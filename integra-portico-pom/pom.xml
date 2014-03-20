@@ -16,13 +16,13 @@
     </repositories>
 
     <modules>
-        <module>../db</module>
-        <module>../persistence</module>
-        <module>../business</module>
-        <module>../jobs</module>
-        <module>../web</module>
+        <module>../integra-portico-db</module>
+        <module>../integra-portico-persistence</module>
+        <module>../integra-portico-business</module>
+        <module>../integra-portico-jobs</module>
+        <module>../integra-portico-web</module>
 
-        <module>../test</module>
+        <module>../integra-portico-test</module>
     </modules>
 
     <distributionManagement>
@@ -130,7 +130,7 @@
                                         <version>${doclet.version}</version>
                                     </docletArtifact>
                                     <additionalparam>${doclet.additionalparam}</additionalparam>
-                                    <!-- 
+                                    <!--
                 <doclet.version>5.6.6</doclet.version>
                 <doclet.additionalparam>
                     -inferrel -inferdep -quiet -hide java.* -hide xeredi.util.* -hide org.* -hide com.* -qualify -postfixpackage -nodefontsize 9
