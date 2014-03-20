@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.proceso.ProcesoMensajeDAO">
+    <resultMap type="ProcesoMensajeVO" id="ResultMap">
+        <id column="prmn_prbt_pk" property="prbtId" />
+        <result column="prmn_nivel" property="nivel" />
+        <result column="prmn_codigo" property="codigo" />
+        <result column="prmn_mensaje" property="mensaje" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        prmn.prmn_prbt_pk
+        , prmn.prmn_nivel
+        , prmn.prmn_codigo
+        , prmn.prmn_mensaje
+    FROM
+        tbl_proceso_mensaje_prmn prmn
+    ]]>
+    </sql>
+
+    <select id="selectList" parameterType="Long" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <![CDATA[
+        WHERE prmn.prmn_prbt_pk = #{value}
+        ]]>
+    </select>
+
+    <insert id="insert" parameterType="ProcesoMensajeVO">
+        <![CDATA[
+        INSERT INTO tbl_proceso_mensaje_prmn (prmn_prbt_pk, prmn_nivel, prmn_codigo, prmn_mensaje)
+        VALUES (#{prbtId}, #{nivel}, #{codigo}, #{mensaje})
+        ]]>
+    </insert>
+
+    <delete id="delete" parameterType="Long">
+        <![CDATA[
+        DELETE FROM tbl_proceso_mensaje_prmn
+        WHERE
+            prmn_prbt_pk = #{value}
+        ]]>
+    </delete>
+</mapper>

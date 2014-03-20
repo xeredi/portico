@@ -1,0 +1,27 @@
+package xeredi.integra.model.dao.comun;
+
+import xeredi.integra.model.vo.comun.IgVO;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Interface IgDAO.
+ */
+public interface IgDAO {
+
+    /**
+     * Select.
+     * 
+     * @param nombre
+     *            the nombre
+     * @return the ig vo
+     */
+    public IgVO select(final String nombre);
+
+    /**
+     * Update.
+     * 
+     * @param vo
+     *            the vo
+     */
+    public int update(final String nombre);
+}

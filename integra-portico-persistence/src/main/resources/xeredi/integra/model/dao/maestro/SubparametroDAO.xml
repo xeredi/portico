@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.maestro.SubparametroDAO">
+    <resultMap type="SubparametroVO" id="ResultMap">
+        <id column="spvr_pk" />
+        <result column="sprm_pk" property="id" />
+        <result column="sprm_tpsp_pk" property="entiId" />
+        <result column="sprm_prmt_pk" property="prmtId" />
+
+        <association property="prmtAsociado" javaType="ParametroVO">
+            <result column="sprm_prmt_dep_pk" property="id" />
+            <result column="prmt_parametro" property="parametro" />
+
+            <association property="i18n" javaType="ParametroI18nVO">
+                <result column="prmt_texto" property="texto" />
+            </association>
+        </association>
+
+        <association property="spvr" javaType="SubparametroVersionVO">
+            <result column="spvr_pk" property="id" />
+            <result column="spvr_fini" property="finicio" />
+            <result column="spvr_ffin" property="ffin" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND sprm_pk = #{id}
+            </if>
+            <if test="entiId != null">
+                AND sprm_tpsp_pk = #{entiId}
+            </if>
+            <if test="prmt != null">
+                <if test="prmt.id != null">
+                    AND sprm_prmt_pk = #{prmt.id}
+                </if>
+            </if>
+            <if test="fechaVigencia != null">
+                AND #{fechaVigencia} BETWEEN spvr_fini AND COALESCE(spvr_ffin,
+                #{fechaVigencia})
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT
+            sprm_pk, sprm_prmt_pk, sprm_prmt_dep_pk, sprm_tpsp_pk
+            , prmt_parametro
+            , spvr_pk, spvr_fini, spvr_ffin
+    ]]>
+        <if test="fechaVigencia != null and idioma != null">
+        <![CDATA[
+        	, (CASE
+        		WHEN tppr_es_i18n = 1
+        		THEN (
+        			SELECT p18n_texto FROM tbl_parametro_i18n_p18n
+        			WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = 'es_ES'
+        		)
+        		WHEN tppr_tpdt_nombre_pk IS NOT NULL
+        		THEN (
+        			SELECT prdt_cadena FROM tbl_parametro_dato_prdt
+        			WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_nombre_pk
+        		)
+        	END) as prmt_texto
+        ]]>
+        </if>
+        <![CDATA[
+        FROM (
+            SELECT
+            	sprm_pk
+            	, sprm_prmt_pk
+            	, sprm_prmt_dep_pk
+            	, sprm_tpsp_pk
+            	, prmt_parametro
+            	, tppr_pk, tppr_es_i18n, tppr_tpdt_nombre_pk
+        ]]>
+        <if test="fechaVigencia != null">
+        <![CDATA[
+            	, (SELECT prvr_pk FROM tbl_parametro_version_prvr
+        		    WHERE prvr_prmt_pk = sprm_prmt_dep_pk
+        			    AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+        	    ) AS prvr_pk
+        ]]>
+        </if>
+        <![CDATA[
+            	, spvr_pk
+            	, spvr_fini
+            	, spvr_ffin
+            FROM tbl_subparametro_sprm sprm
+            	JOIN tbl_subparametro_version_spvr spvr ON
+            		spvr_sprm_pk = sprm_pk
+            	JOIN tbl_parametro_prmt ON
+        		prmt_pk = sprm_prmt_dep_pk
+        	JOIN tbl_tipo_parametro_tppr ON
+        		tppr_pk = prmt_tppr_pk
+        ]]>
+        <include refid="SelectWhere" />
+        <![CDATA[
+        ) sql
+        ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM tbl_subparametro_sprm sprm
+    	JOIN tbl_subparametro_version_spvr spvr ON
+    		spvr_sprm_pk = sprm_pk
+    ]]>
+    </sql>
+
+    <select id="selectCount" parameterType="SubparametroCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+
+        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
+
+        <if test="offset != null">
+            OFFSET #{offset}
+        </if>
+        <if test="limit != null">
+            LIMIT #{limit}
+        </if>
+    </select>
+
+    <select id="selectObject" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="SubparametroVO" resultType="Boolean">
+        <![CDATA[
+        select COUNT(1)
+        from tbl_subparametro_sprm
+        WHERE
+            sprm_prmt_pk = #{prmtId}
+            AND sprm_prmt_dep_pk = #{prmtAsociado.id}
+        ]]>
+    </select>
+
+    <select id="intersects" parameterType="SubparametroVO" resultType="Boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subparametro_sprm
+            JOIN tbl_subparametro_version_spvr ON
+                spvr_sprm_pk = sprm_pk
+        WHERE
+            sprm_prmt_pk = #{prmtId}
+            AND sprm_prmt_dep_pk = #{prmtAsociado.id}
+        	AND (
+        		(
+                    #{spvr.finicio} BETWEEN
+                        spvr_fini AND COALESCE(spvr_ffin, NOW())
+                )
+        		OR (
+                    COALESCE(#{spvr.ffin}, NOW()) BETWEEN
+                        spvr_fini AND COALESCE(spvr_ffin, NOW())
+                )
+        		OR (
+                    #{spvr.finicio} <= spvr_fini
+                    AND COALESCE(#{spvr.ffin}, NOW()) >= COALESCE(spvr_ffin, NOW())
+                )
+        	)
+        ]]>
+    </select>
+
+    <insert id="insert" parameterType="SubparametroVO">
+        <![CDATA[
+        INSERT INTO tbl_subparametro_sprm (sprm_pk, sprm_prmt_pk, sprm_prmt_dep_pk, sprm_tpsp_pk)
+        VALUES (#{id}, #{prmtId}, #{prmtAsociado.id}, #{entiId})
+        ]]>
+    </insert>
+</mapper>

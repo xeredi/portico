@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<properties resource="mybatis-config.properties" />
+
+	<settings>
+		<setting name="proxyFactory" value="JAVASSIST" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="aggressiveLazyLoading" value="false" />
+		<setting name="useColumnLabel" value="false"/>
+		<setting name="defaultExecutorType" value="REUSE"/>
+		<setting name="multipleResultSetsEnabled" value="false"/>
+		        <!--<setting name="jdbcTypeForNull" value="NULL" /> <setting name="defaultExecutorType"
+			value="REUSE" /> <setting name="logImpl" value="${db.logImpl}" /> NO_LOGGING
+			SLF4J LOG4J <setting name="proxyFactory" value="JAVASSIST"/> CGLIB JAVASSIST -->
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="xeredi.util.applicationobjects.LabelValueVO"
+			alias="LabelValueVO" />
+
+		<package name="xeredi.integra.model.util" />
+		<package name="xeredi.integra.model.vo" />
+	</typeAliases>
+
+	<typeHandlers>
+		<typeHandler handler="xeredi.util.mybatis.BooleanTypeHandler"
+			javaType="java.lang.Boolean" jdbcType="INTEGER" />
+	</typeHandlers>
+
+	<environments default="local">
+		<environment id="local">
+			<transactionManager type="JDBC" />
+
+			<dataSource type="POOLED">
+				<property name="url" value="${db.dataSource.url}" />
+				<property name="driver" value="${db.dataSource.driver}" />
+				<property name="username" value="${db.dataSource.username}" />
+				<property name="password" value="${db.dataSource.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<package name="xeredi.integra.model.dao" />
+	</mappers>
+</configuration>

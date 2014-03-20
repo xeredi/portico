@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.configuracion.EntornoDAO">
+    <resultMap type="EntornoVO" id="ResultMap">
+        <id column="cnen_pk" property="id" />
+        <result column="cnen_codigo" property="codigo" />
+        <result column="cnen_nombre" property="nombre" />
+
+        <association property="cnid" javaType="IdiomaVO">
+            <result column="cnen_cnid_pk" property="id" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        cnen_pk, cnen_codigo, cnen_nombre, cnen_cnid_pk
+    FROM tbl_configuracion_entorno_cnen
+    ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM tbl_configuracion_entorno_cnen
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND cnen_pk = #{id}
+            </if>
+            <if test="codigo != null">
+                AND cnen_codigo = #{codigo}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectAllMap" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+    </select>
+
+    <select id="select" resultMap="ResultMap" parameterType="Long">
+        <include refid="SelectPrefix" />
+        WHERE cnen_pk = #{value}
+    </select>
+
+    <select id="exists" resultType="Boolean" parameterType="EntornoVO">
+        <include refid="SelectCountPrefix" />
+        WHERE cnen_codigo = #{codigo}
+    </select>
+
+    <select id="selectAllList" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        ORDER BY cnen_codigo
+    </select>
+
+    <select id="selectCodigosList" resultType="String">
+        SELECT
+        cnen_codigo
+        FROM tbl_configuracion_entorno_cnen
+        ORDER BY cnen_codigo
+    </select>
+
+    <insert id="insert" parameterType="EntornoVO">
+        <selectKey keyProperty="id" resultType="Long" order="BEFORE">
+            SELECT
+            NEXTVAL('sq_integra')
+        </selectKey>
+        <![CDATA[
+        INSERT INTO tbl_configuracion_entorno_cnen(cnen_pk, cnen_codigo, cnen_nombre, cnen_cnid_pk)
+        VALUES(#{id}, #{codigo}, #{nombre}, #{cnid.id})
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="EntornoVO">
+        <![CDATA[
+        UPDATE tbl_configuracion_entorno_cnen SET
+            cnen_nombre = #{nombre}
+            , cnen_cnid_pk = #{cnid.id}
+        WHERE cnen_pk = #{id}
+        ]]>
+    </update>
+</mapper>

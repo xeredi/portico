@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.servicio.escala.AtraqueDAO">
+    <select id="isAutorizable" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subservicio_ssrv
+        WHERE
+            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('S', 'D')
+            AND ssrv_pk = #{value}
+    ]]>
+    </select>
+
+    <update id="updateAutorizar" parameterType="Long">
+    <![CDATA[
+        UPDATE tbl_subservicio_ssrv SET
+            ssrv_estado = 'C'
+        WHERE
+            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('S', 'D')
+            AND ssrv_pk = #{value}
+    ]]>
+    </update>
+
+    <select id="isDenegable" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subservicio_ssrv
+        WHERE
+            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('S', 'C')
+            AND ssrv_pk = #{value}
+    ]]>
+    </select>
+
+    <update id="updateDenegar" parameterType="Long">
+    <![CDATA[
+        UPDATE tbl_subservicio_ssrv SET
+            ssrv_estado = 'D'
+        WHERE
+            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('S', 'C')
+            AND ssrv_pk = #{value}
+    ]]>
+    </update>
+
+    <select id="isAnulable" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subservicio_ssrv
+        WHERE
+            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('S', 'C')
+            AND ssrv_pk = #{value}
+    ]]>
+    </select>
+
+    <update id="updateAnular" parameterType="Long">
+    <![CDATA[
+        UPDATE tbl_subservicio_ssrv SET
+            ssrv_estado = 'A'
+        WHERE
+            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('S', 'C')
+            AND ssrv_pk = #{value}
+    ]]>
+    </update>
+
+    <select id="isIniciable" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subservicio_ssrv ssrv
+        WHERE
+            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv.ssrv_estado IN ('C')
+            AND NOT EXISTS (
+                SELECT 1
+                FROM tbl_subservicio_ssrv ssrvAux
+                WHERE ssrvAux.ssrv_srvc_pk = ssrv.ssrv_srvc_pk
+                    AND ssrvAux.ssrv_tpss_pk = ssrv.ssrv_tpss_pk
+                    AND ssrvAux.ssrv_numero < ssrv.ssrv_numero
+                    and (
+                        ssrvAux.ssrv_ffin IS NULL
+                        OR ssrvAux.ssrv_estado NOT IN ('F', 'D', 'A')
+                    )
+            )
+            AND ssrv.ssrv_pk = #{value}
+    ]]>
+    </select>
+
+    <update id="updateIniciar" parameterType="Long">
+    <![CDATA[
+        UPDATE tbl_subservicio_ssrv ssrv SET
+            ssrv_estado = 'I'
+        WHERE
+            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv.ssrv_estado IN ('C')
+            AND NOT EXISTS (
+                SELECT 1
+                FROM tbl_subservicio_ssrv ssrvAux
+                WHERE ssrvAux.ssrv_srvc_pk = ssrv.ssrv_srvc_pk
+                    AND ssrvAux.ssrv_tpss_pk = ssrv.ssrv_tpss_pk
+                    AND ssrvAux.ssrv_numero < ssrv.ssrv_numero
+                    and (
+                        ssrvAux.ssrv_ffin IS NULL
+                        OR ssrvAux.ssrv_estado NOT IN ('F', 'D', 'A')
+                    )
+            )
+            AND ssrv.ssrv_pk = #{value}
+    ]]>
+    </update>
+
+    <select id="isFinalizable" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subservicio_ssrv ssrv
+        WHERE
+            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv.ssrv_estado IN ('I')
+            AND ssrv.ssrv_pk = #{value}
+    ]]>
+    </select>
+
+    <update id="updateFinalizar" parameterType="Long">
+    <![CDATA[
+        UPDATE tbl_subservicio_ssrv SET
+            ssrv_estado = 'F'
+        WHERE
+            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv_estado IN ('I')
+            AND ssrv_pk = #{value}
+    ]]>
+    </update>
+
+    <select id="isCambioMuelle" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subservicio_ssrv ssrv
+        WHERE
+            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            AND ssrv.ssrv_estado IN ('I')
+            AND ssrv.ssrv_ffin IS NULL
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_subservicio_ssrv ssrvAux
+                WHERE
+                    ssrvAux.ssrv_srvc_pk = ssrv.ssrv_srvc_pk
+                    AND ssrvAux.ssrv_tpss_pk = getEntidad('ATRAQUE')
+                    AND ssrvAux.ssrv_numero > ssrv.ssrv_numero
+                    AND ssrvAux.ssrv_estado = 'C'
+            )
+            AND ssrv.ssrv_pk = #{value}
+    ]]>
+    </select>
+
+    <select id="isAutorizableFprevio" parameterType="Long" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_subservicio_ssrv ssrv
+        WHERE
+        	ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+        	AND ssrv.ssrv_estado IN ('S', 'C')
+            AND ssrv.ssrv_pk = #{value}
+    ]]>
+    </select>
+</mapper>
