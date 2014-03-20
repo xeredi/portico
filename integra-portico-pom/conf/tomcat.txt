@@ -1,0 +1,5 @@
+En server.xml:
+
+		<Context docBase="D:/proyectos/java/integra-portico/web/target/web-0.0.1-SNAPSHOT" path="/web" reloadable="false" />
+
+http://shereifhawary.blogspot.com.es/2013/04/optimizing-tomcat-7-for-best-performance.html

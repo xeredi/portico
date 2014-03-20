@@ -1,0 +1,1 @@
+- Hacer que tipo de dato apunte a una entidad en vez de a un tipo de parametro.

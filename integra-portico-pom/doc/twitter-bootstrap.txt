@@ -1,0 +1,14 @@
+URL
+---
+http://getbootstrap.com/
+
+http://jschr.github.io/bootstrap-modal/
+	Utilidades para ventanas modales
+
+http://tutorialzine.com/2013/07/50-must-have-plugins-for-extending-twitter-bootstrap/
+
+http://eonasdan.github.io/bootstrap-datetimepicker/
+	Calendario
+	
+https://gist.github.com/havvg/3226804
+    Formulario modal
