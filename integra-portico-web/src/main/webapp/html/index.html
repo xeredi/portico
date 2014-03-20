@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Prueba de AngularJs</title>
+</head>
+<body>
+	<div ng-app="portico">
+		<div ng-controller="tpprsCtrl">
+			<input type="text" ng-model="tpprSearch" />
+			<ul>
+				<li ng-repeat="tppr in tpprs | filter:tpprSearch"><a href="/prmt-listado.action?itemCriterio.entiId={{tppr.value}}">{{tppr.label}}</a></li>
+			</ul>
+		</div>
+
+		<div ng-controller="ctrl1">
+			<input type="text" ng-model="data.message">
+			<h1>{{data.message}}</h1>
+		</div>
+		<div ng-controller="ctrl2">
+			<input type="text" ng-model="data.message">
+			<h1>{{data.message}}</h1>
+		</div>
+	</div>
+	<h1>Prueba</h1>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+	<script src="index.js"></script>
+</body>
+</html>
