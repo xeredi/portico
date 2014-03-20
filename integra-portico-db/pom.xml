@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>db</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>integra-portico</groupId>
+        <artifactId>pom</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom</relativePath>
+    </parent>
+    <name>B.D.</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.agilejava.docbkx</groupId>
+                <artifactId>docbkx-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.docbook</groupId>
+                        <artifactId>docbook-xml</artifactId>
+                        <version>4.4</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <foCustomization>${basedir}/src/docbkx/pdf.xsl</foCustomization>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>integra-portico</groupId>
+            <artifactId>business</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.2-1003-jdbc4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.9</version>
+        </dependency>
+    </dependencies>
+</project>

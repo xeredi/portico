@@ -1,0 +1,1291 @@
+<importer>
+    <sql id="ESCALA">
+    <![CDATA[
+    SELECT
+        serv.serv_id
+        , serv.serv_fecha_creacion
+        , serv.serv_fecha_baja
+        , serv.serv_fecha_modificacion
+        , serv.serv_tipo
+        , (
+            SELECT modu_cod
+            FROM icon_modulo_modu
+            WHERE modu_id = serv_modu_id
+        ) AS serv_modu
+        , (
+            SELECT subp_codigo
+            FROM igen_subpuerto_subp
+            WHERE subp_id = serv_subp_id
+        ) AS serv_subp
+        , serv.serv_anno
+        , serv.serv_numero
+        , serv.serv_fecha_estadistica
+        , serv.serv_fecha_anula_factura
+        , COALESCE(esca.esca_fecha_inicio, SYSDATE) as f_referencia
+        , COALESCE(esca.esca_fecha_inicio, SYSDATE)
+        , esca.esca_fecha_finalizacion
+        , esca.esca_estado
+
+        , esca.esca_es_carga_edi
+        , esca.esca_emisor_edi
+        , esca.esca_ref_mensaje_edi
+        , esca.esca_estado_cap_mar
+        , esca.esca_fecha_cap_mar
+        , esca.esca_fecha_notif_practico
+        , esca.esca_manifiesto_notif_practico
+        , esca.esca_fecha_entrada
+        , esca.esca_fecha_salida
+        , esca.esca_buqu_id
+        , (
+            SELECT buqt_codigo
+            FROM igen_buquetipo_buqt
+            WHERE buqt_id = esca_buqt_id_entrada
+        ) AS esca_buqt_entrada
+        , (
+            SELECT buqt_codigo
+            FROM igen_buquetipo_buqt
+            WHERE buqt_id = esca_buqt_id_salida
+        ) AS esca_buqt_salida
+        , esca.esca_tipo_estancia
+        , esca.esca_es_navegacion_int
+        , TO_CHAR(esca.esca_codigo_exencion)
+        , (
+            SELECT exet_codigo
+            FROM igen_exenciontipo_exet
+            WHERE exet_id = esca_tipo_exencion
+        ) AS esca_tipo_exencion
+        , esca.esca_es_carga_mmpp
+        , esca.esca_es_transporte_mmpp
+        , esca.esca_es_descarga_mmpp
+        , esca.esca_es_suj_pas_sustit
+        , esca.esca_es_oper_comercial
+        , (
+            SELECT acue_codigo
+            FROM iesc_acuerdo_acue
+            WHERE acue_id = esca_acue_id
+        ) AS esca_acue
+        , (
+            SELECT
+            (
+                SELECT subp_codigo
+                FROM igen_subpuerto_subp
+                WHERE subp_id = traf_subp_id
+            ) || traf_codigo
+            FROM iesc_trafico_traf
+            WHERE traf_id = esca_traf_id
+        ) AS esca_traf
+        , (
+            SELECT ivat_codigo
+            FROM ifac_ivatipo_ivat
+            WHERE ivat_id = esca_ivat_id
+        ) AS esca_ivat
+        , (
+            SELECT navt_codigo
+            FROM igen_navegaciontipo_navt
+            WHERE navt_id = esca_navt_id_entrada
+        ) AS esca_navt_entrada
+        , (
+            SELECT navt_codigo
+            FROM igen_navegaciontipo_navt
+            WHERE navt_id = esca_navt_id_salida
+        ) AS esca_navt_salida
+        , esca.esca_capitan_entrada
+        , esca.esca_capitan_salida
+        , esca.esca_tripulantes_entrada
+        , esca.esca_tripulantes_salida
+        , esca.esca_pasajeros_entrada
+        , esca.esca_pasajeros_salida
+        , esca.esca_polizones_entrada
+        , esca.esca_polizones_salida
+        , esca.esca_esclusas
+        , esca.esca_pasarelas
+        , (
+            SELECT
+                (
+                    SELECT pais_iso
+                    FROM igen_pais_pais
+                    WHERE pais_id = unlo_pais_id
+                ) ||
+                unlo_codigo
+            FROM igen_unlocode_unlo
+            WHERE unlo_id = esca_loco_id_siguiente
+        ) AS esca_loco_siguiente
+        , (
+            SELECT
+                (
+                    SELECT pais_iso
+                    FROM igen_pais_pais
+                    WHERE pais_id = unlo_pais_id
+                ) ||
+                unlo_codigo
+            FROM igen_unlocode_unlo
+            WHERE unlo_id = esca_loco_id_anterior
+        ) AS esca_loco_anterior
+        , (
+            SELECT orga_cod
+            FROM icom_organizacion_orga
+            WHERE orga_id = esca_orga_id_s_marit
+        ) AS esca_orga_s_marit
+        , (
+            SELECT orga_cod
+            FROM icom_organizacion_orga
+            WHERE orga_id = esca_orga_id_residuos
+        ) AS esca_orga_residuos
+        , (
+            SELECT orga_cod
+            FROM icom_organizacion_orga
+            WHERE orga_id = esca_orga_id_consignat
+        ) AS esca_orga_consignat
+        , esca.esca_observ
+        , esca.esca_observ_cap_mar
+        , esca.esca_observ_due
+        , esca.esca_observ_facturacion
+        , esca.es_aut_cabotaje
+        , esca.es_crudo_transportado
+        , esca.esca_es_recogido_medios_marit
+        , esca.esca_es_certificado_anexo
+        , esca.esca_es_certificado_residuo
+        , esca.esca_es_tarifa_residuos
+        , esca.esca_condiciones_tanque_lastre
+        , esca.esca_condiciones_tanque_carga
+        , esca.esca_es_mercancia_regulada
+        , esca.esca_volumen_carga
+        , esca.esca_es_tareas_obligatorias
+        , esca.esca_texto_tareas_obligatorias
+        , esca.esca_es_modificado_edi
+        , esca.esca_es_base_en_puerto
+    FROM iesc_escala_esca esca
+        JOIN icom_servicio_serv serv ON
+            serv_id = esca_id
+    ]]>
+    </sql>
+
+    <sql id="ATRAQUE">
+    <![CDATA[
+    SELECT
+        atra.atra_escala_id
+        , atra.atra_id
+        , atra.atra_numero
+        , COALESCE(rea.atrd_fecha_inicio, aut.atrd_fecha_inicio, sol.atrd_fecha_inicio) AS finicio
+        , COALESCE(rea.atrd_fecha_finalizacion, rea.atrd_fecha_finalizacion, sol.atrd_fecha_finalizacion) AS ffin
+        , atra.atra_estado
+        , atra.atra_fecha_autorizacion
+        , atra.atra_emisor_edi
+        , atra.atra_numero_edi
+        , TO_CHAR(atra.atra_codigo_exencion)
+        , atra.atra_es_sujeto_pas_sustit
+        , atra.atra_fecha_solicitud
+        , (SELECT orga_cod FROM icom_organizacion_orga WHERE orga_id = atra.atra_orga_id_cliente) AS cliente
+        , (SELECT exet_codigo FROM igen_exenciontipo_exet WHERE exet_id = atra.atra_tipo_exencion) AS exet
+        , (SELECT orga_cod FROM icom_organizacion_orga WHERE orga_id = atra.atra_orga_id_consignatario) AS consignatario
+        , atra.atra_es_modificado_edi
+        , (SELECT dead_codigo FROM igen_descuentoadic_dead WHERE dead_id = atra.atra_dead_id) AS dead
+
+        , sol.atrd_tipo_estancia
+        , (SELECT actt_codigo FROM iesc_actividadtipo_actt WHERE actt_id = sol.atrd_tipo_actividad) AS solactt
+        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet WHERE acet_id = sol.atrd_tipo_actividad_edi) AS solacet
+        , (SELECT alin_codigo FROM igen_alineacion_alin WHERE alin_id = sol.atrd_alineacion) AS solalin
+        , (SELECT atrt_codigo from iesc_atraquetipo_atrt where atrt_id = sol.atrd_tipo_atraque) AS solatrt
+        , (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = sol.atrd_tipo_atraque_edi_1)
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = sol.atrd_tipo_atraque_edi_2)
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = sol.atrd_tipo_atraque_edi_3)
+          AS solatet
+        , sol.atrd_noray_inicial
+        , sol.atrd_noray_final
+        , sol.atrd_calado_entrada
+        , sol.atrd_calado_salida
+        , sol.atrd_es_exencion_prac_sol
+        , sol.atrd_rampa_adicional
+        , sol.atrd_eslora_rampa
+        , sol.atrd_es_luz_solicitada
+        , sol.atrd_es_fuerza_solicitada
+        , sol.atrd_es_combust_solicitado
+        , sol.atrd_es_hielo_solicitado
+        , sol.atrd_es_agua_solicitada
+        , sol.atrd_observaciones
+
+        , aut.atrd_tipo_estancia
+        , (SELECT actt_codigo FROM iesc_actividadtipo_actt WHERE actt_id = aut.atrd_tipo_actividad) AS autactt
+        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet WHERE acet_id = aut.atrd_tipo_actividad_edi) AS autacet
+        , (SELECT alin_codigo FROM igen_alineacion_alin WHERE alin_id = aut.atrd_alineacion) AS autalin
+        , (SELECT atrt_codigo from iesc_atraquetipo_atrt where atrt_id = aut.atrd_tipo_atraque) AS autatrt
+        , (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = aut.atrd_tipo_atraque_edi_1)
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = aut.atrd_tipo_atraque_edi_2)
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = aut.atrd_tipo_atraque_edi_3)
+          AS autatet
+        , aut.atrd_noray_inicial
+        , aut.atrd_noray_final
+        , aut.atrd_calado_entrada
+        , aut.atrd_calado_salida
+        , aut.atrd_es_exencion_prac_sol
+        , aut.atrd_rampa_adicional
+        , aut.atrd_eslora_rampa
+        , aut.atrd_observaciones
+
+        , rea.atrd_tipo_estancia
+        , (SELECT actt_codigo FROM iesc_actividadtipo_actt WHERE actt_id = rea.atrd_tipo_actividad) AS reaactt
+        , (SELECT acet_codigo FROM iesc_actividadeditipo_acet WHERE acet_id = rea.atrd_tipo_actividad_edi) AS reaacet
+        , (SELECT alin_codigo FROM igen_alineacion_alin WHERE alin_id = rea.atrd_alineacion) AS reaalin
+        , (SELECT atrt_codigo FROM iesc_atraquetipo_atrt WHERE atrt_id = rea.atrd_tipo_atraque) AS reaatrt
+        , (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = rea.atrd_tipo_atraque_edi_1)
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = rea.atrd_tipo_atraque_edi_2)
+          || (SELECT atet_codigo FROM iesc_atraqueeditipo_atet WHERE atet_id = rea.atrd_tipo_atraque_edi_3)
+          AS reaatet
+        , rea.atrd_noray_inicial
+        , rea.atrd_noray_final
+        , rea.atrd_calado_entrada
+        , rea.atrd_calado_salida
+        , rea.atrd_es_exencion_prac_sol
+        , rea.atrd_rampa_adicional
+        , rea.atrd_eslora_rampa
+        , rea.atrd_observaciones
+    FROM iesc_atraque_atra atra
+      LEFT JOIN iesc_atraquedetalle_atrd sol ON
+        sol.atrd_atra_id = atra.atra_id
+        AND sol.atrd_momento = 'S'
+      LEFT JOIN iesc_atraquedetalle_atrd aut ON
+        aut.atrd_atra_id = atra.atra_id
+        AND aut.atrd_momento = 'A'
+      LEFT JOIN iesc_atraquedetalle_atrd rea ON
+        rea.atrd_atra_id = atra.atra_id
+        AND rea.atrd_momento = 'R'
+    WHERE atra.atra_es_activo = 1
+    ]]>
+    </sql>
+
+    <sql id="OPERACION_ATRAQUE">
+    <![CDATA[
+    SELECT
+        SERV_ID
+
+        , ATOP_ID
+        , ATOP_ORDEN
+
+        , ATOP_FECHA_INICIO
+        , ATOP_FECHA_final
+
+        , ATRA_ID
+
+        , (select opet_codigo from IGEN_OPERACIONTIPO_OPET where opet_id = ATOP_OPET_ID) AS ATOP_OPET
+        , ATOP_PESO_MAX_UNITARIO
+        , ATOP_CANTIDAD_MOVIDA
+        , 'KGM' as ATOP_UNIDAD_BERMAN
+        , ATOP_LUGAR_DESCARGA_CARGA
+        , (SELECT ORGA_COD FROM ICOM_ORGANIZACION_ORGA WHERE ORGA_ID = ATOP_ORGA_ID_ESTIBADOR) AS ATOP_ESTIBADOR
+        , ATOP_DETALLE_MERCANCIA
+        , ATOP_ESTIBADOR_DESC
+        , (SELECT mert_CODIGO FROM IESC_MERCANCIATIPO_MERT WHERE mert_ID = ATOP_MERT_ID) AS ATOP_MERT
+    FROM
+        IESC_ATRAQUEOPERACION_ATOP ATOP
+        JOIN IESC_ATRAQUE_ATRA ON
+            ATRA_ID = ATOP_ATRA_ID
+            AND ATRA_ES_ACTIVO = 1
+        JOIN ICOM_SERVICIO_SERV SERV ON
+    	        SERV_ID = ATRA_ESCALA_ID
+    	        and serv_fecha_baja is null
+    WHERE
+        ATOP_ES_ACTIVO = 1
+    ]]>
+    </sql>
+
+    <sql id="ESCALA_CONTADOR">
+    <![CDATA[
+    SELECT coes_esca_id, coes_id, ROWNUM, coes_tipo, coes_lecturas
+    FROM ifac_contadorescala_coes
+    ]]>
+    </sql>
+
+    <sql id="ESCALA_RESIDUO">
+    <![CDATA[
+    SELECT escr_esca_id, escr_id, ROWNUM
+        , (
+            SELECT (
+                SELECT rest_codigo
+                FROM iesc_residuostipo_rest
+                WHERE rest_id = ress_rest_id
+            ) || ress_codigo
+            FROM iesc_residuossubtipo_ress
+            WHERE ress_id = escr_ress_id
+        ) AS escr_ress
+        , escr_cantidad_declarada
+        , escr_cantidad_estimada
+        , escr_cantidad_pendiente
+        , escr_cantidad_entregada
+        , escr_capacidad_maxima
+    FROM iesc_escalaresiduo_escr
+    WHERE escr_es_activo = 1
+    ]]>
+    </sql>
+
+
+    <sql id="OCUPACION_SUPERFICIE">
+    <![CDATA[
+	SELECT
+	    serv.serv_id
+	    , serv.serv_fecha_creacion
+	    , serv.serv_fecha_baja
+	    , serv.serv_fecha_modificacion
+	    , serv.serv_tipo
+	    , (
+	        SELECT modu_cod
+	        FROM icon_modulo_modu
+	        WHERE modu_id = serv_modu_id
+	    ) AS serv_modu
+	    , (
+	        SELECT subp_codigo
+	        FROM igen_subpuerto_subp
+	        WHERE subp_id = serv_subp_id
+	    ) AS serv_subp
+	    , serv.serv_anno
+	    , serv.serv_numero
+	    , serv.serv_fecha_estadistica
+	    , serv.serv_fecha_anula_factura
+	    , sude.sude_fecha_inicio AS fecha_referencia
+
+	    , sude.sude_fecha_inicio
+	    , sude.sude_fecha_fin
+        , suoc.suoc_estado
+
+	    , suoc.suoc_referencia
+	    , suoc.suoc_tipo_valoracion
+	    , (
+	        SELECT ivat_codigo
+	        FROM ifac_ivatipo_ivat
+	        WHERE ivat_id = suoc_tipo_iva_id
+	    ) AS suoc_tipo_iva
+	    , TO_CHAR(suoc.suoc_codigo_exencion)
+	    , (
+	        SELECT exet_codigo
+	        FROM igen_exenciontipo_exet
+	        WHERE exet_id = suoc_tipo_exencion_id
+	    ) AS suoc_tipo_exencion
+	    , (
+	        SELECT dead_codigo
+	        FROM igen_descuentoadic_dead
+	        WHERE dead_id = suoc_dead_id
+	    ) AS suoc_dead
+	    , (
+	        SELECT orga_cod
+	        FROM icom_organizacion_orga
+	        WHERE orga_id = suoc_orga_id_cliente
+	    ) AS suoc_orga_cliente
+	    , (
+	        SELECT orga_cod
+	        FROM icom_organizacion_orga
+	        WHERE orga_id = suoc_orga_id_cliente_tasas
+	    ) AS suoc_orga_cliente_tasas
+	    , suoc.suoc_es_suj_pas_sustit
+	    , (
+	        SELECT emet_codigo
+	        FROM iest_mercanciatipo_emet
+	        WHERE emet_id = suoc_tipo_mercancia_id
+	    ) AS suoc_tipo_mercancia
+	    , suoc.suoc_mercancia
+	    , (
+	        SELECT tosu_codigo
+	        FROM isup_tipooperacion_tosu
+	        WHERE tosu_id = suoc_tipo_operacion_id
+	    ) AS suoc_tipo_operacion
+	    , suoc.suoc_es_ro_ro
+	    , (
+	        SELECT
+	          (
+	              SELECT subp_codigo
+	              FROM igen_subpuerto_subp
+	              WHERE subp_id = zons_subp_id
+	          ) ||
+	          zons_codigo
+	        FROM isup_zona_zons
+	        WHERE zons_id = sude_zona_deposito_id
+	    ) AS sude_zona_deposito
+	    , (
+            SELECT unis_codigo
+            FROM isup_unidad_unis
+            WHERE unis_id = sude_tipo_unidad_id
+	    ) AS sude_tipo_unidad
+	    , sude.sude_fecha_solicitud
+	    , sude.sude_superficie_solicitud
+	    , sude.sude_toneladas_solicitud
+	    , sude.sude_fecha_autorizacion
+	    , sude.sude_superficie_autorizacion
+	    , sude.sude_toneladas_autorizacion
+	    , suoc.suoc_observ
+	    , suoc.suoc_observ_facturacion
+	FROM isup_superficie_suoc suoc
+	  JOIN isup_superficiedetalle_sude sude ON
+	      sude.sude_suoc_id = suoc.suoc_id
+	      AND sude.sude_momento = 'R'
+	  JOIN icom_servicio_serv serv ON
+	    serv_id = suoc_id
+	    AND serv.serv_fecha_baja IS NULL
+    ]]>
+    </sql>
+
+    <sql id="OCUPACION_SUPERFICIE_LINEA">
+    <![CDATA[
+	SELECT
+	    serv.serv_id
+	    , sulo.sulo_id
+	    , sulo.sulo_orden
+
+	    , sulo.sulo_fecha_inicio
+	    , sulo.sulo_fecha_fin
+
+	    , sulo.sulo_medida
+	    , sulo.sulo_medida_equivalente
+	    , sulo.sulo_mercancia
+	    , sulo.sulo_referencia
+	    , sulo.sulo_observaciones
+	FROM isup_superficie_suoc suoc
+  	    JOIN isup_superficiedetalle_sude sude ON
+	    	sude.sude_suoc_id = suoc.suoc_id
+	    	AND sude.sude_momento = 'R'
+	    JOIN isup_lineaocupacion_sulo sulo ON
+	    	sulo.sulo_suoc_id = suoc.suoc_id
+	    	AND sulo.sulo_es_activo = 1
+	    JOIN icom_servicio_serv serv ON
+	    	serv_id = suoc_id
+	    	AND serv.serv_fecha_baja IS NULL
+    ]]>
+    </sql>
+
+    <sql id="MANIFIESTO_PESCA">
+    <![CDATA[
+    select
+        SERV.SERV_id
+        , SERV.SERV_FECHA_CREACION
+        , SERV.SERV_FECHA_BAJA
+        , SERV.SERV_FECHA_modificacion
+        , SERV.SERV_TIPO
+        , (
+            SELECT MODU_COD
+            FROM ICON_MODULO_MODU
+            WHERE modu_id = serv_modu_id
+        ) AS SERV_MODU
+        , (
+            SELECT SUBP_CODIGO
+            FROM IGEN_SUBPUERTO_SUBP
+            WHERE SUBP_ID = SERV_SUBP_ID
+        ) AS SERV_SUBP
+        , SERV.SERV_ANNO
+        , SERV.SERV_NUMERO
+        , SERV.SERV_FECHA_ESTADISTICA
+        , SERV.SERV_FECHA_ANULA_FACTURA
+        , mape.MAPE_FECHA_REFERENCIA
+        , mape.MAPE_ESTADO
+
+        , (
+            select BUPE_CODIGO
+            from IPES_BUQUE_BUPE
+            where BUPE_ID = MAPE_BUQUE_id
+        ) as MAPE_BUQUE
+        , TO_CHAR(mape.MAPE_CODIGO_EXENCION)
+        , (
+            select EXET_CODIGO
+            from IGEN_EXENCIONTIPO_EXET
+            where EXET_ID = MAPE_TIPO_EXENCION_ID
+        ) as MAPE_TIPO_EXENCION
+        , (
+            select TOPP_CODIGO
+            from IPES_OPERACIONTIPO_TOPP
+            where TOPP_ID = MAPE_TIPO_OPERACION_id
+        ) as MAPE_TIPO_OPERACION
+        , (
+            select ORGA_COD
+            from ICOM_ORGANIZACION_ORGA
+            where ORGA_ID = MAPE_ORGA_ID_VENDEDOR
+        ) as MAPE_ORGA_VENDEDOR
+        , (
+            select ORGA_COD
+            from ICOM_ORGANIZACION_ORGA
+            where ORGA_ID = MAPE_ORGA_ID_CLIENTE
+        ) as MAPE_ORGA_CLIENTE
+        , (
+            select MPTI_CODIGO
+            from IPES_MANIFIESTOTIPO_MPTI
+            where MPTI_ID = MAPE_TIPO_MANIFIESTO_ID
+        ) as MAPE_TIPO_MANIFIESTO
+        , (
+            select MPST_CODIGO
+            from IPES_MANIFIESTOSUBTIPO_MPST
+            where MPST_ID = MAPE_SUBTIPO_MANIFIESTO_ID
+        ) as MAPE_SUBTIPO_MANIFIESTO
+        , mape.MAPE_REFERENCIA
+        , mape.MAPE_ORDEN_VENTA
+        , mape.MAPE_PESO_TOTAL
+        , mape.MAPE_IMPORTE_TOTAL
+        , (
+            select IVAT_CODIGO
+            from IFAC_IVATIPO_IVAT
+            where IVAT_ID = MAPE_TIPO_IVA_ID
+        ) as MAPE_TIPO_IVA
+        , mape.MAPE_ES_SUJ_PAS_SUSTIT
+        , (
+            select ALIN_CODIGO
+            from IGEN_ALINEACION_ALIN
+            where ALIN_ID = MAPE_ALINEACION_ID
+        ) as MAPE_ALINEACION
+        , (
+            select ARPE_CODIGO
+            from IPES_ARTEPESCA_ARPE
+            where ARPE_ID = MAPE_ARTE_PESCA_ID
+        ) as MAPE_ARTE_PESCA
+        , (
+            select ZOPE_CODIGO
+            from IPES_ZONAPESCA_ZOPE
+            where ZOPE_ID = MAPE_ZONA_PESCA_ID
+        ) as MAPE_ZOPE
+        , mape.MAPE_NOMBRE_FICHERO
+        , mape.MAPE_OBSERV
+        , mape.MAPE_OBSERV_FACTURACION
+    from IPES_MANIFIESTO_MAPE mape
+        join ICOM_SERVICIO_SERV serv on
+            serv.SERV_ID = mape.MAPE_ID
+            AND serv.SERV_FECHA_BAJA is null
+    ]]>
+    </sql>
+
+    <sql id="PARTIDA_PESCA">
+    <![CDATA[
+    select
+        SERV.SERV_id
+        , pape.PAPE_ID
+        , pape.PAPE_ORDEN
+
+        , (
+            SELECT ESPE_CODIGO
+            FROM IPES_ESPECIEPESCA_ESPE
+            WHERE ESPE_ID = PAPE_ESPECIE_ID
+        ) AS PAPE_ESPECIE
+        , (
+            SELECT COPE_CODIGO
+            FROM IPES_COMPRADOR_COPE
+            WHERE COPE_ID = PAPE_COMPRADOR_ID
+        ) AS PAPE_COMPRADOR
+        , (
+            SELECT PRPE_CODIGO
+            FROM IPES_PRESENTACION_PRPE
+            WHERE PRPE_ID = PAPE_PRESENTACION_ID
+        ) AS PAPE_PRESENTACION
+        , pape.PAPE_DESTINO
+        , pape.PAPE_CAJAS
+        , pape.PAPE_KILOS
+        , pape.PAPE_PRECIO
+        , pape.PAPE_IMPORTE_PRIMERA_VENTA
+    from IPES_MANIFIESTO_MAPE mape
+        join ICOM_SERVICIO_SERV serv on
+            serv.SERV_ID = mape.MAPE_ID
+            AND serv.SERV_FECHA_BAJA is null
+        join IPES_PARTIDA_PAPE pape on
+            pape.PAPE_MAPE_ID = serv.SERV_ID
+            and pape.PAPE_ES_ACTIVO = 1
+    ]]>
+    </sql>
+
+    <sql id="SUMINISTRO_CONSUMO">
+    <![CDATA[
+    select
+        SERV.SERV_id
+        , SERV.SERV_FECHA_CREACION
+        , SERV.SERV_FECHA_BAJA
+        , SERV.SERV_FECHA_modificacion
+        , SERV.SERV_TIPO
+        , (
+            SELECT MODU_COD
+            FROM ICON_MODULO_MODU
+            WHERE modu_id = serv_modu_id
+        ) AS SERV_MODU
+        , (
+            SELECT SUBP_CODIGO
+            FROM IGEN_SUBPUERTO_SUBP
+            WHERE SUBP_ID = SERV_SUBP_ID
+        ) AS SERV_SUBP
+        , SERV.SERV_ANNO
+        , SERV.SERV_NUMERO
+        , SERV.SERV_FECHA_ESTADISTICA
+        , SERV.SERV_FECHA_ANULA_FACTURA
+        , coalesce(sucdRea.SUCD_FECHA_INICIO, sucdAut.SUCD_FECHA_INICIO, sucdSol.SUCD_FECHA_INICIO) AS serv_freferencia
+
+        , coalesce(sucdRea.SUCD_FECHA_INICIO, sucdAut.SUCD_FECHA_INICIO, sucdSol.SUCD_FECHA_INICIO)
+        , coalesce(sucdRea.SUCD_FECHA_FINALIZACION, sucdAut.SUCD_FECHA_FINALIZACION, sucdSol.SUCD_FECHA_FINALIZACION)
+        , suco.SUCO_ESTADO
+
+        , suco.SUCO_REFERENCIA
+        , (
+            select tsum_codigo
+            from ISUM_TIPOSUMINISTRO_TSUM
+            where tsum_id = suco.SUCO_TSUM_ID
+        ) as SUCO_TSUM
+        , to_char(suco.SUCO_CODIGO_EXENCION)
+        , (
+            select EXET_codigo
+            from IGEN_EXENCIONTIPO_EXET
+            where EXET_id = suco.SUCO_EXET_ID
+        ) as SUCO_EXET
+        , (
+            select DEAD_codigo
+            from IGEN_DESCUENTOADIC_DEAD
+            where DEAD_id = suco.SUCO_DEAD_ID
+        ) as SUCO_DEAD
+        , (
+            select ORGA_cod
+            from ICOM_ORGANIZACION_ORGA
+            where ORGA_id = suco.SUCO_ORGA_ID_CLIENTE
+        ) as SUCO_ORGA_CLIENTE
+        , (
+            select ORGA_cod
+            from ICOM_ORGANIZACION_ORGA
+            where ORGA_id = suco.SUCO_ORGA_ID_TASA
+        ) as SUCO_ORGA_TASA
+        , suco.SUCO_ES_SUJ_PAS_SUSTIT
+        , sucdSol.SUCD_FECHA_SOLICITUD
+        , sucdAut.SUCD_FECHA_AUTORIZACION
+        , suco.SUCO_OBSERV
+        , suco.SUCO_OBSERV_FACTURACION
+    from ISUM_CONSUMO_SUCO suco
+        join ICOM_SERVICIO_SERV serv on
+            serv.SERV_ID = suco.SUCO_ID
+            AND serv.SERV_FECHA_BAJA IS NULL
+        left join ISUM_CONSUMODETALLE_SUCD sucdSol on
+            sucdSol.SUCD_SUCO_ID = SUCO_ID and sucdSol.SUCD_MOMENTO = 'S'
+        left join ISUM_CONSUMODETALLE_SUCD sucdAut on
+            sucdAut.SUCD_SUCO_ID = SUCO_ID and sucdAut.SUCD_MOMENTO = 'A'
+        left join ISUM_CONSUMODETALLE_SUCD sucdRea on
+            sucdRea.SUCD_SUCO_ID = SUCO_ID and sucdRea.SUCD_MOMENTO = 'R'
+    ]]>
+    </sql>
+
+    <sql id="SUMINISTRO_CONSUMO_GASTO">
+    <![CDATA[
+    select
+      	serv.SERV_ID
+    	, gcsu.GCSU_ID
+
+        , ROWNUM as numero
+
+    	, gcsu.GCSU_FECHA_INICIO
+        , gcsu.GCSU_FECHA_FINAL
+
+        , (
+          SELECT TGSU_CODIGO
+          FROM ISUM_TIPOGASTO_TGSU
+          WHERE TGSU_ID = gcsu.GCSU_TGSU_ID
+        ) AS GCSU_TGSU
+        , (
+          SELECT IVAT_CODIGO
+          FROM IFAC_IVATIPO_IVAT
+          WHERE IVAT_ID = gcsu.GCSU_IVAT_ID
+        ) AS GCSU_IVAT
+        , gcsu.GCSU_COSTE
+    from
+        ISUM_GASTOCONSUMO_GCSU gcsu
+        join ISUM_CONSUMO_SUCO suco on
+            suco.SUCO_ID = gcsu.GCSU_SUCO_ID
+        join ISUM_CONSUMODETALLE_SUCD sucd on
+            sucd.SUCD_SUCO_ID = suco.suco_id
+            AND sucd.SUCD_MOMENTO = 'R'
+        join ICOM_SERVICIO_SERV serv ON
+          serv.serv_id = suco.suco_id
+          AND serv.SERV_FECHA_BAJA IS NULL
+    where
+        gcsu.GCSU_ES_ACTIVO = 1
+    ]]>
+    </sql>
+
+    <sql id="SUMINISTRO_CONSUMO_LECTURA">
+    <![CDATA[
+    select
+      	serv.SERV_ID
+    	, LCSU.LCSU_ID
+        , LCSU.LCSU_ORDEN as numero
+
+    	, LCSU.LCSU_FECHA_INICIO
+        , LCSU.LCSU_FECHA_FINAL
+
+        , LCSU.LCSU_LECTURA_INICIO
+        , LCSU.LCSU_OBSERV_INICIAL
+        , LCSU.LCSU_LECTURA_FINAL
+        , LCSU.LCSU_OBSERV_FINAL
+        , LCSU.LCSU_CONSUMO
+        , LCSU.LCSU_TIPO_HORA
+        , (
+          SELECT IVAT_CODIGO
+          FROM IFAC_IVATIPO_IVAT
+          WHERE IVAT_ID = LCSU.LCSU_IVAT_ID
+        ) AS LCSU_IVAT
+        ,
+          CASE
+            WHEN LCSU.LCSU_COSU_ID is null
+            THEN null
+            ELSE
+              (
+                select SUBP_CODIGO
+                from IGEN_SUBPUERTO_SUBP
+                where SUBP_ID = serv.SERV_SUBP_ID
+              ) ||
+              (
+                SELECT COSU_CODIGO
+                FROM ISUM_CONTADOR_COSU
+                WHERE COSU_ID = LCSU.LCSU_COSU_ID
+              )
+        END AS LCSU_COSU
+    from
+        ISUM_LECTURACONSUMO_LCSU LCSU
+        join ISUM_CONSUMO_SUCO suco on
+            suco.SUCO_ID = LCSU.LCSU_SUCO_ID
+        join ISUM_CONSUMODETALLE_SUCD sucd on
+            sucd.SUCD_SUCO_ID = suco.suco_id
+            AND sucd.SUCD_MOMENTO = 'R'
+        join ICOM_SERVICIO_SERV serv ON
+          serv.serv_id = suco.suco_id
+          AND serv.SERV_FECHA_BAJA IS NULL
+    where
+        LCSU.LCSU_ES_ACTIVO = 1
+    ]]>
+    </sql>
+
+	<sql id="MANIFIESTO">
+    <![CDATA[
+    SELECT
+        SERV.SERV_id
+        , SERV.SERV_FECHA_CREACION
+        , SERV.SERV_FECHA_BAJA
+        , SERV.SERV_FECHA_modificacion
+        , SERV.SERV_TIPO
+        , (
+            SELECT MODU_COD
+            FROM ICON_MODULO_MODU
+            WHERE modu_id = serv_modu_id
+        ) AS SERV_MODU
+        , (
+            SELECT SUBP_CODIGO
+            FROM IGEN_SUBPUERTO_SUBP
+            WHERE SUBP_ID = SERV_SUBP_ID
+        ) AS SERV_SUBP
+        , SERV.SERV_ANNO
+        , SERV.SERV_NUMERO
+        , SERV.SERV_FECHA_ESTADISTICA
+        , SERV.SERV_FECHA_ANULA_FACTURA
+        , MANI.MANI_FECHA_REFERENCIA
+        , MANI.MANI_ESTADO
+        , MANI.MANI_FECHA_ENVIO
+        , MANI.MANI_TIPO_MANIFIESTO
+        , mani.mani_escala_id
+        , MANI.MANI_ES_VIA_EDI
+        , MANI.MANI_NUMERO_EDI
+        , MANI.MANI_NUMERO_VIAJE
+        , to_number(MANI.MANI_NUMERO_TRAMOS)
+        , MANI.MANI_DIAS_EN_PUERTO
+        , MANI.MANI_ES_SERV_REGULAR_AUT
+        , MANI.MANI_ES_REGIMEN_SIMPLE
+        , MANI.MANI_ES_ABARLOADO
+        , MANI.MANI_TIPO_OPERACION
+        , MANI.MANI_TRANSITO_COM_SIM
+        , (
+            SELECT acue_codigo
+            FROM IESC_ACUERDO_ACUE
+            WHERE acue_ID = mani_acuerdo_ID
+        ) AS mani_acue
+        , (
+            SELECT alin_CODIGO
+            FROM Igen_alineacion_alin
+            WHERE alin_ID = MANI_alineacion_ID
+        ) AS mani_alin
+        , (
+            SELECT radu_CODIGO
+            FROM IMAN_RECINTOADUANERO_RADU
+            WHERE radu_ID = MANI_RECINTO_ADU_ID
+        ) AS mani_radu
+        , (
+            SELECT orga_COD
+            FROM ICOM_ORGANIZACION_ORGA
+            WHERE ORGA_ID = MANI_ESTIBADOR_ID
+        ) AS MANI_ESTIBADOR
+        , TO_CHAR(MANI.MANI_CODIGO_EXENCION)
+        , (
+            SELECT exet_CODigo
+            FROM IGEN_EXENCIONTIPO_EXET
+            WHERE exet_ID = MANI_TIPO_EXENCION_ID
+        ) AS MANI_EXET
+        , (
+            SELECT orga_COD
+            FROM ICOM_ORGANIZACION_ORGA
+            WHERE ORGA_ID = MANI_consignatario_ID
+        ) AS MANI_consignatario
+        , (
+            SELECT TERM_CODIGO
+            FROM IMAN_terminal_term
+            WHERE term_ID = MANI_terminal_ID
+        ) AS MANI_TERM
+        , CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM IESC_TRAFICO_TRAF
+                WHERE traf_ID = MANI_servicio_ID
+            )
+            THEN
+                (
+                    SELECT SUBP_CODIGO
+                    FROM IGEN_SUBPUERTO_SUBP
+                    WHERE SUBP_ID = SERV_SUBP_ID
+                ) || (
+                    SELECT traf_CODIGO
+                    FROM IESC_TRAFICO_TRAF
+                    WHERE TRAF_ID = MANI_SERVICIO_ID
+                )
+            ELSE NULL
+        END AS MANI_traf
+        , (
+            SELECT pais_iso
+            FROM IGEN_PAIS_PAIS
+            WHERE pais_ID = MANI_ENS_PAIS_ID
+        ) AS MANI_ENS_PAIS
+        , (
+            SELECT DEAD_codigo
+            FROM IGEN_DESCUENTOADIC_DEAD
+            WHERE DEAD_ID = MANI_DEAD_ID
+        ) AS MANI_DEAD
+        , (
+            SELECT IVAT_CODIGO
+            FROM Ifac_ivatipo_ivat
+            WHERE ivat_ID = MANI_TIPO_IVA_ID
+        ) AS MANI_IVAT
+        , MANI.MANI_OBSERVACIONES
+        , MANI.MANI_OBSERVACIONES_FACT
+        , (
+            SELECT IESP_CODIGO
+            FROM IMAN_INSTESPECIAL_IESP
+            WHERE IESP_ID = MANI_INST_ESPECIAL_ID
+        ) AS MANI_IESP
+        , MANI.MANI_ESCALA_ID
+    FROM IMAN_MANIFIESTO_MANI MANI
+        JOIN ICOM_SERVICIO_SERV serv ON
+            SERV_ID = MANI_ID
+            AND SERV_FECHA_BAJA IS NULL
+    ]]>
+	</sql>
+
+    <sql id="MANIFIESTO_CONSIGNATARIO">
+    <![CDATA[
+        select
+            maco.MACO_MANI_ID
+            , maco.maco_id
+            , maco.MACO_ORDEN as numero
+            , (
+                SELECT ORGA_COD
+                FROM ICOM_ORGANIZACION_ORGA
+                WHERE ORGA_ID = MACO_CONSIGNATARIO_ID
+            ) AS MACO_CONSIGNATARIO
+        from IMAN_CONSIGNATARIO_MACO maco
+        where maco.MACO_ES_ACTIVO = 1
+            AND EXISTS (
+                SELECT 1
+                FROM ICOM_SERVICIO_SERV
+                WHERE SERV_ID = MACO_MANI_ID
+                    AND SERV_FECHA_BAJA IS NULL
+            )
+    ]]>
+    </sql>
+
+    <sql id="BL">
+    <![CDATA[
+	SELECT
+	  MABL.MABL_MANI_ID
+	  , mabl.mabl_id
+	  , MABL.MABL_ORDEN
+      , MABL.MABL_ESTADO
+
+	  , MABL.MABL_CONSIGNATARIO_ID
+
+	  , MABL.MABL_TIPO
+	  , MABL.MABL_TRAMO
+	  , TO_CHAR(MABL.MABL_CODIGO_EXENCION)
+	  , (
+	      SELECT EXET_CODIGO
+	      FROM IGEN_EXENCIONTIPO_EXET
+	      WHERE EXET_ID = MABL_TIPO_EXENCION_ID
+	  ) AS MABL_TIPO_EXENCION
+	  , MABL.MABL_NOMBRE
+	  , (
+	      SELECT TOBL_CODIGO
+	      FROM IMAN_TIPOOPERACION_TOBL
+	      WHERE TOBL_ID = MABL_TIPO_OPERACION_ID
+	  ) AS MABL_TIPO_OPERACION
+	  , (
+	      SELECT
+	          (
+	              SELECT PAIS_ISO
+	              FROM IGEN_PAIS_PAIS
+	              WHERE PAIS_ID = UNLO_PAIS_ID
+	          ) ||
+	          UNLO_CODIGO
+	      FROM IGEN_UNLOCODE_UNLO
+	      WHERE UNLO_ID = MABL_ORIGEN_UNLO_ID
+	  ) AS MABL_ORIGEN_UNLO
+	  , (
+	      SELECT
+	          (
+	              SELECT PAIS_ISO
+	              FROM IGEN_PAIS_PAIS
+	              WHERE PAIS_ID = UNLO_PAIS_ID
+	          ) ||
+	          UNLO_CODIGO
+	      FROM IGEN_UNLOCODE_UNLO
+	      WHERE UNLO_ID = MABL_CARGA_UNLO_ID
+	  ) AS MABL_CARGA_UNLO
+	  , (
+	      SELECT
+	          (
+	              SELECT PAIS_ISO
+	              FROM IGEN_PAIS_PAIS
+	              WHERE PAIS_ID = UNLO_PAIS_ID
+	          ) ||
+	          UNLO_CODIGO
+	      FROM IGEN_UNLOCODE_UNLO
+	      WHERE UNLO_ID = MABL_DESCARGA_UNLO_ID
+	  ) AS MABL_DESCARGA_UNLO
+	  , (
+	      SELECT
+	          (
+	              SELECT PAIS_ISO
+	              FROM IGEN_PAIS_PAIS
+	              WHERE PAIS_ID = UNLO_PAIS_ID
+	          ) ||
+	          UNLO_CODIGO
+	      FROM IGEN_UNLOCODE_UNLO
+	      WHERE UNLO_ID = MABL_DESTINO_UNLO_ID
+	  ) AS MABL_DESTINO_UNLO
+	  , (
+	      SELECT
+	          (
+	              SELECT PAIS_ISO
+	              FROM IGEN_PAIS_PAIS
+	              WHERE PAIS_ID = UNLO_PAIS_ID
+	          ) ||
+	          UNLO_CODIGO
+	      FROM IGEN_UNLOCODE_UNLO
+	      WHERE UNLO_ID = MABL_TRANSBORDO_UNLO_ID
+	  ) AS MABL_TRANSBORDO_UNLO
+	  , MABL.MABL_DEC_SUM_TRANSITO
+	  , MABL.MABL_TIPO_TRANSPORTE
+	  , (
+	      SELECT TEDI_CODIGO
+	      FROM IMAN_MODOTRANSPEDI_TEDI
+	      WHERE TEDI_ID = MABL_MODO_TRANSP_EDI_ID
+	  ) AS MABL_MODO_TRANSP_EDI
+	  , MABL.MABL_TRANSP_POST_IMO
+	  , MABL.MABL_TIPO_DESTINO
+	  , (
+	      SELECT IESP_CODIGO
+	      FROM IMAN_INSTESPECIAL_IESP
+	      WHERE IESP_ID = MABL_INST_ESPECIAL_ID
+	  ) AS MABL_INST_ESPECIAL
+	  , (
+	      SELECT ALIN_CODIGO
+	      FROM IGEN_ALINEACION_ALIN
+	      WHERE ALIN_ID = MABL_ALINEACION_ID
+	  ) AS MABL_ALINEACION
+	  , (
+	      SELECT orga_COD
+	      FROM ICOM_ORGANIZACION_ORGA
+	      WHERE ORGA_ID = MABL_CLIENTE_ID
+	  ) AS MANI_CLIENTE
+	  , MABL.MABL_ES_SUJ_PASIVO_SUST
+	  , (
+	      SELECT NAVT_CODIGO
+	      FROM IGEN_NAVEGACIONTIPO_NAVT
+	      WHERE navt_ID = MABL_TIPO_NAVEGACION_ID
+	  ) AS MABL_TIPO_NAVEGACION
+	  , MABL.MABL_ES_REGIMEN_SIMPLE
+	  , (
+	      SELECT TERM_CODIGO
+	      FROM IMAN_TERMINAL_TERM
+	      WHERE TERM_ID = MABL_TERMINAL_ID
+	  ) AS MABL_TERMINAL
+	  , (
+	      SELECT acue_codigo
+	      FROM IESC_ACUERDO_ACUE
+	      WHERE acue_ID = MABL_ACUERDO_ID
+	  ) AS MABL_ACUERDO
+	  , CASE
+	      WHEN EXISTS (
+	          SELECT 1
+	          FROM IESC_TRAFICO_TRAF
+	          WHERE traf_ID = MABL_SERVICIO_ID
+	      )
+	      THEN
+	          (
+	              SELECT SUBP_CODIGO
+	              FROM IGEN_SUBPUERTO_SUBP
+	              WHERE SUBP_ID = SERV_SUBP_ID
+	          ) || (
+	              SELECT traf_CODIGO
+	              FROM IESC_TRAFICO_TRAF
+	              WHERE TRAF_ID = MABL_SERVICIO_ID
+	          )
+	      ELSE NULL
+	  END AS MABL_SERVICIO
+	  , (
+	      SELECT orga_COD
+	      FROM ICOM_ORGANIZACION_ORGA
+	      WHERE ORGA_ID = MABL_ESTIBADOR_ID
+	  ) AS MANI_ESTIBADOR
+	  , (
+	      SELECT IVAT_CODIGO
+	      FROM IFAC_IVATIPO_IVAT
+	      WHERE IVAT_ID = MABL_TIPO_IVA_ID
+	  ) AS MABL_TIPO_IVA
+	  , MABL.MABL_OBSERVACIONES
+	  , MABL.MABL_OBSERVACIONES_FACT
+
+	  , MABL.MABL_BL_TRANSITO
+	FROM IMAN_BL_MABL MABL
+	    join ICOM_SERVICIO_SERV on
+	        SERV_ID = MABL_MANI_ID
+	        AND SERV_FECHA_BAJA IS NULL
+	WHERE
+	  MABL.MABL_ES_ACTIVO = 1
+    ]]>
+    </sql>
+
+    <sql id="PARTIDA">
+    <![CDATA[
+	SELECT
+	  SERV.SERV_ID
+
+	  , part.part_id
+	  , part.part_orden
+      , PART.PART_ESTADO
+
+	  , PART.PART_MABL_ID
+
+	  , (
+	      SELECT MERC_CODIGO
+	      FROM IMAN_MERCANCIA_MERC
+	      where MERC_ID = PART_MERCANCIA_ID
+	  ) AS PART_MERCANCIA
+	  , (
+	      SELECT TBUL_CODIGO
+	      FROM IMAN_TIPOBULTO_TBUL
+	      where TBUL_ID = PART_TIPO_BULTO_ID
+	  ) AS PART_TIPO_BULTO
+	  , TO_CHAR(PART.PART_CODIGO_EXENCION)
+	  , (
+	      SELECT EXET_CODIGO
+	      FROM IGEN_EXENCIONTIPO_EXET
+	      where EXET_ID = PART_TIPO_EXENCION_ID
+	  ) AS PART_TIPO_EXENCION
+	  , PART.PART_ES_AVITUALLAMIENTO
+	  , PART.PART_ES_RORO
+	  , PART.PART_NUMERO_BULTOS
+	  , PART.PART_UNIDADES_CARGA
+	  , (
+	      SELECT UNIC_CODIGO
+	      FROM IMAN_UNIDADCARGA_UNIC
+	      WHERE UNIC_ID = PART_UNIDAD_CARGA_ID
+	  ) AS PART_UNIDAD_CARGA
+	  , PART.PART_NUMERO_PASAJE
+	  , PART.PART_VOLUMEN
+	  , PART.PART_PESO
+	  , PART.PART_NUM_PART_TRANSITO
+	  , PART.PART_DEC_SUM_TRANSITO
+	  , (
+	      SELECT ACUE_CODIGO
+	      FROM IESC_ACUERDO_ACUE
+	      where ACUE_ID = PART_ACUERDO_ID
+	  ) AS PART_ACUERDO
+	  , (
+	      SELECT ORGA_COD
+	      FROM ICOM_ORGANIZACION_ORGA
+	      where ORGA_ID = PART_ESTIBADOR_ID
+	  ) AS PART_ESTIBADOR
+	  , (
+	      SELECT RECE_CODIGO
+	      FROM IMAN_RECEPTOR_RECE
+	      where RECE_ID = PART_RECEPTOR_ID
+	  ) AS PART_RECEPTOR
+	  , (
+	      SELECT IESP_CODIGO
+	      FROM IMAN_INSTESPECIAL_IESP
+	      where IESP_ID = PART_INST_ESPEC_ID
+	  ) AS PART_INST_ESPEC
+	  , (
+	      SELECT TSUM_CODIGO
+	      FROM ISUM_TIPOSUMINISTRO_TSUM
+	      where TSUM_ID = PART_TIPO_SUM_ID
+	  ) AS PART_TIPO_SUM
+	  , (
+	      SELECT TERM_CODIGO
+	      FROM IMAN_TERMINAL_TERM
+	      where TERM_ID = PART_TERMINAL_ID
+	  ) AS PART_TERMINAL
+	  , (
+	      SELECT VMAR_CODIGO
+	      FROM IMAN_MARCAVEHICULO_VMAR
+	      where VMAR_ID = PART_MARCA_VEHICULO_ID
+	  ) AS PART_MARCA_VEHICULO
+	  , PART.PART_ES_DECLARADO_ENS
+	  , PART.PART_OBSERVACIONES
+	FROM IMAN_PARTIDA_PART PART
+	    JOIN IMAN_BL_MABL ON
+	        MABL_ID = PART_MABL_ID
+	        AND MABL_ES_ACTIVO = 1
+	    JOIN ICOM_SERVICIO_SERV SERV ON
+	        SERV_ID = MABL_MANI_ID
+	        and serv_fecha_baja is null
+	where part_es_activo = 1
+    ]]>
+    </sql>
+
+    <sql id="EQUIPAMIENTO">
+    <![CDATA[
+	SELECT
+	    SERV_ID
+	    , EQUI.EQUI_ID
+	    , EQUI.EQUI_ORDEN
+        , EQUI.EQUI_ESTADO
+
+	    , EQUI.EQUI_MABL_ID
+
+	    , (
+	        SELECT TEQU_CODIGO || TEQU_TAMANYO
+	        FROM IMAN_TIPOEQUIPAMIENTO_TEQU
+	        WHERE TEQU_ID = EQUI_TIPO_ID
+	    ) AS EQUI_TIPO
+	    , EQUI.EQUI_MATRICULA
+	    , to_char(EQUI.EQUI_CODIGO_EXENCION)
+	    , (
+	        SELECT EXET_CODIGO
+	        FROM IGEN_EXENCIONTIPO_EXET
+	        WHERE EXET_ID = EQUI_TIPO_EXENCION_ID
+	    ) AS EQUI_TIPO_EXENCION
+	    , EQUI.EQUI_LLENO_VACIO
+	    , EQUI.EQUI_NUMERO_VACIOS
+	    , EQUI.EQUI_ES_RORO
+	    , EQUI.EQUI_TARA
+	    , (
+	        SELECT UNIC_CODIGO
+	        FROM IMAN_UNIDADCARGA_UNIC
+	        WHERE UNIC_ID = EQUI_UNIDAD_CARGA_ID
+	    ) AS EQUI_UNIDAD_CARGA
+	    , EQUI.EQUI_OBSERVACIONES
+	FROM IMAN_EQUIPAMIENTO_EQUI EQUI
+	    JOIN IMAN_BL_MABL MABL ON
+	        MABL_ID = EQUI_MABL_ID
+	        AND MABL_ES_ACTIVO = 1
+	    JOIN ICOM_SERVICIO_SERV SERV ON
+	        SERV_ID = MABL_MANI_ID
+	        and SERV_FECHA_BAJA is null
+	where equi_es_activo = 1
+    ]]>
+    </sql>
+
+    <sql id="PARTIDA_EQUIPAMIENTO">
+    <![CDATA[
+	SELECT
+	    SERV_ID
+	    , PAEQ.PAEQ_ID
+	    , rownum as numero
+
+	    , PAEQ.PAEQ_PART_ID
+	    , PAEQ.PAEQ_EQUI_ID
+
+	    , PAEQ.PAEQ_NUMERO_BULTOS
+	FROM IMAN_PARTIDAEQUIP_PAEQ PAEQ
+	    JOIN IMAN_PARTIDA_PART PART ON
+	        PART_ID = PAEQ_PART_ID
+	        AND PART_ES_ACTIVO = 1
+	    JOIN IMAN_EQUIPAMIENTO_EQUI EQUI ON
+	        EQUI_ID = PAEQ_EQUI_ID
+	        AND EQUI_ES_ACTIVO = 1
+	    JOIN IMAN_BL_MABL MABL ON
+	        MABL_ID = PART_MABL_ID
+	        AND MABL_ES_ACTIVO = 1
+	    JOIN ICOM_SERVICIO_SERV SERV ON
+	        SERV_ID = MABL_MANI_ID
+	        and SERV_FECHA_BAJA is null
+	where PAEQ_es_activo = 1
+    ]]>
+    </sql>
+
+    <sql id="PRECINTO_EQUIPAMIENTO">
+    <![CDATA[
+	SELECT
+	    SERV_ID
+	    , PREQ.PREQ_ID
+	    , rownum as numero
+
+	    , EQUI.EQUI_ID
+
+	    , PREQ.PREQ_PRECINTO
+	FROM IMAN_PRECINTOEQUIP_PREQ PREQ
+	    JOIN IMAN_EQUIPAMIENTO_EQUI EQUI ON
+	        EQUI_ID = PREQ_EQUI_ID
+	        AND EQUI_ES_ACTIVO = 1
+	    JOIN IMAN_BL_MABL MABL ON
+	        MABL_ID = EQUI_MABL_ID
+	        AND MABL_ES_ACTIVO = 1
+	    JOIN ICOM_SERVICIO_SERV SERV ON
+	        SERV_ID = MABL_MANI_ID
+	        AND SERV_FECHA_BAJA IS NULL
+	where PREQ_es_activo = 1
+    ]]>
+    </sql>
+
+    <sql id="PARTIDA_IM">
+    <![CDATA[
+	SELECT
+	    SERV_ID
+	    , PAIM.PAIM_ID
+	    , PAIM.PAIM_NUMERO
+
+	    , part.part_ID
+
+	    , (
+	        SELECT IMAR_codigo
+	        FROM IMAN_INSTRUCCMARCAJE_IMAR
+	        WHERE IMAR_ID = PAIM_IMAR_ID
+	    ) as PAIM_IMAR
+	    , PAIM.PAIM_DESCRIPCION
+	FROM IMAN_PARTIDAIM_PAIM PAIM
+	    JOIN IMAN_PARTIDA_PART PART ON
+	        PART_ID = PAIM_PART_ID
+	        AND PART_ES_ACTIVO = 1
+	    JOIN IMAN_BL_MABL MABL ON
+	        MABL_ID = PART_MABL_ID
+	        AND MABL_ES_ACTIVO = 1
+	    JOIN ICOM_SERVICIO_SERV SERV ON
+	        SERV_ID = MABL_MANI_ID
+	        AND SERV_FECHA_BAJA IS NULL
+	where paim_es_activo = 1
+    ]]>
+    </sql>
+
+    <sql id="PARTIDA_MMPP">
+    <![CDATA[
+	SELECT
+	    SERV_ID
+	    , PAMP.PAMP_ID
+	    , PAMP.PAMP_orden
+
+	    , part.part_ID
+
+	    , (
+	        SELECT MMPP_NUMERO_ONU || '-' || MMPP_CLASE || '-' || MMPP_NUMERO_VERSION
+	        FROM IMAN_MMPP_MMPP
+	        WHERE MMPP_ID = PAMP_MMPP_ID
+	    ) as PAMP_MMPP
+	FROM IMAN_PARTIDAMMPP_PAMP PAMP
+	    JOIN IMAN_PARTIDA_PART PART ON
+	        PART_ID = PAMP_PART_ID
+	        AND PART_ES_ACTIVO = 1
+	    JOIN IMAN_BL_MABL MABL ON
+	        MABL_ID = PART_MABL_ID
+	        AND MABL_ES_ACTIVO = 1
+	    JOIN ICOM_SERVICIO_SERV SERV ON
+	        SERV_ID = MABL_MANI_ID
+	        AND SERV_FECHA_BAJA IS NULL
+	where PAMP_es_activo = 1
+    ]]>
+    </sql>
+</importer>

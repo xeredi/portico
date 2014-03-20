@@ -1,0 +1,65 @@
+Maestros
+	Manifiesto
+		- IESC_ACUERDO_ACUE				*
+		- IGEN_ALINEACION_ALIN			*
+		- IMAN_RECINTOADUANERO_RADU		*
+		- ICOM_ORGANIZACION_ORGA 		*
+		- IGEN_EXENCIONTIPO_EXET		*
+		- IMAN_TERMINAL_TERM			*
+		- IESC_TRAFICO_TRAF				*
+		- IFAC_IVATIPO_IVAT				*
+		- IMAN_INSTESPECIAL_IESP		*
+		- IGEN_PAIS_PAIS				*
+		- IGEN_DESCUENTOADIC_DEAD		*
+
+	Consignatario
+		- ICOM_ORGANIZACION_ORGA 		* (R)
+
+	BL
+		- IGEN_EXENCIONTIPO_EXET 		* (R)
+		- IMAN_TIPOOPERACION_TOBL 		*
+		- IGEN_UNLOCODE_UNLO 			*
+		- IGEN_PAIS_PAIS 				* (R)
+		- IMAN_MODOTRANSPEDI_TEDI 		*
+		- IMAN_INSTESPECIAL_IESP 		* (R)
+		- IGEN_ALINEACION_ALIN 			*
+		- ICOM_ORGANIZACION_ORGA 		* (R)
+		- IGEN_NAVEGACIONTIPO_NAVT 		*
+		- IMAN_TERMINAL_TERM 			* (R)
+		- IESC_ACUERDO_ACUE				* (R)
+		- IESC_TRAFICO_TRAF				* (R)
+		- IFAC_IVATIPO_IVAT				* (R)
+
+	Partida
+		- IMAN_MERCANCIA_MERC 			*
+		- IMAN_TIPOBULTO_TBUL 			*
+		- IGEN_EXENCIONTIPO_EXET 		* (R)
+		- IMAN_UNIDADCARGA_UNIC 		*
+		- IESC_ACUERDO_ACUE 			* (R)
+		- ICOM_ORGANIZACION_ORGA 		* (R)
+		- IMAN_RECEPTOR_RECE 			*
+		- IMAN_INSTESPECIAL_IESP 		* (R)
+		- ISUM_TIPOSUMINISTRO_TSUM 		*
+		- IMAN_TERMINAL_TERM 			* (R)
+		- IMAN_MARCAVEHICULO_VMAR 		*
+
+	Equipamiento
+		- IMAN_TIPOEQUIPAMIENTO_TEQU 	*
+		- IGEN_EXENCIONTIPO_EXET 		* (R)
+		- IMAN_UNIDADCARGA_UNIC 		* (R)
+
+	Partida_Equipamiento
+		- No hay
+
+	Partida_Documento
+		- TIPODOCAEAT 					*
+
+	Partida_IM
+		- Instruccion Marcaje 			*
+
+	Partida_MMPP
+		- MMPP 							*
+
+	Equipamiento_Precinto
+		- No hay
+
