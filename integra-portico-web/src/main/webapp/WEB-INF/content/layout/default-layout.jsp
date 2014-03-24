@@ -19,7 +19,7 @@
     href="${pageContext.request.contextPath}/static/bootstrap-datetimepicker/2.1.32/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css" />
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/webjars/angularjs/1.2.13/angular.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/webjars/angularjs/1.2.15/angular.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/angular-translate/2.0.1/angular-translate.min.js"></script>
 
 <title><fmt:message key="app.title" /> - <decorator:title /></title>
