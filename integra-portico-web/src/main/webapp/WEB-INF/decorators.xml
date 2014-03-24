@@ -5,8 +5,8 @@
         <pattern>*.js</pattern>
         <pattern>*.css</pattern>
         <!--
-        <pattern>*.html</pattern>
           -->
+        <pattern>*.html</pattern>
     </excludes>
 
     <decorator name="popup-theme" page="/WEB-INF/content/layout/popup-layout.jsp">
