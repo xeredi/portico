@@ -15,6 +15,6 @@
         <pattern>/*grid*</pattern>
     </decorator>
     <decorator name="basic-theme" page="/WEB-INF/content/layout/default-layout.jsp">
-        <pattern>/*</pattern>
+        <pattern>/*.action</pattern>
     </decorator>
 </decorators>

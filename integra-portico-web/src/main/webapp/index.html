@@ -12,7 +12,10 @@
 <script type="text/javascript" src="webjars/jquery/2.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/angularjs/1.2.15/angular.min.js"></script>
+<script type="text/javascript" src="webjars/angularjs/1.2.15/angular-route.min.js"></script>
 <script type="text/javascript" src="webjars/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
+
+<script type="text/javascript" src="index.js"></script>
 <title>PORTICO - <decorator:title /></title>
 </head>
 <body>
@@ -20,7 +23,7 @@
         <header class="navbar navbar-inverse navbar-fixed-top">
             <nav class="collapse navbar-collapse" role="navigation">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.html" class="brand"> PORTICO - <decorator:title />
+                    <li><a href="index.html" class="brand"> PORTICO
                     </a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -28,8 +31,8 @@
                         href="#">Menu</a>
                         <ul class="dropdown-menu" role="menu">
                             <li role="presentation" class="dropdown-header">Gestion</li>
-                            <li><a href="#/servicio/tpsr-listado.action">Servicios</a></li>
-                            <li><a href="estadistica/pepr-listado.action">Estadisticas</a></li>
+                            <li><a href="#/servicio/tpsrs">Servicios</a></li>
+                            <li><a href="#/estadistica/peprs">Estadisticas</a></li>
                             <li><a href="maestro/tppr-listado.action">Maestros</a></li>
                             <li role="presentation" class="divider"></li>
                             <li role="presentation" class="dropdown-header">Administracion</li>
@@ -46,34 +49,7 @@
             </nav>
         </header>
 
-        <div id="body-content">
-            <div class="jumbotron">
-                <h1>Portico 2.0</h1>
-            </div>
-
-            <form action="usro-acceso.action" method="post">
-                <fieldset>
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <label>Email</label> <input type="text" name="usro.email"
-                                id="usro.email" required="required" maxlength="30"
-                                class="form-control input-sm" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <label>Password</label> <input type="password" name="usro.password"
-                                id="usro.password" required="required" maxlength="30"
-                                class="form-control input-sm" />
-                        </div>
-                    </div>
-                </fieldset>
-
-                <button type="submit" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-ok"></i> Acceso
-                </button>
-            </form>
-
+        <div ng-view id="body-content">
         </div>
     </div>
 </body>
