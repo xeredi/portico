@@ -3,6 +3,7 @@ package xeredi.integra.http.controller.action.configuracion;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -18,6 +19,7 @@ import xeredi.util.struts.PropertyValidator;
 /**
  * The Class EntornoAction.
  */
+@ParentPackage("json-default")
 public final class EntornoAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -119,6 +121,7 @@ public final class EntornoAction extends BaseAction {
      */
     @Actions({
         @Action(value = "cnen-detalle"),
+        @Action(value = "cnen-detalle-json", results = { @Result(name = "success", type = "json") }),
         @Action(value = "cnen-detalle-popup", results = { @Result(name = "success", location = "cnen-detalle.jsp") }) })
     public String detalle() {
         final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);

@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.configuracion.Entorno;
@@ -14,6 +17,7 @@ import xeredi.integra.model.vo.configuracion.EntornoVO;
 /**
  * The Class EntornoListadoAction.
  */
+@ParentPackage("json-default")
 public final class EntornoListadoAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -36,7 +40,9 @@ public final class EntornoListadoAction extends BaseAction {
      * 
      * @return the string
      */
-    @Action(value = "cnen-listado")
+    @Actions({
+        @Action(value = "cnen-listado"),
+        @Action(value = "cnen-listado-json", results = { @Result(name = "success", type = "json") }) })
     public String listado() {
         final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);
 
