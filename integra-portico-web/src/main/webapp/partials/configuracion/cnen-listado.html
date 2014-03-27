@@ -1,7 +1,7 @@
 <div ng-controller="cnensCtrl">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="cnen-alta.action"><i
+            <a class="btn btn-default" href="#/configuracion/cnen/create"><i
                 class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
         </div>
     </div>
@@ -17,7 +17,7 @@
 
         <tbody>
             <tr ng-repeat="cnen in cnens">
-                <td><a href="cnen-modificar.action?cnen.id={{cnen.id}}"><i
+                <td><a href="#/configuracion/cnen/edit/{{cnen.id}}"><i
                         class="glyphicon glyphicon-edit"></i></a></td>
                 <td><a href="#/configuracion/cnens/{{cnen.id}}"><b>{{cnen.codigo}}</b></a></td>
                 <td>{{cnen.nombre}}</td>

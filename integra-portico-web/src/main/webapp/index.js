@@ -6,6 +6,7 @@ app.config(function($translateProvider) {
 		app_nombre : 'PORTICO',
 
 		boton_alta : 'Nuevo',
+		boton_guardar : 'Guardar',
 
 		menu_tpsrs : 'Servicios',
 		menu_peprs : 'Estadisticas',
@@ -75,6 +76,12 @@ app.config([ '$routeProvider', function($routeProvider) {
 		controller : 'cnensCtrl'
 	}).when('/configuracion/cnens/:cnenId', {
 		templateUrl : 'partials/configuracion/cnen-detalle.html',
+		controller : 'cnenCtrl'
+	}).when('/configuracion/cnen/:action/', {
+		templateUrl : 'partials/configuracion/cnen-edicion.html',
+		controller : 'cnenCtrl'
+	}).when('/configuracion/cnen/:action/:cnenId', {
+		templateUrl : 'partials/configuracion/cnen-edicion.html',
 		controller : 'cnenCtrl'
 	}).when('/configuracion/cnids', {
 		templateUrl : 'partials/configuracion/cnid-listado.html'/*
