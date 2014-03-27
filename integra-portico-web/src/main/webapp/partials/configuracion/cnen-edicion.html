@@ -5,17 +5,15 @@
 
         <div class="row">
             <div class="col-md-2 form-group">
-                <label>{{'cnen_codigo' | translate}}</label> <input type="text" name="cnen.codigo" id="cnen.codigo"
-                    value="{{cnen.codigo}}" class="form-control input-sm" required="required" />
+                <label>{{'cnen_codigo' | translate}}</label> <input type="text" ng-model="cnen.codigo"
+                    class="form-control input-sm" required="required" />
             </div>
             <div class="col-md-6 form-group">
-                <label>{{'cnen_nombre' | translate}}</label> <input type="text" name="cnen.nombre" id="cnen.nombre"
-                    value="{{cnen.nombre}}" class="form-control input-sm" required="required" />
+                <label>{{'cnen_nombre' | translate}}</label> <input type="text" ng-model="cnen.nombre"
+                    class="form-control input-sm" required="required" />
             </div>
         </div>
     </fieldset>
 
-    <button type="submit" class="btn btn-primary">
-        {{'boton_guardar' | translate}}
-    </button>
+    <button type="submit" class="btn btn-primary">{{'boton_guardar' | translate}}</button>
 </form>

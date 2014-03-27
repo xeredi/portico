@@ -18,11 +18,13 @@ appControllers.controller('cnensCtrl', function($http, $scope) {
 });
 
 appControllers.controller('cnenCtrl', function($http, $scope, $routeParams) {
-	var url = "configuracion/cnen-detalle-json.action?cnen.id="
-			+ $routeParams.cnenId;
+	if ($routeParams.cnenId) {
+		var url = "configuracion/cnen-detalle-json.action?cnen.id="
+				+ $routeParams.cnenId;
 
-	$http.get(url).success(function(data) {
-		// console.log(data);
-		$scope.cnen = data.cnen;
-	});
+		$http.get(url).success(function(data) {
+			// console.log(data);
+			$scope.cnen = data.cnen;
+		});
+	}
 });
