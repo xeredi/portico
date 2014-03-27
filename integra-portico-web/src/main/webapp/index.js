@@ -73,7 +73,7 @@ app.config([ '$routeProvider', function($routeProvider) {
 	}).when('/configuracion/cnens', {
 		templateUrl : 'partials/configuracion/cnen-listado.html',
 		controller : 'cnensCtrl'
-	}).when('/configuracion/cnens/:cnen.id', {
+	}).when('/configuracion/cnens/:cnenId', {
 		templateUrl : 'partials/configuracion/cnen-detalle.html',
 		controller : 'cnenCtrl'
 	}).when('/configuracion/cnids', {

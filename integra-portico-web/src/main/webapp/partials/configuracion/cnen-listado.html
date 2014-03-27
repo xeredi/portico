@@ -1,4 +1,4 @@
-<div ng-controller="cnensCtrl as app">
+<div ng-controller="cnensCtrl">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" href="cnen-alta.action"><i
@@ -16,10 +16,10 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="cnen in app.cnens">
+            <tr ng-repeat="cnen in cnens">
                 <td><a href="cnen-modificar.action?cnen.id={{cnen.id}}"><i
                         class="glyphicon glyphicon-edit"></i></a></td>
-                <td><a href="#/configuracion/cnens/:{{cnen.id}}"><b>{{cnen.codigo}}</b></a></td>
+                <td><a href="#/configuracion/cnens/{{cnen.id}}"><b>{{cnen.codigo}}</b></a></td>
                 <td>{{cnen.nombre}}</td>
             </tr>
         </tbody>
