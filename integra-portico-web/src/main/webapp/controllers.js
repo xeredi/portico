@@ -28,3 +28,16 @@ appControllers.controller('cnenCtrl', function($http, $scope, $routeParams) {
 		});
 	}
 });
+
+appControllers.controller('prmtsCtrl', function($http, $scope, $routeParams) {
+	if ($routeParams.entiId) {
+		var url = "maestro/prmt-listado-json.action?itemCriterio.entiId="
+				+ $routeParams.entiId;
+
+		$http.get(url).success(function(data) {
+			console.log(data);
+			$scope.enti = data.enti;
+			$scope.itemList = data.itemList;
+		});
+	}
+});

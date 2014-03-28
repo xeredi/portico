@@ -5,8 +5,16 @@ app.config(function($translateProvider) {
 	$translateProvider.translations('es', {
 		app_nombre : 'PORTICO',
 
+		fmt_date : 'dd/MM/yyyy',
+		fmt_datetime : 'dd/MM/yyyy HH:mm',
+
 		boton_alta : 'Nuevo',
+		boton_borrar : 'Borrar',
+		boton_duplicar : 'Duplicar',
+		boton_exportar : 'Exportar',
 		boton_guardar : 'Guardar',
+		boton_modificar : 'Editar',
+		boton_volver : 'Volver',
 
 		menu_tpsrs : 'Servicios',
 		menu_peprs : 'Estadisticas',
@@ -17,6 +25,11 @@ app.config(function($translateProvider) {
 		menu_metamodelo_tpprs : 'Tipos de Maestro',
 		menu_metamodelo_tpdts : 'Tipos de Dato',
 		menu_confs : 'Configuracion',
+
+		prmt_codigo : 'Codigo',
+		prmt_finicio : 'F. Inicio',
+		prmt_ffin : 'F. Fin',
+		prmt_i18n_texto : 'Descripcion',
 
 		cnen_codigo : 'Codigo',
 		cnen_nombre : 'Nombre',
@@ -41,6 +54,9 @@ app.config([ '$routeProvider', function($routeProvider) {
 	}).when('/maestro/tpprs', {
 		templateUrl : 'partials/maestro/tppr-listado.html',
 		controller : 'tpprsCtrl'
+	}).when('/maestro/prmts/:entiId', {
+		templateUrl : 'partials/maestro/prmt-listado.html',
+		controller : 'prmtsCtrl'
 	}).when('/proceso/prbts', {
 		templateUrl : 'partials/proceso/prbt-listado.html'/*
 															 * , controller :
