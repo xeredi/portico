@@ -34,6 +34,7 @@ maestro.controller('prmtCtrl', function($http, $scope, $routeParams) {
 			$scope.item = data.item;
 			$scope.p18nMap = data.p18nMap;
 			$scope.entiHijasList = data.entiHijasList;
+			$scope.itemHijosMap = data.itemHijosMap;
 		});
 	}
 });

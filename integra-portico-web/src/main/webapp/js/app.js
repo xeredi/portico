@@ -33,6 +33,9 @@ app.config(function($translateProvider) {
 		prmt_ffin : 'F. Fin',
 		prmt_i18n_texto : 'Descripcion',
 
+		sprm_finicio : 'F. Inicio',
+		sprm_ffin : 'F. Fin',
+		
 		cnen_codigo : 'Codigo',
 		cnen_nombre : 'Nombre',
 	});
@@ -42,53 +45,35 @@ app.config(function($translateProvider) {
 
 app.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/servicio/tpsrs', {
-		templateUrl : 'partials/servicio/tpsr-listado.html'/*
-															 * , controller :
-															 * 'PhoneListCtrl'
-															 */
+		templateUrl : 'partials/servicio/tpsr-listado.html',
+		controller : 'tpprsCtrl'
 	}).when('/estadistica/peprs', {
-		templateUrl : 'partials/estadistica/pepr-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
+		templateUrl : 'partials/estadistica/pepr-listado.html',
+		controller : 'tpprsCtrl'
 	}).when('/maestro/tpprs', {
 		templateUrl : 'partials/maestro/tppr-listado.html',
 		controller : 'tpprsCtrl'
 	}).when('/proceso/prbts', {
-		templateUrl : 'partials/proceso/prbt-listado.html'/*
-															 * , controller :
-															 * 'PhoneListCtrl'
-															 */
+		templateUrl : 'partials/proceso/prbt-listado.html',
+		controller : 'tpprsCtrl'
 	}).when('/metamodelo/tpprs', {
-		templateUrl : 'partials/metamodelo/tppr-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
+		templateUrl : 'partials/metamodelo/tppr-listado.html',
+		controller : 'tpprsCtrl'
 	}).when('/metamodelo/tpsrs', {
-		templateUrl : 'partials/metamodelo/tpsr-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
+		templateUrl : 'partials/metamodelo/tpsr-listado.html',
+		controller : 'tpsrsCtrl'
 	}).when('/metamodelo/tpess', {
-		templateUrl : 'partials/metamodelo/tpes-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
+		templateUrl : 'partials/metamodelo/tpes-listado.html',
+		controller : 'tpprsCtrl'
 	}).when('/metamodelo/tpdts', {
-		templateUrl : 'partials/metamodelo/tpdt-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
+		templateUrl : 'partials/metamodelo/tpdt-listado.html',
+		controller : 'tpprsCtrl'
 	}).when('/configuracion/confs', {
-		templateUrl : 'partials/configuracion/conf-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
+		templateUrl : 'partials/configuracion/conf-listado.html',
+		controller : 'tpprsCtrl'
 	}).when('/acceso', {
-		templateUrl : 'partials/usro-acceso.html'/*
-													 * , controller :
-													 * 'PhoneListCtrl'
-													 */
+		templateUrl : 'partials/usro-acceso.html',
+		controller : 'tpprsCtrl'
 	});
 } ]);
 
@@ -97,5 +82,14 @@ app.controller('tpprsCtrl', function($http, $scope) {
 	$http.get("maestro/tppr-listado-json.action").success(function(data) {
 		// console.log(data);
 		$scope.tpprs = data.tpprs;
+	});
+});
+
+app.controller('tpsrsCtrl', function($http, $scope) {
+	// alert('Llamar al servidor');
+	$http.get("servicio/tpsr-listado-json.action").success(function(data) {
+		// console.log(data);
+		$scope.tpsrs = data.tpsrs;
+		$scope.tpssMap = data.tpssMap;
 	});
 });
