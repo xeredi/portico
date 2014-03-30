@@ -63,9 +63,8 @@ public final class EntidadProxy {
     public static EntidadVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
-        if (!ENTIDAD_MAP.containsKey(id)) {
-            throw new Error("Entidad no encontrada: " + id);
-        }
+        if (!ENTIDAD_MAP.containsKey(id))
+			throw new Error("Entidad no encontrada: " + id);
 
         return ENTIDAD_MAP.get(id);
     }
@@ -94,9 +93,10 @@ public final class EntidadProxy {
     static void loadDependencies(final Map<Long, ? extends EntidadVO> entiMap) {
         Preconditions.checkNotNull(entiMap);
 
-        for (final EntidadVO entiVO : entiMap.values()) {
-            if (ENTIDAD_MAP.containsKey(entiVO.getId())) {
+        for (final EntidadVO entiVO : entiMap.values())
+			if (ENTIDAD_MAP.containsKey(entiVO.getId())) {
                 entiVO.setEntdList(ENTIDAD_MAP.get(entiVO.getId()).getEntdList());
+                entiVO.setEntdGridList(ENTIDAD_MAP.get(entiVO.getId()).getEntdGridList());
                 entiVO.setEntdMap(ENTIDAD_MAP.get(entiVO.getId()).getEntdMap());
                 entiVO.setEntiHijasList(ENTIDAD_MAP.get(entiVO.getId()).getEntiHijasList());
                 entiVO.setEntiPadresList(ENTIDAD_MAP.get(entiVO.getId()).getEntiPadresList());
@@ -105,6 +105,5 @@ public final class EntidadProxy {
                 entiVO.setEngdMap(ENTIDAD_MAP.get(entiVO.getId()).getEngdMap());
                 entiVO.setEngdEntdMap(ENTIDAD_MAP.get(entiVO.getId()).getEngdEntdMap());
             }
-        }
     }
 }

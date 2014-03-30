@@ -1,10 +1,12 @@
-var app = angular.module('integraApp', [ 'ngRoute', 'integraControllers',
-		'pascalprecht.translate' ]);
+var app = angular.module('integraApp', [ 'ui.bootstrap', 'ngRoute', 'pascalprecht.translate', 'configuracion', 'maestro' ]);
 
 app.config(function($translateProvider) {
 	$translateProvider.translations('es', {
 		app_nombre : 'PORTICO',
 
+		fmt_true : 'Si',
+		fmt_false : 'No',
+		fmt_integer : '#,###,###,##0',
 		fmt_date : 'dd/MM/yyyy',
 		fmt_datetime : 'dd/MM/yyyy HH:mm',
 
@@ -39,8 +41,6 @@ app.config(function($translateProvider) {
 });
 
 app.config([ '$routeProvider', function($routeProvider) {
-	// alert('URL');
-
 	$routeProvider.when('/servicio/tpsrs', {
 		templateUrl : 'partials/servicio/tpsr-listado.html'/*
 															 * , controller :
@@ -54,9 +54,6 @@ app.config([ '$routeProvider', function($routeProvider) {
 	}).when('/maestro/tpprs', {
 		templateUrl : 'partials/maestro/tppr-listado.html',
 		controller : 'tpprsCtrl'
-	}).when('/maestro/prmts/:entiId', {
-		templateUrl : 'partials/maestro/prmt-listado.html',
-		controller : 'prmtsCtrl'
 	}).when('/proceso/prbts', {
 		templateUrl : 'partials/proceso/prbt-listado.html'/*
 															 * , controller :
@@ -87,39 +84,18 @@ app.config([ '$routeProvider', function($routeProvider) {
 																 * , controller :
 																 * 'PhoneListCtrl'
 																 */
-	}).when('/configuracion/cnens', {
-		templateUrl : 'partials/configuracion/cnen-listado.html',
-		controller : 'cnensCtrl'
-	}).when('/configuracion/cnens/:cnenId', {
-		templateUrl : 'partials/configuracion/cnen-detalle.html',
-		controller : 'cnenCtrl'
-	}).when('/configuracion/cnen/:action/', {
-		templateUrl : 'partials/configuracion/cnen-edicion.html',
-		controller : 'cnenCtrl'
-	}).when('/configuracion/cnen/:action/:cnenId', {
-		templateUrl : 'partials/configuracion/cnen-edicion.html',
-		controller : 'cnenCtrl'
-	}).when('/configuracion/cnids', {
-		templateUrl : 'partials/configuracion/cnid-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
-	}).when('/configuracion/cncls', {
-		templateUrl : 'partials/configuracion/cncl-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
-	}).when('/configuracion/cncis', {
-		templateUrl : 'partials/configuracion/cnci-listado.html'/*
-																 * , controller :
-																 * 'PhoneListCtrl'
-																 */
 	}).when('/acceso', {
 		templateUrl : 'partials/usro-acceso.html'/*
 													 * , controller :
 													 * 'PhoneListCtrl'
 													 */
-	}).otherwise({
-		redirectTo : '/acceso'
 	});
 } ]);
+
+app.controller('tpprsCtrl', function($http, $scope) {
+	// alert('Llamar al servidor');
+	$http.get("maestro/tppr-listado-json.action").success(function(data) {
+		// console.log(data);
+		$scope.tpprs = data.tpprs;
+	});
+});
