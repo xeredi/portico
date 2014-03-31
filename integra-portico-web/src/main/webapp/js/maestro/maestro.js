@@ -1,5 +1,6 @@
 var maestro = angular.module('maestro', [ 'ngRoute' ]);
 
+
 maestro.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/maestro/prmts/:entiId', {
 		templateUrl : 'partials/maestro/prmt-listado.html',
@@ -10,22 +11,11 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 	});
 } ]);
 
+
 maestro.controller('prmtsCtrl', function($http, $scope, $routeParams) {
-	if ($routeParams.entiId) {
+	$scope.loadData = function() {
 		var url = "maestro/prmt-listado-json.action?itemCriterio.entiId="
-				+ $routeParams.entiId;
-
-		$http.get(url).success(function(data) {
-			console.log(data);
-			$scope.enti = data.enti;
-			$scope.itemList = data.itemList;
-		});
-	}
-
-	$scope.maxSize = 1;
-	$scope.pageChanged = function(page) {
-		var url = "maestro/prmt-listado-json.action?itemCriterio.entiId="
-				+ $routeParams.entiId + "&page=" + page;
+				+ $routeParams.entiId + "&page=" + $routeParams.page;
 
 		$http.get(url).success(function(data) {
 			console.log(data);
@@ -33,7 +23,22 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams) {
 			$scope.itemList = data.itemList;
 		});
 	};
+
+	$scope.pageChanged = function(page) {
+		$routeParams.page = page;
+		$scope.loadData();
+	};
+
+	if ($scope.page == null) {
+		alert('Inicializar page');
+
+		$routeParams.page = 1;
+	}
+
+	$scope.maxSize = 1;
+	$scope.loadData();
 });
+
 
 maestro.controller('prmtCtrl', function($http, $scope, $routeParams) {
 	if ($routeParams.itemId) {
@@ -51,7 +56,7 @@ maestro.controller('prmtCtrl', function($http, $scope, $routeParams) {
 	}
 });
 
+
 maestro.controller('prmtTabsCtrl', function($scope) {
 	$scope.navType = 'pills';
 });
-
