@@ -46,7 +46,7 @@ app.config(function($translateProvider) {
 app.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/servicio/tpsrs', {
 		templateUrl : 'partials/servicio/tpsr-listado.html',
-		controller : 'tpprsCtrl'
+		controller : 'tpsrsCtrl'
 	}).when('/estadistica/peprs', {
 		templateUrl : 'partials/estadistica/pepr-listado.html',
 		controller : 'tpprsCtrl'

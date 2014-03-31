@@ -86,7 +86,7 @@
 				</div>
 
 				<div ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
-					<input ng-switch-when="BO" type="text" value="{{'fmt_true' | translate}}" class="form-control input-sm"
+					<input ng-switch-when="BO" type="text" value="{{'fmt_' + item.itdtMap[tpdtId].booleano | translate}}" class="form-control input-sm"
 						disabled='disabled' /> <input ng-switch-when="ND" type="text"
 						value="{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}" class="form-control input-sm number"
 						disabled='disabled' /> <input ng-switch-when="NE" type="text"
