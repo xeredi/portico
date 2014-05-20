@@ -12,8 +12,13 @@ import java.util.ResourceBundle;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
-import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.column.ColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.constant.PageOrientation;
+import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.integra.model.util.GlobalNames;
@@ -21,6 +26,7 @@ import xeredi.integra.model.vo.comun.ItemDatoVO;
 import xeredi.integra.model.vo.maestro.ParametroVO;
 import xeredi.integra.model.vo.maestro.SubparametroVO;
 import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
+import xeredi.integra.model.vo.metamodelo.TipoElemento;
 import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
 import xeredi.integra.model.vo.metamodelo.TipoSubparametroVO;
 
@@ -44,6 +50,16 @@ public final class PdfUtil {
     /** The Constant DOUBLE_FORMAT. */
     private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("###,###,##0.00####");
 
+    /** The Constant SPAN_SIZE. */
+    private static final int SPAN_SIZE = 65;
+
+    /** The Constant MAX_SPAN. */
+    private static final int MAX_SPAN = 12;
+
+    /** The Constant labelStyle. */
+    private static final StyleBuilder labelStyle = DynamicReports.stl.style()
+            .setHorizontalAlignment(HorizontalAlignment.LEFT).bold();
+
     /** The locale. */
     private final Locale locale;
 
@@ -52,7 +68,7 @@ public final class PdfUtil {
 
     /**
      * Instantiates a new pdf util.
-     * 
+     *
      * @param alocale
      *            the alocale
      */
@@ -64,7 +80,7 @@ public final class PdfUtil {
 
     /**
      * Imprimir.
-     * 
+     *
      * @param prmtVO
      *            the prmt vo
      * @param tpprVO
@@ -84,20 +100,103 @@ public final class PdfUtil {
         Preconditions.checkNotNull(prmtVO);
         Preconditions.checkNotNull(tpprVO);
 
+        final List<List<PdfCell>> listCells = new ArrayList<>();
+
+        List<PdfCell> rowCells = new ArrayList<>();
+        int accWidth = 0;
+
+        rowCells.add(new PdfCell(tpprVO.getEtiqueta(), prmtVO.getEtiqueta(), 4, TipoElemento.TX));
+
+        if (tpprVO.isTempExp()) {
+            rowCells.add(new PdfCell("F. Inicio", DATE_FORMAT.format(prmtVO.getPrvr().getFinicio()), 4, TipoElemento.FE));
+            rowCells.add(new PdfCell("F. Fin", prmtVO.getPrvr().getFfin() == null ? "" : DATE_FORMAT.format(prmtVO
+                    .getPrvr().getFfin()), 4, TipoElemento.FE));
+        }
+
+        listCells.add(rowCells);
+        rowCells = new ArrayList<>();
+        accWidth = 0;
+
+        for (final Long tpdtId : tpprVO.getEntdList()) {
+            final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(tpdtId);
+            final ItemDatoVO itdtVO = prmtVO.getItdtMap().get(tpdtId);
+
+            if (accWidth + entdVO.getSpan() > MAX_SPAN) {
+                listCells.add(rowCells);
+                rowCells = new ArrayList<>();
+                accWidth = 0;
+            }
+
+            rowCells.add(new PdfCell(entdVO.getEtiqueta(), getItdtValue(entdVO, itdtVO), entdVO.getSpan(), entdVO
+                    .getTpdt().getTipoElemento()));
+            accWidth += entdVO.getSpan();
+        }
+
+        if (!rowCells.isEmpty()) {
+            listCells.add(rowCells);
+        }
+
+        HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
+
+        for (final List<PdfCell> row : listCells) {
+            for (final PdfCell pdfCell : row) {
+                list.add(getFieldLabel(pdfCell));
+            }
+
+            list.newRow();
+
+            for (final PdfCell pdfCell : row) {
+                list.add(getFieldValue(pdfCell));
+            }
+
+            list.newRow();
+        }
+
         final JasperReportBuilder report = DynamicReports.report();
 
-        // report.addPageFooter(Components.pageXofY());
-        // report.addTitle(Components.text(tpprVO.getNombre() + ": " + prmtVO.getEtiqueta()));
-        // report.setDataSource(getSubreport(entiVO, itemList));
+        report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
+        report.title(list);
 
-        report.title(createItemComponent(tpprVO, prmtVO));
+        if (entiHijasList != null) {
+            for (final TipoSubparametroVO tpspVO : entiHijasList) {
+                DynamicReports.col.column(tpspVO.getEtiqueta(), String.class);
+            }
+        }
 
         report.toPdf(stream);
     }
 
     /**
+     * Gets the label.
+     *
+     * @param pdfCell
+     *            the pdf cell
+     * @return the label
+     */
+    private TextFieldBuilder<String> getFieldLabel(final PdfCell pdfCell) {
+        final TextFieldBuilder<String> label = DynamicReports.cmp.text(pdfCell.getLabel())
+                .setFixedWidth(pdfCell.getWidth()).setStyle(labelStyle);
+
+        return label;
+    }
+
+    /**
+     * Gets the data.
+     *
+     * @param pdfCell
+     *            the pdf cell
+     * @return the data
+     */
+    private TextFieldBuilder<String> getFieldValue(final PdfCell pdfCell) {
+        final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue()).setFixedWidth(
+                pdfCell.getWidth());
+
+        return data;
+    }
+
+    /**
      * Gets the data source.
-     * 
+     *
      * @param entiVO
      *            the enti vo
      * @param itemList
@@ -154,49 +253,8 @@ public final class PdfUtil {
     }
 
     /**
-     * Creates the item component.
-     * 
-     * @param tpprVO
-     *            the tppr vo
-     * @param prmtVO
-     *            the prmt vo
-     * @return the component builder
-     */
-    private ComponentBuilder<?, ?> createItemComponent(final TipoParametroVO tpprVO, final ParametroVO prmtVO) {
-        final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
-
-        addItdtComponent(list, tpprVO.getNombre(), prmtVO.getEtiqueta());
-
-        for (final Long tpdtId : tpprVO.getEntdList()) {
-            final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(tpdtId);
-            final ItemDatoVO itdtVO = prmtVO.getItdtMap().get(tpdtId);
-
-            addItdtComponent(list, entdVO.getEtiqueta(), getItdtValue(entdVO, itdtVO));
-        }
-
-        return DynamicReports.cmp.verticalList(DynamicReports.cmp.text(tpprVO.getNombre()), list);
-    }
-
-    /**
-     * Adds the itdt component.
-     * 
-     * @param list
-     *            the list
-     * @param label
-     *            the label
-     * @param value
-     *            the value
-     */
-    private void addItdtComponent(final HorizontalListBuilder list, final String label, final String value) {
-        Preconditions.checkNotNull(label);
-        Preconditions.checkNotNull(value);
-
-        list.add(DynamicReports.cmp.text(label + ":").setFixedColumns(8), DynamicReports.cmp.text(value)).newRow();
-    }
-
-    /**
      * Gets the itdt value.
-     * 
+     *
      * @param entdVO
      *            the entd vo
      * @param itdtVO
@@ -257,6 +315,90 @@ public final class PdfUtil {
         }
 
         return value;
+    }
+
+    /**
+     * The Class PdfCell.
+     */
+    class PdfCell {
+
+        /** The label. */
+        private final String label;
+
+        /** The value. */
+        private final String value;
+
+        /** The span. */
+        private final int span;
+
+        /** The tpel. */
+        private final TipoElemento tpel;
+
+        /**
+         * Instantiates a new pdf cell.
+         *
+         * @param alabel
+         *            the alabel
+         * @param avalue
+         *            the avalue
+         * @param aspan
+         *            the aspan
+         * @param atpel
+         *            the atpel
+         */
+        public PdfCell(final String alabel, final String avalue, final int aspan, final TipoElemento atpel) {
+            super();
+            this.label = alabel;
+            this.value = avalue;
+            this.span = aspan;
+            this.tpel = atpel;
+        }
+
+        /**
+         * Gets the width.
+         *
+         * @return the width
+         */
+        public final int getWidth() {
+            return span * SPAN_SIZE;
+        }
+
+        /**
+         * Gets the label.
+         *
+         * @return the label
+         */
+        public final String getLabel() {
+            return label;
+        }
+
+        /**
+         * Gets the value.
+         *
+         * @return the value
+         */
+        public final String getValue() {
+            return value;
+        }
+
+        /**
+         * Gets the span.
+         *
+         * @return the span
+         */
+        public final int getSpan() {
+            return span;
+        }
+
+        /**
+         * Gets the tpel.
+         *
+         * @return the tpel
+         */
+        public final TipoElemento getTpel() {
+            return tpel;
+        }
+
     }
 
 }
