@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
+import net.sf.dynamicreports.report.builder.component.Components;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
@@ -22,6 +23,7 @@ import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.vo.comun.ItemDatoVO;
+import xeredi.integra.model.vo.maestro.ParametroI18nVO;
 import xeredi.integra.model.vo.maestro.ParametroVO;
 import xeredi.integra.model.vo.maestro.SubparametroVO;
 import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
@@ -72,7 +74,7 @@ public final class PdfUtil {
     private static final StyleBuilder TD_STYLE = DynamicReports.stl.style().setFontSize(9).setPadding(2);
 
     /** The Constant H1_STYLE. */
-    private static final StyleBuilder H1_STYLE = DynamicReports.stl.style().setFontSize(14).setTopPadding(20)
+    private static final StyleBuilder H1_STYLE = DynamicReports.stl.style().setFontSize(14).setTopPadding(10)
             .setBottomPadding(5);
 
     /** The locale. */
@@ -104,6 +106,8 @@ public final class PdfUtil {
      *            the enti hijas map
      * @param itemHijosMap
      *            the item hijos map
+     * @param p18nMap
+     *            the p18n map
      * @param stream
      *            the stream
      * @throws DRException
@@ -111,7 +115,7 @@ public final class PdfUtil {
      */
     public void imprimir(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
             final Map<Long, TipoSubparametroVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
-            final OutputStream stream) throws DRException {
+            final Map<String, ParametroI18nVO> p18nMap, final OutputStream stream) throws DRException {
         Preconditions.checkNotNull(prmtVO);
         Preconditions.checkNotNull(tpprVO);
 
@@ -129,6 +133,16 @@ public final class PdfUtil {
         }
 
         listCells.add(rowCells);
+
+        if (tpprVO.isI18n()) {
+            for (final ParametroI18nVO p18nVO : p18nMap.values()) {
+                rowCells = new ArrayList<>();
+
+                rowCells.add(new PdfCell(p18nVO.getIdioma(), p18nVO.getTexto(), 10, TipoElemento.TX));
+                listCells.add(rowCells);
+            }
+        }
+
         rowCells = new ArrayList<>();
         accWidth = 0;
 
@@ -171,15 +185,15 @@ public final class PdfUtil {
 
         report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
         report.addTitle(DynamicReports.cmp.text(tpprVO.getNombre()).setStyle(H1_STYLE));
-        report.addTitle(list);
+        report.addTitle(list, Components.pageBreak());
         // report.addDetail(list);
 
         if (tpprVO.getEntiHijasList() != null) {
             for (final Long entiId : tpprVO.getEntiHijasList()) {
-                report.addTitle(DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
-                        itemHijosMap.get(entiId))));
-
-                // DynamicReports.col.column(entiHijasMap.get(entiId).getEtiqueta(), String.class);
+                if (!itemHijosMap.get(entiId).isEmpty()) {
+                    report.addTitle(DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
+                            itemHijosMap.get(entiId))));
+                }
             }
         }
 

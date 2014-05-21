@@ -46,12 +46,13 @@ maestro.controller('prmtCtrl', function($http, $scope, $routeParams) {
 				+ $routeParams.itemId;
 
 		$http.get(url).success(function(data) {
-			console.log(data);
+			// console.log(data);
 			$scope.enti = data.enti;
 			$scope.item = data.item;
 			$scope.p18nMap = data.p18nMap;
 			$scope.entiHijasList = data.entiHijasList;
 			$scope.itemHijosMap = data.itemHijosMap;
+			$scope.availableLanguages = data.availableLanguages;
 		});
 	}
 });
