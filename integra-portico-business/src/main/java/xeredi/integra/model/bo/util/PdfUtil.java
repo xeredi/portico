@@ -1,5 +1,6 @@
 package xeredi.integra.model.bo.util;
 
+import java.awt.Color;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -12,11 +13,9 @@ import java.util.ResourceBundle;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
-import net.sf.dynamicreports.report.builder.column.ColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
-import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
@@ -50,15 +49,31 @@ public final class PdfUtil {
     /** The Constant DOUBLE_FORMAT. */
     private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("###,###,##0.00####");
 
-    /** The Constant SPAN_SIZE. */
-    private static final int SPAN_SIZE = 65;
-
     /** The Constant MAX_SPAN. */
     private static final int MAX_SPAN = 12;
 
+    /** The Constant SPAN_SIZE. */
+    private static final int SPAN_SIZE = 800 / MAX_SPAN;
+
     /** The Constant labelStyle. */
-    private static final StyleBuilder labelStyle = DynamicReports.stl.style()
-            .setHorizontalAlignment(HorizontalAlignment.LEFT).bold();
+    private static final StyleBuilder LABEL_STYLE = DynamicReports.stl.style().setFontSize(9)
+            .setBorder(DynamicReports.stl.pen1Point().setLineColor(Color.WHITE)).setBackgroundColor(Color.LIGHT_GRAY)
+            .setPadding(3);
+
+    /** The Constant VALUE_STYLE. */
+    private static final StyleBuilder VALUE_STYLE = DynamicReports.stl.style().setFontSize(9).setPadding(3);
+
+    /** The Constant TH_STYLE. */
+    private static final StyleBuilder TH_STYLE = DynamicReports.stl.style().setFontSize(9)
+            .setBorder(DynamicReports.stl.pen1Point().setLineColor(Color.WHITE)).setBackgroundColor(Color.LIGHT_GRAY)
+            .setPadding(2);
+
+    /** The Constant TD_STYLE. */
+    private static final StyleBuilder TD_STYLE = DynamicReports.stl.style().setFontSize(9).setPadding(2);
+
+    /** The Constant H1_STYLE. */
+    private static final StyleBuilder H1_STYLE = DynamicReports.stl.style().setFontSize(14).setTopPadding(20)
+            .setBottomPadding(5);
 
     /** The locale. */
     private final Locale locale;
@@ -85,8 +100,8 @@ public final class PdfUtil {
      *            the prmt vo
      * @param tpprVO
      *            the tppr vo
-     * @param entiHijasList
-     *            the enti hijas list
+     * @param entiHijasMap
+     *            the enti hijas map
      * @param itemHijosMap
      *            the item hijos map
      * @param stream
@@ -95,7 +110,7 @@ public final class PdfUtil {
      *             the DR exception
      */
     public void imprimir(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
-            final List<TipoSubparametroVO> entiHijasList, final Map<Long, List<SubparametroVO>> itemHijosMap,
+            final Map<Long, TipoSubparametroVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
             final OutputStream stream) throws DRException {
         Preconditions.checkNotNull(prmtVO);
         Preconditions.checkNotNull(tpprVO);
@@ -105,7 +120,7 @@ public final class PdfUtil {
         List<PdfCell> rowCells = new ArrayList<>();
         int accWidth = 0;
 
-        rowCells.add(new PdfCell(tpprVO.getEtiqueta(), prmtVO.getEtiqueta(), 4, TipoElemento.TX));
+        rowCells.add(new PdfCell(tpprVO.getNombre(), prmtVO.getEtiqueta(), 4, TipoElemento.TX));
 
         if (tpprVO.isTempExp()) {
             rowCells.add(new PdfCell("F. Inicio", DATE_FORMAT.format(prmtVO.getPrvr().getFinicio()), 4, TipoElemento.FE));
@@ -155,11 +170,16 @@ public final class PdfUtil {
         final JasperReportBuilder report = DynamicReports.report();
 
         report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
-        report.title(list);
+        report.addTitle(DynamicReports.cmp.text(tpprVO.getNombre()).setStyle(H1_STYLE));
+        report.addTitle(list);
+        // report.addDetail(list);
 
-        if (entiHijasList != null) {
-            for (final TipoSubparametroVO tpspVO : entiHijasList) {
-                DynamicReports.col.column(tpspVO.getEtiqueta(), String.class);
+        if (tpprVO.getEntiHijasList() != null) {
+            for (final Long entiId : tpprVO.getEntiHijasList()) {
+                report.addTitle(DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
+                        itemHijosMap.get(entiId))));
+
+                // DynamicReports.col.column(entiHijasMap.get(entiId).getEtiqueta(), String.class);
             }
         }
 
@@ -175,7 +195,7 @@ public final class PdfUtil {
      */
     private TextFieldBuilder<String> getFieldLabel(final PdfCell pdfCell) {
         final TextFieldBuilder<String> label = DynamicReports.cmp.text(pdfCell.getLabel())
-                .setFixedWidth(pdfCell.getWidth()).setStyle(labelStyle);
+                .setFixedWidth(pdfCell.getWidth()).setStyle(LABEL_STYLE);
 
         return label;
     }
@@ -188,8 +208,8 @@ public final class PdfUtil {
      * @return the data
      */
     private TextFieldBuilder<String> getFieldValue(final PdfCell pdfCell) {
-        final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue()).setFixedWidth(
-                pdfCell.getWidth());
+        final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue())
+                .setFixedWidth(pdfCell.getWidth()).setStyle(VALUE_STYLE);
 
         return data;
     }
@@ -207,18 +227,36 @@ public final class PdfUtil {
         Preconditions.checkNotNull(entiVO);
         Preconditions.checkNotNull(itemList);
 
+        final JasperReportBuilder report = DynamicReports.report();
         final List<String> columns = new ArrayList<>();
 
+        report.setTemplate(DynamicReports.template());
+        report.setColumnTitleStyle(TH_STYLE);
+        report.setColumnStyle(TD_STYLE);
+        report.addTitle(DynamicReports.cmp.text(entiVO.getNombre()).setStyle(H1_STYLE));
+
         columns.add(entiVO.getTpprAsociado().getNombre());
+
+        report.addColumn(DynamicReports.col.column(entiVO.getTpprAsociado().getNombre(),
+                entiVO.getTpprAsociado().getNombre(), DynamicReports.type.stringType()).setWidth(4));
 
         if (entiVO.isTempExp()) {
             columns.add("finicio");
             columns.add("ffin");
+
+            report.addColumn(DynamicReports.col.column("F. Inicio", "finicio", DynamicReports.type.stringType())
+                    .setWidth(2));
+            report.addColumn(DynamicReports.col.column("F. Fin", "ffin", DynamicReports.type.stringType()).setWidth(2));
         }
 
         if (entiVO.getEntdList() != null) {
             for (final Long tpdtId : entiVO.getEntdList()) {
-                columns.add(entiVO.getEntdMap().get(tpdtId).getEtiqueta());
+                final EntidadTipoDatoVO entdVO = entiVO.getEntdMap().get(tpdtId);
+
+                columns.add(entdVO.getEtiqueta());
+
+                report.addColumn(DynamicReports.col.column(entdVO.getEtiqueta(), entdVO.getEtiqueta(),
+                        DynamicReports.type.stringType()).setWidth(entdVO.getSpan()));
             }
         }
 
@@ -231,8 +269,9 @@ public final class PdfUtil {
             objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
 
             if (entiVO.isTempExp()) {
-                objects[i++] = itemVO.getSpvr().getFinicio();
-                objects[i++] = itemVO.getSpvr().getFfin();
+                objects[i++] = itemVO.getSpvr().getFinicio() == null ? "" : DATE_FORMAT.format(itemVO.getSpvr()
+                        .getFinicio());
+                objects[i++] = itemVO.getSpvr().getFfin() == null ? "" : DATE_FORMAT.format(itemVO.getSpvr().getFfin());
             }
 
             if (entiVO.getEntdList() != null) {
@@ -244,12 +283,9 @@ public final class PdfUtil {
             dataSource.add(objects);
         }
 
-        final JasperReportBuilder report = DynamicReports.report();
-
         report.setDataSource(dataSource);
 
         return report;
-
     }
 
     /**
