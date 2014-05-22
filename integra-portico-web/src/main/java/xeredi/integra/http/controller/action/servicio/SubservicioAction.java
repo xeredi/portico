@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
@@ -73,12 +74,15 @@ public final class SubservicioAction extends ItemAction {
     // Acciones web
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "ssrv-detalle")
+    @Actions({
+            @Action(value = "ssrv-detalle"),
+            @Action(value = "ssrv-detalle-json", results = { @Result(name = "success", type = "json", params = {
+                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
     public String detalle() throws InstanceNotFoundException {
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
 
@@ -114,7 +118,7 @@ public final class SubservicioAction extends ItemAction {
 
     /**
      * Alta.
-     * 
+     *
      * @return the string
      */
     @Action(value = "ssrv-alta", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
@@ -131,7 +135,7 @@ public final class SubservicioAction extends ItemAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -153,7 +157,7 @@ public final class SubservicioAction extends ItemAction {
 
     /**
      * Duplicar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -172,12 +176,12 @@ public final class SubservicioAction extends ItemAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      */
     @Action(value = "ssrv-guardar", results = {
             @Result(name = "success", type = "redirectAction", params = { "actionName", "ssrv-detalle", "item.id",
-            "%{item.id}" }), @Result(name = "input", location = "ssrv-edicion.jsp") })
+                    "%{item.id}" }), @Result(name = "input", location = "ssrv-edicion.jsp") })
     public String guardar() {
         enti = TipoSubservicioProxy.select(item.getEntiId());
 
@@ -234,7 +238,7 @@ public final class SubservicioAction extends ItemAction {
 
     /**
      * Sets the item.
-     * 
+     *
      * @param value
      *            the new item
      */
@@ -252,7 +256,7 @@ public final class SubservicioAction extends ItemAction {
 
     /**
      * Gets the enti hijas list.
-     * 
+     *
      * @return the enti hijas list
      */
     public final List<TipoSubservicioVO> getEntiHijasList() {
@@ -261,7 +265,7 @@ public final class SubservicioAction extends ItemAction {
 
     /**
      * Gets the item hijos map.
-     * 
+     *
      * @return the item hijos map
      */
     public final Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {

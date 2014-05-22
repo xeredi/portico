@@ -423,6 +423,7 @@ VALUES (21003, 41015, 1, 59, 59,  2, 1, 0, 0, NULL, 'Modificado EDI?');
 
 -- Atraque
 DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22011;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22011, 1, 'General');
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22011, 2, 'Solicitud');
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22011, 3, 'Autorizacion');
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22011, 4, 'Real');

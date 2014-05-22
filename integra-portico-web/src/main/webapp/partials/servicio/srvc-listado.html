@@ -1,0 +1,148 @@
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" href="#/servicio/tpsrs"><i class="glyphicon glyphicon-home"></i> {{'boton_volver'
+            | translate}}</a>
+
+        <!--
+        <c:url value="srvc-filtro-popup.action" var="urlFiltro">
+            <c:forEach items="${itemCriterio.searchLinks}" var="mapEntry">
+                <c:param name="itemCriterio.${mapEntry.key}" value="${mapEntry.value}" />
+            </c:forEach>
+            <c:param name="limit" value="${limit}" />
+        </c:url>
+        <a class="btn btn-default" href="${urlFiltro}" role="button" data-toggle="modal" data-target="#srvc-filtro-div"><i
+            class="glyphicon glyphicon-filter"></i> <fmt:message key="boton.filtro" /></a>
+        <c:url value="srvc-xls-export.action" var="urlExportarFiltro">
+            <c:forEach items="${itemCriterio.searchLinks}" var="mapEntry">
+                <c:param name="itemCriterio.${mapEntry.key}" value="${mapEntry.value}" />
+            </c:forEach>
+        </c:url>
+        <a class="btn btn-default" href="${urlExportarFiltro}"><i class="glyphicon glyphicon-book"></i> <fmt:message
+                key="boton.exportar" /></a>
+
+        <div class="modal" id="srvc-filtro-div" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+ -->
+    </div>
+
+    <div class="btn-group">
+        <a ng-if="enti.cmdAlta" class="btn btn-default" href="srvc-alta-popup.action?item.entiId={{enti.id}}"
+            role="button" data-toggle="modal" data-target="#srvc-alta-div"><i class="glyphicon glyphicon-file"></i>
+            {{'boton_alta' | translate}}</a>
+        <div ng-if="enti.cmdAlta" class="modal" id="srvc-alta-div" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+
+        <a ng-if="enti.cmdEdicion" class="btn btn-default" href="srvc-modificar-popup.action" role="button"
+            data-toggle="modal" data-target="#srvc-modificar-div"><i class="glyphicon glyphicon-edit"></i>
+            {{'boton_modificar' | translate}}</a>
+        <div ng-if="enti.cmdEdicion" class="modal" id="srvc-modificar-div" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+
+        <a ng-if="enti.cmdDuplicado" class="btn btn-default" href="srvc-duplicar-popup.action" role="button"
+            data-toggle="modal" data-target="#srvc-duplicar-div"><i class="glyphicon glyphicon-tags"></i>
+            {{'boton_duplicar' | translate}}</a>
+        <div ng-if="enti.cmdDuplicado" class="modal" id="srvc-duplicar-div" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+
+        <a ng-if="enti.cmdBaja" class="btn btn-default" href="srvc-borrar-popup.action" role="button"
+            data-toggle="modal" data-target="#srvc-borrar-div"><i class="glyphicon glyphicon-remove"></i>
+            {{'boton_borrar' | translate}}</a>
+        <div ng-if="enti.cmdBaja" class="modal" id="srvc-borrar-div" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<c:url value="srvc-listado.action" var="urlListado">
+    <c:forEach items="${itemCriterio.searchLinks}" var="mapEntry">
+        <c:param name="itemCriterio.${mapEntry.key}" value="${mapEntry.value}" />
+    </c:forEach>
+    <c:param name="limit" value="${limit}" />
+</c:url>
+
+<c:url value="${urlListado}" var="urlListadoPrev">
+    <c:param name="page" value="${itemList.page - 1}" />
+</c:url>
+<c:url value="${urlListado}" var="urlListadoNext">
+    <c:param name="page" value="${itemList.page + 1}" />
+</c:url>
+
+<ul class="pagination">
+    <c:if test="${itemList.hasPrevious}">
+        <li><a class="btn" href="${urlListadoPrev}"><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+    </c:if>
+    <c:if test="${!itemList.hasPrevious}">
+        <li><span class="btn"><i class="glyphicon glyphicon-chevron-left"></i></span></li>
+    </c:if>
+    <c:if test="${itemList.hasNext}">
+        <li><a class="btn" href="${urlListadoNext}"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+    </c:if>
+    <c:if test="${!itemList.hasNext}">
+        <li><span class="btn"> <i class="glyphicon glyphicon-chevron-right"></i></span></li>
+    </c:if>
+    <c:if test="${itemList.pageCount > 0}">
+        <li><span class="btn"> <fmt:message key="paginacion.leyenda">
+                    <fmt:param value="${itemList.page}" />
+                    <fmt:param value="${itemList.pageCount}" />
+                    <fmt:param value="${itemList.count}" />
+                </fmt:message></span></li>
+    </c:if>
+</ul>
+ -->
+
+<pagination on-select-page="pageChanged(page)" total-items="itemList.count" page="itemList.page"
+    items-per-page="itemList.limit" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;"
+    next-text="&rsaquo;"></pagination>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap">{{'srvc_servicio' | translate}}</th>
+                <th ng-if="enti.tpdtEstado != null" nowrap="nowrap">{{'srvc_estado' | translate}}</th>
+                <th ng-if="enti.temporal" class="date" nowrap="nowrap">{{'srvc_finicio' | translate}}</th>
+                <th ng-if="enti.temporal" class="date" nowrap="nowrap">{{'srvc_ffin' | translate}}</th>
+                <th ng-if="!enti.temporal" class="date" nowrap="nowrap">{{'srvc_freferencia' | translate}}</th>
+                <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="item in itemList.list">
+                <td><a href="#/servicio/srvc/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td>{{item.etiqueta}}</td>
+                <td ng-if="enti.tpdtEstado != null">{{item.estado}}</td>
+                <td ng-if="enti.temporal">{{item.finicio | date:('fmt_date' | translate)}}</td>
+                <td ng-if="enti.temporal">{{item.ffin | date:('fmt_date' | translate)}}</td>
+                <td ng-if="!enti.temporal">{{item.freferencia | date:('fmt_date' | translate)}}</td>
+                <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
+                    nowrap="nowrap"><span ng-switch-when="BO"><i ng-if="item.itdtMap[tpdtId].cantidadEntera"
+                        class="glyphicon glyphicon-ok"></i></span> <span ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal
+                        | number:2}}</span> <span ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera
+                        | number:0}}</span> <span ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha |
+                        date:('fmt_date' | translate)}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha
+                        | date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
+                    ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
+                    title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,9 +1,9 @@
 <div>
 	<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group">
-			<a class="btn btn-default" href="tppr-listado.action"><i class="glyphicon glyphicon-home"></i> {{'boton_volver' |
+			<a class="btn btn-default" href="#/maestro/tpprs"><i class="glyphicon glyphicon-home"></i> {{'boton_volver' |
 				translate}}</a>
-			<!-- 
+			<!--
         <c:url value="prmt-filtro-popup.action" var="urlFiltro">
             <c:forEach items="${itemCriterio.searchLinks}" var="mapEntry">
                 <c:param name="itemCriterio.${mapEntry.key}" value="${mapEntry.value}" />
@@ -102,7 +102,7 @@
 -->
 	<pagination on-select-page="pageChanged(page)" total-items="itemList.count" page="itemList.page"
 		items-per-page="itemList.limit" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
-<!-- 
+<!--
 	<div ng-controller="prmtPageCtrl"></div>
  -->
 	<div class="table-responsive">

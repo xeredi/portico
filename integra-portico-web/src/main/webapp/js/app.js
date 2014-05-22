@@ -1,4 +1,5 @@
-var app = angular.module('integraApp', [ 'ui.bootstrap', 'ngRoute', 'pascalprecht.translate', 'configuracion', 'maestro', 'servicio' ]);
+var app = angular.module('integraApp', [ 'ui.bootstrap', 'ngRoute',
+		'pascalprecht.translate', 'configuracion', 'maestro', 'servicio' ]);
 
 app.config(function($translateProvider) {
 	$translateProvider.translations('es', {
@@ -38,6 +39,21 @@ app.config(function($translateProvider) {
 
 		cnen_codigo : 'Codigo',
 		cnen_nombre : 'Nombre',
+
+		srvc_servicio : 'Servicio',
+		srvc_finicio : 'F. Inicio',
+		srvc_ffin : 'F. Fin',
+		srvc_freferencia : 'F. Referencia',
+		srvc_estado : 'Estado',
+		srvc_subp_id : 'Subpuerto',
+		srvc_anno : 'A\u00f1o',
+		srvc_numero : 'N\u00famero',
+
+		ssrv_srvc : 'Servicio',
+		ssrv_finicio : 'F. Inicio',
+		ssrv_ffin : 'F. Fin',
+		ssrv_numero : 'N\u00famero',
+		ssrv_estado : 'Estado',
 	});
 
 	$translateProvider.preferredLanguage('es');

@@ -85,12 +85,16 @@ public final class ServicioAction extends ItemAction {
     // Acciones web
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({ @Action(value = "srvc-detalle"), @Action(value = "srvc-detalle-popup") })
+    @Actions({
+            @Action(value = "srvc-detalle"),
+            @Action(value = "srvc-detalle-json", results = { @Result(name = "success", type = "json", params = {
+                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
+            @Action(value = "srvc-detalle-popup") })
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -124,7 +128,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Alta.
-     * 
+     *
      * @return the string
      */
     @Action(value = "srvc-alta-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
@@ -141,7 +145,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -163,7 +167,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Duplicar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -185,7 +189,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      */
     @Action(value = "srvc-guardar", results = {
@@ -227,7 +231,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Borrar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -248,7 +252,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Gets the subps.
-     * 
+     *
      * @return the subps
      */
     public List<LabelValueVO> getSubpList() {
@@ -274,7 +278,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Sets the item.
-     * 
+     *
      * @param value
      *            the new item
      */
@@ -300,7 +304,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Gets the enti hijas list.
-     * 
+     *
      * @return the enti hijas list
      */
     public List<TipoSubservicioVO> getEntiHijasList() {
@@ -309,7 +313,7 @@ public final class ServicioAction extends ItemAction {
 
     /**
      * Gets the item hijos map.
-     * 
+     *
      * @return the item hijos map
      */
     public Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {

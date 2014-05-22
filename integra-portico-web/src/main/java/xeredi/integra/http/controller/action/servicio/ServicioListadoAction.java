@@ -73,9 +73,9 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * @return the string
      */
     @Actions({
-        @Action(value = "srvc-filtro"),
-        @Action(value = "srvc-filtro-popup", results = { @Result(name = "success", location = "srvc-filtro.jsp") }),
-        @Action(value = "srvc-filtro-ftl-popup", results = { @Result(name = "success", type = "freemarker", location = "srvc-filtro.ftl") }) })
+            @Action(value = "srvc-filtro"),
+            @Action(value = "srvc-filtro-popup", results = { @Result(name = "success", location = "srvc-filtro.jsp") }),
+            @Action(value = "srvc-filtro-ftl-popup", results = { @Result(name = "success", type = "freemarker", location = "srvc-filtro.ftl") }) })
     public String editarFiltro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -105,7 +105,10 @@ public final class ServicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Action(value = "srvc-listado")
+    @Actions({
+            @Action(value = "srvc-listado"),
+            @Action(value = "srvc-listado-json", results = { @Result(name = "success", type = "json", params = {
+                    "excludeNullProperties", "true" }) }) })
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -156,7 +159,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param value
      *            the new item criterio
      */
@@ -166,7 +169,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
 
     /**
      * Gets the item list.
-     * 
+     *
      * @return the item list
      */
     public PaginatedList<ServicioVO> getItemList() {
