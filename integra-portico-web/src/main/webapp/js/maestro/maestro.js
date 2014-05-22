@@ -30,7 +30,7 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams) {
 	};
 
 	if ($scope.page == null) {
-		alert('Inicializar page');
+		console.log('Inicializar page');
 
 		$routeParams.page = 1;
 	}

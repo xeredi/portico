@@ -414,7 +414,7 @@ public class ParametroBO implements Parametro {
 
         final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
 
-        fillDependencies(prmtList, prmtCriterioVO, false);
+        fillDependencies(prmtList, prmtCriterioVO, prmtCriterioVO.getLimit() != null);
 
         return prmtList;
     }
@@ -458,7 +458,7 @@ public class ParametroBO implements Parametro {
 
         final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
 
-        fillDependencies(prmtMap.values(), prmtCriterioVO, false);
+        fillDependencies(prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
 
         return prmtMap;
     }
@@ -473,7 +473,7 @@ public class ParametroBO implements Parametro {
 
         final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
 
-        fillDependencies(prmtMap.values(), prmtCriterioVO, false);
+        fillDependencies(prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
 
         return prmtMap;
     }
@@ -635,7 +635,7 @@ public class ParametroBO implements Parametro {
 
     /**
      * Rellenado de los datos asociados a una lista de parametros. Búsqueda en parámetro dato.
-     * 
+     *
      * @param prmtList
      *            Colleccion de parámetros de los que se desea obtener sus datos asociados.
      * @param prmtCriterioVO
