@@ -35,7 +35,7 @@ app.config(function($translateProvider) {
 
 		sprm_finicio : 'F. Inicio',
 		sprm_ffin : 'F. Fin',
-		
+
 		cnen_codigo : 'Codigo',
 		cnen_nombre : 'Nombre',
 	});

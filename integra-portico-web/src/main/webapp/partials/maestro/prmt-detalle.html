@@ -1,4 +1,4 @@
-<!-- 
+<!--
 <c:if test="${not empty entiHijasList}">
     <div class="tabbable">
         <ul class="nav nav-tabs">
@@ -68,7 +68,7 @@
 			</div>
 		</div>
 
-		<div ng-if="enti.i18n">
+        <div ng-if="enti.i18n">
 			<div ng-repeat="availableLanguage in availableLanguages" class="row">
 				<div class="col-md-10 form-group">
 					<label>Texto {{availableLanguage}}</label> <input type="text" value="{{p18nMap[availableLanguage].texto}}"
@@ -157,13 +157,13 @@
 	</tab> </tabset>
 </div>
 
-<!-- 
+<!--
     <jsp:include page="/WEB-INF/content/include/item/item-detalle.jsp" flush="true">
         <jsp:param value="${param.btnOn}" name="btnOn" />
     </jsp:include>
 -->
 
-<!-- 
+<!--
 <c:if test="${not empty entiHijasList}">
     </div>
     <c:forEach items="${entiHijasList}" var="enti">

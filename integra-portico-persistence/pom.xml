@@ -25,17 +25,12 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.2.6</version>
+            <version>3.2.7</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-pool</groupId>
-            <artifactId>commons-pool</artifactId>
-            <version>1.6</version>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
@@ -47,12 +42,14 @@
             <artifactId>javassist</artifactId>
             <version>3.18.1-GA</version>
         </dependency>
+<!--
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-json-plugin</artifactId>
             <version>2.3.16.1</version>
             <scope>provided</scope>
         </dependency>
+ -->
         <!-- -->
     </dependencies>
 </project>
