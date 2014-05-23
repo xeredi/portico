@@ -9,7 +9,6 @@ import java.util.Map;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.Components;
-import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -29,97 +28,99 @@ import com.google.common.base.Preconditions;
  */
 public final class ServicioPdf extends BasePdf {
 
-	/**
-	 * Instantiates a new servicio pdf.
-	 * 
-	 * @param alocale
-	 *            the alocale
-	 */
-	public ServicioPdf(final Locale alocale) {
-		super(alocale);
-	}
+    /**
+     * Instantiates a new servicio pdf.
+     *
+     * @param alocale
+     *            the alocale
+     */
+    public ServicioPdf(final Locale alocale) {
+        super(alocale);
+    }
 
-	public void imprimir(final ServicioVO srvcVO, final TipoServicioVO tpsrVO,
-			final Map<Long, TipoSubservicioVO> entiHijasMap,
-			final Map<Long, List<SubservicioVO>> itemHijosMap,
-			final OutputStream stream) throws DRException {
-		Preconditions.checkNotNull(srvcVO);
-		Preconditions.checkNotNull(tpsrVO);
+    /**
+     * Imprimir.
+     *
+     * @param srvcVO
+     *            the srvc vo
+     * @param tpsrVO
+     *            the tpsr vo
+     * @param entiHijasMap
+     *            the enti hijas map
+     * @param itemHijosMap
+     *            the item hijos map
+     * @param stream
+     *            the stream
+     * @throws DRException
+     *             the DR exception
+     */
+    public void imprimir(final ServicioVO srvcVO, final TipoServicioVO tpsrVO,
+            final Map<Long, TipoSubservicioVO> entiHijasMap, final Map<Long, List<SubservicioVO>> itemHijosMap,
+            final OutputStream stream) throws DRException {
+        Preconditions.checkNotNull(srvcVO);
+        Preconditions.checkNotNull(tpsrVO);
 
-		final List<List<PdfCell>> listCells = new ArrayList<>();
+        final JasperReportBuilder report = DynamicReports.report();
 
-		List<PdfCell> rowCells = new ArrayList<>();
-		int accWidth = 0;
+        report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
+        report.addTitle(DynamicReports.cmp.text(tpsrVO.getNombre()).setStyle(PdfConstants.H1_STYLE));
 
-		rowCells.add(new PdfCell(tpsrVO.getNombre(), srvcVO.getEtiqueta(), 4,
-				TipoElemento.TX));
+        final List<List<PdfCell>> listCells = new ArrayList<>();
 
-		if (tpsrVO.isTemporal()) {
-			rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT
-					.format(srvcVO.getFinicio()), 4, TipoElemento.FE));
-			rowCells.add(new PdfCell("F. Fin", srvcVO.getFfin() == null ? ""
-					: PdfConstants.DATE_FORMAT.format(srvcVO.getFfin()), 4,
-					TipoElemento.FE));
-		}
+        List<PdfCell> rowCells = new ArrayList<>();
+        int accWidth = 0;
 
-		listCells.add(rowCells);
+        rowCells.add(new PdfCell(tpsrVO.getNombre(), srvcVO.getEtiqueta(), 4, TipoElemento.TX));
 
-		rowCells = new ArrayList<>();
-		accWidth = 0;
+        if (tpsrVO.isTemporal()) {
+            rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT.format(srvcVO.getFinicio()), 4,
+                    TipoElemento.FE));
+            rowCells.add(new PdfCell("F. Fin", srvcVO.getFfin() == null ? "" : PdfConstants.DATE_FORMAT.format(srvcVO
+                    .getFfin()), 4, TipoElemento.FE));
+        }
 
-		for (final Long tpdtId : tpsrVO.getEntdList()) {
-			final EntidadTipoDatoVO entdVO = tpsrVO.getEntdMap().get(tpdtId);
-			final ItemDatoVO itdtVO = srvcVO.getItdtMap().get(tpdtId);
+        listCells.add(rowCells);
 
-			if (accWidth + entdVO.getSpan() > PdfConstants.MAX_SPAN) {
-				listCells.add(rowCells);
-				rowCells = new ArrayList<>();
-				accWidth = 0;
-			}
+        report.addTitle(getForm(listCells));
+        listCells.clear();
 
-			rowCells.add(new PdfCell(entdVO.getEtiqueta(), getItdtValue(entdVO,
-					itdtVO), entdVO.getSpan(), entdVO.getTpdt()
-					.getTipoElemento()));
-			accWidth += entdVO.getSpan();
-		}
+        for (final Integer engdId : tpsrVO.getEngdList()) {
+            rowCells = new ArrayList<>();
+            accWidth = 0;
 
-		if (!rowCells.isEmpty()) {
-			listCells.add(rowCells);
-		}
+            for (final Long tpdtId : tpsrVO.getEngdEntdMap().get(engdId)) {
+                final EntidadTipoDatoVO entdVO = tpsrVO.getEntdMap().get(tpdtId);
+                final ItemDatoVO itdtVO = srvcVO.getItdtMap().get(tpdtId);
 
-		final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
+                if (accWidth + entdVO.getSpan() > PdfConstants.MAX_SPAN) {
+                    listCells.add(rowCells);
+                    rowCells = new ArrayList<>();
+                    accWidth = 0;
+                }
 
-		for (final List<PdfCell> row : listCells) {
-			for (final PdfCell pdfCell : row) {
-				list.add(getFieldLabel(pdfCell));
-			}
+                rowCells.add(new PdfCell(entdVO.getEtiqueta(), getItdtValue(entdVO, itdtVO), entdVO.getSpan(), entdVO
+                        .getTpdt().getTipoElemento()));
+                accWidth += entdVO.getSpan();
+            }
 
-			list.newRow();
+            if (!rowCells.isEmpty()) {
+                listCells.add(rowCells);
+            }
 
-			for (final PdfCell pdfCell : row) {
-				list.add(getFieldValue(pdfCell));
-			}
+            report.addTitle(getForm(listCells), Components.pageBreak());
+            listCells.clear();
+        }
 
-			list.newRow();
-		}
+        // if (tpprVO.getEntiHijasList() != null) {
+        // for (final Long entiId : tpprVO.getEntiHijasList()) {
+        // if (!itemHijosMap.get(entiId).isEmpty()) {
+        // report.addTitle(DynamicReports.cmp.subreport(getSubreport(
+        // entiHijasMap.get(entiId), itemHijosMap.get(entiId))));
+        // }
+        // }
+        // }
 
-		final JasperReportBuilder report = DynamicReports.report();
-
-		report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
-		report.addTitle(DynamicReports.cmp.text(tpsrVO.getNombre()).setStyle(
-				PdfConstants.H1_STYLE));
-		report.addTitle(list, Components.pageBreak());
-
-		// if (tpprVO.getEntiHijasList() != null) {
-		// for (final Long entiId : tpprVO.getEntiHijasList()) {
-		// if (!itemHijosMap.get(entiId).isEmpty()) {
-		// report.addTitle(DynamicReports.cmp.subreport(getSubreport(
-		// entiHijasMap.get(entiId), itemHijosMap.get(entiId))));
-		// }
-		// }
-		// }
-
-		report.toPdf(stream);
-	}
+        report.toPdf(stream);
+    }
 
 }

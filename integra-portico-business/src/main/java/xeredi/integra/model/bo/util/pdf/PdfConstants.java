@@ -57,8 +57,12 @@ public final class PdfConstants {
 	public static final StyleBuilder TD_STYLE = DynamicReports.stl.style()
 			.setFontSize(9).setPadding(2);
 
-	/** The Constant H1_STYLE. */
-	public static final StyleBuilder H1_STYLE = DynamicReports.stl.style()
-			.setFontSize(14).setTopPadding(10).setBottomPadding(5);
+    /** The Constant H1_STYLE. */
+    public static final StyleBuilder H1_STYLE = DynamicReports.stl.style()
+            .setFontSize(14).setTopPadding(10).setBottomPadding(5);
+
+    /** The Constant H2_STYLE. */
+    public static final StyleBuilder H2_STYLE = DynamicReports.stl.style()
+            .setFontSize(12).setTopPadding(5).setBottomPadding(3);
 
 }

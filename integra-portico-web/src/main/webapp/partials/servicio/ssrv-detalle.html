@@ -28,9 +28,13 @@
                     disabled="disabled" />
             </div>
         </div>
+    </fieldset>
+
+    <fieldset ng-repeat="engdId in enti.engdList">
+        <legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
 
         <div class="row">
-            <div ng-repeat="tpdtId in enti.entdList"
+            <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
                 class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
                 <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
                 <div ng-if="!item.itdtMap[tpdtId].filled">

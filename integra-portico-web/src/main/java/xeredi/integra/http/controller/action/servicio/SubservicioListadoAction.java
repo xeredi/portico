@@ -59,11 +59,11 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     // Acciones web
     /**
      * Editar filtro.
-     * 
+     *
      * @return the string
      */
     @Actions({ @Action(value = "ssrv-filtro"),
-        @Action(value = "ssrv-filtro-popup", results = { @Result(name = "success", location = "ssrv-filtro.jsp") }) })
+            @Action(value = "ssrv-filtro-popup", results = { @Result(name = "success", location = "ssrv-filtro.jsp") }) })
     public String editarFiltro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -75,12 +75,14 @@ public final class SubservicioListadoAction extends ItemListadoAction {
 
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Actions({
-        @Action(value = "ssrv-listado"),
-        @Action(value = "ssrv-listado-grid", results = { @Result(name = "success", location = "ssrv-listado.jsp") }) })
+            @Action(value = "ssrv-listado"),
+            @Action(value = "ssrv-listado-grid", results = { @Result(name = "success", location = "ssrv-listado.jsp") }),
+            @Action(value = "ssrv-listado-json", results = { @Result(name = "success", type = "json", params = {
+                    "excludeNullProperties", "true" }) }) })
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -110,7 +112,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param value
      *            the new item criterio
      */
@@ -120,7 +122,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
 
     /**
      * Gets the item list.
-     * 
+     *
      * @return the item list
      */
     public final PaginatedList<SubservicioVO> getItemList() {

@@ -1,6 +1,8 @@
 ﻿-- Manifiesto de Pesca
 -- Manifiesto de Pesca
 -- Manifiesto de Pesca
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=21001;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (21001, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=21001;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21001, 45105, 1, 1, 1,  4, 1, 1, 1, NULL, 'Buque');
@@ -44,6 +46,8 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (21001, 41081, 1, 8, 1, 12, 0, 0, 0, NULL, 'Observaciones Facturacion');
 
 -- Partida de Pesca
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22001;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22001, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22001;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22001, 45215, 1, 1, 1, 4, 1, 1, 1, NULL, 'Especie');
@@ -69,6 +73,8 @@ VALUES (22001, 41043, 1, 3, 4, 2, 1, 1, 0, NULL, 'Importe');
 -- Manifiesto de Mercancia
 -- Manifiesto de Mercancia
 -- Manifiesto de Mercancia
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=21002;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (21002, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=21002;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21002, 41100, 1,  2,  2,  2, 0, 1, 1, NULL, 'F. Envio');
@@ -120,11 +126,15 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (21002, 45360, 1, 24, 24,  4, 0, 0, 0, NULL, 'Desc. Adicional');
 
 -- Consignatario de Manifiesto
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22002;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22002, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22002;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22002, 45035, 1,  1,  1,  4, 1, 1, 1, NULL, 'Consignatario');
 
 -- BL
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22003;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22003, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22003;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22003, 43135, 1,  1,  1,  3, 1, 1, 1, NULL, 'Tipo');
@@ -186,6 +196,8 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22003, 41023, 1, 30, 30,  12, 0, 0, 0, NULL, 'Observaciones Facturacion');
 
 -- Partida
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22004;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22004, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22004;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22004, 45290, 1, 1, 1,  4, 1, 1, 1, NULL, 'Mercancia');
@@ -235,6 +247,8 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22004, 41022, 1, 24, 24, 12, 0, 1, 1, NULL, 'Observaciones');
 
 -- Equipamiento
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22005;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22005, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22005;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22005, 45325, 1, 2, 2,  4, 1, 1, 1, NULL, 'Tipo');
@@ -258,6 +272,8 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22005, 41022, 1, 11, 11,  12, 0, 0, 0, NULL, 'Observaciones');
 
 -- IM de Partida
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22008;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22008, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22008;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22008, 45315, 1,  1,  1,  4, 1, 1, 1, NULL, 'IM');
@@ -265,21 +281,29 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22008, 41020, 1,  2,  2,  4, 0, 0, 0, NULL, 'Descripcion');
 
 -- MMPP de Partida
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22009;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22009, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22009;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22009, 45320, 1,  1,  1,  4, 1, 1, 1, NULL, 'MM.PP.');
 
 -- Precinto de Equipamiento
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22010;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22010, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22010;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22010, 41020, 1,  1,  1,  4, 1, 1, 1, NULL, 'Precinto');
 
 -- Partida-Equipamiento
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22006;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22006, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22006;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22006, 41060, 1,  1,  1,  4, 1, 1, 0, NULL, 'Nº Bultos');
 
 -- Documento de Partida
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22007;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22007, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22007;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22007, 43475, 1,  1,  1,  4, 0, 1, 1, NULL, 'Sit. Embarque');
@@ -303,6 +327,8 @@ VALUES (22007, 45310, 1,  5,  5,  4, 0, 1, 1, NULL, 'Tipo Documento');
 -- Escala
 -- Escala
 -- Escala
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=21003;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (21003, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=21003;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21003, 41000, 1,  1,  1,  2, 1, 1, 1, NULL, 'Carga EDI?');
@@ -549,6 +575,8 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22011, 41082, 4,  4,  1, 12, 0, 0, 0, NULL, 'Observaciones');
 
 -- Operacion de Atraque
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22012;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22012, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22012;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22012, 45370, 1,  1,  1,  4, 1, 1, 1, NULL, 'T. Operación');
@@ -568,13 +596,19 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22012, 41022, 1,  8,  8,  4, 0, 0, 0, NULL, 'Obs. Estibador');
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22012, 45385, 1,  9,  9,  4, 0, 1, 1, NULL, 'T. Mercancía');
+
 -- Contador de Escala
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22015;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22015, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22015;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22015, 43160, 1,  1,  1,  3, 1, 1, 1, NULL, 'Tipo');
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22015, 41060, 1,  1,  2,  2, 1, 1, 1, NULL, 'Nº. Lecturas');
+
 -- Contador de Escala
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22016;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22016, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22016;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22016, 45440, 1,  1,  1,  3, 1, 1, 1, NULL, 'Subt. Residuo');
@@ -596,6 +630,8 @@ VALUES (22016, 41044, 1,  2,  5,  2, 0, 1, 0, NULL, 'Cap. Maxima');
 -- Suministro de buque
 -- Suministro de buque
 -- Suministro de buque
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=21005;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (21005, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=21005;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21005, 41020, 1,  1,  1,  3, 0, 1, 1, NULL, 'Referencia');
@@ -625,6 +661,8 @@ VALUES (21005, 41081, 1, 11,  1, 12, 0, 0, 0, NULL, 'Observaciones Fact.');
 -- IESC_ESCALA_ESCA
 
 -- Gasto
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22013;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22013, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22013;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22013, 45390, 1,  1,  1,  3, 1, 1, 1, NULL, 'T. Gasto');
@@ -634,6 +672,8 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22013, 41040, 1,  1,  3,  3, 0, 1, 0, NULL, 'Coste');
 
 -- Lectura
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22014;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22014, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22014;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22014, 41040, 1,  1,  1,  2, 0, 1, 0, NULL, 'L. Inicio');
@@ -660,6 +700,8 @@ VALUES (22014, 45395, 1,  4,  1,  2, 0, 1, 1, NULL, 'Contador');
 -- Ocupacion de superficie
 -- Ocupacion de superficie
 -- Ocupacion de superficie
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=21007;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (21007, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=21007;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21007, 41020, 1,  1,  1,  2, 0, 1, 1, NULL, 'Referencia');
@@ -711,6 +753,8 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (21007, 41081, 1, 11,  1, 11, 0, 0, 0, NULL, 'Observaciones Facturación');
 
 -- Linea de Ocupacion de Superficie
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22018;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22018, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22018;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22018, 41060, 1,  1,  1,  2, 1, 1, 0, NULL, 'Medida');
@@ -729,6 +773,8 @@ VALUES (22018, 41080, 1,  2,  1, 11, 0, 0, 0, NULL, 'Observaciones');
 -- Amarres
 -- Amarres
 -- Amarres
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=21008;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (21008, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=21008;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21008, 41120, 1,  1,  1,  2, 1, 1, 0, NULL, 'F. Solicitud');
@@ -755,7 +801,10 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (21008, 41043, 1,  3,  7,  1, 0, 1, 0, NULL, 'Recargo');
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21008, 41044, 1,  3,  8,  1, 0, 1, 0, NULL, 'Imp. Total');
+
 -- Medio de Amarre
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=22019;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (22019, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=22019;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22019, 45420, 1,  1,  1,  3, 1, 1, 1, NULL, 'T. Medio');
@@ -767,6 +816,8 @@ VALUES (22019, 41060, 1,  1,  2,  2, 1, 1, 0, NULL, 'Nº. Medios');
 -- Practicajes
 -- Practicajes
 -- Practicajes
+DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=21009;
+INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (21009, 1, 'General');
 DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=21009;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21009, 41120, 1,  1,  1,  2, 1, 1, 0, NULL, 'F. Solicitud');
