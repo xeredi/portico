@@ -26,95 +26,100 @@ import xeredi.util.applicationobjects.LabelValueVO;
  */
 public abstract class ItemAction extends BaseAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6333242573443367864L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6333242573443367864L;
 
-    /** The Constant ROWS. */
-    protected static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
+	/** The Constant ROWS. */
+	protected static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
-    /** The accion. */
-    protected ACCION_EDICION accion;
+	/** The accion. */
+	protected ACCION_EDICION accion;
 
-    /** The label values map. */
-    protected Map<Long, List<LabelValueVO>> labelValuesMap;
+	/** The label values map. */
+	protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 
-    // get / set
+	// get / set
 
-    /**
-     * Gets the fecha vigencia.
-     * 
-     * @return the fecha vigencia
-     */
-    public abstract Date getFechaVigencia();
+	/**
+	 * Gets the fecha vigencia.
+	 * 
+	 * @return the fecha vigencia
+	 */
+	public abstract Date getFechaVigencia();
 
-    /**
-     * Gets the label values map.
-     * 
-     * @return the label values map
-     */
-    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
-        if (labelValuesMap == null) {
-            labelValuesMap = new HashMap<>();
+	/**
+	 * Gets the label values map.
+	 * 
+	 * @return the label values map
+	 */
+	public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+		return labelValuesMap;
+	}
 
-            // Carga de los labelValues (Si los hay)
-            final Set<Long> tpprIds = new HashSet<>();
+	/**
+	 * Load label values map.
+	 */
+	protected final void loadLabelValuesMap() {
+		if (labelValuesMap == null) {
+			labelValuesMap = new HashMap<>();
 
-            for (final EntidadTipoDatoVO entdVO : getEnti().getEntdMap().values()) {
-                if (entdVO.getTpdt().getTpht() != TipoHtml.F && entdVO.getTpdt().getEnti() != null
-                        && entdVO.getTpdt().getEnti().getId() != null) {
-                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
-                }
-            }
+			// Carga de los labelValues (Si los hay)
+			final Set<Long> tpprIds = new HashSet<>();
 
-            if (!tpprIds.isEmpty()) {
-                final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+			for (final EntidadTipoDatoVO entdVO : getEnti().getEntdMap().values()) {
+				if (entdVO.getTpdt().getTpht() != TipoHtml.F && entdVO.getTpdt().getEnti() != null
+						&& entdVO.getTpdt().getEnti().getId() != null) {
+					tpprIds.add(entdVO.getTpdt().getEnti().getId());
+				}
+			}
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
-            }
-        }
+			if (!tpprIds.isEmpty()) {
+				final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
 
-        return labelValuesMap;
-    }
+				labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
+			}
+		}
+	}
 
-    /**
-     * Gets the accion.
-     * 
-     * @return the accion
-     */
-    public final ACCION_EDICION getAccion() {
-        return accion;
-    }
+	/**
+	 * Gets the accion.
+	 * 
+	 * @return the accion
+	 */
+	public final ACCION_EDICION getAccion() {
+		return accion;
+	}
 
-    /**
-     * Sets the accion.
-     * 
-     * @param value
-     *            the new accion
-     */
-    public final void setAccion(final ACCION_EDICION value) {
-        accion = value;
-    }
+	/**
+	 * Sets the accion.
+	 * 
+	 * @param value
+	 *            the new accion
+	 */
+	public final void setAccion(final ACCION_EDICION value) {
+		accion = value;
+	}
 
-    /**
-     * Gets the enti.
-     * 
-     * @return the enti
-     */
-    public abstract EntidadVO getEnti();
+	/**
+	 * Gets the enti.
+	 * 
+	 * @return the enti
+	 */
+	public abstract EntidadVO getEnti();
 
-    /**
-     * Gets the item.
-     * 
-     * @return the item
-     */
-    public abstract ItemVO getItem();
+	/**
+	 * Gets the item.
+	 * 
+	 * @return the item
+	 */
+	public abstract ItemVO getItem();
 
 }

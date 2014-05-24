@@ -44,280 +44,286 @@ import com.google.common.base.Preconditions;
  */
 public final class ServicioAction extends ItemAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 2809685065940465041L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 2809685065940465041L;
 
-    /** The srvc form. */
-    private ServicioVO item;
+	/** The srvc form. */
+	private ServicioVO item;
 
-    /** The tpsr. */
-    private TipoServicioVO enti;
+	/** The tpsr. */
+	private TipoServicioVO enti;
 
-    /** The fecha vigencia. */
-    private final Date fechaVigencia;
+	/** The fecha vigencia. */
+	private final Date fechaVigencia;
 
-    /** The subps. */
-    private List<LabelValueVO> subpList;
+	/** The subps. */
+	private List<LabelValueVO> subpList;
 
-    /** The tpss list. */
-    private List<TipoSubservicioVO> entiHijasList;
+	/** The tpss list. */
+	private List<TipoSubservicioVO> entiHijasList;
 
-    /** The ssrv map. */
-    private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
+	/** The ssrv map. */
+	private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
 
-    /**
-     * Instantiates a new servicio action.
-     */
-    public ServicioAction() {
-        super();
+	/**
+	 * Instantiates a new servicio action.
+	 */
+	public ServicioAction() {
+		super();
 
-        fechaVigencia = Calendar.getInstance().getTime();
-    }
+		fechaVigencia = Calendar.getInstance().getTime();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 
-    // Acciones web
-    /**
-     * Detalle.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    @Actions({
-            @Action(value = "srvc-detalle"),
-            @Action(value = "srvc-detalle-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
-            @Action(value = "srvc-detalle-popup") })
-    public String detalle() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+	// Acciones web
+	/**
+	 * Detalle.
+	 *
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Actions({
+		@Action(value = "srvc-detalle"),
+		@Action(value = "srvc-detalle-json", results = { @Result(name = "success", type = "json", params = {
+				"excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
+				@Action(value = "srvc-detalle-popup") })
+	public String detalle() throws InstanceNotFoundException {
+		Preconditions.checkNotNull(item);
+		Preconditions.checkNotNull(item.getId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
 
-        accion = ACCION_EDICION.modificar;
-        item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
-        entiHijasList = new ArrayList<>();
-        itemHijosMap = new HashMap<>();
+		accion = ACCION_EDICION.modificar;
+		item = srvcBO.select(item.getId(), getIdioma());
+		enti = TipoServicioProxy.select(item.getEntiId());
+		entiHijasList = new ArrayList<>();
+		itemHijosMap = new HashMap<>();
 
-        for (final Long entiId : enti.getEntiHijasList()) {
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+		for (final Long entiId : enti.getEntiHijasList()) {
+			final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+			final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
-            srvcCriterioVO.setId(item.getId());
+			srvcCriterioVO.setId(item.getId());
 
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-            ssrvCriterioVO.setEntiId(entiId);
-            ssrvCriterioVO.setIdioma(getIdioma());
+			ssrvCriterioVO.setSrvc(srvcCriterioVO);
+			ssrvCriterioVO.setEntiId(entiId);
+			ssrvCriterioVO.setIdioma(getIdioma());
 
-            itemHijosMap.put(entiId,
-                    ssrvBO.selectList(ssrvCriterioVO, PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-            entiHijasList.add(TipoSubservicioProxy.select(entiId));
-        }
+			itemHijosMap.put(entiId,
+					ssrvBO.selectList(ssrvCriterioVO, PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
+			entiHijasList.add(TipoSubservicioProxy.select(entiId));
+		}
 
-        return SUCCESS;
-    }
+		return SUCCESS;
+	}
 
-    /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action(value = "srvc-alta-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
-    public String alta() {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+	/**
+	 * Alta.
+	 *
+	 * @return the string
+	 */
+	@Action(value = "srvc-alta-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
+	public String alta() {
+		Preconditions.checkNotNull(item);
+		Preconditions.checkNotNull(item.getEntiId());
 
-        accion = ACCION_EDICION.alta;
-        enti = TipoServicioProxy.select(item.getEntiId());
-        item = ServicioVO.newInstance(enti);
+		accion = ACCION_EDICION.alta;
+		enti = TipoServicioProxy.select(item.getEntiId());
+		item = ServicioVO.newInstance(enti);
 
-        return SUCCESS;
-    }
+		loadLabelValuesMap();
 
-    /**
-     * Modificar.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    @Action(value = "srvc-modificar-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
-    public String modificar() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+		return SUCCESS;
+	}
 
-        accion = ACCION_EDICION.modificar;
+	/**
+	 * Modificar.
+	 *
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Action(value = "srvc-modificar-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
+	public String modificar() throws InstanceNotFoundException {
+		Preconditions.checkNotNull(item);
+		Preconditions.checkNotNull(item.getId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		accion = ACCION_EDICION.modificar;
 
-        item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
 
-        return SUCCESS;
-    }
+		item = srvcBO.select(item.getId(), getIdioma());
+		enti = TipoServicioProxy.select(item.getEntiId());
 
-    /**
-     * Duplicar.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    @Action(value = "srvc-duplicar-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
-    public String duplicar() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+		loadLabelValuesMap();
 
-        accion = ACCION_EDICION.duplicar;
+		return SUCCESS;
+	}
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+	/**
+	 * Duplicar.
+	 *
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Action(value = "srvc-duplicar-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
+	public String duplicar() throws InstanceNotFoundException {
+		Preconditions.checkNotNull(item);
+		Preconditions.checkNotNull(item.getId());
 
-        item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
+		accion = ACCION_EDICION.duplicar;
 
-        return SUCCESS;
-    }
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
 
-    /**
-     * Guardar.
-     *
-     * @return the string
-     */
-    @Action(value = "srvc-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "srvc-listado",
-                    "itemCriterio.entiId", "%{enti.id}" }), @Result(name = "input", location = "srvc-edicion.jsp") })
-    public String guardar() {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+		item = srvcBO.select(item.getId(), getIdioma());
+		enti = TipoServicioProxy.select(item.getEntiId());
 
-        enti = TipoServicioProxy.select(item.getEntiId());
-        item = ServicioVO.newInstance(enti);
+		loadLabelValuesMap();
 
-        if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "item.subp", item.getSubp());
-            PropertyValidator.validateRequired(this, "item.numero", item.getNumero());
-            PropertyValidator.validateRequired(this, "item.anno", item.getAnno());
-        } else {
-            Preconditions.checkNotNull(item.getId());
-        }
+		return SUCCESS;
+	}
 
-        PropertyValidator.validateRequired(this, "item.freferencia", item.getFreferencia());
-        ItemDatoValidator.validate(this, enti, item);
+	/**
+	 * Guardar.
+	 *
+	 * @return the string
+	 */
+	@Action(value = "srvc-guardar", results = {
+			@Result(name = "success", type = "redirectAction", params = { "actionName", "srvc-listado",
+					"itemCriterio.entiId", "%{enti.id}" }), @Result(name = "input", location = "srvc-edicion.jsp") })
+	public String guardar() {
+		Preconditions.checkNotNull(item);
+		Preconditions.checkNotNull(item.getEntiId());
 
-        // FIXME ACABAR
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		enti = TipoServicioProxy.select(item.getEntiId());
+		item = ServicioVO.newInstance(enti);
 
-        if (accion == ACCION_EDICION.alta) {
-            try {
-                srvcBO.insert(item, null);
-            } catch (final DuplicateInstanceException ex) {
-                throw new Error(ex);
-            }
-        } else if (accion == ACCION_EDICION.modificar) {
-            srvcBO.update(item);
-        }
+		if (accion == ACCION_EDICION.alta) {
+			PropertyValidator.validateRequired(this, "item.subp", item.getSubp());
+			PropertyValidator.validateRequired(this, "item.numero", item.getNumero());
+			PropertyValidator.validateRequired(this, "item.anno", item.getAnno());
+		} else {
+			Preconditions.checkNotNull(item.getId());
+		}
 
-        return SUCCESS;
-    }
+		PropertyValidator.validateRequired(this, "item.freferencia", item.getFreferencia());
+		ItemDatoValidator.validate(this, enti, item);
 
-    /**
-     * Borrar.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    @Action(value = "srvc-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "srvc-listado", "itemCriterio.entiId", "%{enti.id}" }) })
-    public String borrar() throws InstanceNotFoundException {
-        enti = TipoServicioProxy.select(item.getEntiId());
+		// FIXME ACABAR
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		if (accion == ACCION_EDICION.alta) {
+			try {
+				srvcBO.insert(item, null);
+			} catch (final DuplicateInstanceException ex) {
+				throw new Error(ex);
+			}
+		} else if (accion == ACCION_EDICION.modificar) {
+			srvcBO.update(item);
+		}
 
-        srvcBO.delete(item.getId());
+		return SUCCESS;
+	}
 
-        return SUCCESS;
-    }
+	/**
+	 * Borrar.
+	 *
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Action(value = "srvc-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
+			"actionName", "srvc-listado", "itemCriterio.entiId", "%{enti.id}" }) })
+	public String borrar() throws InstanceNotFoundException {
+		enti = TipoServicioProxy.select(item.getEntiId());
 
-    // get / set
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
 
-    /**
-     * Gets the subps.
-     *
-     * @return the subps
-     */
-    public List<LabelValueVO> getSubpList() {
-        if (subpList == null) {
-            final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+		srvcBO.delete(item.getId());
 
-            final Set<Long> tpprIds = new HashSet<>();
+		return SUCCESS;
+	}
 
-            tpprIds.add(Entidad.SUBPUERTO.getId());
-            subpList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(Entidad.SUBPUERTO.getId());
-        }
+	// get / set
 
-        return subpList;
-    }
+	/**
+	 * Gets the subps.
+	 *
+	 * @return the subps
+	 */
+	public List<LabelValueVO> getSubpList() {
+		if (subpList == null) {
+			final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ServicioVO getItem() {
-        return item;
-    }
+			final Set<Long> tpprIds = new HashSet<>();
 
-    /**
-     * Sets the item.
-     *
-     * @param value
-     *            the new item
-     */
-    public void setItem(final ServicioVO value) {
-        item = value;
-    }
+			tpprIds.add(Entidad.SUBPUERTO.getId());
+			subpList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(Entidad.SUBPUERTO.getId());
+		}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TipoServicioVO getEnti() {
-        return enti;
-    }
+		return subpList;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ServicioVO getItem() {
+		return item;
+	}
 
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public List<TipoSubservicioVO> getEntiHijasList() {
-        return entiHijasList;
-    }
+	/**
+	 * Sets the item.
+	 *
+	 * @param value
+	 *            the new item
+	 */
+	public void setItem(final ServicioVO value) {
+		item = value;
+	}
 
-    /**
-     * Gets the item hijos map.
-     *
-     * @return the item hijos map
-     */
-    public Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {
-        return itemHijosMap;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TipoServicioVO getEnti() {
+		return enti;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Date getFechaVigencia() {
+		return fechaVigencia;
+	}
+
+	/**
+	 * Gets the enti hijas list.
+	 *
+	 * @return the enti hijas list
+	 */
+	public List<TipoSubservicioVO> getEntiHijasList() {
+		return entiHijasList;
+	}
+
+	/**
+	 * Gets the item hijos map.
+	 *
+	 * @return the item hijos map
+	 */
+	public Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {
+		return itemHijosMap;
+	}
 
 }

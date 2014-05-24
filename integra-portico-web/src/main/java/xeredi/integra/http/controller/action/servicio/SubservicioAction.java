@@ -36,240 +36,246 @@ import com.google.common.base.Preconditions;
 // @Result(name="success", type="json")
 public final class SubservicioAction extends ItemAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 9210521463729954776L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 9210521463729954776L;
 
-    /** The srvc form. */
-    private SubservicioVO item;
+	/** The srvc form. */
+	private SubservicioVO item;
 
-    /** The tpsr. */
-    private TipoSubservicioVO enti;
+	/** The tpsr. */
+	private TipoSubservicioVO enti;
 
-    /** The tpss list. */
-    private List<TipoSubservicioVO> entiHijasList;
+	/** The tpss list. */
+	private List<TipoSubservicioVO> entiHijasList;
 
-    /** The ssrv map. */
-    private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
+	/** The ssrv map. */
+	private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
 
-    /** The fecha vigencia. */
-    private final Date fechaVigencia;
+	/** The fecha vigencia. */
+	private final Date fechaVigencia;
 
-    /**
-     * Instantiates a new servicio action.
-     */
-    public SubservicioAction() {
-        super();
+	/**
+	 * Instantiates a new servicio action.
+	 */
+	public SubservicioAction() {
+		super();
 
-        fechaVigencia = new Date();
-    }
+		fechaVigencia = new Date();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 
-    // Acciones web
-    /**
-     * Detalle.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    @Actions({
-            @Action(value = "ssrv-detalle"),
-            @Action(value = "ssrv-detalle-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
-    public String detalle() throws InstanceNotFoundException {
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+	// Acciones web
+	/**
+	 * Detalle.
+	 *
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Actions({
+		@Action(value = "ssrv-detalle"),
+		@Action(value = "ssrv-detalle-json", results = { @Result(name = "success", type = "json", params = {
+				"excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
+	public String detalle() throws InstanceNotFoundException {
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
 
-        accion = ACCION_EDICION.modificar;
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-        entiHijasList = new ArrayList<>();
-        itemHijosMap = new HashMap<>();
+		accion = ACCION_EDICION.modificar;
+		item = ssrvBO.select(item.getId(), getIdioma());
+		enti = TipoSubservicioProxy.select(item.getEntiId());
+		entiHijasList = new ArrayList<>();
+		itemHijosMap = new HashMap<>();
 
-        if (enti.getEntiHijasList() != null) {
-            for (final Long entiId : enti.getEntiHijasList()) {
-                final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-                final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+		if (enti.getEntiHijasList() != null) {
+			for (final Long entiId : enti.getEntiHijasList()) {
+				final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+				final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
-                srvcCriterioVO.setId(item.getSrvc().getId());
+				srvcCriterioVO.setId(item.getSrvc().getId());
 
-                ssrvCriterioVO.setSrvc(srvcCriterioVO);
-                ssrvCriterioVO.setPadreId(item.getId());
-                ssrvCriterioVO.setEntiId(entiId);
-                ssrvCriterioVO.setIdioma(getIdioma());
+				ssrvCriterioVO.setSrvc(srvcCriterioVO);
+				ssrvCriterioVO.setPadreId(item.getId());
+				ssrvCriterioVO.setEntiId(entiId);
+				ssrvCriterioVO.setIdioma(getIdioma());
 
-                itemHijosMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO,
-                        PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-                entiHijasList.add(TipoSubservicioProxy.select(entiId));
-            }
-        }
+				itemHijosMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO,
+						PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
+				entiHijasList.add(TipoSubservicioProxy.select(entiId));
+			}
+		}
 
-        LOG.info("Fin de la accion");
-        // LOG.info(this);
+		LOG.info("Fin de la accion");
+		// LOG.info(this);
 
-        return SUCCESS;
-    }
+		return SUCCESS;
+	}
 
-    /**
-     * Alta.
-     *
-     * @return the string
-     */
-    @Action(value = "ssrv-alta", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
-    public String alta() {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
+	/**
+	 * Alta.
+	 *
+	 * @return the string
+	 */
+	@Action(value = "ssrv-alta", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
+	public String alta() {
+		Preconditions.checkNotNull(item);
+		Preconditions.checkNotNull(item.getEntiId());
 
-        accion = ACCION_EDICION.alta;
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-        item = SubservicioVO.newInstance(enti);
+		accion = ACCION_EDICION.alta;
+		enti = TipoSubservicioProxy.select(item.getEntiId());
+		item = SubservicioVO.newInstance(enti);
 
-        return SUCCESS;
-    }
+		loadLabelValuesMap();
 
-    /**
-     * Modificar.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    @Action(value = "ssrv-modificar", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
-    public String modificar() throws InstanceNotFoundException {
-        Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+		return SUCCESS;
+	}
 
-        accion = ACCION_EDICION.modificar;
+	/**
+	 * Modificar.
+	 *
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Action(value = "ssrv-modificar", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
+	public String modificar() throws InstanceNotFoundException {
+		Preconditions.checkNotNull(item);
+		Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		accion = ACCION_EDICION.modificar;
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
 
-        return SUCCESS;
-    }
+		item = ssrvBO.select(item.getId(), getIdioma());
+		enti = TipoSubservicioProxy.select(item.getEntiId());
 
-    /**
-     * Duplicar.
-     *
-     * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    @Action(value = "ssrv-duplicar", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
-    public String duplicar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.duplicar;
+		loadLabelValuesMap();
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		return SUCCESS;
+	}
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+	/**
+	 * Duplicar.
+	 *
+	 * @return the string
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	@Action(value = "ssrv-duplicar", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
+	public String duplicar() throws InstanceNotFoundException {
+		accion = ACCION_EDICION.duplicar;
 
-        return SUCCESS;
-    }
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
 
-    /**
-     * Guardar.
-     *
-     * @return the string
-     */
-    @Action(value = "ssrv-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "ssrv-detalle", "item.id",
-                    "%{item.id}" }), @Result(name = "input", location = "ssrv-edicion.jsp") })
-    public String guardar() {
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+		item = ssrvBO.select(item.getId(), getIdioma());
+		enti = TipoSubservicioProxy.select(item.getEntiId());
 
-        if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "item.numero", item.getNumero());
-        }
+		loadLabelValuesMap();
 
-        ItemDatoValidator.validate(this, enti, item);
+		return SUCCESS;
+	}
 
-        if (hasErrors()) {
-            return INPUT;
-        }
+	/**
+	 * Guardar.
+	 *
+	 * @return the string
+	 */
+	@Action(value = "ssrv-guardar", results = {
+			@Result(name = "success", type = "redirectAction", params = { "actionName", "ssrv-detalle", "item.id",
+			"%{item.id}" }), @Result(name = "input", location = "ssrv-edicion.jsp") })
+	public String guardar() {
+		enti = TipoSubservicioProxy.select(item.getEntiId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		if (accion == ACCION_EDICION.alta) {
+			PropertyValidator.validateRequired(this, "item.numero", item.getNumero());
+		}
 
-        if (accion == ACCION_EDICION.alta) {
-            try {
-                ssrvBO.insert(item, null);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError("error.ssrv.duplicado");
-            }
-        } else {
-            try {
-                ssrvBO.update(item);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError("error.ssrv.noencontrado");
-            }
-        }
+		ItemDatoValidator.validate(this, enti, item);
 
-        if (hasErrors()) {
-            return INPUT;
-        }
+		if (hasErrors()) {
+			return INPUT;
+		}
 
-        return SUCCESS;
-    }
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
 
-    // get / set
+		if (accion == ACCION_EDICION.alta) {
+			try {
+				ssrvBO.insert(item, null);
+			} catch (final DuplicateInstanceException ex) {
+				addActionError("error.ssrv.duplicado");
+			}
+		} else {
+			try {
+				ssrvBO.update(item);
+			} catch (final InstanceNotFoundException ex) {
+				addActionError("error.ssrv.noencontrado");
+			}
+		}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
+		if (hasErrors()) {
+			return INPUT;
+		}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final SubservicioVO getItem() {
-        return item;
-    }
+		return SUCCESS;
+	}
 
-    /**
-     * Sets the item.
-     *
-     * @param value
-     *            the new item
-     */
-    public final void setItem(final SubservicioVO value) {
-        item = value;
-    }
+	// get / set
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final TipoSubservicioVO getEnti() {
-        return enti;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Date getFechaVigencia() {
+		return fechaVigencia;
+	}
 
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public final List<TipoSubservicioVO> getEntiHijasList() {
-        return entiHijasList;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final SubservicioVO getItem() {
+		return item;
+	}
 
-    /**
-     * Gets the item hijos map.
-     *
-     * @return the item hijos map
-     */
-    public final Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {
-        return itemHijosMap;
-    }
+	/**
+	 * Sets the item.
+	 *
+	 * @param value
+	 *            the new item
+	 */
+	public final void setItem(final SubservicioVO value) {
+		item = value;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final TipoSubservicioVO getEnti() {
+		return enti;
+	}
+
+	/**
+	 * Gets the enti hijas list.
+	 *
+	 * @return the enti hijas list
+	 */
+	public final List<TipoSubservicioVO> getEntiHijasList() {
+		return entiHijasList;
+	}
+
+	/**
+	 * Gets the item hijos map.
+	 *
+	 * @return the item hijos map
+	 */
+	public final Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {
+		return itemHijosMap;
+	}
 
 }
