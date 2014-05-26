@@ -52,7 +52,10 @@ maestro.controller('prmtsFiltroModalCtrl', function($scope, $modal) {
 	$scope.items = [ 'item1', 'item2', 'item3' ];
 
 	$scope.open = function(size) {
-
+		if (size == null) {
+			size = 'lg';
+		}
+		
 		var modalInstance = $modal.open({
 			templateUrl : 'prmt-filtro.html',
 			controller : 'prmtsFiltroCtrl',
@@ -64,21 +67,15 @@ maestro.controller('prmtsFiltroModalCtrl', function($scope, $modal) {
 			}
 		});
 
-		modalInstance.result.then(function(selectedItem) {
-			$scope.selected = selectedItem;
+		modalInstance.result.then(function() {
 		}, function() {
 		});
 	};
 });
 
-maestro.controller('prmtsFiltroCtrl', function($scope, $modal) {
-	$scope.items = items;
-	$scope.selected = {
-		item : $scope.items[0]
-	};
-
+maestro.controller('prmtsFiltroCtrl', function($scope, $modalInstance) {
 	$scope.ok = function() {
-		$modalInstance.close($scope.selected.item);
+		$modalInstance.close();
 	};
 
 	$scope.cancel = function() {

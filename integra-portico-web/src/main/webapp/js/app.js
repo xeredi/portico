@@ -11,6 +11,8 @@ app.config(function($translateProvider) {
 		fmt_date : 'dd/MM/yyyy',
 		fmt_datetime : 'dd/MM/yyyy HH:mm',
 
+		boton_aceptar : 'Aceptar',
+		boton_cancelar : 'Cancelar',
 		boton_alta : 'Nuevo',
 		boton_borrar : 'Borrar',
 		boton_duplicar : 'Duplicar',
@@ -31,6 +33,8 @@ app.config(function($translateProvider) {
 		menu_metamodelo_tpdts : 'Tipos de Dato',
 		menu_confs : 'Configuracion',
 
+		modal_filtro : 'Filtro',
+		
 		prmt_codigo : 'Codigo',
 		prmt_finicio : 'F. Inicio',
 		prmt_ffin : 'F. Fin',
