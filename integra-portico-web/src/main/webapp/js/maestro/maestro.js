@@ -17,7 +17,7 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'partials/maestro/prmt-detalle.html',
 		controller : 'prmtCtrl'
 	}).when('/maestro/prmt/popup/:itemId', {
-		templateUrl : 'partials/maestro/prmt-detalle.html',
+		templateUrl : 'partials/maestro/prmt-detalle-popup.html',
 		controller : 'prmtPopupCtrl'
 	});
 } ]);
