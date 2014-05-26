@@ -23,7 +23,7 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 	});
 } ]);
 
-maestro.controller('prmtsCtrl', function($http, $scope, $routeParams) {
+maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 	$scope.loadData = function() {
 		var url = "maestro/prmt-listado-json.action?itemCriterio.entiId="
 				+ $routeParams.entiId + "&page=" + $routeParams.page;
@@ -32,6 +32,7 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams) {
 			console.log(data);
 			$scope.enti = data.enti;
 			$scope.itemList = data.itemList;
+			$scope.itemCriterio = data.itemCriterio;
 		});
 	};
 
@@ -40,29 +41,17 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams) {
 		$scope.loadData();
 	};
 
-	if ($scope.currentPage == null) {
-		$routeParams.page = 1;
-	}
-
-	$scope.currentPage = 1;
-	$scope.loadData();
-});
-
-maestro.controller('prmtsFiltroModalCtrl', function($scope, $modal) {
-	$scope.items = [ 'item1', 'item2', 'item3' ];
-
-	$scope.open = function(size) {
-		if (size == null) {
-			size = 'lg';
-		}
-		
+	$scope.openFiltro = function(size) {
 		var modalInstance = $modal.open({
-			templateUrl : 'prmt-filtro.html',
+			templateUrl : 'partials/maestro/prmt-filtro.html',
 			controller : 'prmtsFiltroCtrl',
 			size : size,
 			resolve : {
-				items : function() {
-					return $scope.items;
+				enti : function() {
+					return $scope.enti;
+				},
+				itemCriterio : function() {
+					return $scope.itemCriterio;
 				}
 			}
 		});
@@ -71,6 +60,13 @@ maestro.controller('prmtsFiltroModalCtrl', function($scope, $modal) {
 		}, function() {
 		});
 	};
+
+	if ($scope.currentPage == null) {
+		$routeParams.page = 1;
+	}
+
+	$scope.currentPage = 1;
+	$scope.loadData();
 });
 
 maestro.controller('prmtsFiltroCtrl', function($scope, $modalInstance) {

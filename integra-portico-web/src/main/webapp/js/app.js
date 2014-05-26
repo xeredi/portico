@@ -39,6 +39,8 @@ app.config(function($translateProvider) {
 		prmt_finicio : 'F. Inicio',
 		prmt_ffin : 'F. Fin',
 		prmt_i18n_texto : 'Descripcion',
+		prmtCriterio_parametro : 'Parametro',
+		prmtCriterio_fechaVigencia : 'Fec. Vigencia',
 
 		sprm_finicio : 'F. Inicio',
 		sprm_ffin : 'F. Fin',
