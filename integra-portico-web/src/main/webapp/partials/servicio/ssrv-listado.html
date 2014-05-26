@@ -110,9 +110,8 @@
 </ul>
 -->
 
-<pagination on-select-page="pageChanged(page)" total-items="itemList.count" page="itemList.page"
-    items-per-page="itemList.limit" max-size="maxSize" class="pagination-sm" previous-text="&lsaquo;"
-    next-text="&rsaquo;"></pagination>
+<pagination total-items="itemList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
+	max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
 <div class="table-responsive">
     <table class="table table-condensed table-hover table-nonfluid">

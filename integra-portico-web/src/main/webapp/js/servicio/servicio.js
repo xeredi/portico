@@ -28,18 +28,16 @@ servicio.controller('srvcsCtrl', function($http, $scope, $routeParams) {
 		});
 	};
 
-	$scope.pageChanged = function(page) {
-		$routeParams.page = page;
+	$scope.pageChanged = function() {
+		$routeParams.page = $scope.currentPage;
 		$scope.loadData();
 	};
 
-	if ($scope.page == null) {
-		console.log('Inicializar page');
-
+	if ($scope.currentPage == null) {
 		$routeParams.page = 1;
 	}
 
-	$scope.maxSize = 1;
+	$scope.currentPage = 1;
 	$scope.loadData();
 });
 
@@ -74,18 +72,16 @@ servicio.controller('ssrvsCtrl', function($http, $scope, $routeParams) {
 		});
 	};
 
-	$scope.pageChanged = function(page) {
-		$routeParams.page = page;
+	$scope.pageChanged = function() {
+		$routeParams.page = $scope.currentPage;
 		$scope.loadData();
 	};
 
-	if ($scope.page == null) {
-		console.log('Inicializar page');
-
+	if ($scope.currentPage == null) {
 		$routeParams.page = 1;
 	}
 
-	$scope.maxSize = 1;
+	$scope.currentPage = 1;
 	$scope.loadData();
 });
 
