@@ -17,7 +17,9 @@ app.config(function($translateProvider) {
 		boton_exportar : 'Exportar',
 		boton_guardar : 'Guardar',
 		boton_modificar : 'Editar',
+		boton_editar : 'Editar',
 		boton_volver : 'Volver',
+		boton_filtro : 'Filtro',
 
 		menu_tpsrs : 'Servicios',
 		menu_peprs : 'Estadisticas',

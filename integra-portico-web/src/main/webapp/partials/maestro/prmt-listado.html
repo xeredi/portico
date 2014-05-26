@@ -1,9 +1,9 @@
 <div>
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<a class="btn btn-default" href="#/maestro/tpprs"><i class="glyphicon glyphicon-home"></i> {{'boton_volver' |
-				translate}}</a>
-			<!--
+    <div class="btn-toolbar" role="toolbar" ng-controller="prmtsFiltroModalCtrl">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/maestro/tpprs"><i class="glyphicon glyphicon-home"></i>
+                {{'boton_volver' | translate}}</a>
+            <!--
         <c:url value="prmt-filtro-popup.action" var="urlFiltro">
             <c:forEach items="${itemCriterio.searchLinks}" var="mapEntry">
                 <c:param name="itemCriterio.${mapEntry.key}" value="${mapEntry.value}" />
@@ -26,44 +26,42 @@
             </div>
         </div>
  -->
-		</div>
 
-		<div class="btn-group">
-			<a ng-if="enti.cmdAlta" class="btn btn-default" href="#/maestro/prmt/crear/{{enti.id}}" role="button"
-				data-toggle="modal" data-target="#prmt-alta-div"><i class="glyphicon glyphicon-file"></i> {{'boton_alta' |
-				translate}}</a>
-			<div ng-if="enti.cmdAlta" class="modal" id="prmt-alta-div" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content"></div>
-				</div>
-			</div>
-			<a ng-if="enti.cmdEdicion" class="btn btn-default" href="prmt-modificar-popup.action" role="button"
-				data-toggle="modal" data-target="#prmt-modificar-div"><i class="glyphicon glyphicon-edit"></i>
-				{{'boton_modificar' | translate}}</a>
-			<div ng-if="enti.cmdEdicion" class="modal" id="prmt-modificar-div" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content"></div>
-				</div>
-			</div>
-			<a ng-if="enti.cmdDuplicado" class="btn btn-default" href="prmt-duplicar-popup.action" role="button"
-				data-toggle="modal" data-target="#prmt-duplicar-div"><i class="glyphicon glyphicon-tags"></i> {{'boton_duplicar'
-				| translate}}</a>
-			<div ng-if="enti.cmdDuplicado" class="modal" id="prmt-duplicar-div" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content"></div>
-				</div>
-			</div>
-			<a ng-if="enti.cmdBaja" class="btn btn-default" href="prmt-borrar-popup.action" role="button" data-toggle="modal"
-				data-target="#prmt-borrar-div"><i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}</a>
-			<div ng-if="enti.cmdBaja" class="modal" id="prmt-borrar-div" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <script type="text/ng-template" id="prmt-filtro.html">
+			        <div class="modal-header">
+            			<h3 class="modal-title">Filtro</h3>
+        			</div>
+        			<div class="modal-body">
+            			<ul>
+                			<li ng-repeat="item in items">
+                    			<a ng-click="selected.item = item">{{ item }}</a>
+                			</li>
+            			</ul>
+            			Selected: <b>{{ selected.item }}</b>
+        			</div>
+        			<div class="modal-footer">
+            			<button class="btn btn-primary" ng-click="ok()">OK</button>
+            			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        			</div>
+   			</script>
 
-	<!--
+            <button class="btn btn-default" ng-click="open()">
+                <i class="glyphicon glyphicon-filter"></i> {{'boton_filtro' | translate}}
+            </button>
+        </div>
+
+        <div class="btn-group">
+            <a ng-if="enti.cmdAlta" class="btn btn-default" href="#/maestro/prmt/crear/{{enti.id}}"><i
+                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a> <a ng-if="enti.cmdEdicion"
+                class="btn btn-default" href="#/maestro/prmt/editar"><i class="glyphicon glyphicon-edit"></i>
+                {{'boton_modificar' | translate}}</a> <a ng-if="enti.cmdDuplicado" class="btn btn-default"
+                href="#/maestro/prmt/duplicar/"><i class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' |
+                translate}}</a> <a ng-if="enti.cmdBaja" class="btn btn-default" href="#/maestro/prmt/borrar/"><i
+                class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}</a>
+        </div>
+    </div>
+
+    <!--
     <c:url value="prmt-listado.action" var="urlListado">
         <c:forEach items="${itemCriterio.searchLinks}" var="mapEntry">
             <c:param name="itemCriterio.${mapEntry.key}" value="${mapEntry.value}" />
@@ -101,42 +99,43 @@
     </ul>
 -->
 
-	<pagination total-items="itemList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
-		max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
-	<!--
+    <pagination total-items="itemList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
+        max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+    <!--
 	<div ng-controller="prmtPageCtrl"></div>
  -->
-	<div class="table-responsive">
-		<table class="table table-condensed table-hover table-nonfluid">
-			<thead>
-				<tr>
-					<th class="buttonLinks" nowrap="nowrap" />
-					<th class="codigo" nowrap="nowrap">{{'prmt_codigo' | translate}}</th>
-					<th ng-if="enti.i18n" nowrap="nowrap">{{'prmt_i18n_texto' | translate}}</th>
-					<th ng-if="enti.tempExp" class="date" nowrap="nowrap">{{'prmt_finicio' | translate}}</th>
-					<th ng-if="enti.tempExp" class="date" nowrap="nowrap">{{'prmt_ffin' | translate}}</th>
-					<th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
-				</tr>
-			</thead>
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap">{{'prmt_codigo' | translate}}</th>
+                    <th ng-if="enti.i18n" nowrap="nowrap">{{'prmt_i18n_texto' | translate}}</th>
+                    <th ng-if="enti.tempExp" class="date" nowrap="nowrap">{{'prmt_finicio' | translate}}</th>
+                    <th ng-if="enti.tempExp" class="date" nowrap="nowrap">{{'prmt_ffin' | translate}}</th>
+                    <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
+                </tr>
+            </thead>
 
-			<tbody>
-				<tr ng-repeat="item in itemList.list">
-					<td><a href="#/maestro/prmt/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-					<td>{{item.parametro}}</td>
-					<td ng-if="enti.i18n">{{item.i18n.texto}}</td>
-					<td ng-if="enti.tempExp">{{item.prvr.finicio | date:('fmt_date' | translate)}}</td>
-					<td ng-if="enti.tempExp">{{item.prvr.ffin | date:('fmt_date' | translate)}}</td>
-					<td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap">
-						<span ng-switch-when="BO"><i ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i></span>
-						<span ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}</span> <span
-						ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</span> <span
-						ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span
-						ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}</span> <span
-						ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span
-						ng-switch-when="PR" title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+            <tbody>
+                <tr ng-repeat="item in itemList.list">
+                    <td><a href="#/maestro/prmt/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{item.parametro}}</td>
+                    <td ng-if="enti.i18n">{{item.i18n.texto}}</td>
+                    <td ng-if="enti.tempExp">{{item.prvr.finicio | date:('fmt_date' | translate)}}</td>
+                    <td ng-if="enti.tempExp">{{item.prvr.ffin | date:('fmt_date' | translate)}}</td>
+                    <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
+                        nowrap="nowrap"><span ng-switch-when="BO"><i
+                            ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i></span> <span
+                        ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal |
+                            number:2}}</span> <span ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera
+                            | number:0}}</span> <span ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha
+                            | date:('fmt_date' | translate)}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha
+                            | date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
+                        ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
+                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

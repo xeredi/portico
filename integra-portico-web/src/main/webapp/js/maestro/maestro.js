@@ -4,6 +4,8 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/maestro/prmts/:entiId', {
 		templateUrl : 'partials/maestro/prmt-listado.html',
 		controller : 'prmtsCtrl'
+	}).when('/maestro/prmts/exportar/:entiId', {
+		controller : 'prmtsExportCtrl'
 	}).when('/maestro/prmt/crear/:entiId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
 		controller : 'prmtCrearCtrl'
@@ -13,12 +15,11 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 	}).when('/maestro/prmt/duplicar/:itemId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
 		controller : 'prmtDuplicarCtrl'
+	}).when('/maestro/prmt/imprimir/:itemId', {
+		controller : 'prmtImprimirCtrl'
 	}).when('/maestro/prmt/:itemId', {
 		templateUrl : 'partials/maestro/prmt-detalle.html',
 		controller : 'prmtCtrl'
-	}).when('/maestro/prmt/popup/:itemId', {
-		templateUrl : 'partials/maestro/prmt-detalle-popup.html',
-		controller : 'prmtPopupCtrl'
 	});
 } ]);
 
@@ -47,6 +48,44 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams) {
 	$scope.loadData();
 });
 
+maestro.controller('prmtsFiltroModalCtrl', function($scope, $modal) {
+	$scope.items = [ 'item1', 'item2', 'item3' ];
+
+	$scope.open = function(size) {
+
+		var modalInstance = $modal.open({
+			templateUrl : 'prmt-filtro.html',
+			controller : 'prmtsFiltroCtrl',
+			size : size,
+			resolve : {
+				items : function() {
+					return $scope.items;
+				}
+			}
+		});
+
+		modalInstance.result.then(function(selectedItem) {
+			$scope.selected = selectedItem;
+		}, function() {
+		});
+	};
+});
+
+maestro.controller('prmtsFiltroCtrl', function($scope, $modal) {
+	$scope.items = items;
+	$scope.selected = {
+		item : $scope.items[0]
+	};
+
+	$scope.ok = function() {
+		$modalInstance.close($scope.selected.item);
+	};
+
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+});
+
 maestro.controller('prmtCtrl', function($http, $scope, $routeParams) {
 	if ($routeParams.itemId) {
 		var url = "maestro/prmt-detalle-json.action?item.id="
@@ -64,25 +103,8 @@ maestro.controller('prmtCtrl', function($http, $scope, $routeParams) {
 	}
 });
 
-maestro.controller('prmtPopupCtrl', function($http, $scope, $routeParams) {
-	if ($routeParams.itemId) {
-		var url = "maestro/prmt-detalle-json.action?item.id="
-				+ $routeParams.itemId;
-
-		$http.get(url).success(function(data) {
-			// console.log(data);
-			$scope.enti = data.enti;
-			$scope.item = data.item;
-			$scope.p18nMap = data.p18nMap;
-			$scope.entiHijasList = data.entiHijasList;
-			$scope.itemHijosMap = data.itemHijosMap;
-			$scope.availableLanguages = data.availableLanguages;
-		});
-	}
-});
-
 maestro.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
-	if ($routeParams.itemId) {
+	if ($routeParams.entiId) {
 		var url = "maestro/prmt-alta-json.action?item.entiId="
 				+ $routeParams.entiId;
 
