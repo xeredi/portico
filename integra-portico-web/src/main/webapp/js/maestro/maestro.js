@@ -143,7 +143,7 @@ maestro.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
 
 maestro.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
 	if ($routeParams.itemId) {
-		var url = "maestro/prmt-edicion-json.action?item.id="
+		var url = "maestro/prmt-editar-json.action?item.id="
 				+ $routeParams.itemId;
 
 		$http.get(url).success(function(data) {

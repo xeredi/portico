@@ -83,12 +83,13 @@ public final class ParametroAction extends ItemAction {
 	// Acciones web
 	/**
 	 * Alta.
-	 *
+	 * 
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	@Actions({ @Action(value = "prmt-alta", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
+	@Actions({
+		@Action(value = "prmt-alta", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
 		@Action(value = "prmt-alta-json", results = { @Result(name = "success", type = "json") }),
 		@Action(value = "prmt-alta-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
 	public String alta() throws InstanceNotFoundException {
@@ -106,21 +107,24 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Modificar.
-	 *
+	 * 
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
 	@Actions({
-		@Action(value = "prmt-modificar", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
-		@Action(value = "prmt-modificar-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
-	public String modificar() throws InstanceNotFoundException {
+		@Action(value = "prmt-editar", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
+		@Action(value = "prmt-editar-json", results = { @Result(name = "success", type = "json", params = {
+				"excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
+				@Action(value = "prmt-editar-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
+	public String editar() throws InstanceNotFoundException {
 		Preconditions.checkNotNull(item);
 		Preconditions.checkNotNull(item.getId());
 
 		accion = ACCION_EDICION.modificar;
 
-		final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+		final Parametro prmtBO = BOFactory.getInjector().getInstance(
+				Parametro.class);
 		final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
 		prmtCriterioVO.setId(item.getId());
@@ -141,7 +145,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Duplicar.
-	 *
+	 * 
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -155,7 +159,8 @@ public final class ParametroAction extends ItemAction {
 
 		accion = ACCION_EDICION.duplicar;
 
-		final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+		final Parametro prmtBO = BOFactory.getInjector().getInstance(
+				Parametro.class);
 		final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
 		prmtCriterioVO.setId(item.getId());
@@ -176,29 +181,35 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Guardar.
-	 *
+	 * 
 	 * @return the string
 	 */
 	@Action(value = "prmt-guardar", results = {
-			@Result(name = "success", type = "redirectAction", params = { "actionName", "prmt-listado",
-					"itemCriterio.entiId", "%{enti.id}" }), @Result(name = "input", location = "prmt-edicion.jsp") })
+			@Result(name = "success", type = "redirectAction", params = {
+					"actionName", "prmt-listado", "itemCriterio.entiId",
+			"%{enti.id}" }),
+			@Result(name = "input", location = "prmt-edicion.jsp") })
 	public String guardar() {
 		Preconditions.checkNotNull(item);
 
-		final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+		final Parametro prmtBO = BOFactory.getInjector().getInstance(
+				Parametro.class);
 
 		enti = TipoParametroProxy.select(item.getEntiId());
 
 		// Validacion de Datos
 		if (accion == ACCION_EDICION.alta) {
-			PropertyValidator.validateRequired(this, "parametro", item.getParametro());
+			PropertyValidator.validateRequired(this, "parametro",
+					item.getParametro());
 		} else {
 			PropertyValidator.validateRequired(this, "id", item.getId());
-			PropertyValidator.validateRequired(this, "prvr.id", item.getPrvr().getId());
+			PropertyValidator.validateRequired(this, "prvr.id", item.getPrvr()
+					.getId());
 		}
 
 		if (enti.isTempExp()) {
-			PropertyValidator.validateRequired(this, "prvr.finicio", item.getPrvr().getFinicio());
+			PropertyValidator.validateRequired(this, "prvr.finicio", item
+					.getPrvr().getFinicio());
 		} else {
 			if (accion == ACCION_EDICION.alta) {
 				item.getPrvr().setFinicio(Calendar.getInstance().getTime());
@@ -209,7 +220,8 @@ public final class ParametroAction extends ItemAction {
 			for (final String idioma : p18nMap.keySet()) {
 				final ParametroI18nVO i18nVO = p18nMap.get(idioma);
 
-				PropertyValidator.validateRequired(this, "p18nMap['" + idioma + "'].texto", i18nVO.getTexto());
+				PropertyValidator.validateRequired(this, "p18nMap['" + idioma
+						+ "'].texto", i18nVO.getTexto());
 
 				i18nVO.setIdioma(idioma);
 			}
@@ -258,7 +270,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Borrar.
-	 *
+	 * 
 	 * @return the string
 	 */
 	@Action(value = "prmt-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
@@ -268,17 +280,20 @@ public final class ParametroAction extends ItemAction {
 		Preconditions.checkNotNull(item.getEntiId());
 
 		if (item.getPrvr() == null || item.getPrvr().getId() == null) {
-			throw new Error("Identificador de version del parametro no especificado");
+			throw new Error(
+					"Identificador de version del parametro no especificado");
 		}
 
-		final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+		final Parametro prmtBO = BOFactory.getInjector().getInstance(
+				Parametro.class);
 
 		enti = TipoParametroProxy.select(item.getEntiId());
 
 		try {
 			prmtBO.delete(item.getPrvr().getId(), enti);
 
-			addActionMessage("Elemento del Maestro '" + enti.getNombre() + "' eliminado correctamente");
+			addActionMessage("Elemento del Maestro '" + enti.getNombre()
+					+ "' eliminado correctamente");
 		} catch (final InstanceNotFoundException ex) {
 			addActionError(getText("error.prmt.notFound"));
 		}
@@ -288,7 +303,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Detalle.
-	 *
+	 * 
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -302,7 +317,8 @@ public final class ParametroAction extends ItemAction {
 		Preconditions.checkNotNull(item);
 		Preconditions.checkNotNull(item.getId());
 
-		final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+		final Parametro prmtBO = BOFactory.getInjector().getInstance(
+				Parametro.class);
 		final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
 		prmtCriterioVO.setId(item.getId());
@@ -318,8 +334,10 @@ public final class ParametroAction extends ItemAction {
 			p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
 		}
 
-		if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-			final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+		if (enti.getEntiHijasList() != null
+				&& !enti.getEntiHijasList().isEmpty()) {
+			final Subparametro sprmBO = BOFactory.getInjector().getInstance(
+					Subparametro.class);
 
 			entiHijasList = new ArrayList<>();
 			itemHijosMap = new HashMap<>();
@@ -334,8 +352,9 @@ public final class ParametroAction extends ItemAction {
 				sprmCriterioVO.setIdioma(getIdioma());
 
 				entiHijasList.add(TipoSubparametroProxy.select(tpspId));
-				itemHijosMap.put(tpspId, sprmBO.selectList(sprmCriterioVO,
-						PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
+				itemHijosMap.put(tpspId, sprmBO
+						.selectList(sprmCriterioVO, PaginatedList.getOffset(
+								PaginatedList.FIRST_PAGE, ROWS), ROWS));
 			}
 		}
 
@@ -362,7 +381,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Sets the item.
-	 *
+	 * 
 	 * @param value
 	 *            the new item
 	 */
@@ -372,7 +391,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Gets the p18n map.
-	 *
+	 * 
 	 * @return the p18n map
 	 */
 	public Map<String, ParametroI18nVO> getP18nMap() {
@@ -381,7 +400,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Sets the p18n map.
-	 *
+	 * 
 	 * @param value
 	 *            the value
 	 */
@@ -399,7 +418,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Gets the enti hijas list.
-	 *
+	 * 
 	 * @return the enti hijas list
 	 */
 	public final List<TipoSubparametroVO> getEntiHijasList() {
@@ -408,7 +427,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Gets the item hijos map.
-	 *
+	 * 
 	 * @return the item hijos map
 	 */
 	public final Map<Long, PaginatedList<SubparametroVO>> getItemHijosMap() {
