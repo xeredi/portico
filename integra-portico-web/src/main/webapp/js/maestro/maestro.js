@@ -69,12 +69,11 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 	$scope.loadData();
 });
 
-maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance, entiId,
-		itemCriterio) {
+maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance,
+		entiId, itemCriterio) {
 	$scope.itemCriterio = itemCriterio;
 
-	var url = "maestro/prmt-filtro-json.action?itemCriterio.entiId="
-			+ entiId;
+	var url = "maestro/prmt-filtro-json.action?itemCriterio.entiId=" + entiId;
 
 	$http.get(url).success(function(data) {
 		console.log(data);
@@ -82,6 +81,22 @@ maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance, en
 		$scope.limits = data.limits;
 		$scope.labelValuesMap = data.labelValuesMap;
 	});
+
+	$scope.getLocation = function(entiId, textoBusqueda) {
+		return $http.get(
+				'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId
+						+ "&itemLupaCriterio.textoBusqueda=" + textoBusqueda
+						+ "&itemLupaCriterio.fechaVigencia=11/12/2014").then(
+				function(res) {
+					console.log(res.data);
+
+					var addresses = [];
+					angular.forEach(res.data.itemList, function(item) {
+						addresses.push(item.label);
+					});
+					return addresses;
+				});
+	};
 
 	$scope.ok = function() {
 		$modalInstance.close();
