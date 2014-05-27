@@ -64,11 +64,13 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      */
     @Actions({ @Action(value = "ssrv-filtro"),
             @Action(value = "ssrv-filtro-popup", results = { @Result(name = "success", location = "ssrv-filtro.jsp") }) })
-    public String editarFiltro() {
+    public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
+
+        loadLabelValuesMap();
 
         return SUCCESS;
     }

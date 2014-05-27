@@ -34,7 +34,8 @@ app.config(function($translateProvider) {
 		menu_confs : 'Configuracion',
 
 		modal_filtro : 'Filtro',
-		
+		limit : 'Max. Resultados',
+
 		prmt_codigo : 'Codigo',
 		prmt_finicio : 'F. Inicio',
 		prmt_ffin : 'F. Fin',

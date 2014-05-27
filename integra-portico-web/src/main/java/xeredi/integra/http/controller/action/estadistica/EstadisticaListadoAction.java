@@ -64,7 +64,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     // Acciones web
     /**
      * Editar filtro.
-     * 
+     *
      * @return the string
      */
     @Actions({ @Action(value = "estd-filtro"),
@@ -75,12 +75,14 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
         enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
 
+        loadLabelValuesMap();
+
         return SUCCESS;
     }
 
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Action(value = "estd-listado")
@@ -106,7 +108,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
     /**
      * Gets the autps.
-     * 
+     *
      * @return the autps
      */
     public List<LabelValueVO> getAutpList() {
@@ -129,7 +131,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param value
      *            the new item criterio
      */
@@ -139,7 +141,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
     /**
      * Gets the item list.
-     * 
+     *
      * @return the item list
      */
     public final PaginatedList<EstadisticaVO> getItemList() {

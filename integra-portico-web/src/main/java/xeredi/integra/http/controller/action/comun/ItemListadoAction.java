@@ -50,7 +50,7 @@ public abstract class ItemListadoAction extends BaseAction {
 
     /**
      * Gets the limits.
-     * 
+     *
      * @return the limits
      */
     public final int[] getLimits() {
@@ -58,11 +58,9 @@ public abstract class ItemListadoAction extends BaseAction {
     }
 
     /**
-     * Gets the label values map.
-     * 
-     * @return the label values map
+     * Load label values map.
      */
-    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+    protected final void loadLabelValuesMap() {
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
@@ -83,27 +81,34 @@ public abstract class ItemListadoAction extends BaseAction {
                         getItemCriterio().getIdioma()));
             }
         }
+    }
 
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
         return labelValuesMap;
     }
 
     /**
      * Gets the enti.
-     * 
+     *
      * @return the enti
      */
     public abstract EntidadVO getEnti();
 
     /**
      * Gets the item criterio.
-     * 
+     *
      * @return the item criterio
      */
     public abstract ItemCriterioVO getItemCriterio();
 
     /**
      * Gets the page.
-     * 
+     *
      * @return the page
      */
     public final int getPage() {
@@ -112,7 +117,7 @@ public abstract class ItemListadoAction extends BaseAction {
 
     /**
      * Sets the page.
-     * 
+     *
      * @param value
      *            the new page
      */
@@ -122,7 +127,7 @@ public abstract class ItemListadoAction extends BaseAction {
 
     /**
      * Gets the limit.
-     * 
+     *
      * @return the limit
      */
     public final Integer getLimit() {
@@ -131,7 +136,7 @@ public abstract class ItemListadoAction extends BaseAction {
 
     /**
      * Sets the limit.
-     * 
+     *
      * @param value
      *            the new limit
      */

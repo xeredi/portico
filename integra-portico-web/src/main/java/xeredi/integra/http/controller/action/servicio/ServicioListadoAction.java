@@ -76,11 +76,13 @@ public final class ServicioListadoAction extends ItemListadoAction {
             @Action(value = "srvc-filtro"),
             @Action(value = "srvc-filtro-popup", results = { @Result(name = "success", location = "srvc-filtro.jsp") }),
             @Action(value = "srvc-filtro-ftl-popup", results = { @Result(name = "success", type = "freemarker", location = "srvc-filtro.ftl") }) })
-    public String editarFiltro() {
+    public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         enti = TipoServicioProxy.select(itemCriterio.getEntiId());
+
+        loadLabelValuesMap();
 
         return SUCCESS;
     }

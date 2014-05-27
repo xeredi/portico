@@ -47,8 +47,8 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 			controller : 'prmtsFiltroCtrl',
 			size : size,
 			resolve : {
-				enti : function() {
-					return $scope.enti;
+				entiId : function() {
+					return $routeParams.entiId;
 				},
 				itemCriterio : function() {
 					return $scope.itemCriterio;
@@ -69,7 +69,20 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 	$scope.loadData();
 });
 
-maestro.controller('prmtsFiltroCtrl', function($scope, $modalInstance) {
+maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance, entiId,
+		itemCriterio) {
+	$scope.itemCriterio = itemCriterio;
+
+	var url = "maestro/prmt-filtro-json.action?itemCriterio.entiId="
+			+ entiId;
+
+	$http.get(url).success(function(data) {
+		console.log(data);
+		$scope.enti = data.enti;
+		$scope.limits = data.limits;
+		$scope.labelValuesMap = data.labelValuesMap;
+	});
+
 	$scope.ok = function() {
 		$modalInstance.close();
 	};
