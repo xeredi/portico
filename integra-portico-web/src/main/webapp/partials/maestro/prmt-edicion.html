@@ -9,6 +9,21 @@
 				<label>{{'prmt_codigo' | translate}}</label> <input type="text" name="item.parametro" id="item.parametro"
 					value="{{item.parametro}}" required="required" maxlength="30" class="form-control input-sm" />
 			</div>
+
+			<div ng-if="enti.tempExp" class="col-md-2 form-group">
+				<label>{{'prmt_finicio' | translate}}</label>
+				<div class="dropdown">
+					<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href=""> Click here
+						to show calendar </a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<datetimepicker data-ng-model="data.date" data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle' }"></datetimepicker>
+					</ul>
+				</div>
+			</div>
+
+			<div ng-if="enti.tempExp" class="col-md-2 form-group">
+				<label>{{'prmt_ffin' | translate}}</label>
+			</div>
 		</div>
 	</fieldset>
 </div>

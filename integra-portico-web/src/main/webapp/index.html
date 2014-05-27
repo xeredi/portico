@@ -16,16 +16,21 @@
 <script type="text/javascript" src="webjars/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
 -->
 
-<link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="static/angular-datetimepicker/0.2.2/css/datetimepicker.css" />
 <link rel="stylesheet" type="text/css" href="css/main.css" />
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
-<script type="text/javascript" src="webjars/angular-translate/2.0.1/angular-translate.min.js"></script>
 <script type="text/javascript"
-    src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+	src="//cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js"></script>
+<script type="text/javascript"
+	src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<script type="text/javascript" src="static/angular-datetimepicker/0.2.2/js/datetimepicker.js"></script>
+
 
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/configuracion/configuracion.js"></script>
@@ -35,33 +40,33 @@
 <title>{{'app_nombre' | translate}}</title>
 </head>
 <body>
-    <header class="navbar navbar-inverse navbar-fixed-top">
-        <nav class="collapse navbar-collapse" role="navigation">
-            <ul class="nav navbar-nav">
-                <li><a href="index.html" class="brand">{{'app_nombre' | translate}}</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Menu</a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li role="presentation" class="dropdown-header">Gestion</li>
-                        <li><a href="#/servicio/tpsrs">{{'menu_tpsrs' | translate}}</a></li>
-                        <li><a href="#/estadistica/peprs">{{'menu_peprs' | translate}}</a></li>
-                        <li><a href="#/maestro/tpprs">{{'menu_tpprs' | translate}}</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Administracion</li>
-                        <li><a href="#/proceso/prbts">{{'menu_prbts' | translate}}</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Parametrizacion</li>
-                        <li><a href="#/metamodelo/tpsrs">{{'menu_metamodelo_tpsrs' | translate}}</a></li>
-                        <li><a href="#/metamodelo/tpess">{{'menu_metamodelo_tpess' | translate}}</a></li>
-                        <li><a href="#/metamodelo/tpprs">{{'menu_metamodelo_tpprs' | translate}}</a></li>
-                        <li><a href="#/metamodelo/tpdts">{{'menu_metamodelo_tpdts' | translate}}</a></li>
-                        <li><a href="#/configuracion/confs">{{'menu_confs' | translate}}</a></li>
-                    </ul></li>
-            </ul>
-        </nav>
-    </header>
+	<header class="navbar navbar-inverse navbar-fixed-top">
+		<nav class="collapse navbar-collapse" role="navigation">
+			<ul class="nav navbar-nav">
+				<li><a href="index.html" class="brand">{{'app_nombre' | translate}}</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Menu</a>
+					<ul class="dropdown-menu" role="menu">
+						<li role="presentation" class="dropdown-header">Gestion</li>
+						<li><a href="#/servicio/tpsrs">{{'menu_tpsrs' | translate}}</a></li>
+						<li><a href="#/estadistica/peprs">{{'menu_peprs' | translate}}</a></li>
+						<li><a href="#/maestro/tpprs">{{'menu_tpprs' | translate}}</a></li>
+						<li role="presentation" class="divider"></li>
+						<li role="presentation" class="dropdown-header">Administracion</li>
+						<li><a href="#/proceso/prbts">{{'menu_prbts' | translate}}</a></li>
+						<li role="presentation" class="divider"></li>
+						<li role="presentation" class="dropdown-header">Parametrizacion</li>
+						<li><a href="#/metamodelo/tpsrs">{{'menu_metamodelo_tpsrs' | translate}}</a></li>
+						<li><a href="#/metamodelo/tpess">{{'menu_metamodelo_tpess' | translate}}</a></li>
+						<li><a href="#/metamodelo/tpprs">{{'menu_metamodelo_tpprs' | translate}}</a></li>
+						<li><a href="#/metamodelo/tpdts">{{'menu_metamodelo_tpdts' | translate}}</a></li>
+						<li><a href="#/configuracion/confs">{{'menu_confs' | translate}}</a></li>
+					</ul></li>
+			</ul>
+		</nav>
+	</header>
 
-    <div ng-view id="body-content"></div>
+	<div ng-view id="body-content"></div>
 </body>
 </html>
