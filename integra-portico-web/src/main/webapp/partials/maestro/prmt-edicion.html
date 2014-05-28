@@ -1,56 +1,140 @@
 <div>
-	<fieldset>
-		<input type="hidden" name="item.entiId" value="{{item.entiId}}" /> <input type="hidden" name="item.prvr.id"
-			value="{{item.prvr.id}}" /> <input type="hidden" name="item.id" value="{{item.id}}" /> <input type="hidden"
-			name="accion" value="{{accion}}" />
+    <fieldset>
+        <input type="hidden" name="item.entiId" value="{{item.entiId}}" /> <input type="hidden" name="item.prvr.id"
+            value="{{item.prvr.id}}" /> <input type="hidden" name="item.id" value="{{item.id}}" /> <input
+            type="hidden" name="accion" value="{{accion}}" />
 
-		<div class="row">
-			<div class="col-md-2 form-group">
-				<label>{{'prmt_codigo' | translate}}</label> <input type="text" name="item.parametro" id="item.parametro"
-					value="{{item.parametro}}" required="required" maxlength="30" class="form-control input-sm" />
-			</div>
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{'prmt_codigo' | translate}}</label> <input type="text" name="item.parametro"
+                    id="item.parametro" value="{{item.parametro}}" required="required" maxlength="30"
+                    class="form-control input-sm" />
+            </div>
 
-			<div ng-if="enti.tempExp" class="col-md-2 form-group">
-				<label>{{'prmt_finicio' | translate}}</label>
-				<div class="dropdown">
-					<a class="dropdown-toggle" id="datepickerFinicio" role="button" data-toggle="dropdown" data-target="#" href="#">
-						<div class="input-group">
-							<input type="text" class="form-control input-sm" data-ng-model="item.prvr.finicio"><span
-								class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-						</div>
-					</a>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-						<datetimepicker data-ng-model="item.prvr.finicio"
-							data-datetimepicker-config="{ dropdownSelector: '#datepickerFinicio' }" />
-					</ul>
-				</div>
-			</div>
+            <div ng-if="enti.tempExp" class="col-md-2 form-group">
+                <label>{{'prmt_finicio' | translate}}</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="datepickerFinicio" role="button" data-toggle="dropdown"
+                        data-target="#" href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" data-ng-model="item.prvr.finicio"><span
+                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="item.prvr.finicio"
+                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFinicio' }" />
+                    </ul>
+                </div>
+            </div>
 
-			<div ng-if="enti.tempExp" class="col-md-2 form-group">
-				<label>{{'prmt_ffin' | translate}}</label>
-				<div class="dropdown">
-					<a class="dropdown-toggle" id="datepickerFfin" role="button" data-toggle="dropdown" data-target="#" href="#">
-						<div class="input-group">
-							<input type="text" class="form-control input-sm" data-ng-model="item.prvr.ffin"><span
-								class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-						</div>
-					</a>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-						<datetimepicker data-ng-model="item.prvr.ffin"
-							data-datetimepicker-config="{ dropdownSelector: '#datepickerFfin' }" />
-					</ul>
-				</div>
-			</div>
-		</div>
+            <div ng-if="enti.tempExp" class="col-md-2 form-group">
+                <label>{{'prmt_ffin' | translate}}</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="datepickerFfin" role="button" data-toggle="dropdown" data-target="#"
+                        href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" data-ng-model="item.prvr.ffin"><span
+                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="item.prvr.ffin"
+                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFfin' }" />
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-		<div ng-if="enti.i18n">
-			<div ng-repeat="availableLanguage in availableLanguages" class="row">
-				<div class="col-md-10 form-group">
-					<label>Texto {{availableLanguage}}</label> <input type="text" id="p18nMap['{{availableLanguage}}'].texto"
-						name="p18nMap['{{availableLanguage}}'].texto" value="{{p18nMap[availableLanguage].texto}}" required="required"
-						maxlength="350" class="form-control input-sm" />
-				</div>
-			</div>
-		</div>
-	</fieldset>
+        <div ng-if="enti.i18n">
+            <div ng-repeat="availableLanguage in availableLanguages" class="row">
+                <div class="col-md-10 form-group">
+                    <label>Texto {{availableLanguage}}</label> <input type="text"
+                        id="p18nMap['{{availableLanguage}}'].texto" name="p18nMap['{{availableLanguage}}'].texto"
+                        value="{{p18nMap[availableLanguage].texto}}" required="required" maxlength="350"
+                        class="form-control input-sm" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset ng-repeat="engdId in enti.engdList">
+        <legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
+
+        <div class="row">
+            <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
+                class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
+                <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
+
+                <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
+                    <select ng-switch-when="BO" name="item.itdtMap[{{tpdtId}}].booleano"
+                        id="item.itdtMap[{{tpdtId}}].booleano" class="form-control input-sm">
+                        <option value="" />
+                        <option value="true">{{'fmt_true' | translate}}</option>
+                        <option value="false">{{'fmt_false' | translate}}</option>
+                    </select> <input ng-switch-when="ND" type="text" name="item.itdtMap[{{tpdtId}}].cantidadDecimal"
+                        id="item.itdtMap[{{tpdtId}}].cantidadDecimal" value="{{item.itdtMap[tpdtId].cantidadDecimal}}"
+                        class="form-control input-sm number" /> <input ng-switch-when="NE" type="text"
+                        name="item.itdtMap[{{tpdtId}}].cantidadEntera" id="item.itdtMap[{{tpdtId}}].cantidadEntera"
+                        value="{{item.itdtMap[tpdtId].cantidadEntera}}" class="form-control input-sm number" />
+                    <div ng-switch-when="FE" class="dropdown">
+                        <a class="dropdown-toggle" id="datepicker_{{tpdtId}}" role="button" data-toggle="dropdown"
+                            data-target="#" href="#">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm"
+                                    data-ng-model="item.itdtMap[tpdtId].fecha"
+                                    value="{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}"><span
+                                    class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="item.itdtMap[tpdtId].fecha"
+                                data-datetimepicker-config="{ dropdownSelector: '#datepicker_tpdtId' }" />
+                        </ul>
+                    </div>
+                    <div ng-switch-when="FH" class="dropdown">
+                        <a class="dropdown-toggle" id="datepicker_{{tpdtId}}" role="button" data-toggle="dropdown"
+                            data-target="#" href="#">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm"
+                                    data-ng-model="item.itdtMap[tpdtId].fecha"
+                                    value="{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}"><span
+                                    class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="item.itdtMap[tpdtId].fecha"
+                                data-datetimepicker-config="{ dropdownSelector: '#datepicker_tpdtId' }" />
+                        </ul>
+                    </div>
+                    <!--  value="{{itemCriterio.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}" -->
+                    <select ng-switch-when="CR" name="item.itdtMap[{{tpdtId}}].cadena"
+                        id="item.itdtMap[{{tpdtId}}].cadena" class="form-control input-sm">
+                        <option value="" />
+                        <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}">{{cdrf.valor}}</option>
+                    </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
+                        name="item.itdtMap[{{tpdtId}}].cadena" id="item.itdtMap[{{tpdtId}}].cadena"
+                        value="{{item.itdtMap[tpdtId].cadena}}" class="form-control input-sm" />
+                    <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
+                        name="item.itdtMap[{{tpdtId}}].cadena" id="item.itdtMap[{{tpdtId}}].cadena"
+                        class="form-control input-sm">{{item.itdtMap[tpdtId].cadena}}</textarea>
+                    <select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
+                        name="item.itdtMap[{{tpdtId}}].prmt.id" id="item.itdtMap[{{tpdtId}}].prmt.id"
+                        class="form-control input-sm">
+                        <option value="" />
+                        <option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
+                            value="{{labelValue.value}}">{{labelValue.label}}</option>
+                    </select>
+                    <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm">
+                        <input type="text" ng-controller="prmtsLupaCtrl" ng-model="asyncSelected"
+                            typeahead="labelValue for labelValue in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+                            typeahead-loading="loading" class="form-control input-sm"> <i ng-show="loading"
+                            class="glyphicon glyphicon-refresh"></i> <input type="hidden"
+                            name="item.itdtMap[tpdtId].prmt.id" id="item_itdtMap[tpdtId]_prmt_id"
+                            value="{{item.itdtMap[tpdtId].prmt.id}}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 </div>

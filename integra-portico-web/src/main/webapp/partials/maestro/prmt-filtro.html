@@ -1,93 +1,101 @@
 <div class="modal-header">
-	<h3 class="modal-title">{{'modal_filtro' | translate}} - {{enti.nombre}}</h3>
+    <h3 class="modal-title">{{'modal_filtro' | translate}} - {{enti.nombre}}</h3>
 </div>
 <div class="modal-body">
-	<fieldset>
-		<input type="hidden" name="itemCriterio.entiId" value="{{enti.id}}" />
+    <fieldset>
+        <input type="hidden" name="itemCriterio.entiId" value="{{enti.id}}" />
 
-		<div class="row">
-			<div class="col-md-2 form-group">
-				<label>{{'prmtCriterio_parametro' | translate}}</label> <input type="text" name="itemCriterio.parametro"
-					id="itemCriterio.parametro" value="{{itemCriterio.parametro}}" class="form-control input-sm" />
-			</div>
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{'prmtCriterio_parametro' | translate}}</label> <input type="text" name="itemCriterio.parametro"
+                    id="itemCriterio.parametro" value="{{itemCriterio.parametro}}" class="form-control input-sm" />
+            </div>
 
-			<div class="col-md-2 form-group">
-				<label>{{'prmtCriterio_fechaVigencia' | translate}}</label>
-				<div class="dropdown">
-					<a class="dropdown-toggle" id="datepickerFVigencia" role="button" data-toggle="dropdown" data-target="#" href="#">
-						<div class="input-group">
-							<input type="text" class="form-control input-sm" data-ng-model="itemCriterio.fechaVigencia"><span
-								class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-						</div>
-					</a>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-						<datetimepicker data-ng-model="itemCriterio.fechaVigencia"
-							data-datetimepicker-config="{ dropdownSelector: '#datepickerFVigencia' }" />
-					</ul>
-				</div>
-			</div>
+            <div class="col-md-2 form-group">
+                <label>{{'prmtCriterio_fechaVigencia' | translate}}</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="datepickerFVigencia" role="button" data-toggle="dropdown"
+                        data-target="#" href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" data-ng-model="itemCriterio.fechaVigencia"><span
+                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="itemCriterio.fechaVigencia"
+                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFVigencia' }" />
+                    </ul>
+                </div>
+            </div>
 
-			<div class="col-md-2 form-group pull-right">
-				<label>{{'limit' | translate}}</label> <select name="limit" id="limit" class="form-control input-sm">
-					<option ng-repeat="limit in limits" class="pull-right" value="{{limit}}">{{limit}}</option>
-				</select>
-			</div>
-		</div>
+            <div class="col-md-2 form-group pull-right">
+                <label>{{'limit' | translate}}</label> <select name="limit" id="limit" class="form-control input-sm">
+                    <option ng-repeat="limit in limits" class="pull-right" value="{{limit}}">{{limit}}</option>
+                </select>
+            </div>
+        </div>
 
-		<div class="row">
-			<div ng-repeat="tpdtId in enti.entdList">
-				<div ng-if="enti.entdMap[tpdtId].filtrable"
-					class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
-					<input type="hidden" id="itemCriterio.itdtMap[{{tpdtId}}].tpdtId" name="itemCriterio.itdtMap[{{tpdtId}}].tpdtId"
-						value="{{tpdtId}}" /> <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
+        <div class="row">
+            <div ng-repeat="tpdtId in enti.entdList">
+                <div ng-if="enti.entdMap[tpdtId].filtrable"
+                    class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
+                    <input type="hidden" id="itemCriterio.itdtMap[{{tpdtId}}].tpdtId"
+                        name="itemCriterio.itdtMap[{{tpdtId}}].tpdtId" value="{{tpdtId}}" /> <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
 
-					<div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
-						<select ng-switch-when="BO" name="itemCriterio.itdtMap[{{tpdtId}}].booleano"
-							id="itemCriterio.itdtMap[{{tpdtId}}].booleano" class="form-control input-sm">
-							<option value="" />
-							<option value="true">{{'fmt_true' | translate}}</option>
-							<option value="false">{{'fmt_false' | translate}}</option>
-						</select> <input ng-switch-when="ND" type="text" name="itemCriterio.itdtMap[{{tpdtId}}].cantidadDecimal"
-							id="itemCriterio.itdtMap[{{tpdtId}}].cantidadDecimal" value="{{itemCriterio.itdtMap[tpdtId].cantidadDecimal}}"
-							class="form-control input-sm number" /> <input ng-switch-when="NE" type="text"
-							name="itemCriterio.itdtMap[{{tpdtId}}].cantidadEntera" id="itemCriterio.itdtMap[{{tpdtId}}].cantidadEntera"
-							value="{{itemCriterio.itdtMap[tpdtId].cantidadEntera}}" class="form-control input-sm number" /> <input
-							ng-switch-when="FE" name="itemCriterio.itdtMap[{{tpdtId}}].fecha" id="itemCriterio.itdtMap[{{tpdtId}}].fecha"
-							type="text" value="{{itemCriterio.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}"
-							class="form-control input-sm" /> <input ng-switch-when="FH" name="itemCriterio.itdtMap[{{tpdtId}}].fecha"
-							id="itemCriterio.itdtMap[{{tpdtId}}].fecha" type="text"
-							value="{{itemCriterio.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}" class="form-control input-sm" />
-						<select ng-switch-when="CR" name="itemCriterio.itdtMap[{{tpdtId}}].cadena"
-							id="itemCriterio.itdtMap[{{tpdtId}}].cadena" class="form-control input-sm">
-							<option value="" />
-							<option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}">{{cdrf.valor}}</option>
-						</select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
-							name="itemCriterio.itdtMap[{{tpdtId}}].cadena" id="itemCriterio.itdtMap[{{tpdtId}}].cadena"
-							value="{{itemCriterio.itdtMap[tpdtId].cadena}}" class="form-control input-sm" />
-						<textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
-							name="itemCriterio.itdtMap[{{tpdtId}}].cadena" id="itemCriterio.itdtMap[{{tpdtId}}].cadena"
-							class="form-control input-sm">{{itemCriterio.itdtMap[tpdtId].cadena}}</textarea>
-						<select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
-							name="itemCriterio.itdtMap[{{tpdtId}}].prmt.id" id="itemCriterio.itdtMap[{{tpdtId}}].prmt.id"
-							class="form-control input-sm">
-							<option value="" />
-							<option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]" value="{{labelValue.value}}">{{labelValue.label}}</option>
-						</select>
-						<div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm">
-							<input type="text" ng-model="asyncSelected"
-								typeahead="address for address in getLocation(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
-								typeahead-loading="loadingLocations" class="form-control input-sm"> <i ng-show="loadingLocations"
-								class="glyphicon glyphicon-refresh"></i> <input type="hidden" name="itemCriterio.itdtMap[tpdtId].prmt.id"
-								id="itemCriterio_itdtMap[tpdtId]_prmt_id" value="{{itemCriterio.itdtMap[tpdtId].prmt.id}}" />
-						</div>
-					</div>
+                    <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
+                        <select ng-switch-when="BO" name="itemCriterio.itdtMap[{{tpdtId}}].booleano"
+                            id="itemCriterio.itdtMap[{{tpdtId}}].booleano" class="form-control input-sm">
+                            <option value="" />
+                            <option value="true">{{'fmt_true' | translate}}</option>
+                            <option value="false">{{'fmt_false' | translate}}</option>
+                        </select> <input ng-switch-when="ND" type="text" name="itemCriterio.itdtMap[{{tpdtId}}].cantidadDecimal"
+                            id="itemCriterio.itdtMap[{{tpdtId}}].cantidadDecimal"
+                            value="{{itemCriterio.itdtMap[tpdtId].cantidadDecimal}}"
+                            class="form-control input-sm number" /> <input ng-switch-when="NE" type="text"
+                            name="itemCriterio.itdtMap[{{tpdtId}}].cantidadEntera"
+                            id="itemCriterio.itdtMap[{{tpdtId}}].cantidadEntera"
+                            value="{{itemCriterio.itdtMap[tpdtId].cantidadEntera}}" class="form-control input-sm number" />
+                        <input ng-switch-when="FE" name="itemCriterio.itdtMap[{{tpdtId}}].fecha"
+                            id="itemCriterio.itdtMap[{{tpdtId}}].fecha" type="text"
+                            value="{{itemCriterio.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}"
+                            class="form-control input-sm" /> <input ng-switch-when="FH"
+                            name="itemCriterio.itdtMap[{{tpdtId}}].fecha" id="itemCriterio.itdtMap[{{tpdtId}}].fecha"
+                            type="text"
+                            value="{{itemCriterio.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}"
+                            class="form-control input-sm" /> <select ng-switch-when="CR"
+                            name="itemCriterio.itdtMap[{{tpdtId}}].cadena" id="itemCriterio.itdtMap[{{tpdtId}}].cadena"
+                            class="form-control input-sm">
+                            <option value="" />
+                            <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}">{{cdrf.valor}}</option>
+                        </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
+                            name="itemCriterio.itdtMap[{{tpdtId}}].cadena" id="itemCriterio.itdtMap[{{tpdtId}}].cadena"
+                            value="{{itemCriterio.itdtMap[tpdtId].cadena}}" class="form-control input-sm" />
+                        <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
+                            name="itemCriterio.itdtMap[{{tpdtId}}].cadena" id="itemCriterio.itdtMap[{{tpdtId}}].cadena"
+                            class="form-control input-sm">{{itemCriterio.itdtMap[tpdtId].cadena}}</textarea>
+                        <select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
+                            name="itemCriterio.itdtMap[{{tpdtId}}].prmt.id"
+                            id="itemCriterio.itdtMap[{{tpdtId}}].prmt.id" class="form-control input-sm">
+                            <option value="" />
+                            <option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
+                                value="{{labelValue.value}}">{{labelValue.label}}</option>
+                        </select>
+                        <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm">
+                            <input type="text" ng-controller="prmtsLupaCtrl" ng-model="asyncSelected"
+                                typeahead="labelValue for labelValue in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+                                typeahead-loading="loading" class="form-control input-sm"> <i ng-show="loading"
+                                class="glyphicon glyphicon-refresh"></i> <input type="hidden"
+                                name="itemCriterio.itdtMap[tpdtId].prmt.id" id="itemCriterio_itdtMap[tpdtId]_prmt_id"
+                                value="{{itemCriterio.itdtMap[tpdtId].prmt.id}}" />
+                        </div>
+                    </div>
 
-				</div>
-			</div>
-		</div>
-	</fieldset>
+                </div>
+            </div>
+        </div>
+    </fieldset>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" ng-click="ok()">{{'boton_aceptar' | translate}}</button>
-	<button class="btn" ng-click="cancel()">{{'boton_cancelar' | translate}}</button>
+    <button class="btn btn-primary" ng-click="ok()">{{'boton_aceptar' | translate}}</button>
+    <button class="btn" ng-click="cancel()">{{'boton_cancelar' | translate}}</button>
 </div>
