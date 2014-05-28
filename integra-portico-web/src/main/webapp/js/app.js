@@ -1,5 +1,6 @@
 var app = angular.module('integraApp', [ 'ui.bootstrap', 'ngRoute',
-		'pascalprecht.translate', 'configuracion', 'maestro', 'servicio' ]);
+		'ui.bootstrap.datetimepicker', 'pascalprecht.translate',
+		'configuracion', 'maestro', 'servicio' ]);
 
 app.config(function($translateProvider) {
 	$translateProvider.translations('es', {

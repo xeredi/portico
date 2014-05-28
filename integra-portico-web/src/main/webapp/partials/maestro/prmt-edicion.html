@@ -13,16 +13,43 @@
 			<div ng-if="enti.tempExp" class="col-md-2 form-group">
 				<label>{{'prmt_finicio' | translate}}</label>
 				<div class="dropdown">
-					<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href=""> Click here
-						to show calendar </a>
+					<a class="dropdown-toggle" id="datepickerFinicio" role="button" data-toggle="dropdown" data-target="#" href="#">
+						<div class="input-group">
+							<input type="text" class="form-control input-sm" data-ng-model="item.prvr.finicio"><span
+								class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						</div>
+					</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-						<datetimepicker data-ng-model="data.date" data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle' }"></datetimepicker>
+						<datetimepicker data-ng-model="item.prvr.finicio"
+							data-datetimepicker-config="{ dropdownSelector: '#datepickerFinicio' }" />
 					</ul>
 				</div>
 			</div>
 
 			<div ng-if="enti.tempExp" class="col-md-2 form-group">
 				<label>{{'prmt_ffin' | translate}}</label>
+				<div class="dropdown">
+					<a class="dropdown-toggle" id="datepickerFfin" role="button" data-toggle="dropdown" data-target="#" href="#">
+						<div class="input-group">
+							<input type="text" class="form-control input-sm" data-ng-model="item.prvr.ffin"><span
+								class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						</div>
+					</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<datetimepicker data-ng-model="item.prvr.ffin"
+							data-datetimepicker-config="{ dropdownSelector: '#datepickerFfin' }" />
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="enti.i18n">
+			<div ng-repeat="availableLanguage in availableLanguages" class="row">
+				<div class="col-md-10 form-group">
+					<label>Texto {{availableLanguage}}</label> <input type="text" id="p18nMap['{{availableLanguage}}'].texto"
+						name="p18nMap['{{availableLanguage}}'].texto" value="{{p18nMap[availableLanguage].texto}}" required="required"
+						maxlength="350" class="form-control input-sm" />
+				</div>
 			</div>
 		</div>
 	</fieldset>
