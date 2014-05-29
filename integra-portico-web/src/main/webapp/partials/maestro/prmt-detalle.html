@@ -49,13 +49,26 @@
 </c:if>
 -->
 <div>
-    <tabset> <tab heading="{{enti.nombre}}">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <a ng-if="enti.cmdEdicion" class="btn btn-default" href="#/maestro/prmt/editar/{{item.id}}"><i
-                class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+	<tabset> <tab heading="{{enti.nombre}}">
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<button class="btn btn-default" ng-click="crear(enti.id)">
+				<i class="glyphicon glyphicon-file"></i> {{'boton_crear' | translate}}
+			</button>
+			<button class="btn btn-default" ng-click="editar(item.id)">
+				<i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+			</button>
+			<button class="btn btn-default" ng-click="duplicar(item.id)">
+				<i class="glyphicon glyphicon-share"></i> {{'boton_duplicar' | translate}}
+			</button>
+			<button class="btn btn-default" ng-click="borrar(item.id)">
+				<i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+			</button>
+			<button class="btn btn-default" ng-click="imprimir(item.id)">
+				<i class="glyphicon glyphicon-print"></i> {{'boton_imprimir' | translate}}
+			</button>
 
-            <!--
+			<!--
             <c:if test="${enti.cmdDuplicado}">
                 <a class="btn btn-default"
                     href="${pageContext.request.contextPath}/maestro/prmt-duplicar-popup.action?item.id=${item.id}"
@@ -72,113 +85,108 @@
                 href="${pageContext.request.contextPath}/maestro/prmt-imprimir.action?item.id=${item.id}"><i
                 class="glyphicon glyphicon-print"></i> <fmt:message key="boton.imprimir" /></a>
  -->
-        </div>
-    </div>
+		</div>
+	</div>
 
-    <fieldset>
-        <div class="row">
-            <div class="col-md-2 form-group">
-                <label>{{'prmt_codigo' | translate}}</label> <input type="text" value="{{item.parametro}}"
-                    class="form-control input-sm" disabled="disabled" />
-            </div>
+	<fieldset>
+		<div class="row">
+			<div class="col-md-2 form-group">
+				<label>{{'prmt_codigo' | translate}}</label> <input type="text" value="{{item.parametro}}"
+					class="form-control input-sm" disabled="disabled" />
+			</div>
 
-            <div ng-if="enti.tempExp" class="col-md-2 form-group">
-                <label>{{'prmt_finicio' | translate}}</label> <input type="text"
-                    value="{{item.prvr.finicio | date:('fmt_date' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
-            </div>
+			<div ng-if="enti.tempExp" class="col-md-2 form-group">
+				<label>{{'prmt_finicio' | translate}}</label> <input type="text"
+					value="{{item.prvr.finicio | date:('fmt_date' | translate)}}" class="form-control input-sm" disabled="disabled" />
+			</div>
 
-            <div ng-if="enti.tempExp" class="col-md-2 form-group">
-                <label>{{'prmt_ffin' | translate}}</label> <input type="text"
-                    value="{{item.prvr.ffin | date:('fmt_date' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
-            </div>
-        </div>
+			<div ng-if="enti.tempExp" class="col-md-2 form-group">
+				<label>{{'prmt_ffin' | translate}}</label> <input type="text"
+					value="{{item.prvr.ffin | date:('fmt_date' | translate)}}" class="form-control input-sm" disabled="disabled" />
+			</div>
+		</div>
 
-        <div ng-if="enti.i18n">
-            <div ng-repeat="availableLanguage in availableLanguages" class="row">
-                <div class="col-md-10 form-group">
-                    <label>Texto {{availableLanguage}}</label> <input type="text"
-                        value="{{p18nMap[availableLanguage].texto}}" class="form-control input-sm" disabled="disabled" />
-                </div>
-            </div>
-        </div>
-    </fieldset>
+		<div ng-if="enti.i18n">
+			<div ng-repeat="availableLanguage in availableLanguages" class="row">
+				<div class="col-md-10 form-group">
+					<label>Texto {{availableLanguage}}</label> <input type="text" value="{{p18nMap[availableLanguage].texto}}"
+						class="form-control input-sm" disabled="disabled" />
+				</div>
+			</div>
+		</div>
+	</fieldset>
 
-    <fieldset ng-repeat="engdId in enti.engdList">
-        <legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
+	<fieldset ng-repeat="engdId in enti.engdList">
+		<legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
 
-        <div class="row">
-            <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
-                class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
-                <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
-                <div ng-if="!item.itdtMap[tpdtId].filled">
-                    <input type="text" value="" class="form-control input-sm" disabled='disabled' />
-                </div>
+		<div class="row">
+			<div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
+				class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
+				<label>{{enti.entdMap[tpdtId].etiqueta}}</label>
+				<div ng-if="!item.itdtMap[tpdtId].filled">
+					<input type="text" value="" class="form-control input-sm" disabled='disabled' />
+				</div>
 
-                <div ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
-                    <input ng-switch-when="BO" type="text"
-                        value="{{'fmt_' + item.itdtMap[tpdtId].booleano | translate}}" class="form-control input-sm"
-                        disabled='disabled' /> <input ng-switch-when="ND" type="text"
-                        value="{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}" class="form-control input-sm number"
-                        disabled='disabled' /> <input ng-switch-when="NE" type="text"
-                        value="{{item.itdtMap[tpdtId].cantidadEntera | number:0}}" class="form-control input-sm number"
-                        disabled='disabled' /> <input ng-switch-when="FE" type="text"
-                        value="{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}"
-                        class="form-control input-sm" disabled='disabled' /> <input ng-switch-when="FH" type="text"
-                        value="{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}"
-                        class="form-control input-sm" disabled='disabled' /> <input ng-switch-when="CR" type="text"
-                        value="{{item.itdtMap[tpdtId].cadena}}" class="form-control input-sm" disabled='disabled' /> <input
-                        ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
-                        value="{{item.itdtMap[tpdtId].cadena}}" class="form-control input-sm" disabled='disabled' />
-                    <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
-                        class="form-control input-sm" disabled='disabled'>{{item.itdtMap[tpdtId].cadena}}</textarea>
-                    <div ng-switch-when="PR" class='input-group'>
-                        <input type='text' class="form-control input-sm" value="{{item.itdtMap[tpdtId].prmt.etiqueta}}"
-                            disabled='disabled' /> <span class="input-group-addon"><a
-                            href="#/maestro/prmt/{{item.itdtMap[tpdtId].prmt.id}}"><span
-                                class="glyphicon glyphicon-share-alt"></span></a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </fieldset>
-    </tab> <tab ng-repeat="enti in entiHijasList" heading="{{enti.nombre}}" active="tab.active" disabled="tab.disabled">
-    <table class="table table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" />
-                <th>{{enti.tpprAsociado.nombre}}</th>
+				<div ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
+					<input ng-switch-when="BO" type="text" value="{{'fmt_' + item.itdtMap[tpdtId].booleano | translate}}"
+						class="form-control input-sm" disabled='disabled' /> <input ng-switch-when="ND" type="text"
+						value="{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}" class="form-control input-sm number"
+						disabled='disabled' /> <input ng-switch-when="NE" type="text"
+						value="{{item.itdtMap[tpdtId].cantidadEntera | number:0}}" class="form-control input-sm number"
+						disabled='disabled' /> <input ng-switch-when="FE" type="text"
+						value="{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}" class="form-control input-sm"
+						disabled='disabled' /> <input ng-switch-when="FH" type="text"
+						value="{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}" class="form-control input-sm"
+						disabled='disabled' /> <input ng-switch-when="CR" type="text" value="{{item.itdtMap[tpdtId].cadena}}"
+						class="form-control input-sm" disabled='disabled' /> <input ng-switch-when="TX"
+						ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text" value="{{item.itdtMap[tpdtId].cadena}}"
+						class="form-control input-sm" disabled='disabled' />
+					<textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4" class="form-control input-sm"
+						disabled='disabled'>{{item.itdtMap[tpdtId].cadena}}</textarea>
+					<div ng-switch-when="PR" class='input-group'>
+						<input type='text' class="form-control input-sm" value="{{item.itdtMap[tpdtId].prmt.etiqueta}}"
+							disabled='disabled' /> <span class="input-group-addon"><a
+							href="#/maestro/prmt/{{item.itdtMap[tpdtId].prmt.id}}"><span class="glyphicon glyphicon-share-alt"></span></a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+	</tab> <tab ng-repeat="enti in entiHijasList" heading="{{enti.nombre}}" active="tab.active" disabled="tab.disabled">
+	<table class="table table-condensed table-hover table-nonfluid">
+		<thead>
+			<tr>
+				<th class="buttonLinks" />
+				<th>{{enti.tpprAsociado.nombre}}</th>
 
-                <th ng-if="enti.tempExp" class="date">{{'sprm_finicio' | translate}}</th>
-                <th ng-if="enti.tempExp" class="date">{{'sprm_ffin' | translate}}</th>
+				<th ng-if="enti.tempExp" class="date">{{'sprm_finicio' | translate}}</th>
+				<th ng-if="enti.tempExp" class="date">{{'sprm_ffin' | translate}}</th>
 
-                <th ng-repeat="tpdtId in enti.entdGridList">{{enti.entdMap[tpdtId].etiqueta}}</th>
-            </tr>
-        </thead>
+				<th ng-repeat="tpdtId in enti.entdGridList">{{enti.entdMap[tpdtId].etiqueta}}</th>
+			</tr>
+		</thead>
 
-        <tbody>
-            <tr ng-repeat="item in itemHijosMap[enti.id].list">
-                <td><a href="sprm-modificar.action?item.id={{item.id}}"><i class="glyphicon glyphicon-edit"></i></a>
-                    <a href="sprm-borrar.action?item.id={{item.id}}"><i class="glyphicon glyphicon-remove"></i></a></td>
-                <td title="{{item.prmtAsociado.etiqueta}}"><a href="sprm-detalle.action?item.id={{item.id}}"><b>{{item.prmtAsociado.parametro}}</b></a></td>
+		<tbody>
+			<tr ng-repeat="item in itemHijosMap[enti.id].list">
+				<td><a href="sprm-modificar.action?item.id={{item.id}}"><i class="glyphicon glyphicon-edit"></i></a> <a
+					href="sprm-borrar.action?item.id={{item.id}}"><i class="glyphicon glyphicon-remove"></i></a></td>
+				<td title="{{item.prmtAsociado.etiqueta}}"><a href="sprm-detalle.action?item.id={{item.id}}"><b>{{item.prmtAsociado.parametro}}</b></a></td>
 
-                <td ng-if="enti.tempExp">{{item.spvr.finicio | date:('fmt_date' | translate)}}</td>
-                <td ng-if="enti.tempExp">{{item.spvr.ffin | date:('fmt_date' | translate)}}</td>
+				<td ng-if="enti.tempExp">{{item.spvr.finicio | date:('fmt_date' | translate)}}</td>
+				<td ng-if="enti.tempExp">{{item.spvr.ffin | date:('fmt_date' | translate)}}</td>
 
-                <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
-                    nowrap="nowrap"><span ng-switch-when="BO"><i ng-if="item.itdtMap[tpdtId].cantidadEntera"
-                        class="glyphicon glyphicon-ok"></i></span> <span ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadEntera
-                        | number:2}}</i>
-                </span> <span ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</i>
-                </span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</i></span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</i></span>
-                    <span ng-switch-when="PR" title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</i></span>
-                    <span ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</i></span> <span
-                    ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}</i></span></td>
-            </tr>
-        </tbody>
-    </table>
-    </tab> </tabset>
+				<td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
+					ng-switch-when="BO"><i ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i></span> <span
+					ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadEntera | number:2}}</i>
+				</span> <span ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</i>
+				</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</i></span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</i></span>
+					<span ng-switch-when="PR" title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</i></span>
+					<span ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</i></span> <span
+					ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}</i></span></td>
+			</tr>
+		</tbody>
+	</table>
+	</tab> </tabset>
 </div>
 
 <!--

@@ -15,6 +15,7 @@ app.config(function($translateProvider) {
 		boton_aceptar : 'Aceptar',
 		boton_cancelar : 'Cancelar',
 		boton_alta : 'Nuevo',
+		boton_crear : 'Nuevo',
 		boton_borrar : 'Borrar',
 		boton_duplicar : 'Duplicar',
 		boton_exportar : 'Exportar',
@@ -23,6 +24,7 @@ app.config(function($translateProvider) {
 		boton_editar : 'Editar',
 		boton_volver : 'Volver',
 		boton_filtro : 'Filtro',
+		boton_imprimir : 'Imprimir',
 
 		menu_tpsrs : 'Servicios',
 		menu_peprs : 'Estadisticas',

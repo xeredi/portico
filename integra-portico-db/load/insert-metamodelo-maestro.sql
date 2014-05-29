@@ -57,9 +57,8 @@ VALUES (20009, 45025, 1, 3, 3, 4, 1, 1, 1, NULL, 'Tipo Est');
 -- Organizacion
 DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20010;
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (20010, 1, 'General');
-DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20010;
-DELETE FROM tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20010;
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_numero, engd_etiqueta) VALUES (20010, 2, 'Direccion');
+DELETE FROM tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20010;
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (20010, 41020, 1, 1, 1, 4, 1, 1, 1, NULL, 'Nombre');
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
