@@ -601,6 +601,33 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional
+    public ParametroVO select(Long prvrId, String idioma) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(prvrId);
+
+        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+        final Set<Long> prvrIds = new HashSet<>();
+
+        prvrIds.add(prvrId);
+
+        prmtCriterioVO.setPrvrIds(prvrIds);
+        prmtCriterioVO.setIdioma(idioma);
+
+        final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
+
+        if (prmtVO == null) {
+            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+        }
+
+        fillDependencies(Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
+
+        return prmtVO;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public final List<LabelValueVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO) {
         Preconditions.checkNotNull(prmtLupaCriterioVO);
 
@@ -639,8 +666,8 @@ public class ParametroBO implements Parametro {
      * @param prmtList
      *            Colleccion de parámetros de los que se desea obtener sus datos asociados.
      * @param prmtCriterioVO
-     *            Criterio de búsqueda de parámetros. Este criterio ha sido el utilizado para obtener la
-     *            coleccion de parámetros pasada como argumento.
+     *            Criterio de búsqueda de parámetros. Este criterio ha sido el utilizado para
+     *            obtener la coleccion de parámetros pasada como argumento.
      * @param useIds
      *            the use ids
      */

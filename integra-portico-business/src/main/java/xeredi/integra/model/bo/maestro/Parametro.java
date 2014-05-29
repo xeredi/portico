@@ -23,7 +23,7 @@ public interface Parametro {
 
     /**
      * Alta de los datos de un nuevo parámetro.
-     * 
+     *
      * @param prmtVO
      *            Datos de un parámetro
      * @param tpprVO
@@ -38,7 +38,7 @@ public interface Parametro {
 
     /**
      * Duplicado de los datos de un parámetro.
-     * 
+     *
      * @param prmtVO
      *            Nuevos datos del parámetro.
      * @param tpprVO
@@ -53,7 +53,7 @@ public interface Parametro {
 
     /**
      * Modificación de los datos de un parámetro existente.
-     * 
+     *
      * @param prmtVO
      *            Nuevos datos del parámetro.
      * @param tpprVO
@@ -68,7 +68,7 @@ public interface Parametro {
 
     /**
      * Borrado de los datos de una version de un parametro.
-     * 
+     *
      * @param prvrId
      *            Identificador de la version de un parámetro.
      * @param tpprVO
@@ -80,7 +80,7 @@ public interface Parametro {
 
     /**
      * Búsqueda de parámetros que cumplan un criterio de búsqueda.
-     * 
+     *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
      * @return {@link List} de parametros que cumplen el criterio de busqueda.
@@ -89,7 +89,7 @@ public interface Parametro {
 
     /**
      * Búsqueda paginada de parámetros que cumplan un criterio de búsqueda.
-     * 
+     *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
      * @param offset
@@ -102,7 +102,7 @@ public interface Parametro {
 
     /**
      * Búsqueda de parámetros que cumplan un criterio de búsqueda.
-     * 
+     *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
      * @return {@link Map} de parametros que cumplen el criterio de busqueda, indexados por
@@ -112,7 +112,7 @@ public interface Parametro {
 
     /**
      * Búsqueda de parámetros que cumplan un criterio de búsqueda.
-     * 
+     *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
      * @return {@link Map} de parametros que cumplen el criterio de busqueda, indexados por código
@@ -123,7 +123,7 @@ public interface Parametro {
     /**
      * Búsqueda de pares (codigo de parámetro, identificador de parámetro) de parámetros que cumplan
      * un criterio de búsqueda.
-     * 
+     *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
      * @return {@link Map} de identificadores de parametros que cumplen el criterio de busqueda,
@@ -134,7 +134,7 @@ public interface Parametro {
     /**
      * Búsqueda de pares (identificador de parámetro, codigo de parámetro) de parámetros que cumplan
      * un criterio de búsqueda.
-     * 
+     *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
      * @return {@link Map} de códigos de parametros que cumplen el criterio de busqueda, indexados
@@ -145,7 +145,7 @@ public interface Parametro {
     /**
      * Map de Listas de pares (etiqueta de parametro, identificador de parametro), para una lista de
      * tipos de parámetro, una fecha de referencia y un idioma.
-     * 
+     *
      * @param tpprIds
      *            Lista de identificadores de tipo de parámetro.
      * @param fechaReferencia
@@ -162,7 +162,7 @@ public interface Parametro {
 
     /**
      * Búsqueda de un parámetro que cumpla un criterio de búsqueda.
-     * 
+     *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
      * @return Datos del parámetro buscado.
@@ -173,7 +173,7 @@ public interface Parametro {
 
     /**
      * Búsqueda de un parámetro a partir de su identificador.
-     * 
+     *
      * @param prmtId
      *            Identificador de un parámetro.
      * @param idioma
@@ -188,9 +188,22 @@ public interface Parametro {
             throws InstanceNotFoundException;
 
     /**
+     * Select.
+     *
+     * @param prvrId
+     *            the prvr id
+     * @param idioma
+     *            the idioma
+     * @return the parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    ParametroVO select(final Long prvrId, final String idioma) throws InstanceNotFoundException;
+
+    /**
      * Búsqueda de Lista de pares (etiqueta de parametro, identificador de parametro) de parámetros
      * que cumplan un criterio de búsqueda.
-     * 
+     *
      * @param prmtLupaCriterioVO
      *            the prmt lupa criterio vo
      * @return {@link List} de pares (etiqueta de parametro, identificador de parametro) que cumplen
@@ -200,7 +213,7 @@ public interface Parametro {
 
     /**
      * Búsqueda de los textos internacionalizados para una versión de un parámetro.
-     * 
+     *
      * @param prvrId
      *            Identificador de la versión de un parámetro.
      * @return {@link Map} de textos internacionalizados de la versión de un parámetro, indexados

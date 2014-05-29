@@ -52,7 +52,7 @@
 	<tabset> <tab heading="{{enti.nombre}}">
 	<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group">
-			<button class="btn btn-default" ng-click="crear(enti.id)">
+			<button class="btn btn-default" ng-controller="prmtEditCtrl" ng-click="crear(enti.id)">
 				<i class="glyphicon glyphicon-file"></i> {{'boton_crear' | translate}}
 			</button>
 			<button class="btn btn-default" ng-click="editar(item.id)">

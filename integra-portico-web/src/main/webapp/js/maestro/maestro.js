@@ -4,11 +4,14 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/maestro/prmts/:entiId', {
 		templateUrl : 'partials/maestro/prmt-listado.html',
 		controller : 'prmtsCtrl'
+	}).when('/maestro/prmts/:entiId/:page', {
+		templateUrl : 'partials/maestro/prmt-listado.html',
+		controller : 'prmtsCtrl'
 	}).when('/maestro/prmts/exportar/:entiId', {
 		controller : 'prmtsExportCtrl'
 	}).when('/maestro/prmt/crear/:entiId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
-		controller : 'prmtCtrl'
+		controller : 'prmtEditCtrl'
 	}).when('/maestro/prmt/editar/:itemId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
 		controller : 'prmtCtrl'
@@ -27,6 +30,8 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 	$scope.loadData = function() {
 		var url = "maestro/prmt-listado-json.action?itemCriterio.entiId="
 				+ $routeParams.entiId + "&page=" + $routeParams.page;
+
+		// alert($routeParams.page);
 
 		$http.get(url).success(function(data) {
 			// console.log(data);
@@ -61,11 +66,15 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 		});
 	};
 
-	if ($scope.currentPage == null) {
+	if ($routeParams.page == null) {
+		// alert('inicializar numero de pagina');
+
 		$routeParams.page = 1;
 	}
 
-	$scope.currentPage = 1;
+	$scope.page = $routeParams.page;
+	$scope.currentPage = $routeParams.page;
+
 	$scope.loadData();
 });
 
@@ -111,25 +120,54 @@ maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance,
 	};
 });
 
+maestro.controller('prmtEditCtrl', function($http, $scope, $routeParams,
+		$location) {
+
+	$scope.crear = function(entiId) {
+		if (entiId) {
+			alert('alta');
+
+			var url = "maestro/prmt-crear-json.action?item.entiId=" + entiId;
+
+			$http.get(url).success(function(data) {
+				// console.log(data);
+				$scope.enti = data.enti;
+				$scope.item = data.item;
+				$scope.p18nMap = data.p18nMap;
+				$scope.availableLanguages = data.availableLanguages;
+				$scope.labelValuesMap = data.labelValuesMap;
+			});
+
+			// $location.path('/maestro/prmt/crear/' + entiId);
+		}
+	};
+});
+
 maestro.controller('prmtCtrl',
 		function($http, $scope, $routeParams, $location) {
-			if ($routeParams.itemId) {
-				var url = "maestro/prmt-detalle-json.action?item.id="
-						+ $routeParams.itemId;
-
-				$http.get(url).success(function(data) {
-					// console.log(data);
-					$scope.enti = data.enti;
-					$scope.item = data.item;
-					$scope.p18nMap = data.p18nMap;
-					$scope.entiHijasList = data.entiHijasList;
-					$scope.itemHijosMap = data.itemHijosMap;
-					$scope.availableLanguages = data.availableLanguages;
-				});
-			}
+			// $scope.detalle = function(itemId) {
+			// if (itemId) {
+			// var url = "maestro/prmt-detalle-json.action?item.id="
+			// + $routeParams.itemId;
+			//
+			// $http.get(url).success(function(data) {
+			// // console.log(data);
+			// $scope.enti = data.enti;
+			// $scope.item = data.item;
+			// $scope.p18nMap = data.p18nMap;
+			// $scope.entiHijasList = data.entiHijasList;
+			// $scope.itemHijosMap = data.itemHijosMap;
+			// $scope.availableLanguages = data.availableLanguages;
+			// });
+			// }
+			// };
 
 			$scope.crear = function(entiId) {
 				if (entiId) {
+					$location.path('/maestro/prmt/crear/' + entiId);
+
+					alert('alta');
+
 					var url = "maestro/prmt-crear-json.action?item.entiId="
 							+ entiId;
 
@@ -141,8 +179,6 @@ maestro.controller('prmtCtrl',
 						$scope.availableLanguages = data.availableLanguages;
 						$scope.labelValuesMap = data.labelValuesMap;
 					});
-
-					$location.path('/maestro/prmt/crear/' + entiId);
 				}
 			};
 
@@ -187,67 +223,72 @@ maestro.controller('prmtCtrl',
 			};
 
 			$scope.imprimir = function(itemId) {
-				alert('imprimir: ' + itemId);
+				if (itemId) {
+					var url = "maestro/prmt-imprimir.action?item.id=" + itemId;
+
+					$http({
+						method : 'GET',
+						url : "maestro/prmt-imprimir.action?item.id=" + itemId
+					});
+					// $http.get(url).success(function(data) {
+					// alert('impreso');
+					// });
+				}
 			};
 			/*
 			 */
+
+			if ($routeParams.itemId && $scope.enti == null) {
+				var url = "maestro/prmt-detalle-json.action?item.id="
+						+ $routeParams.itemId;
+
+				$http.get(url).success(function(data) { // console.log(data);
+					$scope.enti = data.enti;
+					$scope.item = data.item;
+					$scope.p18nMap = data.p18nMap;
+					$scope.entiHijasList = data.entiHijasList;
+					$scope.itemHijosMap = data.itemHijosMap;
+					$scope.availableLanguages = data.availableLanguages;
+				});
+			}
+
 		});
 /*
-maestro.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
-	if ($routeParams.entiId) {
-		var url = "maestro/prmt-crear-json.action?item.entiId="
-				+ $routeParams.entiId;
-
-		$http.get(url).success(function(data) {
-			// console.log(data);
-			$scope.enti = data.enti;
-			$scope.item = data.item;
-			$scope.p18nMap = data.p18nMap;
-			$scope.entiHijasList = data.entiHijasList;
-			$scope.itemHijosMap = data.itemHijosMap;
-			$scope.availableLanguages = data.availableLanguages;
-			$scope.labelValuesMap = data.labelValuesMap;
-		});
-	}
-});
-
-maestro.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
-	if ($routeParams.itemId) {
-		var url = "maestro/prmt-editar-json.action?item.id="
-				+ $routeParams.itemId;
-
-		$http.get(url).success(function(data) {
-			// console.log(data);
-			$scope.enti = data.enti;
-			$scope.item = data.item;
-			$scope.p18nMap = data.p18nMap;
-			$scope.entiHijasList = data.entiHijasList;
-			$scope.itemHijosMap = data.itemHijosMap;
-			$scope.availableLanguages = data.availableLanguages;
-			$scope.labelValuesMap = data.labelValuesMap;
-		});
-	}
-});
-
-maestro.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
-	if ($routeParams.itemId) {
-		var url = "maestro/prmt-duplicar-json.action?item.id="
-				+ $routeParams.itemId;
-
-		$http.get(url).success(function(data) {
-			// console.log(data);
-			$scope.enti = data.enti;
-			$scope.item = data.item;
-			$scope.p18nMap = data.p18nMap;
-			$scope.entiHijasList = data.entiHijasList;
-			$scope.itemHijosMap = data.itemHijosMap;
-			$scope.availableLanguages = data.availableLanguages;
-			$scope.labelValuesMap = data.labelValuesMap;
-		});
-	}
-});
-*/
+ * maestro.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
+ * if ($routeParams.entiId) { var url =
+ * "maestro/prmt-crear-json.action?item.entiId=" + $routeParams.entiId;
+ *
+ * $http.get(url).success(function(data) { // console.log(data); $scope.enti =
+ * data.enti; $scope.item = data.item; $scope.p18nMap = data.p18nMap;
+ * $scope.entiHijasList = data.entiHijasList; $scope.itemHijosMap =
+ * data.itemHijosMap; $scope.availableLanguages = data.availableLanguages;
+ * $scope.labelValuesMap = data.labelValuesMap; }); } });
+ *
+ * maestro.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
+ * if ($routeParams.itemId) { var url =
+ * "maestro/prmt-editar-json.action?item.id=" + $routeParams.itemId;
+ *
+ * $http.get(url).success(function(data) { // console.log(data); $scope.enti =
+ * data.enti; $scope.item = data.item; $scope.p18nMap = data.p18nMap;
+ * $scope.entiHijasList = data.entiHijasList; $scope.itemHijosMap =
+ * data.itemHijosMap; $scope.availableLanguages = data.availableLanguages;
+ * $scope.labelValuesMap = data.labelValuesMap; }); } });
+ *
+ * maestro.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
+ * if ($routeParams.itemId) { var url =
+ * "maestro/prmt-duplicar-json.action?item.id=" + $routeParams.itemId;
+ *
+ * $http.get(url).success(function(data) { // console.log(data); $scope.enti =
+ * data.enti; $scope.item = data.item; $scope.p18nMap = data.p18nMap;
+ * $scope.entiHijasList = data.entiHijasList; $scope.itemHijosMap =
+ * data.itemHijosMap; $scope.availableLanguages = data.availableLanguages;
+ * $scope.labelValuesMap = data.labelValuesMap; }); } });
+ */
 
 maestro.controller('prmtTabsCtrl', function($scope) {
 	$scope.navType = 'pills';
 });
+
+// $scope.csv = function() {
+// $http({method: 'GET', url: '/orders'});
+// };
