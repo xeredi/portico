@@ -8,13 +8,13 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 		controller : 'prmtsExportCtrl'
 	}).when('/maestro/prmt/crear/:entiId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
-		controller : 'prmtEditCtrl'
+		controller : 'prmtCrearCtrl'
 	}).when('/maestro/prmt/editar/:itemId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
-		controller : 'prmtCtrl'
+		controller : 'prmtEditarCtrl'
 	}).when('/maestro/prmt/duplicar/:itemId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
-		controller : 'prmtCtrl'
+		controller : 'prmtDuplicarCtrl'
 	}).when('/maestro/prmt/imprimir/:itemId', {
 		controller : 'prmtCtrl'
 	}).when('/maestro/prmt/:itemId', {
@@ -63,6 +63,10 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 		}, function() {
 		});
 	};
+
+	$scope.editar = function() {
+		alert('editar: ' + $scope.itemIds);
+	}
 
 	if ($routeParams.page == null) {
 		// alert('inicializar numero de pagina');
@@ -118,29 +122,6 @@ maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance,
 	};
 });
 
-maestro.controller('prmtEditCtrl', function($http, $scope, $routeParams,
-		$location) {
-
-	$scope.crear = function(entiId) {
-		if (entiId) {
-			alert('alta');
-
-			var url = "maestro/prmt-crear-json.action?item.entiId=" + entiId;
-
-			$http.get(url).success(function(data) {
-				// console.log(data);
-				$scope.enti = data.enti;
-				$scope.item = data.item;
-				$scope.p18nMap = data.p18nMap;
-				$scope.availableLanguages = data.availableLanguages;
-				$scope.labelValuesMap = data.labelValuesMap;
-			});
-
-			// $location.path('/maestro/prmt/crear/' + entiId);
-		}
-	};
-});
-
 maestro.controller('prmtCtrl',
 		function($http, $scope, $routeParams, $location) {
 			$scope.crear = function(entiId) {
@@ -160,42 +141,6 @@ maestro.controller('prmtCtrl',
 						$scope.availableLanguages = data.availableLanguages;
 						$scope.labelValuesMap = data.labelValuesMap;
 					});
-				}
-			};
-
-			$scope.editar = function(itemId) {
-				if (itemId) {
-					var url = "maestro/prmt-editar-json.action?item.id="
-							+ itemId;
-
-					$http.get(url).success(function(data) {
-						// console.log(data);
-						$scope.enti = data.enti;
-						$scope.item = data.item;
-						$scope.p18nMap = data.p18nMap;
-						$scope.availableLanguages = data.availableLanguages;
-						$scope.labelValuesMap = data.labelValuesMap;
-					});
-
-					$location.path('/maestro/prmt/editar/' + itemId);
-				}
-			};
-
-			$scope.duplicar = function(itemId) {
-				if (itemId) {
-					var url = "maestro/prmt-duplicar-json.action?item.id="
-							+ itemId;
-
-					$http.get(url).success(function(data) {
-						// console.log(data);
-						$scope.enti = data.enti;
-						$scope.item = data.item;
-						$scope.p18nMap = data.p18nMap;
-						$scope.availableLanguages = data.availableLanguages;
-						$scope.labelValuesMap = data.labelValuesMap;
-					});
-
-					$location.path('/maestro/prmt/duplicar/' + itemId);
 				}
 			};
 
@@ -234,6 +179,61 @@ maestro.controller('prmtTabsCtrl', function($scope) {
 	$scope.navType = 'pills';
 });
 
-// $scope.csv = function() {
-// $http({method: 'GET', url: '/orders'});
-// };
+maestro.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
+	if ($routeParams.entiId) {
+		var url = "maestro/prmt-crear-json.action?item.entiId="
+				+ $routeParams.entiId;
+
+		$http.get(url).success(function(data) {
+			// console.log(data);
+			$scope.accion = data.accion;
+			$scope.enti = data.enti;
+			$scope.item = data.item;
+			$scope.p18nMap = data.p18nMap;
+			$scope.availableLanguages = data.availableLanguages;
+			$scope.labelValuesMap = data.labelValuesMap;
+		});
+	}
+});
+
+maestro.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
+	if ($routeParams.itemId) {
+		var url = "maestro/prmt-editar-json.action?item.id="
+				+ $routeParams.itemId;
+
+		$http.get(url).success(function(data) {
+			// console.log(data);
+			$scope.accion = data.accion;
+			$scope.enti = data.enti;
+			$scope.item = data.item;
+			$scope.p18nMap = data.p18nMap;
+			$scope.availableLanguages = data.availableLanguages;
+			$scope.labelValuesMap = data.labelValuesMap;
+		});
+	}
+});
+
+maestro.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
+	if ($routeParams.itemId) {
+		var url = "maestro/prmt-duplicar-json.action?item.id="
+				+ $routeParams.itemId;
+
+		$http.get(url).success(function(data) {
+			// console.log(data);
+			$scope.accion = data.accion;
+			$scope.enti = data.enti;
+			$scope.item = data.item;
+			$scope.p18nMap = data.p18nMap;
+			$scope.availableLanguages = data.availableLanguages;
+			$scope.labelValuesMap = data.labelValuesMap;
+		});
+	}
+});
+
+maestro.controller('prmtGuardarCtrl', function($scope) {
+	$scope.submit = function() {
+		console.log($scope.accion);
+		console.log($scope.item);
+		console.log($scope.p18nMap);
+	};
+});
