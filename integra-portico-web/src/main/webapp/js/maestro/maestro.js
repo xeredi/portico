@@ -15,6 +15,8 @@ maestro.config([ '$routeProvider', function($routeProvider) {
 	}).when('/maestro/prmt/duplicar/:itemId', {
 		templateUrl : 'partials/maestro/prmt-edicion.html',
 		controller : 'prmtDuplicarCtrl'
+	}).when('/maestro/prmt/borrar/:itemId', {
+		controller : 'prmtBorrarCtrl'
 	}).when('/maestro/prmt/imprimir/:itemId', {
 		controller : 'prmtCtrl'
 	}).when('/maestro/prmt/:itemId', {
@@ -64,10 +66,6 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 		});
 	};
 
-	$scope.editar = function() {
-		alert('editar: ' + $scope.itemIds);
-	}
-
 	if ($routeParams.page == null) {
 		// alert('inicializar numero de pagina');
 
@@ -79,6 +77,47 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 
 	$scope.loadData();
 });
+
+maestro.controller('prmtsFiltroCtrl',
+		function($http, $scope, $modalInstance, entiId, itemCriterio) {
+			// $scope.itemCriterio = itemCriterio;
+
+			var url = "maestro/prmt-filtro-json.action?itemCriterio.entiId="
+					+ entiId;
+
+			$http.get(url).success(function(data) {
+				// console.log(data);
+				$scope.enti = data.enti;
+				$scope.limits = data.limits;
+				$scope.labelValuesMap = data.labelValuesMap;
+				$scope.itemCriterio = data.itemCriterio;
+				$scope.limit = data.limit;
+			});
+
+			$scope.ok = function() {
+				console.log("itemCriterio.parametro: "
+						+ $scope.itemCriterio.parametro);
+				console.log("itemCriterio: "
+						+ $scope.itemCriterio);
+				console.log("itemCriterio.itdtMap: "
+						+ $scope.itemCriterio.itdtMap);
+				console.log("limit:" + $scope.limit);
+
+				$http.post("maestro/prmt-listado-json.action", {
+					"data" : $scope.itemCriterio
+				}).success(function(data, status) {
+					alert("success");
+				}).error(function(data, status) {
+					alert("error");
+				});
+
+				$modalInstance.close();
+			};
+
+			$scope.cancel = function() {
+				$modalInstance.dismiss('cancel');
+			};
+		});
 
 maestro.controller('prmtsLupaCtrl', function($http, $scope) {
 	$scope.getLabelValues = function(entiId, textoBusqueda) {
@@ -97,28 +136,6 @@ maestro.controller('prmtsLupaCtrl', function($http, $scope) {
 
 					return labelValues;
 				});
-	};
-});
-
-maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance,
-		entiId, itemCriterio) {
-	$scope.itemCriterio = itemCriterio;
-
-	var url = "maestro/prmt-filtro-json.action?itemCriterio.entiId=" + entiId;
-
-	$http.get(url).success(function(data) {
-		// console.log(data);
-		$scope.enti = data.enti;
-		$scope.limits = data.limits;
-		$scope.labelValuesMap = data.labelValuesMap;
-	});
-
-	$scope.ok = function() {
-		$modalInstance.close();
-	};
-
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
 	};
 });
 
@@ -214,6 +231,8 @@ maestro.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
 });
 
 maestro.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
+	alert('Duplicar');
+
 	if ($routeParams.itemId) {
 		var url = "maestro/prmt-duplicar-json.action?item.id="
 				+ $routeParams.itemId;
@@ -230,10 +249,17 @@ maestro.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
 	}
 });
 
-maestro.controller('prmtGuardarCtrl', function($scope) {
+maestro.controller('prmtGuardarCtrl', function($scope, $location) {
 	$scope.submit = function() {
 		console.log($scope.accion);
 		console.log($scope.item);
 		console.log($scope.p18nMap);
+
+		$location.path("/maestro/prmt/" + $scope.item.id);
 	};
+});
+
+maestro.controller('prmtBorrarCtrl', function($http, $scope, $routeParams,
+		$location) {
+	alert('Borrar');
 });

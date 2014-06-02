@@ -58,10 +58,9 @@
                 {{'boton_editar' | translate}}</a>
             <a href="#/maestro/prmt/duplicar/{{item.id}}" class="btn btn-default"><i class="glyphicon glyphicon-share"></i>
                 {{'boton_duplicar' | translate}}</a>
+            <a href="#/maestro/prmt/borrar/{{item.id}}" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i>
+                {{'boton_borrar' | translate}}</a>
 
-            <button class="btn btn-default" ng-click="borrar(item.id)">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
-            </button>
             <button class="btn btn-default" ng-click="imprimir(item.id)">
                 <i class="glyphicon glyphicon-print"></i> {{'boton_imprimir' | translate}}
             </button>
