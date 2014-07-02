@@ -108,13 +108,7 @@ public class ServicioBO implements Servicio {
 		final List<ServicioVO> srvcList = new ArrayList<>();
 
 		if (count > offset) {
-			srvcCriterioVO.setOffset(offset);
-			srvcCriterioVO.setLimit(limit);
-
-			srvcList.addAll(srvcDAO.selectList(srvcCriterioVO));
-
-			srvcCriterioVO.setOffset(null);
-			srvcCriterioVO.setLimit(null);
+			srvcList.addAll(srvcDAO.selectList(srvcCriterioVO, new RowBounds(offset, limit)));
 
 			// FIXME Ojo en la paginacion, puede traer una barbaridad de
 			// dependencias

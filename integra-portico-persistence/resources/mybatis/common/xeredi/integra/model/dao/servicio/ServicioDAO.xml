@@ -120,12 +120,6 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
         ORDER BY srvc.srvc_falta DESC
-        <if test="offset != null">
-            OFFSET #{offset}
-        </if>
-        <if test="limit != null">
-            LIMIT #{limit}
-        </if>
     </select>
 
     <select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
