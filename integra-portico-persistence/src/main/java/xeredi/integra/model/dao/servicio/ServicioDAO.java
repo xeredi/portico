@@ -17,7 +17,7 @@ public interface ServicioDAO {
 
     /**
      * Exists.
-     * 
+     *
      * @param srvcVO
      *            the srvc vo
      * @return true, if successful
@@ -26,7 +26,7 @@ public interface ServicioDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param srvcVO
      *            the srvc vo
      */
@@ -34,7 +34,7 @@ public interface ServicioDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param srvcId
      *            the srvc id
      * @return the int
@@ -43,7 +43,7 @@ public interface ServicioDAO {
 
     /**
      * Select count.
-     * 
+     *
      * @param srvcCriterioVO
      *            the srvc criterio vo
      * @return the int
@@ -52,7 +52,7 @@ public interface ServicioDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param srvcCriterioVO
      *            the srvc criterio vo
      * @param bounds
@@ -63,7 +63,7 @@ public interface ServicioDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param srvcCriterioVO
      *            the srvc criterio vo
      * @return the list
@@ -72,7 +72,7 @@ public interface ServicioDAO {
 
     /**
      * Select object.
-     * 
+     *
      * @param srvcCriterioVO
      *            the srvc criterio vo
      * @return the servicio vo
@@ -81,7 +81,7 @@ public interface ServicioDAO {
 
     /**
      * Select.
-     * 
+     *
      * @param srvcId
      *            the srvc id
      * @return the servicio vo
@@ -90,11 +90,13 @@ public interface ServicioDAO {
 
     /**
      * Select lupa list.
-     * 
+     *
      * @param srvcLupaCriterioVO
      *            the srvc lupa criterio vo
+     * @param bounds
+     *            the bounds
      * @return the list
      */
-    List<LabelValueVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO);
+    List<LabelValueVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final RowBounds bounds);
 
 }

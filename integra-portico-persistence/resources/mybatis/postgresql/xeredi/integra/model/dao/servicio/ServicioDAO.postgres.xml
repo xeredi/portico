@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.servicio.ServicioDAO">
+    <select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultType="LabelValueVO">
+        <![CDATA[
+        select
+            srvc_pk AS value
+            , prmt_parametro || '/' || srvc_anno || '/' || srvc_numero AS label
+        from tbl_servicio_srvc
+            JOIN tbl_parametro_prmt ON
+                prmt_pk = srvc_subp_pk
+        WHERE
+            srvc_tpsr_pk = #{entiId}
+        ]]>
+        <if test="subpuerto != null and !subpuerto.empty">
+            AND prmt_parametro LIKE #{subpuerto}
+        </if>
+        <if test="anno != null and !anno.empty">
+            AND srvc_anno LIKE #{anno}
+        </if>
+        <if test="numero != null and !numero.empty">
+            AND srvc_numero LIKE #{numero}
+        </if>
+    </select>
+</mapper>

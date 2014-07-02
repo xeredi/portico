@@ -44,7 +44,7 @@ public final class ServicioLupaAction extends BaseAction {
     // Acciones Web
     /**
      * Lupa.
-     * 
+     *
      * @return the string
      */
     @Action(value = "srvc-lupa", results = { @Result(name = "success", type = "json") })
@@ -64,11 +64,9 @@ public final class ServicioLupaAction extends BaseAction {
             itemLupaCriterio.setNumero(tokenizer.nextToken() + "%");
         }
 
-        itemLupaCriterio.setLimit(ROWS);
-
         final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
 
-        itemList = srvcBO.selectLupaList(itemLupaCriterio);
+        itemList = srvcBO.selectLupaList(itemLupaCriterio, ROWS);
 
         return SUCCESS;
     }
@@ -77,7 +75,7 @@ public final class ServicioLupaAction extends BaseAction {
 
     /**
      * Gets the item lupa criterio.
-     * 
+     *
      * @return the item lupa criterio
      */
     public ServicioLupaCriterioVO getItemLupaCriterio() {
@@ -86,7 +84,7 @@ public final class ServicioLupaAction extends BaseAction {
 
     /**
      * Sets the item lupa criterio.
-     * 
+     *
      * @param value
      *            the new item lupa criterio
      */
@@ -96,7 +94,7 @@ public final class ServicioLupaAction extends BaseAction {
 
     /**
      * Gets the item list.
-     * 
+     *
      * @return the item list
      */
     public List<LabelValueVO> getItemList() {

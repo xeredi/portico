@@ -11,6 +11,17 @@
     </parent>
     <name>Persistencia</name>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>resources/mybatis/${database-vendor}</directory>
+            </resource>
+            <resource>
+                <directory>resources/mybatis/common</directory>
+            </resource>
+        </resources>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>xeredi</groupId>
@@ -42,14 +53,8 @@
             <artifactId>javassist</artifactId>
             <version>3.18.1-GA</version>
         </dependency>
-<!--
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-json-plugin</artifactId>
-            <version>2.3.16.1</version>
-            <scope>provided</scope>
-        </dependency>
- -->
+        <!-- <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-json-plugin</artifactId> <version>2.3.16.1</version>
+            <scope>provided</scope> </dependency> -->
         <!-- -->
     </dependencies>
 </project>

@@ -138,29 +138,6 @@
         WHERE srvc_pk = #{value}
     </select>
 
-    <select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultType="LabelValueVO">
-        <![CDATA[
-        select
-        	srvc_pk AS value
-        	, prmt_parametro || '/' || srvc_anno || '/' || srvc_numero AS label
-        from tbl_servicio_srvc
-        	JOIN tbl_parametro_prmt ON
-        		prmt_pk = srvc_subp_pk
-        WHERE
-        	srvc_tpsr_pk = #{entiId}
-        ]]>
-        <if test="subpuerto != null and !subpuerto.empty">
-            AND prmt_parametro LIKE #{subpuerto}
-        </if>
-        <if test="anno != null and !anno.empty">
-            AND srvc_anno LIKE #{anno}
-        </if>
-        <if test="numero != null and !numero.empty">
-            AND srvc_numero LIKE #{numero}
-        </if>
-        LIMIT #{limit}
-    </select>
-
     <insert id="insert" parameterType="ServicioVO">
         <![CDATA[
         INSERT INTO tbl_servicio_srvc (
@@ -172,8 +149,4 @@
         )
         ]]>
     </insert>
-    <!-- selectLabelValues SELECT srvc_subp_pk as value , ( SELECT prmt_parametro FROM tbl_parametro_prmt
-        WHERE prmt_pk = srvc_subp_pk ) || '/' || srvc_anno || '/' || srvc_numero AS label FROM tbl_servicio_srvc
-        where srvc_tpsr_pk = 21003 AND EXISTS ( SELECT 1 FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk
-        AND prmt_parametro LIKE 'P' ) AND srvc_anno LIKE '2014%' and srvc_numero LIKE '0002%' LIMIT 5; -->
 </mapper>

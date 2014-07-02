@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.comun.IgBO;
@@ -148,15 +149,15 @@ public class ServicioBO implements Servicio {
 	@Override
 	@Transactional
 	public final List<LabelValueVO> selectLupaList(
-			final ServicioLupaCriterioVO srvcLupaCriterioVO) {
+			final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit) {
 		Preconditions.checkNotNull(srvcLupaCriterioVO);
 
-		return srvcDAO.selectLupaList(srvcLupaCriterioVO);
+		return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(0, limit));
 	}
 
 	/**
 	 * Fill dependencies.
-	 * 
+	 *
 	 * @param srvcList
 	 *            the srvc list
 	 * @param srvcCriterioVO

@@ -19,7 +19,7 @@ public interface Servicio {
 
     /**
      * Select.
-     * 
+     *
      * @param srvcId
      *            the srvc id
      * @param idioma
@@ -32,7 +32,7 @@ public interface Servicio {
 
     /**
      * Select list.
-     * 
+     *
      * @param srvcCriterioVO
      *            the srvc criterio vo
      * @param offset
@@ -45,7 +45,7 @@ public interface Servicio {
 
     /**
      * Select list.
-     * 
+     *
      * @param srvcCriterioVO
      *            the srvc criterio vo
      * @return the list
@@ -54,16 +54,18 @@ public interface Servicio {
 
     /**
      * Select lupa list.
-     * 
+     *
      * @param srvcLupaCriterioVO
      *            the srvc lupa criterio vo
+     * @param limit
+     *            the limit
      * @return the list
      */
-    List<LabelValueVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO);
+    List<LabelValueVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit);
 
     /**
      * Insert.
-     * 
+     *
      * @param srvcVO
      *            the srvc vo
      * @param ssrvList
@@ -75,7 +77,7 @@ public interface Servicio {
 
     /**
      * Update.
-     * 
+     *
      * @param srvcVO
      *            the srvc vo
      */
@@ -83,7 +85,7 @@ public interface Servicio {
 
     /**
      * Duplicate.
-     * 
+     *
      * @param srvcVO
      *            the srvc vo
      */
@@ -91,7 +93,7 @@ public interface Servicio {
 
     /**
      * Delete.
-     * 
+     *
      * @param srvcId
      *            the srvc id
      * @throws InstanceNotFoundException
