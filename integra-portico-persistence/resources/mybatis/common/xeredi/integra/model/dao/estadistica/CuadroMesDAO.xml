@@ -466,7 +466,7 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        between prvr_fini AND COALESCE(prvr_ffin, NOW())
+                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt
@@ -627,17 +627,17 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        between prvr_fini AND COALESCE(prvr_ffin, NOW())
+                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt
                                         WHERE prdt_prvr_pk = prvr_pk
                                             AND prdt_tpdt_pk = getTipoDato('TIPO_MERC_EST')
                                             AND prdt_prmt_pk = (
-                                                select prmt_pk
-                                                from tbl_parametro_prmt
+                                                SELECT prmt_pk
+                                                FROM tbl_parametro_prmt
                                                 WHERE prmt_tppr_pk = getEntidad('TIPO_MERCANCIA_EST')
-                                                	and PRMT_PARAMETRO LIKE 'PS'
+                                                	AND prmt_parametro LIKE 'PS'
                                             )
                                     )
                             )
