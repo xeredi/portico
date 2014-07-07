@@ -118,13 +118,13 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (23004, 41061, 1, 3, 2, 2, 1, 1, 0, NULL, 'Esloras')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (23004, 41062, 1, 3, 3, 2, 1, 1, 0, NULL, 'Esloras/Dias')
+VALUES (23004, 41062, 1, 3, 3, 2, 1, 1, 0, NULL, 'Esloras-Dias')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23004, 41063, 1, 3, 4, 2, 1, 1, 0, NULL, 'GTs')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (23004, 41064, 1, 3, 5, 2, 1, 1, 0, NULL, 'GTs/Dias')
+VALUES (23004, 41064, 1, 3, 5, 2, 1, 1, 0, NULL, 'GTs-Dias')
 /
 -- Movimiento Mercancia
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -195,7 +195,7 @@ VALUES (23005, 41020, 1, 8, 1, 4, 0, 1, 1, NULL, 'T. Equipamiento')
 /
 -- Movimiento de Mercancia EEE
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (23006, 45055, 1, 1, 1, 4, 1, 1, 1, NULL, 'Puerto Carga/Descarga')
+VALUES (23006, 45055, 1, 1, 1, 4, 1, 1, 1, NULL, 'Puerto Carga-Descarga')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23006, 45290, 1, 1, 2, 4, 1, 1, 1, NULL, 'Mercancia')
@@ -225,7 +225,7 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (23006, 41061, 1, 4, 3, 2, 1, 1, 1, NULL, 'PAX Crucero')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (23006, 41062, 1, 4, 4, 2, 1, 1, 1, NULL, 'PAX I/F')
+VALUES (23006, 41062, 1, 4, 4, 2, 1, 1, 1, NULL, 'PAX I-F')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23006, 41063, 1, 4, 5, 2, 1, 1, 1, NULL, 'U.C. Llenas')

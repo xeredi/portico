@@ -142,7 +142,7 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (20014, 41000, 1, 2, 3, 2, 1, 1, 1, NULL, 'Insular?')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (20014, 41001, 1, 2, 4, 2, 1, 0, 0, NULL, 'Ceu/Mel/Can?')
+VALUES (20014, 41001, 1, 2, 4, 2, 1, 0, 0, NULL, 'Ceu-Mel-Can?')
 /
 
 -- Tipo de Suministro
@@ -507,13 +507,13 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (20078, 41021, 1, 4, 4, 4, 0, 1, 1, NULL, 'Referencia')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (20078, 41000, 1, 5, 5, 4, 1, 1, 1, NULL, 'Obra/Instalacion?')
+VALUES (20078, 41000, 1, 5, 5, 4, 1, 1, 1, NULL, 'Obra-Instalacion?')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (20078, 41040, 1, 6, 6, 4, 0, 1, 0, NULL, 'Valor Obra/Instalacion')
+VALUES (20078, 41040, 1, 6, 6, 4, 0, 1, 0, NULL, 'Valor Obra-Instalacion')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (20078, 41041, 1, 7, 7, 4, 0, 0, 0, NULL, 'Valor Depr. Obra/Instalacion')
+VALUES (20078, 41041, 1, 7, 7, 4, 0, 0, 0, NULL, 'Valor Depr. Obra-Instalacion')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (20078, 41042, 1, 8, 8, 4, 0, 0, 0, NULL, 'Vida Util')
@@ -884,7 +884,7 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (20005, 41002, 1,  6,  2, 2, 1, 0, 0, NULL, 'Cert. Capitania?')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (20005, 41003, 1,  6,  3, 2, 1, 0, 0, NULL, 'Insp. MOU/PSC?')
+VALUES (20005, 41003, 1,  6,  3, 2, 1, 0, 0, NULL, 'Insp. MOU-PSC?')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (20005, 41048, 1,  7,  1, 2, 0, 0, 0, NULL, 'Carga Max (Cap.)')
@@ -938,7 +938,7 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (20005, 41005, 1, 12,  4, 2, 1, 1, 1, NULL, 'Op. Comer.')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (20005, 41006, 1, 13,  1, 2, 0, 0, 0, NULL, 'Insp. MOU/PSC')
+VALUES (20005, 41006, 1, 13,  1, 2, 0, 0, 0, NULL, 'Insp. MOU-PSC')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (20005, 41104, 1, 13,  2, 2, 0, 0, 0, NULL, 'Fecha Ult. Inspeccion')
@@ -1182,7 +1182,7 @@ VALUES (20117, 41060, 1, 1, 1, 2, 1, 1, 0, NULL, 'Limite Inf.')
 INSERT INTO tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (24000, 1, 'General')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (24000, 41040, 1, 1, 1, 2, 0, 1, 0, NULL, 'Nº Puertos/semana')
+VALUES (24000, 41040, 1, 1, 1, 2, 0, 1, 0, NULL, 'Nº Puertos-semana')
 /
 
 -- Capacidad Buque

@@ -363,7 +363,7 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22005, 45155, 1, 5, 5,  4, 0, 0, 0, NULL, 'Tipo Exencion')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (22005, 41021, 1, 6, 6,  4, 1, 0, 0, NULL, 'Ind. Lleno/Vacio')
+VALUES (22005, 41021, 1, 6, 6,  4, 1, 0, 0, NULL, 'Ind. Lleno-Vacio')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22005, 41060, 1, 7, 7,  4, 0, 0, 0, NULL, 'Nº Vacios')
@@ -823,7 +823,7 @@ INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, 
 VALUES (22012, 43315, 1,  4,  4,  4, 0, 1, 0, NULL, 'Unid. Berman')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (22012, 41020, 1,  5,  5,  4, 0, 1, 0, NULL, 'Lugar Carga/Descarga')
+VALUES (22012, 41020, 1,  5,  5,  4, 0, 1, 0, NULL, 'Lugar Carga-Descarga')
 /
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22012, 45035, 1,  6,  6,  4, 0, 1, 1, NULL, 'Estibador')
@@ -915,7 +915,7 @@ VALUES (21005, 41080, 1, 10,  1, 12, 0, 0, 0, NULL, 'Observaciones')
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (21005, 41081, 1, 11,  1, 12, 0, 0, 0, NULL, 'Observaciones Fact.')
 /
--- SUCO_ESCA_ID 	number 	19 	 √  		null 		
+-- SUCO_ESCA_ID 	number 	19 	 √  		null
 -- IESC_ESCALA_ESCA
 
 -- Gasto
@@ -958,7 +958,7 @@ VALUES (22014, 45040, 1,  3,  3,  3, 1, 1, 1, NULL, 'T. IVA')
 INSERT INTO tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (22014, 45395, 1,  4,  1,  2, 0, 1, 1, NULL, 'Contador')
 /
--- LCSU_PRSU_ID 	number 	19 	 √  		null 		
+-- LCSU_PRSU_ID 	number 	19 	 √  		null
 -- ISUM_PUNTORED_PRSU
 
 

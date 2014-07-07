@@ -1805,7 +1805,7 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 /
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20046, 1, 0)
 /
-INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20047, 'P', 1, 1, 1, 1, 'GRUPO_NST', 'Grupo NST/2000')
+INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20047, 'P', 1, 1, 1, 1, 'GRUPO_NST', 'Grupo NST-2000')
 /
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20047, 1, 0)
 /
@@ -1985,7 +1985,7 @@ INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, e
 /
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20091, 1, 0)
 /
-/* TODO ver datos asociados */
+-- TODO ver datos asociados
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20093, 'P', 1, 1, 1, 1, 'CONVENIO', 'Convenio')
 /
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20093, 1, 1)
@@ -2338,19 +2338,18 @@ INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, t
 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21005, 22014, 2)
 /
 -- Punto de Red
-/*
-INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21006, 'T', 1, 1, 1, 1, 'SURE', 'Punto de Red')
-INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21006, 1, 1, NULL)
-INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22015, 'S', 1, 1, 1, 1, 'CLSU', 'Cliente de Punto de Red')
-INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22015, 21006, 1, 1, NULL)
-	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21006, 22015, 1)
-INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22016, 'S', 1, 1, 1, 1, 'GPSU', 'Gasto de Punto de Red')
-INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22016, 21006, 1, 1, NULL)
-	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21006, 22016, 2)
-INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22017, 'S', 1, 1, 1, 1, 'LPSU', 'Lectura de Punto de Red')
-INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22017, 21006, 1, 1, NULL)
-	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21006, 22017, 3)
-*/
+-- INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21006, 'T', 1, 1, 1, 1, 'SURE', 'Punto de Red')
+-- INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21006, 1, 1, NULL)
+-- INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22015, 'S', 1, 1, 1, 1, 'CLSU', 'Cliente de Punto de Red')
+-- INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22015, 21006, 1, 1, NULL)
+-- 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21006, 22015, 1)
+-- INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22016, 'S', 1, 1, 1, 1, 'GPSU', 'Gasto de Punto de Red')
+-- INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22016, 21006, 1, 1, NULL)
+-- 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21006, 22016, 2)
+-- INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22017, 'S', 1, 1, 1, 1, 'LPSU', 'Lectura de Punto de Red')
+-- INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22017, 21006, 1, 1, NULL)
+-- 	INSERT INTO tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21006, 22017, 3)
+
 -- Ocupacion de Superficie
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21007, 'T', 1, 1, 1, 1, 'OCUPACION_SUPERFICIE', 'Ocupacion de Superficie')
 /
