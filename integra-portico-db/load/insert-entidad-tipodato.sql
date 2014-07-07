@@ -10,7 +10,7 @@ DELETE FROM tbl_estadistica_estd;
 DELETE FROM tbl_cuadro_mes_cdms;
 DELETE FROM tbl_periodo_proceso_pepr;
 
-DELETE FROM tbl_subservicio_subservicio_ssss;
+DELETE FROM tbl_subserv_subserv_ssss;
 TRUNCATE TABLE tbl_subservicio_dato_ssdt;
 DELETE FROM tbl_subservicio_ssrv;
 TRUNCATE TABLE tbl_servicio_dato_srdt;

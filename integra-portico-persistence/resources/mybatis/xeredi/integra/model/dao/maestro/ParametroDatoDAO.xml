@@ -68,11 +68,11 @@ FROM (
                             WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = 'es_ES'
                         )
 
-                        WHEN tppr_tpdt_nombre_pk IS NOT NULL
+                        WHEN tppr_tpdt_pk IS NOT NULL
                         THEN (
                             SELECT prdt_cadena
                             FROM tbl_parametro_dato_prdt
-                            WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_nombre_pk
+                            WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_pk
                         )
 
                         END
@@ -83,7 +83,7 @@ FROM (
         FROM (
         	SELECT prdt_prvr_pk, prdt_tpdt_pk, prdt_nentero, prdt_ndecimal, prdt_fecha, prdt_prmt_pk, prdt_cadena
         		, prmt_parametro
-        		, tppr_es_i18n, tppr_tpdt_nombre_pk
+        		, tppr_es_i18n, tppr_tpdt_pk
         ]]>
         <if test="idioma != null and fechaVigencia != null">
         <![CDATA[

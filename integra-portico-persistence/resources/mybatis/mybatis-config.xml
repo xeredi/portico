@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<properties resource="mybatis-config.properties" />
+    <properties resource="Configuration_env.properties" />
 
 	<settings>
 		<setting name="proxyFactory" value="JAVASSIST" />

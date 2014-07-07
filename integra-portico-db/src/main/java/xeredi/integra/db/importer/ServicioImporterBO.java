@@ -21,7 +21,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import oracle.sql.TIMESTAMP;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,6 +36,7 @@ import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.proxy.metamodelo.EntidadProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.vo.comun.ItemDatoVO;
 import xeredi.integra.model.vo.maestro.ParametroCriterioVO;
@@ -90,13 +91,13 @@ public final class ServicioImporterBO {
         try {
             LOG.info("Importacion de servicios");
 
-            final PropertiesConfiguration configuration = new PropertiesConfiguration("Configuration.properties");
+            final Configuration configuration = ConfigurationUtil.getConfiguration();
 
-            Class.forName(configuration.getString("db.dataSource.driver"));
+            Class.forName(configuration.getString("db.migration.dataSource.driver"));
 
-            con = DriverManager.getConnection(configuration.getString("db.dataSource.url"),
-                    configuration.getString("db.dataSource.username"),
-                    configuration.getString("db.dataSource.password"));
+            con = DriverManager.getConnection(configuration.getString("db.migration.dataSource.url"),
+                    configuration.getString("db.migration.dataSource.username"),
+                    configuration.getString("db.migration.dataSource.password"));
 
             parseXml(entidadesList, entidadesSqlMap);
 
@@ -120,7 +121,7 @@ public final class ServicioImporterBO {
 
     /**
      * Import entity.
-     * 
+     *
      * @param con
      *            the con
      * @param entidad
@@ -376,7 +377,7 @@ public final class ServicioImporterBO {
 
     /**
      * Gets the item dato.
-     * 
+     *
      * @param entdVO
      *            the entd vo
      * @param value
@@ -467,7 +468,7 @@ public final class ServicioImporterBO {
 
     /**
      * Parses the xml.
-     * 
+     *
      * @param aserviciosList
      *            the aservicios list
      * @param aserviciosSqlMap

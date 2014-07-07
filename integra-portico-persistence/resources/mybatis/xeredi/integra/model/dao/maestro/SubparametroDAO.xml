@@ -60,10 +60,10 @@
         			SELECT p18n_texto FROM tbl_parametro_i18n_p18n
         			WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = 'es_ES'
         		)
-        		WHEN tppr_tpdt_nombre_pk IS NOT NULL
+        		WHEN tppr_tpdt_pk IS NOT NULL
         		THEN (
         			SELECT prdt_cadena FROM tbl_parametro_dato_prdt
-        			WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_nombre_pk
+        			WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_pk
         		)
         	END) as prmt_texto
         ]]>
@@ -76,7 +76,7 @@
             	, sprm_prmt_dep_pk
             	, sprm_tpsp_pk
             	, prmt_parametro
-            	, tppr_pk, tppr_es_i18n, tppr_tpdt_nombre_pk
+            	, tppr_pk, tppr_es_i18n, tppr_tpdt_pk
         ]]>
         <if test="fechaVigencia != null">
         <![CDATA[

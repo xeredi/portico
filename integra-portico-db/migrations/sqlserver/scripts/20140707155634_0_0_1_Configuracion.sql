@@ -1,6 +1,13 @@
 -- // 0 0 1 Configuracion
 -- Migration SQL that makes the change goes here.
 
+
+-- Secuencias
+INSERT INTO tbl_ig(ig_nombre, ig_inicio, ig_fin, ig_incremento, ig_cache, ig_ultimo)
+VALUES ('sq_integra', 1000000, NULL, 1, 1000, 1000000)
+/
+
+
 -- SELECT * FROM tbl_configuracion_idioma_cnid
 INSERT INTO tbl_configuracion_idioma_cnid (cnid_pk, cnid_codigo, cnid_descripcion) VALUES (30000, 'es_ES', 'Español (España)')
 /
@@ -52,4 +59,9 @@ DELETE FROM tbl_conf_clave_cncl
 DELETE FROM tbl_configuracion_entorno_cnen
 /
 DELETE FROM tbl_configuracion_idioma_cnid
+/
+
+
+DELETE FROM tbl_ig
+WHERE ig_nombre = 'sq_integra'
 /

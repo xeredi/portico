@@ -54,11 +54,11 @@
                         FROM tbl_parametro_i18n_p18n
                         WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = #{idioma}
                     )
-                    WHEN tppr_tpdt_nombre_pk IS NOT NULL
+                    WHEN tppr_tpdt_pk IS NOT NULL
                     THEN (
                         SELECT prdt_cadena
                         FROM tbl_parametro_dato_prdt
-                        WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_nombre_pk
+                        WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_pk
                     )
                 END
                 ) as prmt_texto
@@ -69,7 +69,7 @@
                 SELECT
                     srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_prmt_pk, srdt_srvc_dep_pk, srdt_cadena
                     , prmt_parametro
-                    , tppr_es_i18n, tppr_tpdt_nombre_pk
+                    , tppr_es_i18n, tppr_tpdt_pk
                     , (SELECT prvr_pk FROM tbl_parametro_version_prvr
                         WHERE
                         prvr_prmt_pk = srdt_prmt_pk

@@ -19,25 +19,19 @@
     <constant name="struts.xslt.nocache" value="false" />
 
     <!-- REST -->
-<!--
-    <constant name="struts.action.extension" value="xhtml,,xml,json,action" />
-    <constant name="struts.mapper.class" value="org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper" />
-    <constant name="struts.mapper.prefixMapping" value="/rest:rest,:struts" />
-    <constant name="struts.convention.action.suffix" value="Controller" />
-    <constant name="struts.convention.action.mapAllMatches" value="true" />
-    <constant name="struts.convention.default.parent.package" value="rest-default" />
-    <constant name="struts.convention.package.locators" value="xeredi" />
- -->
+    <!-- <constant name="struts.action.extension" value="xhtml,,xml,json,action" /> <constant name="struts.mapper.class"
+        value="org.apache.struts2.dispatcher.mapper.PrefixBasedActionMapper" /> <constant name="struts.mapper.prefixMapping" value="/rest:rest,:struts"
+        /> <constant name="struts.convention.action.suffix" value="Controller" /> <constant name="struts.convention.action.mapAllMatches"
+        value="true" /> <constant name="struts.convention.default.parent.package" value="rest-default" /> <constant name="struts.convention.package.locators"
+        value="xeredi" /> -->
 
     <package name="integra" namespace="/" extends="json-default">
         <interceptors>
-            <!-- <interceptor name="timeInterceptor" class="xeredi.integra.http.controller.interceptor.TimeInterceptor"
-                /> <interceptor name="loginInterceptor" class="xeredi.integra.http.controller.interceptor.LoginInterceptor"
+            <!-- <interceptor name="loginInterceptor" class="xeredi.integra.http.controller.interceptor.LoginInterceptor"
                 /> -->
 
             <interceptor-stack name="integraStack">
-                <!-- <interceptor-ref name="timeInterceptor" /> <interceptor-ref name="loginInterceptor"
-                    /> -->
+                <!-- <interceptor-ref name="loginInterceptor" /> -->
                 <interceptor-ref name="timer" />
                 <interceptor-ref name="logger" />
                 <interceptor-ref name="json">
@@ -58,10 +52,8 @@
         </global-results>
 
         <global-exception-mappings>
-            <exception-mapping result="404"
-                exception="xeredi.util.exception.InstanceNotFoundException" />
-            <exception-mapping result="500"
-                exception="xeredi.util.exception.InternalErrorException" />
+            <exception-mapping result="404" exception="xeredi.util.exception.InstanceNotFoundException" />
+            <exception-mapping result="500" exception="xeredi.util.exception.InternalErrorException" />
         </global-exception-mappings>
     </package>
 </struts>

@@ -43,7 +43,7 @@
     			FROM tbl_parametro_dato_prdt
     			WHERE prdt_prvr_pk = prvr_pk
     				AND prdt_tpdt_pk = (
-    					SELECT tppr_tpdt_nombre_pk FROM tbl_tipo_parametro_tppr
+    					SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
     					WHERE tppr_pk = prmt_tppr_pk
     				)
     		)

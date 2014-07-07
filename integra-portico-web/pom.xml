@@ -10,6 +10,20 @@
         <relativePath>../integra-portico-pom</relativePath>
     </parent>
     <name>Web</name>
+
+    <build>
+        <directory>target/${profile-id}</directory>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>resources/${profile-id}</directory>
+            </resource>
+        </resources>
+    </build>
+
     <dependencies>
         <!-- -->
         <dependency>

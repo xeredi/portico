@@ -33,7 +33,7 @@
 			<param name="ConversionPattern" value="%-5p %d [%l]%n\t%m%n" />
 		</layout>
 		<filter class="org.apache.log4j.varia.LevelRangeFilter">
-			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMin" value="TRACE" />
 		</filter>
 	</appender>
 
@@ -59,17 +59,16 @@
 			<param name="LevelMin" value="DEBUG" />
 		</filter>
 	</appender>
-
-	<!-- <logger name='xeredi.integra.model.dao'>
-		<level value="DEBUG" />
-		<appender-ref ref="dbLog" />
-	</logger>-->
+	<!-- <logger name='xeredi.integra.model.dao'> <appender-ref ref="dbLog"
+		/> </logger> -->
 	<logger name='xeredi'>
 		<level value="INFO" />
 
-		<appender-ref ref="debugLog" />
 		<appender-ref ref="infoLog" />
+		<appender-ref ref="debugLog" />
 	</logger>
-	<!-- <root> <level value="WARN" /> <appender-ref ref="dbLog" /> <appender-ref
-		ref="debugLog" /> <appender-ref ref="errorLog" /> </root> -->
+	<logger name='com.opensymphony.xwork2.interceptor'>
+		<appender-ref ref="infoLog" />
+		<appender-ref ref="debugLog" />
+	</logger>
 </log4j:configuration>

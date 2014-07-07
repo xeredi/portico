@@ -5,14 +5,14 @@
 <mapper namespace="xeredi.integra.model.dao.metamodelo.EntidadGrupoDatoDAO">
     <resultMap type="EntidadGrupoDatoVO" id="ResultMap">
         <id column="engd_enti_pk" property="entiId" />
-        <id column="engd_numero" property="numero" />
+        <id column="engd_orden" property="numero" />
         <result column="engd_etiqueta" property="etiqueta" />
     </resultMap>
 
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            engd_enti_pk, engd_numero, engd_etiqueta
+            engd_enti_pk, engd_orden, engd_etiqueta
         FROM
             tbl_entidad_grupo_dato_engd engd
     ]]>
@@ -24,20 +24,20 @@
                 AND engd_enti_pk = #{entiId}
             </if>
             <if test="numero != null">
-                AND engd_numero = #{numero}
+                AND engd_orden = #{numero}
             </if>
         </where>
     </sql>
 
     <select id="selectAll" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        ORDER BY engd_enti_pk, engd_numero
+        ORDER BY engd_enti_pk, engd_orden
     </select>
 
     <select id="selectList" resultMap="ResultMap" parameterType="EntidadGrupoDatoCriterioVO">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY engd_enti_pk, engd_numero
+        ORDER BY engd_enti_pk, engd_orden
     </select>
 
     <select id="selectCriterio" resultMap="ResultMap" parameterType="EntidadGrupoDatoCriterioVO">
@@ -48,7 +48,7 @@
     <select id="selectLabelValues" parameterType="EntidadGrupoDatoCriterioVO" resultType="LabelValueVO">
         <![CDATA[
         SELECT
-            engd_numero AS value
+            engd_orden AS value
             , engd_etiqueta AS label
         FROM
             tbl_entidad_grupo_dato_engd
@@ -61,14 +61,14 @@
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_entidad_grupo_dato_engd engd
-        WHERE engd_enti_pk = #{entiId} AND engd_numero = #{numero}
+        WHERE engd_enti_pk = #{entiId} AND engd_orden = #{numero}
         ]]>
     </select>
 
     <insert id="insert" parameterType="EntidadGrupoDatoVO">
         <![CDATA[
         INSERT INTO tbl_entidad_grupo_dato_engd (
-            engd_enti_pk, engd_numero, engd_etiqueta)
+            engd_enti_pk, engd_orden, engd_etiqueta)
         VALUES (#{entiId}, #{numero}, #{etiqueta})
         ]]>
     </insert>
@@ -77,7 +77,7 @@
         <![CDATA[
         UPDATE tbl_entidad_grupo_dato_engd SET
             engd_etiqueta = #{etiqueta}
-        WHERE engd_enti_pk = #{entiId} AND engd_numero = #{numero}
+        WHERE engd_enti_pk = #{entiId} AND engd_orden = #{numero}
         ]]>
     </update>
 
@@ -89,7 +89,7 @@
             engd_enti_pk = #{entiId}
 
             <if test="numero != null">
-                AND engd_numero = #{numero}
+                AND engd_orden = #{numero}
             </if>
         </where>
     </delete>

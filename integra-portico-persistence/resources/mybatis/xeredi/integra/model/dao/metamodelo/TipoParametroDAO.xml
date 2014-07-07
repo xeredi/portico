@@ -7,7 +7,7 @@
         extends="xeredi.integra.model.dao.metamodelo.EntidadDAO.ResultMap">
         <result column="tppr_es_i18n" property="i18n" />
         <result column="tppr_es_tmp_exp" property="tempExp" />
-        <result column="tppr_tpdt_nombre_pk" property="tpdtNombreId" />
+        <result column="tppr_tpdt_pk" property="tpdtNombreId" />
     </resultMap>
 
     <sql id="SelectPrefix">
@@ -15,7 +15,7 @@
         SELECT
             enti_pk, enti_nombre, enti_codigo, enti_tipo
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
-            , tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk
+            , tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk
         FROM
             tbl_tipo_parametro_tppr
             INNER JOIN tbl_entidad_enti ON
@@ -87,7 +87,7 @@
 
     <insert id="insert" parameterType="TipoParametroVO">
         <![CDATA[
-        INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk)
+        INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk)
         VALUES (#{id}, #{i18n, jdbcType=INTEGER, javaType=Boolean}, #{tempExp, jdbcType=INTEGER, javaType=Boolean}, #{tpdtNombreId})
         ]]>
     </insert>
@@ -97,7 +97,7 @@
         UPDATE tbl_tipo_parametro_tppr SET
             tppr_es_i18n = #{i18n, jdbcType=INTEGER, javaType=Boolean}
             , tppr_es_tmp_exp = #{tempExp, jdbcType=INTEGER, javaType=Boolean}
-            , , tppr_tpdt_nombre_pk = #{tpdtNombreId}
+            , , tppr_tpdt_pk = #{tpdtNombreId}
         WHERE tppr_pk = #{id}
         ]]>
     </update>

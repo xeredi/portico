@@ -20,7 +20,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import oracle.sql.TIMESTAMP;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,6 +34,7 @@ import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.proxy.metamodelo.EntidadProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubparametroProxy;
+import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.vo.comun.ItemDatoVO;
 import xeredi.integra.model.vo.maestro.ParametroI18nVO;
@@ -92,7 +93,7 @@ public final class MaestroImporterBO {
 
     /**
      * Instantiates a new parametro importer2 bo.
-     * 
+     *
      * @param aidioma
      *            the aidioma
      * @param afechaVigencia
@@ -118,13 +119,13 @@ public final class MaestroImporterBO {
         LOG.info("Importacion de maestros");
 
         try {
-            final PropertiesConfiguration configuration = new PropertiesConfiguration("Configuration.properties");
+            final Configuration configuration = ConfigurationUtil.getConfiguration();
 
-            Class.forName(configuration.getString("db.dataSource.driver"));
+            Class.forName(configuration.getString("db.migration.dataSource.driver"));
 
-            try (final Connection con = DriverManager.getConnection(configuration.getString("db.dataSource.url"),
-                    configuration.getString("db.dataSource.username"),
-                    configuration.getString("db.dataSource.password"));) {
+            try (final Connection con = DriverManager.getConnection(configuration.getString("db.migration.dataSource.url"),
+                    configuration.getString("db.migration.dataSource.username"),
+                    configuration.getString("db.migration.dataSource.password"));) {
 
                 parseXml(maestrosList, maestrosSqlMap);
 
@@ -169,7 +170,7 @@ public final class MaestroImporterBO {
 
     /**
      * Import entity.
-     * 
+     *
      * @param con
      *            the con
      * @param entidad
@@ -284,7 +285,7 @@ public final class MaestroImporterBO {
 
     /**
      * Import subtipo parametro.
-     * 
+     *
      * @param con
      *            the con
      * @param entidad
@@ -388,7 +389,7 @@ public final class MaestroImporterBO {
 
     /**
      * Gets the itdt.
-     * 
+     *
      * @param value
      *            the value
      * @param entdVO
@@ -465,7 +466,7 @@ public final class MaestroImporterBO {
 
     /**
      * Parses the xml.
-     * 
+     *
      * @param amaestrosList
      *            the amaestros list
      * @param amaestrosSqlMap
