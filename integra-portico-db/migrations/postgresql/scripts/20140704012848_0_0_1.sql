@@ -4,10 +4,10 @@
 -- tbl_conf_clave_cncl
 CREATE TABLE tbl_conf_clave_cncl
 (
-	cncl_pk bigint NOT NULL
-	, cncl_clave varchar(80) NOT NULL
-	, cncl_tipo_valor varchar(2) NOT NULL
-	, cncl_valor_defecto varchar(200) NOT NULL
+	cncl_pk BIGINT NOT NULL
+	, cncl_clave VARCHAR(80) NOT NULL
+	, cncl_tipo_valor VARCHAR(2) NOT NULL
+	, cncl_valor_defecto VARCHAR(200) NOT NULL
 
 	, CONSTRAINT pk_cncl PRIMARY KEY (cncl_pk)
 	, CONSTRAINT uq_cncl UNIQUE (cncl_clave)
@@ -34,9 +34,9 @@ COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_valor_defecto IS 'Valor por defecto d
 -- tbl_conf_clave_i18n_cnci
 CREATE TABLE tbl_conf_clave_i18n_cnci
 (
-	cnci_pk bigint NOT NULL
-	, cnci_clave varchar(80) NOT NULL
-	, cnci_valor_defecto varchar(200) NOT NULL
+	cnci_pk BIGINT NOT NULL
+	, cnci_clave VARCHAR(80) NOT NULL
+	, cnci_valor_defecto VARCHAR(200) NOT NULL
 
 	, CONSTRAINT pk_cnci PRIMARY KEY (cnci_pk)
 	, CONSTRAINT uq_cnci UNIQUE (cnci_clave)
@@ -57,12 +57,38 @@ COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_valor_defecto IS 'Valor por Defe
 
 
 
+-- tbl_configuracion_idioma_cnid
+CREATE TABLE tbl_configuracion_idioma_cnid
+(
+	cnid_pk BIGINT NOT NULL
+	, cnid_codigo VARCHAR(5) NOT NULL
+	, cnid_descripcion VARCHAR(100)
+
+	, CONSTRAINT pk_cnid PRIMARY KEY (cnid_pk)
+	, CONSTRAINT uq_cnid UNIQUE (cnid_codigo)
+)
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_idioma_cnid TO portico
+/
+
+COMMENT ON TABLE tbl_configuracion_idioma_cnid IS 'Configuraciones de idioma'
+/
+COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_pk IS 'Identificador de configuracion de idioma'
+/
+COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_codigo IS 'Codigo de configuracion de idioma'
+/
+COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_descripcion IS 'Descripcion de configuracion de idioma'
+/
+
+
+
 -- tbl_configuracion_entorno_cnen
 CREATE TABLE tbl_configuracion_entorno_cnen
 (
-	cnen_pk bigint NOT NULL
-	, cnen_codigo varchar(8) NOT NULL
-	, cnen_nombre varchar(50) NOT NULL
+	cnen_pk BIGINT NOT NULL
+	, cnen_codigo VARCHAR(8) NOT NULL
+	, cnen_nombre VARCHAR(50) NOT NULL
 
 	, CONSTRAINT pk_cnen PRIMARY KEY (cnen_pk)
 	, CONSTRAINT uq_cnen UNIQUE (cnen_codigo)
@@ -86,9 +112,9 @@ COMMENT ON COLUMN tbl_configuracion_entorno_cnen.cnen_nombre IS 'Nombre de entor
 -- tbl_configuracion_valor_cnvl
 CREATE TABLE tbl_configuracion_valor_cnvl
 (
-	cnvl_cnen_pk bigint NOT NULL
-	, cnvl_cncl_pk bigint NOT NULL
-	, cnvl_valor varchar(200) NOT NULL
+	cnvl_cnen_pk BIGINT NOT NULL
+	, cnvl_cncl_pk BIGINT NOT NULL
+	, cnvl_valor VARCHAR(200) NOT NULL
 
 	, CONSTRAINT pk_cnvl PRIMARY KEY (cnvl_cnen_pk, cnvl_cncl_pk)
 	, CONSTRAINT fk_cnvl_cnen_pk FOREIGN KEY (cnvl_cnen_pk)
@@ -112,15 +138,44 @@ COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_valor IS 'Valor de parametro
 
 
 
+-- tbl_conf_valor_i18n_cnvi
+CREATE TABLE tbl_conf_valor_i18n_cnvi
+(
+	cnvi_cnid_pk BIGINT NOT NULL
+	, cnvi_cnci_pk BIGINT NOT NULL
+	, cnvi_valor VARCHAR(200) NOT NULL
+
+	, CONSTRAINT pk_cnvi PRIMARY KEY (cnvi_cnid_pk, cnvi_cnci_pk)
+	, CONSTRAINT fk_cnvi_cnid_pk FOREIGN KEY (cnvi_cnid_pk)
+		REFERENCES tbl_configuracion_idioma_cnid (cnid_pk)
+	, CONSTRAINT fk_cnvi_cnci_pk FOREIGN KEY (cnvi_cnci_pk)
+		REFERENCES tbl_conf_clave_i18n_cnci (cnci_pk)
+)
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_valor_i18n_cnvi TO portico
+/
+
+COMMENT ON TABLE tbl_conf_valor_i18n_cnvi IS 'Valores de parametros de configuracion de idioma'
+/
+COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnid_pk IS 'Identificador de Configuracion de Idioma'
+/
+COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnci_pk IS 'Identificador de Parametro de Configuracion de Idioma'
+/
+COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_valor IS 'Valor de Parametro'
+/
+
+
+
 -- tbl_ig
 CREATE TABLE tbl_ig
 (
-	ig_nombre varchar(30) NOT NULL
-	, ig_inicio bigint NOT NULL
-	, ig_fin bigint
-	, ig_incremento bigint NOT NULL
-	, ig_cache bigint NOT NULL
-	, ig_ultimo bigint NOT NULL
+	ig_nombre VARCHAR(30) NOT NULL
+	, ig_inicio BIGINT NOT NULL
+	, ig_fin BIGINT
+	, ig_incremento BIGINT NOT NULL
+	, ig_cache BIGINT NOT NULL
+	, ig_ultimo BIGINT NOT NULL
 
 	, CONSTRAINT pk_ig PRIMARY KEY (ig_nombre)
 )
@@ -149,10 +204,10 @@ COMMENT ON COLUMN tbl_ig.ig_ultimo IS 'Ultimo Valor generado para la secuencia'
 -- tbl_usuario_usro
 CREATE TABLE tbl_usuario_usro
 (
-	usro_pk bigint NOT NULL
-	, usro_login varchar(50) NOT NULL
-	, usro_contrasenia varchar(50) NOT NULL
-	, usro_nombre varchar(50) NOT NULL
+	usro_pk BIGINT NOT NULL
+	, usro_login VARCHAR(50) NOT NULL
+	, usro_contrasenia VARCHAR(50) NOT NULL
+	, usro_nombre VARCHAR(50) NOT NULL
 
 	, CONSTRAINT pk_usro PRIMARY KEY (usro_pk)
 	, CONSTRAINT uq_usro UNIQUE (usro_login)
@@ -178,8 +233,8 @@ COMMENT ON COLUMN tbl_usuario_usro.usro_nombre IS 'Nombre Completo'
 -- tbl_grupo_grpo
 CREATE TABLE tbl_grupo_grpo
 (
-	grpo_pk bigint NOT NULL
-	, grpo_nombre varchar(50) NOT NULL
+	grpo_pk BIGINT NOT NULL
+	, grpo_nombre VARCHAR(50) NOT NULL
 
 	, CONSTRAINT pk_grpo PRIMARY KEY (grpo_pk)
 	, CONSTRAINT uq_grpo UNIQUE (grpo_nombre)
@@ -201,8 +256,8 @@ COMMENT ON COLUMN tbl_grupo_grpo.grpo_nombre IS 'Nombre de grupo'
 -- tbl_usuario_grupo_usgr
 CREATE TABLE tbl_usuario_grupo_usgr
 (
-	usgr_usro_pk bigint NOT NULL
-	, usgr_grpo_pk bigint NOT NULL
+	usgr_usro_pk BIGINT NOT NULL
+	, usgr_grpo_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_usgr PRIMARY KEY (usgr_usro_pk, usgr_grpo_pk)
 	, CONSTRAINT fk_usgr_usro_pk FOREIGN KEY (usgr_usro_pk)
@@ -227,14 +282,14 @@ COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_grpo_pk IS 'Identificador de grupo
 -- tbl_entidad_enti
 CREATE TABLE tbl_entidad_enti
 (
-	enti_pk bigint NOT NULL
-	, enti_codigo varchar(50) NOT NULL
+	enti_pk BIGINT NOT NULL
+	, enti_codigo VARCHAR(50) NOT NULL
 	, enti_tipo char(1) NOT NULL
 	, enti_cmd_alta int NOT NULL
 	, enti_cmd_baja int NOT NULL
 	, enti_cmd_edicion int NOT NULL
 	, enti_cmd_duplicado int NOT NULL
-	, enti_nombre varchar(50) NOT NULL
+	, enti_nombre VARCHAR(50) NOT NULL
 
 	, CONSTRAINT pk_enti PRIMARY KEY (enti_pk)
 	, CONSTRAINT uq_enti_codigo UNIQUE (enti_codigo)
@@ -269,8 +324,8 @@ COMMENT ON COLUMN tbl_entidad_enti.enti_nombre IS 'Nombre de Entidad'
 -- tbl_entidad_entidad_enen
 CREATE TABLE tbl_entidad_entidad_enen
 (
-	enen_entip_pk bigint NOT NULL
-	, enen_entih_pk bigint NOT NULL
+	enen_entip_pk BIGINT NOT NULL
+	, enen_entih_pk BIGINT NOT NULL
 	, enen_orden int NOT NULL
 
 	, CONSTRAINT pk_enen PRIMARY KEY (enen_entip_pk, enen_entih_pk)
@@ -300,12 +355,12 @@ COMMENT ON COLUMN tbl_entidad_entidad_enen.enen_orden IS 'Orden de Entidad Hija 
 -- tbl_tipo_dato_tpdt
 CREATE TABLE tbl_tipo_dato_tpdt
 (
-	tpdt_pk bigint NOT NULL
-	, tpdt_codigo varchar(50) NOT NULL
-	, tpdt_nombre varchar(50) NOT NULL
-	, tpdt_tipo_html varchar(2) NOT NULL
-	, tpdt_tipo_elemento varchar(2) NOT NULL
-	, tpdt_enti_pk bigint
+	tpdt_pk BIGINT NOT NULL
+	, tpdt_codigo VARCHAR(50) NOT NULL
+	, tpdt_nombre VARCHAR(50) NOT NULL
+	, tpdt_tipo_html VARCHAR(2) NOT NULL
+	, tpdt_tipo_elemento VARCHAR(2) NOT NULL
+	, tpdt_enti_pk BIGINT
 
 	, CONSTRAINT pk_tpdt PRIMARY KEY (tpdt_pk)
 	, CONSTRAINT uq_tpdt UNIQUE (tpdt_codigo)
@@ -337,8 +392,8 @@ COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_enti_pk IS 'Entidad asociada al tipo d
 -- tbl_codigo_referencia_cdrf
 CREATE TABLE tbl_codigo_referencia_cdrf
 (
-	cdrf_tpdt_pk bigint NOT NULL
-	, cdrf_valor varchar(10) NOT NULL
+	cdrf_tpdt_pk BIGINT NOT NULL
+	, cdrf_valor VARCHAR(10) NOT NULL
 	, cdrf_orden int NOT NULL
 
 	, CONSTRAINT pk_cdrf PRIMARY KEY (cdrf_tpdt_pk, cdrf_valor)
@@ -364,9 +419,9 @@ COMMENT ON COLUMN tbl_codigo_referencia_cdrf.cdrf_orden IS 'Orden de Visualiazac
 -- tbl_entidad_accion_enac
 CREATE TABLE tbl_entidad_accion_enac
 (
-	enac_enti_pk bigint NOT NULL
-	, enac_path varchar(30) NOT NULL
-	, enac_etiqueta varchar(30) NOT NULL
+	enac_enti_pk BIGINT NOT NULL
+	, enac_path VARCHAR(30) NOT NULL
+	, enac_etiqueta VARCHAR(30) NOT NULL
 	, enac_orden int NOT NULL
 
 	, CONSTRAINT pk_enac PRIMARY KEY (enac_enti_pk, enac_path)
@@ -394,9 +449,9 @@ COMMENT ON COLUMN tbl_entidad_accion_enac.enac_enti_pk IS 'Orden de aparacion de
 -- tbl_entidad_grupo_dato_engd
 CREATE TABLE tbl_entidad_grupo_dato_engd
 (
-	engd_enti_pk bigint NOT NULL
+	engd_enti_pk BIGINT NOT NULL
 	, engd_orden int NOT NULL
-	, engd_etiqueta varchar(30) NOT NULL
+	, engd_etiqueta VARCHAR(30) NOT NULL
 
 	, CONSTRAINT pk_engd PRIMARY KEY (engd_enti_pk, engd_orden)
 	, CONSTRAINT fk_engd_enti_pk FOREIGN KEY (engd_enti_pk)
@@ -421,8 +476,8 @@ COMMENT ON COLUMN tbl_entidad_grupo_dato_engd.engd_etiqueta IS 'Etiqueta del gru
 -- tbl_entidad_tipo_dato_entd
 CREATE TABLE tbl_entidad_tipo_dato_entd
 (
-	entd_enti_pk bigint NOT NULL
-	, entd_tpdt_pk bigint NOT NULL
+	entd_enti_pk BIGINT NOT NULL
+	, entd_tpdt_pk BIGINT NOT NULL
 	, entd_grupo int NOT NULL
 	, entd_fila int NOT NULL
 	, entd_orden int NOT NULL
@@ -430,8 +485,8 @@ CREATE TABLE tbl_entidad_tipo_dato_entd
 	, entd_obligatorio int NOT NULL
 	, entd_gridable int NOT NULL
 	, entd_filtrable int NOT NULL
-	, entd_valor_defecto varchar(30)
-	, entd_etiqueta varchar(100) NOT NULL
+	, entd_valor_defecto VARCHAR(30)
+	, entd_etiqueta VARCHAR(100) NOT NULL
 
 	, CONSTRAINT pk_entd PRIMARY KEY (entd_enti_pk, entd_tpdt_pk)
 	, CONSTRAINT uq_entd_etiqueta UNIQUE (entd_enti_pk, entd_grupo, entd_etiqueta)
@@ -475,10 +530,10 @@ COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_etiqueta IS 'Etiqueta de visua
 -- tbl_tipo_parametro_tppr
 CREATE TABLE tbl_tipo_parametro_tppr
 (
-	tppr_pk bigint NOT NULL
+	tppr_pk BIGINT NOT NULL
 	, tppr_es_i18n int NOT NULL
 	, tppr_es_tmp_exp int NOT NULL
-	, tppr_tpdt_pk bigint
+	, tppr_tpdt_pk BIGINT
 
 	, CONSTRAINT pk_tppr PRIMARY KEY (tppr_pk)
 	, CONSTRAINT fk_tppr_enti_pk FOREIGN KEY (tppr_pk)
@@ -507,9 +562,9 @@ COMMENT ON COLUMN tbl_tipo_parametro_tppr.tppr_tpdt_pk IS 'Identificador de tipo
 -- tbl_parametro_prmt
 CREATE TABLE tbl_parametro_prmt
 (
-	prmt_pk bigint NOT NULL
-	, prmt_tppr_pk bigint NOT NULL
-	, prmt_parametro varchar(30) NOT NULL
+	prmt_pk BIGINT NOT NULL
+	, prmt_tppr_pk BIGINT NOT NULL
+	, prmt_parametro VARCHAR(30) NOT NULL
 
 	, CONSTRAINT pk_prmt PRIMARY KEY (prmt_pk)
 	, CONSTRAINT uq_prmt UNIQUE (prmt_tppr_pk, prmt_parametro)
@@ -535,8 +590,8 @@ COMMENT ON COLUMN tbl_parametro_prmt.prmt_parametro IS 'Valor de Parametro'
 -- tbl_parametro_version_prvr
 CREATE TABLE tbl_parametro_version_prvr
 (
-	prvr_pk bigint NOT NULL
-	, prvr_prmt_pk bigint NOT NULL
+	prvr_pk BIGINT NOT NULL
+	, prvr_prmt_pk BIGINT NOT NULL
 	, prvr_fini timestamp NOT NULL
 	, prvr_ffin timestamp
 
@@ -566,13 +621,13 @@ COMMENT ON COLUMN tbl_parametro_version_prvr.prvr_ffin IS 'Fecha de fin de vigen
 -- tbl_parametro_dato_prdt
 CREATE TABLE tbl_parametro_dato_prdt
 (
-	prdt_prvr_pk bigint NOT NULL
-	, prdt_tpdt_pk bigint NOT NULL
-	, prdt_nentero bigint
-	, prdt_ndecimal double precision
+	prdt_prvr_pk BIGINT NOT NULL
+	, prdt_tpdt_pk BIGINT NOT NULL
+	, prdt_nentero BIGINT
+	, prdt_ndecimal DOUBLE PRECISION
 	, prdt_fecha timestamp
-	, prdt_prmt_pk bigint
-	, prdt_cadena varchar(350)
+	, prdt_prmt_pk BIGINT
+	, prdt_cadena VARCHAR(350)
 
 	, CONSTRAINT pk_prdt PRIMARY KEY (prdt_prvr_pk, prdt_tpdt_pk)
 	, CONSTRAINT fk_prdt_prvr_pk FOREIGN KEY (prdt_prvr_pk)
@@ -609,9 +664,9 @@ COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_cadena IS 'Valor de dato de Tipo 
 -- tbl_parametro_i18n_p18n
 CREATE TABLE tbl_parametro_i18n_p18n
 (
-	p18n_prvr_pk bigint NOT NULL
-	, p18n_idioma varchar(5) NOT NULL
-	, p18n_texto varchar(350) NOT NULL
+	p18n_prvr_pk BIGINT NOT NULL
+	, p18n_idioma VARCHAR(5) NOT NULL
+	, p18n_texto VARCHAR(350) NOT NULL
 
 	, CONSTRAINT p18n_pk PRIMARY KEY (p18n_prvr_pk, p18n_idioma)
 	, CONSTRAINT fk_p18n_prvr_pk FOREIGN KEY (p18n_prvr_pk)
@@ -636,9 +691,9 @@ COMMENT ON COLUMN tbl_parametro_i18n_p18n.p18n_texto IS 'Texto'
 -- tbl_tipo_subparametro_tpsp
 CREATE TABLE tbl_tipo_subparametro_tpsp
 (
-	tpsp_pk bigint NOT NULL
-	, tpsp_tppr_pk bigint NOT NULL
-	, tpsp_tppr_dep_pk bigint NOT NULL
+	tpsp_pk BIGINT NOT NULL
+	, tpsp_tppr_pk BIGINT NOT NULL
+	, tpsp_tppr_dep_pk BIGINT NOT NULL
 	, tpsp_es_i18n int NOT NULL
 	, tpsp_es_tmp_exp int NOT NULL
 
@@ -674,10 +729,10 @@ COMMENT ON COLUMN tbl_tipo_subparametro_tpsp.tpsp_es_tmp_exp IS 'Indicador de si
 -- tbl_subparametro_sprm
 CREATE TABLE tbl_subparametro_sprm
 (
-	sprm_pk bigint NOT NULL
-	, sprm_tpsp_pk bigint NOT NULL
-	, sprm_prmt_pk bigint NOT NULL
-	, sprm_prmt_dep_pk bigint NOT NULL
+	sprm_pk BIGINT NOT NULL
+	, sprm_tpsp_pk BIGINT NOT NULL
+	, sprm_prmt_pk BIGINT NOT NULL
+	, sprm_prmt_dep_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_sprm PRIMARY KEY (sprm_pk)
 	, CONSTRAINT uq_sprm UNIQUE (sprm_prmt_pk, sprm_prmt_dep_pk)
@@ -709,8 +764,8 @@ COMMENT ON COLUMN tbl_subparametro_sprm.sprm_prmt_dep_pk IS 'Identificador de Pa
 -- tbl_subparametro_version_spvr
 CREATE TABLE tbl_subparametro_version_spvr
 (
-	spvr_pk bigint NOT NULL
-	, spvr_sprm_pk bigint NOT NULL
+	spvr_pk BIGINT NOT NULL
+	, spvr_sprm_pk BIGINT NOT NULL
 	, spvr_fini timestamp NOT NULL
 	, spvr_ffin timestamp
 
@@ -740,13 +795,13 @@ COMMENT ON COLUMN tbl_subparametro_version_spvr.spvr_ffin IS 'Fecha de fin de vi
 -- tbl_subparametro_dato_spdt
 CREATE TABLE tbl_subparametro_dato_spdt
 (
-	spdt_spvr_pk bigint NOT NULL
-	, spdt_tpdt_pk bigint NOT NULL
-	, spdt_nentero bigint
-	, spdt_ndecimal double precision
+	spdt_spvr_pk BIGINT NOT NULL
+	, spdt_tpdt_pk BIGINT NOT NULL
+	, spdt_nentero BIGINT
+	, spdt_ndecimal DOUBLE PRECISION
 	, spdt_fecha timestamp
-	, spdt_prmt_pk bigint
-	, spdt_cadena varchar(350)
+	, spdt_prmt_pk BIGINT
+	, spdt_cadena VARCHAR(350)
 
 	, CONSTRAINT pk_spdt PRIMARY KEY (spdt_spvr_pk, spdt_tpdt_pk)
 	, CONSTRAINT fk_spdt_spvr_pk FOREIGN KEY (spdt_spvr_pk)
@@ -783,10 +838,10 @@ COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_cadena IS 'Valor de dato de Ti
 -- tbl_tipo_servicio_tpsr
 CREATE TABLE tbl_tipo_servicio_tpsr
 (
-	tpsr_pk bigint NOT NULL
+	tpsr_pk BIGINT NOT NULL
 	, tpsr_es_temporal int NOT NULL
 	, tpsr_es_facturable int NOT NULL
-	, tpsr_tpdt_estado_pk bigint
+	, tpsr_tpdt_estado_pk BIGINT
 
 	, CONSTRAINT pk_tpsr PRIMARY KEY (tpsr_pk)
 	, CONSTRAINT fk_tpsr_enti_pk FOREIGN KEY (tpsr_pk)
@@ -815,11 +870,11 @@ COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_tpdt_estado_pk IS 'Tipo de dato qu
 -- tbl_tipo_subservicio_tpss
 CREATE TABLE tbl_tipo_subservicio_tpss
 (
-	tpss_pk bigint NOT NULL
-	, tpss_tpsr_pk bigint NOT NULL
+	tpss_pk BIGINT NOT NULL
+	, tpss_tpsr_pk BIGINT NOT NULL
 	, tpss_es_temporal int NOT NULL
 	, tpss_es_facturable int NOT NULL
-	, tpss_tpdt_estado_pk bigint
+	, tpss_tpdt_estado_pk BIGINT
 
 	, CONSTRAINT pk_tpss PRIMARY KEY (tpss_pk)
 	, CONSTRAINT fk_tpss_enti_pk FOREIGN KEY (tpss_pk)
@@ -852,9 +907,9 @@ COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_tpdt_estado_pk IS 'Tipo de dato
 -- tbl_servicio_secuencia_srsc
 CREATE TABLE tbl_servicio_secuencia_srsc
 (
-	srsc_tpsr_pk bigint NOT NULL
-	, srsc_subp_pk bigint NOT NULL
-	, srsc_anno varchar(4) NOT NULL
+	srsc_tpsr_pk BIGINT NOT NULL
+	, srsc_subp_pk BIGINT NOT NULL
+	, srsc_anno VARCHAR(4) NOT NULL
 	, srsc_ultimo_numero int NOT NULL
 
 	, CONSTRAINT pk_srsc PRIMARY KEY (srsc_tpsr_pk, srsc_subp_pk, srsc_anno)
@@ -884,11 +939,11 @@ COMMENT ON COLUMN tbl_servicio_secuencia_srsc.srsc_ultimo_numero IS 'Ultimo nume
 -- tbl_servicio_srvc
 CREATE TABLE tbl_servicio_srvc
 (
-	srvc_pk bigint NOT NULL
-	, srvc_tpsr_pk bigint NOT NULL
-	, srvc_subp_pk bigint NOT NULL
-	, srvc_anno varchar(4) NOT NULL
-	, srvc_numero varchar(5) NOT NULL
+	srvc_pk BIGINT NOT NULL
+	, srvc_tpsr_pk BIGINT NOT NULL
+	, srvc_subp_pk BIGINT NOT NULL
+	, srvc_anno VARCHAR(4) NOT NULL
+	, srvc_numero VARCHAR(5) NOT NULL
 	, srvc_falta timestamp NOT NULL
 	, srvc_fref timestamp NOT NULL
 	, srvc_fini timestamp
@@ -937,14 +992,14 @@ COMMENT ON COLUMN tbl_servicio_srvc.srvc_estado IS 'Estado en el que se encuentr
 -- tbl_servicio_dato_srdt
 CREATE TABLE tbl_servicio_dato_srdt
 (
-	srdt_srvc_pk bigint NOT NULL
-	, srdt_tpdt_pk bigint NOT NULL
-	, srdt_nentero bigint
-	, srdt_ndecimal double precision
+	srdt_srvc_pk BIGINT NOT NULL
+	, srdt_tpdt_pk BIGINT NOT NULL
+	, srdt_nentero BIGINT
+	, srdt_ndecimal DOUBLE PRECISION
 	, srdt_fecha timestamp
-	, srdt_prmt_pk bigint
-	, srdt_srvc_dep_pk bigint
-	, srdt_cadena varchar(350)
+	, srdt_prmt_pk BIGINT
+	, srdt_srvc_dep_pk BIGINT
+	, srdt_cadena VARCHAR(350)
 
 	, CONSTRAINT pk_srdt PRIMARY KEY (srdt_srvc_pk, srdt_tpdt_pk)
 	, CONSTRAINT fk_srdt_srvc_pk FOREIGN KEY (srdt_srvc_pk)
@@ -985,9 +1040,9 @@ COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_cadena IS 'Valor de dato de tipo T
 -- tbl_subservicio_ssrv
 CREATE TABLE tbl_subservicio_ssrv
 (
-	ssrv_pk bigint NOT NULL
-	, ssrv_srvc_pk bigint NOT NULL
-	, ssrv_tpss_pk bigint NOT NULL
+	ssrv_pk BIGINT NOT NULL
+	, ssrv_srvc_pk BIGINT NOT NULL
+	, ssrv_tpss_pk BIGINT NOT NULL
 	, ssrv_numero int NOT NULL
 	, ssrv_fini timestamp
 	, ssrv_ffin timestamp
@@ -1031,13 +1086,13 @@ COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_estado IS 'Estado en el que se encue
 -- tbl_subservicio_dato_ssdt
 CREATE TABLE tbl_subservicio_dato_ssdt
 (
-	ssdt_ssrv_pk bigint NOT NULL
-	, ssdt_tpdt_pk bigint NOT NULL
-	, ssdt_nentero bigint
-	, ssdt_ndecimal double precision
+	ssdt_ssrv_pk BIGINT NOT NULL
+	, ssdt_tpdt_pk BIGINT NOT NULL
+	, ssdt_nentero BIGINT
+	, ssdt_ndecimal DOUBLE PRECISION
 	, ssdt_fecha timestamp
-	, ssdt_prmt_pk bigint
-	, ssdt_cadena varchar(350)
+	, ssdt_prmt_pk BIGINT
+	, ssdt_cadena VARCHAR(350)
 
 	, CONSTRAINT pk_ssdt PRIMARY KEY (ssdt_ssrv_pk, ssdt_tpdt_pk)
 	, CONSTRAINT fk_ssdt_ssrv_pk FOREIGN KEY (ssdt_ssrv_pk)
@@ -1074,8 +1129,8 @@ COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_cadena IS 'Valor de dato de tip
 -- tbl_subserv_subserv_ssss
 CREATE TABLE tbl_subserv_subserv_ssss
 (
-	ssss_ssrvp_pk bigint NOT NULL
-	, ssss_ssrvh_pk bigint NOT NULL
+	ssss_ssrvp_pk BIGINT NOT NULL
+	, ssss_ssrvh_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_ssss PRIMARY KEY (ssss_ssrvp_pk, ssss_ssrvh_pk)
 	, CONSTRAINT fk_ssss_ssrvp_pk FOREIGN KEY (ssss_ssrvp_pk)
@@ -1100,7 +1155,7 @@ COMMENT ON COLUMN tbl_subserv_subserv_ssss.ssss_ssrvh_pk IS 'Identificador de Su
 -- tbl_tipo_estadistica_tpes
 CREATE TABLE tbl_tipo_estadistica_tpes
 (
-	tpes_pk bigint NOT NULL
+	tpes_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_tpes PRIMARY KEY (tpes_pk)
 	, CONSTRAINT fk_tpes_enti_pk FOREIGN KEY (tpes_pk)
@@ -1121,8 +1176,8 @@ COMMENT ON COLUMN tbl_tipo_estadistica_tpes.tpes_pk IS 'Identificador de Tipo de
 -- tbl_periodo_proceso_pepr
 CREATE TABLE tbl_periodo_proceso_pepr
 (
-	pepr_pk bigint NOT NULL
-	, pepr_autp_pk bigint NOT NULL
+	pepr_pk BIGINT NOT NULL
+	, pepr_autp_pk BIGINT NOT NULL
 	, pepr_anio int NOT NULL
 	, pepr_mes int NOT NULL
 	, pepr_trimestre int NOT NULL
@@ -1161,10 +1216,10 @@ COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_falta IS 'Fecha de alta del peri
 -- tbl_estadistica_estd
 CREATE TABLE tbl_estadistica_estd
 (
-	estd_pk bigint NOT NULL
-	, estd_pepr_pk bigint NOT NULL
-	, estd_tpes_pk bigint NOT NULL
-	, estd_subp_pk bigint NOT NULL
+	estd_pk BIGINT NOT NULL
+	, estd_pepr_pk BIGINT NOT NULL
+	, estd_tpes_pk BIGINT NOT NULL
+	, estd_subp_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_estd PRIMARY KEY (estd_pk)
 	, CONSTRAINT fk_estd_pepr_pk FOREIGN KEY (estd_pepr_pk)
@@ -1198,12 +1253,12 @@ COMMENT ON COLUMN tbl_estadistica_estd.estd_subp_pk IS 'Identificador de Subpuer
 -- tbl_estadistica_dato_esdt
 CREATE TABLE tbl_estadistica_dato_esdt
 (
-	esdt_estd_pk bigint NOT NULL
-	, esdt_tpdt_pk bigint NOT NULL
-	, esdt_nentero bigint
-	, esdt_ndecimal double precision
-	, esdt_prmt_pk bigint
-	, esdt_cadena varchar(30)
+	esdt_estd_pk BIGINT NOT NULL
+	, esdt_tpdt_pk BIGINT NOT NULL
+	, esdt_nentero BIGINT
+	, esdt_ndecimal DOUBLE PRECISION
+	, esdt_prmt_pk BIGINT
+	, esdt_cadena VARCHAR(30)
 
 	, CONSTRAINT pk_esdt PRIMARY KEY (esdt_estd_pk, esdt_tpdt_pk)
 	, CONSTRAINT fk_esdt_estd_pk FOREIGN KEY (esdt_estd_pk)
@@ -1238,13 +1293,13 @@ COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_cadena IS 'Valor de dato de Tip
 -- tbl_cuadro_mes_cdms
 CREATE TABLE tbl_cuadro_mes_cdms
 (
-	cdms_pk bigint NOT NULL
-	, cdms_pepr_pk bigint NOT NULL
-	, cdms_cocu_pk bigint NOT NULL
-	, cdms_opet_pk bigint NOT NULL
-	, cdms_navt_pk bigint NOT NULL
-	, cdms_pais_pk bigint NOT NULL
-	, cdms_cantidad double precision NOT NULL
+	cdms_pk BIGINT NOT NULL
+	, cdms_pepr_pk BIGINT NOT NULL
+	, cdms_cocu_pk BIGINT NOT NULL
+	, cdms_opet_pk BIGINT NOT NULL
+	, cdms_navt_pk BIGINT NOT NULL
+	, cdms_pais_pk BIGINT NOT NULL
+	, cdms_cantidad DOUBLE PRECISION NOT NULL
 
 	, CONSTRAINT pk_cdms PRIMARY KEY (cdms_pk)
 	, CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_cocu_pk, cdms_opet_pk, cdms_navt_pk, cdms_pais_pk)
@@ -1286,9 +1341,9 @@ COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cantidad IS 'Cantidad'
 -- tbl_proceso_batch_prbt
 CREATE TABLE tbl_proceso_batch_prbt
 (
-	prbt_pk bigint NOT NULL
+	prbt_pk BIGINT NOT NULL
 	, prbt_modulo char(1) NOT NULL
-	, prbt_tipo varchar(20) NOT NULL
+	, prbt_tipo VARCHAR(20) NOT NULL
 	, prbt_estado char(1) NOT NULL
 	, prbt_falta timestamp NOT NULL
 	, prbt_finicio timestamp
@@ -1323,9 +1378,9 @@ COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_ffin IS 'Fecha de fin de la ejecuc
 -- tbl_proceso_parametro_prpm
 CREATE TABLE tbl_proceso_parametro_prpm
 (
-	prpm_prbt_pk bigint NOT NULL
-	, prpm_nombre varchar(50) NOT NULL
-	, prpm_valor varchar(300) NOT NULL
+	prpm_prbt_pk BIGINT NOT NULL
+	, prpm_nombre VARCHAR(50) NOT NULL
+	, prpm_valor VARCHAR(300) NOT NULL
 
 	, CONSTRAINT pk_prpm PRIMARY KEY (prpm_prbt_pk, prpm_nombre)
 	, CONSTRAINT fk_prpm_prbt_pk FOREIGN KEY (prpm_prbt_pk)
@@ -1350,8 +1405,8 @@ COMMENT ON COLUMN tbl_proceso_parametro_prpm.prpm_valor IS 'Valor del parametro'
 -- tbl_proceso_archivo_prar
 CREATE TABLE tbl_proceso_archivo_prar
 (
-	prar_prbt_pk bigint NOT NULL
-	, prar_nombre varchar(50) NOT NULL
+	prar_prbt_pk BIGINT NOT NULL
+	, prar_nombre VARCHAR(50) NOT NULL
 	, prar_sentido char(1) NOT NULL
 
 	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_sentido, prar_nombre)
@@ -1377,8 +1432,8 @@ COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_sentido IS 'Sentido de Archivo: 
 -- tbl_proceso_item_prit
 CREATE TABLE tbl_proceso_item_prit
 (
-	prit_prbt_pk bigint NOT NULL
-	, prit_item_pk bigint NOT NULL
+	prit_prbt_pk BIGINT NOT NULL
+	, prit_item_pk BIGINT NOT NULL
 	, prit_sentido char(1) NOT NULL
 
 	, CONSTRAINT pk_prit PRIMARY KEY (prit_prbt_pk, prit_sentido, prit_item_pk)
@@ -1404,10 +1459,10 @@ COMMENT ON COLUMN tbl_proceso_item_prit.prit_sentido IS 'Indicador de Tipo de It
 -- tbl_proceso_mensaje_prmn
 CREATE TABLE tbl_proceso_mensaje_prmn
 (
-	prmn_prbt_pk bigint NOT NULL
+	prmn_prbt_pk BIGINT NOT NULL
 	, prmn_nivel char(1) NOT NULL
-	, prmn_codigo varchar(5) NOT NULL
-	, prmn_mensaje varchar(300)
+	, prmn_codigo VARCHAR(5) NOT NULL
+	, prmn_mensaje VARCHAR(300)
 
 	, CONSTRAINT fk_prmn_prbt_pk FOREIGN KEY (prmn_prbt_pk)
 		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
@@ -1552,9 +1607,13 @@ DROP TABLE tbl_usuario_usro
 /
 DROP TABLE tbl_ig
 /
+DROP TABLE tbl_conf_valor_i18n_cnvi
+/
 DROP TABLE tbl_configuracion_valor_cnvl
 /
 DROP TABLE tbl_configuracion_entorno_cnen
+/
+DROP TABLE tbl_configuracion_idioma_cnid
 /
 DROP TABLE tbl_conf_clave_i18n_cnci
 /

@@ -62,6 +62,35 @@ COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_valor_defecto IS 'Valor por Defe
 
 
 
+-- tbl_configuracion_idioma_cnid
+CREATE TABLE tbl_configuracion_idioma_cnid
+(
+	cnid_pk NUMBER(19) NOT NULL
+	, cnid_codigo VARCHAR2(5) NOT NULL
+	, cnid_descripcion VARCHAR2(100)
+
+	, CONSTRAINT pk_cnid PRIMARY KEY (cnid_pk)
+	, CONSTRAINT uq_cnid UNIQUE (cnid_codigo)
+)
+/
+
+CREATE OR REPLACE SYNONYM portico.tbl_configuracion_idioma_cnid FOR porticoadm.tbl_configuracion_idioma_cnid
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_idioma_cnid TO portico
+/
+
+COMMENT ON TABLE tbl_configuracion_idioma_cnid IS 'Configuraciones de idioma'
+/
+COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_pk IS 'Identificador de configuracion de idioma'
+/
+COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_codigo IS 'Codigo de configuracion de idioma'
+/
+COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_descripcion IS 'Descripcion de configuracion de idioma'
+/
+
+
+
 -- tbl_configuracion_entorno_cnen
 CREATE TABLE tbl_configuracion_entorno_cnen
 (
@@ -119,6 +148,38 @@ COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_cnen_pk IS 'Identificador de
 COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_cncl_pk IS 'Identificador de clave'
 /
 COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_valor IS 'Valor de parametro'
+/
+
+
+
+-- tbl_conf_valor_i18n_cnvi
+CREATE TABLE tbl_conf_valor_i18n_cnvi
+(
+	cnvi_cnid_pk NUMBER(19) NOT NULL
+	, cnvi_cnci_pk NUMBER(19) NOT NULL
+	, cnvi_valor VARCHAR2(200) NOT NULL
+
+	, CONSTRAINT pk_cnvi PRIMARY KEY (cnvi_cnid_pk, cnvi_cnci_pk)
+	, CONSTRAINT fk_cnvi_cnid_pk FOREIGN KEY (cnvi_cnid_pk)
+		REFERENCES tbl_configuracion_idioma_cnid (cnid_pk)
+	, CONSTRAINT fk_cnvi_cnci_pk FOREIGN KEY (cnvi_cnci_pk)
+		REFERENCES tbl_conf_clave_i18n_cnci (cnci_pk)
+)
+/
+
+CREATE OR REPLACE SYNONYM portico.tbl_conf_valor_i18n_cnvi FOR porticoadm.tbl_conf_valor_i18n_cnvi
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_valor_i18n_cnvi TO portico
+/
+
+COMMENT ON TABLE tbl_conf_valor_i18n_cnvi IS 'Valores de parametros de configuracion de idioma'
+/
+COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnid_pk IS 'Identificador de Configuracion de Idioma'
+/
+COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnci_pk IS 'Identificador de Parametro de Configuracion de Idioma'
+/
+COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_valor IS 'Valor de Parametro'
 /
 
 
@@ -587,8 +648,8 @@ CREATE TABLE tbl_parametro_version_prvr
 (
 	prvr_pk NUMBER(19) NOT NULL
 	, prvr_prmt_pk NUMBER(19) NOT NULL
-	, prvr_fini timestamp NOT NULL
-	, prvr_ffin timestamp
+	, prvr_fini TIMESTAMP NOT NULL
+	, prvr_ffin TIMESTAMP
 
 	, CONSTRAINT pk_prvr PRIMARY KEY (prvr_pk)
 	, CONSTRAINT fk_prvr_prmt_pk FOREIGN KEY (prvr_prmt_pk)
@@ -622,8 +683,8 @@ CREATE TABLE tbl_parametro_dato_prdt
 	prdt_prvr_pk NUMBER(19) NOT NULL
 	, prdt_tpdt_pk NUMBER(19) NOT NULL
 	, prdt_nentero NUMBER(19)
-	, prdt_ndecimal double precision
-	, prdt_fecha timestamp
+	, prdt_ndecimal DOUBLE PRECISION
+	, prdt_fecha TIMESTAMP
 	, prdt_prmt_pk NUMBER(19)
 	, prdt_cadena VARCHAR2(350)
 
@@ -776,8 +837,8 @@ CREATE TABLE tbl_subparametro_version_spvr
 (
 	spvr_pk NUMBER(19) NOT NULL
 	, spvr_sprm_pk NUMBER(19) NOT NULL
-	, spvr_fini timestamp NOT NULL
-	, spvr_ffin timestamp
+	, spvr_fini TIMESTAMP NOT NULL
+	, spvr_ffin TIMESTAMP
 
 	, CONSTRAINT pk_spvr PRIMARY KEY (spvr_pk)
 	, CONSTRAINT fk_spvr_sprm_pk FOREIGN KEY (spvr_sprm_pk)
@@ -811,8 +872,8 @@ CREATE TABLE tbl_subparametro_dato_spdt
 	spdt_spvr_pk NUMBER(19) NOT NULL
 	, spdt_tpdt_pk NUMBER(19) NOT NULL
 	, spdt_nentero NUMBER(19)
-	, spdt_ndecimal double precision
-	, spdt_fecha timestamp
+	, spdt_ndecimal DOUBLE PRECISION
+	, spdt_fecha TIMESTAMP
 	, spdt_prmt_pk NUMBER(19)
 	, spdt_cadena VARCHAR2(350)
 
@@ -969,10 +1030,10 @@ CREATE TABLE tbl_servicio_srvc
 	, srvc_subp_pk NUMBER(19) NOT NULL
 	, srvc_anno VARCHAR2(4) NOT NULL
 	, srvc_numero VARCHAR2(5) NOT NULL
-	, srvc_falta timestamp NOT NULL
-	, srvc_fref timestamp NOT NULL
-	, srvc_fini timestamp
-	, srvc_ffin timestamp
+	, srvc_falta TIMESTAMP NOT NULL
+	, srvc_fref TIMESTAMP NOT NULL
+	, srvc_fini TIMESTAMP
+	, srvc_ffin TIMESTAMP
 	, srvc_estado char(1)
 
 	, CONSTRAINT pk_srvc PRIMARY KEY (srvc_pk)
@@ -1023,8 +1084,8 @@ CREATE TABLE tbl_servicio_dato_srdt
 	srdt_srvc_pk NUMBER(19) NOT NULL
 	, srdt_tpdt_pk NUMBER(19) NOT NULL
 	, srdt_nentero NUMBER(19)
-	, srdt_ndecimal double precision
-	, srdt_fecha timestamp
+	, srdt_ndecimal DOUBLE PRECISION
+	, srdt_fecha TIMESTAMP
 	, srdt_prmt_pk NUMBER(19)
 	, srdt_srvc_dep_pk NUMBER(19)
 	, srdt_cadena VARCHAR2(350)
@@ -1075,8 +1136,8 @@ CREATE TABLE tbl_subservicio_ssrv
 	, ssrv_srvc_pk NUMBER(19) NOT NULL
 	, ssrv_tpss_pk NUMBER(19) NOT NULL
 	, ssrv_numero int NOT NULL
-	, ssrv_fini timestamp
-	, ssrv_ffin timestamp
+	, ssrv_fini TIMESTAMP
+	, ssrv_ffin TIMESTAMP
 	, ssrv_estado char(1)
 
 	, CONSTRAINT pk_ssrv PRIMARY KEY (ssrv_pk)
@@ -1123,8 +1184,8 @@ CREATE TABLE tbl_subservicio_dato_ssdt
 	ssdt_ssrv_pk NUMBER(19) NOT NULL
 	, ssdt_tpdt_pk NUMBER(19) NOT NULL
 	, ssdt_nentero NUMBER(19)
-	, ssdt_ndecimal double precision
-	, ssdt_fecha timestamp
+	, ssdt_ndecimal DOUBLE PRECISION
+	, ssdt_fecha TIMESTAMP
 	, ssdt_prmt_pk NUMBER(19)
 	, ssdt_cadena VARCHAR2(350)
 
@@ -1224,8 +1285,8 @@ CREATE TABLE tbl_periodo_proceso_pepr
 	, pepr_anio int NOT NULL
 	, pepr_mes int NOT NULL
 	, pepr_trimestre int NOT NULL
-	, pepr_freferencia timestamp NOT NULL
-	, pepr_falta timestamp NOT NULL
+	, pepr_freferencia TIMESTAMP NOT NULL
+	, pepr_falta TIMESTAMP NOT NULL
 
 	, CONSTRAINT pk_pepr PRIMARY KEY (pepr_pk)
 	, CONSTRAINT uq_pepr UNIQUE (pepr_autp_pk, pepr_anio, pepr_mes)
@@ -1305,7 +1366,7 @@ CREATE TABLE tbl_estadistica_dato_esdt
 	esdt_estd_pk NUMBER(19) NOT NULL
 	, esdt_tpdt_pk NUMBER(19) NOT NULL
 	, esdt_nentero NUMBER(19)
-	, esdt_ndecimal double precision
+	, esdt_ndecimal DOUBLE PRECISION
 	, esdt_prmt_pk NUMBER(19)
 	, esdt_cadena VARCHAR2(30)
 
@@ -1351,7 +1412,7 @@ CREATE TABLE tbl_cuadro_mes_cdms
 	, cdms_opet_pk NUMBER(19) NOT NULL
 	, cdms_navt_pk NUMBER(19) NOT NULL
 	, cdms_pais_pk NUMBER(19) NOT NULL
-	, cdms_cantidad double precision NOT NULL
+	, cdms_cantidad DOUBLE PRECISION NOT NULL
 
 	, CONSTRAINT pk_cdms PRIMARY KEY (cdms_pk)
 	, CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_cocu_pk, cdms_opet_pk, cdms_navt_pk, cdms_pais_pk)
@@ -1400,9 +1461,9 @@ CREATE TABLE tbl_proceso_batch_prbt
 	, prbt_modulo char(1) NOT NULL
 	, prbt_tipo VARCHAR2(20) NOT NULL
 	, prbt_estado char(1) NOT NULL
-	, prbt_falta timestamp NOT NULL
-	, prbt_finicio timestamp
-	, prbt_ffin timestamp
+	, prbt_falta TIMESTAMP NOT NULL
+	, prbt_finicio TIMESTAMP
+	, prbt_ffin TIMESTAMP
 
 	, CONSTRAINT pk_prbt PRIMARY KEY (prbt_pk)
 )
@@ -1677,9 +1738,13 @@ DROP TABLE tbl_usuario_usro
 /
 DROP TABLE tbl_ig
 /
+DROP TABLE tbl_conf_valor_i18n_cnvi
+/
 DROP TABLE tbl_configuracion_valor_cnvl
 /
 DROP TABLE tbl_configuracion_entorno_cnen
+/
+DROP TABLE tbl_configuracion_idioma_cnid
 /
 DROP TABLE tbl_conf_clave_i18n_cnci
 /

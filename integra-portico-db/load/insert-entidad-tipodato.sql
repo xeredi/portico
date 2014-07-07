@@ -1,25 +1,25 @@
 ﻿-- Borrado de maestros
-TRUNCATE TABLE tbl_proceso_archivo_prar; 
-TRUNCATE TABLE tbl_proceso_item_prit; 
-TRUNCATE TABLE tbl_proceso_mensaje_prmn; 
-TRUNCATE TABLE tbl_proceso_parametro_prpm; 
-DELETE FROM tbl_proceso_batch_prbt; 
+TRUNCATE TABLE tbl_proceso_archivo_prar;
+TRUNCATE TABLE tbl_proceso_item_prit;
+TRUNCATE TABLE tbl_proceso_mensaje_prmn;
+TRUNCATE TABLE tbl_proceso_parametro_prpm;
+DELETE FROM tbl_proceso_batch_prbt;
 
-TRUNCATE TABLE tbl_estadistica_dato_esdt; 
-DELETE FROM tbl_estadistica_estd; 
-DELETE FROM tbl_cuadro_mes_cdms; 
-DELETE FROM tbl_periodo_proceso_pepr; 
+TRUNCATE TABLE tbl_estadistica_dato_esdt;
+DELETE FROM tbl_estadistica_estd;
+DELETE FROM tbl_cuadro_mes_cdms;
+DELETE FROM tbl_periodo_proceso_pepr;
 
 DELETE FROM tbl_subservicio_subservicio_ssss;
-TRUNCATE TABLE tbl_subservicio_dato_ssdt; 
-DELETE FROM tbl_subservicio_ssrv; 
-TRUNCATE TABLE tbl_servicio_dato_srdt; 
-DELETE FROM tbl_servicio_srvc; 
+TRUNCATE TABLE tbl_subservicio_dato_ssdt;
+DELETE FROM tbl_subservicio_ssrv;
+TRUNCATE TABLE tbl_servicio_dato_srdt;
+DELETE FROM tbl_servicio_srvc;
 
-TRUNCATE TABLE tbl_subparametro_dato_spdt; 
+TRUNCATE TABLE tbl_subparametro_dato_spdt;
 DELETE FROM tbl_subparametro_version_spvr;
 DELETE FROM tbl_subparametro_sprm ;
-TRUNCATE TABLE tbl_parametro_dato_prdt; 
+TRUNCATE TABLE tbl_parametro_dato_prdt;
 TRUNCATE TABLE tbl_parametro_i18n_p18n;
 DELETE FROM tbl_parametro_version_prvr;
 DELETE FROM tbl_parametro_prmt;
@@ -82,7 +82,7 @@ INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpd
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41032,  'T', 'TX', NULL , 'CADENA_13', 'Cadena 13');
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41033,  'T', 'TX', NULL , 'CADENA_14', 'Cadena 14');
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41034,  'T', 'TX', NULL , 'CADENA_15', 'Cadena 15');
- 
+
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41040,  'T', 'ND', NULL , 'DECIMAL_01', 'Decimal 01');
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41041,  'T', 'ND', NULL , 'DECIMAL_02', 'Decimal 02');
 INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41042,  'T', 'ND', NULL , 'DECIMAL_03', 'Decimal 03');
@@ -879,7 +879,7 @@ INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALU
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20004, 'P', 1, 1, 1, 1, 'PAIS', 'Pais');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20004, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20005, 'P', 1, 1, 1, 1, 'BUQUE', 'Buque');
-INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk) VALUES (20005, 0, 0, 41020);
+INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20005, 0, 0, 41020);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20006, 'P', 1, 1, 1, 1, 'AREA_MUNDIAL', 'Area Mundial');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20006, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20007, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_EEE', 'Tipo de Buque EEE');
@@ -889,7 +889,7 @@ INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALU
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20009, 'P', 1, 1, 1, 1, 'TIPO_BUQUE', 'Tipo de Buque');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20009, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20010, 'P', 1, 1, 1, 1, 'ORGANIZACION', 'Organizacion');
-INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk) VALUES (20010, 0, 0, 41020);
+INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20010, 0, 0, 41020);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20011, 'P', 1, 1, 1, 1, 'TIPO_IVA', 'Tipo de IVA');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20011, 1, 1);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20012, 'P', 1, 1, 1, 1, 'AREA_GEOGRAFICA', 'Area Geografica');
@@ -949,7 +949,7 @@ INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALU
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20039, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_PESCA', 'Tipo de Buque de Pesca');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20039, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20040, 'P', 1, 1, 1, 1, 'BUQUE_PESCA', 'Buque de Pesca');
-INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk) VALUES (20040, 0, 0, 41020);
+INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20040, 0, 0, 41020);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20041, 'P', 1, 1, 1, 1, 'ARTE_PESCA', 'Arte de Pesca');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20041, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20042, 'P', 1, 1, 1, 1, 'TIPO_MERCANCIA_EST', 'Tipo de Mercancia Est');
@@ -987,7 +987,7 @@ INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALU
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20058, 'P', 1, 1, 1, 1, 'MERCANCIAS_PELIGROSAS', 'Mercancias Peligrosas');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20058, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20059, 'P', 1, 1, 1, 1, 'MARCA_VEHICULO', 'Marca de Vehiculo');
-INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk) VALUES (20059, 0, 0, 41020);
+INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20059, 0, 0, 41020);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20060, 'P', 1, 1, 1, 1, 'INSTRUCCION_MARCAJE', 'Instruccion de Marcaje');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20060, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20061, 'P', 1, 1, 1, 1, 'INSTALACION_ESPECIAL', 'Instalacion Especial');
@@ -1033,9 +1033,9 @@ INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALU
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20081, 'P', 1, 1, 1, 1, 'ESTADO_EXPEDIENTE', 'Estado de Expediente');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20081, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20082, 'P', 1, 1, 1, 1, 'REGISTRO_TIPO_BUQUE_EEE', 'Registro de Tipo de Buque EEE');
-INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk) VALUES (20082, 0, 0, 41020);
+INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20082, 0, 0, 41020);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20083, 'P', 1, 1, 1, 1, 'REGISTRO_TIPO_BUQUE', 'Registro de Tipo de Buque');
-INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_nombre_pk) VALUES (20083, 0, 0, 41020);
+INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk) VALUES (20083, 0, 0, 41020);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20084, 'P', 1, 1, 1, 1, 'CONCEPTO_CUADRO_EST', 'Concepto de Cuadro Estadistico');
 INSERT INTO tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (20084, 1, 0);
 INSERT INTO tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20085, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_GT', 'Tipo de Buque GT');
