@@ -29,6 +29,33 @@
                     <foCustomization>${basedir}/src/docbkx/pdf.xsl</foCustomization>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.mybatis.maven</groupId>
+                <artifactId>migrations-maven-plugin</artifactId>
+                <configuration>
+                    <repository>migrations/${database-vendor}</repository>
+                    <environment>${profile-id}</environment>
+                    <upSteps>1</upSteps>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>9.3-1101-jdbc41</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.oracle</groupId>
+                        <artifactId>jdbc</artifactId>
+                        <version>11.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.microsoft.sqlserver</groupId>
+                        <artifactId>jdbc</artifactId>
+                        <version>4.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 

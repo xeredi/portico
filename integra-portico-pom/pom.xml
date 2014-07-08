@@ -10,26 +10,36 @@
 
     <profiles>
         <profile>
-            <id>home</id>
+            <id>postgresql</id>
 
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
 
             <properties>
-                <profile-id>home</profile-id>
+                <profile-id>postgresql</profile-id>
                 <database-vendor>postgresql</database-vendor>
                 <server-vendor>jetty</server-vendor>
             </properties>
         </profile>
 
         <profile>
-            <id>work</id>
+            <id>oracle</id>
 
             <properties>
-                <profile-id>work</profile-id>
+                <profile-id>oracle</profile-id>
                 <database-vendor>oracle</database-vendor>
-                <server-vendor>weblogic</server-vendor>
+                <server-vendor>jetty</server-vendor>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>sqlserver</id>
+
+            <properties>
+                <profile-id>sqlserver</profile-id>
+                <database-vendor>sqlserver</database-vendor>
+                <server-vendor>jetty</server-vendor>
             </properties>
         </profile>
     </profiles>
