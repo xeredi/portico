@@ -52,9 +52,9 @@ COMMENT ON FUNCTION getTipoDato(varchar) IS 'A partir de un codigo de tipo de da
 
 
 CREATE FUNCTION getSysDatetime() RETURNS TIMESTAMP IMMUTABLE AS $$
-    BEGIN
-         RETURN NOW();
-    END;
+BEGIN
+     RETURN NOW();
+END;
 $$ LANGUAGE plpgsql
 /
 
@@ -65,8 +65,28 @@ COMMENT ON FUNCTION getSysDatetime() IS 'Obtencion de la Fecha-Hora del Sistema'
 /
 
 
+CREATE FUNCTION concat(vc1 varchar, vc2 varchar) RETURNS TIMESTAMP IMMUTABLE AS $$
+BEGIN
+     RETURN vc1 || vc2;
+END;
+$$ LANGUAGE plpgsql
+/
+
+GRANT EXECUTE ON FUNCTION concat(varchar, varchar) TO portico
+/
+
+COMMENT ON FUNCTION concat(varchar, varchar) IS 'Concatenacion de Elementos'
+/
+
+
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+DROP FUNCTION concat(varchar, varchar)
+/
+
+DROP FUNCTION getSysDatetime()
+/
 
 DROP FUNCTION getTipoDato(varchar)
 /
@@ -74,6 +94,4 @@ DROP FUNCTION getTipoDato(varchar)
 DROP FUNCTION getEntidad(varchar)
 /
 
-DROP FUNCTION getSysDatetime()
-/
 

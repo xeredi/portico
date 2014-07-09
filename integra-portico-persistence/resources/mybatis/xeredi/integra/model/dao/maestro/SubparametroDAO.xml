@@ -159,15 +159,15 @@
         	AND (
         		(
                     #{spvr.finicio} BETWEEN
-                        spvr_fini AND COALESCE(spvr_ffin, NOW())
+                        spvr_fini AND COALESCE(spvr_ffin, getSysDatetime())
                 )
         		OR (
-                    COALESCE(#{spvr.ffin}, NOW()) BETWEEN
-                        spvr_fini AND COALESCE(spvr_ffin, NOW())
+                    COALESCE(#{spvr.ffin}, getSysDatetime()) BETWEEN
+                        spvr_fini AND COALESCE(spvr_ffin, getSysDatetime())
                 )
         		OR (
                     #{spvr.finicio} <= spvr_fini
-                    AND COALESCE(#{spvr.ffin}, NOW()) >= COALESCE(spvr_ffin, NOW())
+                    AND COALESCE(#{spvr.ffin}, getSysDatetime()) >= COALESCE(spvr_ffin, getSysDatetime())
                 )
         	)
         ]]>

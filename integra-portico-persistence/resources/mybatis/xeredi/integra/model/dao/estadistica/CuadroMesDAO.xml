@@ -466,7 +466,7 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt
@@ -546,7 +546,7 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        between prvr_fini AND COALESCE(prvr_ffin, NOW())
+                                        between prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt
@@ -627,7 +627,7 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt

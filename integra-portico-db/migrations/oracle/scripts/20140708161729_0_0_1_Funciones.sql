@@ -8,16 +8,10 @@ CREATE FUNCTION getEntidad(entiCodigo varchar) RETURN integer IS
 BEGIN
 	SELECT enti_pk INTO id FROM tbl_entidad_enti WHERE enti_codigo = entiCodigo;
 
-	DBMS_OUTPUT.PUT_LINE(id);
-
-	IF id IS NULL
-	THEN
-		id := -1;
-
-		raise_application_error(-1, 'Entidad NO encontrada --> ' || entiCodigo);
-	END IF;
-
-	return id;
+	RETURN id;
+EXCEPTION
+   WHEN NO_DATA_FOUND THEN
+  		RAISE_APPLICATION_ERROR(-20000, 'Entidad NO encontrada --> ' || entiCodigo);
 END;
 /
 
@@ -34,16 +28,10 @@ CREATE FUNCTION getTipoDato(tpdtCodigo varchar) RETURN integer IS
 BEGIN
 	SELECT tpdt_pk INTO id FROM tbl_tipo_dato_tpdt WHERE tpdt_codigo = tpdtCodigo;
 
-	DBMS_OUTPUT.PUT_LINE(id);
-
-	IF id IS NULL
-	THEN
-		id := -1;
-
-		raise_application_error(-1, 'Tipo de Dato NO encontrado --> ' || tpdtCodigo);
-	END IF;
-
-	return id;
+	RETURN id;
+EXCEPTION
+   WHEN NO_DATA_FOUND THEN
+  		RAISE_APPLICATION_ERROR(-20000, 'Tipo de Dato NO encontrado --> ' || tpdtCodigo);
 END;
 /
 

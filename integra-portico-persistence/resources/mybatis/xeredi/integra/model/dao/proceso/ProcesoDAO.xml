@@ -91,7 +91,7 @@
 	<insert id="insert" parameterType="ProcesoVO">
         <![CDATA[
         INSERT INTO tbl_proceso_batch_prbt(prbt_pk, prbt_modulo, prbt_tipo, prbt_estado, prbt_falta, prbt_finicio, prbt_ffin)
-        VALUES (#{id}, #{modulo}, #{tipo}, 'C', NOW(), NULL, NULL)
+        VALUES (#{id}, #{modulo}, #{tipo}, 'C', getSysDatetime(), NULL, NULL)
         ]]>
 	</insert>
 
@@ -99,7 +99,7 @@
         <![CDATA[
         UPDATE tbl_proceso_batch_prbt SET
             prbt_estado = 'E'
-            , prbt_finicio = NOW()
+            , prbt_finicio = getSysDatetime()
         WHERE
             prbt_pk = #{value}
             AND prbt_estado = 'C'
@@ -111,7 +111,7 @@
         <![CDATA[
         UPDATE tbl_proceso_batch_prbt SET
             prbt_estado = 'F'
-            , prbt_ffin = NOW()
+            , prbt_ffin = getSysDatetime()
         WHERE
             prbt_pk = #{value}
             AND prbt_estado = 'E'

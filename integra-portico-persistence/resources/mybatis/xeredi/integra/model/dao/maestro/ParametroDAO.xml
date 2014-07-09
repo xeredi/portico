@@ -138,8 +138,7 @@
                         </if>
                         <if test="itdt.cadenas != null and !itdt.cadenas.empty">
                             AND prdt_cadena IN
-                            <foreach collection="itdt.cadenas" item="cadena" open="(" close=")"
-                                separator=",">#{cadena}
+                            <foreach collection="itdt.cadenas" item="cadena" open="(" close=")" separator=",">#{cadena}
                             </foreach>
                         </if>
                         )
@@ -212,9 +211,9 @@
                     AND (
                         #{prvr.finicio} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.finicio})
                         OR
-                        COALESCE(#{prvr.ffin}, NOW()) BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, NOW()))
+                        COALESCE(#{prvr.ffin}, getSysDatetime()) BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, getSysDatetime()))
                         OR (
-                            #{prvr.finicio} < prvr_fini AND COALESCE(#{prvr.ffin}, NOW()) >= COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, NOW()))
+                            #{prvr.finicio} < prvr_fini AND COALESCE(#{prvr.ffin}, getSysDatetime()) >= COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, getSysDatetime()))
                         )
                     )
             WHERE
@@ -230,14 +229,13 @@
                 , prmt_parametro
         ]]>
         <if test="idioma != null and !idioma.empty">
-        <![CDATA[
-                    || ' - ' || p18n_texto
-        ]]>
+            , CONCAT(CONCAT(prmt_parametro, ' - '), p18n_texto)
         </if>
         <if test="tpdtNombreId != null">
-        <![CDATA[
-                    || ' - ' || prdt_cadena
-        ]]>
+            , CONCAT(CONCAT(prmt_parametro, ' - '), prdt_cadena)
+        </if>
+        <if test="tpdtNombreId == null or idioma == null or idioma.empty">
+            , prmt_parametro
         </if>
         <![CDATA[
                 AS label

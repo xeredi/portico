@@ -6,29 +6,32 @@
     <select id="selectNumeroManifiestoAeat" parameterType="Long" resultType="String">
     <![CDATA[
         SELECT
-            (
-                select prmt_parametro
-                FROM tbl_parametro_prmt
-                WHERE
-                    EXISTS (
-                        SELECT 1
-                        FROM tbl_parametro_dato_prdt
+            CONCAT(
+                CONCAT(
+                    (
+                        select prmt_parametro
+                        FROM tbl_parametro_prmt
                         WHERE
                             EXISTS (
-                                select 1
-                                FROM tbl_parametro_version_prvr
+                                SELECT 1
+                                FROM tbl_parametro_dato_prdt
                                 WHERE
-                                    prvr_pk = prdt_prvr_pk
-                                    AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
-                                    AND prvr_prmt_pk = srvc_subp_pk
+                                    EXISTS (
+                                        select 1
+                                        FROM tbl_parametro_version_prvr
+                                        WHERE
+                                            prvr_pk = prdt_prvr_pk
+                                            AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+                                            AND prvr_prmt_pk = srvc_subp_pk
+                                    )
+                                    AND prdt_prmt_pk = prmt_pk
+                                    and prdt_tpdt_pk = getTipoDato('REC_ADU')
                             )
-                            AND prdt_prmt_pk = prmt_pk
-                            and prdt_tpdt_pk = getTipoDato('REC_ADU')
                     )
+                    , SUBSTRING(srvc_anno FROM 4)
+                )
+                , CONCAT('5', srvc_numero)
             )
-            || SUBSTRING(srvc_anno FROM 4)
-            || '5'
-            || srvc_numero
             AS numero
         FROM tbl_servicio_srvc srvc
         WHERE srvc_pk = #{value}
@@ -223,7 +226,7 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = unlo_pais.prdt_prmt_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
 											AND prdt_tpdt_pk = 41000
 									) as pais_ue
@@ -236,7 +239,7 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = srvc_subp_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
 											AND prdt_tpdt_pk = 45055
 									) as unlo_subp_servicio
@@ -248,7 +251,7 @@
 										prmt_pk = srdt_prmt_pk
 									join tbl_parametro_version_prvr unlo_version ON
 										prvr_prmt_pk = prmt_pk
-										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 									JOIN tbl_parametro_dato_prdt unlo_pais ON
 										prdt_prvr_pk = prvr_pk
 										AND prdt_tpdt_pk = 45005
@@ -316,7 +319,7 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = unlo_pais.prdt_prmt_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
 											AND prdt_tpdt_pk = 41000
 									) as pais_ue
@@ -329,7 +332,7 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = srvc_subp_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
 											AND prdt_tpdt_pk = 45055
 									) as unlo_subp_servicio
@@ -341,7 +344,7 @@
 										prmt_pk = srdt_prmt_pk
 									join tbl_parametro_version_prvr unlo_version ON
 										prvr_prmt_pk = prmt_pk
-										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 									JOIN tbl_parametro_dato_prdt unlo_pais ON
 										prdt_prvr_pk = prvr_pk
 										AND prdt_tpdt_pk = 45005
