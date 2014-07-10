@@ -3,6 +3,7 @@ package xeredi.integra.model.bo.metamodelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.util.BOFactory;
@@ -68,13 +69,7 @@ public class TipoParametroBO implements TipoParametro {
         final List<TipoParametroVO> list = new ArrayList<>();
 
         if (count > offset) {
-            tpprCriterioVO.setOffset(offset);
-            tpprCriterioVO.setLimit(limit);
-
-            list.addAll(tpprDAO.selectList(tpprCriterioVO));
-
-            tpprCriterioVO.setOffset(null);
-            tpprCriterioVO.setLimit(null);
+            list.addAll(tpprDAO.selectList(tpprCriterioVO, new RowBounds(offset, limit)));
         }
 
         return new PaginatedList<>(list, offset, limit, count);

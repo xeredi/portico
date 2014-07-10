@@ -44,13 +44,6 @@
         <include refid="SelectWhere" />
 
         ORDER BY enti_nombre, enti_pk
-
-        <if test="offset != null">
-            OFFSET #{offset}
-        </if>
-        <if test="limit != null">
-            LIMIT #{limit}
-        </if>
     </select>
 
     <select id="count" resultType="int">

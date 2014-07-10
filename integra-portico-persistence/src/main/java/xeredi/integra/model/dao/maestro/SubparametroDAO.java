@@ -2,6 +2,8 @@ package xeredi.integra.model.dao.maestro;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
+
 import xeredi.integra.model.vo.maestro.SubparametroCriterioVO;
 import xeredi.integra.model.vo.maestro.SubparametroVO;
 
@@ -13,7 +15,7 @@ public interface SubparametroDAO {
 
     /**
      * Exists.
-     * 
+     *
      * @param sprmVO
      *            the sprm vo
      * @return true, if successful
@@ -22,7 +24,7 @@ public interface SubparametroDAO {
 
     /**
      * Intersects.
-     * 
+     *
      * @param sprmVO
      *            the sprm vo
      * @return true, if successful
@@ -31,7 +33,7 @@ public interface SubparametroDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param sprmVO
      *            the sprm vo
      */
@@ -39,7 +41,7 @@ public interface SubparametroDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param sprmCriterioVO
      *            the sprm criterio vo
      * @return the int
@@ -48,7 +50,7 @@ public interface SubparametroDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param sprmCriterioVO
      *            the sprm criterio vo
      * @return the list
@@ -56,8 +58,19 @@ public interface SubparametroDAO {
     List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO);
 
     /**
+     * Select list.
+     *
+     * @param sprmCriterioVO
+     *            the sprm criterio vo
+     * @param bounds
+     *            the bounds
+     * @return the list< subparametro v o>
+     */
+    List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO, final RowBounds bounds);
+
+    /**
      * Select object.
-     * 
+     *
      * @param sprmCriterioVO
      *            the sprm criterio vo
      * @return the subparametro vo
@@ -67,7 +80,8 @@ public interface SubparametroDAO {
     /**
      * Select id.
      *
-     * @param sprmVO the sprm vo
+     * @param sprmVO
+     *            the sprm vo
      * @return the long
      */
     Long selectId(final SubparametroVO sprmVO);

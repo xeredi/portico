@@ -123,13 +123,6 @@
         <include refid="SelectPrefix" />
 
         ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-
-        <if test="offset != null">
-            OFFSET #{offset}
-        </if>
-        <if test="limit != null">
-            LIMIT #{limit}
-        </if>
     </select>
 
     <select id="selectObject" parameterType="SubparametroCriterioVO" resultMap="ResultMap">

@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.comun.IgBO;
@@ -248,13 +249,7 @@ public class SubparametroBO implements Subparametro {
         final int count = sprmDAO.selectCount(sprmCriterioVO);
 
         if (count > offset) {
-            sprmCriterioVO.setOffset(offset);
-            sprmCriterioVO.setLimit(limit);
-
-            sprmList = sprmDAO.selectList(sprmCriterioVO);
-
-            sprmCriterioVO.setOffset(null);
-            sprmCriterioVO.setLimit(null);
+            sprmList = sprmDAO.selectList(sprmCriterioVO, new RowBounds(offset, limit));
 
             // FIXME Ojo en la paginacion, puede traer una barbaridad de
             // dependencias
@@ -303,7 +298,7 @@ public class SubparametroBO implements Subparametro {
 
     /**
      * Fill dependencies.
-     * 
+     *
      * @param session
      *            the session
      * @param sprmList
