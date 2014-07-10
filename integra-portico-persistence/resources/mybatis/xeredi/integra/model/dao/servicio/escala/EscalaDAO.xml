@@ -201,7 +201,7 @@
 				SELECT prmt_pk
 				FROM tbl_parametro_prmt
 				WHERE
-					prmt_tppr_pk = 20065
+					prmt_tppr_pk = getTipoDato('TIPO_NAVEGACION')
 					AND prmt_parametro = (
 						WITH
 							unlo AS (
@@ -215,7 +215,7 @@
 										FROM tbl_parametro_dato_prdt
 										WHERE
 											prdt_prvr_pk = prvr_pk
-											AND prdt_tpdt_pk = 41000
+											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
 									) as unlo_insular
 									, (
 										SELECT prdt_nentero
@@ -228,7 +228,7 @@
 													AND prvr_prmt_pk = unlo_pais.prdt_prmt_pk
 													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
-											AND prdt_tpdt_pk = 41000
+											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
 									) as pais_ue
 									, (
 										SELECT prdt_prmt_pk
@@ -241,7 +241,7 @@
 													AND prvr_prmt_pk = srvc_subp_pk
 													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
-											AND prdt_tpdt_pk = 45055
+											AND prdt_tpdt_pk = getTipoDato('UNLOCODE')
 									) as unlo_subp_servicio
 								FROM
 									tbl_servicio_dato_srdt srdtLoc
@@ -254,9 +254,9 @@
 										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 									JOIN tbl_parametro_dato_prdt unlo_pais ON
 										prdt_prvr_pk = prvr_pk
-										AND prdt_tpdt_pk = 45005
+										AND prdt_tpdt_pk = getTipoDato('PAIS')
 								WHERE
-									srdtLoc.srdt_tpdt_pk = 45056
+									srdtLoc.srdt_tpdt_pk = getTipoDato('UNLOCODE_2')
 									AND srdtLoc.srdt_srvc_pk = srdtNav.srdt_srvc_pk
 							)
 						SELECT
@@ -282,7 +282,7 @@
 					)
 			)
 		WHERE
-			srdt_tpdt_pk = 45235
+			srdt_tpdt_pk = getTipoDato('TIPO_NAV')
 			AND srdt_srvc_pk = #{value}
     ]]>
     </update>
@@ -294,7 +294,7 @@
 				SELECT prmt_pk
 				FROM tbl_parametro_prmt
 				WHERE
-					prmt_tppr_pk = 20065
+					prmt_tppr_pk = getEntidad('TIPO_NAVEGACION')
 					AND prmt_parametro = (
 						WITH
 							unlo AS (
@@ -308,7 +308,7 @@
 										FROM tbl_parametro_dato_prdt
 										WHERE
 											prdt_prvr_pk = prvr_pk
-											AND prdt_tpdt_pk = 41000
+											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
 									) as unlo_insular
 									, (
 										SELECT prdt_nentero
@@ -321,7 +321,7 @@
 													AND prvr_prmt_pk = unlo_pais.prdt_prmt_pk
 													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
-											AND prdt_tpdt_pk = 41000
+											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
 									) as pais_ue
 									, (
 										SELECT prdt_prmt_pk
@@ -334,7 +334,7 @@
 													AND prvr_prmt_pk = srvc_subp_pk
 													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 											)
-											AND prdt_tpdt_pk = 45055
+											AND prdt_tpdt_pk = getTipoDato('UNLOCODE')
 									) as unlo_subp_servicio
 								FROM
 									tbl_servicio_dato_srdt srdtLoc
@@ -347,9 +347,9 @@
 										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
 									JOIN tbl_parametro_dato_prdt unlo_pais ON
 										prdt_prvr_pk = prvr_pk
-										AND prdt_tpdt_pk = 45005
+										AND prdt_tpdt_pk = getTipoDato('PAIS')
 								WHERE
-									srdtLoc.srdt_tpdt_pk = 45055
+									srdtLoc.srdt_tpdt_pk = getTipoDato('UNLOCODE')
 									AND srdtLoc.srdt_srvc_pk = srdtNav.srdt_srvc_pk
 							)
 						SELECT
@@ -375,7 +375,7 @@
 					)
 			)
 		WHERE
-			srdt_tpdt_pk = 45236
+			srdt_tpdt_pk = getTipoDato('TIPO_NAV_2')
 			AND srdt_srvc_pk = #{value}
     ]]>
     </update>
@@ -387,7 +387,7 @@
 				SELECT prmt_pk
 				FROM tbl_parametro_prmt
 				WHERE
-					prmt_tppr_pk = 20011
+					prmt_tppr_pk = getEntidad('TIPO_IVA')
 					AND prmt_parametro = (
 						WITH
 							sql AS (
