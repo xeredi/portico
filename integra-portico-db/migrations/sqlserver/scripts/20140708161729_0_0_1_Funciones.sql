@@ -1,65 +1,69 @@
 -- // 0 0 1 Funciones
 -- Migration SQL that makes the change goes here.
 
-CREATE FUNCTION getEntidad(@entiCodigo varchar) RETURNS integer AS
-BEGIN
-	DECLARE @id AS integer;
-
-	id = (SELECT enti_pk FROM tbl_entidad_enti WHERE enti_codigo = @entiCodigo);
-
-	IF id IS NULL
-	THEN
-		RAISE EXCEPTION 'Entidad NO encontrada --> %', @entiCodigo;
-	END IF;
-
-	return @id;
-END
-/
-
-GRANT EXECUTE ON FUNCTION getEntidad(varchar) TO portico
-/
 
 
-
-CREATE FUNCTION getTipoDato(@tpdtCodigo varchar) RETURNS integer AS
-BEGIN
-	DECLARE id AS integer;
-
-	id = (SELECT tpdt_pk FROM tbl_tipo_dato_tpdt WHERE @tpdt_codigo = @tpdtCodigo);
-
-	IF id IS NULL
-	THEN
-		RAISE EXCEPTION 'Tipo de Dato NO encontrado --> %', @tpdtCodigo;
-	END IF;
-
-	return @id;
-END
-/
-
-GRANT EXECUTE ON FUNCTION getTipoDato(varchar) TO portico
-/
-
-
-
-CREATE FUNCTION getSysDatetime() RETURNS TIMESTAMP AS
+CREATE FUNCTION getSysDatetimeSch() RETURNS DATETIME2 AS
 BEGIN
      RETURN SYSDATETIME();
 END
 /
 
-GRANT EXECUTE ON FUNCTION getSysDatetime() TO portico
+CREATE SYNONYM getSysDatetime FOR getSysDatetimeSch
+/
+
+
+
+CREATE FUNCTION getEntidad(@entiCodigo varchar(30)) RETURNS integer AS
+BEGIN
+	DECLARE @id AS integer;
+	DECLARE @err_message nvarchar(255)
+
+	SELECT @id = enti_pk FROM tbl_entidad_enti WHERE enti_codigo = @entiCodigo;
+
+	IF @@rowcount = 0
+	BEGIN
+		SET @err_message = 'Entidad NO encontrada -->' + @entiCodigo;
+
+		-- RAISERROR (@err_message, 11, 1);
+		RETURN -1;
+	END;
+
+	RETURN @id;
+END
+/
+
+
+
+CREATE FUNCTION getTipoDato(@tpdtCodigo varchar(30)) RETURNS integer AS
+BEGIN
+	DECLARE @id AS integer;
+	DECLARE @err_message nvarchar(255)
+
+	SELECT @id = tpdt_pk FROM tbl_tipo_dato_tpdt WHERE tpdt_codigo = @tpdtCodigo;
+
+	IF @@rowcount = 0
+	BEGIN
+		SET @err_message = 'Tipo de Dato NO encontrado -->' + @tpdtCodigo;
+
+		-- RAISERROR (@err_message, 11, 1);
+		RETURN -1;
+	END;
+
+	RETURN @id;
+END
 /
 
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP FUNCTION getTipoDato(varchar)
+DROP FUNCTION getTipoDato
 /
 
-DROP FUNCTION getEntidad(varchar)
+DROP FUNCTION getEntidad
 /
 
-DROP FUNCTION getSysDatetime()
+DROP FUNCTION getSysDatetimeSch
 /
 
