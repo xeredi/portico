@@ -56,6 +56,32 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+            <plugin>
+                <groupId>xeredi</groupId>
+                <artifactId>maven-schemaspy-plugin</artifactId>
+                <configuration>
+                    <databaseType>pgsql</databaseType>
+                    <database>test</database>
+                    <schema>public</schema>
+                    <host>localhost</host>
+                    <user>test</user>
+                    <password>test</password>
+                    <port>5432</port>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>9.3-1101-jdbc41</version>
+                    </dependency>
+                </dependencies>
+
+                <!-- <configuration> <reportPlugins> <plugin> <groupId>com.wakaleo.schemaspy</groupId> <artifactId>maven-schemaspy-plugin</artifactId>
+                    <version>1.0.4</version> <configuration> <databaseType>orathin</databaseType> <database>exchange</database> <host>172.20.6.54</host>
+                    <user>integra</user> <password>integra</password> <port>1521</port> </configuration> </plugin> </reportPlugins> </configuration> -->
+            </plugin>
         </plugins>
     </build>
 
@@ -69,12 +95,17 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.2-1003-jdbc4</version>
+            <version>9.3-1101-jdbc41</version>
         </dependency>
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>jdbc</artifactId>
             <version>11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>jdbc</artifactId>
+            <version>4.0</version>
         </dependency>
         <dependency>
             <groupId>commons-dbutils</groupId>
@@ -87,4 +118,11 @@
             <version>1.9</version>
         </dependency>
     </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>Wakaleo Repository</id>
+            <url>http://www.wakaleo.com/maven/repos/</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
