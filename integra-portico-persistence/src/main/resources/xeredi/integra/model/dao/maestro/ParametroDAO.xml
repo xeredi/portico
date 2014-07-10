@@ -158,13 +158,6 @@
         <include refid="SelectWhere" />
 
         ORDER BY prmt.prmt_tppr_pk, prmt.prmt_parametro
-
-        <if test="offset != null">
-            OFFSET #{offset}
-        </if>
-        <if test="limit != null">
-            LIMIT #{limit}
-        </if>
     </select>
 
     <select id="selectMap" parameterType="ParametroCriterioVO" resultMap="ResultMap">
@@ -277,7 +270,6 @@
         </if>
         <![CDATA[
                 )
-            LIMIT #{limit}
         ]]>
     </select>
 

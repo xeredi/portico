@@ -103,13 +103,6 @@
 	<select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-
-		<if test="offset != null">
-			OFFSET #{offset}
-		</if>
-		<if test="limit != null">
-			LIMIT #{limit}
-		</if>
 	</select>
 
 	<select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">

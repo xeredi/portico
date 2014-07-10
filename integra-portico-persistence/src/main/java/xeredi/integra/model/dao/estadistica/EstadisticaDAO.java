@@ -15,7 +15,7 @@ public interface EstadisticaDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param estdVO
      *            the estd vo
      */
@@ -23,7 +23,7 @@ public interface EstadisticaDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param estdCriterioVO
      *            the estd criterio vo
      * @return the int
@@ -32,16 +32,7 @@ public interface EstadisticaDAO {
 
     /**
      * Select list.
-     * 
-     * @param estdCriterioVO
-     *            the estd criterio vo
-     * @return the list
-     */
-    List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO);
-
-    /**
-     * Select list.
-     * 
+     *
      * @param estdCriterioVO
      *            the estd criterio vo
      * @param bounds
@@ -51,8 +42,17 @@ public interface EstadisticaDAO {
     List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO, final RowBounds bounds);
 
     /**
+     * Select list.
+     *
+     * @param estdCriterioVO
+     *            the estd criterio vo
+     * @return the list< estadistica v o>
+     */
+    List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO);
+
+    /**
      * Select object.
-     * 
+     *
      * @param estdCriterioVO
      *            the estd criterio vo
      * @return the estadistica vo
@@ -61,7 +61,7 @@ public interface EstadisticaDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param prprId
      *            the prpr id
      * @return the int

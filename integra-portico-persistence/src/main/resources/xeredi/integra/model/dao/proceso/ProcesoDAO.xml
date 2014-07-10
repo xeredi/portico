@@ -80,7 +80,6 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		LIMIT 1
 	</select>
 
 	<select id="select" parameterType="Long" resultMap="ResultMap">

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.vo.configuracion.ClaveCriterioVO;
 import xeredi.integra.model.vo.configuracion.ClaveVO;
@@ -16,7 +17,7 @@ public interface ClaveDAO {
 
     /**
      * Select all map.
-     * 
+     *
      * @return the map
      */
     @MapKey("clave")
@@ -24,16 +25,18 @@ public interface ClaveDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param cnclCriterioVO
      *            the cncl criterio vo
+     * @param bounds
+     *            the bounds
      * @return the list
      */
-    List<ClaveVO> selectList(final ClaveCriterioVO cnclCriterioVO);
+    List<ClaveVO> selectList(final ClaveCriterioVO cnclCriterioVO, final RowBounds bounds);
 
     /**
      * Select count.
-     * 
+     *
      * @param cnclCriterioVO
      *            the cncl criterio vo
      * @return the int
@@ -42,7 +45,7 @@ public interface ClaveDAO {
 
     /**
      * Exists.
-     * 
+     *
      * @param cnclVO
      *            the cncl vo
      * @return true, if successful
@@ -51,7 +54,7 @@ public interface ClaveDAO {
 
     /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the clave vo
@@ -60,7 +63,7 @@ public interface ClaveDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param cnclVO
      *            the cncl vo
      */
@@ -68,7 +71,7 @@ public interface ClaveDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param cnclVO
      *            the cncl vo
      * @return the int

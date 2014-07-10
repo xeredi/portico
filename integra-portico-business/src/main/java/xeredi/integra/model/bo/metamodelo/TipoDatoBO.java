@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.dao.metamodelo.CodigoReferenciaDAO;
@@ -126,13 +127,7 @@ public class TipoDatoBO implements TipoDato {
         final List<TipoDatoVO> tpdtList = new ArrayList<>();
 
         if (count > offset) {
-            tpdtCriterioVO.setOffset(offset);
-            tpdtCriterioVO.setLimit(limit);
-
-            tpdtList.addAll(tpdtDAO.selectList(tpdtCriterioVO));
-
-            tpdtCriterioVO.setOffset(null);
-            tpdtCriterioVO.setLimit(null);
+            tpdtList.addAll(tpdtDAO.selectList(tpdtCriterioVO, new RowBounds(offset, limit)));
         }
 
         return new PaginatedList<>(tpdtList, offset, limit, count);

@@ -339,7 +339,6 @@
         									AND prmt_pk = ssdt_prmt_pk
         							)
         					)
-        				LIMIT 1
         			) AS ssrv_pk
         			, (
         				SELECT srdt_prmt_pk
@@ -1231,7 +1230,6 @@
         									AND ssssEqui.ssss_ssrvh_pk = ssssPart.ssss_ssrvh_pk
         							)
         					)
-        				LIMIT 1
         			) AS part_asociada_pk
         		FROM ssrvs
         			JOIN tbl_subservicio_ssrv ssrvEqui ON

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.dao.configuracion.ClaveIdiomaDAO;
@@ -132,17 +133,11 @@ public class ClaveIdiomaBO implements ClaveIdioma {
         final List<ClaveIdiomaVO> list = new ArrayList<>();
 
         if (count > offset) {
-            cnciCriterioVO.setOffset(offset);
-            cnciCriterioVO.setLimit(limit);
-
-            list.addAll(cnciDAO.selectList(cnciCriterioVO));
+            list.addAll(cnciDAO.selectList(cnciCriterioVO, new RowBounds(offset, limit)));
 
             if (!list.isEmpty()) {
                 loadDependencies(list);
             }
-
-            cnciCriterioVO.setOffset(null);
-            cnciCriterioVO.setLimit(null);
         }
 
         return new PaginatedList<>(list, offset, limit, count);
@@ -159,7 +154,7 @@ public class ClaveIdiomaBO implements ClaveIdioma {
 
     /**
      * Load dependencies.
-     * 
+     *
      * @param list
      *            the list
      */

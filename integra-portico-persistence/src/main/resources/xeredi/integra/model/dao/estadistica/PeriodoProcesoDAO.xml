@@ -27,7 +27,6 @@
             SELECT 1
             FROM tbl_cuadro_mes_cdms
             WHERE cdms_pepr_pk = pepr_pk
-            LIMIT 1
         ) AS pepr_cdms_generado
     FROM tbl_periodo_proceso_pepr pepr
         JOIN tbl_parametro_prmt autp ON

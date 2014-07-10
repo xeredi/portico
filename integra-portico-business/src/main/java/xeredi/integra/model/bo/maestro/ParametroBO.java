@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.comun.IgBO;
@@ -432,13 +433,7 @@ public class ParametroBO implements Parametro {
         final int count = prmtDAO.selectCount(prmtCriterioVO);
 
         if (count > offset) {
-            prmtCriterioVO.setOffset(offset);
-            prmtCriterioVO.setLimit(limit);
-
-            prmtList.addAll(prmtDAO.selectList(prmtCriterioVO));
-
-            prmtCriterioVO.setOffset(null);
-            prmtCriterioVO.setLimit(null);
+            prmtList.addAll(prmtDAO.selectList(prmtCriterioVO, new RowBounds(offset, limit)));
 
             // FIXME Ojo en la paginacion, puede traer una barbaridad de
             // dependencias
@@ -633,7 +628,8 @@ public class ParametroBO implements Parametro {
 
         prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
 
-        return prmtDAO.selectLupaList(prmtLupaCriterioVO);
+        return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(GlobalNames.OFFSET_DEFAULT,
+                GlobalNames.LUPA_LIMIT_DEFAULT));
     }
 
     /**
@@ -666,8 +662,8 @@ public class ParametroBO implements Parametro {
      * @param prmtList
      *            Colleccion de parámetros de los que se desea obtener sus datos asociados.
      * @param prmtCriterioVO
-     *            Criterio de búsqueda de parámetros. Este criterio ha sido el utilizado para
-     *            obtener la coleccion de parámetros pasada como argumento.
+     *            Criterio de búsqueda de parámetros. Este criterio ha sido el utilizado para obtener la coleccion de
+     *            parámetros pasada como argumento.
      * @param useIds
      *            the use ids
      */

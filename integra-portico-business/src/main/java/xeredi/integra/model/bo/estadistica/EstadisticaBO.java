@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.dao.estadistica.EstadisticaDAO;
@@ -51,13 +52,7 @@ public class EstadisticaBO implements Estadistica {
         final List<EstadisticaVO> estdList = new ArrayList<>();
 
         if (count > offset) {
-            estdCriterioVO.setOffset(offset);
-            estdCriterioVO.setLimit(limit);
-
-            estdList.addAll(estdDAO.selectList(estdCriterioVO));
-
-            estdCriterioVO.setOffset(null);
-            estdCriterioVO.setLimit(null);
+            estdList.addAll(estdDAO.selectList(estdCriterioVO, new RowBounds(offset, limit)));
 
             fillDependencies(estdList, estdCriterioVO);
         }
@@ -104,7 +99,7 @@ public class EstadisticaBO implements Estadistica {
 
     /**
      * Fill dependencies.
-     * 
+     *
      * @param estdList
      *            the estd list
      * @param estdCriterioVO

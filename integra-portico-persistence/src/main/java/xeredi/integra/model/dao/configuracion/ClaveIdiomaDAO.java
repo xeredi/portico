@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.vo.configuracion.ClaveIdiomaCriterioVO;
 import xeredi.integra.model.vo.configuracion.ClaveIdiomaVO;
@@ -16,7 +17,7 @@ public interface ClaveIdiomaDAO {
 
     /**
      * Select all map.
-     * 
+     *
      * @return the map
      */
     @MapKey("clave")
@@ -24,7 +25,7 @@ public interface ClaveIdiomaDAO {
 
     /**
      * Select count.
-     * 
+     *
      * @param cnciCriterioVO
      *            the cnci criterio vo
      * @return the integer
@@ -33,16 +34,18 @@ public interface ClaveIdiomaDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param cnciCriterioVO
      *            the cnci criterio vo
+     * @param bounds
+     *            the bounds
      * @return the list
      */
-    List<ClaveIdiomaVO> selectList(final ClaveIdiomaCriterioVO cnciCriterioVO);
+    List<ClaveIdiomaVO> selectList(final ClaveIdiomaCriterioVO cnciCriterioVO, final RowBounds bounds);
 
     /**
      * Exists.
-     * 
+     *
      * @param cnciVO
      *            the cnci vo
      * @return true, if successful
@@ -51,7 +54,7 @@ public interface ClaveIdiomaDAO {
 
     /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the clave idioma vo
@@ -60,7 +63,7 @@ public interface ClaveIdiomaDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param cnciVO
      *            the cnci vo
      */
@@ -68,7 +71,7 @@ public interface ClaveIdiomaDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param cnciVO
      *            the cnci vo
      * @return the int

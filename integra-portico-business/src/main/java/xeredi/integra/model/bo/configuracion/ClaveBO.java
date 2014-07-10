@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.dao.configuracion.ClaveDAO;
@@ -136,17 +137,11 @@ public class ClaveBO implements Clave {
         final List<ClaveVO> list = new ArrayList<>();
 
         if (count > offset) {
-            cnclCriterioVO.setOffset(offset);
-            cnclCriterioVO.setLimit(limit);
-
-            list.addAll(cnclDAO.selectList(cnclCriterioVO));
+            list.addAll(cnclDAO.selectList(cnclCriterioVO, new RowBounds(offset, limit)));
 
             if (!list.isEmpty()) {
                 loadDependencies(list);
             }
-
-            cnclCriterioVO.setOffset(null);
-            cnclCriterioVO.setLimit(null);
         }
 
         return new PaginatedList<>(list, offset, limit, count);
@@ -163,7 +158,7 @@ public class ClaveBO implements Clave {
 
     /**
      * Load dependencies.
-     * 
+     *
      * @param list
      *            the list
      */

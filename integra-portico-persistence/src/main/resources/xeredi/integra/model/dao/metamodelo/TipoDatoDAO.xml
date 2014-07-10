@@ -67,13 +67,6 @@
         <include refid="SelectWhere" />
 
         ORDER BY tpdt.tpdt_nombre
-
-        <if test="offset != null">
-            OFFSET #{offset}
-        </if>
-        <if test="limit != null">
-            LIMIT #{limit}
-        </if>
     </select>
 
     <select id="selectMap" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
