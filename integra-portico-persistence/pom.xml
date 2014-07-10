@@ -11,19 +11,6 @@
     </parent>
     <name>Persistencia</name>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>resources/mybatis</directory>
-                <includes>
-                    <include>mybatis-config.xml</include>
-                    <include>**/**DAO.xml</include>
-                    <include>**/**DAO.${database-vendor}.xml</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>xeredi</groupId>
