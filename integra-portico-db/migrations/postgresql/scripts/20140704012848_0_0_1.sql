@@ -1,16 +1,5 @@
 -- // 0.0.1
 -- Migration SQL that makes the change goes here.
-CREATE SCHEMA portico
-/
-
-GRANT USAGE ON SCHEMA portico TO portico
-/
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA portico TO portico
-/
-
-
-
 
 
 -- tbl_conf_clave_cncl
@@ -180,7 +169,7 @@ COMMENT ON COLUMN portico.tbl_conf_valor_i18n_cnvi.cnvi_valor IS 'Valor de Param
 
 
 -- tbl_ig
-CREATE TABLE tbl_ig
+CREATE TABLE portico.tbl_ig
 (
 	ig_nombre VARCHAR(30) NOT NULL
 	, ig_inicio BIGINT NOT NULL
@@ -193,28 +182,28 @@ CREATE TABLE tbl_ig
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_ig TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_ig TO portico
 /
 
-COMMENT ON TABLE tbl_ig IS 'Generadores de Secuencias de las Tablas de la Aplicacion'
+COMMENT ON TABLE portico.tbl_ig IS 'Generadores de Secuencias de las Tablas de la Aplicacion'
 /
-COMMENT ON COLUMN tbl_ig.ig_nombre IS 'Nombre del generador de identificadores'
+COMMENT ON COLUMN portico.tbl_ig.ig_nombre IS 'Nombre del generador de identificadores'
 /
-COMMENT ON COLUMN tbl_ig.ig_inicio IS 'Numero de inicio de la secuencia'
+COMMENT ON COLUMN portico.tbl_ig.ig_inicio IS 'Numero de inicio de la secuencia'
 /
-COMMENT ON COLUMN tbl_ig.ig_fin IS 'Numero de fin de la secuencia'
+COMMENT ON COLUMN portico.tbl_ig.ig_fin IS 'Numero de fin de la secuencia'
 /
-COMMENT ON COLUMN tbl_ig.ig_incremento IS 'Incremento de la secuencia'
+COMMENT ON COLUMN portico.tbl_ig.ig_incremento IS 'Incremento de la secuencia'
 /
-COMMENT ON COLUMN tbl_ig.ig_cache IS 'Numero de elementos reservados cada vez que se pide valor a la secuencia'
+COMMENT ON COLUMN portico.tbl_ig.ig_cache IS 'Numero de elementos reservados cada vez que se pide valor a la secuencia'
 /
-COMMENT ON COLUMN tbl_ig.ig_ultimo IS 'Ultimo Valor generado para la secuencia'
+COMMENT ON COLUMN portico.tbl_ig.ig_ultimo IS 'Ultimo Valor generado para la secuencia'
 /
 
 
 
 -- tbl_usuario_usro
-CREATE TABLE tbl_usuario_usro
+CREATE TABLE portico.tbl_usuario_usro
 (
 	usro_pk BIGINT NOT NULL
 	, usro_login VARCHAR(50) NOT NULL
@@ -226,24 +215,24 @@ CREATE TABLE tbl_usuario_usro
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_usuario_usro TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_usuario_usro TO portico
 /
 
-COMMENT ON TABLE tbl_usuario_usro IS 'Usuarios'
+COMMENT ON TABLE portico.tbl_usuario_usro IS 'Usuarios'
 /
-COMMENT ON COLUMN tbl_usuario_usro.usro_pk IS 'Identificador de usuario'
+COMMENT ON COLUMN portico.tbl_usuario_usro.usro_pk IS 'Identificador de usuario'
 /
-COMMENT ON COLUMN tbl_usuario_usro.usro_login IS 'Login'
+COMMENT ON COLUMN portico.tbl_usuario_usro.usro_login IS 'Login'
 /
-COMMENT ON COLUMN tbl_usuario_usro.usro_contrasenia IS 'Contrasenia'
+COMMENT ON COLUMN portico.tbl_usuario_usro.usro_contrasenia IS 'Contrasenia'
 /
-COMMENT ON COLUMN tbl_usuario_usro.usro_nombre IS 'Nombre Completo'
+COMMENT ON COLUMN portico.tbl_usuario_usro.usro_nombre IS 'Nombre Completo'
 /
 
 
 
 -- tbl_grupo_grpo
-CREATE TABLE tbl_grupo_grpo
+CREATE TABLE portico.tbl_grupo_grpo
 (
 	grpo_pk BIGINT NOT NULL
 	, grpo_nombre VARCHAR(50) NOT NULL
@@ -253,46 +242,46 @@ CREATE TABLE tbl_grupo_grpo
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_grupo_grpo TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_grupo_grpo TO portico
 /
 
-COMMENT ON TABLE tbl_grupo_grpo IS 'Grupos de usuarios'
+COMMENT ON TABLE portico.tbl_grupo_grpo IS 'Grupos de usuarios'
 /
-COMMENT ON COLUMN tbl_grupo_grpo.grpo_pk IS 'Identificador de grupo'
+COMMENT ON COLUMN portico.tbl_grupo_grpo.grpo_pk IS 'Identificador de grupo'
 /
-COMMENT ON COLUMN tbl_grupo_grpo.grpo_nombre IS 'Nombre de grupo'
+COMMENT ON COLUMN portico.tbl_grupo_grpo.grpo_nombre IS 'Nombre de grupo'
 /
 
 
 
 -- tbl_usuario_grupo_usgr
-CREATE TABLE tbl_usuario_grupo_usgr
+CREATE TABLE portico.tbl_usuario_grupo_usgr
 (
 	usgr_usro_pk BIGINT NOT NULL
 	, usgr_grpo_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_usgr PRIMARY KEY (usgr_usro_pk, usgr_grpo_pk)
 	, CONSTRAINT fk_usgr_usro_pk FOREIGN KEY (usgr_usro_pk)
-		REFERENCES tbl_usuario_usro (usro_pk)
+		REFERENCES portico.tbl_usuario_usro (usro_pk)
 	, CONSTRAINT fk_usgr_grpo_pk FOREIGN KEY (usgr_grpo_pk)
-		REFERENCES tbl_grupo_grpo (grpo_pk)
+		REFERENCES portico.tbl_grupo_grpo (grpo_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_usuario_grupo_usgr TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_usuario_grupo_usgr TO portico
 /
 
-COMMENT ON TABLE tbl_usuario_grupo_usgr IS 'Asociaciones de usuarios a grupos'
+COMMENT ON TABLE portico.tbl_usuario_grupo_usgr IS 'Asociaciones de usuarios a grupos'
 /
-COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_usro_pk IS 'Identificador de usuario'
+COMMENT ON COLUMN portico.tbl_usuario_grupo_usgr.usgr_usro_pk IS 'Identificador de usuario'
 /
-COMMENT ON COLUMN tbl_usuario_grupo_usgr.usgr_grpo_pk IS 'Identificador de grupo de usuarios'
+COMMENT ON COLUMN portico.tbl_usuario_grupo_usgr.usgr_grpo_pk IS 'Identificador de grupo de usuarios'
 /
 
 
 
 -- tbl_entidad_enti
-CREATE TABLE tbl_entidad_enti
+CREATE TABLE portico.tbl_entidad_enti
 (
 	enti_pk BIGINT NOT NULL
 	, enti_codigo VARCHAR(50) NOT NULL
@@ -309,32 +298,32 @@ CREATE TABLE tbl_entidad_enti
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_enti TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_enti TO portico
 /
 
-COMMENT ON TABLE tbl_entidad_enti IS 'Entidades de la aplicacion'
+COMMENT ON TABLE portico.tbl_entidad_enti IS 'Entidades de la aplicacion'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_pk IS 'Identificador de Entidad'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_pk IS 'Identificador de Entidad'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_codigo IS 'Codigo Unico'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_codigo IS 'Codigo Unico'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_tipo IS 'Tipo de Entidad: P (Parametrico) - T (Tipo de Servicio) - S (Tipo de Subservicio)'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_tipo IS 'Tipo de Entidad: P (Parametrico) - T (Tipo de Servicio) - S (Tipo de Subservicio)'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_alta IS 'Comando de alta Habilitado?'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_alta IS 'Comando de alta Habilitado?'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_baja IS 'Comando de baja Habilitado?'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_baja IS 'Comando de baja Habilitado?'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_edicion IS 'Comando de edicion Habilitado?'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_edicion IS 'Comando de edicion Habilitado?'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_duplicado IS 'Comando de duplicado Habilitado?'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_duplicado IS 'Comando de duplicado Habilitado?'
 /
-COMMENT ON COLUMN tbl_entidad_enti.enti_nombre IS 'Nombre de Entidad'
+COMMENT ON COLUMN portico.tbl_entidad_enti.enti_nombre IS 'Nombre de Entidad'
 /
 
 
 
 -- tbl_entidad_entidad_enen
-CREATE TABLE tbl_entidad_entidad_enen
+CREATE TABLE portico.tbl_entidad_entidad_enen
 (
 	enen_entip_pk BIGINT NOT NULL
 	, enen_entih_pk BIGINT NOT NULL
@@ -342,22 +331,22 @@ CREATE TABLE tbl_entidad_entidad_enen
 
 	, CONSTRAINT pk_enen PRIMARY KEY (enen_entip_pk, enen_entih_pk)
 	, CONSTRAINT fk_enen_entip_pk FOREIGN KEY (enen_entip_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_enen_entih_pk FOREIGN KEY (enen_entih_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_entidad_enen TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_entidad_enen TO portico
 /
 
-COMMENT ON TABLE tbl_entidad_entidad_enen IS 'Relacion de Dependencia entre Entidades de la aplicacion'
+COMMENT ON TABLE portico.tbl_entidad_entidad_enen IS 'Relacion de Dependencia entre Entidades de la aplicacion'
 /
-COMMENT ON COLUMN tbl_entidad_entidad_enen.enen_entip_pk IS 'Identificador de Entidad Padre'
+COMMENT ON COLUMN portico.tbl_entidad_entidad_enen.enen_entip_pk IS 'Identificador de Entidad Padre'
 /
-COMMENT ON COLUMN tbl_entidad_entidad_enen.enen_entih_pk IS 'Identificador de Entidad Hija'
+COMMENT ON COLUMN portico.tbl_entidad_entidad_enen.enen_entih_pk IS 'Identificador de Entidad Hija'
 /
-COMMENT ON COLUMN tbl_entidad_entidad_enen.enen_orden IS 'Orden de Entidad Hija con Respecto a la entidad Padre'
+COMMENT ON COLUMN portico.tbl_entidad_entidad_enen.enen_orden IS 'Orden de Entidad Hija con Respecto a la entidad Padre'
 /
 
 
@@ -365,7 +354,7 @@ COMMENT ON COLUMN tbl_entidad_entidad_enen.enen_orden IS 'Orden de Entidad Hija 
 
 
 -- tbl_tipo_dato_tpdt
-CREATE TABLE tbl_tipo_dato_tpdt
+CREATE TABLE portico.tbl_tipo_dato_tpdt
 (
 	tpdt_pk BIGINT NOT NULL
 	, tpdt_codigo VARCHAR(50) NOT NULL
@@ -377,32 +366,32 @@ CREATE TABLE tbl_tipo_dato_tpdt
 	, CONSTRAINT pk_tpdt PRIMARY KEY (tpdt_pk)
 	, CONSTRAINT uq_tpdt UNIQUE (tpdt_codigo)
 	, CONSTRAINT fk_tpdt_enti_pk FOREIGN KEY (tpdt_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_dato_tpdt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_tipo_dato_tpdt TO portico
 /
 
-COMMENT ON TABLE tbl_tipo_dato_tpdt IS 'Tipos de dato de la aplicacion'
+COMMENT ON TABLE portico.tbl_tipo_dato_tpdt IS 'Tipos de dato de la aplicacion'
 /
-COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_codigo IS 'Codigo de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_codigo IS 'Codigo de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_nombre IS 'Nombre de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_nombre IS 'Nombre de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_tipo_html IS 'Tipo Html con el que se representa el Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_tipo_html IS 'Tipo Html con el que se representa el Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_tipo_elemento IS 'Tipo de elemento que almacena el tipo de dato. Puede tomar los valores: L (Long), D (Double), S (String), T (Date), B (Boolean), P (Parametro)'
+COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_tipo_elemento IS 'Tipo de elemento que almacena el tipo de dato. Puede tomar los valores: L (Long), D (Double), S (String), T (Date), B (Boolean), P (Parametro)'
 /
-COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_enti_pk IS 'Entidad asociada al tipo de dato'
+COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_enti_pk IS 'Entidad asociada al tipo de dato'
 /
 
 
 
 -- tbl_codigo_referencia_cdrf
-CREATE TABLE tbl_codigo_referencia_cdrf
+CREATE TABLE portico.tbl_codigo_referencia_cdrf
 (
 	cdrf_tpdt_pk BIGINT NOT NULL
 	, cdrf_valor VARCHAR(10) NOT NULL
@@ -410,26 +399,26 @@ CREATE TABLE tbl_codigo_referencia_cdrf
 
 	, CONSTRAINT pk_cdrf PRIMARY KEY (cdrf_tpdt_pk, cdrf_valor)
 	, CONSTRAINT fk_cdrf_tpdt_pk FOREIGN KEY (cdrf_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_codigo_referencia_cdrf TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_codigo_referencia_cdrf TO portico
 /
 
-COMMENT ON TABLE tbl_codigo_referencia_cdrf IS 'Tipos de dato de la aplicacion'
+COMMENT ON TABLE portico.tbl_codigo_referencia_cdrf IS 'Tipos de dato de la aplicacion'
 /
-COMMENT ON COLUMN tbl_codigo_referencia_cdrf.cdrf_tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_codigo_referencia_cdrf.cdrf_tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_codigo_referencia_cdrf.cdrf_valor IS 'Valor del Codigo de Referencia'
+COMMENT ON COLUMN portico.tbl_codigo_referencia_cdrf.cdrf_valor IS 'Valor del Codigo de Referencia'
 /
-COMMENT ON COLUMN tbl_codigo_referencia_cdrf.cdrf_orden IS 'Orden de Visualiazacion del Codigo de Referencia dentro de un Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_codigo_referencia_cdrf.cdrf_orden IS 'Orden de Visualiazacion del Codigo de Referencia dentro de un Tipo de Dato'
 /
 
 
 
 -- tbl_entidad_accion_enac
-CREATE TABLE tbl_entidad_accion_enac
+CREATE TABLE portico.tbl_entidad_accion_enac
 (
 	enac_enti_pk BIGINT NOT NULL
 	, enac_path VARCHAR(30) NOT NULL
@@ -438,28 +427,28 @@ CREATE TABLE tbl_entidad_accion_enac
 
 	, CONSTRAINT pk_enac PRIMARY KEY (enac_enti_pk, enac_path)
 	, CONSTRAINT fk_enac_enti_pk FOREIGN KEY (enac_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_accion_enac TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_accion_enac TO portico
 /
 
-COMMENT ON TABLE tbl_entidad_accion_enac IS 'Acciones asociadas a entidades'
+COMMENT ON TABLE portico.tbl_entidad_accion_enac IS 'Acciones asociadas a entidades'
 /
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_enti_pk IS 'Identificador de Entidad'
+COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_enti_pk IS 'Identificador de Entidad'
 /
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_path IS 'Path para construir la URL de la accion'
+COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_path IS 'Path para construir la URL de la accion'
 /
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_etiqueta IS 'Etiqueta de visualizacion de la accion en Web'
+COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_etiqueta IS 'Etiqueta de visualizacion de la accion en Web'
 /
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_enti_pk IS 'Orden de aparacion de la accion dentro de las acciones de una entidad'
+COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_enti_pk IS 'Orden de aparacion de la accion dentro de las acciones de una entidad'
 /
 
 
 
 -- tbl_entidad_grupo_dato_engd
-CREATE TABLE tbl_entidad_grupo_dato_engd
+CREATE TABLE portico.tbl_entidad_grupo_dato_engd
 (
 	engd_enti_pk BIGINT NOT NULL
 	, engd_orden int NOT NULL
@@ -467,26 +456,26 @@ CREATE TABLE tbl_entidad_grupo_dato_engd
 
 	, CONSTRAINT pk_engd PRIMARY KEY (engd_enti_pk, engd_orden)
 	, CONSTRAINT fk_engd_enti_pk FOREIGN KEY (engd_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_grupo_dato_engd TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_grupo_dato_engd TO portico
 /
 
-COMMENT ON TABLE tbl_entidad_grupo_dato_engd IS 'Grupos de datos en los que se organizan las entidades'
+COMMENT ON TABLE portico.tbl_entidad_grupo_dato_engd IS 'Grupos de datos en los que se organizan las entidades'
 /
-COMMENT ON COLUMN tbl_entidad_grupo_dato_engd.engd_enti_pk IS 'Identificador de Entidad'
+COMMENT ON COLUMN portico.tbl_entidad_grupo_dato_engd.engd_enti_pk IS 'Identificador de Entidad'
 /
-COMMENT ON COLUMN tbl_entidad_grupo_dato_engd.engd_orden IS 'Orden del grupo de datos dentro de la entidad'
+COMMENT ON COLUMN portico.tbl_entidad_grupo_dato_engd.engd_orden IS 'Orden del grupo de datos dentro de la entidad'
 /
-COMMENT ON COLUMN tbl_entidad_grupo_dato_engd.engd_etiqueta IS 'Etiqueta del grupo de datos'
+COMMENT ON COLUMN portico.tbl_entidad_grupo_dato_engd.engd_etiqueta IS 'Etiqueta del grupo de datos'
 /
 
 
 
 -- tbl_entidad_tipo_dato_entd
-CREATE TABLE tbl_entidad_tipo_dato_entd
+CREATE TABLE portico.tbl_entidad_tipo_dato_entd
 (
 	entd_enti_pk BIGINT NOT NULL
 	, entd_tpdt_pk BIGINT NOT NULL
@@ -503,44 +492,44 @@ CREATE TABLE tbl_entidad_tipo_dato_entd
 	, CONSTRAINT pk_entd PRIMARY KEY (entd_enti_pk, entd_tpdt_pk)
 	, CONSTRAINT uq_entd_etiqueta UNIQUE (entd_enti_pk, entd_grupo, entd_etiqueta)
 	, CONSTRAINT fk_entd_enti_pk FOREIGN KEY (entd_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_entd_tpdt_pk FOREIGN KEY (entd_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_tipo_dato_entd TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_tipo_dato_entd TO portico
 /
 
-COMMENT ON TABLE tbl_entidad_tipo_dato_entd IS 'Tipos de datos de los que se componen las entidades'
+COMMENT ON TABLE portico.tbl_entidad_tipo_dato_entd IS 'Tipos de datos de los que se componen las entidades'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_enti_pk IS 'Identificador de Entidad'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_enti_pk IS 'Identificador de Entidad'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_grupo IS 'Numero de grupo al que pertenece el tipo de dato dentro de la entidad'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_grupo IS 'Numero de grupo al que pertenece el tipo de dato dentro de la entidad'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_fila IS 'Numero de Fila en el que aparece el tipo de Dato'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_fila IS 'Numero de Fila en el que aparece el tipo de Dato'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_orden IS 'Orden del tipo de Dato dentro de una fila'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_orden IS 'Orden del tipo de Dato dentro de una fila'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_span IS 'Ancho del tipo de dato'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_span IS 'Ancho del tipo de dato'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_obligatorio IS 'Indicador de si el tipo de dato debe tener valor asociado'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_obligatorio IS 'Indicador de si el tipo de dato debe tener valor asociado'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_gridable IS 'Indicador de si el tipo de dato va a ser visible en los grids de datos de la Entidad'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_gridable IS 'Indicador de si el tipo de dato va a ser visible en los grids de datos de la Entidad'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_filtrable IS 'Indicador de si el tipo de dato va a ser visible en los filtros de busqueda de la Entidad'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_filtrable IS 'Indicador de si el tipo de dato va a ser visible en los filtros de busqueda de la Entidad'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_valor_defecto IS 'Valor por defecto del tipo de dato'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_valor_defecto IS 'Valor por defecto del tipo de dato'
 /
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_etiqueta IS 'Etiqueta de visualizacion'
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_etiqueta IS 'Etiqueta de visualizacion'
 /
 
 
 
 -- tbl_tipo_parametro_tppr
-CREATE TABLE tbl_tipo_parametro_tppr
+CREATE TABLE portico.tbl_tipo_parametro_tppr
 (
 	tppr_pk BIGINT NOT NULL
 	, tppr_es_i18n int NOT NULL
@@ -549,30 +538,30 @@ CREATE TABLE tbl_tipo_parametro_tppr
 
 	, CONSTRAINT pk_tppr PRIMARY KEY (tppr_pk)
 	, CONSTRAINT fk_tppr_enti_pk FOREIGN KEY (tppr_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tppr_tpdt_pk FOREIGN KEY (tppr_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_parametro_tppr TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_tipo_parametro_tppr TO portico
 /
 
-COMMENT ON TABLE tbl_tipo_parametro_tppr IS 'Tipos de Parametro de la aplicacion (Definicion de Maestros)'
+COMMENT ON TABLE portico.tbl_tipo_parametro_tppr IS 'Tipos de Parametro de la aplicacion (Definicion de Maestros)'
 /
-COMMENT ON COLUMN tbl_tipo_parametro_tppr.tppr_pk IS 'Identificador de Tipo de Parametro'
+COMMENT ON COLUMN portico.tbl_tipo_parametro_tppr.tppr_pk IS 'Identificador de Tipo de Parametro'
 /
-COMMENT ON COLUMN tbl_tipo_parametro_tppr.tppr_es_i18n IS 'Indicador de si el parametro tiene descripciones internacionalizables'
+COMMENT ON COLUMN portico.tbl_tipo_parametro_tppr.tppr_es_i18n IS 'Indicador de si el parametro tiene descripciones internacionalizables'
 /
-COMMENT ON COLUMN tbl_tipo_parametro_tppr.tppr_es_tmp_exp IS 'Indicador de si el parametro tiene temporalidad explicita'
+COMMENT ON COLUMN portico.tbl_tipo_parametro_tppr.tppr_es_tmp_exp IS 'Indicador de si el parametro tiene temporalidad explicita'
 /
-COMMENT ON COLUMN tbl_tipo_parametro_tppr.tppr_tpdt_pk IS 'Identificador de tipo de dato que almacena la descripcion del parametro (utilizado en maestros sin i18n)'
+COMMENT ON COLUMN portico.tbl_tipo_parametro_tppr.tppr_tpdt_pk IS 'Identificador de tipo de dato que almacena la descripcion del parametro (utilizado en maestros sin i18n)'
 /
 
 
 
 -- tbl_parametro_prmt
-CREATE TABLE tbl_parametro_prmt
+CREATE TABLE portico.tbl_parametro_prmt
 (
 	prmt_pk BIGINT NOT NULL
 	, prmt_tppr_pk BIGINT NOT NULL
@@ -581,26 +570,26 @@ CREATE TABLE tbl_parametro_prmt
 	, CONSTRAINT pk_prmt PRIMARY KEY (prmt_pk)
 	, CONSTRAINT uq_prmt UNIQUE (prmt_tppr_pk, prmt_parametro)
 	, CONSTRAINT fk_prmt_tppr_pk FOREIGN KEY (prmt_tppr_pk)
-		REFERENCES tbl_tipo_parametro_tppr (tppr_pk)
+		REFERENCES portico.tbl_tipo_parametro_tppr (tppr_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_parametro_prmt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_parametro_prmt TO portico
 /
 
-COMMENT ON TABLE tbl_parametro_prmt IS 'Parametros de la aplicacion (Datos de Maestros)'
+COMMENT ON TABLE portico.tbl_parametro_prmt IS 'Parametros de la aplicacion (Datos de Maestros)'
 /
-COMMENT ON COLUMN tbl_parametro_prmt.prmt_pk IS 'Identificador de Parametro'
+COMMENT ON COLUMN portico.tbl_parametro_prmt.prmt_pk IS 'Identificador de Parametro'
 /
-COMMENT ON COLUMN tbl_parametro_prmt.prmt_tppr_pk IS 'Identificador de Tipo de Parametro al que pertenece el parametro'
+COMMENT ON COLUMN portico.tbl_parametro_prmt.prmt_tppr_pk IS 'Identificador de Tipo de Parametro al que pertenece el parametro'
 /
-COMMENT ON COLUMN tbl_parametro_prmt.prmt_parametro IS 'Valor de Parametro'
+COMMENT ON COLUMN portico.tbl_parametro_prmt.prmt_parametro IS 'Valor de Parametro'
 /
 
 
 
 -- tbl_parametro_version_prvr
-CREATE TABLE tbl_parametro_version_prvr
+CREATE TABLE portico.tbl_parametro_version_prvr
 (
 	prvr_pk BIGINT NOT NULL
 	, prvr_prmt_pk BIGINT NOT NULL
@@ -609,29 +598,29 @@ CREATE TABLE tbl_parametro_version_prvr
 
 	, CONSTRAINT pk_prvr PRIMARY KEY (prvr_pk)
 	, CONSTRAINT fk_prvr_prmt_pk FOREIGN KEY (prvr_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-CREATE INDEX ix_prvr_prmt_pk ON tbl_parametro_version_prvr(prvr_prmt_pk)
+CREATE INDEX ix_prvr_prmt_pk ON portico.tbl_parametro_version_prvr(prvr_prmt_pk)
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_parametro_version_prvr TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_parametro_version_prvr TO portico
 /
 
-COMMENT ON TABLE tbl_parametro_version_prvr IS 'Versiones de Parametros de la aplicacion (Temporalidad de Datos de Maestros)'
+COMMENT ON TABLE portico.tbl_parametro_version_prvr IS 'Versiones de Parametros de la aplicacion (Temporalidad de Datos de Maestros)'
 /
-COMMENT ON COLUMN tbl_parametro_version_prvr.prvr_pk IS 'Identificador de Version de Parametro'
+COMMENT ON COLUMN portico.tbl_parametro_version_prvr.prvr_pk IS 'Identificador de Version de Parametro'
 /
-COMMENT ON COLUMN tbl_parametro_version_prvr.prvr_fini IS 'Fecha de inicio de vigencia de la Version'
+COMMENT ON COLUMN portico.tbl_parametro_version_prvr.prvr_fini IS 'Fecha de inicio de vigencia de la Version'
 /
-COMMENT ON COLUMN tbl_parametro_version_prvr.prvr_ffin IS 'Fecha de fin de vigencia de la Version'
+COMMENT ON COLUMN portico.tbl_parametro_version_prvr.prvr_ffin IS 'Fecha de fin de vigencia de la Version'
 /
 
 
 
 -- tbl_parametro_dato_prdt
-CREATE TABLE tbl_parametro_dato_prdt
+CREATE TABLE portico.tbl_parametro_dato_prdt
 (
 	prdt_prvr_pk BIGINT NOT NULL
 	, prdt_tpdt_pk BIGINT NOT NULL
@@ -643,38 +632,38 @@ CREATE TABLE tbl_parametro_dato_prdt
 
 	, CONSTRAINT pk_prdt PRIMARY KEY (prdt_prvr_pk, prdt_tpdt_pk)
 	, CONSTRAINT fk_prdt_prvr_pk FOREIGN KEY (prdt_prvr_pk)
-		REFERENCES tbl_parametro_version_prvr (prvr_pk)
+		REFERENCES portico.tbl_parametro_version_prvr (prvr_pk)
 	, CONSTRAINT fk_prdt_tpdt_pk FOREIGN KEY (prdt_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 	, CONSTRAINT fk_prdt_prmt_pk FOREIGN KEY (prdt_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_parametro_dato_prdt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_parametro_dato_prdt TO portico
 /
 
-COMMENT ON TABLE tbl_parametro_dato_prdt IS 'Datos Asociados a las Versiones de Parametros de la aplicacion (Datos de Maestros)'
+COMMENT ON TABLE portico.tbl_parametro_dato_prdt IS 'Datos Asociados a las Versiones de Parametros de la aplicacion (Datos de Maestros)'
 /
-COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_prvr_pk IS 'Identificador de Version de Parametro'
+COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_prvr_pk IS 'Identificador de Version de Parametro'
 /
-COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_nentero IS 'Valor de dato de Tipo Cantidad Entera'
+COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_nentero IS 'Valor de dato de Tipo Cantidad Entera'
 /
-COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_ndecimal IS 'Valor de dato de Tipo Cantidad Decimal'
+COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_ndecimal IS 'Valor de dato de Tipo Cantidad Decimal'
 /
-COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_fecha IS 'Valor de dato de Tipo Fecha'
+COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_fecha IS 'Valor de dato de Tipo Fecha'
 /
-COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_prmt_pk IS 'Valor de dato de Tipo Maestro'
+COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_prmt_pk IS 'Valor de dato de Tipo Maestro'
 /
-COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_cadena IS 'Valor de dato de Tipo Texto'
+COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_cadena IS 'Valor de dato de Tipo Texto'
 /
 
 
 
 -- tbl_parametro_i18n_p18n
-CREATE TABLE tbl_parametro_i18n_p18n
+CREATE TABLE portico.tbl_parametro_i18n_p18n
 (
 	p18n_prvr_pk BIGINT NOT NULL
 	, p18n_idioma VARCHAR(5) NOT NULL
@@ -682,26 +671,26 @@ CREATE TABLE tbl_parametro_i18n_p18n
 
 	, CONSTRAINT p18n_pk PRIMARY KEY (p18n_prvr_pk, p18n_idioma)
 	, CONSTRAINT fk_p18n_prvr_pk FOREIGN KEY (p18n_prvr_pk)
-		REFERENCES tbl_parametro_version_prvr (prvr_pk)
+		REFERENCES portico.tbl_parametro_version_prvr (prvr_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_parametro_i18n_p18n TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_parametro_i18n_p18n TO portico
 /
 
-COMMENT ON TABLE tbl_parametro_i18n_p18n IS 'Textos internacionalizados Asociados a las Versiones de Parametros de la aplicacion (Textos i18n de Maestros)'
+COMMENT ON TABLE portico.tbl_parametro_i18n_p18n IS 'Textos internacionalizados Asociados a las Versiones de Parametros de la aplicacion (Textos i18n de Maestros)'
 /
-COMMENT ON COLUMN tbl_parametro_i18n_p18n.p18n_prvr_pk IS 'Identificador de Version de Parametro'
+COMMENT ON COLUMN portico.tbl_parametro_i18n_p18n.p18n_prvr_pk IS 'Identificador de Version de Parametro'
 /
-COMMENT ON COLUMN tbl_parametro_i18n_p18n.p18n_idioma IS 'Idioma del texto'
+COMMENT ON COLUMN portico.tbl_parametro_i18n_p18n.p18n_idioma IS 'Idioma del texto'
 /
-COMMENT ON COLUMN tbl_parametro_i18n_p18n.p18n_texto IS 'Texto'
+COMMENT ON COLUMN portico.tbl_parametro_i18n_p18n.p18n_texto IS 'Texto'
 /
 
 
 
 -- tbl_tipo_subparametro_tpsp
-CREATE TABLE tbl_tipo_subparametro_tpsp
+CREATE TABLE portico.tbl_tipo_subparametro_tpsp
 (
 	tpsp_pk BIGINT NOT NULL
 	, tpsp_tppr_pk BIGINT NOT NULL
@@ -712,34 +701,34 @@ CREATE TABLE tbl_tipo_subparametro_tpsp
 	, CONSTRAINT pk_tpsp PRIMARY KEY (tpsp_pk)
 	, CONSTRAINT uq_tpsp UNIQUE (tpsp_tppr_pk, tpsp_tppr_dep_pk)
 	, CONSTRAINT fk_tpsp_enti_pk FOREIGN KEY (tpsp_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tpsp_tppr_pk FOREIGN KEY (tpsp_tppr_pk)
-		REFERENCES tbl_tipo_parametro_tppr (tppr_pk)
+		REFERENCES portico.tbl_tipo_parametro_tppr (tppr_pk)
 	, CONSTRAINT fk_tpsp_tppr_dep_pk FOREIGN KEY (tpsp_tppr_dep_pk)
-		REFERENCES tbl_tipo_parametro_tppr (tppr_pk)
+		REFERENCES portico.tbl_tipo_parametro_tppr (tppr_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_subparametro_tpsp TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_tipo_subparametro_tpsp TO portico
 /
 
-COMMENT ON TABLE tbl_tipo_subparametro_tpsp IS 'Tipos de Subparametro de la aplicacion (Definicion de Maestros dependientes de otros maestros)'
+COMMENT ON TABLE portico.tbl_tipo_subparametro_tpsp IS 'Tipos de Subparametro de la aplicacion (Definicion de Maestros dependientes de otros maestros)'
 /
-COMMENT ON COLUMN tbl_tipo_subparametro_tpsp.tpsp_pk IS 'Identificador de Tipo de Subparametro'
+COMMENT ON COLUMN portico.tbl_tipo_subparametro_tpsp.tpsp_pk IS 'Identificador de Tipo de Subparametro'
 /
-COMMENT ON COLUMN tbl_tipo_subparametro_tpsp.tpsp_tppr_pk IS 'Identificador de Tipo de Parametro Padre'
+COMMENT ON COLUMN portico.tbl_tipo_subparametro_tpsp.tpsp_tppr_pk IS 'Identificador de Tipo de Parametro Padre'
 /
-COMMENT ON COLUMN tbl_tipo_subparametro_tpsp.tpsp_tppr_dep_pk IS 'Identificador de Tipo de Parametro Asociado'
+COMMENT ON COLUMN portico.tbl_tipo_subparametro_tpsp.tpsp_tppr_dep_pk IS 'Identificador de Tipo de Parametro Asociado'
 /
-COMMENT ON COLUMN tbl_tipo_subparametro_tpsp.tpsp_es_i18n IS 'Indicador de si el tipo de Subparametro tiene internacionalizacion'
+COMMENT ON COLUMN portico.tbl_tipo_subparametro_tpsp.tpsp_es_i18n IS 'Indicador de si el tipo de Subparametro tiene internacionalizacion'
 /
-COMMENT ON COLUMN tbl_tipo_subparametro_tpsp.tpsp_es_tmp_exp IS 'Indicador de si el tipo de Subparametro tiene temporalidad explicita'
+COMMENT ON COLUMN portico.tbl_tipo_subparametro_tpsp.tpsp_es_tmp_exp IS 'Indicador de si el tipo de Subparametro tiene temporalidad explicita'
 /
 
 
 
 -- tbl_subparametro_sprm
-CREATE TABLE tbl_subparametro_sprm
+CREATE TABLE portico.tbl_subparametro_sprm
 (
 	sprm_pk BIGINT NOT NULL
 	, sprm_tpsp_pk BIGINT NOT NULL
@@ -749,32 +738,32 @@ CREATE TABLE tbl_subparametro_sprm
 	, CONSTRAINT pk_sprm PRIMARY KEY (sprm_pk)
 	, CONSTRAINT uq_sprm UNIQUE (sprm_prmt_pk, sprm_prmt_dep_pk)
 	, CONSTRAINT fk_sprm_tpsp_pk FOREIGN KEY (sprm_tpsp_pk)
-		REFERENCES tbl_tipo_subparametro_tpsp (tpsp_pk)
+		REFERENCES portico.tbl_tipo_subparametro_tpsp (tpsp_pk)
 	, CONSTRAINT fk_sprm_prmt_pk FOREIGN KEY (sprm_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_sprm_prmt_dep_pk FOREIGN KEY (sprm_prmt_dep_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subparametro_sprm TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_subparametro_sprm TO portico
 /
 
-COMMENT ON TABLE tbl_subparametro_sprm IS 'Subparametros de la aplicacion (Datos de Maestros dependientes de otros maestros)'
+COMMENT ON TABLE portico.tbl_subparametro_sprm IS 'Subparametros de la aplicacion (Datos de Maestros dependientes de otros maestros)'
 /
-COMMENT ON COLUMN tbl_subparametro_sprm.sprm_pk IS 'Identificador de Subparametro'
+COMMENT ON COLUMN portico.tbl_subparametro_sprm.sprm_pk IS 'Identificador de Subparametro'
 /
-COMMENT ON COLUMN tbl_subparametro_sprm.sprm_tpsp_pk IS 'Identificador de Tipo de Subparametro'
+COMMENT ON COLUMN portico.tbl_subparametro_sprm.sprm_tpsp_pk IS 'Identificador de Tipo de Subparametro'
 /
-COMMENT ON COLUMN tbl_subparametro_sprm.sprm_prmt_pk IS 'Identificador de Parametro padre'
+COMMENT ON COLUMN portico.tbl_subparametro_sprm.sprm_prmt_pk IS 'Identificador de Parametro padre'
 /
-COMMENT ON COLUMN tbl_subparametro_sprm.sprm_prmt_dep_pk IS 'Identificador de Parametro Asociado'
+COMMENT ON COLUMN portico.tbl_subparametro_sprm.sprm_prmt_dep_pk IS 'Identificador de Parametro Asociado'
 /
 
 
 
 -- tbl_subparametro_version_spvr
-CREATE TABLE tbl_subparametro_version_spvr
+CREATE TABLE portico.tbl_subparametro_version_spvr
 (
 	spvr_pk BIGINT NOT NULL
 	, spvr_sprm_pk BIGINT NOT NULL
@@ -783,29 +772,29 @@ CREATE TABLE tbl_subparametro_version_spvr
 
 	, CONSTRAINT pk_spvr PRIMARY KEY (spvr_pk)
 	, CONSTRAINT fk_spvr_sprm_pk FOREIGN KEY (spvr_sprm_pk)
-		REFERENCES tbl_subparametro_sprm (sprm_pk)
+		REFERENCES portico.tbl_subparametro_sprm (sprm_pk)
 )
 /
 
-CREATE INDEX ix_spvr_sprm_pk ON tbl_subparametro_version_spvr (spvr_sprm_pk)
+CREATE INDEX ix_spvr_sprm_pk ON portico.tbl_subparametro_version_spvr (spvr_sprm_pk)
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subparametro_version_spvr TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_subparametro_version_spvr TO portico
 /
 
-COMMENT ON TABLE tbl_subparametro_version_spvr IS 'Versiones de subparametros de la aplicacion (Temporalidad de Datos de Maestros dependientes de otros maestros)'
+COMMENT ON TABLE portico.tbl_subparametro_version_spvr IS 'Versiones de subparametros de la aplicacion (Temporalidad de Datos de Maestros dependientes de otros maestros)'
 /
-COMMENT ON COLUMN tbl_subparametro_version_spvr.spvr_pk IS 'Identificador de Version de Subparametro'
+COMMENT ON COLUMN portico.tbl_subparametro_version_spvr.spvr_pk IS 'Identificador de Version de Subparametro'
 /
-COMMENT ON COLUMN tbl_subparametro_version_spvr.spvr_fini IS 'Fecha de inicio de vigencia de Version de Subparametro'
+COMMENT ON COLUMN portico.tbl_subparametro_version_spvr.spvr_fini IS 'Fecha de inicio de vigencia de Version de Subparametro'
 /
-COMMENT ON COLUMN tbl_subparametro_version_spvr.spvr_ffin IS 'Fecha de fin de vigencia de Version de Subparametro'
+COMMENT ON COLUMN portico.tbl_subparametro_version_spvr.spvr_ffin IS 'Fecha de fin de vigencia de Version de Subparametro'
 /
 
 
 
 -- tbl_subparametro_dato_spdt
-CREATE TABLE tbl_subparametro_dato_spdt
+CREATE TABLE portico.tbl_subparametro_dato_spdt
 (
 	spdt_spvr_pk BIGINT NOT NULL
 	, spdt_tpdt_pk BIGINT NOT NULL
@@ -817,38 +806,38 @@ CREATE TABLE tbl_subparametro_dato_spdt
 
 	, CONSTRAINT pk_spdt PRIMARY KEY (spdt_spvr_pk, spdt_tpdt_pk)
 	, CONSTRAINT fk_spdt_spvr_pk FOREIGN KEY (spdt_spvr_pk)
-		REFERENCES tbl_subparametro_version_spvr (spvr_pk)
+		REFERENCES portico.tbl_subparametro_version_spvr (spvr_pk)
 	, CONSTRAINT fk_spdt_tpdt_pk FOREIGN KEY (spdt_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 	, CONSTRAINT fk_spdt_prmt_pk FOREIGN KEY (spdt_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subparametro_dato_spdt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_subparametro_dato_spdt TO portico
 /
 
-COMMENT ON TABLE tbl_subparametro_dato_spdt IS 'Datos Asociados a las Versiones de Subparametros de la aplicacion (Datos de Maestros Dependientes)'
+COMMENT ON TABLE portico.tbl_subparametro_dato_spdt IS 'Datos Asociados a las Versiones de Subparametros de la aplicacion (Datos de Maestros Dependientes)'
 /
-COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_spvr_pk IS 'Identificador de Version de Subparametro'
+COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_spvr_pk IS 'Identificador de Version de Subparametro'
 /
-COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_nentero IS 'Valor de dato de Tipo Cantidad Entera'
+COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_nentero IS 'Valor de dato de Tipo Cantidad Entera'
 /
-COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_ndecimal IS 'Valor de dato de Tipo Cantidad Decimal'
+COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_ndecimal IS 'Valor de dato de Tipo Cantidad Decimal'
 /
-COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_nentero IS 'Valor de dato de Tipo Fecha'
+COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_nentero IS 'Valor de dato de Tipo Fecha'
 /
-COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_prmt_pk IS 'Valor de dato de Tipo Maestro'
+COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_prmt_pk IS 'Valor de dato de Tipo Maestro'
 /
-COMMENT ON COLUMN tbl_subparametro_dato_spdt.spdt_cadena IS 'Valor de dato de Tipo Texto'
+COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_cadena IS 'Valor de dato de Tipo Texto'
 /
 
 
 
 -- tbl_tipo_servicio_tpsr
-CREATE TABLE tbl_tipo_servicio_tpsr
+CREATE TABLE portico.tbl_tipo_servicio_tpsr
 (
 	tpsr_pk BIGINT NOT NULL
 	, tpsr_es_temporal int NOT NULL
@@ -857,30 +846,30 @@ CREATE TABLE tbl_tipo_servicio_tpsr
 
 	, CONSTRAINT pk_tpsr PRIMARY KEY (tpsr_pk)
 	, CONSTRAINT fk_tpsr_enti_pk FOREIGN KEY (tpsr_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tpsr_tpdt_estado_pk FOREIGN KEY (tpsr_tpdt_estado_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_servicio_tpsr TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_tipo_servicio_tpsr TO portico
 /
 
-COMMENT ON TABLE tbl_tipo_servicio_tpsr IS 'Tipos de Servicio de la aplicacion'
+COMMENT ON TABLE portico.tbl_tipo_servicio_tpsr IS 'Tipos de Servicio de la aplicacion'
 /
-COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_pk IS 'Identificador de Tipo de Servicio'
+COMMENT ON COLUMN portico.tbl_tipo_servicio_tpsr.tpsr_pk IS 'Identificador de Tipo de Servicio'
 /
-COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_es_temporal IS 'Indicador de si el tipo de servicio tiene temporalidad'
+COMMENT ON COLUMN portico.tbl_tipo_servicio_tpsr.tpsr_es_temporal IS 'Indicador de si el tipo de servicio tiene temporalidad'
 /
-COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_es_facturable IS 'Indicador de si el tipo de servicio es facturable'
+COMMENT ON COLUMN portico.tbl_tipo_servicio_tpsr.tpsr_es_facturable IS 'Indicador de si el tipo de servicio es facturable'
 /
-COMMENT ON COLUMN tbl_tipo_servicio_tpsr.tpsr_tpdt_estado_pk IS 'Tipo de dato que añmacena los estados por los que pueden pasar los servicios de este tipo de servicio'
+COMMENT ON COLUMN portico.tbl_tipo_servicio_tpsr.tpsr_tpdt_estado_pk IS 'Tipo de dato que añmacena los estados por los que pueden pasar los servicios de este tipo de servicio'
 /
 
 
 
 -- tbl_tipo_subservicio_tpss
-CREATE TABLE tbl_tipo_subservicio_tpss
+CREATE TABLE portico.tbl_tipo_subservicio_tpss
 (
 	tpss_pk BIGINT NOT NULL
 	, tpss_tpsr_pk BIGINT NOT NULL
@@ -890,34 +879,34 @@ CREATE TABLE tbl_tipo_subservicio_tpss
 
 	, CONSTRAINT pk_tpss PRIMARY KEY (tpss_pk)
 	, CONSTRAINT fk_tpss_enti_pk FOREIGN KEY (tpss_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tpss_tpsr_pk FOREIGN KEY (tpss_tpsr_pk)
-		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
+		REFERENCES portico.tbl_tipo_servicio_tpsr (tpsr_pk)
 	, CONSTRAINT fk_tpss_tpdt_estado_pk FOREIGN KEY (tpss_tpdt_estado_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_subservicio_tpss TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_tipo_subservicio_tpss TO portico
 /
 
-COMMENT ON TABLE tbl_tipo_subservicio_tpss IS 'Tipos de Subservicio de la aplicacion'
+COMMENT ON TABLE portico.tbl_tipo_subservicio_tpss IS 'Tipos de Subservicio de la aplicacion'
 /
-COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_pk IS 'Identificador de Tipo de Subservicio'
+COMMENT ON COLUMN portico.tbl_tipo_subservicio_tpss.tpss_pk IS 'Identificador de Tipo de Subservicio'
 /
-COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_tpsr_pk IS 'Identificador de Tipo de Servicio al que pertenece el tipo de subservicio'
+COMMENT ON COLUMN portico.tbl_tipo_subservicio_tpss.tpss_tpsr_pk IS 'Identificador de Tipo de Servicio al que pertenece el tipo de subservicio'
 /
-COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_es_temporal IS 'Indicador de si el tipo de subservicio tiene temporalidad'
+COMMENT ON COLUMN portico.tbl_tipo_subservicio_tpss.tpss_es_temporal IS 'Indicador de si el tipo de subservicio tiene temporalidad'
 /
-COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_es_facturable IS 'Indicador de si el tipo de subservicio es facturable'
+COMMENT ON COLUMN portico.tbl_tipo_subservicio_tpss.tpss_es_facturable IS 'Indicador de si el tipo de subservicio es facturable'
 /
-COMMENT ON COLUMN tbl_tipo_subservicio_tpss.tpss_tpdt_estado_pk IS 'Tipo de dato que añmacena los estados por los que pueden pasar los subservicios de este tipo de subservicio'
+COMMENT ON COLUMN portico.tbl_tipo_subservicio_tpss.tpss_tpdt_estado_pk IS 'Tipo de dato que añmacena los estados por los que pueden pasar los subservicios de este tipo de subservicio'
 /
 
 
 
 -- tbl_servicio_secuencia_srsc
-CREATE TABLE tbl_servicio_secuencia_srsc
+CREATE TABLE portico.tbl_servicio_secuencia_srsc
 (
 	srsc_tpsr_pk BIGINT NOT NULL
 	, srsc_subp_pk BIGINT NOT NULL
@@ -926,30 +915,30 @@ CREATE TABLE tbl_servicio_secuencia_srsc
 
 	, CONSTRAINT pk_srsc PRIMARY KEY (srsc_tpsr_pk, srsc_subp_pk, srsc_anno)
 	, CONSTRAINT fk_srsc_tpsr_pk FOREIGN KEY (srsc_tpsr_pk)
-		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
+		REFERENCES portico.tbl_tipo_servicio_tpsr (tpsr_pk)
 	, CONSTRAINT fk_srsc_subp_pk FOREIGN KEY (srsc_subp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_secuencia_srsc TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_servicio_secuencia_srsc TO portico
 /
 
-COMMENT ON TABLE tbl_servicio_secuencia_srsc IS 'Numeros de Secuencia de Servicios'
+COMMENT ON TABLE portico.tbl_servicio_secuencia_srsc IS 'Numeros de Secuencia de Servicios'
 /
-COMMENT ON COLUMN tbl_servicio_secuencia_srsc.srsc_tpsr_pk IS 'Identificador de Tipo de Servicio'
+COMMENT ON COLUMN portico.tbl_servicio_secuencia_srsc.srsc_tpsr_pk IS 'Identificador de Tipo de Servicio'
 /
-COMMENT ON COLUMN tbl_servicio_secuencia_srsc.srsc_subp_pk IS 'Identificador de Subpuerto'
+COMMENT ON COLUMN portico.tbl_servicio_secuencia_srsc.srsc_subp_pk IS 'Identificador de Subpuerto'
 /
-COMMENT ON COLUMN tbl_servicio_secuencia_srsc.srsc_anno IS 'Anio'
+COMMENT ON COLUMN portico.tbl_servicio_secuencia_srsc.srsc_anno IS 'Anio'
 /
-COMMENT ON COLUMN tbl_servicio_secuencia_srsc.srsc_ultimo_numero IS 'Ultimo numero de servicio generado para un tipo de servicio, subpuerto y anio'
+COMMENT ON COLUMN portico.tbl_servicio_secuencia_srsc.srsc_ultimo_numero IS 'Ultimo numero de servicio generado para un tipo de servicio, subpuerto y anio'
 /
 
 
 
 -- tbl_servicio_srvc
-CREATE TABLE tbl_servicio_srvc
+CREATE TABLE portico.tbl_servicio_srvc
 (
 	srvc_pk BIGINT NOT NULL
 	, srvc_tpsr_pk BIGINT NOT NULL
@@ -964,45 +953,45 @@ CREATE TABLE tbl_servicio_srvc
 
 	, CONSTRAINT pk_srvc PRIMARY KEY (srvc_pk)
 	, CONSTRAINT fk_srvc_tpsr_pk FOREIGN KEY (srvc_tpsr_pk)
-		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
+		REFERENCES portico.tbl_tipo_servicio_tpsr (tpsr_pk)
 	, CONSTRAINT fk_srvc_subp_pk FOREIGN KEY (srvc_subp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-CREATE INDEX ix_srvc_tpsr_pk ON tbl_servicio_srvc (srvc_tpsr_pk)
+CREATE INDEX ix_srvc_tpsr_pk ON portico.tbl_servicio_srvc (srvc_tpsr_pk)
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_srvc TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_servicio_srvc TO portico
 /
 
-COMMENT ON TABLE tbl_servicio_srvc IS 'Servicios de la aplicacion'
+COMMENT ON TABLE portico.tbl_servicio_srvc IS 'Servicios de la aplicacion'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_pk IS 'Identificador de Servicio'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_pk IS 'Identificador de Servicio'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_tpsr_pk IS 'Identificador de Tipo de Servicio'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_tpsr_pk IS 'Identificador de Tipo de Servicio'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_subp_pk IS 'Identificador de Subpuerto del Servicio'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_subp_pk IS 'Identificador de Subpuerto del Servicio'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_anno IS 'Año'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_anno IS 'Año'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_numero IS 'Numero'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_numero IS 'Numero'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_falta IS 'Fecha de alta en el sistema'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_falta IS 'Fecha de alta en el sistema'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_fref IS 'Fecha de referencia. Utilizada para recuperar los datos temporales asociados al servicio'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_fref IS 'Fecha de referencia. Utilizada para recuperar los datos temporales asociados al servicio'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_fini IS 'Fecha de inicio de prestacion del servicio'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_fini IS 'Fecha de inicio de prestacion del servicio'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_ffin IS 'Fecha de fin de prestacion del servicio'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_ffin IS 'Fecha de fin de prestacion del servicio'
 /
-COMMENT ON COLUMN tbl_servicio_srvc.srvc_estado IS 'Estado en el que se encuentra el servicio'
+COMMENT ON COLUMN portico.tbl_servicio_srvc.srvc_estado IS 'Estado en el que se encuentra el servicio'
 /
 
 
 
 -- tbl_servicio_dato_srdt
-CREATE TABLE tbl_servicio_dato_srdt
+CREATE TABLE portico.tbl_servicio_dato_srdt
 (
 	srdt_srvc_pk BIGINT NOT NULL
 	, srdt_tpdt_pk BIGINT NOT NULL
@@ -1015,42 +1004,42 @@ CREATE TABLE tbl_servicio_dato_srdt
 
 	, CONSTRAINT pk_srdt PRIMARY KEY (srdt_srvc_pk, srdt_tpdt_pk)
 	, CONSTRAINT fk_srdt_srvc_pk FOREIGN KEY (srdt_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
+		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
 	, CONSTRAINT fk_srdt_tpdt_pk FOREIGN KEY (srdt_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 	, CONSTRAINT fk_srdt_prmt_pk FOREIGN KEY (srdt_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_srdt_srvc_dep_pk FOREIGN KEY (srdt_srvc_dep_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
+		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_dato_srdt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_servicio_dato_srdt TO portico
 /
 
-COMMENT ON TABLE tbl_servicio_dato_srdt IS 'Datos asociados a servicios'
+COMMENT ON TABLE portico.tbl_servicio_dato_srdt IS 'Datos asociados a servicios'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_srvc_pk IS 'Identificador de Servicio'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_srvc_pk IS 'Identificador de Servicio'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_nentero IS 'Valor de dato de tipo cantidad entera'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_nentero IS 'Valor de dato de tipo cantidad entera'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_ndecimal IS 'Valor de dato de tipo cantidad decimal'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_ndecimal IS 'Valor de dato de tipo cantidad decimal'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_fecha IS 'Valor de dato de tipo Fecha'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_fecha IS 'Valor de dato de tipo Fecha'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_prmt_pk IS 'Valor de dato de tipo Maestro'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_prmt_pk IS 'Valor de dato de tipo Maestro'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_srvc_dep_pk IS 'Valor de dato de Servicio'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_srvc_dep_pk IS 'Valor de dato de Servicio'
 /
-COMMENT ON COLUMN tbl_servicio_dato_srdt.srdt_cadena IS 'Valor de dato de tipo Texto'
+COMMENT ON COLUMN portico.tbl_servicio_dato_srdt.srdt_cadena IS 'Valor de dato de tipo Texto'
 /
 
 
 
 -- tbl_subservicio_ssrv
-CREATE TABLE tbl_subservicio_ssrv
+CREATE TABLE portico.tbl_subservicio_ssrv
 (
 	ssrv_pk BIGINT NOT NULL
 	, ssrv_srvc_pk BIGINT NOT NULL
@@ -1062,41 +1051,41 @@ CREATE TABLE tbl_subservicio_ssrv
 
 	, CONSTRAINT pk_ssrv PRIMARY KEY (ssrv_pk)
 	, CONSTRAINT fk_ssrv_srvc_pk FOREIGN KEY (ssrv_srvc_pk)
-		REFERENCES tbl_servicio_srvc (srvc_pk)
+		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
 	, CONSTRAINT fk_ssrv_tpss_pk FOREIGN KEY (ssrv_tpss_pk)
-		REFERENCES tbl_tipo_subservicio_tpss (tpss_pk)
+		REFERENCES portico.tbl_tipo_subservicio_tpss (tpss_pk)
 )
 /
 
-CREATE INDEX ix_ssrv_srvc_pk ON tbl_subservicio_ssrv (ssrv_srvc_pk)
+CREATE INDEX ix_ssrv_srvc_pk ON portico.tbl_subservicio_ssrv (ssrv_srvc_pk)
 /
-CREATE INDEX ix_ssrv_tpss_pk ON tbl_subservicio_ssrv (ssrv_tpss_pk)
-/
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_ssrv TO portico
+CREATE INDEX ix_ssrv_tpss_pk ON portico.tbl_subservicio_ssrv (ssrv_tpss_pk)
 /
 
-COMMENT ON TABLE tbl_subservicio_ssrv IS 'Subservicios de la aplicacion'
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_subservicio_ssrv TO portico
 /
-COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_pk IS 'Identificador de Subservicio'
+
+COMMENT ON TABLE portico.tbl_subservicio_ssrv IS 'Subservicios de la aplicacion'
 /
-COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_srvc_pk IS 'Identificador de Servicio'
+COMMENT ON COLUMN portico.tbl_subservicio_ssrv.ssrv_pk IS 'Identificador de Subservicio'
 /
-COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_tpss_pk IS 'Identificador de Tipo de Subservicio'
+COMMENT ON COLUMN portico.tbl_subservicio_ssrv.ssrv_srvc_pk IS 'Identificador de Servicio'
 /
-COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_numero IS 'Numero de Subservicio'
+COMMENT ON COLUMN portico.tbl_subservicio_ssrv.ssrv_tpss_pk IS 'Identificador de Tipo de Subservicio'
 /
-COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_fini IS 'Fecha de inicio de prestacion del subservicio'
+COMMENT ON COLUMN portico.tbl_subservicio_ssrv.ssrv_numero IS 'Numero de Subservicio'
 /
-COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_ffin IS 'Fecha de fin de prestacion del subservicio'
+COMMENT ON COLUMN portico.tbl_subservicio_ssrv.ssrv_fini IS 'Fecha de inicio de prestacion del subservicio'
 /
-COMMENT ON COLUMN tbl_subservicio_ssrv.ssrv_estado IS 'Estado en el que se encuentra el subservicio'
+COMMENT ON COLUMN portico.tbl_subservicio_ssrv.ssrv_ffin IS 'Fecha de fin de prestacion del subservicio'
+/
+COMMENT ON COLUMN portico.tbl_subservicio_ssrv.ssrv_estado IS 'Estado en el que se encuentra el subservicio'
 /
 
 
 
 -- tbl_subservicio_dato_ssdt
-CREATE TABLE tbl_subservicio_dato_ssdt
+CREATE TABLE portico.tbl_subservicio_dato_ssdt
 (
 	ssdt_ssrv_pk BIGINT NOT NULL
 	, ssdt_tpdt_pk BIGINT NOT NULL
@@ -1108,85 +1097,85 @@ CREATE TABLE tbl_subservicio_dato_ssdt
 
 	, CONSTRAINT pk_ssdt PRIMARY KEY (ssdt_ssrv_pk, ssdt_tpdt_pk)
 	, CONSTRAINT fk_ssdt_ssrv_pk FOREIGN KEY (ssdt_ssrv_pk)
-		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
 	, CONSTRAINT fk_ssdt_tpdt_pk FOREIGN KEY (ssdt_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 	, CONSTRAINT fk_ssdt_prmt_pk FOREIGN KEY (ssdt_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subservicio_dato_ssdt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_subservicio_dato_ssdt TO portico
 /
 
-COMMENT ON TABLE tbl_subservicio_dato_ssdt IS 'Subservicios de la aplicacion'
+COMMENT ON TABLE portico.tbl_subservicio_dato_ssdt IS 'Subservicios de la aplicacion'
 /
-COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_ssrv_pk IS 'Identificador de Subservicio'
+COMMENT ON COLUMN portico.tbl_subservicio_dato_ssdt.ssdt_ssrv_pk IS 'Identificador de Subservicio'
 /
-COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_subservicio_dato_ssdt.ssdt_tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_nentero IS 'Valor de dato de tipo cantidad entera'
+COMMENT ON COLUMN portico.tbl_subservicio_dato_ssdt.ssdt_nentero IS 'Valor de dato de tipo cantidad entera'
 /
-COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_ndecimal IS 'Valor de dato de tipo cantidad decimal'
+COMMENT ON COLUMN portico.tbl_subservicio_dato_ssdt.ssdt_ndecimal IS 'Valor de dato de tipo cantidad decimal'
 /
-COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_fecha IS 'Valor de dato de tipo fecha'
+COMMENT ON COLUMN portico.tbl_subservicio_dato_ssdt.ssdt_fecha IS 'Valor de dato de tipo fecha'
 /
-COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_prmt_pk IS 'Valor de dato de tipo maestro'
+COMMENT ON COLUMN portico.tbl_subservicio_dato_ssdt.ssdt_prmt_pk IS 'Valor de dato de tipo maestro'
 /
-COMMENT ON COLUMN tbl_subservicio_dato_ssdt.ssdt_cadena IS 'Valor de dato de tipo texto'
+COMMENT ON COLUMN portico.tbl_subservicio_dato_ssdt.ssdt_cadena IS 'Valor de dato de tipo texto'
 /
 
 
 
 -- tbl_subserv_subserv_ssss
-CREATE TABLE tbl_subserv_subserv_ssss
+CREATE TABLE portico.tbl_subserv_subserv_ssss
 (
 	ssss_ssrvp_pk BIGINT NOT NULL
 	, ssss_ssrvh_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_ssss PRIMARY KEY (ssss_ssrvp_pk, ssss_ssrvh_pk)
 	, CONSTRAINT fk_ssss_ssrvp_pk FOREIGN KEY (ssss_ssrvp_pk)
-		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
 	, CONSTRAINT fk_ssss_ssrvh_pk FOREIGN KEY (ssss_ssrvh_pk)
-		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
+		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_subserv_subserv_ssss TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_subserv_subserv_ssss TO portico
 /
 
-COMMENT ON TABLE tbl_subserv_subserv_ssss IS 'Subservicios de la aplicacion'
+COMMENT ON TABLE portico.tbl_subserv_subserv_ssss IS 'Subservicios de la aplicacion'
 /
-COMMENT ON COLUMN tbl_subserv_subserv_ssss.ssss_ssrvp_pk IS 'Identificador de Subservicio Padre'
+COMMENT ON COLUMN portico.tbl_subserv_subserv_ssss.ssss_ssrvp_pk IS 'Identificador de Subservicio Padre'
 /
-COMMENT ON COLUMN tbl_subserv_subserv_ssss.ssss_ssrvh_pk IS 'Identificador de Subservicio Hijo'
+COMMENT ON COLUMN portico.tbl_subserv_subserv_ssss.ssss_ssrvh_pk IS 'Identificador de Subservicio Hijo'
 /
 
 
 
 -- tbl_tipo_estadistica_tpes
-CREATE TABLE tbl_tipo_estadistica_tpes
+CREATE TABLE portico.tbl_tipo_estadistica_tpes
 (
 	tpes_pk BIGINT NOT NULL
 
 	, CONSTRAINT pk_tpes PRIMARY KEY (tpes_pk)
 	, CONSTRAINT fk_tpes_enti_pk FOREIGN KEY (tpes_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_estadistica_tpes TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_tipo_estadistica_tpes TO portico
 /
 
-COMMENT ON TABLE tbl_tipo_estadistica_tpes IS 'Tipos de Estadisticas de la aplicacion'
+COMMENT ON TABLE portico.tbl_tipo_estadistica_tpes IS 'Tipos de Estadisticas de la aplicacion'
 /
-COMMENT ON COLUMN tbl_tipo_estadistica_tpes.tpes_pk IS 'Identificador de Tipo de Estadistica'
+COMMENT ON COLUMN portico.tbl_tipo_estadistica_tpes.tpes_pk IS 'Identificador de Tipo de Estadistica'
 /
 
 
 
 -- tbl_periodo_proceso_pepr
-CREATE TABLE tbl_periodo_proceso_pepr
+CREATE TABLE portico.tbl_periodo_proceso_pepr
 (
 	pepr_pk BIGINT NOT NULL
 	, pepr_autp_pk BIGINT NOT NULL
@@ -1199,34 +1188,34 @@ CREATE TABLE tbl_periodo_proceso_pepr
 	, CONSTRAINT pk_pepr PRIMARY KEY (pepr_pk)
 	, CONSTRAINT uq_pepr UNIQUE (pepr_autp_pk, pepr_anio, pepr_mes)
 	, CONSTRAINT fk_pepr_autp_pk FOREIGN KEY (pepr_autp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_periodo_proceso_pepr TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_periodo_proceso_pepr TO portico
 /
 
-COMMENT ON TABLE tbl_periodo_proceso_pepr IS 'Periodos de Proceso de Estadisticas'
+COMMENT ON TABLE portico.tbl_periodo_proceso_pepr IS 'Periodos de Proceso de Estadisticas'
 /
-COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_pk IS 'Identificador de Periodo de Proceso'
+COMMENT ON COLUMN portico.tbl_periodo_proceso_pepr.pepr_pk IS 'Identificador de Periodo de Proceso'
 /
-COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_autp_pk IS 'Identificador de Autoridad Portuaria'
+COMMENT ON COLUMN portico.tbl_periodo_proceso_pepr.pepr_autp_pk IS 'Identificador de Autoridad Portuaria'
 /
-COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_anio IS 'Año de Periodo de Proceso'
+COMMENT ON COLUMN portico.tbl_periodo_proceso_pepr.pepr_anio IS 'Año de Periodo de Proceso'
 /
-COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_mes IS 'Mes de Periodo de Proceso'
+COMMENT ON COLUMN portico.tbl_periodo_proceso_pepr.pepr_mes IS 'Mes de Periodo de Proceso'
 /
-COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_trimestre IS 'Trimestre de Periodo de Proceso'
+COMMENT ON COLUMN portico.tbl_periodo_proceso_pepr.pepr_trimestre IS 'Trimestre de Periodo de Proceso'
 /
-COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_freferencia IS 'Fecha de referencia. Utilizada para recuperar los datos temporales asociados al periodo de proceso'
+COMMENT ON COLUMN portico.tbl_periodo_proceso_pepr.pepr_freferencia IS 'Fecha de referencia. Utilizada para recuperar los datos temporales asociados al periodo de proceso'
 /
-COMMENT ON COLUMN tbl_periodo_proceso_pepr.pepr_falta IS 'Fecha de alta del periodo de proceso'
+COMMENT ON COLUMN portico.tbl_periodo_proceso_pepr.pepr_falta IS 'Fecha de alta del periodo de proceso'
 /
 
 
 
 -- tbl_estadistica_estd
-CREATE TABLE tbl_estadistica_estd
+CREATE TABLE portico.tbl_estadistica_estd
 (
 	estd_pk BIGINT NOT NULL
 	, estd_pepr_pk BIGINT NOT NULL
@@ -1235,35 +1224,35 @@ CREATE TABLE tbl_estadistica_estd
 
 	, CONSTRAINT pk_estd PRIMARY KEY (estd_pk)
 	, CONSTRAINT fk_estd_pepr_pk FOREIGN KEY (estd_pepr_pk)
-		REFERENCES tbl_periodo_proceso_pepr (pepr_pk)
+		REFERENCES portico.tbl_periodo_proceso_pepr (pepr_pk)
 	, CONSTRAINT fk_estd_tpes_pk FOREIGN KEY (estd_tpes_pk)
-		REFERENCES tbl_tipo_estadistica_tpes (tpes_pk)
+		REFERENCES portico.tbl_tipo_estadistica_tpes (tpes_pk)
 	, CONSTRAINT fk_estd_subp_pk FOREIGN KEY (estd_subp_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-CREATE INDEX ix_estd_pepr_pk ON tbl_estadistica_estd (estd_tpes_pk, estd_pepr_pk)
+CREATE INDEX ix_estd_pepr_pk ON portico.tbl_estadistica_estd (estd_tpes_pk, estd_pepr_pk)
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_estadistica_estd TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_estadistica_estd TO portico
 /
 
-COMMENT ON TABLE tbl_estadistica_estd IS 'Estadisticas'
+COMMENT ON TABLE portico.tbl_estadistica_estd IS 'Estadisticas'
 /
-COMMENT ON COLUMN tbl_estadistica_estd.estd_pk IS 'Identificador de Estadistica'
+COMMENT ON COLUMN portico.tbl_estadistica_estd.estd_pk IS 'Identificador de Estadistica'
 /
-COMMENT ON COLUMN tbl_estadistica_estd.estd_pepr_pk IS 'Identificador de Periodo de Proceso'
+COMMENT ON COLUMN portico.tbl_estadistica_estd.estd_pepr_pk IS 'Identificador de Periodo de Proceso'
 /
-COMMENT ON COLUMN tbl_estadistica_estd.estd_tpes_pk IS 'Identificador de Tipo de Estadistica'
+COMMENT ON COLUMN portico.tbl_estadistica_estd.estd_tpes_pk IS 'Identificador de Tipo de Estadistica'
 /
-COMMENT ON COLUMN tbl_estadistica_estd.estd_subp_pk IS 'Identificador de Subpuerto'
+COMMENT ON COLUMN portico.tbl_estadistica_estd.estd_subp_pk IS 'Identificador de Subpuerto'
 /
 
 
 
 -- tbl_estadistica_dato_esdt
-CREATE TABLE tbl_estadistica_dato_esdt
+CREATE TABLE portico.tbl_estadistica_dato_esdt
 (
 	esdt_estd_pk BIGINT NOT NULL
 	, esdt_tpdt_pk BIGINT NOT NULL
@@ -1274,36 +1263,36 @@ CREATE TABLE tbl_estadistica_dato_esdt
 
 	, CONSTRAINT pk_esdt PRIMARY KEY (esdt_estd_pk, esdt_tpdt_pk)
 	, CONSTRAINT fk_esdt_estd_pk FOREIGN KEY (esdt_estd_pk)
-		REFERENCES tbl_estadistica_estd (estd_pk)
+		REFERENCES portico.tbl_estadistica_estd (estd_pk)
 	, CONSTRAINT fk_esdt_tpdt_pk FOREIGN KEY (esdt_tpdt_pk)
-		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
+		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 	, CONSTRAINT fk_esdt_prmt_pk FOREIGN KEY (esdt_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_estadistica_dato_esdt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_estadistica_dato_esdt TO portico
 /
 
-COMMENT ON TABLE tbl_estadistica_dato_esdt IS 'Datos asociados a Estadisticas'
+COMMENT ON TABLE portico.tbl_estadistica_dato_esdt IS 'Datos asociados a Estadisticas'
 /
-COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_estd_pk IS 'Identificador de Estadistica'
+COMMENT ON COLUMN portico.tbl_estadistica_dato_esdt.esdt_estd_pk IS 'Identificador de Estadistica'
 /
-COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_tpdt_pk IS 'Identificador de Tipo de Dato'
+COMMENT ON COLUMN portico.tbl_estadistica_dato_esdt.esdt_tpdt_pk IS 'Identificador de Tipo de Dato'
 /
-COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_nentero IS 'Valor de dato de Tipo Cantidad Entera'
+COMMENT ON COLUMN portico.tbl_estadistica_dato_esdt.esdt_nentero IS 'Valor de dato de Tipo Cantidad Entera'
 /
-COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_ndecimal IS 'Valor de dato de Tipo Cantidad Decimal'
+COMMENT ON COLUMN portico.tbl_estadistica_dato_esdt.esdt_ndecimal IS 'Valor de dato de Tipo Cantidad Decimal'
 /
-COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_prmt_pk IS 'Valor de dato de Tipo Maestro'
+COMMENT ON COLUMN portico.tbl_estadistica_dato_esdt.esdt_prmt_pk IS 'Valor de dato de Tipo Maestro'
 /
-COMMENT ON COLUMN tbl_estadistica_dato_esdt.esdt_cadena IS 'Valor de dato de Tipo Texto'
+COMMENT ON COLUMN portico.tbl_estadistica_dato_esdt.esdt_cadena IS 'Valor de dato de Tipo Texto'
 /
 
 
 
 -- tbl_cuadro_mes_cdms
-CREATE TABLE tbl_cuadro_mes_cdms
+CREATE TABLE portico.tbl_cuadro_mes_cdms
 (
 	cdms_pk BIGINT NOT NULL
 	, cdms_pepr_pk BIGINT NOT NULL
@@ -1316,42 +1305,42 @@ CREATE TABLE tbl_cuadro_mes_cdms
 	, CONSTRAINT pk_cdms PRIMARY KEY (cdms_pk)
 	, CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_cocu_pk, cdms_opet_pk, cdms_navt_pk, cdms_pais_pk)
 	, CONSTRAINT fk_cdms_pepr_pk FOREIGN KEY (cdms_pepr_pk)
-		REFERENCES tbl_periodo_proceso_pepr (pepr_pk)
+		REFERENCES portico.tbl_periodo_proceso_pepr (pepr_pk)
 	, CONSTRAINT fk_cdms_cocu_pk FOREIGN KEY (cdms_cocu_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_cdms_opet_pk FOREIGN KEY (cdms_opet_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_cdms_navt_pk FOREIGN KEY (cdms_navt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_cdms_pais_pk FOREIGN KEY (cdms_pais_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_cuadro_mes_cdms TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_cuadro_mes_cdms TO portico
 /
 
-COMMENT ON TABLE tbl_cuadro_mes_cdms IS 'Cuadros mensuales de Estadisticas'
+COMMENT ON TABLE portico.tbl_cuadro_mes_cdms IS 'Cuadros mensuales de Estadisticas'
 /
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pk IS 'Identificador de Cuadro mensual'
+COMMENT ON COLUMN portico.tbl_cuadro_mes_cdms.cdms_pk IS 'Identificador de Cuadro mensual'
 /
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pepr_pk IS 'Identificador de Periodo de Proceso'
+COMMENT ON COLUMN portico.tbl_cuadro_mes_cdms.cdms_pepr_pk IS 'Identificador de Periodo de Proceso'
 /
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cocu_pk IS 'Identificador de Concepto de Cuadro mensual'
+COMMENT ON COLUMN portico.tbl_cuadro_mes_cdms.cdms_cocu_pk IS 'Identificador de Concepto de Cuadro mensual'
 /
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_opet_pk IS 'Identificador de Tipo de Operacion de BL'
+COMMENT ON COLUMN portico.tbl_cuadro_mes_cdms.cdms_opet_pk IS 'Identificador de Tipo de Operacion de BL'
 /
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_navt_pk IS 'Identificador de Tipo de Navegacion'
+COMMENT ON COLUMN portico.tbl_cuadro_mes_cdms.cdms_navt_pk IS 'Identificador de Tipo de Navegacion'
 /
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_pais_pk IS 'Identificador de Pais'
+COMMENT ON COLUMN portico.tbl_cuadro_mes_cdms.cdms_pais_pk IS 'Identificador de Pais'
 /
-COMMENT ON COLUMN tbl_cuadro_mes_cdms.cdms_cantidad IS 'Cantidad'
+COMMENT ON COLUMN portico.tbl_cuadro_mes_cdms.cdms_cantidad IS 'Cantidad'
 /
 
 
 
 -- tbl_proceso_batch_prbt
-CREATE TABLE tbl_proceso_batch_prbt
+CREATE TABLE portico.tbl_proceso_batch_prbt
 (
 	prbt_pk BIGINT NOT NULL
 	, prbt_modulo char(1) NOT NULL
@@ -1365,30 +1354,30 @@ CREATE TABLE tbl_proceso_batch_prbt
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_batch_prbt TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_proceso_batch_prbt TO portico
 /
 
-COMMENT ON TABLE tbl_proceso_batch_prbt IS 'Ejecuciones de Procesos Batch de la Aplicacion'
+COMMENT ON TABLE portico.tbl_proceso_batch_prbt IS 'Ejecuciones de Procesos Batch de la Aplicacion'
 /
-COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_pk IS 'Identificador de proceso'
+COMMENT ON COLUMN portico.tbl_proceso_batch_prbt.prbt_pk IS 'Identificador de proceso'
 /
-COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_modulo IS 'Modulo al que pertenece el proceso: S (Servicio), E (Estadistica), F (Facturacion)'
+COMMENT ON COLUMN portico.tbl_proceso_batch_prbt.prbt_modulo IS 'Modulo al que pertenece el proceso: S (Servicio), E (Estadistica), F (Facturacion)'
 /
-COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_tipo IS 'Tipo de Proceso'
+COMMENT ON COLUMN portico.tbl_proceso_batch_prbt.prbt_tipo IS 'Tipo de Proceso'
 /
-COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_estado IS 'Estado en el que se encuentra el proceso: C (En cola), E (En ejecucion), F (Finalizado)'
+COMMENT ON COLUMN portico.tbl_proceso_batch_prbt.prbt_estado IS 'Estado en el que se encuentra el proceso: C (En cola), E (En ejecucion), F (Finalizado)'
 /
-COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_falta IS 'Fecha del alta del proceso en el sistema'
+COMMENT ON COLUMN portico.tbl_proceso_batch_prbt.prbt_falta IS 'Fecha del alta del proceso en el sistema'
 /
-COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_finicio IS 'Fecha de inicio de la ejecucion del proceso'
+COMMENT ON COLUMN portico.tbl_proceso_batch_prbt.prbt_finicio IS 'Fecha de inicio de la ejecucion del proceso'
 /
-COMMENT ON COLUMN tbl_proceso_batch_prbt.prbt_ffin IS 'Fecha de fin de la ejecucion del proceso'
+COMMENT ON COLUMN portico.tbl_proceso_batch_prbt.prbt_ffin IS 'Fecha de fin de la ejecucion del proceso'
 /
 
 
 
 -- tbl_proceso_parametro_prpm
-CREATE TABLE tbl_proceso_parametro_prpm
+CREATE TABLE portico.tbl_proceso_parametro_prpm
 (
 	prpm_prbt_pk BIGINT NOT NULL
 	, prpm_nombre VARCHAR(50) NOT NULL
@@ -1396,26 +1385,26 @@ CREATE TABLE tbl_proceso_parametro_prpm
 
 	, CONSTRAINT pk_prpm PRIMARY KEY (prpm_prbt_pk, prpm_nombre)
 	, CONSTRAINT fk_prpm_prbt_pk FOREIGN KEY (prpm_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
+		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_parametro_prpm TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_proceso_parametro_prpm TO portico
 /
 
-COMMENT ON TABLE tbl_proceso_parametro_prpm IS 'Parametros de Ejecuciones de Procesos Batch'
+COMMENT ON TABLE portico.tbl_proceso_parametro_prpm IS 'Parametros de Ejecuciones de Procesos Batch'
 /
-COMMENT ON COLUMN tbl_proceso_parametro_prpm.prpm_prbt_pk IS 'Identificador de proceso'
+COMMENT ON COLUMN portico.tbl_proceso_parametro_prpm.prpm_prbt_pk IS 'Identificador de proceso'
 /
-COMMENT ON COLUMN tbl_proceso_parametro_prpm.prpm_nombre IS 'Nombre del parametro'
+COMMENT ON COLUMN portico.tbl_proceso_parametro_prpm.prpm_nombre IS 'Nombre del parametro'
 /
-COMMENT ON COLUMN tbl_proceso_parametro_prpm.prpm_valor IS 'Valor del parametro'
+COMMENT ON COLUMN portico.tbl_proceso_parametro_prpm.prpm_valor IS 'Valor del parametro'
 /
 
 
 
 -- tbl_proceso_archivo_prar
-CREATE TABLE tbl_proceso_archivo_prar
+CREATE TABLE portico.tbl_proceso_archivo_prar
 (
 	prar_prbt_pk BIGINT NOT NULL
 	, prar_nombre VARCHAR(50) NOT NULL
@@ -1423,26 +1412,26 @@ CREATE TABLE tbl_proceso_archivo_prar
 
 	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_sentido, prar_nombre)
 	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
+		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_archivo_prar TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_proceso_archivo_prar TO portico
 /
 
-COMMENT ON TABLE tbl_proceso_archivo_prar IS 'Ficheros tratados (leidos-generados) en las Ejecuciones de Procesos Batch'
+COMMENT ON TABLE portico.tbl_proceso_archivo_prar IS 'Ficheros tratados (leidos-generados) en las Ejecuciones de Procesos Batch'
 /
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_prbt_pk IS 'Identificador de proceso al que pertenece el archivo'
+COMMENT ON COLUMN portico.tbl_proceso_archivo_prar.prar_prbt_pk IS 'Identificador de proceso al que pertenece el archivo'
 /
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_nombre IS 'Nombre del archivo'
+COMMENT ON COLUMN portico.tbl_proceso_archivo_prar.prar_nombre IS 'Nombre del archivo'
 /
-COMMENT ON COLUMN tbl_proceso_archivo_prar.prar_sentido IS 'Sentido de Archivo: E (Entrada), S (Salida)'
+COMMENT ON COLUMN portico.tbl_proceso_archivo_prar.prar_sentido IS 'Sentido de Archivo: E (Entrada), S (Salida)'
 /
 
 
 
 -- tbl_proceso_item_prit
-CREATE TABLE tbl_proceso_item_prit
+CREATE TABLE portico.tbl_proceso_item_prit
 (
 	prit_prbt_pk BIGINT NOT NULL
 	, prit_item_pk BIGINT NOT NULL
@@ -1450,26 +1439,26 @@ CREATE TABLE tbl_proceso_item_prit
 
 	, CONSTRAINT pk_prit PRIMARY KEY (prit_prbt_pk, prit_sentido, prit_item_pk)
 	, CONSTRAINT fk_prit_prbt_pk FOREIGN KEY (prit_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
+		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_item_prit TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_proceso_item_prit TO portico
 /
 
-COMMENT ON TABLE tbl_proceso_item_prit IS 'Items tratados (leidos-generados) en las Ejecuciones de Procesos Batch. Un item puede ser un servicio, valoracion, factura...'
+COMMENT ON TABLE portico.tbl_proceso_item_prit IS 'Items tratados (leidos-generados) en las Ejecuciones de Procesos Batch. Un item puede ser un servicio, valoracion, factura...'
 /
-COMMENT ON COLUMN tbl_proceso_item_prit.prit_prbt_pk IS 'Identificador de proceso al que pertenece el item'
+COMMENT ON COLUMN portico.tbl_proceso_item_prit.prit_prbt_pk IS 'Identificador de proceso al que pertenece el item'
 /
-COMMENT ON COLUMN tbl_proceso_item_prit.prit_item_pk IS 'Identificador de item (Puede ser un Servicio, Periodo de Proceso, ...)'
+COMMENT ON COLUMN portico.tbl_proceso_item_prit.prit_item_pk IS 'Identificador de item (Puede ser un Servicio, Periodo de Proceso, ...)'
 /
-COMMENT ON COLUMN tbl_proceso_item_prit.prit_sentido IS 'Indicador de Tipo de Item: E (Entrada), S (Salida)'
+COMMENT ON COLUMN portico.tbl_proceso_item_prit.prit_sentido IS 'Indicador de Tipo de Item: E (Entrada), S (Salida)'
 /
 
 
 
 -- tbl_proceso_mensaje_prmn
-CREATE TABLE tbl_proceso_mensaje_prmn
+CREATE TABLE portico.tbl_proceso_mensaje_prmn
 (
 	prmn_prbt_pk BIGINT NOT NULL
 	, prmn_nivel char(1) NOT NULL
@@ -1477,25 +1466,25 @@ CREATE TABLE tbl_proceso_mensaje_prmn
 	, prmn_mensaje VARCHAR(300)
 
 	, CONSTRAINT fk_prmn_prbt_pk FOREIGN KEY (prmn_prbt_pk)
-		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
+		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
 )
 /
 
-CREATE INDEX ix_prmn_prbt_pk ON tbl_proceso_mensaje_prmn (prmn_prbt_pk)
+CREATE INDEX ix_prmn_prbt_pk ON portico.tbl_proceso_mensaje_prmn (prmn_prbt_pk)
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_proceso_mensaje_prmn TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_proceso_mensaje_prmn TO portico
 /
 
-COMMENT ON TABLE tbl_proceso_mensaje_prmn IS 'Mensajes generados (info-warning-error) en las Ejecuciones de Procesos Batch.'
+COMMENT ON TABLE portico.tbl_proceso_mensaje_prmn IS 'Mensajes generados (info-warning-error) en las Ejecuciones de Procesos Batch.'
 /
-COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_prbt_pk IS 'Identificador de proceso al que pertenece el mensaje'
+COMMENT ON COLUMN portico.tbl_proceso_mensaje_prmn.prmn_prbt_pk IS 'Identificador de proceso al que pertenece el mensaje'
 /
-COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_nivel IS 'Nivel del mensaje generado por el proceso: I (Info), W (Warning), E (Error)'
+COMMENT ON COLUMN portico.tbl_proceso_mensaje_prmn.prmn_nivel IS 'Nivel del mensaje generado por el proceso: I (Info), W (Warning), E (Error)'
 /
-COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_codigo IS 'Codigo de Mensaje'
+COMMENT ON COLUMN portico.tbl_proceso_mensaje_prmn.prmn_codigo IS 'Codigo de Mensaje'
 /
-COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_mensaje IS 'Texto del mensaje'
+COMMENT ON COLUMN portico.tbl_proceso_mensaje_prmn.prmn_mensaje IS 'Texto del mensaje'
 /
 
 
@@ -1543,81 +1532,81 @@ COMMENT ON COLUMN tbl_proceso_mensaje_prmn.prmn_mensaje IS 'Texto del mensaje'
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP TABLE tbl_proceso_mensaje_prmn
+DROP TABLE portico.tbl_proceso_mensaje_prmn
 /
-DROP TABLE tbl_proceso_item_prit
+DROP TABLE portico.tbl_proceso_item_prit
 /
-DROP TABLE tbl_proceso_archivo_prar
+DROP TABLE portico.tbl_proceso_archivo_prar
 /
-DROP TABLE tbl_proceso_parametro_prpm
+DROP TABLE portico.tbl_proceso_parametro_prpm
 /
-DROP TABLE tbl_proceso_batch_prbt
+DROP TABLE portico.tbl_proceso_batch_prbt
 /
-DROP TABLE tbl_cuadro_mes_cdms
+DROP TABLE portico.tbl_cuadro_mes_cdms
 /
-DROP TABLE tbl_estadistica_dato_esdt
+DROP TABLE portico.tbl_estadistica_dato_esdt
 /
-DROP TABLE tbl_estadistica_estd
+DROP TABLE portico.tbl_estadistica_estd
 /
-DROP TABLE tbl_periodo_proceso_pepr
+DROP TABLE portico.tbl_periodo_proceso_pepr
 /
-DROP TABLE tbl_tipo_estadistica_tpes
+DROP TABLE portico.tbl_tipo_estadistica_tpes
 /
-DROP TABLE tbl_servicio_secuencia_srsc
+DROP TABLE portico.tbl_servicio_secuencia_srsc
 /
-DROP TABLE tbl_subserv_subserv_ssss
+DROP TABLE portico.tbl_subserv_subserv_ssss
 /
-DROP TABLE tbl_subservicio_dato_ssdt
+DROP TABLE portico.tbl_subservicio_dato_ssdt
 /
-DROP TABLE tbl_subservicio_ssrv
+DROP TABLE portico.tbl_subservicio_ssrv
 /
-DROP TABLE tbl_servicio_dato_srdt
+DROP TABLE portico.tbl_servicio_dato_srdt
 /
-DROP TABLE tbl_servicio_srvc
+DROP TABLE portico.tbl_servicio_srvc
 /
-DROP TABLE tbl_tipo_subservicio_tpss
+DROP TABLE portico.tbl_tipo_subservicio_tpss
 /
-DROP TABLE tbl_tipo_servicio_tpsr
+DROP TABLE portico.tbl_tipo_servicio_tpsr
 /
-DROP TABLE tbl_subparametro_dato_spdt
+DROP TABLE portico.tbl_subparametro_dato_spdt
 /
-DROP TABLE tbl_subparametro_version_spvr
+DROP TABLE portico.tbl_subparametro_version_spvr
 /
-DROP TABLE tbl_subparametro_sprm
+DROP TABLE portico.tbl_subparametro_sprm
 /
-DROP TABLE tbl_tipo_subparametro_tpsp
+DROP TABLE portico.tbl_tipo_subparametro_tpsp
 /
-DROP TABLE tbl_parametro_i18n_p18n
+DROP TABLE portico.tbl_parametro_i18n_p18n
 /
-DROP TABLE tbl_parametro_dato_prdt
+DROP TABLE portico.tbl_parametro_dato_prdt
 /
-DROP TABLE tbl_parametro_version_prvr
+DROP TABLE portico.tbl_parametro_version_prvr
 /
-DROP TABLE tbl_parametro_prmt
+DROP TABLE portico.tbl_parametro_prmt
 /
-DROP TABLE tbl_tipo_parametro_tppr
+DROP TABLE portico.tbl_tipo_parametro_tppr
 /
-DROP TABLE tbl_entidad_tipo_dato_entd
+DROP TABLE portico.tbl_entidad_tipo_dato_entd
 /
-DROP TABLE tbl_entidad_grupo_dato_engd
+DROP TABLE portico.tbl_entidad_grupo_dato_engd
 /
-DROP TABLE tbl_entidad_accion_enac
+DROP TABLE portico.tbl_entidad_accion_enac
 /
-DROP TABLE tbl_codigo_referencia_cdrf
+DROP TABLE portico.tbl_codigo_referencia_cdrf
 /
-DROP TABLE tbl_tipo_dato_tpdt
+DROP TABLE portico.tbl_tipo_dato_tpdt
 /
-DROP TABLE tbl_entidad_entidad_enen
+DROP TABLE portico.tbl_entidad_entidad_enen
 /
-DROP TABLE tbl_entidad_enti
+DROP TABLE portico.tbl_entidad_enti
 /
-DROP TABLE tbl_usuario_grupo_usgr
+DROP TABLE portico.tbl_usuario_grupo_usgr
 /
-DROP TABLE tbl_grupo_grpo
+DROP TABLE portico.tbl_grupo_grpo
 /
-DROP TABLE tbl_usuario_usro
+DROP TABLE portico.tbl_usuario_usro
 /
-DROP TABLE tbl_ig
+DROP TABLE portico.tbl_ig
 /
 DROP TABLE portico.tbl_conf_valor_i18n_cnvi
 /
@@ -1634,5 +1623,3 @@ DROP TABLE portico.tbl_conf_clave_cncl
 
 
 
-DROP SCHEMA portico
-/

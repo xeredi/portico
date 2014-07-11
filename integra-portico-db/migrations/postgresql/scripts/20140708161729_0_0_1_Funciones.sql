@@ -3,11 +3,11 @@
 
 
 
-CREATE FUNCTION getEntidad(entiCodigo varchar) RETURNS integer IMMUTABLE AS $$
+CREATE FUNCTION portico.getEntidad(entiCodigo varchar) RETURNS integer IMMUTABLE AS $$
 DECLARE
 	id integer;
 BEGIN
-	id := (SELECT enti_pk FROM tbl_entidad_enti WHERE enti_codigo = entiCodigo);
+	id := (SELECT enti_pk FROM portico.tbl_entidad_enti WHERE enti_codigo = entiCodigo);
 
 	IF id IS NULL
 	THEN
@@ -19,19 +19,19 @@ END;
 $$ LANGUAGE plpgsql
 /
 
-GRANT EXECUTE ON FUNCTION getEntidad(varchar) TO portico
+GRANT EXECUTE ON FUNCTION portico.getEntidad(varchar) TO portico
 /
 
-COMMENT ON FUNCTION getEntidad(varchar) IS 'A partir de un codigo de entidad, se localiza su identificador asociado'
+COMMENT ON FUNCTION portico.getEntidad(varchar) IS 'A partir de un codigo de entidad, se localiza su identificador asociado'
 /
 
 
 
-CREATE FUNCTION getTipoDato(tpdtCodigo varchar) RETURNS integer IMMUTABLE AS $$
+CREATE FUNCTION portico.getTipoDato(tpdtCodigo varchar) RETURNS integer IMMUTABLE AS $$
 DECLARE
 	id integer;
 BEGIN
-	id := (SELECT tpdt_pk FROM tbl_tipo_dato_tpdt WHERE tpdt_codigo = tpdtCodigo);
+	id := (SELECT tpdt_pk FROM portico.tbl_tipo_dato_tpdt WHERE tpdt_codigo = tpdtCodigo);
 
 	IF id IS NULL
 	THEN
@@ -43,55 +43,55 @@ END;
 $$ LANGUAGE plpgsql
 /
 
-GRANT EXECUTE ON FUNCTION getTipoDato(varchar) TO portico
+GRANT EXECUTE ON FUNCTION portico.getTipoDato(varchar) TO portico
 /
 
-COMMENT ON FUNCTION getTipoDato(varchar) IS 'A partir de un codigo de tipo de dato, se localiza su identificador asociado'
+COMMENT ON FUNCTION portico.getTipoDato(varchar) IS 'A partir de un codigo de tipo de dato, se localiza su identificador asociado'
 /
 
 
 
-CREATE FUNCTION getSysDatetime() RETURNS TIMESTAMP IMMUTABLE AS $$
+CREATE FUNCTION portico.getSysDatetime() RETURNS TIMESTAMP IMMUTABLE AS $$
 BEGIN
      RETURN NOW();
 END;
 $$ LANGUAGE plpgsql
 /
 
-GRANT EXECUTE ON FUNCTION getSysDatetime() TO portico
+GRANT EXECUTE ON FUNCTION portico.getSysDatetime() TO portico
 /
 
-COMMENT ON FUNCTION getSysDatetime() IS 'Obtencion de la Fecha-Hora del Sistema'
+COMMENT ON FUNCTION portico.getSysDatetime() IS 'Obtencion de la Fecha-Hora del Sistema'
 /
 
 
-CREATE FUNCTION concat(vc1 varchar, vc2 varchar) RETURNS TIMESTAMP IMMUTABLE AS $$
+CREATE FUNCTION portico.concat(vc1 varchar, vc2 varchar) RETURNS TIMESTAMP IMMUTABLE AS $$
 BEGIN
      RETURN vc1 || vc2;
 END;
 $$ LANGUAGE plpgsql
 /
 
-GRANT EXECUTE ON FUNCTION concat(varchar, varchar) TO portico
+GRANT EXECUTE ON FUNCTION portico.concat(varchar, varchar) TO portico
 /
 
-COMMENT ON FUNCTION concat(varchar, varchar) IS 'Concatenacion de Elementos'
+COMMENT ON FUNCTION portico.concat(varchar, varchar) IS 'Concatenacion de Elementos'
 /
 
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP FUNCTION concat(varchar, varchar)
+DROP FUNCTION portico.concat(varchar, varchar)
 /
 
-DROP FUNCTION getSysDatetime()
+DROP FUNCTION portico.getSysDatetime()
 /
 
-DROP FUNCTION getTipoDato(varchar)
+DROP FUNCTION portico.getTipoDato(varchar)
 /
 
-DROP FUNCTION getEntidad(varchar)
+DROP FUNCTION portico.getEntidad(varchar)
 /
 
 
