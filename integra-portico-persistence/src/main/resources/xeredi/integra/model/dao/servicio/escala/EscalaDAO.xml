@@ -25,7 +25,7 @@
                                             AND prvr_prmt_pk = srvc_subp_pk
                                     )
                                     AND prdt_prmt_pk = prmt_pk
-                                    and prdt_tpdt_pk = getTipoDato('REC_ADU')
+                                    and prdt_tpdt_pk = portico.getTipoDato('REC_ADU')
                             )
                     )
                     , SUBSTRING(srvc_anno FROM 4)
@@ -46,7 +46,7 @@
 					SELECT ssrv_estado
 					FROM tbl_subservicio_ssrv
 					WHERE
-                        ssrv_tpss_pk = getEntidad('ATRAQUE')
+                        ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
 						AND ssrv_srvc_pk = srvc_pk
 				)
 				SELECT
@@ -103,9 +103,9 @@
 							WHERE
 								ssrv_pk = ssdt_ssrv_pk
 								and ssrv_srvc_pk = srdt_srvc_pk
-								AND ssrv_tpss_pk = getEntidad('ATRAQUE')
+								AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
 						)
-						AND ssdt_tpdt_pk = getTipoDato('COD_EXEN')
+						AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
 				)
 				SELECT
 					CASE
@@ -133,7 +133,7 @@
 					END
 			)
 		WHERE
-			srdt_tpdt_pk = getTipoDato('COD_EXEN')
+			srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
 			AND srdt_srvc_pk = #{value}
     ]]>
     </update>
@@ -151,7 +151,7 @@
 									tbl_subservicio_dato_ssdt
 								WHERE
 									ssdt_ssrv_pk = ssrv_pk
-									AND ssdt_tpdt_pk = getTipoDato('TIPO_ESTAN_ATR_3')
+									AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR_3')
 							)
 							, (
 								SELECT ssdt_cadena
@@ -159,7 +159,7 @@
 									tbl_subservicio_dato_ssdt
 								WHERE
 									ssdt_ssrv_pk = ssrv_pk
-									AND ssdt_tpdt_pk = getTipoDato('TIPO_ESTAN_ATR_2')
+									AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR_2')
 							)
 							, (
 								SELECT ssdt_cadena
@@ -167,13 +167,13 @@
 									tbl_subservicio_dato_ssdt
 								WHERE
 									ssdt_ssrv_pk = ssrv_pk
-									AND ssdt_tpdt_pk = getTipoDato('TIPO_ESTAN_ATR')
+									AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR')
 							)
 						) AS ssdt_cadena
 					FROM tbl_subservicio_ssrv
 					WHERE
 						ssrv_srvc_pk = srdt_srvc_pk
-						AND ssrv_tpss_pk = getEntidad('ATRAQUE')
+						AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
 				)
 				SELECT
 					CASE
@@ -189,7 +189,7 @@
 					END
 			)
 		WHERE
-			srdt_tpdt_pk = getTipoDato('TIPO_ESTAN_ESC')
+			srdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ESC')
 			AND srdt_srvc_pk = #{value}
     ]]>
     </update>
@@ -201,7 +201,7 @@
 				SELECT prmt_pk
 				FROM tbl_parametro_prmt
 				WHERE
-					prmt_tppr_pk = getTipoDato('TIPO_NAVEGACION')
+					prmt_tppr_pk = portico.getTipoDato('TIPO_NAVEGACION')
 					AND prmt_parametro = (
 						WITH
 							unlo AS (
@@ -215,7 +215,7 @@
 										FROM tbl_parametro_dato_prdt
 										WHERE
 											prdt_prvr_pk = prvr_pk
-											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
+											AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
 									) as unlo_insular
 									, (
 										SELECT prdt_nentero
@@ -226,9 +226,9 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = unlo_pais.prdt_prmt_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
 											)
-											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
+											AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
 									) as pais_ue
 									, (
 										SELECT prdt_prmt_pk
@@ -239,9 +239,9 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = srvc_subp_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
 											)
-											AND prdt_tpdt_pk = getTipoDato('UNLOCODE')
+											AND prdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
 									) as unlo_subp_servicio
 								FROM
 									tbl_servicio_dato_srdt srdtLoc
@@ -251,12 +251,12 @@
 										prmt_pk = srdt_prmt_pk
 									join tbl_parametro_version_prvr unlo_version ON
 										prvr_prmt_pk = prmt_pk
-										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
 									JOIN tbl_parametro_dato_prdt unlo_pais ON
 										prdt_prvr_pk = prvr_pk
-										AND prdt_tpdt_pk = getTipoDato('PAIS')
+										AND prdt_tpdt_pk = portico.getTipoDato('PAIS')
 								WHERE
-									srdtLoc.srdt_tpdt_pk = getTipoDato('UNLOCODE_2')
+									srdtLoc.srdt_tpdt_pk = portico.getTipoDato('UNLOCODE_2')
 									AND srdtLoc.srdt_srvc_pk = srdtNav.srdt_srvc_pk
 							)
 						SELECT
@@ -282,7 +282,7 @@
 					)
 			)
 		WHERE
-			srdt_tpdt_pk = getTipoDato('TIPO_NAV')
+			srdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
 			AND srdt_srvc_pk = #{value}
     ]]>
     </update>
@@ -294,7 +294,7 @@
 				SELECT prmt_pk
 				FROM tbl_parametro_prmt
 				WHERE
-					prmt_tppr_pk = getEntidad('TIPO_NAVEGACION')
+					prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION')
 					AND prmt_parametro = (
 						WITH
 							unlo AS (
@@ -308,7 +308,7 @@
 										FROM tbl_parametro_dato_prdt
 										WHERE
 											prdt_prvr_pk = prvr_pk
-											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
+											AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
 									) as unlo_insular
 									, (
 										SELECT prdt_nentero
@@ -319,9 +319,9 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = unlo_pais.prdt_prmt_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
 											)
-											AND prdt_tpdt_pk = getTipoDato('BOOLEANO_01')
+											AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
 									) as pais_ue
 									, (
 										SELECT prdt_prmt_pk
@@ -332,9 +332,9 @@
 												WHERE
 													prvr_pk = prdt_prvr_pk
 													AND prvr_prmt_pk = srvc_subp_pk
-													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+													AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
 											)
-											AND prdt_tpdt_pk = getTipoDato('UNLOCODE')
+											AND prdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
 									) as unlo_subp_servicio
 								FROM
 									tbl_servicio_dato_srdt srdtLoc
@@ -344,12 +344,12 @@
 										prmt_pk = srdt_prmt_pk
 									join tbl_parametro_version_prvr unlo_version ON
 										prvr_prmt_pk = prmt_pk
-										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
 									JOIN tbl_parametro_dato_prdt unlo_pais ON
 										prdt_prvr_pk = prvr_pk
-										AND prdt_tpdt_pk = getTipoDato('PAIS')
+										AND prdt_tpdt_pk = portico.getTipoDato('PAIS')
 								WHERE
-									srdtLoc.srdt_tpdt_pk = getTipoDato('UNLOCODE')
+									srdtLoc.srdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
 									AND srdtLoc.srdt_srvc_pk = srdtNav.srdt_srvc_pk
 							)
 						SELECT
@@ -375,7 +375,7 @@
 					)
 			)
 		WHERE
-			srdt_tpdt_pk = getTipoDato('TIPO_NAV_2')
+			srdt_tpdt_pk = portico.getTipoDato('TIPO_NAV_2')
 			AND srdt_srvc_pk = #{value}
     ]]>
     </update>
@@ -387,7 +387,7 @@
 				SELECT prmt_pk
 				FROM tbl_parametro_prmt
 				WHERE
-					prmt_tppr_pk = getEntidad('TIPO_IVA')
+					prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
 					AND prmt_parametro = (
 						WITH
 							sql AS (
@@ -400,7 +400,7 @@
 											tbl_servicio_dato_srdt
 										WHERE
 											srdt_srvc_pk = srvc_pk
-											AND srdt_tpdt_pk = getTipoDato('TIPO_NAVEGACION_2')
+											AND srdt_tpdt_pk = portico.getTipoDato('TIPO_NAVEGACION_2')
 									) AS navt_sal_pk
 									, (
 										SELECT srdt_nentero
@@ -408,7 +408,7 @@
 											tbl_servicio_dato_srdt
 										WHERE
 											srdt_srvc_pk = srvc_pk
-											AND srdt_tpdt_pk = getTipoDato('BOOLEANO_02')
+											AND srdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
 									) AS nav_int
 									, (
 										SELECT prmt_parametro
@@ -427,7 +427,7 @@
 															AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
 													)
 													AND prdt_prmt_pk = prmt_pk
-													AND prdt_tpdt_pk = getTipoDato('TIPO_IVA')
+													AND prdt_tpdt_pk = portico.getTipoDato('TIPO_IVA')
 											)
 									) AS ivat
 								FROM
@@ -435,7 +435,7 @@
 									join tbl_servicio_srvc ON
 										srvc_pk = srdt_srvc_pk
 								WHERE
-									srdtNavEnt.srdt_tpdt_pk = getTipoDato('TIPO_NAVEGACION')
+									srdtNavEnt.srdt_tpdt_pk = portico.getTipoDato('TIPO_NAVEGACION')
 									AND srdtNavEnt.srdt_srvc_pk = srdtIva.srdt_srvc_pk
 							)
 						SELECT
@@ -454,7 +454,7 @@
 					)
 			)
 		WHERE
-			srdt_tpdt_pk = getTipoDato('TIPO_IVA')
+			srdt_tpdt_pk = portico.getTipoDato('TIPO_IVA')
 			AND srdt_srvc_pk = #{value}
     ]]>
     </update>
@@ -473,7 +473,7 @@
 								FROM tbl_subservicio_dato_ssdt
 								WHERE
 									ssdt_ssrv_pk = ssrv_pk
-									AND ssdt_tpdt_pk = getTipoDato('ESTADO_ATR')
+									AND ssdt_tpdt_pk = portico.getTipoDato('ESTADO_ATR')
 									AND ssdt_cadena NOT IN ('A', 'D')
 							)
 							AND ssrv_srvc_pk = srvc_pk
@@ -489,7 +489,7 @@
 								FROM tbl_subservicio_dato_ssdt
 								WHERE
 									ssdt_ssrv_pk = ssrv_pk
-									AND ssdt_tpdt_pk = getTipoDato('ESTADO_ATR')
+									AND ssdt_tpdt_pk = portico.getTipoDato('ESTADO_ATR')
 									AND ssdt_cadena NOT IN ('A', 'D')
 							)
 							AND ssrv_srvc_pk = srvc_pk

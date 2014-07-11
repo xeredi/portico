@@ -12,7 +12,7 @@
 					FROM tbl_subservicio_ssrv ssrvPartEqui
 					WHERE
 						ssrvPartEqui.ssrv_srvc_pk = ssrvBl.ssrv_srvc_pk
-						AND ssrvPartEqui.ssrv_tpss_pk IN (getEntidad('PARTIDA'), getEntidad('EQUIPAMIENTO'))
+						AND ssrvPartEqui.ssrv_tpss_pk IN (portico.getEntidad('PARTIDA'), portico.getEntidad('EQUIPAMIENTO'))
 						AND EXISTS (
 							SELECT 1
 							FROM tbl_subservicio_subservicio_ssss
@@ -51,7 +51,7 @@
         		END
         	)
         WHERE
-        	ssrv_tpss_pk = getEntidad('BL')
+        	ssrv_tpss_pk = portico.getEntidad('BL')
             AND ssrv_pk = #{value}
         ]]>
     </update>

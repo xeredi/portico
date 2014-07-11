@@ -20,12 +20,12 @@ FROM (
             SELECT prvr_pk
             FROM tbl_parametro_version_prvr
             WHERE prvr_prmt_pk = prdt_prmt_pk
-                AND getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+                AND portico.getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
         ) AS prdt_prmt_prvr_pk
     FROM tbl_parametro_prmt prmt
         JOIN tbl_parametro_version_prvr prvr on
             prvr_prmt_pk = prmt_pk
-            AND getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+            AND portico.getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
             AND prmt_tppr_pk = 20049
         join tbl_parametro_dato_prdt prdt ON
             prdt_prvr_pk = prvr_pk
@@ -110,7 +110,7 @@ FROM (
         ]]>
         <if test="fechaVigencia != null">
         <![CDATA[
-        				AND getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+        				AND portico.getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
         ]]>
         </if>
         <if test="prvrIds != null and !prvrIds.empty">

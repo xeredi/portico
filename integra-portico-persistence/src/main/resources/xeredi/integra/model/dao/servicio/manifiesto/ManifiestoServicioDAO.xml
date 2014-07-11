@@ -9,7 +9,7 @@
         	srvc_estado = 'B'
 		WHERE
 			srvc_estado IN ('S', 'I', 'C')
-			AND srvc_tpsr_pk = getEntidad('MANIFIESTO')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
 			AND srvc_pk = #{id}
         ]]>
 	</update>
@@ -20,7 +20,7 @@
         	srvc_estado = 'C'
 		WHERE
 			srvc_estado IN ('I')
-			AND srvc_tpsr_pk = getEntidad('MANIFIESTO')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
 			AND srvc_pk = #{id}
         ]]>
 	</update>
@@ -32,7 +32,7 @@
         	srvc_estado = 'I'
 		WHERE
 			srvc_estado IN ('C', 'B')
-			AND srvc_tpsr_pk = getEntidad('MANIFIESTO')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
 			AND srvc_pk = #{id}
         ]]>
 	</update>
@@ -43,7 +43,7 @@
         	srvc_estado = 'A'
 		WHERE
 			srvc_estado IN ('S', 'I', 'C')
-			AND srvc_tpsr_pk = getEntidad('MANIFIESTO')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
 			AND srvc_pk = #{id}
         ]]>
 	</update>
@@ -57,41 +57,41 @@
 		            FROM tbl_subservicio_ssrv
 					WHERE
 		                ssrv_srvc_pk = srvc_pk
-		                AND ssrv_tpss_pk = getEntidad('BL')
+		                AND ssrv_tpss_pk = portico.getEntidad('BL')
 				)
 				SELECT
 					CASE
-					    WHEN 
+					    WHEN
 							'B' = ANY (SELECT ssrv_estado FROM sql)
 					    THEN 'B'
-		
+
 					    WHEN
 							'C' = ANY (SELECT ssrv_estado FROM sql)
 							and
-							not exists (SELECT 1 FROM sql WHERE ssrv_estado NOT IN ('C', 'A') ) 
+							not exists (SELECT 1 FROM sql WHERE ssrv_estado NOT IN ('C', 'A') )
 					    THEN 'C'
-		
+
 					    WHEN
 							'I' = ANY (SELECT ssrv_estado FROM sql)
-							AND 
+							AND
 							NOT 'B' = ANY (SELECT ssrv_estado FROM sql)
 					    THEN 'I'
-		
+
 					    WHEN
 							'S' = ANY (SELECT ssrv_estado FROM sql)
 							and
-							not exists (SELECT 1 FROM sql WHERE ssrv_estado NOT IN ('S', 'A') ) 
+							not exists (SELECT 1 FROM sql WHERE ssrv_estado NOT IN ('S', 'A') )
 					    THEN 'S'
-		
+
 					    WHEN
 							'A' = ALL (SELECT ssrv_estado FROM sql)
 					    THEN 'A'
-		
+
 					    ELSE 'X'
 					END
-            )   
+            )
         WHERE
-            srvc_tpsr_pk = getEntidad('MANIFIESTO')
+            srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
             AND srvc_pk = #{id}
         ]]>
 	</update>

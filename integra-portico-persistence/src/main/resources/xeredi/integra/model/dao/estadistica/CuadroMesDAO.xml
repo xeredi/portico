@@ -82,10 +82,10 @@
         VALUES (
             #{cdmsId}
             , #{peprId}
-            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = getEntidad('CONCEPTO_CUADRO_EST') AND prmt_parametro = #{cocu})
-            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = getEntidad('TIPO_OPERACION_BL') AND prmt_parametro = #{opet})
-            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = getEntidad('TIPO_NAVEGACION') AND prmt_parametro = #{navt})
-            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = getEntidad('PAIS') AND prmt_parametro = #{pais})
+            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = portico.getEntidad('CONCEPTO_CUADRO_EST') AND prmt_parametro = #{cocu})
+            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = portico.getEntidad('TIPO_OPERACION_BL') AND prmt_parametro = #{opet})
+            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = portico.getEntidad('TIPO_NAVEGACION') AND prmt_parametro = #{navt})
+            , (SELECT prmt_pk FROM tbl_parametro_prmt WHERE prmt_tppr_pk = portico.getEntidad('PAIS') AND prmt_parametro = #{pais})
             , (
     ]]>
     </sql>
@@ -110,7 +110,7 @@
                     WHERE
                         estd_pk = esdt_estd_pk
                         AND estd_pepr_pk = #{peprId}
-                        AND estd_tpes_pk = getEntidad('ACTIVIDAD_PESQUERA')
+                        AND estd_tpes_pk = portico.getEntidad('ACTIVIDAD_PESQUERA')
                 )
         ]]>
         <include refid="InsertSuffix" />
@@ -130,13 +130,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('AVITUALLAMIENTO')
+                    AND estd_tpes_pk = portico.getEntidad('AVITUALLAMIENTO')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_SUM')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_parametro_prmt
@@ -165,13 +165,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('AVITUALLAMIENTO')
+                    AND estd_tpes_pk = portico.getEntidad('AVITUALLAMIENTO')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_SUM')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_parametro_prmt
@@ -204,13 +204,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('AGREGACION_ESCALA')
+                    AND estd_tpes_pk = portico.getEntidad('AGREGACION_ESCALA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_BUQUE')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_parametro_prmt
@@ -226,7 +226,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('PAIS')
+                            AND esdt_tpdt_pk = portico.getTipoDato('PAIS')
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_parametro_prmt
@@ -255,13 +255,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('AGREGACION_ESCALA')
+                    AND estd_tpes_pk = portico.getEntidad('AGREGACION_ESCALA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_BUQUE')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_parametro_prmt
@@ -277,7 +277,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('PAIS')
+                            AND esdt_tpdt_pk = portico.getTipoDato('PAIS')
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_parametro_prmt
@@ -306,13 +306,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('AGREGACION_ESCALA')
+                    AND estd_tpes_pk = portico.getEntidad('AGREGACION_ESCALA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_BUQUE')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_BUQUE')
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_parametro_prmt
@@ -341,13 +341,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -363,7 +363,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -379,7 +379,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -405,13 +405,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -427,7 +427,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -443,7 +443,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('INST_ESP')
+                            AND esdt_tpdt_pk = portico.getTipoDato('INST_ESP')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -456,7 +456,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_version_prvr
                                 WHERE
@@ -466,16 +466,16 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt
                                         WHERE prdt_prvr_pk = prvr_pk
-                                            AND prdt_tpdt_pk = getTipoDato('TIPO_MERC_EST')
+                                            AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
                                             AND prdt_prmt_pk = (
                                                 select prmt_pk
                                                 from tbl_parametro_prmt
-                                                WHERE prmt_tppr_pk = getEntidad('TIPO_MERCANCIA_EST') and PRMT_PARAMETRO LIKE 'SG'
+                                                WHERE prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST') and PRMT_PARAMETRO LIKE 'SG'
                                             )
                                     )
                             )
@@ -498,13 +498,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -520,7 +520,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -536,7 +536,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_version_prvr
                                 WHERE
@@ -546,16 +546,16 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        between prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+                                        between prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt
                                         WHERE prdt_prvr_pk = prvr_pk
-                                            AND prdt_tpdt_pk = getTipoDato('TIPO_MERC_EST')
+                                            AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
                                             AND prdt_prmt_pk = (
                                                 select prmt_pk
                                                 from tbl_parametro_prmt
-                                                WHERE prmt_tppr_pk = getEntidad('TIPO_MERCANCIA_EST')
+                                                WHERE prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
                                                 	and PRMT_PARAMETRO LIKE #{campoAdicionalParam}
                                             )
                                     )
@@ -579,13 +579,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -601,7 +601,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -617,7 +617,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_version_prvr
                                 WHERE
@@ -627,16 +627,16 @@
                                             SELECT pepr_freferencia FROM tbl_periodo_proceso_pepr
                                             WHERE pepr_pk = #{peprId}
                                         )
-                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, getSysDatetime())
+                                        BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
                                     )
                                     AND EXISTS (
                                         SELECT 1 FROM tbl_parametro_dato_prdt
                                         WHERE prdt_prvr_pk = prvr_pk
-                                            AND prdt_tpdt_pk = getTipoDato('TIPO_MERC_EST')
+                                            AND prdt_tpdt_pk = portico.getTipoDato('TIPO_MERC_EST')
                                             AND prdt_prmt_pk = (
                                                 SELECT prmt_pk
                                                 FROM tbl_parametro_prmt
-                                                WHERE prmt_tppr_pk = getEntidad('TIPO_MERCANCIA_EST')
+                                                WHERE prmt_tppr_pk = portico.getEntidad('TIPO_MERCANCIA_EST')
                                                 	AND prmt_parametro LIKE 'PS'
                                             )
                                     )
@@ -647,7 +647,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('MERCANCIA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -673,13 +673,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -695,7 +695,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -711,7 +711,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -727,7 +727,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('MERCANCIA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -753,13 +753,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -775,7 +775,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -791,7 +791,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -807,7 +807,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('MERCANCIA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -839,13 +839,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -861,7 +861,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -877,7 +877,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -893,7 +893,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('MERCANCIA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -919,13 +919,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -941,7 +941,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -957,7 +957,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -973,7 +973,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('BOOLEANO_01')
+                            AND esdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
                             AND esdt_nentero = 1
                     )
             )
@@ -994,13 +994,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -1016,7 +1016,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -1032,7 +1032,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('UNIDAD_CARGA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -1048,7 +1048,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('BOOLEANO_01')
+                            AND esdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
                             AND esdt_nentero = 1
                     )
                     AND EXISTS (
@@ -1056,7 +1056,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('MERCANCIA')
+                            AND esdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -1082,13 +1082,13 @@
                 WHERE
                     estd_pk = esdt_estd_pk
                     AND estd_pepr_pk = #{peprId}
-                    AND estd_tpes_pk = getEntidad('MOVIMIENTO_MERCANCIA')
+                    AND estd_tpes_pk = portico.getEntidad('MOVIMIENTO_MERCANCIA')
                     AND EXISTS (
                         SELECT 1
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_OP_BL')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_OP_BL')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE
@@ -1101,7 +1101,7 @@
                         FROM tbl_estadistica_dato_esdt
                         WHERE
                             estd_pk = esdt_estd_pk
-                            AND esdt_tpdt_pk = getTipoDato('TIPO_NAV')
+                            AND esdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
                             AND EXISTS (
                                 SELECT 1 FROM tbl_parametro_prmt
                                 WHERE

@@ -204,9 +204,9 @@
                     AND (
                         #{prvr.finicio} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.finicio})
                         OR
-                        COALESCE(#{prvr.ffin}, getSysDatetime()) BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, getSysDatetime()))
+                        COALESCE(#{prvr.ffin}, portico.getSysDatetime()) BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, portico.getSysDatetime()))
                         OR (
-                            #{prvr.finicio} < prvr_fini AND COALESCE(#{prvr.ffin}, getSysDatetime()) >= COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, getSysDatetime()))
+                            #{prvr.finicio} < prvr_fini AND COALESCE(#{prvr.ffin}, portico.getSysDatetime()) >= COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, portico.getSysDatetime()))
                         )
                     )
             WHERE

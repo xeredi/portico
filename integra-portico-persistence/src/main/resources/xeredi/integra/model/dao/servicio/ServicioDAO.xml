@@ -166,7 +166,7 @@
             , srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado
         ) VALUES (
             #{id}, #{entiId}, #{subp.id}, #{anno}, #{numero}
-            , getSysDatetime(), #{freferencia}, #{finicio}, #{ffin}, #{estado}
+            , portico.getSysDatetime(), #{freferencia}, #{finicio}, #{ffin}, #{estado}
         )
         ]]>
     </insert>

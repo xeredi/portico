@@ -9,9 +9,9 @@
 		    ssrv_estado = 'B'
 		WHERE
 			(
-				(ssrv_tpss_pk = getEntidad('BL') and ssrv_estado IN ('S', 'I', 'C'))
-				OR (ssrv_tpss_pk = getEntidad('PARTIDA') and ssrv_estado IN ('R'))
-				OR (ssrv_tpss_pk = getEntidad('EQUIPAMIENTO') and ssrv_estado IN ('R'))
+				(ssrv_tpss_pk = portico.getEntidad('BL') and ssrv_estado IN ('S', 'I', 'C'))
+				OR (ssrv_tpss_pk = portico.getEntidad('PARTIDA') and ssrv_estado IN ('R'))
+				OR (ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO') and ssrv_estado IN ('R'))
 			)
         ]]>
         <if test="padreId != null">
@@ -44,7 +44,7 @@
 		    ssrv_estado = 'C'
 		WHERE
 			(
-				(ssrv_tpss_pk = getEntidad('BL') and ssrv_estado IN ('I'))
+				(ssrv_tpss_pk = portico.getEntidad('BL') and ssrv_estado IN ('I'))
 			)
         ]]>
         <if test="padreId != null">
@@ -77,16 +77,16 @@
 		UPDATE tbl_subservicio_ssrv SET
 		    ssrv_estado =
 		    	CASE
-		    		WHEN ssrv_tpss_pk = getEntidad('BL')
+		    		WHEN ssrv_tpss_pk = portico.getEntidad('BL')
 		    		THEN 'I'
 
 		    		ELSE 'R'
 		    	END
 		WHERE
 			(
-				(ssrv_tpss_pk = getEntidad('BL') and ssrv_estado IN ('C', 'B'))
-				OR (ssrv_tpss_pk = getEntidad('PARTIDA') and ssrv_estado IN ('B'))
-				OR (ssrv_tpss_pk = getEntidad('EQUIPAMIENTO') and ssrv_estado IN ('B'))
+				(ssrv_tpss_pk = portico.getEntidad('BL') and ssrv_estado IN ('C', 'B'))
+				OR (ssrv_tpss_pk = portico.getEntidad('PARTIDA') and ssrv_estado IN ('B'))
+				OR (ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO') and ssrv_estado IN ('B'))
 			)
         ]]>
         <if test="padreId != null">
@@ -119,9 +119,9 @@
 		    ssrv_estado = 'A'
 		WHERE
 			(
-				(ssrv_tpss_pk = getEntidad('BL') and ssrv_estado IN ('S', 'I', 'C'))
-				OR (ssrv_tpss_pk = getEntidad('PARTIDA') and ssrv_estado IN ('R'))
-				OR (ssrv_tpss_pk = getEntidad('EQUIPAMIENTO') and ssrv_estado IN ('R'))
+				(ssrv_tpss_pk = portico.getEntidad('BL') and ssrv_estado IN ('S', 'I', 'C'))
+				OR (ssrv_tpss_pk = portico.getEntidad('PARTIDA') and ssrv_estado IN ('R'))
+				OR (ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO') and ssrv_estado IN ('R'))
 			)
         ]]>
         <if test="padreId != null">

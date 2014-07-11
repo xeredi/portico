@@ -7,23 +7,23 @@
         <![CDATA[
         UPDATE tbl_subservicio_ssrv SET
             ssrv_estado = 'B'
-        WHERE 
-            ssrv_tpss_pk = getEntidad('PARTIDA')
+        WHERE
+            ssrv_tpss_pk = portico.getEntidad('PARTIDA')
             AND ssrv_estado = 'R'
             AND EXISTS (
                 SELECT 1
                 FROM tbl_subservicio_subservicio_ssss
-                WHERE ssrv_pk = ssss_ssrvp_pk 
+                WHERE ssrv_pk = ssss_ssrvp_pk
                     AND ssss_ssrvh_pk = ANY (
                         SELECT ssss_ssrvh_pk
                         FROM tbl_subservicio_subservicio_ssss
-                        WHERE 
+                        WHERE
                             EXISTS (
                                 SELECT 1
                                 FROM tbl_subservicio_ssrv
-                                WHERE 
-                                    ssrv_tpss_pk = getEntidad('EQUIPAMIENTO')
-                                    AND ssrv_pk = ssss_ssrvp_pk 
+                                WHERE
+                                    ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+                                    AND ssrv_pk = ssss_ssrvp_pk
                                     AND ssrv_pk = #{value}
                             )
                     )
@@ -35,23 +35,23 @@
         <![CDATA[
         UPDATE tbl_subservicio_ssrv SET
             ssrv_estado = 'R'
-        WHERE 
-            ssrv_tpss_pk = getEntidad('PARTIDA')
+        WHERE
+            ssrv_tpss_pk = portico.getEntidad('PARTIDA')
             AND ssrv_estado = 'B'
             AND EXISTS (
                 SELECT 1
                 FROM tbl_subservicio_subservicio_ssss
-                WHERE ssrv_pk = ssss_ssrvp_pk 
+                WHERE ssrv_pk = ssss_ssrvp_pk
                     AND ssss_ssrvh_pk = ANY (
                         SELECT ssss_ssrvh_pk
                         FROM tbl_subservicio_subservicio_ssss
-                        WHERE 
+                        WHERE
                             EXISTS (
                                 SELECT 1
                                 FROM tbl_subservicio_ssrv
-                                WHERE 
-                                    ssrv_tpss_pk = getEntidad('EQUIPAMIENTO')
-                                    AND ssrv_pk = ssss_ssrvp_pk 
+                                WHERE
+                                    ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
+                                    AND ssrv_pk = ssss_ssrvp_pk
                                     AND ssrv_pk = #{value}
                             )
                     )

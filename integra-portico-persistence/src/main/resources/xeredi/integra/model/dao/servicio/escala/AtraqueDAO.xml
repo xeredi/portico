@@ -8,7 +8,7 @@
         SELECT COUNT(1)
         FROM tbl_subservicio_ssrv
         WHERE
-            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv_estado IN ('S', 'D')
             AND ssrv_pk = #{value}
     ]]>
@@ -19,7 +19,7 @@
         UPDATE tbl_subservicio_ssrv SET
             ssrv_estado = 'C'
         WHERE
-            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv_estado IN ('S', 'D')
             AND ssrv_pk = #{value}
     ]]>
@@ -30,7 +30,7 @@
         SELECT COUNT(1)
         FROM tbl_subservicio_ssrv
         WHERE
-            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv_estado IN ('S', 'C')
             AND ssrv_pk = #{value}
     ]]>
@@ -41,7 +41,7 @@
         UPDATE tbl_subservicio_ssrv SET
             ssrv_estado = 'D'
         WHERE
-            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv_estado IN ('S', 'C')
             AND ssrv_pk = #{value}
     ]]>
@@ -52,7 +52,7 @@
         SELECT COUNT(1)
         FROM tbl_subservicio_ssrv
         WHERE
-            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv_estado IN ('S', 'C')
             AND ssrv_pk = #{value}
     ]]>
@@ -63,7 +63,7 @@
         UPDATE tbl_subservicio_ssrv SET
             ssrv_estado = 'A'
         WHERE
-            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv_estado IN ('S', 'C')
             AND ssrv_pk = #{value}
     ]]>
@@ -74,7 +74,7 @@
         SELECT COUNT(1)
         FROM tbl_subservicio_ssrv ssrv
         WHERE
-            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv.ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv.ssrv_estado IN ('C')
             AND NOT EXISTS (
                 SELECT 1
@@ -96,7 +96,7 @@
         UPDATE tbl_subservicio_ssrv ssrv SET
             ssrv_estado = 'I'
         WHERE
-            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv.ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv.ssrv_estado IN ('C')
             AND NOT EXISTS (
                 SELECT 1
@@ -118,7 +118,7 @@
         SELECT COUNT(1)
         FROM tbl_subservicio_ssrv ssrv
         WHERE
-            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv.ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv.ssrv_estado IN ('I')
             AND ssrv.ssrv_pk = #{value}
     ]]>
@@ -129,7 +129,7 @@
         UPDATE tbl_subservicio_ssrv SET
             ssrv_estado = 'F'
         WHERE
-            ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv_estado IN ('I')
             AND ssrv_pk = #{value}
     ]]>
@@ -140,7 +140,7 @@
         SELECT COUNT(1)
         FROM tbl_subservicio_ssrv ssrv
         WHERE
-            ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+            ssrv.ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
             AND ssrv.ssrv_estado IN ('I')
             AND ssrv.ssrv_ffin IS NULL
             AND EXISTS (
@@ -148,7 +148,7 @@
                 FROM tbl_subservicio_ssrv ssrvAux
                 WHERE
                     ssrvAux.ssrv_srvc_pk = ssrv.ssrv_srvc_pk
-                    AND ssrvAux.ssrv_tpss_pk = getEntidad('ATRAQUE')
+                    AND ssrvAux.ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
                     AND ssrvAux.ssrv_numero > ssrv.ssrv_numero
                     AND ssrvAux.ssrv_estado = 'C'
             )
@@ -161,7 +161,7 @@
         SELECT COUNT(1)
         FROM tbl_subservicio_ssrv ssrv
         WHERE
-        	ssrv.ssrv_tpss_pk = getEntidad('ATRAQUE')
+        	ssrv.ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
         	AND ssrv.ssrv_estado IN ('S', 'C')
             AND ssrv.ssrv_pk = #{value}
     ]]>
