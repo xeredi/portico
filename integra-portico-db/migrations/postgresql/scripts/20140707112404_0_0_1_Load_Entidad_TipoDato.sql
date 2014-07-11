@@ -2656,6 +2656,73 @@ INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpd
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+TRUNCATE TABLE tbl_proceso_archivo_prar
+/
+
+TRUNCATE TABLE tbl_proceso_item_prit
+/
+
+TRUNCATE TABLE tbl_proceso_mensaje_prmn
+/
+
+TRUNCATE TABLE tbl_proceso_parametro_prpm
+/
+
+DELETE FROM tbl_proceso_batch_prbt
+/
+
+
+TRUNCATE TABLE tbl_estadistica_dato_esdt
+/
+
+DELETE FROM tbl_estadistica_estd
+/
+
+DELETE FROM tbl_cuadro_mes_cdms
+/
+
+DELETE FROM tbl_periodo_proceso_pepr
+/
+
+
+DELETE FROM tbl_subserv_subserv_ssss
+/
+
+TRUNCATE TABLE tbl_subservicio_dato_ssdt
+/
+
+DELETE FROM tbl_subservicio_ssrv
+/
+
+TRUNCATE TABLE tbl_servicio_dato_srdt
+/
+
+DELETE FROM tbl_servicio_srvc
+/
+
+
+TRUNCATE TABLE tbl_subparametro_dato_spdt
+/
+
+DELETE FROM tbl_subparametro_version_spvr
+/
+
+DELETE FROM tbl_subparametro_sprm
+/
+
+TRUNCATE TABLE tbl_parametro_dato_prdt
+/
+
+TRUNCATE TABLE tbl_parametro_i18n_p18n
+/
+
+DELETE FROM tbl_parametro_version_prvr
+/
+
+DELETE FROM tbl_parametro_prmt
+/
+
+
 
 -- Tipos de dato - Tipos de Servicio
 DELETE FROM tbl_tipo_dato_tpdt

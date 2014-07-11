@@ -34,4 +34,7 @@
 -- use the migrations and the changelog for all future
 -- database change management.
 
+CREATE USER porticoadm WITH PASSWORD 'portico';
+CREATE USER portico WITH PASSWORD 'portico';
 
+CREATE DATABASE portico WITH OWNER porticoadm;

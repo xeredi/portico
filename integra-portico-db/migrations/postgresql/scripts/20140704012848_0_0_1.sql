@@ -1,8 +1,20 @@
 -- // 0.0.1
 -- Migration SQL that makes the change goes here.
+CREATE SCHEMA portico
+/
+
+GRANT USAGE ON SCHEMA portico TO portico
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA portico TO portico
+/
+
+
+
+
 
 -- tbl_conf_clave_cncl
-CREATE TABLE tbl_conf_clave_cncl
+CREATE TABLE portico.tbl_conf_clave_cncl
 (
 	cncl_pk BIGINT NOT NULL
 	, cncl_clave VARCHAR(80) NOT NULL
@@ -13,26 +25,26 @@ CREATE TABLE tbl_conf_clave_cncl
 	, CONSTRAINT uq_cncl UNIQUE (cncl_clave)
 )
 /
+
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_conf_clave_cncl TO portico
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_clave_cncl TO portico
+COMMENT ON TABLE portico.tbl_conf_clave_cncl IS 'Claves de Parametros de Configuracion'
 /
-
-COMMENT ON TABLE tbl_conf_clave_cncl IS 'Claves de Parametros de Configuracion'
+COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_pk IS 'Identificador de clave'
 /
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_pk IS 'Identificador de clave'
+COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_tipo_valor IS 'Tipo de Valor del parametro (Fecha, numero, ...)'
 /
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_tipo_valor IS 'Tipo de Valor del parametro (Fecha, numero, ...)'
+COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_clave IS 'Clave del parametro'
 /
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_clave IS 'Clave del parametro'
-/
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_valor_defecto IS 'Valor por defecto del parametro'
+COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_valor_defecto IS 'Valor por defecto del parametro'
 /
 
 
 
 -- tbl_conf_clave_i18n_cnci
-CREATE TABLE tbl_conf_clave_i18n_cnci
+CREATE TABLE portico.tbl_conf_clave_i18n_cnci
 (
 	cnci_pk BIGINT NOT NULL
 	, cnci_clave VARCHAR(80) NOT NULL
@@ -43,22 +55,22 @@ CREATE TABLE tbl_conf_clave_i18n_cnci
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_clave_i18n_cnci TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_conf_clave_i18n_cnci TO portico
 /
 
-COMMENT ON TABLE tbl_conf_clave_i18n_cnci IS 'Claves de Configuracion de idioma'
+COMMENT ON TABLE portico.tbl_conf_clave_i18n_cnci IS 'Claves de Configuracion de idioma'
 /
-COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_pk IS 'Identificador de clave de idioma'
+COMMENT ON COLUMN portico.tbl_conf_clave_i18n_cnci.cnci_pk IS 'Identificador de clave de idioma'
 /
-COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_clave IS 'Identificador de clave'
+COMMENT ON COLUMN portico.tbl_conf_clave_i18n_cnci.cnci_clave IS 'Identificador de clave'
 /
-COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_valor_defecto IS 'Valor por Defecto'
+COMMENT ON COLUMN portico.tbl_conf_clave_i18n_cnci.cnci_valor_defecto IS 'Valor por Defecto'
 /
 
 
 
 -- tbl_configuracion_idioma_cnid
-CREATE TABLE tbl_configuracion_idioma_cnid
+CREATE TABLE portico.tbl_configuracion_idioma_cnid
 (
 	cnid_pk BIGINT NOT NULL
 	, cnid_codigo VARCHAR(5) NOT NULL
@@ -69,22 +81,22 @@ CREATE TABLE tbl_configuracion_idioma_cnid
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_idioma_cnid TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_configuracion_idioma_cnid TO portico
 /
 
-COMMENT ON TABLE tbl_configuracion_idioma_cnid IS 'Configuraciones de idioma'
+COMMENT ON TABLE portico.tbl_configuracion_idioma_cnid IS 'Configuraciones de idioma'
 /
-COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_pk IS 'Identificador de configuracion de idioma'
+COMMENT ON COLUMN portico.tbl_configuracion_idioma_cnid.cnid_pk IS 'Identificador de configuracion de idioma'
 /
-COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_codigo IS 'Codigo de configuracion de idioma'
+COMMENT ON COLUMN portico.tbl_configuracion_idioma_cnid.cnid_codigo IS 'Codigo de configuracion de idioma'
 /
-COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_descripcion IS 'Descripcion de configuracion de idioma'
+COMMENT ON COLUMN portico.tbl_configuracion_idioma_cnid.cnid_descripcion IS 'Descripcion de configuracion de idioma'
 /
 
 
 
 -- tbl_configuracion_entorno_cnen
-CREATE TABLE tbl_configuracion_entorno_cnen
+CREATE TABLE portico.tbl_configuracion_entorno_cnen
 (
 	cnen_pk BIGINT NOT NULL
 	, cnen_codigo VARCHAR(8) NOT NULL
@@ -95,22 +107,22 @@ CREATE TABLE tbl_configuracion_entorno_cnen
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_entorno_cnen TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_configuracion_entorno_cnen TO portico
 /
 
-COMMENT ON TABLE tbl_configuracion_entorno_cnen IS 'Entornos de Configuracion'
+COMMENT ON TABLE portico.tbl_configuracion_entorno_cnen IS 'Entornos de Configuracion'
 /
-COMMENT ON COLUMN tbl_configuracion_entorno_cnen.cnen_pk IS 'Identificador de entorno'
+COMMENT ON COLUMN portico.tbl_configuracion_entorno_cnen.cnen_pk IS 'Identificador de entorno'
 /
-COMMENT ON COLUMN tbl_configuracion_entorno_cnen.cnen_codigo IS 'Codigo de entorno'
+COMMENT ON COLUMN portico.tbl_configuracion_entorno_cnen.cnen_codigo IS 'Codigo de entorno'
 /
-COMMENT ON COLUMN tbl_configuracion_entorno_cnen.cnen_nombre IS 'Nombre de entorno'
+COMMENT ON COLUMN portico.tbl_configuracion_entorno_cnen.cnen_nombre IS 'Nombre de entorno'
 /
 
 
 
 -- tbl_configuracion_valor_cnvl
-CREATE TABLE tbl_configuracion_valor_cnvl
+CREATE TABLE portico.tbl_configuracion_valor_cnvl
 (
 	cnvl_cnen_pk BIGINT NOT NULL
 	, cnvl_cncl_pk BIGINT NOT NULL
@@ -118,28 +130,28 @@ CREATE TABLE tbl_configuracion_valor_cnvl
 
 	, CONSTRAINT pk_cnvl PRIMARY KEY (cnvl_cnen_pk, cnvl_cncl_pk)
 	, CONSTRAINT fk_cnvl_cnen_pk FOREIGN KEY (cnvl_cnen_pk)
-		REFERENCES tbl_configuracion_entorno_cnen (cnen_pk)
+		REFERENCES portico.tbl_configuracion_entorno_cnen (cnen_pk)
 	, CONSTRAINT fk_cnvl_cncl_pk FOREIGN KEY (cnvl_cncl_pk)
-		REFERENCES tbl_conf_clave_cncl (cncl_pk)
+		REFERENCES portico.tbl_conf_clave_cncl (cncl_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_valor_cnvl TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_configuracion_valor_cnvl TO portico
 /
 
-COMMENT ON TABLE tbl_configuracion_valor_cnvl IS 'Valores de parametros de configuracion'
+COMMENT ON TABLE portico.tbl_configuracion_valor_cnvl IS 'Valores de parametros de configuracion'
 /
-COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_cnen_pk IS 'Identificador de entorno'
+COMMENT ON COLUMN portico.tbl_configuracion_valor_cnvl.cnvl_cnen_pk IS 'Identificador de entorno'
 /
-COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_cncl_pk IS 'Identificador de clave'
+COMMENT ON COLUMN portico.tbl_configuracion_valor_cnvl.cnvl_cncl_pk IS 'Identificador de clave'
 /
-COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_valor IS 'Valor de parametro'
+COMMENT ON COLUMN portico.tbl_configuracion_valor_cnvl.cnvl_valor IS 'Valor de parametro'
 /
 
 
 
 -- tbl_conf_valor_i18n_cnvi
-CREATE TABLE tbl_conf_valor_i18n_cnvi
+CREATE TABLE portico.tbl_conf_valor_i18n_cnvi
 (
 	cnvi_cnid_pk BIGINT NOT NULL
 	, cnvi_cnci_pk BIGINT NOT NULL
@@ -147,22 +159,22 @@ CREATE TABLE tbl_conf_valor_i18n_cnvi
 
 	, CONSTRAINT pk_cnvi PRIMARY KEY (cnvi_cnid_pk, cnvi_cnci_pk)
 	, CONSTRAINT fk_cnvi_cnid_pk FOREIGN KEY (cnvi_cnid_pk)
-		REFERENCES tbl_configuracion_idioma_cnid (cnid_pk)
+		REFERENCES portico.tbl_configuracion_idioma_cnid (cnid_pk)
 	, CONSTRAINT fk_cnvi_cnci_pk FOREIGN KEY (cnvi_cnci_pk)
-		REFERENCES tbl_conf_clave_i18n_cnci (cnci_pk)
+		REFERENCES portico.tbl_conf_clave_i18n_cnci (cnci_pk)
 )
 /
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_valor_i18n_cnvi TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_conf_valor_i18n_cnvi TO portico
 /
 
-COMMENT ON TABLE tbl_conf_valor_i18n_cnvi IS 'Valores de parametros de configuracion de idioma'
+COMMENT ON TABLE portico.tbl_conf_valor_i18n_cnvi IS 'Valores de parametros de configuracion de idioma'
 /
-COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnid_pk IS 'Identificador de Configuracion de Idioma'
+COMMENT ON COLUMN portico.tbl_conf_valor_i18n_cnvi.cnvi_cnid_pk IS 'Identificador de Configuracion de Idioma'
 /
-COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnci_pk IS 'Identificador de Parametro de Configuracion de Idioma'
+COMMENT ON COLUMN portico.tbl_conf_valor_i18n_cnvi.cnvi_cnci_pk IS 'Identificador de Parametro de Configuracion de Idioma'
 /
-COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_valor IS 'Valor de Parametro'
+COMMENT ON COLUMN portico.tbl_conf_valor_i18n_cnvi.cnvi_valor IS 'Valor de Parametro'
 /
 
 
@@ -1607,15 +1619,20 @@ DROP TABLE tbl_usuario_usro
 /
 DROP TABLE tbl_ig
 /
-DROP TABLE tbl_conf_valor_i18n_cnvi
+DROP TABLE portico.tbl_conf_valor_i18n_cnvi
 /
-DROP TABLE tbl_configuracion_valor_cnvl
+DROP TABLE portico.tbl_configuracion_valor_cnvl
 /
-DROP TABLE tbl_configuracion_entorno_cnen
+DROP TABLE portico.tbl_configuracion_entorno_cnen
 /
-DROP TABLE tbl_configuracion_idioma_cnid
+DROP TABLE portico.tbl_configuracion_idioma_cnid
 /
-DROP TABLE tbl_conf_clave_i18n_cnci
+DROP TABLE portico.tbl_conf_clave_i18n_cnci
 /
-DROP TABLE tbl_conf_clave_cncl
+DROP TABLE portico.tbl_conf_clave_cncl
+/
+
+
+
+DROP SCHEMA portico
 /
