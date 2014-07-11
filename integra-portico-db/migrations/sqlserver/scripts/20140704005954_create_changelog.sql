@@ -9,20 +9,35 @@
 -- Be sure that ID and DESCRIPTION fields exist in
 -- BigInteger and String compatible fields respectively.
 
-CREATE TABLE ${changelog} (
+CREATE SCHEMA portico
+/
+
+ALTER USER portico WITH DEFAULT_SCHEMA = portico;
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON SCHEMA::portico TO portico
+/
+GRANT EXECUTE ON SCHEMA::portico TO portico
+/
+
+
+
+CREATE TABLE portico.tbl_changelog_chng (
 ID BIGINT NOT NULL,
 APPLIED_AT VARCHAR(25) NOT NULL,
 DESCRIPTION VARCHAR(255) NOT NULL
 )
 /
 
-ALTER TABLE ${changelog}
-ADD CONSTRAINT PK_${changelog}
+ALTER TABLE portico.tbl_changelog_chng
+ADD CONSTRAINT pk_chng
 PRIMARY KEY (id)
 /
 
 -- //@UNDO
 
-DROP TABLE ${changelog}
+DROP TABLE portico.tbl_changelog_chng
 /
 
+DROP SCHEMA portico
+/

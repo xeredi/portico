@@ -3,23 +3,20 @@
 
 
 
-CREATE FUNCTION getSysDatetimeSch() RETURNS DATETIME2 AS
+CREATE FUNCTION portico.getSysDatetime() RETURNS DATETIME2 AS
 BEGIN
      RETURN SYSDATETIME();
 END
 /
 
-CREATE SYNONYM getSysDatetime FOR getSysDatetimeSch
-/
 
 
-
-CREATE FUNCTION getEntidad(@entiCodigo varchar(30)) RETURNS integer AS
+CREATE FUNCTION portico.getEntidad(@entiCodigo varchar(30)) RETURNS integer AS
 BEGIN
 	DECLARE @id AS integer;
 	DECLARE @err_message nvarchar(255)
 
-	SELECT @id = enti_pk FROM tbl_entidad_enti WHERE enti_codigo = @entiCodigo;
+	SELECT @id = enti_pk FROM portico.tbl_entidad_enti WHERE enti_codigo = @entiCodigo;
 
 	IF @@rowcount = 0
 	BEGIN
@@ -35,12 +32,12 @@ END
 
 
 
-CREATE FUNCTION getTipoDato(@tpdtCodigo varchar(30)) RETURNS integer AS
+CREATE FUNCTION portico.getTipoDato(@tpdtCodigo varchar(30)) RETURNS integer AS
 BEGIN
 	DECLARE @id AS integer;
 	DECLARE @err_message nvarchar(255)
 
-	SELECT @id = tpdt_pk FROM tbl_tipo_dato_tpdt WHERE tpdt_codigo = @tpdtCodigo;
+	SELECT @id = tpdt_pk FROM portico.tbl_tipo_dato_tpdt WHERE tpdt_codigo = @tpdtCodigo;
 
 	IF @@rowcount = 0
 	BEGIN
@@ -58,12 +55,12 @@ END
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP FUNCTION getTipoDato
+DROP FUNCTION portico.getTipoDato
 /
 
-DROP FUNCTION getEntidad
+DROP FUNCTION portico.getEntidad
 /
 
-DROP FUNCTION getSysDatetimeSch
+DROP FUNCTION portico.getSysDatetime
 /
 
