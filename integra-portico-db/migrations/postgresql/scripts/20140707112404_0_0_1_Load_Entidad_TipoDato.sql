@@ -2656,23 +2656,23 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-TRUNCATE TABLE portico.tbl_proceso_archivo_prar
+DELETE FROM portico.tbl_proceso_archivo_prar
 /
 
-TRUNCATE TABLE portico.tbl_proceso_item_prit
+DELETE FROM portico.tbl_proceso_item_prit
 /
 
-TRUNCATE TABLE portico.tbl_proceso_mensaje_prmn
+DELETE FROM portico.tbl_proceso_mensaje_prmn
 /
 
-TRUNCATE TABLE portico.tbl_proceso_parametro_prpm
+DELETE FROM portico.tbl_proceso_parametro_prpm
 /
 
 DELETE FROM portico.tbl_proceso_batch_prbt
 /
 
 
-TRUNCATE TABLE portico.tbl_estadistica_dato_esdt
+DELETE FROM portico.tbl_estadistica_dato_esdt
 /
 
 DELETE FROM portico.tbl_estadistica_estd
@@ -2688,20 +2688,20 @@ DELETE FROM portico.tbl_periodo_proceso_pepr
 DELETE FROM portico.tbl_subserv_subserv_ssss
 /
 
-TRUNCATE TABLE portico.tbl_subservicio_dato_ssdt
+DELETE FROM portico.tbl_subservicio_dato_ssdt
 /
 
 DELETE FROM portico.tbl_subservicio_ssrv
 /
 
-TRUNCATE TABLE portico.tbl_servicio_dato_srdt
+DELETE FROM portico.tbl_servicio_dato_srdt
 /
 
 DELETE FROM portico.tbl_servicio_srvc
 /
 
 
-TRUNCATE TABLE portico.tbl_subparametro_dato_spdt
+DELETE FROM portico.tbl_subparametro_dato_spdt
 /
 
 DELETE FROM portico.tbl_subparametro_version_spvr
@@ -2710,10 +2710,10 @@ DELETE FROM portico.tbl_subparametro_version_spvr
 DELETE FROM portico.tbl_subparametro_sprm
 /
 
-TRUNCATE TABLE portico.tbl_parametro_dato_prdt
+DELETE FROM portico.tbl_parametro_dato_prdt
 /
 
-TRUNCATE TABLE portico.tbl_parametro_i18n_p18n
+DELETE FROM portico.tbl_parametro_i18n_p18n
 /
 
 DELETE FROM portico.tbl_parametro_version_prvr
