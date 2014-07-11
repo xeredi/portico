@@ -14,17 +14,55 @@ Esquemas de la BD 'portico'
 ---------------------------
 
 Oracle
-	porticoadm - Creador de las tablas/indices/funciones
-		Da permisos de CRUD al usuario portico
+	Usuario porticoadm
+		Creador de las tablas/indices/funciones en el esquema porticoadm
+		Da permisos de CRUD/execute al usuario portico
 		Crea sinonimos en el esquema portico
-	portico - Usuario de las tablas/indices/funciones
+	Usuario portico
+		- Usuario de las tablas/indices/funciones (sinonimos) del esquema portico
 
 SqlServer
-	portico
-		- El usuario porticoadm crea las tablas/indices/funciones
-		- El usuario porticoadm Da permisos de CRUD al usuario portico
+	Usuario porticoadm
+		- crea las tablas/indices/funciones en el esquema portico
+		- Da permisos de CRUD/execute al usuario portico
+	Usuario portico
+		- Usuario de las tablas/indices/funciones del esquema portico
 
 PostgreSQL
-	portico
-		- El usuario porticoadm crea las tablas/indices/funciones
-		- El usuario porticoadm Da permisos de CRUD al usuario portico
+	Usuario porticoadm
+		- crea las tablas/indices/funciones en el esquema portico
+		- Da permisos de CRUD/execute al usuario portico
+	Usuario portico
+		- Usuario de las tablas/indices/funciones del esquema portico
+
+
+Permisos de los usuarios
+------------------------
+
+Oracle
+	Usuario porticoadm
+		- Create table
+		- Create any synonym (para crear sinonimos en el esquema portico)
+		- Insert/Delete any table (para insertar filas en tablas de el esquema portico)
+		- Dar permisos al usuario portico
+	Usuario portico
+		- CRUD tablas
+		- Execute funciones
+
+SqlServer
+	Usuario porticoadm
+		- Create table
+		- Dar permisos al usuario portico
+		- Insert
+	Usuario portico
+		- CRUD tablas
+		- Execute funciones
+
+PostgreSQL
+	Usuario porticoadm
+		- Create table
+		- Dar permisos al usuario portico
+	Usuario portico
+		- CRUD tablas
+		- Execute funciones
+
