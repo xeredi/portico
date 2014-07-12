@@ -71,5 +71,12 @@ SQL Server
 ----------
 
 Jdbc (Driver MS vs jTds). Carga Maestros:
-	- MS: Más de 1h30
-	-jTds:
+	- MS: ???
+	-jTds: 13m 09s
+
+Migracion de Maestros
+---------------------
+
+SQL Server		13m 09s
+Oracle			12m 40s
+PostgreSQL		14m 12s

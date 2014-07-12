@@ -128,6 +128,7 @@ CREATE TABLE tbl_configuracion_valor_cnvl
 	, cnvl_valor VARCHAR2(200) NOT NULL
 
 	, CONSTRAINT pk_cnvl PRIMARY KEY (cnvl_cnen_pk, cnvl_cncl_pk)
+
 	, CONSTRAINT fk_cnvl_cnen_pk FOREIGN KEY (cnvl_cnen_pk)
 		REFERENCES tbl_configuracion_entorno_cnen (cnen_pk)
 	, CONSTRAINT fk_cnvl_cncl_pk FOREIGN KEY (cnvl_cncl_pk)
@@ -160,6 +161,7 @@ CREATE TABLE tbl_conf_valor_i18n_cnvi
 	, cnvi_valor VARCHAR2(200) NOT NULL
 
 	, CONSTRAINT pk_cnvi PRIMARY KEY (cnvi_cnid_pk, cnvi_cnci_pk)
+
 	, CONSTRAINT fk_cnvi_cnid_pk FOREIGN KEY (cnvi_cnid_pk)
 		REFERENCES tbl_configuracion_idioma_cnid (cnid_pk)
 	, CONSTRAINT fk_cnvi_cnci_pk FOREIGN KEY (cnvi_cnci_pk)
@@ -286,6 +288,7 @@ CREATE TABLE tbl_usuario_grupo_usgr
 	, usgr_grpo_pk NUMBER(19) NOT NULL
 
 	, CONSTRAINT pk_usgr PRIMARY KEY (usgr_usro_pk, usgr_grpo_pk)
+
 	, CONSTRAINT fk_usgr_usro_pk FOREIGN KEY (usgr_usro_pk)
 		REFERENCES tbl_usuario_usro (usro_pk)
 	, CONSTRAINT fk_usgr_grpo_pk FOREIGN KEY (usgr_grpo_pk)
@@ -361,6 +364,7 @@ CREATE TABLE tbl_entidad_entidad_enen
 	, enen_orden int NOT NULL
 
 	, CONSTRAINT pk_enen PRIMARY KEY (enen_entip_pk, enen_entih_pk)
+
 	, CONSTRAINT fk_enen_entip_pk FOREIGN KEY (enen_entip_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_enen_entih_pk FOREIGN KEY (enen_entih_pk)
@@ -399,6 +403,7 @@ CREATE TABLE tbl_tipo_dato_tpdt
 
 	, CONSTRAINT pk_tpdt PRIMARY KEY (tpdt_pk)
 	, CONSTRAINT uq_tpdt UNIQUE (tpdt_codigo)
+
 	, CONSTRAINT fk_tpdt_enti_pk FOREIGN KEY (tpdt_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )
@@ -435,6 +440,7 @@ CREATE TABLE tbl_codigo_referencia_cdrf
 	, cdrf_orden int NOT NULL
 
 	, CONSTRAINT pk_cdrf PRIMARY KEY (cdrf_tpdt_pk, cdrf_valor)
+
 	, CONSTRAINT fk_cdrf_tpdt_pk FOREIGN KEY (cdrf_tpdt_pk)
 		REFERENCES tbl_tipo_dato_tpdt (tpdt_pk)
 )
@@ -466,6 +472,7 @@ CREATE TABLE tbl_entidad_accion_enac
 	, enac_orden int NOT NULL
 
 	, CONSTRAINT pk_enac PRIMARY KEY (enac_enti_pk, enac_path)
+
 	, CONSTRAINT fk_enac_enti_pk FOREIGN KEY (enac_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )
@@ -498,6 +505,7 @@ CREATE TABLE tbl_entidad_grupo_dato_engd
 	, engd_etiqueta VARCHAR2(30) NOT NULL
 
 	, CONSTRAINT pk_engd PRIMARY KEY (engd_enti_pk, engd_orden)
+
 	, CONSTRAINT fk_engd_enti_pk FOREIGN KEY (engd_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )
@@ -537,6 +545,7 @@ CREATE TABLE tbl_entidad_tipo_dato_entd
 
 	, CONSTRAINT pk_entd PRIMARY KEY (entd_enti_pk, entd_tpdt_pk)
 	, CONSTRAINT uq_entd_etiqueta UNIQUE (entd_enti_pk, entd_grupo, entd_etiqueta)
+
 	, CONSTRAINT fk_entd_enti_pk FOREIGN KEY (entd_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_entd_tpdt_pk FOREIGN KEY (entd_tpdt_pk)
@@ -586,6 +595,7 @@ CREATE TABLE tbl_tipo_parametro_tppr
 	, tppr_tpdt_pk NUMBER(19)
 
 	, CONSTRAINT pk_tppr PRIMARY KEY (tppr_pk)
+
 	, CONSTRAINT fk_tppr_enti_pk FOREIGN KEY (tppr_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tppr_tpdt_pk FOREIGN KEY (tppr_tpdt_pk)
@@ -621,6 +631,7 @@ CREATE TABLE tbl_parametro_prmt
 
 	, CONSTRAINT pk_prmt PRIMARY KEY (prmt_pk)
 	, CONSTRAINT uq_prmt UNIQUE (prmt_tppr_pk, prmt_parametro)
+
 	, CONSTRAINT fk_prmt_tppr_pk FOREIGN KEY (prmt_tppr_pk)
 		REFERENCES tbl_tipo_parametro_tppr (tppr_pk)
 )
@@ -652,6 +663,7 @@ CREATE TABLE tbl_parametro_version_prvr
 	, prvr_ffin TIMESTAMP
 
 	, CONSTRAINT pk_prvr PRIMARY KEY (prvr_pk)
+
 	, CONSTRAINT fk_prvr_prmt_pk FOREIGN KEY (prvr_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )
@@ -689,6 +701,7 @@ CREATE TABLE tbl_parametro_dato_prdt
 	, prdt_cadena VARCHAR2(350)
 
 	, CONSTRAINT pk_prdt PRIMARY KEY (prdt_prvr_pk, prdt_tpdt_pk)
+
 	, CONSTRAINT fk_prdt_prvr_pk FOREIGN KEY (prdt_prvr_pk)
 		REFERENCES tbl_parametro_version_prvr (prvr_pk)
 	, CONSTRAINT fk_prdt_tpdt_pk FOREIGN KEY (prdt_tpdt_pk)
@@ -696,6 +709,11 @@ CREATE TABLE tbl_parametro_dato_prdt
 	, CONSTRAINT fk_prdt_prmt_pk FOREIGN KEY (prdt_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )
+/
+
+CREATE INDEX ix_prdt_prmt_pk ON tbl_parametro_dato_prdt (prdt_prmt_pk)
+/
+CREATE INDEX ix_prdt_cadena ON tbl_parametro_dato_prdt (prdt_tpdt_pk, prdt_cadena)
 /
 
 CREATE OR REPLACE SYNONYM portico.tbl_parametro_dato_prdt FOR porticoadm.tbl_parametro_dato_prdt
@@ -730,7 +748,8 @@ CREATE TABLE tbl_parametro_i18n_p18n
 	, p18n_idioma VARCHAR2(5) NOT NULL
 	, p18n_texto VARCHAR2(350) NOT NULL
 
-	, CONSTRAINT p18n_pk PRIMARY KEY (p18n_prvr_pk, p18n_idioma)
+	, CONSTRAINT pk_p18n PRIMARY KEY (p18n_prvr_pk, p18n_idioma)
+
 	, CONSTRAINT fk_p18n_prvr_pk FOREIGN KEY (p18n_prvr_pk)
 		REFERENCES tbl_parametro_version_prvr (prvr_pk)
 )
@@ -764,6 +783,7 @@ CREATE TABLE tbl_tipo_subparametro_tpsp
 
 	, CONSTRAINT pk_tpsp PRIMARY KEY (tpsp_pk)
 	, CONSTRAINT uq_tpsp UNIQUE (tpsp_tppr_pk, tpsp_tppr_dep_pk)
+
 	, CONSTRAINT fk_tpsp_enti_pk FOREIGN KEY (tpsp_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tpsp_tppr_pk FOREIGN KEY (tpsp_tppr_pk)
@@ -804,6 +824,7 @@ CREATE TABLE tbl_subparametro_sprm
 
 	, CONSTRAINT pk_sprm PRIMARY KEY (sprm_pk)
 	, CONSTRAINT uq_sprm UNIQUE (sprm_prmt_pk, sprm_prmt_dep_pk)
+
 	, CONSTRAINT fk_sprm_tpsp_pk FOREIGN KEY (sprm_tpsp_pk)
 		REFERENCES tbl_tipo_subparametro_tpsp (tpsp_pk)
 	, CONSTRAINT fk_sprm_prmt_pk FOREIGN KEY (sprm_prmt_pk)
@@ -811,6 +832,9 @@ CREATE TABLE tbl_subparametro_sprm
 	, CONSTRAINT fk_sprm_prmt_dep_pk FOREIGN KEY (sprm_prmt_dep_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )
+/
+
+CREATE INDEX ix_sprm_prmt_dep_pk ON tbl_subparametro_sprm (sprm_prmt_dep_pk)
 /
 
 CREATE OR REPLACE SYNONYM portico.tbl_subparametro_sprm FOR porticoadm.tbl_subparametro_sprm
@@ -841,6 +865,7 @@ CREATE TABLE tbl_subparametro_version_spvr
 	, spvr_ffin TIMESTAMP
 
 	, CONSTRAINT pk_spvr PRIMARY KEY (spvr_pk)
+
 	, CONSTRAINT fk_spvr_sprm_pk FOREIGN KEY (spvr_sprm_pk)
 		REFERENCES tbl_subparametro_sprm (sprm_pk)
 )
@@ -878,6 +903,7 @@ CREATE TABLE tbl_subparametro_dato_spdt
 	, spdt_cadena VARCHAR2(350)
 
 	, CONSTRAINT pk_spdt PRIMARY KEY (spdt_spvr_pk, spdt_tpdt_pk)
+
 	, CONSTRAINT fk_spdt_spvr_pk FOREIGN KEY (spdt_spvr_pk)
 		REFERENCES tbl_subparametro_version_spvr (spvr_pk)
 	, CONSTRAINT fk_spdt_tpdt_pk FOREIGN KEY (spdt_tpdt_pk)
@@ -885,6 +911,11 @@ CREATE TABLE tbl_subparametro_dato_spdt
 	, CONSTRAINT fk_spdt_prmt_pk FOREIGN KEY (spdt_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )
+/
+
+CREATE INDEX ix_spdt_prmt_pk ON tbl_subparametro_dato_spdt (spdt_prmt_pk)
+/
+CREATE INDEX ix_spdt_cadena ON tbl_subparametro_dato_spdt (spdt_tpdt_pk, spdt_cadena)
 /
 
 CREATE OR REPLACE SYNONYM portico.tbl_subparametro_dato_spdt FOR porticoadm.tbl_subparametro_dato_spdt
@@ -921,6 +952,7 @@ CREATE TABLE tbl_tipo_servicio_tpsr
 	, tpsr_tpdt_estado_pk NUMBER(19)
 
 	, CONSTRAINT pk_tpsr PRIMARY KEY (tpsr_pk)
+
 	, CONSTRAINT fk_tpsr_enti_pk FOREIGN KEY (tpsr_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tpsr_tpdt_estado_pk FOREIGN KEY (tpsr_tpdt_estado_pk)
@@ -957,6 +989,7 @@ CREATE TABLE tbl_tipo_subservicio_tpss
 	, tpss_tpdt_estado_pk NUMBER(19)
 
 	, CONSTRAINT pk_tpss PRIMARY KEY (tpss_pk)
+
 	, CONSTRAINT fk_tpss_enti_pk FOREIGN KEY (tpss_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 	, CONSTRAINT fk_tpss_tpsr_pk FOREIGN KEY (tpss_tpsr_pk)
@@ -996,6 +1029,7 @@ CREATE TABLE tbl_servicio_secuencia_srsc
 	, srsc_ultimo_numero int NOT NULL
 
 	, CONSTRAINT pk_srsc PRIMARY KEY (srsc_tpsr_pk, srsc_subp_pk, srsc_anno)
+
 	, CONSTRAINT fk_srsc_tpsr_pk FOREIGN KEY (srsc_tpsr_pk)
 		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
 	, CONSTRAINT fk_srsc_subp_pk FOREIGN KEY (srsc_subp_pk)
@@ -1037,6 +1071,7 @@ CREATE TABLE tbl_servicio_srvc
 	, srvc_estado char(1)
 
 	, CONSTRAINT pk_srvc PRIMARY KEY (srvc_pk)
+
 	, CONSTRAINT fk_srvc_tpsr_pk FOREIGN KEY (srvc_tpsr_pk)
 		REFERENCES tbl_tipo_servicio_tpsr (tpsr_pk)
 	, CONSTRAINT fk_srvc_subp_pk FOREIGN KEY (srvc_subp_pk)
@@ -1091,6 +1126,7 @@ CREATE TABLE tbl_servicio_dato_srdt
 	, srdt_cadena VARCHAR2(350)
 
 	, CONSTRAINT pk_srdt PRIMARY KEY (srdt_srvc_pk, srdt_tpdt_pk)
+
 	, CONSTRAINT fk_srdt_srvc_pk FOREIGN KEY (srdt_srvc_pk)
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 	, CONSTRAINT fk_srdt_tpdt_pk FOREIGN KEY (srdt_tpdt_pk)
@@ -1100,6 +1136,11 @@ CREATE TABLE tbl_servicio_dato_srdt
 	, CONSTRAINT fk_srdt_srvc_dep_pk FOREIGN KEY (srdt_srvc_dep_pk)
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 )
+/
+
+CREATE INDEX ix_srdt_prmt_pk ON tbl_servicio_dato_srdt (srdt_prmt_pk)
+/
+CREATE INDEX ix_srdt_cadena ON tbl_servicio_dato_srdt (srdt_tpdt_pk, srdt_cadena)
 /
 
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_dato_srdt FOR porticoadm.tbl_servicio_dato_srdt
@@ -1141,6 +1182,7 @@ CREATE TABLE tbl_subservicio_ssrv
 	, ssrv_estado char(1)
 
 	, CONSTRAINT pk_ssrv PRIMARY KEY (ssrv_pk)
+
 	, CONSTRAINT fk_ssrv_srvc_pk FOREIGN KEY (ssrv_srvc_pk)
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 	, CONSTRAINT fk_ssrv_tpss_pk FOREIGN KEY (ssrv_tpss_pk)
@@ -1190,6 +1232,7 @@ CREATE TABLE tbl_subservicio_dato_ssdt
 	, ssdt_cadena VARCHAR2(350)
 
 	, CONSTRAINT pk_ssdt PRIMARY KEY (ssdt_ssrv_pk, ssdt_tpdt_pk)
+
 	, CONSTRAINT fk_ssdt_ssrv_pk FOREIGN KEY (ssdt_ssrv_pk)
 		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
 	, CONSTRAINT fk_ssdt_tpdt_pk FOREIGN KEY (ssdt_tpdt_pk)
@@ -1197,6 +1240,11 @@ CREATE TABLE tbl_subservicio_dato_ssdt
 	, CONSTRAINT fk_ssdt_prmt_pk FOREIGN KEY (ssdt_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )
+/
+
+CREATE INDEX ix_ssdt_prmt_pk ON tbl_subservicio_dato_ssdt (ssdt_prmt_pk)
+/
+CREATE INDEX ix_ssdt_cadena ON tbl_subservicio_dato_ssdt (ssdt_tpdt_pk, ssdt_cadena)
 /
 
 CREATE OR REPLACE SYNONYM portico.tbl_subservicio_dato_ssdt FOR porticoadm.tbl_subservicio_dato_ssdt
@@ -1231,11 +1279,15 @@ CREATE TABLE tbl_subserv_subserv_ssss
 	, ssss_ssrvh_pk NUMBER(19) NOT NULL
 
 	, CONSTRAINT pk_ssss PRIMARY KEY (ssss_ssrvp_pk, ssss_ssrvh_pk)
+
 	, CONSTRAINT fk_ssss_ssrvp_pk FOREIGN KEY (ssss_ssrvp_pk)
 		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
 	, CONSTRAINT fk_ssss_ssrvh_pk FOREIGN KEY (ssss_ssrvh_pk)
 		REFERENCES tbl_subservicio_ssrv (ssrv_pk)
 )
+/
+
+CREATE INDEX ix_ssss_ssrvh_pk ON tbl_subserv_subserv_ssss (ssss_ssrvh_pk)
 /
 
 CREATE OR REPLACE SYNONYM portico.tbl_subserv_subserv_ssss FOR porticoadm.tbl_subserv_subserv_ssss
@@ -1259,6 +1311,7 @@ CREATE TABLE tbl_tipo_estadistica_tpes
 	tpes_pk NUMBER(19) NOT NULL
 
 	, CONSTRAINT pk_tpes PRIMARY KEY (tpes_pk)
+
 	, CONSTRAINT fk_tpes_enti_pk FOREIGN KEY (tpes_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
 )
@@ -1290,6 +1343,7 @@ CREATE TABLE tbl_periodo_proceso_pepr
 
 	, CONSTRAINT pk_pepr PRIMARY KEY (pepr_pk)
 	, CONSTRAINT uq_pepr UNIQUE (pepr_autp_pk, pepr_anio, pepr_mes)
+
 	, CONSTRAINT fk_pepr_autp_pk FOREIGN KEY (pepr_autp_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )
@@ -1329,6 +1383,7 @@ CREATE TABLE tbl_estadistica_estd
 	, estd_subp_pk NUMBER(19) NOT NULL
 
 	, CONSTRAINT pk_estd PRIMARY KEY (estd_pk)
+
 	, CONSTRAINT fk_estd_pepr_pk FOREIGN KEY (estd_pepr_pk)
 		REFERENCES tbl_periodo_proceso_pepr (pepr_pk)
 	, CONSTRAINT fk_estd_tpes_pk FOREIGN KEY (estd_tpes_pk)
@@ -1371,6 +1426,7 @@ CREATE TABLE tbl_estadistica_dato_esdt
 	, esdt_cadena VARCHAR2(30)
 
 	, CONSTRAINT pk_esdt PRIMARY KEY (esdt_estd_pk, esdt_tpdt_pk)
+
 	, CONSTRAINT fk_esdt_estd_pk FOREIGN KEY (esdt_estd_pk)
 		REFERENCES tbl_estadistica_estd (estd_pk)
 	, CONSTRAINT fk_esdt_tpdt_pk FOREIGN KEY (esdt_tpdt_pk)
@@ -1378,6 +1434,11 @@ CREATE TABLE tbl_estadistica_dato_esdt
 	, CONSTRAINT fk_esdt_prmt_pk FOREIGN KEY (esdt_prmt_pk)
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )
+/
+
+CREATE INDEX ix_esdt_prmt_pk ON tbl_estadistica_dato_esdt (esdt_prmt_pk)
+/
+CREATE INDEX ix_esdt_cadena ON tbl_estadistica_dato_esdt (esdt_tpdt_pk, esdt_cadena)
 /
 
 CREATE OR REPLACE SYNONYM portico.tbl_estadistica_dato_esdt FOR porticoadm.tbl_estadistica_dato_esdt
@@ -1416,6 +1477,7 @@ CREATE TABLE tbl_cuadro_mes_cdms
 
 	, CONSTRAINT pk_cdms PRIMARY KEY (cdms_pk)
 	, CONSTRAINT uq_cdms UNIQUE (cdms_pepr_pk, cdms_cocu_pk, cdms_opet_pk, cdms_navt_pk, cdms_pais_pk)
+
 	, CONSTRAINT fk_cdms_pepr_pk FOREIGN KEY (cdms_pepr_pk)
 		REFERENCES tbl_periodo_proceso_pepr (pepr_pk)
 	, CONSTRAINT fk_cdms_cocu_pk FOREIGN KEY (cdms_cocu_pk)
@@ -1502,6 +1564,7 @@ CREATE TABLE tbl_proceso_parametro_prpm
 	, prpm_valor VARCHAR2(300) NOT NULL
 
 	, CONSTRAINT pk_prpm PRIMARY KEY (prpm_prbt_pk, prpm_nombre)
+
 	, CONSTRAINT fk_prpm_prbt_pk FOREIGN KEY (prpm_prbt_pk)
 		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
 )
@@ -1532,6 +1595,7 @@ CREATE TABLE tbl_proceso_archivo_prar
 	, prar_sentido char(1) NOT NULL
 
 	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_sentido, prar_nombre)
+
 	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
 		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
 )
@@ -1562,6 +1626,7 @@ CREATE TABLE tbl_proceso_item_prit
 	, prit_sentido char(1) NOT NULL
 
 	, CONSTRAINT pk_prit PRIMARY KEY (prit_prbt_pk, prit_sentido, prit_item_pk)
+
 	, CONSTRAINT fk_prit_prbt_pk FOREIGN KEY (prit_prbt_pk)
 		REFERENCES tbl_proceso_batch_prbt (prbt_pk)
 )
