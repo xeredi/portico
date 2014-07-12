@@ -231,7 +231,7 @@ FROM (
     <insert id="insert" parameterType="ItemDatoVO">
         <![CDATA[
         INSERT INTO tbl_parametro_dato_prdt (prdt_prvr_pk, prdt_tpdt_pk, prdt_nentero, prdt_ndecimal, prdt_fecha, prdt_prmt_pk, prdt_cadena)
-        VALUES (#{itemId}, #{tpdtId}, #{cantidadEntera}, #{cantidadDecimal}, #{fecha}, #{prmt.id}, #{cadena})
+        VALUES (#{itemId}, #{tpdtId}, #{cantidadEntera, jdbcType=BIGINT}, #{cantidadDecimal, jdbcType=DOUBLE}, #{fecha, jdbcType=TIMESTAMP}, #{prmt.id, jdbcType=BIGINT}, #{cadena, jdbcType=VARCHAR})
         ]]>
     </insert>
 </mapper>

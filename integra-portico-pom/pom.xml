@@ -21,6 +21,14 @@
                 <database-vendor>postgresql</database-vendor>
                 <server-vendor>jetty</server-vendor>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>9.3-1101-jdbc41</version>
+                </dependency>
+            </dependencies>
         </profile>
 
         <profile>
@@ -31,6 +39,14 @@
                 <database-vendor>oracle</database-vendor>
                 <server-vendor>jetty</server-vendor>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.oracle</groupId>
+                    <artifactId>jdbc</artifactId>
+                    <version>11.2</version>
+                </dependency>
+            </dependencies>
         </profile>
 
         <profile>
@@ -41,6 +57,16 @@
                 <database-vendor>sqlserver</database-vendor>
                 <server-vendor>jetty</server-vendor>
             </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>net.sourceforge.jtds</groupId>
+                    <artifactId>jtds</artifactId>
+                    <version>1.3.1</version>
+                </dependency>
+                <!-- <dependency> <groupId>com.microsoft.sqlserver</groupId> <artifactId>jdbc</artifactId> <version>4.0</version>
+                    </dependency> -->
+            </dependencies>
         </profile>
     </profiles>
 

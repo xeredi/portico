@@ -6,7 +6,7 @@
     <insert id="insert" parameterType="ParametroVO">
         <![CDATA[
         INSERT INTO tbl_parametro_version_prvr (prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin)
-        VALUES (#{prvr.id}, #{id}, #{prvr.finicio}, #{prvr.ffin})
+        VALUES (#{prvr.id}, #{id}, #{prvr.finicio}, #{prvr.ffin, jdbcType=TIMESTAMP})
         ]]>
     </insert>
 

@@ -66,3 +66,10 @@ PostgreSQL
 		- CRUD tablas
 		- Execute funciones
 
+
+SQL Server
+----------
+
+Jdbc (Driver MS vs jTds). Carga Maestros:
+	- MS: Más de 1h30
+	-jTds:

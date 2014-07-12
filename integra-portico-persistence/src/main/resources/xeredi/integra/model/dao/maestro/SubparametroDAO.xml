@@ -155,12 +155,12 @@
                         spvr_fini AND COALESCE(spvr_ffin, portico.getSysDatetime())
                 )
         		OR (
-                    COALESCE(#{spvr.ffin}, portico.getSysDatetime()) BETWEEN
+                    COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()) BETWEEN
                         spvr_fini AND COALESCE(spvr_ffin, portico.getSysDatetime())
                 )
         		OR (
                     #{spvr.finicio} <= spvr_fini
-                    AND COALESCE(#{spvr.ffin}, portico.getSysDatetime()) >= COALESCE(spvr_ffin, portico.getSysDatetime())
+                    AND COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()) >= COALESCE(spvr_ffin, portico.getSysDatetime())
                 )
         	)
         ]]>
