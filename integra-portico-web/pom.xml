@@ -11,6 +11,10 @@
     </parent>
     <name>Web</name>
 
+    <build>
+        <directory>target/${profile-id}</directory>
+    </build>
+
     <dependencies>
         <!-- -->
         <dependency>
