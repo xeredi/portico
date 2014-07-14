@@ -64,7 +64,6 @@ public class GlobalNames {
     /** The Constant SQ_INTEGRA. */
     public static final String SQ_INTEGRA = "sq_integra";
 
-    public static final int OFFSET_DEFAULT = 0;
-
+    /** The Constant LUPA_LIMIT_DEFAULT. */
     public static final int LUPA_LIMIT_DEFAULT = 5;
 }

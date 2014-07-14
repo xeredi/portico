@@ -11,6 +11,19 @@
     </parent>
     <name>Persistencia</name>
 
+    <build>
+        <directory>target/${profile-id}</directory>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>resources/${profile-id}</directory>
+            </resource>
+        </resources>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>xeredi</groupId>

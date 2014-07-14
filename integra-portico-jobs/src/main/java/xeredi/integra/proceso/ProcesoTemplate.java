@@ -40,12 +40,6 @@ public abstract class ProcesoTemplate {
     /** The Constant LOG. */
     protected static final Log LOG = LogFactory.getLog(ProcesoTemplate.class);
 
-    /** The Constant CONFIGURATION_FILENAME. */
-    protected static final String CONFIGURATION_FILENAME = "jobs.properties";
-
-    /** The configuration. */
-    protected static Configuration CONFIGURATION;
-
     /** The prbt vo. */
     protected ProcesoVO prbtVO;
 
@@ -60,16 +54,6 @@ public abstract class ProcesoTemplate {
 
     /** The organizaciones map. */
     protected final Map<String, ParametroVO> organizacionesMap = new HashMap<>();
-
-    static {
-        try {
-            CONFIGURATION = new PropertiesConfiguration(CONFIGURATION_FILENAME);
-        } catch (final ConfigurationException ex) {
-            LOG.fatal("Error cargando el archivo de configuracion '" + CONFIGURATION_FILENAME + "'", ex);
-
-            CONFIGURATION = new PropertiesConfiguration();
-        }
-    }
 
     /**
      * Procesar.
@@ -111,7 +95,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Buscar maestros.
-     * 
+     *
      * @param fechaVigencia
      *            the fecha vigencia
      */
@@ -136,7 +120,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Buscar organizaciones.
-     * 
+     *
      * @param fechaVigencia
      *            the fecha vigencia
      */
@@ -167,7 +151,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Adds the codigo maestro.
-     * 
+     *
      * @param entidad
      *            the entidad
      * @param codigo
@@ -185,7 +169,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Adds the nif.
-     * 
+     *
      * @param nif
      *            the nif
      */
@@ -195,7 +179,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Adds the mensaje.
-     * 
+     *
      * @param codigo
      *            the codigo
      * @param nivel
@@ -215,7 +199,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Adds the mensaje.
-     * 
+     *
      * @param codigo
      *            the codigo
      * @param mensaje
@@ -227,7 +211,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Adds the warning.
-     * 
+     *
      * @param codigo
      *            the codigo
      * @param mensaje
@@ -239,7 +223,7 @@ public abstract class ProcesoTemplate {
 
     /**
      * Adds the info.
-     * 
+     *
      * @param codigo
      *            the codigo
      * @param mensaje
@@ -252,7 +236,7 @@ public abstract class ProcesoTemplate {
     // FIXME Quitar - Es solo para pruebas
     /**
      * Sets the prbt vo.
-     * 
+     *
      * @param value
      *            the new prbt vo
      */
@@ -267,14 +251,14 @@ public abstract class ProcesoTemplate {
 
     /**
      * Gets the proceso tipo.
-     * 
+     *
      * @return the proceso tipo
      */
     protected abstract ProcesoTipo getProcesoTipo();
 
     /**
      * Gets the proceso modulo.
-     * 
+     *
      * @return the proceso modulo
      */
     protected abstract ProcesoModulo getProcesoModulo();

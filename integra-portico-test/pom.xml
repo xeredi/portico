@@ -9,17 +9,6 @@
         <relativePath>../integra-portico-pom</relativePath>
     </parent>
 
-    <build>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-            <testResource>
-                <directory>resources/${profile-id}</directory>
-            </testResource>
-        </testResources>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>integra-portico</groupId>

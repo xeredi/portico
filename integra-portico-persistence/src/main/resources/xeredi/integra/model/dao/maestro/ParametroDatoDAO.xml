@@ -55,7 +55,7 @@ FROM (
 
     <sql id="SelectPrefix">
         <![CDATA[
-        SELECT *
+        SELECT sql.*
         ]]>
         <if test="idioma != null">
         <![CDATA[

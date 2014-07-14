@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.bo.servicio.Servicio;
@@ -17,6 +18,7 @@ import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.proxy.metamodelo.TipoDatoProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.model.vo.maestro.ParametroVO;
@@ -36,9 +38,23 @@ import xeredi.util.exception.DuplicateInstanceException;
  * The Class ProcesoCargaPesca.
  */
 public final class ProcesoCargaPesca extends ProcesoTemplate {
+    /** The Constant PATH_ENTRADA_PARAM. */
+    private static final String PATH_ENTRADA_PARAM = "pesca.files.entrada.home";
+
+    /** The Constant PATH_PROCESADO_PARAM. */
+    private static final String PATH_PROCESADO_PARAM = "pesca.files.procesado.home";
+
+    /** The Constant PATH_ERRONEO_PARAM. */
+    private static final String PATH_ERRONEO_PARAM = "pesca.files.erroneo.home";
 
     /** The path entrada. */
     private static String PATH_ENTRADA;
+
+    /** The path procesado. */
+    private static String PATH_PROCESADO;
+
+    /** The path erroneo. */
+    private static String PATH_ERRONEO;
 
     /** The Constant DATE_FORMAT. */
     private static final String DATE_FORMAT = "dd/MM/yyyy";
@@ -51,10 +67,6 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /** The Constant SUJ_PAS_SUST. */
     private static final Boolean SUJ_PAS_SUST = false;
-
-    static {
-        PATH_ENTRADA = CONFIGURATION.getString("servicio.pesca.pathentrada");
-    }
 
     /** The fecha referencia. */
     private Date fechaReferencia = null;
@@ -71,6 +83,12 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
+        final Configuration configuration = ConfigurationUtil.getConfiguration();
+
+        PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
+        PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);
+        PATH_ERRONEO = configuration.getString(PATH_ERRONEO_PARAM);
+
         for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
             final String pathArchivo = PATH_ENTRADA + "/" + prarVO.getNombre();
 
@@ -117,7 +135,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Busqueda codigos maestros.
-     * 
+     *
      * @param lines
      *            the lines
      */
@@ -153,7 +171,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Procesar archivo.
-     * 
+     *
      * @param lines
      *            the lines
      * @param filename
@@ -232,7 +250,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Gets the token maestro.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -260,7 +278,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Gets the token organizacion.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -286,7 +304,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Gets the token cr.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -316,7 +334,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Gets the token string.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -341,7 +359,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Gets the token date.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -371,7 +389,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
 
     /**
      * Gets the token double.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line

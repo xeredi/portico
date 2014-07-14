@@ -112,9 +112,11 @@ public class ProcesoBO implements Proceso {
         prbtCriterioVO.setModulo(modulo);
         prbtCriterioVO.setTipo(tipo);
 
-        final ProcesoVO prbtVO = prbtDAO.selectObject(prbtCriterioVO);
+        final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, 1));
 
-        if (prbtVO != null) {
+        if (!prbtList.isEmpty()) {
+            final ProcesoVO prbtVO = prbtList.get(0);
+
             prbtDAO.updateIniciar(prbtVO.getId());
 
             prbtVO.getPrarEntradaList().addAll(prarDAO.selectList(prbtVO.getId()));
@@ -125,9 +127,11 @@ public class ProcesoBO implements Proceso {
             for (final ProcesoParametroVO prpmVO : prpmList) {
                 prbtVO.getPrpmMap().put(prpmVO.getNombre(), prpmVO.getValor());
             }
+
+            return prbtVO;
         }
 
-        return prbtVO;
+        return null;
     }
 
     /**

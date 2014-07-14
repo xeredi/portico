@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.bo.maestro.Parametro;
@@ -21,6 +22,7 @@ import xeredi.integra.model.proxy.metamodelo.TipoDatoProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.model.vo.comun.ItemDatoCriterioVO;
@@ -43,12 +45,23 @@ import xeredi.util.exception.InstanceNotFoundException;
  * The Class ProcesoCargaEscala.
  */
 public final class ProcesoCargaEscala extends ProcesoTemplate {
+    /** The Constant PATH_ENTRADA_PARAM. */
+    private static final String PATH_ENTRADA_PARAM = "escala.files.entrada.home";
+
+    /** The Constant PATH_PROCESADO_PARAM. */
+    private static final String PATH_PROCESADO_PARAM = "escala.files.procesado.home";
+
+    /** The Constant PATH_ERRONEO_PARAM. */
+    private static final String PATH_ERRONEO_PARAM = "escala.files.erroneo.home";
+
     /** The path entrada. */
     private static String PATH_ENTRADA;
 
-    static {
-        PATH_ENTRADA = CONFIGURATION.getString("servicio.escala.pathentrada");
-    }
+    /** The path procesado. */
+    private static String PATH_PROCESADO;
+
+    /** The path erroneo. */
+    private static String PATH_ERRONEO;
 
     /** The mensaje. */
     private EscalaTipoMensaje mensaje = null;
@@ -85,6 +98,12 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
+        final Configuration configuration = ConfigurationUtil.getConfiguration();
+
+        PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
+        PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);
+        PATH_ERRONEO = configuration.getString(PATH_ERRONEO_PARAM);
+
         for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
             final String pathArchivo = PATH_ENTRADA + "/" + prarVO.getNombre();
 
@@ -147,7 +166,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Tratar unb.
-     * 
+     *
      * @param lines
      *            the lines
      */
@@ -175,7 +194,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Tratar bgm.
-     * 
+     *
      * @param lines
      *            the lines
      */
@@ -213,7 +232,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the primera linea berman.
-     * 
+     *
      * @param lines
      *            the lines
      * @return the primera linea berman
@@ -239,7 +258,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Validar segmentos berman.
-     * 
+     *
      * @param lines
      *            the lines
      * @param primeraLinea
@@ -276,7 +295,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Busqueda maestros berman.
-     * 
+     *
      * @param lines
      *            the lines
      * @param primeraLinea
@@ -358,7 +377,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Procesar archivo.
-     * 
+     *
      * @param lines
      *            the lines
      * @param primeraLinea
@@ -1035,7 +1054,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token string.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1060,7 +1079,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token maestro.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1088,7 +1107,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token organizacion.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1114,7 +1133,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token cr.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1144,7 +1163,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token segmento.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1165,7 +1184,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token constante.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1186,7 +1205,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token long.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1213,7 +1232,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token integer.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1240,7 +1259,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token double.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -1267,7 +1286,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
     /**
      * Gets the token date.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line

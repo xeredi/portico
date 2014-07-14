@@ -628,7 +628,7 @@ public class ParametroBO implements Parametro {
 
         prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
 
-        return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(GlobalNames.OFFSET_DEFAULT,
+        return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
                 GlobalNames.LUPA_LIMIT_DEFAULT));
     }
 

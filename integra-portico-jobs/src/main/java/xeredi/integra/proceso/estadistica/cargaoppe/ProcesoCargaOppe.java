@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.bo.estadistica.EstadisticaFileKeyword;
@@ -21,6 +22,7 @@ import xeredi.integra.model.bo.estadistica.PeriodoProceso;
 import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.proxy.metamodelo.TipoDatoProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoEstadisticaProxy;
+import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.model.vo.estadistica.EstadisticaVO;
@@ -43,13 +45,13 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
     private static final String SIGMA_TOKEN = "SIGMA";
 
     /** The Constant PATH_ENTRADA_PARAM. */
-    private static final String PATH_ENTRADA_PARAM = "estadistica.cargaoppe.pathentrada";
+    private static final String PATH_ENTRADA_PARAM = "estadistica.files.oppe.entrada.home";
 
     /** The Constant PATH_PROCESADO_PARAM. */
-    private static final String PATH_PROCESADO_PARAM = "estadistica.cargaoppe.pathentrada";
+    private static final String PATH_PROCESADO_PARAM = "estadistica.files.oppe.procesado.home";
 
     /** The Constant PATH_ERRONEO_PARAM. */
-    private static final String PATH_ERRONEO_PARAM = "estadistica.cargaoppe.pathentrada";
+    private static final String PATH_ERRONEO_PARAM = "estadistica.files.oppe.erroneo.home";
 
     /** The path entrada. */
     private static String PATH_ENTRADA;
@@ -98,9 +100,11 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
-        PATH_ENTRADA = CONFIGURATION.getString(PATH_ENTRADA_PARAM);
-        PATH_PROCESADO = CONFIGURATION.getString(PATH_PROCESADO_PARAM);
-        PATH_ERRONEO = CONFIGURATION.getString(PATH_ERRONEO_PARAM);
+        final Configuration configuration = ConfigurationUtil.getConfiguration();
+
+        PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
+        PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);
+        PATH_ERRONEO = configuration.getString(PATH_ERRONEO_PARAM);
 
         // Lectura de los parametros de entrada
         final String autp = prbtVO.getPrpmMap().get(AUTP_PARAM);

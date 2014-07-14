@@ -10,11 +10,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.proxy.metamodelo.TipoDatoProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.model.vo.maestro.ParametroVO;
@@ -32,13 +34,23 @@ import xeredi.integra.proceso.ProcesoTemplate;
  * The Class ProcesoCargaManifiesto.
  */
 public final class ProcesoCargaManifiesto extends ProcesoTemplate {
+    /** The Constant PATH_ENTRADA_PARAM. */
+    private static final String PATH_ENTRADA_PARAM = "manifiesto.files.entrada.home";
+
+    /** The Constant PATH_PROCESADO_PARAM. */
+    private static final String PATH_PROCESADO_PARAM = "manifiesto.files.procesado.home";
+
+    /** The Constant PATH_ERRONEO_PARAM. */
+    private static final String PATH_ERRONEO_PARAM = "manifiesto.files.erroneo.home";
 
     /** The path entrada. */
     private static String PATH_ENTRADA;
 
-    static {
-        PATH_ENTRADA = CONFIGURATION.getString("servicio.manifiesto.pathentrada");
-    }
+    /** The path procesado. */
+    private static String PATH_PROCESADO;
+
+    /** The path erroneo. */
+    private static String PATH_ERRONEO;
 
     /** The mensaje. */
     private ManifiestoMensaje mensaje;
@@ -61,6 +73,12 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
+        final Configuration configuration = ConfigurationUtil.getConfiguration();
+
+        PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
+        PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);
+        PATH_ERRONEO = configuration.getString(PATH_ERRONEO_PARAM);
+
         for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
             final String pathArchivo = PATH_ENTRADA + "/" + prarVO.getNombre();
 
@@ -96,7 +114,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Validar segmentos.
-     * 
+     *
      * @param lines
      *            the lines
      * @param primeraLinea
@@ -127,7 +145,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Busqueda maestros.
-     * 
+     *
      * @param lines
      *            the lines
      * @param primeraLinea
@@ -233,7 +251,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Procesar archivo.
-     * 
+     *
      * @param lines
      *            the lines
      * @param primeraLinea
@@ -624,7 +642,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token organizacion.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -650,7 +668,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token maestro.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -678,7 +696,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token maestro.
-     * 
+     *
      * @param codigo
      *            the codigo
      * @param line
@@ -704,7 +722,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Sets the unlocode bl.
-     * 
+     *
      * @param bl
      *            the bl
      * @param calificadorPuerto
@@ -741,7 +759,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the tipo bl.
-     * 
+     *
      * @param tipoBlEDI
      *            the tipo bl edi
      * @return the tipo bl
@@ -761,7 +779,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the tipo manifiesto.
-     * 
+     *
      * @param tipoManifiestoEDI
      *            the tipo manifiesto edi
      * @return the tipo manifiesto
@@ -787,7 +805,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the primera linea.
-     * 
+     *
      * @param lines
      *            the lines
      * @return the primera linea
@@ -822,7 +840,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token string.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -847,7 +865,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token cr.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -877,7 +895,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token integer.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -904,7 +922,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token long.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -931,7 +949,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token date.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
@@ -961,7 +979,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
     /**
      * Gets the token segmento.
-     * 
+     *
      * @param keyword
      *            the keyword
      * @param line
