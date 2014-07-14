@@ -2,8 +2,9 @@
     <tabset> <tab heading="Proceso">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a href="#/proceso/prbt/{{prbt.id}}/cancelar" class="btn btn-default"><i
-                class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}</a>
+            <button class="btn btn-default" ng-click="cancelar()">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            </button>
         </div>
     </div>
 

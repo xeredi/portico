@@ -67,39 +67,33 @@
         $http.get(url).success(function(response) {
             $scope.prbt = response.prbt;
         });
+
+        $scope.cancelar = function() {
+            alert('Cancelar: ' + $scope.prbt.id);
+        }
     });
 
     /*
-    app.controller('TrademarkInsertController', function($scope, $http, $route, $routeParams, $location) {
-        $scope.save = function() {
-            $http.post('catalog/trademark-insert.action', {
-                trdm : $scope.trdm,
-                vndrId : $routeParams.vndrId
-            }).success(function(data) {
-                var url = '/trademark-detail/' + data.vndrId + '/' + data.trdm.id;
-
-                $location.path(url);
-            });
-        };
-    });
-
-    app.controller('TrademarkUpdateController', function($scope, $http, $route, $routeParams) {
-        $scope.save = function() {
-            $http.post('catalog/trademark-update.action', {
-                trdm : $scope.trdm,
-                vndrId : $routeParams.vndrId
-            }).success(function(data) {
-                var url = '/trademark-detail/' + data.vndrId + '/' + data.trdm.id;
-
-                $location.path(url);
-            });
-        };
-
-        var url = 'catalog/trademark-detail.action?vndrId=' + $routeParams.vndrId + "&trdm.id=" + $routeParams.id;
-
-        $http.get(url).success(function(response) {
-            $scope.trdm = response.trdm;
-        });
-    });
-*/
+     * app.controller('TrademarkInsertController', function($scope, $http,
+     * $route, $routeParams, $location) { $scope.save = function() {
+     * $http.post('catalog/trademark-insert.action', { trdm : $scope.trdm,
+     * vndrId : $routeParams.vndrId }).success(function(data) { var url =
+     * '/trademark-detail/' + data.vndrId + '/' + data.trdm.id;
+     *
+     * $location.path(url); }); }; });
+     *
+     * app.controller('TrademarkUpdateController', function($scope, $http,
+     * $route, $routeParams) { $scope.save = function() {
+     * $http.post('catalog/trademark-update.action', { trdm : $scope.trdm,
+     * vndrId : $routeParams.vndrId }).success(function(data) { var url =
+     * '/trademark-detail/' + data.vndrId + '/' + data.trdm.id;
+     *
+     * $location.path(url); }); };
+     *
+     * var url = 'catalog/trademark-detail.action?vndrId=' + $routeParams.vndrId +
+     * "&trdm.id=" + $routeParams.id;
+     *
+     * $http.get(url).success(function(response) { $scope.trdm = response.trdm;
+     * }); });
+     */
 })();
