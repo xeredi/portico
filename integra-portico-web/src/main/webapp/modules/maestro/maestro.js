@@ -2,25 +2,25 @@ var maestro = angular.module('maestro', [ 'ngRoute' ]);
 
 maestro.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/maestro/prmts/:entiId/:page', {
-		templateUrl : 'partials/maestro/prmt-listado.html',
+		templateUrl : 'modules/maestro/prmt-listado.html',
 		controller : 'prmtsCtrl'
 	}).when('/maestro/prmts/exportar/:entiId', {
 		controller : 'prmtsExportCtrl'
 	}).when('/maestro/prmt/crear/:entiId', {
-		templateUrl : 'partials/maestro/prmt-edicion.html',
+		templateUrl : 'modules/maestro/prmt-edicion.html',
 		controller : 'prmtCrearCtrl'
 	}).when('/maestro/prmt/editar/:itemId', {
-		templateUrl : 'partials/maestro/prmt-edicion.html',
+		templateUrl : 'modules/maestro/prmt-edicion.html',
 		controller : 'prmtEditarCtrl'
 	}).when('/maestro/prmt/duplicar/:itemId', {
-		templateUrl : 'partials/maestro/prmt-edicion.html',
+		templateUrl : 'modules/maestro/prmt-edicion.html',
 		controller : 'prmtDuplicarCtrl'
 	}).when('/maestro/prmt/borrar/:itemId', {
 		controller : 'prmtBorrarCtrl'
 	}).when('/maestro/prmt/imprimir/:itemId', {
 		controller : 'prmtCtrl'
 	}).when('/maestro/prmt/:itemId', {
-		templateUrl : 'partials/maestro/prmt-detalle.html',
+		templateUrl : 'modules/maestro/prmt-detalle.html',
 		controller : 'prmtCtrl'
 	});
 } ]);
@@ -48,7 +48,7 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
 
 	$scope.openFiltro = function(size) {
 		var modalInstance = $modal.open({
-			templateUrl : 'partials/maestro/prmt-filtro.html',
+			templateUrl : 'modules/maestro/prmt-filtro.html',
 			controller : 'prmtsFiltroCtrl',
 			size : size,
 			resolve : {

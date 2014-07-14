@@ -1,0 +1,41 @@
+<button class="btn btn-default" ng-click="filter()">Filter</button>
+
+<pagination total-items="prbtList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
+    max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+<span>{{prbtList.count}} resultado(s)</span>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th nowrap="nowrap">{{'prbt_modulo' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_tipo' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_estado' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_falta' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_finicio' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_ffin' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_duracion' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_erroresCnt' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_alertasCnt' | translate}}</th>
+                <th nowrap="nowrap">{{'prbt_mensajesCnt' | translate}}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="prbt in prbtList.list">
+                <td><a href="#/proceso/prbt/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td>{{prbt.modulo}}</td>
+                <td>{{prbt.tipo}}</td>
+                <td>{{prbt.estado}}</td>
+                <td>{{prbt.falta}}</td>
+                <td>{{prbt.finicio}}</td>
+                <td>{{prbt.ffin}}</td>
+                <td>{{prbt.duracion}}</td>
+                <td>{{prbt.erroresCnt}}</td>
+                <td>{{prbt.alertasCnt}}</td>
+                <td>{{prbt.mensajesCnt}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -2,29 +2,29 @@ var configuracion = angular.module('configuracion', [ 'ngRoute' ]);
 
 configuracion.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/configuracion/cnens', {
-		templateUrl : 'partials/configuracion/cnen-listado.html',
+		templateUrl : 'modules/configuracion/cnen-listado.html',
 		controller : 'cnensCtrl'
 	}).when('/configuracion/cnens/:cnenId', {
-		templateUrl : 'partials/configuracion/cnen-detalle.html',
+		templateUrl : 'modules/configuracion/cnen-detalle.html',
 		controller : 'cnenCtrl'
 	}).when('/configuracion/cnen/:action/', {
-		templateUrl : 'partials/configuracion/cnen-edicion.html',
+		templateUrl : 'modules/configuracion/cnen-edicion.html',
 		controller : 'cnenCtrl'
 	}).when('/configuracion/cnen/:action/:cnenId', {
-		templateUrl : 'partials/configuracion/cnen-edicion.html',
+		templateUrl : 'modules/configuracion/cnen-edicion.html',
 		controller : 'cnenCtrl'
 	}).when('/configuracion/cnids', {
-		templateUrl : 'partials/configuracion/cnid-listado.html'/*
+		templateUrl : 'modules/configuracion/cnid-listado.html'/*
 																 * , controller :
 																 * 'PhoneListCtrl'
 																 */
 	}).when('/configuracion/cncls', {
-		templateUrl : 'partials/configuracion/cncl-listado.html'/*
+		templateUrl : 'modules/configuracion/cncl-listado.html'/*
 																 * , controller :
 																 * 'PhoneListCtrl'
 																 */
 	}).when('/configuracion/cncis', {
-		templateUrl : 'partials/configuracion/cnci-listado.html'/*
+		templateUrl : 'modules/configuracion/cnci-listado.html'/*
 																 * , controller :
 																 * 'PhoneListCtrl'
 																 */

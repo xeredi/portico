@@ -32,7 +32,7 @@ public final class ProcesoListadoAction extends BaseAction {
     private ProcesoCriterioVO prbtCriterio;
 
     /** The prbt list. */
-    private PaginatedList<ProcesoVO> prbts;
+    private PaginatedList<ProcesoVO> prbtList;
 
     /** The page. */
     private int page;
@@ -57,21 +57,24 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
-    @Action(value = "prbt-listado")
+    @Actions({
+        @Action(value = "prbt-listado"),
+        @Action(value = "prbt-listado-json", results = { @Result(name = "success", type = "json", params = {
+                "excludeNullProperties", "true" }) }) })
     public String listado() {
         final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
 
-        prbts = prbtBO.selectList(prbtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        prbtList = prbtBO.selectList(prbtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
         return SUCCESS;
     }
 
     /**
      * Editar filtro.
-     * 
+     *
      * @return the string
      */
     @Actions({ @Action(value = "prbt-filtro"),
@@ -84,7 +87,7 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Gets the proceso tipos.
-     * 
+     *
      * @return the proceso tipos
      */
     public ProcesoTipo[] getProcesoTipos() {
@@ -93,7 +96,7 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Gets the proceso modulos.
-     * 
+     *
      * @return the proceso modulos
      */
     public ProcesoModulo[] getProcesoModulos() {
@@ -102,7 +105,7 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Gets the proceso estados.
-     * 
+     *
      * @return the proceso estados
      */
     public ProcesoEstado[] getProcesoEstados() {
@@ -111,7 +114,7 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Gets the prbt criterio vo.
-     * 
+     *
      * @return the prbt criterio vo
      */
     public ProcesoCriterioVO getPrbtCriterio() {
@@ -120,7 +123,7 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Sets the prbt criterio vo.
-     * 
+     *
      * @param value
      *            the new prbt criterio vo
      */
@@ -130,16 +133,16 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Gets the prbt list.
-     * 
+     *
      * @return the prbt list
      */
-    public PaginatedList<ProcesoVO> getPrbts() {
-        return prbts;
+    public PaginatedList<ProcesoVO> getPrbtList() {
+        return prbtList;
     }
 
     /**
      * Gets the page.
-     * 
+     *
      * @return the page
      */
     public int getPage() {
@@ -148,7 +151,7 @@ public final class ProcesoListadoAction extends BaseAction {
 
     /**
      * Sets the page.
-     * 
+     *
      * @param value
      *            the new page
      */

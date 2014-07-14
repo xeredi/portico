@@ -1,6 +1,6 @@
 var app = angular.module('integraApp', [ 'ui.bootstrap', 'ngRoute',
 		'ui.bootstrap.datetimepicker', 'pascalprecht.translate',
-		'configuracion', 'maestro', 'servicio' ]);
+		'configuracion', 'maestro', 'servicio', 'proceso' ]);
 
 app.config(function($translateProvider) {
 	$translateProvider.translations('es', {
@@ -73,34 +73,34 @@ app.config(function($translateProvider) {
 
 app.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/servicio/tpsrs', {
-		templateUrl : 'partials/servicio/tpsr-listado.html',
+		templateUrl : 'modules/servicio/tpsr-listado.html',
 		controller : 'tpsrsCtrl'
 	}).when('/estadistica/peprs', {
-		templateUrl : 'partials/estadistica/pepr-listado.html',
+		templateUrl : 'modules/estadistica/pepr-listado.html',
 		controller : 'tpprsCtrl'
 	}).when('/maestro/tpprs', {
-		templateUrl : 'partials/maestro/tppr-listado.html',
+		templateUrl : 'modules/maestro/tppr-listado.html',
 		controller : 'tpprsCtrl'
 	}).when('/proceso/prbts', {
-		templateUrl : 'partials/proceso/prbt-listado.html',
-		controller : 'tpprsCtrl'
+		templateUrl : 'modules/proceso/prbt-listado.html',
+		controller : 'ProcesoListController'
 	}).when('/metamodelo/tpprs', {
-		templateUrl : 'partials/metamodelo/tppr-listado.html',
+		templateUrl : 'modules/metamodelo/tppr-listado.html',
 		controller : 'tpprsCtrl'
 	}).when('/metamodelo/tpsrs', {
-		templateUrl : 'partials/metamodelo/tpsr-listado.html',
+		templateUrl : 'modules/metamodelo/tpsr-listado.html',
 		controller : 'tpsrsCtrl'
 	}).when('/metamodelo/tpess', {
-		templateUrl : 'partials/metamodelo/tpes-listado.html',
+		templateUrl : 'modules/metamodelo/tpes-listado.html',
 		controller : 'tpprsCtrl'
 	}).when('/metamodelo/tpdts', {
-		templateUrl : 'partials/metamodelo/tpdt-listado.html',
+		templateUrl : 'modules/metamodelo/tpdt-listado.html',
 		controller : 'tpprsCtrl'
 	}).when('/configuracion/confs', {
-		templateUrl : 'partials/configuracion/conf-listado.html',
+		templateUrl : 'modules/configuracion/conf-listado.html',
 		controller : 'tpprsCtrl'
 	}).when('/acceso', {
-		templateUrl : 'partials/usro-acceso.html',
+		templateUrl : 'modules/usro-acceso.html',
 		controller : 'tpprsCtrl'
 	});
 } ]);

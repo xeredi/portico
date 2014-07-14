@@ -2,16 +2,16 @@ var servicio = angular.module('servicio', [ 'ngRoute' ]);
 
 servicio.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/servicio/srvcs/:entiId', {
-		templateUrl : 'partials/servicio/srvc-listado.html',
+		templateUrl : 'modules/servicio/srvc-listado.html',
 		controller : 'srvcsCtrl'
 	}).when('/servicio/srvc/:itemId', {
-		templateUrl : 'partials/servicio/srvc-detalle.html',
+		templateUrl : 'modules/servicio/srvc-detalle.html',
 		controller : 'srvcCtrl'
 	}).when('/servicio/ssrvs/:entiId', {
-		templateUrl : 'partials/servicio/ssrv-listado.html',
+		templateUrl : 'modules/servicio/ssrv-listado.html',
 		controller : 'ssrvsCtrl'
 	}).when('/servicio/ssrv/:itemId', {
-		templateUrl : 'partials/servicio/ssrv-detalle.html',
+		templateUrl : 'modules/servicio/ssrv-detalle.html',
 		controller : 'ssrvCtrl'
 	});
 } ]);

@@ -2,6 +2,7 @@ package xeredi.integra.http.controller.action.proceso;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -35,12 +36,15 @@ public final class ProcesoAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "prbt-detalle")
+    @Actions({
+            @Action(value = "prbt-detalle"),
+            @Action(value = "prbt-detalle-json", results = { @Result(name = "success", type = "json", params = {
+                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
     public String detalle() throws InstanceNotFoundException {
         final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
 
@@ -51,7 +55,7 @@ public final class ProcesoAction extends BaseAction {
 
     /**
      * Borrar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -79,7 +83,7 @@ public final class ProcesoAction extends BaseAction {
 
     /**
      * Gets the prbt.
-     * 
+     *
      * @return the prbt
      */
     public ProcesoVO getPrbt() {
@@ -88,7 +92,7 @@ public final class ProcesoAction extends BaseAction {
 
     /**
      * Sets the prbt.
-     * 
+     *
      * @param value
      *            the new prbt
      */
