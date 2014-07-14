@@ -24,7 +24,7 @@ public final class TipoParametroListadoAction extends BaseAction {
     private static final long serialVersionUID = 6957331552111084410L;
 
     /** The mensajes. */
-    private List<LabelValueVO> tpprs;
+    private List<LabelValueVO> tpprList;
 
     /** The tppr criterio. */
     private TipoParametroCriterioVO tpprCriterio;
@@ -40,7 +40,7 @@ public final class TipoParametroListadoAction extends BaseAction {
     // Acciones web
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Actions({
@@ -48,7 +48,7 @@ public final class TipoParametroListadoAction extends BaseAction {
         @Action(value = "tppr-listado-json", results = { @Result(name = "success", type = "json") }),
         @Action(value = "tppr-listado-ftl", results = { @Result(name = "success", type = "freemarker", location = "tppr-listado.ftl") }) })
     public String listado() {
-        tpprs = TipoParametroProxy.selectLabelValues();
+        tpprList = TipoParametroProxy.selectLabelValues();
 
         return SUCCESS;
     }
@@ -56,16 +56,16 @@ public final class TipoParametroListadoAction extends BaseAction {
     // get / set
     /**
      * Gets the mensajes.
-     * 
+     *
      * @return the mensajes
      */
-    public final List<LabelValueVO> getTpprs() {
-        return tpprs;
+    public final List<LabelValueVO> getTpprList() {
+        return tpprList;
     }
 
     /**
      * Gets the tppr criterio.
-     * 
+     *
      * @return the tppr criterio
      */
     public TipoParametroCriterioVO getTpprCriterio() {
@@ -74,7 +74,7 @@ public final class TipoParametroListadoAction extends BaseAction {
 
     /**
      * Sets the tppr criterio.
-     * 
+     *
      * @param value
      *            the new tppr criterio
      */

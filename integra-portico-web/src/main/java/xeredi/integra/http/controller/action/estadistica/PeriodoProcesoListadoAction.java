@@ -34,7 +34,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
     private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The peprs. */
-    private PaginatedList<PeriodoProcesoVO> peprs;
+    private PaginatedList<PeriodoProcesoVO> peprList;
 
     /** The page. */
     private int page;
@@ -63,21 +63,22 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
     // Acciones web
     /**
      * Editar filtro.
-     * 
+     *
      * @return the string
      */
     @Actions({ @Action(value = "pepr-filtro"),
-        @Action(value = "pepr-filtro-popup", results = { @Result(name = "success", location = "pepr-filtro.jsp") }) })
+            @Action(value = "pepr-filtro-popup", results = { @Result(name = "success", location = "pepr-filtro.jsp") }) })
     public String filtro() {
         return SUCCESS;
     }
 
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
-    @Action(value = "pepr-listado")
+    @Actions({ @Action(value = "pepr-listado"),
+            @Action(value = "pepr-listado-json", results = { @Result(name = "success", type = "json") }) })
     public String listado() {
         if (hasErrors()) {
             return INPUT;
@@ -85,7 +86,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
 
         final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProceso.class);
 
-        peprs = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        peprList = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
         return SUCCESS;
     }
@@ -93,7 +94,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
     // get / set
     /**
      * Gets the page.
-     * 
+     *
      * @return the page
      */
     public int getPage() {
@@ -102,7 +103,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
 
     /**
      * Sets the page.
-     * 
+     *
      * @param value
      *            the new page
      */
@@ -112,7 +113,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
 
     /**
      * Gets the pepr criterio.
-     * 
+     *
      * @return the pepr criterio
      */
     public PeriodoProcesoCriterioVO getPeprCriterio() {
@@ -121,7 +122,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
 
     /**
      * Sets the pepr criterio.
-     * 
+     *
      * @param value
      *            the new pepr criterio
      */
@@ -131,16 +132,16 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
 
     /**
      * Gets the peprs.
-     * 
+     *
      * @return the peprs
      */
-    public PaginatedList<PeriodoProcesoVO> getPeprs() {
-        return peprs;
+    public PaginatedList<PeriodoProcesoVO> getPeprList() {
+        return peprList;
     }
 
     /**
      * Gets the autps.
-     * 
+     *
      * @return the autps
      */
     public List<LabelValueVO> getAutps() {

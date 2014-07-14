@@ -26,7 +26,7 @@ public final class TipoServicioListadoAction extends BaseAction {
 	private static final long serialVersionUID = -5523514529976849793L;
 
 	/** The tpsrs. */
-	private List<LabelValueVO> tpsrs;
+	private List<LabelValueVO> tpsrList;
 
 	/** {@link Map} de tipos de subservicio indexados por id de tipo de servicio. */
 	private Map<Long, List<LabelValueVO>> tpssMap;
@@ -42,14 +42,14 @@ public final class TipoServicioListadoAction extends BaseAction {
 	// Acciones web
 	/**
 	 * Listado.
-	 * 
+	 *
 	 * @return the string
 	 */
 	@Actions({
 		@Action(value = "tpsr-listado"),
 		@Action(value = "tpsr-listado-json", results = { @Result(name = "success", type = "json") }) })
 	public String listado() {
-		tpsrs = TipoServicioProxy.selectLabelValues();
+		tpsrList = TipoServicioProxy.selectLabelValues();
 		tpssMap = new HashMap<>();
 
 		for (final TipoSubservicioVO vo : TipoSubservicioProxy.selectMap()
@@ -69,16 +69,16 @@ public final class TipoServicioListadoAction extends BaseAction {
 
 	/**
 	 * Gets the tpsrs.
-	 * 
+	 *
 	 * @return the tpsrs
 	 */
-	public List<LabelValueVO> getTpsrs() {
-		return tpsrs;
+	public List<LabelValueVO> getTpsrList() {
+		return tpsrList;
 	}
 
 	/**
 	 * Gets the tpss map.
-	 * 
+	 *
 	 * @return the tpss map
 	 */
 	public final Map<Long, List<LabelValueVO>> getTpssMap() {
