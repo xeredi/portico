@@ -62,7 +62,7 @@
 	<!-- <logger name='xeredi.integra.model.dao'> <appender-ref ref="dbLog"
 		/> </logger> -->
 	<logger name='xeredi'>
-		<level value="INFO" />
+		<level value="DEBUG" />
 
 		<appender-ref ref="infoLog" />
 		<appender-ref ref="debugLog" />
