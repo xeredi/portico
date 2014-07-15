@@ -27,145 +27,138 @@ import com.google.common.base.Preconditions;
  */
 public final class ParametroListadoAction extends ItemListadoAction {
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 4719886690588825194L;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 4719886690588825194L;
 
-	/** The prmts. */
-	private PaginatedList<ParametroVO> itemList;
+    /** The prmts. */
+    private PaginatedList<ParametroVO> itemList;
 
-	/** The tppr. */
-	private TipoParametroVO enti;
+    /** The tppr. */
+    private TipoParametroVO enti;
 
-	/** The criterio vo. */
-	private ParametroCriterioVO itemCriterio;
+    /** The criterio vo. */
+    private ParametroCriterioVO itemCriterio;
 
-	/**
-	 * Instantiates a new parametro listado action.
-	 */
-	public ParametroListadoAction() {
-		super();
+    /**
+     * Instantiates a new parametro listado action.
+     */
+    public ParametroListadoAction() {
+        super();
 
-		itemCriterio = new ParametroCriterioVO();
+        itemCriterio = new ParametroCriterioVO();
 
-		final Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
 
-		// FIXME Superñapa debido a que los borrados son demasiado rapidos
-		calendar.add(Calendar.SECOND, 1);
+        // FIXME Superñapa debido a que los borrados son demasiado rapidos
+        calendar.add(Calendar.SECOND, 1);
 
-		itemCriterio.setFechaVigencia(calendar.getTime());
-		itemCriterio.setIdioma(getIdioma());
-	}
+        itemCriterio.setFechaVigencia(calendar.getTime());
+        itemCriterio.setIdioma(getIdioma());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
-	// Acciones web
-	/**
-	 * Editar filtro.
-	 *
-	 * @return the string
-	 */
-	@Actions({
-		@Action(value = "prmt-filtro"),
-		@Action(value = "prmt-filtro-json", results = { @Result(name = "success", type = "json", params = {
-				"ignoreHierarchy", "false" }) }),
-				@Action(value = "prmt-filtro-popup", results = { @Result(name = "success", location = "prmt-filtro.jsp") }) })
-	public String filtro() {
-		Preconditions.checkNotNull(itemCriterio);
-		Preconditions.checkNotNull(itemCriterio.getEntiId());
+    // Acciones web
+    /**
+     * Editar filtro.
+     *
+     * @return the string
+     */
+    @Actions({
+            @Action(value = "prmt-filtro"),
+            @Action(value = "prmt-filtro-json", results = { @Result(name = "success", type = "json", params = {
+                    "ignoreHierarchy", "false" }) }),
+            @Action(value = "prmt-filtro-popup", results = { @Result(name = "success", location = "prmt-filtro.jsp") }) })
+    public String filtro() {
+        Preconditions.checkNotNull(itemCriterio);
+        Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-		enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
-		// Inicializar el filtro - Necesario para AngularJS
-		if (itemCriterio.getItdtMap() == null) {
-			itemCriterio.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
-		}
+        // Inicializar el filtro - Necesario para AngularJS
+        if (itemCriterio.getItdtMap() == null) {
+            itemCriterio.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
+        }
 
-		for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
-			if (entdVO.isFiltrable()
-					&& !itemCriterio.getItdtMap().containsKey(
-							entdVO.getTpdt().getId())) {
-				itemCriterio.getItdtMap().put(entdVO.getTpdt().getId(),
-						new ItemDatoCriterioVO());
-			}
-		}
+        for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+            if (entdVO.isFiltrable() && !itemCriterio.getItdtMap().containsKey(entdVO.getTpdt().getId())) {
+                itemCriterio.getItdtMap().put(entdVO.getTpdt().getId(), new ItemDatoCriterioVO());
+            }
+        }
 
-		loadLabelValuesMap();
+        loadLabelValuesMap();
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Listado.
-	 *
-	 * @return the string
-	 */
-	@Actions({
-		@Action(value = "prmt-listado"),
-		@Action(value = "prmt-listado-json", results = { @Result(name = "success", type = "json", params = {
-				"ignoreHierarchy", "false" }) }),
-				@Action(value = "prmt-listado-grid") })
-	public String listado() {
-		Preconditions.checkNotNull(itemCriterio);
-		Preconditions.checkNotNull(itemCriterio.getEntiId());
+    /**
+     * Listado.
+     *
+     * @return the string
+     */
+    @Actions({ @Action(value = "prmt-listado-json"), @Action(value = "prmt-listado-grid") })
+    public String listado() {
+        Preconditions.checkNotNull(itemCriterio);
+        Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-		final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
 
-		enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
-		if (hasErrors()) {
-			return INPUT;
-		}
+        if (hasErrors()) {
+            return INPUT;
+        }
 
-		// Traemos solo los datos 'gridables' de los parametros (Minimiza el
-		// trafico con la BD)
-		itemCriterio.setSoloDatosGrid(true);
+        // Traemos solo los datos 'gridables' de los parametros (Minimiza el
+        // trafico con la BD)
+        itemCriterio.setSoloDatosGrid(true);
 
-		itemList = prmtBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        itemList = prmtBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	// get / set
+    // get / set
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final ParametroCriterioVO getItemCriterio() {
-		return itemCriterio;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ParametroCriterioVO getItemCriterio() {
+        return itemCriterio;
+    }
 
-	/**
-	 * Sets the item criterio.
-	 *
-	 * @param value
-	 *            the new item criterio
-	 */
-	public final void setItemCriterio(final ParametroCriterioVO value) {
-		itemCriterio = value;
-	}
+    /**
+     * Sets the item criterio.
+     *
+     * @param value
+     *            the new item criterio
+     */
+    public final void setItemCriterio(final ParametroCriterioVO value) {
+        itemCriterio = value;
+    }
 
-	/**
-	 * Gets the item list.
-	 *
-	 * @return the item list
-	 */
-	public final PaginatedList<ParametroVO> getItemList() {
-		return itemList;
-	}
+    /**
+     * Gets the item list.
+     *
+     * @return the item list
+     */
+    public final PaginatedList<ParametroVO> getItemList() {
+        return itemList;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final TipoParametroVO getEnti() {
-		return enti;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final TipoParametroVO getEnti() {
+        return enti;
+    }
 
 }
