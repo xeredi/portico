@@ -7,6 +7,10 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.InterceptorRefs;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 
 import xeredi.integra.model.util.GlobalNames;
@@ -17,6 +21,9 @@ import com.opensymphony.xwork2.ActionSupport;
 /**
  * The Class BaseAction.
  */
+@ParentPackage("json-default")
+@Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "true" })
+@InterceptorRefs({ @InterceptorRef(value = "timer"), @InterceptorRef(value = "json"), @InterceptorRef("basicStack") })
 public class BaseAction extends ActionSupport implements SessionAware {
 
     /** The Constant serialVersionUID. */
@@ -50,7 +57,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
 
     /**
      * Gets the idioma.
-     * 
+     *
      * @return the idioma
      */
     public final String getIdioma() {
@@ -59,7 +66,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
 
     /**
      * Gets the available languages.
-     * 
+     *
      * @return the available languages
      */
     public final Set<String> getAvailableLanguages() {
@@ -68,7 +75,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
 
     /**
      * Gets the session.
-     * 
+     *
      * @return the session
      */
     public final Map<String, Object> getSession() {

@@ -1,5 +1,37 @@
 var maestro = angular.module('maestro', [ 'ngRoute' ]);
 
+app.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.when('/c?id', '/contacts/:id').when('/user/:id', '/contacts/:id').otherwise('/');
+
+    $stateProvider
+
+    .state('prmts', {
+        url : '/maestro/prmts/:entiId/:page',
+        templateUrl : 'modules/maestro/prmt-listado.html',
+        controller : function($http, $scope, $stateParams) {
+            $scope.loadData = function() {
+                var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $stateParams.entiId + "&page="
+                + $stateParams.page;
+
+                $http.get(url).success(function(data) {
+                    // console.log(data);
+                    $scope.enti = data.enti;
+                    $scope.itemList = data.itemList;
+                    $scope.itemCriterio = data.itemCriterio;
+                });
+            };
+
+            $scope.pageChanged = function() {
+                $stateParams.page = $scope.currentPage;
+
+                $scope.loadData();
+            };
+
+            $scope.loadData();
+        }
+    })
+});
+/*
 maestro.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/maestro/prmts/:entiId/:page', {
         templateUrl : 'modules/maestro/prmt-listado.html',
@@ -27,6 +59,7 @@ maestro.config([ '$routeProvider', function($routeProvider) {
         controller : 'ParametroEditController'
     });
 } ]);
+*/
 
 maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
     $scope.loadData = function() {
@@ -135,7 +168,6 @@ maestro.controller('prmtsLupaCtrl', function($http, $scope) {
     };
 });
 
-
 app.controller('ParametroDetailController', function($scope, $http, $route, $routeParams, $location) {
     var url = "maestro/prmt-detalle-json.action?item.id=" + $routeParams.itemId;
 
@@ -167,7 +199,6 @@ app.controller('ParametroDetailController', function($scope, $http, $route, $rou
     }
 });
 
-
 app.controller('ParametroEditController', function($scope, $http, $route, $routeParams) {
     var url = "maestro/prmt-detalle-json.action?item.id=" + $routeParams.itemId;
 
@@ -184,7 +215,6 @@ app.controller('ParametroEditController', function($scope, $http, $route, $route
         alert('Guardar: ' + $scope.item.id);
     }
 });
-
 
 maestro.controller('prmtCtrl', function($http, $scope, $routeParams, $location) {
     $scope.crear = function(entiId) {

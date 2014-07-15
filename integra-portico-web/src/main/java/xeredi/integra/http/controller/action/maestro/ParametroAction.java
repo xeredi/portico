@@ -10,7 +10,6 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
@@ -39,7 +38,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ParametroAction.
  */
-@ParentPackage("json-default")
+//@ParentPackage("json-default")
 public final class ParametroAction extends ItemAction {
 
 	/** The Constant serialVersionUID. */
@@ -83,7 +82,7 @@ public final class ParametroAction extends ItemAction {
 	// Acciones web
 	/**
 	 * Alta.
-	 * 
+	 *
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -108,7 +107,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Modificar.
-	 * 
+	 *
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -146,7 +145,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Duplicar.
-	 * 
+	 *
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -184,7 +183,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Guardar.
-	 * 
+	 *
 	 * @return the string
 	 */
 	@Action(value = "prmt-guardar", results = {
@@ -273,7 +272,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Borrar.
-	 * 
+	 *
 	 * @return the string
 	 */
 	@Action(value = "prmt-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
@@ -306,7 +305,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Detalle.
-	 * 
+	 *
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -384,7 +383,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Sets the item.
-	 * 
+	 *
 	 * @param value
 	 *            the new item
 	 */
@@ -394,7 +393,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Gets the p18n map.
-	 * 
+	 *
 	 * @return the p18n map
 	 */
 	public Map<String, ParametroI18nVO> getP18nMap() {
@@ -403,7 +402,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Sets the p18n map.
-	 * 
+	 *
 	 * @param value
 	 *            the value
 	 */
@@ -421,7 +420,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Gets the enti hijas list.
-	 * 
+	 *
 	 * @return the enti hijas list
 	 */
 	public final List<TipoSubparametroVO> getEntiHijasList() {
@@ -430,7 +429,7 @@ public final class ParametroAction extends ItemAction {
 
 	/**
 	 * Gets the item hijos map.
-	 * 
+	 *
 	 * @return the item hijos map
 	 */
 	public final Map<Long, PaginatedList<SubparametroVO>> getItemHijosMap() {

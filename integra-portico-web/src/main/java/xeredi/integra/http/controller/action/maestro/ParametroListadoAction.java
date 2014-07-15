@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
@@ -26,7 +25,6 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ParametroListadoAction.
  */
-@ParentPackage("json-default")
 public final class ParametroListadoAction extends ItemListadoAction {
 
 	/** The Constant serialVersionUID. */
