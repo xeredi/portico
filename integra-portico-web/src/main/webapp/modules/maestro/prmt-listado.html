@@ -44,7 +44,9 @@
 
             <tbody>
                 <tr ng-repeat="item in itemList.list">
-                    <td><input type="checkbox" ng-model="itemIds" value="{{item.id}}" /> <a href="#/maestro/prmt/{{item.id}}"><i
+                    <td>
+                    <a ui-sref="prmts.detalle({itemId:item.id})">Detalle</a>
+                    <a href="#/maestro/prmt/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.parametro}}</td>
                     <td ng-if="enti.i18n">{{item.i18n.texto}}</td>
