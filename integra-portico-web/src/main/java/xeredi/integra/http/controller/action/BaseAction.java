@@ -22,7 +22,7 @@ import com.opensymphony.xwork2.ActionSupport;
  * The Class BaseAction.
  */
 @ParentPackage("json-default")
-@Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "false" })
+@Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "true" })
 @InterceptorRefs({ @InterceptorRef(value = "timer"), @InterceptorRef(value = "json"), @InterceptorRef("basicStack") })
 public class BaseAction extends ActionSupport implements SessionAware {
 
