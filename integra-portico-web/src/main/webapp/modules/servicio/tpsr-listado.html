@@ -1,10 +1,12 @@
 <div>
 	<div ng-repeat="tpsr in tpsrList" class="panel panel-default col-md-4">
 		<div class="panel-heading">
-			<a href="#/servicio/srvcs/{{tpsr.value}}">{{tpsr.label}}</a>
+			<a ui-sref="srvcs.list({entiId:tpsr.value, page:1})">{{tpsr.label}}</a>
 		</div>
 		<ul class="list-group">
 			<li ng-repeat="tpss in tpssMap[tpsr.value]" class="list-group-item"><a href="#/servicio/ssrvs/{{tpss.value}}">{{tpss.label}}</a></li>
 		</ul>
 	</div>
 </div>
+
+<!-- href="#/servicio/srvcs/{{tpsr.value}}" -->

@@ -1,16 +1,29 @@
-var maestro = angular.module('maestro', [ 'ui.router' ]);
+angular.module('maestro', [ 'ui.router' ])
 
-app.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
-    .state(
-            'prmts',
-            {
-                url : '/maestro/prmts/:entiId/:page',
-                templateUrl : 'modules/maestro/prmt-listado.html',
-                controller : function($http, $scope, $stateParams) {
-                    alert('Listado');
+    .state('prmts', {
+        abstract : true,
+        url : '/maestro/prmts',
+        templateUrl : 'modules/maestro/prmts.html'/*,
+        resolve : {
+            itemList : {}
+        },
+        controller : function($scope, $state, itemList) {
+            $scope.enti = {};
+            $scope.itemList = itemList;
+            $scope.itemCriterio = {};
+        }*/
+    })
 
+    .state(
+            'prmts.list',
+            {
+                url : '/:entiId/:page',
+                templateUrl : 'modules/maestro/prmt-listado.html',
+
+                controller : function($http, $scope, $stateParams) {
                     $scope.loadData = function() {
                         var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $stateParams.entiId
                                 + "&page=" + $stateParams.page;
@@ -39,8 +52,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
             '' : {
                 templateUrl : 'modules/maestro/prmt-detalle.html',
                 controller : function($http, $scope, $state, $stateParams) {
-                    alert('Detalle');
-
                     var url = "maestro/prmt-detalle-json.action?item.id=" + $stateParams.itemId;
 
                     $http.get(url).success(function(data) {
@@ -83,28 +94,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
             }
         }
     })
-});
-/*
- * maestro.config([ '$routeProvider', function($routeProvider) {
- * $routeProvider.when('/maestro/prmts/:entiId/:page', { templateUrl :
- * 'modules/maestro/prmt-listado.html', controller : 'prmtsCtrl'
- * }).when('/maestro/prmts/exportar/:entiId', { controller : 'prmtsExportCtrl'
- * }).when('/maestro/prmt/crear/:entiId', { templateUrl :
- * 'modules/maestro/prmt-edicion.html', controller : 'prmtCrearCtrl'
- * }).when('/maestro/prmt/editar/:itemId', { templateUrl :
- * 'modules/maestro/prmt-edicion.html', controller : 'prmtEditarCtrl'
- * }).when('/maestro/prmt/duplicar/:itemId', { templateUrl :
- * 'modules/maestro/prmt-edicion.html', controller : 'prmtDuplicarCtrl'
- * }).when('/maestro/prmt/borrar/:itemId', { controller : 'prmtBorrarCtrl'
- * }).when('/maestro/prmt/imprimir/:itemId', { controller : 'prmtCtrl'
- * }).when('/maestro/prmt/:itemId', { templateUrl :
- * 'modules/maestro/prmt-detalle.html', controller : 'ParametroDetailController'
- * }).when('/maestro/prmt/edit/:itemId', { templateUrl :
- * 'modules/maestro/prmt-edicion.html', controller : 'ParametroEditController'
- * }); } ]);
- */
+})
 
-maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
+.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
     $scope.loadData = function() {
         var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $routeParams.entiId + "&page="
                 + $routeParams.page;
@@ -155,9 +147,9 @@ maestro.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
     $scope.currentPage = $routeParams.page;
 
     $scope.loadData();
-});
+})
 
-maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance, entiId, itemCriterio) {
+.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance, entiId, itemCriterio) {
     // $scope.itemCriterio = itemCriterio;
 
     var url = "maestro/prmt-filtro-json.action?itemCriterio.entiId=" + entiId;
@@ -191,9 +183,9 @@ maestro.controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance, en
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     };
-});
+})
 
-maestro.controller('prmtsLupaCtrl', function($http, $scope) {
+.controller('prmtsLupaCtrl', function($http, $scope) {
     $scope.getLabelValues = function(entiId, textoBusqueda) {
         return $http.get(
                 'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.textoBusqueda="
@@ -209,9 +201,9 @@ maestro.controller('prmtsLupaCtrl', function($http, $scope) {
             return labelValues;
         });
     };
-});
+})
 
-app.controller('ParametroDetailController', function($scope, $http, $route, $routeParams, $location) {
+.controller('ParametroDetailController', function($scope, $http, $route, $routeParams, $location) {
     var url = "maestro/prmt-detalle-json.action?item.id=" + $routeParams.itemId;
 
     $http.get(url).success(function(data) { // console.log(data);
@@ -240,9 +232,9 @@ app.controller('ParametroDetailController', function($scope, $http, $route, $rou
     $scope.borrar = function() {
         alert('Borrar: ' + $scope.item.id);
     }
-});
+})
 
-app.controller('ParametroEditController', function($scope, $http, $route, $routeParams) {
+.controller('ParametroEditController', function($scope, $http, $route, $routeParams) {
     var url = "maestro/prmt-detalle-json.action?item.id=" + $routeParams.itemId;
 
     $http.get(url).success(function(data) { // console.log(data);
@@ -257,9 +249,9 @@ app.controller('ParametroEditController', function($scope, $http, $route, $route
     $scope.guardar = function($location) {
         alert('Guardar: ' + $scope.item.id);
     }
-});
+})
 
-maestro.controller('prmtCtrl', function($http, $scope, $routeParams, $location) {
+.controller('prmtCtrl', function($http, $scope, $routeParams, $location) {
     $scope.crear = function(entiId) {
         if (entiId) {
             $location.path('/maestro/prmt/crear/' + entiId);
@@ -306,13 +298,13 @@ maestro.controller('prmtCtrl', function($http, $scope, $routeParams, $location) 
             $scope.availableLanguages = data.availableLanguages;
         });
     }
-});
+})
 
-maestro.controller('prmtTabsCtrl', function($scope) {
+.controller('prmtTabsCtrl', function($scope) {
     $scope.navType = 'pills';
-});
+})
 
-maestro.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
+.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
     if ($routeParams.entiId) {
         var url = "maestro/prmt-crear-json.action?item.entiId=" + $routeParams.entiId;
 
@@ -326,9 +318,9 @@ maestro.controller('prmtCrearCtrl', function($http, $scope, $routeParams) {
             $scope.labelValuesMap = data.labelValuesMap;
         });
     }
-});
+})
 
-maestro.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
+.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
     if ($routeParams.itemId) {
         var url = "maestro/prmt-editar-json.action?item.id=" + $routeParams.itemId;
 
@@ -342,9 +334,9 @@ maestro.controller('prmtEditarCtrl', function($http, $scope, $routeParams) {
             $scope.labelValuesMap = data.labelValuesMap;
         });
     }
-});
+})
 
-maestro.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
+.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
     alert('Duplicar');
 
     if ($routeParams.itemId) {
@@ -360,9 +352,9 @@ maestro.controller('prmtDuplicarCtrl', function($http, $scope, $routeParams) {
             $scope.labelValuesMap = data.labelValuesMap;
         });
     }
-});
+})
 
-maestro.controller('prmtGuardarCtrl', function($scope, $location) {
+.controller('prmtGuardarCtrl', function($scope, $location) {
     $scope.submit = function() {
         console.log($scope.accion);
         console.log($scope.item);
@@ -370,8 +362,9 @@ maestro.controller('prmtGuardarCtrl', function($scope, $location) {
 
         $location.path("/maestro/prmt/" + $scope.item.id);
     };
-});
+})
 
-maestro.controller('prmtBorrarCtrl', function($http, $scope, $routeParams, $location) {
+.controller('prmtBorrarCtrl', function($http, $scope, $routeParams, $location) {
     alert('Borrar');
-});
+})
+;

@@ -23,8 +23,8 @@
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular-route.min.js"></script>
 <script type="text/javascript"
     src="//cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js"></script>
 <script type="text/javascript"
@@ -51,12 +51,12 @@
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Menu</a>
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation" class="dropdown-header">Gestion</li>
-                        <li><a href="#/servicio/tpsrs">{{'menu_tpsrs' | translate}}</a></li>
-                        <li><a href="#/estadistica/peprs">{{'menu_peprs' | translate}}</a></li>
-                        <li><a href="#/maestro/tpprs">{{'menu_tpprs' | translate}}</a></li>
+                        <li><a ui-sref="tpsrs">{{'menu_tpsrs' | translate}}</a></li>
+                        <li><a ui-sref="peprs">{{'menu_peprs' | translate}}</a></li>
+                        <li><a ui-sref="tpprs"">{{'menu_tpprs' | translate}}</a></li>
                         <li role="presentation" class="divider"></li>
                         <li role="presentation" class="dropdown-header">Administracion</li>
-                        <li><a href="#/proceso/prbts">{{'menu_prbts' | translate}}</a></li>
+                        <li><a ui-sref="prbts">{{'menu_prbts' | translate}}</a></li>
                         <li role="presentation" class="divider"></li>
                         <li role="presentation" class="dropdown-header">Parametrizacion</li>
                         <li><a href="#/metamodelo/tpsrs">{{'menu_metamodelo_tpsrs' | translate}}</a></li>
