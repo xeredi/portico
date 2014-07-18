@@ -1,5 +1,5 @@
-var servicio = angular.module('servicio', [ 'ngRoute' ]);
-
+var servicio = angular.module('servicio', [ 'ui-route' ]);
+/*
 servicio.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/servicio/srvcs/:entiId', {
 		templateUrl : 'modules/servicio/srvc-listado.html',
@@ -15,6 +15,47 @@ servicio.config([ '$routeProvider', function($routeProvider) {
 		controller : 'ssrvCtrl'
 	});
 } ]);
+*/
+
+servicio.config(function($stateProvider, $urlRouterProvider) {
+$stateProvider
+
+.state(
+        'prmts',
+        {
+            url : '/maestro/prmts/:entiId/:page',
+            templateUrl : 'modules/maestro/prmt-listado.html',
+            controller : function($http, $scope, $stateParams) {
+                alert('Listado');
+
+                $scope.loadData = function() {
+                    var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $stateParams.entiId
+                            + "&page=" + $stateParams.page;
+
+                    $http.get(url).success(function(data) {
+                        // console.log(data);
+                        $scope.enti = data.enti;
+                        $scope.itemList = data.itemList;
+                        $scope.itemCriterio = data.itemCriterio;
+                    });
+                };
+
+                $scope.pageChanged = function() {
+                    $stateParams.page = $scope.currentPage;
+
+                    $scope.loadData();
+                };
+
+                $scope.loadData();
+            }
+        })
+});
+
+
+
+
+
+
 
 servicio.controller('srvcsCtrl', function($http, $scope, $routeParams) {
 	$scope.loadData = function() {
