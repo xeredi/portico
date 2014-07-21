@@ -175,6 +175,51 @@ CREATE TABLE portico.tbl_aspecto_version_aspv
 	, aspv_fini TIMESTAMP NOT NULL
 	, aspv_ffin TIMESTAMP
 
+	, aspv_cpath_info1 VARCHAR(250)
+	, aspv_cetiq_info1 VARCHAR(50)
+	, aspv_cpath_info2 VARCHAR(250)
+	, aspv_cetiq_info2 VARCHAR(50)
+	, aspv_cpath_info3 VARCHAR(250)
+	, aspv_cetiq_info3 VARCHAR(50)
+	, aspv_cpath_info4 VARCHAR(250)
+	, aspv_cetiq_info4 VARCHAR(50)
+	, aspv_cpath_info5 VARCHAR(250)
+	, aspv_cetiq_info5 VARCHAR(50)
+	, aspv_cpath_info6 VARCHAR(250)
+	, aspv_cetiq_info6 VARCHAR(50)
+
+	, aspv_lpath_info1 VARCHAR(250)
+	, aspv_letiq_info1 VARCHAR(50)
+	, aspv_lpath_info2 VARCHAR(250)
+	, aspv_letiq_info2 VARCHAR(50)
+	, aspv_lpath_info3 VARCHAR(250)
+	, aspv_letiq_info3 VARCHAR(50)
+	, aspv_lpath_info4 VARCHAR(250)
+	, aspv_letiq_info4 VARCHAR(50)
+	, aspv_lpath_info5 VARCHAR(250)
+	, aspv_letiq_info5 VARCHAR(50)
+	, aspv_lpath_info6 VARCHAR(250)
+	, aspv_letiq_info6 VARCHAR(50)
+
+	, aspv_lpath_cuant1 VARCHAR(250)
+	, aspv_letiq_cuant1 VARCHAR(50)
+	, aspv_lsum_cuant1 INT
+	, aspv_lpath_cuant2 VARCHAR(250)
+	, aspv_letiq_cuant2 VARCHAR(50)
+	, aspv_lsum_cuant2 INT
+	, aspv_lpath_cuant3 VARCHAR(250)
+	, aspv_letiq_cuant3 VARCHAR(50)
+	, aspv_lsum_cuant3 INT
+	, aspv_lpath_cuant4 VARCHAR(250)
+	, aspv_letiq_cuant4 VARCHAR(50)
+	, aspv_lsum_cuant4 INT
+	, aspv_lpath_cuant5 VARCHAR(250)
+	, aspv_letiq_cuant5 VARCHAR(50)
+	, aspv_lsum_cuant5 INT
+	, aspv_lpath_cuant6 VARCHAR(250)
+	, aspv_letiq_cuant6 VARCHAR(50)
+	, aspv_lsum_cuant6 INT
+
 	, CONSTRAINT pk_aspv PRIMARY KEY (aspv_pk)
 
 	, CONSTRAINT fk_aspv_aspc_pk FOREIGN KEY (aspv_aspc_pk)
@@ -190,66 +235,19 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_version_aspv TO port
 -- tbl_aspecto_cargo_ascr
 CREATE TABLE portico.tbl_aspecto_cargo_ascr
 (
-	ascr_aspc_pk BIGINT NOT NULL
+	ascr_aspv_pk BIGINT NOT NULL
 	, ascr_crgo_pk BIGINT NOT NULL
 
-	, CONSTRAINT pk_ascr PRIMARY KEY (ascr_aspc_pk, ascr_crgo_pk)
+	, CONSTRAINT pk_ascr PRIMARY KEY (ascr_aspv_pk, ascr_crgo_pk)
 
-	, CONSTRAINT fk_ascr_aspc_pk FOREIGN KEY (ascr_aspc_pk)
-		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
+	, CONSTRAINT fk_ascr_aspv_pk FOREIGN KEY (ascr_aspv_pk)
+		REFERENCES portico.tbl_aspecto_version_aspv (aspv_pk)
 	, CONSTRAINT fk_ascr_crgo_pk FOREIGN KEY (ascr_crgo_pk)
 		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
 )
 /
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_cargo_ascr TO portico
-/
-
-
-
--- tbl_aspecto_cab_ascb
-CREATE TABLE portico.tbl_aspecto_cab_ascb
-(
-	ascb_pk BIGINT NOT NULL
-	, ascb_aspc_pk BIGINT NOT NULL
-	, ascb_etiqueta VARCHAR(100) NOT NULL
-	, ascb_campo_servicio VARCHAR(100) NOT NULL
-	, ascb_campo_valoracion VARCHAR(100) NOT NULL
-	, ascb_campo_factura VARCHAR(100) NOT NULL
-
-	, CONSTRAINT pk_ascb PRIMARY KEY (ascb_pk)
-	, CONSTRAINT uq_ascb UNIQUE (ascb_aspc_pk, ascb_etiqueta)
-
-	, CONSTRAINT fk_ascb_aspc_pk FOREIGN KEY (ascb_aspc_pk)
-		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
-)
-/
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_cab_ascb TO portico
-/
-
-
-
--- tbl_aspecto_lin_ascl
-CREATE TABLE portico.tbl_aspecto_lin_ascl
-(
-	ascl_pk BIGINT NOT NULL
-	, ascl_aspc_pk BIGINT NOT NULL
-	, ascl_etiqueta VARCHAR(100) NOT NULL
-	, ascl_campo_servicio VARCHAR(100) NOT NULL
-	, ascl_campo_valoracion VARCHAR(100) NOT NULL
-	, ascl_campo_factura VARCHAR(100) NOT NULL
-	, ascl_es_sumarizable INT NOT NULL
-
-	, CONSTRAINT pk_ascl PRIMARY KEY (ascl_pk)
-	, CONSTRAINT uq_ascl UNIQUE (ascl_aspc_pk, ascl_etiqueta)
-
-	, CONSTRAINT fk_ascl_aspc_pk FOREIGN KEY (ascl_aspc_pk)
-		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
-)
-/
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_lin_ascl TO portico
 /
 
 
@@ -273,6 +271,7 @@ CREATE TABLE portico.tbl_valoracion_vlrc
 	, vlrc_info3 VARCHAR(100)
 	, vlrc_info4 VARCHAR(100)
 	, vlrc_info5 VARCHAR(100)
+	, vlrc_info6 VARCHAR(100)
 
 	, CONSTRAINT pk_vlrc PRIMARY KEY (vlrc_pk)
 
@@ -338,12 +337,14 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 	, vlrl_cuant3 DOUBLE PRECISION
 	, vlrl_cuant4 DOUBLE PRECISION
 	, vlrl_cuant5 DOUBLE PRECISION
+	, vlrl_cuant6 DOUBLE PRECISION
 
 	, vlrl_info1 VARCHAR(100)
 	, vlrl_info2 VARCHAR(100)
 	, vlrl_info3 VARCHAR(100)
 	, vlrl_info4 VARCHAR(100)
 	, vlrl_info5 VARCHAR(100)
+	, vlrl_info6 VARCHAR(100)
 
 	, CONSTRAINT pk_vlrl PRIMARY KEY (vlrl_pk)
 
@@ -384,12 +385,14 @@ CREATE TABLE portico.tbl_valoracion_det_vlrd
 	, vlrd_cuant3 DOUBLE PRECISION
 	, vlrd_cuant4 DOUBLE PRECISION
 	, vlrd_cuant5 DOUBLE PRECISION
+	, vlrd_cuant6 DOUBLE PRECISION
 
 	, vlrd_info1 VARCHAR(100)
 	, vlrd_info2 VARCHAR(100)
 	, vlrd_info3 VARCHAR(100)
 	, vlrd_info4 VARCHAR(100)
 	, vlrd_info5 VARCHAR(100)
+	, vlrd_info6 VARCHAR(100)
 
 	, CONSTRAINT pk_vlrd PRIMARY KEY (vlrd_pk)
 
@@ -436,6 +439,7 @@ CREATE TABLE portico.tbl_factura_fctr
 	, fctr_info3 VARCHAR(100)
 	, fctr_info4 VARCHAR(100)
 	, fctr_info5 VARCHAR(100)
+	, fctr_info6 VARCHAR(100)
 
 	, CONSTRAINT pk_fctr PRIMARY KEY (fctr_pk)
 
@@ -521,12 +525,14 @@ CREATE TABLE portico.tbl_factura_lin_fctl
 	, fctl_cuant3 DOUBLE PRECISION
 	, fctl_cuant4 DOUBLE PRECISION
 	, fctl_cuant5 DOUBLE PRECISION
+	, fctl_cuant6 DOUBLE PRECISION
 
 	, fctl_info1 VARCHAR(100)
 	, fctl_info2 VARCHAR(100)
 	, fctl_info3 VARCHAR(100)
 	, fctl_info4 VARCHAR(100)
 	, fctl_info5 VARCHAR(100)
+	, fctl_info6 VARCHAR(100)
 
 	, CONSTRAINT pk_fctl PRIMARY KEY (fctl_pk)
 
@@ -570,12 +576,14 @@ CREATE TABLE portico.tbl_factura_det_fctd
 	, fctd_cuant3 DOUBLE PRECISION
 	, fctd_cuant4 DOUBLE PRECISION
 	, fctd_cuant5 DOUBLE PRECISION
+	, fctd_cuant6 DOUBLE PRECISION
 
 	, fctd_info1 VARCHAR(100)
 	, fctd_info2 VARCHAR(100)
 	, fctd_info3 VARCHAR(100)
 	, fctd_info4 VARCHAR(100)
 	, fctd_info5 VARCHAR(100)
+	, fctd_info6 VARCHAR(100)
 
 	, CONSTRAINT pk_fctd PRIMARY KEY (fctd_pk)
 
@@ -669,10 +677,6 @@ DROP TABLE portico.tbl_valoracion_lin_vlrl
 DROP TABLE portico.tbl_valoracion_imp_vlri
 /
 DROP TABLE portico.tbl_valoracion_vlrc
-/
-DROP TABLE portico.tbl_aspecto_lin_ascl
-/
-DROP TABLE portico.tbl_aspecto_cab_ascb
 /
 DROP TABLE portico.tbl_aspecto_cargo_ascr
 /

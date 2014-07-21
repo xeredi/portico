@@ -51,26 +51,26 @@ INSERT INTO portico.tbl_cargo_dep_crdp (crdp_crgop_pk, crdp_crgoh_pk) VALUES (60
 
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61000, 'B5', 21001, 'ASPECTO DE PESCA FRESCA')
 /
-	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61000, 60000)
-	/
+--	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61000, 60000)
+--	/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61001, 'B2', 21002, 'ASPECTO DE PASAJE')
 /
-	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61001, 60001)
-	/
+--	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61001, 60001)
+--	/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61002, 'B3', 21002, 'ASPECTO DE MERCANCIA')
 /
-	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61002, 60002)
-	/
+--	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61002, 60002)
+--	/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61003, 'B1', 21003, 'ASPECTO DE BUQUE')
 /
-	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61003, 60003)
-	/
-	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61003, 60004)
-	/
+--	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61003, 60003)
+--	/
+--	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61003, 60004)
+--	/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61004, 'TR', 21002, 'ASPECTO DE RESIDUOS')
 /
-	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61004, 60005)
-	/
+--	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61004, 60005)
+--	/
 
 
 
@@ -86,14 +86,14 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DELETE FROM portico.tbl_aspecto_cargo_ascr WHERE ascr_aspc_pk IN (
-	  61000
-	, 61001
-	, 61002
-	, 61003
-	, 61004
-)
-/
+--DELETE FROM portico.tbl_aspecto_cargo_ascr WHERE ascr_aspc_pk IN (
+--	  61000
+--	, 61001
+--	, 61002
+--	, 61003
+--	, 61004
+--)
+--/
 
 DELETE FROM portico.tbl_aspecto_aspc WHERE aspc_pk IN (
 	  61000
