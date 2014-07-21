@@ -104,13 +104,15 @@ CREATE TABLE portico.tbl_regla_version_rglv
 	, rglv_rgla_pk BIGINT NOT NULL
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
-	, rglv_condicion VARCHAR(2000)
-	, rglv_formula VARCHAR(2000)
+	, rglv_condicion VARCHAR(2000) NOT NULL
+	, rglv_formula VARCHAR(2000) NOT NULL
 
 	, rglv_path_impuesto VARCHAR(250) NOT NULL
 	, rglv_path_pagador VARCHAR(250) NOT NULL
-	, rglv_path_info1 VARCHAR(250) NOT NULL
-	, rglv_path_cuant1 VARCHAR(250) NOT NULL
+	, rglv_path_info1 VARCHAR(250)
+	, rglv_etiq_info1 VARCHAR(50)
+	, rglv_path_cuant1 VARCHAR(250)
+	, rglv_etiq_cuant1 VARCHAR(50)
 
 	, CONSTRAINT pk_rglv PRIMARY KEY (rglv_pk)
 
@@ -161,6 +163,26 @@ CREATE TABLE portico.tbl_aspecto_aspc
 /
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_aspc TO portico
+/
+
+
+
+-- tbl_aspecto_version_aspv
+CREATE TABLE portico.tbl_aspecto_version_aspv
+(
+	aspv_pk BIGINT NOT NULL
+	, aspv_aspc_pk BIGINT NOT NULL
+	, aspv_fini TIMESTAMP NOT NULL
+	, aspv_ffin TIMESTAMP
+
+	, CONSTRAINT pk_aspv PRIMARY KEY (aspv_pk)
+
+	, CONSTRAINT fk_aspv_aspc_pk FOREIGN KEY (aspv_aspc_pk)
+		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
+)
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_version_aspv TO portico
 /
 
 
@@ -653,6 +675,8 @@ DROP TABLE portico.tbl_aspecto_lin_ascl
 DROP TABLE portico.tbl_aspecto_cab_ascb
 /
 DROP TABLE portico.tbl_aspecto_cargo_ascr
+/
+DROP TABLE portico.tbl_aspecto_version_aspv
 /
 DROP TABLE portico.tbl_aspecto_aspc
 /

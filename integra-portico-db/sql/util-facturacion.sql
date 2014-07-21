@@ -1,4 +1,57 @@
-﻿SELECT * 
+﻿-- Cargos a valorar de un servicio (las que salen por pantalla)
+SELECT *
+FROM portico.tbl_cargo_crgo
+	JOIN portico.tbl_cargo_version_crgv ON
+		crgv_crgo_pk = crgo_pk
+		AND NOW() BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
+WHERE crgo_es_principal = 1
+	AND crgo_tpsr_pk = 21003
+;
+
+-- Cargos a valorar de un servicio (las que NO salen por pantalla)
+SELECT *
+FROM portico.tbl_cargo_crgo
+	JOIN portico.tbl_cargo_version_crgv ON
+		crgv_crgo_pk = crgo_pk
+		AND NOW() BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
+WHERE 
+	EXISTS (
+		SELECT 1 
+		FROM portico.tbl_cargo_dep_crdp
+		WHERE crdp_crgoh_pk = crgo_pk
+			AND crdp_crgop_pk IN (60003, 60005)
+	)
+;
+
+-- Reglas de un cargo
+SELECT * 
+FROM portico.tbl_regla_rgla
+;
+
+SELECT * 
+FROM portico.tbl_regla_version_rglv
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT * 
 FROM tbl_servicio_srvc 
 	JOIN tbl_entidad_enti ON
 		enti_pk = srvc_tpsr_pk;
