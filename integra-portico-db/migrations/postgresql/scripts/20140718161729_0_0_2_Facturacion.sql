@@ -109,10 +109,34 @@ CREATE TABLE portico.tbl_regla_version_rglv
 
 	, rglv_path_impuesto VARCHAR(250) NOT NULL
 	, rglv_path_pagador VARCHAR(250) NOT NULL
+	, rglv_path_es_suj_pasivo VARCHAR(250) NOT NULL
+	, rglv_path_cod_exen VARCHAR(250) NOT NULL
+
 	, rglv_path_info1 VARCHAR(250)
 	, rglv_etiq_info1 VARCHAR(50)
+	, rglv_path_info2 VARCHAR(250)
+	, rglv_etiq_info2 VARCHAR(50)
+	, rglv_path_info3 VARCHAR(250)
+	, rglv_etiq_info3 VARCHAR(50)
+	, rglv_path_info4 VARCHAR(250)
+	, rglv_etiq_info4 VARCHAR(50)
+	, rglv_path_info5 VARCHAR(250)
+	, rglv_etiq_info5 VARCHAR(50)
+	, rglv_path_info6 VARCHAR(250)
+	, rglv_etiq_info6 VARCHAR(50)
+
 	, rglv_path_cuant1 VARCHAR(250)
 	, rglv_etiq_cuant1 VARCHAR(50)
+	, rglv_path_cuant2 VARCHAR(250)
+	, rglv_etiq_cuant2 VARCHAR(50)
+	, rglv_path_cuant3 VARCHAR(250)
+	, rglv_etiq_cuant3 VARCHAR(50)
+	, rglv_path_cuant4 VARCHAR(250)
+	, rglv_etiq_cuant4 VARCHAR(50)
+	, rglv_path_cuant5 VARCHAR(250)
+	, rglv_etiq_cuant5 VARCHAR(50)
+	, rglv_path_cuant6 VARCHAR(250)
+	, rglv_etiq_cuant6 VARCHAR(50)
 
 	, CONSTRAINT pk_rglv PRIMARY KEY (rglv_pk)
 
@@ -266,6 +290,9 @@ CREATE TABLE portico.tbl_valoracion_vlrc
 	, vlrc_ffin TIMESTAMP
 	, vlrc_importe DOUBLE PRECISION NOT NULL
 	, vlrc_iva DOUBLE PRECISION NOT NULL
+	, vlrc_es_suj_pasivo INT NOT NULL
+	, vlrc_cod_exen CHAR(1) NOT NULL
+
 	, vlrc_info1 VARCHAR(100)
 	, vlrc_info2 VARCHAR(100)
 	, vlrc_info3 VARCHAR(100)
@@ -417,6 +444,61 @@ CREATE INDEX ix_vlrd_ssrv_pk ON portico.tbl_valoracion_det_vlrd (vlrd_ssrv_pk)
 /
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_det_vlrd TO portico
+/
+
+
+
+-- tbl_valoracion_tmp_vlrt
+CREATE TABLE portico.tbl_valoracion_tmp_vlrt
+(
+	vlrt_prbt_pk BIGINT NOT NULL
+	, vlrt_srvc_pk BIGINT NOT NULL
+	, vlrt_ssrv_pk BIGINT
+	, vlrt_crgo_pk BIGINT NOT NULL
+	, vlrt_rgla_pk BIGINT NOT NULL
+	, vlrt_impuesto_pk BIGINT NOT NULL
+	, vlrt_pagador_pk BIGINT NOT NULL
+	, vlrt_orden INT NOT NULL
+	, vlrt_importe_base DOUBLE PRECISION NOT NULL
+	, vlrt_importe DOUBLE PRECISION NOT NULL
+	, vlrt_es_suj_pasivo INT NOT NULL
+	, vlrt_cod_exen CHAR(1) NOT NULL
+
+	, vlrt_cuant1 DOUBLE PRECISION
+	, vlrt_cuant2 DOUBLE PRECISION
+	, vlrt_cuant3 DOUBLE PRECISION
+	, vlrt_cuant4 DOUBLE PRECISION
+	, vlrt_cuant5 DOUBLE PRECISION
+	, vlrt_cuant6 DOUBLE PRECISION
+
+	, vlrt_info1 VARCHAR(100)
+	, vlrt_info2 VARCHAR(100)
+	, vlrt_info3 VARCHAR(100)
+	, vlrt_info4 VARCHAR(100)
+	, vlrt_info5 VARCHAR(100)
+	, vlrt_info6 VARCHAR(100)
+
+	, CONSTRAINT fk_vlrt_prbt_pk FOREIGN KEY (vlrt_prbt_pk)
+		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
+	, CONSTRAINT fk_vlrt_srvc_pk FOREIGN KEY (vlrt_srvc_pk)
+		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_vlrt_ssrv_pk FOREIGN KEY (vlrt_ssrv_pk)
+		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
+	, CONSTRAINT fk_vlrt_crgo_pk FOREIGN KEY (vlrt_crgo_pk)
+		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
+	, CONSTRAINT fk_vlrt_rgla_pk FOREIGN KEY (vlrt_rgla_pk)
+		REFERENCES portico.tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_vlrt_impuesto_pk FOREIGN KEY (vlrt_impuesto_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_vlrt_pagador_pk FOREIGN KEY (vlrt_pagador_pk)
+		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
+)
+/
+
+CREATE INDEX ix_vlrt_prbt_pk ON portico.tbl_valoracion_tmp_vlrt (vlrt_prbt_pk)
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_tmp_vlrt TO portico
 /
 
 
@@ -616,6 +698,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_det_fctd TO portico
 CREATE TABLE portico.tbl_servicio_cargo_srcr
 (
 	srcr_srvc_pk BIGINT NOT NULL
+	, srcr_ssrv_pk BIGINT
 	, srcr_crgo_pk BIGINT NOT NULL
 	, srcr_fini TIMESTAMP NOT NULL
 	, srcr_ffin TIMESTAMP NOT NULL
@@ -624,6 +707,8 @@ CREATE TABLE portico.tbl_servicio_cargo_srcr
 
 	, CONSTRAINT fk_srcr_srvc_pk FOREIGN KEY (srcr_srvc_pk)
 		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_srcr_ssrv_pk FOREIGN KEY (srcr_ssrv_pk)
+		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
 	, CONSTRAINT fk_srcr_crgo_pk FOREIGN KEY (srcr_crgo_pk)
 		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
 	, CONSTRAINT fk_srcr_vlrc_pk FOREIGN KEY (srcr_vlrc_pk)
@@ -669,6 +754,8 @@ DROP TABLE portico.tbl_factura_imp_fcti
 DROP TABLE portico.tbl_factura_servicio_fcsr
 /
 DROP TABLE portico.tbl_factura_fctr
+/
+DROP TABLE portico.tbl_valoracion_tmp_vlrt
 /
 DROP TABLE portico.tbl_valoracion_det_vlrd
 /
