@@ -11,7 +11,7 @@
     <select id="exists" parameterType="SubservicioSubservicioVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)
-        FROM tbl_subservicio_subservicio_ssss
+        FROM tbl_subserv_subserv_ssss
         WHERE ssss_ssrvp_pk = #{ssrvPadreId}
             AND ssss_ssrvh_pk = #{ssrvHijoId}
         ]]>
@@ -19,7 +19,7 @@
 
     <insert id="insert" parameterType="SubservicioSubservicioVO">
         <![CDATA[
-        INSERT INTO tbl_subservicio_subservicio_ssss (
+        INSERT INTO tbl_subserv_subserv_ssss (
             ssss_ssrvp_pk, ssss_ssrvh_pk
         ) VALUES (
             #{ssrvPadreId}, #{ssrvHijoId}

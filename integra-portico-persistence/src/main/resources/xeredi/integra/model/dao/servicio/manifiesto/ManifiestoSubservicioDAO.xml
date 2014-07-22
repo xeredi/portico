@@ -18,7 +18,7 @@
         <![CDATA[
 			AND EXISTS (
 				SELECT 1
-				FROM tbl_subservicio_subservicio_ssss
+				FROM tbl_subserv_subserv_ssss
 				WHERE
 					ssss_ssrvh_pk = ssrv_pk
 					AND ssss_ssrvp_pk = #{padreId}
@@ -51,7 +51,7 @@
         <![CDATA[
 			AND EXISTS (
 				SELECT 1
-				FROM tbl_subservicio_subservicio_ssss
+				FROM tbl_subserv_subserv_ssss
 				WHERE
 					ssss_ssrvh_pk = ssrv_pk
 					AND ssss_ssrvp_pk = #{padreId}
@@ -93,7 +93,7 @@
         <![CDATA[
 			AND EXISTS (
 				SELECT 1
-				FROM tbl_subservicio_subservicio_ssss
+				FROM tbl_subserv_subserv_ssss
 				WHERE
 					ssss_ssrvh_pk = ssrv_pk
 					AND ssss_ssrvp_pk = #{padreId}
@@ -128,7 +128,7 @@
         <![CDATA[
 			AND EXISTS (
 				SELECT 1
-				FROM tbl_subservicio_subservicio_ssss
+				FROM tbl_subserv_subserv_ssss
 				WHERE
 					ssss_ssrvh_pk = ssrv_pk
 					AND ssss_ssrvp_pk = #{padreId}

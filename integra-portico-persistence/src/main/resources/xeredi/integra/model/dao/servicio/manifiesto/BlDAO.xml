@@ -15,7 +15,7 @@
 						AND ssrvPartEqui.ssrv_tpss_pk IN (portico.getEntidad('PARTIDA'), portico.getEntidad('EQUIPAMIENTO'))
 						AND EXISTS (
 							SELECT 1
-							FROM tbl_subservicio_subservicio_ssss
+							FROM tbl_subserv_subserv_ssss
 							WHERE
 								ssss_ssrvp_pk = ssrvBl.ssrv_pk
 								AND ssss_ssrvh_pk = ssrvPartEqui.ssrv_pk

@@ -902,7 +902,7 @@
         							ssrv_tpss_pk = portico.getEntidad('MANIFIESTO_CONSIGNATARIO')
         							AND EXISTS (
         								SELECT 1
-        								FROM tbl_subservicio_subservicio_ssss
+        								FROM tbl_subserv_subserv_ssss
         								WHERE
         									ssss_ssrvp_pk = ssrvMaco.ssrv_pk
         									AND ssss_ssrvh_pk = ssrvBl.ssrv_pk
@@ -1084,7 +1084,7 @@
         		JOIN tbl_subservicio_ssrv ssrvPart ON
         			ssrvPart.ssrv_srvc_pk = ssrvs.srvc_pk
         			AND ssrvPart.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
-        		JOIN tbl_subservicio_subservicio_ssss ON
+        		JOIN tbl_subserv_subserv_ssss ON
         			ssss_ssrvp_pk = ssrvs.ssrv_pk
         			AND ssss_ssrvh_pk = ssrvPart.ssrv_pk
         	WHERE
@@ -1221,11 +1221,11 @@
         					AND part.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
         					AND EXISTS (
         						SELECT 1
-        						FROM tbl_subservicio_subservicio_ssss ssssPart
+        						FROM tbl_subserv_subserv_ssss ssssPart
         						WHERE ssssPart.ssss_ssrvp_pk = part.ssrv_pk
         							AND EXISTS (
         								SELECT 1
-        								FROM tbl_subservicio_subservicio_ssss ssssEqui
+        								FROM tbl_subserv_subserv_ssss ssssEqui
         								WHERE ssssEqui.ssss_ssrvp_pk = ssrvEqui.ssrv_pk
         									AND ssssEqui.ssss_ssrvh_pk = ssssPart.ssss_ssrvh_pk
         							)
@@ -1235,7 +1235,7 @@
         			JOIN tbl_subservicio_ssrv ssrvEqui ON
         				ssrvEqui.ssrv_srvc_pk = ssrvs.srvc_pk
         				AND ssrvEqui.ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
-        			JOIN tbl_subservicio_subservicio_ssss ON
+        			JOIN tbl_subserv_subserv_ssss ON
         				ssss_ssrvp_pk = ssrvs.ssrv_pk
         				AND ssss_ssrvh_pk = ssrvEqui.ssrv_pk
 			WHERE
@@ -1533,7 +1533,7 @@
         		join tbl_subservicio_ssrv ssrvPart ON
         			ssrvPart.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
         			AND ssrvPart.ssrv_srvc_pk = srvc_pk
-        		JOIN tbl_subservicio_subservicio_ssss ON
+        		JOIN tbl_subserv_subserv_ssss ON
         			ssss_ssrvp_pk = ssrvs.ssrv_pk
         			AND ssss_ssrvh_pk = ssrvPart.ssrv_pk
         	WHERE
@@ -1658,7 +1658,7 @@
         		join tbl_subservicio_ssrv ssrvEqui ON
         			ssrvEqui.ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
         			AND ssrvEqui.ssrv_srvc_pk = srvc_pk
-        		JOIN tbl_subservicio_subservicio_ssss on
+        		JOIN tbl_subserv_subserv_ssss on
         			ssss_ssrvp_pk = ssrvs.ssrv_pk
         			AND ssss_ssrvh_pk = ssrvEqui.ssrv_pk
         	WHERE

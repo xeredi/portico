@@ -101,24 +101,67 @@ WHERE
 ;
 
 
--- Tasas de un aspecto
-SELECT * 
-FROM tbl_aspecto_aspc  
-	JOIN tbl_aspecto_cargo_ascr ON
-		ascr_aspc_pk = aspc_pk
-	JOIN tbl_cargo_crgo ON
-		crgo_pk = ascr_crgo_pk
+
+
+
+
+
+
+
+-- Valorar manifiesto
+select ssrv_srvc_pk, count(1)
+from 
+	portico.tbl_subservicio_ssrv
+group by ssrv_srvc_pk
 ;
 
 
-SELECT * 
-FROM tbl_tipo_servicio_tpsr 
-	JOIN tbl_entidad_enti ON
-		enti_pk = tpsr_pk
+
+select ssrv_tpss_pk, enti_nombre, count(1)
+from 
+	portico.tbl_subservicio_ssrv
+	join portico.tbl_entidad_enti on
+		enti_pk = ssrv_tpss_pk
+where ssrv_srvc_pk = 1202566
+group by ssrv_tpss_pk, enti_nombre
 ;
 
-SELECT * 
-FROM tbl_tipo_subservicio_tpss  
-	JOIN tbl_entidad_enti ON
-		enti_pk = tpss_pk
+select * 
+from 
+	portico.tbl_servicio_srvc
+	join portico.tbl_entidad_enti on
+		enti_pk = srvc_tpsr_pk
+where srvc_pk = 1202566
 ;
+
+
+SELECT srvc.*, ssrv.*, tpss.*
+FROM 
+	portico.tbl_subservicio_ssrv ssrv
+	JOIN portico.tbl_servicio_srvc srvc ON
+		srvc_pk = ssrv_srvc_pk
+	JOIN portico.tbl_tipo_subservicio_tpss tpss ON
+		tpss_pk = ssrv_tpss_pk
+WHERE
+	ssrv_srvc_pk = 1202566
+	AND ssrv_tpss_pk = 22004
+	AND tpss_es_facturable = 0
+	AND (
+		tpss_tpdt_estado_pk IS NULL
+		OR (
+			(tpss_pk = portico.getEntidad('PARTIDA') AND ssrv_estado = 'R')
+			OR (tpss_pk = portico.getEntidad('EQUIPAMIENTO') AND ssrv_estado = 'R')
+		)
+	)
+;
+
+
+SELECT * FROM portico.tbl_subservicio_dato_ssdt
+WHERE ssdt_ssrv_pk = 1204566
+	AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+;
+
+SELECT * FROM portico.tbl_tipo_dato_tpdt
+order by tpdt_codigo
+;
+
