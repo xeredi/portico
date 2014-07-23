@@ -122,7 +122,7 @@ from
 	portico.tbl_subservicio_ssrv
 	join portico.tbl_entidad_enti on
 		enti_pk = ssrv_tpss_pk
-where ssrv_srvc_pk = 1194876
+where ssrv_srvc_pk = 1192567
 group by ssrv_tpss_pk, enti_nombre
 ;
 
@@ -131,7 +131,7 @@ from
 	portico.tbl_servicio_srvc
 	join portico.tbl_entidad_enti on
 		enti_pk = srvc_tpsr_pk
-where srvc_pk = 1194876
+where srvc_pk = 1192567
 ;
 
 
@@ -326,13 +326,13 @@ SELECT srvc.*, ssrv.*, tpss.*, tpsr.*
 				FROM portico.tbl_subservicio_dato_ssdt
 				WHERE 
 					ssdt_prmt_pk = prmt_pk
-					and ssdt_tpdt_pk = getTipoDato('TIPO_IVA')
+					and ssdt_tpdt_pk = portico.getTipoDato('TIPO_IVA')
 					AND EXISTS (
 						SELECT 1
 						FROM portico.tbl_subservicio_ssrv
 						WHERE 
 							ssrv_pk = ssdt_ssrv_pk
-							AND ssrv_tpss_pk = getEntidad('BL')
+							AND ssrv_tpss_pk = portico.getEntidad('BL')
 					)
 					AND EXISTS (
 						SELECT 1
@@ -347,13 +347,13 @@ SELECT srvc.*, ssrv.*, tpss.*, tpsr.*
 		SELECT ssdt_nentero
 		FROM portico.tbl_subservicio_dato_ssdt
 		WHERE 
-			ssdt_tpdt_pk = getTipoDato('BOOLEANO_01')
+			ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
 			AND EXISTS (
 				SELECT 1
 				FROM portico.tbl_subservicio_ssrv
 				WHERE 
 					ssrv_pk = ssdt_ssrv_pk
-					AND ssrv_tpss_pk = getEntidad('BL')
+					AND ssrv_tpss_pk = portico.getEntidad('BL')
 			)
 			AND EXISTS (
 				SELECT 1
@@ -435,7 +435,7 @@ WHERE
 								FROM portico.tbl_subservicio_ssrv
 								WHERE 
 									ssrv_pk = ssdt_ssrv_pk
-									AND ssrv_tpss_pk = getEntidad('BL')
+									AND ssrv_tpss_pk = portico.getEntidad('BL')
 							)
 							AND EXISTS (
 								SELECT 1
@@ -445,8 +445,8 @@ WHERE
 									AND ssss_ssrvh_pk = ssrv.ssrv_pk
 							)
 							AND (
-								(ssdt_tpdt_pk = getTipoDato('BOOLEANO_02') AND ssdt_nentero = 0)
-								or (ssdt_tpdt_pk = getTipoDato('TIPO_BL') AND ssdt_cadena = 'P')
+								(ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02') AND ssdt_nentero = 0)
+								or (ssdt_tpdt_pk = portico.getTipoDato('TIPO_BL') AND ssdt_cadena = 'P')
 							)
 					)
 					or (
@@ -510,7 +510,7 @@ WHERE
 
 	-- TODO Que no este valorado/facturado
 
-	AND ssrv_srvc_pk = 1194876
+	AND ssrv_srvc_pk = 1192567
 
 ORDER BY ssrv_srvc_pk, ssrv_numero
 ;
