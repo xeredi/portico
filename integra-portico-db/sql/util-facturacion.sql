@@ -122,7 +122,7 @@ from
 	portico.tbl_subservicio_ssrv
 	join portico.tbl_entidad_enti on
 		enti_pk = ssrv_tpss_pk
-where ssrv_srvc_pk = 1202566
+where ssrv_srvc_pk = 1192567
 group by ssrv_tpss_pk, enti_nombre
 ;
 
@@ -131,7 +131,7 @@ from
 	portico.tbl_servicio_srvc
 	join portico.tbl_entidad_enti on
 		enti_pk = srvc_tpsr_pk
-where srvc_pk = 1202566
+where srvc_pk = 1192567
 ;
 
 
@@ -143,9 +143,8 @@ FROM
 	JOIN portico.tbl_tipo_subservicio_tpss tpss ON
 		tpss_pk = ssrv_tpss_pk
 WHERE
-	ssrv_srvc_pk = 1202566
-	AND ssrv_tpss_pk = 22004
-	AND tpss_es_facturable = 0
+	ssrv_tpss_pk = 22004
+	AND tpss_es_facturable = 1
 	AND (
 		tpss_tpdt_estado_pk IS NULL
 		OR (
@@ -153,11 +152,21 @@ WHERE
 			OR (tpss_pk = portico.getEntidad('EQUIPAMIENTO') AND ssrv_estado = 'R')
 		)
 	)
+	AND (
+		tpss_es_exencionable = 0
+		OR EXISTS (
+			SELECT 1
+			FROM portico.tbl_subservicio_dato_ssdt
+			WHERE ssdt_ssrv_pk = ssrv_pk
+				AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+		)
+	)
+	AND ssrv_srvc_pk = 1192567
 ;
 
 
 SELECT * FROM portico.tbl_subservicio_dato_ssdt
-WHERE ssdt_ssrv_pk = 1204566
+WHERE ssdt_ssrv_pk = 1195604
 	AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
 ;
 

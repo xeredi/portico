@@ -871,8 +871,9 @@ COMMENT ON COLUMN portico.tbl_subparametro_dato_spdt.spdt_cadena IS 'Valor de da
 CREATE TABLE portico.tbl_tipo_servicio_tpsr
 (
 	tpsr_pk BIGINT NOT NULL
-	, tpsr_es_temporal int NOT NULL
-	, tpsr_es_facturable int NOT NULL
+	, tpsr_es_temporal INT NOT NULL
+	, tpsr_es_facturable INT NOT NULL
+	, tpsr_es_exencionable INT NOT NULL
 	, tpsr_tpdt_estado_pk BIGINT
 
 	, CONSTRAINT pk_tpsr PRIMARY KEY (tpsr_pk)
@@ -907,6 +908,7 @@ CREATE TABLE portico.tbl_tipo_subservicio_tpss
 	, tpss_tpsr_pk BIGINT NOT NULL
 	, tpss_es_temporal int NOT NULL
 	, tpss_es_facturable int NOT NULL
+	, tpss_es_exencionable int NOT NULL
 	, tpss_tpdt_estado_pk BIGINT
 
 	, CONSTRAINT pk_tpss PRIMARY KEY (tpss_pk)

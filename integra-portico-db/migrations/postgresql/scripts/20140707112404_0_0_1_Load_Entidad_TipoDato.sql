@@ -2164,11 +2164,11 @@ INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_
 -- Manifiestos de Pesca
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21001, 'T', 1, 1, 1, 1, 'MANIFIESTO_PESCA', 'Manifiesto de Pesca')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21001, 0, 1, 43065)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21001, 0, 1, 1, 43065)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22001, 'S', 1, 1, 1, 1, 'PARTIDA_PESCA', 'Partida de Pesca')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22001, 21001, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22001, 21001, 0, 1, 1, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21001, 22001, 1)
 /
@@ -2185,17 +2185,17 @@ INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd
 /
 	INSERT INTO portico.tbl_entidad_accion_enac(enac_enti_pk, enac_orden, enac_path, enac_etiqueta) VALUES (21002, 5, 'mani-totales', 'Verif. Totales')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21002, 0, 1, 43070)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21002, 0, 1, 1, 43070)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22002, 'S', 1, 1, 1, 1, 'MANIFIESTO_CONSIGNATARIO', 'Consignatario de Manifiesto')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22002, 21002, 0, 0, null)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22002, 21002, 0, 0, 0, null)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21002, 22002, 1)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22003, 'S', 1, 1, 1, 1, 'BL', 'BL')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22003, 21002, 0, 0, 43085)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22003, 21002, 0, 0, 0, 43085)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21002, 22003, 2)
 /
@@ -2213,7 +2213,7 @@ INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_tem
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22004, 'S', 1, 1, 1, 1, 'PARTIDA', 'Partida')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22004, 21002, 0, 0, 43075)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22004, 21002, 0, 1, 1, 43075)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22003, 22004, 1)
 /
@@ -2225,7 +2225,7 @@ INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_tem
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22005, 'S', 1, 1, 1, 1, 'EQUIPAMIENTO', 'Equipamiento')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22005, 21002, 0, 0, 43080)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22005, 21002, 0, 1, 1, 43080)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22003, 22005, 2)
 /
@@ -2237,7 +2237,7 @@ INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_tem
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22006, 'S', 1, 1, 1, 1, 'PARTIDA_EQUIPAMIENTO', 'Partida-Equipamiento')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22006, 21002, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22006, 21002, 0, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22004, 22006, 1)
 /
@@ -2245,39 +2245,39 @@ INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_tem
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22007, 'S', 1, 1, 1, 1, 'PARTIDA_DOCUMENTO', 'Documento de la Partida')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22007, 21002, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22007, 21002, 0, 0, 0, NULL)
 /
 -- TODO Tiene Estado
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22004, 22007, 2)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22008, 'S', 1, 1, 1, 1, 'PARTIDA_IM', 'Instruccion de Marcaje de la Partida')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22008, 21002, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22008, 21002, 0, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22004, 22008, 3)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22009, 'S', 1, 1, 1, 1, 'PARTIDA_MMPP', 'MM.PP. de la Partida')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22009, 21002, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22009, 21002, 0, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22004, 22009, 4)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22010, 'S', 1, 1, 1, 1, 'PRECINTO_EQUIPAMIENTO', 'Precinto de Equipamiento')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22010, 21002, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22010, 21002, 0, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22005, 22010, 2)
 /
 -- Escala
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21003, 'T', 1, 1, 1, 1, 'ESCALA', 'Escala')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21003, 1, 1, 43265)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21003, 1, 1, 1, 43265)
 /
 	INSERT INTO portico.tbl_entidad_accion_enac(enac_enti_pk, enac_orden, enac_path, enac_etiqueta) VALUES (21003, 1, 'esca-notificar', 'Not. Practico')
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22011, 'S', 1, 1, 1, 1, 'ATRAQUE', 'Atraque')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22011, 21003, 1, 1, 43235)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22011, 21003, 1, 1, 1, 43235)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21003, 22011, 1)
 /
@@ -2299,41 +2299,41 @@ INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_tem
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22015, 'S', 0, 0, 0, 0, 'ESCALA_CONTADOR', 'Contador de Escala')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22015, 21003, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22015, 21003, 0, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21003, 22015, 2)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22016, 'S', 1, 1, 1, 1, 'ESCALA_RESIDUO', 'Residuo de Escala')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22016, 21003, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22016, 21003, 0, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21003, 22016, 3)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22012, 'S', 1, 1, 1, 1, 'OPERACION_ATRAQUE', 'Operacion de Atraque')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22012, 21003, 1, 1, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22012, 21003, 1, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (22011, 22012, 1)
 /
 -- Embarcacion Dep. Aut.
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21004, 'T', 1, 1, 1, 1, 'EMBARCACION_DEP_AUT', 'Embarcacion Deportiva Autonomica')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21004, 0, 1, NULL)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21004, 0, 1, 1, NULL)
 /
 -- Suministro a Buque
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21005, 'T', 1, 1, 1, 1, 'SUMINISTRO_CONSUMO', 'Suministro a Buque')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21005, 1, 1, 43295)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21005, 1, 1, 1, 43295)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22013, 'S', 1, 1, 1, 1, 'SUMINISTRO_CONSUMO_GASTO', 'Gasto de Consumo')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22013, 21005, 1, 1, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22013, 21005, 1, 1, 1, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21005, 22013, 1)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22014, 'S', 1, 1, 1, 1, 'SUMINISTRO_CONSUMO_LECTURA', 'Lectura de Consumo')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22014, 21005, 1, 1, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22014, 21005, 1, 1, 1, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21005, 22014, 2)
 /
@@ -2353,29 +2353,29 @@ INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_tem
 -- Ocupacion de Superficie
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21007, 'T', 1, 1, 1, 1, 'OCUPACION_SUPERFICIE', 'Ocupacion de Superficie')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21007, 1, 1, 43290)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21007, 1, 1, 1, 43290)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22018, 'S', 1, 1, 1, 1, 'OCUPACION_SUPERFICIE_LINEA', 'Linea de Ocupacion de Superficie')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22018, 21007, 1, 1, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22018, 21007, 1, 1, 1, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21007, 22018, 1)
 /
 -- Amarres
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21008, 'T', 1, 1, 1, 1, 'AMARRE', 'Amarre')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21008, 1, 0, 43230)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21008, 1, 0, 0, 43230)
 /
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (22019, 'S', 1, 1, 1, 1, 'AMARRE_MEDIO', 'Medio de Amarre')
 /
-INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk) VALUES (22019, 21008, 0, 0, NULL)
+INSERT INTO portico.tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk) VALUES (22019, 21008, 0, 0, 0, NULL)
 /
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (21008, 22019, 1)
 /
 -- Practicajes
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21009, 'T', 1, 1, 1, 1, 'PRACTICAJE', 'Practicaje')
 /
-INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk) VALUES (21009, 1, 0, 43275)
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21009, 1, 0, 0, 43275)
 /
 
 
@@ -2687,17 +2687,15 @@ DELETE FROM portico.tbl_periodo_proceso_pepr
 
 DELETE FROM portico.tbl_subserv_subserv_ssss
 /
-
 DELETE FROM portico.tbl_subservicio_dato_ssdt
 /
-
 DELETE FROM portico.tbl_subservicio_ssrv
 /
-
 DELETE FROM portico.tbl_servicio_dato_srdt
 /
-
 DELETE FROM portico.tbl_servicio_srvc
+/
+DELETE FROM portico.tbl_servicio_secuencia_srsc
 /
 
 

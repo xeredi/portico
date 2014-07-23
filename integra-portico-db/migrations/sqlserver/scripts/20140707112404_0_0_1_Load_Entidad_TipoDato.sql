@@ -2656,7 +2656,6 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-
 DELETE FROM portico.tbl_proceso_archivo_prar
 /
 
@@ -2688,17 +2687,15 @@ DELETE FROM portico.tbl_periodo_proceso_pepr
 
 DELETE FROM portico.tbl_subserv_subserv_ssss
 /
-
 DELETE FROM portico.tbl_subservicio_dato_ssdt
 /
-
 DELETE FROM portico.tbl_subservicio_ssrv
 /
-
 DELETE FROM portico.tbl_servicio_dato_srdt
 /
-
 DELETE FROM portico.tbl_servicio_srvc
+/
+DELETE FROM portico.tbl_servicio_secuencia_srsc
 /
 
 
@@ -2722,6 +2719,7 @@ DELETE FROM portico.tbl_parametro_version_prvr
 
 DELETE FROM portico.tbl_parametro_prmt
 /
+
 
 
 -- Tipos de dato - Tipos de Servicio
