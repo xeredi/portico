@@ -410,7 +410,7 @@ public final class ServicioImporterBO {
 
                 break;
             case PR:
-                final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId()).get(value);
+                final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId()).get(value.toString().toUpperCase());
 
                 if (prmtId == null) {
                     final String errorMessage = "Parametro no encontrado para el codigo: " + value
