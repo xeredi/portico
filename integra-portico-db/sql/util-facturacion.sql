@@ -184,27 +184,6 @@ WHERE
 ;
 
 -- Pagador Principal
-SELECT * 
-FROM portico.tbl_tipo_dato_tpdt
-ORDER BY tpdt_codigo;
-;
-
-SELECT * 
-FROM portico.tbl_entidad_enti
-ORDER BY enti_codigo;
-;
-
-SELECT *
-FROM
-	portico.tbl_entidad_tipo_dato_entd
-WHERE 
-	entd_enti_pk = portico.getEntidad('MANIFIESTO_CONSIGNATARIO')
---	AND entd_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
-;
-
-
-
-
 select *
 FROM
 	portico.tbl_subservicio_dato_ssdt
@@ -242,43 +221,98 @@ WHERE
 ;
 
 
+-- Reg. Simplificado
+SELECT * 
+FROM portico.tbl_tipo_dato_tpdt
+ORDER BY tpdt_codigo;
+;
 
+SELECT * 
+FROM portico.tbl_entidad_enti
+ORDER BY enti_codigo;
+;
 
-select *
+SELECT *
 FROM
-	portico.tbl_subservicio_dato_ssdt
+	portico.tbl_entidad_tipo_dato_entd
+	JOIN portico.tbl_tipo_dato_tpdt ON
+		tpdt_pk = entd_tpdt_pk
 WHERE 
-	ssdt_tpdt_pk = portico.getTipoDato('ORGA')
+	entd_enti_pk = portico.getEntidad('UNIDAD_CARGA')
+--	AND entd_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
+;
+
+-- esTransporte
+SELECT *
+FROM
+	portico.tbl_parametro_dato_prdt
+WHERE
+	prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+	AND EXISTS (
+		SELECT 1
+		FROM portico.tbl_parametro_version_prvr
+		WHERE
+			prvr_pk = prdt_prvr_pk
+			AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_subservicio_dato_ssdt
+				WHERE 
+					ssdt_prmt_pk = prvr_prmt_pk
+					AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+					AND ssdt_ssrv_pk = 1198158
+			)
+	)
+;
+
+-- mercancia de la uc
+SELECT *
+FROM
+	portico.tbl_parametro_dato_prdt
+WHERE
+	prdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+	AND EXISTS (
+		SELECT 1
+		FROM portico.tbl_parametro_version_prvr
+		WHERE
+			prvr_pk = prdt_prvr_pk
+			AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_subservicio_dato_ssdt
+				WHERE 
+					ssdt_prmt_pk = prvr_prmt_pk 
+					AND ssdt_tpdt_pk = portico.getTipoDato('UNIDAD_CARGA')
+--					AND ssdt_ssrv_pk = 1198158
+			)
+	)
+;
+
+
+
+
+SELECT *
+FROM portico.tbl_subservicio_dato_ssdt
+WHERE 
+	ssdt_tpdt_pk = getTipoDato('BOOLEANO_02')
+	AND EXISTS (
+		SELECT 1
+		FROM portico.tbl_subservicio_ssrv
+		WHERE 
+			ssrv_pk = ssdt_ssrv_pk
+			AND ssrv_tpss_pk = getEntidad('BL')
+	)
 	AND EXISTS (
 		SELECT 1
 		FROM portico.tbl_subserv_subserv_ssss
 		WHERE 
 			ssss_ssrvp_pk = ssdt_ssrv_pk
-			AND exists (
-				SELECT 1
-				FROM 
-					portico.tbl_subservicio_ssrv
-				WHERE
-					ssrv_tpss_pk = portico.getEntidad('MANIFIESTO_CONSIGNATARIO')
-					AND ssrv_pk = ssss_ssrvp_pk
-			)
-			AND ssss_ssrvh_pk = 1195659
+			AND ssss_ssrvh_pk = 1198329
 	)
 ;
 
-SELECT * 
-FROM portico.tbl_subserv_subserv_ssss
-WHERE 
-	exists (
-		SELECT 1
-		FROM 
-			portico.tbl_subservicio_ssrv
-		WHERE
-			ssrv_tpss_pk = portico.getEntidad('BL')
-			AND ssrv_pk = ssss_ssrvp_pk
-	)
-	AND ssss_ssrvh_pk = 1198329
-;
+
+
 
 
 
@@ -386,8 +420,69 @@ WHERE
 	AND (
 		tpss_tpdt_estado_pk IS NULL
 		OR (
-			(tpss_pk = portico.getEntidad('PARTIDA') AND ssrv_estado = 'R')
+			(
+				tpss_pk = portico.getEntidad('PARTIDA') 
+				AND ssrv_estado = 'R'
+				AND (
+					-- Regimen simplificado
+					EXISTS (
+						SELECT 1
+						FROM portico.tbl_subservicio_dato_ssdt
+						WHERE 
+							
+							EXISTS (
+								SELECT 1
+								FROM portico.tbl_subservicio_ssrv
+								WHERE 
+									ssrv_pk = ssdt_ssrv_pk
+									AND ssrv_tpss_pk = getEntidad('BL')
+							)
+							AND EXISTS (
+								SELECT 1
+								FROM portico.tbl_subserv_subserv_ssss
+								WHERE 
+									ssss_ssrvp_pk = ssdt_ssrv_pk
+									AND ssss_ssrvh_pk = ssrv.ssrv_pk
+							)
+							AND (
+								(ssdt_tpdt_pk = getTipoDato('BOOLEANO_02') AND ssdt_nentero = 0)
+								or (ssdt_tpdt_pk = getTipoDato('TIPO_BL') AND ssdt_cadena = 'P')
+							)
+					)
+					or (
+						EXISTS (
+							SELECT 1
+							FROM
+								portico.tbl_parametro_dato_prdt
+							WHERE
+								prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+								AND EXISTS (
+									SELECT 1
+									FROM portico.tbl_parametro_version_prvr
+									WHERE
+										prvr_pk = prdt_prvr_pk
+										AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+										AND EXISTS (
+											SELECT 1
+											FROM portico.tbl_subservicio_dato_ssdt
+											WHERE 
+												ssdt_prmt_pk = prvr_prmt_pk
+												AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+												AND ssdt_ssrv_pk = ssrv.ssrv_pk
+										)
+								)
+								AND prdt_nentero = 1
+								-- TODO Falta ver que la mercancia de la unidad de carga sea nula
+						)
+					)
+				)
+			)
+			
 			OR (tpss_pk = portico.getEntidad('EQUIPAMIENTO') AND ssrv_estado = 'R')
+
+			OR (tpss_pk = portico.getEntidad('PARTIDA_PESCA') AND ssrv_estado = 'R')
+
+			OR (tpss_pk = portico.getEntidad('ATRAQUE') AND ssrv_estado IN ('I', 'F'))
 		)
 	)
 	AND (
@@ -410,8 +505,14 @@ WHERE
 				AND srdt_cadena IN ('0', '1')
 		)
 	)
-	-- Que no este valorado/facturado
+
+	-- TODO Condicion
+
+	-- TODO Que no este valorado/facturado
+
 	AND ssrv_srvc_pk = 1194876
+
+ORDER BY ssrv_srvc_pk, ssrv_numero
 ;
 
 
