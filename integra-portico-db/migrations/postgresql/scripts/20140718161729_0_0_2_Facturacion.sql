@@ -6,7 +6,9 @@ CREATE TABLE portico.tbl_cargo_crgo
 (
 	crgo_pk BIGINT NOT NULL
 	, crgo_codigo VARCHAR(15) NOT NULL
+	, crgo_codigo_norm VARCHAR(15)
 	, crgo_es_principal INT NOT NULL
+	, crgo_es_temporal INT NOT NULL
 	, crgo_tpsr_pk BIGINT NOT NULL
 	, crgo_tipo VARCHAR(1) NOT NULL
 	, crgo_descripcion VARCHAR(200) NOT NULL
@@ -33,26 +35,6 @@ COMMENT ON COLUMN portico.tbl_cargo_crgo.crgo_tpsr_pk IS 'Identificador de Modul
 
 
 
--- tbl_cargo_dep_crdp
-CREATE TABLE portico.tbl_cargo_dep_crdp
-(
-	crdp_crgop_pk BIGINT NOT NULL
-	, crdp_crgoh_pk BIGINT NOT NULL
-
-	, CONSTRAINT pk_crdp PRIMARY KEY (crdp_crgop_pk, crdp_crgoh_pk)
-
-	, CONSTRAINT fk_crdp_crgop_pk FOREIGN KEY (crdp_crgop_pk)
-		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
-	, CONSTRAINT fk_crdp_crgoh_pk FOREIGN KEY (crdp_crgoh_pk)
-		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
-)
-/
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_cargo_dep_crdp TO portico
-/
-
-
-
 -- tbl_cargo_version_crgv
 CREATE TABLE portico.tbl_cargo_version_crgv
 (
@@ -69,6 +51,48 @@ CREATE TABLE portico.tbl_cargo_version_crgv
 /
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_cargo_version_crgv TO portico
+/
+
+
+
+-- tbl_cargo_dep_crdp
+CREATE TABLE portico.tbl_cargo_dep_crdp
+(
+	crdp_pk BIGINT NOT NULL
+	, crdp_crgop_pk BIGINT NOT NULL
+	, crdp_crgoh_pk BIGINT NOT NULL
+
+	, CONSTRAINT pk_crdp PRIMARY KEY (crdp_pk)
+	, CONSTRAINT uq_crdp UNIQUE (crdp_crgop_pk, crdp_crgoh_pk)
+
+	, CONSTRAINT fk_crdp_crgop_pk FOREIGN KEY (crdp_crgop_pk)
+		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
+	, CONSTRAINT fk_crdp_crgoh_pk FOREIGN KEY (crdp_crgoh_pk)
+		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
+)
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_cargo_dep_crdp TO portico
+/
+
+
+
+-- tbl_cargo_dep_version_crdv
+CREATE TABLE portico.tbl_cargo_dep_version_crdv
+(
+	crdv_pk BIGINT NOT NULL
+	, crdv_crdp_pk BIGINT NOT NULL
+	, crdv_fini TIMESTAMP NOT NULL
+	, crdv_ffin TIMESTAMP
+
+	, CONSTRAINT pk_crdv PRIMARY KEY (crdv_pk)
+
+	, CONSTRAINT fk_crdv_crdp_pk FOREIGN KEY (crdv_crdp_pk)
+		REFERENCES portico.tbl_cargo_dep_crdp (crdp_pk)
+)
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_cargo_dep_version_crdv TO portico
 /
 
 
@@ -776,6 +800,8 @@ DROP TABLE portico.tbl_regla_inc_rgin
 DROP TABLE portico.tbl_regla_version_rglv
 /
 DROP TABLE portico.tbl_regla_rgla
+/
+DROP TABLE portico.tbl_cargo_dep_version_crdv
 /
 DROP TABLE portico.tbl_cargo_dep_crdp
 /

@@ -316,7 +316,7 @@ WHERE
 
 
 
-SELECT srvc.*, ssrv.*, tpss.*, tpsr.*
+SELECT srvc.*, ssrv.*, tpss.*, tpsr.*, rgla.*
 	, (
 		SELECT prmt_pk
 		FROM portico.tbl_parametro_prmt
@@ -413,9 +413,11 @@ FROM
 		tpss_pk = ssrv_tpss_pk
 	JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
 		tpsr_pk = srvc_tpsr_pk
+	JOIN portico.tbl_regla_rgla rgla ON
+		rgla_enti_pk = ssrv_tpss_pk
+		AND rgla_pk = 63001
 WHERE
-	ssrv_tpss_pk = 22004
-	AND tpsr_es_facturable = 1
+	tpsr_es_facturable = 1
 	AND tpss_es_facturable = 1
 	AND (
 		tpss_tpdt_estado_pk IS NULL
@@ -510,7 +512,43 @@ WHERE
 
 	-- TODO Que no este valorado/facturado
 
-	AND ssrv_srvc_pk = 1192567
+	AND (
+		(
+			rgla_tipo = 'T'
+			AND NOT EXISTS (
+				SELECT 1
+				FROM portico.tbl_servicio_cargo_srcr
+				WHERE
+					srcr_srvc_pk = srvc_pk
+					AND srcr_ssrv_pk = ssrv_pk
+					AND srcr_crgo_pk = rgla_crgo_pk
+					AND (srcr_vlrc_pk IS NOT NULL OR srcr_fctr_pk IS NOT NULL)
+			)
+			-- TODO Ojo lo de temporalidad
+		)
+		OR (
+			rgla_tipo IN ('C', 'D')
+			AND EXISTS (
+				SELECT 1
+				FROM 
+					portico.tbl_valoracion_tmp_vlrt
+				WHERE 
+					vlrt_prbt_pk = 1 -- TODO
+					AND vlrt_srvc_pk = srvc_pk
+					AND vlrt_ssrv_pk = ssrv_pk
+					AND vlrt_crgo_pk = rgla_crgo_pk
+					AND vlrt_rgla_pk = ANY(
+						SELECT rgla_pk
+						FROM portico.tbl_regla_rgla
+						WHERE 
+							rgla_crgo_pk = vlrt_crgo_pk
+							AND rgla_tipo = 'T'
+					)
+			)
+		)
+	)
+
+	AND ssrv_srvc_pk = 1193880
 
 ORDER BY ssrv_srvc_pk, ssrv_numero
 ;
@@ -530,3 +568,6 @@ order by tpdt_codigo
 --2		NO FACT/EST	No Facturable y Si Estadística
 --3		NO FACT/NO EST	No Facturable y No Estadística
 --4		SIN REVISAR	Sin revisar
+
+;
+
