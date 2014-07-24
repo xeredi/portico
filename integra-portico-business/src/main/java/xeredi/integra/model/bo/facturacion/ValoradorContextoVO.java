@@ -14,7 +14,7 @@ import xeredi.integra.model.vo.servicio.ServicioVO;
 /**
  * The Class ValoracionContextoVO.
  */
-public final class ValoracionContextoVO {
+public final class ValoradorContextoVO {
 
     /** The prbt. */
     private ProcesoVO prbt;

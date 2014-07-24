@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * The Interface Valoracion.
  */
-public interface Valoracion {
+public interface Valorador {
 
     /**
      * Valorar servicio.

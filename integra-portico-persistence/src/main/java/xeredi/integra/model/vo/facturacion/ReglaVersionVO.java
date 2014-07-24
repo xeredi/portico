@@ -22,20 +22,38 @@ public final class ReglaVersionVO {
     /** The condicion. */
     private String condicion;
 
+    /** The condicion sql. */
+    private String condicionSql;
+
     /** The formula. */
     private String formula;
+
+    /** The formula sql. */
+    private String formulaSql;
 
     /** The path impuesto. */
     private String pathImpuesto;
 
+    /** The path impuesto sql. */
+    private String pathImpuestoSql;
+
     /** The path pagador. */
     private String pathPagador;
+
+    /** The path pagador sql. */
+    private String pathPagadorSql;
 
     /** The path es suj pasivo. */
     private String pathEsSujPasivo;
 
+    /** The path es suj pasivo sql. */
+    private String pathEsSujPasivoSql;
+
     /** The path cod exen. */
     private String pathCodExen;
+
+    /** The path cod exen sql. */
+    private String pathCodExenSql;
 
     /** The etiq info1. */
     private String etiqInfo1;
@@ -43,11 +61,17 @@ public final class ReglaVersionVO {
     /** The path info1. */
     private String pathInfo1;
 
+    /** The path info1 sql. */
+    private String pathInfo1Sql;
+
     /** The etiq info2. */
     private String etiqInfo2;
 
     /** The path info2. */
     private String pathInfo2;
+
+    /** The path info2 sql. */
+    private String pathInfo2Sql;
 
     /** The etiq info3. */
     private String etiqInfo3;
@@ -55,11 +79,17 @@ public final class ReglaVersionVO {
     /** The path info3. */
     private String pathInfo3;
 
+    /** The path info3 sql. */
+    private String pathInfo3Sql;
+
     /** The etiq info4. */
     private String etiqInfo4;
 
     /** The path info4. */
     private String pathInfo4;
+
+    /** The path info4 sql. */
+    private String pathInfo4Sql;
 
     /** The etiq info5. */
     private String etiqInfo5;
@@ -67,11 +97,17 @@ public final class ReglaVersionVO {
     /** The path info5. */
     private String pathInfo5;
 
+    /** The path info5 sql. */
+    private String pathInfo5Sql;
+
     /** The etiq info6. */
     private String etiqInfo6;
 
     /** The path info6. */
     private String pathInfo6;
+
+    /** The path info6 sql. */
+    private String pathInfo6Sql;
 
     /** The etiq cuant1. */
     private String etiqCuant1;
@@ -79,11 +115,17 @@ public final class ReglaVersionVO {
     /** The path cuant1. */
     private String pathCuant1;
 
+    /** The path cuant1 sql. */
+    private String pathCuant1Sql;
+
     /** The etiq cuant2. */
     private String etiqCuant2;
 
     /** The path cuant2. */
     private String pathCuant2;
+
+    /** The path cuant2 sql. */
+    private String pathCuant2Sql;
 
     /** The etiq cuant3. */
     private String etiqCuant3;
@@ -91,11 +133,17 @@ public final class ReglaVersionVO {
     /** The path cuant3. */
     private String pathCuant3;
 
+    /** The path cuant3 sql. */
+    private String pathCuant3Sql;
+
     /** The etiq cuant4. */
     private String etiqCuant4;
 
     /** The path cuant4. */
     private String pathCuant4;
+
+    /** The path cuant4 sql. */
+    private String pathCuant4Sql;
 
     /** The etiq cuant5. */
     private String etiqCuant5;
@@ -103,11 +151,17 @@ public final class ReglaVersionVO {
     /** The path cuant5. */
     private String pathCuant5;
 
+    /** The path cuant5 sql. */
+    private String pathCuant5Sql;
+
     /** The etiq cuant6. */
     private String etiqCuant6;
 
     /** The path cuant6. */
     private String pathCuant6;
+
+    /** The path cuant6 sql. */
+    private String pathCuant6Sql;
 
     /**
      * {@inheritDoc}
@@ -115,6 +169,13 @@ public final class ReglaVersionVO {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    /**
+     * Generate sql.
+     */
+    public void generateSql() {
+        // TODO Implementar
     }
 
     /**
@@ -742,6 +803,347 @@ public final class ReglaVersionVO {
      */
     public void setPathCuant6(String value) {
         this.pathCuant6 = value;
+    }
+
+    /**
+     * Gets the condicion sql.
+     *
+     * @return the condicion sql
+     */
+    public String getCondicionSql() {
+        return condicionSql;
+    }
+
+    /**
+     * Sets the condicion sql.
+     *
+     * @param value
+     *            the condicion sql
+     */
+    public void setCondicionSql(String value) {
+        this.condicionSql = value;
+    }
+
+    /**
+     * Gets the formula sql.
+     *
+     * @return the formula sql
+     */
+    public String getFormulaSql() {
+        return formulaSql;
+    }
+
+    /**
+     * Sets the formula sql.
+     *
+     * @param value
+     *            the formula sql
+     */
+    public void setFormulaSql(String value) {
+        this.formulaSql = value;
+    }
+
+    /**
+     * Gets the path impuesto sql.
+     *
+     * @return the path impuesto sql
+     */
+    public String getPathImpuestoSql() {
+        return pathImpuestoSql;
+    }
+
+    /**
+     * Sets the path impuesto sql.
+     *
+     * @param value
+     *            the path impuesto sql
+     */
+    public void setPathImpuestoSql(String value) {
+        this.pathImpuestoSql = value;
+    }
+
+    /**
+     * Gets the path pagador sql.
+     *
+     * @return the path pagador sql
+     */
+    public String getPathPagadorSql() {
+        return pathPagadorSql;
+    }
+
+    /**
+     * Sets the path pagador sql.
+     *
+     * @param value
+     *            the path pagador sql
+     */
+    public void setPathPagadorSql(String value) {
+        this.pathPagadorSql = value;
+    }
+
+    /**
+     * Gets the path es suj pasivo sql.
+     *
+     * @return the path es suj pasivo sql
+     */
+    public String getPathEsSujPasivoSql() {
+        return pathEsSujPasivoSql;
+    }
+
+    /**
+     * Sets the path es suj pasivo sql.
+     *
+     * @param value
+     *            the path es suj pasivo sql
+     */
+    public void setPathEsSujPasivoSql(String value) {
+        this.pathEsSujPasivoSql = value;
+    }
+
+    /**
+     * Gets the path cod exen sql.
+     *
+     * @return the path cod exen sql
+     */
+    public String getPathCodExenSql() {
+        return pathCodExenSql;
+    }
+
+    /**
+     * Sets the path cod exen sql.
+     *
+     * @param value
+     *            the path cod exen sql
+     */
+    public void setPathCodExenSql(String value) {
+        this.pathCodExenSql = value;
+    }
+
+    /**
+     * Gets the path info1 sql.
+     *
+     * @return the path info1 sql
+     */
+    public String getPathInfo1Sql() {
+        return pathInfo1Sql;
+    }
+
+    /**
+     * Sets the path info1 sql.
+     *
+     * @param value
+     *            the path info1 sql
+     */
+    public void setPathInfo1Sql(String value) {
+        this.pathInfo1Sql = value;
+    }
+
+    /**
+     * Gets the path info2 sql.
+     *
+     * @return the path info2 sql
+     */
+    public String getPathInfo2Sql() {
+        return pathInfo2Sql;
+    }
+
+    /**
+     * Sets the path info2 sql.
+     *
+     * @param value
+     *            the path info2 sql
+     */
+    public void setPathInfo2Sql(String value) {
+        this.pathInfo2Sql = value;
+    }
+
+    /**
+     * Gets the path info3 sql.
+     *
+     * @return the path info3 sql
+     */
+    public String getPathInfo3Sql() {
+        return pathInfo3Sql;
+    }
+
+    /**
+     * Sets the path info3 sql.
+     *
+     * @param value
+     *            the path info3 sql
+     */
+    public void setPathInfo3Sql(String value) {
+        this.pathInfo3Sql = value;
+    }
+
+    /**
+     * Gets the path info4 sql.
+     *
+     * @return the path info4 sql
+     */
+    public String getPathInfo4Sql() {
+        return pathInfo4Sql;
+    }
+
+    /**
+     * Sets the path info4 sql.
+     *
+     * @param value
+     *            the path info4 sql
+     */
+    public void setPathInfo4Sql(String value) {
+        this.pathInfo4Sql = value;
+    }
+
+    /**
+     * Gets the path info5 sql.
+     *
+     * @return the path info5 sql
+     */
+    public String getPathInfo5Sql() {
+        return pathInfo5Sql;
+    }
+
+    /**
+     * Sets the path info5 sql.
+     *
+     * @param value
+     *            the path info5 sql
+     */
+    public void setPathInfo5Sql(String value) {
+        this.pathInfo5Sql = value;
+    }
+
+    /**
+     * Gets the path info6 sql.
+     *
+     * @return the path info6 sql
+     */
+    public String getPathInfo6Sql() {
+        return pathInfo6Sql;
+    }
+
+    /**
+     * Sets the path info6 sql.
+     *
+     * @param value
+     *            the path info6 sql
+     */
+    public void setPathInfo6Sql(String value) {
+        this.pathInfo6Sql = value;
+    }
+
+    /**
+     * Gets the path cuant1 sql.
+     *
+     * @return the path cuant1 sql
+     */
+    public String getPathCuant1Sql() {
+        return pathCuant1Sql;
+    }
+
+    /**
+     * Sets the path cuant1 sql.
+     *
+     * @param value
+     *            the path cuant1 sql
+     */
+    public void setPathCuant1Sql(String value) {
+        this.pathCuant1Sql = value;
+    }
+
+    /**
+     * Gets the path cuant2 sql.
+     *
+     * @return the path cuant2 sql
+     */
+    public String getPathCuant2Sql() {
+        return pathCuant2Sql;
+    }
+
+    /**
+     * Sets the path cuant2 sql.
+     *
+     * @param value
+     *            the path cuant2 sql
+     */
+    public void setPathCuant2Sql(String value) {
+        this.pathCuant2Sql = value;
+    }
+
+    /**
+     * Gets the path cuant3 sql.
+     *
+     * @return the path cuant3 sql
+     */
+    public String getPathCuant3Sql() {
+        return pathCuant3Sql;
+    }
+
+    /**
+     * Sets the path cuant3 sql.
+     *
+     * @param value the path cuant3 sql
+     */
+    public void setPathCuant3Sql(String value) {
+        this.pathCuant3Sql = value;
+    }
+
+    /**
+     * Gets the path cuant4 sql.
+     *
+     * @return the path cuant4 sql
+     */
+    public String getPathCuant4Sql() {
+        return pathCuant4Sql;
+    }
+
+    /**
+     * Sets the path cuant4 sql.
+     *
+     * @param value
+     *            the path cuant4 sql
+     */
+    public void setPathCuant4Sql(String value) {
+        this.pathCuant4Sql = value;
+    }
+
+    /**
+     * Gets the path cuant5 sql.
+     *
+     * @return the path cuant5 sql
+     */
+    public String getPathCuant5Sql() {
+        return pathCuant5Sql;
+    }
+
+    /**
+     * Sets the path cuant5 sql.
+     *
+     * @param value
+     *            the path cuant5 sql
+     */
+    public void setPathCuant5Sql(String value) {
+        this.pathCuant5Sql = value;
+    }
+
+    /**
+     * Gets the path cuant6 sql.
+     *
+     * @return the path cuant6 sql
+     */
+    public String getPathCuant6Sql() {
+        return pathCuant6Sql;
+    }
+
+    /**
+     * Sets the path cuant6 sql.
+     *
+     * @param value
+     *            the path cuant6 sql
+     */
+    public void setPathCuant6Sql(String value) {
+        this.pathCuant6Sql = value;
     }
 
 }

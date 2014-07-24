@@ -27,10 +27,10 @@ import com.google.inject.Singleton;
  * The Class ValoracionBO.
  */
 @Singleton
-public final class ValoracionBO implements Valoracion {
+public final class ValoradorBO implements Valorador {
 
     /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ValoracionBO.class);
+    private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
 
     /** The srvc dao. */
     @Inject
@@ -57,7 +57,7 @@ public final class ValoracionBO implements Valoracion {
                     + fechaLiquidacion + ", prbtId: " + prbtId);
         }
 
-        final ValoracionContextoVO contextoVO = new ValoracionContextoVO();
+        final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
 
         contextoVO.setFechaLiquidacion(fechaLiquidacion);
         contextoVO.setPrbt(prbtDAO.select(prbtId));
@@ -112,7 +112,7 @@ public final class ValoracionBO implements Valoracion {
      * @param contextoVO
      *            the contexto vo
      */
-    private void valorarCargoServicio(final ValoracionContextoVO contextoVO) {
+    private void valorarCargoServicio(final ValoradorContextoVO contextoVO) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Contexto: " + contextoVO);
         }
@@ -128,6 +128,8 @@ public final class ValoracionBO implements Valoracion {
         final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
 
         for (final ReglaVO rgla : rglaList) {
+            rgla.getRglv().generateSql();
+
             contextoVO.setRgla(rgla);
         }
     }
