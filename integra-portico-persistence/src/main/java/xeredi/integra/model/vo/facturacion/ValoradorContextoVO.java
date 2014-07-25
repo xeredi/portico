@@ -1,11 +1,9 @@
-package xeredi.integra.model.bo.facturacion;
+package xeredi.integra.model.vo.facturacion;
 
 import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.vo.facturacion.CargoVO;
-import xeredi.integra.model.vo.facturacion.ReglaVO;
 import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
 import xeredi.integra.model.vo.proceso.ProcesoVO;
 import xeredi.integra.model.vo.servicio.ServicioVO;

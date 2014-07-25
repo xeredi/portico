@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO">
+    <resultMap type="ValoracionTemporalVO" id="ResultMap">
+        <id column="vlrt_prbt_pk" />
+        <id column="vlrt_srvc_pk" />
+        <id column="vlrt_ssrv_pk" />
+        <id column="vlrt_cgro_pk" />
+        <id column="vlrt_rgla_pk" />
+        <id column="vlrt_impuesto_pk" />
+        <id column="vlrt_pagador_pk" />
+
+        <result column="vlrt_orden" property="orden" />
+        <result column="vlrt_importe_base" property="importeBase" />
+        <result column="vlrt_importe" property="importe" />
+        <result column="vlrt_es_suj_pasivo" property="sujPasivo" />
+        <result column="vlrt_cod_exen" property="codExencion" />
+
+        <result column="vlrt_cuant1" property="cuant1" />
+        <result column="vlrt_cuant2" property="cuant2" />
+        <result column="vlrt_cuant3" property="cuant3" />
+        <result column="vlrt_cuant4" property="cuant4" />
+        <result column="vlrt_cuant5" property="cuant5" />
+        <result column="vlrt_cuant6" property="cuant6" />
+
+        <result column="vlrt_info1" property="info1" />
+        <result column="vlrt_info2" property="info2" />
+        <result column="vlrt_info3" property="info3" />
+        <result column="vlrt_info4" property="info4" />
+        <result column="vlrt_info5" property="info5" />
+        <result column="vlrt_info6" property="info6" />
+
+        <association property="prbt" javaType="ProcesoVO">
+            <result column="vlrt_prbt_pk" property="id" />
+        </association>
+
+        <association property="srvc" javaType="ServicioVO">
+            <result column="vlrt_srvc_pk" property="id" />
+        </association>
+
+        <association property="ssrv" javaType="SubservicioVO">
+            <result column="vlrt_ssrv_pk" property="id" />
+        </association>
+
+        <association property="crgo" javaType="CargoVO">
+            <result column="vlrt_crgo_pk" property="id" />
+        </association>
+
+        <association property="rgla" javaType="ReglaVO">
+            <result column="vlrt_rgla_pk" property="id" />
+        </association>
+
+        <association property="impuesto" javaType="ParametroVO">
+            <result column="vlrt_impuesto_pk" property="id" />
+        </association>
+
+        <association property="pagador" javaType="ParametroVO">
+            <result column="vlrt_pagador_pk" property="id" />
+        </association>
+    </resultMap>
+
+    <select id="selectAplicarReglaSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+    <![CDATA[
+    SELECT
+        #{prbt.id} AS vlrt_prbt_pk
+        , srvc.srvc_pk AS vlrt_srvc_pk
+        , ssrv.ssrv_pk AS vlrt_ssrv_pk
+        , rgla.rgla_crgo_pk AS vlrt_crgo_pk
+        , rgla.rgla_pk AS vlrt_rgla_pk
+        , ssrv.ssrv_numero AS vlrt_orden
+        , 0 AS vlrt_importe_base
+        , 0 AS vlrt_importe
+
+        , 0 AS vlrt_cuant1
+        , 0 AS vlrt_cuant2
+        , 0 AS vlrt_cuant3
+        , 0 AS vlrt_cuant4
+        , 0 AS vlrt_cuant5
+        , 0 AS vlrt_cuant6
+
+        , NULL AS vlrt_info1
+        , NULL AS vlrt_info2
+        , NULL AS vlrt_info3
+        , NULL AS vlrt_info4
+        , NULL AS vlrt_info5
+        , NULL AS vlrt_info6
+
+        , (
+            SELECT prmt_pk
+            FROM portico.tbl_parametro_prmt
+            WHERE
+                EXISTS (
+                    SELECT 1
+                    FROM portico.tbl_subservicio_dato_ssdt
+                    WHERE
+                        ssdt_prmt_pk = prmt_pk
+                        and ssdt_tpdt_pk = portico.getTipoDato('TIPO_IVA')
+                        AND EXISTS (
+                            SELECT 1
+                            FROM portico.tbl_subservicio_ssrv
+                            WHERE
+                                ssrv_pk = ssdt_ssrv_pk
+                                AND ssrv_tpss_pk = portico.getEntidad('BL')
+                        )
+                        AND EXISTS (
+                            SELECT 1
+                            FROM portico.tbl_subserv_subserv_ssss
+                            WHERE
+                                ssss_ssrvp_pk = ssdt_ssrv_pk
+                                AND ssss_ssrvh_pk = ssrv.ssrv_pk
+                        )
+                )
+        ) AS vlrt_impuesto_pk
+        , (
+            SELECT ssdt_nentero
+            FROM portico.tbl_subservicio_dato_ssdt
+            WHERE
+                ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+                AND EXISTS (
+                    SELECT 1
+                    FROM portico.tbl_subservicio_ssrv
+                    WHERE
+                        ssrv_pk = ssdt_ssrv_pk
+                        AND ssrv_tpss_pk = portico.getEntidad('BL')
+                )
+                AND EXISTS (
+                    SELECT 1
+                    FROM portico.tbl_subserv_subserv_ssss
+                    WHERE
+                        ssss_ssrvp_pk = ssdt_ssrv_pk
+                        AND ssss_ssrvh_pk = ssrv.ssrv_pk
+                )
+        ) AS vlrt_es_suj_pasivo
+        , (
+            select ssdt_prmt_pk
+            FROM
+                portico.tbl_subservicio_dato_ssdt
+            WHERE
+                ssdt_tpdt_pk = portico.getTipoDato('ORGA')
+                AND EXISTS (
+                    SELECT 1
+                    FROM
+                        portico.tbl_subservicio_ssrv
+                    WHERE
+                        ssrv_pk = ssdt_ssrv_pk
+                        AND ssrv_tpss_pk = portico.getEntidad('MANIFIESTO_CONSIGNATARIO')
+                        AND EXISTS (
+                            SELECT 1
+                            FROM portico.tbl_subserv_subserv_ssss
+                            WHERE
+                                ssss_ssrvp_pk = ssrv_pk
+                                AND EXISTS (
+                                    SELECT 1
+                                    FROM
+                                        portico.tbl_subservicio_ssrv
+                                    WHERE
+                                        ssrv_pk = ssss_ssrvh_pk
+                                        AND ssrv_tpss_pk = portico.getEntidad('BL')
+                                        AND EXISTS (
+                                            SELECT 1
+                                            FROM portico.tbl_subserv_subserv_ssss
+                                            WHERE
+                                                ssss_ssrvp_pk = ssrv_pk
+                                                AND ssss_ssrvh_pk = ssrv.ssrv_pk
+                                        )
+                                )
+                        )
+                )
+        ) AS vlrt_pagador_pk
+        , (
+            SELECT ssdt_cadena
+            FROM portico.tbl_subservicio_dato_ssdt
+            WHERE ssdt_ssrv_pk = ssrv.ssrv_pk
+                AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+        ) AS vlrt_cod_exen
+    FROM
+        portico.tbl_subservicio_ssrv ssrv
+        JOIN portico.tbl_servicio_srvc srvc ON
+            srvc_pk = ssrv_srvc_pk
+        JOIN portico.tbl_tipo_subservicio_tpss tpss ON
+            tpss_pk = ssrv_tpss_pk
+        JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+            tpsr_pk = srvc_tpsr_pk
+        JOIN portico.tbl_regla_rgla rgla ON
+            rgla_enti_pk = ssrv_tpss_pk
+            AND rgla_pk = #{rgla.id}
+    WHERE
+        tpsr_es_facturable = 1
+        AND tpss_es_facturable = 1
+        AND (
+            tpss_tpdt_estado_pk IS NULL
+            OR (
+                (
+                    tpss_pk = portico.getEntidad('PARTIDA')
+                    AND ssrv_estado = 'R'
+                    AND (
+                        -- Regimen simplificado
+                        EXISTS (
+                            SELECT 1
+                            FROM portico.tbl_subservicio_dato_ssdt
+                            WHERE
+
+                                EXISTS (
+                                    SELECT 1
+                                    FROM portico.tbl_subservicio_ssrv
+                                    WHERE
+                                        ssrv_pk = ssdt_ssrv_pk
+                                        AND ssrv_tpss_pk = portico.getEntidad('BL')
+                                )
+                                AND EXISTS (
+                                    SELECT 1
+                                    FROM portico.tbl_subserv_subserv_ssss
+                                    WHERE
+                                        ssss_ssrvp_pk = ssdt_ssrv_pk
+                                        AND ssss_ssrvh_pk = ssrv.ssrv_pk
+                                )
+                                AND (
+                                    (ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02') AND ssdt_nentero = 0)
+                                    or (ssdt_tpdt_pk = portico.getTipoDato('TIPO_BL') AND ssdt_cadena = 'P')
+                                )
+                        )
+                        or (
+                            EXISTS (
+                                SELECT 1
+                                FROM
+                                    portico.tbl_parametro_dato_prdt
+                                WHERE
+                                    prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+                                    AND EXISTS (
+                                        SELECT 1
+                                        FROM portico.tbl_parametro_version_prvr
+                                        WHERE
+                                            prvr_pk = prdt_prvr_pk
+                                            AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+                                            AND EXISTS (
+                                                SELECT 1
+                                                FROM portico.tbl_subservicio_dato_ssdt
+                                                WHERE
+                                                    ssdt_prmt_pk = prvr_prmt_pk
+                                                    AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+                                                    AND ssdt_ssrv_pk = ssrv.ssrv_pk
+                                            )
+                                    )
+                                    AND prdt_nentero = 1
+                                    -- TODO Falta ver que la mercancia de la unidad de carga sea nula
+                            )
+                        )
+                    )
+                )
+
+                OR (tpss_pk = portico.getEntidad('EQUIPAMIENTO') AND ssrv_estado = 'R')
+
+                OR (tpss_pk = portico.getEntidad('PARTIDA_PESCA') AND ssrv_estado = 'R')
+
+                OR (tpss_pk = portico.getEntidad('ATRAQUE') AND ssrv_estado IN ('I', 'F'))
+            )
+        )
+        AND (
+            tpss_es_exencionable = 0
+            OR EXISTS (
+                SELECT 1
+                FROM portico.tbl_subservicio_dato_ssdt
+                WHERE ssdt_ssrv_pk = ssrv_pk
+                    AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+                    AND ssdt_cadena IN ('0', '1')
+            )
+        )
+        AND (
+            tpsr_es_exencionable = 0
+            OR EXISTS (
+                SELECT 1
+                FROM portico.tbl_servicio_dato_srdt
+                WHERE srdt_srvc_pk = srvc_pk
+                    AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+                    AND srdt_cadena IN ('0', '1')
+            )
+        )
+
+        -- TODO Condicion
+
+        AND (
+            (
+                rgla_tipo = 'T'
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM portico.tbl_servicio_cargo_srcr
+                    WHERE
+                        srcr_srvc_pk = srvc_pk
+                        AND srcr_ssrv_pk = ssrv_pk
+                        AND srcr_crgo_pk = rgla_crgo_pk
+                        AND (srcr_vlrc_pk IS NOT NULL OR srcr_fctr_pk IS NOT NULL)
+                )
+                -- TODO Ojo lo de temporalidad
+            )
+            OR (
+                rgla_tipo IN ('C', 'D')
+                AND EXISTS (
+                    SELECT 1
+                    FROM
+                        portico.tbl_valoracion_tmp_vlrt
+                    WHERE
+                        vlrt_prbt_pk = #{prbt.id}
+                        AND vlrt_srvc_pk = srvc_pk
+                        AND vlrt_ssrv_pk = ssrv_pk
+                        AND vlrt_crgo_pk = rgla_crgo_pk
+                        AND vlrt_rgla_pk = ANY(
+                            SELECT rgla_pk
+                            FROM portico.tbl_regla_rgla
+                            WHERE
+                                rgla_crgo_pk = vlrt_crgo_pk
+                                AND rgla_tipo = 'T'
+                        )
+                )
+            )
+        )
+
+        AND ssrv_srvc_pk = #{srvc.id}
+    ORDER BY ssrv_srvc_pk, ssrv_numero
+    ]]>
+    </select>
+
+    <insert id="insert" parameterType="ValoracionTemporalVO">
+    <![CDATA[
+    INSERT INTO portico.tbl_valoracion_tmp_vlrt (
+        vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_impuesto_pk, vlrt_pagador_pk
+        , vlrt_orden, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
+        , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
+        , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
+    ) VALUES (
+        #{prbt.id}, #{srvc.id}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{impuesto.id}, #{pagador.id}
+        , #{orden}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
+        , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
+        , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+    )
+    ]]>
+    </insert>
+</mapper>

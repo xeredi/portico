@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class ReglaCriterioVO {
 
     /** The fecha referencia. */
-    private Date fechaReferencia;
+    private Date fechaVigencia;
 
     /** The id. */
     private Long id;
@@ -39,8 +39,8 @@ public final class ReglaCriterioVO {
      *
      * @return the fecha referencia
      */
-    public Date getFechaReferencia() {
-        return fechaReferencia;
+    public Date getFechaVigencia() {
+        return fechaVigencia;
     }
 
     /**
@@ -49,8 +49,8 @@ public final class ReglaCriterioVO {
      * @param value
      *            the fecha referencia
      */
-    public void setFechaReferencia(Date value) {
-        this.fechaReferencia = value;
+    public void setFechaVigencia(Date value) {
+        this.fechaVigencia = value;
     }
 
     /**

@@ -18,6 +18,8 @@ import xeredi.integra.model.bo.estadistica.Estadistica;
 import xeredi.integra.model.bo.estadistica.EstadisticaBO;
 import xeredi.integra.model.bo.estadistica.PeriodoProceso;
 import xeredi.integra.model.bo.estadistica.PeriodoProcesoBO;
+import xeredi.integra.model.bo.facturacion.Valorador;
+import xeredi.integra.model.bo.facturacion.ValoradorBO;
 import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.maestro.ParametroBO;
 import xeredi.integra.model.bo.maestro.Subparametro;
@@ -76,7 +78,7 @@ public final class BOFactory {
 
     /**
      * Creates a new BO object.
-     * 
+     *
      * @return the injector
      */
     private static Injector createInjector() {
@@ -120,6 +122,8 @@ public final class BOFactory {
                 bind(Idioma.class).to(IdiomaBO.class);
 
                 bind(Proceso.class).to(ProcesoBO.class);
+
+                bind(Valorador.class).to(ValoradorBO.class);
             }
 
         });
@@ -131,7 +135,7 @@ public final class BOFactory {
 
     /**
      * Gets the injector.
-     * 
+     *
      * @return the injector
      */
     public static Injector getInjector() {

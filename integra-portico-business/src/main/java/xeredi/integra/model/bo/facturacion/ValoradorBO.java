@@ -1,5 +1,6 @@
 package xeredi.integra.model.bo.facturacion;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -7,9 +8,12 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.session.ExecutorType;
+import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.dao.facturacion.CargoDAO;
 import xeredi.integra.model.dao.facturacion.ReglaDAO;
+import xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO;
 import xeredi.integra.model.dao.proceso.ProcesoDAO;
 import xeredi.integra.model.dao.servicio.ServicioDAO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
@@ -18,6 +22,8 @@ import xeredi.integra.model.vo.facturacion.CargoVO;
 import xeredi.integra.model.vo.facturacion.ReglaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ReglaTipo;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
+import xeredi.integra.model.vo.facturacion.ValoracionTemporalVO;
+import xeredi.integra.model.vo.facturacion.ValoradorContextoVO;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -27,7 +33,7 @@ import com.google.inject.Singleton;
  * The Class ValoracionBO.
  */
 @Singleton
-public final class ValoradorBO implements Valorador {
+public class ValoradorBO implements Valorador {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
@@ -44,13 +50,20 @@ public final class ValoradorBO implements Valorador {
     @Inject
     ProcesoDAO prbtDAO;
 
+    /** The rgla dao. */
     @Inject
     ReglaDAO rglaDAO;
+
+    /** The vlrt dao. */
+    @Inject
+    ValoracionTemporalDAO vlrtDAO;
 
     /**
      * {@inheritDoc}
      */
     @Override
+    //@Transactional(executorType = ExecutorType.BATCH)
+    @Transactional
     public void valorarServicio(Long srvcId, Set<Long> crgoIds, Date fechaLiquidacion, final Long prbtId) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: "
@@ -113,6 +126,8 @@ public final class ValoradorBO implements Valorador {
      *            the contexto vo
      */
     private void valorarCargoServicio(final ValoradorContextoVO contextoVO) {
+        LOG.info(contextoVO);
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Contexto: " + contextoVO);
         }
@@ -121,16 +136,100 @@ public final class ValoradorBO implements Valorador {
 
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
-        rglaCriterioVO.setCrgoId(contextoVO.getCrgo().getIg());
-        rglaCriterioVO.setFechaReferencia(contextoVO.getFechaInicio());
-        rglaCriterioVO.setTipo(ReglaTipo.T);
+        rglaCriterioVO.setCrgoId(contextoVO.getCrgo().getId());
+        rglaCriterioVO.setFechaVigencia(contextoVO.getFechaInicio());
 
-        final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
+        {
+            // Aplicaro procedimientos de tipo precio
+            rglaCriterioVO.setTipo(ReglaTipo.T);
 
-        for (final ReglaVO rgla : rglaList) {
-            rgla.getRglv().generateSql();
+            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
 
-            contextoVO.setRgla(rgla);
+            for (final ReglaVO rgla : rglaList) {
+                rgla.getRglv().generateSql();
+
+                contextoVO.setRgla(rgla);
+
+                final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+
+                switch (rgla.getEnti().getTipo()) {
+                case T:
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(contextoVO));
+
+                    break;
+
+                default:
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(contextoVO));
+
+                    break;
+                }
+
+                for (final ValoracionTemporalVO vlrt : vlrtList) {
+                    vlrtDAO.insert(vlrt);
+                }
+            }
+        }
+
+        {
+            // Aplicaro procedimientos de tipo coeficiente
+            rglaCriterioVO.setTipo(ReglaTipo.C);
+
+            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
+
+            for (final ReglaVO rgla : rglaList) {
+                rgla.getRglv().generateSql();
+
+                contextoVO.setRgla(rgla);
+
+                final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+
+                switch (rgla.getEnti().getTipo()) {
+                case T:
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(contextoVO));
+
+                    break;
+
+                default:
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(contextoVO));
+
+                    break;
+                }
+
+                for (final ValoracionTemporalVO vlrt : vlrtList) {
+                    vlrtDAO.insert(vlrt);
+                }
+            }
+        }
+
+        {
+            // Aplicaro procedimientos de tipo bonificacion
+            rglaCriterioVO.setTipo(ReglaTipo.D);
+
+            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
+
+            for (final ReglaVO rgla : rglaList) {
+                rgla.getRglv().generateSql();
+
+                contextoVO.setRgla(rgla);
+
+                final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
+
+                switch (rgla.getEnti().getTipo()) {
+                case T:
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(contextoVO));
+
+                    break;
+
+                default:
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(contextoVO));
+
+                    break;
+                }
+
+                for (final ValoracionTemporalVO vlrt : vlrtList) {
+                    vlrtDAO.insert(vlrt);
+                }
+            }
         }
     }
 

@@ -1,37 +1,18 @@
-﻿-- Cargos a valorar de un servicio (las que salen por pantalla)
+﻿SELECT 
+	vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_impuesto_pk, vlrt_pagador_pk
+	, vlrt_orden, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
+	, vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
+	, vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
+FROM portico.tbl_valoracion_tmp_vlrt
+;
+
 SELECT *
-FROM portico.tbl_cargo_crgo
-	JOIN portico.tbl_cargo_version_crgv ON
-		crgv_crgo_pk = crgo_pk
-		AND NOW() BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
-WHERE crgo_es_principal = 1
-	AND crgo_tpsr_pk = 21003
+FROM portico.tbl_proceso_batch_prbt
 ;
 
--- Cargos a valorar de un servicio (las que NO salen por pantalla)
-SELECT *
-FROM portico.tbl_cargo_crgo
-	JOIN portico.tbl_cargo_version_crgv ON
-		crgv_crgo_pk = crgo_pk
-		AND NOW() BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
-WHERE 
-	EXISTS (
-		SELECT 1 
-		FROM portico.tbl_cargo_dep_crdp
-		WHERE crdp_crgoh_pk = crgo_pk
-			AND crdp_crgop_pk IN (60003, 60005)
-	)
+DELETE
+FROM portico.tbl_valoracion_tmp_vlrt
 ;
-
--- Reglas de un cargo
-SELECT * 
-FROM portico.tbl_regla_rgla
-;
-
-SELECT * 
-FROM portico.tbl_regla_version_rglv
-;
-
 
 
 
@@ -548,7 +529,7 @@ WHERE
 		)
 	)
 
-	AND ssrv_srvc_pk = 1193880
+--	AND ssrv_srvc_pk = 1193880
 
 ORDER BY ssrv_srvc_pk, ssrv_numero
 ;

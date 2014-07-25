@@ -11,7 +11,7 @@ import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
 public final class CargoVO {
 
     /** The ig. */
-    private Long ig;
+    private Long id;
 
     /** The codigo. */
     private String codigo;
@@ -50,8 +50,8 @@ public final class CargoVO {
      *
      * @return the ig
      */
-    public Long getIg() {
-        return ig;
+    public Long getId() {
+        return id;
     }
 
     /**
@@ -60,8 +60,8 @@ public final class CargoVO {
      * @param value
      *            the ig
      */
-    public void setIg(Long value) {
-        this.ig = value;
+    public void setId(Long value) {
+        this.id = value;
     }
 
     /**
