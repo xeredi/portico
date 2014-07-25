@@ -487,6 +487,10 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 	, vlrt_importe DOUBLE PRECISION NOT NULL
 	, vlrt_es_suj_pasivo INT NOT NULL
 	, vlrt_cod_exen CHAR(1) NOT NULL
+	, vlrt_fref TIMESTAMP NOT NULL
+	, vlrt_fliq TIMESTAMP NOT NULL
+	, vlrt_fini TIMESTAMP
+	, vlrt_ffin TIMESTAMP
 
 	, vlrt_cuant1 DOUBLE PRECISION
 	, vlrt_cuant2 DOUBLE PRECISION

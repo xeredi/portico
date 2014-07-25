@@ -109,6 +109,9 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DELETE FROM portico.tbl_valoracion_tmp_vlrt
+/
+
 --DELETE FROM portico.tbl_aspecto_cargo_ascr WHERE ascr_aspc_pk IN (
 --	  61000
 --	, 61001

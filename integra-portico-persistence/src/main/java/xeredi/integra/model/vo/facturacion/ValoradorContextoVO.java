@@ -27,16 +27,16 @@ public final class ValoradorContextoVO {
     private CargoVO crgo;
 
     /** The fecha liquidacion. */
-    private Date fechaLiquidacion;
+    private Date fliquidacion;
 
     /** The fecha inicio. */
-    private Date fechaInicio;
+    private Date finicio;
 
     /** The fecha fin. */
-    private Date fechaFin;
+    private Date ffin;
 
     /** The fecha referencia. */
-    private Date fechaReferencia;
+    private Date freferencia;
 
     /** The rgla. */
     private ReglaVO rgla;
@@ -107,82 +107,6 @@ public final class ValoradorContextoVO {
     }
 
     /**
-     * Gets the fecha liquidacion.
-     *
-     * @return the fecha liquidacion
-     */
-    public Date getFechaLiquidacion() {
-        return fechaLiquidacion;
-    }
-
-    /**
-     * Sets the fecha liquidacion.
-     *
-     * @param value
-     *            the fecha liquidacion
-     */
-    public void setFechaLiquidacion(Date value) {
-        this.fechaLiquidacion = value;
-    }
-
-    /**
-     * Gets the fecha inicio.
-     *
-     * @return the fecha inicio
-     */
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    /**
-     * Sets the fecha inicio.
-     *
-     * @param value
-     *            the fecha inicio
-     */
-    public void setFechaInicio(Date value) {
-        this.fechaInicio = value;
-    }
-
-    /**
-     * Gets the fecha fin.
-     *
-     * @return the fecha fin
-     */
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
-    /**
-     * Sets the fecha fin.
-     *
-     * @param value
-     *            the fecha fin
-     */
-    public void setFechaFin(Date value) {
-        this.fechaFin = value;
-    }
-
-    /**
-     * Gets the fecha referencia.
-     *
-     * @return the fecha referencia
-     */
-    public Date getFechaReferencia() {
-        return fechaReferencia;
-    }
-
-    /**
-     * Sets the fecha referencia.
-     *
-     * @param value
-     *            the fecha referencia
-     */
-    public void setFechaReferencia(Date value) {
-        this.fechaReferencia = value;
-    }
-
-    /**
      * Gets the prbt.
      *
      * @return the prbt
@@ -218,6 +142,82 @@ public final class ValoradorContextoVO {
      */
     public void setRgla(ReglaVO value) {
         this.rgla = value;
+    }
+
+    /**
+     * Gets the finicio.
+     *
+     * @return the finicio
+     */
+    public Date getFinicio() {
+        return finicio;
+    }
+
+    /**
+     * Sets the finicio.
+     *
+     * @param value
+     *            the finicio
+     */
+    public void setFinicio(Date value) {
+        this.finicio = value;
+    }
+
+    /**
+     * Gets the ffin.
+     *
+     * @return the ffin
+     */
+    public Date getFfin() {
+        return ffin;
+    }
+
+    /**
+     * Sets the ffin.
+     *
+     * @param value
+     *            the ffin
+     */
+    public void setFfin(Date value) {
+        this.ffin = value;
+    }
+
+    /**
+     * Gets the freferencia.
+     *
+     * @return the freferencia
+     */
+    public Date getFreferencia() {
+        return freferencia;
+    }
+
+    /**
+     * Sets the freferencia.
+     *
+     * @param value
+     *            the freferencia
+     */
+    public void setFreferencia(Date value) {
+        this.freferencia = value;
+    }
+
+    /**
+     * Gets the fliquidacion.
+     *
+     * @return the fliquidacion
+     */
+    public Date getFliquidacion() {
+        return fliquidacion;
+    }
+
+    /**
+     * Sets the fliquidacion.
+     *
+     * @param value
+     *            the fliquidacion
+     */
+    public void setFliquidacion(Date value) {
+        this.fliquidacion = value;
     }
 
 }

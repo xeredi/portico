@@ -13,6 +13,7 @@ public final class RegularExpression {
      */
     public void test() {
         // http://stackoverflow.com/questions/3373885/splitting-a-simple-maths-expression-with-regex
+        // http://www.redalyc.org/articulo.oa?id=81690111
 
         String regex = "(?<=op)|(?=op)".replace("op", "[-|+|*|/|(|)|(NOT)|(AND)|(OR)]");
 

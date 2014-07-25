@@ -1,5 +1,7 @@
 package xeredi.integra.model.vo.facturacion;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.vo.maestro.ParametroVO;
@@ -48,6 +50,18 @@ public final class ValoracionTemporalVO {
 
     /** The cod exencion. */
     private String codExencion;
+
+    /** The freferencia. */
+    private Date freferencia;
+
+    /** The fliquidacion. */
+    private Date fliquidacion;
+
+    /** The finicio. */
+    private Date finicio;
+
+    /** The ffin. */
+    private Date ffin;
 
     /** The cuant1. */
     private Double cuant1;
@@ -547,6 +561,82 @@ public final class ValoracionTemporalVO {
      */
     public void setInfo6(String value) {
         this.info6 = value;
+    }
+
+    /**
+     * Gets the freferencia.
+     *
+     * @return the freferencia
+     */
+    public Date getFreferencia() {
+        return freferencia;
+    }
+
+    /**
+     * Sets the freferencia.
+     *
+     * @param value
+     *            the freferencia
+     */
+    public void setFreferencia(Date value) {
+        this.freferencia = value;
+    }
+
+    /**
+     * Gets the fliquidacion.
+     *
+     * @return the fliquidacion
+     */
+    public Date getFliquidacion() {
+        return fliquidacion;
+    }
+
+    /**
+     * Sets the fliquidacion.
+     *
+     * @param value
+     *            the fliquidacion
+     */
+    public void setFliquidacion(Date value) {
+        this.fliquidacion = value;
+    }
+
+    /**
+     * Gets the finicio.
+     *
+     * @return the finicio
+     */
+    public Date getFinicio() {
+        return finicio;
+    }
+
+    /**
+     * Sets the finicio.
+     *
+     * @param value
+     *            the finicio
+     */
+    public void setFinicio(Date value) {
+        this.finicio = value;
+    }
+
+    /**
+     * Gets the ffin.
+     *
+     * @return the ffin
+     */
+    public Date getFfin() {
+        return ffin;
+    }
+
+    /**
+     * Sets the ffin.
+     *
+     * @param value
+     *            the ffin
+     */
+    public void setFfin(Date value) {
+        this.ffin = value;
     }
 
 }
