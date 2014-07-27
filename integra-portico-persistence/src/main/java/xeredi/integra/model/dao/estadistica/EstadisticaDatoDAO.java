@@ -13,15 +13,14 @@ public interface EstadisticaDatoDAO {
 
     /**
      * Insert.
-     * 
-     * @param esdtVO
-     *            the esdt vo
+     *
+     * @param itdtVO the itdt vo
      */
     void insert(final ItemDatoVO itdtVO);
 
     /**
      * Select list.
-     * 
+     *
      * @param estdCriterioVO
      *            the estd criterio vo
      * @return the list
@@ -30,7 +29,7 @@ public interface EstadisticaDatoDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param prprId
      *            the prpr id
      * @return the int

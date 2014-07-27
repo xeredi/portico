@@ -93,7 +93,7 @@ public interface ParametroDAO {
      *
      * @param prmtCriterioVO
      *            the prmt criterio vo
-     * @return the list< parametro v o>
+     * @return the list
      */
     List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO);
 

@@ -46,7 +46,7 @@ public interface EstadisticaDAO {
      *
      * @param estdCriterioVO
      *            the estd criterio vo
-     * @return the list< estadistica v o>
+     * @return the list
      */
     List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO);
 

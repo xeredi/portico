@@ -16,7 +16,7 @@ public interface ValoracionTemporalDAO {
      *
      * @param contextoVO
      *            the contexto vo
-     * @return the list< valoracion temporal v o>
+     * @return the list
      */
     List<ValoracionTemporalVO> selectAplicarReglaServicio(final ValoradorContextoVO contextoVO);
 
@@ -25,7 +25,7 @@ public interface ValoracionTemporalDAO {
      *
      * @param contextoVO
      *            the contexto vo
-     * @return the list< valoracion temporal v o>
+     * @return the list
      */
     List<ValoracionTemporalVO> selectAplicarReglaSubservicio(final ValoradorContextoVO contextoVO);
 

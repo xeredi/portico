@@ -53,7 +53,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Autorizar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -83,7 +83,7 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
         item.getItdtMap()
-        .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
@@ -100,7 +100,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Autorizar guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -136,7 +136,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Denegar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -170,7 +170,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Denegar guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -206,7 +206,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Anular.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -240,7 +240,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Anular guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -276,7 +276,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Iniciar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -320,7 +320,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Anular iniciar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -351,7 +351,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Finalizar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -385,7 +385,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Finalizar guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -416,8 +416,10 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Autorizar fprevio.
-     * 
+     *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action(value = "atra-autorizar-fprevio-popup", results = {
             @Result(name = "success", location = "escala/atra-autorizar-fprevio.jsp"),
@@ -444,7 +446,7 @@ public final class AtraqueAction extends ItemAction {
             item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
             item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
             item.getItdtMap()
-            .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
             item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
                     item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
             item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
@@ -464,7 +466,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Cambiar muelle.
-     * 
+     *
      * @return the string
      */
     @Action(value = "atra-cambiar-muelle-popup", results = { @Result(name = "success", location = "escala/atra-cambiar-muelle.jsp") })
@@ -474,7 +476,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Deshacer estado.
-     * 
+     *
      * @return the string
      */
     @Action(value = "atra-deshacer-estado-popup", results = { @Result(name = "success", location = "escala/atra-deshacer-estado.jsp") })
@@ -494,7 +496,7 @@ public final class AtraqueAction extends ItemAction {
 
     /**
      * Sets the item.
-     * 
+     *
      * @param value
      *            the new item
      */

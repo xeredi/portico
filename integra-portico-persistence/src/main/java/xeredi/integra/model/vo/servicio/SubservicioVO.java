@@ -32,11 +32,11 @@ public final class SubservicioVO extends ItemVO {
     private String estado;
 
     /**
-     * Instancia un nuevo {@link SubservicioVO} con todos sus.
-     * 
+     * Instancia un nuevo {@link SubservicioVO} con todos sus datos asociados.
+     *
      * @param tpssVO
      *            Tipo de Subervicio del que se quiere instanciar un subservicio.
-     * @return Subservicio creado. {@link SubservicioDatoVO} asociados.
+     * @return Subservicio creado.
      */
     public static SubservicioVO newInstance(final TipoSubservicioVO tpssVO) {
         final SubservicioVO ssrvVO = new SubservicioVO();
@@ -78,7 +78,7 @@ public final class SubservicioVO extends ItemVO {
             buffer.append(srvc.getEtiqueta());
             buffer.append(" - ");
         }
-        
+
         buffer.append(numero);
 
         return buffer.toString();
@@ -86,7 +86,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Gets the srvc id.
-     * 
+     *
      * @return the srvc id
      */
     public ServicioVO getSrvc() {
@@ -95,7 +95,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Sets the srvc id.
-     * 
+     *
      * @param value
      *            the new srvc id
      */
@@ -105,7 +105,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Gets the numero.
-     * 
+     *
      * @return the numero
      */
     public Integer getNumero() {
@@ -114,7 +114,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Sets the numero.
-     * 
+     *
      * @param value
      *            the new numero
      */
@@ -124,7 +124,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Gets the finicio.
-     * 
+     *
      * @return the finicio
      */
     public Date getFinicio() {
@@ -133,7 +133,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Sets the finicio.
-     * 
+     *
      * @param value
      *            the new finicio
      */
@@ -143,7 +143,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Gets the ffin.
-     * 
+     *
      * @return the ffin
      */
     public Date getFfin() {
@@ -152,7 +152,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Sets the ffin.
-     * 
+     *
      * @param value
      *            the new ffin
      */
@@ -162,7 +162,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Gets the estado.
-     * 
+     *
      * @return the estado
      */
     public String getEstado() {
@@ -171,7 +171,7 @@ public final class SubservicioVO extends ItemVO {
 
     /**
      * Sets the estado.
-     * 
+     *
      * @param value
      *            the new estado
      */

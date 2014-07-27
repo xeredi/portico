@@ -27,7 +27,7 @@ public final class AtraqueBO {
 
     /**
      * Checks if is autorizable.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @return true, if is autorizable
@@ -44,7 +44,7 @@ public final class AtraqueBO {
 
     /**
      * Autorizar.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @param itdtMap
@@ -55,7 +55,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void autorizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    EstadoInvalidoException {
+            EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -99,7 +99,7 @@ public final class AtraqueBO {
 
     /**
      * Checks if is denegable.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @return true, if is denegable
@@ -116,7 +116,7 @@ public final class AtraqueBO {
 
     /**
      * Denegar.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @param itdtMap
@@ -127,7 +127,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void denegar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    EstadoInvalidoException {
+            EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -171,7 +171,7 @@ public final class AtraqueBO {
 
     /**
      * Checks if is anulable.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @return true, if is anulable
@@ -188,7 +188,7 @@ public final class AtraqueBO {
 
     /**
      * Anular.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @param itdtMap
@@ -199,7 +199,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void anular(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    EstadoInvalidoException {
+            EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -243,7 +243,7 @@ public final class AtraqueBO {
 
     /**
      * Checks if is iniciable.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @return true, if is iniciable
@@ -260,7 +260,7 @@ public final class AtraqueBO {
 
     /**
      * Iniciar.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @param itdtMap
@@ -271,7 +271,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    EstadoInvalidoException {
+            EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -317,7 +317,7 @@ public final class AtraqueBO {
 
     /**
      * Checks if is finalizable.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @return true, if is finalizable
@@ -334,7 +334,7 @@ public final class AtraqueBO {
 
     /**
      * Finalizar.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @param itdtMap
@@ -345,7 +345,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void finalizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    EstadoInvalidoException {
+            EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -391,7 +391,7 @@ public final class AtraqueBO {
 
     /**
      * Checks if is cambio muelle.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @return true, if is cambio muelle
@@ -408,7 +408,7 @@ public final class AtraqueBO {
 
     /**
      * Checks if is autorizable f previo.
-     * 
+     *
      * @param ssrvId
      *            the ssrv id
      * @return true, if is autorizable f previo
@@ -425,9 +425,15 @@ public final class AtraqueBO {
 
     /**
      * Autorizar fprevio.
-     * 
-     * @param ssrvVO
-     *            the ssrv vo
+     *
+     * @param ssrvId
+     *            the ssrv id
+     * @param itdtMap
+     *            the itdt map
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws EstadoInvalidoException
+     *             the estado invalido exception
      */
     public void autorizarFprevio(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap)
             throws InstanceNotFoundException, EstadoInvalidoException {

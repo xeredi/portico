@@ -25,7 +25,7 @@ public interface CargoDAO {
      *
      * @param criterioVO
      *            the criterio vo
-     * @return the list< cargo v o>
+     * @return the list
      */
     List<CargoVO> selectList(final CargoCriterioVO criterioVO);
 }

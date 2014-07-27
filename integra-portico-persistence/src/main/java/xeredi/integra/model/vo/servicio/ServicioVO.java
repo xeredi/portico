@@ -48,11 +48,11 @@ public final class ServicioVO extends ItemVO {
     private String estado;
 
     /**
-     * Instancia un nuevo {@link ServicioVO} con todos sus.
-     * 
+     * Instancia un nuevo {@link ServicioVO} con todos sus datos asociados.
+     *
      * @param tpsrVO
      *            Tipo de Servicio del que se quiere instanciar un servicio.
-     * @return Servicio creado. {@link ServicioDatoVO} asociados.
+     * @return Servicio creado.
      */
     public static ServicioVO newInstance(final TipoServicioVO tpsrVO) {
         final ServicioVO srvcVO = new ServicioVO();
@@ -77,7 +77,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Convert numero.
-     * 
+     *
      * @param numero
      *            the numero
      * @return the string
@@ -108,7 +108,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the subpuerto.
-     * 
+     *
      * @return the subpuerto
      */
     public ParametroVO getSubp() {
@@ -117,7 +117,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the subpuerto.
-     * 
+     *
      * @param value
      *            the new subpuerto
      */
@@ -127,7 +127,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the anno.
-     * 
+     *
      * @return the anno
      */
     public String getAnno() {
@@ -136,7 +136,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the anno.
-     * 
+     *
      * @param value
      *            the new anno
      */
@@ -146,7 +146,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the numero.
-     * 
+     *
      * @return the numero
      */
     public String getNumero() {
@@ -155,7 +155,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the numero.
-     * 
+     *
      * @param value
      *            the new numero
      */
@@ -165,7 +165,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the falta.
-     * 
+     *
      * @return the falta
      */
     public Date getFalta() {
@@ -174,7 +174,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the falta.
-     * 
+     *
      * @param value
      *            the new falta
      */
@@ -184,7 +184,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the fbaja.
-     * 
+     *
      * @return the fbaja
      */
     public Date getFbaja() {
@@ -193,7 +193,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the fbaja.
-     * 
+     *
      * @param value
      *            the new fbaja
      */
@@ -203,7 +203,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the freferencia.
-     * 
+     *
      * @return the freferencia
      */
     public Date getFreferencia() {
@@ -212,7 +212,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the freferencia.
-     * 
+     *
      * @param value
      *            the new freferencia
      */
@@ -222,7 +222,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the finicio.
-     * 
+     *
      * @return the finicio
      */
     public Date getFinicio() {
@@ -231,7 +231,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the finicio.
-     * 
+     *
      * @param value
      *            the new finicio
      */
@@ -241,7 +241,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the ffin.
-     * 
+     *
      * @return the ffin
      */
     public Date getFfin() {
@@ -250,7 +250,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the ffin.
-     * 
+     *
      * @param value
      *            the new ffin
      */
@@ -260,7 +260,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Gets the estado.
-     * 
+     *
      * @return the estado
      */
     public String getEstado() {
@@ -269,7 +269,7 @@ public final class ServicioVO extends ItemVO {
 
     /**
      * Sets the estado.
-     * 
+     *
      * @param value
      *            the new estado
      */

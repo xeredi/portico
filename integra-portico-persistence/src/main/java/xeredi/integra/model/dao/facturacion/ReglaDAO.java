@@ -25,7 +25,7 @@ public interface ReglaDAO {
      *
      * @param criterioVO
      *            the criterio vo
-     * @return the list< regla v o>
+     * @return the list
      */
     List<ReglaVO> selectList(final ReglaCriterioVO criterioVO);
 

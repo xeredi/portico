@@ -64,7 +64,7 @@ public interface SubparametroDAO {
      *            the sprm criterio vo
      * @param bounds
      *            the bounds
-     * @return the list< subparametro v o>
+     * @return the list
      */
     List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO, final RowBounds bounds);
 

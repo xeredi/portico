@@ -10,7 +10,7 @@ public interface IgDAO {
 
     /**
      * Select.
-     * 
+     *
      * @param nombre
      *            the nombre
      * @return the ig vo
@@ -19,9 +19,10 @@ public interface IgDAO {
 
     /**
      * Update.
-     * 
-     * @param vo
-     *            the vo
+     *
+     * @param nombre
+     *            the nombre
+     * @return the int
      */
     public int update(final String nombre);
 }

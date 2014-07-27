@@ -299,8 +299,6 @@ public class SubparametroBO implements Subparametro {
     /**
      * Fill dependencies.
      *
-     * @param session
-     *            the session
      * @param sprmList
      *            the sprm list
      * @param sprmCriterioVO
