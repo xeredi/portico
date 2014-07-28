@@ -17,7 +17,7 @@ FROM portico.tbl_valoracion_tmp_vlrt
 
 
 
-
+SELECT
 
 
 
