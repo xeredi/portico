@@ -5,10 +5,13 @@ import java.io.IOException;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+
+import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.util.Entidad;
+import xeredi.integra.model.vo.facturacion.ReglaVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,7 +30,7 @@ public class ConditionTest {
      */
     @Test
     public void test() throws IOException {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             test("true");
             test("false");
             test("5 > 2");
@@ -61,10 +64,14 @@ public class ConditionTest {
         final ConditionParser parser = new ConditionParser(tokens);
 
         final ParseTree tree = parser.r();
-        final ParseTreeWalker walker = new ParseTreeWalker();
-        final ConditionSqlGenerator extractor = new ConditionSqlGenerator(parser);
 
-        walker.walk(extractor, tree);
+        final ReglaVO reglaVO = new ReglaVO();
+
+        reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
+
+        final ConditionSqlGenerator extractor = new ConditionSqlGenerator(reglaVO);
+
+        extractor.visit(tree);
     }
 
 }

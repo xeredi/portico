@@ -74,8 +74,7 @@ BOOLEAN_VALUE
 
 path
 :
-	pathElement
-	| pathElement PATH_SEPARATOR path
+	pathElement (PATH_SEPARATOR pathElement)*
 ;
 
 PATH_SEPARATOR

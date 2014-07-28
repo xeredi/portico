@@ -293,9 +293,20 @@ WHERE
 	)
 ;
 
+SELECT * FROM tbl_entidad_enti
+ORDER BY enti_codigo
+;
 
+SELECT * 
+FROM 
+	tbl_entidad_tipo_dato_entd
+	JOIN tbl_tipo_dato_tpdt ON
+		tpdt_pk = entd_tpdt_pk
+WHERE entd_enti_pk = 20014
+;
 
-
+SELECT * FROM tbl_tipo_dato_tpdt
+order by tpdt_codigo;
 
 
 SELECT srvc.*, ssrv.*, tpss.*, tpsr.*, rgla.*
@@ -530,10 +541,97 @@ WHERE
 		)
 	)
 
---	AND ssrv_srvc_pk = 1193880
+	AND ssrv_srvc_pk = 1192567
 
 ORDER BY ssrv_srvc_pk, ssrv_numero
 ;
+
+
+
+
+SELECT 
+	item.ssrv_pk AS item_pk
+	, item.fref AS item_fref
+	, item.*
+	, (
+		SELECT srvc_pk
+		FROM tbl_servicio_srvc
+		WHERE srvc_pk = item.ssrv_srvc_pk
+	) AS srvc
+	, (
+		SELECT ssss_ssrvp_pk
+		FROM tbl_subserv_subserv_ssss
+		WHERE 
+			EXISTS (
+				SELECT 1
+				FROM tbl_subservicio_ssrv
+				WHERE 
+					ssrv_pk = ssss_ssrvp_pk
+					AND ssrv_tpss_pk = portico.getEntidad('BL')
+			)
+			AND ssss_ssrvh_pk = item.ssrv_pk
+	) AS padre
+	, (
+		SELECT ssdt_prmt_pk
+		FROM tbl_subservicio_dato_ssdt
+		WHERE ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+			AND ssdt_ssrv_pk = ANY (
+				SELECT ssss_ssrvp_pk
+				FROM tbl_subserv_subserv_ssss
+				WHERE 
+					EXISTS (
+						SELECT 1
+						FROM tbl_subservicio_ssrv
+						WHERE 
+							ssrv_pk = ssss_ssrvp_pk
+							AND ssrv_tpss_pk = portico.getEntidad('BL')
+					)
+					AND ssss_ssrvh_pk = item.ssrv_pk
+			)
+	) AS dato_padre
+	, (
+		SELECT prdt_prmt_pk
+		FROM tbl_parametro_dato_prdt
+		WHERE prdt_tpdt_pk = portico.getTipoDato('PAIS')
+			AND prdt_prvr_pk = ANY (
+				SELECT prvr_pk
+				FROM tbl_parametro_version_prvr
+					WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref)
+						AND prvr_prmt_pk = ANY (
+							SELECT ssdt_prmt_pk
+							FROM tbl_subservicio_dato_ssdt
+							WHERE ssdt_tpdt_pk = portico.getTipoDato('UNLOCODE')
+								AND ssdt_ssrv_pk = ANY (
+									SELECT ssss_ssrvp_pk
+									FROM tbl_subserv_subserv_ssss
+									WHERE 
+										EXISTS (
+											SELECT 1
+											FROM tbl_subservicio_ssrv
+											WHERE 
+												ssrv_pk = ssss_ssrvp_pk
+												AND ssrv_tpss_pk = portico.getEntidad('BL')
+										)
+										AND ssss_ssrvh_pk = item.ssrv_pk
+								)
+						) 
+			)
+	) AS dato_dato_padre
+FROM (
+	SELECT ssrv.*
+		, (
+			SELECT srvc_fref
+			FROM tbl_servicio_srvc
+			WHERE srvc_pk = ssrv_srvc_pk
+		) AS fref
+	FROM tbl_subservicio_ssrv ssrv
+	WHERE ssrv.ssrv_srvc_pk = 1192567
+		AND ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+) item
+ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
+;
+
+
 
 
 SELECT * FROM portico.tbl_subservicio_dato_ssdt

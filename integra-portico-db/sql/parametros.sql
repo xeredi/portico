@@ -1,4 +1,4 @@
-﻿SELECT COUNT(1) FROM tbl_parametro_dato_prdt;
+SELECT COUNT(1) FROM tbl_parametro_dato_prdt;
 SELECT COUNT(1) FROM tbl_parametro_i18n_p18n p18n;
 SELECT COUNT(1) FROM tbl_parametro_version_prvr prvr;
 SELECT COUNT(1) FROM tbl_parametro_prmt prmt;
@@ -49,7 +49,7 @@ ORDER BY enti.enti_nombre
 
 -- Tipos de parametro sin maestros asociados
 				SELECT *
-				FROM tbl_tipo_dato_tpdt tpdt
+				FROM tbl_tipo_dato_tpdt tpdt;
 
 SELECT *
 FROM
@@ -290,22 +290,6 @@ SELECT * FROM tbl_codigo_referencia_cdrf cdrf;
 
 
 
-DEBUG 2013-08-17 22:32:25,750 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	==>  Preparing: SELECT COUNT(1) FROM tbl_parametro_prmt prmt JOIN tbl_parametro_version_prvr prvr ON prvr.prvr_prmt_pk = prmt.prmt_pk LEFT JOIN tbl_parametro_i18n_p18n p18n ON p18n.p18n_prvr_pk = prvr.prvr_pk WHERE prmt.prmt_tppr_pk IN (?) AND EXISTS ( SELECT 1 FROM tbl_tipo_parametro_tppr tppr WHERE tppr.tppr_pk = prmt.prmt_tppr_pk AND ( tppr.tppr_es_i18n = 0 OR p18n.p18n_idioma = ? ) ) AND ? BETWEEN prvr.prvr_fini AND coalesce(prvr.prvr_ffin, ?)
-DEBUG 2013-08-17 22:32:25,751 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	==> Parameters: 20010(Long), es_ES(String), 2013-08-17 22:32:21.0(Timestamp), 2013-08-17 22:32:21.0(Timestamp)
-DEBUG 2013-08-17 22:32:25,829 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	ooo Using Connection [org.postgresql.jdbc4.Jdbc4Connection@7924cb]
-DEBUG 2013-08-17 22:32:25,830 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	==>  Preparing: SELECT prmt.prmt_pk, prmt.prmt_tppr_pk, prmt.prmt_parametro , prvr.prvr_pk, prvr.prvr_fini, prvr.prvr_ffin , p18n.p18n_idioma, p18n.p18n_texto FROM tbl_parametro_prmt prmt JOIN tbl_parametro_version_prvr prvr ON prvr.prvr_prmt_pk = prmt.prmt_pk LEFT JOIN tbl_parametro_i18n_p18n p18n ON p18n.p18n_prvr_pk = prvr.prvr_pk WHERE prmt.prmt_tppr_pk IN (?) AND EXISTS ( SELECT 1 FROM tbl_tipo_parametro_tppr tppr WHERE tppr.tppr_pk = prmt.prmt_tppr_pk AND ( tppr.tppr_es_i18n = 0 OR p18n.p18n_idioma = ? ) ) AND ? BETWEEN prvr.prvr_fini AND coalesce(prvr.prvr_ffin, ?) ORDER BY prmt.prmt_tppr_pk, prmt.prmt_parametro
-DEBUG 2013-08-17 22:32:25,832 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	==> Parameters: 20010(Long), es_ES(String), 2013-08-17 22:32:21.0(Timestamp), 2013-08-17 22:32:21.0(Timestamp)
-DEBUG 2013-08-17 22:32:26,690 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	ooo Using Connection [org.postgresql.jdbc4.Jdbc4Connection@7924cb]
-DEBUG 2013-08-17 22:32:26,691 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	==>  Preparing: SELECT prdt.prdt_prvr_pk, prdt.prdt_nentero, prdt.prdt_ndecimal, prdt.prdt_fecha , prdt.prdt_cadena, prdt.prdt_tpdt_pk, prdt.prdt_prmt_pk , prmt.prmt_parametro FROM tbl_parametro_dato_prdt prdt INNER JOIN tbl_parametro_version_prvr prvr ON prvr.prvr_pk = prdt.prdt_prvr_pk LEFT JOIN tbl_parametro_prmt prmt ON prmt.prmt_pk = prdt.prdt_prmt_pk WHERE prvr.prvr_pk IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ORDER BY prdt.prdt_prvr_pk, prdt.prdt_tpdt_pk
-DEBUG 2013-08-17 22:32:26,692 [org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:132)]
-	==> Parameters: 1000463112(Long), 1000463114(Long), 1000463116(Long), 1000463118(Long), 1000463138(Long), 1000463136(Long), 1000463142(Long), 1000463140(Long), 1000446032(Long), 1000463128(Long), 1000441604(Long), 1000463130(Long), 1000441606(Long), 1000463132(Long), 1000463134(Long), 1000441602(Long), 1000463120(Long), 1000463122(Long), 1000463124(Long), 1000463126(Long)
 
 
 SELECT *
@@ -368,20 +352,6 @@ ORDER BY prdt.prdt_prvr_pk, prdt.prdt_tpdt_pk
 --LIMIT 1000
 ;
 
-
-	SELECT COUNT(1)
-	FROM tbl_parametro_prmt prmt
-		JOIN tbl_parametro_version_prvr prvr ON
-			prvr.prvr_prmt_pk = prmt.prmt_pk
-		LEFT JOIN tbl_parametro_i18n_p18n p18n ON
-			p18n.p18n_prvr_pk = prvr.prvr_pk
-	WHERE prmt.prmt_tppr_pk IN (?)
-		AND EXISTS (
-			SELECT 1 FROM tbl_tipo_parametro_tppr tppr
-			WHERE tppr.tppr_pk = prmt.prmt_tppr_pk
-				AND ( tppr.tppr_es_i18n = 0 OR p18n.p18n_idioma = ? )
-		)
-		AND ? BETWEEN prvr.prvr_fini AND coalesce(prvr.prvr_ffin, ?)
 
 
 SELECT COUNT(1)

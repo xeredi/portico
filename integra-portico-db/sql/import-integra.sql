@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 SELECT * FROM ISUM_RED_REDS;
 
 SELECT * FROM IFAC_LECTURAPUNTORED_FLPR;
@@ -15,7 +8,7 @@ SELECT * FROM ICON_MODULO_MODU;
 
 
 SELECT *
-FROM ICOM_ORGANIZACION_ORGA 
+FROM ICOM_ORGANIZACION_ORGA
     LEFT JOIN ICOM_DIRECCION_CONT_DIRC ON
         DIRC_ID_ORGANIZACION = ORGA_ID
 ;
@@ -45,12 +38,7 @@ FROM ICOM_ORGANIZACION_ORGA
 ;
 
 
-SELECT * 
-FROM IGEN_PROVINCIA_PROV MAES
-    join igen_provin
-;
-
-SELECT * 
+SELECT *
 FROM IGEN_municipio_muni
 ;
 
@@ -148,7 +136,7 @@ select * from DEVUELVE_ENTRADAS_BUQUE;
 
 select count(1) from IESC_ATRAQUE_ATRA;
 
-select 
+select
     atra.ATRA_FECHA_AUTORIZACION
     , atra.ATRA_EMISOR_EDI
     , atra.ATRA_NUMERO_EDI
@@ -194,16 +182,16 @@ select * from IESC_ATRAQUETIPO_ATRT;
 select * from IESC_ATRAQUETIPOI18N_ATRT;
 select * from IESC_RELACIONATRAQUETIPO_RATT;
 
-select 
-    (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_1) 
-      || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_2) 
-      || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_3) 
+select
+    (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_1)
+      || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_2)
+      || (SELECT atet_codigo FROM IESC_ATRAQUEEDITIPO_ATET where ATET_id = RATT_ATET_ID_3)
       AS ratt_atet
     , (SELECT atrt_codigo from IESC_ATRAQUETIPO_ATRT where atrt_id = RATT_ATRT_ID) as ratt_atrt
     , (select atet_nombre from IESC_ATRAQUEEDITIPOI18N_ATET where atet_id = RATT_ATET_ID_1 and ATET_IDIOMA = idioma
         AND FREFERENCIA BETWEEN ATET_FECHA_CREACION AND COALESCE(ATET_FECHA_FIN, FREFERENCIA))
       || ' / ' ||
-      (select atet_nombre from IESC_ATRAQUEEDITIPOI18N_ATET where atet_id = RATT_ATET_ID_2 and ATET_IDIOMA = idioma 
+      (select atet_nombre from IESC_ATRAQUEEDITIPOI18N_ATET where atet_id = RATT_ATET_ID_2 and ATET_IDIOMA = idioma
         AND FREFERENCIA BETWEEN ATET_FECHA_CREACION AND COALESCE(ATET_FECHA_FIN, FREFERENCIA))
       || ' / ' ||
       (select atet_nombre from IESC_ATRAQUEEDITIPOI18N_ATET where atet_id = RATT_ATET_ID_3 and ATET_IDIOMA = idioma

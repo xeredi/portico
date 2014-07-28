@@ -17,28 +17,9 @@
                 <directory>src/main/resources</directory>
             </resource>
             <resource>
-                <directory>target/generated-sources/antlr4</directory>
-            </resource>
-            <resource>
                 <directory>resources/${profile-id}</directory>
             </resource>
         </resources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.3</version>
-                <executions>
-                    <execution>
-                        <id>antlr</id>
-                        <goals>
-                            <goal>antlr4</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 
     <dependencies>
@@ -76,11 +57,6 @@
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>3.18.1-GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4-runtime</artifactId>
-            <version>4.3</version>
         </dependency>
         <!-- <dependency> <groupId>org.apache.struts</groupId> <artifactId>struts2-json-plugin</artifactId> <version>2.3.16.1</version>
             <scope>provided</scope> </dependency> -->
