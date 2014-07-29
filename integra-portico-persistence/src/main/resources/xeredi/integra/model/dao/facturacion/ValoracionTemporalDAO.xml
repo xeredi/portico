@@ -290,6 +290,73 @@
     ]]>
     </select>
 
+    <select id="selectAplicarReglaDecoradorSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+    <![CDATA[
+    SELECT
+        #{prbt.id} AS vlrt_prbt_pk
+        , srvc_pk AS vlrt_srvc_pk
+        , ssrv_pk AS vlrt_ssrv_pk
+        , rgla_crgo_pk AS vlrt_crgo_pk
+        , rgla_pk AS vlrt_rgla_pk
+        , vlrt_rgla_pk AS vlrt_rgla_padre_pk
+        , ssrv_numero AS vlrt_orden
+        , 0 AS vlrt_importe_base
+        , 0 AS vlrt_importe
+
+        , vlrt_cuant1
+        , vlrt_cuant2
+        , vlrt_cuant3
+        , vlrt_cuant4
+        , vlrt_cuant5
+        , vlrt_cuant6
+
+        , vlrt_info1
+        , vlrt_info2
+        , vlrt_info3
+        , vlrt_info4
+        , vlrt_info5
+        , vlrt_info6
+
+        , vlrt_impuesto_pk
+        , vlrt_es_suj_pasivo
+        , vlrt_pagador_pk
+        , vlrt_cod_exen
+    FROM (
+        SELECT item.*, rgla.*, srvc.*, vlrt.*, srvc_fref AS fref
+        FROM
+            portico.tbl_subservicio_ssrv item
+            JOIN portico.tbl_servicio_srvc srvc ON
+                srvc_pk = ssrv_srvc_pk
+            JOIN portico.tbl_tipo_subservicio_tpss tpss ON
+                tpss_pk = ssrv_tpss_pk
+            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+                tpsr_pk = srvc_tpsr_pk
+            JOIN portico.tbl_regla_rgla rgla ON
+                rgla_enti_pk = ssrv_tpss_pk
+                AND rgla_pk = #{rgla.id}
+            JOIN tbl_valoracion_tmp_vlrt vlrt ON
+                vlrt_srvc_pk = ssrv_srvc_pk
+                AND vlrt_ssrv_pk = ssrv_pk
+                AND vlrt_prbt_pk = #{prbt.id}
+                AND vlrt_crgo_pk = #{crgo.id}
+                AND vlrt_rgla_pk = ANY (
+                    SELECT rgla_pk
+                    FROM tbl_regla_rgla
+                    WHERE rgla_crgo_pk = vlrt_crgo_pk
+                        AND rgla_tipo = 'T'
+                )
+        WHERE
+            tpsr_es_facturable = 1
+            AND tpss_es_facturable = 1
+
+            -- TODO Condicion
+
+            AND ssrv_srvc_pk = #{srvc.id}
+    ) item
+    ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
+    ]]>
+    </select>
+
     <insert id="insert" parameterType="ValoracionTemporalVO">
     <![CDATA[
     INSERT INTO portico.tbl_valoracion_tmp_vlrt (

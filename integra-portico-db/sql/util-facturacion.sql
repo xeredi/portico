@@ -691,7 +691,11 @@ order by tpdt_codigo
 
 
 SELECT * FROM portico.tbl_proceso_batch_prbt;
-SELECT * FROM portico.tbl_valoracion_tmp_vlrt;
+
+SELECT * 
+FROM portico.tbl_valoracion_tmp_vlrt
+ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk;
+
 DELETE FROM portico.tbl_valoracion_tmp_vlrt;
 
 --0		FACT/EST	Facturable y Estadística

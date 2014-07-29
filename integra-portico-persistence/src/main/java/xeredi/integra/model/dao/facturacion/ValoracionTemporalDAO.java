@@ -21,6 +21,14 @@ public interface ValoracionTemporalDAO {
     List<ValoracionTemporalVO> selectAplicarReglaServicio(final ValoradorContextoVO contextoVO);
 
     /**
+     * Select aplicar regla decorador servicio.
+     *
+     * @param contextoVO the contexto vo
+     * @return the list
+     */
+    List<ValoracionTemporalVO> selectAplicarReglaDecoradorServicio(final ValoradorContextoVO contextoVO);
+
+    /**
      * Select aplicar regla subservicio.
      *
      * @param contextoVO
@@ -28,6 +36,15 @@ public interface ValoracionTemporalDAO {
      * @return the list
      */
     List<ValoracionTemporalVO> selectAplicarReglaSubservicio(final ValoradorContextoVO contextoVO);
+
+    /**
+     * Select aplicar regla decorador subservicio.
+     *
+     * @param contextoVO
+     *            the contexto vo
+     * @return the list
+     */
+    List<ValoracionTemporalVO> selectAplicarReglaDecoradorSubservicio(final ValoradorContextoVO contextoVO);
 
     /**
      * Insert.

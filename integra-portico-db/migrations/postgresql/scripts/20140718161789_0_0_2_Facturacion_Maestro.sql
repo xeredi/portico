@@ -25,15 +25,15 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 		/
 	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63002, 60001, 22004, 'C', 'B2-C001');
 	/
---		INSERT INTO portico.tbl_regla_version_rglv (rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_condicion, rglv_formula, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
---			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
---			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
---		) VALUES (
---			64001, 63002, '2013-01-01', NULL, 11, 'TRUE', '1', NULL, NULL, NULL, NULL
---			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
---			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
---		)
---		/
+		INSERT INTO portico.tbl_regla_version_rglv (rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_condicion, rglv_formula, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
+			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
+		) VALUES (
+			64001, 63002, '2013-01-01', NULL, 11, 'TRUE', '1', NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+		)
+		/
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)
 	VALUES (60002, 'B3', 'B3', 1, 0, 21002, 'B', 'TASA A LA MERCANCIA')
 /

@@ -196,12 +196,12 @@ public class ValoradorBO implements Valorador {
 
                 switch (rgla.getEnti().getTipo()) {
                 case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(contextoVO));
 
                     break;
 
                 default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(contextoVO));
 
                     break;
                 }
@@ -231,12 +231,12 @@ public class ValoradorBO implements Valorador {
 
                 switch (rgla.getEnti().getTipo()) {
                 case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(contextoVO));
 
                     break;
 
                 default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(contextoVO));
 
                     break;
                 }
