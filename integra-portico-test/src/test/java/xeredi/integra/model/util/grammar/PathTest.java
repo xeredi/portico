@@ -63,7 +63,7 @@ public final class PathTest {
 
         reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
 
-        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO);
+        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO, true);
 
         LOG.info(extractor.visit(tree));
     }

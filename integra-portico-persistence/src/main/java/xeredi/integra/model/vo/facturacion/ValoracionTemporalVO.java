@@ -30,6 +30,9 @@ public final class ValoracionTemporalVO {
     /** The rgla. */
     private ReglaVO rgla;
 
+    /** The rgla padre. */
+    private ReglaVO rglaPadre;
+
     /** The impuesto. */
     private ParametroVO impuesto;
 
@@ -637,6 +640,25 @@ public final class ValoracionTemporalVO {
      */
     public void setFfin(Date value) {
         this.ffin = value;
+    }
+
+    /**
+     * Gets the rgla padre.
+     *
+     * @return the rgla padre
+     */
+    public ReglaVO getRglaPadre() {
+        return rglaPadre;
+    }
+
+    /**
+     * Sets the rgla padre.
+     *
+     * @param value
+     *            the new rgla padre
+     */
+    public void setRglaPadre(ReglaVO value) {
+        this.rglaPadre = value;
     }
 
 }

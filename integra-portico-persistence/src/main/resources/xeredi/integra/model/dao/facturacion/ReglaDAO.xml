@@ -13,6 +13,7 @@
             <result column="rglv_pk" property="id" />
             <result column="rglv_fini" property="finicio" />
             <result column="rglv_ffin" property="ffin" />
+            <result column="rglv_orden" property="orden" />
             <result column="rglv_condicion" property="condicion" />
             <result column="rglv_formula" property="formula" />
             <result column="rglv_path_impuesto" property="pathImpuesto" />
@@ -102,5 +103,6 @@
     <select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
+        ORDER BY rgla_crgo_pk, rgla_tipo, rglv_orden
     </select>
 </mapper>

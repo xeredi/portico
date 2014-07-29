@@ -559,6 +559,24 @@ SELECT
 		WHERE srvc_pk = item.ssrv_srvc_pk
 	) AS srvc
 	, (
+		SELECT ssdt_prmt_pk 
+		FROM tbl_subservicio_dato_ssdt 
+		WHERE 
+			ssdt_tpdt_pk = portico.getTipoDato('TIPO_IVA') 
+			AND ssdt_ssrv_pk = ANY(
+				SELECT ssss_ssrvp_pk 
+				FROM tbl_subserv_subserv_ssss 
+				WHERE 
+					EXISTS (
+						SELECT 1 
+						FROM tbl_subservicio_ssrv 
+						WHERE ssrv_pk = ssss_ssrvp_pk 
+							AND ssrv_tpss_pk = portico.getEntidad('BL')
+					) 
+					AND ssss_ssrvh_pk = item.ssrv_pk
+			)
+	) AS vlrt_impuesto_pk 
+	, (
 		SELECT ssss_ssrvp_pk
 		FROM tbl_subserv_subserv_ssss
 		WHERE 
@@ -626,15 +644,41 @@ FROM (
 		) AS fref
 	FROM tbl_subservicio_ssrv ssrv
 	WHERE 
-		-- ssrv.ssrv_srvc_pk = 1192567
-		ssrv.ssrv_srvc_pk = 1209891
+		ssrv.ssrv_srvc_pk = 1192567
+		-- ssrv.ssrv_srvc_pk = 1209891
 		AND ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
 ) item
 ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
 ;
 
 
-
+SELECT *
+FROM (
+	SELECT ssrv.*, vlrt.*
+		, (
+			SELECT srvc_fref
+			FROM tbl_servicio_srvc
+			WHERE srvc_pk = ssrv_srvc_pk
+		) AS fref
+	FROM tbl_subservicio_ssrv ssrv
+		JOIN tbl_valoracion_tmp_vlrt vlrt ON
+			vlrt_srvc_pk = ssrv_srvc_pk
+			AND vlrt_ssrv_pk = ssrv_pk
+			AND vlrt_prbt_pk = 1208001
+			AND vlrt_crgo_pk = 60001
+			AND vlrt_rgla_pk = ANY (
+				SELECT rgla_pk 
+				FROM tbl_regla_rgla
+				WHERE rgla_crgo_pk = vlrt_crgo_pk
+					AND rgla_tipo = 'T'
+			)
+	WHERE 
+		ssrv.ssrv_srvc_pk = 1192567
+		-- ssrv.ssrv_srvc_pk = 1209891
+		AND ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
+) item
+ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
+;
 
 SELECT * FROM portico.tbl_subservicio_dato_ssdt
 WHERE ssdt_ssrv_pk = 1195604
@@ -644,6 +688,11 @@ WHERE ssdt_ssrv_pk = 1195604
 SELECT * FROM portico.tbl_tipo_dato_tpdt
 order by tpdt_codigo
 ;
+
+
+SELECT * FROM portico.tbl_proceso_batch_prbt;
+SELECT * FROM portico.tbl_valoracion_tmp_vlrt;
+DELETE FROM portico.tbl_valoracion_tmp_vlrt;
 
 --0		FACT/EST	Facturable y Estadística
 --1		FACT/NO EST	Facturable y No Estadística

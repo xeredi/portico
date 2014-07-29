@@ -33,7 +33,7 @@ public final class ValoradorBOTest {
             crgoIds.add(60001L);
             crgoIds.add(60002L);
 
-            vlrdBO.valorarServicio(1209891L, crgoIds, Calendar.getInstance().getTime(), 1225001L);
+            vlrdBO.valorarServicio(1192567L, crgoIds, Calendar.getInstance().getTime(), 1208001L);
         } finally {
             LOG.info("End test");
         }

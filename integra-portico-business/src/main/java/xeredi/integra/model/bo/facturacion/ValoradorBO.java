@@ -256,42 +256,45 @@ public class ValoradorBO implements Valorador {
     /**
      * Generate sql.
      *
-     * @param rgla the rgla
+     * @param rgla
+     *            the rgla
      */
     private void generateSql(final ReglaVO rgla) {
-        rgla.getRglv().setPathImpuestoSql(generateSqlPath(rgla, rgla.getRglv().getPathImpuesto()));
-        rgla.getRglv().setPathPagadorSql(generateSqlPath(rgla, rgla.getRglv().getPathPagador()));
-        rgla.getRglv().setPathEsSujPasivoSql(generateSqlPath(rgla, rgla.getRglv().getPathEsSujPasivo()));
-        rgla.getRglv().setPathCodExenSql(generateSqlPath(rgla, rgla.getRglv().getPathCodExen()));
+        rgla.getRglv().setPathImpuestoSql(generateSqlPath(rgla, rgla.getRglv().getPathImpuesto(), false));
+        rgla.getRglv().setPathPagadorSql(generateSqlPath(rgla, rgla.getRglv().getPathPagador(), false));
+        rgla.getRglv().setPathEsSujPasivoSql(generateSqlPath(rgla, rgla.getRglv().getPathEsSujPasivo(), false));
+        rgla.getRglv().setPathCodExenSql(generateSqlPath(rgla, rgla.getRglv().getPathCodExen(), false));
 
-        rgla.getRglv().setPathInfo1Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo1()));
-        rgla.getRglv().setPathInfo2Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo2()));
-        rgla.getRglv().setPathInfo3Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo3()));
-        rgla.getRglv().setPathInfo4Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo4()));
-        rgla.getRglv().setPathInfo5Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo5()));
-        rgla.getRglv().setPathInfo6Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo6()));
+        rgla.getRglv().setPathInfo1Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo1(), true));
+        rgla.getRglv().setPathInfo2Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo2(), true));
+        rgla.getRglv().setPathInfo3Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo3(), true));
+        rgla.getRglv().setPathInfo4Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo4(), true));
+        rgla.getRglv().setPathInfo5Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo5(), true));
+        rgla.getRglv().setPathInfo6Sql(generateSqlPath(rgla, rgla.getRglv().getPathInfo6(), true));
 
-        rgla.getRglv().setPathCuant1Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant1()));
-        rgla.getRglv().setPathCuant2Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant2()));
-        rgla.getRglv().setPathCuant3Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant3()));
-        rgla.getRglv().setPathCuant4Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant4()));
-        rgla.getRglv().setPathCuant5Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant5()));
-        rgla.getRglv().setPathCuant6Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant6()));
+        rgla.getRglv().setPathCuant1Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant1(), false));
+        rgla.getRglv().setPathCuant2Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant2(), false));
+        rgla.getRglv().setPathCuant3Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant3(), false));
+        rgla.getRglv().setPathCuant4Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant4(), false));
+        rgla.getRglv().setPathCuant5Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant5(), false));
+        rgla.getRglv().setPathCuant6Sql(generateSqlPath(rgla, rgla.getRglv().getPathCuant6(), false));
     }
 
     /**
      * Generate sql path.
      *
-     * @param rgla the rgla
-     * @param expression the expression
+     * @param rgla
+     *            the rgla
+     * @param expression
+     *            the expression
      * @return the string
      */
-    private String generateSqlPath(final ReglaVO rgla, final String expression) {
+    private String generateSqlPath(final ReglaVO rgla, final String expression, final boolean generateLabel) {
         if (expression == null || expression.isEmpty()) {
             return null;
         }
 
-        final PathSqlGenerator pathSqlGenerator = new PathSqlGenerator(rgla);
+        final PathSqlGenerator pathSqlGenerator = new PathSqlGenerator(rgla, generateLabel);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);
         final PathLexer lexer = new PathLexer(input);

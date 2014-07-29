@@ -1,4 +1,4 @@
--- // 0 0 1 Funciones
+﻿-- // 0 0 1 Funciones
 -- Migration SQL that makes the change goes here.
 
 
@@ -65,7 +65,7 @@ COMMENT ON FUNCTION portico.getSysDatetime() IS 'Obtencion de la Fecha-Hora del 
 /
 
 
-CREATE FUNCTION portico.concat(vc1 varchar, vc2 varchar) RETURNS TIMESTAMP IMMUTABLE AS $$
+CREATE FUNCTION portico.concat(vc1 varchar, vc2 varchar) RETURNS varchar IMMUTABLE AS $$
 BEGIN
      RETURN vc1 || vc2;
 END;

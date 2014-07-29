@@ -19,6 +19,9 @@ public final class ReglaVersionVO {
     /** The ffin. */
     private Date ffin;
 
+    /** The orden. */
+    private Integer orden;
+
     /** The condicion. */
     private String condicion;
 
@@ -1076,7 +1079,8 @@ public final class ReglaVersionVO {
     /**
      * Sets the path cuant3 sql.
      *
-     * @param value the path cuant3 sql
+     * @param value
+     *            the path cuant3 sql
      */
     public void setPathCuant3Sql(String value) {
         this.pathCuant3Sql = value;
@@ -1137,6 +1141,25 @@ public final class ReglaVersionVO {
      */
     public void setPathCuant6Sql(String value) {
         this.pathCuant6Sql = value;
+    }
+
+    /**
+     * Gets the orden.
+     *
+     * @return the orden
+     */
+    public Integer getOrden() {
+        return orden;
+    }
+
+    /**
+     * Sets the orden.
+     *
+     * @param value
+     *            the new orden
+     */
+    public void setOrden(Integer value) {
+        this.orden = value;
     }
 
 }

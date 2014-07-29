@@ -128,13 +128,14 @@ CREATE TABLE portico.tbl_regla_version_rglv
 	, rglv_rgla_pk BIGINT NOT NULL
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
+	, rglv_orden INT NOT NULL
 	, rglv_condicion VARCHAR(2000) NOT NULL
 	, rglv_formula VARCHAR(2000) NOT NULL
 
-	, rglv_path_impuesto VARCHAR(250) NOT NULL
-	, rglv_path_pagador VARCHAR(250) NOT NULL
-	, rglv_path_es_suj_pasivo VARCHAR(250) NOT NULL
-	, rglv_path_cod_exen VARCHAR(250) NOT NULL
+	, rglv_path_impuesto VARCHAR(250)
+	, rglv_path_pagador VARCHAR(250)
+	, rglv_path_es_suj_pasivo VARCHAR(250)
+	, rglv_path_cod_exen VARCHAR(250)
 
 	, rglv_path_info1 VARCHAR(250)
 	, rglv_etiq_info1 VARCHAR(50)
@@ -480,6 +481,7 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 	, vlrt_ssrv_pk BIGINT
 	, vlrt_crgo_pk BIGINT NOT NULL
 	, vlrt_rgla_pk BIGINT NOT NULL
+	, vlrt_rgla_padre_pk BIGINT NOT NULL
 	, vlrt_impuesto_pk BIGINT NOT NULL
 	, vlrt_pagador_pk BIGINT NOT NULL
 	, vlrt_orden INT NOT NULL
@@ -516,6 +518,8 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
 	, CONSTRAINT fk_vlrt_rgla_pk FOREIGN KEY (vlrt_rgla_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_vlrt_rgla_padre_pk FOREIGN KEY (vlrt_rgla_padre_pk)
+		REFERENCES portico.tbl_regla_rgla (rgla_pk)
 	, CONSTRAINT fk_vlrt_impuesto_pk FOREIGN KEY (vlrt_impuesto_pk)
 		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_vlrt_pagador_pk FOREIGN KEY (vlrt_pagador_pk)
@@ -523,7 +527,7 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 )
 /
 
-CREATE INDEX ix_vlrt_prbt_pk ON portico.tbl_valoracion_tmp_vlrt (vlrt_prbt_pk)
+CREATE INDEX ix_vlrt ON portico.tbl_valoracion_tmp_vlrt (vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk)
 /
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_tmp_vlrt TO portico
