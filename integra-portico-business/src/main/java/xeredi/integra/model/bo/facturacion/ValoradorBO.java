@@ -132,7 +132,7 @@ public class ValoradorBO implements Valorador {
      *            the contexto vo
      */
     private void valorarCargoServicio(final ValoradorContextoVO contextoVO) {
-        LOG.info(contextoVO);
+        LOG.info("Cargo: " + contextoVO.getCrgo().getCodigo());
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Contexto: " + contextoVO);
@@ -152,12 +152,12 @@ public class ValoradorBO implements Valorador {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
 
             for (final ReglaVO rgla : rglaList) {
+                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+
                 generateSql(rgla);
                 contextoVO.setRgla(rgla);
 
                 final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
-
-                LOG.info(contextoVO);
 
                 switch (rgla.getEnti().getTipo()) {
                 case T:
@@ -189,6 +189,8 @@ public class ValoradorBO implements Valorador {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
 
             for (final ReglaVO rgla : rglaList) {
+                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+
                 generateSql(rgla);
                 contextoVO.setRgla(rgla);
 
@@ -224,6 +226,8 @@ public class ValoradorBO implements Valorador {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
 
             for (final ReglaVO rgla : rglaList) {
+                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
+
                 generateSql(rgla);
                 contextoVO.setRgla(rgla);
 
