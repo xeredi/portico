@@ -75,259 +75,213 @@
     <![CDATA[
     SELECT
         #{prbt.id} AS vlrt_prbt_pk
-        , srvc.srvc_pk AS vlrt_srvc_pk
-        , ssrv.ssrv_pk AS vlrt_ssrv_pk
-        , rgla.rgla_crgo_pk AS vlrt_crgo_pk
-        , rgla.rgla_pk AS vlrt_rgla_pk
-        , ssrv.ssrv_numero AS vlrt_orden
+        , srvc_pk AS vlrt_srvc_pk
+        , ssrv_pk AS vlrt_ssrv_pk
+        , rgla_crgo_pk AS vlrt_crgo_pk
+        , rgla_pk AS vlrt_rgla_pk
+        , ssrv_numero AS vlrt_orden
         , 0 AS vlrt_importe_base
         , 0 AS vlrt_importe
+    ]]>
 
-        , 0 AS vlrt_cuant1
-        , 0 AS vlrt_cuant2
-        , 0 AS vlrt_cuant3
-        , 0 AS vlrt_cuant4
-        , 0 AS vlrt_cuant5
-        , 0 AS vlrt_cuant6
+    <if test="rgla.rglv.pathCuant1Sql != null">
+        , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
+    </if>
+    <if test="rgla.rglv.pathCuant2Sql != null">
+        , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
+    </if>
+    <if test="rgla.rglv.pathCuant3Sql != null">
+        , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
+    </if>
+    <if test="rgla.rglv.pathCuant4Sql != null">
+        , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
+    </if>
+    <if test="rgla.rglv.pathCuant5Sql != null">
+        , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
+    </if>
+    <if test="rgla.rglv.pathCuant6Sql != null">
+        , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
+    </if>
 
-        , NULL AS vlrt_info1
-        , NULL AS vlrt_info2
-        , NULL AS vlrt_info3
-        , NULL AS vlrt_info4
-        , NULL AS vlrt_info5
-        , NULL AS vlrt_info6
+    <if test="rgla.rglv.pathInfo1Sql != null">
+        , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
+    </if>
+    <if test="rgla.rglv.pathInfo2Sql != null">
+        , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
+    </if>
+    <if test="rgla.rglv.pathInfo3Sql != null">
+        , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
+    </if>
+    <if test="rgla.rglv.pathInfo4Sql != null">
+        , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
+    </if>
+    <if test="rgla.rglv.pathInfo5Sql != null">
+        , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
+    </if>
+    <if test="rgla.rglv.pathInfo6Sql != null">
+        , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
+    </if>
 
-        , (
-            SELECT prmt_pk
-            FROM portico.tbl_parametro_prmt
-            WHERE
-                EXISTS (
-                    SELECT 1
-                    FROM portico.tbl_subservicio_dato_ssdt
-                    WHERE
-                        ssdt_prmt_pk = prmt_pk
-                        and ssdt_tpdt_pk = portico.getTipoDato('TIPO_IVA')
-                        AND EXISTS (
-                            SELECT 1
-                            FROM portico.tbl_subservicio_ssrv
-                            WHERE
-                                ssrv_pk = ssdt_ssrv_pk
-                                AND ssrv_tpss_pk = portico.getEntidad('BL')
-                        )
-                        AND EXISTS (
-                            SELECT 1
-                            FROM portico.tbl_subserv_subserv_ssss
-                            WHERE
-                                ssss_ssrvp_pk = ssdt_ssrv_pk
-                                AND ssss_ssrvh_pk = ssrv.ssrv_pk
-                        )
-                )
-        ) AS vlrt_impuesto_pk
-        , (
-            SELECT ssdt_nentero
-            FROM portico.tbl_subservicio_dato_ssdt
-            WHERE
-                ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
-                AND EXISTS (
-                    SELECT 1
-                    FROM portico.tbl_subservicio_ssrv
-                    WHERE
-                        ssrv_pk = ssdt_ssrv_pk
-                        AND ssrv_tpss_pk = portico.getEntidad('BL')
-                )
-                AND EXISTS (
-                    SELECT 1
-                    FROM portico.tbl_subserv_subserv_ssss
-                    WHERE
-                        ssss_ssrvp_pk = ssdt_ssrv_pk
-                        AND ssss_ssrvh_pk = ssrv.ssrv_pk
-                )
-        ) AS vlrt_es_suj_pasivo
-        , (
-            select ssdt_prmt_pk
-            FROM
-                portico.tbl_subservicio_dato_ssdt
-            WHERE
-                ssdt_tpdt_pk = portico.getTipoDato('ORGA')
-                AND EXISTS (
-                    SELECT 1
-                    FROM
-                        portico.tbl_subservicio_ssrv
-                    WHERE
-                        ssrv_pk = ssdt_ssrv_pk
-                        AND ssrv_tpss_pk = portico.getEntidad('MANIFIESTO_CONSIGNATARIO')
-                        AND EXISTS (
-                            SELECT 1
-                            FROM portico.tbl_subserv_subserv_ssss
-                            WHERE
-                                ssss_ssrvp_pk = ssrv_pk
-                                AND EXISTS (
-                                    SELECT 1
-                                    FROM
-                                        portico.tbl_subservicio_ssrv
-                                    WHERE
-                                        ssrv_pk = ssss_ssrvh_pk
-                                        AND ssrv_tpss_pk = portico.getEntidad('BL')
-                                        AND EXISTS (
-                                            SELECT 1
-                                            FROM portico.tbl_subserv_subserv_ssss
-                                            WHERE
-                                                ssss_ssrvp_pk = ssrv_pk
-                                                AND ssss_ssrvh_pk = ssrv.ssrv_pk
-                                        )
-                                )
-                        )
-                )
-        ) AS vlrt_pagador_pk
-        , (
-            SELECT ssdt_cadena
-            FROM portico.tbl_subservicio_dato_ssdt
-            WHERE ssdt_ssrv_pk = ssrv.ssrv_pk
-                AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-        ) AS vlrt_cod_exen
-    FROM
-        portico.tbl_subservicio_ssrv ssrv
-        JOIN portico.tbl_servicio_srvc srvc ON
-            srvc_pk = ssrv_srvc_pk
-        JOIN portico.tbl_tipo_subservicio_tpss tpss ON
-            tpss_pk = ssrv_tpss_pk
-        JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
-            tpsr_pk = srvc_tpsr_pk
-        JOIN portico.tbl_regla_rgla rgla ON
-            rgla_enti_pk = ssrv_tpss_pk
-            AND rgla_pk = #{rgla.id}
-    WHERE
-        tpsr_es_facturable = 1
-        AND tpss_es_facturable = 1
-        AND (
-            tpss_tpdt_estado_pk IS NULL
-            OR (
-                (
-                    tpss_pk = portico.getEntidad('PARTIDA')
-                    AND ssrv_estado = 'R'
-                    AND (
-                        -- Regimen simplificado
-                        EXISTS (
-                            SELECT 1
-                            FROM portico.tbl_subservicio_dato_ssdt
-                            WHERE
+    <if test="rgla.rglv.pathImpuestoSql != null">
+        , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
+    </if>
+    <if test="rgla.rglv.pathEsSujPasivoSql != null">
+        , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
+    </if>
+    <if test="rgla.rglv.pathPagadorSql != null">
+        , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
+    </if>
+    <if test="rgla.rglv.pathCodExenSql != null">
+        , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
+    </if>
 
-                                EXISTS (
-                                    SELECT 1
-                                    FROM portico.tbl_subservicio_ssrv
-                                    WHERE
-                                        ssrv_pk = ssdt_ssrv_pk
-                                        AND ssrv_tpss_pk = portico.getEntidad('BL')
-                                )
-                                AND EXISTS (
-                                    SELECT 1
-                                    FROM portico.tbl_subserv_subserv_ssss
-                                    WHERE
-                                        ssss_ssrvp_pk = ssdt_ssrv_pk
-                                        AND ssss_ssrvh_pk = ssrv.ssrv_pk
-                                )
-                                AND (
-                                    (ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02') AND ssdt_nentero = 0)
-                                    or (ssdt_tpdt_pk = portico.getTipoDato('TIPO_BL') AND ssdt_cadena = 'P')
-                                )
-                        )
-                        or (
+    <![CDATA[
+    FROM (
+        SELECT item.*, rgla.*, srvc.*
+        FROM
+            portico.tbl_subservicio_ssrv item
+            JOIN portico.tbl_servicio_srvc srvc ON
+                srvc_pk = ssrv_srvc_pk
+            JOIN portico.tbl_tipo_subservicio_tpss tpss ON
+                tpss_pk = ssrv_tpss_pk
+            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+                tpsr_pk = srvc_tpsr_pk
+            JOIN portico.tbl_regla_rgla rgla ON
+                rgla_enti_pk = ssrv_tpss_pk
+                AND rgla_pk = #{rgla.id}
+        WHERE
+            tpsr_es_facturable = 1
+            AND tpss_es_facturable = 1
+            AND (
+                tpss_tpdt_estado_pk IS NULL
+                OR (
+                    (
+                        tpss_pk = portico.getEntidad('PARTIDA')
+                        AND ssrv_estado = 'R'
+                        AND (
+                            -- Regimen simplificado
                             EXISTS (
                                 SELECT 1
-                                FROM
-                                    portico.tbl_parametro_dato_prdt
+                                FROM portico.tbl_subservicio_dato_ssdt
                                 WHERE
-                                    prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+
+                                    EXISTS (
+                                        SELECT 1
+                                        FROM portico.tbl_subservicio_ssrv
+                                        WHERE
+                                            ssrv_pk = ssdt_ssrv_pk
+                                            AND ssrv_tpss_pk = portico.getEntidad('BL')
+                                    )
                                     AND EXISTS (
                                         SELECT 1
-                                        FROM portico.tbl_parametro_version_prvr
+                                        FROM portico.tbl_subserv_subserv_ssss
                                         WHERE
-                                            prvr_pk = prdt_prvr_pk
-                                            AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
-                                            AND EXISTS (
-                                                SELECT 1
-                                                FROM portico.tbl_subservicio_dato_ssdt
-                                                WHERE
-                                                    ssdt_prmt_pk = prvr_prmt_pk
-                                                    AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
-                                                    AND ssdt_ssrv_pk = ssrv.ssrv_pk
-                                            )
+                                            ssss_ssrvp_pk = ssdt_ssrv_pk
+                                            AND ssss_ssrvh_pk = item.ssrv_pk
                                     )
-                                    AND prdt_nentero = 1
-                                    -- TODO Falta ver que la mercancia de la unidad de carga sea nula
+                                    AND (
+                                        (ssdt_tpdt_pk = portico.getTipoDato('BOOLEANO_02') AND ssdt_nentero = 0)
+                                        or (ssdt_tpdt_pk = portico.getTipoDato('TIPO_BL') AND ssdt_cadena = 'P')
+                                    )
+                            )
+                            or (
+                                EXISTS (
+                                    SELECT 1
+                                    FROM
+                                        portico.tbl_parametro_dato_prdt
+                                    WHERE
+                                        prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+                                        AND EXISTS (
+                                            SELECT 1
+                                            FROM portico.tbl_parametro_version_prvr
+                                            WHERE
+                                                prvr_pk = prdt_prvr_pk
+                                                AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+                                                AND EXISTS (
+                                                    SELECT 1
+                                                    FROM portico.tbl_subservicio_dato_ssdt
+                                                    WHERE
+                                                        ssdt_prmt_pk = prvr_prmt_pk
+                                                        AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
+                                                        AND ssdt_ssrv_pk = item.ssrv_pk
+                                                )
+                                        )
+                                        AND prdt_nentero = 1
+                                        -- TODO Falta ver que la mercancia de la unidad de carga sea nula
+                                )
                             )
                         )
                     )
+
+                    OR (tpss_pk = portico.getEntidad('EQUIPAMIENTO') AND ssrv_estado = 'R')
+
+                    OR (tpss_pk = portico.getEntidad('PARTIDA_PESCA') AND ssrv_estado = 'R')
+
+                    OR (tpss_pk = portico.getEntidad('ATRAQUE') AND ssrv_estado IN ('I', 'F'))
                 )
-
-                OR (tpss_pk = portico.getEntidad('EQUIPAMIENTO') AND ssrv_estado = 'R')
-
-                OR (tpss_pk = portico.getEntidad('PARTIDA_PESCA') AND ssrv_estado = 'R')
-
-                OR (tpss_pk = portico.getEntidad('ATRAQUE') AND ssrv_estado IN ('I', 'F'))
             )
-        )
-        AND (
-            tpss_es_exencionable = 0
-            OR EXISTS (
-                SELECT 1
-                FROM portico.tbl_subservicio_dato_ssdt
-                WHERE ssdt_ssrv_pk = ssrv_pk
-                    AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-                    AND ssdt_cadena IN ('0', '1')
-            )
-        )
-        AND (
-            tpsr_es_exencionable = 0
-            OR EXISTS (
-                SELECT 1
-                FROM portico.tbl_servicio_dato_srdt
-                WHERE srdt_srvc_pk = srvc_pk
-                    AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-                    AND srdt_cadena IN ('0', '1')
-            )
-        )
-
-        -- TODO Condicion
-
-        AND (
-            (
-                rgla_tipo = 'T'
-                AND NOT EXISTS (
+            AND (
+                tpss_es_exencionable = 0
+                OR EXISTS (
                     SELECT 1
-                    FROM portico.tbl_servicio_cargo_srcr
-                    WHERE
-                        srcr_srvc_pk = srvc_pk
-                        AND srcr_ssrv_pk = ssrv_pk
-                        AND srcr_crgo_pk = rgla_crgo_pk
-                        AND (srcr_vlrc_pk IS NOT NULL OR srcr_fctr_pk IS NOT NULL)
+                    FROM portico.tbl_subservicio_dato_ssdt
+                    WHERE ssdt_ssrv_pk = ssrv_pk
+                        AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+                        AND ssdt_cadena IN ('0', '1')
                 )
-                -- TODO Ojo lo de temporalidad
             )
-            OR (
-                rgla_tipo IN ('C', 'D')
-                AND EXISTS (
+            AND (
+                tpsr_es_exencionable = 0
+                OR EXISTS (
                     SELECT 1
-                    FROM
-                        portico.tbl_valoracion_tmp_vlrt
-                    WHERE
-                        vlrt_prbt_pk = #{prbt.id}
-                        AND vlrt_srvc_pk = srvc_pk
-                        AND vlrt_ssrv_pk = ssrv_pk
-                        AND vlrt_crgo_pk = rgla_crgo_pk
-                        AND vlrt_rgla_pk = ANY(
-                            SELECT rgla_pk
-                            FROM portico.tbl_regla_rgla
-                            WHERE
-                                rgla_crgo_pk = vlrt_crgo_pk
-                                AND rgla_tipo = 'T'
-                        )
+                    FROM portico.tbl_servicio_dato_srdt
+                    WHERE srdt_srvc_pk = srvc_pk
+                        AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+                        AND srdt_cadena IN ('0', '1')
                 )
             )
-        )
 
-        AND ssrv_srvc_pk = #{srvc.id}
-    ORDER BY ssrv_srvc_pk, ssrv_numero
+            -- TODO Condicion
+
+            AND (
+                (
+                    rgla_tipo = 'T'
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM portico.tbl_servicio_cargo_srcr
+                        WHERE
+                            srcr_srvc_pk = srvc_pk
+                            AND srcr_ssrv_pk = ssrv_pk
+                            AND srcr_crgo_pk = rgla_crgo_pk
+                            AND (srcr_vlrc_pk IS NOT NULL OR srcr_fctr_pk IS NOT NULL)
+                    )
+                    -- TODO Ojo lo de temporalidad
+                )
+                OR (
+                    rgla_tipo IN ('C', 'D')
+                    AND EXISTS (
+                        SELECT 1
+                        FROM
+                            portico.tbl_valoracion_tmp_vlrt
+                        WHERE
+                            vlrt_prbt_pk = #{prbt.id}
+                            AND vlrt_srvc_pk = srvc_pk
+                            AND vlrt_ssrv_pk = ssrv_pk
+                            AND vlrt_crgo_pk = rgla_crgo_pk
+                            AND vlrt_rgla_pk = ANY(
+                                SELECT rgla_pk
+                                FROM portico.tbl_regla_rgla
+                                WHERE
+                                    rgla_crgo_pk = vlrt_crgo_pk
+                                    AND rgla_tipo = 'T'
+                            )
+                    )
+                )
+            )
+
+            AND ssrv_srvc_pk = #{srvc.id}
+    ) item
+    ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
     ]]>
     </select>
 

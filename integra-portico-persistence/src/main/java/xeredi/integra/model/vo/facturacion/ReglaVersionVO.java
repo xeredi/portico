@@ -172,13 +172,6 @@ public final class ReglaVersionVO {
     }
 
     /**
-     * Generate sql.
-     */
-    public void generateSql() {
-        // TODO Implementar
-    }
-
-    /**
      * Gets the id.
      *
      * @return the id

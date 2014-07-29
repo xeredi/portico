@@ -1,36 +1,34 @@
 grammar Path;
 
-r
+value
 :
-	path
-	| FUNCTION
-	(
-		path
-	)
+	function
+	| path
+	| scalar
 ;
 
-FUNCTION
+function
 :
-	'COALESCE'
+	coalesce
+;
+
+coalesce
+:
+	'COALESCE' '(' value ',' value ')'
 ;
 
 path
 :
 	pathElement
 	(
-		PATH_SEPARATOR pathElement
+		'.' pathElement
 	)*
-;
-
-PATH_SEPARATOR
-:
-	'.'
 ;
 
 pathElement
 :
-	ELEMENT_PARENT LPAREN ID RPAREN
-	| ELEMENT_DATA LPAREN ID RPAREN
+	ELEMENT_PARENT '(' ID ')'
+	| ELEMENT_DATA '(' ID ')'
 	| ELEMENT_SERVICE
 ;
 
@@ -49,19 +47,28 @@ ELEMENT_SERVICE
 	'servicio'
 ;
 
-LPAREN
-:
-	'('
-;
-
-RPAREN
-:
-	')'
-;
-
 ID
 :
 	[A-Z0-9_]+
+;
+
+scalar
+:
+	DOUBLE
+	| INT
+;
+
+DOUBLE
+:
+	[0-9]+
+	(
+		. [0-9]+
+	)?
+;
+
+INT
+:
+	[0-9]+
 ;
 
 WS

@@ -1,6 +1,5 @@
 -- // 0 0 2 Facturacion Maestro
 -- Migration SQL that makes the change goes here.
-
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)
 	VALUES (60000, 'B5', NULL, 1, 0, 21001, 'B', 'TASA DE PESCA FRESCA')
 /
@@ -19,9 +18,9 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64000, 63001, '2013-01-01', NULL, 'TRUE', '1', 'padre("BL").dato("TIPO_IVA")', 'padre("BL").padre("MANIFIESTO_CONSIGNATARIO").dato("ORGANIZACION")', 'padre("BL").dato("BOOLEANO_01")', 'padre("BL").dato("COD_EXEN")'
-			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
-			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+			64000, 63001, '2013-01-01', NULL, 'TRUE', '1', 'padre(BL).dato(TIPO_IVA)', 'padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)', 'padre(BL).dato(BOOLEANO_01)', 'padre(BL).dato(COD_EXEN)'
+			, 'dato(MERCANCIA)', 'Mercancia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+			, 'dato(ENTERO_04)', 'Peso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
 		/
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)

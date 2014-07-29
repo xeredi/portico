@@ -220,7 +220,7 @@ FROM
 	JOIN portico.tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
 WHERE 
-	entd_enti_pk = portico.getEntidad('UNIDAD_CARGA')
+	entd_enti_pk = portico.getEntidad('PARTIDA')
 --	AND entd_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
 ;
 
@@ -625,7 +625,9 @@ FROM (
 			WHERE srvc_pk = ssrv_srvc_pk
 		) AS fref
 	FROM tbl_subservicio_ssrv ssrv
-	WHERE ssrv.ssrv_srvc_pk = 1192567
+	WHERE 
+		-- ssrv.ssrv_srvc_pk = 1192567
+		ssrv.ssrv_srvc_pk = 1209891
 		AND ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
 ) item
 ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero

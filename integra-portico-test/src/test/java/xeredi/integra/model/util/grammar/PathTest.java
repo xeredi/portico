@@ -18,6 +18,8 @@ import xeredi.integra.model.vo.facturacion.ReglaVO;
  * The Class PathTest.
  */
 public final class PathTest {
+
+    /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(PathTest.class);
 
     /**
@@ -28,10 +30,11 @@ public final class PathTest {
      */
     @Test
     public void test() throws IOException {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             test("servicio.dato(ACUERDO)");
             test("dato(MERCANCIA)");
             test("padre(BL).dato(COD_EXEN)");
+            test("padre(BL).dato(UNLOCODE).dato(PAIS)");
         }
     }
 
@@ -54,7 +57,7 @@ public final class PathTest {
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final PathParser parser = new PathParser(tokens);
 
-        final ParseTree tree = parser.r();
+        final ParseTree tree = parser.value();
 
         final ReglaVO reglaVO = new ReglaVO();
 
@@ -62,7 +65,7 @@ public final class PathTest {
 
         final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO);
 
-        extractor.visit(tree);
+        LOG.info(extractor.visit(tree));
     }
 
 }
