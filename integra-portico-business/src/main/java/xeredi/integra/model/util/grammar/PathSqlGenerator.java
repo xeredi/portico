@@ -174,7 +174,8 @@ public final class PathSqlGenerator extends PathBaseVisitor {
 
                 sqlElement.append(" FROM tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = portico.getTipoDato('"
                         + ctx.ID().getText() + "') AND srdt_srvc_pk = ");
-                sqlElement.append(firstPathElement ? "item.ssrv_srvc_pk" : "ANY(#{any})");
+                sqlElement.append(firstPathElement ? (regla.getEnti().getTipo() == TipoEntidad.T ? "item.srvc_pk"
+                        : "item.ssrv_srvc_pk") : "ANY(#{any})");
 
                 break;
             case S:

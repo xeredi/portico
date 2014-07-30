@@ -14,12 +14,14 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
+import xeredi.integra.model.bo.comun.IgBO;
 import xeredi.integra.model.dao.facturacion.CargoDAO;
 import xeredi.integra.model.dao.facturacion.ReglaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO;
 import xeredi.integra.model.dao.proceso.ProcesoDAO;
 import xeredi.integra.model.dao.servicio.ServicioDAO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
+import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.grammar.PathLexer;
 import xeredi.integra.model.util.grammar.PathParser;
 import xeredi.integra.model.util.grammar.PathSqlGenerator;
@@ -145,6 +147,9 @@ public class ValoradorBO implements Valorador {
         rglaCriterioVO.setCrgoId(contextoVO.getCrgo().getId());
         rglaCriterioVO.setFechaVigencia(contextoVO.getFinicio());
 
+
+        final IgBO igBO = new IgBO();
+
         {
             // Aplicaro procedimientos de tipo precio
             rglaCriterioVO.setTipo(ReglaTipo.T);
@@ -172,6 +177,8 @@ public class ValoradorBO implements Valorador {
                 }
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
+                    vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
                     vlrt.setFreferencia(contextoVO.getFreferencia());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
                     vlrt.setFinicio(contextoVO.getFinicio());
@@ -209,6 +216,8 @@ public class ValoradorBO implements Valorador {
                 }
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
+                    vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
                     vlrt.setFreferencia(contextoVO.getFreferencia());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
                     vlrt.setFinicio(contextoVO.getFinicio());
@@ -246,6 +255,8 @@ public class ValoradorBO implements Valorador {
                 }
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
+                    vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
                     vlrt.setFreferencia(contextoVO.getFreferencia());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
                     vlrt.setFinicio(contextoVO.getFinicio());
@@ -291,6 +302,8 @@ public class ValoradorBO implements Valorador {
      *            the rgla
      * @param expression
      *            the expression
+     * @param generateLabel
+     *            the generate label
      * @return the string
      */
     private String generateSqlPath(final ReglaVO rgla, final String expression, final boolean generateLabel) {

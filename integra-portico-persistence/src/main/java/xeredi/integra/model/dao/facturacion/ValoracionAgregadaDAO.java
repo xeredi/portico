@@ -16,7 +16,7 @@ public interface ValoracionAgregadaDAO {
      *
      * @param criterioVO
      *            the criterio vo
-     * @return the list< valoracion agregada v o>
+     * @return the list
      */
     List<ValoracionAgregadaVO> selectList(final ValoracionAgregadaCriterioVO criterioVO);
 }

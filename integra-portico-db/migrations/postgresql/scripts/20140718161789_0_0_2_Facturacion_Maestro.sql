@@ -61,6 +61,17 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 		/
 	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63201, 60003, 22011, 'T', 'B1-20-0000');
 	/
+	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63202, 60003, 22011, 'C', 'B1-C001');
+	/
+		INSERT INTO portico.tbl_regla_version_rglv (rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_condicion, rglv_formula, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
+			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
+		) VALUES (
+			64202, 63202, '2013-01-01', NULL, 1, 'TRUE', '1', NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+		)
+		/
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)
 	VALUES (60004, 'B0', 'B0', 0, 1, 21003, 'B', 'TASA AL BUQUE 2')
 /
@@ -72,8 +83,19 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64300, 63300, '2013-01-01', NULL, 1, 'TRUE', '1', 'dato(TIPO_IVA)', 'dato(ORGA)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
+			64300, 63300, '2013-01-01', NULL, 1, 'TRUE', '1', 'dato(TIPO_IVA)', 'dato(ORGA_3)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
 			, 'dato(BUQUE)', 'Buque', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+		)
+		/
+	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63320, 60004, 21003, 'C', 'B0-C001');
+	/
+		INSERT INTO portico.tbl_regla_version_rglv (rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_condicion, rglv_formula, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
+			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
+		) VALUES (
+			64320, 63320, '2013-01-01', NULL, 1, 'TRUE', '1', NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
 		/
@@ -88,7 +110,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64400, 63400, '2013-01-01', NULL, 1, 'TRUE', '1', 'dato(TIPO_IVA)', 'dato(ORGA)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
+			64400, 63400, '2013-01-01', NULL, 1, 'TRUE', '1', 'dato(TIPO_IVA)', 'dato(ORGA_3)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
 			, 'dato(BUQUE)', 'Buque', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
@@ -105,26 +127,94 @@ INSERT INTO portico.tbl_cargo_dep_crdp (crdp_pk, crdp_crgop_pk, crdp_crgoh_pk) V
 
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61000, 'B5', 21001, 'ASPECTO DE PESCA FRESCA')
 /
---	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61000, 60000)
---	/
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
+		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
+		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
+		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
+		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+	) VALUES (65000, 61000, '2013-01-01', NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+	)
+	/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61001, 'B2', 21002, 'ASPECTO DE PASAJE')
 /
---	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61001, 60001)
---	/
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
+		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
+		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
+		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
+		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+	) VALUES (65001, 61001, '2013-01-01', NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+	)
+	/
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65001, 60001)
+		/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61002, 'B3', 21002, 'ASPECTO DE MERCANCIA')
 /
---	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61002, 60002)
---	/
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
+		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
+		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
+		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
+		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+	) VALUES (65002, 61002, '2013-01-01', NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+	)
+	/
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65002, 60002)
+		/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61003, 'B1', 21003, 'ASPECTO DE BUQUE')
 /
---	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61003, 60003)
---	/
---	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61003, 60004)
---	/
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
+		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
+		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
+		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
+		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+	) VALUES (65003, 61003, '2013-01-01', NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+	)
+	/
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65003, 60003)
+		/
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65003, 60004)
+		/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61004, 'TR', 21002, 'ASPECTO DE RESIDUOS')
 /
---	INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspc_pk, ascr_crgo_pk) VALUES (61004, 60005)
---	/
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
+		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
+		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
+		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
+		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+	) VALUES (65004, 61004, '2013-01-01', NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+		, NULL, NULL, NULL, NULL, NULL, NULL
+	)
+	/
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65004, 60005)
+		/
 
 
 
@@ -151,6 +241,40 @@ DELETE FROM portico.tbl_valoracion_tmp_vlrt
 --	, 61004
 --)
 --/
+
+DELETE FROM portico.tbl_aspecto_cargo_ascr
+WHERE EXISTS (
+		SELECT 1
+		FROM portico.tbl_aspecto_version_aspv 
+		WHERE aspv_pk = ascr_aspv_pk
+			AND EXISTS (
+				SELECT 1 FROM portico.tbl_aspecto_aspc 
+				WHERE 
+					aspc_pk = aspv_aspc_pk
+					AND aspc_pk IN (
+						  61000
+						, 61001
+						, 61002
+						, 61003
+						, 61004
+					)
+			)
+)
+/
+
+DELETE FROM portico.tbl_aspecto_version_aspv WHERE EXISTS (
+	SELECT 1 FROM portico.tbl_aspecto_aspc 
+	WHERE 
+		aspc_pk = aspv_aspc_pk
+		AND aspc_pk IN (
+			  61000
+			, 61001
+			, 61002
+			, 61003
+			, 61004
+		)
+)
+/
 
 DELETE FROM portico.tbl_aspecto_aspc WHERE aspc_pk IN (
 	  61000

@@ -237,38 +237,26 @@ CREATE TABLE portico.tbl_aspecto_version_aspv
 	, aspv_cpath_info6 VARCHAR(250)
 	, aspv_cetiq_info6 VARCHAR(50)
 
-	, aspv_lpath_info1 VARCHAR(250)
-	, aspv_letiq_info1 VARCHAR(50)
-	, aspv_lpath_info2 VARCHAR(250)
-	, aspv_letiq_info2 VARCHAR(50)
-	, aspv_lpath_info3 VARCHAR(250)
-	, aspv_letiq_info3 VARCHAR(50)
-	, aspv_lpath_info4 VARCHAR(250)
-	, aspv_letiq_info4 VARCHAR(50)
-	, aspv_lpath_info5 VARCHAR(250)
-	, aspv_letiq_info5 VARCHAR(50)
-	, aspv_lpath_info6 VARCHAR(250)
-	, aspv_letiq_info6 VARCHAR(50)
-
-	, aspv_lpath_cuant1 VARCHAR(250)
-	, aspv_letiq_cuant1 VARCHAR(50)
 	, aspv_lsum_cuant1 INT
-	, aspv_lpath_cuant2 VARCHAR(250)
-	, aspv_letiq_cuant2 VARCHAR(50)
 	, aspv_lsum_cuant2 INT
-	, aspv_lpath_cuant3 VARCHAR(250)
-	, aspv_letiq_cuant3 VARCHAR(50)
 	, aspv_lsum_cuant3 INT
-	, aspv_lpath_cuant4 VARCHAR(250)
-	, aspv_letiq_cuant4 VARCHAR(50)
 	, aspv_lsum_cuant4 INT
-	, aspv_lpath_cuant5 VARCHAR(250)
-	, aspv_letiq_cuant5 VARCHAR(50)
 	, aspv_lsum_cuant5 INT
-	, aspv_lpath_cuant6 VARCHAR(250)
-	, aspv_letiq_cuant6 VARCHAR(50)
 	, aspv_lsum_cuant6 INT
+	, aspv_lgrp_cuant1 INT
+	, aspv_lgrp_cuant2 INT
+	, aspv_lgrp_cuant3 INT
+	, aspv_lgrp_cuant4 INT
+	, aspv_lgrp_cuant5 INT
+	, aspv_lgrp_cuant6 INT
 
+	, aspv_lgrp_info1 INT
+	, aspv_lgrp_info2 INT
+	, aspv_lgrp_info3 INT
+	, aspv_lgrp_info4 INT
+	, aspv_lgrp_info5 INT
+	, aspv_lgrp_info6 INT
+	
 	, CONSTRAINT pk_aspv PRIMARY KEY (aspv_pk)
 
 	, CONSTRAINT fk_aspv_aspc_pk FOREIGN KEY (aspv_aspc_pk)
@@ -476,7 +464,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_det_vlrd TO porti
 -- tbl_valoracion_tmp_vlrt
 CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 (
-	vlrt_prbt_pk BIGINT NOT NULL
+	vlrt_pk BIGINT NOT NULL
+	, vlrt_prbt_pk BIGINT NOT NULL
 	, vlrt_srvc_pk BIGINT NOT NULL
 	, vlrt_ssrv_pk BIGINT
 	, vlrt_crgo_pk BIGINT NOT NULL
@@ -484,7 +473,7 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 	, vlrt_rgla_padre_pk BIGINT NOT NULL
 	, vlrt_impuesto_pk BIGINT NOT NULL
 	, vlrt_pagador_pk BIGINT NOT NULL
-	, vlrt_orden INT NOT NULL
+	, vlrt_orden INT
 	, vlrt_importe_base DOUBLE PRECISION NOT NULL
 	, vlrt_importe DOUBLE PRECISION NOT NULL
 	, vlrt_es_suj_pasivo INT NOT NULL
@@ -507,6 +496,8 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 	, vlrt_info4 VARCHAR(100)
 	, vlrt_info5 VARCHAR(100)
 	, vlrt_info6 VARCHAR(100)
+
+	, CONSTRAINT pk_vlrt PRIMARY KEY (vlrt_pk)
 
 	, CONSTRAINT fk_vlrt_prbt_pk FOREIGN KEY (vlrt_prbt_pk)
 		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)

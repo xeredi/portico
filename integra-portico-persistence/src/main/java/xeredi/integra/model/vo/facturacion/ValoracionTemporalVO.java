@@ -15,6 +15,9 @@ import xeredi.integra.model.vo.servicio.SubservicioVO;
  */
 public final class ValoracionTemporalVO {
 
+    /** The id. */
+    private Long id;
+
     /** The prbt. */
     private ProcesoVO prbt;
 
@@ -659,6 +662,25 @@ public final class ValoracionTemporalVO {
      */
     public void setRglaPadre(ReglaVO value) {
         this.rglaPadre = value;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(Long value) {
+        this.id = value;
     }
 
 }

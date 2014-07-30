@@ -4,13 +4,7 @@
 
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO">
     <resultMap type="ValoracionTemporalVO" id="ResultMap">
-        <id column="vlrt_prbt_pk" />
-        <id column="vlrt_srvc_pk" />
-        <id column="vlrt_ssrv_pk" />
-        <id column="vlrt_cgro_pk" />
-        <id column="vlrt_rgla_pk" />
-        <id column="vlrt_impuesto_pk" />
-        <id column="vlrt_pagador_pk" />
+        <result column="vlrt_pk" property="id" />
 
         <result column="vlrt_orden" property="orden" />
         <result column="vlrt_importe_base" property="importeBase" />
@@ -136,7 +130,7 @@
     FROM (
         SELECT item.*, rgla.*, srvc_fref AS fref
         FROM
-            portico.tbl_servicio_srvc srvc
+            portico.tbl_servicio_srvc item
             JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
                 tpsr_pk = srvc_tpsr_pk
             JOIN portico.tbl_regla_rgla rgla ON
@@ -145,10 +139,10 @@
         WHERE
             tpsr_es_facturable = 1
             AND (
-                tpss_tpdt_estado_pk IS NULL
+                tpsr_tpdt_estado_pk IS NULL
                 OR (
 
-                    (tpsr_pk = portico.getEntidad('ESCALA') AND ssrv_estado IN ('I', 'F'))
+                    (tpsr_pk = portico.getEntidad('ESCALA') AND srvc_estado IN ('I', 'F'))
 
                 )
             )
@@ -175,7 +169,7 @@
             )
             -- TODO Ojo lo de temporalidad
 
-            AND ssrv_srvc_pk = #{srvc.id}
+            AND srvc_pk = #{srvc.id}
     ) item
     ]]>
     </select>
@@ -212,14 +206,14 @@
     FROM (
         SELECT item.*, rgla.*, vlrt.*, srvc_fref AS fref
         FROM
-            portico.tbl_servicio_srvc srvc
+            portico.tbl_servicio_srvc item
             JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
                 tpsr_pk = srvc_tpsr_pk
             JOIN portico.tbl_regla_rgla rgla ON
                 rgla_enti_pk = srvc_tpsr_pk
                 AND rgla_pk = #{rgla.id}
             JOIN tbl_valoracion_tmp_vlrt vlrt ON
-                vlrt_srvc_pk = ssrv_srvc_pk
+                vlrt_srvc_pk = srvc_pk
                 AND vlrt_prbt_pk = #{prbt.id}
                 AND vlrt_crgo_pk = #{crgo.id}
                 AND vlrt_rgla_pk = ANY (
@@ -523,13 +517,13 @@
     <insert id="insert" parameterType="ValoracionTemporalVO">
     <![CDATA[
     INSERT INTO portico.tbl_valoracion_tmp_vlrt (
-        vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_padre_pk, vlrt_impuesto_pk, vlrt_pagador_pk
+        vlrt_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_padre_pk, vlrt_impuesto_pk, vlrt_pagador_pk
         , vlrt_orden, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
         , vlrt_fref, vlrt_fliq, vlrt_fini, vlrt_ffin
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
     ) VALUES (
-        #{prbt.id}, #{srvc.id}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rglaPadre.id}, #{impuesto.id}, #{pagador.id}
+        #{id}, #{prbt.id}, #{srvc.id}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rglaPadre.id}, #{impuesto.id}, #{pagador.id}
         , #{orden}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
         , #{freferencia}, #{fliquidacion}, #{finicio}, #{ffin}
         , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
