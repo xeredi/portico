@@ -117,102 +117,6 @@ where srvc_pk = 1192567
 ;
 
 
--- Tipo de IVA
-SELECT *
-FROM portico.tbl_parametro_prmt
-WHERE 
-	EXISTS (
-		SELECT 1 
-		FROM portico.tbl_subservicio_dato_ssdt
-		WHERE 
-			ssdt_prmt_pk = prmt_pk
-			and ssdt_tpdt_pk = getTipoDato('TIPO_IVA')
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_subservicio_ssrv
-				WHERE 
-					ssrv_pk = ssdt_ssrv_pk
-					AND ssrv_tpss_pk = getEntidad('BL')
-			)
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_subserv_subserv_ssss
-				WHERE 
-					ssss_ssrvp_pk = ssdt_ssrv_pk
-					AND ssss_ssrvh_pk = 1198329
-			)
-	)
-;
-
--- Suj_pasivo
-SELECT *
-FROM portico.tbl_subservicio_dato_ssdt
-WHERE 
-	ssdt_tpdt_pk = getTipoDato('BOOLEANO_01')
-	AND EXISTS (
-		SELECT 1
-		FROM portico.tbl_subservicio_ssrv
-		WHERE 
-			ssrv_pk = ssdt_ssrv_pk
-			AND ssrv_tpss_pk = getEntidad('BL')
-	)
-	AND EXISTS (
-		SELECT 1
-		FROM portico.tbl_subserv_subserv_ssss
-		WHERE 
-			ssss_ssrvp_pk = ssdt_ssrv_pk
-			AND ssss_ssrvh_pk = 1198329
-	)
-;
-
--- Pagador Principal
-select *
-FROM
-	portico.tbl_subservicio_dato_ssdt
-WHERE 
-	ssdt_tpdt_pk = portico.getTipoDato('ORGA')
-	AND EXISTS (
-		SELECT 1
-		FROM 
-			portico.tbl_subservicio_ssrv
-		WHERE
-			ssrv_pk = ssdt_ssrv_pk
-			AND ssrv_tpss_pk = portico.getEntidad('MANIFIESTO_CONSIGNATARIO')
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_subserv_subserv_ssss
-				WHERE 
-					ssss_ssrvp_pk = ssrv_pk
-					AND EXISTS (
-						SELECT 1
-						FROM 
-							portico.tbl_subservicio_ssrv
-						WHERE 
-							ssrv_pk = ssss_ssrvh_pk
-							AND ssrv_tpss_pk = portico.getEntidad('BL')
-							AND EXISTS (
-								SELECT 1
-								FROM portico.tbl_subserv_subserv_ssss
-								WHERE 
-									ssss_ssrvp_pk = ssrv_pk
-									AND ssss_ssrvh_pk = 1198329
-							)
-					)
-			)
-	)
-;
-
-
--- Reg. Simplificado
-SELECT * 
-FROM portico.tbl_tipo_dato_tpdt
-ORDER BY tpdt_codigo;
-;
-
-SELECT * 
-FROM portico.tbl_entidad_enti
-ORDER BY enti_codigo;
-;
 
 SELECT *
 FROM
@@ -220,7 +124,7 @@ FROM
 	JOIN portico.tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
 WHERE 
-	entd_enti_pk = portico.getEntidad('PARTIDA')
+	entd_enti_pk = portico.getEntidad('ATRAQUE')
 --	AND entd_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
 ;
 
@@ -644,41 +548,14 @@ FROM (
 		) AS fref
 	FROM tbl_subservicio_ssrv ssrv
 	WHERE 
-		ssrv.ssrv_srvc_pk = 1192567
-		-- ssrv.ssrv_srvc_pk = 1209891
+		-- ssrv.ssrv_srvc_pk = 1192567
+		ssrv.ssrv_srvc_pk = 1209891
 		AND ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
 ) item
 ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
 ;
 
 
-SELECT *
-FROM (
-	SELECT ssrv.*, vlrt.*
-		, (
-			SELECT srvc_fref
-			FROM tbl_servicio_srvc
-			WHERE srvc_pk = ssrv_srvc_pk
-		) AS fref
-	FROM tbl_subservicio_ssrv ssrv
-		JOIN tbl_valoracion_tmp_vlrt vlrt ON
-			vlrt_srvc_pk = ssrv_srvc_pk
-			AND vlrt_ssrv_pk = ssrv_pk
-			AND vlrt_prbt_pk = 1208001
-			AND vlrt_crgo_pk = 60001
-			AND vlrt_rgla_pk = ANY (
-				SELECT rgla_pk 
-				FROM tbl_regla_rgla
-				WHERE rgla_crgo_pk = vlrt_crgo_pk
-					AND rgla_tipo = 'T'
-			)
-	WHERE 
-		ssrv.ssrv_srvc_pk = 1192567
-		-- ssrv.ssrv_srvc_pk = 1209891
-		AND ssrv.ssrv_tpss_pk = portico.getEntidad('PARTIDA')
-) item
-ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
-;
 
 SELECT * FROM portico.tbl_subservicio_dato_ssdt
 WHERE ssdt_ssrv_pk = 1195604
@@ -692,9 +569,36 @@ order by tpdt_codigo
 
 SELECT * FROM portico.tbl_proceso_batch_prbt;
 
-SELECT * 
-FROM portico.tbl_valoracion_tmp_vlrt
-ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk;
+SELECT vlrt_srvc_pk, vlrt_pagador_pk, vlrt_es_suj_pasivo, vlrt_cod_exen, vlrt_fref, vlrt_fliq, vlrt_crgo_pk, vlrt_rgla_pk
+FROM (
+	SELECT vlrt.*
+		, rgla.*
+		, rglv.*
+		, ssrv.*
+		,  CASE
+			WHEN rgla_tipo = 'T'
+			THEN 1
+			WHEN rgla_tipo = 'C'
+			THEN 2
+			WHEN rgla_tipo = 'D'
+			THEN 3
+		END AS tipo_regla_prec
+	FROM 
+		tbl_valoracion_tmp_vlrt vlrt
+		INNER JOIN tbl_regla_rgla rgla ON
+			rgla_pk = vlrt_rgla_pk
+		INNER JOIN tbl_regla_version_rglv rglv ON
+			rglv_rgla_pk = vlrt_rgla_pk
+			AND vlrt_fini BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrt_fini)
+		LEFT JOIN tbl_subservicio_ssrv ssrv ON
+			ssrv_pk = vlrt_ssrv_pk
+) sql
+ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_pk, vlrt_es_suj_pasivo, ssrv_tpss_pk, ssrv_numero, vlrt_crgo_pk, tipo_regla_prec, rglv_orden
+;
+
+SELECT DISTINCT vlrt_pagador_pk, vlrt_crgo_pk
+FROM tbl_valoracion_tmp_vlrt;
+
 
 DELETE FROM portico.tbl_valoracion_tmp_vlrt;
 
@@ -704,5 +608,24 @@ DELETE FROM portico.tbl_valoracion_tmp_vlrt;
 --3		NO FACT/NO EST	No Facturable y No Estadística
 --4		SIN REVISAR	Sin revisar
 
+SELECT *
+FROM tbl_servicio_srvc
+WHERE
+	srvc_tpsr_pk = portico.getEntidad('ESCALA')
+	and SRVC_ESTADO in ('I', 'F')
+;
+
+
+SELECT *
+FROM tbl_subservicio_ssrv
+WHERE
+	EXISTS (
+		SELECT 1
+		FROM tbl_servicio_srvc
+		WHERE
+			srvc_pk = ssrv_srvc_pk
+			AND srvc_tpsr_pk = portico.getEntidad('ESCALA')
+			and SRVC_ESTADO in ('I', 'F')
+	)
 ;
 

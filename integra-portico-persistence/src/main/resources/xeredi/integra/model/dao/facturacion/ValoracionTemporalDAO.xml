@@ -69,12 +69,175 @@
         </association>
     </resultMap>
 
-<!--
-        , #{fliquidacion} AS vlrt_fliq
-        , #{freferencia} AS vlrt_fref
-        , #{finicio} AS vlrt_fini
-        , #{ffin} AS vlrt_ffin
- -->
+    <select id="selectAplicarReglaServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+    <![CDATA[
+    SELECT
+        #{prbt.id} AS vlrt_prbt_pk
+        , srvc_pk AS vlrt_srvc_pk
+        , rgla_crgo_pk AS vlrt_crgo_pk
+        , rgla_pk AS vlrt_rgla_pk
+        , rgla_pk AS vlrt_rgla_padre_pk
+        , 0 AS vlrt_importe_base
+        , 0 AS vlrt_importe
+    ]]>
+
+    <if test="rgla.rglv.pathCuant1Sql != null">
+        , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
+    </if>
+    <if test="rgla.rglv.pathCuant2Sql != null">
+        , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
+    </if>
+    <if test="rgla.rglv.pathCuant3Sql != null">
+        , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
+    </if>
+    <if test="rgla.rglv.pathCuant4Sql != null">
+        , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
+    </if>
+    <if test="rgla.rglv.pathCuant5Sql != null">
+        , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
+    </if>
+    <if test="rgla.rglv.pathCuant6Sql != null">
+        , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
+    </if>
+
+    <if test="rgla.rglv.pathInfo1Sql != null">
+        , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
+    </if>
+    <if test="rgla.rglv.pathInfo2Sql != null">
+        , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
+    </if>
+    <if test="rgla.rglv.pathInfo3Sql != null">
+        , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
+    </if>
+    <if test="rgla.rglv.pathInfo4Sql != null">
+        , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
+    </if>
+    <if test="rgla.rglv.pathInfo5Sql != null">
+        , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
+    </if>
+    <if test="rgla.rglv.pathInfo6Sql != null">
+        , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
+    </if>
+
+    <if test="rgla.rglv.pathImpuestoSql != null">
+        , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
+    </if>
+    <if test="rgla.rglv.pathEsSujPasivoSql != null">
+        , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
+    </if>
+    <if test="rgla.rglv.pathPagadorSql != null">
+        , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
+    </if>
+    <if test="rgla.rglv.pathCodExenSql != null">
+        , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
+    </if>
+
+    <![CDATA[
+    FROM (
+        SELECT item.*, rgla.*, srvc_fref AS fref
+        FROM
+            portico.tbl_servicio_srvc srvc
+            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+                tpsr_pk = srvc_tpsr_pk
+            JOIN portico.tbl_regla_rgla rgla ON
+                rgla_enti_pk = srvc_tpsr_pk
+                AND rgla_pk = #{rgla.id}
+        WHERE
+            tpsr_es_facturable = 1
+            AND (
+                tpss_tpdt_estado_pk IS NULL
+                OR (
+
+                    (tpsr_pk = portico.getEntidad('ESCALA') AND ssrv_estado IN ('I', 'F'))
+
+                )
+            )
+            AND (
+                tpsr_es_exencionable = 0
+                OR EXISTS (
+                    SELECT 1
+                    FROM portico.tbl_servicio_dato_srdt
+                    WHERE srdt_srvc_pk = srvc_pk
+                        AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+                        AND srdt_cadena IN ('0', '1')
+                )
+            )
+
+            -- TODO Condicion
+
+            AND NOT EXISTS (
+                SELECT 1
+                FROM portico.tbl_servicio_cargo_srcr
+                WHERE
+                    srcr_srvc_pk = srvc_pk
+                    AND srcr_crgo_pk = rgla_crgo_pk
+                    AND (srcr_vlrc_pk IS NOT NULL OR srcr_fctr_pk IS NOT NULL)
+            )
+            -- TODO Ojo lo de temporalidad
+
+            AND ssrv_srvc_pk = #{srvc.id}
+    ) item
+    ]]>
+    </select>
+
+    <select id="selectAplicarReglaDecoradorServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+    <![CDATA[
+    SELECT
+        #{prbt.id} AS vlrt_prbt_pk
+        , srvc_pk AS vlrt_srvc_pk
+        , rgla_crgo_pk AS vlrt_crgo_pk
+        , rgla_pk AS vlrt_rgla_pk
+        , vlrt_rgla_pk AS vlrt_rgla_padre_pk
+        , 0 AS vlrt_importe_base
+        , 0 AS vlrt_importe
+
+        , vlrt_cuant1
+        , vlrt_cuant2
+        , vlrt_cuant3
+        , vlrt_cuant4
+        , vlrt_cuant5
+        , vlrt_cuant6
+
+        , vlrt_info1
+        , vlrt_info2
+        , vlrt_info3
+        , vlrt_info4
+        , vlrt_info5
+        , vlrt_info6
+
+        , vlrt_impuesto_pk
+        , vlrt_es_suj_pasivo
+        , vlrt_pagador_pk
+        , vlrt_cod_exen
+    FROM (
+        SELECT item.*, rgla.*, vlrt.*, srvc_fref AS fref
+        FROM
+            portico.tbl_servicio_srvc srvc
+            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+                tpsr_pk = srvc_tpsr_pk
+            JOIN portico.tbl_regla_rgla rgla ON
+                rgla_enti_pk = srvc_tpsr_pk
+                AND rgla_pk = #{rgla.id}
+            JOIN tbl_valoracion_tmp_vlrt vlrt ON
+                vlrt_srvc_pk = ssrv_srvc_pk
+                AND vlrt_prbt_pk = #{prbt.id}
+                AND vlrt_crgo_pk = #{crgo.id}
+                AND vlrt_rgla_pk = ANY (
+                    SELECT rgla_pk
+                    FROM tbl_regla_rgla
+                    WHERE rgla_crgo_pk = vlrt_crgo_pk
+                        AND rgla_tipo = 'T'
+                )
+        WHERE
+            tpsr_es_facturable = 1
+
+            -- TODO Condicion
+
+            AND srvc_pk = #{srvc.id}
+    ) item
+    ]]>
+    </select>
+
     <select id="selectAplicarReglaSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT

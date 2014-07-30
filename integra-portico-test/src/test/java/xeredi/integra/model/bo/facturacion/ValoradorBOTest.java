@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
@@ -30,10 +31,21 @@ public final class ValoradorBOTest {
             final Valorador vlrdBO = BOFactory.getInjector().getInstance(Valorador.class);
             final Set<Long> crgoIds = new HashSet<>();
 
-            crgoIds.add(60001L);
-            crgoIds.add(60002L);
+            // Manifiesto
+            // crgoIds.add(60001L);
+            // crgoIds.add(60002L);
+            // vlrdBO.valorarServicio(1209891L, crgoIds, Calendar.getInstance().getTime(), 1226001L);
 
-            vlrdBO.valorarServicio(1192567L, crgoIds, Calendar.getInstance().getTime(), 1208001L);
+            // Escala
+            crgoIds.add(60003L);
+            crgoIds.add(60004L);
+            crgoIds.add(60005L);
+            vlrdBO.valorarServicio(1192030L, crgoIds, Calendar.getInstance().getTime(), 1226001L);
+
+        } catch (Throwable ex) {
+            LOG.error(ex, ex);
+
+            Assert.fail(ex.getMessage());
         } finally {
             LOG.info("End test");
         }
