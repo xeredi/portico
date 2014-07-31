@@ -4,13 +4,46 @@
 
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionAgregadaDAO">
     <resultMap type="ValoracionAgregadaVO" id="ResultMap">
-        <id column="vlrt_prbt_pk" />
+        <association property="vlrc" javaType="ValoracionVO">
+            <association property="srvc" javaType="ServicioVO">
+                <result column="vlrc_srvc_pk" property="id" />
+            </association>
+        </association>
 
-<!--
-        <collection property="vlrlList">
-            <result />
-        </collection>
- -->
+        <!-- <collection property="vlrlList"> <result /> </collection> -->
     </resultMap>
+
+    <select id="selectList" parameterType="ValoracionAgregadaCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT
+            vlrt.vlrt_srvc_pk AS vlrc_srvc_pk
+            , (
+                CASE
+                    WHEN rgla_tipo = 'T' THEN 1
+                    WHEN rgla_tipo = 'C' THEN 2
+                    ELSE 3
+                END
+            ) AS regla_tipo_orden
+        FROM
+            tbl_valoracion_tmp_vlrt vlrt
+            INNER JOIN tbl_regla_rgla rgla ON
+                rgla_pk = vlrt_rgla_pk
+            LEFT JOIN tbl_subservicio_ssrv ssrv ON
+                ssrv_pk = vlrt_ssrv_pk
+        WHERE
+            EXISTS (
+                SELECT 1
+                FROM tbl_aspecto_cargo_ascr
+                WHERE
+                    ascr_crgo_pk = vlrt_crgo_pk
+                    AND ascr_aspv_pk = #{aspvId}
+            )
+            AND vlrt_srvc_pk = #{srvcId}
+            AND vlrt_prbt_pk = #{prbtId}
+        ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
+            , ssrv_tpss_pk, vlrt_info1, vlrt_orden
+    ]]>
+    </select>
+
 
 </mapper>

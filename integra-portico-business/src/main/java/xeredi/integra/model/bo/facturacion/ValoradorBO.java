@@ -15,6 +15,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.comun.IgBO;
+import xeredi.integra.model.dao.facturacion.AspectoDAO;
 import xeredi.integra.model.dao.facturacion.CargoDAO;
 import xeredi.integra.model.dao.facturacion.ReglaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO;
@@ -25,6 +26,8 @@ import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.grammar.PathLexer;
 import xeredi.integra.model.util.grammar.PathParser;
 import xeredi.integra.model.util.grammar.PathSqlGenerator;
+import xeredi.integra.model.vo.facturacion.AspectoCriterioVO;
+import xeredi.integra.model.vo.facturacion.AspectoVO;
 import xeredi.integra.model.vo.facturacion.CargoCriterioVO;
 import xeredi.integra.model.vo.facturacion.CargoVO;
 import xeredi.integra.model.vo.facturacion.ReglaCriterioVO;
@@ -66,6 +69,10 @@ public class ValoradorBO implements Valorador {
     @Inject
     ValoracionTemporalDAO vlrtDAO;
 
+    /** The aspc dao. */
+    @Inject
+    AspectoDAO aspcDAO;
+
     /**
      * {@inheritDoc}
      */
@@ -101,9 +108,7 @@ public class ValoradorBO implements Valorador {
 
         crgoList.addAll(crgoDAO.selectList(crgoDepCriterioVO));
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("crgoList: " + crgoList);
-        }
+        // Aplicacion de cargos del servicio
 
         for (final CargoVO crgo : crgoList) {
             contextoVO.setCrgo(crgo);
@@ -120,6 +125,19 @@ public class ValoradorBO implements Valorador {
             contextoVO.setFreferencia(contextoVO.getFinicio());
 
             valorarCargoServicio(contextoVO);
+        }
+
+        // Generacion de valoraciones a partir de los aspectos
+
+        final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+
+        aspcCriterioVO.setFechaVigencia(fechaLiquidacion);
+        aspcCriterioVO.setSrvcId(srvcId);
+
+        final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
+
+        for (final AspectoVO aspc : aspcList) {
+
         }
 
         if (LOG.isDebugEnabled()) {

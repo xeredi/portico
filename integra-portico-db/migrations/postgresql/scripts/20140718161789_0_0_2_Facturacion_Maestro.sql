@@ -197,7 +197,7 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 		/
 		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65003, 60004)
 		/
-INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61004, 'TR', 21002, 'ASPECTO DE RESIDUOS')
+INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61004, 'TR', 21003, 'ASPECTO DE RESIDUOS')
 /
 	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
 		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
