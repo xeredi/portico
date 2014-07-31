@@ -294,10 +294,10 @@ CREATE TABLE portico.tbl_valoracion_vlrc
 (
 	vlrc_pk BIGINT NOT NULL
 	, vlrc_srvc_pk BIGINT NOT NULL
-	, vlrc_crgo_pk BIGINT NOT NULL
 	, vlrc_aspc_pk BIGINT NOT NULL
 	, vlrc_pagador_pk BIGINT NOT NULL
 	, vlrc_fref TIMESTAMP NOT NULL
+	, vlrc_fliq TIMESTAMP NOT NULL
 	, vlrc_falta TIMESTAMP NOT NULL
 	, vlrc_fini TIMESTAMP
 	, vlrc_ffin TIMESTAMP
@@ -317,8 +317,6 @@ CREATE TABLE portico.tbl_valoracion_vlrc
 
 	, CONSTRAINT fk_vlrc_srvc_pk FOREIGN KEY (vlrc_srvc_pk)
 		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
-	, CONSTRAINT fk_vlrc_crgo_pk FOREIGN KEY (vlrc_crgo_pk)
-		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
 	, CONSTRAINT fk_vlrc_aspc_pk FOREIGN KEY (vlrc_aspc_pk)
 		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
 	, CONSTRAINT fk_vlrc_pagador_pk FOREIGN KEY (vlrc_pagador_pk)
@@ -328,9 +326,9 @@ CREATE TABLE portico.tbl_valoracion_vlrc
 
 CREATE INDEX ix_vlrc_srvc_pk ON portico.tbl_valoracion_vlrc (vlrc_srvc_pk)
 /
-CREATE INDEX ix_vlrc_crgo_pk ON portico.tbl_valoracion_vlrc (vlrc_crgo_pk)
-/
 CREATE INDEX ix_vlrc_pagador_pk ON portico.tbl_valoracion_vlrc (vlrc_pagador_pk)
+/
+CREATE INDEX ix_vlrc_aspc_pk ON portico.tbl_valoracion_vlrc (vlrc_aspc_pk)
 /
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_vlrc TO portico
@@ -366,6 +364,7 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 	vlrl_pk BIGINT NOT NULL
 	, vlrl_vlrc_pk BIGINT NOT NULL
 	, vlrl_rgla_pk BIGINT NOT NULL
+	, vlrl_rgla_padre_pk BIGINT NOT NULL
 	, vlrl_orden INT NOT NULL
 	, vlrl_importe_base DOUBLE PRECISION NOT NULL
 	, vlrl_importe DOUBLE PRECISION NOT NULL
@@ -392,6 +391,8 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 		REFERENCES portico.tbl_valoracion_vlrc (vlrc_pk)
 	, CONSTRAINT fk_vlrl_rgla_pk FOREIGN KEY (vlrl_rgla_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_vlrl_rgla_padre_pk FOREIGN KEY (vlrl_rgla_padre_pk)
+		REFERENCES portico.tbl_regla_rgla (rgla_pk)
 	, CONSTRAINT fk_vlrl_impuesto_pk FOREIGN KEY (vlrl_impuesto_pk)
 		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_vlrl_ssrv_pk FOREIGN KEY (vlrl_ssrv_pk)
@@ -413,11 +414,9 @@ CREATE TABLE portico.tbl_valoracion_det_vlrd
 	vlrd_pk BIGINT NOT NULL
 	, vlrd_vlrc_pk BIGINT NOT NULL
 	, vlrd_vlrl_pk BIGINT NOT NULL
-	, vlrd_rgla_pk BIGINT NOT NULL
 	, vlrd_orden INT NOT NULL
 	, vlrd_importe_base DOUBLE PRECISION NOT NULL
 	, vlrd_importe DOUBLE PRECISION NOT NULL
-	, vlrd_impuesto_pk BIGINT NOT NULL
 	, vlrd_ssrv_pk BIGINT
 
 	, vlrd_cuant1 DOUBLE PRECISION
@@ -440,10 +439,6 @@ CREATE TABLE portico.tbl_valoracion_det_vlrd
 		REFERENCES portico.tbl_valoracion_vlrc (vlrc_pk)
 	, CONSTRAINT fk_vlrd_vlrl_pk FOREIGN KEY (vlrd_vlrl_pk)
 		REFERENCES portico.tbl_valoracion_lin_vlrl (vlrl_pk)
-	, CONSTRAINT fk_vlrd_rgla_pk FOREIGN KEY (vlrd_rgla_pk)
-		REFERENCES portico.tbl_regla_rgla (rgla_pk)
-	, CONSTRAINT fk_vlrd_impuesto_pk FOREIGN KEY (vlrd_impuesto_pk)
-		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_vlrd_ssrv_pk FOREIGN KEY (vlrd_ssrv_pk)
 		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
 )

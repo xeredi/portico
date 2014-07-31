@@ -262,21 +262,43 @@ WHERE
 
 
 
-SELECT 
-	vlrt.* 
-	, (
-		CASE 
-			WHEN rgla_tipo = 'T' THEN 1
-			WHEN rgla_tipo = 'C' THEN 2
-			ELSE 3
-		END
-	) AS regla_tipo_orden
-FROM 
-	tbl_valoracion_tmp_vlrt vlrt
-	INNER JOIN tbl_regla_rgla rgla ON
-		rgla_pk = vlrt_rgla_pk
-	LEFT JOIN tbl_subservicio_ssrv ssrv ON
-		ssrv_pk = vlrt_ssrv_pk
+        SELECT
+            vlrt_srvc_pk AS vlrc_srvc_pk
+            , vlrt_pagador_pk AS vlrc_pagador_pk
+            , vlrt_es_suj_pasivo AS vlrc_es_suj_pasivo
+            , vlrt_cod_exen AS vlrc_cod_exen
+
+            , vlrt_rgla_pk AS vlrl_rgla_pk
+
+            , vlrt_info1 AS vlrl_info1
+            , vlrt_info2 AS vlrl_info2
+            , vlrt_info3 AS vlrl_info3
+            , vlrt_info4 AS vlrl_info4
+            , vlrt_info5 AS vlrl_info5
+            , vlrt_info6 AS vlrl_info6
+
+            , vlrt_ssrv_pk AS vlrd_ssrv_pk
+
+            , vlrt_cuant1 AS vlrd_cuant1
+            , vlrt_cuant2 AS vlrd_cuant2
+            , vlrt_cuant3 AS vlrd_cuant3
+            , vlrt_cuant4 AS vlrd_cuant4
+            , vlrt_cuant5 AS vlrd_cuant5
+            , vlrt_cuant6 AS vlrd_cuant6
+
+            , (
+                CASE
+                    WHEN rgla_tipo = 'T' THEN 1
+                    WHEN rgla_tipo = 'C' THEN 2
+                    ELSE 3
+                END
+            ) AS regla_tipo_orden
+        FROM
+            tbl_valoracion_tmp_vlrt vlrt
+            INNER JOIN tbl_regla_rgla rgla ON
+                rgla_pk = vlrt_rgla_pk
+            LEFT JOIN tbl_subservicio_ssrv ssrv ON
+                ssrv_pk = vlrt_ssrv_pk
 WHERE 
 	EXISTS (
 		SELECT 1 
@@ -286,5 +308,5 @@ WHERE
 			AND ascr_aspv_pk = 65001
 	)
 ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
-	, ssrv_tpss_pk, vlrt_info1, vlrt_orden
+	, ssrv_tpss_pk, vlrt_info1, regla_tipo_orden
 ;

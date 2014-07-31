@@ -2,14 +2,13 @@ package xeredi.integra.model.vo.facturacion;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.vo.maestro.ParametroVO;
 import xeredi.integra.model.vo.servicio.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ValoracionLineaVO.
+ * The Class ValoracionDetalleVO.
  */
-public final class ValoracionLineaVO {
+public final class ValoracionDetalleVO {
 
     /** The id. */
     private Long id;
@@ -17,11 +16,8 @@ public final class ValoracionLineaVO {
     /** The vlrc id. */
     private Long vlrcId;
 
-    /** The rgla padre. */
-    private ReglaVO rglaPadre;
-
-    /** The rgla. */
-    private ReglaVO rgla;
+    /** The vlrl id. */
+    private Long vlrlId;
 
     /** The orden. */
     private Integer orden;
@@ -31,9 +27,6 @@ public final class ValoracionLineaVO {
 
     /** The importe. */
     private Double importe;
-
-    /** The impuesto. */
-    private ParametroVO impuesto;
 
     /** The ssrv. */
     private SubservicioVO ssrv;
@@ -113,30 +106,28 @@ public final class ValoracionLineaVO {
     /**
      * Sets the vlrc id.
      *
-     * @param value
-     *            the vlrc id
+     * @param value the new vlrc id
      */
     public void setVlrcId(Long value) {
         this.vlrcId = value;
     }
 
     /**
-     * Gets the rgla.
+     * Gets the vlrl id.
      *
-     * @return the rgla
+     * @return the vlrl id
      */
-    public ReglaVO getRgla() {
-        return rgla;
+    public Long getVlrlId() {
+        return vlrlId;
     }
 
     /**
-     * Sets the rgla.
+     * Sets the vlrl id.
      *
-     * @param value
-     *            the rgla
+     * @param value the new vlrl id
      */
-    public void setRgla(ReglaVO value) {
-        this.rgla = value;
+    public void setVlrlId(Long value) {
+        this.vlrlId = value;
     }
 
     /**
@@ -151,8 +142,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the orden.
      *
-     * @param value
-     *            the orden
+     * @param value the new orden
      */
     public void setOrden(Integer value) {
         this.orden = value;
@@ -170,8 +160,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the importe base.
      *
-     * @param value
-     *            the importe base
+     * @param value the new importe base
      */
     public void setImporteBase(Double value) {
         this.importeBase = value;
@@ -189,30 +178,10 @@ public final class ValoracionLineaVO {
     /**
      * Sets the importe.
      *
-     * @param value
-     *            the importe
+     * @param value the new importe
      */
     public void setImporte(Double value) {
         this.importe = value;
-    }
-
-    /**
-     * Gets the impuesto.
-     *
-     * @return the impuesto
-     */
-    public ParametroVO getImpuesto() {
-        return impuesto;
-    }
-
-    /**
-     * Sets the impuesto.
-     *
-     * @param value
-     *            the impuesto
-     */
-    public void setImpuesto(ParametroVO value) {
-        this.impuesto = value;
     }
 
     /**
@@ -227,8 +196,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the ssrv.
      *
-     * @param value
-     *            the ssrv
+     * @param value the new ssrv
      */
     public void setSsrv(SubservicioVO value) {
         this.ssrv = value;
@@ -246,8 +214,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the cuant1.
      *
-     * @param value
-     *            the cuant1
+     * @param value the new cuant1
      */
     public void setCuant1(Double value) {
         this.cuant1 = value;
@@ -265,8 +232,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the cuant2.
      *
-     * @param value
-     *            the cuant2
+     * @param value the new cuant2
      */
     public void setCuant2(Double value) {
         this.cuant2 = value;
@@ -284,8 +250,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the cuant3.
      *
-     * @param value
-     *            the cuant3
+     * @param value the new cuant3
      */
     public void setCuant3(Double value) {
         this.cuant3 = value;
@@ -303,8 +268,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the cuant4.
      *
-     * @param value
-     *            the cuant4
+     * @param value the new cuant4
      */
     public void setCuant4(Double value) {
         this.cuant4 = value;
@@ -322,8 +286,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the cuant5.
      *
-     * @param value
-     *            the cuant5
+     * @param value the new cuant5
      */
     public void setCuant5(Double value) {
         this.cuant5 = value;
@@ -341,8 +304,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the cuant6.
      *
-     * @param value
-     *            the cuant6
+     * @param value the new cuant6
      */
     public void setCuant6(Double value) {
         this.cuant6 = value;
@@ -360,8 +322,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the info1.
      *
-     * @param value
-     *            the info1
+     * @param value the new info1
      */
     public void setInfo1(String value) {
         this.info1 = value;
@@ -379,8 +340,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the info2.
      *
-     * @param value
-     *            the info2
+     * @param value the new info2
      */
     public void setInfo2(String value) {
         this.info2 = value;
@@ -398,8 +358,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the info3.
      *
-     * @param value
-     *            the info3
+     * @param value the new info3
      */
     public void setInfo3(String value) {
         this.info3 = value;
@@ -417,8 +376,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the info4.
      *
-     * @param value
-     *            the info4
+     * @param value the new info4
      */
     public void setInfo4(String value) {
         this.info4 = value;
@@ -436,8 +394,7 @@ public final class ValoracionLineaVO {
     /**
      * Sets the info5.
      *
-     * @param value
-     *            the info5
+     * @param value the new info5
      */
     public void setInfo5(String value) {
         this.info5 = value;
@@ -455,30 +412,10 @@ public final class ValoracionLineaVO {
     /**
      * Sets the info6.
      *
-     * @param value
-     *            the info6
+     * @param value the new info6
      */
     public void setInfo6(String value) {
         this.info6 = value;
-    }
-
-    /**
-     * Gets the rgla padre.
-     *
-     * @return the rgla padre
-     */
-    public ReglaVO getRglaPadre() {
-        return rglaPadre;
-    }
-
-    /**
-     * Sets the rgla padre.
-     *
-     * @param value
-     *            the new rgla padre
-     */
-    public void setRglaPadre(ReglaVO value) {
-        this.rglaPadre = value;
     }
 
 }

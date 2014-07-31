@@ -20,6 +20,7 @@ import com.google.common.base.Preconditions;
  */
 public final class IgBO {
 
+    /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(IgBO.class);
 
     /** The Constant MAP. */
@@ -27,7 +28,7 @@ public final class IgBO {
 
     /**
      * Next val.
-     * 
+     *
      * @param nombre
      *            the nombre
      * @return the long

@@ -34,6 +34,9 @@ public final class ValoracionVO {
     /** The falta. */
     private Date falta;
 
+    /** The fliq. */
+    private Date fliq;
+
     /** The fini. */
     private Date fini;
 
@@ -437,6 +440,24 @@ public final class ValoracionVO {
      */
     public void setInfo6(String value) {
         this.info6 = value;
+    }
+
+    /**
+     * Gets the fliq.
+     *
+     * @return the fliq
+     */
+    public Date getFliq() {
+        return fliq;
+    }
+
+    /**
+     * Sets the fliq.
+     *
+     * @param value the new fliq
+     */
+    public void setFliq(Date value) {
+        this.fliq = value;
     }
 
 }

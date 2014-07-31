@@ -18,6 +18,7 @@ import xeredi.integra.model.bo.comun.IgBO;
 import xeredi.integra.model.dao.facturacion.AspectoDAO;
 import xeredi.integra.model.dao.facturacion.CargoDAO;
 import xeredi.integra.model.dao.facturacion.ReglaDAO;
+import xeredi.integra.model.dao.facturacion.ValoracionAgregadaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO;
 import xeredi.integra.model.dao.proceso.ProcesoDAO;
 import xeredi.integra.model.dao.servicio.ServicioDAO;
@@ -33,6 +34,10 @@ import xeredi.integra.model.vo.facturacion.CargoVO;
 import xeredi.integra.model.vo.facturacion.ReglaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ReglaTipo;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
+import xeredi.integra.model.vo.facturacion.ValoracionAgregadaCriterioVO;
+import xeredi.integra.model.vo.facturacion.ValoracionAgregadaVO;
+import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
+import xeredi.integra.model.vo.facturacion.ValoracionLineaAgregadaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionTemporalVO;
 import xeredi.integra.model.vo.facturacion.ValoradorContextoVO;
 
@@ -72,6 +77,10 @@ public class ValoradorBO implements Valorador {
     /** The aspc dao. */
     @Inject
     AspectoDAO aspcDAO;
+
+    /** The vlra dao. */
+    @Inject
+    ValoracionAgregadaDAO vlraDAO;
 
     /**
      * {@inheritDoc}
@@ -129,6 +138,7 @@ public class ValoradorBO implements Valorador {
 
         // Generacion de valoraciones a partir de los aspectos
 
+        final IgBO igBO = new IgBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setFechaVigencia(fechaLiquidacion);
@@ -137,7 +147,39 @@ public class ValoradorBO implements Valorador {
         final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
 
         for (final AspectoVO aspc : aspcList) {
+            final ValoracionAgregadaCriterioVO vlraCriterioVO = new ValoracionAgregadaCriterioVO();
 
+            vlraCriterioVO.setAspvId(aspc.getAspv().getId());
+            vlraCriterioVO.setPrbtId(prbtId);
+            vlraCriterioVO.setSrvcId(srvcId);
+
+            final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(vlraCriterioVO);
+
+            for (final ValoracionAgregadaVO vlra : vlraList) {
+                vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                vlra.getVlrc().setAspc(aspc);
+
+                LOG.info("vlrc: " + vlra.getVlrc());
+
+                if (vlra.getVlrlList() != null) {
+                    for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+                        vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
+                        vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                        LOG.info("vlrl: " + vlrl.getVlrl());
+
+                        if (vlrl.getVlrdList() != null) {
+                            for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+                                vlrd.setVlrcId(vlra.getVlrc().getId());
+                                vlrd.setVlrlId(vlrl.getVlrl().getId());
+                                vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                                LOG.info("vlrd: " + vlrd);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         if (LOG.isDebugEnabled()) {
@@ -164,7 +206,6 @@ public class ValoradorBO implements Valorador {
 
         rglaCriterioVO.setCrgoId(contextoVO.getCrgo().getId());
         rglaCriterioVO.setFechaVigencia(contextoVO.getFinicio());
-
 
         final IgBO igBO = new IgBO();
 

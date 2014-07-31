@@ -14,7 +14,7 @@ public final class ValoracionAgregadaVO {
     private ValoracionVO vlrc;
 
     /** The vlrl list. */
-    private List<ValoracionLineaVO> vlrlList;
+    private List<ValoracionLineaAgregadaVO> vlrlList;
 
     /**
      * {@inheritDoc}
@@ -48,7 +48,7 @@ public final class ValoracionAgregadaVO {
      *
      * @return the vlrl list
      */
-    public List<ValoracionLineaVO> getVlrlList() {
+    public List<ValoracionLineaAgregadaVO> getVlrlList() {
         return vlrlList;
     }
 
@@ -58,7 +58,7 @@ public final class ValoracionAgregadaVO {
      * @param value
      *            the vlrl list
      */
-    public void setVlrlList(List<ValoracionLineaVO> value) {
+    public void setVlrlList(List<ValoracionLineaAgregadaVO> value) {
         this.vlrlList = value;
     }
 }
