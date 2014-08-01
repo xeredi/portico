@@ -121,13 +121,15 @@ public final class AspectoVersionVO {
     }
 
     /**
-     * Checks if is linea agrupable.
+     * Checks if is agrupa detalles.
      *
-     * @return true, if checks if is linea agrupable
+     * @return true, if checks if is agrupa detalles
      */
-    public boolean isLineaAgrupable() {
+    public boolean isAgrupaDetalles() {
         return Boolean.TRUE == lgrpInfo1 || Boolean.TRUE == lgrpInfo2 || Boolean.TRUE == lgrpInfo3
-                || Boolean.TRUE == lgrpInfo4 || Boolean.TRUE == lgrpInfo5 || Boolean.TRUE == lgrpInfo6;
+                || Boolean.TRUE == lgrpInfo4 || Boolean.TRUE == lgrpInfo5 || Boolean.TRUE == lgrpInfo6
+                || Boolean.TRUE == lsumCuant1 || Boolean.TRUE == lsumCuant2 || Boolean.TRUE == lsumCuant3
+                || Boolean.TRUE == lsumCuant4 || Boolean.TRUE == lsumCuant5 || Boolean.TRUE == lsumCuant6;
     }
 
     /**

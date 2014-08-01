@@ -1,39 +1,4 @@
-﻿SELECT 
-	vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_impuesto_pk, vlrt_pagador_pk
-	, vlrt_orden, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
-        , vlrt_fref, vlrt_fliq, vlrt_fini, vlrt_ffin
-	, vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
-	, vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
-FROM portico.tbl_valoracion_tmp_vlrt
-;
-
-SELECT *
-FROM portico.tbl_proceso_batch_prbt
-;
-
-DELETE
-FROM portico.tbl_valoracion_tmp_vlrt
-;
-
-
-
-SELECT
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-SELECT * 
+﻿SELECT * 
 FROM tbl_servicio_srvc 
 	JOIN tbl_entidad_enti ON
 		enti_pk = srvc_tpsr_pk;
@@ -144,7 +109,6 @@ order by tpdt_codigo
 
 
 
-DELETE FROM portico.tbl_valoracion_tmp_vlrt;
 
 --0		FACT/EST	Facturable y Estadística
 --1		FACT/NO EST	Facturable y No Estadística
@@ -153,6 +117,12 @@ DELETE FROM portico.tbl_valoracion_tmp_vlrt;
 --4		SIN REVISAR	Sin revisar
 
 SELECT * FROM portico.tbl_proceso_batch_prbt;
+
+SELECT *
+FROM portico.tbl_valoracion_tmp_vlrt
+;
+
+DELETE FROM portico.tbl_valoracion_tmp_vlrt;
 
 select ssrv_srvc_pk, count(1)
 from 
@@ -187,16 +157,4 @@ WHERE
 ;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+SELECT * FROM tbl_subservicio_ssrv WHERE ssrv_srvc_pk = 1209891;

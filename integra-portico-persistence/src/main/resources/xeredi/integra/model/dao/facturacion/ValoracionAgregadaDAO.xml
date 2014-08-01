@@ -209,7 +209,24 @@
                 AND vlrt_srvc_pk = #{srvcId}
                 AND vlrt_prbt_pk = #{prbtId}
             ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
-                , ssrv_tpss_pk, vlrt_info1, regla_tipo_orden
+                , ssrv_tpss_pk
+    ]]>
+
+        <if test="aspc.aspv.agrupaDetalles">
+            <if test="aspc.aspv.lgrpInfo1">, vlrt_info1</if>
+            <if test="aspc.aspv.lgrpInfo2">, vlrt_info2</if>
+            <if test="aspc.aspv.lgrpInfo3">, vlrt_info3</if>
+            <if test="aspc.aspv.lgrpInfo4">, vlrt_info4</if>
+            <if test="aspc.aspv.lgrpInfo5">, vlrt_info5</if>
+            <if test="aspc.aspv.lgrpInfo6">, vlrt_info6</if>
+        </if>
+
+        <if test="!aspc.aspv.agrupaDetalles">
+            <if test="aspc.aspv.lgrpInfo1">, ssrv_orden</if>
+        </if>
+
+    <![CDATA[
+                , regla_tipo_orden
         ) item
     ]]>
     </select>
