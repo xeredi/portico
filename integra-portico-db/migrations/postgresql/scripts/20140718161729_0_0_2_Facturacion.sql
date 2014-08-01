@@ -223,6 +223,7 @@ CREATE TABLE portico.tbl_aspecto_version_aspv
 	, aspv_aspc_pk BIGINT NOT NULL
 	, aspv_fini TIMESTAMP NOT NULL
 	, aspv_ffin TIMESTAMP
+	, aspv_prioridad INT NOT NULL
 
 	, aspv_cpath_info1 VARCHAR(250)
 	, aspv_cetiq_info1 VARCHAR(50)
@@ -243,12 +244,6 @@ CREATE TABLE portico.tbl_aspecto_version_aspv
 	, aspv_lsum_cuant4 INT
 	, aspv_lsum_cuant5 INT
 	, aspv_lsum_cuant6 INT
-	, aspv_lgrp_cuant1 INT
-	, aspv_lgrp_cuant2 INT
-	, aspv_lgrp_cuant3 INT
-	, aspv_lgrp_cuant4 INT
-	, aspv_lgrp_cuant5 INT
-	, aspv_lgrp_cuant6 INT
 
 	, aspv_lgrp_info1 INT
 	, aspv_lgrp_info2 INT
@@ -332,6 +327,26 @@ CREATE INDEX ix_vlrc_aspc_pk ON portico.tbl_valoracion_vlrc (vlrc_aspc_pk)
 /
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_vlrc TO portico
+/
+
+
+
+-- tbl_valoracion_cargo_vlrg
+CREATE TABLE portico.tbl_valoracion_cargo_vlrg
+(
+	vlrg_vlrc_pk BIGINT NOT NULL
+	, vlrg_crgo_pk BIGINT NOT NULL
+
+	, CONSTRAINT uq_vlrg UNIQUE (vlrg_vlrc_pk, vlrg_crgo_pk)
+
+	, CONSTRAINT fk_vlrg_vlrc_pk FOREIGN KEY (vlrg_vlrc_pk)
+		REFERENCES portico.tbl_valoracion_vlrc (vlrc_pk)
+	, CONSTRAINT fk_vlrg_crgo_pk FOREIGN KEY (vlrg_crgo_pk)
+		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
+)
+/
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_cargo_vlrg TO portico
 /
 
 
@@ -780,6 +795,8 @@ DROP TABLE portico.tbl_valoracion_det_vlrd
 DROP TABLE portico.tbl_valoracion_lin_vlrl
 /
 DROP TABLE portico.tbl_valoracion_imp_vlri
+/
+DROP TABLE portico.tbl_valoracion_cargo_vlrg
 /
 DROP TABLE portico.tbl_valoracion_vlrc
 /

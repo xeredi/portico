@@ -11,12 +11,14 @@
 
         <association property="tpsr" javaType="TipoServicioVO">
             <result column="aspc_tpsr_pk" property="id" />
+            <result column="enti_tipo" property="tipo" />
         </association>
 
         <association property="aspv" javaType="AspectoVersionVO">
             <result column="aspv_pk" property="id" />
             <result column="aspv_fini" property="fini" />
             <result column="aspv_ffin" property="ffin" />
+            <result column="aspv_prioridad" property="prioridad" />
 
             <result column="aspv_cpath_info1" property="cpathInfo1" />
             <result column="aspv_cetiq_info1" property="cetiqInfo1" />
@@ -38,13 +40,6 @@
             <result column="aspv_lsum_cuant5" property="lsumCuant5" />
             <result column="aspv_lsum_cuant6" property="lsumCuant6" />
 
-            <result column="aspv_lgrp_cuant1" property="lgrpCuant1" />
-            <result column="aspv_lgrp_cuant2" property="lgrpCuant2" />
-            <result column="aspv_lgrp_cuant3" property="lgrpCuant3" />
-            <result column="aspv_lgrp_cuant4" property="lgrpCuant4" />
-            <result column="aspv_lgrp_cuant5" property="lgrpCuant5" />
-            <result column="aspv_lgrp_cuant6" property="lgrpCuant6" />
-
             <result column="aspv_lgrp_info1" property="lgrpInfo1" />
             <result column="aspv_lgrp_info2" property="lgrpInfo2" />
             <result column="aspv_lgrp_info3" property="lgrpInfo3" />
@@ -58,15 +53,17 @@
     <![CDATA[
         SELECT
         	aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion
-        	, aspv_pk, aspv_fini, aspv_ffin
+        	, aspv_pk, aspv_fini, aspv_ffin, aspv_prioridad
         	, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
         	, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
         	, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
-        	, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
         	, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+            , enti_tipo
         from tbl_aspecto_aspc
         	JOIN tbl_aspecto_version_aspv ON
         		aspv_aspc_pk = aspc_pk
+            JOIN portico.tbl_entidad_enti ON
+                enti_pk = aspc_tpsr_pk
     ]]>
     </sql>
 
@@ -94,5 +91,6 @@
     <select id="selectList" parameterType="AspectoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
+        ORDER BY aspc_tpsr_pk, aspv_prioridad
     </select>
 </mapper>

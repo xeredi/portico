@@ -19,8 +19,14 @@ public final class AspectoVersionVO {
     /** The ffin. */
     private Date ffin;
 
+    /** The prioridad. */
+    private Integer prioridad;
+
     /** The cpath info1. */
     private String cpathInfo1;
+
+    /** The cpath info1 sql. */
+    private String cpathInfo1Sql;
 
     /** The cetiq info1. */
     private String cetiqInfo1;
@@ -28,11 +34,17 @@ public final class AspectoVersionVO {
     /** The cpath info2. */
     private String cpathInfo2;
 
+    /** The cpath info2 sql. */
+    private String cpathInfo2Sql;
+
     /** The cetiq info2. */
     private String cetiqInfo2;
 
     /** The cpath info3. */
     private String cpathInfo3;
+
+    /** The cpath info3 sql. */
+    private String cpathInfo3Sql;
 
     /** The cetiq info3. */
     private String cetiqInfo3;
@@ -40,17 +52,26 @@ public final class AspectoVersionVO {
     /** The cpath info4. */
     private String cpathInfo4;
 
+    /** The cpath info4 sql. */
+    private String cpathInfo4Sql;
+
     /** The cetiq info4. */
     private String cetiqInfo4;
 
     /** The cpath info5. */
     private String cpathInfo5;
 
+    /** The cpath info5 sql. */
+    private String cpathInfo5Sql;
+
     /** The cetiq info5. */
     private String cetiqInfo5;
 
     /** The cpath info6. */
     private String cpathInfo6;
+
+    /** The cpath info6 sql. */
+    private String cpathInfo6Sql;
 
     /** The cetiq info6. */
     private String cetiqInfo6;
@@ -72,24 +93,6 @@ public final class AspectoVersionVO {
 
     /** The lsum cuant6. */
     private Boolean lsumCuant6;
-
-    /** The lgrp cuant1. */
-    private Boolean lgrpCuant1;
-
-    /** The lgrp cuant2. */
-    private Boolean lgrpCuant2;
-
-    /** The lgrp cuant3. */
-    private Boolean lgrpCuant3;
-
-    /** The lgrp cuant4. */
-    private Boolean lgrpCuant4;
-
-    /** The lgrp cuant5. */
-    private Boolean lgrpCuant5;
-
-    /** The lgrp cuant6. */
-    private Boolean lgrpCuant6;
 
     /** The lgrp info1. */
     private Boolean lgrpInfo1;
@@ -115,6 +118,16 @@ public final class AspectoVersionVO {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    /**
+     * Checks if is linea agrupable.
+     *
+     * @return true, if checks if is linea agrupable
+     */
+    public boolean isLineaAgrupable() {
+        return Boolean.TRUE == lgrpInfo1 || Boolean.TRUE == lgrpInfo2 || Boolean.TRUE == lgrpInfo3
+                || Boolean.TRUE == lgrpInfo4 || Boolean.TRUE == lgrpInfo5 || Boolean.TRUE == lgrpInfo6;
     }
 
     /**
@@ -517,120 +530,6 @@ public final class AspectoVersionVO {
     }
 
     /**
-     * Gets the lgrp cuant1.
-     *
-     * @return the lgrp cuant1
-     */
-    public Boolean getLgrpCuant1() {
-        return lgrpCuant1;
-    }
-
-    /**
-     * Sets the lgrp cuant1.
-     *
-     * @param value
-     *            the lgrp cuant1
-     */
-    public void setLgrpCuant1(Boolean value) {
-        this.lgrpCuant1 = value;
-    }
-
-    /**
-     * Gets the lgrp cuant2.
-     *
-     * @return the lgrp cuant2
-     */
-    public Boolean getLgrpCuant2() {
-        return lgrpCuant2;
-    }
-
-    /**
-     * Sets the lgrp cuant2.
-     *
-     * @param value
-     *            the lgrp cuant2
-     */
-    public void setLgrpCuant2(Boolean value) {
-        this.lgrpCuant2 = value;
-    }
-
-    /**
-     * Gets the lgrp cuant3.
-     *
-     * @return the lgrp cuant3
-     */
-    public Boolean getLgrpCuant3() {
-        return lgrpCuant3;
-    }
-
-    /**
-     * Sets the lgrp cuant3.
-     *
-     * @param value
-     *            the lgrp cuant3
-     */
-    public void setLgrpCuant3(Boolean value) {
-        this.lgrpCuant3 = value;
-    }
-
-    /**
-     * Gets the lgrp cuant4.
-     *
-     * @return the lgrp cuant4
-     */
-    public Boolean getLgrpCuant4() {
-        return lgrpCuant4;
-    }
-
-    /**
-     * Sets the lgrp cuant4.
-     *
-     * @param value
-     *            the lgrp cuant4
-     */
-    public void setLgrpCuant4(Boolean value) {
-        this.lgrpCuant4 = value;
-    }
-
-    /**
-     * Gets the lgrp cuant5.
-     *
-     * @return the lgrp cuant5
-     */
-    public Boolean getLgrpCuant5() {
-        return lgrpCuant5;
-    }
-
-    /**
-     * Sets the lgrp cuant5.
-     *
-     * @param value
-     *            the lgrp cuant5
-     */
-    public void setLgrpCuant5(Boolean value) {
-        this.lgrpCuant5 = value;
-    }
-
-    /**
-     * Gets the lgrp cuant6.
-     *
-     * @return the lgrp cuant6
-     */
-    public Boolean getLgrpCuant6() {
-        return lgrpCuant6;
-    }
-
-    /**
-     * Sets the lgrp cuant6.
-     *
-     * @param value
-     *            the lgrp cuant6
-     */
-    public void setLgrpCuant6(Boolean value) {
-        this.lgrpCuant6 = value;
-    }
-
-    /**
      * Gets the lgrp info1.
      *
      * @return the lgrp info1
@@ -742,6 +641,139 @@ public final class AspectoVersionVO {
      */
     public void setLgrpInfo6(Boolean value) {
         this.lgrpInfo6 = value;
+    }
+
+    /**
+     * Gets the prioridad.
+     *
+     * @return the prioridad
+     */
+    public Integer getPrioridad() {
+        return prioridad;
+    }
+
+    /**
+     * Sets the prioridad.
+     *
+     * @param value
+     *            the prioridad
+     */
+    public void setPrioridad(Integer value) {
+        this.prioridad = value;
+    }
+
+    /**
+     * Gets the cpath info1 sql.
+     *
+     * @return the cpath info1 sql
+     */
+    public String getCpathInfo1Sql() {
+        return cpathInfo1Sql;
+    }
+
+    /**
+     * Sets the cpath info1 sql.
+     *
+     * @param value
+     *            the cpath info1 sql
+     */
+    public void setCpathInfo1Sql(String value) {
+        this.cpathInfo1Sql = value;
+    }
+
+    /**
+     * Gets the cpath info2 sql.
+     *
+     * @return the cpath info2 sql
+     */
+    public String getCpathInfo2Sql() {
+        return cpathInfo2Sql;
+    }
+
+    /**
+     * Sets the cpath info2 sql.
+     *
+     * @param value
+     *            the cpath info2 sql
+     */
+    public void setCpathInfo2Sql(String value) {
+        this.cpathInfo2Sql = value;
+    }
+
+    /**
+     * Gets the cpath info3 sql.
+     *
+     * @return the cpath info3 sql
+     */
+    public String getCpathInfo3Sql() {
+        return cpathInfo3Sql;
+    }
+
+    /**
+     * Sets the cpath info3 sql.
+     *
+     * @param value
+     *            the cpath info3 sql
+     */
+    public void setCpathInfo3Sql(String value) {
+        this.cpathInfo3Sql = value;
+    }
+
+    /**
+     * Gets the cpath info4 sql.
+     *
+     * @return the cpath info4 sql
+     */
+    public String getCpathInfo4Sql() {
+        return cpathInfo4Sql;
+    }
+
+    /**
+     * Sets the cpath info4 sql.
+     *
+     * @param value
+     *            the cpath info4 sql
+     */
+    public void setCpathInfo4Sql(String value) {
+        this.cpathInfo4Sql = value;
+    }
+
+    /**
+     * Gets the cpath info5 sql.
+     *
+     * @return the cpath info5 sql
+     */
+    public String getCpathInfo5Sql() {
+        return cpathInfo5Sql;
+    }
+
+    /**
+     * Sets the cpath info5 sql.
+     *
+     * @param value
+     *            the cpath info5 sql
+     */
+    public void setCpathInfo5Sql(String value) {
+        this.cpathInfo5Sql = value;
+    }
+
+    /**
+     * Gets the cpath info6 sql.
+     *
+     * @return the cpath info6 sql
+     */
+    public String getCpathInfo6Sql() {
+        return cpathInfo6Sql;
+    }
+
+    /**
+     * Sets the cpath info6 sql.
+     *
+     * @param value
+     *            the cpath info6 sql
+     */
+    public void setCpathInfo6Sql(String value) {
+        this.cpathInfo6Sql = value;
     }
 
 }

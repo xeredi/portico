@@ -34,13 +34,13 @@ public final class ValoradorBOTest {
             // Manifiesto
             crgoIds.add(60001L);
             crgoIds.add(60002L);
-            vlrdBO.valorarServicio(1192567L, crgoIds, Calendar.getInstance().getTime(), 1208001L);
+            vlrdBO.valorarServicio(1209891L, crgoIds, Calendar.getInstance().getTime(), 1226001L);
 
             // Escala
          // crgoIds.add(60003L);
          // crgoIds.add(60004L);
          // crgoIds.add(60005L);
-         // vlrdBO.valorarServicio(1192118L, crgoIds, Calendar.getInstance().getTime(), 1208001L);
+         // vlrdBO.valorarServicio(1192118L, crgoIds, Calendar.getInstance().getTime(), 1226001L);
 
         } catch (Throwable ex) {
             LOG.error(ex, ex);

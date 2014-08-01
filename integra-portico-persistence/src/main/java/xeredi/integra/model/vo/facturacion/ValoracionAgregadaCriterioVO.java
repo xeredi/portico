@@ -15,7 +15,7 @@ public final class ValoracionAgregadaCriterioVO {
     private Long srvcId;
 
     /** The aspv id. */
-    private Long aspvId;
+    private AspectoVO aspc;
 
     /**
      * {@inheritDoc}
@@ -64,22 +64,21 @@ public final class ValoracionAgregadaCriterioVO {
     }
 
     /**
-     * Gets the aspv id.
+     * Gets the aspc.
      *
-     * @return the aspv id
+     * @return the aspc
      */
-    public Long getAspvId() {
-        return aspvId;
+    public AspectoVO getAspc() {
+        return aspc;
     }
 
     /**
-     * Sets the aspv id.
+     * Sets the aspc.
      *
-     * @param value
-     *            the aspv id
+     * @param value the aspc
      */
-    public void setAspvId(Long value) {
-        this.aspvId = value;
+    public void setAspc(AspectoVO value) {
+        this.aspc = value;
     }
 
 }

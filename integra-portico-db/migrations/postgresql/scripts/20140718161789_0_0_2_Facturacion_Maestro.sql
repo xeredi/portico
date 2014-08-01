@@ -127,14 +127,12 @@ INSERT INTO portico.tbl_cargo_dep_crdp (crdp_pk, crdp_crgop_pk, crdp_crgoh_pk) V
 
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61000, 'B5', 21001, 'ASPECTO DE PESCA FRESCA')
 /
-	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad
 		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
 		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
 		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
-		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
 		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
-	) VALUES (65000, 61000, '2013-01-01', NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
+	) VALUES (65000, 61000, '2013-01-01', NULL, 1
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
@@ -143,15 +141,13 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 	/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61001, 'B2', 21002, 'ASPECTO DE PASAJE')
 /
-	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad
 		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
 		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
 		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
-		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
 		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
-	) VALUES (65001, 61001, '2013-01-01', NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
+	) VALUES (65001, 61001, '2013-01-01', NULL, 1
+		, 'dato(ORGA_2)', 'Consignatario', 'dato(ALIN)', 'Alineacion', 'dato(ACUERDO)', 'Acuerdo'
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
@@ -161,15 +157,13 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 		/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61002, 'B3', 21002, 'ASPECTO DE MERCANCIA')
 /
-	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad
 		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
 		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
 		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
-		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
 		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
-	) VALUES (65002, 61002, '2013-01-01', NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
+	) VALUES (65002, 61002, '2013-01-01', NULL, 2
+		, 'dato(ORGA_2)', 'Consignatario', 'dato(ALIN)', 'Alineacion', 'dato(ACUERDO)', 'Acuerdo'
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
@@ -179,14 +173,12 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 		/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61003, 'B1', 21003, 'ASPECTO DE BUQUE')
 /
-	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad
 		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
 		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
 		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
-		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
 		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
-	) VALUES (65003, 61003, '2013-01-01', NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
+	) VALUES (65003, 61003, '2013-01-01', NULL, 1 
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
@@ -199,14 +191,12 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 		/
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion) VALUES (61004, 'TR', 21003, 'ASPECTO DE RESIDUOS')
 /
-	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin
+	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad
 		, aspv_cpath_info1, aspv_cetiq_info1, aspv_cpath_info2, aspv_cetiq_info2, aspv_cpath_info3, aspv_cetiq_info3
 		, aspv_cpath_info4, aspv_cetiq_info4, aspv_cpath_info5, aspv_cetiq_info5, aspv_cpath_info6, aspv_cetiq_info6
 		, aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
-		, aspv_lgrp_cuant1, aspv_lgrp_cuant2, aspv_lgrp_cuant3, aspv_lgrp_cuant4, aspv_lgrp_cuant5, aspv_lgrp_cuant6
 		, aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
-	) VALUES (65004, 61004, '2013-01-01', NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
+	) VALUES (65004, 61004, '2013-01-01', NULL, 2
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
@@ -231,6 +221,10 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 -- SQL to undo the change goes here.
 
 DELETE FROM portico.tbl_valoracion_tmp_vlrt
+/
+DELETE FROM portico.tbl_valoracion_cargo_vlrg
+/
+DELETE FROM portico.tbl_valoracion_vlrc
 /
 
 --DELETE FROM portico.tbl_aspecto_cargo_ascr WHERE ascr_aspc_pk IN (

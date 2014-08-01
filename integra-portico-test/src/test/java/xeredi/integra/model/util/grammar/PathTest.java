@@ -31,10 +31,14 @@ public final class PathTest {
     @Test
     public void test() throws IOException {
         for (int i = 0; i < 1; i++) {
-            test("servicio.dato(ACUERDO)");
-            test("dato(MERCANCIA)");
-            test("padre(BL).dato(COD_EXEN)");
-            test("padre(BL).dato(UNLOCODE).dato(PAIS)");
+            test("servicio.dato(ACUERDO)", true);
+            test("servicio.dato(ACUERDO)", false);
+            test("dato(MERCANCIA)", true);
+            test("dato(MERCANCIA)", false);
+            test("padre(BL).dato(COD_EXEN)", true);
+            test("padre(BL).dato(COD_EXEN)", false);
+            test("padre(BL).dato(UNLOCODE).dato(PAIS)", true);
+            test("padre(BL).dato(UNLOCODE).dato(PAIS)", false);
         }
     }
 
@@ -43,10 +47,12 @@ public final class PathTest {
      *
      * @param expression
      *            the expression
+     * @param generateLabel
+     *            the generate label
      * @throws IOException
      *             the IO exception
      */
-    private void test(final String expression) throws IOException {
+    private void test(final String expression, final boolean generateLabel) throws IOException {
         final String message = "Testing: " + expression;
 
         System.out.println(message);
@@ -56,14 +62,13 @@ public final class PathTest {
         final PathLexer lexer = new PathLexer(input);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final PathParser parser = new PathParser(tokens);
-
         final ParseTree tree = parser.value();
 
         final ReglaVO reglaVO = new ReglaVO();
 
         reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
 
-        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO, true);
+        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO.getEnti(), generateLabel);
 
         LOG.info(extractor.visit(tree));
     }
