@@ -16,7 +16,7 @@ public interface AspectoDAO {
      *
      * @param criterioVO
      *            the criterio vo
-     * @return the list< aspecto v o>
+     * @return the list
      */
     List<AspectoVO> selectList(final AspectoCriterioVO criterioVO);
 

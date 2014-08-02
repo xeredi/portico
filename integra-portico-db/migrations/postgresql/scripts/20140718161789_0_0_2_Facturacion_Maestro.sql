@@ -222,6 +222,8 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 
 DELETE FROM portico.tbl_valoracion_tmp_vlrt
 /
+DELETE FROM portico.tbl_valoracion_det_vlrd
+/
 DELETE FROM portico.tbl_valoracion_lin_vlrl
 /
 DELETE FROM portico.tbl_valoracion_cargo_vlrg

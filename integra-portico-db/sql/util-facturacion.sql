@@ -81,7 +81,7 @@ FROM
 	JOIN portico.tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
 WHERE 
-	entd_enti_pk = portico.getEntidad('MANIFIESTO')
+	entd_enti_pk = portico.getEntidad('TIPO_IVA')
 --	AND entd_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
 ;
 
@@ -120,12 +120,51 @@ SELECT * FROM tbl_proceso_batch_prbt;
 
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 SELECT * FROM tbl_valoracion_vlrc;
+SELECT * FROM tbl_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
 
+
+SELECT sql.* 
+	, (
+		SELECT prdt_ndecimal
+		FROM
+			tbl_parametro_dato_prdt
+		WHERE 
+			prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+			AND prdt_prvr_pk = ANY (
+				SELECT prvr_pk
+				FROM tbl_parametro_version_prvr
+				WHERE 
+					prvr_prmt_pk = vlrl_impuesto_pk
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_valoracion_vlrc
+						WHERE 
+							vlrc_pk = vlrl_vlrc_pk
+							AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+					)
+			)
+	) AS impuesto_porcentaje
+FROM (
+	SELECT vlrl_vlrc_pk, vlrl_impuesto_pk
+		, SUM(vlrl_importe) AS importe_base
+	FROM tbl_valoracion_lin_vlrl
+	WHERE 
+		vlrl_vlrc_pk = 1388947
+	GROUP BY 
+		vlrl_vlrc_pk, vlrl_impuesto_pk
+) sql
+;
+
+SELECT * FROM tbl_parametro_prmt
+WHERE prmt_pk = 1007029;
+
+
 DELETE FROM tbl_valoracion_tmp_vlrt;
+DELETE FROM tbl_valoracion_det_vlrd;
 DELETE FROM tbl_valoracion_lin_vlrl;
-DELETE FROM tbl_valoracion_det_vlrl;
+DELETE FROM tbl_valoracion_cargo_vlrg;
 DELETE FROM tbl_valoracion_vlrc;
 
 select ssrv_srvc_pk, count(1)

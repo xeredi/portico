@@ -19,4 +19,13 @@ public interface ValoracionAgregadaDAO {
      * @return the list
      */
     List<ValoracionAgregadaVO> selectList(final ValoracionAgregadaCriterioVO criterioVO);
+
+    /**
+     * Delete temporal list.
+     *
+     * @param criterioVO
+     *            the criterio vo
+     * @return the int
+     */
+    int deleteTemporalList(final ValoracionAgregadaCriterioVO criterioVO);
 }

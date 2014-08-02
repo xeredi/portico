@@ -40,6 +40,7 @@ import xeredi.integra.model.vo.facturacion.ReglaTipo;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionAgregadaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionAgregadaVO;
+import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaAgregadaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionTemporalVO;
@@ -193,14 +194,18 @@ public class ValoradorBO implements Valorador {
                     vlrl.getVlrl().setImporteBase(0.0);
                     vlrl.getVlrl().setImporte(0.0);
 
-                    LOG.info("vlrl: " + vlrl.getVlrl());
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("vlrl: " + vlrl.getVlrl());
+                    }
 
                     for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
                         vlrd.setVlrcId(vlra.getVlrc().getId());
                         vlrd.setVlrlId(vlrl.getVlrl().getId());
                         vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-                        LOG.info("vlrd: " + vlrd);
+                        if (LOG.isDebugEnabled()) {
+                            LOG.debug("vlrd: " + vlrd);
+                        }
                     }
                 }
 
@@ -217,7 +222,15 @@ public class ValoradorBO implements Valorador {
                         vlrdDAO.insert(vlrd);
                     }
                 }
+
+                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+
+                vlrcCriterioVO.setId(vlra.getVlrc().getId());
+
+                vlrcDAO.insertGenerateCargos(vlrcCriterioVO);
             }
+
+            vlraDAO.deleteTemporalList(vlraCriterioVO);
         }
 
         if (LOG.isDebugEnabled()) {
