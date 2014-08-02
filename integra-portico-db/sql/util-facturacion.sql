@@ -116,13 +116,17 @@ order by tpdt_codigo
 --3		NO FACT/NO EST	No Facturable y No Estadística
 --4		SIN REVISAR	Sin revisar
 
-SELECT * FROM portico.tbl_proceso_batch_prbt;
+SELECT * FROM tbl_proceso_batch_prbt;
 
-SELECT *
-FROM portico.tbl_valoracion_tmp_vlrt
-;
+SELECT * FROM tbl_valoracion_tmp_vlrt;
+SELECT * FROM tbl_valoracion_vlrc;
+SELECT * FROM tbl_valoracion_lin_vlrl;
+SELECT * FROM tbl_valoracion_det_vlrd;
 
-DELETE FROM portico.tbl_valoracion_tmp_vlrt;
+DELETE FROM tbl_valoracion_tmp_vlrt;
+DELETE FROM tbl_valoracion_lin_vlrl;
+DELETE FROM tbl_valoracion_det_vlrl;
+DELETE FROM tbl_valoracion_vlrc;
 
 select ssrv_srvc_pk, count(1)
 from 

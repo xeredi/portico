@@ -380,7 +380,6 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 	, vlrl_vlrc_pk BIGINT NOT NULL
 	, vlrl_rgla_pk BIGINT NOT NULL
 	, vlrl_rgla_padre_pk BIGINT NOT NULL
-	, vlrl_orden INT NOT NULL
 	, vlrl_importe_base DOUBLE PRECISION NOT NULL
 	, vlrl_importe DOUBLE PRECISION NOT NULL
 	, vlrl_impuesto_pk BIGINT NOT NULL
@@ -429,7 +428,6 @@ CREATE TABLE portico.tbl_valoracion_det_vlrd
 	vlrd_pk BIGINT NOT NULL
 	, vlrd_vlrc_pk BIGINT NOT NULL
 	, vlrd_vlrl_pk BIGINT NOT NULL
-	, vlrd_orden INT NOT NULL
 	, vlrd_importe_base DOUBLE PRECISION NOT NULL
 	, vlrd_importe DOUBLE PRECISION NOT NULL
 	, vlrd_ssrv_pk BIGINT

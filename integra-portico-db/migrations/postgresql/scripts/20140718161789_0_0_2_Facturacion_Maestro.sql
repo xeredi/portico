@@ -150,7 +150,7 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 		, 'dato(ORGA_2)', 'Consignatario', 'dato(ALIN)', 'Alineacion', 'dato(ACUERDO)', 'Acuerdo'
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
+		, 1, NULL, NULL, NULL, NULL, NULL
 	)
 	/
 		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65001, 60001)
@@ -166,7 +166,7 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 		, 'dato(ORGA_2)', 'Consignatario', 'dato(ALIN)', 'Alineacion', 'dato(ACUERDO)', 'Acuerdo'
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
-		, NULL, NULL, NULL, NULL, NULL, NULL
+		, 1, NULL, NULL, NULL, NULL, NULL
 	)
 	/
 		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65002, 60002)
@@ -222,19 +222,12 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 
 DELETE FROM portico.tbl_valoracion_tmp_vlrt
 /
+DELETE FROM portico.tbl_valoracion_lin_vlrl
+/
 DELETE FROM portico.tbl_valoracion_cargo_vlrg
 /
 DELETE FROM portico.tbl_valoracion_vlrc
 /
-
---DELETE FROM portico.tbl_aspecto_cargo_ascr WHERE ascr_aspc_pk IN (
---	  61000
---	, 61001
---	, 61002
---	, 61003
---	, 61004
---)
---/
 
 DELETE FROM portico.tbl_aspecto_cargo_ascr
 WHERE EXISTS (

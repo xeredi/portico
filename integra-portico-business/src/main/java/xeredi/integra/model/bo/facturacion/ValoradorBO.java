@@ -20,6 +20,9 @@ import xeredi.integra.model.dao.facturacion.AspectoDAO;
 import xeredi.integra.model.dao.facturacion.CargoDAO;
 import xeredi.integra.model.dao.facturacion.ReglaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionAgregadaDAO;
+import xeredi.integra.model.dao.facturacion.ValoracionDAO;
+import xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO;
+import xeredi.integra.model.dao.facturacion.ValoracionLineaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO;
 import xeredi.integra.model.dao.proceso.ProcesoDAO;
 import xeredi.integra.model.dao.servicio.ServicioDAO;
@@ -83,6 +86,18 @@ public class ValoradorBO implements Valorador {
     /** The vlra dao. */
     @Inject
     ValoracionAgregadaDAO vlraDAO;
+
+    /** The vlrc dao. */
+    @Inject
+    ValoracionDAO vlrcDAO;
+
+    /** The vlrl dao. */
+    @Inject
+    ValoracionLineaDAO vlrlDAO;
+
+    /** The vlrd dao. */
+    @Inject
+    ValoracionDetalleDAO vlrdDAO;
 
     /**
      * {@inheritDoc}
@@ -164,31 +179,44 @@ public class ValoradorBO implements Valorador {
 
                 vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
                 vlra.getVlrc().setAspc(aspc);
+                vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
+                vlra.getVlrc().setImporte(0.0);
+                vlra.getVlrc().setIva(0.0);
 
                 LOG.info("vlrc: " + vlra.getVlrc());
 
-                if (vlra.getVlrlList() != null) {
-                    for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                        vlrgCrgoIds.add(vlrl.getVlrl().getRgla().getCrgo().getId());
+                for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+                    vlrgCrgoIds.add(vlrl.getVlrl().getRgla().getCrgo().getId());
 
-                        vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
-                        vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
+                    vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    vlrl.getVlrl().setImporteBase(0.0);
+                    vlrl.getVlrl().setImporte(0.0);
 
-                        LOG.info("vlrl: " + vlrl.getVlrl());
+                    LOG.info("vlrl: " + vlrl.getVlrl());
 
-                        if (vlrl.getVlrdList() != null) {
-                            for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
-                                vlrd.setVlrcId(vlra.getVlrc().getId());
-                                vlrd.setVlrlId(vlrl.getVlrl().getId());
-                                vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+                        vlrd.setVlrcId(vlra.getVlrc().getId());
+                        vlrd.setVlrlId(vlrl.getVlrl().getId());
+                        vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-                                LOG.info("vlrd: " + vlrd);
-                            }
-                        }
+                        LOG.info("vlrd: " + vlrd);
                     }
                 }
 
                 LOG.info("vlrgCrgoIds: " + vlrgCrgoIds);
+
+                vlrcDAO.insert(vlra.getVlrc());
+
+                for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+                    vlrlDAO.insert(vlrl.getVlrl());
+                }
+
+                for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+                    for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+                        vlrdDAO.insert(vlrd);
+                    }
+                }
             }
         }
 

@@ -19,9 +19,6 @@ public final class ValoracionDetalleVO {
     /** The vlrl id. */
     private Long vlrlId;
 
-    /** The orden. */
-    private Integer orden;
-
     /** The importe base. */
     private Double importeBase;
 
@@ -106,7 +103,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the vlrc id.
      *
-     * @param value the new vlrc id
+     * @param value
+     *            the new vlrc id
      */
     public void setVlrcId(Long value) {
         this.vlrcId = value;
@@ -124,28 +122,11 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the vlrl id.
      *
-     * @param value the new vlrl id
+     * @param value
+     *            the new vlrl id
      */
     public void setVlrlId(Long value) {
         this.vlrlId = value;
-    }
-
-    /**
-     * Gets the orden.
-     *
-     * @return the orden
-     */
-    public Integer getOrden() {
-        return orden;
-    }
-
-    /**
-     * Sets the orden.
-     *
-     * @param value the new orden
-     */
-    public void setOrden(Integer value) {
-        this.orden = value;
     }
 
     /**
@@ -160,7 +141,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the importe base.
      *
-     * @param value the new importe base
+     * @param value
+     *            the new importe base
      */
     public void setImporteBase(Double value) {
         this.importeBase = value;
@@ -178,7 +160,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the importe.
      *
-     * @param value the new importe
+     * @param value
+     *            the new importe
      */
     public void setImporte(Double value) {
         this.importe = value;
@@ -196,7 +179,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the ssrv.
      *
-     * @param value the new ssrv
+     * @param value
+     *            the new ssrv
      */
     public void setSsrv(SubservicioVO value) {
         this.ssrv = value;
@@ -214,7 +198,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the cuant1.
      *
-     * @param value the new cuant1
+     * @param value
+     *            the new cuant1
      */
     public void setCuant1(Double value) {
         this.cuant1 = value;
@@ -232,7 +217,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the cuant2.
      *
-     * @param value the new cuant2
+     * @param value
+     *            the new cuant2
      */
     public void setCuant2(Double value) {
         this.cuant2 = value;
@@ -250,7 +236,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the cuant3.
      *
-     * @param value the new cuant3
+     * @param value
+     *            the new cuant3
      */
     public void setCuant3(Double value) {
         this.cuant3 = value;
@@ -268,7 +255,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the cuant4.
      *
-     * @param value the new cuant4
+     * @param value
+     *            the new cuant4
      */
     public void setCuant4(Double value) {
         this.cuant4 = value;
@@ -286,7 +274,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the cuant5.
      *
-     * @param value the new cuant5
+     * @param value
+     *            the new cuant5
      */
     public void setCuant5(Double value) {
         this.cuant5 = value;
@@ -304,7 +293,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the cuant6.
      *
-     * @param value the new cuant6
+     * @param value
+     *            the new cuant6
      */
     public void setCuant6(Double value) {
         this.cuant6 = value;
@@ -322,7 +312,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the info1.
      *
-     * @param value the new info1
+     * @param value
+     *            the new info1
      */
     public void setInfo1(String value) {
         this.info1 = value;
@@ -340,7 +331,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the info2.
      *
-     * @param value the new info2
+     * @param value
+     *            the new info2
      */
     public void setInfo2(String value) {
         this.info2 = value;
@@ -358,7 +350,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the info3.
      *
-     * @param value the new info3
+     * @param value
+     *            the new info3
      */
     public void setInfo3(String value) {
         this.info3 = value;
@@ -376,7 +369,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the info4.
      *
-     * @param value the new info4
+     * @param value
+     *            the new info4
      */
     public void setInfo4(String value) {
         this.info4 = value;
@@ -394,7 +388,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the info5.
      *
-     * @param value the new info5
+     * @param value
+     *            the new info5
      */
     public void setInfo5(String value) {
         this.info5 = value;
@@ -412,7 +407,8 @@ public final class ValoracionDetalleVO {
     /**
      * Sets the info6.
      *
-     * @param value the new info6
+     * @param value
+     *            the new info6
      */
     public void setInfo6(String value) {
         this.info6 = value;

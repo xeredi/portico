@@ -23,9 +23,6 @@ public final class ValoracionLineaVO {
     /** The rgla. */
     private ReglaVO rgla;
 
-    /** The orden. */
-    private Integer orden;
-
     /** The importe base. */
     private Double importeBase;
 
@@ -137,25 +134,6 @@ public final class ValoracionLineaVO {
      */
     public void setRgla(ReglaVO value) {
         this.rgla = value;
-    }
-
-    /**
-     * Gets the orden.
-     *
-     * @return the orden
-     */
-    public Integer getOrden() {
-        return orden;
-    }
-
-    /**
-     * Sets the orden.
-     *
-     * @param value
-     *            the orden
-     */
-    public void setOrden(Integer value) {
-        this.orden = value;
     }
 
     /**
