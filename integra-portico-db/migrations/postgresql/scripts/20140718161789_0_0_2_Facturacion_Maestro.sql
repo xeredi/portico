@@ -228,6 +228,8 @@ DELETE FROM portico.tbl_valoracion_lin_vlrl
 /
 DELETE FROM portico.tbl_valoracion_cargo_vlrg
 /
+DELETE FROM portico.tbl_valoracion_imp_vlri
+/
 DELETE FROM portico.tbl_valoracion_vlrc
 /
 

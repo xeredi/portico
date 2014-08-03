@@ -9,13 +9,13 @@
         INSERT INTO tbl_valoracion_vlrc (
             vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_pk
             , vlrc_fref, vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin
-            , vlrc_importe, vlrc_iva, vlrc_es_suj_pasivo, vlrc_cod_exen
+            , vlrc_importe, vlrc_impuesto, vlrc_es_suj_pasivo, vlrc_cod_exen
             , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6
         )
         VALUES (
             #{id}, #{srvc.id}, #{aspc.id}, #{pagador.id}
             , #{fref}, #{fliq}, #{falta}, #{fini}, #{ffin}
-            , #{importe}, #{iva}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
+            , #{importe}, #{impuesto}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>
@@ -44,4 +44,21 @@
                 )
     ]]>
     </insert>
+
+    <update id="updateRecalcular" parameterType="ValoracionCriterioVO">
+    <![CDATA[
+        UPDATE tbl_valoracion_vlrc SET
+            vlrc_importe = (
+                SELECT SUM(vlri_importe)
+                FROM tbl_valoracion_imp_vlri
+                WHERE vlri_vlrc_pk = vlrc_pk
+            )
+            , vlrc_impuesto = (
+                SELECT SUM(vlri_impuesto)
+                FROM tbl_valoracion_imp_vlri
+                WHERE vlri_vlrc_pk = vlrc_pk
+            )
+        WHERE vlrc_pk = #{id}
+    ]]>
+    </update>
 </mapper>

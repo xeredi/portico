@@ -22,6 +22,7 @@ import xeredi.integra.model.dao.facturacion.ReglaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionAgregadaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO;
+import xeredi.integra.model.dao.facturacion.ValoracionImpuestoDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionLineaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO;
 import xeredi.integra.model.dao.proceso.ProcesoDAO;
@@ -42,6 +43,7 @@ import xeredi.integra.model.vo.facturacion.ValoracionAgregadaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionAgregadaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
+import xeredi.integra.model.vo.facturacion.ValoracionImpuestoVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaAgregadaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionTemporalVO;
 import xeredi.integra.model.vo.facturacion.ValoradorContextoVO;
@@ -100,16 +102,18 @@ public class ValoradorBO implements Valorador {
     @Inject
     ValoracionDetalleDAO vlrdDAO;
 
+    /** The vlri dao. */
+    @Inject
+    ValoracionImpuestoDAO vlriDAO;
+
     /**
      * {@inheritDoc}
      */
     @Override
     @Transactional(executorType = ExecutorType.BATCH)
     public void valorarServicio(Long srvcId, Set<Long> crgoIds, Date fechaLiquidacion, final Long prbtId) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: "
-                    + fechaLiquidacion + ", prbtId: " + prbtId);
-        }
+        LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
+                + ", prbtId: " + prbtId);
 
         final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
 
@@ -182,7 +186,7 @@ public class ValoradorBO implements Valorador {
                 vlra.getVlrc().setAspc(aspc);
                 vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
                 vlra.getVlrc().setImporte(0.0);
-                vlra.getVlrc().setIva(0.0);
+                vlra.getVlrc().setImpuesto(0.0);
 
                 LOG.info("vlrc: " + vlra.getVlrc());
 
@@ -209,8 +213,6 @@ public class ValoradorBO implements Valorador {
                     }
                 }
 
-                LOG.info("vlrgCrgoIds: " + vlrgCrgoIds);
-
                 vlrcDAO.insert(vlra.getVlrc());
 
                 for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
@@ -227,7 +229,14 @@ public class ValoradorBO implements Valorador {
 
                 vlrcCriterioVO.setId(vlra.getVlrc().getId());
 
+                final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
+
+                for (final ValoracionImpuestoVO vlri : vlriList) {
+                    vlriDAO.insert(vlri);
+                }
+
                 vlrcDAO.insertGenerateCargos(vlrcCriterioVO);
+                vlrcDAO.updateRecalcular(vlrcCriterioVO);
             }
 
             vlraDAO.deleteTemporalList(vlraCriterioVO);

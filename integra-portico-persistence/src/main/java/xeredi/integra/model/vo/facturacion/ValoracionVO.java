@@ -47,7 +47,7 @@ public final class ValoracionVO {
     private Double importe;
 
     /** The iva. */
-    private Double iva;
+    private Double impuesto;
 
     /** The suj pasivo. */
     private Boolean sujPasivo;
@@ -272,25 +272,6 @@ public final class ValoracionVO {
     }
 
     /**
-     * Gets the iva.
-     *
-     * @return the iva
-     */
-    public Double getIva() {
-        return iva;
-    }
-
-    /**
-     * Sets the iva.
-     *
-     * @param value
-     *            the iva
-     */
-    public void setIva(Double value) {
-        this.iva = value;
-    }
-
-    /**
      * Gets the suj pasivo.
      *
      * @return the suj pasivo
@@ -454,10 +435,30 @@ public final class ValoracionVO {
     /**
      * Sets the fliq.
      *
-     * @param value the new fliq
+     * @param value
+     *            the new fliq
      */
     public void setFliq(Date value) {
         this.fliq = value;
+    }
+
+    /**
+     * Gets the impuesto.
+     *
+     * @return the impuesto
+     */
+    public Double getImpuesto() {
+        return impuesto;
+    }
+
+    /**
+     * Sets the impuesto.
+     *
+     * @param value
+     *            the new impuesto
+     */
+    public void setImpuesto(Double value) {
+        this.impuesto = value;
     }
 
 }

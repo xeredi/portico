@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionImpuestoDAO">
+    <resultMap type="ValoracionImpuestoVO" id="ResultMap">
+        <id column="vlri_vlrc_pk" />
+        <id column="vlri_impuesto_pk" />
+
+        <result column="vlri_vlrc_pk" property="vlrcId" />
+        <result column="vlri_porcentaje" property="porcentaje" />
+        <result column="vlri_importe" property="importeBase" />
+        <result column="vlri_impuesto" property="importeImpuesto" />
+
+        <association property="impuesto" javaType="ParametroVO">
+            <result column="vlri_impuesto_pk" property="id" />
+        </association>
+    </resultMap>
+
+    <select id="selectGenerateList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT
+            sql.vlrl_vlrc_pk AS vlri_vlrc_pk
+            , sql.vlrl_impuesto_pk AS vlri_impuesto_pk
+            , sql.importe_base AS vlri_importe
+            , sql.impuesto_porcentaje AS vlri_porcentaje
+            , importe_base * impuesto_porcentaje / 100 AS vlri_impuesto
+        FROM (
+            SELECT sql.*
+                , (
+                    SELECT prdt_ndecimal
+                    FROM
+                        tbl_parametro_dato_prdt
+                    WHERE
+                        prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+                        AND prdt_prvr_pk = ANY (
+                            SELECT prvr_pk
+                            FROM tbl_parametro_version_prvr
+                            WHERE
+                                prvr_prmt_pk = vlrl_impuesto_pk
+                                AND EXISTS (
+                                    SELECT 1
+                                    FROM tbl_valoracion_vlrc
+                                    WHERE
+                                        vlrc_pk = vlrl_vlrc_pk
+                                        AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+                                )
+                        )
+                ) AS impuesto_porcentaje
+            FROM (
+                SELECT vlrl_vlrc_pk, vlrl_impuesto_pk
+                    , SUM(vlrl_importe) AS importe_base
+                FROM tbl_valoracion_lin_vlrl
+                WHERE
+                    vlrl_vlrc_pk = #{id}
+                GROUP BY
+                    vlrl_vlrc_pk, vlrl_impuesto_pk
+            ) sql
+        ) sql
+    ]]>
+    </select>
+
+    <insert id="insert" parameterType="ValoracionImpuestoVO">
+    <![CDATA[
+        INSERT INTO tbl_valoracion_imp_vlri (
+            vlri_vlrc_pk, vlri_impuesto_pk, vlri_porcentaje, vlri_importe, vlri_impuesto
+        )
+        VALUES (
+            #{vlrcId}, #{impuesto.id}, #{porcentaje}, #{importeBase}, #{importeImpuesto}
+        )
+    ]]>
+    </insert>
+</mapper>

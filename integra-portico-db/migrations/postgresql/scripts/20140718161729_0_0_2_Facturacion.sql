@@ -297,7 +297,7 @@ CREATE TABLE portico.tbl_valoracion_vlrc
 	, vlrc_fini TIMESTAMP
 	, vlrc_ffin TIMESTAMP
 	, vlrc_importe DOUBLE PRECISION NOT NULL
-	, vlrc_iva DOUBLE PRECISION NOT NULL
+	, vlrc_impuesto DOUBLE PRECISION NOT NULL
 	, vlrc_es_suj_pasivo INT NOT NULL
 	, vlrc_cod_exen CHAR(1) NOT NULL
 
@@ -356,6 +356,7 @@ CREATE TABLE portico.tbl_valoracion_imp_vlri
 (
 	vlri_vlrc_pk BIGINT NOT NULL
 	, vlri_impuesto_pk BIGINT NOT NULL
+	, vlri_porcentaje DOUBLE PRECISION NOT NULL
 	, vlri_importe DOUBLE PRECISION NOT NULL
 	, vlri_impuesto DOUBLE PRECISION NOT NULL
 
@@ -546,7 +547,7 @@ CREATE TABLE portico.tbl_factura_fctr
 	, fctr_fini TIMESTAMP
 	, fctr_ffin TIMESTAMP
 	, fctr_importe DOUBLE PRECISION NOT NULL
-	, fctr_iva DOUBLE PRECISION NOT NULL
+	, fctr_impuesto DOUBLE PRECISION NOT NULL
 	, fctr_info1 VARCHAR(100)
 	, fctr_info2 VARCHAR(100)
 	, fctr_info3 VARCHAR(100)
