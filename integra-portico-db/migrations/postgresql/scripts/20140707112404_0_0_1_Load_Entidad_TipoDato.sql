@@ -2188,10 +2188,21 @@ INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20114, 24014, 3)
 /
 
--- PUNTO_RED 20114
--- ORGANIZACION 20010
--- TIPO_GASTO 20025
--- TIPO_LECTURA 20119
+-- Amarre
+-- Servicio Deportivo
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24015, 'B', 1, 1, 1, 1, 'AMARRE_SERVICIO_DEPORTIVO', 'Servicio Deportivo de Amarre')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24015, 20118, 20099, 0, 0)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20118, 24015, 1)
+/
+-- Punto de Red
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24016, 'B', 1, 1, 1, 1, 'AMARRE_PUNTO_RED', 'Punto de Red de Amarre')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24016, 20118, 20114, 0, 0)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20118, 24016, 2)
+/
 
 
 
@@ -2683,6 +2694,8 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 /
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45455, 'S', 'PR', 20101, 'INSTALACION_DEP', 'Instalacion Dep.')
 /
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45460, 'S', 'PR', 20110, 'REDES', 'Red')
+/
 
 
 
@@ -2880,6 +2893,7 @@ WHERE tpdt_pk IN (
 	, 45450
 	, 45451
 	, 45455
+	, 45460
 )
 /
 
@@ -3097,6 +3111,8 @@ WHERE enen_entih_pk IN (
 	, 24012
 	, 24013
 	, 24014
+	, 24015
+	, 24016
 )
 /
 
@@ -3112,6 +3128,8 @@ WHERE tpsp_pk IN (
 	, 24012
 	, 24013
 	, 24014
+	, 24015
+	, 24016
 )
 /
 
@@ -3127,6 +3145,8 @@ WHERE enti_pk IN (
 	, 24012
 	, 24013
 	, 24014
+	, 24015
+	, 24016
 )
 /
 

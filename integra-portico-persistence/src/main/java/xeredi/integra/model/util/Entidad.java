@@ -18,6 +18,10 @@ public enum Entidad {
     ALINEACION(20109L),
     /** The amarre dep. */
     AMARRE_DEP(20118L),
+    /** The amarre punto red. */
+    AMARRE_PUNTO_RED(24016L),
+    /** The amarre servicio deportivo. */
+    AMARRE_SERVICIO_DEPORTIVO(24015L),
     /** The area geografica. */
     AREA_GEOGRAFICA(20012L),
     /** The area mundial. */
@@ -162,6 +166,8 @@ public enum Entidad {
     PRESENTACION_PESCA(20031L),
     /** The provincia. */
     PROVINCIA(20062L),
+    /** The punto red. */
+    PUNTO_RED(20114L),
     /** The receptor mercancia. */
     RECEPTOR_MERCANCIA(20056L),
     /** The recinto aduanero. */
