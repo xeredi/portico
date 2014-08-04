@@ -168,6 +168,12 @@ public enum Entidad {
     PROVINCIA(20062L),
     /** The punto red. */
     PUNTO_RED(20114L),
+    /** The punto red organizacion. */
+    PUNTO_RED_ORGANIZACION(24012L),
+    /** The punto red tipo gasto. */
+    PUNTO_RED_TIPO_GASTO(24013L),
+    /** The punto red tipo lectura. */
+    PUNTO_RED_TIPO_LECTURA(24014L),
     /** The receptor mercancia. */
     RECEPTOR_MERCANCIA(20056L),
     /** The recinto aduanero. */
@@ -262,6 +268,8 @@ public enum Entidad {
     TIPO_GASTO(20025L),
     /** The tipo iva. */
     TIPO_IVA(20011L),
+    /** The tipo lectura. */
+    TIPO_LECTURA(20119L),
     /** The tipo manifiesto pesca. */
     TIPO_MANIFIESTO_PESCA(20033L),
     /** The tipo maniobra remolque. */

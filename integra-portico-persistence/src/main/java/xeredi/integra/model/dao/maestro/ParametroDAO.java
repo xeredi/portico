@@ -1,5 +1,6 @@
 package xeredi.integra.model.dao.maestro;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 

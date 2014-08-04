@@ -1,12 +1,6 @@
 -- // 0 0 1 Configuracion
 -- Migration SQL that makes the change goes here.
 
--- Secuencias
-INSERT INTO portico.tbl_ig(ig_nombre, ig_inicio, ig_fin, ig_incremento, ig_cache, ig_ultimo)
-VALUES ('sq_integra', 1000000, NULL, 1, 1000, 1000000)
-/
-
-
 -- SELECT * FROM portico.tbl_configuracion_idioma_cnid
 INSERT INTO portico.tbl_configuracion_idioma_cnid (cnid_pk, cnid_codigo, cnid_descripcion) VALUES (30000, 'es_ES', 'Español (España)')
 /
@@ -61,6 +55,3 @@ DELETE FROM portico.tbl_configuracion_idioma_cnid
 /
 
 
-DELETE FROM portico.tbl_ig
-WHERE ig_nombre = 'sq_integra'
-/

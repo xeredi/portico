@@ -251,6 +251,16 @@ VALUES (23007, 41061, 1, 1, 4, 2, 1, 1, 1, NULL, 'No. GTs')
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DELETE FROM portico.tbl_estadistica_dato_esdt
+/
+DELETE FROM portico.tbl_estadistica_estd
+/
+DELETE FROM portico.tbl_cuadro_mes_cdms
+/
+DELETE FROM portico.tbl_periodo_proceso_pepr
+/
+
+
 -- Tipo Estadistica Tipo Dato
 DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
 	23000

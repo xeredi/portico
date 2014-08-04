@@ -1,6 +1,11 @@
 -- // 0_0_1 Load Entidad TipoDato
 -- Migration SQL that makes the change goes here.
 
+-- Secuencias
+INSERT INTO portico.tbl_ig(ig_nombre, ig_inicio, ig_fin, ig_incremento, ig_cache, ig_ultimo)
+VALUES ('sq_integra', 1000000, NULL, 1, 1000, 1000000)
+/
+
 -- Tipos de Dato - Simples
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41000, 'CB', 'BO', NULL , 'BOOLEANO_01', 'Booleano 01')
 /
@@ -1615,6 +1620,16 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 /
     INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_CONT'), 'D',  2)
 /
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (43550, 'S', 'CR', NULL , 'ESTADO_AMAD', 'Estado Amarre Dep.')
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'L',  1)
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'R',  1)
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'T',  1)
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'B',  1)
+/
 
 
 
@@ -2086,6 +2101,14 @@ INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd
 /
 INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_GT_EEE'), 0, 0)
 /
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20118, 'P', 1, 1, 1, 1, 'AMARRE_DEP', 'Amarre Deportivo')
+/
+INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('AMARRE_DEP'), 0, 0)
+/
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20119, 'P', 1, 1, 1, 1, 'TIPO_LECTURA', 'Tipo de Lectura (Pto Red)')
+/
+INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_LECTURA'), 0, 0)
+/
 
 
 
@@ -2147,15 +2170,44 @@ INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20010, 24011, 2)
 /
 
-
 -- Punto de Red
--- Contador
--- Cliente (orgaId)
--- Lectura
+-- Cliente
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24012, 'B', 1, 1, 1, 1, 'PUNTO_RED_ORGANIZACION', 'Cliente de Pto de Red')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24012, 20114, 20010, 0, 1)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20114, 24012, 1)
+/
 -- Gasto
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24013, 'B', 1, 1, 1, 1, 'PUNTO_RED_TIPO_GASTO', 'Tipo de Gasto de Pto de Red')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24013, 20114, 20025, 0, 1)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20114, 24013, 2)
+/
+-- Lectura
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24014, 'B', 1, 1, 1, 1, 'PUNTO_RED_TIPO_LECTURA', 'Tipo de Lectura de Pto de Red')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24014, 20114, 20119, 0, 1)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20114, 24014, 3)
+/
 
-
-
+-- Amarre
+-- Servicio Deportivo
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24015, 'B', 1, 1, 1, 1, 'AMARRE_SERVICIO_DEPORTIVO', 'Servicio Deportivo de Amarre')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24015, 20118, 20099, 0, 0)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20118, 24015, 1)
+/
+-- Punto de Red
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24016, 'B', 1, 1, 1, 1, 'AMARRE_PUNTO_RED', 'Punto de Red de Amarre')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24016, 20118, 20114, 0, 0)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20118, 24016, 2)
+/
 
 
 
@@ -2641,6 +2693,14 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 /
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45445, 'S', 'PR', 20117, 'TIPO_BUQUE_GT_EEE', 'Tipo de Buque GT EEE')
 /
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45450, 'S', 'PR', 20118, 'AMARRE_DEP', 'Amarre Dep.')
+/
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45451, 'S', 'PR', 20118, 'AMARRE_DEP_2', 'Amarre Dep. 2')
+/
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45455, 'S', 'PR', 20101, 'INSTALACION_DEP', 'Instalacion Dep.')
+/
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45460, 'S', 'PR', 20110, 'REDES', 'Red')
+/
 
 
 
@@ -2658,66 +2718,13 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 
 DELETE FROM portico.tbl_proceso_archivo_prar
 /
-
 DELETE FROM portico.tbl_proceso_item_prit
 /
-
 DELETE FROM portico.tbl_proceso_mensaje_prmn
 /
-
 DELETE FROM portico.tbl_proceso_parametro_prpm
 /
-
 DELETE FROM portico.tbl_proceso_batch_prbt
-/
-
-
-DELETE FROM portico.tbl_estadistica_dato_esdt
-/
-
-DELETE FROM portico.tbl_estadistica_estd
-/
-
-DELETE FROM portico.tbl_cuadro_mes_cdms
-/
-
-DELETE FROM portico.tbl_periodo_proceso_pepr
-/
-
-
-DELETE FROM portico.tbl_subserv_subserv_ssss
-/
-DELETE FROM portico.tbl_subservicio_dato_ssdt
-/
-DELETE FROM portico.tbl_subservicio_ssrv
-/
-DELETE FROM portico.tbl_servicio_dato_srdt
-/
-DELETE FROM portico.tbl_servicio_srvc
-/
-DELETE FROM portico.tbl_servicio_secuencia_srsc
-/
-
-
-DELETE FROM portico.tbl_subparametro_dato_spdt
-/
-
-DELETE FROM portico.tbl_subparametro_version_spvr
-/
-
-DELETE FROM portico.tbl_subparametro_sprm
-/
-
-DELETE FROM portico.tbl_parametro_dato_prdt
-/
-
-DELETE FROM portico.tbl_parametro_i18n_p18n
-/
-
-DELETE FROM portico.tbl_parametro_version_prvr
-/
-
-DELETE FROM portico.tbl_parametro_prmt
 /
 
 
@@ -2835,6 +2842,10 @@ WHERE tpdt_pk IN (
 	, 45435
 	, 45440
 	, 45445
+	, 45450
+	, 45451
+	, 45455
+	, 45460
 )
 /
 
@@ -3049,6 +3060,11 @@ WHERE enen_entih_pk IN (
 	, 24004
 	, 24010
 	, 24011
+	, 24012
+	, 24013
+	, 24014
+	, 24015
+	, 24016
 )
 /
 
@@ -3061,6 +3077,11 @@ WHERE tpsp_pk IN (
 	, 24004
 	, 24010
 	, 24011
+	, 24012
+	, 24013
+	, 24014
+	, 24015
+	, 24016
 )
 /
 
@@ -3073,6 +3094,11 @@ WHERE enti_pk IN (
 	, 24004
 	, 24010
 	, 24011
+	, 24012
+	, 24013
+	, 24014
+	, 24015
+	, 24016
 )
 /
 
@@ -3198,6 +3224,8 @@ WHERE tppr_pk IN (
 	, 20115
 	, 20116
 	, 20117
+	, 20118
+	, 20119
 )
 /
 
@@ -3319,6 +3347,8 @@ WHERE enti_pk IN (
 	, 20115
 	, 20116
 	, 20117
+	, 20118
+	, 20119
 )
 /
 
@@ -3436,6 +3466,7 @@ WHERE cdrf_tpdt_pk IN (
 	, 43527
 	, 43540
 	, 43545
+	, 43550
 )
 /
 
@@ -3549,6 +3580,7 @@ WHERE tpdt_pk IN (
 	, 43527
 	, 43540
 	, 43545
+	, 43550
 )
 /
 
@@ -3655,4 +3687,8 @@ WHERE tpdt_pk IN (
 	, 41123
 	, 41124
 )
+/
+
+DELETE FROM portico.tbl_ig
+WHERE ig_nombre = 'sq_integra'
 /

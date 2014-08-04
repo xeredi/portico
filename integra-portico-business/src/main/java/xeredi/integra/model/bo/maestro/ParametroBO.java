@@ -1,5 +1,6 @@
 package xeredi.integra.model.bo.maestro;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
@@ -130,17 +132,21 @@ public class ParametroBO implements Parametro {
             }
         }
 
-        if (prmtDAO.exists(prmtVO)) {
-            if (prmtDAO.intersects(prmtVO)) {
-                throw new DuplicateInstanceException(ParametroVO.class.getName(), prmtVO);
-            }
-
-            final Long id = prmtDAO.selectId(prmtVO);
-
-            prmtVO.setId(id);
-        } else {
+        try {
             prmtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
             prmtDAO.insert(prmtVO);
+        } catch (final PersistenceException ex) {
+            if (prmtDAO.exists(prmtVO)) {
+                if (prmtDAO.intersects(prmtVO)) {
+                    throw new DuplicateInstanceException(ParametroVO.class.getName(), prmtVO);
+                }
+
+                final Long id = prmtDAO.selectId(prmtVO);
+
+                prmtVO.setId(id);
+            } else {
+                throw new Error(ex);
+            }
         }
 
         prmtVO.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
@@ -194,17 +200,21 @@ public class ParametroBO implements Parametro {
         final IgBO igBO = new IgBO();
         final Long prmtActualId = prmtVO.getId();
 
-        if (prmtDAO.exists(prmtVO)) {
-            if (prmtDAO.intersects(prmtVO)) {
-                throw new DuplicateInstanceException(ParametroVO.class.getName(), prmtVO);
-            }
-
-            final Long id = prmtDAO.selectId(prmtVO);
-
-            prmtVO.setId(id);
-        } else {
+        try {
             prmtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
             prmtDAO.insert(prmtVO);
+        } catch (final PersistenceException ex) {
+            if (prmtDAO.exists(prmtVO)) {
+                if (prmtDAO.intersects(prmtVO)) {
+                    throw new DuplicateInstanceException(ParametroVO.class.getName(), prmtVO);
+                }
+
+                final Long id = prmtDAO.selectId(prmtVO);
+
+                prmtVO.setId(id);
+            } else {
+                throw new Error(ex);
+            }
         }
 
         prmtVO.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));

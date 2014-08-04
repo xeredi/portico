@@ -1,6 +1,11 @@
 -- // 0_0_1 Load Entidad TipoDato
 -- Migration SQL that makes the change goes here.
 
+-- Secuencias
+INSERT INTO portico.tbl_ig(ig_nombre, ig_inicio, ig_fin, ig_incremento, ig_cache, ig_ultimo)
+VALUES ('sq_integra', 1000000, NULL, 1, 1000, 1000000)
+/
+
 -- Tipos de Dato - Simples
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (41000, 'CB', 'BO', NULL , 'BOOLEANO_01', 'Booleano 01')
 /
@@ -2713,66 +2718,13 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 
 DELETE FROM portico.tbl_proceso_archivo_prar
 /
-
 DELETE FROM portico.tbl_proceso_item_prit
 /
-
 DELETE FROM portico.tbl_proceso_mensaje_prmn
 /
-
 DELETE FROM portico.tbl_proceso_parametro_prpm
 /
-
 DELETE FROM portico.tbl_proceso_batch_prbt
-/
-
-
-DELETE FROM portico.tbl_estadistica_dato_esdt
-/
-
-DELETE FROM portico.tbl_estadistica_estd
-/
-
-DELETE FROM portico.tbl_cuadro_mes_cdms
-/
-
-DELETE FROM portico.tbl_periodo_proceso_pepr
-/
-
-
-DELETE FROM portico.tbl_subserv_subserv_ssss
-/
-DELETE FROM portico.tbl_subservicio_dato_ssdt
-/
-DELETE FROM portico.tbl_subservicio_ssrv
-/
-DELETE FROM portico.tbl_servicio_dato_srdt
-/
-DELETE FROM portico.tbl_servicio_srvc
-/
-DELETE FROM portico.tbl_servicio_secuencia_srsc
-/
-
-
-DELETE FROM portico.tbl_subparametro_dato_spdt
-/
-
-DELETE FROM portico.tbl_subparametro_version_spvr
-/
-
-DELETE FROM portico.tbl_subparametro_sprm
-/
-
-DELETE FROM portico.tbl_parametro_dato_prdt
-/
-
-DELETE FROM portico.tbl_parametro_i18n_p18n
-/
-
-DELETE FROM portico.tbl_parametro_version_prvr
-/
-
-DELETE FROM portico.tbl_parametro_prmt
 /
 
 
@@ -3735,4 +3687,8 @@ WHERE tpdt_pk IN (
 	, 41123
 	, 41124
 )
+/
+
+DELETE FROM portico.tbl_ig
+WHERE ig_nombre = 'sq_integra'
 /

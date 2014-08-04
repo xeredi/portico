@@ -1167,11 +1167,26 @@ VALUES (21009, 41044, 1,  3,  5,  1, 0, 1, 0, NULL, 'Imp. Total')
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DELETE FROM portico.tbl_subserv_subserv_ssss
+/
+DELETE FROM portico.tbl_subservicio_dato_ssdt
+/
+DELETE FROM portico.tbl_subservicio_ssrv
+/
+DELETE FROM portico.tbl_servicio_dato_srdt
+/
+DELETE FROM portico.tbl_servicio_srvc
+/
+DELETE FROM portico.tbl_servicio_secuencia_srsc
+/
+
+
+
 
 DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
 	21001
 	, 22001
-	
+
 	, 21002
 	, 22002
 	, 22003
@@ -1207,7 +1222,7 @@ DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
 DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk IN (
 	21001
 	, 22001
-	
+
 	, 21002
 	, 22002
 	, 22003
