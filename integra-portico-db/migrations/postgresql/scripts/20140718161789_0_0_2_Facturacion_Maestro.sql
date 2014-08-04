@@ -73,7 +73,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 		)
 		/
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)
-	VALUES (60004, 'B0', 'B0', 0, 1, 21003, 'B', 'TASA AL BUQUE 2')
+	VALUES (60004, 'B0', 'B0', 0, 0, 21003, 'B', 'TASA AL BUQUE 2')
 /
 	INSERT INTO portico.tbl_cargo_version_crgv (crgv_pk, crgv_crgo_pk, crgv_fini, crgv_ffin) VALUES (62004, 60004, '2013-01-01', NULL);
 	/

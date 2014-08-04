@@ -16,6 +16,8 @@ public enum Entidad {
     AGREGACION_SUPERFICIE(23002L),
     /** The alineacion. */
     ALINEACION(20109L),
+    /** The amarre dep. */
+    AMARRE_DEP(20118L),
     /** The area geografica. */
     AREA_GEOGRAFICA(20012L),
     /** The area mundial. */

@@ -1481,39 +1481,69 @@
 	]]>
 	</sql>
 
-	<sql id="INSTALACION_DEP" tempImp="false">
-	<![CDATA[
-		SELECT
-		    (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID)
-		    || MAES.INDP_CODIGO AS MAES_CODIGO
-		    , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS MAES_SUBP
-		    , (SELECT TAMD_CODIGO FROM IEMD_TIPOAMARRE_TAMD WHERE TAMD_ID = INDP_TIPO_AMARRE_ID) AS MAES_TAMD
-		    , (SELECT TEMD_CODIGO FROM IEMD_TIPOEMBARCACION_TEMD WHERE TEMD_ID = INDP_TIPO_EMBARCACION_ID) AS MAES_TEMD
-		    , MAES.indp_calado_real
-		    , MAES.indp_manga_real
-		    , MAES.INDP_ESLORA_REAL
-		    , MAES.INDP_ALTURA_REAL
-		    , MAES.INDP_CALADO_MAXIMO
-		    , MAES.indp_manga_maxima
-		    , MAES.INDP_ESLORA_MAXIMA
-		    , MAES.indp_altura_maxima
-		    , MAES.indp_calado_minimo
-		    , MAES.indp_manga_minima
-		    , MAES.INDP_ESLORA_MINIMA
-		    , MAES.INDP_ALTURA_MINIMA
-		    , MAES.INDP_ES_EN_TIERRA
-		    , MAES.INDP_observaciones
-		 	, (SELECT I18N.INDP_NOMBRE
-		 		FROM IEMD_INSTALACIONDEPi18n_INDP I18N
-		    	WHERE I18N.INDP_ID = MAES.INDP_ID
-		        	AND I18N.INDP_IDIOMA = ?
-		         	AND ? BETWEEN INDP_FECHA_CREACION AND COALESCE(INDP_FECHA_FIN, ?)
- 			) AS i18n_nombre
-		FROM
-			IEMD_INSTALACIONDEP_INDP MAES
-		order by MAES.INDP_es_activo desc
-	]]>
-	</sql>
+    <sql id="INSTALACION_DEP" tempImp="false">
+    <![CDATA[
+        SELECT
+            (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID)
+            || MAES.INDP_CODIGO AS MAES_CODIGO
+            , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDP_SUBPUERTO_ID) AS MAES_SUBP
+            , (SELECT TAMD_CODIGO FROM IEMD_TIPOAMARRE_TAMD WHERE TAMD_ID = INDP_TIPO_AMARRE_ID) AS MAES_TAMD
+            , (SELECT TEMD_CODIGO FROM IEMD_TIPOEMBARCACION_TEMD WHERE TEMD_ID = INDP_TIPO_EMBARCACION_ID) AS MAES_TEMD
+            , MAES.indp_calado_real
+            , MAES.indp_manga_real
+            , MAES.INDP_ESLORA_REAL
+            , MAES.INDP_ALTURA_REAL
+            , MAES.INDP_CALADO_MAXIMO
+            , MAES.indp_manga_maxima
+            , MAES.INDP_ESLORA_MAXIMA
+            , MAES.indp_altura_maxima
+            , MAES.indp_calado_minimo
+            , MAES.indp_manga_minima
+            , MAES.INDP_ESLORA_MINIMA
+            , MAES.INDP_ALTURA_MINIMA
+            , MAES.INDP_ES_EN_TIERRA
+            , MAES.INDP_observaciones
+            , (SELECT I18N.INDP_NOMBRE
+                FROM IEMD_INSTALACIONDEPi18n_INDP I18N
+                WHERE I18N.INDP_ID = MAES.INDP_ID
+                    AND I18N.INDP_IDIOMA = ?
+                    AND ? BETWEEN INDP_FECHA_CREACION AND COALESCE(INDP_FECHA_FIN, ?)
+            ) AS i18n_nombre
+        FROM
+            IEMD_INSTALACIONDEP_INDP MAES
+        order by MAES.INDP_es_activo desc
+    ]]>
+    </sql>
+
+    <sql id="AMARRE_DEP" tempImp="false">
+    <![CDATA[
+        SELECT
+            (
+                select
+                    (select subp_codigo
+                    from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                    || indp_codigo
+                from IEMD_INSTALACIONDEP_INDP
+                WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
+            ) || '-' || maes.AMAD_PANTALAN || '-' || maes.AMAD_PUESTO
+            AS codigo
+            , (  select
+                    (select subp_codigo
+                    from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                    || indp_codigo
+                from IEMD_INSTALACIONDEP_INDP
+                WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
+            ) AS indp_codigo
+            , maes.AMAD_PANTALAN, maes.AMAD_PUESTO, maes.AMAD_estado, maes.AMAD_descripcion
+            , (select tamd_codigo from IEMD_TIPOAMARRE_TAMD where tamd_id = maes.amad_tipoamarre_id) as tamd_codigo
+            , (select temd_codigo from IEMD_TIPOEMBARCACION_TEMD where temd_id = maes.amad_tipoembarcacion_id) as temd_codigo
+            , maes.amad_calado_real, maes.amad_manga_real, maes.amad_eslora_real, maes.amad_altura_real
+            , maes.amad_calado_maximo, maes.amad_manga_maxima, maes.amad_eslora_maxima, maes.amad_altura_maxima
+            , maes.amad_calado_minimo, maes.amad_manga_minima, maes.amad_eslora_minima, maes.amad_altura_minima
+            , maes.amad_observaciones
+        FROM IEMD_AMARRE_AMAD maes
+    ]]>
+    </sql>
 
 	<sql id="ALINEACION" tempImp="true">
 	<![CDATA[

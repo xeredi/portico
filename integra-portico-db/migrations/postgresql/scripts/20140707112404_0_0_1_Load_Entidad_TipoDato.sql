@@ -1615,6 +1615,16 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 /
     INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_CONT'), 'D',  2)
 /
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (43550, 'S', 'CR', NULL , 'ESTADO_AMAD', 'Estado Amarre Dep.')
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'L',  1)
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'R',  1)
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'T',  1)
+/
+    INSERT INTO portico.tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden) VALUES (portico.getTipoDato('ESTADO_AMAD'), 'B',  1)
+/
 
 
 
@@ -2085,6 +2095,10 @@ INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_e
 INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20117, 'P', 1, 1, 1, 1, 'TIPO_BUQUE_GT_EEE', 'Tipo de Buque GT EEE')
 /
 INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_BUQUE_GT_EEE'), 0, 0)
+/
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20118, 'P', 1, 1, 1, 1, 'AMARRE_DEP', 'Amarre Deportivo')
+/
+INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('AMARRE_DEP'), 0, 0)
 /
 
 
@@ -2641,6 +2655,12 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 /
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45445, 'S', 'PR', 20117, 'TIPO_BUQUE_GT_EEE', 'Tipo de Buque GT EEE')
 /
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45450, 'S', 'PR', 20118, 'AMARRE_DEP', 'Amarre Dep.')
+/
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45451, 'S', 'PR', 20118, 'AMARRE_DEP_2', 'Amarre Dep. 2')
+/
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45455, 'S', 'PR', 20101, 'INSTALACION_DEP', 'Instalacion Dep.')
+/
 
 
 
@@ -2835,6 +2855,9 @@ WHERE tpdt_pk IN (
 	, 45435
 	, 45440
 	, 45445
+	, 45450
+	, 45451
+	, 45455
 )
 /
 
@@ -3198,6 +3221,7 @@ WHERE tppr_pk IN (
 	, 20115
 	, 20116
 	, 20117
+	, 20118
 )
 /
 
@@ -3319,6 +3343,7 @@ WHERE enti_pk IN (
 	, 20115
 	, 20116
 	, 20117
+	, 20118
 )
 /
 
@@ -3436,6 +3461,7 @@ WHERE cdrf_tpdt_pk IN (
 	, 43527
 	, 43540
 	, 43545
+	, 43550
 )
 /
 
@@ -3549,6 +3575,7 @@ WHERE tpdt_pk IN (
 	, 43527
 	, 43540
 	, 43545
+	, 43550
 )
 /
 

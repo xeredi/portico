@@ -56,10 +56,27 @@ WHERE
 
 
 -- Valorar manifiesto
+select prmt_tppr_pk, enti_nombre, count(1)
+from 
+	tbl_parametro_prmt
+	join tbl_entidad_enti on
+		enti_pk = prmt_tppr_pk
+group by prmt_tppr_pk, enti_nombre
+order by enti_nombre
+;
+
+select srvc_tpsr_pk, enti_nombre, count(1)
+from 
+	tbl_servicio_srvc
+	join tbl_entidad_enti on
+		enti_pk = srvc_tpsr_pk
+group by srvc_tpsr_pk, enti_nombre
+;
+
 select ssrv_tpss_pk, enti_nombre, count(1)
 from 
-	portico.tbl_subservicio_ssrv
-	join portico.tbl_entidad_enti on
+	tbl_subservicio_ssrv
+	join tbl_entidad_enti on
 		enti_pk = ssrv_tpss_pk
 where ssrv_srvc_pk = 1192567
 group by ssrv_tpss_pk, enti_nombre
@@ -124,6 +141,7 @@ SELECT * FROM tbl_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_imp_vlri;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
+
 
 
 SELECT * FROM tbl_parametro_prmt

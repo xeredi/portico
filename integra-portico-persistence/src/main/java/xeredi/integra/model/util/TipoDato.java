@@ -194,6 +194,10 @@ public enum TipoDato {
     ALIN_2(45181L),
     /** The ALI n_3. */
     ALIN_3(45182L),
+    /** The amarre dep. */
+    AMARRE_DEP(45450L),
+    /** The AMARR e_ de p_2. */
+    AMARRE_DEP_2(45451L),
     /** The area geografica. */
     AREA_GEOG(45045L),
     /** The area mundial. */
@@ -222,6 +226,8 @@ public enum TipoDato {
     GRUPO_NST(45140L),
     /** The grupo zona. */
     GRUPO_ZONA(45255L),
+    /** The instalacion dep. */
+    INSTALACION_DEP(45455L),
     /** The instalacion especial. */
     INST_ESP(45300L),
     /** The instruccion marcaje. */
@@ -484,7 +490,7 @@ public enum TipoDato {
 
     /**
      * Instantiates a new tipo dato.
-     * 
+     *
      * @param aid
      *            the aid
      */
@@ -494,7 +500,7 @@ public enum TipoDato {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public long getId() {

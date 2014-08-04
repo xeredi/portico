@@ -1165,7 +1165,69 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (20117, 41060, 1, 1, 1, 2, 1, 1, 0, NULL, 'Limite Inf.')
 /
 
-
+-- Amarre Deportivo
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (20118, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 45455, 1, 1, 1, 4, 1, 1, 1, NULL, 'Inst. Deportiva')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41020, 1, 1, 2, 1, 1, 1, 1, NULL, 'Pantalan')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41021, 1, 1, 3, 1, 1, 1, 1, NULL, 'Puesto')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 43550, 1, 1, 4, 1, 1, 1, 1, NULL, 'Estado')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41022, 1, 1, 4, 5, 1, 1, 1, NULL, 'Descripcion')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 45200, 1, 2, 1, 4, 1, 1, 1, NULL, 'Tipo de Amarre')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 45195, 1, 2, 2, 4, 0, 1, 1, NULL, 'Tipo de Embarcacion')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41040, 1, 3, 1, 1, 1, 1, 0, NULL, 'Calado R.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41041, 1, 3, 2, 1, 1, 1, 0, NULL, 'Manga R.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41042, 1, 3, 3, 1, 1, 1, 0, NULL, 'Eslora R.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41043, 1, 3, 4, 1, 1, 1, 0, NULL, 'Altura R.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41044, 1, 3, 5, 1, 1, 1, 0, NULL, 'Calado M.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41045, 1, 3, 6, 1, 1, 1, 0, NULL, 'Manga M.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41046, 1, 3, 7, 1, 1, 1, 0, NULL, 'Eslora M.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41047, 1, 3, 8, 1, 1, 1, 0, NULL, 'Altura M.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41048, 1, 3, 9, 1, 0, 1, 0, NULL, 'Calado m.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41049, 1, 3,10, 1, 0, 1, 0, NULL, 'Manga m.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41050, 1, 3,11, 1, 0, 1, 0, NULL, 'Eslora m.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41051, 1, 3,12, 1, 0, 1, 0, NULL, 'Altura m.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20118, 41080, 1, 4, 1,12, 0, 0, 0, NULL, 'Observaciones')
+/
 
 
 
@@ -1410,6 +1472,8 @@ DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20116
 /
 DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20117
 /
+DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20118
+/
 
 
 DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20001
@@ -1551,4 +1615,6 @@ DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20115
 DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20116
 /
 DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20117
+/
+DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20118
 /

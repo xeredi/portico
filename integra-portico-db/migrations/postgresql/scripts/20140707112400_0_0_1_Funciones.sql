@@ -1,4 +1,4 @@
-﻿-- // 0 0 1 Funciones
+-- // 0 0 1 Funciones
 -- Migration SQL that makes the change goes here.
 
 
