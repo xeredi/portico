@@ -252,21 +252,15 @@ VALUES (23007, 41061, 1, 1, 4, 2, 1, 1, 1, NULL, 'No. GTs')
 -- SQL to undo the change goes here.
 
 -- Tipo Estadistica Tipo Dato
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23000
+DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
+	23000
+	, 23001
+	, 23002
+	, 23003
+	, 23004
+	, 23005
+	, 23006
+	, 23007
+)
 /
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23001
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23002
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23003
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23004
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23005
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23006
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=23007
-/
-
 

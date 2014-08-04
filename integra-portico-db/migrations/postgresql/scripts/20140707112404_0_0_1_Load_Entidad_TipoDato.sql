@@ -2100,6 +2100,10 @@ INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd
 /
 INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('AMARRE_DEP'), 0, 0)
 /
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (20119, 'P', 1, 1, 1, 1, 'TIPO_LECTURA', 'Tipo de Lectura (Pto Red)')
+/
+INSERT INTO portico.tbl_tipo_parametro_tppr(tppr_pk, tppr_es_i18n, tppr_es_tmp_exp) VALUES (portico.getEntidad('TIPO_LECTURA'), 0, 0)
+/
 
 
 
@@ -2161,15 +2165,33 @@ INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_
 	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20010, 24011, 2)
 /
 
-
 -- Punto de Red
--- Contador
--- Cliente (orgaId)
--- Lectura
+-- Cliente
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24012, 'B', 1, 1, 1, 1, 'PUNTO_RED_ORGANIZACION', 'Cliente de Pto de Red')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24012, 20114, 20010, 0, 1)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20114, 24012, 1)
+/
 -- Gasto
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24013, 'B', 1, 1, 1, 1, 'PUNTO_RED_TIPO_GASTO', 'Tipo de Gasto de Pto de Red')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24013, 20114, 20025, 0, 1)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20114, 24013, 2)
+/
+-- Lectura
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (24014, 'B', 1, 1, 1, 1, 'PUNTO_RED_TIPO_LECTURA', 'Tipo de Lectura de Pto de Red')
+/
+INSERT INTO portico.tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp) VALUES (24014, 20114, 20119, 0, 1)
+/
+	INSERT INTO portico.tbl_entidad_entidad_enen (enen_entip_pk, enen_entih_pk, enen_orden) VALUES (20114, 24014, 3)
+/
 
-
-
+-- PUNTO_RED 20114
+-- ORGANIZACION 20010
+-- TIPO_GASTO 20025
+-- TIPO_LECTURA 20119
 
 
 
@@ -3072,6 +3094,9 @@ WHERE enen_entih_pk IN (
 	, 24004
 	, 24010
 	, 24011
+	, 24012
+	, 24013
+	, 24014
 )
 /
 
@@ -3084,6 +3109,9 @@ WHERE tpsp_pk IN (
 	, 24004
 	, 24010
 	, 24011
+	, 24012
+	, 24013
+	, 24014
 )
 /
 
@@ -3096,6 +3124,9 @@ WHERE enti_pk IN (
 	, 24004
 	, 24010
 	, 24011
+	, 24012
+	, 24013
+	, 24014
 )
 /
 
@@ -3222,6 +3253,7 @@ WHERE tppr_pk IN (
 	, 20116
 	, 20117
 	, 20118
+	, 20119
 )
 /
 
@@ -3344,6 +3376,7 @@ WHERE enti_pk IN (
 	, 20116
 	, 20117
 	, 20118
+	, 20119
 )
 /
 

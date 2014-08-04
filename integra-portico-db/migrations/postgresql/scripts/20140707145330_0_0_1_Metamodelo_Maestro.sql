@@ -1141,6 +1141,51 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (20113, 41103, 1, 4, 4, 2, 0, 1, 0, NULL, 'F. Vida Estimada')
 /
 
+-- Punto de Red
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (20114, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41021, 1, 1, 1, 4, 0, 1, 1, NULL, 'Referencia')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 45275, 1, 1, 2, 4, 1, 1, 1, NULL, 'T. Suministro')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 45040, 1, 1, 3, 4, 1, 1, 1, NULL, 'T. IVA')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41020, 1, 2, 1, 6, 0, 1, 1, NULL, 'Nombre')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41022, 1, 2, 2, 6, 0, 1, 0, NULL, 'Ubicacion')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41040, 1, 3, 1, 2, 1, 1, 0, NULL, 'Consumo Min.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41060, 1, 3, 2, 4, 0, 1, 0, NULL, 'Consumo Min. Periodo')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41061, 1, 3, 3, 3, 0, 1, 0, NULL, 'Diametro Entrada')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41062, 1, 3, 4, 3, 0, 1, 0, NULL, 'Diametro Salida')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41063, 1, 4, 1, 3, 0, 1, 0, NULL, 'Distancia Ant.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41064, 1, 4, 2, 3, 0, 1, 0, NULL, 'Ruta Lectura')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41023, 1, 4, 3, 3, 0, 1, 0, NULL, 'Forma Recogida')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20114, 41065, 1, 4, 4, 3, 0, 1, 0, NULL, 'Psicion Ruta')
+/
+
+
+
 -- Tipo de Atraque EDI
 INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (20115, 1, 'General')
 /
@@ -1304,6 +1349,49 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (24010, 41030, 1, 3, 2, 4, 0, 0, 0, NULL, 'Web')
 /
 
+-- Cliente Punto de Red
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (24012, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (24012, 41040, 1, 1, 1, 1, 1, 1, 0, NULL, '%')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (24012, 43000, 1, 1, 2, 3, 1, 1, 1, NULL, 'Cod. Exencion')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (24012, 45155, 1, 1, 3, 4, 0, 1, 1, NULL, 'Tipo Exencion')
+/
+
+-- Gasto Punto de Red
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (24013, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (24013, 45040, 1, 1, 1, 4, 0, 1, 1, NULL, 'Tipo de IVA')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (24013, 41040, 1, 1, 2, 2, 0, 1, 0, NULL, 'Gasto')
+/
+
+-- Lectura Punto de Red
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (24014, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (24014, 41040, 1, 1, 1, 2, 1, 1, 0, NULL, 'Lectura Inicial')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (24014, 41041, 1, 1, 1, 2, 0, 1, 0, NULL, 'Lectura Final')
+/
+
+
+
+
+ 
+
+
+
+
+
+
 
 -- //@UNDO
 -- SQL to undo the change goes here.
@@ -1312,309 +1400,181 @@ VALUES (24010, 41030, 1, 3, 2, 4, 0, 0, 0, NULL, 'Web')
 
 
 -- TipoSubparametro-TipoDato
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=24000
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=24001
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=24003
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=24010
+DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
+	24000
+	, 24001
+	, 24003
+	, 24010
+	, 24012
+	, 24013
+	, 24014
+)
 /
 
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=24000
+DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk IN (
+	24000
+	, 24001
+	, 24003
+	, 24010
+	, 24012
+	, 24013
+	, 24014
+)
 /
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=24001
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=24003
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=24010
-/
+
 
 
 -- TipoParametro-TipoDato
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20001
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20002
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20003
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20004
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20008
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20009
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20010
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20011
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20013
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20014
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20024
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20025
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20027
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20032
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20036
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20038
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20040
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20044
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20049
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20051
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20054
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20055
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20056
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20057
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20058
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20059
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20061
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20062
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20063
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20064
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20065
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20067
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20069
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20070
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20071
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20072
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20074
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20077
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20078
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20079
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20080
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20081
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20082
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20083
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20084
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20085
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20086
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20088
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20089
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20090
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20091
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20093
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20094
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20095
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20100
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20101
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20102
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20103
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20005
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20107
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20048
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20108
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20109
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20106
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20110
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20111
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20113
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20115
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20116
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20117
-/
-DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk=20118
+DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
+	20001
+	, 20002
+	, 20003
+	, 20004
+	, 20005
+	, 20008
+	, 20009
+	, 20010
+	, 20011
+	, 20013
+	, 20014
+	, 20024
+	, 20025
+	, 20027
+	, 20032
+	, 20036
+	, 20038
+	, 20040
+	, 20044
+	, 20048
+	, 20049
+	, 20051
+	, 20054
+	, 20055
+	, 20056
+	, 20057
+	, 20058
+	, 20059
+	, 20061
+	, 20062
+	, 20063
+	, 20064
+	, 20065
+	, 20067
+	, 20069
+	, 20070
+	, 20071
+	, 20072
+	, 20074
+	, 20077
+	, 20078
+	, 20079
+	, 20080
+	, 20081
+	, 20082
+	, 20083
+	, 20084
+	, 20085
+	, 20086
+	, 20088
+	, 20089
+	, 20090
+	, 20091
+	, 20093
+	, 20094
+	, 20095
+	, 20100
+	, 20101
+	, 20102
+	, 20103
+	, 20105
+	, 20106
+	, 20107
+	, 20108
+	, 20109
+	, 20110
+	, 20111
+	, 20113
+	, 20114
+	, 20115
+	, 20116
+	, 20117
+	, 20118
+)
 /
 
-
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20001
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20002
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20003
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20004
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20008
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20009
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20010
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20011
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20013
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20014
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20024
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20025
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20027
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20032
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20036
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20038
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20040
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20044
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20049
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20051
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20054
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20055
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20056
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20057
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20058
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20059
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20061
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20062
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20063
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20064
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20065
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20067
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20069
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20070
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20071
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20072
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20074
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20077
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20078
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20079
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20080
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20081
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20082
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20083
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20084
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20085
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20086
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20088
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20089
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20090
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20091
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20093
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20094
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20095
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20100
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20101
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20102
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20103
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20005
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20107
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20048
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20108
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20109
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20106
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20110
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20111
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20113
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20115
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20116
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20117
-/
-DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk=20118
+DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk IN (
+	20001
+	, 20002
+	, 20003
+	, 20004
+	, 20005
+	, 20008
+	, 20009
+	, 20010
+	, 20011
+	, 20013
+	, 20014
+	, 20024
+	, 20025
+	, 20027
+	, 20032
+	, 20036
+	, 20038
+	, 20040
+	, 20044
+	, 20048
+	, 20049
+	, 20051
+	, 20054
+	, 20055
+	, 20056
+	, 20057
+	, 20058
+	, 20059
+	, 20061
+	, 20062
+	, 20063
+	, 20064
+	, 20065
+	, 20067
+	, 20069
+	, 20070
+	, 20071
+	, 20072
+	, 20074
+	, 20077
+	, 20078
+	, 20079
+	, 20080
+	, 20081
+	, 20082
+	, 20083
+	, 20084
+	, 20085
+	, 20086
+	, 20088
+	, 20089
+	, 20090
+	, 20091
+	, 20093
+	, 20094
+	, 20095
+	, 20100
+	, 20101
+	, 20102
+	, 20103
+	, 20105
+	, 20106
+	, 20107
+	, 20108
+	, 20109
+	, 20110
+	, 20111
+	, 20113
+	, 20114
+	, 20115
+	, 20116
+	, 20117
+	, 20118
+)
 /
