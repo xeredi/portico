@@ -1,0 +1,28 @@
+SELECT
+	prdt.*
+	, (
+		WHEN
+			EXISTS (
+				SELECT 1
+				FROM tbl_servicio_srvc
+				WHERE srvc_tpdr_pk = portico.getEntidad()
+			)
+		ELSE 0
+	) AS estado
+FROM tbl_parametro_dato_prdt prdt
+WHERE
+	EXISTS (
+		SELECT 1
+		FROM tbl_parametro_version_prvr
+		WHERE prvr_pk = prdt_prvr_pk
+			AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_parametro_prmt
+				WHERE prmt_pk = prvr_prmt_pk
+					AND prmt_tppr_pk = portico.getEntidad('AMARRE_DEP')
+			)
+	)
+	AND prdt_tpdt_pk = portico.getTipoDato('ESTADO_AMAD')
+	AND prdt_cadena <> 'B'
+;

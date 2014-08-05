@@ -2143,7 +2143,7 @@
             , 'L' as tipo_lectura
             , maes.LPSU_FECHA_INICIO
             , maes.LPSU_FECHA_FINAL
-            , maes.LPSU_LECTURA_INICIO
+            , coalesce(maes.LPSU_LECTURA_INICIO, 0)
             , maes.LPSU_LECTURA_FINAL
         from ISUM_LECTURAPUNTORED_LPSU maes
         where

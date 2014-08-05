@@ -71,14 +71,13 @@ public final class MaestroImporterBO {
     private final String idioma;
 
     /**
-     * The fecha vigencia. La que se toma como referencia para traer los datos vigentes a esa fecha
-     * en INTEGRA.
+     * The fecha vigencia. La que se toma como referencia para traer los datos vigentes a esa fecha en INTEGRA.
      */
     private final Date fechaVigencia;
 
     /**
-     * Fecha que se utiliza para marcar la fecha de inicio de las versiones de los parametros con
-     * temporalidad implicita en la BD.
+     * Fecha que se utiliza para marcar la fecha de inicio de las versiones de los parametros con temporalidad implicita
+     * en la BD.
      */
     private final Date fechaInicioReferencia;
 
@@ -123,7 +122,8 @@ public final class MaestroImporterBO {
 
             Class.forName(configuration.getString("db.migration.dataSource.driver"));
 
-            try (final Connection con = DriverManager.getConnection(configuration.getString("db.migration.dataSource.url"),
+            try (final Connection con = DriverManager.getConnection(
+                    configuration.getString("db.migration.dataSource.url"),
                     configuration.getString("db.migration.dataSource.username"),
                     configuration.getString("db.migration.dataSource.password"));) {
 
@@ -403,8 +403,8 @@ public final class MaestroImporterBO {
     private ItemDatoVO getItdt(final Object value, final EntidadTipoDatoVO entdVO, final String nombreEntidad)
             throws SQLException {
         if (value == null && entdVO.isObligatorio()) {
-            throw new Error("Campo obligatorio no encontrado para el dato: " + entdVO.getTpdt().getNombre()
-                    + " de la entidad: " + nombreEntidad);
+            throw new Error("Campo obligatorio no encontrado para el dato: " + entdVO.getTpdt().getNombre() + " ("
+                    + entdVO.getEtiqueta() + ") de la entidad: " + nombreEntidad);
         }
 
         final ItemDatoVO itdtVO = new ItemDatoVO();
