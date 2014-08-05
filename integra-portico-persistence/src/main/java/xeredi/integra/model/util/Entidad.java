@@ -28,6 +28,8 @@ public enum Entidad {
     AREA_MUNDIAL(20006L),
     /** The arte pesca. */
     ARTE_PESCA(20041L),
+    /** The asignacion amarre. */
+    ASIGNACION_AMARRE(21010L),
     /** The atraque. */
     ATRAQUE(22011L),
     /** The autoridad portuaria. */

@@ -1,4 +1,77 @@
 <importer>
+    <sql id="ASIGNACION_AMARRE">
+    <![CDATA[
+        SELECT
+            serv.serv_id
+            , serv.serv_fecha_creacion
+            , serv.serv_fecha_baja
+            , serv.serv_fecha_modificacion
+            , serv.serv_tipo
+            , (
+                SELECT modu_cod
+                FROM icon_modulo_modu
+                WHERE modu_id = serv_modu_id
+            ) AS serv_modu
+            , (
+                SELECT subp_codigo
+                FROM igen_subpuerto_subp
+                WHERE subp_id = serv_subp_id
+            ) AS serv_subp
+            , serv.serv_anno
+            , serv.serv_numero
+            , serv.serv_fecha_estadistica
+            , SERV.SERV_FECHA_ANULA_FACTURA
+            , COALESCE(ASAM.ASAM_FECHA_INICIO_PRINCIPAL, SYSDATE) as f_referencia
+            , ASAM.ASAM_FECHA_INICIO_PRINCIPAL
+            , ASAM.ASAM_FECHA_FINAL_PRINCIPAL
+            , ASAM.ASAM_estado
+
+            , ASAM.ASAM_ES_NOAUT_CON_OCUPAC
+            , (
+                SELECT
+                    (
+                        select
+                            (select subp_codigo
+                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                            || indp_codigo
+                        from IEMD_INSTALACIONDEP_INDP
+                        WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
+                    ) || '-' || maes.AMAD_PANTALAN || '-' || maes.AMAD_PUESTO
+                FROM IEMD_AMARRE_AMAD MAES
+                WHERE AMAD_ID = ASAM_AMARRE_PRINCIPAL_ID
+            ) as AMARRE_PRINCIPAL
+            , (
+                SELECT
+                    (
+                        select
+                            (select subp_codigo
+                            from IGEN_SUBPUERTO_SUBP where subp_id = INDP_SUBPUERTO_ID)
+                            || indp_codigo
+                        from IEMD_INSTALACIONDEP_INDP
+                        WHERE indp_id = maes.AMAD_INSTALACIONDEP_ID
+                    ) || '-' || maes.AMAD_PANTALAN || '-' || maes.AMAD_PUESTO
+                FROM IEMD_AMARRE_AMAD MAES
+                WHERE AMAD_ID = ASAM_AMARRE_SECUNDARIO_ID
+            ) AS AMARRE_SECUNDARIO
+            , ASAM.ASAM_FECHA_INICIO_SECUNDARIO
+            , ASAM.ASAM_FECHA_FINAL_SECUNDARIO
+            , (SELECT ORGA_COD FROM ICOM_ORGANIZACION_ORGA WHERE ORGA_ID = ASAM_ORGA_ID_CLIENTE) AS ORGA_CLIENTE
+            , (select EMBD_codigo from IEMD_EMBARCACION_EMBD where EMBD_id = ASAM_EMBARCACION_ID) as ASAM_EMBARCACION
+            , to_char(ASAM.ASAM_CODIGO_EXENCION)
+            , (SELECT EXET_CODIGO FROM IGEN_EXENCIONTIPO_EXET WHERE EXET_ID = ASAM_TIPO_EXENCION_ID) AS ASAM_EXET
+            , (SELECT orga_COD FROM ICOM_ORGANIZACION_ORGA WHERE ORGA_ID = ASAM_ORGA_ID_CLIENTE_AD) AS orga_cliente_ad
+            , ASAM.ASAM_ES_SUJETO_PAS_SUSTIT
+            , (SELECT ivat_CODIGO FROM ifac_ivatipo_ivat WHERE ivat_ID = ASAM_TIPO_IVA_ID) AS ASAM_ivat
+            , (SELECT DEAD_CODIGO from IGEN_DESCUENTOADIC_DEAD where dead_id = ASAM_DEAD_ID) as asam_dead
+            , ASAM.ASAM_OBSERVACOIONES
+        FROM IEMD_ASIGNACIONAMARRE_ASAM asam
+            JOIN ICOM_SERVICIO_SERV serv ON
+                SERV_ID = ASAM_ID
+        WHERE
+            serv.serv_fecha_baja IS NULL
+    ]]>
+    </sql>
+
     <sql id="ESCALA">
     <![CDATA[
     SELECT
