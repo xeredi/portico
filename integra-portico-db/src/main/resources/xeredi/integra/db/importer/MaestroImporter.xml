@@ -1590,6 +1590,43 @@
     ]]>
     </sql>
 
+    <sql id="EMBARCACION_DEP" tempImp="false">
+    <![CDATA[
+        select
+            maes.EMBD_CODIGO
+            , maes.EMBD_MATRICULA
+            , maes.EMBD_NOMBRE
+            , (
+                select TEMD_codigo
+                from IEMD_TIPOEMBARCACION_TEMD
+                where TEMD_id = EMBD_TIPO_EMBARCACION_ID
+            ) as embd_tipo
+            , (
+                select orga_cod
+                from ICOM_ORGANIZACION_ORGA
+                where ORGA_id = EMBD_ORGA_ID
+            ) as embd_ORGA
+            , maes.EMBD_ESLORA
+            , maes.EMBD_MANGA
+            , maes.EMBD_CALADO
+            , maes.EMBD_ALTURA
+            , maes.EMBD_DESPLAZAMIENTO
+            , maes.EMBD_TONELAJE
+            , maes.EMBD_POTENCIA
+            , maes.EMBD_ES_A_MOTOR
+            , maes.EMBD_ES_TRANSEUNTE
+            , maes.EMBD_ES_SUJETO_NAV_INT
+            , (
+                select pais_iso
+                from IGEN_PAIS_PAIS
+                where PAIS_id = EMBD_PAIS_ID
+            ) as embd_PAIS
+            , maes.EMBD_OBSERVACIONES
+        from IEMD_EMBARCACION_EMBD maes
+        order by maes.EMBD_ES_ACTIVO desc
+    ]]>
+    </sql>
+
 	<sql id="INSTALACION_ESPECIAL" tempImp="true">
 	<![CDATA[
 		SELECT

@@ -1202,10 +1202,6 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (20114, 41024, 1, 6, 1, 4, 0, 1, 0, NULL, 'Secuencia de Repetidores')
 /
 
-
-
-
-
 -- Tipo de Atraque EDI
 INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (20115, 1, 'General')
 /
@@ -1294,6 +1290,121 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (20118, 41080, 1, 4, 1,12, 0, 0, 0, NULL, 'Observaciones')
 /
 
+-- Embarcacion Deportiva
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (20120, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41020, 1, 1, 1, 2, 1, 1, 1, NULL, 'Matricula')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41021, 1, 1, 2, 3, 1, 1, 1, NULL, 'Nombre')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 45195, 1, 1, 3, 3, 1, 1, 1, NULL, 'Tipo')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 45035, 1, 1, 4, 4, 0, 1, 1, NULL, 'Cliente')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41040, 1, 2, 1, 2, 1, 1, 0, NULL, 'Eslora')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41041, 1, 2, 2, 2, 1, 1, 0, NULL, 'Manga')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41042, 1, 2, 3, 2, 1, 1, 0, NULL, 'Calado')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41043, 1, 2, 4, 2, 1, 1, 0, NULL, 'Altura')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41044, 1, 2, 5, 2, 0, 1, 0, NULL, 'Desplazamiento')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41045, 1, 2, 6, 2, 0, 1, 0, NULL, 'Tonelaje')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41046, 1, 3, 1, 2, 0, 1, 0, NULL, 'Potencia')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41000, 1, 3, 2, 2, 1, 1, 0, NULL, 'A Motor?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41001, 1, 3, 3, 2, 1, 1, 0, NULL, 'Transeunte?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41002, 1, 3, 4, 2, 1, 1, 0, NULL, 'Suj. Nav. Int.?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 45005, 1, 3, 5, 3, 0, 1, 1, NULL, 'Pais')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20120, 41080, 1, 4, 1,12, 0, 0, 0, NULL, 'Observaciones')
+/
+
+-- Embarcacion Deportiva Autonomica
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (20121, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41020, 1, 1, 1, 2, 1, 1, 1, NULL, 'Matricula')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41021, 1, 1, 2, 3, 1, 1, 1, NULL, 'Nombre')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 45195, 1, 2, 1, 3, 1, 1, 1, NULL, 'Tipo')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 45035, 1, 2, 2, 4, 1, 1, 1, NULL, 'Cliente')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 45036, 1, 2, 3, 4, 0, 1, 1, NULL, 'Cliente Adic.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 45465, 1, 3, 1, 4, 1, 1, 1, NULL, 'Inst. Dep. Aut.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41040, 1, 3, 2, 2, 1, 1, 0, NULL, 'Eslora')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41041, 1, 3, 3, 2, 1, 1, 0, NULL, 'Manga')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41042, 1, 3, 4, 2, 0, 1, 0, NULL, 'Calado')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41043, 1, 3, 5, 2, 0, 1, 0, NULL, 'Altura')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41044, 1, 4, 1, 2, 0, 1, 0, NULL, 'Desplazamiento')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41045, 1, 4, 2, 2, 0, 1, 0, NULL, 'Tonelaje')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41046, 1, 4, 3, 2, 0, 1, 0, NULL, 'Potencia')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41000, 1, 4, 4, 2, 1, 1, 0, NULL, 'A Motor?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 43000, 1, 5, 1, 2, 1, 1, 0, NULL, 'Cod. Exencion')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 45155, 1, 5, 2, 3, 0, 1, 0, NULL, 'Tipo Exencion')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41001, 1, 5, 3, 2, 0, 1, 0, NULL, 'Suj. Pas. Sust.?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41002, 1, 5, 4, 2, 1, 1, 0, NULL, 'Transeunte?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41003, 1, 5, 5, 2, 1, 1, 0, NULL, 'Nav. Int.?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (20121, 41080, 1, 6, 1,12, 0, 0, 0, NULL, 'Observaciones')
+/
 
 
 
@@ -1556,6 +1667,8 @@ DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
 	, 20116
 	, 20117
 	, 20118
+	, 20120
+	, 20121
 )
 /
 
@@ -1633,5 +1746,7 @@ DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk IN (
 	, 20116
 	, 20117
 	, 20118
+	, 20120
+	, 20121
 )
 /

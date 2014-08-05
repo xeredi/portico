@@ -66,6 +66,10 @@ public enum Entidad {
     CONVENIO(20093L),
     /** The descuento adicional. */
     DESCUENTO_ADICIONAL(20068L),
+    /** The embarcacion dep. */
+    EMBARCACION_DEP(20120L),
+    /** The embarcacion dep aut. */
+    EMBARCACION_DEP_AUT(20121L),
     /** The equipamiento. */
     EQUIPAMIENTO(22005L),
     /** The escala. */
