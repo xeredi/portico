@@ -1463,6 +1463,31 @@
 	]]>
 	</sql>
 
+    <sql id="INSTALACION_DEP_AUT" tempImp="false">
+    <![CDATA[
+        SELECT
+              (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID)
+              || INDA_CODIGO as codigo
+              , (SELECT SUBP_CODIGO FROM IGEN_SUBPUERTO_SUBP WHERE SUBP_ID = INDA_SUBPUERTO_ID) AS SUBP
+              , (
+                  SELECT
+                      (select pais_iso from IGEN_PAIS_PAIS where pais_id = unlo_pais_id)
+                      || unlo_codigo
+                  FROM IGEN_UNLOCODE_UNLO
+                  where unlo_id = inda_puerto_id
+              ) AS PUERTO
+              , MAES.INDA_OBSERVACIONES
+              , (SELECT I18N.INDA_NOMBRE
+                  FROM IEMD_INSTALACIONDEPAI18N_INDA I18N
+                  WHERE I18N.INDA_ID = MAES.INDA_ID
+                      AND I18N.INDA_IDIOMA = ?
+                      AND ? BETWEEN INDA_FECHA_CREACION AND COALESCE(INDA_FECHA_FIN, ?)
+              ) AS I18N_NOMBRE
+        FROM IEMD_INSTALACIONDEPA_INDA MAES
+        order by INDA_ES_ACTIVO desc
+    ]]>
+    </sql>
+
     <sql id="INSTALACION_DEP" tempImp="false">
     <![CDATA[
         SELECT
@@ -1624,6 +1649,60 @@
             , maes.EMBD_OBSERVACIONES
         from IEMD_EMBARCACION_EMBD maes
         order by maes.EMBD_ES_ACTIVO desc
+    ]]>
+    </sql>
+
+    <sql id="EMBARCACION_DEP_AUT" tempImp="true">
+    <![CDATA[
+        SELECT
+            EMBA.EMBA_CODIGO
+            , EMBA.EMBA_MATRICULA
+            , EMBA.EMBA_NOMBRE
+            , (
+                SELECT TEMD_CODigo
+                FROM IEMD_TIPOEMBARCACION_TEMD
+                WHERE TEMD_ID = EMBA_TIPO_EMBARCACION_ID
+            ) AS EMBA_TIPO_EMBARCACION
+            , (
+                SELECT ORGA_COD
+                FROM ICOM_ORGANIZACION_ORGA
+                where ORGA_id = EACL_ORGA_ID_CLIENTE
+            ) AS EMBA_CLIENTE
+            , (
+                SELECT ORGA_COD
+                FROM ICOM_ORGANIZACION_ORGA
+                where ORGA_id = EACL_ORGA_ID_CLIENTE_AD
+            ) as EMBA_CLIENTE_AD
+            , (
+                SELECT
+                    (select subp_codigo from IGEN_SUBPUERTO_SUBP where subp_id = INDA_SUBPUERTO_ID)
+                    || INDA_CODIGO
+                FROM IEMD_INSTALACIONDEPA_INDA
+                where INDA_id = EMBA_INSTALACIONDEPA_ID
+            ) AS EMBA_INSTALACIONDEPA
+            , EMBA.EMBA_ESLORA
+            , EMBA.EMBA_MANGA
+            , EMBA.EMBA_CALADO
+            , EMBA.EMBA_ALTURA
+            , EMBA.EMBA_DESPLAZAMIENTO
+            , EMBA.EMBA_TONELAJE
+            , EMBA.EMBA_POTENCIA
+            , EMBA.EMBA_ES_A_MOTOR
+            , to_char(EMBA.EMBA_CODIGO_EXENCION)
+            , (
+                SELECT EXET_codigo
+                FROM IGEN_EXENCIONTIPO_EXET
+                where exet_id = EMBA_TIPO_EXENCION_ID
+            ) as EMBA_TIPO_EXENCION
+            , EACL.EACL_ES_SUJ_PASIVO_SUST
+            , EACL.EACL_ES_TRANSEUNTE
+            , EACL.EACL_ES_NAVEGACION_INT
+            , EMBA.EMBA_OBSERVACIONES
+        FROM IEMD_EMBARCACIONAUT_EMBA emba
+            JOIN IEMD_EMBARCACIONAUTCLI_EACL EACL ON
+                EACL_EMBARCACIONAUT_ID = EMBA_ID
+                AND ? BETWEEN EACL_FECHA_INICIO AND COALESCE(EACL_FECHA_FIN, ?)
+        order by EMBA.EMBA_ES_ACTIVO desc, EACL.EACL_ES_ACTIVO desc
     ]]>
     </sql>
 

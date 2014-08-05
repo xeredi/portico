@@ -2432,6 +2432,12 @@ INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd
 INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21009, 1, 0, 1, 43275)
 /
 
+-- Asignacion Amarre
+INSERT INTO portico.tbl_entidad_enti(enti_pk, enti_tipo, enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado, enti_codigo, enti_nombre) VALUES (21010, 'T', 1, 1, 1, 1, 'ASIGNACION_AMARRE', 'Asignacion de Amarre')
+/
+INSERT INTO portico.tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk) VALUES (21010, 1, 1, 1, 43200)
+/
+
 
 
 
@@ -2705,6 +2711,10 @@ INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_eleme
 /
 INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45465, 'S', 'PR', 20100, 'INSTALACION_DEP_AUT', 'Instalacion Dep. Aut.')
 /
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45470, 'S', 'PR', 20120, 'EMBARCACION_DEP', 'Embarcacion Dep.')
+/
+INSERT INTO portico.tbl_tipo_dato_tpdt (tpdt_pk, tpdt_tipo_html, tpdt_tipo_elemento, tpdt_enti_pk, tpdt_codigo, tpdt_nombre) VALUES (45475, 'S', 'PR', 20121, 'EMBARCACION_DEP_AUT', 'Embarcacion Dep. Aut.')
+/
 
 
 
@@ -2851,6 +2861,8 @@ WHERE tpdt_pk IN (
 	, 45455
 	, 45460
 	, 45465
+	, 45470
+	, 45475
 )
 /
 
@@ -2923,6 +2935,7 @@ WHERE enen_entih_pk IN (
 	, 21008
 	, 22019
 	, 21009
+	, 21010
 )
 /
 
@@ -2954,6 +2967,7 @@ WHERE enac_enti_pk IN (
 	, 21008
 	, 22019
 	, 21009
+	, 21010
 )
 /
 
@@ -2985,6 +2999,7 @@ WHERE tpss_pk IN (
 	, 21008
 	, 22019
 	, 21009
+	, 21010
 )
 /
 
@@ -3016,6 +3031,7 @@ WHERE tpsr_pk IN (
 	, 21008
 	, 22019
 	, 21009
+	, 21010
 )
 /
 
@@ -3047,6 +3063,7 @@ WHERE enti_pk IN (
 	, 21008
 	, 22019
 	, 21009
+	, 21010
 )
 /
 

@@ -1160,6 +1160,56 @@ VALUES (21009, 41044, 1,  3,  5,  1, 0, 1, 0, NULL, 'Imp. Total')
 
 
 
+-- Asignacion de Amarres
+-- Asignacion de Amarres
+-- Asignacion de Amarres
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (21010, 1, 'General')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 41000, 1,  1,  1,  2, 1, 1, 0, NULL, 'Desautorizado con Ocup.?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45450, 1,  1,  2,  3, 1, 1, 1, NULL, 'Amarre')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45451, 1,  1,  3,  3, 0, 1, 1, NULL, 'Amarre Secundario')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 41120, 1,  1,  4,  2, 0, 1, 0, NULL, 'F. Ini. Secundario')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 41121, 1,  1,  5,  2, 0, 1, 0, NULL, 'F. Fin Secundario')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45035, 1,  2,  1,  4, 0, 1, 1, NULL, 'Cliente')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45470, 1,  2,  2,  4, 0, 1, 1, NULL, 'Embarcacion Dep.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 43000, 1,  2,  3,  1, 0, 1, 1, NULL, 'Cod. Exen.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45155, 1,  2,  4,  3, 0, 1, 1, NULL, 'T. Exen.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45036, 1,  3,  1,  4, 0, 1, 1, NULL, 'Cliente Adic.')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 41001, 1,  3,  2,  2, 0, 1, 1, NULL, 'Suj. Pas. Sust.?')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45040, 1,  3,  3,  3, 1, 1, 1, NULL, 'Tipo IVA')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 45360, 1,  3,  4,  3, 0, 1, 1, NULL, 'Desc. Adicional')
+/
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
+VALUES (21010, 41080, 1,  4,  1, 12, 0, 0, 0, NULL, 'Observaciones')
+/
+
+
+
 
 
 
@@ -1215,6 +1265,8 @@ DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
 	, 22019
 
 	, 21009
+
+	, 21010
 )
 /
 
@@ -1251,6 +1303,8 @@ DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk IN (
 	, 22019
 
 	, 21009
+
+	, 21010
 )
 /
 

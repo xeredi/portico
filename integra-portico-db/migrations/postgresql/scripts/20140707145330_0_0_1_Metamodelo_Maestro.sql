@@ -1388,7 +1388,7 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (20121, 41000, 1, 4, 4, 2, 1, 1, 0, NULL, 'A Motor?')
 /
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
-VALUES (20121, 43000, 1, 5, 1, 2, 1, 1, 0, NULL, 'Cod. Exencion')
+VALUES (20121, 43000, 1, 5, 1, 2, 0, 1, 0, NULL, 'Cod. Exencion')
 /
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (20121, 45155, 1, 5, 2, 3, 0, 1, 0, NULL, 'Tipo Exencion')
