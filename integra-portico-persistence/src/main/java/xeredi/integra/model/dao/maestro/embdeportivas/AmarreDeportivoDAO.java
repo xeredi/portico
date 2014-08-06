@@ -4,7 +4,7 @@ import xeredi.integra.model.vo.maestro.ParametroCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface AmarreDeportivoDAO.
+ * DAO de acceso al maestro de Amarred Deportivos.
  */
 public interface AmarreDeportivoDAO {
 
