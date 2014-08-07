@@ -106,19 +106,17 @@ WHERE
 -- EscalaEsAvituallamiento()
 SELECT portico.escalaEsAvituallamiento(1593169, NOW());
 
-
 -- EscalaValorContador(TipoContador)
 SELECT portico.escalaValorContador(1593079, NOW(), 'ES');
-
 
 -- EscalaEsBuqueCertificado(TipoCertificado)
 SELECT portico.escalaEsBuqueCertificado(1593174, NOW(), '245');
 
+-- EscalaEsBuqueBaseEnPuerto()
+SELECT portico.escalaEsBuqueBaseEnPuerto(1229010, NOW());
 
-
-
-
-
+-- escalaNumeroPuertosBuque
+SELECT portico.escalaNumeroPuertosBuque(1229010, NOW());
 
 
 
@@ -144,7 +142,7 @@ FROM
 		enti_pk = entd_enti_pk
 	JOIN tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
-WHERE entd_enti_pk = portico.getEntidad('ESCALA_CONTADOR')		
+WHERE entd_enti_pk = portico.getEntidad('ESCALA')		
 order by entd_grupo, entd_fila, entd_orden
 ;
 

@@ -244,6 +244,131 @@ COMMENT ON FUNCTION portico.escalaEsBuqueCertificado(INTEGER, TIMESTAMP with tim
 
 
 
+CREATE FUNCTION portico.escalaEsBuqueBaseEnPuerto(itemId INTEGER, fref TIMESTAMP with time zone) RETURNS BOOLEAN AS $$
+DECLARE
+	id integer;
+BEGIN
+	id := (
+		SELECT 1
+		FROM tbl_servicio_srvc
+		WHERE 
+			srvc_tpsr_pk = portico.getEntidad('ESCALA')
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_servicio_dato_srdt
+				WHERE 
+					srdt_srvc_pk = srvc_pk
+					AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_subparametro_sprm
+						WHERE 
+							sprm_prmt_pk = srdt_prmt_pk
+							AND sprm_prmt_dep_pk = srvc_subp_pk
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_subparametro_version_spvr
+								WHERE spvr_sprm_pk = sprm_pk
+									AND fref BETWEEN  spvr_fini AND COALESCE(spvr_ffin, fref)
+									AND EXISTS (
+										SELECT 1
+										FROM tbl_subparametro_dato_spdt
+										WHERE 
+											spdt_spvr_pk = spvr_pk
+											AND spdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
+											AND spdt_nentero = 1
+									)
+							)
+					)
+			)
+			AND srvc_pk = itemId
+	);
+
+	IF id IS NULL
+	THEN
+		RETURN false;
+	ELSE
+		RETURN true;
+	END IF;
+END;
+$$ LANGUAGE plpgsql
+/
+
+GRANT EXECUTE ON FUNCTION portico.escalaEsBuqueBaseEnPuerto(INTEGER, TIMESTAMP with time zone) TO portico
+/
+
+COMMENT ON FUNCTION portico.escalaEsBuqueBaseEnPuerto(INTEGER, TIMESTAMP with time zone) IS 'Indicar si el buque de la escala pasada como argumento tiene o no base en el subpuerto del servicio'
+/
+
+
+
+
+
+
+CREATE FUNCTION portico.escalaNumeroPuertosBuque(itemId INTEGER, fref TIMESTAMP with time zone) RETURNS FLOAT AS $$
+DECLARE
+	id integer;
+BEGIN
+	id := (
+		SELECT spdt_ndecimal
+		FROM 
+			tbl_subparametro_dato_spdt
+		WHERE
+			spdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_subparametro_version_spvr
+				WHERE spvr_pk = spdt_spvr_pk
+					AND fref BETWEEN spvr_fini AND COALESCE(spvr_ffin, fref)
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_subparametro_sprm
+						WHERE 
+							sprm_tpsp_pk = portico.getEntidad('BUQUE_TRAFICO')
+							AND sprm_pk = spvr_sprm_pk
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_servicio_dato_srdt
+								WHERE 
+									srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+									AND srdt_prmt_pk = sprm_prmt_pk
+									AND srdt_srvc_pk = itemId
+							)
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_servicio_dato_srdt
+								WHERE 
+									srdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
+									AND srdt_prmt_pk = sprm_prmt_dep_pk
+									AND srdt_srvc_pk = itemId
+							)
+					)
+			)
+	);
+
+	IF id IS NULL
+	THEN
+		RETURN 0;
+	ELSE
+		RETURN id;
+	END IF;
+END;
+$$ LANGUAGE plpgsql
+/
+
+GRANT EXECUTE ON FUNCTION portico.escalaNumeroPuertosBuque(INTEGER, TIMESTAMP with time zone) TO portico
+/
+
+COMMENT ON FUNCTION portico.escalaNumeroPuertosBuque(INTEGER, TIMESTAMP with time zone) IS 'Indicar si el buque de la escala pasada como argumento tiene o no base en el subpuerto del servicio'
+/
+
+
+
+
+
+
+
+
 
 
 
@@ -255,6 +380,11 @@ COMMENT ON FUNCTION portico.escalaEsBuqueCertificado(INTEGER, TIMESTAMP with tim
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+
+DROP FUNCTION portico.escalaNumeroPuertosBuque(INTEGER, TIMESTAMP with time zone)
+/
+DROP FUNCTION portico.escalaEsBuqueBaseEnPuerto(INTEGER, TIMESTAMP with time zone)
+/
 DROP FUNCTION portico.escalaEsBuqueCertificado(INTEGER, TIMESTAMP with time zone, VARCHAR)
 /
 DROP FUNCTION portico.escalaValorContador(INTEGER, TIMESTAMP with time zone, VARCHAR)

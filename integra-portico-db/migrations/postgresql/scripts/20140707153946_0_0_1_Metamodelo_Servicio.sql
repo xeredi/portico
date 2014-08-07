@@ -848,7 +848,7 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (22015, 41060, 1,  1,  2,  2, 1, 1, 1, NULL, 'Nº. Lecturas')
 /
 
--- Contador de Escala
+-- Residuo de Escala
 INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (22016, 1, 'General')
 /
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
