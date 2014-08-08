@@ -221,7 +221,7 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
             }
         }
 
-        return sqlPath;
+        return "(" + sqlPath + ")";
     }
 
 }

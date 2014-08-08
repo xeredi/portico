@@ -251,7 +251,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
             }
         }
 
-        return sqlPath;
+        return "(" + sqlPath + ")";
     }
 
 }

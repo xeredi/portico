@@ -27,6 +27,7 @@ booleanExpr
 		| '='
 		| '<>'
 	) ne2 = numericExpr
+//	| ne1 = numericExpr in = 'IN' '(' scalarList ')'
 	| lp = '(' be1 = booleanExpr rp = ')'
 	| fn = 'escalaEsAvituallamiento' '()'
 	| fn = 'escalaEsBuqueBaseEnPuerto' '()'
@@ -41,6 +42,19 @@ numericExpr
 	| fn = 'escalaNumeroPuertosBuque' '()'
 	| fn = 'escalaValorContador' '(' fnArg1 = STRING ')'
 ;
+/*
+scalarList
+:
+	scalarList = scalar (',' scalar)*
+;
+
+scalar
+:
+	val = NUMBER
+	| val = TEXT
+	| ne1 = numericExpr
+	;
+*/
 
 NUMBER
 :
@@ -49,6 +63,13 @@ NUMBER
 		. [0-9]+
 	)?
 ;
+
+/*
+TEXT
+:
+	[a-zA-Z0-9-+_]+
+;
+*/
 
 STRING
 :

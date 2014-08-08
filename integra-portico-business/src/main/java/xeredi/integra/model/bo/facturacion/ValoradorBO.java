@@ -32,6 +32,9 @@ import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.grammar.ConditionLexer;
 import xeredi.integra.model.util.grammar.ConditionParser;
 import xeredi.integra.model.util.grammar.ConditionSqlGenerator;
+import xeredi.integra.model.util.grammar.FormulaLexer;
+import xeredi.integra.model.util.grammar.FormulaParser;
+import xeredi.integra.model.util.grammar.FormulaSqlGenerator;
 import xeredi.integra.model.util.grammar.PathLexer;
 import xeredi.integra.model.util.grammar.PathParser;
 import xeredi.integra.model.util.grammar.PathSqlGenerator;
@@ -418,6 +421,7 @@ public class ValoradorBO implements Valorador {
         rgla.getRglv().setPathCuant6Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant6(), false));
 
         rgla.getRglv().setCondicionSql(generateSqlCondition(rgla, rgla.getRglv().getCondicion()));
+        rgla.getRglv().setFormulaSql(generateSqlFormula(rgla, rgla.getRglv().getFormula()));
     }
 
     /**
@@ -485,5 +489,21 @@ public class ValoradorBO implements Valorador {
         final ParseTree tree = parser.condition();
 
         return conditionSqlGenerator.visit(tree).toString();
+    }
+
+    private String generateSqlFormula(final ReglaVO reglaVO, final String expression) {
+        if (expression == null || expression.isEmpty()) {
+            return null;
+        }
+
+        final FormulaSqlGenerator formulaSqlGenerator = new FormulaSqlGenerator(reglaVO);
+
+        final ANTLRInputStream input = new ANTLRInputStream(expression);
+        final FormulaLexer lexer = new FormulaLexer(input);
+        final CommonTokenStream tokens = new CommonTokenStream(lexer);
+        final FormulaParser parser = new FormulaParser(tokens);
+        final ParseTree tree = parser.formula();
+
+        return formulaSqlGenerator.visit(tree).toString();
     }
 }

@@ -72,7 +72,7 @@
         , rgla_pk AS vlrt_rgla_pk
         , rgla_pk AS vlrt_rgla_padre_pk
         , 0 AS vlrt_importe_base
-        , 0 AS vlrt_importe
+        , (${rgla.rglv.formulaSql}) AS vlrt_importe
     ]]>
 
     <if test="rgla.rglv.pathCuant1Sql != null">
@@ -251,7 +251,7 @@
         , rgla_pk AS vlrt_rgla_padre_pk
         , ssrv_numero AS vlrt_orden
         , 0 AS vlrt_importe_base
-        , 0 AS vlrt_importe
+        , (${rgla.rglv.formulaSql}) AS vlrt_importe
     ]]>
 
     <if test="rgla.rglv.pathCuant1Sql != null">
