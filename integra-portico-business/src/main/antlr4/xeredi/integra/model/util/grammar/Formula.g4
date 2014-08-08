@@ -1,32 +1,29 @@
 grammar Formula;
 
-r
+formula
 :
-	operand OPERATOR operand
-	| operand
+	aritmethicExpr
 ;
 
-operand
+aritmethicExpr
 :
-	item
-	| item OPERATOR operand
+	nmb = NUMBER
+	| ae1 = aritmethicExpr opArit2 =
+	(
+		'+'
+		| '-'
+		| '*'
+		| '/'
+	) ae2 = aritmethicExpr
+	| opArit1 = '-' ae1 = aritmethicExpr
+	| pt = path
+	| fn = 'COALESCE' '(' ae1 = aritmethicExpr ',' ae2 = aritmethicExpr ')'
+	| fn = 'escalaNumeroPuertosBuque' '()'
+	| fn = 'escalaValorContador' '(' fnArg1 = STRING ')'
+	| lp = '(' ae1 = aritmethicExpr rp = ')'
 ;
 
-OPERATOR
-:
-	'+'
-	| '-'
-	| '*'
-	| '/'
-;
-
-item
-:
-	VALUE
-	| path
-;
-
-VALUE
+NUMBER
 :
 	[0-9]+
 	(
@@ -34,53 +31,39 @@ VALUE
 	)?
 ;
 
+STRING
+:
+	'\'' [A-Za-z0-9]+ '\''
+;
+
 path
 :
-	token
-	| token TOKEN_SEPARATOR path
+	pathElement
+	(
+		'.' pathElement
+	)*
 ;
 
-TOKEN_SEPARATOR
+pathElement
 :
-	'.'
+	parent = ELEMENT_PARENT '(' arg = ID ')'
+	| data = ELEMENT_DATA '(' arg = ID ')'
+	| service = ELEMENT_SERVICE
 ;
 
-token
-:
-	TOKEN_PARENT LPAREN ID RPAREN
-	| TOKEN_DATA_SERVICE LPAREN ID RPAREN
-	| TOKEN_DATA_SUBSERVICE LPAREN ID RPAREN
-	| TOKEN_SERVICE
-;
-
-TOKEN_PARENT
+ELEMENT_PARENT
 :
 	'padre'
 ;
 
-TOKEN_DATA_SERVICE
+ELEMENT_DATA
 :
-	'datoSr'
+	'dato'
 ;
 
-TOKEN_DATA_SUBSERVICE
-:
-	'datoSs'
-;
-
-TOKEN_SERVICE
+ELEMENT_SERVICE
 :
 	'servicio'
-;
-
-LPAREN
-:
-	'('
-;
-
-RPAREN
-:
-	')'
 ;
 
 ID

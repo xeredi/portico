@@ -29,6 +29,9 @@ import xeredi.integra.model.dao.proceso.ProcesoDAO;
 import xeredi.integra.model.dao.servicio.ServicioDAO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.integra.model.util.grammar.ConditionLexer;
+import xeredi.integra.model.util.grammar.ConditionParser;
+import xeredi.integra.model.util.grammar.ConditionSqlGenerator;
 import xeredi.integra.model.util.grammar.PathLexer;
 import xeredi.integra.model.util.grammar.PathParser;
 import xeredi.integra.model.util.grammar.PathSqlGenerator;
@@ -413,6 +416,8 @@ public class ValoradorBO implements Valorador {
         rgla.getRglv().setPathCuant4Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant4(), false));
         rgla.getRglv().setPathCuant5Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant5(), false));
         rgla.getRglv().setPathCuant6Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant6(), false));
+
+        rgla.getRglv().setCondicionSql(generateSqlCondition(rgla, rgla.getRglv().getCondicion()));
     }
 
     /**
@@ -455,5 +460,30 @@ public class ValoradorBO implements Valorador {
         final ParseTree tree = parser.value();
 
         return pathSqlGenerator.visit(tree).toString();
+    }
+
+    /**
+     * Generate sql condition.
+     *
+     * @param reglaVO
+     *            the regla vo
+     * @param expression
+     *            the expression
+     * @return the string
+     */
+    private String generateSqlCondition(final ReglaVO reglaVO, final String expression) {
+        if (expression == null || expression.isEmpty()) {
+            return null;
+        }
+
+        final ConditionSqlGenerator conditionSqlGenerator = new ConditionSqlGenerator(reglaVO);
+
+        final ANTLRInputStream input = new ANTLRInputStream(expression);
+        final ConditionLexer lexer = new ConditionLexer(input);
+        final CommonTokenStream tokens = new CommonTokenStream(lexer);
+        final ConditionParser parser = new ConditionParser(tokens);
+        final ParseTree tree = parser.condition();
+
+        return conditionSqlGenerator.visit(tree).toString();
     }
 }

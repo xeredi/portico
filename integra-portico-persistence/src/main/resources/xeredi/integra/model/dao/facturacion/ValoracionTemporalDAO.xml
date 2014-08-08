@@ -156,9 +156,13 @@
                         AND srdt_cadena IN ('0', '1')
                 )
             )
-
-            -- TODO Condicion
-
+    ]]>
+    <if test="rgla.rglv.condicionSql != null">
+    <![CDATA[
+            AND (${rgla.rglv.condicionSql})
+    ]]>
+    </if>
+    <![CDATA[
             AND NOT EXISTS (
                 SELECT 1
                 FROM portico.tbl_servicio_cargo_srcr
@@ -224,9 +228,13 @@
                 )
         WHERE
             tpsr_es_facturable = 1
-
-            -- TODO Condicion
-
+    ]]>
+    <if test="rgla.rglv.condicionSql != null">
+    <![CDATA[
+            AND (${rgla.rglv.condicionSql})
+    ]]>
+    </if>
+    <![CDATA[
             AND srvc_pk = #{srvc.id}
     ) item
     ]]>
@@ -402,9 +410,13 @@
                         AND srdt_cadena IN ('0', '1')
                 )
             )
-
-            -- TODO Condicion
-
+    ]]>
+    <if test="rgla.rglv.condicionSql != null">
+    <![CDATA[
+            AND (${rgla.rglv.condicionSql})
+    ]]>
+    </if>
+    <![CDATA[
             AND (
                 (
                     rgla_tipo = 'T'
@@ -505,9 +517,13 @@
         WHERE
             tpsr_es_facturable = 1
             AND tpss_es_facturable = 1
-
-            -- TODO Condicion
-
+    ]]>
+    <if test="rgla.rglv.condicionSql != null">
+    <![CDATA[
+            AND (${rgla.rglv.condicionSql})
+    ]]>
+    </if>
+    <![CDATA[
             AND ssrv_srvc_pk = #{srvc.id}
     ) item
     ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero

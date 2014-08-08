@@ -18,7 +18,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64000, 63001, '2013-01-01', NULL, 1, 'TRUE', '1', 'padre(BL).dato(TIPO_IVA)', 'padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)', 'padre(BL).dato(BOOLEANO_01)', 'padre(BL).dato(COD_EXEN)'
+			64000, 63001, '2013-01-01', NULL, 1, 'true', '1', 'padre(BL).dato(TIPO_IVA)', 'padre(BL).padre(MANIFIESTO_CONSIGNATARIO).dato(ORGA)', 'padre(BL).dato(BOOLEANO_01)', 'padre(BL).dato(COD_EXEN)'
 			, 'dato(MERCANCIA)', 'Mercancia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, 'dato(ENTERO_04)', 'Peso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
@@ -29,7 +29,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64001, 63002, '2013-01-01', NULL, 11, 'TRUE', '1', NULL, NULL, NULL, NULL
+			64001, 63002, '2013-01-01', NULL, 11, 'true', '1', NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
@@ -54,7 +54,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64200, 63200, '2013-01-01', NULL, 1, 'TRUE', '1', 'servicio.dato(TIPO_IVA)', 'dato(ORGA_2)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
+			64200, 63200, '2013-01-01', NULL, 1, 'true', '1', 'servicio.dato(TIPO_IVA)', 'dato(ORGA_2)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
@@ -67,7 +67,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64202, 63202, '2013-01-01', NULL, 1, 'TRUE', '1', NULL, NULL, NULL, NULL
+			64202, 63202, '2013-01-01', NULL, 1, 'true', '1', NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
@@ -83,7 +83,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64300, 63300, '2013-01-01', NULL, 1, 'TRUE', '1', 'dato(TIPO_IVA)', 'dato(ORGA_3)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
+			64300, 63300, '2013-01-01', NULL, 1, 'true', '1', 'dato(TIPO_IVA)', 'dato(ORGA_3)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
 			, 'dato(BUQUE)', 'Buque', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
@@ -94,7 +94,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64320, 63320, '2013-01-01', NULL, 1, 'TRUE', '1', NULL, NULL, NULL, NULL
+			64320, 63320, '2013-01-01', NULL, 1, 'true', '1', NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)
@@ -110,7 +110,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
 			, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
 		) VALUES (
-			64400, 63400, '2013-01-01', NULL, 1, 'TRUE', '1', 'dato(TIPO_IVA)', 'dato(ORGA_3)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
+			64400, 63400, '2013-01-01', NULL, 1, 'true', '1', 'dato(TIPO_IVA)', 'dato(ORGA_3)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
 			, 'dato(BUQUE)', 'Buque', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
 		)

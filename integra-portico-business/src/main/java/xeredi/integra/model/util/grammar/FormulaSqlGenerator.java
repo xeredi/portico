@@ -1,7 +1,5 @@
 package xeredi.integra.model.util.grammar;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -11,10 +9,9 @@ import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.integra.model.util.grammar.ConditionParser.BooleanExprContext;
-import xeredi.integra.model.util.grammar.ConditionParser.NumericExprContext;
-import xeredi.integra.model.util.grammar.ConditionParser.PathContext;
-import xeredi.integra.model.util.grammar.ConditionParser.PathElementContext;
+import xeredi.integra.model.util.grammar.FormulaParser.PathElementContext;
+import xeredi.integra.model.util.grammar.FormulaParser.AritmethicExprContext;
+import xeredi.integra.model.util.grammar.FormulaParser.PathContext;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
 import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadVO;
@@ -23,17 +20,20 @@ import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class TestInterpreter.
+ * The Class FormulaSqlGenerator.
  */
-public final class ConditionSqlGenerator extends ConditionBaseVisitor {
-
-    /** The Constant DATE_FORMAT. */
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+public final class FormulaSqlGenerator extends FormulaBaseVisitor {
 
     /** The contexto vo. */
     private final transient ReglaVO reglaVO;
 
-    public ConditionSqlGenerator(final ReglaVO areglaVO) {
+    /**
+     * Instantiates a new formula sql generator.
+     *
+     * @param areglaVO
+     *            the aregla vo
+     */
+    public FormulaSqlGenerator(final ReglaVO areglaVO) {
         super();
         this.reglaVO = areglaVO;
     }
@@ -42,14 +42,18 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitNumericExpr(NumericExprContext ctx) {
+    public String visitAritmethicExpr(AritmethicExprContext ctx) {
         if (ctx.nmb != null) {
             return ctx.nmb.getText();
         }
 
+        if (ctx.lp != null) {
+            return ctx.lp.getText() + visitAritmethicExpr(ctx.ae1) + ctx.rp.getText();
+        }
+
         if (ctx.fn != null) {
             if ("COALESCE".equals(ctx.fn.getText())) {
-                return " COALESCE(" + visitNumericExpr(ctx.ne1) + ", " + visitNumericExpr(ctx.ne2) + ")";
+                return " COALESCE(" + visitAritmethicExpr(ctx.ae1) + ", " + visitAritmethicExpr(ctx.ae2) + ")";
             }
             if ("escalaNumeroPuertosBuque".equals(ctx.fn.getText())) {
                 return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
@@ -65,49 +69,15 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
             return visitPath(ctx.pt);
         }
 
-        throw new Error("Expresion Numerica no implementada!: " + ctx);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String visitBooleanExpr(BooleanExprContext ctx) {
-        if (ctx.lp != null) {
-            return ctx.lp.getText() + visitBooleanExpr(ctx.be1) + ctx.rp.getText();
+        if (ctx.opArit1 != null) {
+            return ctx.opArit1.getText() + ' ' + visitAritmethicExpr(ctx.ae1);
         }
 
-        if (ctx.opLogic1 != null) {
-            return ctx.opLogic1.getText() + ' ' + visitBooleanExpr(ctx.be1);
+        if (ctx.opArit2 != null) {
+            return visitAritmethicExpr(ctx.ae1) + ' ' + ctx.opArit2.getText() + ' ' + visitAritmethicExpr(ctx.ae2);
         }
 
-        if (ctx.opLogic2 != null) {
-            return visitBooleanExpr(ctx.be1) + ' ' + ctx.opLogic2.getText() + ' ' + visitBooleanExpr(ctx.be2);
-        }
-
-        if (ctx.opComp != null) {
-            return visitNumericExpr(ctx.ne1) + ' ' + ctx.opComp.getText() + ' ' + visitNumericExpr(ctx.ne2);
-        }
-
-        if (ctx.bool != null) {
-            return ctx.bool.getText();
-        }
-
-        if (ctx.fn != null) {
-            if ("escalaEsAvituallamiento".equals(ctx.fn.getText())) {
-                return "portico.escalaEsAvituallamiento(itemId, item.fref)";
-            }
-            if ("escalaEsBuqueBaseEnPuerto".equals(ctx.fn.getText())) {
-                return "portico.escalaEsBuqueBaseEnPuerto(itemId, item.fref)";
-            }
-            if ("escalaEsBuqueCertificado".equals(ctx.fn.getText())) {
-                return "portico.escalaEsBuqueCertificado(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
-            }
-
-            throw new Error("Funcion '" + ctx.fn.getText() + "' no implementada!");
-        }
-
-        throw new Error("Expresion Booleana no implementada!: " + ctx);
+        throw new Error("Expresion Aritmetica no implementada!: " + ctx);
     }
 
     /**

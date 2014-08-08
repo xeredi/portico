@@ -261,7 +261,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
             entiTmp = entd.getTpdt().getEnti() == null ? null : EntidadProxy.select(entd.getTpdt().getEnti().getId());
         }
 
-        if (sql.length() > 0) {
+        if (sqlElement.length() > 0) {
             final int posAny = sqlElement.lastIndexOf("#{any}");
 
             if (posAny > 0) {

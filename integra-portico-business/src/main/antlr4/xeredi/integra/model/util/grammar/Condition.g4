@@ -1,93 +1,73 @@
 grammar Condition;
 
-r
+condition
 :
 	booleanExpr
 ;
 
 booleanExpr
 :
-	booleanExpr OPERATOR booleanExpr
-	| '(' booleanExpr OPERATOR booleanExpr ')'
-	| 'NOT' booleanExpr
-	| 'COALESCE' '(' booleanExpr ', ' booleanExpr ')'
-	| path
-	| BOOLEAN_VALUE
-	| INT_VALUE
-	| DOUBLE_VALUE
-	| DATE_VALUE
-	| DATETIME_VALUE
-	| TEXT_VALUE
-;
-
-OPERATOR
-:
-	'AND'
-	| 'OR'
-	| '<'
-	| '<='
-	| '=='
-	| '<>'
-	| '>'
-	| '>='
-;
-
-INT_VALUE
-:
-	DIGIT+
-;
-
-DOUBLE_VALUE
-:
-	DIGIT+
+	be1 = booleanExpr opLogic2 =
 	(
-		. DIGIT+
+		'AND'
+		| 'OR'
+	) be2 = booleanExpr
+	| opLogic1 = 'NOT' be1 = booleanExpr
+	| bool =
+	(
+		'true'
+		| 'false'
+	)
+	| ne1 = numericExpr opComp =
+	(
+		'>'
+		| '<'
+		| '>='
+		| '<='
+		| '='
+		| '<>'
+	) ne2 = numericExpr
+	| lp = '(' be1 = booleanExpr rp = ')'
+	| fn = 'escalaEsAvituallamiento' '()'
+	| fn = 'escalaEsBuqueBaseEnPuerto' '()'
+	| fn = 'escalaEsBuqueCertificado' '(' fnArg1 = STRING ')'
+;
+
+numericExpr
+:
+	nmb = NUMBER
+	| pt = path
+	| fn = 'COALESCE' '(' ne1 = numericExpr ',' ne2 = numericExpr ')'
+	| fn = 'escalaNumeroPuertosBuque' '()'
+	| fn = 'escalaValorContador' '(' fnArg1 = STRING ')'
+;
+
+NUMBER
+:
+	[0-9]+
+	(
+		. [0-9]+
 	)?
 ;
 
-DATE_VALUE
+STRING
 :
-	'"' [2] DIGIT DIGIT DIGIT '-' [0-1] DIGIT '-' [0-3] DIGIT '"'
-;
-
-DATETIME_VALUE
-:
-	'"' [2] DIGIT DIGIT DIGIT '-' [0-1] DIGIT '-' [0-3] DIGIT [0-2] DIGIT ':'
-	[0-5] DIGIT '"'
-;
-
-TEXT_VALUE
-:
-	'"' .*? '"'
-;
-
-DIGIT
-:
-	[0-9]
-;
-
-BOOLEAN_VALUE
-:
-	'true'
-	| 'false'
+	'\'' [A-Za-z0-9]+ '\''
 ;
 
 path
 :
-	pathElement (PATH_SEPARATOR pathElement)*
-;
-
-PATH_SEPARATOR
-:
-	'.'
+	pathElement
+	(
+		'.' pathElement
+	)*
 ;
 
 pathElement
 :
-	ELEMENT_PARENT LPAREN ID RPAREN
-	| ELEMENT_DATA_SERVICE LPAREN ID RPAREN
-	| ELEMENT_DATA_SUBSERVICE LPAREN ID RPAREN
-	| ELEMENT_SERVICE
+	parent = ELEMENT_PARENT '(' arg = ID ')'
+	| data = ELEMENT_DATA '(' arg = ID ')'
+	| service = ELEMENT_SERVICE
 ;
 
 ELEMENT_PARENT
@@ -95,29 +75,14 @@ ELEMENT_PARENT
 	'padre'
 ;
 
-ELEMENT_DATA_SERVICE
+ELEMENT_DATA
 :
-	'datoSr'
-;
-
-ELEMENT_DATA_SUBSERVICE
-:
-	'datoSs'
+	'dato'
 ;
 
 ELEMENT_SERVICE
 :
 	'servicio'
-;
-
-LPAREN
-:
-	'('
-;
-
-RPAREN
-:
-	')'
 ;
 
 ID
@@ -129,3 +94,5 @@ WS
 :
 	[ \t\r\n]+ -> skip
 ;
+
+/* a > b */

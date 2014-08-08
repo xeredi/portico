@@ -1,47 +1,43 @@
 package xeredi.integra.model.util.grammar;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
+import xeredi.integra.model.vo.facturacion.ValoradorContextoVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ConditionTest.
+ * The Class Test2Test.
  */
-public class ConditionTest {
-
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ConditionTest.class);
-
+public final class ConditionTest {
     /**
      * Test.
      *
      * @throws IOException
-     *             the IO exception
+     *             Signals that an I/O exception has occurred.
      */
     @Test
     public void test() throws IOException {
-        for (int i = 0; i < 10; i++) {
-            test("true");
-            test("false");
-            test("5 > 2");
-            test("5 > 2 AND 2 < 5");
-            test("\"2014-12-22\" <> 2.5");
-            test("\"2014-12-22 23:57\" <> 2.5");
-            test("NOT \"Prueba de Texto\" <> 2.5");
-            test("servicio.datoSr(BUQUE) <> 2.5");
-            test("padre(BL).padre(MANIFIESTO_CONSIGNATARIO).datoSs(ORGANIZACION) <> servicio.datoSr(BUQUE)");
-            test("COALESCE(padre(BL).padre(MANIFIESTO_CONSIGNATARIO).datoSs(ORGANIZACION), servicio.datoSr(BUQUE))");
-        }
+        // test("5 > 3");
+        test("true");
+        test("(true)");
+        test("(true AND false) OR (NOT true)");
+        test("(true OR false) AND (5 > 4)");
+        test("NOT (COALESCE(3, 5) > 4)");
+        test("escalaEsAvituallamiento() AND (5 > 4)");
+        test("escalaEsBuqueCertificado('PEPE') AND (escalaNumeroPuertosBuque() > escalaValorContador('PEPITO'))");
+        test("dato(MERCANCIA) = 5");
+        test("servicio.dato(TIPO_MANIF) = 5");
+        test("padre(BL).dato(TIPO_OP_BL) = 5");
+        // test("servicio.dato(BUQUE) <> 4");
     }
 
     /**
@@ -53,25 +49,24 @@ public class ConditionTest {
      *             the IO exception
      */
     private void test(final String expression) throws IOException {
-        final String message = "Testing: " + expression;
-
-        System.out.println(message);
-        LOG.info(message);
+        System.out.println("Testing: " + expression);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);
         final ConditionLexer lexer = new ConditionLexer(input);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final ConditionParser parser = new ConditionParser(tokens);
+        final ParseTree tree = parser.condition();
 
-        final ParseTree tree = parser.r();
-
+        final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
         final ReglaVO reglaVO = new ReglaVO();
 
         reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
+        contextoVO.setRgla(reglaVO);
+        contextoVO.setFreferencia(Calendar.getInstance().getTime());
 
         final ConditionSqlGenerator extractor = new ConditionSqlGenerator(reglaVO);
 
-        extractor.visit(tree);
+        System.out.println("resultado: " + extractor.visit(tree));
     }
 
 }
