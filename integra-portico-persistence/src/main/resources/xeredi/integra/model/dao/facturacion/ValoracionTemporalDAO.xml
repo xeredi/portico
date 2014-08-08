@@ -178,6 +178,13 @@
     ]]>
     </select>
 
+<!--
+        , COALESCE(
+            SELECT SUM(vlrt_importe)
+            FROM tbl_valoracion_tmp_vlrt
+            WHERE
+          ), 0) AS vlrt_importe_base
+ -->
     <select id="selectAplicarReglaDecoradorServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT
@@ -493,14 +500,14 @@
     FROM (
         SELECT item.*, rgla.*, srvc.*, vlrt.*, srvc_fref AS fref
         FROM
-            portico.tbl_subservicio_ssrv item
-            JOIN portico.tbl_servicio_srvc srvc ON
+            tbl_subservicio_ssrv item
+            JOIN tbl_servicio_srvc srvc ON
                 srvc_pk = ssrv_srvc_pk
-            JOIN portico.tbl_tipo_subservicio_tpss tpss ON
+            JOIN tbl_tipo_subservicio_tpss tpss ON
                 tpss_pk = ssrv_tpss_pk
-            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+            JOIN tbl_tipo_servicio_tpsr tpsr ON
                 tpsr_pk = srvc_tpsr_pk
-            JOIN portico.tbl_regla_rgla rgla ON
+            JOIN tbl_regla_rgla rgla ON
                 rgla_enti_pk = ssrv_tpss_pk
                 AND rgla_pk = #{rgla.id}
             JOIN tbl_valoracion_tmp_vlrt vlrt ON
@@ -532,7 +539,7 @@
 
     <insert id="insert" parameterType="ValoracionTemporalVO">
     <![CDATA[
-    INSERT INTO portico.tbl_valoracion_tmp_vlrt (
+    INSERT INTO tbl_valoracion_tmp_vlrt (
         vlrt_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_padre_pk, vlrt_impuesto_pk, vlrt_pagador_pk
         , vlrt_orden, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
         , vlrt_fref, vlrt_fliq, vlrt_fini, vlrt_ffin
