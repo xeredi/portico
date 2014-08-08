@@ -15,6 +15,7 @@ import xeredi.integra.model.util.grammar.Test2Parser.PathElementContext;
 import xeredi.integra.model.vo.facturacion.ValoradorContextoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadVO;
+import xeredi.integra.model.vo.metamodelo.TipoEntidad;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -193,13 +194,21 @@ public final class Test2SqlGenerator extends Test2BaseVisitor {
 
                     switch (entiBase.getTipo()) {
                     case P:
-                        sql += " tbl_parametro_dato_prdt ";
+                        sql += " tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = "
+                                + entd.getTpdt().getId()
+                                + " AND prdt_prvr_pk = ANY (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )";
                         break;
                     case T:
-                        sql += " tbl_servicio_dato_srdt ";
+                        sql += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
+                                + " AND srdt_srvc_pk = ";
+                        sql += isFirst ? (entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk" : "item.ssrv_srvc_pk")
+                                : "ANY(#{any})";
                         break;
                     case S:
-                        sql += " tbl_subservicio_dato_ssdt ";
+                        sql += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
+                                + " AND ssdt_ssrv_pk = ";
+                        sql += isFirst ? "item.ssrv_pk" : "ANY(#{any})";
+
                         break;
                     default:
                         throw new Error("Tipo de entidad no soportado");
@@ -212,7 +221,7 @@ public final class Test2SqlGenerator extends Test2BaseVisitor {
 
         // TODO Auto-generated method stub
 
-        return sql;
+        return "(" + sql + ")";
     }
 
 }
