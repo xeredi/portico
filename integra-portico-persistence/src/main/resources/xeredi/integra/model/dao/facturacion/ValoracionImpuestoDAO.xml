@@ -48,13 +48,13 @@
                         )
                 ) AS impuesto_porcentaje
             FROM (
-                SELECT vlrl_vlrc_pk, vlrl_impuesto_pk
-                    , SUM(vlrl_importe) AS importe_base
-                FROM tbl_valoracion_lin_vlrl
+                SELECT vlrl_vlrc_pk, vlrl_impuesto_pk, SUM(vlrd_importe) AS importe_base
+                FROM tbl_valoracion_det_vlrd
+                    INNER JOIN tbl_valoracion_lin_vlrl ON
+                        vlrl_pk = vlrd_vlrl_pk
                 WHERE
                     vlrl_vlrc_pk = #{id}
-                GROUP BY
-                    vlrl_vlrc_pk, vlrl_impuesto_pk
+                GROUP BY vlrl_vlrc_pk, vlrl_impuesto_pk
             ) sql
         ) sql
     ]]>

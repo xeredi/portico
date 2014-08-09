@@ -297,8 +297,6 @@ CREATE TABLE portico.tbl_valoracion_vlrc
 	, vlrc_falta TIMESTAMP NOT NULL
 	, vlrc_fini TIMESTAMP
 	, vlrc_ffin TIMESTAMP
-	, vlrc_importe DOUBLE PRECISION NOT NULL
-	, vlrc_impuesto DOUBLE PRECISION NOT NULL
 	, vlrc_es_suj_pasivo INT NOT NULL
 	, vlrc_cod_exen CHAR(1) NOT NULL
 
@@ -382,8 +380,6 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 	, vlrl_vlrc_pk BIGINT NOT NULL
 	, vlrl_rgla_pk BIGINT NOT NULL
 	, vlrl_rgla_padre_pk BIGINT NOT NULL
-	, vlrl_importe_base DOUBLE PRECISION NOT NULL
-	, vlrl_importe DOUBLE PRECISION NOT NULL
 	, vlrl_impuesto_pk BIGINT NOT NULL
 	, vlrl_ssrv_pk BIGINT
 

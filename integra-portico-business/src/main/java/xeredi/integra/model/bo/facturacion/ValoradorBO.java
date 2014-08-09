@@ -202,8 +202,6 @@ public class ValoradorBO implements Valorador {
             vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
             vlra.getVlrc().setAspc(contextoVO.getAspc());
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
-            vlra.getVlrc().setImporte(0.0);
-            vlra.getVlrc().setImpuesto(0.0);
 
             LOG.info("vlrc: " + vlra.getVlrc());
 
@@ -212,8 +210,6 @@ public class ValoradorBO implements Valorador {
 
                 vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
                 vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                vlrl.getVlrl().setImporteBase(0.0);
-                vlrl.getVlrl().setImporte(0.0);
 
                 if (LOG.isDebugEnabled()) {
                     LOG.debug("vlrl: " + vlrl.getVlrl());
@@ -253,7 +249,6 @@ public class ValoradorBO implements Valorador {
             }
 
             vlrcDAO.insertGenerateCargos(vlrcCriterioVO);
-            vlrcDAO.updateRecalcular(vlrcCriterioVO);
         }
 
         // vlraDAO.deleteTemporalList(vlraCriterioVO);
@@ -315,6 +310,10 @@ public class ValoradorBO implements Valorador {
                     vlrt.setFinicio(contextoVO.getFinicio());
                     vlrt.setFfin(contextoVO.getFfin());
 
+                    if (vlrt.getImporte() == -0.0) {
+                        vlrt.setImporte(+0.0);
+                    }
+
                     vlrtDAO.insert(vlrt);
                 }
             }
@@ -354,6 +353,10 @@ public class ValoradorBO implements Valorador {
                     vlrt.setFinicio(contextoVO.getFinicio());
                     vlrt.setFfin(contextoVO.getFfin());
 
+                    if (vlrt.getImporte() == -0.0) {
+                        vlrt.setImporte(+0.0);
+                    }
+
                     vlrtDAO.insert(vlrt);
                 }
             }
@@ -392,6 +395,10 @@ public class ValoradorBO implements Valorador {
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
                     vlrt.setFinicio(contextoVO.getFinicio());
                     vlrt.setFfin(contextoVO.getFfin());
+
+                    if (vlrt.getImporte() == -0.0) {
+                        vlrt.setImporte(+0.0);
+                    }
 
                     vlrtDAO.insert(vlrt);
                 }

@@ -24,13 +24,4 @@ public interface ValoracionDAO {
      *            the vlrc criterio vo
      */
     void insertGenerateCargos(final ValoracionCriterioVO vlrcCriterioVO);
-
-    /**
-     * Update recalcular.
-     *
-     * @param vlrcCriterioVO
-     *            the vlrc criterio vo
-     * @return the int
-     */
-    int updateRecalcular(final ValoracionCriterioVO vlrcCriterioVO);
 }

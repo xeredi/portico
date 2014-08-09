@@ -7,13 +7,13 @@
     <![CDATA[
         INSERT INTO tbl_valoracion_lin_vlrl (
             vlrl_pk, vlrl_vlrc_pk, vlrl_rgla_pk, vlrl_rgla_padre_pk
-            , vlrl_importe_base, vlrl_importe, vlrl_impuesto_pk, vlrl_ssrv_pk
+            , vlrl_impuesto_pk, vlrl_ssrv_pk
             , vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
             , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
         )
         VALUES (
             #{id}, #{vlrcId}, #{rgla.id}, #{rglaPadre.id}
-            , #{importeBase}, #{importe}, #{impuesto.id}, #{ssrv.id}
+            , #{impuesto.id}, #{ssrv.id}
             , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )

@@ -256,7 +256,7 @@
 
     <![CDATA[
                 , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
-                , regla_tipo_orden
+                , regla_tipo_orden, rglv_orden
         ) item
     ]]>
     </select>
