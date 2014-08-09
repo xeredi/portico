@@ -142,6 +142,9 @@ SELECT * FROM tbl_valoracion_imp_vlri;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
 
+SELECT * FROM tbl_cargo_crgo;
+SELECT * FROM tbl_regla_rgla;
+
 
 
 SELECT * FROM tbl_parametro_prmt
@@ -151,6 +154,7 @@ WHERE prmt_pk = 1007029;
 DELETE FROM tbl_valoracion_tmp_vlrt;
 DELETE FROM tbl_valoracion_det_vlrd;
 DELETE FROM tbl_valoracion_lin_vlrl;
+DELETE FROM tbl_valoracion_imp_vlri;
 DELETE FROM tbl_valoracion_cargo_vlrg;
 DELETE FROM tbl_valoracion_vlrc;
 
@@ -188,3 +192,100 @@ WHERE
 
 
 SELECT * FROM tbl_subservicio_ssrv WHERE ssrv_srvc_pk = 1209891;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT 
+	vlrt_prbt_pk
+        , srvc_pk AS vlrt_srvc_pk
+        , NULL AS vlrt_ssrv_pk
+        , rgla_crgo_pk AS vlrt_crgo_pk
+        , rgla_pk AS vlrt_rgla_pk
+        , vlrt_rgla_pk AS vlrt_rgla_padre_pk
+        , NULL AS vlrt_orden
+        , importe_base AS vlrt_importe_base
+        , (
+		CASE
+			WHEN rgla_tipo = 'C'
+			THEN importe_base * (valor_base - 1)
+			WHEN rgla_tipo = 'B'
+			THEN importe_base * (- valor_base) / 100
+			ELSE 0
+		END
+        ) AS vlrt_importe
+        , valor_base AS vlrt_valor_base
+        , importe_inc AS vlrt_importe_inc
+
+        , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
+        , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
+        , vlrt_impuesto_pk, vlrt_es_suj_pasivo, vlrt_pagador_pk, vlrt_cod_exen
+FROM (
+	SELECT *
+		, COALESCE(
+			(
+				SELECT SUM(vlrt_importe)
+				FROM tbl_valoracion_tmp_vlrt
+				WHERE 
+					vlrt_prbt_pk = 1237001
+					AND vlrt_srvc_pk = srvc_pk
+					AND vlrt_crgo_pk = rgla_crgo_pk
+					AND NOT EXISTS (
+						SELECT 1
+						FROM tbl_regla_inc_rgin
+						WHERE 
+							rgin_rgla1_pk = vlrt_rgla_pk
+							AND rgin_rgla2_pk = rgla_pk
+					)
+			)
+			, 0) AS importe_base
+		, COALESCE(
+			(
+				SELECT SUM(vlrt_importe)
+				FROM tbl_valoracion_tmp_vlrt
+				WHERE 
+					vlrt_prbt_pk = 1237001
+					AND vlrt_srvc_pk = srvc_pk
+					AND vlrt_crgo_pk = rgla_crgo_pk
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_regla_inc_rgin
+						WHERE 
+							rgin_rgla1_pk = vlrt_rgla_pk
+							AND rgin_rgla2_pk = rgla_pk
+					)
+			)
+			, 0) AS importe_inc
+		, 0.5 AS valor_base
+	FROM tbl_servicio_srvc item
+		JOIN tbl_regla_rgla ON
+			rgla_enti_pk = srvc_tpsr_pk
+			AND rgla_pk = 63001
+		JOIN tbl_valoracion_tmp_vlrt ON
+			vlrt_srvc_pk = srvc_pk
+			AND vlrt_prbt_pk = 1237001
+	                AND vlrt_crgo_pk = rgla_crgo_pk
+			AND vlrt_rgla_pk = ANY (
+			    SELECT rgla_pk
+			    FROM tbl_regla_rgla
+			    WHERE rgla_crgo_pk = vlrt_crgo_pk
+				AND rgla_tipo = 'T'
+			)
+	WHERE 
+		srvc_pk = 1229570
+) item
+;
+
+
+
+

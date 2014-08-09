@@ -127,7 +127,7 @@
         </collection>
     </resultMap>
 
-    <select id="selectList" parameterType="ValoracionAgregadaCriterioVO" resultMap="ResultMap">
+    <select id="selectList" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
         SELECT
             item.*
@@ -244,8 +244,8 @@
                         ascr_crgo_pk = vlrt_crgo_pk
                         AND ascr_aspv_pk = #{aspc.aspv.id}
                 )
-                AND vlrt_srvc_pk = #{srvcId}
-                AND vlrt_prbt_pk = #{prbtId}
+                AND vlrt_srvc_pk = #{srvc.id}
+                AND vlrt_prbt_pk = #{prbt.id}
             ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
                 , ssrv_tpss_pk
     ]]>
@@ -261,7 +261,7 @@
     ]]>
     </select>
 
-    <delete id="deleteTemporalList" parameterType="ValoracionAgregadaCriterioVO">
+    <delete id="deleteTemporalList" parameterType="ValoradorContextoVO">
     <![CDATA[
         DELETE FROM
             tbl_valoracion_tmp_vlrt
@@ -273,8 +273,8 @@
                     ascr_crgo_pk = vlrt_crgo_pk
                     AND ascr_aspv_pk = #{aspc.aspv.id}
             )
-            AND vlrt_srvc_pk = #{srvcId}
-            AND vlrt_prbt_pk = #{prbtId}
+            AND vlrt_srvc_pk = #{srvc.id}
+            AND vlrt_prbt_pk = #{prbt.id}
     ]]>
     </delete>
 

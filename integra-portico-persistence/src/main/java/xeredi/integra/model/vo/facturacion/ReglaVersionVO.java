@@ -22,6 +22,9 @@ public final class ReglaVersionVO {
     /** The orden. */
     private Integer orden;
 
+    /** The importe base. */
+    private Double importeBase;
+
     /** The condicion. */
     private String condicion;
 
@@ -1160,6 +1163,25 @@ public final class ReglaVersionVO {
      */
     public void setOrden(Integer value) {
         this.orden = value;
+    }
+
+    /**
+     * Gets the importe base.
+     *
+     * @return the importe base
+     */
+    public Double getImporteBase() {
+        return importeBase;
+    }
+
+    /**
+     * Sets the importe base.
+     *
+     * @param value
+     *            the new importe base
+     */
+    public void setImporteBase(Double value) {
+        this.importeBase = value;
     }
 
 }

@@ -14,6 +14,7 @@
             <result column="rglv_fini" property="finicio" />
             <result column="rglv_ffin" property="ffin" />
             <result column="rglv_orden" property="orden" />
+            <result column="rglv_importe_base" property="importeBase" />
             <result column="rglv_condicion" property="condicion" />
             <result column="rglv_formula" property="formula" />
             <result column="rglv_path_impuesto" property="pathImpuesto" />
@@ -61,7 +62,7 @@
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT rgla_pk, rgla_codigo, rgla_crgo_pk, rgla_enti_pk, rgla_tipo
-        	, rglv_pk, rglv_fini, rglv_ffin, rglv_condicion, rglv_formula, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+        	, rglv_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
         	, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3
         	, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
         	, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3

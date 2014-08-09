@@ -7,8 +7,10 @@
         <result column="vlrt_pk" property="id" />
 
         <result column="vlrt_orden" property="orden" />
+        <result column="vlrt_valor_base" property="valorBase" />
         <result column="vlrt_importe_base" property="importeBase" />
         <result column="vlrt_importe" property="importe" />
+        <result column="vlrt_importe_inc" property="importeInc" />
         <result column="vlrt_es_suj_pasivo" property="sujPasivo" />
         <result column="vlrt_cod_exen" property="codExencion" />
         <result column="vlrt_fref" property="freferencia" />
@@ -71,6 +73,7 @@
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
         , rgla_pk AS vlrt_rgla_padre_pk
+        , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.rglv.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.rglv.formulaSql}) AS vlrt_importe
     ]]>
@@ -178,63 +181,85 @@
     ]]>
     </select>
 
-<!--
-        , COALESCE(
-            SELECT SUM(vlrt_importe)
-            FROM tbl_valoracion_tmp_vlrt
-            WHERE
-          ), 0) AS vlrt_importe_base
- -->
     <select id="selectAplicarReglaDecoradorServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT
-        #{prbt.id} AS vlrt_prbt_pk
+        vlrt_prbt_pk
         , srvc_pk AS vlrt_srvc_pk
+        , NULL AS vlrt_ssrv_pk
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
         , vlrt_rgla_pk AS vlrt_rgla_padre_pk
-        , 0 AS vlrt_importe_base
-        , 0 AS vlrt_importe
+        , NULL AS vlrt_orden
+        , importe_base AS vlrt_importe_base
+        , (
+            CASE
+                WHEN rgla_tipo = 'C'
+                THEN importe_base * (valor_base - 1)
+                WHEN rgla_tipo = 'B'
+                THEN importe_base * (- valor_base) / 100
+                ELSE 0
+            END
+        ) AS vlrt_importe
+        , valor_base AS vlrt_valor_base
+        , importe_inc AS vlrt_importe_inc
 
-        , vlrt_cuant1
-        , vlrt_cuant2
-        , vlrt_cuant3
-        , vlrt_cuant4
-        , vlrt_cuant5
-        , vlrt_cuant6
-
-        , vlrt_info1
-        , vlrt_info2
-        , vlrt_info3
-        , vlrt_info4
-        , vlrt_info5
-        , vlrt_info6
-
-        , vlrt_impuesto_pk
-        , vlrt_es_suj_pasivo
-        , vlrt_pagador_pk
-        , vlrt_cod_exen
+        , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
+        , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
+        , vlrt_impuesto_pk, vlrt_es_suj_pasivo, vlrt_pagador_pk, vlrt_cod_exen
     FROM (
-        SELECT item.*, rgla.*, vlrt.*, srvc_fref AS fref
-        FROM
-            portico.tbl_servicio_srvc item
-            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
-                tpsr_pk = srvc_tpsr_pk
-            JOIN portico.tbl_regla_rgla rgla ON
+        SELECT *
+            , COALESCE(
+                (
+                    SELECT SUM(vlrt_importe)
+                    FROM tbl_valoracion_tmp_vlrt
+                    WHERE
+                        vlrt_prbt_pk = #{prbt.id}
+                        AND vlrt_srvc_pk = srvc_pk
+                        AND vlrt_crgo_pk = rgla_crgo_pk
+                        AND NOT EXISTS (
+                            SELECT 1
+                            FROM tbl_regla_inc_rgin
+                            WHERE
+                                rgin_rgla1_pk = vlrt_rgla_pk
+                                AND rgin_rgla2_pk = rgla_pk
+                        )
+                )
+                , 0) AS importe_base
+            , COALESCE(
+                (
+                    SELECT SUM(vlrt_importe)
+                    FROM tbl_valoracion_tmp_vlrt
+                    WHERE
+                        vlrt_prbt_pk = #{prbt.id}
+                        AND vlrt_srvc_pk = srvc_pk
+                        AND vlrt_crgo_pk = rgla_crgo_pk
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_regla_inc_rgin
+                            WHERE
+                                rgin_rgla1_pk = vlrt_rgla_pk
+                                AND rgin_rgla2_pk = rgla_pk
+                        )
+                )
+                , 0) AS importe_inc
+            , (${rgla.rglv.formulaSql}) AS valor_base
+        FROM tbl_servicio_srvc item
+            JOIN tbl_regla_rgla ON
                 rgla_enti_pk = srvc_tpsr_pk
                 AND rgla_pk = #{rgla.id}
-            JOIN tbl_valoracion_tmp_vlrt vlrt ON
+            JOIN tbl_valoracion_tmp_vlrt ON
                 vlrt_srvc_pk = srvc_pk
                 AND vlrt_prbt_pk = #{prbt.id}
-                AND vlrt_crgo_pk = #{crgo.id}
+                        AND vlrt_crgo_pk = rgla_crgo_pk
                 AND vlrt_rgla_pk = ANY (
                     SELECT rgla_pk
                     FROM tbl_regla_rgla
                     WHERE rgla_crgo_pk = vlrt_crgo_pk
-                        AND rgla_tipo = 'T'
+                    AND rgla_tipo = 'T'
                 )
         WHERE
-            tpsr_es_facturable = 1
+            srvc_pk = #{srvc.id}
     ]]>
     <if test="rgla.rglv.condicionSql != null">
     <![CDATA[
@@ -242,8 +267,8 @@
     ]]>
     </if>
     <![CDATA[
-            AND srvc_pk = #{srvc.id}
     ) item
+
     ]]>
     </select>
 
@@ -257,6 +282,7 @@
         , rgla_pk AS vlrt_rgla_pk
         , rgla_pk AS vlrt_rgla_padre_pk
         , ssrv_numero AS vlrt_orden
+        , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.rglv.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.rglv.formulaSql}) AS vlrt_importe
     ]]>
@@ -469,61 +495,85 @@
     <select id="selectAplicarReglaDecoradorSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT
-        #{prbt.id} AS vlrt_prbt_pk
-        , srvc_pk AS vlrt_srvc_pk
+        vlrt_prbt_pk
+        , ssrv_srvc_pk AS vlrt_srvc_pk
         , ssrv_pk AS vlrt_ssrv_pk
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
         , vlrt_rgla_pk AS vlrt_rgla_padre_pk
         , ssrv_numero AS vlrt_orden
-        , 0 AS vlrt_importe_base
-        , 0 AS vlrt_importe
+        , importe_base AS vlrt_importe_base
+        , (
+            CASE
+                WHEN rgla_tipo = 'C'
+                THEN importe_base * (valor_base - 1)
+                WHEN rgla_tipo = 'B'
+                THEN importe_base * (- valor_base) / 100
+                ELSE 0
+            END
+        ) AS vlrt_importe
+        , valor_base AS vlrt_valor_base
+        , importe_inc AS vlrt_importe_inc
 
-        , vlrt_cuant1
-        , vlrt_cuant2
-        , vlrt_cuant3
-        , vlrt_cuant4
-        , vlrt_cuant5
-        , vlrt_cuant6
-
-        , vlrt_info1
-        , vlrt_info2
-        , vlrt_info3
-        , vlrt_info4
-        , vlrt_info5
-        , vlrt_info6
-
-        , vlrt_impuesto_pk
-        , vlrt_es_suj_pasivo
-        , vlrt_pagador_pk
-        , vlrt_cod_exen
+        , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
+        , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
+        , vlrt_impuesto_pk, vlrt_es_suj_pasivo, vlrt_pagador_pk, vlrt_cod_exen
     FROM (
-        SELECT item.*, rgla.*, srvc.*, vlrt.*, srvc_fref AS fref
-        FROM
-            tbl_subservicio_ssrv item
-            JOIN tbl_servicio_srvc srvc ON
-                srvc_pk = ssrv_srvc_pk
-            JOIN tbl_tipo_subservicio_tpss tpss ON
-                tpss_pk = ssrv_tpss_pk
-            JOIN tbl_tipo_servicio_tpsr tpsr ON
-                tpsr_pk = srvc_tpsr_pk
-            JOIN tbl_regla_rgla rgla ON
+        SELECT *
+            , COALESCE(
+                (
+                    SELECT SUM(vlrt_importe)
+                    FROM tbl_valoracion_tmp_vlrt
+                    WHERE
+                        vlrt_prbt_pk = #{prbt.id}
+                        AND vlrt_srvc_pk = ssrv_srvc_pk
+                        AND vlrt_ssrv_pk = ssrv_pk
+                        AND vlrt_crgo_pk = rgla_crgo_pk
+                        AND NOT EXISTS (
+                            SELECT 1
+                            FROM tbl_regla_inc_rgin
+                            WHERE
+                                rgin_rgla1_pk = vlrt_rgla_pk
+                                AND rgin_rgla2_pk = rgla_pk
+                        )
+                )
+            , 0) AS importe_base
+            , COALESCE(
+                (
+                    SELECT SUM(vlrt_importe)
+                    FROM tbl_valoracion_tmp_vlrt
+                    WHERE
+                        vlrt_prbt_pk = #{prbt.id}
+                        AND vlrt_srvc_pk = ssrv_srvc_pk
+                        AND vlrt_ssrv_pk = ssrv_pk
+                        AND vlrt_crgo_pk = rgla_crgo_pk
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_regla_inc_rgin
+                            WHERE
+                                rgin_rgla1_pk = vlrt_rgla_pk
+                                AND rgin_rgla2_pk = rgla_pk
+                        )
+                )
+            , 0) AS importe_inc
+            , (${rgla.rglv.formulaSql}) AS valor_base
+        FROM tbl_subservicio_ssrv item
+            JOIN tbl_regla_rgla ON
                 rgla_enti_pk = ssrv_tpss_pk
                 AND rgla_pk = #{rgla.id}
-            JOIN tbl_valoracion_tmp_vlrt vlrt ON
+            JOIN tbl_valoracion_tmp_vlrt ON
                 vlrt_srvc_pk = ssrv_srvc_pk
                 AND vlrt_ssrv_pk = ssrv_pk
                 AND vlrt_prbt_pk = #{prbt.id}
-                AND vlrt_crgo_pk = #{crgo.id}
+                        AND vlrt_crgo_pk = rgla_crgo_pk
                 AND vlrt_rgla_pk = ANY (
                     SELECT rgla_pk
                     FROM tbl_regla_rgla
                     WHERE rgla_crgo_pk = vlrt_crgo_pk
-                        AND rgla_tipo = 'T'
+                    AND rgla_tipo = 'T'
                 )
         WHERE
-            tpsr_es_facturable = 1
-            AND tpss_es_facturable = 1
+            ssrv_srvc_pk = #{srvc.id}
     ]]>
     <if test="rgla.rglv.condicionSql != null">
     <![CDATA[
@@ -531,7 +581,6 @@
     ]]>
     </if>
     <![CDATA[
-            AND ssrv_srvc_pk = #{srvc.id}
     ) item
     ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
     ]]>
@@ -541,13 +590,13 @@
     <![CDATA[
     INSERT INTO tbl_valoracion_tmp_vlrt (
         vlrt_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_padre_pk, vlrt_impuesto_pk, vlrt_pagador_pk
-        , vlrt_orden, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
+        , vlrt_orden, vlrt_valor_base, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
         , vlrt_fref, vlrt_fliq, vlrt_fini, vlrt_ffin
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
     ) VALUES (
         #{id}, #{prbt.id}, #{srvc.id}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rglaPadre.id}, #{impuesto.id}, #{pagador.id}
-        , #{orden}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
+        , #{orden}, #{valorBase}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
         , #{freferencia}, #{fliquidacion}, #{finicio}, #{ffin}
         , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
         , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}

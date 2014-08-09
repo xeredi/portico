@@ -2,8 +2,8 @@ package xeredi.integra.model.dao.facturacion;
 
 import java.util.List;
 
-import xeredi.integra.model.vo.facturacion.ValoracionAgregadaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionAgregadaVO;
+import xeredi.integra.model.vo.facturacion.ValoradorContextoVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,18 +14,18 @@ public interface ValoracionAgregadaDAO {
     /**
      * Select list.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param contextoVO
+     *            the contexto vo
      * @return the list
      */
-    List<ValoracionAgregadaVO> selectList(final ValoracionAgregadaCriterioVO criterioVO);
+    List<ValoracionAgregadaVO> selectList(final ValoradorContextoVO contextoVO);
 
     /**
      * Delete temporal list.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param contextoVO
+     *            the contexto vo
      * @return the int
      */
-    int deleteTemporalList(final ValoracionAgregadaCriterioVO criterioVO);
+    int deleteTemporalList(final ValoradorContextoVO contextoVO);
 }

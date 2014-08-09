@@ -129,6 +129,7 @@ CREATE TABLE portico.tbl_regla_version_rglv
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
 	, rglv_orden INT NOT NULL
+	, rglv_importe_base DOUBLE PRECISION
 	, rglv_condicion VARCHAR(2000) NOT NULL
 	, rglv_formula VARCHAR(2000) NOT NULL
 
@@ -482,6 +483,7 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 	, vlrt_rgla_padre_pk BIGINT NOT NULL
 	, vlrt_impuesto_pk BIGINT NOT NULL
 	, vlrt_pagador_pk BIGINT NOT NULL
+	, vlrt_valor_base DOUBLE PRECISION NOT NULL
 	, vlrt_orden INT
 	, vlrt_importe_base DOUBLE PRECISION NOT NULL
 	, vlrt_importe DOUBLE PRECISION NOT NULL

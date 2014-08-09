@@ -41,6 +41,9 @@ public final class ValoradorContextoVO {
     /** The rgla. */
     private ReglaVO rgla;
 
+    /** The aspc. */
+    private AspectoVO aspc;
+
     /**
      * {@inheritDoc}
      */
@@ -218,6 +221,25 @@ public final class ValoradorContextoVO {
      */
     public void setFliquidacion(Date value) {
         this.fliquidacion = value;
+    }
+
+    /**
+     * Gets the aspc.
+     *
+     * @return the aspc
+     */
+    public AspectoVO getAspc() {
+        return aspc;
+    }
+
+    /**
+     * Sets the aspc.
+     *
+     * @param value
+     *            the new aspc
+     */
+    public void setAspc(AspectoVO value) {
+        this.aspc = value;
     }
 
 }

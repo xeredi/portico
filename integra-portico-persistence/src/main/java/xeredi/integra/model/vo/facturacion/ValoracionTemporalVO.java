@@ -45,11 +45,17 @@ public final class ValoracionTemporalVO {
     /** The orden. */
     private Integer orden;
 
+    /** The valor base. */
+    private Double valorBase;
+
     /** The importe base. */
     private Double importeBase;
 
     /** The importe. */
     private Double importe;
+
+    /** The importe inc. */
+    private Double importeInc;
 
     /** The suj pasivo. */
     private Boolean sujPasivo;
@@ -681,6 +687,44 @@ public final class ValoracionTemporalVO {
      */
     public void setId(Long value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the valor base.
+     *
+     * @return the valor base
+     */
+    public Double getValorBase() {
+        return valorBase;
+    }
+
+    /**
+     * Sets the valor base.
+     *
+     * @param value
+     *            the new valor base
+     */
+    public void setValorBase(Double value) {
+        this.valorBase = value;
+    }
+
+    /**
+     * Gets the importe inc.
+     *
+     * @return the importe inc
+     */
+    public Double getImporteInc() {
+        return importeInc;
+    }
+
+    /**
+     * Sets the importe inc.
+     *
+     * @param value
+     *            the new importe inc
+     */
+    public void setImporteInc(Double value) {
+        this.importeInc = value;
     }
 
 }

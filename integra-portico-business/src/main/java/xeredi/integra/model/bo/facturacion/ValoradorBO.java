@@ -45,7 +45,6 @@ import xeredi.integra.model.vo.facturacion.CargoVO;
 import xeredi.integra.model.vo.facturacion.ReglaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ReglaTipo;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
-import xeredi.integra.model.vo.facturacion.ValoracionAgregadaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionAgregadaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
@@ -166,7 +165,6 @@ public class ValoradorBO implements Valorador {
 
         // Generacion de valoraciones a partir de los aspectos
 
-        final IgBO igBO = new IgBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setFechaVigencia(fechaLiquidacion);
@@ -175,82 +173,90 @@ public class ValoradorBO implements Valorador {
         final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
 
         for (final AspectoVO aspc : aspcList) {
-            generateSql(aspc);
+            contextoVO.setAspc(aspc);
 
-            final ValoracionAgregadaCriterioVO vlraCriterioVO = new ValoracionAgregadaCriterioVO();
-
-            vlraCriterioVO.setAspc(aspc);
-            vlraCriterioVO.setPrbtId(prbtId);
-            vlraCriterioVO.setSrvcId(srvcId);
-
-            final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(vlraCriterioVO);
-
-            for (final ValoracionAgregadaVO vlra : vlraList) {
-                final Set<Long> vlrgCrgoIds = new HashSet<Long>();
-
-                vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                vlra.getVlrc().setAspc(aspc);
-                vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
-                vlra.getVlrc().setImporte(0.0);
-                vlra.getVlrc().setImpuesto(0.0);
-
-                LOG.info("vlrc: " + vlra.getVlrc());
-
-                for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                    vlrgCrgoIds.add(vlrl.getVlrl().getRgla().getCrgo().getId());
-
-                    vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
-                    vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                    vlrl.getVlrl().setImporteBase(0.0);
-                    vlrl.getVlrl().setImporte(0.0);
-
-                    if (LOG.isDebugEnabled()) {
-                        LOG.debug("vlrl: " + vlrl.getVlrl());
-                    }
-
-                    for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
-                        vlrd.setVlrcId(vlra.getVlrc().getId());
-                        vlrd.setVlrlId(vlrl.getVlrl().getId());
-                        vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-                        if (LOG.isDebugEnabled()) {
-                            LOG.debug("vlrd: " + vlrd);
-                        }
-                    }
-                }
-
-                vlrcDAO.insert(vlra.getVlrc());
-
-                for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                    vlrlDAO.insert(vlrl.getVlrl());
-                }
-
-                for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                    for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
-                        vlrdDAO.insert(vlrd);
-                    }
-                }
-
-                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-
-                vlrcCriterioVO.setId(vlra.getVlrc().getId());
-
-                final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
-
-                for (final ValoracionImpuestoVO vlri : vlriList) {
-                    vlriDAO.insert(vlri);
-                }
-
-                vlrcDAO.insertGenerateCargos(vlrcCriterioVO);
-                vlrcDAO.updateRecalcular(vlrcCriterioVO);
-            }
-
-            vlraDAO.deleteTemporalList(vlraCriterioVO);
+            aplicarAspecto(contextoVO);
         }
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Fin Valoracion");
         }
+    }
+
+    /**
+     * Aplicar aspecto.
+     *
+     * @param contextoVO
+     *            the contexto vo
+     */
+    private void aplicarAspecto(final ValoradorContextoVO contextoVO) {
+        final IgBO igBO = new IgBO();
+
+        generateSql(contextoVO.getAspc());
+
+        final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(contextoVO);
+
+        for (final ValoracionAgregadaVO vlra : vlraList) {
+            final Set<Long> vlrgCrgoIds = new HashSet<Long>();
+
+            vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vlra.getVlrc().setAspc(contextoVO.getAspc());
+            vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
+            vlra.getVlrc().setImporte(0.0);
+            vlra.getVlrc().setImpuesto(0.0);
+
+            LOG.info("vlrc: " + vlra.getVlrc());
+
+            for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+                vlrgCrgoIds.add(vlrl.getVlrl().getRgla().getCrgo().getId());
+
+                vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
+                vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                vlrl.getVlrl().setImporteBase(0.0);
+                vlrl.getVlrl().setImporte(0.0);
+
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("vlrl: " + vlrl.getVlrl());
+                }
+
+                for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+                    vlrd.setVlrcId(vlra.getVlrc().getId());
+                    vlrd.setVlrlId(vlrl.getVlrl().getId());
+                    vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("vlrd: " + vlrd);
+                    }
+                }
+            }
+
+            vlrcDAO.insert(vlra.getVlrc());
+
+            for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+                vlrlDAO.insert(vlrl.getVlrl());
+            }
+
+            for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
+                for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
+                    vlrdDAO.insert(vlrd);
+                }
+            }
+
+            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+
+            vlrcCriterioVO.setId(vlra.getVlrc().getId());
+
+            final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
+
+            for (final ValoracionImpuestoVO vlri : vlriList) {
+                vlriDAO.insert(vlri);
+            }
+
+            vlrcDAO.insertGenerateCargos(vlrcCriterioVO);
+            vlrcDAO.updateRecalcular(vlrcCriterioVO);
+        }
+
+        // vlraDAO.deleteTemporalList(vlraCriterioVO);
     }
 
     /**
@@ -491,6 +497,15 @@ public class ValoradorBO implements Valorador {
         return conditionSqlGenerator.visit(tree).toString();
     }
 
+    /**
+     * Generate sql formula.
+     *
+     * @param reglaVO
+     *            the regla vo
+     * @param expression
+     *            the expression
+     * @return the string
+     */
     private String generateSqlFormula(final ReglaVO reglaVO, final String expression) {
         if (expression == null || expression.isEmpty()) {
             return null;
