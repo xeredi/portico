@@ -547,15 +547,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_tmp_vlrt TO porti
 CREATE TABLE portico.tbl_factura_fctr
 (
 	fctr_pk BIGINT NOT NULL
-	, fctr_crgo_pk BIGINT NOT NULL
 	, fctr_aspc_pk BIGINT NOT NULL
 	, fctr_pagador_pk BIGINT NOT NULL
 	, fctr_fref TIMESTAMP NOT NULL
 	, fctr_falta TIMESTAMP NOT NULL
 	, fctr_fini TIMESTAMP
 	, fctr_ffin TIMESTAMP
-	, fctr_importe DOUBLE PRECISION NOT NULL
-	, fctr_impuesto DOUBLE PRECISION NOT NULL
 	, fctr_info1 VARCHAR(100)
 	, fctr_info2 VARCHAR(100)
 	, fctr_info3 VARCHAR(100)
@@ -565,8 +562,6 @@ CREATE TABLE portico.tbl_factura_fctr
 
 	, CONSTRAINT pk_fctr PRIMARY KEY (fctr_pk)
 
-	, CONSTRAINT fk_fctr_crgo_pk FOREIGN KEY (fctr_crgo_pk)
-		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
 	, CONSTRAINT fk_fctr_aspc_pk FOREIGN KEY (fctr_aspc_pk)
 		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
 	, CONSTRAINT fk_fctr_pagador_pk FOREIGN KEY (fctr_pagador_pk)
@@ -574,8 +569,6 @@ CREATE TABLE portico.tbl_factura_fctr
 )
 \
 
-CREATE INDEX ix_fctr_crgo_pk ON portico.tbl_factura_fctr (fctr_crgo_pk)
-\
 CREATE INDEX ix_fctr_pagador_pk ON portico.tbl_factura_fctr (fctr_pagador_pk)
 \
 
@@ -585,24 +578,30 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_fctr TO portico
 
 
 -- tbl_factura_servicio_fcsr
-CREATE TABLE portico.tbl_factura_servicio_fcsr
+CREATE TABLE portico.tbl_factura_srv_fcts
 (
-	fcsr_fctr_pk BIGINT NOT NULL
-	, fcsr_srvc_pk BIGINT NOT NULL
+	fcts_pk BIGINT NOT NULL
+	, fcts_fctr_pk BIGINT NOT NULL
+	, fcts_srvc_pk BIGINT NOT NULL
+	, fcts_fref TIMESTAMP NOT NULL
+	, fcts_fini TIMESTAMP 
+	, fcts_ffin TIMESTAMP 
 
-	, CONSTRAINT pk_fcsr PRIMARY KEY (fcsr_fctr_pk, fcsr_srvc_pk)
+	, CONSTRAINT pk_fcts PRIMARY KEY (fcts_pk)
 
-	, CONSTRAINT fk_fcsr_fctr_pk FOREIGN KEY (fcsr_fctr_pk)
+	, CONSTRAINT fk_fcts_fctr_pk FOREIGN KEY (fcts_fctr_pk)
 		REFERENCES portico.tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fcsr_srvc_pk FOREIGN KEY (fcsr_srvc_pk)
+	, CONSTRAINT fk_fcts_srvc_pk FOREIGN KEY (fcts_srvc_pk)
 		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
 )
 \
 
-CREATE INDEX ix_fcsr_srvc_pk ON portico.tbl_factura_servicio_fcsr (fcsr_srvc_pk)
+CREATE INDEX ix_fcts_fctr_pk ON portico.tbl_factura_srv_fcts (fcts_fctr_pk)
+\
+CREATE INDEX ix_fcts_srvc_pk ON portico.tbl_factura_srv_fcts (fcts_srvc_pk)
 \
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_servicio_fcsr TO portico
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_srv_fcts TO portico
 \
 
 
@@ -612,10 +611,9 @@ CREATE TABLE portico.tbl_factura_imp_fcti
 (
 	fcti_fctr_pk BIGINT NOT NULL
 	, fcti_impuesto_pk BIGINT NOT NULL
-	, fcti_importe DOUBLE PRECISION NOT NULL
-	, fcti_impuesto DOUBLE PRECISION NOT NULL
-
-	, CONSTRAINT pk_fcti PRIMARY KEY (fcti_fctr_pk, fcti_impuesto_pk)
+	, fcti_porcentaje NUMERIC(5, 2) NOT NULL
+	, fcti_importe NUMERIC(10, 2) NOT NULL
+	, fcti_impuesto NUMERIC(10, 2) NOT NULL
 
 	, CONSTRAINT fk_fcti_fctr_pk FOREIGN KEY (fcti_fctr_pk)
 		REFERENCES portico.tbl_factura_fctr (fctr_pk)
@@ -624,7 +622,30 @@ CREATE TABLE portico.tbl_factura_imp_fcti
 )
 \
 
+CREATE INDEX ix_fcti_fctr_pk ON portico.tbl_factura_imp_fcti (fcti_fctr_pk)
+\
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_imp_fcti TO portico
+\
+
+
+
+-- tbl_factura_cargo_fctc
+CREATE TABLE portico.tbl_factura_cargo_fctc
+(
+	fctc_fctr_pk BIGINT NOT NULL
+	, fctc_crgo_pk BIGINT NOT NULL
+
+	, CONSTRAINT pk_fctc PRIMARY KEY (fctc_fctr_pk, fctc_crgo_pk)
+
+	, CONSTRAINT fk_fctc_fctr_pk FOREIGN KEY (fctc_fctr_pk)
+		REFERENCES portico.tbl_factura_fctr (fctr_pk)
+	, CONSTRAINT fk_fctc_crgo_pk FOREIGN KEY (fctc_crgo_pk)
+		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
+)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_cargo_fctc TO portico
 \
 
 
@@ -634,12 +655,10 @@ CREATE TABLE portico.tbl_factura_lin_fctl
 (
 	fctl_pk BIGINT NOT NULL
 	, fctl_fctr_pk BIGINT NOT NULL
+	, fctl_fcts_pk BIGINT NOT NULL
 	, fctl_rgla_pk BIGINT NOT NULL
 	, fctl_orden INT NOT NULL
-	, fctl_importe_base DOUBLE PRECISION NOT NULL
-	, fctl_importe DOUBLE PRECISION NOT NULL
 	, fctl_impuesto_pk BIGINT NOT NULL
-	, fctl_srvc_pk BIGINT NOT NULL
 	, fctl_ssrv_pk BIGINT
 
 	, fctl_cuant1 DOUBLE PRECISION
@@ -660,12 +679,12 @@ CREATE TABLE portico.tbl_factura_lin_fctl
 
 	, CONSTRAINT fk_fctl_fctr_pk FOREIGN KEY (fctl_fctr_pk)
 		REFERENCES portico.tbl_factura_fctr (fctr_pk)
+	, CONSTRAINT fk_fctl_fcts_pk FOREIGN KEY (fctl_fcts_pk)
+		REFERENCES portico.tbl_factura_srv_fcts (fcts_pk)
 	, CONSTRAINT fk_fctl_rgla_pk FOREIGN KEY (fctl_rgla_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
 	, CONSTRAINT fk_fctl_impuesto_pk FOREIGN KEY (fctl_impuesto_pk)
 		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_fctl_srvc_pk FOREIGN KEY (fctl_srvc_pk)
-		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
 	, CONSTRAINT fk_fctl_ssrv_pk FOREIGN KEY (fctl_ssrv_pk)
 		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
 )
@@ -685,12 +704,9 @@ CREATE TABLE portico.tbl_factura_det_fctd
 	fctd_pk BIGINT NOT NULL
 	, fctd_fctr_pk BIGINT NOT NULL
 	, fctd_fctl_pk BIGINT NOT NULL
-	, fctd_rgla_pk BIGINT NOT NULL
 	, fctd_orden INT NOT NULL
-	, fctd_importe_base DOUBLE PRECISION NOT NULL
-	, fctd_importe DOUBLE PRECISION NOT NULL
-	, fctd_impuesto_pk BIGINT NOT NULL
-	, fctd_srvc_pk BIGINT NOT NULL
+	, fctd_importe_base NUMERIC(10, 2) NOT NULL
+	, fctd_importe NUMERIC(10, 2) NOT NULL
 	, fctd_ssrv_pk BIGINT
 
 	, fctd_cuant1 DOUBLE PRECISION
@@ -713,12 +729,6 @@ CREATE TABLE portico.tbl_factura_det_fctd
 		REFERENCES portico.tbl_factura_fctr (fctr_pk)
 	, CONSTRAINT fk_fctd_fctl_pk FOREIGN KEY (fctd_fctl_pk)
 		REFERENCES portico.tbl_factura_lin_fctl (fctl_pk)
-	, CONSTRAINT fk_fctd_rgla_pk FOREIGN KEY (fctd_rgla_pk)
-		REFERENCES portico.tbl_regla_rgla (rgla_pk)
-	, CONSTRAINT fk_fctd_impuesto_pk FOREIGN KEY (fctd_impuesto_pk)
-		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
-	, CONSTRAINT fk_fctd_srvc_pk FOREIGN KEY (fctd_srvc_pk)
-		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
 	, CONSTRAINT fk_fctd_ssrv_pk FOREIGN KEY (fctd_ssrv_pk)
 		REFERENCES portico.tbl_subservicio_ssrv (ssrv_pk)
 )
@@ -789,9 +799,11 @@ DROP TABLE portico.tbl_factura_det_fctd
 \
 DROP TABLE portico.tbl_factura_lin_fctl
 \
+DROP TABLE portico.tbl_factura_cargo_fctc
+\
 DROP TABLE portico.tbl_factura_imp_fcti
 \
-DROP TABLE portico.tbl_factura_servicio_fcsr
+DROP TABLE portico.tbl_factura_srv_fcts
 \
 DROP TABLE portico.tbl_factura_fctr
 \
