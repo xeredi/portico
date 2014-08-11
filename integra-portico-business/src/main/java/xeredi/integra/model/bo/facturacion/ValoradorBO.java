@@ -251,7 +251,7 @@ public class ValoradorBO implements Valorador {
             vlrcDAO.insertGenerateCargos(vlrcCriterioVO);
         }
 
-        // vlraDAO.deleteTemporalList(vlraCriterioVO);
+        vlrtDAO.deleteList(contextoVO);
     }
 
     /**

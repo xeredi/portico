@@ -129,7 +129,7 @@ CREATE TABLE portico.tbl_regla_version_rglv
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
 	, rglv_orden INT NOT NULL
-	, rglv_importe_base DOUBLE PRECISION
+	, rglv_importe_base NUMERIC(10, 4)
 	, rglv_condicion VARCHAR(2000) NOT NULL
 	, rglv_formula VARCHAR(2000) NOT NULL
 
@@ -139,31 +139,33 @@ CREATE TABLE portico.tbl_regla_version_rglv
 	, rglv_path_cod_exen VARCHAR(250)
 
 	, rglv_path_info1 VARCHAR(250)
-	, rglv_etiq_info1 VARCHAR(50)
 	, rglv_path_info2 VARCHAR(250)
-	, rglv_etiq_info2 VARCHAR(50)
 	, rglv_path_info3 VARCHAR(250)
-	, rglv_etiq_info3 VARCHAR(50)
 	, rglv_path_info4 VARCHAR(250)
-	, rglv_etiq_info4 VARCHAR(50)
 	, rglv_path_info5 VARCHAR(250)
-	, rglv_etiq_info5 VARCHAR(50)
 	, rglv_path_info6 VARCHAR(250)
+
+	, rglv_etiq_info1 VARCHAR(50)
+	, rglv_etiq_info2 VARCHAR(50)
+	, rglv_etiq_info3 VARCHAR(50)
+	, rglv_etiq_info4 VARCHAR(50)
+	, rglv_etiq_info5 VARCHAR(50)
 	, rglv_etiq_info6 VARCHAR(50)
-
+	
 	, rglv_path_cuant1 VARCHAR(250)
-	, rglv_etiq_cuant1 VARCHAR(50)
 	, rglv_path_cuant2 VARCHAR(250)
-	, rglv_etiq_cuant2 VARCHAR(50)
 	, rglv_path_cuant3 VARCHAR(250)
-	, rglv_etiq_cuant3 VARCHAR(50)
 	, rglv_path_cuant4 VARCHAR(250)
-	, rglv_etiq_cuant4 VARCHAR(50)
 	, rglv_path_cuant5 VARCHAR(250)
-	, rglv_etiq_cuant5 VARCHAR(50)
 	, rglv_path_cuant6 VARCHAR(250)
-	, rglv_etiq_cuant6 VARCHAR(50)
 
+	, rglv_etiq_cuant1 VARCHAR(50)
+	, rglv_etiq_cuant2 VARCHAR(50)
+	, rglv_etiq_cuant3 VARCHAR(50)
+	, rglv_etiq_cuant4 VARCHAR(50)
+	, rglv_etiq_cuant5 VARCHAR(50)
+	, rglv_etiq_cuant6 VARCHAR(50)
+	
 	, CONSTRAINT pk_rglv PRIMARY KEY (rglv_pk)
 
 	, CONSTRAINT fk_rglv_rgla_pk FOREIGN KEY (rglv_rgla_pk)
@@ -227,17 +229,25 @@ CREATE TABLE portico.tbl_aspecto_version_aspv
 	, aspv_prioridad INT NOT NULL
 
 	, aspv_cpath_info1 VARCHAR(250)
-	, aspv_cetiq_info1 VARCHAR(50)
 	, aspv_cpath_info2 VARCHAR(250)
-	, aspv_cetiq_info2 VARCHAR(50)
 	, aspv_cpath_info3 VARCHAR(250)
-	, aspv_cetiq_info3 VARCHAR(50)
 	, aspv_cpath_info4 VARCHAR(250)
-	, aspv_cetiq_info4 VARCHAR(50)
 	, aspv_cpath_info5 VARCHAR(250)
-	, aspv_cetiq_info5 VARCHAR(50)
 	, aspv_cpath_info6 VARCHAR(250)
+
+	, aspv_cetiq_info1 VARCHAR(50)
+	, aspv_cetiq_info2 VARCHAR(50)
+	, aspv_cetiq_info3 VARCHAR(50)
+	, aspv_cetiq_info4 VARCHAR(50)
+	, aspv_cetiq_info5 VARCHAR(50)
 	, aspv_cetiq_info6 VARCHAR(50)
+
+	, aspv_cgrp_info1 INT
+	, aspv_cgrp_info2 INT
+	, aspv_cgrp_info3 INT
+	, aspv_cgrp_info4 INT
+	, aspv_cgrp_info5 INT
+	, aspv_cgrp_info6 INT
 
 	, aspv_lsum_cuant1 INT
 	, aspv_lsum_cuant2 INT
@@ -355,9 +365,9 @@ CREATE TABLE portico.tbl_valoracion_imp_vlri
 (
 	vlri_vlrc_pk BIGINT NOT NULL
 	, vlri_impuesto_pk BIGINT NOT NULL
-	, vlri_porcentaje DOUBLE PRECISION NOT NULL
-	, vlri_importe DOUBLE PRECISION NOT NULL
-	, vlri_impuesto DOUBLE PRECISION NOT NULL
+	, vlri_porcentaje NUMERIC(5, 2) NOT NULL
+	, vlri_importe NUMERIC(10, 2) NOT NULL
+	, vlri_impuesto NUMERIC(10, 2) NOT NULL
 
 	, CONSTRAINT pk_vlri PRIMARY KEY (vlri_vlrc_pk, vlri_impuesto_pk)
 
@@ -426,8 +436,8 @@ CREATE TABLE portico.tbl_valoracion_det_vlrd
 	vlrd_pk BIGINT NOT NULL
 	, vlrd_vlrc_pk BIGINT NOT NULL
 	, vlrd_vlrl_pk BIGINT NOT NULL
-	, vlrd_importe_base DOUBLE PRECISION NOT NULL
-	, vlrd_importe DOUBLE PRECISION NOT NULL
+	, vlrd_importe_base NUMERIC(10, 2) NOT NULL
+	, vlrd_importe NUMERIC(10, 2) NOT NULL
 	, vlrd_ssrv_pk BIGINT
 
 	, vlrd_cuant1 DOUBLE PRECISION
@@ -479,10 +489,10 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 	, vlrt_rgla_padre_pk BIGINT NOT NULL
 	, vlrt_impuesto_pk BIGINT NOT NULL
 	, vlrt_pagador_pk BIGINT NOT NULL
-	, vlrt_valor_base DOUBLE PRECISION NOT NULL
+	, vlrt_valor_base NUMERIC(10, 4) NOT NULL
 	, vlrt_orden INT
-	, vlrt_importe_base DOUBLE PRECISION NOT NULL
-	, vlrt_importe DOUBLE PRECISION NOT NULL
+	, vlrt_importe_base NUMERIC(10, 2) NOT NULL
+	, vlrt_importe NUMERIC(10, 2) NOT NULL
 	, vlrt_es_suj_pasivo INT NOT NULL
 	, vlrt_cod_exen CHAR(1) NOT NULL
 	, vlrt_fref TIMESTAMP NOT NULL

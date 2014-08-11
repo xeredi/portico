@@ -76,6 +76,24 @@ public final class AspectoVersionVO {
     /** The cetiq info6. */
     private String cetiqInfo6;
 
+    /** The lgrp info1. */
+    private Boolean cgrpInfo1;
+
+    /** The lgrp info2. */
+    private Boolean cgrpInfo2;
+
+    /** The lgrp info3. */
+    private Boolean cgrpInfo3;
+
+    /** The lgrp info4. */
+    private Boolean cgrpInfo4;
+
+    /** The lgrp info5. */
+    private Boolean cgrpInfo5;
+
+    /** The lgrp info6. */
+    private Boolean cgrpInfo6;
+
     /** The lsum cuant1. */
     private Boolean lsumCuant1;
 
@@ -776,6 +794,120 @@ public final class AspectoVersionVO {
      */
     public void setCpathInfo6Sql(String value) {
         this.cpathInfo6Sql = value;
+    }
+
+    /**
+     * Gets the cgrp info1.
+     *
+     * @return the cgrp info1
+     */
+    public Boolean getCgrpInfo1() {
+        return cgrpInfo1;
+    }
+
+    /**
+     * Sets the cgrp info1.
+     *
+     * @param value
+     *            the new cgrp info1
+     */
+    public void setCgrpInfo1(Boolean value) {
+        this.cgrpInfo1 = value;
+    }
+
+    /**
+     * Gets the cgrp info2.
+     *
+     * @return the cgrp info2
+     */
+    public Boolean getCgrpInfo2() {
+        return cgrpInfo2;
+    }
+
+    /**
+     * Sets the cgrp info2.
+     *
+     * @param value
+     *            the new cgrp info2
+     */
+    public void setCgrpInfo2(Boolean value) {
+        this.cgrpInfo2 = value;
+    }
+
+    /**
+     * Gets the cgrp info3.
+     *
+     * @return the cgrp info3
+     */
+    public Boolean getCgrpInfo3() {
+        return cgrpInfo3;
+    }
+
+    /**
+     * Sets the cgrp info3.
+     *
+     * @param value
+     *            the new cgrp info3
+     */
+    public void setCgrpInfo3(Boolean value) {
+        this.cgrpInfo3 = value;
+    }
+
+    /**
+     * Gets the cgrp info4.
+     *
+     * @return the cgrp info4
+     */
+    public Boolean getCgrpInfo4() {
+        return cgrpInfo4;
+    }
+
+    /**
+     * Sets the cgrp info4.
+     *
+     * @param value
+     *            the new cgrp info4
+     */
+    public void setCgrpInfo4(Boolean value) {
+        this.cgrpInfo4 = value;
+    }
+
+    /**
+     * Gets the cgrp info5.
+     *
+     * @return the cgrp info5
+     */
+    public Boolean getCgrpInfo5() {
+        return cgrpInfo5;
+    }
+
+    /**
+     * Sets the cgrp info5.
+     *
+     * @param value
+     *            the new cgrp info5
+     */
+    public void setCgrpInfo5(Boolean value) {
+        this.cgrpInfo5 = value;
+    }
+
+    /**
+     * Gets the cgrp info6.
+     *
+     * @return the cgrp info6
+     */
+    public Boolean getCgrpInfo6() {
+        return cgrpInfo6;
+    }
+
+    /**
+     * Sets the cgrp info6.
+     *
+     * @param value
+     *            the new cgrp info6
+     */
+    public void setCgrpInfo6(Boolean value) {
+        this.cgrpInfo6 = value;
     }
 
 }

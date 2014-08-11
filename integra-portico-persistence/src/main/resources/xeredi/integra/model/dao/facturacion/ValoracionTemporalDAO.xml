@@ -603,4 +603,21 @@
     )
     ]]>
     </insert>
+
+    <delete id="deleteList" parameterType="ValoradorContextoVO">
+    <![CDATA[
+        DELETE FROM
+            tbl_valoracion_tmp_vlrt
+        WHERE
+            EXISTS (
+                SELECT 1
+                FROM tbl_aspecto_cargo_ascr
+                WHERE
+                    ascr_crgo_pk = vlrt_crgo_pk
+                    AND ascr_aspv_pk = #{aspc.aspv.id}
+            )
+            AND vlrt_srvc_pk = #{srvc.id}
+            AND vlrt_prbt_pk = #{prbt.id}
+    ]]>
+    </delete>
 </mapper>

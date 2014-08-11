@@ -21,17 +21,25 @@
             <result column="aspv_prioridad" property="prioridad" />
 
             <result column="aspv_cpath_info1" property="cpathInfo1" />
-            <result column="aspv_cetiq_info1" property="cetiqInfo1" />
             <result column="aspv_cpath_info2" property="cpathInfo2" />
-            <result column="aspv_cetiq_info2" property="cetiqInfo2" />
             <result column="aspv_cpath_info3" property="cpathInfo3" />
-            <result column="aspv_cetiq_info3" property="cetiqInfo3" />
             <result column="aspv_cpath_info4" property="cpathInfo4" />
-            <result column="aspv_cetiq_info4" property="cetiqInfo4" />
             <result column="aspv_cpath_info5" property="cpathInfo5" />
-            <result column="aspv_cetiq_info5" property="cetiqInfo5" />
             <result column="aspv_cpath_info6" property="cpathInfo6" />
+
+            <result column="aspv_cetiq_info1" property="cetiqInfo1" />
+            <result column="aspv_cetiq_info2" property="cetiqInfo2" />
+            <result column="aspv_cetiq_info3" property="cetiqInfo3" />
+            <result column="aspv_cetiq_info4" property="cetiqInfo4" />
+            <result column="aspv_cetiq_info5" property="cetiqInfo5" />
             <result column="aspv_cetiq_info6" property="cetiqInfo6" />
+
+            <result column="aspv_cgrp_info1" property="cgrpInfo1" />
+            <result column="aspv_cgrp_info2" property="cgrpInfo2" />
+            <result column="aspv_cgrp_info3" property="cgrpInfo3" />
+            <result column="aspv_cgrp_info4" property="cgrpInfo4" />
+            <result column="aspv_cgrp_info5" property="cgrpInfo5" />
+            <result column="aspv_cgrp_info6" property="cgrpInfo6" />
 
             <result column="aspv_lsum_cuant1" property="lsumCuant1" />
             <result column="aspv_lsum_cuant2" property="lsumCuant2" />

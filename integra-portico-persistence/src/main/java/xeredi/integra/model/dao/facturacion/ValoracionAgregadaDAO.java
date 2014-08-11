@@ -19,13 +19,4 @@ public interface ValoracionAgregadaDAO {
      * @return the list
      */
     List<ValoracionAgregadaVO> selectList(final ValoradorContextoVO contextoVO);
-
-    /**
-     * Delete temporal list.
-     *
-     * @param contextoVO
-     *            the contexto vo
-     * @return the int
-     */
-    int deleteTemporalList(final ValoradorContextoVO contextoVO);
 }

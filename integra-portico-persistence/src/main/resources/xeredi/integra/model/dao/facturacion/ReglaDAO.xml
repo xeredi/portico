@@ -22,31 +22,33 @@
             <result column="rglv_path_es_suj_pasivo" property="pathEsSujPasivo" />
             <result column="rglv_path_cod_exen" property="pathCodExen" />
 
-            <result column="rglv_etiq_info1" property="etiqInfo1" />
             <result column="rglv_path_info1" property="pathInfo1" />
-            <result column="rglv_etiq_info2" property="etiqInfo2" />
             <result column="rglv_path_info2" property="pathInfo2" />
-            <result column="rglv_etiq_info3" property="etiqInfo3" />
             <result column="rglv_path_info3" property="pathInfo3" />
-            <result column="rglv_etiq_info4" property="etiqInfo4" />
             <result column="rglv_path_info4" property="pathInfo4" />
-            <result column="rglv_etiq_info5" property="etiqInfo5" />
             <result column="rglv_path_info5" property="pathInfo5" />
-            <result column="rglv_etiq_info6" property="etiqInfo6" />
             <result column="rglv_path_info6" property="pathInfo6" />
 
-            <result column="rglv_etiq_cuant1" property="etiqCuant1" />
+            <result column="rglv_etiq_info1" property="etiqInfo1" />
+            <result column="rglv_etiq_info2" property="etiqInfo2" />
+            <result column="rglv_etiq_info3" property="etiqInfo3" />
+            <result column="rglv_etiq_info4" property="etiqInfo4" />
+            <result column="rglv_etiq_info5" property="etiqInfo5" />
+            <result column="rglv_etiq_info6" property="etiqInfo6" />
+
             <result column="rglv_path_cuant1" property="pathCuant1" />
-            <result column="rglv_etiq_cuant2" property="etiqCuant2" />
             <result column="rglv_path_cuant2" property="pathCuant2" />
-            <result column="rglv_etiq_cuant3" property="etiqCuant3" />
             <result column="rglv_path_cuant3" property="pathCuant3" />
-            <result column="rglv_etiq_cuant4" property="etiqCuant4" />
             <result column="rglv_path_cuant4" property="pathCuant4" />
-            <result column="rglv_etiq_cuant5" property="etiqCuant5" />
             <result column="rglv_path_cuant5" property="pathCuant5" />
-            <result column="rglv_etiq_cuant6" property="etiqCuant6" />
             <result column="rglv_path_cuant6" property="pathCuant6" />
+
+            <result column="rglv_etiq_cuant1" property="etiqCuant1" />
+            <result column="rglv_etiq_cuant2" property="etiqCuant2" />
+            <result column="rglv_etiq_cuant3" property="etiqCuant3" />
+            <result column="rglv_etiq_cuant4" property="etiqCuant4" />
+            <result column="rglv_etiq_cuant5" property="etiqCuant5" />
+            <result column="rglv_etiq_cuant6" property="etiqCuant6" />
         </association>
 
         <association property="crgo" javaType="CargoVO">
@@ -61,12 +63,12 @@
 
     <sql id="SelectPrefix">
     <![CDATA[
-        SELECT rgla_pk, rgla_codigo, rgla_crgo_pk, rgla_enti_pk, rgla_tipo
-        	, rglv_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
-        	, rglv_path_info1, rglv_etiq_info1, rglv_path_info2, rglv_etiq_info2, rglv_path_info3, rglv_etiq_info3
-        	, rglv_path_info4, rglv_etiq_info4, rglv_path_info5, rglv_etiq_info5, rglv_path_info6, rglv_etiq_info6
-        	, rglv_path_cuant1, rglv_etiq_cuant1, rglv_path_cuant2, rglv_etiq_cuant2, rglv_path_cuant3, rglv_etiq_cuant3
-        	, rglv_path_cuant4, rglv_etiq_cuant4, rglv_path_cuant5, rglv_etiq_cuant5, rglv_path_cuant6, rglv_etiq_cuant6
+        SELECT rgla_pk, rgla_codigo, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rglv_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+            , rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+        	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
+            , rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+            , rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
+            , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
             , enti_tipo
         FROM portico.tbl_regla_rgla
             JOIN portico.tbl_regla_version_rglv ON

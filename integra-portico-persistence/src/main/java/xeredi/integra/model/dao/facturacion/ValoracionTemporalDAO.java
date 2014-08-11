@@ -53,4 +53,13 @@ public interface ValoracionTemporalDAO {
      *            the vo
      */
     void insert(final ValoracionTemporalVO vo);
+
+    /**
+     * Delete temporal list.
+     *
+     * @param contextoVO
+     *            the contexto vo
+     * @return the int
+     */
+    int deleteList(final ValoradorContextoVO contextoVO);
 }
