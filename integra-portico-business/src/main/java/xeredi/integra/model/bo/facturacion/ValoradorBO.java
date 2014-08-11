@@ -25,6 +25,7 @@ import xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionImpuestoDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionLineaDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO;
+import xeredi.integra.model.dao.facturacion.ValoradorContextoDAO;
 import xeredi.integra.model.dao.proceso.ProcesoDAO;
 import xeredi.integra.model.dao.servicio.ServicioDAO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
@@ -111,6 +112,10 @@ public class ValoradorBO implements Valorador {
     @Inject
     ValoracionImpuestoDAO vlriDAO;
 
+    /** The contexto dao. */
+    @Inject
+    ValoradorContextoDAO contextoDAO;
+
     /**
      * {@inheritDoc}
      */
@@ -127,11 +132,17 @@ public class ValoradorBO implements Valorador {
         contextoVO.setSrvc(srvcDAO.select(srvcId));
         contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
 
+        final Date fref = contextoDAO.selectFref(contextoVO);
+
+        contextoVO.setFref(fref);
+
+        LOG.info("fref: " + fref);
+
         // Obtencion de los cargos, y los cargos dependientes
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setIds(crgoIds);
-        crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
+        crgoCriterioVO.setFechaVigencia(fref);
         crgoCriterioVO.setSoloPrincipales(true);
 
         final List<CargoVO> crgoList = crgoDAO.selectList(crgoCriterioVO);
@@ -139,7 +150,7 @@ public class ValoradorBO implements Valorador {
         final CargoCriterioVO crgoDepCriterioVO = new CargoCriterioVO();
 
         crgoDepCriterioVO.setPadreIds(crgoIds);
-        crgoDepCriterioVO.setFechaVigencia(fechaLiquidacion);
+        crgoDepCriterioVO.setFechaVigencia(fref);
         crgoDepCriterioVO.setSoloDependientes(true);
 
         crgoList.addAll(crgoDAO.selectList(crgoDepCriterioVO));
@@ -148,18 +159,6 @@ public class ValoradorBO implements Valorador {
 
         for (final CargoVO crgo : crgoList) {
             contextoVO.setCrgo(crgo);
-
-            // FIXME Obtener fechas de inicio / fin de valoracion
-
-            Calendar calendar = Calendar.getInstance();
-
-            contextoVO.setFfin(calendar.getTime());
-
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
-
-            contextoVO.setFinicio(calendar.getTime());
-            contextoVO.setFreferencia(contextoVO.getFinicio());
-
             valorarCargoServicio(contextoVO);
         }
 
@@ -267,12 +266,18 @@ public class ValoradorBO implements Valorador {
             LOG.debug("Contexto: " + contextoVO);
         }
 
+        final Date fini = contextoDAO.selectFini(contextoVO);
+        final Date ffin = contextoDAO.selectFfin(contextoVO);
+
+        contextoVO.setFini(fini);
+        contextoVO.setFfin(ffin);
+
         // Obtener Reglas de Tipo Precio
 
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
         rglaCriterioVO.setCrgoId(contextoVO.getCrgo().getId());
-        rglaCriterioVO.setFechaVigencia(contextoVO.getFinicio());
+        rglaCriterioVO.setFechaVigencia(contextoVO.getFref());
 
         final IgBO igBO = new IgBO();
 
@@ -295,7 +300,6 @@ public class ValoradorBO implements Valorador {
                     vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(contextoVO));
 
                     break;
-
                 default:
                     vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(contextoVO));
 
@@ -305,10 +309,13 @@ public class ValoradorBO implements Valorador {
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-                    vlrt.setFreferencia(contextoVO.getFreferencia());
+                    vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
-                    vlrt.setFinicio(contextoVO.getFinicio());
-                    vlrt.setFfin(contextoVO.getFfin());
+
+                    if (contextoVO.getCrgo().isTemporal()) {
+                        vlrt.setFinicio(contextoVO.getFini());
+                        vlrt.setFfin(contextoVO.getFfin());
+                    }
 
                     if (vlrt.getImporte() == -0.0) {
                         vlrt.setImporte(+0.0);
@@ -348,10 +355,13 @@ public class ValoradorBO implements Valorador {
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-                    vlrt.setFreferencia(contextoVO.getFreferencia());
+                    vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
-                    vlrt.setFinicio(contextoVO.getFinicio());
-                    vlrt.setFfin(contextoVO.getFfin());
+
+                    if (contextoVO.getCrgo().isTemporal()) {
+                        vlrt.setFinicio(contextoVO.getFini());
+                        vlrt.setFfin(contextoVO.getFfin());
+                    }
 
                     if (vlrt.getImporte() == -0.0) {
                         vlrt.setImporte(+0.0);
@@ -391,10 +401,13 @@ public class ValoradorBO implements Valorador {
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-                    vlrt.setFreferencia(contextoVO.getFreferencia());
+                    vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
-                    vlrt.setFinicio(contextoVO.getFinicio());
-                    vlrt.setFfin(contextoVO.getFfin());
+
+                    if (contextoVO.getCrgo().isTemporal()) {
+                        vlrt.setFinicio(contextoVO.getFini());
+                        vlrt.setFfin(contextoVO.getFfin());
+                    }
 
                     if (vlrt.getImporte() == -0.0) {
                         vlrt.setImporte(+0.0);

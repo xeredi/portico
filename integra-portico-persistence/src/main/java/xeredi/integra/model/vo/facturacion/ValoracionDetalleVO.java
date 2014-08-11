@@ -1,5 +1,7 @@
 package xeredi.integra.model.vo.facturacion;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.vo.servicio.SubservicioVO;
@@ -27,6 +29,12 @@ public final class ValoracionDetalleVO {
 
     /** The ssrv. */
     private SubservicioVO ssrv;
+
+    /** The fini. */
+    private Date fini;
+
+    /** The ffin. */
+    private Date ffin;
 
     /** The cuant1. */
     private Double cuant1;
@@ -412,6 +420,44 @@ public final class ValoracionDetalleVO {
      */
     public void setInfo6(String value) {
         this.info6 = value;
+    }
+
+    /**
+     * Gets the fini.
+     *
+     * @return the fini
+     */
+    public Date getFini() {
+        return fini;
+    }
+
+    /**
+     * Sets the fini.
+     *
+     * @param value
+     *            the fini
+     */
+    public void setFini(Date value) {
+        this.fini = value;
+    }
+
+    /**
+     * Gets the ffin.
+     *
+     * @return the ffin
+     */
+    public Date getFfin() {
+        return ffin;
+    }
+
+    /**
+     * Sets the ffin.
+     *
+     * @param value
+     *            the ffin
+     */
+    public void setFfin(Date value) {
+        this.ffin = value;
     }
 
 }

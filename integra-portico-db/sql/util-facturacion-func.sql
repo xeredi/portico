@@ -118,6 +118,37 @@ SELECT portico.escalaEsBuqueBaseEnPuerto(1229010, NOW());
 -- escalaNumeroPuertosBuque
 SELECT portico.escalaNumeroPuertosBuque(1229010, NOW());
 
+-- atraqueUdsGt
+SELECT portico.escalaNumeroPuertosBuque(1628440, NOW());
+
+
+
+-- escalaUdsGt
+WITH buque AS (
+	SELECT prvr_pk
+	FROM tbl_parametro_version_prvr
+	WHERE 
+		prvr_prmt_pk = any(
+			SELECT srdt_prmt_pk
+			FROM tbl_servicio_dato_srdt
+			WHERE 
+				srdt_srvc_pk = 1628195
+				AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+		)
+		AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+)
+SELECT 
+	COALESCE(
+		(SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02'))
+		, (SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01'))
+	) AS unidades
+FROM buque
+;
+
+
+
+
+
 -- atraqueNumeroPeriodosFacturables
 
 SELECT *
@@ -135,7 +166,7 @@ WHERE
 
 SELECT *
 FROM tbl_subservicio_ssrv
-WHERE ssrv_srvc_pk = 1259122
+WHERE ssrv_srvc_pk = 1628087
 ;
 
 SELECT *
@@ -153,7 +184,7 @@ WHERE
 	ssrv_srvc_pk = (
 		SELECT ssrv_srvc_pk 
 		FROM tbl_subservicio_ssrv
-		WHERE ssrv_pk = 1259144
+		WHERE ssrv_pk = 1628291
 	)
 	AND ssrv_estado IN ('I', 'F')
 	AND (
@@ -208,3 +239,36 @@ WHERE
 	)
 ;
 
+
+
+
+
+-- Busqueda de fecha de referencia de un servicio
+SELECT *
+FROM tbl_servicio_srvc
+	INNER JOIN tbl_cargo_crgo ON
+		crgo_tpsr_pk = srvc_tpsr_pk
+		AND crgo_es_principal = 1
+WHERE srvc_pk = 1628895;
+
+SELECT *
+	, (
+		CASE
+			WHEN NOT EXISTS (
+				SELECT 1 
+				FROM tbl_cargo_crgo
+				WHERE crgo_tpsr_pk = srvc_tpsr_pk
+					AND crgo_es_principal = 1
+					AND crgo_es_temporal = 1
+			)
+			THEN srvc_fref
+
+			ELSE srvc_fini
+		END
+	) AS fref
+FROM tbl_servicio_srvc
+WHERE srvc_pk = 1628895;
+
+
+SELECT * 
+FROM tbl_cargo_crgo;

@@ -7,11 +7,13 @@
     <![CDATA[
         INSERT INTO tbl_valoracion_det_vlrd (
             vlrd_pk, vlrd_vlrl_pk, vlrd_vlrc_pk, vlrd_importe_base, vlrd_importe, vlrd_ssrv_pk
+            , vlrd_fini, vlrd_ffin
             , vlrd_cuant1, vlrd_cuant2, vlrd_cuant3, vlrd_cuant4, vlrd_cuant5, vlrd_cuant6
             , vlrd_info1, vlrd_info2, vlrd_info3, vlrd_info4, vlrd_info5, vlrd_info6
         )
         VALUES (
             #{id}, #{vlrlId}, #{vlrcId}, #{importeBase}, #{importe}, #{ssrv.id}
+            , #{fini}, #{ffin}
             , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )

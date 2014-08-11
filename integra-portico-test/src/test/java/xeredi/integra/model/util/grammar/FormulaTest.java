@@ -59,7 +59,7 @@ public final class FormulaTest {
 
         reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
         contextoVO.setRgla(reglaVO);
-        contextoVO.setFreferencia(Calendar.getInstance().getTime());
+        contextoVO.setFref(Calendar.getInstance().getTime());
 
         final FormulaSqlGenerator extractor = new FormulaSqlGenerator(reglaVO);
 

@@ -34,7 +34,7 @@ public final class ValoradorBOTest {
             // Manifiesto
             crgoIds.add(60001L);
             crgoIds.add(60002L);
-            vlrdBO.valorarServicio(1229570L, crgoIds, Calendar.getInstance().getTime(), 1237001L);
+            vlrdBO.valorarServicio(1628895L, crgoIds, Calendar.getInstance().getTime(), 1644001L);
             // vlrdBO.valorarServicio(1229570L, crgoIds, Calendar.getInstance().getTime(), 1237001L);
 
             // Escala

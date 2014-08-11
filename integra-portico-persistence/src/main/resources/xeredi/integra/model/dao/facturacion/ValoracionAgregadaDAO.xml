@@ -54,6 +54,9 @@
             <association property="vlrl" javaType="ValoracionLineaVO">
                 <id column="vlrl_ssrv_pk" />
 
+                <result column="vlrl_fini" property="fini" />
+                <result column="vlrl_ffin" property="ffin" />
+
                 <result column="vlrl_info1" property="info1" />
                 <result column="vlrl_info2" property="info2" />
                 <result column="vlrl_info3" property="info3" />
@@ -105,6 +108,8 @@
 
                 <result column="vlrd_importe_base" property="importeBase" />
                 <result column="vlrd_importe" property="importe" />
+                <result column="vlrd_fini" property="fini" />
+                <result column="vlrd_ffin" property="ffin" />
 
                 <result column="vlrd_info1" property="info1" />
                 <result column="vlrd_info2" property="info2" />
@@ -184,6 +189,10 @@
             <if test="!aspc.aspv.lgrpInfo6">, vlrt_info6 AS vlrd_info6</if>
 
             <![CDATA[
+                , vlrt_ssrv_pk AS vlrd_ssrv_pk
+                , vlrt_fini AS vlrd_fini
+                , vlrt_ffin AS vlrd_ffin
+
                 , vlrt_cuant1 AS vlrd_cuant1
                 , vlrt_cuant2 AS vlrd_cuant2
                 , vlrt_cuant3 AS vlrd_cuant3
@@ -196,6 +205,8 @@
         <if test="!aspc.aspv.agrupaDetalles">
         <![CDATA[
                 , vlrt_ssrv_pk AS vlrl_ssrv_pk
+                , vlrt_fini AS vlrl_fini
+                , vlrt_ffin AS vlrl_ffin
 
                 , vlrt_info1 AS vlrl_info1
                 , vlrt_info2 AS vlrl_info2
@@ -213,7 +224,6 @@
         ]]>
         </if>
     <![CDATA[
-                , vlrt_ssrv_pk AS vlrd_ssrv_pk
                 , vlrt_importe_base AS vlrd_importe_base
                 , vlrt_importe AS vlrd_importe
 

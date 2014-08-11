@@ -30,13 +30,13 @@ public final class ValoradorContextoVO {
     private Date fliquidacion;
 
     /** The fecha inicio. */
-    private Date finicio;
+    private Date fini;
 
     /** The fecha fin. */
     private Date ffin;
 
     /** The fecha referencia. */
-    private Date freferencia;
+    private Date fref;
 
     /** The rgla. */
     private ReglaVO rgla;
@@ -148,25 +148,6 @@ public final class ValoradorContextoVO {
     }
 
     /**
-     * Gets the finicio.
-     *
-     * @return the finicio
-     */
-    public Date getFinicio() {
-        return finicio;
-    }
-
-    /**
-     * Sets the finicio.
-     *
-     * @param value
-     *            the finicio
-     */
-    public void setFinicio(Date value) {
-        this.finicio = value;
-    }
-
-    /**
      * Gets the ffin.
      *
      * @return the ffin
@@ -183,25 +164,6 @@ public final class ValoradorContextoVO {
      */
     public void setFfin(Date value) {
         this.ffin = value;
-    }
-
-    /**
-     * Gets the freferencia.
-     *
-     * @return the freferencia
-     */
-    public Date getFreferencia() {
-        return freferencia;
-    }
-
-    /**
-     * Sets the freferencia.
-     *
-     * @param value
-     *            the freferencia
-     */
-    public void setFreferencia(Date value) {
-        this.freferencia = value;
     }
 
     /**
@@ -240,6 +202,44 @@ public final class ValoradorContextoVO {
      */
     public void setAspc(AspectoVO value) {
         this.aspc = value;
+    }
+
+    /**
+     * Gets the fini.
+     *
+     * @return the fini
+     */
+    public Date getFini() {
+        return fini;
+    }
+
+    /**
+     * Sets the fini.
+     *
+     * @param value
+     *            the fini
+     */
+    public void setFini(Date value) {
+        this.fini = value;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the fref
+     */
+    public void setFref(Date value) {
+        this.fref = value;
     }
 
 }

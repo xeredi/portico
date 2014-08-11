@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.facturacion.ValoradorContextoDAO">
+    <select id="selectFref" parameterType="ValoradorContextoVO" resultType="java.util.Date">
+    <![CDATA[
+        SELECT
+            (
+                CASE
+                    WHEN NOT EXISTS (
+                        SELECT 1
+                        FROM tbl_cargo_crgo
+                        WHERE crgo_tpsr_pk = srvc_tpsr_pk
+                            AND crgo_es_principal = 1
+                            AND crgo_es_temporal = 1
+                    )
+                    THEN srvc_fref
+
+                    ELSE srvc_fini
+                END
+            ) AS fref
+        FROM tbl_servicio_srvc
+        WHERE srvc_pk = #{srvc.id}
+    ]]>
+    </select>
+
+    <select id="selectFini" parameterType="ValoradorContextoVO" resultType="java.util.Date">
+    <![CDATA[
+        SELECT
+            (
+                CASE
+                    WHEN EXISTS (
+                        SELECT 1
+                        FROM tbl_cargo_crgo
+                        WHERE crgo_tpsr_pk = srvc_tpsr_pk
+                            AND crgo_es_principal = 1
+                            AND crgo_es_temporal = 1
+                            AND crgo_pk = #{crgo.id}
+                    )
+                    THEN srvc_fini
+
+                    ELSE srvc_fref
+                END
+            ) AS fref
+        FROM tbl_servicio_srvc
+        WHERE srvc_pk = #{srvc.id}
+    ]]>
+    </select>
+
+    <select id="selectFfin" parameterType="ValoradorContextoVO" resultType="java.util.Date">
+    <![CDATA[
+        SELECT
+            (
+                CASE
+                    WHEN EXISTS (
+                        SELECT 1
+                        FROM tbl_cargo_crgo
+                        WHERE crgo_tpsr_pk = srvc_tpsr_pk
+                            AND crgo_es_principal = 1
+                            AND crgo_es_temporal = 1
+                            AND crgo_pk = #{crgo.id}
+                    )
+                    THEN srvc_ffin
+
+                    ELSE srvc_fref
+                END
+            ) AS fref
+        FROM tbl_servicio_srvc
+        WHERE srvc_pk = #{srvc.id}
+    ]]>
+    </select>
+</mapper>
