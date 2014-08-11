@@ -369,41 +369,39 @@ COMMENT ON FUNCTION portico.escalaNumeroPuertosBuque(INTEGER, TIMESTAMP with tim
 
 CREATE FUNCTION portico.atraqueUdsGt(itemId INTEGER, fref TIMESTAMP with time zone) RETURNS INT AS $$
 DECLARE
-	udsGt integer;
+	gt integer;
+	udsFact integer;
 BEGIN
-	udsGt := (
-		WITH buque AS (
-			SELECT prvr_pk
-			FROM tbl_parametro_version_prvr
-			WHERE 
-				prvr_prmt_pk = any(
-					SELECT srdt_prmt_pk
-					FROM tbl_servicio_dato_srdt
-					WHERE 
-						srdt_srvc_pk = ANY(
-							SELECT ssrv_srvc_pk
-							FROM tbl_subservicio_ssrv
-							WHERE
-								ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
-								AND ssrv_pk = itemId
-						)
-						AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
-				)
-				AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref)
-		)
-		SELECT 
-			COALESCE(
-				(SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02'))
-				, (SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01'))
-			) AS unidades
-		FROM buque
-	);
+	WITH buque AS (
+		SELECT prvr_pk
+		FROM tbl_parametro_version_prvr
+		WHERE 
+			prvr_prmt_pk = any(
+				SELECT srdt_prmt_pk
+				FROM tbl_servicio_dato_srdt
+				WHERE 
+					srdt_srvc_pk = ANY(
+						SELECT ssrv_srvc_pk
+						FROM tbl_subservicio_ssrv
+						WHERE
+							ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+							AND ssrv_pk = itemId
+					)
+					AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+			)
+			AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref)
+	)
+	SELECT INTO gt, udsFact
+		(SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01'))
+		, (SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02'))
+	FROM buque
+	;
 
-	IF udsGt IS NULL
+	IF udsFact IS NULL OR udsFact = 0
 	THEN
-		RETURN 0;
+		RETURN gt;
 	ELSE
-		RETURN udsGt;
+		RETURN udsFact;
 	END IF;
 END;
 $$ LANGUAGE plpgsql
@@ -422,35 +420,33 @@ COMMENT ON FUNCTION portico.atraqueUdsGt(INTEGER, TIMESTAMP with time zone) IS '
 
 CREATE FUNCTION portico.escalaUdsGt(itemId INTEGER, fref TIMESTAMP with time zone) RETURNS INT AS $$
 DECLARE
-	udsGt integer;
+	gt integer;
+	udsFact integer;
 BEGIN
-	udsGt := (
-		WITH buque AS (
-			SELECT prvr_pk
-			FROM tbl_parametro_version_prvr
-			WHERE 
-				prvr_prmt_pk = any(
-					SELECT srdt_prmt_pk
-					FROM tbl_servicio_dato_srdt
-					WHERE 
-						srdt_srvc_pk = itemId
-						AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
-				)
-				AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref)
-		)
-		SELECT 
-			COALESCE(
-				(SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02'))
-				, (SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01'))
-			) AS unidades
-		FROM buque
-	);
+	WITH buque AS (
+		SELECT prvr_pk
+		FROM tbl_parametro_version_prvr
+		WHERE 
+			prvr_prmt_pk = any(
+				SELECT srdt_prmt_pk
+				FROM tbl_servicio_dato_srdt
+				WHERE 
+					srdt_srvc_pk = itemId
+					AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
+			)
+			AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref)
+	)
+	SELECT INTO gt, udsFact
+		(SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01'))
+		, (SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02'))
+	FROM buque
+	;
 
-	IF udsGt IS NULL
+	IF udsFact IS NULL OR udsFact = 0
 	THEN
-		RETURN 0;
+		RETURN gt;
 	ELSE
-		RETURN udsGt;
+		RETURN udsFact;
 	END IF;
 END;
 $$ LANGUAGE plpgsql

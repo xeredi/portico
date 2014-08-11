@@ -119,31 +119,10 @@ SELECT portico.escalaEsBuqueBaseEnPuerto(1229010, NOW());
 SELECT portico.escalaNumeroPuertosBuque(1229010, NOW());
 
 -- atraqueUdsGt
-SELECT portico.escalaNumeroPuertosBuque(1628440, NOW());
-
-
+SELECT portico.atraqueUdsGt(1628440, NOW());
 
 -- escalaUdsGt
-WITH buque AS (
-	SELECT prvr_pk
-	FROM tbl_parametro_version_prvr
-	WHERE 
-		prvr_prmt_pk = any(
-			SELECT srdt_prmt_pk
-			FROM tbl_servicio_dato_srdt
-			WHERE 
-				srdt_srvc_pk = 1628195
-				AND srdt_tpdt_pk = portico.getTipoDato('BUQUE')
-		)
-		AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-)
-SELECT 
-	COALESCE(
-		(SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_02'))
-		, (SELECT prdt_nentero FROM tbl_parametro_dato_prdt WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('ENTERO_01'))
-	) AS unidades
-FROM buque
-;
+SELECT portico.escalaUdsGt(1628195, NOW());
 
 
 

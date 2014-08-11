@@ -19,6 +19,8 @@ aritmethicExpr
 	| pt = path
 	| fn = 'COALESCE' '(' ae1 = aritmethicExpr ',' ae2 = aritmethicExpr ')'
 	| fn = 'escalaNumeroPuertosBuque' '()'
+	| fn = 'atraqueUdsGt' '()'
+	| fn = 'escalaUdsGt' '()'
 	| fn = 'escalaValorContador' '(' fnArg1 = STRING ')'
 	| lp = '(' ae1 = aritmethicExpr rp = ')'
 ;

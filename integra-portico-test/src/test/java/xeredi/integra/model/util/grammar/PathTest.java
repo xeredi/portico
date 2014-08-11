@@ -31,6 +31,8 @@ public final class PathTest {
     @Test
     public void test() throws IOException {
         for (int i = 0; i < 1; i++) {
+            test("0.4", false);
+            test("'ABC'", false);
             test("servicio.dato(ACUERDO)", true);
             test("servicio.dato(ACUERDO)", false);
             test("dato(MERCANCIA)", true);

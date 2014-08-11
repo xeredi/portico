@@ -37,6 +37,7 @@ public final class ConditionTest {
         test("dato(MERCANCIA) = 5");
         test("servicio.dato(TIPO_MANIF) = 5");
         test("padre(BL).dato(TIPO_OP_BL) = 5");
+        test("servicio.dato(TIPO_MANIF) = 'P'");
         // test("servicio.dato(BUQUE) <> 4");
     }
 

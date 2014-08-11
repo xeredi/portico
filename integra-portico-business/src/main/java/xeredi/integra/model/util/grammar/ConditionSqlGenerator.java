@@ -12,9 +12,9 @@ import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.model.util.grammar.ConditionParser.BooleanExprContext;
-import xeredi.integra.model.util.grammar.ConditionParser.NumericExprContext;
 import xeredi.integra.model.util.grammar.ConditionParser.PathContext;
 import xeredi.integra.model.util.grammar.ConditionParser.PathElementContext;
+import xeredi.integra.model.util.grammar.ConditionParser.ScalarExprContext;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
 import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadVO;
@@ -33,6 +33,12 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
     /** The contexto vo. */
     private final transient ReglaVO reglaVO;
 
+    /**
+     * The Constructor.
+     *
+     * @param areglaVO
+     *            the aregla vo
+     */
     public ConditionSqlGenerator(final ReglaVO areglaVO) {
         super();
         this.reglaVO = areglaVO;
@@ -42,17 +48,27 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
      * {@inheritDoc}
      */
     @Override
-    public String visitNumericExpr(NumericExprContext ctx) {
+    public String visitScalarExpr(ScalarExprContext ctx) {
         if (ctx.nmb != null) {
             return ctx.nmb.getText();
         }
 
+        if (ctx.str != null) {
+            return ctx.str.getText();
+        }
+
         if (ctx.fn != null) {
             if ("COALESCE".equals(ctx.fn.getText())) {
-                return " COALESCE(" + visitNumericExpr(ctx.ne1) + ", " + visitNumericExpr(ctx.ne2) + ")";
+                return " COALESCE(" + visitScalarExpr(ctx.ne1) + ", " + visitScalarExpr(ctx.ne2) + ")";
             }
             if ("escalaNumeroPuertosBuque".equals(ctx.fn.getText())) {
                 return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
+            }
+            if ("atraqueUdsGt".equals(ctx.fn.getText())) {
+                return " portico.atraqueUdsGt(itemId, item.fref)";
+            }
+            if ("escalaUdsGt".equals(ctx.fn.getText())) {
+                return " portico.escalaUdsGt(itemId, item.fref)";
             }
             if ("escalaValorContador".equals(ctx.fn.getText())) {
                 return " portico.escalaValorContador(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
@@ -86,7 +102,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
         }
 
         if (ctx.opComp != null) {
-            return visitNumericExpr(ctx.ne1) + ' ' + ctx.opComp.getText() + ' ' + visitNumericExpr(ctx.ne2);
+            return visitScalarExpr(ctx.se1) + ' ' + ctx.opComp.getText() + ' ' + visitScalarExpr(ctx.se2);
         }
 
         if (ctx.bool != null) {

@@ -58,6 +58,12 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
             if ("escalaNumeroPuertosBuque".equals(ctx.fn.getText())) {
                 return " portico.escalaNumeroPuertosBuque(itemId, item.fref)";
             }
+            if ("escalaUdsGt".equals(ctx.fn.getText())) {
+                return " portico.escalaUdsGt(itemId, item.fref)";
+            }
+            if ("atraqueUdsGt".equals(ctx.fn.getText())) {
+                return " portico.atraqueUdsGt(itemId, item.fref)";
+            }
             if ("escalaValorContador".equals(ctx.fn.getText())) {
                 return " portico.escalaValorContador(itemId, item.fref, " + ctx.fnArg1.getText() + ")";
             }

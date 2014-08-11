@@ -18,7 +18,7 @@ booleanExpr
 		'true'
 		| 'false'
 	)
-	| ne1 = numericExpr opComp =
+	| se1 = scalarExpr opComp =
 	(
 		'>'
 		| '<'
@@ -26,20 +26,23 @@ booleanExpr
 		| '<='
 		| '='
 		| '<>'
-	) ne2 = numericExpr
-//	| ne1 = numericExpr in = 'IN' '(' scalarList ')'
+	) se2 = scalarExpr
+//	| se1 = numericExpr in = 'IN' '(' scalarList ')'
 	| lp = '(' be1 = booleanExpr rp = ')'
 	| fn = 'escalaEsAvituallamiento' '()'
 	| fn = 'escalaEsBuqueBaseEnPuerto' '()'
 	| fn = 'escalaEsBuqueCertificado' '(' fnArg1 = STRING ')'
 ;
 
-numericExpr
+scalarExpr
 :
 	nmb = NUMBER
+	| str = STRING
 	| pt = path
-	| fn = 'COALESCE' '(' ne1 = numericExpr ',' ne2 = numericExpr ')'
+	| fn = 'COALESCE' '(' ne1 = scalarExpr ',' ne2 = scalarExpr ')'
 	| fn = 'escalaNumeroPuertosBuque' '()'
+	| fn = 'atraqueUdsGt' '()'
+	| fn = 'escalaUdsGt' '()'
 	| fn = 'escalaValorContador' '(' fnArg1 = STRING ')'
 ;
 /*

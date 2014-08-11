@@ -2,19 +2,14 @@ grammar Path;
 
 value
 :
-	function
-	| path
-	| scalar
-;
-
-function
-:
-	coalesce
-;
-
-coalesce
-:
-	'COALESCE' '(' value ',' value ')'
+	nmb = NUMBER
+	| str = STRING
+	| pt = path
+	| fn = 'COALESCE' '(' vl1 = value ',' vl2 = value ')'
+	| fn = 'escalaNumeroPuertosBuque' '()'
+	| fn = 'atraqueUdsGt' '()'
+	| fn = 'escalaUdsGt' '()'
+	| fn = 'escalaValorContador' '(' fnArg1 = STRING ')'
 ;
 
 path
@@ -54,21 +49,21 @@ ID
 
 scalar
 :
-	DOUBLE
-	| INT
+	NUMBER
+	| STRING
 ;
 
-DOUBLE
+STRING
+:
+	'\'' [A-Za-z0-9]+ '\''
+;
+
+NUMBER
 :
 	[0-9]+
 	(
 		. [0-9]+
 	)?
-;
-
-INT
-:
-	[0-9]+
 ;
 
 WS

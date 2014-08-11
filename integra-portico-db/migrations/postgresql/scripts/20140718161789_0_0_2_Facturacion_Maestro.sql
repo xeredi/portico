@@ -90,7 +90,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
 			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 		) VALUES (
-			64200, 63200, '2013-01-01', NULL, 1, 2.95, 'dato(TIPO_ESTAN_ATR_3) = ????', '2.95 * dato(ENTERO_04) / 1000.0'
+			64200, 63200, '2013-01-01', NULL, 1, 1.3, 'dato(TIPO_ESTAN_ATR_3) = ????', '1.3 * atraqueUdsGt()'
 			, 'servicio.dato(TIPO_IVA)', 'dato(ORGA_2)', 'dato(BOOLEANO_01)', 'dato(COD_EXEN)'
 			, NULL, NULL, NULL, NULL, NULL, NULL
 			, NULL, NULL, NULL, NULL, NULL, NULL
