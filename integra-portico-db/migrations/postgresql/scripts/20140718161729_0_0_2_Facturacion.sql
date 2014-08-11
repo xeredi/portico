@@ -392,6 +392,8 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 	, vlrl_rgla_padre_pk BIGINT NOT NULL
 	, vlrl_impuesto_pk BIGINT NOT NULL
 	, vlrl_ssrv_pk BIGINT
+	, vlrl_fini TIMESTAMP
+	, vlrl_ffin TIMESTAMP
 
 	, vlrl_cuant1 DOUBLE PRECISION
 	, vlrl_cuant2 DOUBLE PRECISION
@@ -439,6 +441,8 @@ CREATE TABLE portico.tbl_valoracion_det_vlrd
 	, vlrd_importe_base NUMERIC(10, 2) NOT NULL
 	, vlrd_importe NUMERIC(10, 2) NOT NULL
 	, vlrd_ssrv_pk BIGINT
+	, vlrd_fini TIMESTAMP
+	, vlrd_ffin TIMESTAMP
 
 	, vlrd_cuant1 DOUBLE PRECISION
 	, vlrd_cuant2 DOUBLE PRECISION

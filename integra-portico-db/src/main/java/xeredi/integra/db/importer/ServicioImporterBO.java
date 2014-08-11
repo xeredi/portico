@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -218,8 +219,20 @@ public final class ServicioImporterBO {
                     srvcVO.setFreferencia(fechaReferencia);
 
                     if (tpsrVO.isTemporal()) {
-                        final Date fechaInicio = rs.getDate(i++);
-                        final Date fechaFin = rs.getDate(i++);
+                        Date fechaInicio = null;
+                        Date fechaFin = null;
+
+                        final Timestamp tsInicio = rs.getTimestamp(i++);
+
+                        if (!rs.wasNull()) {
+                            fechaInicio = new Date(tsInicio.getTime());
+                        }
+
+                        final Timestamp tsFin = rs.getTimestamp(i++);
+
+                        if (!rs.wasNull()) {
+                            fechaFin = new Date(tsFin.getTime());
+                        }
 
                         srvcVO.setFinicio(fechaInicio);
                         srvcVO.setFfin(fechaFin);
@@ -288,8 +301,20 @@ public final class ServicioImporterBO {
                         ssrvVO.setNumero(numeroSubservicio++);
 
                         if (tpssVO.isTemporal()) {
-                            final Date fechaInicio = rs.getDate(i++);
-                            final Date fechaFin = rs.getDate(i++);
+                            Date fechaInicio = null;
+                            Date fechaFin = null;
+
+                            final Timestamp tsInicio = rs.getTimestamp(i++);
+
+                            if (!rs.wasNull()) {
+                                fechaInicio = new Date(tsInicio.getTime());
+                            }
+
+                            final Timestamp tsFin = rs.getTimestamp(i++);
+
+                            if (!rs.wasNull()) {
+                                fechaFin = new Date(tsFin.getTime());
+                            }
 
                             ssrvVO.setFinicio(fechaInicio);
                             ssrvVO.setFfin(fechaFin);

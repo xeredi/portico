@@ -98,7 +98,7 @@ FROM
 	JOIN portico.tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
 WHERE 
-	entd_enti_pk = portico.getEntidad('TIPO_IVA')
+	entd_enti_pk = portico.getEntidad('ATRAQUE')
 --	AND entd_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
 ;
 

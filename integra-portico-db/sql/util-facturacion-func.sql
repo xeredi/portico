@@ -118,7 +118,56 @@ SELECT portico.escalaEsBuqueBaseEnPuerto(1229010, NOW());
 -- escalaNumeroPuertosBuque
 SELECT portico.escalaNumeroPuertosBuque(1229010, NOW());
 
+-- atraqueNumeroPeriodosFacturables
 
+SELECT *
+	, (
+		SELECT COUNT(1)
+		FROM tbl_subservicio_ssrv
+		WHERE ssrv_srvc_pk = srvc_pk
+			AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+	) AS numAtraques
+FROM tbl_servicio_srvc
+WHERE 
+	srvc_tpsr_pk = portico.getEntidad('ESCALA')
+	AND srvc_estado IN ('I', 'F');
+;
+
+SELECT *
+FROM tbl_subservicio_ssrv
+WHERE ssrv_srvc_pk = 1259122
+;
+
+SELECT *
+	, GREATEST(ssrv_fini, '2013-01-01') AS ssrv_fini_liq
+	, LEAST(ssrv_ffin, '2015-01-01') AS ssrv_ffin_liq
+	, (
+		SELECT ssdt_cadena
+		FROM tbl_subservicio_dato_ssdt
+		WHERE ssdt_ssrv_pk = ssrv_pk
+			AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR_3')
+	) AS ssrv_tipo_estancia
+FROM 
+	tbl_subservicio_ssrv
+WHERE 
+	ssrv_srvc_pk = (
+		SELECT ssrv_srvc_pk 
+		FROM tbl_subservicio_ssrv
+		WHERE ssrv_pk = 1259144
+	)
+	AND ssrv_estado IN ('I', 'F')
+	AND (
+		ssrv_fini BETWEEN '2013-01-01' AND '2015-01-01'
+		OR ssrv_fini BETWEEN '2013-01-01' AND '2015-01-01'
+	)
+	AND EXISTS (
+		SELECT 1
+		FROM tbl_subservicio_dato_ssdt
+		WHERE ssdt_ssrv_pk = ssrv_pk
+			AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+			AND ssdt_cadena IN ('0', '1')
+	)
+;
 
 
 
