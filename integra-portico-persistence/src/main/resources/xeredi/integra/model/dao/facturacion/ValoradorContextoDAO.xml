@@ -6,22 +6,48 @@
     <select id="selectFref" parameterType="ValoradorContextoVO" resultType="java.util.Date">
     <![CDATA[
         SELECT
-            (
-                CASE
-                    WHEN NOT EXISTS (
-                        SELECT 1
-                        FROM tbl_cargo_crgo
-                        WHERE crgo_tpsr_pk = srvc_tpsr_pk
-                            AND crgo_es_principal = 1
-                            AND crgo_es_temporal = 1
-                    )
-                    THEN srvc_fref
+        	(
+        		CASE
+        			WHEN
+        				tpsr_es_temporal = 0
+        				AND EXISTS (
+        					SELECT 1
+        					FROM tbl_cargo_crgo
+        					WHERE crgo_tpsr_pk = srvc_tpsr_pk
+        						AND EXISTS (
+        							SELECT 1
+        							FROM tbl_cargo_version_crgv
+        							WHERE crgv_crgo_pk = crgo_pk
+        								AND srvc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fliquidacion})
+        						)
+        						AND crgo_pk = #{crgo.id}
+        				)
+        			THEN
+        				srvc_fref
 
-                    ELSE srvc_fini
-                END
-            ) AS fref
+        			WHEN
+        				tpsr_es_temporal = 1
+        				AND EXISTS (
+        					SELECT 1
+        					FROM tbl_cargo_crgo
+        					WHERE crgo_tpsr_pk = srvc_tpsr_pk
+        						AND EXISTS (
+        							SELECT 1
+        							FROM tbl_cargo_version_crgv
+        							WHERE crgv_crgo_pk = crgo_pk
+        								AND srvc_fini BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fliquidacion})
+        						)
+        						AND crgo_pk = #{crgo.id}
+        				)
+        			THEN
+        				srvc_fini
+        		END
+        	) AS fref
         FROM tbl_servicio_srvc
-        WHERE srvc_pk = #{srvc.id}
+        	INNER JOIN tbl_tipo_servicio_tpsr ON
+        		tpsr_pk = srvc_tpsr_pk
+        WHERE
+        	srvc_pk = #{srvc.id}
     ]]>
     </select>
 

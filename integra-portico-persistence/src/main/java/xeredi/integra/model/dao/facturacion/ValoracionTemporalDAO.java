@@ -23,7 +23,8 @@ public interface ValoracionTemporalDAO {
     /**
      * Select aplicar regla decorador servicio.
      *
-     * @param contextoVO the contexto vo
+     * @param contextoVO
+     *            the contexto vo
      * @return the list
      */
     List<ValoracionTemporalVO> selectAplicarReglaDecoradorServicio(final ValoradorContextoVO contextoVO);
@@ -45,6 +46,15 @@ public interface ValoracionTemporalDAO {
      * @return the list
      */
     List<ValoracionTemporalVO> selectAplicarReglaDecoradorSubservicio(final ValoradorContextoVO contextoVO);
+
+    /**
+     * Exists pendiente.
+     *
+     * @param contextoVO
+     *            the contexto vo
+     * @return true, if successful
+     */
+    boolean existsPendiente(final ValoradorContextoVO contextoVO);
 
     /**
      * Insert.

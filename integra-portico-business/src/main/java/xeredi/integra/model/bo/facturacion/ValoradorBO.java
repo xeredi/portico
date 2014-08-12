@@ -125,60 +125,82 @@ public class ValoradorBO implements Valorador {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
                 + ", prbtId: " + prbtId);
 
-        final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
+        for (final Long crgoId : crgoIds) {
+            // Obtencion de los cargos, y los cargos dependientes
+            final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
-        contextoVO.setFliquidacion(fechaLiquidacion);
-        contextoVO.setPrbt(prbtDAO.select(prbtId));
-        contextoVO.setSrvc(srvcDAO.select(srvcId));
-        contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
+            crgoCriterioVO.setId(crgoId);
+            crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
+            crgoCriterioVO.setSoloPrincipales(true);
 
-        final Date fref = contextoDAO.selectFref(contextoVO);
+            final CargoVO crgo = crgoDAO.selectObject(crgoCriterioVO);
 
-        contextoVO.setFref(fref);
+            if (crgo == null) {
+                throw new Error("No se encuentra el cargo: " + crgoCriterioVO);
+            }
 
-        LOG.info("fref: " + fref);
+            LOG.info("Cargo principal: " + crgo.getCodigo());
 
-        // Obtencion de los cargos, y los cargos dependientes
-        final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+            final List<CargoVO> crgoList = new ArrayList<>();
 
-        crgoCriterioVO.setIds(crgoIds);
-        crgoCriterioVO.setFechaVigencia(fref);
-        crgoCriterioVO.setSoloPrincipales(true);
+            crgoList.add(crgo);
 
-        final List<CargoVO> crgoList = crgoDAO.selectList(crgoCriterioVO);
+            final CargoCriterioVO crgoDepCriterioVO = new CargoCriterioVO();
 
-        final CargoCriterioVO crgoDepCriterioVO = new CargoCriterioVO();
+            crgoDepCriterioVO.setPadreId(crgoId);
+            crgoDepCriterioVO.setFechaVigencia(fechaLiquidacion);
+            crgoDepCriterioVO.setSoloDependientes(true);
 
-        crgoDepCriterioVO.setPadreIds(crgoIds);
-        crgoDepCriterioVO.setFechaVigencia(fref);
-        crgoDepCriterioVO.setSoloDependientes(true);
+            final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
 
-        crgoList.addAll(crgoDAO.selectList(crgoDepCriterioVO));
-
-        // Aplicacion de cargos del servicio
-
-        for (final CargoVO crgo : crgoList) {
+            contextoVO.setFliquidacion(fechaLiquidacion);
+            contextoVO.setPrbt(prbtDAO.select(prbtId));
+            contextoVO.setSrvc(srvcDAO.select(srvcId));
+            contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
             contextoVO.setCrgo(crgo);
-            valorarCargoServicio(contextoVO);
-        }
 
-        // Generacion de valoraciones a partir de los aspectos
+            final Date fref = contextoDAO.selectFref(contextoVO);
 
-        final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+            if (fref == null) {
+                throw new Error("No se encuentra fecha de referencia para el contexto: " + contextoVO);
+            }
 
-        aspcCriterioVO.setFechaVigencia(fechaLiquidacion);
-        aspcCriterioVO.setSrvcId(srvcId);
+            contextoVO.setFref(fref);
 
-        final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
+            LOG.info("fref: " + fref);
 
-        for (final AspectoVO aspc : aspcList) {
-            contextoVO.setAspc(aspc);
+            crgoList.addAll(crgoDAO.selectList(crgoDepCriterioVO));
 
-            aplicarAspecto(contextoVO);
-        }
+            for (final CargoVO crgoServicio : crgoList) {
+                contextoVO.setCrgo(crgoServicio);
+                valorarCargoServicio(contextoVO);
+            }
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Fin Valoracion");
+            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+
+            aspcCriterioVO.setFechaVigencia(fref);
+            aspcCriterioVO.setSrvcId(srvcId);
+
+            final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
+
+            if (aspcList.isEmpty()) {
+                throw new Error("No se encuentran aspectos para: " + aspcCriterioVO);
+            }
+
+            for (final AspectoVO aspc : aspcList) {
+                contextoVO.setAspc(aspc);
+
+                aplicarAspecto(contextoVO);
+            }
+
+            if (vlrtDAO.existsPendiente(contextoVO)) {
+                throw new Error("No se ha podido aplicar aspecto a todos los elementos del servicio valorado: "
+                        + contextoVO);
+            }
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Fin Valoracion");
+            }
         }
     }
 
@@ -196,8 +218,6 @@ public class ValoradorBO implements Valorador {
         final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(contextoVO);
 
         for (final ValoracionAgregadaVO vlra : vlraList) {
-            final Set<Long> vlrgCrgoIds = new HashSet<Long>();
-
             vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
             vlra.getVlrc().setAspc(contextoVO.getAspc());
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
@@ -205,38 +225,36 @@ public class ValoradorBO implements Valorador {
             LOG.info("vlrc: " + vlra.getVlrc());
 
             for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
-                vlrgCrgoIds.add(vlrl.getVlrl().getRgla().getCrgo().getId());
-
                 vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
                 vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("vlrl: " + vlrl.getVlrl());
-                }
 
                 for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
                     vlrd.setVlrcId(vlra.getVlrc().getId());
                     vlrd.setVlrlId(vlrl.getVlrl().getId());
                     vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-                    if (LOG.isDebugEnabled()) {
-                        LOG.debug("vlrd: " + vlrd);
-                    }
                 }
             }
+        }
 
+        for (final ValoracionAgregadaVO vlra : vlraList) {
             vlrcDAO.insert(vlra.getVlrc());
+        }
 
+        for (final ValoracionAgregadaVO vlra : vlraList) {
             for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
                 vlrlDAO.insert(vlrl.getVlrl());
             }
+        }
 
+        for (final ValoracionAgregadaVO vlra : vlraList) {
             for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
                 for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
                     vlrdDAO.insert(vlrd);
                 }
             }
+        }
 
+        for (final ValoracionAgregadaVO vlra : vlraList) {
             final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
 
             vlrcCriterioVO.setId(vlra.getVlrc().getId());

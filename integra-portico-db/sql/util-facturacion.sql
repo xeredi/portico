@@ -11,45 +11,47 @@ WHERE srvc_pk IN (1192001, 1192002, 1192003);
 
 
 -- Tasas propuestas para un servicio
-SELECT *
+SELECT * 
 FROM tbl_cargo_crgo
 WHERE 
 	EXISTS (
 		SELECT 1
 		FROM tbl_servicio_srvc
-		WHERE srvc_tpsr_pk = crgo_tpsr_pk
-			AND srvc_pk = 1192001
+		WHERE
+			srvc_tpsr_pk = crgo_tpsr_pk
+			AND EXISTS (
+				SELECT 1 
+				FROM tbl_tipo_servicio_tpsr
+				WHERE tpsr_pk = srvc_tpsr_pk
+					AND (
+						(
+							tpsr_es_temporal = 0
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_cargo_version_crgv
+								WHERE crgv_crgo_pk = crgo_pk
+									AND srvc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
+							)
+						)
+						OR 
+						(
+							tpsr_es_temporal = 1
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_cargo_version_crgv
+								WHERE crgv_crgo_pk = crgo_pk
+									AND (
+										srvc_fini BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
+										OR COALESCE(srvc_ffin, NOW()) BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
+									)
+							)
+						)
+					)
+			)
+			AND srvc_pk = 1259571
 	)
-	AND NOT EXISTS (
-		SELECT 1
-		FROM tbl_cargo_composicion_crcm
-		WHERE crcm_crgo_hijo_pk = crgo_pk
-	)
+	AND crgo_es_principal = 1
 ;
-
--- Tasas a Valorar
-SELECT * 
-FROM
-	tbl_cargo_crgo
-WHERE crgo_pk IN (1004)
-	OR EXISTS (
-		SELECT 1
-		FROM tbl_cargo_composicion_crcm
-		WHERE crcm_crgo_hijo_pk = crgo_pk
-			AND crcm_crgo_padre_pk IN (1004)
-	)
-;
-
--- Procedimientos de una tasa
-SELECT * 
-FROM tbl_procedimiento_prcd 
-WHERE 
-	prcd_crgo_pk IN (1004)
-;
-
-
-
-
 
 
 
@@ -192,4 +194,109 @@ SELECT * FROM tbl_subservicio_ssrv WHERE ssrv_srvc_pk = 1209891;
 
 
 
--- Facturar
+-- Situacion de un servicio
+SELECT *
+FROM tbl_regla_rgla
+	INNER JOIN tbl_regla_version_rglv ON
+		rglv_rgla_pk = rgla_pk
+	INNER JOIN tbl_entidad_enti ON
+		enti_pk = rgla_enti_pk
+WHERE rgla_tipo = 'T'
+;
+
+
+SELECT *
+	, (
+		CASE 
+			WHEN
+				crgo_es_temporal = 0
+			THEN 
+				'Cargo no Temporal'
+			ELSE 
+				'Cargo Temporal'
+		END
+	) AS estado
+FROM 
+	tbl_servicio_srvc
+	INNER JOIN tbl_tipo_servicio_tpsr ON
+		tpsr_pk = srvc_tpsr_pk
+	INNER JOIN tbl_cargo_crgo ON
+		crgo_tpsr_pk = tpsr_pk
+		AND crgo_es_principal = 1
+		AND EXISTS (
+			SELECT 1 
+			FROM tbl_cargo_version_crgv
+			WHERE crgv_crgo_pk = crgo_pk
+				AND (
+					(
+						tpsr_es_temporal = 0
+						AND srvc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, srvc_fref)
+					)
+					OR
+					(
+						tpsr_es_temporal = 1
+						AND (
+							srvc_fini BETWEEN crgv_fini AND COALESCE(crgv_ffin, srvc_fini)
+							OR COALESCE(srvc_ffin, NOW()) BETWEEN crgv_fini AND COALESCE(crgv_ffin, COALESCE(srvc_ffin, NOW()))
+						)
+					)
+				)
+		)
+WHERE 
+	srvc_pk = 1259571
+;
+
+-- Marcar servicios/subservicios valorados
+
+SELECT srvc_pk
+	, crgo_pk
+	, vlrd_vlrc_pk
+	, ssrv_pk
+	, MIN(fini)
+	, MAX(fini)
+FROM (
+	SELECT 
+		vlrd_vlrc_pk
+		, (SELECT vlrc_srvc_pk FROM tbl_valoracion_vlrc WHERE vlrc_pk = vlrd_vlrc_pk) AS srvc_pk
+		, (
+			CASE 
+				WHEN crgo_es_temporal = 0
+				THEN COALESCE(vlrl_ssrv_pk, vlrd_ssrv_pk)
+
+				ELSE NULL
+			END
+		) AS ssrv_pk
+		, crgo_pk
+		, (
+			CASE 
+				WHEN crgo_es_temporal = 0
+				THEN NULL
+
+				ELSE vlrd_fini
+			END
+		) AS fini
+		, (
+			CASE 
+				WHEN crgo_es_temporal = 0
+				THEN NULL
+
+				ELSE vlrd_ffin
+			END
+		) AS ffin
+	FROM tbl_valoracion_det_vlrd
+		INNER JOIN tbl_valoracion_lin_vlrl ON
+			vlrl_pk = vlrd_vlrl_pk
+		INNER JOIN tbl_regla_rgla ON
+			rgla_pk = vlrl_rgla_pk
+		INNER JOIN tbl_cargo_crgo ON
+			crgo_pk = rgla_crgo_pk
+	WHERE vlrd_vlrc_pk IN (1290920)
+		AND rgla_tipo = 'T'
+) sql
+GROUP BY srvc_pk
+	, crgo_pk
+	, vlrd_vlrc_pk
+	, ssrv_pk
+;
+
+

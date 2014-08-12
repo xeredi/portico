@@ -198,9 +198,25 @@ public final class ServicioImporterBO {
                     final String subpuertoCod = rs.getString(i++);
                     final String anno = rs.getString(i++);
                     final String numero = rs.getString(i++);
-                    final Date fechaEstadistica = rs.getDate(i++);
-                    final Date fechaAnulaFactura = rs.getDate(i++);
-                    final Date fechaReferencia = rs.getDate(i++);
+
+                    Date fechaEstadistica = null;
+                    final Timestamp tsEstadistica= rs.getTimestamp(i++);
+                    if (!rs.wasNull()) {
+                        fechaEstadistica = new Date(tsEstadistica.getTime());
+                    }
+
+                    Date fechaAnulaFactura = null;
+                    final Timestamp tsAnulaFactura= rs.getTimestamp(i++);
+                    if (!rs.wasNull()) {
+                        fechaAnulaFactura = new Date(tsAnulaFactura.getTime());
+                    }
+
+                    Date fechaReferencia = null;
+                    final Timestamp tsReferencia = rs.getTimestamp(i++);
+                    if (!rs.wasNull()) {
+                        fechaReferencia = new Date(tsReferencia.getTime());
+                    }
+
                     final Long prmtSubpuertoId = tpprPrmtMap.get(Entidad.SUBPUERTO.getId()).get(subpuertoCod);
 
                     if (prmtSubpuertoId == null) {

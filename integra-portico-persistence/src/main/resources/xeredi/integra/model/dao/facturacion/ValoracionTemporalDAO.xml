@@ -604,6 +604,16 @@
     ]]>
     </insert>
 
+    <select id="existsPendiente" parameterType="ValoradorContextoVO" resultType="boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_valoracion_tmp_vlrt
+        WHERE
+            vlrt_prbt_pk = #{prbt.id}
+    ]]>
+    </select>
+
     <delete id="deleteList" parameterType="ValoradorContextoVO">
     <![CDATA[
         DELETE FROM

@@ -110,4 +110,9 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
     </select>
+
+    <select id="selectObject" parameterType="CargoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
 </mapper>
