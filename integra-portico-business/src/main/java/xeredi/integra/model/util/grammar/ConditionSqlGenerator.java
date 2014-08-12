@@ -18,6 +18,7 @@ import xeredi.integra.model.util.grammar.ConditionParser.ScalarExprContext;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
 import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadVO;
+import xeredi.integra.model.vo.metamodelo.TipoElemento;
 import xeredi.integra.model.vo.metamodelo.TipoEntidad;
 import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
 
@@ -202,31 +203,30 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                     switch (entd.getTpdt().getTipoElemento()) {
                     case BO:
                     case NE:
-                        field += "nentero";
+                        field += " SELECT " + field + "nentero FROM ";
                         break;
                     case ND:
-                        field += "nentero";
+                        field += " SELECT " + field + "ndecimal FROM ";
                         break;
                     case CR:
                     case TX:
-                        field += "cadena";
+                        field += " SELECT " + field + "cadena FROM ";
                         break;
                     case FE:
                     case FH:
-                        field += "fecha";
+                        field += " SELECT " + field + "fecha FROM ";
                         break;
                     case PR:
-                        field += "prmt_pk";
+                        field = isLast ? " SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = ANY( SELECT "
+                                + field + "prmt_pk FROM " : " SELECT " + field + "prmt_pk FROM ";
                         break;
                     case SR:
-                        field += "srvc_dep_pk";
+                        field += " SELECT " + field + "srvc_dep_pk FROM ";
                         break;
 
                     default:
                         throw new Error("Tipo de dato no soportado");
                     }
-
-                    sqlElement += " SELECT " + field + " FROM ";
 
                     switch (entiElem.getTipo()) {
                     case P:
@@ -248,6 +248,10 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         break;
                     default:
                         throw new Error("Tipo de entidad no soportado");
+                    }
+
+                    if (entd.getTpdt().getTipoElemento() == TipoElemento.PR && isLast) {
+                        sqlElement += ")";
                     }
                 }
 
