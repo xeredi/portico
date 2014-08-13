@@ -131,7 +131,7 @@ public class ValoradorBO implements Valorador {
      * {@inheritDoc}
      */
     @Override
-    @Transactional(executorType = ExecutorType.REUSE)
+    @Transactional(executorType = ExecutorType.BATCH)
     public void valorarServicio(Long srvcId, Set<Long> crgoIds, Date fechaLiquidacion, final Long prbtId) {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
                 + ", prbtId: " + prbtId);
