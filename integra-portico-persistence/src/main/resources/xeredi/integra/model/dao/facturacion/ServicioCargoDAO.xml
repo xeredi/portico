@@ -66,4 +66,13 @@
         	, ssrv_pk
     ]]>
     </insert>
+
+    <delete id="deleteValoracion" parameterType="ServicioCargoCriterioVO">
+    <![CDATA[
+        DELETE FROM tbl_servicio_cargo_srcr
+        WHERE srcr_vlrc_pk IN
+    ]]>
+        <foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}
+        </foreach>
+    </delete>
 </mapper>

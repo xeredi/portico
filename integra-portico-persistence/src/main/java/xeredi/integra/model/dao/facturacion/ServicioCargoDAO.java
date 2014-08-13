@@ -15,4 +15,13 @@ public interface ServicioCargoDAO {
      *            the criterio vo
      */
     void insertMarcarValorado(final ServicioCargoCriterioVO criterioVO);
+
+    /**
+     * Delete valoracion.
+     *
+     * @param criterioVO
+     *            the criterio vo
+     * @return the int
+     */
+    int deleteValoracion(final ServicioCargoCriterioVO criterioVO);
 }

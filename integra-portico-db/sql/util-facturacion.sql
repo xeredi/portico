@@ -137,6 +137,12 @@ order by tpdt_codigo
 
 SELECT * FROM tbl_proceso_batch_prbt;
 
+select ssrv_srvc_pk, count(1)
+from 
+	portico.tbl_subservicio_ssrv
+group by ssrv_srvc_pk
+;
+
 SELECT * FROM tbl_cargo_crgo;
 SELECT * FROM tbl_regla_rgla;
 
@@ -157,12 +163,6 @@ DELETE FROM tbl_valoracion_lin_vlrl;
 DELETE FROM tbl_valoracion_imp_vlri;
 DELETE FROM tbl_valoracion_cargo_vlrg;
 DELETE FROM tbl_valoracion_vlrc;
-
-select ssrv_srvc_pk, count(1)
-from 
-	portico.tbl_subservicio_ssrv
-group by ssrv_srvc_pk
-;
 
 SELECT *
 FROM tbl_servicio_srvc

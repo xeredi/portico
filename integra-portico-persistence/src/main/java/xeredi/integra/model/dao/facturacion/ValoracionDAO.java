@@ -16,4 +16,13 @@ public interface ValoracionDAO {
      *            the vlrc vo
      */
     void insert(final ValoracionVO vlrcVO);
+
+    /**
+     * Delete.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @return the int
+     */
+    int delete(final ValoracionCriterioVO vlrcCriterioVO);
 }

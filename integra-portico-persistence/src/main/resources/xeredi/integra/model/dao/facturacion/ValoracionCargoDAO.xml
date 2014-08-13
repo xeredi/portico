@@ -26,4 +26,15 @@
                 )
     ]]>
     </insert>
+
+    <delete id="delete" parameterType="ValoracionCriterioVO">
+    <![CDATA[
+        DELETE FROM tbl_valoracion_cargo_vlrg
+    ]]>
+        <where>
+            <if test="id != null">
+                AND vlrg_vlrc_pk = #{id}
+            </if>
+        </where>
+    </delete>
 </mapper>

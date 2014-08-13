@@ -19,4 +19,25 @@
         )
     ]]>
     </insert>
+
+    <delete id="delete" parameterType="ValoracionDetalleCriterioVO">
+    <![CDATA[
+        DELETE FROM tbl_valoracion_det_vlrd
+    ]]>
+        <where>
+            <if test="id != null">
+                AND vlrd_pk = #{id}
+            </if>
+            <if test="vlrl != null">
+                <if test="vlrl.id != null">
+                    AND vlrd_vlrl_pk = #{vlrl.id}
+                </if>
+                <if test="vlrl.vlrc != null">
+                    <if test="vlrl.vlrc.id != null">
+                        AND vlrd_vlrc_pk = #{vlrl.vlrc.id}
+                    </if>
+                </if>
+            </if>
+        </where>
+    </delete>
 </mapper>

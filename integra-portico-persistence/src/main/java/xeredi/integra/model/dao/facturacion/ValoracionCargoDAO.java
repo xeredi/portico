@@ -16,4 +16,12 @@ public interface ValoracionCargoDAO {
      */
     void insertGenerate(final ValoracionCriterioVO vlrcCriterioVO);
 
+    /**
+     * Delete.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @return the int
+     */
+    int delete(final ValoracionCriterioVO vlrcCriterioVO);
 }
