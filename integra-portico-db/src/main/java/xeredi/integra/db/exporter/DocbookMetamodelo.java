@@ -9,15 +9,18 @@ import xeredi.integra.model.proxy.metamodelo.TipoDatoProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoEstadisticaProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
+import xeredi.integra.model.proxy.metamodelo.TipoSubparametroProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
 import xeredi.integra.model.vo.metamodelo.CodigoReferenciaVO;
 import xeredi.integra.model.vo.metamodelo.EntidadAccionVO;
+import xeredi.integra.model.vo.metamodelo.EntidadGrupoDatoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadVO;
 import xeredi.integra.model.vo.metamodelo.TipoDatoVO;
 import xeredi.integra.model.vo.metamodelo.TipoEstadisticaVO;
 import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
 import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
+import xeredi.integra.model.vo.metamodelo.TipoSubparametroVO;
 import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -41,19 +44,20 @@ public final class DocbookMetamodelo {
 
             // Entidades
             writer.println("<chapter><info><title>Entidades</title></info>");
+
             // Entidades - Maestros
             writer.println("<section><title>Maestros</title>");
-            writer.println("<table><title>Maestros</title><tgroup cols='6'>");
+            writer.println("<informaltable><title>Maestros</title><tgroup cols='6'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
-            writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
-            writer.println("<colspec colnum='3' colname='col3' colwidth='6*' />");
+            writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
+            writer.println("<colspec colnum='3' colname='col3' colwidth='8*' />");
             writer.println("<colspec colnum='4' colname='col4' colwidth='2*' />");
             writer.println("<colspec colnum='5' colname='col5' colwidth='2*' />");
             writer.println("<colspec colnum='6' colname='col6' colwidth='2*' />");
             writer.println("<thead><row>");
             writer.println("<entry>ID</entry>");
-            writer.println("<entry>Código</entry>");
             writer.println("<entry>Nombre</entry>");
+            writer.println("<entry>Código</entry>");
             writer.println("<entry>Dup</entry>");
             writer.println("<entry>I18n</entry>");
             writer.println("<entry>Tmp</entry>");
@@ -64,31 +68,71 @@ public final class DocbookMetamodelo {
 
                 writer.println("<row>");
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
-                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
+                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isI18n() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isTempExp() ? "S" : "") + "</entry>");
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
+            writer.println("</section>");
+
+            // Entidades - Submaestros
+            writer.println("<section><title>Submaestros</title>");
+            writer.println("<informaltable><title>Maestros</title><tgroup cols='8'>");
+            writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
+            writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
+            writer.println("<colspec colnum='3' colname='col3' colwidth='8*' />");
+            writer.println("<colspec colnum='4' colname='col4' colwidth='6*' />");
+            writer.println("<colspec colnum='5' colname='col5' colwidth='6*' />");
+            writer.println("<colspec colnum='6' colname='col6' colwidth='2*' />");
+            writer.println("<colspec colnum='7' colname='col7' colwidth='2*' />");
+            writer.println("<colspec colnum='8' colname='col8' colwidth='2*' />");
+            writer.println("<thead><row>");
+            writer.println("<entry>ID</entry>");
+            writer.println("<entry>Nombre</entry>");
+            writer.println("<entry>Código</entry>");
+            writer.println("<entry>Maestro Padre</entry>");
+            writer.println("<entry>Maestro Asoc.</entry>");
+            writer.println("<entry>Dup</entry>");
+            writer.println("<entry>I18n</entry>");
+            writer.println("<entry>Tmp</entry>");
+            writer.println("</row></thead><tbody>");
+
+            for (final LabelValueVO labelValueVO : TipoSubparametroProxy.selectLabelValues()) {
+                final TipoSubparametroVO entiVO = TipoSubparametroProxy.select((Long) labelValueVO.getValue());
+
+                writer.println("<row>");
+                writer.println("<entry>" + entiVO.getId() + "</entry>");
+                writer.println("<entry>" + entiVO.getNombre() + "</entry>");
+                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
+                writer.println("<entry>" + entiVO.getTppr().getNombre() + "</entry>");
+                writer.println("<entry>" + entiVO.getTpprAsociado().getNombre() + "</entry>");
+                writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.isI18n() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.isTempExp() ? "S" : "") + "</entry>");
+                writer.println("</row>");
+            }
+
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</section>");
 
             // Entidades - Tipos de Servicio
             writer.println("<section><title>Tipos de Servicio</title>");
-            writer.println("<table><title>Tipos de Servicio</title><tgroup cols='7'>");
+            writer.println("<informaltable><title>Tipos de Servicio</title><tgroup cols='7'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='1.5*' />");
-            writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
-            writer.println("<colspec colnum='3' colname='col3' colwidth='6*' />");
+            writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
+            writer.println("<colspec colnum='3' colname='col3' colwidth='8*' />");
             writer.println("<colspec colnum='4' colname='col4' colwidth='1.5*' />");
             writer.println("<colspec colnum='5' colname='col5' colwidth='1.5*' />");
             writer.println("<colspec colnum='6' colname='col6' colwidth='1.5*' />");
             writer.println("<colspec colnum='7' colname='col7' colwidth='6*' />");
             writer.println("<thead><row>");
             writer.println("<entry>ID</entry>");
-            writer.println("<entry>Código</entry>");
             writer.println("<entry>Nombre</entry>");
+            writer.println("<entry>Código</entry>");
             writer.println("<entry>Dup</entry>");
             writer.println("<entry>Tmp</entry>");
             writer.println("<entry>Fact</entry>");
@@ -100,8 +144,8 @@ public final class DocbookMetamodelo {
 
                 writer.println("<row>");
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
-                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
+                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isTemporal() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isFacturable() ? "S" : "") + "</entry>");
@@ -110,23 +154,23 @@ public final class DocbookMetamodelo {
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</section>");
 
             // Entidades - Tipos de Subservicio
             writer.println("<section><title>Tipos de Subservicio</title>");
-            writer.println("<table><title>Tipos de Subservicio</title><tgroup cols='7'>");
+            writer.println("<informaltable><title>Tipos de Subservicio</title><tgroup cols='7'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='1.5*' />");
-            writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
-            writer.println("<colspec colnum='3' colname='col3' colwidth='6*' />");
+            writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
+            writer.println("<colspec colnum='3' colname='col3' colwidth='8*' />");
             writer.println("<colspec colnum='4' colname='col4' colwidth='1.5*' />");
             writer.println("<colspec colnum='5' colname='col5' colwidth='1.5*' />");
             writer.println("<colspec colnum='6' colname='col6' colwidth='1.5*' />");
             writer.println("<colspec colnum='7' colname='col7' colwidth='6*' />");
             writer.println("<thead><row>");
             writer.println("<entry>ID</entry>");
-            writer.println("<entry>Código</entry>");
             writer.println("<entry>Nombre</entry>");
+            writer.println("<entry>Código</entry>");
             writer.println("<entry>Dup</entry>");
             writer.println("<entry>Tmp</entry>");
             writer.println("<entry>Fact</entry>");
@@ -138,8 +182,8 @@ public final class DocbookMetamodelo {
 
                 writer.println("<row>");
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
-                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
+                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isTemporal() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isFacturable() ? "S" : "") + "</entry>");
@@ -148,19 +192,19 @@ public final class DocbookMetamodelo {
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</section>");
 
             // Entidades - Tipos de Estadistica
             writer.println("<section><title>Tipos de Estadistica</title>");
-            writer.println("<table><title>Tipos de Estadistica</title><tgroup cols='3'>");
+            writer.println("<informaltable><title>Tipos de Estadistica</title><tgroup cols='3'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='1.5*' />");
-            writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
-            writer.println("<colspec colnum='3' colname='col3' colwidth='6*' />");
+            writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
+            writer.println("<colspec colnum='3' colname='col3' colwidth='8*' />");
             writer.println("<thead><row>");
             writer.println("<entry>ID</entry>");
-            writer.println("<entry>Código</entry>");
             writer.println("<entry>Nombre</entry>");
+            writer.println("<entry>Código</entry>");
             writer.println("</row></thead><tbody>");
 
             for (final LabelValueVO labelValueVO : TipoEstadisticaProxy.selectLabelValues()) {
@@ -168,19 +212,19 @@ public final class DocbookMetamodelo {
 
                 writer.println("<row>");
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
-                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
+                writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</section>");
 
             writer.println("</chapter>");
 
             // Tipos de Datos
             writer.println("<chapter><info><title>Tipos de datos</title></info>");
-            writer.println("<table width='100%'><title>Tipos de Datos</title><tgroup cols='7'>");
+            writer.println("<informaltable width='100%'><title>Tipos de Datos</title><tgroup cols='7'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
             writer.println("<colspec colnum='3' colname='col3' colwidth='6*' />");
@@ -190,8 +234,8 @@ public final class DocbookMetamodelo {
             writer.println("<colspec colnum='7' colname='col7' colwidth='7*' />");
             writer.println("<thead><row>");
             writer.println("<entry>ID</entry>");
-            writer.println("<entry>Código</entry>");
             writer.println("<entry>Nombre</entry>");
+            writer.println("<entry>Código</entry>");
             writer.println("<entry>TE</entry>");
             writer.println("<entry>TH</entry>");
             writer.println("<entry>Entidad</entry>");
@@ -205,8 +249,8 @@ public final class DocbookMetamodelo {
                 writer.println("<row>");
 
                 writer.println("<entry>" + tipoDatoVO.getId() + "</entry>");
-                writer.println("<entry>" + tipoDatoVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + tipoDatoVO.getNombre() + "</entry>");
+                writer.println("<entry>" + tipoDatoVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + tipoDatoVO.getTipoElemento() + "</entry>");
                 writer.println("<entry>" + tipoDatoVO.getTpht() + "</entry>");
                 writer.println("<entry>" + (tipoDatoVO.getEnti() == null ? "" : tipoDatoVO.getEnti().getNombre())
@@ -223,7 +267,7 @@ public final class DocbookMetamodelo {
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</chapter>");
 
             // Maestros
@@ -232,10 +276,11 @@ public final class DocbookMetamodelo {
             for (final LabelValueVO labelValueVO : TipoParametroProxy.selectLabelValues()) {
                 final TipoParametroVO entiVO = TipoParametroProxy.select((Long) labelValueVO.getValue());
 
-                writer.println("<section><title>" + entiVO.getNombre() + "</title>");
+                writer.println("<section xml:id='ent_" + entiVO.getCodigo() + "'><title>" + entiVO.getNombre()
+                        + "</title>");
 
                 writer.println("<section><title>Atributos</title>");
-                writer.println("<table width='100%'><title>Atributos de " + entiVO.getNombre()
+                writer.println("<informaltable width='100%'><title>Atributos de " + entiVO.getNombre()
                         + "</title><tgroup cols='2'>");
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
@@ -245,8 +290,7 @@ public final class DocbookMetamodelo {
                 writer.println("<row><entry>Etiqueta</entry><entry>" + entiVO.getEtiqueta() + "</entry></row>");
                 writer.println("<row><entry>Temporalidad Explicita?</entry><entry>" + (entiVO.isTempExp() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>I18N?</entry><entry>" + (entiVO.isI18n() ? "S" : "N")
-                        + "</entry></row>");
+                writer.println("<row><entry>I18N?</entry><entry>" + (entiVO.isI18n() ? "S" : "N") + "</entry></row>");
                 writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.isCmdBaja() ? "S" : "N")
@@ -255,7 +299,50 @@ public final class DocbookMetamodelo {
                         + "</entry></row>");
                 writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("</tbody></tgroup></table>");
+                writer.println("</tbody></tgroup></informaltable>");
+                writer.println("</section>");
+
+                writeEntiInfo(entiVO, writer);
+
+                writer.println("</section>");
+            }
+
+            writer.println("</chapter>");
+
+            // Submaestros
+            writer.println("<chapter><info><title>Submaestros</title></info>");
+
+            for (final LabelValueVO labelValueVO : TipoSubparametroProxy.selectLabelValues()) {
+                final TipoSubparametroVO entiVO = TipoSubparametroProxy.select((Long) labelValueVO.getValue());
+
+                writer.println("<section xml:id='ent_" + entiVO.getCodigo() + "'><title>" + entiVO.getNombre()
+                        + "</title>");
+
+                writer.println("<section><title>Atributos</title>");
+                writer.println("<informaltable width='100%'><title>Atributos de " + entiVO.getNombre()
+                        + "</title><tgroup cols='2'>");
+                writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
+                writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
+                writer.println("<tbody>");
+                writer.println("<row><entry>Codigo</entry><entry>" + entiVO.getCodigo() + "</entry></row>");
+                writer.println("<row><entry>Nombre</entry><entry>" + entiVO.getNombre() + "</entry></row>");
+                writer.println("<row><entry>Etiqueta</entry><entry>" + entiVO.getEtiqueta() + "</entry></row>");
+                writer.println("<row><entry>Maestro Padre</entry><entry>" + getLinkEntidad(entiVO.getTppr())
+                        + "</entry></row>");
+                writer.println("<row><entry>Maestro Asoc.</entry><entry>" + getLinkEntidad(entiVO.getTpprAsociado())
+                        + "</entry></row>");
+                writer.println("<row><entry>Temporalidad Explicita?</entry><entry>" + (entiVO.isTempExp() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>I18N?</entry><entry>" + (entiVO.isI18n() ? "S" : "N") + "</entry></row>");
+                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.isCmdBaja() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.isCmdEdicion() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("</tbody></tgroup></informaltable>");
                 writer.println("</section>");
 
                 writeEntiInfo(entiVO, writer);
@@ -271,10 +358,11 @@ public final class DocbookMetamodelo {
             for (final LabelValueVO labelValueVO : TipoServicioProxy.selectLabelValues()) {
                 final TipoServicioVO entiVO = TipoServicioProxy.select((Long) labelValueVO.getValue());
 
-                writer.println("<section><title>" + entiVO.getNombre() + "</title>");
+                writer.println("<section xml:id='ent_" + entiVO.getCodigo() + "'><title>" + entiVO.getNombre()
+                        + "</title>");
 
                 writer.println("<section><title>Atributos</title>");
-                writer.println("<table width='100%'><title>Atributos de " + entiVO.getNombre()
+                writer.println("<informaltable width='100%'><title>Atributos de " + entiVO.getNombre()
                         + "</title><tgroup cols='2'>");
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
@@ -294,7 +382,50 @@ public final class DocbookMetamodelo {
                         + "</entry></row>");
                 writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("</tbody></tgroup></table>");
+                writer.println("</tbody></tgroup></informaltable>");
+                writer.println("</section>");
+
+                writeEntiInfo(entiVO, writer);
+
+                writer.println("</section>");
+                writer.println("<?hard-pagebreak?>");
+            }
+
+            writer.println("</chapter>");
+
+            // Tipos de Subservicio
+            writer.println("<chapter><info><title>Tipos de Subservicio</title></info>");
+
+            for (final LabelValueVO labelValueVO : TipoSubservicioProxy.selectLabelValues()) {
+                final TipoSubservicioVO entiVO = TipoSubservicioProxy.select((Long) labelValueVO.getValue());
+
+                writer.println("<section xml:id='ent_" + entiVO.getCodigo() + "'><title>" + entiVO.getNombre()
+                        + "</title>");
+
+                writer.println("<section><title>Atributos</title>");
+                writer.println("<informaltable width='100%'><title>Atributos de " + entiVO.getNombre()
+                        + "</title><tgroup cols='2'>");
+                writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
+                writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
+                writer.println("<tbody>");
+                writer.println("<row><entry>Codigo</entry><entry>" + entiVO.getCodigo() + "</entry></row>");
+                writer.println("<row><entry>Nombre</entry><entry>" + entiVO.getNombre() + "</entry></row>");
+                writer.println("<row><entry>Etiqueta</entry><entry>" + entiVO.getEtiqueta() + "</entry></row>");
+                writer.println("<row><entry>Tipo de Servicio</entry><entry>" + getLinkEntidad(entiVO.getTpsr())
+                        + "</entry></row>");
+                writer.println("<row><entry>Temporal?</entry><entry>" + (entiVO.isTemporal() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Facturable?</entry><entry>" + (entiVO.isFacturable() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.isCmdBaja() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.isCmdEdicion() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
+                        + "</entry></row>");
+                writer.println("</tbody></tgroup></informaltable>");
                 writer.println("</section>");
 
                 writeEntiInfo(entiVO, writer);
@@ -311,10 +442,11 @@ public final class DocbookMetamodelo {
             for (final LabelValueVO labelValueVO : TipoEstadisticaProxy.selectLabelValues()) {
                 final TipoEstadisticaVO entiVO = TipoEstadisticaProxy.select((Long) labelValueVO.getValue());
 
-                writer.println("<section><title>" + entiVO.getNombre() + "</title>");
+                writer.println("<section xml:id='ent_" + entiVO.getCodigo() + "'><title>" + entiVO.getNombre()
+                        + "</title>");
 
                 writer.println("<section><title>Atributos</title>");
-                writer.println("<table width='100%'><title>Atributos de " + entiVO.getNombre()
+                writer.println("<informaltable width='100%'><title>Atributos de " + entiVO.getNombre()
                         + "</title><tgroup cols='2'>");
                 writer.println("<colspec colnum='1' colname='col1' colwidth='1*' />");
                 writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
@@ -330,7 +462,7 @@ public final class DocbookMetamodelo {
                 // + "</entry></row>");
                 // writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
                 // + "</entry></row>");
-                writer.println("</tbody></tgroup></table>");
+                writer.println("</tbody></tgroup></informaltable>");
                 writer.println("</section>");
 
                 writeEntiInfo(entiVO, writer);
@@ -358,10 +490,33 @@ public final class DocbookMetamodelo {
      *             Signals that an I/O exception has occurred.
      */
     private void writeEntiInfo(final EntidadVO entiVO, final PrintWriter writer) throws IOException {
+        if (entiVO.getEngdList() != null) {
+            writer.println("<section><title>Grupos de Datos Asociados</title>");
+            writer.println("<informaltable><title>Grupos de Datos Asociados de " + entiVO.getNombre() + "</title><tgroup cols='2'>");
+            writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
+            writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
+            writer.println("<thead><row>");
+            writer.println("<entry>Orden</entry>");
+            writer.println("<entry>Etiqueta</entry>");
+            writer.println("</row></thead><tbody>");
+
+            for (final Integer engdId : entiVO.getEngdList()) {
+                final EntidadGrupoDatoVO engdVO = entiVO.getEngdMap().get(engdId);
+
+                writer.println("<row>");
+                writer.println("<entry>" + engdVO.getNumero() + "</entry>");
+                writer.println("<entry>" + engdVO.getEtiqueta() + "</entry>");
+                writer.println("</row>");
+            }
+
+            writer.println("</tbody></tgroup></informaltable>");
+            writer.println("</section>");
+        }
+
         if (entiVO.getEntdList() != null) {
             writer.println("<section><title>Datos Asociados</title>");
 
-            writer.println("<table><title>Datos Asociados de " + entiVO.getNombre() + "</title><tgroup cols='13'>");
+            writer.println("<informaltable><title>Datos Asociados de " + entiVO.getNombre() + "</title><tgroup cols='13'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='5*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
             writer.println("<colspec colnum='3' colname='col3' colwidth='1.5*' />");
@@ -400,7 +555,7 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + entdVO.getTpdt().getTipoElemento() + "</entry>");
                 writer.println("<entry>" + entdVO.getTpdt().getTpht() + "</entry>");
                 writer.println("<entry>"
-                        + (entdVO.getTpdt().getEnti() == null ? "" : entdVO.getTpdt().getEnti().getNombre())
+                        + (entdVO.getTpdt().getEnti() == null ? "" : getLinkEntidad(entdVO.getTpdt().getEnti()))
                         + "</entry>");
                 writer.println("<entry>" + (entdVO.getGrupo() == null ? "" : entdVO.getGrupo()) + "</entry>");
                 writer.println("<entry>" + entdVO.getFila() + "</entry>");
@@ -414,14 +569,14 @@ public final class DocbookMetamodelo {
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</section>");
         }
 
         if (entiVO.getEntiHijasList() != null) {
             writer.println("<section><title>Entidades hijas</title>");
 
-            writer.println("<table><title>Entidades Hijas de " + entiVO.getNombre() + "</title><tgroup cols='2'>");
+            writer.println("<informaltable><title>Entidades Hijas de " + entiVO.getNombre() + "</title><tgroup cols='2'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='8*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
             writer.println("<thead><row>");
@@ -438,14 +593,15 @@ public final class DocbookMetamodelo {
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</section>");
         }
 
         if (entiVO.getEnacList() != null) {
             writer.println("<section><title>Acciones Especificas de la Entidad</title>");
 
-            writer.println("<table><title>Acciones Especificas de la de " + entiVO.getNombre() + "</title><tgroup cols='3'>");
+            writer.println("<informaltable><title>Acciones Especificas de la de " + entiVO.getNombre()
+                    + "</title><tgroup cols='3'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='4*' />");
             writer.println("<colspec colnum='3' colname='col3' colwidth='8*' />");
@@ -463,7 +619,7 @@ public final class DocbookMetamodelo {
                 writer.println("</row>");
             }
 
-            writer.println("</tbody></tgroup></table>");
+            writer.println("</tbody></tgroup></informaltable>");
             writer.println("</section>");
         }
     }
@@ -479,6 +635,17 @@ public final class DocbookMetamodelo {
      */
     private String getVarlistentry(final String dt, final String dd) {
         return "<varlistentry><term>" + dt + ":</term><listitem><para>" + dd + "</para></listitem></varlistentry>";
+    }
+
+    /**
+     * Gets the link entidad.
+     *
+     * @param vo
+     *            the vo
+     * @return the link entidad
+     */
+    private String getLinkEntidad(final EntidadVO vo) {
+        return "<link linkend='ent_" + vo.getCodigo() + "'>" + vo.getNombre() + "</link>";
     }
 
     /**

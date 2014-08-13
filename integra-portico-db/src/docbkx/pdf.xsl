@@ -84,4 +84,11 @@
     <xsl:param name="section.autolabel.max.depth">
         1
     </xsl:param>
+    <xsl:param name="toc.max.depth">
+        2
+    </xsl:param>
+    <xsl:param name="generate.toc">
+        book toc,title
+    </xsl:param>
+
 </xsl:stylesheet>

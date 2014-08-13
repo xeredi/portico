@@ -1,5 +1,6 @@
 package xeredi.integra.model.proxy.metamodelo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import xeredi.integra.model.bo.metamodelo.TipoSubparametro;
 import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.vo.metamodelo.TipoSubparametroCriterioVO;
 import xeredi.integra.model.vo.metamodelo.TipoSubparametroVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -22,6 +24,9 @@ public final class TipoSubparametroProxy {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(TipoSubparametroProxy.class);
 
+    /** The Constant LABEL_VALUE_LIST. */
+    private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
+
     /** The Constant TIPO_SUBPARAMETRO_MAP. */
     private static final Map<Long, TipoSubparametroVO> TIPO_SUBPARAMETRO_MAP = new HashMap<>();
 
@@ -30,8 +35,17 @@ public final class TipoSubparametroProxy {
     }
 
     /**
+     * Select label values.
+     *
+     * @return the list
+     */
+    public static List<LabelValueVO> selectLabelValues() {
+        return LABEL_VALUE_LIST;
+    }
+
+    /**
      * Select map.
-     * 
+     *
      * @return the map
      */
     public static Map<Long, TipoSubparametroVO> selectMap() {
@@ -40,7 +54,7 @@ public final class TipoSubparametroProxy {
 
     /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo subparametro vo
@@ -74,6 +88,8 @@ public final class TipoSubparametroProxy {
         }
 
         EntidadProxy.loadDependencies(TIPO_SUBPARAMETRO_MAP);
+
+        LABEL_VALUE_LIST.addAll(tpspBO.selectLabelValues());
 
         LOG.info("Carga de tipos de subparametro OK");
     }

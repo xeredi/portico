@@ -36,7 +36,7 @@ public final class TipoSubservicioProxy {
 
     /**
      * Select label values.
-     * 
+     *
      * @return the list
      */
     public static List<LabelValueVO> selectLabelValues() {
@@ -45,7 +45,7 @@ public final class TipoSubservicioProxy {
 
     /**
      * Select map.
-     * 
+     *
      * @return the map
      */
     public static Map<Long, TipoSubservicioVO> selectMap() {
@@ -54,7 +54,7 @@ public final class TipoSubservicioProxy {
 
     /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo subservicio vo
@@ -78,6 +78,8 @@ public final class TipoSubservicioProxy {
         final List<TipoSubservicioVO> tpssList = tpssBO.selectList(new TipoSubservicioCriterioVO());
 
         for (final TipoSubservicioVO tpssVO : tpssList) {
+            tpssVO.setTpsr(TipoServicioProxy.select(tpssVO.getTpsr().getId()));
+
             if (tpssVO.getTpdtEstado() != null) {
                 tpssVO.setTpdtEstado(TipoDatoProxy.select(tpssVO.getTpdtEstado().getId()));
             }
