@@ -16,12 +16,4 @@ public interface ValoracionDAO {
      *            the vlrc vo
      */
     void insert(final ValoracionVO vlrcVO);
-
-    /**
-     * Insert generate cargos.
-     *
-     * @param vlrcCriterioVO
-     *            the vlrc criterio vo
-     */
-    void insertGenerateCargos(final ValoracionCriterioVO vlrcCriterioVO);
 }

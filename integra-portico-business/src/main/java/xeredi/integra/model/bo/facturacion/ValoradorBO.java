@@ -19,7 +19,9 @@ import xeredi.integra.model.bo.comun.IgBO;
 import xeredi.integra.model.dao.facturacion.AspectoDAO;
 import xeredi.integra.model.dao.facturacion.CargoDAO;
 import xeredi.integra.model.dao.facturacion.ReglaDAO;
+import xeredi.integra.model.dao.facturacion.ServicioCargoDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionAgregadaDAO;
+import xeredi.integra.model.dao.facturacion.ValoracionCargoDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionImpuestoDAO;
@@ -46,6 +48,7 @@ import xeredi.integra.model.vo.facturacion.CargoVO;
 import xeredi.integra.model.vo.facturacion.ReglaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ReglaTipo;
 import xeredi.integra.model.vo.facturacion.ReglaVO;
+import xeredi.integra.model.vo.facturacion.ServicioCargoCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionAgregadaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
@@ -116,11 +119,19 @@ public class ValoradorBO implements Valorador {
     @Inject
     ValoradorContextoDAO contextoDAO;
 
+    /** The srcr dao. */
+    @Inject
+    ServicioCargoDAO srcrDAO;
+
+    /** The vlrg dao. */
+    @Inject
+    ValoracionCargoDAO vlrgDAO;
+
     /**
      * {@inheritDoc}
      */
     @Override
-    @Transactional(executorType = ExecutorType.BATCH)
+    @Transactional(executorType = ExecutorType.REUSE)
     public void valorarServicio(Long srvcId, Set<Long> crgoIds, Date fechaLiquidacion, final Long prbtId) {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
                 + ", prbtId: " + prbtId);
@@ -216,6 +227,7 @@ public class ValoradorBO implements Valorador {
         generateSql(contextoVO.getAspc());
 
         final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(contextoVO);
+        final Set<Long> vlrcIds = new HashSet<Long>();
 
         for (final ValoracionAgregadaVO vlra : vlraList) {
             vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
@@ -223,6 +235,8 @@ public class ValoradorBO implements Valorador {
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
 
             LOG.info("vlrc: " + vlra.getVlrc());
+
+            vlrcIds.add(vlra.getVlrc().getId());
 
             for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
                 vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
@@ -265,10 +279,16 @@ public class ValoradorBO implements Valorador {
                 vlriDAO.insert(vlri);
             }
 
-            vlrcDAO.insertGenerateCargos(vlrcCriterioVO);
+            vlrgDAO.insertGenerate(vlrcCriterioVO);
         }
 
-        vlrtDAO.deleteList(contextoVO);
+        if (!vlrcIds.isEmpty()) {
+            final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
+
+            srcrCriterioVO.setVlrcIds(vlrcIds);
+            srcrDAO.insertMarcarValorado(srcrCriterioVO);
+            vlrtDAO.deleteList(contextoVO);
+        }
     }
 
     /**

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.facturacion.ServicioCargoDAO">
+    <insert id="insertMarcarValorado" parameterType="ServicioCargoCriterioVO">
+    <![CDATA[
+        INSERT INTO tbl_servicio_cargo_srcr (
+            srcr_srvc_pk, srcr_ssrv_pk, srcr_crgo_pk, srcr_fini, srcr_ffin, srcr_vlrc_pk, srcr_fctr_pk
+        )
+        SELECT
+            srvc_pk AS srcr_srvc_pk
+            , ssrv_pk AS srcr_ssrv_pk
+        	, crgo_pk AS srcr_crgo_pk
+        	, MIN(fini) AS srcr_fini
+        	, MAX(ffin) AS srcr_ffin
+            , vlrd_vlrc_pk AS srcr_vlrcr_pk
+        	, NULL AS srcr_fctr_pk
+        FROM (
+        	SELECT
+        		vlrd_vlrc_pk
+        		, (SELECT vlrc_srvc_pk FROM tbl_valoracion_vlrc WHERE vlrc_pk = vlrd_vlrc_pk) AS srvc_pk
+        		, (
+        			CASE
+        				WHEN crgo_es_temporal = 0
+        				THEN COALESCE(vlrl_ssrv_pk, vlrd_ssrv_pk)
+
+        				ELSE NULL
+        			END
+        		) AS ssrv_pk
+        		, crgo_pk
+        		, (
+        			CASE
+        				WHEN crgo_es_temporal = 0
+        				THEN NULL
+
+        				ELSE vlrd_fini
+        			END
+        		) AS fini
+        		, (
+        			CASE
+        				WHEN crgo_es_temporal = 0
+        				THEN NULL
+
+        				ELSE vlrd_ffin
+        			END
+        		) AS ffin
+        	FROM tbl_valoracion_det_vlrd
+        		INNER JOIN tbl_valoracion_lin_vlrl ON
+        			vlrl_pk = vlrd_vlrl_pk
+        		INNER JOIN tbl_regla_rgla ON
+        			rgla_pk = vlrl_rgla_pk
+        		INNER JOIN tbl_cargo_crgo ON
+        			crgo_pk = rgla_crgo_pk
+        	WHERE
+                rgla_tipo = 'T'
+                AND vlrd_vlrc_pk IN
+    ]]>
+        <foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}
+        </foreach>
+    <![CDATA[
+        ) sql
+        GROUP BY srvc_pk
+        	, crgo_pk
+        	, vlrd_vlrc_pk
+        	, ssrv_pk
+    ]]>
+    </insert>
+</mapper>

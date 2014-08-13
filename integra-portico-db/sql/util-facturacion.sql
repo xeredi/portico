@@ -80,7 +80,7 @@ from
 	tbl_subservicio_ssrv
 	join tbl_entidad_enti on
 		enti_pk = ssrv_tpss_pk
-where ssrv_srvc_pk = 1192567
+--where ssrv_srvc_pk = 1192567
 group by ssrv_tpss_pk, enti_nombre
 ;
 
@@ -140,6 +140,7 @@ SELECT * FROM tbl_proceso_batch_prbt;
 SELECT * FROM tbl_cargo_crgo;
 SELECT * FROM tbl_regla_rgla;
 
+SELECT * FROM tbl_servicio_cargo_srcr;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 SELECT * FROM vw_valoracion_vlrc;
 SELECT * FROM vw_valoracion_lin_vlrl;
@@ -149,6 +150,7 @@ SELECT * FROM tbl_valoracion_imp_vlri;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
 
+DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
 DELETE FROM tbl_valoracion_det_vlrd;
 DELETE FROM tbl_valoracion_lin_vlrl;
@@ -245,58 +247,4 @@ FROM
 WHERE 
 	srvc_pk = 1259571
 ;
-
--- Marcar servicios/subservicios valorados
-
-SELECT srvc_pk
-	, crgo_pk
-	, vlrd_vlrc_pk
-	, ssrv_pk
-	, MIN(fini)
-	, MAX(fini)
-FROM (
-	SELECT 
-		vlrd_vlrc_pk
-		, (SELECT vlrc_srvc_pk FROM tbl_valoracion_vlrc WHERE vlrc_pk = vlrd_vlrc_pk) AS srvc_pk
-		, (
-			CASE 
-				WHEN crgo_es_temporal = 0
-				THEN COALESCE(vlrl_ssrv_pk, vlrd_ssrv_pk)
-
-				ELSE NULL
-			END
-		) AS ssrv_pk
-		, crgo_pk
-		, (
-			CASE 
-				WHEN crgo_es_temporal = 0
-				THEN NULL
-
-				ELSE vlrd_fini
-			END
-		) AS fini
-		, (
-			CASE 
-				WHEN crgo_es_temporal = 0
-				THEN NULL
-
-				ELSE vlrd_ffin
-			END
-		) AS ffin
-	FROM tbl_valoracion_det_vlrd
-		INNER JOIN tbl_valoracion_lin_vlrl ON
-			vlrl_pk = vlrd_vlrl_pk
-		INNER JOIN tbl_regla_rgla ON
-			rgla_pk = vlrl_rgla_pk
-		INNER JOIN tbl_cargo_crgo ON
-			crgo_pk = rgla_crgo_pk
-	WHERE vlrd_vlrc_pk IN (1290920)
-		AND rgla_tipo = 'T'
-) sql
-GROUP BY srvc_pk
-	, crgo_pk
-	, vlrd_vlrc_pk
-	, ssrv_pk
-;
-
 

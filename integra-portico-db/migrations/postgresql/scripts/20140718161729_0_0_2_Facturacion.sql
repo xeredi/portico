@@ -754,8 +754,8 @@ CREATE TABLE portico.tbl_servicio_cargo_srcr
 	srcr_srvc_pk BIGINT NOT NULL
 	, srcr_ssrv_pk BIGINT
 	, srcr_crgo_pk BIGINT NOT NULL
-	, srcr_fini TIMESTAMP NOT NULL
-	, srcr_ffin TIMESTAMP NOT NULL
+	, srcr_fini TIMESTAMP
+	, srcr_ffin TIMESTAMP
 	, srcr_vlrc_pk BIGINT
 	, srcr_fctr_pk BIGINT
 
