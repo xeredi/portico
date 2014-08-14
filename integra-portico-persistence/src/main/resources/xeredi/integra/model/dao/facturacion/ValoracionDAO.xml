@@ -83,7 +83,7 @@
         <include refid="SelectWhere"/>
     </select>
 
-    <select id="count" parameterType="ValoracionCriterioVO" resultType="Long">
+    <select id="count" parameterType="ValoracionCriterioVO" resultType="Integer">
         SELECT COUNT(1)
         FROM vw_valoracion_vlrc
         <include refid="SelectWhere"/>

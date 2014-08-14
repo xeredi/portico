@@ -3,6 +3,26 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionCargoDAO">
+    <resultMap type="ValoracionCargoVO" id="ResultMap">
+        <id column="vlrg_vlrc_pk" />
+        <id column="vlrg_crgo_pk" />
+
+        <result column="vlrg_vlrc_pk" property="vlrcId" />
+        <association property="crgo" resultMap="xeredi.integra.model.dao.facturacion.CargoDAO.ResultMap" />
+    </resultMap>
+
+    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT *
+        FROM vw_valoracion_cargo_vlrg
+    ]]>
+        <where>
+            <if test="id != null">
+                AND vlrg_vlrc_pk = #{id}
+            </if>
+        </where>
+    </select>
+
     <insert id="insertGenerate" parameterType="ValoracionCriterioVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_cargo_vlrg (vlrg_vlrc_pk, vlrg_crgo_pk)

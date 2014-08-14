@@ -50,6 +50,9 @@ CREATE TABLE portico.tbl_cargo_version_crgv
 )
 \
 
+CREATE INDEX ix_crgv_crgo_pk ON portico.tbl_cargo_version_crgv (crgv_crgo_pk)
+\
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_cargo_version_crgv TO portico
 \
 
@@ -116,6 +119,9 @@ CREATE TABLE portico.tbl_regla_rgla
 )
 \
 
+CREATE INDEX ix_rgla_crgo_pk ON portico.tbl_regla_rgla (rgla_crgo_pk)
+\
+
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_regla_rgla TO portico
 \
 
@@ -171,6 +177,9 @@ CREATE TABLE portico.tbl_regla_version_rglv
 	, CONSTRAINT fk_rglv_rgla_pk FOREIGN KEY (rglv_rgla_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
 )
+\
+
+CREATE INDEX ix_rglv_rgla_pk ON portico.tbl_regla_version_rglv (rglv_rgla_pk)
 \
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_regla_version_rglv TO portico
@@ -268,6 +277,9 @@ CREATE TABLE portico.tbl_aspecto_version_aspv
 	, CONSTRAINT fk_aspv_aspc_pk FOREIGN KEY (aspv_aspc_pk)
 		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
 )
+\
+
+CREATE INDEX ix_aspv_aspc_pk ON portico.tbl_aspecto_version_aspv (aspv_aspc_pk)
 \
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_version_aspv TO portico
@@ -573,6 +585,8 @@ CREATE TABLE portico.tbl_factura_fctr
 )
 \
 
+CREATE INDEX ix_fctr_aspc_pk ON portico.tbl_factura_fctr (fctr_aspc_pk)
+\
 CREATE INDEX ix_fctr_pagador_pk ON portico.tbl_factura_fctr (fctr_pagador_pk)
 \
 

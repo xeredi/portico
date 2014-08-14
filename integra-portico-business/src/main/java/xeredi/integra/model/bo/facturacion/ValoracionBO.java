@@ -1,10 +1,12 @@
 package xeredi.integra.model.bo.facturacion;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.dao.facturacion.ServicioCargoDAO;
@@ -14,11 +16,14 @@ import xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionImpuestoDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionLineaDAO;
 import xeredi.integra.model.vo.facturacion.ServicioCargoCriterioVO;
+import xeredi.integra.model.vo.facturacion.ValoracionCargoVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleCriterioVO;
+import xeredi.integra.model.vo.facturacion.ValoracionImpuestoVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionVO;
+import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
@@ -103,10 +108,45 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional
+    public List<ValoracionImpuestoVO> selectImpuestosList(ValoracionCriterioVO vlrcCriterioVO) {
+        return vlriDAO.selectList(vlrcCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public List<ValoracionCargoVO> selectCargosList(ValoracionCriterioVO vlrcCriterioVO) {
+        return vlrgDAO.selectList(vlrcCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public List<ValoracionLineaVO> selectLineasList(final ValoracionLineaCriterioVO vlrlCriterioVO) {
         Preconditions.checkNotNull(vlrlCriterioVO);
 
         return vlrlDAO.selectList(vlrlCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public PaginatedList<ValoracionLineaVO> selectLineasList(ValoracionLineaCriterioVO vlrlCriterioVO, int offset,
+            int limit) {
+        final int count = vlrlDAO.count(vlrlCriterioVO);
+        final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
+
+        if (count >= offset) {
+            vlrlList.addAll(vlrlDAO.selectList(vlrlCriterioVO, new RowBounds(offset, limit)));
+        }
+
+        return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
     }
 
 }

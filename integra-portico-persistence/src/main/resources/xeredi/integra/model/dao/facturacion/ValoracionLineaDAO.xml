@@ -5,6 +5,9 @@
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionLineaDAO">
     <resultMap type="ValoracionLineaVO" id="ResultMap">
         <id column="vlrl_pk" property="id" />
+        <id column="vlrl_vlrc_pk" property="vlrcId" />
+        <id column="vlrl_fini" property="fini" />
+        <id column="vlrl_ffin" property="ffin" />
 
         <result column="vlrl_importe" property="importe" />
 
@@ -15,7 +18,15 @@
         <result column="vlrl_info5" property="info5" />
         <result column="vlrl_info6" property="info6" />
 
+        <result column="vlrl_cuant1" property="cuant1" />
+        <result column="vlrl_cuant2" property="cuant2" />
+        <result column="vlrl_cuant3" property="cuant3" />
+        <result column="vlrl_cuant4" property="cuant4" />
+        <result column="vlrl_cuant5" property="cuant5" />
+        <result column="vlrl_cuant6" property="cuant6" />
+
         <association property="ssrv" resultMap="xeredi.integra.model.dao.servicio.SubservicioDAO.ResultMap" />
+        <association property="rgla" resultMap="xeredi.integra.model.dao.facturacion.ReglaDAO.ResultMap" />
         <association property="impuesto" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap"
             columnPrefix="impuesto_" />
     </resultMap>
@@ -84,7 +95,7 @@
         ORDER BY vlrl_vlrc_pk, vlrl_pk
     </select>
 
-    <select id="count" parameterType="ValoracionLineaCriterioVO" resultType="Long">
+    <select id="count" parameterType="ValoracionLineaCriterioVO" resultType="Integer">
         SELECT COUNT(1)
         FROM vw_valoracion_lin_vlrl
         <include refid="SelectWhere" />

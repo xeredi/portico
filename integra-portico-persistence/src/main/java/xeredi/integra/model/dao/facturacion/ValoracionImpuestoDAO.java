@@ -36,4 +36,13 @@ public interface ValoracionImpuestoDAO {
      * @return the int
      */
     int delete(final ValoracionCriterioVO vlrcCriterioVO);
+
+    /**
+     * Select list.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @return the list< valoracion impuesto v o>
+     */
+    List<ValoracionImpuestoVO> selectList(final ValoracionCriterioVO vlrcCriterioVO);
 }

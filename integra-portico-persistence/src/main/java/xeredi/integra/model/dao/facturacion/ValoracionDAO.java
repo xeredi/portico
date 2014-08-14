@@ -9,62 +9,62 @@ import xeredi.integra.model.vo.facturacion.ValoracionVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface ValoracionDAO.
+ * DAO de acceso a las valoraciones de la aplicacion.
  */
 public interface ValoracionDAO {
 
     /**
-     * Insert.
+     * Alta de los datos de una valoracion.
      *
      * @param vlrcVO
-     *            the vlrc vo
+     *            Datos de una valoracion
      */
     void insert(final ValoracionVO vlrcVO);
 
     /**
-     * Delete.
+     * Borrado de las valoraciones que cumplan un criterio de busqueda.
      *
      * @param vlrcCriterioVO
-     *            the vlrc criterio vo
-     * @return the int
+     *            Criterio de busqueda de valoraciones.
+     * @return Numero de filas modificadas.
      */
     int delete(final ValoracionCriterioVO vlrcCriterioVO);
 
     /**
-     * Select.
+     * Busqueda de los datos de una valoracion a partir de su identificador.
      *
      * @param id
-     *            the id
-     * @return the valoracion vo
+     *            Identificador de valoracion
+     * @return Datos de la valoracion buscada.
      */
     ValoracionVO select(final Long id);
 
     /**
-     * Select list.
+     * Busqueda de una lista de valoraciones que cumplan un criterio de busqueda.
      *
      * @param vlrcCriterioVO
-     *            the vlrc criterio vo
-     * @return the list
+     *            Criterio de busqueda de valoraciones.
+     * @return {@link List} de valoraciones que cumplan el criterio de busqueda.
      */
     List<ValoracionVO> selectList(final ValoracionCriterioVO vlrcCriterioVO);
 
     /**
-     * Count.
+     * Cuenta del numero de valoraciones que cumplan un criterio de busqueda.
      *
      * @param vlrcCriterioVO
-     *            the vlrc criterio vo
-     * @return the int
+     *            Criterio de busqueda de valoraciones.
+     * @return Numero de valoraciones que cumplen el criterio de busqueda.
      */
     int count(final ValoracionCriterioVO vlrcCriterioVO);
 
     /**
-     * Select list.
+     * Busqueda de una pagina de una lista de valoraciones que cumplan un criterio de busqueda.
      *
      * @param vlrcCriterioVO
-     *            the vlrc criterio vo
+     *            Criterio de busqueda de valoraciones.
      * @param bounds
-     *            the bounds
-     * @return the list
+     *            Limites de la pagina.
+     * @return {@link List} de valoraciones que cumplan el criterio de busqueda.
      */
     List<ValoracionVO> selectList(final ValoracionCriterioVO vlrcCriterioVO, final RowBounds bounds);
 }

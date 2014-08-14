@@ -60,6 +60,22 @@
     ]]>
     </select>
 
+    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT *
+        	, vlri_impuesto_pk AS impuesto_prmt_pk
+        	, (SELECT prmt_parametro FROM tbl_parametro_prmt
+        		WHERE prmt_pk = vlri_impuesto_pk) AS impuesto_prmt_parametro
+        FROM
+        	tbl_valoracion_imp_vlri
+    ]]>
+        <where>
+            <if test="id != null">
+                AND vlri_vlrc_pk = #{id}
+            </if>
+        </where>
+    </select>
+
     <insert id="insert" parameterType="ValoracionImpuestoVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_imp_vlri (

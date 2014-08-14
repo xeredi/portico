@@ -150,11 +150,26 @@ SELECT * FROM tbl_servicio_cargo_srcr;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 SELECT * FROM vw_valoracion_vlrc;
 SELECT * FROM vw_valoracion_lin_vlrl;
+SELECT * FROM vw_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_vlrc;
 SELECT * FROM tbl_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_imp_vlri;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
+
+
+
+
+SELECT * 
+	, vlri_impuesto_pk AS impuesto_prmt_pk
+	, (SELECT prmt_parametro FROM tbl_parametro_prmt
+		WHERE prmt_pk = vlri_impuesto_pk) AS impuesto_prmt_parametro
+FROM 
+	tbl_valoracion_imp_vlri
+
+;
+
+	
 
 DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
