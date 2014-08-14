@@ -3,6 +3,32 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionDAO">
+    <resultMap type="ValoracionVO" id="ResultMap">
+        <id column="vlrc_pk" property="id" />
+
+        <result column="vlrc_fref" property="fref" />
+        <result column="vlrc_falta" property="falta" />
+        <result column="vlrc_fliq" property="fliq" />
+        <result column="vlrc_fini" property="fini" />
+        <result column="vlrc_ffin" property="ffin" />
+        <result column="vlrc_es_suj_pasivo" property="sujPasivo" />
+        <result column="vlrc_cod_exen" property="codExencion" />
+
+        <result column="vlrc_importe" property="importe" />
+        <result column="vlrc_impuesto" property="impuesto" />
+
+        <result column="vlrc_info1" property="info1" />
+        <result column="vlrc_info2" property="info2" />
+        <result column="vlrc_info3" property="info3" />
+        <result column="vlrc_info4" property="info4" />
+        <result column="vlrc_info5" property="info5" />
+        <result column="vlrc_info6" property="info6" />
+
+        <association property="srvc" resultMap="xeredi.integra.model.dao.servicio.ServicioDAO.ResultMap" />
+        <association property="aspc" resultMap="xeredi.integra.model.dao.facturacion.AspectoDAO.ResultMap" />
+        <association property="pagador" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap"
+            columnPrefix="pagador_" />
+    </resultMap>
 
     <insert id="insert" parameterType="ValoracionVO">
     <![CDATA[
@@ -31,4 +57,35 @@
             </if>
         </where>
     </delete>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_valoracion_vlrc
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND vlrc_pk = #{id}
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" parameterType="Long" resultMap="ResultMap">
+        <include refid="SelectPrefix"/>
+        WHERE vlrc_pk = #{value}
+    </select>
+
+    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix"/>
+        <include refid="SelectWhere"/>
+    </select>
+
+    <select id="count" parameterType="ValoracionCriterioVO" resultType="Long">
+        SELECT COUNT(1)
+        FROM vw_valoracion_vlrc
+        <include refid="SelectWhere"/>
+    </select>
 </mapper>

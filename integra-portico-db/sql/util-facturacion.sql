@@ -248,3 +248,19 @@ WHERE
 	srvc_pk = 1259571
 ;
 
+-- Valoracion de impresion
+SELECT *
+FROM vw_valoracion_lin_vlrl
+	INNER JOIN portico.tbl_regla_rgla ON
+		rgla_pk = vlrl_rgla_pk
+	INNER JOIN portico.tbl_regla_version_rglv ON
+		rglv_rgla_pk = vlrl_rgla_pk
+		AND EXISTS (
+			SELECT 1
+			FROM portico.tbl_valoracion_vlrc
+			WHERE vlrc_pk = vlrl_vlrc_pk
+				AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
+		)
+	LEFT JOIN portico.tbl_subservicio_ssrv ON
+		ssrv_pk = vlrl_ssrv_pk
+;

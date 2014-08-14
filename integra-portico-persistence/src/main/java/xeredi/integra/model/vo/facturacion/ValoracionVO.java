@@ -19,9 +19,6 @@ public final class ValoracionVO {
     /** The srvc. */
     private ServicioVO srvc;
 
-    /** The crgo. */
-    private CargoVO crgo;
-
     /** The aspc. */
     private AspectoVO aspc;
 
@@ -117,25 +114,6 @@ public final class ValoracionVO {
      */
     public void setSrvc(ServicioVO value) {
         this.srvc = value;
-    }
-
-    /**
-     * Gets the crgo.
-     *
-     * @return the crgo
-     */
-    public CargoVO getCrgo() {
-        return crgo;
-    }
-
-    /**
-     * Sets the crgo.
-     *
-     * @param value
-     *            the crgo
-     */
-    public void setCrgo(CargoVO value) {
-        this.crgo = value;
     }
 
     /**

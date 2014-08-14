@@ -1,6 +1,7 @@
 package xeredi.integra.model.bo.facturacion;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -16,6 +17,8 @@ import xeredi.integra.model.vo.facturacion.ServicioCargoCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaCriterioVO;
+import xeredi.integra.model.vo.facturacion.ValoracionLineaVO;
+import xeredi.integra.model.vo.facturacion.ValoracionVO;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
@@ -79,6 +82,31 @@ public class ValoracionBO implements Valoracion {
         vlriDAO.delete(vlrcCriterioVO);
         vlrgDAO.delete(vlrcCriterioVO);
         vlrcDAO.delete(vlrcCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public ValoracionVO select(final Long id) {
+        Preconditions.checkNotNull(id);
+
+        final ValoracionVO vlrc = vlrcDAO.select(id);
+
+        // TODO Auto-generated method stub
+        return vlrc;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public List<ValoracionLineaVO> selectLineasList(final ValoracionLineaCriterioVO vlrlCriterioVO) {
+        Preconditions.checkNotNull(vlrlCriterioVO);
+
+        return vlrlDAO.selectList(vlrlCriterioVO);
     }
 
 }

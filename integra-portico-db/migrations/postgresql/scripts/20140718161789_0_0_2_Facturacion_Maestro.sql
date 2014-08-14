@@ -297,6 +297,8 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DELETE FROM portico.tbl_servicio_cargo_srcr
+\
 DELETE FROM portico.tbl_valoracion_tmp_vlrt
 \
 DELETE FROM portico.tbl_valoracion_det_vlrd

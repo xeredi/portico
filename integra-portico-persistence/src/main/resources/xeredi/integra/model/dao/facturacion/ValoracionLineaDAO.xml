@@ -3,6 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionLineaDAO">
+    <resultMap type="ValoracionLineaVO" id="ResultMap">
+        <id column="vlrl_pk" property="id" />
+
+        <result column="vlrl_importe" property="importe" />
+
+        <result column="vlrl_info1" property="info1" />
+        <result column="vlrl_info2" property="info2" />
+        <result column="vlrl_info3" property="info3" />
+        <result column="vlrl_info4" property="info4" />
+        <result column="vlrl_info5" property="info5" />
+        <result column="vlrl_info6" property="info6" />
+
+        <association property="ssrv" resultMap="xeredi.integra.model.dao.servicio.SubservicioDAO.ResultMap" />
+        <association property="impuesto" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap"
+            columnPrefix="impuesto_" />
+    </resultMap>
+
     <insert id="insert" parameterType="ValoracionLineaVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_lin_vlrl (
@@ -35,4 +52,41 @@
             </if>
         </where>
     </delete>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_valoracion_lin_vlrl
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND vlrl_pk = #{id}
+            </if>
+            <if test="vlrc != null">
+                <if test="vlrc.id != null">
+                    AND vlrl_vlrc_pk = #{vlrc.id}
+                </if>
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" parameterType="Long" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        WHERE vlrl_pk = #{value}
+    </select>
+
+    <select id="selectList" parameterType="ValoracionLineaCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY vlrl_vlrc_pk, vlrl_pk
+    </select>
+
+    <select id="count" parameterType="ValoracionLineaCriterioVO" resultType="Long">
+        SELECT COUNT(1)
+        FROM vw_valoracion_lin_vlrl
+        <include refid="SelectWhere" />
+    </select>
 </mapper>
