@@ -150,6 +150,7 @@ SELECT * FROM tbl_servicio_cargo_srcr;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 SELECT * FROM vw_valoracion_vlrc;
 SELECT * FROM vw_valoracion_lin_vlrl;
+SELECT * FROM vw_valoracion_det_vlrd;
 SELECT * FROM vw_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_vlrc;
 SELECT * FROM tbl_valoracion_cargo_vlrg;
@@ -157,19 +158,11 @@ SELECT * FROM tbl_valoracion_imp_vlri;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
 
-
-
-
-SELECT * 
-	, vlri_impuesto_pk AS impuesto_prmt_pk
-	, (SELECT prmt_parametro FROM tbl_parametro_prmt
-		WHERE prmt_pk = vlri_impuesto_pk) AS impuesto_prmt_parametro
-FROM 
-	tbl_valoracion_imp_vlri
-
+SELECT * FROM vw_valoracion_det_vlrd 
+WHERE vlrd_vlrl_pk = 1371129
 ;
 
-	
+
 
 DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
@@ -263,19 +256,3 @@ WHERE
 	srvc_pk = 1259571
 ;
 
--- Valoracion de impresion
-SELECT *
-FROM vw_valoracion_lin_vlrl
-	INNER JOIN portico.tbl_regla_rgla ON
-		rgla_pk = vlrl_rgla_pk
-	INNER JOIN portico.tbl_regla_version_rglv ON
-		rglv_rgla_pk = vlrl_rgla_pk
-		AND EXISTS (
-			SELECT 1
-			FROM portico.tbl_valoracion_vlrc
-			WHERE vlrc_pk = vlrl_vlrc_pk
-				AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
-		)
-	LEFT JOIN portico.tbl_subservicio_ssrv ON
-		ssrv_pk = vlrl_ssrv_pk
-;

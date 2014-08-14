@@ -3,8 +3,7 @@
 
 
 
-CREATE VIEW portico.vw_valoracion_vlrc
-AS
+CREATE VIEW portico.vw_valoracion_vlrc AS
 	SELECT * 
 		, vlrc_pagador_pk AS pagador_prmt_pk
 		, (
@@ -46,8 +45,7 @@ GRANT SELECT ON portico.vw_valoracion_vlrc TO portico
 
 
 
-CREATE VIEW portico.vw_valoracion_lin_vlrl
-AS
+CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 	SELECT * 
 		, vlrl_impuesto_pk AS impuesto_prmt_pk
 		, (SELECT prmt_parametro 
@@ -89,8 +87,19 @@ GRANT SELECT ON portico.vw_valoracion_lin_vlrl TO portico
 
 
 
-CREATE VIEW portico.vw_valoracion_cargo_vlrg
-AS
+CREATE VIEW portico.vw_valoracion_det_vlrd AS
+	SELECT * 
+	FROM portico.tbl_valoracion_det_vlrd
+		LEFT JOIN portico.tbl_subservicio_ssrv ON
+			ssrv_pk = vlrd_ssrv_pk
+\
+
+GRANT SELECT ON portico.vw_valoracion_det_vlrd TO portico
+\
+
+
+
+CREATE VIEW portico.vw_valoracion_cargo_vlrg AS
 	SELECT * 
 	FROM portico.tbl_valoracion_cargo_vlrg
 		INNER JOIN portico.tbl_cargo_crgo ON 
@@ -121,6 +130,8 @@ GRANT SELECT ON portico.vw_valoracion_cargo_vlrg TO portico
 -- SQL to undo the change goes here.
 
 DROP VIEW portico.vw_valoracion_cargo_vlrg
+\
+DROP VIEW portico.vw_valoracion_det_vlrd
 \
 DROP VIEW portico.vw_valoracion_lin_vlrl
 \

@@ -3,6 +3,33 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO">
+    <resultMap type="ValoracionDetalleVO" id="ResultMap">
+        <id column="vlrd_pk" />
+
+        <result column="vlrd_pk" property="id" />
+        <result column="vlrd_vlrc_pk" property="vlrcId" />
+        <result column="vlrd_vlrl_pk" property="vlrlId" />
+        <result column="vlrd_importe_base" property="importeBase" />
+        <result column="vlrd_importe" property="importe" />
+        <result column="vlrd_fini" property="fini" />
+        <result column="vlrd_ffin" property="ffin" />
+
+        <result column="vlrd_cuant1" property="cuant1" />
+        <result column="vlrd_cuant2" property="cuant2" />
+        <result column="vlrd_cuant3" property="cuant3" />
+        <result column="vlrd_cuant4" property="cuant4" />
+        <result column="vlrd_cuant5" property="cuant5" />
+        <result column="vlrd_cuant6" property="cuant6" />
+        <result column="vlrd_info1" property="info1" />
+        <result column="vlrd_info2" property="info2" />
+        <result column="vlrd_info3" property="info3" />
+        <result column="vlrd_info4" property="info4" />
+        <result column="vlrd_info5" property="info5" />
+        <result column="vlrd_info6" property="info6" />
+
+        <association property="ssrv" resultMap="xeredi.integra.model.dao.servicio.SubservicioDAO.ResultMap" />
+    </resultMap>
+
     <insert id="insert" parameterType="ValoracionDetalleVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_det_vlrd (
@@ -40,4 +67,48 @@
             </if>
         </where>
     </delete>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_valoracion_det_vlrd
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND vlrd_pk = #{id}
+            </if>
+            <if test="vlrl != null">
+                <if test="vlrl.id != null">
+                    AND vlrd_vlrl_pk = #{vlrl.id}
+                </if>
+                <if test="vlrl.vlrc != null">
+                    <if test="vlrl.vlrc.id != null">
+                        AND vlrd_vlrc_pk = #{vlrl.vlrc.id}
+                    </if>
+                </if>
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" parameterType="Long" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        WHERE vlrd_pk = #{value}
+    </select>
+
+    <select id="count" parameterType="ValoracionDetalleCriterioVO" resultType="Integer">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM vw_valoracion_det_vlrd
+    ]]>
+        <include refid="SelectWhere"/>
+    </select>
+
+    <select id="selectList" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix"/>
+        <include refid="SelectWhere"/>
+        ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk
+    </select>
 </mapper>

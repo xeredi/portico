@@ -1,5 +1,9 @@
 package xeredi.integra.model.dao.facturacion;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
 
@@ -26,4 +30,32 @@ public interface ValoracionDetalleDAO {
      */
     int delete(final ValoracionDetalleCriterioVO vlrdCriterioVO);
 
+    /**
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @return the valoracion detalle vo
+     */
+    ValoracionDetalleVO select(final Long id);
+
+    /**
+     * Count.
+     *
+     * @param vlrdCriterioVO
+     *            the vlrd criterio vo
+     * @return the int
+     */
+    int count(final ValoracionDetalleCriterioVO vlrdCriterioVO);
+
+    /**
+     * Select list.
+     *
+     * @param vlrdCriterioVO
+     *            the vlrd criterio vo
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<ValoracionDetalleVO> selectList(final ValoracionDetalleCriterioVO vlrdCriterioVO, final RowBounds bounds);
 }

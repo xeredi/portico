@@ -19,6 +19,7 @@ import xeredi.integra.model.vo.facturacion.ServicioCargoCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCargoVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleCriterioVO;
+import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
 import xeredi.integra.model.vo.facturacion.ValoracionImpuestoVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaVO;
@@ -99,7 +100,6 @@ public class ValoracionBO implements Valoracion {
 
         final ValoracionVO vlrc = vlrcDAO.select(id);
 
-        // TODO Auto-generated method stub
         return vlrc;
     }
 
@@ -109,6 +109,8 @@ public class ValoracionBO implements Valoracion {
     @Override
     @Transactional
     public List<ValoracionImpuestoVO> selectImpuestosList(ValoracionCriterioVO vlrcCriterioVO) {
+        Preconditions.checkNotNull(vlrcCriterioVO);
+
         return vlriDAO.selectList(vlrcCriterioVO);
     }
 
@@ -118,7 +120,20 @@ public class ValoracionBO implements Valoracion {
     @Override
     @Transactional
     public List<ValoracionCargoVO> selectCargosList(ValoracionCriterioVO vlrcCriterioVO) {
+        Preconditions.checkNotNull(vlrcCriterioVO);
+
         return vlrgDAO.selectList(vlrcCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public ValoracionLineaVO selectLinea(Long vlrlId) {
+        Preconditions.checkNotNull(vlrlId);
+
+        return vlrlDAO.select(vlrlId);
     }
 
     /**
@@ -139,6 +154,8 @@ public class ValoracionBO implements Valoracion {
     @Transactional
     public PaginatedList<ValoracionLineaVO> selectLineasList(ValoracionLineaCriterioVO vlrlCriterioVO, int offset,
             int limit) {
+        Preconditions.checkNotNull(vlrlCriterioVO);
+
         final int count = vlrlDAO.count(vlrlCriterioVO);
         final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
 
@@ -147,6 +164,36 @@ public class ValoracionBO implements Valoracion {
         }
 
         return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public ValoracionDetalleVO selectDetalle(Long vlrdId) {
+        Preconditions.checkNotNull(vlrdId);
+
+        return vlrdDAO.select(vlrdId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public PaginatedList<ValoracionDetalleVO> selectDetallesList(ValoracionDetalleCriterioVO vlrdCriterioVO,
+            int offset, int limit) {
+        Preconditions.checkNotNull(vlrdCriterioVO);
+
+        final int count = vlrdDAO.count(vlrdCriterioVO);
+        final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
+
+        if (count >= offset) {
+            vlrdList.addAll(vlrdDAO.selectList(vlrdCriterioVO, new RowBounds(offset, limit)));
+        }
+
+        return new PaginatedList<ValoracionDetalleVO>(vlrdList, offset, limit, count);
     }
 
 }
