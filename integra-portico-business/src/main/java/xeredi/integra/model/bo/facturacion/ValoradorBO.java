@@ -246,8 +246,6 @@ public class ValoradorBO implements Valorador {
                 vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
                 if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {
-                    System.out.println("Precio!!!");
-
                     vlrlPadreId = vlrl.getVlrl().getId();
                 }
 

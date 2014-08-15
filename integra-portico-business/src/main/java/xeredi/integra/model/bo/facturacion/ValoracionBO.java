@@ -66,7 +66,7 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional(executorType = ExecutorType.BATCH)
-    public void delete(Long id) {
+    public void delete(final Long id) {
         Preconditions.checkNotNull(id);
 
         final Set<Long> vlrcIds = new HashSet<Long>();
@@ -108,7 +108,7 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional
-    public List<ValoracionImpuestoVO> selectImpuestosList(ValoracionCriterioVO vlrcCriterioVO) {
+    public List<ValoracionImpuestoVO> selectImpuestosList(final ValoracionCriterioVO vlrcCriterioVO) {
         Preconditions.checkNotNull(vlrcCriterioVO);
 
         return vlriDAO.selectList(vlrcCriterioVO);
@@ -119,7 +119,7 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional
-    public List<ValoracionCargoVO> selectCargosList(ValoracionCriterioVO vlrcCriterioVO) {
+    public List<ValoracionCargoVO> selectCargosList(final ValoracionCriterioVO vlrcCriterioVO) {
         Preconditions.checkNotNull(vlrcCriterioVO);
 
         return vlrgDAO.selectList(vlrcCriterioVO);
@@ -130,10 +130,60 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional
-    public ValoracionLineaVO selectLinea(Long vlrlId) {
+    public ValoracionLineaVO selectLinea(final Long vlrlId) {
         Preconditions.checkNotNull(vlrlId);
 
         return vlrlDAO.select(vlrlId);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsLineaDependencia(final Long vlrlId) {
+        Preconditions.checkNotNull(vlrlId);
+
+        return vlrlDAO.existsDependencia(vlrlId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void deleteLinea(final Long vlrlId) {
+        Preconditions.checkNotNull(vlrlId);
+
+        if (vlrlDAO.existsDependencia(vlrlId)) {
+            throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
+        }
+
+        final ValoracionLineaVO vlrl = vlrlDAO.select(vlrlId);
+
+        if (vlrl != null) {
+            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+            final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+            final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
+
+            vlrcCriterioVO.setId(vlrl.getVlrcId());
+
+            vlrlCriterioVO.setId(vlrlId);
+            vlrlCriterioVO.setVlrc(vlrcCriterioVO);
+
+            vlrdCriterioVO.setVlrl(vlrlCriterioVO);
+
+            vlrdDAO.delete(vlrdCriterioVO);
+            vlrlDAO.delete(vlrlCriterioVO);
+
+            // Recalcular cargos e importes de IVA
+            vlrgDAO.delete(vlrcCriterioVO);
+            vlrgDAO.insertGenerate(vlrcCriterioVO);
+            vlriDAO.delete(vlrcCriterioVO);
+
+            final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
+
+            for (final ValoracionImpuestoVO vlri : vlriList) {
+                vlriDAO.insert(vlri);
+            }
+        }
     }
 
     /**
@@ -152,8 +202,8 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional
-    public PaginatedList<ValoracionLineaVO> selectLineasList(ValoracionLineaCriterioVO vlrlCriterioVO, int offset,
-            int limit) {
+    public PaginatedList<ValoracionLineaVO> selectLineasList(final ValoracionLineaCriterioVO vlrlCriterioVO,
+            final int offset, final int limit) {
         Preconditions.checkNotNull(vlrlCriterioVO);
 
         final int count = vlrlDAO.count(vlrlCriterioVO);
@@ -171,7 +221,7 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional
-    public ValoracionDetalleVO selectDetalle(Long vlrdId) {
+    public ValoracionDetalleVO selectDetalle(final Long vlrdId) {
         Preconditions.checkNotNull(vlrdId);
 
         return vlrdDAO.select(vlrdId);
@@ -182,8 +232,8 @@ public class ValoracionBO implements Valoracion {
      */
     @Override
     @Transactional
-    public PaginatedList<ValoracionDetalleVO> selectDetallesList(ValoracionDetalleCriterioVO vlrdCriterioVO,
-            int offset, int limit) {
+    public PaginatedList<ValoracionDetalleVO> selectDetallesList(final ValoracionDetalleCriterioVO vlrdCriterioVO,
+            final int offset, final int limit) {
         Preconditions.checkNotNull(vlrdCriterioVO);
 
         final int count = vlrdDAO.count(vlrdCriterioVO);

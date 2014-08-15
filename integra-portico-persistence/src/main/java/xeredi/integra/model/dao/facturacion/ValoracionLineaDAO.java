@@ -67,4 +67,13 @@ public interface ValoracionLineaDAO {
      * @return the valoracion linea vo
      */
     ValoracionLineaVO select(final Long id);
+
+    /**
+     * Exists dependencia.
+     *
+     * @param vlrlId
+     *            the vlrl id
+     * @return true, if successful
+     */
+    boolean existsDependencia(final Long vlrlId);
 }

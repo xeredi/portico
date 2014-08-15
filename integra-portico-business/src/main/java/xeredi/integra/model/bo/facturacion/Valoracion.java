@@ -63,6 +63,23 @@ public interface Valoracion {
     ValoracionLineaVO selectLinea(final Long vlrlId);
 
     /**
+     * Exists linea dependencia.
+     *
+     * @param vlrlId
+     *            the vlrl id
+     * @return true, if successful
+     */
+    boolean existsLineaDependencia(final Long vlrlId);
+
+    /**
+     * Delete linea.
+     *
+     * @param vlrlId
+     *            the vlrl id
+     */
+    void deleteLinea(final Long vlrlId);
+
+    /**
      * Select lineas list.
      *
      * @param vlrlCriterioVO

@@ -190,10 +190,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_regla_version_rglv TO portic
 -- tbl_regla_inc_rgin
 CREATE TABLE portico.tbl_regla_inc_rgin
 (
-	rgin_rgla1_pk BIGINT NOT NULL
+	rgin_pk BIGINT NOT NULL
+	, rgin_rgla1_pk BIGINT NOT NULL
 	, rgin_rgla2_pk BIGINT NOT NULL
 
-	, CONSTRAINT pk_rgin PRIMARY KEY (rgin_rgla1_pk, rgin_rgla2_pk)
+	, CONSTRAINT pk_rgin PRIMARY KEY (rgin_pk)
+	, CONSTRAINT uq_rgin UNIQUE (rgin_rgla1_pk, rgin_rgla2_pk)
 
 	, CONSTRAINT fk_rgin_rgla1_pk FOREIGN KEY (rgin_rgla1_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
@@ -203,6 +205,29 @@ CREATE TABLE portico.tbl_regla_inc_rgin
 \
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_regla_inc_rgin TO portico
+\
+
+
+
+-- tbl_regla_inc_version_rgiv
+CREATE TABLE portico.tbl_regla_inc_version_rgiv
+(
+	rgiv_pk BIGINT NOT NULL
+	, rgiv_rgin_pk BIGINT NOT NULL
+	, rgiv_fini TIMESTAMP NOT NULL
+	, rgiv_ffin TIMESTAMP
+
+	, CONSTRAINT pk_rgiv PRIMARY KEY (rgiv_pk)
+
+	, CONSTRAINT fk_rgiv_rgin_pk FOREIGN KEY (rgiv_rgin_pk)
+		REFERENCES portico.tbl_regla_inc_rgin (rgin_pk)
+)
+\
+
+CREATE INDEX ix_rgiv_rgin_pk ON portico.tbl_regla_inc_version_rgiv (rgiv_rgin_pk)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_regla_inc_version_rgiv TO portico
 \
 
 
@@ -844,6 +869,8 @@ DROP TABLE portico.tbl_aspecto_cargo_ascr
 DROP TABLE portico.tbl_aspecto_version_aspv
 \
 DROP TABLE portico.tbl_aspecto_aspc
+\
+DROP TABLE portico.tbl_regla_inc_version_rgiv
 \
 DROP TABLE portico.tbl_regla_inc_rgin
 \
