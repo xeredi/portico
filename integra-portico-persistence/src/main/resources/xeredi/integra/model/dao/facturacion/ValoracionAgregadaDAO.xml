@@ -161,7 +161,6 @@
                 , rgla_pk
                 , rgla_tipo
                 , rgla_crgo_pk
-                , vlrt_rgla_padre_pk AS vlrl_rgla_padre_pk
 
                 , vlrt_impuesto_pk AS vlrl_impuesto_pk
     ]]>

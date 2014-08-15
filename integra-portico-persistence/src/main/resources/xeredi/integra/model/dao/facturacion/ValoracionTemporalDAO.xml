@@ -5,6 +5,7 @@
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionTemporalDAO">
     <resultMap type="ValoracionTemporalVO" id="ResultMap">
         <result column="vlrt_pk" property="id" />
+        <result column="vlrt_padre_pk" property="padreId" />
 
         <result column="vlrt_orden" property="orden" />
         <result column="vlrt_valor_base" property="valorBase" />
@@ -52,10 +53,6 @@
             <result column="vlrt_rgla_pk" property="id" />
         </association>
 
-        <association property="rglaPadre" javaType="ReglaVO">
-            <result column="vlrt_rgla_padre_pk" property="id" />
-        </association>
-
         <association property="impuesto" javaType="ParametroVO">
             <result column="vlrt_impuesto_pk" property="id" />
         </association>
@@ -72,7 +69,7 @@
         , srvc_pk AS vlrt_srvc_pk
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
-        , rgla_pk AS vlrt_rgla_padre_pk
+        , NULL AS vlrt_padre_pk
         , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.rglv.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.rglv.formulaSql}) AS vlrt_importe
@@ -189,7 +186,7 @@
         , NULL AS vlrt_ssrv_pk
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
-        , vlrt_rgla_pk AS vlrt_rgla_padre_pk
+        , vlrt_padre_pk AS vlrt_padre_pk
         , NULL AS vlrt_orden
         , importe_base AS vlrt_importe_base
         , (
@@ -279,7 +276,7 @@
         , ssrv_pk AS vlrt_ssrv_pk
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
-        , rgla_pk AS vlrt_rgla_padre_pk
+        , NULL AS vlrt_padre_pk
         , ssrv_numero AS vlrt_orden
         , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.rglv.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
@@ -499,7 +496,7 @@
         , ssrv_pk AS vlrt_ssrv_pk
         , rgla_crgo_pk AS vlrt_crgo_pk
         , rgla_pk AS vlrt_rgla_pk
-        , vlrt_rgla_pk AS vlrt_rgla_padre_pk
+        , vlrt_pk AS vlrt_padre_pk
         , ssrv_numero AS vlrt_orden
         , importe_base AS vlrt_importe_base
         , (
@@ -588,13 +585,13 @@
     <insert id="insert" parameterType="ValoracionTemporalVO">
     <![CDATA[
     INSERT INTO tbl_valoracion_tmp_vlrt (
-        vlrt_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_padre_pk, vlrt_impuesto_pk, vlrt_pagador_pk
+        vlrt_pk, vlrt_padre_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_impuesto_pk, vlrt_pagador_pk
         , vlrt_orden, vlrt_valor_base, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
         , vlrt_fref, vlrt_fliq, vlrt_fini, vlrt_ffin
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
     ) VALUES (
-        #{id}, #{prbt.id}, #{srvc.id}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rglaPadre.id}, #{impuesto.id}, #{pagador.id}
+        #{id}, #{padreId}, #{prbt.id}, #{srvc.id}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{impuesto.id}, #{pagador.id}
         , #{orden}, #{valorBase}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
         , #{freferencia}, #{fliquidacion}, #{finicio}, #{ffin}
         , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}

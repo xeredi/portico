@@ -18,6 +18,9 @@ public final class ValoracionTemporalVO {
     /** The id. */
     private Long id;
 
+    /** The padre id. */
+    private Long padreId;
+
     /** The prbt. */
     private ProcesoVO prbt;
 
@@ -32,9 +35,6 @@ public final class ValoracionTemporalVO {
 
     /** The rgla. */
     private ReglaVO rgla;
-
-    /** The rgla padre. */
-    private ReglaVO rglaPadre;
 
     /** The impuesto. */
     private ParametroVO impuesto;
@@ -134,8 +134,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the prbt
      */
-    public void setPrbt(ProcesoVO value) {
-        this.prbt = value;
+    public void setPrbt(final ProcesoVO value) {
+        prbt = value;
     }
 
     /**
@@ -153,8 +153,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the srvc
      */
-    public void setSrvc(ServicioVO value) {
-        this.srvc = value;
+    public void setSrvc(final ServicioVO value) {
+        srvc = value;
     }
 
     /**
@@ -172,8 +172,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the ssrv
      */
-    public void setSsrv(SubservicioVO value) {
-        this.ssrv = value;
+    public void setSsrv(final SubservicioVO value) {
+        ssrv = value;
     }
 
     /**
@@ -191,8 +191,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the crgo
      */
-    public void setCrgo(CargoVO value) {
-        this.crgo = value;
+    public void setCrgo(final CargoVO value) {
+        crgo = value;
     }
 
     /**
@@ -210,8 +210,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the rgla
      */
-    public void setRgla(ReglaVO value) {
-        this.rgla = value;
+    public void setRgla(final ReglaVO value) {
+        rgla = value;
     }
 
     /**
@@ -229,8 +229,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the impuesto
      */
-    public void setImpuesto(ParametroVO value) {
-        this.impuesto = value;
+    public void setImpuesto(final ParametroVO value) {
+        impuesto = value;
     }
 
     /**
@@ -248,8 +248,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the pagador
      */
-    public void setPagador(ParametroVO value) {
-        this.pagador = value;
+    public void setPagador(final ParametroVO value) {
+        pagador = value;
     }
 
     /**
@@ -267,8 +267,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the orden
      */
-    public void setOrden(Integer value) {
-        this.orden = value;
+    public void setOrden(final Integer value) {
+        orden = value;
     }
 
     /**
@@ -286,8 +286,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the importe base
      */
-    public void setImporteBase(Double value) {
-        this.importeBase = value;
+    public void setImporteBase(final Double value) {
+        importeBase = value;
     }
 
     /**
@@ -305,8 +305,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the importe
      */
-    public void setImporte(Double value) {
-        this.importe = value;
+    public void setImporte(final Double value) {
+        importe = value;
     }
 
     /**
@@ -324,8 +324,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the suj pasivo
      */
-    public void setSujPasivo(Boolean value) {
-        this.sujPasivo = value;
+    public void setSujPasivo(final Boolean value) {
+        sujPasivo = value;
     }
 
     /**
@@ -343,8 +343,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the cod exencion
      */
-    public void setCodExencion(String value) {
-        this.codExencion = value;
+    public void setCodExencion(final String value) {
+        codExencion = value;
     }
 
     /**
@@ -362,8 +362,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the cuant1
      */
-    public void setCuant1(Double value) {
-        this.cuant1 = value;
+    public void setCuant1(final Double value) {
+        cuant1 = value;
     }
 
     /**
@@ -381,8 +381,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the cuant2
      */
-    public void setCuant2(Double value) {
-        this.cuant2 = value;
+    public void setCuant2(final Double value) {
+        cuant2 = value;
     }
 
     /**
@@ -400,8 +400,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the cuant3
      */
-    public void setCuant3(Double value) {
-        this.cuant3 = value;
+    public void setCuant3(final Double value) {
+        cuant3 = value;
     }
 
     /**
@@ -419,8 +419,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the cuant4
      */
-    public void setCuant4(Double value) {
-        this.cuant4 = value;
+    public void setCuant4(final Double value) {
+        cuant4 = value;
     }
 
     /**
@@ -438,8 +438,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the cuant5
      */
-    public void setCuant5(Double value) {
-        this.cuant5 = value;
+    public void setCuant5(final Double value) {
+        cuant5 = value;
     }
 
     /**
@@ -457,8 +457,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the cuant6
      */
-    public void setCuant6(Double value) {
-        this.cuant6 = value;
+    public void setCuant6(final Double value) {
+        cuant6 = value;
     }
 
     /**
@@ -476,8 +476,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the info1
      */
-    public void setInfo1(String value) {
-        this.info1 = value;
+    public void setInfo1(final String value) {
+        info1 = value;
     }
 
     /**
@@ -495,8 +495,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the info2
      */
-    public void setInfo2(String value) {
-        this.info2 = value;
+    public void setInfo2(final String value) {
+        info2 = value;
     }
 
     /**
@@ -514,8 +514,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the info3
      */
-    public void setInfo3(String value) {
-        this.info3 = value;
+    public void setInfo3(final String value) {
+        info3 = value;
     }
 
     /**
@@ -533,8 +533,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the info4
      */
-    public void setInfo4(String value) {
-        this.info4 = value;
+    public void setInfo4(final String value) {
+        info4 = value;
     }
 
     /**
@@ -552,8 +552,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the info5
      */
-    public void setInfo5(String value) {
-        this.info5 = value;
+    public void setInfo5(final String value) {
+        info5 = value;
     }
 
     /**
@@ -571,8 +571,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the info6
      */
-    public void setInfo6(String value) {
-        this.info6 = value;
+    public void setInfo6(final String value) {
+        info6 = value;
     }
 
     /**
@@ -590,8 +590,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the freferencia
      */
-    public void setFreferencia(Date value) {
-        this.freferencia = value;
+    public void setFreferencia(final Date value) {
+        freferencia = value;
     }
 
     /**
@@ -609,8 +609,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the fliquidacion
      */
-    public void setFliquidacion(Date value) {
-        this.fliquidacion = value;
+    public void setFliquidacion(final Date value) {
+        fliquidacion = value;
     }
 
     /**
@@ -628,8 +628,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the finicio
      */
-    public void setFinicio(Date value) {
-        this.finicio = value;
+    public void setFinicio(final Date value) {
+        finicio = value;
     }
 
     /**
@@ -647,27 +647,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
-    }
-
-    /**
-     * Gets the rgla padre.
-     *
-     * @return the rgla padre
-     */
-    public ReglaVO getRglaPadre() {
-        return rglaPadre;
-    }
-
-    /**
-     * Sets the rgla padre.
-     *
-     * @param value
-     *            the new rgla padre
-     */
-    public void setRglaPadre(ReglaVO value) {
-        this.rglaPadre = value;
+    public void setFfin(final Date value) {
+        ffin = value;
     }
 
     /**
@@ -685,8 +666,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the new id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -704,8 +685,8 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the new valor base
      */
-    public void setValorBase(Double value) {
-        this.valorBase = value;
+    public void setValorBase(final Double value) {
+        valorBase = value;
     }
 
     /**
@@ -723,8 +704,27 @@ public final class ValoracionTemporalVO {
      * @param value
      *            the new importe inc
      */
-    public void setImporteInc(Double value) {
-        this.importeInc = value;
+    public void setImporteInc(final Double value) {
+        importeInc = value;
+    }
+
+    /**
+     * Gets the padre id.
+     *
+     * @return the padre id
+     */
+    public Long getPadreId() {
+        return padreId;
+    }
+
+    /**
+     * Sets the padre id.
+     *
+     * @param value
+     *            the new padre id
+     */
+    public void setPadreId(final Long value) {
+        padreId = value;
     }
 
 }

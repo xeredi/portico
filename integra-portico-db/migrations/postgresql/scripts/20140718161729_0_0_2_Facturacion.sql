@@ -524,12 +524,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_det_vlrd TO porti
 CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 (
 	vlrt_pk BIGINT NOT NULL
+	, vlrt_padre_pk BIGINT NOT NULL
 	, vlrt_prbt_pk BIGINT NOT NULL
 	, vlrt_srvc_pk BIGINT NOT NULL
 	, vlrt_ssrv_pk BIGINT
 	, vlrt_crgo_pk BIGINT NOT NULL
 	, vlrt_rgla_pk BIGINT NOT NULL
-	, vlrt_rgla_padre_pk BIGINT NOT NULL
 	, vlrt_impuesto_pk BIGINT NOT NULL
 	, vlrt_pagador_pk BIGINT NOT NULL
 	, vlrt_valor_base NUMERIC(10, 4) NOT NULL
@@ -559,6 +559,8 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 
 	, CONSTRAINT pk_vlrt PRIMARY KEY (vlrt_pk)
 
+	, CONSTRAINT fk_vlrt_padre_pk FOREIGN KEY (vlrt_padre_pk)
+		REFERENCES portico.tbl_valoracion_tmp_vlrt (vlrt_pk)
 	, CONSTRAINT fk_vlrt_prbt_pk FOREIGN KEY (vlrt_prbt_pk)
 		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
 	, CONSTRAINT fk_vlrt_srvc_pk FOREIGN KEY (vlrt_srvc_pk)
@@ -569,8 +571,6 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
 	, CONSTRAINT fk_vlrt_rgla_pk FOREIGN KEY (vlrt_rgla_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
-	, CONSTRAINT fk_vlrt_rgla_padre_pk FOREIGN KEY (vlrt_rgla_padre_pk)
-		REFERENCES portico.tbl_regla_rgla (rgla_pk)
 	, CONSTRAINT fk_vlrt_impuesto_pk FOREIGN KEY (vlrt_impuesto_pk)
 		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
 	, CONSTRAINT fk_vlrt_pagador_pk FOREIGN KEY (vlrt_pagador_pk)
@@ -579,6 +579,8 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 \
 
 CREATE INDEX ix_vlrt ON portico.tbl_valoracion_tmp_vlrt (vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk)
+\
+CREATE INDEX ix_vlrt_padre_pk ON portico.tbl_valoracion_tmp_vlrt (vlrt_padre_pk)
 \
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_tmp_vlrt TO portico

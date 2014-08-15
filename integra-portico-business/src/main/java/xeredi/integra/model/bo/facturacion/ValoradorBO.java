@@ -355,6 +355,7 @@ public class ValoradorBO implements Valorador {
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    vlrt.setPadreId(vlrt.getId());
 
                     vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
