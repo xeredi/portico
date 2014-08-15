@@ -33,7 +33,7 @@ public interface ValoracionCargoDAO {
      *
      * @param vlrcCriterioVO
      *            the vlrc criterio vo
-     * @return the list< valoracion cargo v o>
+     * @return the list
      */
     List<ValoracionCargoVO> selectList(final ValoracionCriterioVO vlrcCriterioVO);
 }

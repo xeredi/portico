@@ -40,7 +40,7 @@ public interface Valoracion {
      *
      * @param vlrcCriterioVO
      *            the vlrc criterio vo
-     * @return the list< valoracion impuesto v o>
+     * @return the list
      */
     List<ValoracionImpuestoVO> selectImpuestosList(final ValoracionCriterioVO vlrcCriterioVO);
 
@@ -49,7 +49,7 @@ public interface Valoracion {
      *
      * @param vlrcCriterioVO
      *            the vlrc criterio vo
-     * @return the list< valoracion cargo v o>
+     * @return the list
      */
     List<ValoracionCargoVO> selectCargosList(final ValoracionCriterioVO vlrcCriterioVO);
 
@@ -80,7 +80,7 @@ public interface Valoracion {
      *            the offset
      * @param limit
      *            the limit
-     * @return the paginated list< valoracion linea v o>
+     * @return the paginated list
      */
     PaginatedList<ValoracionLineaVO> selectLineasList(final ValoracionLineaCriterioVO vlrlCriterioVO, final int offset,
             final int limit);

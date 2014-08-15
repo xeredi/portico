@@ -16,11 +16,11 @@ public final class ValoracionLineaVO {
     /** The id. */
     private Long id;
 
+    /** The padre id. */
+    private Long padreId;
+
     /** The vlrc id. */
     private Long vlrcId;
-
-    /** The rgla padre. */
-    private ReglaVO rglaPadre;
 
     /** The rgla. */
     private ReglaVO rgla;
@@ -449,25 +449,6 @@ public final class ValoracionLineaVO {
     }
 
     /**
-     * Gets the rgla padre.
-     *
-     * @return the rgla padre
-     */
-    public ReglaVO getRglaPadre() {
-        return rglaPadre;
-    }
-
-    /**
-     * Sets the rgla padre.
-     *
-     * @param value
-     *            the new rgla padre
-     */
-    public void setRglaPadre(ReglaVO value) {
-        this.rglaPadre = value;
-    }
-
-    /**
      * Gets the fini.
      *
      * @return the fini
@@ -503,6 +484,25 @@ public final class ValoracionLineaVO {
      */
     public void setFfin(Date value) {
         this.ffin = value;
+    }
+
+    /**
+     * Gets the padre id.
+     *
+     * @return the padre id
+     */
+    public Long getPadreId() {
+        return padreId;
+    }
+
+    /**
+     * Sets the padre id.
+     *
+     * @param value
+     *            the new padre id
+     */
+    public void setPadreId(Long value) {
+        this.padreId = value;
     }
 
 }

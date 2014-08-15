@@ -399,9 +399,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_imp_vlri TO porti
 CREATE TABLE portico.tbl_valoracion_lin_vlrl
 (
 	vlrl_pk BIGINT NOT NULL
+	, vlrl_padre_pk BIGINT NOT NULL
 	, vlrl_vlrc_pk BIGINT NOT NULL
 	, vlrl_rgla_pk BIGINT NOT NULL
-	, vlrl_rgla_padre_pk BIGINT NOT NULL
 	, vlrl_impuesto_pk BIGINT NOT NULL
 	, vlrl_ssrv_pk BIGINT
 	, vlrl_fini TIMESTAMP
@@ -425,9 +425,9 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 
 	, CONSTRAINT fk_vlrl_vlrc_pk FOREIGN KEY (vlrl_vlrc_pk)
 		REFERENCES portico.tbl_valoracion_vlrc (vlrc_pk)
+	, CONSTRAINT fk_vlrl_padre_pk FOREIGN KEY (vlrl_padre_pk)
+		REFERENCES portico.tbl_valoracion_lin_vlrl (vlrl_pk)
 	, CONSTRAINT fk_vlrl_rgla_pk FOREIGN KEY (vlrl_rgla_pk)
-		REFERENCES portico.tbl_regla_rgla (rgla_pk)
-	, CONSTRAINT fk_vlrl_rgla_padre_pk FOREIGN KEY (vlrl_rgla_padre_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
 	, CONSTRAINT fk_vlrl_impuesto_pk FOREIGN KEY (vlrl_impuesto_pk)
 		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
@@ -437,6 +437,8 @@ CREATE TABLE portico.tbl_valoracion_lin_vlrl
 \
 
 CREATE INDEX ix_vlrl_vlrc_pk ON portico.tbl_valoracion_lin_vlrl (vlrl_vlrc_pk)
+\
+CREATE INDEX ix_vlrl_padre_pk ON portico.tbl_valoracion_lin_vlrl (vlrl_padre_pk)
 \
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_valoracion_lin_vlrl TO portico

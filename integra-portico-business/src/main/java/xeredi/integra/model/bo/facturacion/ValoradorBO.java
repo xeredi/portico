@@ -132,7 +132,8 @@ public class ValoradorBO implements Valorador {
      */
     @Override
     @Transactional(executorType = ExecutorType.BATCH)
-    public void valorarServicio(Long srvcId, Set<Long> crgoIds, Date fechaLiquidacion, final Long prbtId) {
+    public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion,
+            final Long prbtId) {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
                 + ", prbtId: " + prbtId);
 
@@ -238,9 +239,19 @@ public class ValoradorBO implements Valorador {
 
             vlrcIds.add(vlra.getVlrc().getId());
 
+            Long vlrlPadreId = null;
+
             for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
                 vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
                 vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {
+                    System.out.println("Precio!!!");
+
+                    vlrlPadreId = vlrl.getVlrl().getId();
+                }
+
+                vlrl.getVlrl().setPadreId(vlrlPadreId);
 
                 for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
                     vlrd.setVlrcId(vlra.getVlrc().getId());

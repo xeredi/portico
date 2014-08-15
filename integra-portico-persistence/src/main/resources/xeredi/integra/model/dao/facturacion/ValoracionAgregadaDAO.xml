@@ -48,8 +48,7 @@
             <id column="vlrl_cuant5" />
             <id column="vlrl_cuant6" />
 
-            <id column="vlrl_rgla_padre_pk" />
-            <id column="vlrl_rgla_pk" />
+            <id column="rgla_pk" />
 
             <association property="vlrl" javaType="ValoracionLineaVO">
                 <id column="vlrl_ssrv_pk" />
@@ -71,16 +70,7 @@
                 <result column="vlrl_cuant5" property="cuant5" />
                 <result column="vlrl_cuant6" property="cuant6" />
 
-                <association property="rglaPadre" javaType="ReglaVO">
-                    <result column="vlrl_rgla_padre_pk" property="id" />
-                </association>
-                <association property="rgla" javaType="ReglaVO">
-                    <result column="vlrl_rgla_pk" property="id" />
-
-                    <association property="crgo" javaType="CargoVO">
-                        <result column="vlrl_crgo_pk" property="id" />
-                    </association>
-                </association>
+                <association property="rgla" resultMap="xeredi.integra.model.dao.facturacion.ReglaDAO.ResultMap" />
                 <association property="ssrv" javaType="SubservicioVO">
                     <result column="vlrl_ssrv_pk" property="id" />
                 </association>
@@ -168,9 +158,11 @@
                 , vlrt_fliq AS vlrc_fliq
                 , vlrt_fref AS vlrc_fref
 
-                , vlrt_crgo_pk AS vlrl_crgo_pk
-                , vlrt_rgla_pk AS vlrl_rgla_pk
+                , rgla_pk
+                , rgla_tipo
+                , rgla_crgo_pk
                 , vlrt_rgla_padre_pk AS vlrl_rgla_padre_pk
+
                 , vlrt_impuesto_pk AS vlrl_impuesto_pk
     ]]>
 
