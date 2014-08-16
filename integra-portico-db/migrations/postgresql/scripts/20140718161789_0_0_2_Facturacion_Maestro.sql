@@ -7,6 +7,7 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 	\
 	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63000, 60000, 22001, 'T', 'B5-10-0000');
 	\
+
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)
 	VALUES (60001, 'B2', 'B2', 1, 0, 21002, 'B', 'TASA AL PASAJE')
 \
@@ -66,14 +67,42 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, NULL, NULL, NULL, NULL, NULL, NULL
 		)
 		\
+	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63004, 60001, 22004, 'C', 'B2-C003');
+	\
+		INSERT INTO portico.tbl_regla_version_rglv (
+			rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+			, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+			, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
+			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+			, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
+			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
+		) VALUES (
+			64003, 63004, '2013-01-01', NULL, 13, NULL, 'true', '1.2'
+			, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+		)
+		\
+	INSERT INTO portico.tbl_regla_inc_rgin (rgin_pk, rgin_rgla1_pk, rgin_rgla2_pk) VALUES (66001, 63003, 63004)
+	\
+		INSERT INTO portico.tbl_regla_inc_version_rgiv (rgiv_pk, rgiv_rgin_pk, rgiv_fini, rgiv_ffin) VALUES (67001, 66001, '2013-01-01', NULL)
+		\
+	INSERT INTO portico.tbl_regla_inc_rgin (rgin_pk, rgin_rgla1_pk, rgin_rgla2_pk) VALUES (66002, 63004, 63003)
+	\
+		INSERT INTO portico.tbl_regla_inc_version_rgiv (rgiv_pk, rgiv_rgin_pk, rgiv_fini, rgiv_ffin) VALUES (67002, 66002, '2013-01-01', NULL)
+		\
+
+
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)
 	VALUES (60002, 'B3', 'B3', 1, 0, 21002, 'B', 'TASA A LA MERCANCIA')
 \
 	INSERT INTO portico.tbl_cargo_version_crgv (crgv_pk, crgv_crgo_pk, crgv_fini, crgv_ffin) VALUES (62002, 60002, '2013-01-01', NULL);
 	\
-	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63100, 60002, 22004, 'T', 'B3-10-0000');
+	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63100, 60002, 22004, 'T', 'B3-10-0000')
 	\
-	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63101, 60002, 22005, 'T', 'B3-20-0000');
+	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63101, 60002, 22005, 'T', 'B3-20-0000')
 	\
 INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion)
 	VALUES (60003, 'B1', NULL, 1, 1, 21003, 'B', 'TASA AL BUQUE')
@@ -352,6 +381,50 @@ DELETE FROM portico.tbl_aspecto_aspc WHERE aspc_pk IN (
 	, 61002
 	, 61003
 	, 61004
+)
+\
+
+DELETE FROM portico.tbl_regla_inc_version_rgiv WHERE EXISTS (
+	SELECT 1
+	FROM portico.tbl_regla_inc_rgin
+	WHERE 
+		EXISTS (
+			SELECT 1
+			FROM portico.tbl_regla_rgla
+			WHERE
+				(
+					rgla_pk = rgin_rgla1_pk
+					OR rgla_pk = rgin_rgla2_pk
+				)
+				AND rgla_crgo_pk IN (
+					  60000
+					, 60001
+					, 60002
+					, 60003
+					, 60004
+					, 60005
+				)
+		)
+		AND rgin_pk = rgiv_rgin_pk
+)
+\
+
+DELETE FROM portico.tbl_regla_inc_rgin WHERE EXISTS (
+	SELECT 1
+	FROM portico.tbl_regla_rgla
+	WHERE
+		(
+			rgla_pk = rgin_rgla1_pk
+			OR rgla_pk = rgin_rgla2_pk
+		)
+		AND rgla_crgo_pk IN (
+			  60000
+			, 60001
+			, 60002
+			, 60003
+			, 60004
+			, 60005
+		)
 )
 \
 
