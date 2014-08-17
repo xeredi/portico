@@ -166,14 +166,6 @@ ORDER BY vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_pk
 ;
 
 
-
-
-
-
-
-
-
-
 DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
 DELETE FROM tbl_valoracion_det_vlrd;

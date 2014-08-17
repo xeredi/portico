@@ -13,6 +13,7 @@
 		<setting name="useColumnLabel" value="false"/>
 		<setting name="defaultExecutorType" value="REUSE"/>
 		<setting name="multipleResultSetsEnabled" value="false"/>
+        <setting name="logImpl" value="${db.logImpl}" />
 		        <!--<setting name="jdbcTypeForNull" value="NULL" /> <setting name="defaultExecutorType"
 			value="REUSE" /> <setting name="logImpl" value="${db.logImpl}" /> NO_LOGGING
 			SLF4J LOG4J <setting name="proxyFactory" value="JAVASSIST"/> CGLIB JAVASSIST -->
