@@ -329,7 +329,7 @@ public class ValoradorBO implements Valorador {
         final IgBO igBO = new IgBO();
 
         {
-            // Aplicaro procedimientos de tipo precio
+            // Aplicar procedimientos de tipo precio
             rglaCriterioVO.setTipo(ReglaTipo.T);
 
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
@@ -357,6 +357,7 @@ public class ValoradorBO implements Valorador {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
                     vlrt.setPadreId(vlrt.getId());
 
+                    vlrt.setRgla(rgla);
                     vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
 
@@ -369,13 +370,18 @@ public class ValoradorBO implements Valorador {
                         vlrt.setImporte(+0.0);
                     }
 
-                    vlrtDAO.insert(vlrt);
+                    if (vlrt.getImporteInc() == null) {
+                        vlrtDAO.insert(vlrt);
+                    } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+                        vlrtDAO.deleteIncompatibilidadList(vlrt);
+                        vlrtDAO.insert(vlrt);
+                    }
                 }
             }
         }
 
         {
-            // Aplicaro procedimientos de tipo coeficiente
+            // Aplicar procedimientos de tipo coeficiente
             rglaCriterioVO.setTipo(ReglaTipo.C);
 
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
@@ -400,9 +406,12 @@ public class ValoradorBO implements Valorador {
                     break;
                 }
 
+                boolean incompatibilidadFound = false;
+
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
+                    vlrt.setRgla(rgla);
                     vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
 
@@ -415,13 +424,26 @@ public class ValoradorBO implements Valorador {
                         vlrt.setImporte(+0.0);
                     }
 
-                    vlrtDAO.insert(vlrt);
+                    if (vlrt.getImporteInc() == null) {
+                        vlrtDAO.insert(vlrt);
+                    } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+                        incompatibilidadFound = true;
+
+                        vlrtDAO.deleteIncompatibilidadList(vlrt);
+                        vlrtDAO.insert(vlrt);
+                    }
+                }
+
+                if (incompatibilidadFound) {
+                    LOG.info("Incompatibilidades. Recalcular Importes!!");
+
+                    vlrtDAO.updateRecalcularCargo(contextoVO);
                 }
             }
         }
 
         {
-            // Aplicaro procedimientos de tipo bonificacion
+            // Aplicar procedimientos de tipo bonificacion
             rglaCriterioVO.setTipo(ReglaTipo.D);
 
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
@@ -446,9 +468,12 @@ public class ValoradorBO implements Valorador {
                     break;
                 }
 
+                boolean incompatibilidadFound = false;
+
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
+                    vlrt.setRgla(rgla);
                     vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
 
@@ -461,7 +486,20 @@ public class ValoradorBO implements Valorador {
                         vlrt.setImporte(+0.0);
                     }
 
-                    vlrtDAO.insert(vlrt);
+                    if (vlrt.getImporteInc() == null) {
+                        vlrtDAO.insert(vlrt);
+                    } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+                        incompatibilidadFound = true;
+
+                        vlrtDAO.deleteIncompatibilidadList(vlrt);
+                        vlrtDAO.insert(vlrt);
+                    }
+                }
+
+                if (incompatibilidadFound) {
+                    LOG.info("Incompatibilidades. Recalcular Importes!!");
+
+                    vlrtDAO.updateRecalcularCargo(contextoVO);
                 }
             }
         }

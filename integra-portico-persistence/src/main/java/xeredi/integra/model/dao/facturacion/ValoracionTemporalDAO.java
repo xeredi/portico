@@ -72,4 +72,22 @@ public interface ValoracionTemporalDAO {
      * @return the int
      */
     int deleteList(final ValoradorContextoVO contextoVO);
+
+    /**
+     * Delete incompatibilidad list.
+     *
+     * @param vlrt
+     *            the vlrt
+     * @return the int
+     */
+    int deleteIncompatibilidadList(final ValoracionTemporalVO vlrt);
+
+    /**
+     * Update recalcular cargo.
+     *
+     * @param contextoVO
+     *            the contexto vo
+     * @return the int
+     */
+    int updateRecalcularCargo(final ValoradorContextoVO contextoVO);
 }

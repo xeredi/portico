@@ -6,7 +6,8 @@
     <resultMap type="ValoracionTemporalVO" id="ResultMap">
         <result column="vlrt_pk" property="id" />
         <result column="vlrt_padre_pk" property="padreId" />
-
+        <result column="vlrt_prbt_pk" property="prbtId" />
+        <result column="vlrt_srvc_pk" property="srvcId" />
         <result column="vlrt_orden" property="orden" />
         <result column="vlrt_valor_base" property="valorBase" />
         <result column="vlrt_importe_base" property="importeBase" />
@@ -32,14 +33,6 @@
         <result column="vlrt_info4" property="info4" />
         <result column="vlrt_info5" property="info5" />
         <result column="vlrt_info6" property="info6" />
-
-        <association property="prbt" javaType="ProcesoVO">
-            <result column="vlrt_prbt_pk" property="id" />
-        </association>
-
-        <association property="srvc" javaType="ServicioVO">
-            <result column="vlrt_srvc_pk" property="id" />
-        </association>
 
         <association property="ssrv" javaType="SubservicioVO">
             <result column="vlrt_ssrv_pk" property="id" />
@@ -73,62 +66,64 @@
         , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.rglv.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.rglv.formulaSql}) AS vlrt_importe
+        , importe_inc AS vlrt_importe_inc
     ]]>
 
-    <if test="rgla.rglv.pathCuant1Sql != null">
-        , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
-    </if>
-    <if test="rgla.rglv.pathCuant2Sql != null">
-        , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
-    </if>
-    <if test="rgla.rglv.pathCuant3Sql != null">
-        , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
-    </if>
-    <if test="rgla.rglv.pathCuant4Sql != null">
-        , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
-    </if>
-    <if test="rgla.rglv.pathCuant5Sql != null">
-        , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
-    </if>
-    <if test="rgla.rglv.pathCuant6Sql != null">
-        , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
-    </if>
+        <if test="rgla.rglv.pathCuant1Sql != null">
+            , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
+        </if>
+        <if test="rgla.rglv.pathCuant2Sql != null">
+            , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
+        </if>
+        <if test="rgla.rglv.pathCuant3Sql != null">
+            , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
+        </if>
+        <if test="rgla.rglv.pathCuant4Sql != null">
+            , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
+        </if>
+        <if test="rgla.rglv.pathCuant5Sql != null">
+            , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
+        </if>
+        <if test="rgla.rglv.pathCuant6Sql != null">
+            , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
+        </if>
 
-    <if test="rgla.rglv.pathInfo1Sql != null">
-        , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
-    </if>
-    <if test="rgla.rglv.pathInfo2Sql != null">
-        , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
-    </if>
-    <if test="rgla.rglv.pathInfo3Sql != null">
-        , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
-    </if>
-    <if test="rgla.rglv.pathInfo4Sql != null">
-        , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
-    </if>
-    <if test="rgla.rglv.pathInfo5Sql != null">
-        , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
-    </if>
-    <if test="rgla.rglv.pathInfo6Sql != null">
-        , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
-    </if>
+        <if test="rgla.rglv.pathInfo1Sql != null">
+            , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
+        </if>
+        <if test="rgla.rglv.pathInfo2Sql != null">
+            , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
+        </if>
+        <if test="rgla.rglv.pathInfo3Sql != null">
+            , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
+        </if>
+        <if test="rgla.rglv.pathInfo4Sql != null">
+            , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
+        </if>
+        <if test="rgla.rglv.pathInfo5Sql != null">
+            , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
+        </if>
+        <if test="rgla.rglv.pathInfo6Sql != null">
+            , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
+        </if>
 
-    <if test="rgla.rglv.pathImpuestoSql != null">
-        , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
-    </if>
-    <if test="rgla.rglv.pathEsSujPasivoSql != null">
-        , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
-    </if>
-    <if test="rgla.rglv.pathPagadorSql != null">
-        , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
-    </if>
-    <if test="rgla.rglv.pathCodExenSql != null">
-        , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
-    </if>
+        <if test="rgla.rglv.pathImpuestoSql != null">
+            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
+        </if>
+        <if test="rgla.rglv.pathEsSujPasivoSql != null">
+            , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
+        </if>
+        <if test="rgla.rglv.pathPagadorSql != null">
+            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
+        </if>
+        <if test="rgla.rglv.pathCodExenSql != null">
+            , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
+        </if>
 
     <![CDATA[
     FROM (
         SELECT item.*, rgla.*, srvc_fref AS fref
+            , NULL AS importe_inc
         FROM
             portico.tbl_servicio_srvc item
             JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
@@ -157,11 +152,11 @@
                 )
             )
     ]]>
-    <if test="rgla.rglv.condicionSql != null">
+        <if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-    </if>
+        </if>
     <![CDATA[
             AND NOT EXISTS (
                 SELECT 1
@@ -220,26 +215,34 @@
                             WHERE
                                 rgin_rgla1_pk = vlrt_rgla_pk
                                 AND rgin_rgla2_pk = rgla_pk
+                                AND EXISTS (
+                                    SELECT 1 FROM tbl_regla_inc_version_rgiv
+                                    WHERE rgiv_rgin_pk = rgin_pk
+                                        AND #{fref} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fref})
+                                )
                         )
                 )
                 , 0) AS importe_base
-            , COALESCE(
-                (
-                    SELECT SUM(vlrt_importe)
-                    FROM tbl_valoracion_tmp_vlrt
-                    WHERE
-                        vlrt_prbt_pk = #{prbt.id}
-                        AND vlrt_srvc_pk = srvc_pk
-                        AND vlrt_crgo_pk = rgla_crgo_pk
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_regla_inc_rgin
-                            WHERE
-                                rgin_rgla1_pk = vlrt_rgla_pk
-                                AND rgin_rgla2_pk = rgla_pk
-                        )
-                )
-                , 0) AS importe_inc
+            , (
+                SELECT SUM(vlrt_importe)
+                FROM tbl_valoracion_tmp_vlrt
+                WHERE
+                    vlrt_prbt_pk = #{prbt.id}
+                    AND vlrt_srvc_pk = srvc_pk
+                    AND vlrt_crgo_pk = rgla_crgo_pk
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_regla_inc_rgin
+                        WHERE
+                            rgin_rgla1_pk = vlrt_rgla_pk
+                            AND rgin_rgla2_pk = rgla_pk
+                            AND EXISTS (
+                                SELECT 1 FROM tbl_regla_inc_version_rgiv
+                                WHERE rgiv_rgin_pk = rgin_pk
+                                    AND #{fref} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fref})
+                            )
+                    )
+                ) AS importe_inc
             , (${rgla.rglv.formulaSql}) AS valor_base
         FROM tbl_servicio_srvc item
             JOIN tbl_regla_rgla ON
@@ -258,11 +261,11 @@
         WHERE
             srvc_pk = #{srvc.id}
     ]]>
-    <if test="rgla.rglv.condicionSql != null">
+        <if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-    </if>
+        </if>
     <![CDATA[
     ) item
     ]]>
@@ -281,62 +284,64 @@
         , (SELECT rglv_importe_base FROM tbl_regla_version_rglv WHERE rglv_pk = #{rgla.rglv.id}) AS vlrt_valor_base
         , 0 AS vlrt_importe_base
         , (${rgla.rglv.formulaSql}) AS vlrt_importe
+        , importe_inc AS vlrt_importe_inc
     ]]>
 
-    <if test="rgla.rglv.pathCuant1Sql != null">
-        , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
-    </if>
-    <if test="rgla.rglv.pathCuant2Sql != null">
-        , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
-    </if>
-    <if test="rgla.rglv.pathCuant3Sql != null">
-        , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
-    </if>
-    <if test="rgla.rglv.pathCuant4Sql != null">
-        , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
-    </if>
-    <if test="rgla.rglv.pathCuant5Sql != null">
-        , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
-    </if>
-    <if test="rgla.rglv.pathCuant6Sql != null">
-        , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
-    </if>
+        <if test="rgla.rglv.pathCuant1Sql != null">
+            , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
+        </if>
+        <if test="rgla.rglv.pathCuant2Sql != null">
+            , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
+        </if>
+        <if test="rgla.rglv.pathCuant3Sql != null">
+            , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
+        </if>
+        <if test="rgla.rglv.pathCuant4Sql != null">
+            , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
+        </if>
+        <if test="rgla.rglv.pathCuant5Sql != null">
+            , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
+        </if>
+        <if test="rgla.rglv.pathCuant6Sql != null">
+            , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
+        </if>
 
-    <if test="rgla.rglv.pathInfo1Sql != null">
-        , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
-    </if>
-    <if test="rgla.rglv.pathInfo2Sql != null">
-        , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
-    </if>
-    <if test="rgla.rglv.pathInfo3Sql != null">
-        , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
-    </if>
-    <if test="rgla.rglv.pathInfo4Sql != null">
-        , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
-    </if>
-    <if test="rgla.rglv.pathInfo5Sql != null">
-        , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
-    </if>
-    <if test="rgla.rglv.pathInfo6Sql != null">
-        , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
-    </if>
+        <if test="rgla.rglv.pathInfo1Sql != null">
+            , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
+        </if>
+        <if test="rgla.rglv.pathInfo2Sql != null">
+            , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
+        </if>
+        <if test="rgla.rglv.pathInfo3Sql != null">
+            , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
+        </if>
+        <if test="rgla.rglv.pathInfo4Sql != null">
+            , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
+        </if>
+        <if test="rgla.rglv.pathInfo5Sql != null">
+            , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
+        </if>
+        <if test="rgla.rglv.pathInfo6Sql != null">
+            , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
+        </if>
 
-    <if test="rgla.rglv.pathImpuestoSql != null">
-        , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
-    </if>
-    <if test="rgla.rglv.pathEsSujPasivoSql != null">
-        , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
-    </if>
-    <if test="rgla.rglv.pathPagadorSql != null">
-        , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
-    </if>
-    <if test="rgla.rglv.pathCodExenSql != null">
-        , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
-    </if>
+        <if test="rgla.rglv.pathImpuestoSql != null">
+            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
+        </if>
+        <if test="rgla.rglv.pathEsSujPasivoSql != null">
+            , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
+        </if>
+        <if test="rgla.rglv.pathPagadorSql != null">
+            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
+        </if>
+        <if test="rgla.rglv.pathCodExenSql != null">
+            , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
+        </if>
 
     <![CDATA[
     FROM (
         SELECT item.*, rgla.*, srvc.*, srvc_fref AS fref
+            , NULL AS importe_inc
         FROM
             portico.tbl_subservicio_ssrv item
             JOIN portico.tbl_servicio_srvc srvc ON
@@ -440,11 +445,11 @@
                 )
             )
     ]]>
-    <if test="rgla.rglv.condicionSql != null">
+        <if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-    </if>
+        </if>
     <![CDATA[
             AND (
                 (
@@ -531,27 +536,35 @@
                             WHERE
                                 rgin_rgla1_pk = vlrt_rgla_pk
                                 AND rgin_rgla2_pk = rgla_pk
+                                AND EXISTS (
+                                    SELECT 1 FROM tbl_regla_inc_version_rgiv
+                                    WHERE rgiv_rgin_pk = rgin_pk
+                                        AND #{fref} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fref})
+                                )
                         )
                 )
             , 0) AS importe_base
-            , COALESCE(
-                (
-                    SELECT SUM(vlrt_importe)
-                    FROM tbl_valoracion_tmp_vlrt
-                    WHERE
-                        vlrt_prbt_pk = #{prbt.id}
-                        AND vlrt_srvc_pk = ssrv_srvc_pk
-                        AND vlrt_ssrv_pk = ssrv_pk
-                        AND vlrt_crgo_pk = rgla_crgo_pk
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_regla_inc_rgin
-                            WHERE
-                                rgin_rgla1_pk = vlrt_rgla_pk
-                                AND rgin_rgla2_pk = rgla_pk
-                        )
-                )
-            , 0) AS importe_inc
+            , (
+                SELECT SUM(vlrt_importe)
+                FROM tbl_valoracion_tmp_vlrt
+                WHERE
+                    vlrt_prbt_pk = #{prbt.id}
+                    AND vlrt_srvc_pk = ssrv_srvc_pk
+                    AND vlrt_ssrv_pk = ssrv_pk
+                    AND vlrt_crgo_pk = rgla_crgo_pk
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_regla_inc_rgin
+                        WHERE
+                            rgin_rgla1_pk = vlrt_rgla_pk
+                            AND rgin_rgla2_pk = rgla_pk
+                            AND EXISTS (
+                                SELECT 1 FROM tbl_regla_inc_version_rgiv
+                                WHERE rgiv_rgin_pk = rgin_pk
+                                    AND #{fref} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fref})
+                            )
+                    )
+            ) AS importe_inc
             , (${rgla.rglv.formulaSql}) AS valor_base
         FROM tbl_subservicio_ssrv item
             JOIN tbl_regla_rgla ON
@@ -571,11 +584,11 @@
         WHERE
             ssrv_srvc_pk = #{srvc.id}
     ]]>
-    <if test="rgla.rglv.condicionSql != null">
+        <if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-    </if>
+        </if>
     <![CDATA[
     ) item
     ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
@@ -585,13 +598,13 @@
     <insert id="insert" parameterType="ValoracionTemporalVO">
     <![CDATA[
     INSERT INTO tbl_valoracion_tmp_vlrt (
-        vlrt_pk, vlrt_padre_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_impuesto_pk, vlrt_pagador_pk
+        vlrt_pk, vlrt_padre_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_tipo, vlrt_impuesto_pk, vlrt_pagador_pk
         , vlrt_orden, vlrt_valor_base, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
         , vlrt_fref, vlrt_fliq, vlrt_fini, vlrt_ffin
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
     ) VALUES (
-        #{id}, #{padreId}, #{prbt.id}, #{srvc.id}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{impuesto.id}, #{pagador.id}
+        #{id}, #{padreId}, #{prbtId}, #{srvcId}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rgla.tipo}, #{impuesto.id}, #{pagador.id}
         , #{orden}, #{valorBase}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
         , #{freferencia}, #{fliquidacion}, #{finicio}, #{ffin}
         , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
@@ -626,4 +639,97 @@
             AND vlrt_prbt_pk = #{prbt.id}
     ]]>
     </delete>
+
+    <delete id="deleteIncompatibilidadList" parameterType="ValoracionTemporalVO">
+        <![CDATA[
+        DELETE FROM
+            tbl_valoracion_tmp_vlrt
+        WHERE
+        	vlrt_prbt_pk = #{prbtId}
+        	AND vlrt_srvc_pk = #{srvcId}
+        	AND vlrt_crgo_pk = #{crgo.id}
+        	AND EXISTS (
+        		SELECT 1
+        		FROM tbl_regla_inc_rgin
+        		WHERE
+        			rgin_rgla2_pk = vlrt_rgla_pk
+        			AND rgin_rgla1_pk = #{rgla.id}
+        			AND EXISTS (
+        				SELECT 1
+        				FROM tbl_regla_inc_version_rgiv
+        				WHERE rgiv_rgin_pk = rgin_pk
+        					AND #{freferencia} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{freferencia})
+        			)
+        	)
+        ]]>
+
+        <if test="ssrv != null and ssrv.id != null">
+        <![CDATA[
+            AND vlrt_ssrv_pk = #{ssrv.id}
+        ]]>
+        </if>
+    </delete>
+
+    <update id="updateRecalcularCargo" parameterType="ValoradorContextoVO">
+        <![CDATA[
+        UPDATE tbl_valoracion_tmp_vlrt vlrt SET
+            vlrt_importe_base = (
+                SELECT SUM(vlrtAux.vlrt_importe)
+                FROM tbl_valoracion_tmp_vlrt vlrtAux
+                WHERE
+                    vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
+                    AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
+                    AND (
+                        (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
+                        OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
+                    )
+                    AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
+                    AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+            )
+            , vlrt_importe = (
+                CASE
+                    WHEN vlrt_rgla_tipo = 'C'
+                    THEN (
+                        SELECT sql.vlrt_importe * (vlrt_valor_base - 1)
+                        FROM (
+                            SELECT SUM(vlrtAux.vlrt_importe) AS vlrt_importe
+                            FROM tbl_valoracion_tmp_vlrt vlrtAux
+                            WHERE
+                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
+                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
+                                AND (
+                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
+                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
+                                )
+                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
+                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+                        ) sql
+                    )
+
+                    WHEN vlrt_rgla_tipo = 'D'
+                    THEN (
+                        SELECT sql.vlrt_importe * (- vlrt_valor_base) / 100
+                        FROM (
+                            SELECT SUM(vlrtAux.vlrt_importe_base) AS vlrt_importe
+                            FROM tbl_valoracion_tmp_vlrt vlrtAux
+                            WHERE
+                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
+                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
+                                AND (
+                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
+                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
+                                )
+                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
+                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+                        ) sql
+                    )
+                END
+            )
+        WHERE
+            vlrt_prbt_pk = #{prbt.id}
+            AND vlrt_srvc_pk = #{srvc.id}
+            AND vlrt_crgo_pk = #{crgo.id}
+            AND vlrt_rgla_tipo <> 'T'
+        ]]>
+    </update>
 </mapper>

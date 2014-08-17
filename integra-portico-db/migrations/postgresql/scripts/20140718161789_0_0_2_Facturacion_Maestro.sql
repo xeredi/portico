@@ -85,6 +85,24 @@ INSERT INTO portico.tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo
 			, NULL, NULL, NULL, NULL, NULL, NULL
 		)
 		\
+	INSERT INTO portico.tbl_regla_rgla (rgla_pk, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rgla_codigo) VALUES (63005, 60001, 22004, 'C', 'B2-C004');
+	\
+		INSERT INTO portico.tbl_regla_version_rglv (
+			rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+			, rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+			, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
+			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+			, rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
+			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
+		) VALUES (
+			64004, 63005, '2013-01-01', NULL, 14, NULL, 'true', '0.8'
+			, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+			, NULL, NULL, NULL, NULL, NULL, NULL
+		)
+		\
 	INSERT INTO portico.tbl_regla_inc_rgin (rgin_pk, rgin_rgla1_pk, rgin_rgla2_pk) VALUES (66001, 63003, 63004)
 	\
 		INSERT INTO portico.tbl_regla_inc_version_rgiv (rgiv_pk, rgiv_rgin_pk, rgiv_fini, rgiv_ffin) VALUES (67001, 66001, '2013-01-01', NULL)

@@ -530,6 +530,7 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 	, vlrt_ssrv_pk BIGINT
 	, vlrt_crgo_pk BIGINT NOT NULL
 	, vlrt_rgla_pk BIGINT NOT NULL
+	, vlrt_rgla_tipo CHAR(1) NOT NULL
 	, vlrt_impuesto_pk BIGINT NOT NULL
 	, vlrt_pagador_pk BIGINT NOT NULL
 	, vlrt_valor_base NUMERIC(10, 4) NOT NULL

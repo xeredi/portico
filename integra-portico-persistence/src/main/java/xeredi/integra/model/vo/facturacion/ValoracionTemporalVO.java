@@ -5,8 +5,6 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.vo.maestro.ParametroVO;
-import xeredi.integra.model.vo.proceso.ProcesoVO;
-import xeredi.integra.model.vo.servicio.ServicioVO;
 import xeredi.integra.model.vo.servicio.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -22,10 +20,10 @@ public final class ValoracionTemporalVO {
     private Long padreId;
 
     /** The prbt. */
-    private ProcesoVO prbt;
+    private Long prbtId;
 
     /** The srvc. */
-    private ServicioVO srvc;
+    private Long srvcId;
 
     /** The ssrv. */
     private SubservicioVO ssrv;
@@ -120,41 +118,41 @@ public final class ValoracionTemporalVO {
     }
 
     /**
-     * Gets the prbt.
+     * Gets the prbt id.
      *
-     * @return the prbt
+     * @return the prbt id
      */
-    public ProcesoVO getPrbt() {
-        return prbt;
+    public Long getPrbtId() {
+        return prbtId;
     }
 
     /**
-     * Sets the prbt.
+     * Sets the prbt id.
      *
      * @param value
-     *            the prbt
+     *            the new prbt id
      */
-    public void setPrbt(final ProcesoVO value) {
-        prbt = value;
+    public void setPrbtId(final Long value) {
+        prbtId = value;
     }
 
     /**
-     * Gets the srvc.
+     * Gets the srvc id.
      *
-     * @return the srvc
+     * @return the srvc id
      */
-    public ServicioVO getSrvc() {
-        return srvc;
+    public Long getSrvcId() {
+        return srvcId;
     }
 
     /**
-     * Sets the srvc.
+     * Sets the srvc id.
      *
      * @param value
-     *            the srvc
+     *            the new srvc id
      */
-    public void setSrvc(final ServicioVO value) {
-        srvc = value;
+    public void setSrvcId(final Long value) {
+        srvcId = value;
     }
 
     /**

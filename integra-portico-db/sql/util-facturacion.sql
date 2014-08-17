@@ -159,9 +159,18 @@ SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 
-SELECT * FROM vw_valoracion_det_vlrd 
-WHERE vlrd_vlrl_pk = 1371129
+
+SELECT * 
+FROM tbl_valoracion_tmp_vlrt
+ORDER BY vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_pk
 ;
+
+
+
+
+
+
+
 
 
 
@@ -172,6 +181,7 @@ DELETE FROM tbl_valoracion_lin_vlrl;
 DELETE FROM tbl_valoracion_imp_vlri;
 DELETE FROM tbl_valoracion_cargo_vlrg;
 DELETE FROM tbl_valoracion_vlrc;
+
 
 SELECT *
 FROM tbl_servicio_srvc
