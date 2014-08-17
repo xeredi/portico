@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -22,6 +23,7 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class TipoDatoListadoAction.
  */
+@ParentPackage("json-default")
 public final class TipoDatoListadoAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -31,7 +33,7 @@ public final class TipoDatoListadoAction extends BaseAction {
     private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The list. */
-    private PaginatedList<TipoDatoVO> tpdts;
+    private PaginatedList<TipoDatoVO> tpdtList;
 
     /** The tpdt criterio. */
     private TipoDatoCriterioVO tpdtCriterio;
@@ -55,11 +57,12 @@ public final class TipoDatoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "tpdt-listado")
+    @Actions({ @Action(value = "tpdt-listado"),
+            @Action(value = "tpdt-listado-json", results = { @Result(name = "success", type = "json") }), })
     public String listado() {
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
 
-        tpdts = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
         return SUCCESS;
     }
@@ -70,7 +73,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      * @return the string
      */
     @Actions({ @Action(value = "tpdt-filtro"),
-        @Action(value = "tpdt-filtro-popup", results = { @Result(name = "success", location = "tpdt-filtro.jsp") }) })
+            @Action(value = "tpdt-filtro-popup", results = { @Result(name = "success", location = "tpdt-filtro.jsp") }) })
     public static String editarFiltro() {
         return SUCCESS;
     }
@@ -100,8 +103,8 @@ public final class TipoDatoListadoAction extends BaseAction {
      *
      * @return the list
      */
-    public PaginatedList<TipoDatoVO> getTpdts() {
-        return tpdts;
+    public PaginatedList<TipoDatoVO> getTpdtList() {
+        return tpdtList;
     }
 
     /**

@@ -1,5 +1,5 @@
 var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.router', 'ngRoute', 'ui.bootstrap.datetimepicker',
-        'pascalprecht.translate', 'configuracion', 'maestro', 'servicio', 'proceso' ]);
+        'pascalprecht.translate', 'configuracion', 'maestro', 'servicio', 'proceso', 'metamodelo' ]);
 
 app.config(function($translateProvider) {
     $translateProvider.translations('es', {
@@ -119,6 +119,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
             $http.get("proceso/prbt-listado-json.action").success(function(data) {
                 // console.log(data);
                 $scope.prbtList = data.prbtList;
+            });
+        }
+    })
+
+    .state('tpdts', {
+        url : '/metamodelo/tpdts',
+        templateUrl : 'modules/metamodelo/tpdt-listado.html',
+        controller : function($http, $scope) {
+            $http.get("metamodelo/tpdt-listado-json.action").success(function(data) {
+                // console.log(data);
+                $scope.tpdtList = data.tpdtList;
             });
         }
     })
