@@ -47,11 +47,11 @@
         </association>
 
         <association property="impuesto" javaType="ParametroVO">
-            <result column="vlrt_impuesto_pk" property="id" />
+            <result column="vlrt_impuesto_prmt_pk" property="id" />
         </association>
 
         <association property="pagador" javaType="ParametroVO">
-            <result column="vlrt_pagador_pk" property="id" />
+            <result column="vlrt_pagador_prmt_pk" property="id" />
         </association>
     </resultMap>
 
@@ -108,13 +108,13 @@
         </if>
 
         <if test="rgla.rglv.pathImpuestoSql != null">
-            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
+            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_prmt_pk
         </if>
         <if test="rgla.rglv.pathEsSujPasivoSql != null">
             , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
         </if>
         <if test="rgla.rglv.pathPagadorSql != null">
-            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
+            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_prmt_pk
         </if>
         <if test="rgla.rglv.pathCodExenSql != null">
             , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
@@ -198,7 +198,7 @@
 
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
-        , vlrt_impuesto_pk, vlrt_es_suj_pasivo, vlrt_pagador_pk, vlrt_cod_exen
+        , vlrt_impuesto_prmt_pk, vlrt_es_suj_pasivo, vlrt_pagador_prmt_pk, vlrt_cod_exen
     FROM (
         SELECT *
             , COALESCE(
@@ -326,13 +326,13 @@
         </if>
 
         <if test="rgla.rglv.pathImpuestoSql != null">
-            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_pk
+            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_prmt_pk
         </if>
         <if test="rgla.rglv.pathEsSujPasivoSql != null">
             , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
         </if>
         <if test="rgla.rglv.pathPagadorSql != null">
-            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_pk
+            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_prmt_pk
         </if>
         <if test="rgla.rglv.pathCodExenSql != null">
             , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
@@ -518,7 +518,7 @@
 
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
-        , vlrt_impuesto_pk, vlrt_es_suj_pasivo, vlrt_pagador_pk, vlrt_cod_exen
+        , vlrt_impuesto_prmt_pk, vlrt_es_suj_pasivo, vlrt_pagador_prmt_pk, vlrt_cod_exen
     FROM (
         SELECT *
             , COALESCE(
@@ -598,7 +598,7 @@
     <insert id="insert" parameterType="ValoracionTemporalVO">
     <![CDATA[
     INSERT INTO tbl_valoracion_tmp_vlrt (
-        vlrt_pk, vlrt_padre_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_tipo, vlrt_impuesto_pk, vlrt_pagador_pk
+        vlrt_pk, vlrt_padre_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_tipo, vlrt_impuesto_prmt_pk, vlrt_pagador_prmt_pk
         , vlrt_orden, vlrt_valor_base, vlrt_importe_base, vlrt_importe, vlrt_es_suj_pasivo, vlrt_cod_exen
         , vlrt_fref, vlrt_fliq, vlrt_fini, vlrt_ffin
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6

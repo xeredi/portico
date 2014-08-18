@@ -61,6 +61,11 @@
 
         <appender-ref ref="dbLog" />
     </logger>
+    <logger name='xeredi.integra.model.dao.facturacion.FacturaAgregadaDAO'>
+        <level value="DEBUG" />
+
+        <appender-ref ref="dbLog" />
+    </logger>
     <logger name='xeredi'>
         <level value="INFO" />
 

@@ -5,18 +5,17 @@
 
 CREATE VIEW portico.vw_valoracion_vlrc AS
 	SELECT * 
-		, vlrc_pagador_pk AS pagador_prmt_pk
 		, (
 			SELECT prmt_parametro
 			FROM portico.tbl_parametro_prmt
-			WHERE prmt_pk = vlrc_pagador_pk
-		) AS pagador_prmt_parametro
+			WHERE prmt_pk = vlrc_pagador_prmt_pk
+		) AS vlrc_pagador_prmt_parametro
 		, (
 			SELECT prvr_pk
 			FROM portico.tbl_parametro_version_prvr
-			WHERE prvr_prmt_pk = vlrc_pagador_pk
+			WHERE prvr_prmt_pk = vlrc_pagador_prmt_pk
 				AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
-		) AS pagador_prvr_pk
+		) AS vlrc_pagador_prvr_pk
 		, (
 			SELECT SUM(vlri_importe)
 			FROM portico.tbl_valoracion_imp_vlri
@@ -47,20 +46,19 @@ GRANT SELECT ON portico.vw_valoracion_vlrc TO portico
 
 CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 	SELECT * 
-		, vlrl_impuesto_pk AS impuesto_prmt_pk
 		, (SELECT prmt_parametro 
 			FROM portico.tbl_parametro_prmt
-			WHERE prmt_pk = vlrl_impuesto_pk) AS impuesto_prmt_parametro
+			WHERE prmt_pk = vlrl_impuesto_prmt_pk) AS vlrl_impuesto_prmt_parametro
 		, (SELECT prvr_pk
 			FROM portico.tbl_parametro_version_prvr
-			WHERE prvr_prmt_pk = vlrl_impuesto_pk
+			WHERE prvr_prmt_pk = vlrl_impuesto_prmt_pk
 				AND EXISTS (
 					SELECT 1
 					FROM portico.tbl_valoracion_vlrc
 					WHERE vlrc_pk = vlrl_vlrc_pk
 						AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
 				)
-		) AS impuesto_prvr_pk
+		) AS vlrl_impuesto_prvr_pk
 		, (
 			SELECT SUM(vlrd_importe)
 			FROM portico.tbl_valoracion_det_vlrd

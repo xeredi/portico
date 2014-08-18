@@ -33,7 +33,7 @@
     <insert id="insert" parameterType="ValoracionVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_vlrc (
-            vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_pk
+            vlrc_pk, vlrc_srvc_pk, vlrc_aspc_pk, vlrc_pagador_prmt_pk
             , vlrc_fref, vlrc_fliq, vlrc_falta, vlrc_fini, vlrc_ffin
             , vlrc_es_suj_pasivo, vlrc_cod_exen
             , vlrc_info1, vlrc_info2, vlrc_info3, vlrc_info4, vlrc_info5, vlrc_info6

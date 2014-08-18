@@ -31,13 +31,23 @@ public final class FacturadorTest {
             final Facturador facturador = BOFactory.getInjector().getInstance(Facturador.class);
             final Set<Long> vlrcIds = new HashSet<>();
 
-            vlrcIds.add(1805046L);
-            vlrcIds.add(1809960L);
-            vlrcIds.add(1819533L);
-            vlrcIds.add(1824286L);
-            vlrcIds.add(1824380L);
+            // vlrcIds.add(1805046L);
+            // vlrcIds.add(1809960L);
+            // vlrcIds.add(1819533L);
+            // vlrcIds.add(1824286L);
+            // vlrcIds.add(1824380L);
 
-            facturador.facturarValoraciones(vlrcIds, /*61001L*/ null, 68001L, Calendar.getInstance().getTime(), 1644001L);
+            // facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
+            // 1644001L);
+
+            vlrcIds.add(1951376L);
+            vlrcIds.add(1956594L);
+            vlrcIds.add(1966167L);
+            vlrcIds.add(1970925L);
+            vlrcIds.add(1971407L);
+
+            facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
+                    1237001L);
         } catch (final Throwable ex) {
             LOG.error(ex, ex);
 

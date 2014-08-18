@@ -5,7 +5,7 @@
 <mapper namespace="xeredi.integra.model.dao.facturacion.ValoracionAgregadaDAO">
     <resultMap type="ValoracionAgregadaVO" id="ResultMap">
         <id column="vlrc_srvc_pk" />
-        <id column="vlrc_pagador_pk" />
+        <id column="vlrc_pagador_prmt_pk" />
         <id column="vlrc_es_suj_pasivo" />
         <id column="vlrc_cod_exen" />
 
@@ -26,12 +26,12 @@
                 <result column="vlrc_srvc_pk" property="id" />
             </association>
             <association property="pagador" javaType="ParametroVO">
-                <result column="vlrc_pagador_pk" property="id" />
+                <result column="vlrc_pagador_prmt_pk" property="id" />
             </association>
         </association>
 
         <collection property="vlrlList" ofType="ValoracionLineaAgregadaVO" javaType="ArrayList">
-            <id column="vlrl_impuesto_pk" />
+            <id column="vlrl_impuesto_prmt_pk" />
             <id column="vlrl_ssrv_pk" />
 
             <id column="vlrl_info1" />
@@ -75,7 +75,7 @@
                     <result column="vlrl_ssrv_pk" property="id" />
                 </association>
                 <association property="impuesto" javaType="ParametroVO">
-                    <result column="vlrl_impuesto_pk" property="id" />
+                    <result column="vlrl_impuesto_prmt_pk" property="id" />
                 </association>
             </association>
 
@@ -151,7 +151,7 @@
         FROM (
             SELECT
                 vlrt_srvc_pk AS vlrc_srvc_pk
-                , vlrt_pagador_pk AS vlrc_pagador_pk
+                , vlrt_pagador_prmt_pk AS vlrc_pagador_prmt_pk
                 , vlrt_es_suj_pasivo AS vlrc_es_suj_pasivo
                 , vlrt_cod_exen AS vlrc_cod_exen
 
@@ -162,7 +162,7 @@
                 , rgla_tipo
                 , rgla_crgo_pk
 
-                , vlrt_impuesto_pk AS vlrl_impuesto_pk
+                , vlrt_impuesto_prmt_pk AS vlrl_impuesto_prmt_pk
     ]]>
 
         <if test="aspc.aspv.agrupaDetalles">
@@ -247,7 +247,7 @@
                 )
                 AND vlrt_srvc_pk = #{srvc.id}
                 AND vlrt_prbt_pk = #{prbt.id}
-            ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
+            ORDER BY vlrt_prbt_pk, vlrt_srvc_pk, vlrt_pagador_prmt_pk, vlrt_es_suj_pasivo, vlrt_cod_exen
                 , ssrv_tpss_pk
     ]]>
 
@@ -257,7 +257,7 @@
 
     <![CDATA[
                 , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
-                , vlrt_impuesto_pk, regla_tipo_orden, rglv_orden
+                , vlrt_impuesto_prmt_pk, regla_tipo_orden, rglv_orden
         ) item
     ]]>
     </select>
