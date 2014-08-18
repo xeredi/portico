@@ -16,4 +16,13 @@ public interface FacturaSerieDAO {
      * @return the factura serie vo
      */
     FacturaSerieVO select(final Long id);
+
+    /**
+     * Update incrementar.
+     *
+     * @param id
+     *            the id
+     * @return the int
+     */
+    int updateIncrementar(final Long id);
 }

@@ -19,9 +19,6 @@ public final class FacturaDetalleVO {
     /** The fctl id. */
     private Long fctlId;
 
-    /** The orden. */
-    private Integer orden;
-
     /** The importe base. */
     private Double importeBase;
 
@@ -130,25 +127,6 @@ public final class FacturaDetalleVO {
      */
     public void setFctlId(final Long value) {
         fctlId = value;
-    }
-
-    /**
-     * Gets the orden.
-     *
-     * @return the orden
-     */
-    public Integer getOrden() {
-        return orden;
-    }
-
-    /**
-     * Sets the orden.
-     *
-     * @param value
-     *            the new orden
-     */
-    public void setOrden(final Integer value) {
-        orden = value;
     }
 
     /**

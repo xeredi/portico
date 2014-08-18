@@ -70,14 +70,27 @@ public class ValoracionBO implements Valoracion {
         Preconditions.checkNotNull(id);
 
         final Set<Long> vlrcIds = new HashSet<Long>();
+
+        vlrcIds.add(id);
+        delete(vlrcIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(executorType = ExecutorType.BATCH)
+    public void delete(final Set<Long> ids) {
+        Preconditions.checkNotNull(ids);
+        Preconditions.checkArgument(!ids.isEmpty());
+
         final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
         final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
         final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
         final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
 
-        vlrcIds.add(id);
-        srcrCriterioVO.setVlrcIds(vlrcIds);
-        vlrcCriterioVO.setId(id);
+        srcrCriterioVO.setVlrcIds(ids);
+        vlrcCriterioVO.setIds(ids);
         vlrlCriterioVO.setVlrc(vlrcCriterioVO);
         vlrdCriterioVO.setVlrl(vlrlCriterioVO);
 

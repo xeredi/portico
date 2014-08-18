@@ -1,6 +1,7 @@
 package xeredi.integra.model.bo.facturacion;
 
 import java.util.List;
+import java.util.Set;
 
 import xeredi.integra.model.vo.facturacion.ValoracionCargoVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
@@ -25,6 +26,14 @@ public interface Valoracion {
      *            the id
      */
     void delete(final Long id);
+
+    /**
+     * Delete.
+     *
+     * @param ids
+     *            the ids
+     */
+    void delete(final Set<Long> ids);
 
     /**
      * Select.

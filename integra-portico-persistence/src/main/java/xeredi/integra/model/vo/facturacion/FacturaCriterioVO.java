@@ -1,20 +1,15 @@
 package xeredi.integra.model.vo.facturacion;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ValoracionCriterioVO.
+ * The Class FacturaCriterioVO.
  */
-public final class ValoracionCriterioVO {
+public final class FacturaCriterioVO {
 
     /** The id. */
     private Long id;
-
-    /** The ids. */
-    private Set<Long> ids;
 
     /**
      * {@inheritDoc}
@@ -37,29 +32,10 @@ public final class ValoracionCriterioVO {
      * Sets the id.
      *
      * @param value
-     *            the new id
+     *            the id
      */
     public void setId(Long value) {
         this.id = value;
-    }
-
-    /**
-     * Gets the ids.
-     *
-     * @return the ids
-     */
-    public Set<Long> getIds() {
-        return ids;
-    }
-
-    /**
-     * Sets the ids.
-     *
-     * @param value
-     *            the ids
-     */
-    public void setIds(Set<Long> value) {
-        this.ids = value;
     }
 
 }

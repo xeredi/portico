@@ -23,9 +23,6 @@ public final class FacturaLineaVO {
     /** The rgla. */
     private ReglaVO rgla;
 
-    /** The orden. */
-    private Integer orden;
-
     /** The impuesto. */
     private ParametroVO impuesto;
 
@@ -150,25 +147,6 @@ public final class FacturaLineaVO {
      */
     public void setRgla(final ReglaVO value) {
         rgla = value;
-    }
-
-    /**
-     * Gets the orden.
-     *
-     * @return the orden
-     */
-    public Integer getOrden() {
-        return orden;
-    }
-
-    /**
-     * Sets the orden.
-     *
-     * @param value
-     *            the new orden
-     */
-    public void setOrden(final Integer value) {
-        orden = value;
     }
 
     /**

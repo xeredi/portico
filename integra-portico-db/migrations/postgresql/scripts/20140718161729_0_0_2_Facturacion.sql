@@ -723,7 +723,6 @@ CREATE TABLE portico.tbl_factura_lin_fctl
 	, fctl_fctr_pk BIGINT NOT NULL
 	, fctl_fcts_pk BIGINT NOT NULL
 	, fctl_rgla_pk BIGINT NOT NULL
-	, fctl_orden INT NOT NULL
 	, fctl_impuesto_pk BIGINT NOT NULL
 	, fctl_ssrv_pk BIGINT
 
@@ -770,7 +769,6 @@ CREATE TABLE portico.tbl_factura_det_fctd
 	fctd_pk BIGINT NOT NULL
 	, fctd_fctr_pk BIGINT NOT NULL
 	, fctd_fctl_pk BIGINT NOT NULL
-	, fctd_orden INT NOT NULL
 	, fctd_importe_base NUMERIC(10, 2) NOT NULL
 	, fctd_importe NUMERIC(10, 2) NOT NULL
 	, fctd_ssrv_pk BIGINT

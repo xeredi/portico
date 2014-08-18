@@ -21,6 +21,12 @@ public final class FacturaVO {
     /** The pagador. */
     private ParametroVO pagador;
 
+    /** The fcsr. */
+    private FacturaSerieVO fcsr;
+
+    /** The numero. */
+    private Integer numero;
+
     /** The falta. */
     private Date falta;
 
@@ -57,6 +63,25 @@ public final class FacturaVO {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    /**
+     * Gets the fcsr.
+     *
+     * @return the fcsr
+     */
+    public FacturaSerieVO getFcsr() {
+        return fcsr;
+    }
+
+    /**
+     * Sets the fcsr.
+     *
+     * @param value
+     *            the fcsr
+     */
+    public void setFcsr(FacturaSerieVO value) {
+        this.fcsr = value;
     }
 
     /**
@@ -304,6 +329,25 @@ public final class FacturaVO {
      */
     public void setInfo6(final String value) {
         info6 = value;
+    }
+
+    /**
+     * Gets the numero.
+     *
+     * @return the numero
+     */
+    public Integer getNumero() {
+        return numero;
+    }
+
+    /**
+     * Sets the numero.
+     *
+     * @param value
+     *            the numero
+     */
+    public void setNumero(Integer value) {
+        this.numero = value;
     }
 
 }
