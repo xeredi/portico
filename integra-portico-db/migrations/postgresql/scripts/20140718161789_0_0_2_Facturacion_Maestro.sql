@@ -333,6 +333,15 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 
 
 
+-- Series de factura
+INSERT INTO portico.tbl_factura_serie_fcsr (fcsr_pk, fcsr_serie, fcsr_anio, fcsr_numero_ultimo) VALUES (68000, 'A', 2013, 0)
+\
+INSERT INTO portico.tbl_factura_serie_fcsr (fcsr_pk, fcsr_serie, fcsr_anio, fcsr_numero_ultimo) VALUES (68001, 'A', 2014, 0)
+\
+INSERT INTO portico.tbl_factura_serie_fcsr (fcsr_pk, fcsr_serie, fcsr_anio, fcsr_numero_ultimo) VALUES (68002, 'B', 2013, 0)
+\
+INSERT INTO portico.tbl_factura_serie_fcsr (fcsr_pk, fcsr_serie, fcsr_anio, fcsr_numero_ultimo) VALUES (68003, 'B', 2014, 0)
+\
 
 
 
@@ -343,7 +352,6 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_d
 
 -- //@UNDO
 -- SQL to undo the change goes here.
-
 DELETE FROM portico.tbl_servicio_cargo_srcr
 \
 DELETE FROM portico.tbl_valoracion_tmp_vlrt
@@ -357,6 +365,15 @@ DELETE FROM portico.tbl_valoracion_cargo_vlrg
 DELETE FROM portico.tbl_valoracion_imp_vlri
 \
 DELETE FROM portico.tbl_valoracion_vlrc
+\
+
+DELETE FROM portico.tbl_factura_serie_fcsr
+WHERE fcsr_pk IN (
+	68000
+	, 68001
+	, 68002
+	, 68003
+)
 \
 
 DELETE FROM portico.tbl_aspecto_cargo_ascr

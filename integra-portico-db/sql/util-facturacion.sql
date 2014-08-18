@@ -143,6 +143,13 @@ from
 group by ssrv_srvc_pk
 ;
 
+
+
+
+
+
+
+
 SELECT * FROM tbl_cargo_crgo;
 SELECT * FROM tbl_regla_rgla;
 
@@ -160,11 +167,6 @@ SELECT * FROM tbl_valoracion_det_vlrd;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 
 
-SELECT * 
-FROM tbl_valoracion_tmp_vlrt
-ORDER BY vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_pk
-;
-
 
 DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
@@ -173,6 +175,65 @@ DELETE FROM tbl_valoracion_lin_vlrl;
 DELETE FROM tbl_valoracion_imp_vlri;
 DELETE FROM tbl_valoracion_cargo_vlrg;
 DELETE FROM tbl_valoracion_vlrc;
+
+
+
+-- Facturar
+-- Facturar
+-- Facturar
+-- Facturar
+
+-- Comprobar que todos los cargos de las valoraciones encajan en el aspecto.
+SELECT COUNT(1)
+FROM tbl_valoracion_cargo_vlrg
+WHERE 
+	NOT EXISTS (
+		SELECT 1
+		FROM tbl_aspecto_cargo_ascr
+		WHERE 
+			ascr_crgo_pk = vlrg_crgo_pk
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_aspecto_version_aspv
+				WHERE 
+					aspv_pk = ascr_aspv_pk
+					AND NOW() BETWEEN aspv_fini AND COALESCE(aspv_ffin, NOW())
+					AND aspv_aspc_pk = 61001
+			)
+	)
+;
+
+
+SELECT * 
+FROM 
+	tbl_aspecto_aspc
+	INNER JOIN tbl_aspecto_version_aspv ON
+		aspv_aspc_pk = aspc_pk
+		AND NOW() BETWEEN aspv_fini AND COALESCE(aspv_ffin, NOW())
+;
+
+SELECT *
+FROM 
+	tbl_valoracion_vlrc
+	INNER JOIN tbl_valoracion_lin_vlrl ON
+		vlrl_vlrc_pk = vlrc_pk
+	INNER JOIN tbl_valoracion_det_vlrd ON
+		vlrd_vlrl_pk = vlrl_pk
+		AND vlrd_vlrc_pk = vlrc_pk
+-- WHERE vlrc_pk = 1859167
+ORDER BY vlrc_pagador_pk, vlrc_pk, vlrl_pk, vlrd_pk
+;
+
+
+
+
+
+
+
+
+
+
+
 
 
 SELECT *

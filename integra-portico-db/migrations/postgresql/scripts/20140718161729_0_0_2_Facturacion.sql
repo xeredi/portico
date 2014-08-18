@@ -332,6 +332,24 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_cargo_ascr TO portic
 
 
 
+-- tbl_factura_serie_fcsr
+CREATE TABLE portico.tbl_factura_serie_fcsr
+(
+	fcsr_pk BIGINT NOT NULL
+	, fcsr_serie CHAR(1) NOT NULL
+	, fcsr_anio INT NOT NULL
+	, fcsr_numero_ultimo INT NOT NULL
+
+	, CONSTRAINT pk_fcsr PRIMARY KEY (fcsr_pk)
+	, CONSTRAINT uq_fcsr UNIQUE (fcsr_serie, fcsr_anio)
+)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_serie_fcsr TO portico
+\
+
+
+
 -- tbl_valoracion_vlrc
 CREATE TABLE portico.tbl_valoracion_vlrc
 (
@@ -866,6 +884,8 @@ DROP TABLE portico.tbl_valoracion_imp_vlri
 DROP TABLE portico.tbl_valoracion_cargo_vlrg
 \
 DROP TABLE portico.tbl_valoracion_vlrc
+\
+DROP TABLE portico.tbl_factura_serie_fcsr
 \
 DROP TABLE portico.tbl_aspecto_cargo_ascr
 \

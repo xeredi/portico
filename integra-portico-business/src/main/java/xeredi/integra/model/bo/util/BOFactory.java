@@ -18,6 +18,8 @@ import xeredi.integra.model.bo.estadistica.Estadistica;
 import xeredi.integra.model.bo.estadistica.EstadisticaBO;
 import xeredi.integra.model.bo.estadistica.PeriodoProceso;
 import xeredi.integra.model.bo.estadistica.PeriodoProcesoBO;
+import xeredi.integra.model.bo.facturacion.Facturador;
+import xeredi.integra.model.bo.facturacion.FacturadorBO;
 import xeredi.integra.model.bo.facturacion.Valoracion;
 import xeredi.integra.model.bo.facturacion.ValoracionBO;
 import xeredi.integra.model.bo.facturacion.Valorador;
@@ -125,6 +127,7 @@ public final class BOFactory {
 
                 bind(Proceso.class).to(ProcesoBO.class);
 
+                bind(Facturador.class).to(FacturadorBO.class);
                 bind(Valorador.class).to(ValoradorBO.class);
                 bind(Valoracion.class).to(ValoracionBO.class);
             }
