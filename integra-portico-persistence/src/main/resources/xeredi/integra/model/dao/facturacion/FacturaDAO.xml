@@ -7,5 +7,35 @@
         <id column="fctr_pk" />
 
         <result column="fctr_pk" property="id" />
+        <result column="fctr_fref" property="fref" />
+        <result column="fctr_falta" property="falta" />
+        <result column="fctr_fini" property="fini" />
+        <result column="fctr_ffin" property="ffin" />
+
+        <result column="fctr_info1" property="info1" />
+        <result column="fctr_info2" property="info2" />
+        <result column="fctr_info3" property="info3" />
+        <result column="fctr_info4" property="info4" />
+        <result column="fctr_info5" property="info5" />
+        <result column="fctr_info6" property="info6" />
+
+        <association property="aspc" columnPrefix="fctr_"
+            resultMap="xeredi.integra.model.dao.facturacion.AspectoDAO.ResultMap" />
+        <association property="pagador" columnPrefix="fctr_pagador_"
+            resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
     </resultMap>
+
+    <insert id="insert" parameterType="FacturaVO">
+    <![CDATA[
+        INSERT INTO tbl_factura_fctr (
+            fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk
+            , fctr_fref, fctr_falta, fctr_fini, fctr_ffin
+            , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
+        ) VALUES (
+            #{id}, #{aspc.id}, #{pagador.id}
+            , #{fref}, #{falta}, #{fini}, #{ffin}
+            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+        )
+    ]]>
+    </insert>
 </mapper>

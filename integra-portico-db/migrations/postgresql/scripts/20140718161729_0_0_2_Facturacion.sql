@@ -643,12 +643,13 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_fctr TO portico
 
 
 
--- tbl_factura_servicio_fcsr
+-- tbl_factura_srv_fcts
 CREATE TABLE portico.tbl_factura_srv_fcts
 (
 	fcts_pk BIGINT NOT NULL
 	, fcts_fctr_pk BIGINT NOT NULL
 	, fcts_srvc_pk BIGINT NOT NULL
+	, fcts_aspc_pk BIGINT NOT NULL
 	, fcts_fref TIMESTAMP NOT NULL
 	, fcts_fini TIMESTAMP 
 	, fcts_ffin TIMESTAMP 
@@ -659,6 +660,8 @@ CREATE TABLE portico.tbl_factura_srv_fcts
 		REFERENCES portico.tbl_factura_fctr (fctr_pk)
 	, CONSTRAINT fk_fcts_srvc_pk FOREIGN KEY (fcts_srvc_pk)
 		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_fcts_aspc_pk FOREIGN KEY (fcts_aspc_pk)
+		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
 )
 \
 

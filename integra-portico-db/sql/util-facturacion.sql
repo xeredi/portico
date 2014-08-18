@@ -165,6 +165,7 @@ SELECT * FROM tbl_valoracion_imp_vlri;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
+SELECT * FROM tbl_factura_fctr;
 
 
 
