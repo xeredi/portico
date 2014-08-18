@@ -139,6 +139,16 @@ public final class AspectoVersionVO {
     }
 
     /**
+     * Checks if is agrupa cabeceras.
+     *
+     * @return true, if checks if is agrupa cabeceras
+     */
+    public boolean isAgrupaCabeceras() {
+        return Boolean.TRUE == cgrpInfo1 || Boolean.TRUE == cgrpInfo2 || Boolean.TRUE == cgrpInfo3
+                || Boolean.TRUE == cgrpInfo4 || Boolean.TRUE == cgrpInfo5 || Boolean.TRUE == cgrpInfo6;
+    }
+
+    /**
      * Checks if is agrupa detalles.
      *
      * @return true, if checks if is agrupa detalles

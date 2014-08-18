@@ -212,6 +212,68 @@ FROM
 		AND NOW() BETWEEN aspv_fini AND COALESCE(aspv_ffin, NOW())
 ;
 
+SELECT 
+	NULL AS fctr_pk
+	, vlrc_pagador_pk AS fctr_pagador_prmt_pk
+
+	, vlrc_info1 AS fctr_info1
+	, vlrc_info2 AS fctr_info2
+	, vlrc_info3 AS fctr_info3
+	, vlrc_info4 AS fctr_info4
+	, vlrc_info5 AS fctr_info5
+	, vlrc_info6 AS fctr_info6
+	, vlrc_aspc_pk AS fctr_aspc_pk
+
+	, vlrc_pk AS fcts_pk
+	, vlrc_srvc_pk AS fcts_srvc_pk
+	, vlrc_fref AS fcts_fref
+	, vlrc_fini AS fcts_fini
+	, vlrc_ffin AS fcts_ffin
+
+	, vlrl_pk AS fctl_pk
+	, vlrl_rgla_pk AS fctl_rgla_pk
+	, vlrl_impuesto_pk AS fctl_impuesto_pk
+	, vlrl_ssrv_pk AS fctl_ssrv_pk
+	, vlrl_cuant1 AS fctl_cuant1
+	, vlrl_cuant2 AS fctl_cuant2
+	, vlrl_cuant3 AS fctl_cuant3
+	, vlrl_cuant4 AS fctl_cuant4
+	, vlrl_cuant5 AS fctl_cuant5
+	, vlrl_cuant6 AS fctl_cuant6
+	, vlrl_info1 AS fctl_info1
+	, vlrl_info2 AS fctl_info2
+	, vlrl_info3 AS fctl_info3
+	, vlrl_info4 AS fctl_info4
+	, vlrl_info5 AS fctl_info5
+	, vlrl_info6 AS fctl_info6
+
+	, vlrd_pk AS fctd_pk
+	, vlrd_importe_base AS fctd_importe_base
+	, vlrd_importe AS fctd_importe
+	, vlrd_ssrv_pk AS fctd_ssrv_pk
+	, vlrd_cuant1 AS fctd_cuant1
+	, vlrd_cuant2 AS fctd_cuant2
+	, vlrd_cuant3 AS fctd_cuant3
+	, vlrd_cuant4 AS fctd_cuant4
+	, vlrd_cuant5 AS fctd_cuant5
+	, vlrd_cuant6 AS fctd_cuant6
+	, vlrd_info1 AS fctd_info1
+	, vlrd_info2 AS fctd_info2
+	, vlrd_info3 AS fctd_info3
+	, vlrd_info4 AS fctd_info4
+	, vlrd_info5 AS fctd_info5
+	, vlrd_info6 AS fctd_info6
+FROM 
+	vw_valoracion_vlrc
+	INNER JOIN vw_valoracion_lin_vlrl ON
+		vlrl_vlrc_pk = vlrc_pk
+	INNER JOIN vw_valoracion_det_vlrd ON
+		vlrd_vlrl_pk = vlrl_pk
+		AND vlrd_vlrc_pk = vlrc_pk
+WHERE vlrc_pk = 1769960
+ORDER BY fctr_pagador_prmt_pk, fctr_info1, fctr_pk, fcts_pk, fctl_pk, fctd_pk
+;
+
 SELECT *
 FROM 
 	tbl_valoracion_vlrc

@@ -78,20 +78,26 @@
     <sql id="SelectWhere">
         <where>
             <if test="fechaVigencia != null">
+            <![CDATA[
                 AND #{fechaVigencia} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{fechaVigencia})
+            ]]>
             </if>
 
             <if test="id != null">
+            <![CDATA[
                 AND aspc_pk = #{id}
+            ]]>
             </if>
 
             <if test="srvcId != null">
+            <![CDATA[
                 AND EXISTS (
             		SELECT 1
             		FROM tbl_servicio_srvc
             		WHERE srvc_tpsr_pk = aspc_tpsr_pk
             			AND srvc_pk = #{srvcId}
             	)
+            ]]>
             </if>
         </where>
     </sql>
@@ -100,5 +106,35 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
         ORDER BY aspc_tpsr_pk, aspv_prioridad
+    </select>
+
+    <select id="selectObject" parameterType="AspectoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="isInaplicable" parameterType="FacturadorContextoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_valoracion_cargo_vlrg
+        WHERE
+        	NOT EXISTS (
+        		SELECT 1
+        		FROM tbl_aspecto_cargo_ascr
+        		WHERE
+        			ascr_crgo_pk = vlrg_crgo_pk
+        			AND EXISTS (
+        				SELECT 1
+        				FROM tbl_aspecto_version_aspv
+        				WHERE
+        					aspv_pk = ascr_aspv_pk
+        					AND #{fechaFacturacion} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{fechaFacturacion})
+        					AND aspv_aspc_pk = #{aspc.id}
+        			)
+        	)
+            AND vlrg_vlrc_pk IN
+    ]]>
+        <foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}
+        </foreach>
     </select>
 </mapper>

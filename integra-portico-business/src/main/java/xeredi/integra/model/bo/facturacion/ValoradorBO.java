@@ -57,7 +57,10 @@ import xeredi.integra.model.vo.facturacion.ValoracionLineaAgregadaVO;
 import xeredi.integra.model.vo.facturacion.ValoracionTemporalVO;
 import xeredi.integra.model.vo.facturacion.ValoradorContextoVO;
 import xeredi.integra.model.vo.metamodelo.EntidadVO;
+import xeredi.integra.model.vo.proceso.ProcesoVO;
+import xeredi.integra.model.vo.servicio.ServicioVO;
 
+import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -137,6 +140,27 @@ public class ValoradorBO implements Valorador {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
                 + ", prbtId: " + prbtId);
 
+        Preconditions.checkNotNull(srvcId);
+        Preconditions.checkNotNull(crgoIds);
+        Preconditions.checkNotNull(fechaLiquidacion);
+        Preconditions.checkNotNull(prbtId);
+
+        final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
+        final ProcesoVO prbt = prbtDAO.select(prbtId);
+        final ServicioVO srvc = srvcDAO.select(srvcId);
+
+        if (prbt == null) {
+            throw new Error("Proceso Batch no encontrado: " + prbt);
+        }
+        if (srvc == null) {
+            throw new Error("Servicio no encontrado: " + srvc);
+        }
+
+        contextoVO.setFliquidacion(fechaLiquidacion);
+        contextoVO.setPrbt(prbt);
+        contextoVO.setSrvc(srvc);
+        contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
+
         for (final Long crgoId : crgoIds) {
             // Obtencion de los cargos, y los cargos dependientes
             final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
@@ -163,12 +187,6 @@ public class ValoradorBO implements Valorador {
             crgoDepCriterioVO.setFechaVigencia(fechaLiquidacion);
             crgoDepCriterioVO.setSoloDependientes(true);
 
-            final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
-
-            contextoVO.setFliquidacion(fechaLiquidacion);
-            contextoVO.setPrbt(prbtDAO.select(prbtId));
-            contextoVO.setSrvc(srvcDAO.select(srvcId));
-            contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
             contextoVO.setCrgo(crgo);
 
             final Date fref = contextoDAO.selectFref(contextoVO);

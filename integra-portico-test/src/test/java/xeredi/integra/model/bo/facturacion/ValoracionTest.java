@@ -22,9 +22,9 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class ValoracionBOTest.
  */
-public final class ValoracionBOTest {
+public final class ValoracionTest {
     /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ValoracionBOTest.class);
+    private static final Log LOG = LogFactory.getLog(ValoracionTest.class);
 
     /**
      * Test.
