@@ -145,12 +145,12 @@ public class FacturadorBO implements Facturador {
             }
         }
 
-        final List<FacturaAgregadaVO> fctaList = fctaDAO.selectList(contextoVO);
+        final List<FacturaAgregadaVO> fctrList = fctaDAO.selectList(contextoVO);
 
         final IgBO igBO = new IgBO();
 
         // Preparar Facturas
-        for (final FacturaAgregadaVO fctr : fctaList) {
+        for (final FacturaAgregadaVO fctr : fctrList) {
             fcsrDAO.updateIncrementar(fcsrId);
 
             fctr.getFctr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
@@ -184,17 +184,17 @@ public class FacturadorBO implements Facturador {
         }
 
         // Guardar Facturas
-        for (final FacturaAgregadaVO fctr : fctaList) {
+        for (final FacturaAgregadaVO fctr : fctrList) {
             fctrDAO.insert(fctr.getFctr());
         }
 
-        for (final FacturaAgregadaVO fctr : fctaList) {
+        for (final FacturaAgregadaVO fctr : fctrList) {
             for (final FacturaServicioAgregadaVO fcts : fctr.getFctsList()) {
                 fctsDAO.insert(fcts.getFcts());
             }
         }
 
-        for (final FacturaAgregadaVO fctr : fctaList) {
+        for (final FacturaAgregadaVO fctr : fctrList) {
             for (final FacturaServicioAgregadaVO fcts : fctr.getFctsList()) {
                 for (final FacturaLineaAgregadaVO fctl : fcts.getFctlList()) {
                     fctlDAO.insert(fctl.getFctl());
@@ -202,7 +202,7 @@ public class FacturadorBO implements Facturador {
             }
         }
 
-        for (final FacturaAgregadaVO fctr : fctaList) {
+        for (final FacturaAgregadaVO fctr : fctrList) {
             for (final FacturaServicioAgregadaVO fcts : fctr.getFctsList()) {
                 for (final FacturaLineaAgregadaVO fctl : fcts.getFctlList()) {
                     for (final FacturaDetalleVO fctd : fctl.getFctdList()) {
@@ -212,7 +212,7 @@ public class FacturadorBO implements Facturador {
             }
         }
 
-        for (final FacturaAgregadaVO fctr : fctaList) {
+        for (final FacturaAgregadaVO fctr : fctrList) {
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctr.getFctr().getId());

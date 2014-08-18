@@ -22,4 +22,12 @@
         <include refid="SelectPrefix" />
         WHERE fcsr_pk = #{value}
     </select>
+
+    <update id="updateIncrementar" parameterType="Long">
+    <![CDATA[
+        UPDATE tbl_factura_serie_fcsr SET
+            fcsr_numero_ultimo = fcsr_numero_ultimo +1
+        WHERE fcsr_pk = #{value}
+    ]]>
+    </update>
 </mapper>
