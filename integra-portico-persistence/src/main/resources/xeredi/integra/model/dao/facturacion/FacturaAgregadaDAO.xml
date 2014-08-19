@@ -25,7 +25,8 @@
 
                 <association property="fctl" resultMap="xeredi.integra.model.dao.facturacion.FacturaLineaDAO.ResultMap" />
 
-                <collection property="fctdList" ofType="FacturaDetalleVO" javaType="ArrayList" />
+                <collection property="fctdList" resultMap="xeredi.integra.model.dao.facturacion.FacturaDetalleDAO.ResultMap"
+                    javaType="ArrayList" />
             </collection>
         </collection>
     </resultMap>
@@ -46,7 +47,7 @@
             , vlrc_info4 AS fctr_info4
             , vlrc_info5 AS fctr_info5
             , vlrc_info6 AS fctr_info6
-            , vlrc_aspc_pk AS fctr_aspc_pk
+            , NULL AS fctr_aspc_pk
         ]]>
         </if>
         <if test="aspc != null">
@@ -82,6 +83,7 @@
         	, vlrc_fref AS fcts_fref
         	, vlrc_fini AS fcts_fini
         	, vlrc_ffin AS fcts_ffin
+            , vlrc_aspc_pk AS fcts_aspc_pk
 
         	, vlrl_pk AS fctl_pk
         	, vlrl_rgla_pk AS fctl_rgla_pk

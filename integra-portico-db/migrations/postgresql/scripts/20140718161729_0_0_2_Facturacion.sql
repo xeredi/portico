@@ -760,6 +760,8 @@ CREATE TABLE portico.tbl_factura_lin_fctl
 
 CREATE INDEX ix_fctl_fctr_pk ON portico.tbl_factura_lin_fctl (fctl_fctr_pk)
 \
+CREATE INDEX ix_fctl_fcts_pk ON portico.tbl_factura_lin_fctl (fctl_fcts_pk)
+\
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_lin_fctl TO portico
 \

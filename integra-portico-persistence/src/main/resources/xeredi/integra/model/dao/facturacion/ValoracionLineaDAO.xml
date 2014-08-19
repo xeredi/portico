@@ -72,6 +72,11 @@
                 <if test="vlrc.id != null">
                     AND vlrl_vlrc_pk = #{vlrc.id}
                 </if>
+                <if test="vlrc.ids != null">
+                    AND vlrl_vlrc_pk IN
+                    <foreach collection="vlrc.ids" item="item" open="(" close=")" separator=",">#{item}
+                    </foreach>
+                </if>
             </if>
         </where>
     </sql>

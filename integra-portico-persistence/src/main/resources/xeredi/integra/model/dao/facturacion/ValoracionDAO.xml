@@ -51,11 +51,7 @@
     <![CDATA[
         DELETE FROM tbl_valoracion_vlrc
     ]]>
-        <where>
-            <if test="id != null">
-                AND vlrc_pk = #{id}
-            </if>
-        </where>
+        <include refid="SelectWhere" />
     </delete>
 
     <sql id="SelectPrefix">
@@ -70,22 +66,27 @@
             <if test="id != null">
                 AND vlrc_pk = #{id}
             </if>
+            <if test="ids != null">
+                AND vlrc_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
         </where>
     </sql>
 
     <select id="select" parameterType="Long" resultMap="ResultMap">
-        <include refid="SelectPrefix"/>
+        <include refid="SelectPrefix" />
         WHERE vlrc_pk = #{value}
     </select>
 
     <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix"/>
-        <include refid="SelectWhere"/>
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
     </select>
 
     <select id="count" parameterType="ValoracionCriterioVO" resultType="Integer">
         SELECT COUNT(1)
         FROM vw_valoracion_vlrc
-        <include refid="SelectWhere"/>
+        <include refid="SelectWhere" />
     </select>
 </mapper>

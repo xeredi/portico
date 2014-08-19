@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.dao.facturacion.FacturaImpuestoDAO">
+    <resultMap type="FacturaImpuestoVO" id="ResultMap">
+        <id column="fcti_fctr_pk" />
+        <id column="fcti_impuesto_prmt_pk" />
+        <id column="fcti_porcentaje" />
+
+        <result column="fcti_fctr_pk" property="fctrId" />
+        <result column="fcti_porcentaje" property="porcentaje" />
+        <result column="fcti_importe" property="importeBase" />
+        <result column="fcti_impuesto" property="importeImpuesto" />
+
+        <association property="impuesto" columnPrefix="fcti_impuesto_"
+            resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
+    </resultMap>
+
+    <select id="selectGenerateList" parameterType="FacturaCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT *
+        	, (fcti_importe * fcti_porcentaje) / 100 AS fcti_impuesto
+        FROM (
+        	SELECT
+        		fcts_fctr_pk AS fcti_fctr_pk
+        		, fctl_impuesto_prmt_pk AS fcti_impuesto_prmt_pk
+        		, (
+        			select prdt_ndecimal
+        			FROM tbl_parametro_dato_prdt
+        			WHERE
+        				prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
+        				AND prdt_prvr_pk = ANY(
+        					SELECT prvr_pk
+        					FROM tbl_parametro_version_prvr
+        					WHERE prvr_prmt_pk = fctl_impuesto_prmt_pk
+        						AND fcts_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fcts_fref)
+        				)
+        		) AS fcti_porcentaje
+        		, SUM(fctd_importe) as fcti_importe
+        	FROM
+        		tbl_factura_srv_fcts
+        		INNER JOIN tbl_factura_lin_fctl ON
+        			fctl_fcts_pk = fcts_pk
+        		INNER JOIN tbl_factura_det_fctd ON
+        			fctd_fctl_pk = fctl_pk
+        	WHERE fcts_fctr_pk = #{id}
+        	GROUP BY fcti_fctr_pk, fcti_impuesto_prmt_pk, fcti_porcentaje
+        ) sql
+    ]]>
+    </select>
+
+    <insert id="insert" parameterType="FacturaImpuestoVO">
+    <![CDATA[
+        INSERT INTO tbl_factura_imp_fcti (
+            fcti_fctr_pk, fcti_impuesto_prmt_pk, fcti_porcentaje, fcti_importe, fcti_impuesto
+        ) VALUES (
+            #{fctrId}, #{impuesto.id}, #{porcentaje}, #{importeBase}, #{importeImpuesto}
+        )
+    ]]>
+    </insert>
+</mapper>

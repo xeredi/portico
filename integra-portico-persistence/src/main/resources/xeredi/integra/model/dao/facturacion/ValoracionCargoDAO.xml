@@ -11,16 +11,25 @@
         <association property="crgo" resultMap="xeredi.integra.model.dao.facturacion.CargoDAO.ResultMap" />
     </resultMap>
 
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND vlrg_vlrc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND vlrg_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
     <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
     <![CDATA[
         SELECT *
         FROM vw_valoracion_cargo_vlrg
     ]]>
-        <where>
-            <if test="id != null">
-                AND vlrg_vlrc_pk = #{id}
-            </if>
-        </where>
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insertGenerate" parameterType="ValoracionCriterioVO">
@@ -51,10 +60,6 @@
     <![CDATA[
         DELETE FROM tbl_valoracion_cargo_vlrg
     ]]>
-        <where>
-            <if test="id != null">
-                AND vlrg_vlrc_pk = #{id}
-            </if>
-        </where>
+        <include refid="SelectWhere" />
     </delete>
 </mapper>

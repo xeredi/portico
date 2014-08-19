@@ -59,6 +59,19 @@
     ]]>
     </select>
 
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND vlri_vlrc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND vlri_vlrc_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
     <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
     <![CDATA[
         SELECT *
@@ -68,11 +81,7 @@
         FROM
         	tbl_valoracion_imp_vlri
     ]]>
-        <where>
-            <if test="id != null">
-                AND vlri_vlrc_pk = #{id}
-            </if>
-        </where>
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="ValoracionImpuestoVO">
@@ -90,10 +99,6 @@
     <![CDATA[
         DELETE FROM tbl_valoracion_imp_vlri
     ]]>
-        <where>
-            <if test="id != null">
-                AND vlri_vlrc_pk = #{id}
-            </if>
-        </where>
+        <include refid="SelectWhere" />
     </delete>
 </mapper>
