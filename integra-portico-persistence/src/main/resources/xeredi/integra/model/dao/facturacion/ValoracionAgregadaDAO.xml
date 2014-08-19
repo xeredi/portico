@@ -9,26 +9,7 @@
         <id column="vlrc_es_suj_pasivo" />
         <id column="vlrc_cod_exen" />
 
-        <association property="vlrc" javaType="ValoracionVO">
-            <result column="vlrc_es_suj_pasivo" property="sujPasivo" />
-            <result column="vlrc_cod_exen" property="codExencion" />
-            <result column="vlrc_fref" property="fref" />
-            <result column="vlrc_fliq" property="fliq" />
-
-            <result column="vlrc_info1" property="info1" />
-            <result column="vlrc_info2" property="info2" />
-            <result column="vlrc_info3" property="info3" />
-            <result column="vlrc_info4" property="info4" />
-            <result column="vlrc_info5" property="info5" />
-            <result column="vlrc_info6" property="info6" />
-
-            <association property="srvc" javaType="ServicioVO">
-                <result column="vlrc_srvc_pk" property="id" />
-            </association>
-            <association property="pagador" javaType="ParametroVO">
-                <result column="vlrc_pagador_prmt_pk" property="id" />
-            </association>
-        </association>
+        <association property="vlrc" resultMap="xeredi.integra.model.dao.facturacion.ValoracionDAO.ResultMap" />
 
         <collection property="vlrlList" ofType="ValoracionLineaAgregadaVO" javaType="ArrayList">
             <id column="vlrl_impuesto_prmt_pk" />
@@ -50,75 +31,10 @@
 
             <id column="rgla_pk" />
 
-            <association property="vlrl" javaType="ValoracionLineaVO">
-                <id column="vlrl_ssrv_pk" />
+            <association property="vlrl" resultMap="xeredi.integra.model.dao.facturacion.ValoracionLineaDAO.ResultMap" />
 
-                <result column="vlrl_fini" property="fini" />
-                <result column="vlrl_ffin" property="ffin" />
-
-                <result column="vlrl_info1" property="info1" />
-                <result column="vlrl_info2" property="info2" />
-                <result column="vlrl_info3" property="info3" />
-                <result column="vlrl_info4" property="info4" />
-                <result column="vlrl_info5" property="info5" />
-                <result column="vlrl_info6" property="info6" />
-
-                <result column="vlrl_cuant1" property="cuant1" />
-                <result column="vlrl_cuant2" property="cuant2" />
-                <result column="vlrl_cuant3" property="cuant3" />
-                <result column="vlrl_cuant4" property="cuant4" />
-                <result column="vlrl_cuant5" property="cuant5" />
-                <result column="vlrl_cuant6" property="cuant6" />
-
-                <association property="rgla" resultMap="xeredi.integra.model.dao.facturacion.ReglaDAO.ResultMap" />
-                <association property="ssrv" javaType="SubservicioVO">
-                    <result column="vlrl_ssrv_pk" property="id" />
-                </association>
-                <association property="impuesto" javaType="ParametroVO">
-                    <result column="vlrl_impuesto_prmt_pk" property="id" />
-                </association>
-            </association>
-
-            <collection property="vlrdList" ofType="ValoracionDetalleVO" javaType="ArrayList">
-                <id column="vlrd_ssrv_pk" />
-
-                <id column="vlrd_info1" />
-                <id column="vlrd_info2" />
-                <id column="vlrd_info3" />
-                <id column="vlrd_info4" />
-                <id column="vlrd_info5" />
-                <id column="vlrd_info6" />
-
-                <id column="vlrd_cuant1" />
-                <id column="vlrd_cuant2" />
-                <id column="vlrd_cuant3" />
-                <id column="vlrd_cuant4" />
-                <id column="vlrd_cuant5" />
-                <id column="vlrd_cuant6" />
-
-                <result column="vlrd_importe_base" property="importeBase" />
-                <result column="vlrd_importe" property="importe" />
-                <result column="vlrd_fini" property="fini" />
-                <result column="vlrd_ffin" property="ffin" />
-
-                <result column="vlrd_info1" property="info1" />
-                <result column="vlrd_info2" property="info2" />
-                <result column="vlrd_info3" property="info3" />
-                <result column="vlrd_info4" property="info4" />
-                <result column="vlrd_info5" property="info5" />
-                <result column="vlrd_info6" property="info6" />
-
-                <result column="vlrd_cuant1" property="cuant1" />
-                <result column="vlrd_cuant2" property="cuant2" />
-                <result column="vlrd_cuant3" property="cuant3" />
-                <result column="vlrd_cuant4" property="cuant4" />
-                <result column="vlrd_cuant5" property="cuant5" />
-                <result column="vlrd_cuant6" property="cuant6" />
-
-                <association property="ssrv" javaType="SubservicioVO">
-                    <result column="vlrd_ssrv_pk" property="id" />
-                </association>
-            </collection>
+            <collection property="vlrdList" resultMap="xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO.ResultMap"
+                javaType="ArrayList" />
         </collection>
     </resultMap>
 
@@ -151,7 +67,7 @@
         FROM (
             SELECT
                 vlrt_srvc_pk AS vlrc_srvc_pk
-                , vlrt_pagador_prmt_pk AS vlrc_pagador_prmt_pk
+                , vlrt_pagador_prmt_pk AS pagador_prmt_pk
                 , vlrt_es_suj_pasivo AS vlrc_es_suj_pasivo
                 , vlrt_cod_exen AS vlrc_cod_exen
 
@@ -162,7 +78,7 @@
                 , rgla_tipo
                 , rgla_crgo_pk
 
-                , vlrt_impuesto_prmt_pk AS vlrl_impuesto_prmt_pk
+                , vlrt_impuesto_prmt_pk AS impuesto_prmt_pk
     ]]>
 
         <if test="aspc.aspv.agrupaDetalles">

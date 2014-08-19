@@ -12,9 +12,8 @@
         <result column="vlri_importe" property="importeBase" />
         <result column="vlri_impuesto" property="importeImpuesto" />
 
-        <association property="impuesto" javaType="ParametroVO">
-            <result column="vlri_impuesto_prmt_pk" property="id" />
-        </association>
+        <association property="impuesto" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap"
+            columnPrefix="vlri_impuesto_" />
     </resultMap>
 
     <select id="selectGenerateList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">

@@ -34,25 +34,16 @@
         <result column="vlrt_info5" property="info5" />
         <result column="vlrt_info6" property="info6" />
 
-        <association property="ssrv" javaType="SubservicioVO">
-            <result column="vlrt_ssrv_pk" property="id" />
-        </association>
-
-        <association property="crgo" javaType="CargoVO">
-            <result column="vlrt_crgo_pk" property="id" />
-        </association>
-
-        <association property="rgla" javaType="ReglaVO">
-            <result column="vlrt_rgla_pk" property="id" />
-        </association>
-
-        <association property="impuesto" javaType="ParametroVO">
-            <result column="vlrt_impuesto_prmt_pk" property="id" />
-        </association>
-
-        <association property="pagador" javaType="ParametroVO">
-            <result column="vlrt_pagador_prmt_pk" property="id" />
-        </association>
+        <association property="ssrv" columnPrefix="vlrt_"
+            resultMap="xeredi.integra.model.dao.servicio.SubservicioDAO.ResultMap" />
+        <association property="crgo" columnPrefix="vlrt_"
+            resultMap="xeredi.integra.model.dao.facturacion.CargoDAO.ResultMap" />
+        <association property="rgla" columnPrefix="vlrt_"
+            resultMap="xeredi.integra.model.dao.facturacion.ReglaDAO.ResultMap" />
+        <association property="impuesto" columnPrefix="vlrt_impuesto_"
+            resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
+        <association property="pagador" columnPrefix="vlrt_pagador_"
+            resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
     </resultMap>
 
     <select id="selectAplicarReglaServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
