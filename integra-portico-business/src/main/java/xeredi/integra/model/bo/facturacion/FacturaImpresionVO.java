@@ -3,6 +3,8 @@ package xeredi.integra.model.bo.facturacion;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
 import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
 import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
@@ -44,14 +46,23 @@ public final class FacturaImpresionVO {
      * @param afctsMap
      *            the afcts map
      */
-    public FacturaImpresionVO(FacturaVO afctr, List<FacturaCargoVO> afctgList, List<FacturaImpuestoVO> afctiList,
-            List<FacturaLineaVO> afctlList, Map<Long, FacturaServicioVO> afctsMap) {
+    public FacturaImpresionVO(final FacturaVO afctr, final List<FacturaCargoVO> afctgList,
+            final List<FacturaImpuestoVO> afctiList, final List<FacturaLineaVO> afctlList,
+            final Map<Long, FacturaServicioVO> afctsMap) {
         super();
-        this.fctr = afctr;
-        this.fctgList = afctgList;
-        this.fctiList = afctiList;
-        this.fctlList = afctlList;
-        this.fctsMap = afctsMap;
+        fctr = afctr;
+        fctgList = afctgList;
+        fctiList = afctiList;
+        fctlList = afctlList;
+        fctsMap = afctsMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
     /**

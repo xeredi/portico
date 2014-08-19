@@ -12,9 +12,8 @@
         <result column="fcts_fini" property="fini" />
         <result column="fcts_ffin" property="ffin" />
 
-        <association property="aspc" columnPrefix="fcts_"
-            resultMap="xeredi.integra.model.dao.facturacion.AspectoDAO.ResultMap" />
-        <association property="srvc" columnPrefix="fcts_" resultMap="xeredi.integra.model.dao.servicio.ServicioDAO.ResultMap" />
+        <association property="aspc" resultMap="xeredi.integra.model.dao.facturacion.AspectoDAO.ResultMap" />
+        <association property="srvc" resultMap="xeredi.integra.model.dao.servicio.ServicioDAO.ResultMap" />
     </resultMap>
 
     <insert id="insert" parameterType="FacturaServicioVO">
@@ -28,4 +27,25 @@
         )
     ]]>
     </insert>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND fcts_fctr_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND fcts_fctr_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_srv_fcts
+    ]]>
+        <include refid="SelectWhere" />
+    </select>
 </mapper>

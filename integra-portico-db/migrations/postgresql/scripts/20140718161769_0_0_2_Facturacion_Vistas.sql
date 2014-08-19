@@ -172,7 +172,83 @@ GRANT SELECT ON portico.vw_factura_cargo_fctc TO portico
 
 
 
+CREATE VIEW portico.vw_factura_imp_fcti AS
+	SELECT *
+	FROM portico.tbl_factura_imp_fcti
+		JOIN portico.tbl_parametro_prmt ON
+			prmt_pk = fcti_impuesto_prmt_pk
+		JOIN portico.tbl_parametro_version_prvr ON
+			prvr_prmt_pk = fcti_impuesto_prmt_pk
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_factura_fctr
+				WHERE 
+					fctr_pk = fcti_fctr_pk
+					AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
+			)
+\
 
+GRANT SELECT ON portico.vw_factura_imp_fcti TO portico
+\
+
+
+
+CREATE VIEW portico.vw_factura_srv_fcts AS
+SELECT * 
+FROM 
+	portico.tbl_factura_srv_fcts
+	INNER JOIN portico.tbl_aspecto_aspc ON
+		aspc_pk = fcts_aspc_pk
+	INNER JOIN portico.tbl_servicio_srvc ON
+		srvc_pk = fcts_srvc_pk
+\
+
+GRANT SELECT ON portico.vw_factura_srv_fcts TO portico
+\
+
+
+
+CREATE VIEW portico.vw_factura_lin_fctl AS
+	SELECT *
+		, (
+			SELECT SUM(fctd_importe_base)
+			FROM portico.tbl_factura_det_fctd
+			WHERE fctd_fctl_pk = fctl_pk
+		) AS fctl_importe_base
+		, (
+			SELECT SUM(fctd_importe)
+			FROM portico.tbl_factura_det_fctd
+			WHERE fctd_fctl_pk = fctl_pk
+		) AS fctl_importe
+	FROM portico.tbl_factura_lin_fctl
+		INNER JOIN portico.tbl_regla_rgla ON
+			rgla_pk = fctl_rgla_pk
+		INNER JOIN portico.tbl_regla_version_rglv ON
+			rglv_rgla_pk = fctl_rgla_pk
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_factura_srv_fcts
+				WHERE 
+					fcts_pk = fctl_fcts_pk
+					AND fcts_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, fcts_fref)
+			)
+		INNER JOIN portico.tbl_parametro_prmt ON
+			prmt_pk = fctl_impuesto_prmt_pk
+		INNER JOIN portico.tbl_parametro_version_prvr ON
+			prvr_prmt_pk = fctl_impuesto_prmt_pk
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_factura_srv_fcts
+				WHERE 
+					fcts_pk = fctl_fcts_pk
+					AND fcts_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fcts_fref)
+			)
+		LEFT JOIN portico.tbl_subservicio_ssrv ON
+			ssrv_pk = fctl_ssrv_pk
+\
+
+GRANT SELECT ON portico.vw_factura_lin_fctl TO portico
+\
 
 
 
@@ -181,6 +257,12 @@ GRANT SELECT ON portico.vw_factura_cargo_fctc TO portico
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DROP VIEW portico.vw_factura_lin_fctl
+\
+DROP VIEW portico.vw_factura_srv_fcts
+\
+DROP VIEW portico.vw_factura_imp_fcti
+\
 DROP VIEW portico.vw_factura_cargo_fctc
 \
 DROP VIEW portico.vw_factura_fctr

@@ -31,23 +31,23 @@ public final class FacturadorTest {
             final Facturador facturador = BOFactory.getInjector().getInstance(Facturador.class);
             final Set<Long> vlrcIds = new HashSet<>();
 
-            vlrcIds.add(2116046L);
-            vlrcIds.add(2120960L);
-            vlrcIds.add(2130533L);
-            vlrcIds.add(2135286L);
-            vlrcIds.add(2135380L);
-
-            facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
-                    1644001L);
-
-            // vlrcIds.add(1951376L);
-            // vlrcIds.add(1956594L);
-            // vlrcIds.add(1966167L);
-            // vlrcIds.add(1970925L);
-            // vlrcIds.add(1971407L);
+            // vlrcIds.add(2116046L);
+            // vlrcIds.add(2120960L);
+            // vlrcIds.add(2130533L);
+            // vlrcIds.add(2135286L);
+            // vlrcIds.add(2135380L);
 
             // facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
-            // 1237001L);
+            // 1644001L);
+
+            vlrcIds.add(2010376L);
+            vlrcIds.add(2015574L);
+            vlrcIds.add(2025147L);
+            vlrcIds.add(2029905L);
+            vlrcIds.add(2030387L);
+
+            facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
+                    1237001L);
         } catch (final Throwable ex) {
             LOG.error(ex, ex);
 

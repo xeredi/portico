@@ -13,8 +13,7 @@
         <result column="fcti_importe" property="importeBase" />
         <result column="fcti_impuesto" property="importeImpuesto" />
 
-        <association property="impuesto" columnPrefix="fcti_impuesto_"
-            resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
+        <association property="impuesto" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
     </resultMap>
 
     <select id="selectGenerateList" parameterType="FacturaCriterioVO" resultMap="ResultMap">
@@ -48,6 +47,27 @@
         	GROUP BY fcti_fctr_pk, fcti_impuesto_prmt_pk, fcti_porcentaje
         ) sql
     ]]>
+    </select>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND fcti_fctr_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND fcti_fctr_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_imp_fcti
+    ]]>
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="FacturaImpuestoVO">

@@ -22,18 +22,17 @@
         <result column="fctr_info6" property="info6" />
 
         <association property="aspc" resultMap="xeredi.integra.model.dao.facturacion.AspectoDAO.ResultMap" />
-        <association property="pagador" columnPrefix="pagador_"
-            resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
+        <association property="pagador" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
     </resultMap>
 
     <insert id="insert" parameterType="FacturaVO">
     <![CDATA[
         INSERT INTO tbl_factura_fctr (
-            fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk
+            fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
             , fctr_fref, fctr_falta, fctr_fini, fctr_ffin
             , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
         ) VALUES (
-            #{id}, #{aspc.id}, #{pagador.id}
+            #{id}, #{aspc.id}, #{pagador.id}, #{fcsr.id}, #{numero}
             , #{fref}, #{falta}, #{fini}, #{ffin}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )

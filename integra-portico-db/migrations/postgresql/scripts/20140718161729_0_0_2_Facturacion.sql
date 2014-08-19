@@ -613,6 +613,8 @@ CREATE TABLE portico.tbl_factura_fctr
 	fctr_pk BIGINT NOT NULL
 	, fctr_aspc_pk BIGINT NOT NULL
 	, fctr_pagador_prmt_pk BIGINT NOT NULL
+	, fctr_fcsr_pk BIGINT NOT NULL
+	, fctr_numero INT NOT NULL
 	, fctr_fref TIMESTAMP NOT NULL
 	, fctr_falta TIMESTAMP NOT NULL
 	, fctr_fini TIMESTAMP
@@ -630,6 +632,8 @@ CREATE TABLE portico.tbl_factura_fctr
 		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
 	, CONSTRAINT fk_fctr_pagador_prmt_pk FOREIGN KEY (fctr_pagador_prmt_pk)
 		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
+	, CONSTRAINT fk_fctr_fcsr_pk FOREIGN KEY (fctr_fcsr_pk)
+		REFERENCES portico.tbl_factura_serie_fcsr (fcsr_pk)
 )
 \
 
