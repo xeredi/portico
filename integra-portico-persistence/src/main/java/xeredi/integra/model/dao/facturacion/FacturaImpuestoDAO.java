@@ -27,4 +27,13 @@ public interface FacturaImpuestoDAO {
      *            the fcti
      */
     void insert(final FacturaImpuestoVO fcti);
+
+    /**
+     * Select list.
+     *
+     * @param fctrCriterioVO
+     *            the fctr criterio vo
+     * @return the list< factura impuesto v o>
+     */
+    List<FacturaImpuestoVO> selectList(final FacturaCriterioVO fctrCriterioVO);
 }

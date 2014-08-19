@@ -190,6 +190,8 @@ DELETE FROM tbl_factura_cargo_fctc;
 DELETE FROM tbl_factura_fctr;
 
 
+
+
 SELECT *
 FROM 
 	tbl_factura_srv_fcts

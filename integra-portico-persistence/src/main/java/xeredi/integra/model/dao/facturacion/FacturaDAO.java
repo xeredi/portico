@@ -15,4 +15,13 @@ public interface FacturaDAO {
      *            the fctr
      */
     void insert(final FacturaVO fctr);
+
+    /**
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @return the factura vo
+     */
+    FacturaVO select(final Long id);
 }

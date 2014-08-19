@@ -12,7 +12,6 @@ import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.comun.IgBO;
-import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.dao.facturacion.AspectoDAO;
 import xeredi.integra.model.dao.facturacion.FacturaAgregadaDAO;
 import xeredi.integra.model.dao.facturacion.FacturaCargoDAO;
@@ -22,6 +21,7 @@ import xeredi.integra.model.dao.facturacion.FacturaImpuestoDAO;
 import xeredi.integra.model.dao.facturacion.FacturaLineaDAO;
 import xeredi.integra.model.dao.facturacion.FacturaSerieDAO;
 import xeredi.integra.model.dao.facturacion.FacturaServicioDAO;
+import xeredi.integra.model.dao.facturacion.ServicioCargoDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionCargoDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionDAO;
 import xeredi.integra.model.dao.facturacion.ValoracionDetalleDAO;
@@ -41,6 +41,7 @@ import xeredi.integra.model.vo.facturacion.FacturaSerieVO;
 import xeredi.integra.model.vo.facturacion.FacturaServicioAgregadaVO;
 import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
 import xeredi.integra.model.vo.facturacion.FacturadorContextoVO;
+import xeredi.integra.model.vo.facturacion.ServicioCargoCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionLineaCriterioVO;
@@ -92,13 +93,13 @@ public class FacturadorBO implements Facturador {
     @Inject
     FacturaServicioDAO fctsDAO;
 
-    /** The fctc dao. */
-    @Inject
-    FacturaCargoDAO fctcDAO;
-
     /** The fcti dao. */
     @Inject
     FacturaImpuestoDAO fctiDAO;
+
+    /** The fctg dao. */
+    @Inject
+    FacturaCargoDAO fctgDAO;
 
     /** The vlrc dao. */
     @Inject
@@ -119,6 +120,10 @@ public class FacturadorBO implements Facturador {
     /** The vlrd dao. */
     @Inject
     ValoracionDetalleDAO vlrdDAO;
+
+    /** The srcr dao. */
+    @Inject
+    ServicioCargoDAO srcrDAO;
 
     /**
      * {@inheritDoc}
@@ -252,15 +257,25 @@ public class FacturadorBO implements Facturador {
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctr.getFctr().getId());
+            Preconditions.checkNotNull(fctrCriterioVO.getId());
 
             final List<FacturaImpuestoVO> fctiList = fctiDAO.selectGenerateList(fctrCriterioVO);
 
             for (final FacturaImpuestoVO fcti : fctiList) {
                 fctiDAO.insert(fcti);
             }
+
+            fctgDAO.insertGenerate(fctrCriterioVO);
         }
 
-        // TODO Calcular los cargos de cada facturacion
+        LOG.info("Marcar como facturado en servicio_cargo");
+        // FIXME Marcar como facturado en servicio_cargo
+
+        final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
+
+        srcrCriterioVO.setVlrcIds(vlrcIds);
+
+        srcrDAO.deleteValoracion(srcrCriterioVO);
 
         LOG.info("Borrado de Valoraciones");
         final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
@@ -277,5 +292,4 @@ public class FacturadorBO implements Facturador {
         vlrgDAO.delete(vlrcCriterioVO);
         vlrcDAO.delete(vlrcCriterioVO);
     }
-
 }

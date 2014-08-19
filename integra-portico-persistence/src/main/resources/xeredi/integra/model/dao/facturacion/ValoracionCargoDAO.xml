@@ -17,7 +17,7 @@
                 AND vlrg_vlrc_pk = #{id}
             </if>
             <if test="ids != null">
-                AND vlrg_pk IN
+                AND vlrg_vlrc_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
                 </foreach>
             </if>

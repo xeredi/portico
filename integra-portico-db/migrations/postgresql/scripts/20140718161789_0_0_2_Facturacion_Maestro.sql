@@ -354,6 +354,20 @@ INSERT INTO portico.tbl_factura_serie_fcsr (fcsr_pk, fcsr_serie, fcsr_anio, fcsr
 -- SQL to undo the change goes here.
 DELETE FROM portico.tbl_servicio_cargo_srcr
 \
+
+DELETE FROM portico.tbl_factura_det_fctd
+\
+DELETE FROM portico.tbl_factura_lin_fctl
+\
+DELETE FROM portico.tbl_factura_imp_fcti
+\
+DELETE FROM portico.tbl_factura_srv_fcts
+\
+DELETE FROM portico.tbl_factura_cargo_fctc
+\
+DELETE FROM portico.tbl_factura_fctr
+\
+
 DELETE FROM portico.tbl_valoracion_tmp_vlrt
 \
 DELETE FROM portico.tbl_valoracion_det_vlrd
