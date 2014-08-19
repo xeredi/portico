@@ -46,4 +46,12 @@
         		AND fctr_pk = #{id}
     ]]>
     </insert>
+
+    <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_cargo_fctc
+    ]]>
+        <include refid="SelectWhere"/>
+    </select>
 </mapper>

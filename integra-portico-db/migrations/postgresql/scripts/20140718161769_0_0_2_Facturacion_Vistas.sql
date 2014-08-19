@@ -118,6 +118,60 @@ GRANT SELECT ON portico.vw_valoracion_cargo_vlrg TO portico
 
 
 
+CREATE VIEW portico.vw_factura_fctr AS
+	SELECT * 
+		, (
+			SELECT prvr_pk 
+			FROM portico.tbl_parametro_version_prvr 
+			WHERE prvr_prmt_pk = fctr_pagador_prmt_pk
+				AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
+		) AS fctr_pagador_prvr_pk
+		, (
+			SELECT SUM(fcti_importe) 
+			FROM portico.tbl_factura_imp_fcti 
+			WHERE fcti_fctr_pk = fctr_pk
+		) AS fctr_importe
+		, (
+			SELECT SUM(fcti_impuesto) 
+			FROM portico.tbl_factura_imp_fcti 
+			WHERE fcti_fctr_pk = fctr_pk
+		) AS fctr_impuesto
+	FROM 
+		portico.tbl_factura_fctr
+		JOIN portico.tbl_aspecto_aspc on
+			aspc_pk = fctr_aspc_pk
+		JOIN portico.tbl_aspecto_version_aspv on
+			aspv_aspc_pk = fctr_aspc_pk
+			AND fctr_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fctr_fref)
+\
+
+GRANT SELECT ON portico.vw_factura_fctr TO portico
+\
+
+
+
+CREATE VIEW portico.vw_factura_cargo_fctc AS
+	SELECT * 
+	FROM 
+		portico.tbl_factura_cargo_fctc
+		INNER JOIN portico.tbl_cargo_crgo ON
+			crgo_pk = fctc_crgo_pk
+		INNER JOIN portico.tbl_cargo_version_crgv ON
+			crgv_crgo_pk = fctc_crgo_pk
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_factura_fctr
+				WHERE 
+					fctr_pk = fctc_fctr_pk
+					AND fctr_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, fctr_fref)
+			)
+\
+
+GRANT SELECT ON portico.vw_factura_cargo_fctc TO portico
+\
+
+
+
 
 
 
@@ -127,6 +181,10 @@ GRANT SELECT ON portico.vw_valoracion_cargo_vlrg TO portico
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DROP VIEW portico.vw_factura_cargo_fctc
+\
+DROP VIEW portico.vw_factura_fctr
+\
 DROP VIEW portico.vw_valoracion_cargo_vlrg
 \
 DROP VIEW portico.vw_valoracion_det_vlrd

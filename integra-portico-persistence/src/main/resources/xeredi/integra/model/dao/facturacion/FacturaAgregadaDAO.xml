@@ -6,7 +6,6 @@
     <resultMap type="FacturaAgregadaVO" id="ResultMap">
         <id column="fctr_pk" />
         <id column="fctr_pagador_prmt_pk" />
-        <id column="fctr_aspc_pk" />
         <id column="fctr_info1" />
         <id column="fctr_info2" />
         <id column="fctr_info3" />
@@ -14,19 +13,80 @@
         <id column="fctr_info5" />
         <id column="fctr_info6" />
 
-        <association property="fctr" resultMap="xeredi.integra.model.dao.facturacion.FacturaDAO.ResultMap" />
+        <association property="fctr" javaType="FacturaVO">
+            <result column="fctr_pk" property="id" />
+            <result column="fctr_info1" property="info1" />
+            <result column="fctr_info2" property="info2" />
+            <result column="fctr_info3" property="info3" />
+            <result column="fctr_info4" property="info4" />
+            <result column="fctr_info5" property="info5" />
+            <result column="fctr_info6" property="info6" />
+
+            <association property="pagador" columnPrefix="fctr_pagador_"
+                resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
+        </association>
         <collection property="fctsList" ofType="FacturaServicioAgregadaVO" javaType="ArrayList">
             <id column="fcts_pk" />
 
-            <association property="fcts" resultMap="xeredi.integra.model.dao.facturacion.FacturaServicioDAO.ResultMap" />
+            <association property="fcts" javaType="FacturaServicioVO">
+                <result column="fcts_pk" property="id" />
+                <result column="fcts_fref" property="fref" />
+                <result column="fcts_fini" property="fini" />
+                <result column="fcts_ffin" property="ffin" />
+
+                <association property="srvc" columnPrefix="fcts_"
+                    resultMap="xeredi.integra.model.dao.servicio.ServicioDAO.ResultMap" />
+                <association property="aspc" columnPrefix="fcts_"
+                    resultMap="xeredi.integra.model.dao.facturacion.AspectoDAO.ResultMap" />
+            </association>
 
             <collection property="fctlList" ofType="FacturaLineaAgregadaVO" javaType="ArrayList">
                 <id column="fctl_pk" />
 
-                <association property="fctl" resultMap="xeredi.integra.model.dao.facturacion.FacturaLineaDAO.ResultMap" />
+                <association property="fctl" javaType="FacturaLineaVO">
+                    <result column="fctl_pk" property="id" />
+                    <result column="fctl_cuant1" property="cuant1" />
+                    <result column="fctl_cuant2" property="cuant2" />
+                    <result column="fctl_cuant3" property="cuant3" />
+                    <result column="fctl_cuant4" property="cuant4" />
+                    <result column="fctl_cuant5" property="cuant5" />
+                    <result column="fctl_cuant6" property="cuant6" />
+                    <result column="fctl_info1" property="info1" />
+                    <result column="fctl_info2" property="info2" />
+                    <result column="fctl_info3" property="info3" />
+                    <result column="fctl_info4" property="info4" />
+                    <result column="fctl_info5" property="info5" />
+                    <result column="fctl_info6" property="info6" />
 
-                <collection property="fctdList" resultMap="xeredi.integra.model.dao.facturacion.FacturaDetalleDAO.ResultMap"
-                    javaType="ArrayList" />
+                    <association property="rgla" columnPrefix="fctl_"
+                        resultMap="xeredi.integra.model.dao.facturacion.ReglaDAO.ResultMap" />
+                    <association property="impuesto" columnPrefix="fctl_impuesto_"
+                        resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
+                    <association property="ssrv" columnPrefix="fctl_"
+                        resultMap="xeredi.integra.model.dao.servicio.SubservicioDAO.ResultMap" />
+                </association>
+
+                <collection property="fctdList" ofType="FacturaDetalleVO" javaType="ArrayList">
+                    <result column="fctd_pk" property="id" />
+                    <result column="fctd_importe_base" property="importeBase" />
+                    <result column="fctd_importe" property="importe" />
+                    <result column="fctd_pk" property="id" />
+                    <result column="fctd_cuant1" property="cuant1" />
+                    <result column="fctd_cuant2" property="cuant2" />
+                    <result column="fctd_cuant3" property="cuant3" />
+                    <result column="fctd_cuant4" property="cuant4" />
+                    <result column="fctd_cuant5" property="cuant5" />
+                    <result column="fctd_cuant6" property="cuant6" />
+                    <result column="fctd_info1" property="info1" />
+                    <result column="fctd_info2" property="info2" />
+                    <result column="fctd_info3" property="info3" />
+                    <result column="fctd_info4" property="info4" />
+                    <result column="fctd_info5" property="info5" />
+                    <result column="fctd_info6" property="info6" />
+
+                    <association property="ssrv" columnPrefix="fctd_"
+                        resultMap="xeredi.integra.model.dao.servicio.SubservicioDAO.ResultMap" />
+                </collection>
             </collection>
         </collection>
     </resultMap>
@@ -47,7 +107,6 @@
             , vlrc_info4 AS fctr_info4
             , vlrc_info5 AS fctr_info5
             , vlrc_info6 AS fctr_info6
-            , NULL AS fctr_aspc_pk
         ]]>
         </if>
         <if test="aspc != null">
@@ -74,7 +133,6 @@
             <if test="aspc.aspv.cgrpInfo6">
                 , vlrc_info6 AS fctr_info6
             </if>
-            , #{aspc.aspv.id} AS fctr_aspc_pk
         </if>
 
         <![CDATA[

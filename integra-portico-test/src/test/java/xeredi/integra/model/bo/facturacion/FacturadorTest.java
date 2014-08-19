@@ -31,11 +31,11 @@ public final class FacturadorTest {
             final Facturador facturador = BOFactory.getInjector().getInstance(Facturador.class);
             final Set<Long> vlrcIds = new HashSet<>();
 
-            vlrcIds.add(2066046L);
-            vlrcIds.add(2070960L);
-            vlrcIds.add(2080533L);
-            vlrcIds.add(2085286L);
-            vlrcIds.add(2085380L);
+            vlrcIds.add(2116046L);
+            vlrcIds.add(2120960L);
+            vlrcIds.add(2130533L);
+            vlrcIds.add(2135286L);
+            vlrcIds.add(2135380L);
 
             facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
                     1644001L);

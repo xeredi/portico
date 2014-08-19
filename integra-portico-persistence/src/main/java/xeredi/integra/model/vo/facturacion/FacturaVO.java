@@ -39,6 +39,12 @@ public final class FacturaVO {
     /** The ffin. */
     private Date ffin;
 
+    /** The importe. */
+    private Double importe;
+
+    /** The impuesto. */
+    private Double impuesto;
+
     /** The info1. */
     private String info1;
 
@@ -348,6 +354,44 @@ public final class FacturaVO {
      */
     public void setNumero(Integer value) {
         this.numero = value;
+    }
+
+    /**
+     * Gets the importe.
+     *
+     * @return the importe
+     */
+    public Double getImporte() {
+        return importe;
+    }
+
+    /**
+     * Sets the importe.
+     *
+     * @param value
+     *            the importe
+     */
+    public void setImporte(Double value) {
+        this.importe = value;
+    }
+
+    /**
+     * Gets the impuesto.
+     *
+     * @return the impuesto
+     */
+    public Double getImpuesto() {
+        return impuesto;
+    }
+
+    /**
+     * Sets the impuesto.
+     *
+     * @param value
+     *            the impuesto
+     */
+    public void setImpuesto(Double value) {
+        this.impuesto = value;
     }
 
 }

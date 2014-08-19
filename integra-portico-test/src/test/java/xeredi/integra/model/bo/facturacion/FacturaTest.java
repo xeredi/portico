@@ -31,8 +31,8 @@ public final class FacturaTest {
             final Factura factura = BOFactory.getInjector().getInstance(Factura.class);
             final Set<Long> fctrIds = new HashSet<>();
 
-            fctrIds.add(1965046L);
-            fctrIds.add(1969960L);
+            fctrIds.add(2146001L);
+            fctrIds.add(2146051L);
 
             final List<FacturaImpresionVO> fctrList = factura.selectImprimir(fctrIds);
 

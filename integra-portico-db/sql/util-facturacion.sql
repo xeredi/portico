@@ -171,8 +171,47 @@ SELECT * FROM tbl_factura_srv_fcts;
 SELECT * FROM tbl_factura_imp_fcti;
 SELECT * FROM tbl_factura_lin_fctl;
 SELECT * FROM tbl_factura_det_fctd;
+SELECT * FROM VW_factura_fctr;
 
 
+-- Vistas facturacion
+SELECT *
+FROM tbl_factura_imp_fcti
+	join tbl_parametro_prmt ON
+		prmt_pk = fcti_impuesto_prmt_pk
+	JOIN tbl_parametro_version_prvr ON
+		prvr_prmt_pk = fcti_impuesto_prmt_pk
+		AND EXISTS (
+			SELECT 1
+			FROM portico.tbl_factura_fctr
+			WHERE 
+				fctr_pk = fcti_fctr_pk
+				AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
+		)
+;
+
+
+CREATE VIEW portico.vw_factura_cargo_fctc AS
+	SELECT * 
+	FROM 
+		portico.tbl_factura_cargo_fctc
+		INNER JOIN portico.tbl_cargo_crgo ON
+			crgo_pk = fctc_crgo_pk
+		INNER JOIN portico.tbl_cargo_version_crgv ON
+			crgv_crgo_pk = fctc_crgo_pk
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_factura_fctr
+				WHERE 
+					fctr_pk = fctc_fctr_pk
+					AND fctr_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, fctr_fref)
+			)
+\
+
+GRANT SELECT ON portico.vw_factura_cargo_fctc TO portico
+\
+
+SELECT * FROM vw_factura_cargo_fctc;
 
 DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
