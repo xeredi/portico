@@ -61,6 +61,7 @@ public final class FacturaPdf extends BasePdf {
         report.setPageFormat(PageType.A4, PageOrientation.PORTRAIT);
         report.setTextStyle(PdfConstants.VALUE_STYLE);
         report.pageHeader(createLogoComponent());
+        report.pageFooter(DynamicReports.cmp.pageXofY());
 
         final MultiPageListBuilder builder = DynamicReports.cmp.multiPageList();
 
@@ -239,8 +240,8 @@ public final class FacturaPdf extends BasePdf {
                 createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
                 createEtiquetaValorComponent("Cuota",
                         PdfConstants.DOUBLE_FORMAT.format(fctl.getRgla().getRglv().getImporteBase())),
-                createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
-                createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
+                        createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
+                        createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
 
         final HorizontalListBuilder infos = DynamicReports.cmp.horizontalList();
 
