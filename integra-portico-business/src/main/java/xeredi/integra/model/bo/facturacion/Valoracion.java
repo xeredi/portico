@@ -45,6 +45,15 @@ public interface Valoracion {
     ValoracionVO select(final Long id);
 
     /**
+     * Select imprimir.
+     *
+     * @param ids
+     *            the ids
+     * @return the list< valoracion impresion v o>
+     */
+    List<ValoracionImpresionVO> selectImprimir(final Set<Long> ids);
+
+    /**
      * Select impuestos list.
      *
      * @param vlrcCriterioVO

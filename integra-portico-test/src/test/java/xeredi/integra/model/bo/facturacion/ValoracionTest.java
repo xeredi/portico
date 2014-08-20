@@ -1,6 +1,8 @@
 package xeredi.integra.model.bo.facturacion;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -8,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.bo.util.pdf.ValoracionPdf;
+import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.vo.facturacion.ValoracionCargoVO;
 import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
 import xeredi.integra.model.vo.facturacion.ValoracionDetalleCriterioVO;
@@ -34,9 +38,9 @@ public final class ValoracionTest {
         LOG.info("Start test");
 
         try {
-            final Long vlrcId = 1367920L;
-            final Long vlrlId = 1371129L;
-            final Long vlrdId = 1371148L;
+            final Long vlrcId = 2156046L;
+            final Long vlrlId = 2156047L;
+            final Long vlrdId = 2156048L;
 
             final Valoracion vlrcBO = BOFactory.getInjector().getInstance(Valoracion.class);
 
@@ -58,6 +62,24 @@ public final class ValoracionTest {
                 Assert.assertNotNull(vlrc);
 
                 LOG.info("vlrc: " + vlrc);
+            }
+
+            {
+                LOG.info("vlrcImpresion");
+
+                final Set<Long> ids = new HashSet<>();
+
+                ids.add(vlrcId);
+
+                final List<ValoracionImpresionVO> vlrcList = vlrcBO.selectImprimir(ids);
+
+                Assert.assertNotNull(vlrcList);
+
+                LOG.info("vlrcImpresion: " + vlrcList);
+
+                final ValoracionPdf valoracionPdf = new ValoracionPdf(GlobalNames.DEFAULT_LOCALE);
+
+                valoracionPdf.imprimir(vlrcList, null);
             }
 
             {

@@ -5,23 +5,23 @@ import java.util.List;
 import java.util.Locale;
 
 import net.sf.dynamicreports.report.exception.DRException;
-import xeredi.integra.model.bo.facturacion.FacturaImpresionVO;
+import xeredi.integra.model.bo.facturacion.ValoracionImpresionVO;
 
 import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class FacturaPdf.
+ * The Class ValoracionPdf.
  */
-public final class FacturaPdf extends BasePdf {
+public final class ValoracionPdf extends BasePdf {
 
     /**
-     * Instantiates a new factura pdf.
+     * The Constructor.
      *
      * @param alocale
      *            the alocale
      */
-    public FacturaPdf(final Locale alocale) {
+    public ValoracionPdf(final Locale alocale) {
         super(alocale);
     }
 
@@ -35,9 +35,10 @@ public final class FacturaPdf extends BasePdf {
      * @throws DRException
      *             the DR exception
      */
-    public void imprimir(final List<FacturaImpresionVO> vos, final OutputStream os) throws DRException {
+    public void imprimir(final List<ValoracionImpresionVO> vos, final OutputStream os) throws DRException {
         Preconditions.checkNotNull(vos);
         Preconditions.checkArgument(!vos.isEmpty());
         Preconditions.checkNotNull(os);
     }
+
 }

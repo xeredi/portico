@@ -107,13 +107,43 @@ public class ValoracionBO implements Valoracion {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
     public ValoracionVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
         final ValoracionVO vlrc = vlrcDAO.select(id);
 
         return vlrc;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ValoracionImpresionVO> selectImprimir(Set<Long> ids) {
+        Preconditions.checkNotNull(ids);
+        Preconditions.checkArgument(!ids.isEmpty());
+
+        final List<ValoracionImpresionVO> list = new ArrayList<>();
+
+        for (final Long vlrcId : ids) {
+            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+            final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+
+            vlrcCriterioVO.setId(vlrcId);
+            vlrlCriterioVO.setVlrc(vlrcCriterioVO);
+
+            final ValoracionVO vlrc = vlrcDAO.select(vlrcId);
+
+            if (vlrc != null) {
+                final List<ValoracionCargoVO> vlrgList = vlrgDAO.selectList(vlrcCriterioVO);
+                final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectList(vlrcCriterioVO);
+                final List<ValoracionLineaVO> vlrlList = vlrlDAO.selectList(vlrlCriterioVO);
+
+                list.add(new ValoracionImpresionVO(vlrc, vlrgList, vlriList, vlrlList));
+            }
+        }
+
+        return list;
     }
 
     /**
@@ -149,6 +179,11 @@ public class ValoracionBO implements Valoracion {
         return vlrlDAO.select(vlrlId);
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see xeredi.integra.model.bo.facturacion.Valoracion#existsLineaDependencia(java.lang.Long)
+     */
     @Override
     @Transactional
     public boolean existsLineaDependencia(final Long vlrlId) {

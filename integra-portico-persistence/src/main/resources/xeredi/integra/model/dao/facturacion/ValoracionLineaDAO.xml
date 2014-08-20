@@ -89,7 +89,7 @@
     <select id="selectList" parameterType="ValoracionLineaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY vlrl_vlrc_pk, vlrl_pk
+        ORDER BY vlrl_vlrc_pk, vlrl_padre_pk, vlrl_pk
     </select>
 
     <select id="count" parameterType="ValoracionLineaCriterioVO" resultType="Integer">

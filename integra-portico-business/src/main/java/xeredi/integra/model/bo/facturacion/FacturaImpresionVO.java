@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
 import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
 import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
@@ -16,6 +18,9 @@ import xeredi.integra.model.vo.facturacion.FacturaVO;
  * The Class FacturaImpresionVO.
  */
 public final class FacturaImpresionVO {
+
+    /** The Constant FILENAME_FORMAT. */
+    private static final String FILENAME_FORMAT = "{0}-{1}-{2}";
 
     /** The fctr. */
     private final transient FacturaVO fctr;
@@ -50,6 +55,17 @@ public final class FacturaImpresionVO {
             final List<FacturaImpuestoVO> afctiList, final List<FacturaLineaVO> afctlList,
             final Map<Long, FacturaServicioVO> afctsMap) {
         super();
+
+        Preconditions.checkNotNull(afctr);
+        Preconditions.checkNotNull(afctgList);
+        Preconditions.checkArgument(!afctgList.isEmpty());
+        Preconditions.checkNotNull(afctiList);
+        Preconditions.checkArgument(!afctiList.isEmpty());
+        Preconditions.checkNotNull(afctlList);
+        Preconditions.checkArgument(!afctlList.isEmpty());
+        Preconditions.checkNotNull(afctsMap);
+        Preconditions.checkArgument(!afctsMap.isEmpty());
+
         fctr = afctr;
         fctgList = afctgList;
         fctiList = afctiList;
@@ -63,6 +79,15 @@ public final class FacturaImpresionVO {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    /**
+     * Gets the filename.
+     *
+     * @return the filename
+     */
+    public String getFilename() {
+        return fctr.getFcsr().getSerie() + "-" + fctr.getFcsr().getAnio() + "-" + fctr.getNumero();
     }
 
     /**

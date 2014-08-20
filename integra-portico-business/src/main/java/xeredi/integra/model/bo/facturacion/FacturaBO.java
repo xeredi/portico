@@ -70,18 +70,21 @@ public class FacturaBO implements Factura {
             fctlCriterioVO.setFctr(fctrCriterioVO);
 
             final FacturaVO fctr = fctrDAO.select(fctrId);
-            final List<FacturaCargoVO> fctgList = fctgDAO.selectList(fctrCriterioVO);
-            final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
-            final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
-            final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
 
-            final Map<Long, FacturaServicioVO> fctsMap = new HashMap<>();
+            if (fctr != null) {
+                final List<FacturaCargoVO> fctgList = fctgDAO.selectList(fctrCriterioVO);
+                final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
+                final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
+                final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
 
-            for (final FacturaServicioVO fcts : fctsList) {
-                fctsMap.put(fcts.getId(), fcts);
+                final Map<Long, FacturaServicioVO> fctsMap = new HashMap<>();
+
+                for (final FacturaServicioVO fcts : fctsList) {
+                    fctsMap.put(fcts.getId(), fcts);
+                }
+
+                list.add(new FacturaImpresionVO(fctr, fctgList, fctiList, fctlList, fctsMap));
             }
-
-            list.add(new FacturaImpresionVO(fctr, fctgList, fctiList, fctlList, fctsMap));
         }
 
         return list;
