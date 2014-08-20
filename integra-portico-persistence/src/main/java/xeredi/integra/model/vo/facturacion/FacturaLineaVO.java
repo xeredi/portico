@@ -29,6 +29,12 @@ public final class FacturaLineaVO {
     /** The ssrv. */
     private SubservicioVO ssrv;
 
+    /** The importe base. */
+    private Double importeBase;
+
+    /** The importe. */
+    private Double importe;
+
     /** The cuant1. */
     private Double cuant1;
 
@@ -413,6 +419,44 @@ public final class FacturaLineaVO {
      */
     public void setInfo6(final String value) {
         info6 = value;
+    }
+
+    /**
+     * Gets the importe.
+     *
+     * @return the importe
+     */
+    public Double getImporte() {
+        return importe;
+    }
+
+    /**
+     * Sets the importe.
+     *
+     * @param value
+     *            the new importe
+     */
+    public void setImporte(final Double value) {
+        importe = value;
+    }
+
+    /**
+     * Gets the importe base.
+     *
+     * @return the importe base
+     */
+    public Double getImporteBase() {
+        return importeBase;
+    }
+
+    /**
+     * Sets the importe base.
+     *
+     * @param value
+     *            the new importe base
+     */
+    public void setImporteBase(final Double value) {
+        importeBase = value;
     }
 
 }

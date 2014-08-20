@@ -72,6 +72,23 @@ public final class FacturaVO {
     }
 
     /**
+     * Gets the etiqueta.
+     *
+     * @return the etiqueta
+     */
+    public String getEtiqueta() {
+        final StringBuilder etiqueta = new StringBuilder();
+
+        if (fcsr != null) {
+            etiqueta.append(fcsr.getSerie()).append('/').append(fcsr.getAnio()).append('/');
+        }
+
+        etiqueta.append(numero);
+
+        return etiqueta.toString();
+    }
+
+    /**
      * Gets the fcsr.
      *
      * @return the fcsr
@@ -86,8 +103,8 @@ public final class FacturaVO {
      * @param value
      *            the fcsr
      */
-    public void setFcsr(FacturaSerieVO value) {
-        this.fcsr = value;
+    public void setFcsr(final FacturaSerieVO value) {
+        fcsr = value;
     }
 
     /**
@@ -352,8 +369,8 @@ public final class FacturaVO {
      * @param value
      *            the numero
      */
-    public void setNumero(Integer value) {
-        this.numero = value;
+    public void setNumero(final Integer value) {
+        numero = value;
     }
 
     /**
@@ -371,8 +388,8 @@ public final class FacturaVO {
      * @param value
      *            the importe
      */
-    public void setImporte(Double value) {
-        this.importe = value;
+    public void setImporte(final Double value) {
+        importe = value;
     }
 
     /**
@@ -390,8 +407,8 @@ public final class FacturaVO {
      * @param value
      *            the impuesto
      */
-    public void setImpuesto(Double value) {
-        this.impuesto = value;
+    public void setImpuesto(final Double value) {
+        impuesto = value;
     }
 
 }

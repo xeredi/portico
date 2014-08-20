@@ -10,6 +10,9 @@
         <result column="fctl_fctr_pk" property="fctrId" />
         <result column="fctl_fcts_pk" property="fctsId" />
 
+        <result column="fctl_importe_base" property="importeBase" />
+        <result column="fctl_importe" property="importe" />
+
         <result column="fctl_cuant1" property="cuant1" />
         <result column="fctl_cuant2" property="cuant2" />
         <result column="fctl_cuant3" property="cuant3" />

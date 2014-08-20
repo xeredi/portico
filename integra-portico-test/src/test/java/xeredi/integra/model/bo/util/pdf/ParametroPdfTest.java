@@ -35,81 +35,79 @@ import xeredi.integra.model.vo.metamodelo.TipoSubparametroVO;
  */
 public final class ParametroPdfTest {
 
-	private static final Log LOG = LogFactory.getLog(ParametroPdfTest.class);
+    private static final Log LOG = LogFactory.getLog(ParametroPdfTest.class);
 
-	/**
-	 * Test.
-	 */
-	@Test
-	public void test() throws IOException, DRException {
-		LOG.info("Start Test");
+    /**
+     * Test.
+     */
+    @Test
+    public void test() throws IOException, DRException {
+        LOG.info("Start Test");
 
-		final List<Long> tpprIds = Arrays.asList(new Long[] { 20005L, 20049L });
-		final String language = "es";
-		final String country = "ES";
-		final String locale = "es_ES";
+        final List<Long> tpprIds = Arrays.asList(new Long[] { 20005L, 20049L });
+        final String language = "es";
+        final String country = "ES";
+        final String locale = "es_ES";
 
-		final ParametroPdf prmtPdf = new ParametroPdf(new Locale(language,
-				country));
-		final Parametro prmt = BOFactory.getInjector().getInstance(Parametro.class);
+        final ParametroPdf prmtPdf = new ParametroPdf(new Locale(language, country));
+        final Parametro prmt = BOFactory.getInjector().getInstance(Parametro.class);
 
-		for (final Long tpprId : tpprIds) {
-			final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+        for (final Long tpprId : tpprIds) {
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-			prmtCriterioVO.setEntiId(tpprId);
-			prmtCriterioVO.setIdioma(locale);
-			prmtCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
-			prmtCriterioVO.setLimit(50);
+            prmtCriterioVO.setEntiId(tpprId);
+            prmtCriterioVO.setIdioma(locale);
+            prmtCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
+            prmtCriterioVO.setLimit(50);
 
-			LOG.info("Busqueda de Parametros");
+            LOG.info("Busqueda de Parametros");
 
-			final TipoParametroVO tpprVO = TipoParametroProxy.select(tpprId);
-			final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
+            final TipoParametroVO tpprVO = TipoParametroProxy.select(tpprId);
+            final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
 
-			if (tpprVO.getEntiHijasList() != null) {
-				for (final Long entiId : tpprVO.getEntiHijasList()) {
-					entiHijasMap.put(entiId, TipoSubparametroProxy.select(entiId));
-				}
-			}
+            if (tpprVO.getEntiHijasList() != null) {
+                for (final Long entiId : tpprVO.getEntiHijasList()) {
+                    entiHijasMap.put(entiId, TipoSubparametroProxy.select(entiId));
+                }
+            }
 
-			final List<ParametroVO> prmtList = prmt.selectList(prmtCriterioVO);
+            final List<ParametroVO> prmtList = prmt.selectList(prmtCriterioVO);
 
-			LOG.info("Impresion de Parametros");
+            LOG.info("Impresion de Parametros");
 
-			for (final ParametroVO prmtVO : prmtList) {
-				final Map<Long, List<SubparametroVO>> sprmMap = new HashMap<>();
+            for (final ParametroVO prmtVO : prmtList) {
+                final Map<Long, List<SubparametroVO>> sprmMap = new HashMap<>();
 
-				if (tpprVO.getEntiHijasList() != null) {
-					for (final Long entiId : tpprVO.getEntiHijasList()) {
-						final Subparametro sprm = BOFactory.getInjector().getInstance(Subparametro.class);
-						final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+                if (tpprVO.getEntiHijasList() != null) {
+                    for (final Long entiId : tpprVO.getEntiHijasList()) {
+                        final Subparametro sprm = BOFactory.getInjector().getInstance(Subparametro.class);
+                        final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-						sprmCriterioVO.setFechaVigencia(prmtCriterioVO.getFechaVigencia());
-						sprmCriterioVO.setIdioma(prmtCriterioVO.getIdioma());
-						sprmCriterioVO.setEntiId(entiId);
+                        sprmCriterioVO.setFechaVigencia(prmtCriterioVO.getFechaVigencia());
+                        sprmCriterioVO.setIdioma(prmtCriterioVO.getIdioma());
+                        sprmCriterioVO.setEntiId(entiId);
 
-						prmtCriterioVO.setId(prmtVO.getId());
+                        prmtCriterioVO.setId(prmtVO.getId());
 
-						sprmCriterioVO.setPrmt(prmtCriterioVO);
+                        sprmCriterioVO.setPrmt(prmtCriterioVO);
 
-						sprmMap.put(entiId, sprm.selectList(sprmCriterioVO));
-					}
-				}
+                        sprmMap.put(entiId, sprm.selectList(sprmCriterioVO));
+                    }
+                }
 
-				final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
+                final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
 
-				if (tpprVO.isI18n()) {
-					p18nMap.putAll(prmt.selectI18nMap(prmtVO.getPrvr().getId()));
-				}
+                if (tpprVO.isI18n()) {
+                    p18nMap.putAll(prmt.selectI18nMap(prmtVO.getPrvr().getId()));
+                }
 
-				try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprVO.getId() + "_"
-						+ prmtVO.getId() + ".pdf");) {
-					prmtPdf.imprimir(prmtVO, tpprVO, entiHijasMap, sprmMap,
-							p18nMap, stream);
-				}
-			}
-		}
+                try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprVO.getId() + "_"
+                        + prmtVO.getId() + ".pdf");) {
+                    prmtPdf.imprimir(prmtVO, tpprVO, entiHijasMap, sprmMap, p18nMap, stream);
+                }
+            }
+        }
 
-		LOG.info("End Test");
-	}
+        LOG.info("End Test");
+    }
 }

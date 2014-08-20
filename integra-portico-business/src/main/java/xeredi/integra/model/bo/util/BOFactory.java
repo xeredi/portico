@@ -2,6 +2,7 @@ package xeredi.integra.model.bo.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.formula.functions.T;
 import org.mybatis.guice.XMLMyBatisModule;
 
 import xeredi.integra.model.bo.configuracion.Clave;
@@ -149,6 +150,17 @@ public final class BOFactory {
      */
     public static Injector getInjector() {
         return INJECTOR;
+    }
+
+    /**
+     * Gets the bo.
+     *
+     * @param type
+     *            the type
+     * @return the bo
+     */
+    public static T getBO(final Class<? extends T> type) {
+        return INJECTOR.getInstance(type);
     }
 
 }

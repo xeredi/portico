@@ -1,4 +1,4 @@
-package xeredi.integra.model.vo.servicio.usuario;
+package xeredi.integra.model.vo.usuario;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -30,7 +30,7 @@ public final class UsuarioVO {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public Long getId() {
@@ -39,7 +39,7 @@ public final class UsuarioVO {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
@@ -49,7 +49,7 @@ public final class UsuarioVO {
 
     /**
      * Gets the login.
-     * 
+     *
      * @return the login
      */
     public String getLogin() {
@@ -58,7 +58,7 @@ public final class UsuarioVO {
 
     /**
      * Sets the login.
-     * 
+     *
      * @param value
      *            the new login
      */
@@ -68,7 +68,7 @@ public final class UsuarioVO {
 
     /**
      * Gets the contrasenia.
-     * 
+     *
      * @return the contrasenia
      */
     public String getContrasenia() {
@@ -77,7 +77,7 @@ public final class UsuarioVO {
 
     /**
      * Sets the contrasenia.
-     * 
+     *
      * @param value
      *            the new contrasenia
      */
@@ -87,7 +87,7 @@ public final class UsuarioVO {
 
     /**
      * Gets the nombre.
-     * 
+     *
      * @return the nombre
      */
     public String getNombre() {
@@ -96,7 +96,7 @@ public final class UsuarioVO {
 
     /**
      * Sets the nombre.
-     * 
+     *
      * @param value
      *            the new nombre
      */

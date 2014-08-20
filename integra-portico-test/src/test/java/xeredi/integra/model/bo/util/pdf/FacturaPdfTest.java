@@ -1,0 +1,65 @@
+package xeredi.integra.model.bo.util.pdf;
+
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
+import org.junit.Test;
+
+import xeredi.integra.model.bo.facturacion.Factura;
+import xeredi.integra.model.bo.facturacion.FacturaImpresionVO;
+import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.util.GlobalNames;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FacturaPdfTest.
+ */
+public final class FacturaPdfTest {
+
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(FacturaPdfTest.class);
+
+    /**
+     * Test.
+     */
+    @Test
+    public void test() {
+        LOG.info("Start test");
+
+        try {
+            for (int i = 0; i < 10; i++) {
+                final Long id = 2031001L;
+
+                final Set<Long> fctrIds = new HashSet<>();
+                final FacturaPdf facturaPdf = new FacturaPdf(GlobalNames.DEFAULT_LOCALE);
+                final Factura factura = BOFactory.getInjector().getInstance(Factura.class);
+
+                fctrIds.add(id);
+
+                LOG.info("Busqueda de Facturas");
+
+                final List<FacturaImpresionVO> list = factura.selectImprimir(fctrIds);
+
+                LOG.info("Impresion");
+
+                for (final FacturaImpresionVO vo : list) {
+                    final OutputStream os = new FileOutputStream("/test.pdf");
+
+                    facturaPdf.imprimir(vo, os);
+                }
+            }
+        } catch (final Throwable th) {
+            LOG.error(th, th);
+
+            Assert.fail(th.getMessage());
+        } finally {
+            LOG.info("End test");
+        }
+    }
+}
