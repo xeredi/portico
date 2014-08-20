@@ -169,57 +169,13 @@ SELECT * FROM tbl_factura_fctr;
 SELECT * FROM tbl_factura_cargo_fctc;
 SELECT * FROM tbl_factura_srv_fcts;
 SELECT * FROM tbl_factura_imp_fcti;
-SELECT * FROM tbl_factura_lin_fctl;
-SELECT * FROM tbl_factura_det_fctd;
+SELECT * FROM tbl_factura_lin_fctl ORDER BY fctl_pk;
+SELECT * FROM tbl_factura_det_fctd ORDER BY fctd_fctl_pk, fctd_pk;
 SELECT * FROM vw_factura_fctr;
 SELECT * FROM vw_factura_cargo_fctc;
 SELECT * FROM vw_factura_srv_fcts;
 SELECT * FROM vw_factura_imp_fcti;
 SELECT * FROM vw_factura_lin_fctl;
-
-SELECT * 
-FROM 
-	portico.tbl_factura_srv_fcts
-	INNER JOIN portico.tbl_aspecto_aspc ON
-		aspc_pk = fcts_aspc_pk
-;
-
-	SELECT *
-		, (
-			SELECT SUM(fctd_importe_base)
-			FROM portico.tbl_factura_det_fctd
-			WHERE fctd_fctl_pk = fctl_pk
-		) AS fctl_importe_base
-		, (
-			SELECT SUM(fctd_importe)
-			FROM portico.tbl_factura_det_fctd
-			WHERE fctd_fctl_pk = fctl_pk
-		) AS fctl_importe
-	FROM portico.tbl_factura_lin_fctl
-		INNER JOIN portico.tbl_regla_rgla ON
-			rgla_pk = fctl_rgla_pk
-		INNER JOIN portico.tbl_regla_version_rglv ON
-			rglv_rgla_pk = fctl_rgla_pk
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_factura_srv_fcts
-				WHERE 
-					fcts_pk = fctl_fcts_pk
-					AND fcts_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, fcts_fref)
-			)
-		INNER JOIN portico.tbl_parametro_prmt ON
-			prmt_pk = fctl_impuesto_prmt_pk
-		INNER JOIN portico.tbl_parametro_version_prvr ON
-			prvr_prmt_pk = fctl_impuesto_prmt_pk
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_factura_srv_fcts
-				WHERE 
-					fcts_pk = fctl_fcts_pk
-					AND fcts_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fcts_fref)
-			)
-		LEFT JOIN portico.tbl_subservicio_ssrv ON
-			ssrv_pk = fctl_ssrv_pk
 
 
 
