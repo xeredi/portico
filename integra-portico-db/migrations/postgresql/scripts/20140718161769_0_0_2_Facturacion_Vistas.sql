@@ -262,11 +262,26 @@ GRANT SELECT ON portico.vw_factura_lin_fctl TO portico
 
 
 
+CREATE VIEW portico.vw_factura_det_fctd AS
+	select *
+	FROM 
+		portico.tbl_factura_det_fctd
+		LEFT JOIN portico.tbl_subservicio_ssrv ON
+			ssrv_pk = fctd_ssrv_pk
+\
+
+GRANT SELECT ON portico.vw_factura_det_fctd TO portico
+\
+
+
+
 
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DROP VIEW portico.vw_factura_det_fctd
+\
 DROP VIEW portico.vw_factura_lin_fctl
 \
 DROP VIEW portico.vw_factura_srv_fcts

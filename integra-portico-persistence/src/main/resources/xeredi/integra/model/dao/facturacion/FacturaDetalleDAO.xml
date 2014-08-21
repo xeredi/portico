@@ -27,7 +27,7 @@
         <result column="fctl_info5" property="info5" />
         <result column="fctl_info6" property="info6" />
 
-        <association property="ssrv" columnPrefix="fctd_" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
+        <association property="ssrv" resultMap="xeredi.integra.model.dao.maestro.ParametroDAO.ResultMap" />
     </resultMap>
 
     <insert id="insert" parameterType="FacturaDetalleVO">

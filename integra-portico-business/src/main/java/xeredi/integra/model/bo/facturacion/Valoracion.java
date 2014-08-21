@@ -45,6 +45,19 @@ public interface Valoracion {
     ValoracionVO select(final Long id);
 
     /**
+     * Select list.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
+     */
+    PaginatedList<ValoracionVO> selectList(final ValoracionCriterioVO vlrcCriterioVO, final int offset, final int limit);
+
+    /**
      * Select imprimir.
      *
      * @param ids

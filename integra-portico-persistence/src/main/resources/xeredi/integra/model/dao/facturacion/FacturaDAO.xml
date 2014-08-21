@@ -41,11 +41,38 @@
     ]]>
     </insert>
 
-    <select id="select" resultMap="ResultMap" parameterType="Long">
+    <sql id="SelectPrefix">
     <![CDATA[
         SELECT *
         FROM vw_factura_fctr
-        WHERE fctr_pk = #{value}
     ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                fctr_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND fctr_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" resultMap="ResultMap" parameterType="Long">
+        <include refid="SelectPrefix" />
+        WHERE fctr_pk = #{value}
+    </select>
+
+    <select id="count" resultType="Integer" parameterType="FacturaCriterioVO">
+        SELECT COUNT(1) FROM vw_factura_fctr
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
     </select>
 </mapper>

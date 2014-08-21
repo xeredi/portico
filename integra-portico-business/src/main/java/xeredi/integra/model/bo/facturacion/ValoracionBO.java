@@ -119,6 +119,25 @@ public class ValoracionBO implements Valoracion {
      * {@inheritDoc}
      */
     @Override
+    public PaginatedList<ValoracionVO> selectList(ValoracionCriterioVO vlrcCriterioVO, int offset, int limit) {
+        Preconditions.checkNotNull(vlrcCriterioVO);
+        Preconditions.checkArgument(offset >= 0);
+        Preconditions.checkArgument(limit > 0);
+
+        final int count = vlrcDAO.count(vlrcCriterioVO);
+        final List<ValoracionVO> vlrcList = new ArrayList<>();
+
+        if (count >= offset) {
+            vlrcList.addAll(vlrcDAO.selectList(vlrcCriterioVO, new RowBounds(offset, limit)));
+        }
+
+        return new PaginatedList<ValoracionVO>(vlrcList, offset, limit, count);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<ValoracionImpresionVO> selectImprimir(Set<Long> ids) {
         Preconditions.checkNotNull(ids);
         Preconditions.checkArgument(!ids.isEmpty());

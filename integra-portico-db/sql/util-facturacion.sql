@@ -176,6 +176,7 @@ SELECT * FROM vw_factura_cargo_fctc;
 SELECT * FROM vw_factura_srv_fcts;
 SELECT * FROM vw_factura_imp_fcti;
 SELECT * FROM vw_factura_lin_fctl;
+SELECT * FROM vw_factura_det_fctd;
 
 
 
@@ -194,18 +195,6 @@ DELETE FROM tbl_factura_srv_fcts;
 DELETE FROM tbl_factura_cargo_fctc;
 DELETE FROM tbl_factura_fctr;
 
-
-
-
-SELECT *
-FROM 
-	tbl_factura_srv_fcts
-	INNER JOIN tbl_factura_lin_fctl ON
-		fctl_fcts_pk = fcts_pk
-	INNER JOIN tbl_factura_det_fctd ON
-		fctd_fctl_pk = fctl_pk
-WHERE fcts_fctr_pk = 1
-;
 
 
 -- Facturar

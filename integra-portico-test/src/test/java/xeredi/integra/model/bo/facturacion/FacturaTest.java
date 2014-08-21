@@ -10,7 +10,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
 import xeredi.integra.model.vo.facturacion.FacturaCriterioVO;
+import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
+import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
+import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
 import xeredi.integra.model.vo.facturacion.FacturaVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -39,16 +43,28 @@ public final class FacturaTest {
                 {
                     LOG.info("Busqueda de facturas una a una");
                     for (final FacturaVO fctr : fctrList.getList()) {
+                        LOG.info("Busqueda de detalle de factura");
                         Assert.assertNotNull(factura.select(fctr.getId()));
 
                         LOG.info("Busqueda de cargos de factura");
-                        Assert.assertTrue(!factura.selectFctgList(fctr.getId()).isEmpty());
+                        final List<FacturaCargoVO> fctgList = factura.selectFctgList(fctr.getId());
+
+                        Assert.assertTrue(!fctgList.isEmpty());
 
                         LOG.info("Busqueda de servicios de factura");
-                        Assert.assertTrue(!factura.selectFctsList(fctr.getId()).isEmpty());
+                        final List<FacturaServicioVO> fctsList = factura.selectFctsList(fctr.getId());
+
+                        Assert.assertTrue(!fctsList.isEmpty());
 
                         LOG.info("Busqueda de impuestos de factura");
-                        Assert.assertTrue(!factura.selectFctiList(fctr.getId()).isEmpty());
+                        final List<FacturaImpuestoVO> fctiList = factura.selectFctiList(fctr.getId());
+
+                        Assert.assertTrue(!fctiList.isEmpty());
+
+                        LOG.info("Busqueda de lineas de factura");
+                        final PaginatedList<FacturaLineaVO> fctlList = factura.selectFctlList(fctr.getId(), 0, 20);
+
+                        Assert.assertTrue(!fctlList.getList().isEmpty());
                     }
 
                 }
@@ -64,8 +80,6 @@ public final class FacturaTest {
                     final List<FacturaImpresionVO> fctrImprimirList = factura.selectImprimir(fctrIds);
                 }
             }
-
-            LOG.info(fctrList);
         } catch (final Throwable ex) {
             LOG.error(ex, ex);
 

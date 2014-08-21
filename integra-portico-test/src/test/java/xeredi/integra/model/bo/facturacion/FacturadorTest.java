@@ -10,6 +10,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
+import xeredi.integra.model.vo.facturacion.ValoracionVO;
+import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,26 +31,24 @@ public final class FacturadorTest {
         LOG.info("Start test");
 
         try {
+            final Long prbtId = 1644001L;
+            // final Long prbtId = 1237001L;
+            final Valoracion valoracion = BOFactory.getInjector().getInstance(Valoracion.class);
             final Facturador facturador = BOFactory.getInjector().getInstance(Facturador.class);
+
+            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+            final PaginatedList<ValoracionVO> vlrcList = valoracion.selectList(vlrcCriterioVO, 0, 20);
+
+            Assert.assertTrue(!vlrcList.getList().isEmpty());
+
             final Set<Long> vlrcIds = new HashSet<>();
 
-            vlrcIds.add(2156046L);
-            vlrcIds.add(2160960L);
-            vlrcIds.add(2170533L);
-            vlrcIds.add(2175286L);
-            vlrcIds.add(2175380L);
+            for (final ValoracionVO vlrc : vlrcList.getList()) {
+                vlrcIds.add(vlrc.getId());
+            }
 
-            facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
-                    1644001L);
-
-            // vlrcIds.add(2010376L);
-            // vlrcIds.add(2015574L);
-            // vlrcIds.add(2025147L);
-            // vlrcIds.add(2029905L);
-            // vlrcIds.add(2030387L);
-
-            // facturador.facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(),
-            // 1237001L);
+            facturador
+                    .facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(), prbtId);
         } catch (final Throwable ex) {
             LOG.error(ex, ex);
 

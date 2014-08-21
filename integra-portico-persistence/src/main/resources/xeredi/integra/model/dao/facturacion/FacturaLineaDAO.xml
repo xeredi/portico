@@ -46,6 +46,13 @@
     ]]>
     </insert>
 
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_lin_fctl
+    ]]>
+    </sql>
+
     <sql id="SelectWhere">
         <where>
             <if test="id != null">
@@ -69,12 +76,19 @@
         </where>
     </sql>
 
+    <select id="select" resultMap="ResultMap" parameterType="Long">
+        <include refid="SelectPrefix" />
+        WHERE fctl_pk = #{value}
+    </select>
+
     <select id="selectList" resultMap="ResultMap" parameterType="FacturaLineaCriterioVO">
-    <![CDATA[
-        SELECT *
-        FROM vw_factura_lin_fctl
-    ]]>
+        <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
         ORDER BY fctl_fctr_pk, fctl_pk
+    </select>
+
+    <select id="count" resultType="Integer" parameterType="FacturaLineaCriterioVO">
+        SELECT COUNT(1) FROM vw_factura_lin_fctl
+        <include refid="SelectWhere" />
     </select>
 </mapper>
