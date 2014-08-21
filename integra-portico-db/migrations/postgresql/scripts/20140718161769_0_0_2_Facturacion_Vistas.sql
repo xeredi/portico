@@ -6,16 +6,11 @@
 CREATE VIEW portico.vw_valoracion_vlrc AS
 	SELECT * 
 		, (
-			SELECT prmt_parametro
-			FROM portico.tbl_parametro_prmt
-			WHERE prmt_pk = vlrc_pagador_prmt_pk
-		) AS vlrc_pagador_prmt_parametro
-		, (
 			SELECT prvr_pk
 			FROM portico.tbl_parametro_version_prvr
 			WHERE prvr_prmt_pk = vlrc_pagador_prmt_pk
 				AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
-		) AS vlrc_pagador_prvr_pk
+		) AS prvr_pk
 		, (
 			SELECT SUM(vlri_importe)
 			FROM portico.tbl_valoracion_imp_vlri
@@ -30,6 +25,8 @@ CREATE VIEW portico.vw_valoracion_vlrc AS
 		portico.tbl_valoracion_vlrc
 		INNER JOIN portico.tbl_servicio_srvc ON
 			srvc_pk = vlrc_srvc_pk
+		INNER JOIN portico.tbl_parametro_prmt ON
+			prmt_pk = vlrc_pagador_prmt_pk
 		INNER JOIN portico.tbl_aspecto_aspc ON
 			aspc_pk = vlrc_aspc_pk
 		INNER JOIN portico.tbl_aspecto_version_aspv ON
@@ -125,7 +122,7 @@ CREATE VIEW portico.vw_factura_fctr AS
 			FROM portico.tbl_parametro_version_prvr 
 			WHERE prvr_prmt_pk = fctr_pagador_prmt_pk
 				AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
-		) AS fctr_pagador_prvr_pk
+		) AS prvr_pk
 		, (
 			SELECT SUM(fcti_importe) 
 			FROM portico.tbl_factura_imp_fcti 
@@ -138,12 +135,14 @@ CREATE VIEW portico.vw_factura_fctr AS
 		) AS fctr_impuesto
 	FROM 
 		portico.tbl_factura_fctr
-		JOIN portico.tbl_aspecto_aspc on
+		INNER JOIN portico.tbl_parametro_prmt ON
+			prmt_pk = fctr_pagador_prmt_pk
+		INNER JOIN portico.tbl_aspecto_aspc on
 			aspc_pk = fctr_aspc_pk
-		JOIN portico.tbl_aspecto_version_aspv on
+		INNER JOIN portico.tbl_aspecto_version_aspv on
 			aspv_aspc_pk = fctr_aspc_pk
 			AND fctr_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fctr_fref)
-		JOIN portico.tbl_factura_serie_fcsr on
+		INNER JOIN portico.tbl_factura_serie_fcsr on
 			fcsr_pk = fctr_fcsr_pk
 \
 

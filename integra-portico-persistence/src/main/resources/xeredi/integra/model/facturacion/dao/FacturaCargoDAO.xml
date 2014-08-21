@@ -11,6 +11,13 @@
         <association property="crgo" resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
     </resultMap>
 
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_cargo_fctc
+    ]]>
+    </sql>
+
     <sql id="SelectWhere">
         <where>
             <if test="id != null">
@@ -27,31 +34,36 @@
     <insert id="insertGenerate" parameterType="FacturaCriterioVO">
     <![CDATA[
         INSERT INTO tbl_factura_cargo_fctc (fctc_fctr_pk, fctc_crgo_pk)
-        	SELECT fctr_pk, crgo_pk
-        	FROM tbl_cargo_crgo, tbl_factura_fctr
-        	WHERE
-        		EXISTS (
-        			SELECT 1
-        			FROM tbl_regla_rgla
-        			WHERE
-        				rgla_crgo_pk = crgo_pk
-        				AND EXISTS (
-        					SELECT 1
-        					FROM tbl_factura_lin_fctl
-        					WHERE
-        						fctl_rgla_pk = rgla_pk
-        						AND fctl_fctr_pk = fctr_pk
-        				)
-        		)
-        		AND fctr_pk = #{id}
+            SELECT fctr_pk, crgo_pk
+            FROM tbl_cargo_crgo, tbl_factura_fctr
+            WHERE
+                EXISTS (
+                    SELECT 1
+                    FROM tbl_regla_rgla
+                    WHERE
+                        rgla_crgo_pk = crgo_pk
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_factura_lin_fctl
+                            WHERE
+                                fctl_rgla_pk = rgla_pk
+                                AND fctl_fctr_pk = fctr_pk
+                        )
+                )
+                AND fctr_pk = #{id}
+    ]]>
+    </insert>
+
+    <insert id="insert" parameterType="FacturaCargoVO">
+    <![CDATA[
+        INSERT INTO tbl_factura_cargo_fctc (fctc_fctr_pk, fctc_crgo_pk)
+        VALUES(#{fctrId}, #{crgo.id})
     ]]>
     </insert>
 
     <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
-    <![CDATA[
-        SELECT *
-        FROM vw_factura_cargo_fctc
-    ]]>
+        <include refid="SelectPrefix"/>
         <include refid="SelectWhere"/>
+        ORDER BY fctc_fctr_pk
     </select>
 </mapper>

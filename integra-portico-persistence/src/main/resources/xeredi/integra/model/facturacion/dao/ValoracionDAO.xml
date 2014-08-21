@@ -26,8 +26,7 @@
 
         <association property="srvc" resultMap="xeredi.integra.model.servicio.dao.ServicioDAO.ResultMap" />
         <association property="aspc" resultMap="xeredi.integra.model.facturacion.dao.AspectoDAO.ResultMap" />
-        <association property="pagador" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap"
-            columnPrefix="pagador_" />
+        <association property="pagador" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
     </resultMap>
 
     <insert id="insert" parameterType="ValoracionVO">

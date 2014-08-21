@@ -1,6 +1,8 @@
 package xeredi.integra.model.facturacion.bo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +12,13 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
+import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.facturacion.dao.FacturaCargoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaDAO;
 import xeredi.integra.model.facturacion.dao.FacturaDetalleDAO;
 import xeredi.integra.model.facturacion.dao.FacturaImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaLineaDAO;
+import xeredi.integra.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.integra.model.facturacion.dao.FacturaServicioDAO;
 import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
@@ -23,8 +27,10 @@ import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturaVO;
+import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -61,6 +67,112 @@ public class FacturaBO implements Factura {
     /** The fctd dao. */
     @Inject
     FacturaDetalleDAO fctdDAO;
+
+    /** The fcsr dao. */
+    @Inject
+    FacturaSerieDAO fcsrDAO;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(executorType = ExecutorType.BATCH)
+    public void anular(final Long fctrId, final Date fechaAnulacion, final Long fcsrId, final String observaciones) {
+        Preconditions.checkNotNull(fctrId);
+        Preconditions.checkNotNull(fechaAnulacion);
+        Preconditions.checkNotNull(fcsrId);
+
+        if (fctrDAO.existsValoracionPosterior(fctrId)) {
+            throw new Error("No se puede eliminar una factura con valoraciones posteriores");
+        }
+
+        final boolean existsFacturaPosterior = fctrDAO.existsFacturaPosterior(fctrId);
+
+        final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+        final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
+        final FacturaDetalleCriterioVO fctdCriterioVO = new FacturaDetalleCriterioVO();
+
+        fctrCriterioVO.setId(fctrId);
+        fctlCriterioVO.setFctr(fctrCriterioVO);
+        fctdCriterioVO.setFctl(fctlCriterioVO);
+
+        final FacturaVO fctr = fctrDAO.select(fctrId);
+
+        if (fctr == null) {
+            throw new Error("No se encuentra la factura a anular");
+        }
+
+        if (fcsrDAO.updateIncrementar(fcsrId) == 0) {
+            throw new Error("No se encuentra serie de anulacion");
+        }
+
+        final FacturaSerieVO fcsr = fcsrDAO.select(fcsrId);
+        final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
+        final List<FacturaCargoVO> fctgList = fctgDAO.selectList(fctrCriterioVO);
+        final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
+        final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
+        final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);
+
+        final Map<Long, Long> generatedIds = new HashMap<>();
+        final IgBO igBO = new IgBO();
+
+        generatedIds.put(fctr.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+        fctr.setId(generatedIds.get(fctr.getId()));
+        fctr.setFcsr(fcsr);
+        fctr.setNumero(fcsr.getNumeroUltimo());
+        fctr.setFalta(Calendar.getInstance().getTime());
+
+        // FIXME Donde guardo la fecha de anulacion
+
+        fctrDAO.insert(fctr);
+
+        for (final FacturaServicioVO fcts : fctsList) {
+            generatedIds.put(fcts.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            fcts.setId(generatedIds.get(fcts.getId()));
+            fcts.setFctrId(generatedIds.get(fcts.getFctrId()));
+
+            fctsDAO.insert(fcts);
+        }
+
+        for (final FacturaCargoVO fctg : fctgList) {
+            fctg.setFctrId(generatedIds.get(fctg.getFctrId()));
+
+            fctgDAO.insert(fctg);
+        }
+
+        for (final FacturaImpuestoVO fcti : fctiList) {
+            fcti.setFctrId(generatedIds.get(fcti.getFctrId()));
+            fcti.setImporteBase(-fcti.getImporteBase());
+            fcti.setImporteImpuesto(-fcti.getImporteImpuesto());
+
+            fctiDAO.insert(fcti);
+        }
+
+        for (final FacturaLineaVO fctl : fctlList) {
+            generatedIds.put(fctl.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            fctl.setId(generatedIds.get(fctl.getId()));
+            fctl.setFctrId(generatedIds.get(fctl.getFctrId()));
+
+            fctlDAO.insert(fctl);
+        }
+
+        for (final FacturaDetalleVO fctd : fctdList) {
+            generatedIds.put(fctd.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            fctd.setId(generatedIds.get(fctd.getId()));
+            fctd.setFctrId(generatedIds.get(fctd.getFctrId()));
+            fctd.setFctlId(generatedIds.get(fctd.getFctlId()));
+            fctd.setImporteBase(-fctd.getImporteBase());
+            fctd.setImporte(-fctd.getImporte());
+
+            fctdDAO.insert(fctd);
+        }
+
+        // FIXME Acabar
+    }
 
     /**
      * {@inheritDoc}
@@ -134,7 +246,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
-    public List<FacturaServicioVO> selectFctsList(Long fctrId) {
+    public List<FacturaServicioVO> selectFctsList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
         final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
@@ -148,7 +260,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
-    public List<FacturaImpuestoVO> selectFctiList(Long fctrId) {
+    public List<FacturaImpuestoVO> selectFctiList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
         final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
@@ -162,7 +274,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
-    public List<FacturaCargoVO> selectFctgList(Long fctrId) {
+    public List<FacturaCargoVO> selectFctgList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
         final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
@@ -176,7 +288,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
-    public PaginatedList<FacturaLineaVO> selectFctlList(Long fctrId, final int offset, final int limit) {
+    public PaginatedList<FacturaLineaVO> selectFctlList(final Long fctrId, final int offset, final int limit) {
         Preconditions.checkNotNull(fctrId);
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -201,7 +313,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
-    public FacturaLineaVO selectFctl(Long fctlId) {
+    public FacturaLineaVO selectFctl(final Long fctlId) {
         Preconditions.checkNotNull(fctlId);
 
         return fctlDAO.select(fctlId);
@@ -214,7 +326,7 @@ public class FacturaBO implements Factura {
      * @see FacturaDetalleDAO#selectList(FacturaDetalleCriterioVO, RowBounds)
      */
     @Override
-    public PaginatedList<FacturaDetalleVO> selectFctdList(Long fctlId, int offset, int limit) {
+    public PaginatedList<FacturaDetalleVO> selectFctdList(final Long fctlId, final int offset, final int limit) {
         Preconditions.checkNotNull(fctlId);
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -239,7 +351,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
-    public FacturaDetalleVO selectFctd(Long fctdId) {
+    public FacturaDetalleVO selectFctd(final Long fctdId) {
         Preconditions.checkNotNull(fctdId);
 
         return fctdDAO.select(fctdId);

@@ -1,5 +1,6 @@
 package xeredi.integra.model.facturacion.bo;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,20 @@ import xeredi.util.pagination.PaginatedList;
  * Funciones de Negocio de Gestión de facturas.
  */
 public interface Factura {
+
+    /**
+     * Anular.
+     *
+     * @param fctrId
+     *            the fctr id
+     * @param fechaAnulacion
+     *            the fecha anulacion
+     * @param fcsrId
+     *            the fcsr id
+     * @param observaciones
+     *            the observaciones
+     */
+    void anular(final Long fctrId, final Date fechaAnulacion, final Long fcsrId, final String observaciones);
 
     /**
      * Imprimir.

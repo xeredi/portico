@@ -70,6 +70,17 @@
                     <foreach collection="fctl.ids" item="item" open="(" close=")" separator=",">#{item}
                     </foreach>
                 </if>
+
+                <if test="fctl.fctr != null">
+                    <if test="fctl.fctr.id != null">
+                        AND fctd_fctr_pk = #{fctl.fctr.id}
+                    </if>
+                    <if test="fctl.fctr.ids != null">
+                        AND fctd_fctr_pk IN
+                        <foreach collection="fctl.fctr.ids" item="item" open="(" close=")" separator=",">#{item}
+                        </foreach>
+                    </if>
+                </if>
             </if>
         </where>
     </sql>

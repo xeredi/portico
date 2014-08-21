@@ -49,6 +49,13 @@
     ]]>
     </select>
 
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_imp_fcti
+    ]]>
+    </sql>
+
     <sql id="SelectWhere">
         <where>
             <if test="id != null">
@@ -63,11 +70,9 @@
     </sql>
 
     <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
-    <![CDATA[
-        SELECT *
-        FROM vw_factura_imp_fcti
-    ]]>
+        <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
+        ORDER BY fcti_fctr_pk
     </select>
 
     <insert id="insert" parameterType="FacturaImpuestoVO">

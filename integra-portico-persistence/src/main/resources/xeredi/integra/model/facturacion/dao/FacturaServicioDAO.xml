@@ -28,6 +28,13 @@
     ]]>
     </insert>
 
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_srv_fcts
+    ]]>
+    </sql>
+
     <sql id="SelectWhere">
         <where>
             <if test="id != null">
@@ -42,10 +49,8 @@
     </sql>
 
     <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
-    <![CDATA[
-        SELECT *
-        FROM vw_factura_srv_fcts
-    ]]>
+        <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
+        ORDER BY fcts_fctr_pk
     </select>
 </mapper>

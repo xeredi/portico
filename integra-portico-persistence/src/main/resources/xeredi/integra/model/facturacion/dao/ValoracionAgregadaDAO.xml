@@ -5,7 +5,7 @@
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionAgregadaDAO">
     <resultMap type="ValoracionAgregadaVO" id="ResultMap">
         <id column="vlrc_srvc_pk" />
-        <id column="vlrc_pagador_prmt_pk" />
+        <id column="prmt_pk" />
         <id column="vlrc_es_suj_pasivo" />
         <id column="vlrc_cod_exen" />
 
@@ -67,7 +67,7 @@
         FROM (
             SELECT
                 vlrt_srvc_pk AS vlrc_srvc_pk
-                , vlrt_pagador_prmt_pk AS pagador_prmt_pk
+                , vlrt_pagador_prmt_pk AS prmt_pk
                 , vlrt_es_suj_pasivo AS vlrc_es_suj_pasivo
                 , vlrt_cod_exen AS vlrc_cod_exen
 

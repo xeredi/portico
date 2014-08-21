@@ -49,4 +49,22 @@ public interface FacturaDAO {
      * @return the list
      */
     List<FacturaVO> selectList(final FacturaCriterioVO fctrCriterioVO, final RowBounds bounds);
+
+    /**
+     * Exists factura posterior.
+     *
+     * @param fctrId
+     *            the fctr id
+     * @return true, if successful
+     */
+    boolean existsFacturaPosterior(final Long fctrId);
+
+    /**
+     * Exists valoracion posterior.
+     *
+     * @param fctrId
+     *            the fctr id
+     * @return true, if successful
+     */
+    boolean existsValoracionPosterior(final Long fctrId);
 }

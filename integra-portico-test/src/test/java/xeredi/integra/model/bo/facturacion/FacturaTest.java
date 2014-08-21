@@ -1,5 +1,6 @@
 package xeredi.integra.model.bo.facturacion;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -47,10 +48,13 @@ public final class FacturaTest {
 
             if (!fctrList.getList().isEmpty()) {
                 {
-                    LOG.info("Busqueda de facturas una a una");
                     for (final FacturaVO fctr : fctrList.getList()) {
                         LOG.info("Busqueda de factura");
                         Assert.assertNotNull(factura.select(fctr.getId()));
+
+                        LOG.info("Anulacion de factura");
+                        factura.anular(fctr.getId(), Calendar.getInstance().getTime(), fctr.getFcsr().getId(),
+                                "Observaciones de prueba de anulacion");
 
                         LOG.info("Busqueda de cargos de factura");
                         final List<FacturaCargoVO> fctgList = factura.selectFctgList(fctr.getId());
