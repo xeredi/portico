@@ -8,9 +8,10 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 
+import xeredi.integra.model.facturacion.grammar.FormulaSqlGenerator;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
-import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
 
 // TODO: Auto-generated Javadoc

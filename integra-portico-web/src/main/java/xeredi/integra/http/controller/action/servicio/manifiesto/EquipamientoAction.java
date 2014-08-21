@@ -5,8 +5,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.servicio.EstadoInvalidoException;
-import xeredi.integra.model.bo.servicio.manifiesto.EquipamientoBO;
+import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
+import xeredi.integra.model.servicio.bo.manifiesto.EquipamientoBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
 

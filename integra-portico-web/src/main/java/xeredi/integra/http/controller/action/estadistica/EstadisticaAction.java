@@ -8,12 +8,12 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.model.bo.estadistica.Estadistica;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.estadistica.bo.Estadistica;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.integra.model.proxy.metamodelo.TipoEstadisticaProxy;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;

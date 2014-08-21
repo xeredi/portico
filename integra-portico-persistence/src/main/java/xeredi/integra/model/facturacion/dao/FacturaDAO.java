@@ -46,7 +46,7 @@ public interface FacturaDAO {
      *            the fctr criterio vo
      * @param bounds
      *            the bounds
-     * @return the list< factura v o>
+     * @return the list
      */
     List<FacturaVO> selectList(final FacturaCriterioVO fctrCriterioVO, final RowBounds bounds);
 }

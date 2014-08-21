@@ -5,9 +5,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.servicio.Subservicio;
-import xeredi.integra.model.bo.servicio.manifiesto.Bl;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.manifiesto.Bl;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.exception.InstanceNotFoundException;

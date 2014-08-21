@@ -11,9 +11,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.bo.facturacion.Factura;
-import xeredi.integra.model.bo.facturacion.FacturaImpresionVO;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.facturacion.bo.Factura;
+import xeredi.integra.model.facturacion.bo.FacturaImpresionVO;
+import xeredi.integra.model.facturacion.report.FacturaPdf;
 import xeredi.integra.model.util.GlobalNames;
 
 // TODO: Auto-generated Javadoc

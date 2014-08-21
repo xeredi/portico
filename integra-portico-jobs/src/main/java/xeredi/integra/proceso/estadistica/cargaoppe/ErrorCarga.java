@@ -1,6 +1,6 @@
 package xeredi.integra.proceso.estadistica.cargaoppe;
 
-import xeredi.integra.model.bo.estadistica.EstadisticaFileType;
+import xeredi.integra.model.estadistica.bo.EstadisticaFileType;
 
 
 // TODO: Auto-generated Javadoc

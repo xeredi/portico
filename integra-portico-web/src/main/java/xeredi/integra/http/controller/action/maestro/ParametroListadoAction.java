@@ -9,14 +9,14 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
-import xeredi.integra.model.bo.maestro.Parametro;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
+import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;

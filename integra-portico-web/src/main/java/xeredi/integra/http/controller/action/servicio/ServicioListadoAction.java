@@ -12,11 +12,11 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
-import xeredi.integra.model.bo.maestro.Parametro;
-import xeredi.integra.model.bo.servicio.Servicio;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
+import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.Entidad;

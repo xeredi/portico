@@ -6,10 +6,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.metamodelo.Entidad;
-import xeredi.integra.model.bo.metamodelo.TipoParametro;
-import xeredi.integra.model.bo.metamodelo.TipoSubparametro;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.TipoParametro;
+import xeredi.integra.model.metamodelo.bo.TipoSubparametro;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;

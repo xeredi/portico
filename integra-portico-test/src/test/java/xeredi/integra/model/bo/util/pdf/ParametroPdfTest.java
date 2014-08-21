@@ -16,18 +16,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.bo.maestro.Parametro;
-import xeredi.integra.model.bo.maestro.Subparametro;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.Subparametro;
+import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
-import xeredi.integra.model.proxy.metamodelo.TipoSubparametroProxy;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -44,7 +44,7 @@ public interface FacturaDetalleDAO {
      *
      * @param fctdCriterioVO
      *            the fctd criterio vo
-     * @return the list< factura detalle v o>
+     * @return the list
      */
     List<FacturaDetalleVO> selectList(final FacturaDetalleCriterioVO fctdCriterioVO);
 
@@ -55,7 +55,7 @@ public interface FacturaDetalleDAO {
      *            the fctd criterio vo
      * @param bounds
      *            the bounds
-     * @return the list< factura detalle v o>
+     * @return the list
      */
     List<FacturaDetalleVO> selectList(final FacturaDetalleCriterioVO fctdCriterioVO, final RowBounds bounds);
 }

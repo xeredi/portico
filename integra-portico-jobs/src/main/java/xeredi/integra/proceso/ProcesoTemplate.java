@@ -13,13 +13,13 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.bo.maestro.Parametro;
-import xeredi.integra.model.bo.proceso.OperacionNoPermitidaException;
-import xeredi.integra.model.bo.proceso.Proceso;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
+import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.proceso.bo.OperacionNoPermitidaException;
+import xeredi.integra.model.proceso.bo.Proceso;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;

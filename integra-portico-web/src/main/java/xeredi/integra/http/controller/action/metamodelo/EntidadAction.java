@@ -4,8 +4,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.metamodelo.Entidad;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 
 // TODO: Auto-generated Javadoc

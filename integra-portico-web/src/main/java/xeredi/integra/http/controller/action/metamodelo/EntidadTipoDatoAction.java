@@ -6,10 +6,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.metamodelo.EntidadGrupoDato;
-import xeredi.integra.model.bo.metamodelo.EntidadTipoDato;
-import xeredi.integra.model.bo.metamodelo.TipoDato;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.metamodelo.bo.EntidadGrupoDato;
+import xeredi.integra.model.metamodelo.bo.EntidadTipoDato;
+import xeredi.integra.model.metamodelo.bo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;

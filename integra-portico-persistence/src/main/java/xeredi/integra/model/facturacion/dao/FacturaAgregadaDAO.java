@@ -16,7 +16,7 @@ public interface FacturaAgregadaDAO {
      *
      * @param contextoVO
      *            the contexto vo
-     * @return the list< factura agregada v o>
+     * @return the list
      */
     List<FacturaAgregadaVO> selectList(final FacturadorContextoVO contextoVO);
 }

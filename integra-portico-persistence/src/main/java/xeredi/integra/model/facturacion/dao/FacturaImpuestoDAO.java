@@ -33,7 +33,7 @@ public interface FacturaImpuestoDAO {
      *
      * @param fctrCriterioVO
      *            the fctr criterio vo
-     * @return the list< factura impuesto v o>
+     * @return the list
      */
     List<FacturaImpuestoVO> selectList(final FacturaCriterioVO fctrCriterioVO);
 }

@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.util.GlobalNames;
 
 // TODO: Auto-generated Javadoc

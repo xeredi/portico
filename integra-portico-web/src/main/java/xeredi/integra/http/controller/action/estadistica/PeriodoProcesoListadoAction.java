@@ -11,11 +11,11 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.estadistica.PeriodoProceso;
-import xeredi.integra.model.bo.maestro.Parametro;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
+import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;

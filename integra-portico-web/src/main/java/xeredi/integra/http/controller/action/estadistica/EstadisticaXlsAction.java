@@ -10,12 +10,12 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.estadistica.Estadistica;
-import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.bo.util.ExcelUtil;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.report.ExcelUtil;
+import xeredi.integra.model.estadistica.bo.Estadistica;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.integra.model.proxy.metamodelo.TipoEstadisticaProxy;
 
 import com.google.common.base.Preconditions;
 

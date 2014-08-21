@@ -9,7 +9,11 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.facturacion.bo.Facturador;
+import xeredi.integra.model.facturacion.bo.FacturadorBO;
+import xeredi.integra.model.facturacion.bo.Valoracion;
+import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.util.pagination.PaginatedList;
@@ -31,10 +35,10 @@ public final class FacturadorTest {
         LOG.info("Start test");
 
         try {
-            final Long prbtId = 1644001L;
-            // final Long prbtId = 1237001L;
-            final Valoracion valoracion = BOFactory.getInjector().getInstance(Valoracion.class);
-            final Facturador facturador = BOFactory.getInjector().getInstance(Facturador.class);
+            // final Long prbtId = 1644001L;
+            final Long prbtId = 1237001L;
+            final Valoracion valoracion = BOFactory.getInjector().getInstance(ValoracionBO.class);
+            final Facturador facturador = BOFactory.getInjector().getInstance(FacturadorBO.class);
 
             final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
             final PaginatedList<ValoracionVO> vlrcList = valoracion.selectList(vlrcCriterioVO, 0, 20);

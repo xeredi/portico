@@ -7,10 +7,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.estadistica.PeriodoProceso;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.proxy.metamodelo.TipoEstadisticaProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.struts.PropertyValidator;

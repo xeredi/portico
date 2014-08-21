@@ -10,11 +10,11 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.servicio.Servicio;
-import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.bo.util.ExcelUtil;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.report.ExcelUtil;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
+import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 
 import com.google.common.base.Preconditions;

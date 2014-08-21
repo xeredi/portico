@@ -9,7 +9,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.facturacion.bo.Factura;
+import xeredi.integra.model.facturacion.bo.FacturaBO;
+import xeredi.integra.model.facturacion.bo.FacturaImpresionVO;
 import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
@@ -38,6 +41,8 @@ public final class FacturaTest {
         try {
             final Factura factura = BOFactory.getInjector().getInstance(FacturaBO.class);
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+
+            LOG.info("Busqueda de facturas");
             final PaginatedList<FacturaVO> fctrList = factura.selectList(fctrCriterioVO, 0, 20);
 
             if (!fctrList.getList().isEmpty()) {
@@ -71,14 +76,13 @@ public final class FacturaTest {
                             LOG.info("Busqueda de linea de factura");
                             Assert.assertNotNull(factura.selectFctl(fctl.getId()));
 
-                            LOG.info("Busqueda de detalles de factura");
+                            LOG.info("Busqueda de detalles de factura de una linea, y detalles individuales");
                             final PaginatedList<FacturaDetalleVO> fctdList = factura
                                     .selectFctdList(fctl.getId(), 0, 20);
 
                             Assert.assertTrue(!fctdList.getList().isEmpty());
 
                             for (final FacturaDetalleVO fctd : fctdList.getList()) {
-                                LOG.info("Busqueda de detalle de factura");
                                 Assert.assertNotNull(factura.selectFctd(fctd.getId()));
                             }
                         }

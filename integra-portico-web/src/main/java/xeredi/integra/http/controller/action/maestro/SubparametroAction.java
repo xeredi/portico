@@ -13,13 +13,13 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
-import xeredi.integra.model.bo.maestro.Parametro;
-import xeredi.integra.model.bo.maestro.Subparametro;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.integra.model.proxy.metamodelo.TipoSubparametroProxy;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;

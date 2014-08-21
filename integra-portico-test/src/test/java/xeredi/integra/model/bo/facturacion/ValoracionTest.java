@@ -9,8 +9,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.bo.util.pdf.ValoracionPdf;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.facturacion.bo.Valoracion;
+import xeredi.integra.model.facturacion.bo.ValoracionImpresionVO;
+import xeredi.integra.model.facturacion.report.ValoracionPdf;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
@@ -162,7 +164,7 @@ public final class ValoracionTest {
                     LOG.info("vlrg: " + vlrg);
                 }
             }
-        } catch (Throwable ex) {
+        } catch (final Throwable ex) {
             LOG.error(ex, ex);
 
             Assert.fail(ex.getMessage());

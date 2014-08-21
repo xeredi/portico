@@ -9,7 +9,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.util.Entidad;

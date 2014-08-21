@@ -8,9 +8,9 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginableAction;
-import xeredi.integra.model.bo.configuracion.ClaveIdioma;
-import xeredi.integra.model.bo.configuracion.Idioma;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.configuracion.bo.ClaveIdioma;
+import xeredi.integra.model.configuracion.bo.Idioma;
 import xeredi.integra.model.configuracion.vo.ClaveIdiomaCriterioVO;
 import xeredi.integra.model.configuracion.vo.ClaveIdiomaVO;
 import xeredi.integra.model.configuracion.vo.IdiomaVO;

@@ -16,19 +16,19 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.bo.maestro.Parametro;
-import xeredi.integra.model.bo.maestro.Subparametro;
-import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.bo.util.pdf.ParametroPdf;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.Subparametro;
+import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
-import xeredi.integra.model.proxy.metamodelo.TipoSubparametroProxy;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;

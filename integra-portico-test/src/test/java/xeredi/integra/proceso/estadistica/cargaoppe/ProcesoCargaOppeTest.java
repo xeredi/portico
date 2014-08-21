@@ -4,8 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.bo.proceso.Proceso;
-import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.proceso.bo.Proceso;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 // TODO: Auto-generated Javadoc

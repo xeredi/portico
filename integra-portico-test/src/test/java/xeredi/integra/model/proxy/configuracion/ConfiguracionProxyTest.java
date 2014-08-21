@@ -5,6 +5,9 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import xeredi.integra.model.configuracion.proxy.ConfiguracionException;
+import xeredi.integra.model.configuracion.proxy.ConfiguracionProxy;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ConfiguracionProxyTest.
