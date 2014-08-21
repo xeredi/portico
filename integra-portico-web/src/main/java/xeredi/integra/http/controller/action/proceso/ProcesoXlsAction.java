@@ -13,7 +13,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.proceso.Proceso;
 import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.bo.util.ExcelUtil;
-import xeredi.integra.model.vo.proceso.ProcesoCriterioVO;
+import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**

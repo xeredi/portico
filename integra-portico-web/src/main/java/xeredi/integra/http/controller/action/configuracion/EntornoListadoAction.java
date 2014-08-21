@@ -11,7 +11,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.configuracion.Entorno;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.configuracion.EntornoVO;
+import xeredi.integra.model.configuracion.vo.EntornoVO;
 
 // TODO: Auto-generated Javadoc
 /**

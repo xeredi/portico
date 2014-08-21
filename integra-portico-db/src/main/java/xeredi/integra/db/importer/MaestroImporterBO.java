@@ -31,19 +31,19 @@ import org.xml.sax.helpers.DefaultHandler;
 import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.maestro.Subparametro;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.maestro.vo.ParametroI18nVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.proxy.metamodelo.EntidadProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubparametroProxy;
 import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.vo.comun.ItemDatoVO;
-import xeredi.integra.model.vo.maestro.ParametroI18nVO;
-import xeredi.integra.model.vo.maestro.ParametroVO;
-import xeredi.integra.model.vo.maestro.SubparametroVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
-import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
-import xeredi.integra.model.vo.metamodelo.TipoSubparametroVO;
 import xeredi.util.exception.DuplicateInstanceException;
 
 // TODO: Auto-generated Javadoc

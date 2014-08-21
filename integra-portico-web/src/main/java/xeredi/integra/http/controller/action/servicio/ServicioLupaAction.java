@@ -10,7 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.servicio.Servicio;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.servicio.ServicioLupaCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

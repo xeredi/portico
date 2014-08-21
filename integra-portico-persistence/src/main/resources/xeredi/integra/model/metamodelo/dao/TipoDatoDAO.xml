@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.metamodelo.dao.TipoDatoDAO">
+    <resultMap type="TipoDatoVO" id="ResultMap">
+        <id column="tpdt_pk" property="id" />
+        <result column="tpdt_codigo" property="codigo" />
+        <result column="tpdt_nombre" property="nombre" />
+        <result column="tpdt_tipo_elemento" property="tipoElemento" />
+        <result column="tpdt_tipo_html" property="tpht" />
+
+        <association property="enti" javaType="EntidadVO">
+            <id column="tpdt_enti_pk" property="id" />
+            <result column="enti_nombre" property="nombre" />
+            <result column="enti_codigo" property="codigo" />
+            <result column="enti_tipo" property="tipo" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        tpdt.tpdt_pk, tpdt.tpdt_codigo, tpdt.tpdt_nombre, tpdt.tpdt_tipo_elemento, tpdt.tpdt_tipo_html
+        , tpdt.tpdt_enti_pk, enti.enti_codigo, enti.enti_nombre, enti.enti_tipo
+    FROM
+        tbl_tipo_dato_tpdt tpdt
+        LEFT JOIN tbl_entidad_enti enti ON
+            tpdt.tpdt_enti_pk = enti.enti_pk
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="ids != null">
+                AND tpdt.tpdt_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
+                </foreach>
+            </if>
+            <if test="codigo != null and !codigo.empty">
+                AND tpdt.tpdt_codigo LIKE #{codigo}
+            </if>
+            <if test="nombre != null and !nombre.empty">
+                AND tpdt.tpdt_nombre LIKE #{nombre}
+            </if>
+            <if test="tipoElemento != null">
+                AND tpdt.tpdt_tipo_elemento = #{tipoElemento}
+            </if>
+            <if test="tpht != null">
+                AND tpdt.tpdt_tipo_html = #{tpht}
+            </if>
+            <if test="entiId != null">
+                AND tpdt.tpdt_enti_pk = #{entiId}
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" parameterType="Long" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <![CDATA[
+        WHERE tpdt.tpdt_pk = #{id}
+        ]]>
+    </select>
+
+    <select id="selectList" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+
+        ORDER BY tpdt.tpdt_nombre
+    </select>
+
+    <select id="selectMap" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectLabelValues" parameterType="TipoDatoCriterioVO" resultType="LabelValueVO">
+        <![CDATA[
+        SELECT
+            tpdt.tpdt_pk AS value
+            , tpdt.tpdt_nombre AS label
+        FROM
+            tbl_tipo_dato_tpdt tpdt
+        ]]>
+        <include refid="SelectWhere" />
+        ORDER BY tpdt.tpdt_nombre
+    </select>
+
+    <select id="count" parameterType="TipoDatoCriterioVO" resultType="Integer">
+        <![CDATA[
+        SELECT
+            COUNT(1)
+        FROM
+            tbl_tipo_dato_tpdt tpdt
+        ]]>
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="nextSequence" resultType="Long">
+        SELECT COALESCE(MAX(tpdt_pk), 40000) + 1 as tpdt_pk
+        FROM tbl_tipo_dato_tpdt
+    </select>
+
+    <select id="exists" parameterType="TipoDatoVO" resultType="boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_tipo_dato_tpdt tpdt
+        WHERE tpdt.tpdt_pk = #{id}
+            OR tpdt.tpdt_nombre = #{nombre}
+        ]]>
+    </select>
+
+    <insert id="insert" parameterType="TipoDatoVO">
+        <![CDATA[
+        INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_codigo, tpdt_nombre, tpdt_tipo_elemento, tpdt_tipo_html, tpdt_enti_pk)
+        VALUES (#{id}, #{codigo}, #{nombre}, #{tipoElemento}, #{tpht}, #{enti.id})
+        ]]>
+    </insert>
+
+    <update id="update" parameterType="TipoDatoVO">
+        <![CDATA[
+        UPDATE tbl_tipo_dato_tpdt SET
+            tpdt_codigo = #{codigo}
+            , tpdt_nombre = #{nombre}
+            , tpdt_tipo_elemento = #{tipoElemento}
+            , tpdt_tipo_html = #{tpht}
+            , tpdt_enti_pk = #{enti.id}
+        WHERE tpdt_pk = #{id}
+        ]]>
+    </update>
+
+    <update id="delete" parameterType="Long">
+        <![CDATA[
+        DELETE FROM tbl_tipo_dato_tpdt
+        WHERE tpdt_pk = #{value}
+        ]]>
+    </update>
+</mapper>

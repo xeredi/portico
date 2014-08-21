@@ -11,11 +11,11 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.metamodelo.Entidad;
 import xeredi.integra.model.bo.metamodelo.TipoDato;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoElemento;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.vo.metamodelo.TipoDatoCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.TipoElemento;
-import xeredi.integra.model.vo.metamodelo.TipoHtml;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 

@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.model.vo.estadistica.EstadisticaVO;
-import xeredi.integra.model.vo.estadistica.PeriodoProcesoCriterioVO;
-import xeredi.integra.model.vo.estadistica.PeriodoProcesoVO;
-import xeredi.integra.model.vo.maestro.ParametroVO;
+import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
+import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;

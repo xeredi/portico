@@ -8,8 +8,8 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.servicio.Subservicio;
 import xeredi.integra.model.bo.servicio.manifiesto.Bl;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
-import xeredi.integra.model.vo.servicio.manifiesto.ResumenTotalesVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;

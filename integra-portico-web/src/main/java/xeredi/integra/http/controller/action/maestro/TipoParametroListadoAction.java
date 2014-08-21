@@ -9,8 +9,8 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
-import xeredi.integra.model.vo.metamodelo.TipoParametroCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc

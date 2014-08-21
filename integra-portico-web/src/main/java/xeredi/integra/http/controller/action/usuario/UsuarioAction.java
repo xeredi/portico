@@ -6,7 +6,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.vo.servicio.usuario.UsuarioVO;
+import xeredi.integra.model.seguridad.vo.UsuarioVO;
 
 import com.google.common.base.Preconditions;
 
@@ -35,7 +35,7 @@ public final class UsuarioAction extends BaseAction {
 
     /**
      * Acceso.
-     * 
+     *
      * @return the string
      */
     @Action(value = "usro-acceso", results = { @Result(name = "success", type = "json") })
@@ -48,7 +48,7 @@ public final class UsuarioAction extends BaseAction {
     // get / set
     /**
      * Gets the usro.
-     * 
+     *
      * @return the usro
      */
     public UsuarioVO getUsro() {
@@ -57,7 +57,7 @@ public final class UsuarioAction extends BaseAction {
 
     /**
      * Sets the usro.
-     * 
+     *
      * @param value
      *            the new usro
      */

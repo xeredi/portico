@@ -7,9 +7,9 @@ import java.util.ResourceBundle;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
+import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.vo.comun.ItemDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
 
 import com.google.common.base.Preconditions;
 

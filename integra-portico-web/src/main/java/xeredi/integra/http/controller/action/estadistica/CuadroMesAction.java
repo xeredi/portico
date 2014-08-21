@@ -10,8 +10,8 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.estadistica.CuadroMes;
 import xeredi.integra.model.bo.estadistica.PeriodoProceso;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.estadistica.CuadroMesVO;
-import xeredi.integra.model.vo.estadistica.PeriodoProcesoVO;
+import xeredi.integra.model.estadistica.vo.CuadroMesVO;
+import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc

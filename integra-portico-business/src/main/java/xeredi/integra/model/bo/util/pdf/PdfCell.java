@@ -1,6 +1,6 @@
 package xeredi.integra.model.bo.util.pdf;
 
-import xeredi.integra.model.vo.metamodelo.TipoElemento;
+import xeredi.integra.model.metamodelo.vo.TipoElemento;
 
 // TODO: Auto-generated Javadoc
 /**

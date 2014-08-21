@@ -1,6 +1,6 @@
 package xeredi.integra.model.bo.metamodelo;
 
-import xeredi.integra.model.vo.metamodelo.EntidadEntidadVO;
+import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 

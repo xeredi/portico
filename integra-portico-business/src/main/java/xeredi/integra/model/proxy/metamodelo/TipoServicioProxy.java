@@ -10,8 +10,8 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.bo.metamodelo.TipoServicio;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.metamodelo.TipoServicioCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

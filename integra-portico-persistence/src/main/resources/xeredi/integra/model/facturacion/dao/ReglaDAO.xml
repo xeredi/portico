@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.facturacion.dao.ReglaDAO">
+    <resultMap type="ReglaVO" id="ResultMap">
+        <id column="rglv_pk" />
+        <result column="rgla_pk" property="id" />
+        <result column="rgla_codigo" property="codigo" />
+        <result column="rgla_tipo" property="tipo" />
+
+        <association property="rglv" javaType="ReglaVersionVO">
+            <result column="rglv_pk" property="id" />
+            <result column="rglv_fini" property="finicio" />
+            <result column="rglv_ffin" property="ffin" />
+            <result column="rglv_orden" property="orden" />
+            <result column="rglv_importe_base" property="importeBase" />
+            <result column="rglv_condicion" property="condicion" />
+            <result column="rglv_formula" property="formula" />
+            <result column="rglv_path_impuesto" property="pathImpuesto" />
+            <result column="rglv_path_pagador" property="pathPagador" />
+            <result column="rglv_path_es_suj_pasivo" property="pathEsSujPasivo" />
+            <result column="rglv_path_cod_exen" property="pathCodExen" />
+
+            <result column="rglv_path_info1" property="pathInfo1" />
+            <result column="rglv_path_info2" property="pathInfo2" />
+            <result column="rglv_path_info3" property="pathInfo3" />
+            <result column="rglv_path_info4" property="pathInfo4" />
+            <result column="rglv_path_info5" property="pathInfo5" />
+            <result column="rglv_path_info6" property="pathInfo6" />
+
+            <result column="rglv_etiq_info1" property="etiqInfo1" />
+            <result column="rglv_etiq_info2" property="etiqInfo2" />
+            <result column="rglv_etiq_info3" property="etiqInfo3" />
+            <result column="rglv_etiq_info4" property="etiqInfo4" />
+            <result column="rglv_etiq_info5" property="etiqInfo5" />
+            <result column="rglv_etiq_info6" property="etiqInfo6" />
+
+            <result column="rglv_path_cuant1" property="pathCuant1" />
+            <result column="rglv_path_cuant2" property="pathCuant2" />
+            <result column="rglv_path_cuant3" property="pathCuant3" />
+            <result column="rglv_path_cuant4" property="pathCuant4" />
+            <result column="rglv_path_cuant5" property="pathCuant5" />
+            <result column="rglv_path_cuant6" property="pathCuant6" />
+
+            <result column="rglv_etiq_cuant1" property="etiqCuant1" />
+            <result column="rglv_etiq_cuant2" property="etiqCuant2" />
+            <result column="rglv_etiq_cuant3" property="etiqCuant3" />
+            <result column="rglv_etiq_cuant4" property="etiqCuant4" />
+            <result column="rglv_etiq_cuant5" property="etiqCuant5" />
+            <result column="rglv_etiq_cuant6" property="etiqCuant6" />
+        </association>
+
+        <association property="crgo" javaType="CargoVO">
+            <result column="rgla_crgo_pk" property="id" />
+        </association>
+
+        <association property="enti" javaType="EntidadVO">
+            <result column="rgla_enti_pk" property="id" />
+            <result column="enti_tipo" property="tipo" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT rgla_pk, rgla_codigo, rgla_crgo_pk, rgla_enti_pk, rgla_tipo, rglv_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+            , rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+        	, rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
+            , rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+            , rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
+            , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
+            , enti_tipo
+        FROM portico.tbl_regla_rgla
+            JOIN portico.tbl_regla_version_rglv ON
+                rglv_rgla_pk = rgla_pk
+            JOIN portico.tbl_entidad_enti ON
+                enti_pk = rgla_enti_pk
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="fechaVigencia != null">
+                AND #{fechaVigencia} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fechaVigencia})
+            </if>
+
+            <if test="id != null">
+                AND rgla_pk = #{id}
+            </if>
+
+            <if test="ids != null">
+                AND rgla_pk IN
+                <foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
+            </if>
+
+            <if test="crgoId != null">
+                AND rgla_crgo_pk = #{crgoId}
+            </if>
+
+            <if test="tipo != null">
+                AND rgla_tipo = #{tipo}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY rgla_crgo_pk, rgla_tipo, rglv_orden
+    </select>
+</mapper>

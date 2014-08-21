@@ -3,8 +3,8 @@ package xeredi.integra.model.bo.metamodelo;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.model.vo.metamodelo.TipoDatoCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.pagination.PaginatedList;

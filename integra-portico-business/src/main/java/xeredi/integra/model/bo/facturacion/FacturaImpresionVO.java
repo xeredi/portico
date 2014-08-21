@@ -7,11 +7,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.common.base.Preconditions;
 
-import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
-import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
-import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
-import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
-import xeredi.integra.model.vo.facturacion.FacturaVO;
+import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
+import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
+import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
+import xeredi.integra.model.facturacion.vo.FacturaVO;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -13,12 +13,12 @@ import xeredi.integra.model.bo.servicio.Servicio;
 import xeredi.integra.model.bo.servicio.Subservicio;
 import xeredi.integra.model.bo.servicio.escala.AtraqueBO;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;

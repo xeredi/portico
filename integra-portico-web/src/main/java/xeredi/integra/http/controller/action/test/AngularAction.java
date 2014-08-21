@@ -9,11 +9,11 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.proxy.metamodelo.TipoParametroProxy;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.vo.maestro.ParametroCriterioVO;
-import xeredi.integra.model.vo.maestro.ParametroVO;
-import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc

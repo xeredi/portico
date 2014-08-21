@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import xeredi.integra.model.vo.maestro.ParametroCriterioVO;
-import xeredi.integra.model.vo.maestro.ParametroI18nVO;
-import xeredi.integra.model.vo.maestro.ParametroLupaCriterioVO;
-import xeredi.integra.model.vo.maestro.ParametroVO;
-import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroI18nVO;
+import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;

@@ -10,8 +10,8 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.bo.metamodelo.Entidad;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
-import xeredi.integra.model.vo.metamodelo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

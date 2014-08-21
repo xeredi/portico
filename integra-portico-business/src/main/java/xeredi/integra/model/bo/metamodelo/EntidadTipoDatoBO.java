@@ -2,11 +2,11 @@ package xeredi.integra.model.bo.metamodelo;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.metamodelo.EntidadDAO;
-import xeredi.integra.model.dao.metamodelo.EntidadTipoDatoDAO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoCriterioVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
+import xeredi.integra.model.metamodelo.dao.EntidadDAO;
+import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.util.exception.DuplicateInstanceException;
 
 import com.google.common.base.Preconditions;

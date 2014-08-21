@@ -8,8 +8,8 @@ import java.util.Map;
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.estadistica.CuadroMesDAO;
-import xeredi.integra.model.vo.estadistica.CuadroMesVO;
+import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
+import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;

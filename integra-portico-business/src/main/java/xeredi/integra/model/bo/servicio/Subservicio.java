@@ -3,8 +3,8 @@ package xeredi.integra.model.bo.servicio;
 import java.util.List;
 import java.util.Set;
 
-import xeredi.integra.model.vo.servicio.SubservicioCriterioVO;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;

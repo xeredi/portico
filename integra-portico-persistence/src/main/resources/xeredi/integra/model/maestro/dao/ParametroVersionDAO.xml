@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.maestro.dao.ParametroVersionDAO">
+    <insert id="insert" parameterType="ParametroVO">
+        <![CDATA[
+        INSERT INTO tbl_parametro_version_prvr (prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin)
+        VALUES (#{prvr.id}, #{id}, #{prvr.finicio}, #{prvr.ffin, jdbcType=TIMESTAMP})
+        ]]>
+    </insert>
+
+    <!-- Solo se pueden marcar como borrados parametros con temporalidad no explicita -->
+    <update id="updateDelete" parameterType="ParametroVO">
+        <![CDATA[
+        UPDATE tbl_parametro_version_prvr SET
+            prvr_ffin = #{prvr.ffin}
+        WHERE prvr_pk = #{prvr.id}
+            AND prvr_ffin IS NULL
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_parametro_prmt
+                WHERE prmt_pk = prvr_prmt_pk
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_tipo_parametro_tppr
+                        WHERE tppr_pk = prmt_tppr_pk
+                            AND tppr_es_tmp_exp = 0
+                    )
+            )
+        ]]>
+    </update>
+
+    <!-- TODO Acabar -->
+    <select id="existsSolape" parameterType="ParametroVO" resultType="boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_parametro_version_prvr
+        WHERE prvr_prmt_pk = #{id}
+        ]]>
+    </select>
+</mapper>

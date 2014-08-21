@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import xeredi.integra.model.bo.proceso.Proceso;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.proceso.ProcesoVO;
+import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 // TODO: Auto-generated Javadoc
 /**

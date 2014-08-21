@@ -2,10 +2,10 @@ package xeredi.integra.model.bo.proceso;
 
 import java.util.List;
 
-import xeredi.integra.model.vo.proceso.ProcesoCriterioVO;
-import xeredi.integra.model.vo.proceso.ProcesoModulo;
-import xeredi.integra.model.vo.proceso.ProcesoTipo;
-import xeredi.integra.model.vo.proceso.ProcesoVO;
+import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
+import xeredi.integra.model.proceso.vo.ProcesoModulo;
+import xeredi.integra.model.proceso.vo.ProcesoTipo;
+import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 

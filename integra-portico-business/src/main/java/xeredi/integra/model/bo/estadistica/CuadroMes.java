@@ -3,7 +3,7 @@ package xeredi.integra.model.bo.estadistica;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.model.vo.estadistica.CuadroMesVO;
+import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -2,10 +2,10 @@ package xeredi.integra.model.bo.servicio;
 
 import java.util.List;
 
-import xeredi.integra.model.vo.servicio.ServicioCriterioVO;
-import xeredi.integra.model.vo.servicio.ServicioLupaCriterioVO;
-import xeredi.integra.model.vo.servicio.ServicioVO;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
+import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;

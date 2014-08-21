@@ -12,12 +12,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.integra.model.vo.comun.ItemVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
-import xeredi.integra.model.vo.metamodelo.TipoHtml;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc

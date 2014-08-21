@@ -7,10 +7,10 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.metamodelo.TipoServicio;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.vo.metamodelo.TipoEntidad;
-import xeredi.integra.model.vo.metamodelo.TipoServicioCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc

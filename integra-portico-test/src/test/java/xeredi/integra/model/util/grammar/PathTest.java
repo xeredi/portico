@@ -9,9 +9,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.vo.facturacion.ReglaVO;
 
 // TODO: Auto-generated Javadoc
 /**

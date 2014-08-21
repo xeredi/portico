@@ -1,9 +1,9 @@
 package xeredi.integra.http.util;
 
-import xeredi.integra.model.vo.comun.ItemDatoVO;
-import xeredi.integra.model.vo.comun.ItemVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
+import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.util.struts.PropertyValidator;
 
 import com.opensymphony.xwork2.ActionSupport;

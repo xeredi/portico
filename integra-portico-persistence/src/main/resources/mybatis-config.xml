@@ -23,8 +23,7 @@
 		<typeAlias type="xeredi.util.applicationobjects.LabelValueVO"
 			alias="LabelValueVO" />
 
-		<package name="xeredi.integra.model.util" />
-		<package name="xeredi.integra.model.vo" />
+		<package name="xeredi.integra.model" />
 	</typeAliases>
 
 	<typeHandlers>
@@ -46,6 +45,6 @@
 	</environments>
 
 	<mappers>
-		<package name="xeredi.integra.model.dao" />
+		<package name="xeredi.integra.model" />
 	</mappers>
 </configuration>

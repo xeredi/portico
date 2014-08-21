@@ -7,11 +7,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.dao.metamodelo.EntidadDAO;
-import xeredi.integra.model.dao.metamodelo.TipoServicioDAO;
-import xeredi.integra.model.vo.metamodelo.TipoEntidad;
-import xeredi.integra.model.vo.metamodelo.TipoServicioCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
+import xeredi.integra.model.metamodelo.dao.EntidadDAO;
+import xeredi.integra.model.metamodelo.dao.TipoServicioDAO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;

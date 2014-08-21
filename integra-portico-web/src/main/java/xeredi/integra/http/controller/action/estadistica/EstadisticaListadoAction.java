@@ -14,11 +14,11 @@ import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.bo.estadistica.Estadistica;
 import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
+import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.proxy.metamodelo.TipoEstadisticaProxy;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.vo.estadistica.EstadisticaCriterioVO;
-import xeredi.integra.model.vo.estadistica.EstadisticaVO;
-import xeredi.integra.model.vo.metamodelo.TipoEstadisticaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 

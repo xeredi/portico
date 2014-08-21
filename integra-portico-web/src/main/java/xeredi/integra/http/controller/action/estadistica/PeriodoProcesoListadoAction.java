@@ -14,10 +14,10 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.estadistica.PeriodoProceso;
 import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
+import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.vo.estadistica.PeriodoProcesoCriterioVO;
-import xeredi.integra.model.vo.estadistica.PeriodoProcesoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 

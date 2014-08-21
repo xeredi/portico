@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.configuracion.IdiomaDAO;
-import xeredi.integra.model.dao.configuracion.ValorIdiomaDAO;
-import xeredi.integra.model.vo.configuracion.IdiomaVO;
-import xeredi.integra.model.vo.configuracion.ValorIdiomaCriterioVO;
+import xeredi.integra.model.configuracion.dao.IdiomaDAO;
+import xeredi.integra.model.configuracion.dao.ValorIdiomaDAO;
+import xeredi.integra.model.configuracion.vo.IdiomaVO;
+import xeredi.integra.model.configuracion.vo.ValorIdiomaCriterioVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 

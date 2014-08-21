@@ -6,6 +6,12 @@ import java.util.Iterator;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import xeredi.integra.model.facturacion.vo.ReglaVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoElemento;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.proxy.metamodelo.EntidadProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
@@ -15,12 +21,6 @@ import xeredi.integra.model.util.grammar.ConditionParser.BooleanExprContext;
 import xeredi.integra.model.util.grammar.ConditionParser.PathContext;
 import xeredi.integra.model.util.grammar.ConditionParser.PathElementContext;
 import xeredi.integra.model.util.grammar.ConditionParser.ScalarExprContext;
-import xeredi.integra.model.vo.facturacion.ReglaVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
-import xeredi.integra.model.vo.metamodelo.TipoElemento;
-import xeredi.integra.model.vo.metamodelo.TipoEntidad;
-import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**

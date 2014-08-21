@@ -7,22 +7,22 @@ import java.util.Map;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.metamodelo.EntidadAccionDAO;
-import xeredi.integra.model.dao.metamodelo.EntidadDAO;
-import xeredi.integra.model.dao.metamodelo.EntidadEntidadDAO;
-import xeredi.integra.model.dao.metamodelo.EntidadGrupoDatoDAO;
-import xeredi.integra.model.dao.metamodelo.EntidadTipoDatoDAO;
-import xeredi.integra.model.vo.metamodelo.EntidadAccionCriterioVO;
-import xeredi.integra.model.vo.metamodelo.EntidadAccionVO;
-import xeredi.integra.model.vo.metamodelo.EntidadCriterioVO;
-import xeredi.integra.model.vo.metamodelo.EntidadEntidadVO;
-import xeredi.integra.model.vo.metamodelo.EntidadGrupoDatoCriterioVO;
-import xeredi.integra.model.vo.metamodelo.EntidadGrupoDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoCriterioVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
-import xeredi.integra.model.vo.metamodelo.TipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.TipoEntidad;
+import xeredi.integra.model.metamodelo.dao.EntidadAccionDAO;
+import xeredi.integra.model.metamodelo.dao.EntidadDAO;
+import xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO;
+import xeredi.integra.model.metamodelo.dao.EntidadGrupoDatoDAO;
+import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

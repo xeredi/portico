@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.metamodelo.EntidadGrupoDatoDAO;
-import xeredi.integra.model.vo.metamodelo.EntidadGrupoDatoCriterioVO;
-import xeredi.integra.model.vo.metamodelo.EntidadGrupoDatoVO;
+import xeredi.integra.model.metamodelo.dao.EntidadGrupoDatoDAO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;

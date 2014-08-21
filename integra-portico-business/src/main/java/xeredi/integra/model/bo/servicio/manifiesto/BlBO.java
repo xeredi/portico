@@ -3,17 +3,17 @@ package xeredi.integra.model.bo.servicio.manifiesto;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.bo.servicio.EstadoInvalidoException;
-import xeredi.integra.model.dao.servicio.SubservicioDAO;
-import xeredi.integra.model.dao.servicio.manifiesto.ManifiestoResumenDAO;
-import xeredi.integra.model.dao.servicio.manifiesto.ManifiestoServicioDAO;
-import xeredi.integra.model.dao.servicio.manifiesto.ManifiestoSubservicioDAO;
+import xeredi.integra.model.servicio.dao.SubservicioDAO;
+import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
+import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
+import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
+import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
+import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.vo.servicio.ServicioCriterioVO;
-import xeredi.integra.model.vo.servicio.ServicioVO;
-import xeredi.integra.model.vo.servicio.SubservicioCriterioVO;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
-import xeredi.integra.model.vo.servicio.manifiesto.ResumenTotalesCriterioVO;
-import xeredi.integra.model.vo.servicio.manifiesto.ResumenTotalesVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;

@@ -10,8 +10,8 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.bo.metamodelo.TipoParametro;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.metamodelo.TipoParametroCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

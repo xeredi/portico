@@ -19,11 +19,11 @@ import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
 import net.sf.jasperreports.engine.fill.JRFileVirtualizer;
 import xeredi.integra.model.bo.facturacion.FacturaImpresionVO;
-import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
-import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
-import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
-import xeredi.integra.model.vo.facturacion.FacturaVO;
-import xeredi.integra.model.vo.facturacion.ReglaTipo;
+import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
+import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
+import xeredi.integra.model.facturacion.vo.FacturaVO;
+import xeredi.integra.model.facturacion.vo.ReglaTipo;
 
 import com.google.common.base.Preconditions;
 

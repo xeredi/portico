@@ -1,6 +1,6 @@
 package xeredi.integra.model.bo.metamodelo;
 
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.util.exception.DuplicateInstanceException;
 
 // TODO: Auto-generated Javadoc

@@ -6,10 +6,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.google.common.base.Preconditions;
 
-import xeredi.integra.model.vo.facturacion.ValoracionCargoVO;
-import xeredi.integra.model.vo.facturacion.ValoracionImpuestoVO;
-import xeredi.integra.model.vo.facturacion.ValoracionLineaVO;
-import xeredi.integra.model.vo.facturacion.ValoracionVO;
+import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.integra.model.facturacion.vo.ValoracionVO;
 
 // TODO: Auto-generated Javadoc
 /**

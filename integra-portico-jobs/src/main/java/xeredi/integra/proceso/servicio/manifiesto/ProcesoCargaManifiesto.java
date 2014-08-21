@@ -13,20 +13,20 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.proceso.vo.MensajeCodigo;
+import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
+import xeredi.integra.model.proceso.vo.ProcesoModulo;
+import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proxy.metamodelo.TipoDatoProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
+import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.integra.model.vo.maestro.ParametroVO;
-import xeredi.integra.model.vo.metamodelo.TipoDatoVO;
-import xeredi.integra.model.vo.proceso.MensajeCodigo;
-import xeredi.integra.model.vo.proceso.ProcesoArchivoVO;
-import xeredi.integra.model.vo.proceso.ProcesoModulo;
-import xeredi.integra.model.vo.proceso.ProcesoTipo;
-import xeredi.integra.model.vo.servicio.ServicioVO;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
 import xeredi.integra.proceso.ProcesoTemplate;
 
 // TODO: Auto-generated Javadoc

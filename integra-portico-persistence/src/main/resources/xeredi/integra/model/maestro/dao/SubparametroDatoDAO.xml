@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.maestro.dao.SubparametroDatoDAO">
+    <resultMap type="ItemDatoVO" id="ResultMap">
+        <id column="spdt_spvr_pk" property="itemId" />
+        <id column="spdt_tpdt_pk" property="tpdtId" />
+        <result column="spdt_nentero" property="cantidadEntera" />
+        <result column="spdt_ndecimal" property="cantidadDecimal" />
+        <result column="spdt_fecha" property="fecha" />
+        <result column="spdt_cadena" property="cadena" />
+
+        <association property="prmt" javaType="ParametroVO">
+            <result column="spdt_prmt_pk" property="id" />
+            <result column="prmt_parametro" property="parametro" />
+
+            <association property="i18n" javaType="ParametroI18nVO">
+                <result column="prmt_texto" property="texto" />
+            </association>
+        </association>
+    </resultMap>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="spvrIds != null">
+                AND spdt_spvr_pk IN
+                <foreach collection="spvrIds" item="item" open="("
+                    close=")" separator=",">#{item}</foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT
+            spdt_spvr_pk , spdt_tpdt_pk , spdt_nentero , spdt_ndecimal , spdt_fecha , spdt_cadena , spdt_prmt_pk
+            , prmt_parametro
+        ]]>
+        <if test="fechaVigencia != null">
+        <![CDATA[
+            , prvr_pk
+        ]]>
+        </if>
+        <if test="idioma != null and fechaVigencia != null">
+        <![CDATA[
+            , (CASE
+                WHEN tppr_es_i18n = 1
+                THEN (
+                    SELECT p18n_texto
+                    FROM tbl_parametro_i18n_p18n
+                    WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = #{idioma}
+                )
+
+                WHEN tppr_tpdt_pk IS NOT NULL
+                THEN (
+                    SELECT prdt_cadena
+                    FROM tbl_parametro_dato_prdt
+                    WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_pk
+                )
+
+                END
+            ) as prmt_texto
+        ]]>
+        </if>
+        <![CDATA[
+        FROM (
+            SELECT spdt_spvr_pk , spdt_tpdt_pk , spdt_nentero , spdt_ndecimal , spdt_fecha , spdt_cadena , spdt_prmt_pk
+                , prmt_parametro
+                , tppr_es_i18n, tppr_tpdt_pk
+        ]]>
+        <if test="fechaVigencia != null">
+        <![CDATA[
+                , (SELECT prvr_pk FROM tbl_parametro_version_prvr
+                    WHERE prvr_prmt_pk = spdt_prmt_pk
+                        AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+                ) AS prvr_pk
+        ]]>
+        </if>
+        <![CDATA[
+            FROM
+                tbl_subparametro_dato_spdt spdt
+                LEFT JOIN tbl_parametro_prmt ON
+                    prmt_pk = spdt_prmt_pk
+                LEFT JOIN tbl_tipo_parametro_tppr ON
+                    tppr_pk = prmt_tppr_pk
+
+    ]]>
+        <include refid="SelectWhere" />
+    <![CDATA[
+        ) sql
+    ]]>
+    </sql>
+
+    <select id="selectList" resultMap="ResultMap" parameterType="SubparametroCriterioVO">
+        <include refid="SelectPrefix"/>
+    </select>
+
+    <insert id="insert" parameterType="ItemDatoVO">
+        <![CDATA[
+        INSERT INTO tbl_subparametro_dato_spdt (
+        	spdt_spvr_pk, spdt_tpdt_pk, spdt_nentero, spdt_ndecimal, spdt_fecha, spdt_prmt_pk, spdt_cadena)
+        VALUES (#{itemId}, #{tpdtId}, #{cantidadEntera, jdbcType=BIGINT}, #{cantidadDecimal, jdbcType=DOUBLE}, #{fecha, jdbcType=TIMESTAMP}, #{prmt.id, jdbcType=BIGINT}, #{cadena, jdbcType=VARCHAR})
+        ]]>
+    </insert>
+</mapper>

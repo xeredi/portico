@@ -2,11 +2,11 @@ package xeredi.integra.model.bo.metamodelo;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.metamodelo.EntidadDAO;
-import xeredi.integra.model.dao.metamodelo.EntidadEntidadDAO;
-import xeredi.integra.model.vo.metamodelo.EntidadEntidadVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
-import xeredi.integra.model.vo.metamodelo.TipoEntidad;
+import xeredi.integra.model.metamodelo.dao.EntidadDAO;
+import xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO;
+import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 

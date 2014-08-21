@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO">
+	<update id="updateBloquear" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_servicio_srvc SET
+        	srvc_estado = 'B'
+		WHERE
+			srvc_estado IN ('S', 'I', 'C')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+			AND srvc_pk = #{id}
+        ]]>
+	</update>
+
+	<update id="updateCompletar" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_servicio_srvc SET
+        	srvc_estado = 'C'
+		WHERE
+			srvc_estado IN ('I')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+			AND srvc_pk = #{id}
+        ]]>
+	</update>
+
+	<!-- FIXME I o S -->
+	<update id="updateIniciar" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_servicio_srvc SET
+        	srvc_estado = 'I'
+		WHERE
+			srvc_estado IN ('C', 'B')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+			AND srvc_pk = #{id}
+        ]]>
+	</update>
+
+	<update id="updateAnular" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_servicio_srvc SET
+        	srvc_estado = 'A'
+		WHERE
+			srvc_estado IN ('S', 'I', 'C')
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+			AND srvc_pk = #{id}
+        ]]>
+	</update>
+
+	<update id="updateRecalcularEstado" parameterType="Long">
+        <![CDATA[
+        UPDATE tbl_servicio_srvc SET
+            srvc_estado = (
+				WITH sql AS (
+					SELECT ssrv_estado
+		            FROM tbl_subservicio_ssrv
+					WHERE
+		                ssrv_srvc_pk = srvc_pk
+		                AND ssrv_tpss_pk = portico.getEntidad('BL')
+				)
+				SELECT
+					CASE
+					    WHEN
+							'B' = ANY (SELECT ssrv_estado FROM sql)
+					    THEN 'B'
+
+					    WHEN
+							'C' = ANY (SELECT ssrv_estado FROM sql)
+							and
+							not exists (SELECT 1 FROM sql WHERE ssrv_estado NOT IN ('C', 'A') )
+					    THEN 'C'
+
+					    WHEN
+							'I' = ANY (SELECT ssrv_estado FROM sql)
+							AND
+							NOT 'B' = ANY (SELECT ssrv_estado FROM sql)
+					    THEN 'I'
+
+					    WHEN
+							'S' = ANY (SELECT ssrv_estado FROM sql)
+							and
+							not exists (SELECT 1 FROM sql WHERE ssrv_estado NOT IN ('S', 'A') )
+					    THEN 'S'
+
+					    WHEN
+							'A' = ALL (SELECT ssrv_estado FROM sql)
+					    THEN 'A'
+
+					    ELSE 'X'
+					END
+            )
+        WHERE
+            srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')
+            AND srvc_pk = #{id}
+        ]]>
+	</update>
+</mapper>

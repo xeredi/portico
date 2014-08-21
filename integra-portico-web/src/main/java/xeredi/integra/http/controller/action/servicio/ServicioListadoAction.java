@@ -15,11 +15,11 @@ import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.servicio.Servicio;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
+import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
-import xeredi.integra.model.vo.servicio.ServicioCriterioVO;
-import xeredi.integra.model.vo.servicio.ServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 

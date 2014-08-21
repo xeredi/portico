@@ -2,7 +2,7 @@ package xeredi.integra.model.bo.servicio.escala;
 
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.integra.model.dao.servicio.escala.EscalaDAO;
+import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;

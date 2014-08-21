@@ -2,8 +2,8 @@ package xeredi.integra.model.bo.estadistica;
 
 import java.util.List;
 
-import xeredi.integra.model.vo.estadistica.EstadisticaCriterioVO;
-import xeredi.integra.model.vo.estadistica.EstadisticaVO;
+import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
+import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 

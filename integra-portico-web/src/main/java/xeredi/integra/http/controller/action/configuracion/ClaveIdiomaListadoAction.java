@@ -11,10 +11,10 @@ import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.bo.configuracion.ClaveIdioma;
 import xeredi.integra.model.bo.configuracion.Idioma;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.configuracion.vo.ClaveIdiomaCriterioVO;
+import xeredi.integra.model.configuracion.vo.ClaveIdiomaVO;
+import xeredi.integra.model.configuracion.vo.IdiomaVO;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.vo.configuracion.ClaveIdiomaCriterioVO;
-import xeredi.integra.model.vo.configuracion.ClaveIdiomaVO;
-import xeredi.integra.model.vo.configuracion.IdiomaVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc

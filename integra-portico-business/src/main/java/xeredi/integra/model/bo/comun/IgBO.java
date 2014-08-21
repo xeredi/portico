@@ -8,8 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.integra.model.dao.comun.IgDAO;
-import xeredi.integra.model.vo.comun.IgVO;
+import xeredi.integra.model.comun.dao.IgDAO;
+import xeredi.integra.model.comun.vo.IgVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;

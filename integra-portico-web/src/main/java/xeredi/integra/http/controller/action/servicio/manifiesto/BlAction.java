@@ -8,7 +8,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.servicio.EstadoInvalidoException;
 import xeredi.integra.model.bo.servicio.manifiesto.Bl;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc

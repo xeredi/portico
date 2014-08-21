@@ -12,10 +12,10 @@ import xeredi.integra.model.bo.servicio.Servicio;
 import xeredi.integra.model.bo.servicio.escala.EscalaBO;
 import xeredi.integra.model.bo.servicio.escala.EscalaEdiBO;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
+import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
-import xeredi.integra.model.vo.servicio.ServicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;

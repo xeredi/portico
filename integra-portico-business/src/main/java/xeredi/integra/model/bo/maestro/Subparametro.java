@@ -2,9 +2,9 @@ package xeredi.integra.model.bo.maestro;
 
 import java.util.List;
 
-import xeredi.integra.model.vo.maestro.SubparametroCriterioVO;
-import xeredi.integra.model.vo.maestro.SubparametroVO;
-import xeredi.integra.model.vo.metamodelo.TipoSubparametroVO;
+import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
+import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;

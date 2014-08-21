@@ -3,13 +3,13 @@ package xeredi.integra.model.bo.facturacion;
 import java.util.List;
 import java.util.Set;
 
-import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
-import xeredi.integra.model.vo.facturacion.FacturaCriterioVO;
-import xeredi.integra.model.vo.facturacion.FacturaDetalleVO;
-import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
-import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
-import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
-import xeredi.integra.model.vo.facturacion.FacturaVO;
+import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
+import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
+import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
+import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
+import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
+import xeredi.integra.model.facturacion.vo.FacturaVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc

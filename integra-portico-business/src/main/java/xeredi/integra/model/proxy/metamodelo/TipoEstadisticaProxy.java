@@ -10,8 +10,8 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.bo.metamodelo.TipoEstadistica;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.metamodelo.TipoEstadisticaCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoEstadisticaVO;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

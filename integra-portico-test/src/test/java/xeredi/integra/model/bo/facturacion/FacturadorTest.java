@@ -10,8 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
-import xeredi.integra.model.vo.facturacion.ValoracionVO;
+import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc

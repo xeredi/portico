@@ -10,30 +10,32 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.facturacion.FacturaCargoDAO;
-import xeredi.integra.model.dao.facturacion.FacturaDAO;
-import xeredi.integra.model.dao.facturacion.FacturaDetalleDAO;
-import xeredi.integra.model.dao.facturacion.FacturaImpuestoDAO;
-import xeredi.integra.model.dao.facturacion.FacturaLineaDAO;
-import xeredi.integra.model.dao.facturacion.FacturaServicioDAO;
-import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
-import xeredi.integra.model.vo.facturacion.FacturaCriterioVO;
-import xeredi.integra.model.vo.facturacion.FacturaDetalleCriterioVO;
-import xeredi.integra.model.vo.facturacion.FacturaDetalleVO;
-import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
-import xeredi.integra.model.vo.facturacion.FacturaLineaCriterioVO;
-import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
-import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
-import xeredi.integra.model.vo.facturacion.FacturaVO;
+import xeredi.integra.model.facturacion.dao.FacturaCargoDAO;
+import xeredi.integra.model.facturacion.dao.FacturaDAO;
+import xeredi.integra.model.facturacion.dao.FacturaDetalleDAO;
+import xeredi.integra.model.facturacion.dao.FacturaImpuestoDAO;
+import xeredi.integra.model.facturacion.dao.FacturaLineaDAO;
+import xeredi.integra.model.facturacion.dao.FacturaServicioDAO;
+import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
+import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
+import xeredi.integra.model.facturacion.vo.FacturaDetalleCriterioVO;
+import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
+import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
+import xeredi.integra.model.facturacion.vo.FacturaLineaCriterioVO;
+import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
+import xeredi.integra.model.facturacion.vo.FacturaVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaBO.
  */
+@Singleton
 public class FacturaBO implements Factura {
 
     /** The fctr dao. */

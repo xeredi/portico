@@ -10,13 +10,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
-import xeredi.integra.model.vo.facturacion.FacturaCriterioVO;
-import xeredi.integra.model.vo.facturacion.FacturaDetalleVO;
-import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
-import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
-import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
-import xeredi.integra.model.vo.facturacion.FacturaVO;
+import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
+import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
+import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
+import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
+import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
+import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
+import xeredi.integra.model.facturacion.vo.FacturaVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
@@ -36,7 +36,7 @@ public final class FacturaTest {
         LOG.info("Start test");
 
         try {
-            final Factura factura = BOFactory.getInjector().getInstance(Factura.class);
+            final Factura factura = BOFactory.getInjector().getInstance(FacturaBO.class);
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
             final PaginatedList<FacturaVO> fctrList = factura.selectList(fctrCriterioVO, 0, 20);
 

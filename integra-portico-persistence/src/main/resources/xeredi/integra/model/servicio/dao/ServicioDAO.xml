@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.servicio.dao.ServicioDAO">
+    <resultMap type="ServicioVO" id="ResultMap">
+        <id column="srvc_pk" property="id" />
+        <result column="srvc_tpsr_pk" property="entiId" />
+        <result column="srvc_anno" property="anno" />
+        <result column="srvc_numero" property="numero" />
+        <result column="srvc_falta" property="falta" />
+        <result column="srvc_fref" property="freferencia" />
+        <result column="srvc_fini" property="finicio" />
+        <result column="srvc_ffin" property="ffin" />
+        <result column="srvc_estado" property="estado" />
+
+        <association property="subp" javaType="ParametroVO">
+            <result column="srvc_subp_pk" property="id" />
+            <result column="srvc_subp" property="parametro" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+		srvc.srvc_pk, srvc.srvc_tpsr_pk, srvc.srvc_anno, srvc.srvc_numero, srvc.srvc_falta, srvc.srvc_fref
+		, srvc.srvc_fini, srvc.srvc_ffin, srvc.srvc_estado, srvc.srvc_subp_pk
+		, (SELECT prmt_parametro FROM tbl_parametro_prmt
+			WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+    FROM
+    	tbl_servicio_srvc srvc
+    ]]>
+    </sql>
+
+    <sql id="SelectCountPrefix">
+    <![CDATA[
+    SELECT
+        COUNT(1)
+    FROM
+    	tbl_servicio_srvc srvc
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND srvc.srvc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND srvc.srvc_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+
+            <if test="entiId != null">
+                AND srvc.srvc_tpsr_pk = #{entiId}
+            </if>
+            <if test="subpId != null">
+                AND srvc.srvc_subp_pk = #{subpId}
+            </if>
+            <if test="anno != null and !anno.empty">
+                AND srvc.srvc_anno = #{anno}
+            </if>
+            <if test="numero != null and !numero.empty">
+                AND srvc.srvc_numero = #{numero}
+            </if>
+            <if test="estado != null and !estado.empty">
+                AND srvc.srvc_estado = #{estado}
+            </if>
+            <if test="itdtMap != null and !itdtMap.empty">
+                <foreach collection="itdtMap" item="itdt">
+                    <if
+                        test="itdt.prmtId != null or itdt.srvcId != null or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
+                        <![CDATA[
+                        AND EXISTS (
+                            SELECT 1 FROM tbl_servicio_dato_srdt
+                            WHERE srdt_srvc_pk = srvc_pk
+                                AND srdt_tpdt_pk = #{itdt.tpdtId}
+                        ]]>
+                        <if test="itdt.prmtId != null">
+                            AND srdt_prmt_pk = #{itdt.prmtId}
+                        </if>
+                        <if test="itdt.srvcId != null">
+                            AND srdt_srvc_dep_pk = #{itdt.srvcId}
+                        </if>
+                        <if test="itdt.cantidadEntera != null">
+                            AND srdt_nentero = #{itdt.cantidadEntera}
+                        </if>
+                        <if test="itdt.cantidadDecimal != null">
+                            AND srdt_ndecimal = #{itdt.cantidadDecimal}
+                        </if>
+                        <if test="itdt.cadena != null and !itdt.cadena.empty">
+                            AND srdt_cadena LIKE #{itdt.cadena}
+                        </if>
+                        <!-- FIXME Faltan las fechas -->
+                        )
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <select id="exists" parameterType="ServicioVO" resultType="boolean">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_servicio_srvc
+        WHERE srvc_tpsr_pk = #{entiId}
+            AND srvc_subp_pk = #{subp.id}
+            AND srvc_anno = #{anno}
+            AND srvc_numero = #{numero}
+        ]]>
+    </select>
+
+    <select id="selectCount" parameterType="ServicioCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY srvc.srvc_falta DESC
+    </select>
+
+    <select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="select" parameterType="Long" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        WHERE srvc_pk = #{value}
+    </select>
+
+    <select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultType="LabelValueVO">
+        <![CDATA[
+        select
+            srvc_pk AS value
+            , CONCAT(
+                CONCAT(
+                    CONCAT(prmt_parametro, '/')
+                    , CONCAT(srvc_anno, '/')
+                ), srvc_numero
+            ) AS label
+        from tbl_servicio_srvc
+            JOIN tbl_parametro_prmt ON
+                prmt_pk = srvc_subp_pk
+        WHERE
+            srvc_tpsr_pk = #{entiId}
+        ]]>
+        <if test="subpuerto != null and !subpuerto.empty">
+            AND prmt_parametro LIKE #{subpuerto}
+        </if>
+        <if test="anno != null and !anno.empty">
+            AND srvc_anno LIKE #{anno}
+        </if>
+        <if test="numero != null and !numero.empty">
+            AND srvc_numero LIKE #{numero}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="ServicioVO">
+        <![CDATA[
+        INSERT INTO tbl_servicio_srvc (
+            srvc_pk, srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
+            , srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado
+        ) VALUES (
+            #{id}, #{entiId}, #{subp.id}, #{anno}, #{numero}
+            , portico.getSysDatetime(), #{freferencia}, #{finicio}, #{ffin}, #{estado}
+        )
+        ]]>
+    </insert>
+</mapper>

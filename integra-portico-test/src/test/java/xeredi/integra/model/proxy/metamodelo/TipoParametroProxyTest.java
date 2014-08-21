@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 
 // TODO: Auto-generated Javadoc
 /**

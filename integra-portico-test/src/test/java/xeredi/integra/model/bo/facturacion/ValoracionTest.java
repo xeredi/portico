@@ -11,15 +11,15 @@ import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.bo.util.pdf.ValoracionPdf;
+import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
+import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
+import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.vo.facturacion.ValoracionCargoVO;
-import xeredi.integra.model.vo.facturacion.ValoracionCriterioVO;
-import xeredi.integra.model.vo.facturacion.ValoracionDetalleCriterioVO;
-import xeredi.integra.model.vo.facturacion.ValoracionDetalleVO;
-import xeredi.integra.model.vo.facturacion.ValoracionImpuestoVO;
-import xeredi.integra.model.vo.facturacion.ValoracionLineaCriterioVO;
-import xeredi.integra.model.vo.facturacion.ValoracionLineaVO;
-import xeredi.integra.model.vo.facturacion.ValoracionVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc

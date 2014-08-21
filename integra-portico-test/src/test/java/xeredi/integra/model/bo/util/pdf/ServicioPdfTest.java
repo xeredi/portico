@@ -19,14 +19,14 @@ import org.junit.Test;
 import xeredi.integra.model.bo.servicio.Servicio;
 import xeredi.integra.model.bo.servicio.Subservicio;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.proxy.metamodelo.TipoServicioProxy;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
-import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
-import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
-import xeredi.integra.model.vo.servicio.ServicioCriterioVO;
-import xeredi.integra.model.vo.servicio.ServicioVO;
-import xeredi.integra.model.vo.servicio.SubservicioCriterioVO;
-import xeredi.integra.model.vo.servicio.SubservicioVO;
+import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 public final class ServicioPdfTest {
 	/** The Constant LOG. */

@@ -13,9 +13,9 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.servicio.Subservicio;
 import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.bo.util.ExcelUtil;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.proxy.metamodelo.TipoSubservicioProxy;
-import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
-import xeredi.integra.model.vo.servicio.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
 import com.google.common.base.Preconditions;
 

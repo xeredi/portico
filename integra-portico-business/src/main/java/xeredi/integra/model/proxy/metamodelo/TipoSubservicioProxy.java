@@ -10,8 +10,8 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.bo.metamodelo.TipoSubservicio;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.metamodelo.TipoSubservicioCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoSubservicioVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;

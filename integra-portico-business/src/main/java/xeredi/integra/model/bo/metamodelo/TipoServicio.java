@@ -2,8 +2,8 @@ package xeredi.integra.model.bo.metamodelo;
 
 import java.util.List;
 
-import xeredi.integra.model.vo.metamodelo.TipoServicioCriterioVO;
-import xeredi.integra.model.vo.metamodelo.TipoServicioVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;

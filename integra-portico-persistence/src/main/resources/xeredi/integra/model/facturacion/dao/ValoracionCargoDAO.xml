@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionCargoDAO">
+    <resultMap type="ValoracionCargoVO" id="ResultMap">
+        <id column="vlrg_vlrc_pk" />
+        <id column="vlrg_crgo_pk" />
+
+        <result column="vlrg_vlrc_pk" property="vlrcId" />
+        <association property="crgo" resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
+    </resultMap>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND vlrg_vlrc_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND vlrg_vlrc_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT *
+        FROM vw_valoracion_cargo_vlrg
+    ]]>
+        <include refid="SelectWhere" />
+    </select>
+
+    <insert id="insertGenerate" parameterType="ValoracionCriterioVO">
+    <![CDATA[
+        INSERT INTO tbl_valoracion_cargo_vlrg (vlrg_vlrc_pk, vlrg_crgo_pk)
+            SELECT vlrc_pk, crgo_pk
+            FROM tbl_valoracion_vlrc
+                , tbl_cargo_crgo
+            WHERE
+                EXISTS (
+        		    SELECT 1
+		            FROM tbl_regla_rgla
+		            WHERE
+			            rgla_crgo_pk = crgo_pk
+			            AND EXISTS (
+			                SELECT 1
+			                FROM tbl_valoracion_lin_vlrl
+			                WHERE
+				                vlrl_rgla_pk = rgla_pk
+				                AND vlrl_vlrc_pk = vlrc_pk
+                        )
+                        AND vlrc_pk = #{id}
+                )
+    ]]>
+    </insert>
+
+    <delete id="delete" parameterType="ValoracionCriterioVO">
+    <![CDATA[
+        DELETE FROM tbl_valoracion_cargo_vlrg
+    ]]>
+        <include refid="SelectWhere" />
+    </delete>
+</mapper>

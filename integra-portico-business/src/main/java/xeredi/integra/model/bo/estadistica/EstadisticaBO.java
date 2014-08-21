@@ -12,11 +12,11 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.estadistica.EstadisticaDAO;
-import xeredi.integra.model.dao.estadistica.EstadisticaDatoDAO;
-import xeredi.integra.model.vo.comun.ItemDatoVO;
-import xeredi.integra.model.vo.estadistica.EstadisticaCriterioVO;
-import xeredi.integra.model.vo.estadistica.EstadisticaVO;
+import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.estadistica.dao.EstadisticaDAO;
+import xeredi.integra.model.estadistica.dao.EstadisticaDatoDAO;
+import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
+import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 

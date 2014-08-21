@@ -13,14 +13,14 @@ import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
-import xeredi.integra.model.vo.comun.ItemDatoVO;
-import xeredi.integra.model.vo.maestro.ParametroI18nVO;
-import xeredi.integra.model.vo.maestro.ParametroVO;
-import xeredi.integra.model.vo.maestro.SubparametroVO;
-import xeredi.integra.model.vo.metamodelo.EntidadTipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.TipoElemento;
-import xeredi.integra.model.vo.metamodelo.TipoParametroVO;
-import xeredi.integra.model.vo.metamodelo.TipoSubparametroVO;
+import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.maestro.vo.ParametroI18nVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoElemento;
+import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 
 import com.google.common.base.Preconditions;
 

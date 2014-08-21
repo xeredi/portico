@@ -8,8 +8,8 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.servicio.Servicio;
 import xeredi.integra.model.bo.servicio.manifiesto.Manifiesto;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.servicio.ServicioVO;
-import xeredi.integra.model.vo.servicio.manifiesto.ResumenTotalesVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
+import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc

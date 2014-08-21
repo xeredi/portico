@@ -2,8 +2,8 @@ package xeredi.integra.model.bo.configuracion;
 
 import java.util.Map;
 
-import xeredi.integra.model.vo.configuracion.ClaveCriterioVO;
-import xeredi.integra.model.vo.configuracion.ClaveVO;
+import xeredi.integra.model.configuracion.vo.ClaveCriterioVO;
+import xeredi.integra.model.configuracion.vo.ClaveVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;

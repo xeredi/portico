@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.metamodelo.dao.TipoEstadisticaDAO">
+	<resultMap type="TipoEstadisticaVO" id="ResultMap"
+        extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+        SELECT
+            enti.enti_pk, enti.enti_nombre, enti.enti_codigo, enti.enti_tipo
+            , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
+        FROM
+            tbl_tipo_estadistica_tpes tpes
+            INNER JOIN tbl_entidad_enti enti ON
+                enti.enti_pk = tpes.tpes_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="ids != null">
+				AND enti.enti_pk IN
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=", ">#{item}</foreach>
+			</if>
+			<if test="nombre != null and !nombre.empty">
+				AND enti.enti_nombre LIKE #{nombre}
+			</if>
+			<if test="codigo != null and !codigo.empty">
+				AND enti.enti_codigo LIKE #{codigo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectList" parameterType="TipoEstadisticaCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+        <![CDATA[
+        ORDER BY enti.enti_nombre, enti.enti_pk
+        ]]>
+	</select>
+
+	<select id="count" resultType="int">
+        <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_tipo_estadistica_tpes tpes
+            INNER JOIN tbl_entidad_enti enti ON
+                enti.enti_pk = tpes.tpes_pk
+        ]]>
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="select" resultMap="ResultMap" parameterType="Long">
+		<include refid="SelectPrefix" />
+		<where>
+        <![CDATA[
+        enti.enti_pk = #{value}
+        ]]>
+		</where>
+	</select>
+
+	<select id="selectLabelValues" parameterType="TipoEstadisticaCriterioVO"
+		resultType="LabelValueVO">
+        <![CDATA[
+        SELECT
+            enti.enti_pk AS value
+            , enti.enti_nombre AS label
+        FROM
+            tbl_tipo_estadistica_tpes tpes
+            INNER JOIN tbl_entidad_enti enti ON
+                enti.enti_pk = tpes.tpes_pk
+        ]]>
+		<include refid="SelectWhere" />
+        <![CDATA[
+        ORDER BY enti.enti_nombre
+        ]]>
+	</select>
+
+	<insert id="insert" parameterType="TipoEstadisticaVO">
+        <![CDATA[
+        INSERT INTO tbl_tipo_estadistica_tpes(tpes_pk)
+        VALUES (#{id})
+        ]]>
+	</insert>
+</mapper>

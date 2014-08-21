@@ -1,7 +1,7 @@
 package xeredi.integra.model.bo.servicio.manifiesto;
 
 import xeredi.integra.model.bo.servicio.EstadoInvalidoException;
-import xeredi.integra.model.vo.servicio.manifiesto.ResumenTotalesVO;
+import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc

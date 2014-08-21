@@ -3,10 +3,10 @@ package xeredi.integra.model.bo.metamodelo;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.model.vo.metamodelo.EntidadCriterioVO;
-import xeredi.integra.model.vo.metamodelo.EntidadVO;
-import xeredi.integra.model.vo.metamodelo.TipoDatoVO;
-import xeredi.integra.model.vo.metamodelo.TipoEntidad;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc

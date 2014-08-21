@@ -12,12 +12,12 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.configuracion.ClaveDAO;
-import xeredi.integra.model.dao.configuracion.ValorDAO;
-import xeredi.integra.model.vo.configuracion.ClaveCriterioVO;
-import xeredi.integra.model.vo.configuracion.ClaveVO;
-import xeredi.integra.model.vo.configuracion.ValorCriterioVO;
-import xeredi.integra.model.vo.configuracion.ValorVO;
+import xeredi.integra.model.configuracion.dao.ClaveDAO;
+import xeredi.integra.model.configuracion.dao.ValorDAO;
+import xeredi.integra.model.configuracion.vo.ClaveCriterioVO;
+import xeredi.integra.model.configuracion.vo.ClaveVO;
+import xeredi.integra.model.configuracion.vo.ValorCriterioVO;
+import xeredi.integra.model.configuracion.vo.ValorVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;

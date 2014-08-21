@@ -2,8 +2,8 @@ package xeredi.integra.model.bo.metamodelo;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import xeredi.integra.model.dao.metamodelo.CodigoReferenciaDAO;
-import xeredi.integra.model.vo.metamodelo.CodigoReferenciaVO;
+import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
+import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 

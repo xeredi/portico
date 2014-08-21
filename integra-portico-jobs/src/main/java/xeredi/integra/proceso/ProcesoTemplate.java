@@ -17,18 +17,18 @@ import xeredi.integra.model.bo.maestro.Parametro;
 import xeredi.integra.model.bo.proceso.OperacionNoPermitidaException;
 import xeredi.integra.model.bo.proceso.Proceso;
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.proceso.vo.MensajeCodigo;
+import xeredi.integra.model.proceso.vo.MensajeNivel;
+import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
+import xeredi.integra.model.proceso.vo.ProcesoModulo;
+import xeredi.integra.model.proceso.vo.ProcesoTipo;
+import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.integra.model.vo.comun.ItemDatoCriterioVO;
-import xeredi.integra.model.vo.maestro.ParametroCriterioVO;
-import xeredi.integra.model.vo.maestro.ParametroVO;
-import xeredi.integra.model.vo.proceso.MensajeCodigo;
-import xeredi.integra.model.vo.proceso.MensajeNivel;
-import xeredi.integra.model.vo.proceso.ProcesoMensajeVO;
-import xeredi.integra.model.vo.proceso.ProcesoModulo;
-import xeredi.integra.model.vo.proceso.ProcesoTipo;
-import xeredi.integra.model.vo.proceso.ProcesoVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc

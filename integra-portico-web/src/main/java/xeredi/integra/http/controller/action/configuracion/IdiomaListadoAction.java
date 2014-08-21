@@ -8,7 +8,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.bo.configuracion.Idioma;
 import xeredi.integra.model.bo.util.BOFactory;
-import xeredi.integra.model.vo.configuracion.IdiomaVO;
+import xeredi.integra.model.configuracion.vo.IdiomaVO;
 
 // TODO: Auto-generated Javadoc
 /**

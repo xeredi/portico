@@ -3,7 +3,7 @@ package xeredi.integra.model.bo.configuracion;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.model.vo.configuracion.EntornoVO;
+import xeredi.integra.model.configuracion.vo.EntornoVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 
