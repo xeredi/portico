@@ -43,4 +43,50 @@
         )
     ]]>
     </insert>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM vw_factura_det_fctd
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND fctd_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND fctd_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
+            </if>
+            <if test="fctl != null">
+                <if test="fctl.id != null">
+                    AND fctd_fctl_pk = #{fctl.id}
+                </if>
+                <if test="fctl.ids != null">
+                    AND fctd_fctl_pk IN
+                    <foreach collection="fctl.ids" item="item" open="(" close=")" separator=",">#{item}
+                    </foreach>
+                </if>
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" resultMap="ResultMap" parameterType="Long">
+        <include refid="SelectPrefix" />
+        WHERE fctd_pk = #{value}
+    </select>
+
+    <select id="selectList" resultMap="ResultMap" parameterType="FacturaDetalleCriterioVO">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk
+    </select>
+
+    <select id="count" resultType="Integer" parameterType="FacturaDetalleCriterioVO">
+        SELECT COUNT(1) FROM vw_factura_det_fctd
+        <include refid="SelectWhere" />
+    </select>
 </mapper>

@@ -12,6 +12,7 @@ import org.junit.Test;
 import xeredi.integra.model.bo.util.BOFactory;
 import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
 import xeredi.integra.model.vo.facturacion.FacturaCriterioVO;
+import xeredi.integra.model.vo.facturacion.FacturaDetalleVO;
 import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
 import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
 import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
@@ -43,7 +44,7 @@ public final class FacturaTest {
                 {
                     LOG.info("Busqueda de facturas una a una");
                     for (final FacturaVO fctr : fctrList.getList()) {
-                        LOG.info("Busqueda de detalle de factura");
+                        LOG.info("Busqueda de factura");
                         Assert.assertNotNull(factura.select(fctr.getId()));
 
                         LOG.info("Busqueda de cargos de factura");
@@ -65,8 +66,23 @@ public final class FacturaTest {
                         final PaginatedList<FacturaLineaVO> fctlList = factura.selectFctlList(fctr.getId(), 0, 20);
 
                         Assert.assertTrue(!fctlList.getList().isEmpty());
-                    }
 
+                        for (final FacturaLineaVO fctl : fctlList.getList()) {
+                            LOG.info("Busqueda de linea de factura");
+                            Assert.assertNotNull(factura.selectFctl(fctl.getId()));
+
+                            LOG.info("Busqueda de detalles de factura");
+                            final PaginatedList<FacturaDetalleVO> fctdList = factura
+                                    .selectFctdList(fctl.getId(), 0, 20);
+
+                            Assert.assertTrue(!fctdList.getList().isEmpty());
+
+                            for (final FacturaDetalleVO fctd : fctdList.getList()) {
+                                LOG.info("Busqueda de detalle de factura");
+                                Assert.assertNotNull(factura.selectFctd(fctd.getId()));
+                            }
+                        }
+                    }
                 }
 
                 {
