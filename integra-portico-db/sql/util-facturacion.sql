@@ -156,7 +156,7 @@ SELECT * FROM tbl_regla_rgla;
 SELECT * FROM tbl_servicio_cargo_srcr;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 SELECT * FROM vw_valoracion_vlrc;
-SELECT * FROM vw_valoracion_lin_vlrl ORDER BY vlrl_pk;
+SELECT * FROM vw_valoracion_lin_vlrl WHERE vlrl_vlrc_pk = 2156046 ORDER BY vlrl_vlrc_pk, vlrl_padre_pk, vlrl_pk;
 SELECT * FROM vw_valoracion_det_vlrd;
 SELECT * FROM vw_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_vlrc;

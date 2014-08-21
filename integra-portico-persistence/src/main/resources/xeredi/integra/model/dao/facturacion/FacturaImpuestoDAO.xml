@@ -23,7 +23,7 @@
         FROM (
         	SELECT
         		fcts_fctr_pk AS fcti_fctr_pk
-        		, fctl_impuesto_prmt_pk AS fcti_impuesto_prmt_pk
+        		, fctl_impuesto_prmt_pk AS prmt_pk
         		, (
         			select prdt_ndecimal
         			FROM tbl_parametro_dato_prdt
@@ -44,7 +44,7 @@
         		INNER JOIN tbl_factura_det_fctd ON
         			fctd_fctl_pk = fctl_pk
         	WHERE fcts_fctr_pk = #{id}
-        	GROUP BY fcti_fctr_pk, fcti_impuesto_prmt_pk, fcti_porcentaje
+        	GROUP BY fcts_fctr_pk, fctl_impuesto_prmt_pk, fcti_porcentaje
         ) sql
     ]]>
     </select>

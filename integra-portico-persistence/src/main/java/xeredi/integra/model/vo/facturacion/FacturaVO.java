@@ -2,6 +2,7 @@ package xeredi.integra.model.vo.facturacion;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.vo.maestro.ParametroVO;
@@ -11,6 +12,9 @@ import xeredi.integra.model.vo.maestro.ParametroVO;
  * The Class FacturaVO.
  */
 public final class FacturaVO {
+
+    /** The Constant NUMERO_LENGTH. */
+    public static final int NUMERO_LENGTH = 5;
 
     /** The id. */
     private Long id;
@@ -83,7 +87,7 @@ public final class FacturaVO {
             etiqueta.append(fcsr.getSerie()).append('/').append(fcsr.getAnio()).append('/');
         }
 
-        etiqueta.append(numero);
+        etiqueta.append(StringUtils.leftPad(String.valueOf(numero), NUMERO_LENGTH, '0'));
 
         return etiqueta.toString();
     }

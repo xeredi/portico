@@ -49,4 +49,13 @@ public interface FacturaLineaDAO {
      * @return the list< factura linea v o>
      */
     List<FacturaLineaVO> selectList(final FacturaLineaCriterioVO fctlCriterioVO);
+
+    /**
+     * Select.
+     *
+     * @param fctlId
+     *            the fctl id
+     * @return the factura linea vo
+     */
+    FacturaLineaVO select(final Long fctlId);
 }

@@ -17,6 +17,7 @@ import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.jasperreports.engine.fill.JRFileVirtualizer;
 import xeredi.integra.model.bo.facturacion.FacturaImpresionVO;
 import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
 import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
@@ -31,6 +32,9 @@ import com.google.common.base.Preconditions;
  * The Class FacturaPdf.
  */
 public final class FacturaPdf extends BasePdf {
+
+    private static final ImageBuilder LOGO = DynamicReports.cmp.image("/temp/LogoAP.png");
+    private static final ImageBuilder FIRMA = DynamicReports.cmp.image("/temp/FirmaAP.png");
 
     /**
      * Instantiates a new factura pdf.
@@ -58,19 +62,19 @@ public final class FacturaPdf extends BasePdf {
 
         final JasperReportBuilder report = DynamicReports.report();
 
-        report.setPageFormat(PageType.A4, PageOrientation.PORTRAIT);
-        report.setTextStyle(PdfConstants.VALUE_STYLE);
-        report.pageHeader(createLogoComponent());
+        report.setPageFormat(PageType.A4);
+        report.pageHeader(LOGO);
         report.pageFooter(DynamicReports.cmp.pageXofY());
+        // report.setVirtualizer(new JRFileVirtualizer(2));
 
         final MultiPageListBuilder builder = DynamicReports.cmp.multiPageList();
 
         builder.add(createCabeceraComponent(vo.getFctr()));
         builder.add(DynamicReports.cmp.horizontalList(
-                DynamicReports.cmp.verticalList(createImportesComponent(vo), createFirmaComponent()),
+                DynamicReports.cmp.verticalList(createImportesComponent(vo), FIRMA),
                 createDatosPagadorComponent(vo.getFctr())));
         builder.add(createServiciosComponent(vo.getFctsMap()));
-        builder.add(createInfoCabeceraComponent(vo.getFctr()));
+        // builder.add(createInfoCabeceraComponent(vo.getFctr()));
 
         FacturaLineaVO fctlPrec = null;
         List<FacturaLineaVO> fctlMods = null;
@@ -78,7 +82,7 @@ public final class FacturaPdf extends BasePdf {
         for (final FacturaLineaVO fctl : vo.getFctlList()) {
             if (fctl.getRgla().getTipo() == ReglaTipo.T) {
                 if (fctlPrec != null) {
-                    builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
+                    // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
                 }
 
                 fctlPrec = fctl;
@@ -89,12 +93,11 @@ public final class FacturaPdf extends BasePdf {
         }
 
         if (fctlPrec != null) {
-            builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
+            // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
         }
 
-        // builder.add(createInfoLineasComponent(vo));
-
         report.summary(builder);
+        // report.rebuild();
 
         report.toPdf(os);
     }
@@ -105,7 +108,7 @@ public final class FacturaPdf extends BasePdf {
      * @return the logo
      */
     private ImageBuilder createLogoComponent() {
-        return DynamicReports.cmp.image("/LogoAP.png");
+        return DynamicReports.cmp.image("/temp/LogoAP.png");
     }
 
     /**
@@ -152,7 +155,7 @@ public final class FacturaPdf extends BasePdf {
      * @return the firma
      */
     private ImageBuilder createFirmaComponent() {
-        return DynamicReports.cmp.image("/FirmaAP.png");
+        return DynamicReports.cmp.image("/temp/FirmaAP.png");
     }
 
     /**
@@ -240,8 +243,8 @@ public final class FacturaPdf extends BasePdf {
                 createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
                 createEtiquetaValorComponent("Cuota",
                         PdfConstants.DOUBLE_FORMAT.format(fctl.getRgla().getRglv().getImporteBase())),
-                        createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
-                        createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
+                createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
+                createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
 
         final HorizontalListBuilder infos = DynamicReports.cmp.horizontalList();
 

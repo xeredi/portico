@@ -143,6 +143,8 @@ CREATE VIEW portico.vw_factura_fctr AS
 		JOIN portico.tbl_aspecto_version_aspv on
 			aspv_aspc_pk = fctr_aspc_pk
 			AND fctr_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fctr_fref)
+		JOIN portico.tbl_factura_serie_fcsr on
+			fcsr_pk = fctr_fcsr_pk
 \
 
 GRANT SELECT ON portico.vw_factura_fctr TO portico
@@ -194,13 +196,21 @@ GRANT SELECT ON portico.vw_factura_imp_fcti TO portico
 
 
 CREATE VIEW portico.vw_factura_srv_fcts AS
-SELECT * 
-FROM 
-	portico.tbl_factura_srv_fcts
-	INNER JOIN portico.tbl_aspecto_aspc ON
-		aspc_pk = fcts_aspc_pk
-	INNER JOIN portico.tbl_servicio_srvc ON
-		srvc_pk = fcts_srvc_pk
+	SELECT * 
+		, (
+			SELECT prmt_parametro
+			FROM portico.tbl_parametro_prmt
+			WHERE prmt_pk = srvc_subp_pk
+		) AS srvc_subp
+	FROM 
+		portico.tbl_factura_srv_fcts
+		INNER JOIN portico.tbl_aspecto_aspc ON
+			aspc_pk = fcts_aspc_pk
+		INNER JOIN portico.tbl_aspecto_version_aspv ON
+			aspv_aspc_pk = fcts_aspc_pk
+			AND fcts_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fcts_fref)
+		INNER JOIN portico.tbl_servicio_srvc ON
+			srvc_pk = fcts_srvc_pk
 \
 
 GRANT SELECT ON portico.vw_factura_srv_fcts TO portico

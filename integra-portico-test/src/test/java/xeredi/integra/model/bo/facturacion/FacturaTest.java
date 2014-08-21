@@ -10,6 +10,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.bo.util.BOFactory;
+import xeredi.integra.model.vo.facturacion.FacturaCriterioVO;
+import xeredi.integra.model.vo.facturacion.FacturaVO;
+import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,12 +32,38 @@ public final class FacturaTest {
 
         try {
             final Factura factura = BOFactory.getInjector().getInstance(Factura.class);
-            final Set<Long> fctrIds = new HashSet<>();
+            final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+            final PaginatedList<FacturaVO> fctrList = factura.selectList(fctrCriterioVO, 0, 20);
 
-            fctrIds.add(2031001L);
-            fctrIds.add(2031335L);
+            if (!fctrList.getList().isEmpty()) {
+                {
+                    LOG.info("Busqueda de facturas una a una");
+                    for (final FacturaVO fctr : fctrList.getList()) {
+                        Assert.assertNotNull(factura.select(fctr.getId()));
 
-            final List<FacturaImpresionVO> fctrList = factura.selectImprimir(fctrIds);
+                        LOG.info("Busqueda de cargos de factura");
+                        Assert.assertTrue(!factura.selectFctgList(fctr.getId()).isEmpty());
+
+                        LOG.info("Busqueda de servicios de factura");
+                        Assert.assertTrue(!factura.selectFctsList(fctr.getId()).isEmpty());
+
+                        LOG.info("Busqueda de impuestos de factura");
+                        Assert.assertTrue(!factura.selectFctiList(fctr.getId()).isEmpty());
+                    }
+
+                }
+
+                {
+                    LOG.info("Impresion de facturas");
+                    final Set<Long> fctrIds = new HashSet<>();
+
+                    for (final FacturaVO fctr : fctrList.getList()) {
+                        fctrIds.add(fctr.getId());
+                    }
+
+                    final List<FacturaImpresionVO> fctrImprimirList = factura.selectImprimir(fctrIds);
+                }
+            }
 
             LOG.info(fctrList);
         } catch (final Throwable ex) {

@@ -34,7 +34,7 @@ public final class FacturaPdfTest {
 
         try {
             for (int i = 0; i < 10; i++) {
-                final Long id = 2031001L;
+                final Long id = 2196001L;
 
                 final Set<Long> fctrIds = new HashSet<>();
                 final FacturaPdf facturaPdf = new FacturaPdf(GlobalNames.DEFAULT_LOCALE);
@@ -49,7 +49,7 @@ public final class FacturaPdfTest {
                 LOG.info("Impresion");
 
                 for (final FacturaImpresionVO vo : list) {
-                    final OutputStream os = new FileOutputStream("/test.pdf");
+                    final OutputStream os = new FileOutputStream("/temp/test.pdf");
 
                     facturaPdf.imprimir(vo, os);
                 }

@@ -7,20 +7,25 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.dao.facturacion.FacturaCargoDAO;
 import xeredi.integra.model.dao.facturacion.FacturaDAO;
+import xeredi.integra.model.dao.facturacion.FacturaDetalleDAO;
 import xeredi.integra.model.dao.facturacion.FacturaImpuestoDAO;
 import xeredi.integra.model.dao.facturacion.FacturaLineaDAO;
 import xeredi.integra.model.dao.facturacion.FacturaServicioDAO;
 import xeredi.integra.model.vo.facturacion.FacturaCargoVO;
 import xeredi.integra.model.vo.facturacion.FacturaCriterioVO;
+import xeredi.integra.model.vo.facturacion.FacturaDetalleCriterioVO;
+import xeredi.integra.model.vo.facturacion.FacturaDetalleVO;
 import xeredi.integra.model.vo.facturacion.FacturaImpuestoVO;
 import xeredi.integra.model.vo.facturacion.FacturaLineaCriterioVO;
 import xeredi.integra.model.vo.facturacion.FacturaLineaVO;
 import xeredi.integra.model.vo.facturacion.FacturaServicioVO;
 import xeredi.integra.model.vo.facturacion.FacturaVO;
+import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
@@ -50,6 +55,10 @@ public class FacturaBO implements Factura {
     /** The fctl dao. */
     @Inject
     FacturaLineaDAO fctlDAO;
+
+    /** The fctd dao. */
+    @Inject
+    FacturaDetalleDAO fctdDAO;
 
     /**
      * {@inheritDoc}
@@ -88,6 +97,150 @@ public class FacturaBO implements Factura {
         }
 
         return list;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public FacturaVO select(final Long fctrId) {
+        Preconditions.checkNotNull(fctrId);
+
+        return fctrDAO.select(fctrId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PaginatedList<FacturaVO> selectList(final FacturaCriterioVO fctrCriterioVO, final int offset, final int limit) {
+        Preconditions.checkNotNull(fctrCriterioVO);
+        Preconditions.checkArgument(offset >= 0);
+        Preconditions.checkArgument(limit > 0);
+
+        final int count = fctrDAO.count(fctrCriterioVO);
+        final List<FacturaVO> fctrList = new ArrayList<>();
+
+        if (count >= offset) {
+            fctrList.addAll(fctrDAO.selectList(fctrCriterioVO, new RowBounds(offset, limit)));
+        }
+
+        return new PaginatedList<FacturaVO>(fctrList, offset, limit, count);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<FacturaServicioVO> selectFctsList(Long fctrId) {
+        Preconditions.checkNotNull(fctrId);
+
+        final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+
+        fctrCriterioVO.setId(fctrId);
+
+        return fctsDAO.selectList(fctrCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<FacturaImpuestoVO> selectFctiList(Long fctrId) {
+        Preconditions.checkNotNull(fctrId);
+
+        final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+
+        fctrCriterioVO.setId(fctrId);
+
+        return fctiDAO.selectList(fctrCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<FacturaCargoVO> selectFctgList(Long fctrId) {
+        Preconditions.checkNotNull(fctrId);
+
+        final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+
+        fctrCriterioVO.setId(fctrId);
+
+        return fctgDAO.selectList(fctrCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PaginatedList<FacturaLineaVO> selectFctlList(Long fctrId, final int offset, final int limit) {
+        Preconditions.checkNotNull(fctrId);
+        Preconditions.checkArgument(offset >= 0);
+        Preconditions.checkArgument(limit > 0);
+
+        final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
+        final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+
+        fctrCriterioVO.setId(fctrId);
+        fctlCriterioVO.setFctr(fctrCriterioVO);
+
+        final int count = fctlDAO.count(fctlCriterioVO);
+        final List<FacturaLineaVO> fctlList = new ArrayList<>();
+
+        if (count >= offset) {
+            fctlList.addAll(fctlDAO.selectList(fctlCriterioVO, new RowBounds(offset, limit)));
+        }
+
+        return new PaginatedList<FacturaLineaVO>(fctlList, offset, limit, count);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public FacturaLineaVO selectFctl(Long fctlId) {
+        Preconditions.checkNotNull(fctlId);
+
+        return fctlDAO.select(fctlId);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see FacturaDetalleDAO#count(FacturaDetalleCriterioVO)
+     * @see FacturaDetalleDAO#selectList(FacturaDetalleCriterioVO, RowBounds)
+     */
+    @Override
+    public PaginatedList<FacturaDetalleVO> selectFctdList(Long fctlId, int offset, int limit) {
+        Preconditions.checkNotNull(fctlId);
+        Preconditions.checkArgument(offset >= 0);
+        Preconditions.checkArgument(limit > 0);
+
+        final FacturaDetalleCriterioVO fctdCriterioVO = new FacturaDetalleCriterioVO();
+        final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
+
+        fctlCriterioVO.setId(fctlId);
+        fctdCriterioVO.setFctl(fctlCriterioVO);
+
+        final int count = fctdDAO.count(fctdCriterioVO);
+        final List<FacturaDetalleVO> fctdList = new ArrayList<>();
+
+        if (count >= offset) {
+            fctdList.addAll(fctdDAO.selectList(fctdCriterioVO, new RowBounds(offset, limit)));
+        }
+
+        return new PaginatedList<FacturaDetalleVO>(fctdList, offset, limit, count);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public FacturaDetalleVO selectFctd(Long fctdId) {
+        Preconditions.checkNotNull(fctdId);
+
+        return fctdDAO.select(fctdId);
     }
 
 }
