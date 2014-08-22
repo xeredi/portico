@@ -34,6 +34,19 @@ public interface Factura {
     void anular(final Long fctrId, final Date fechaAnulacion, final Long fcsrId, final String observaciones);
 
     /**
+     * Rectificar.
+     *
+     * @param fctrId
+     *            the fctr id
+     * @param fctsId
+     *            the fcts id
+     * @param duplicarDatos
+     *            the duplicar datos
+     * @return the long
+     */
+    Long rectificar(final Long fctrId, final Long fctsId, final boolean duplicarDatos);
+
+    /**
      * Imprimir.
      *
      * @param fctrIds

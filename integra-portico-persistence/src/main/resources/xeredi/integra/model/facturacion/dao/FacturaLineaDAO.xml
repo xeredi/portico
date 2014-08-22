@@ -72,6 +72,19 @@
                     <foreach collection="fctr.ids" item="item" open="(" close=")" separator=",">#{item}
                     </foreach>
                 </if>
+
+                <if test="fctr.fcts != null">
+                    <if test="fctr.fcts.id != null">
+                    <![CDATA[
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_factura_srv_fcts
+                            WHERE fcts_pk = fctl_fcts_pk
+                                AND fcts_pk = #{fctr.fcts.id}
+                        )
+                    ]]>
+                    </if>
+                </if>
             </if>
         </where>
     </sql>

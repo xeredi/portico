@@ -20,6 +20,15 @@ public interface FacturaServicioDAO {
     void insert(final FacturaServicioVO fcts);
 
     /**
+     * Select.
+     *
+     * @param fctsId
+     *            the fcts id
+     * @return the factura servicio vo
+     */
+    FacturaServicioVO select(final Long fctsId);
+
+    /**
      * Select list.
      *
      * @param fctrCriterioVO

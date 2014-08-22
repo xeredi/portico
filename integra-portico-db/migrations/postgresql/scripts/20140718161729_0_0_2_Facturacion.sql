@@ -619,6 +619,7 @@ CREATE TABLE portico.tbl_factura_fctr
 	, fctr_falta TIMESTAMP NOT NULL
 	, fctr_fini TIMESTAMP
 	, fctr_ffin TIMESTAMP
+	, fctr_estado CHAR(2) NOT NULL
 	, fctr_info1 VARCHAR(100)
 	, fctr_info2 VARCHAR(100)
 	, fctr_info3 VARCHAR(100)

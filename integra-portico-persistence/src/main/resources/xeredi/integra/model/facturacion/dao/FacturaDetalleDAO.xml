@@ -80,6 +80,25 @@
                         <foreach collection="fctl.fctr.ids" item="item" open="(" close=")" separator=",">#{item}
                         </foreach>
                     </if>
+
+                    <if test="fctl.fctr.fcts != null">
+                        <if test="fctl.fctr.fcts.id != null">
+                        <![CDATA[
+                            AND EXISTS (
+                                SELECT 1
+                                FROM tbl_factura_lin_fctl
+                                WHERE
+                                    fctl_pk = fctd_fctl_pk
+                                    AND EXISTS (
+                                        SELECT 1
+                                        FROM tbl_factura_srv_fcts
+                                        WHERE fcts_pk = fctl_fcts_pk
+                                            AND fcts_pk = #{fctl.fctr.fcts.id}
+                                    )
+                            )
+                        ]]>
+                        </if>
+                    </if>
                 </if>
             </if>
         </where>

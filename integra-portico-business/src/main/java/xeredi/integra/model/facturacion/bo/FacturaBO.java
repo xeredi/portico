@@ -24,12 +24,15 @@ import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
+import xeredi.integra.model.facturacion.vo.FacturaEstado;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
+import xeredi.integra.model.facturacion.vo.FacturaServicioCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturaVO;
+import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
@@ -82,11 +85,12 @@ public class FacturaBO implements Factura {
         Preconditions.checkNotNull(fechaAnulacion);
         Preconditions.checkNotNull(fcsrId);
 
-        if (fctrDAO.existsValoracionPosterior(fctrId)) {
+        final boolean existsValoracionPosterior = fctrDAO.existsValoracionPosterior(fctrId);
+        final boolean existsFacturaPosterior = fctrDAO.existsFacturaPosterior(fctrId);
+
+        if (existsValoracionPosterior && !existsFacturaPosterior) {
             throw new Error("No se puede eliminar una factura con valoraciones posteriores");
         }
-
-        final boolean existsFacturaPosterior = fctrDAO.existsFacturaPosterior(fctrId);
 
         final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
         final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
@@ -100,6 +104,10 @@ public class FacturaBO implements Factura {
 
         if (fctr == null) {
             throw new Error("No se encuentra la factura a anular");
+        }
+
+        if (fctr.getEstado() != FacturaEstado.NO) {
+            throw new Error("Estado de factura no valido para anulacion: " + fctr.getEstado());
         }
 
         if (fcsrDAO.updateIncrementar(fcsrId) == 0) {
@@ -172,6 +180,76 @@ public class FacturaBO implements Factura {
         }
 
         // FIXME Acabar
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(executorType = ExecutorType.BATCH)
+    public Long rectificar(final Long fctrId, final Long fctsId, final boolean duplicarDatos) {
+        Preconditions.checkNotNull(fctrId);
+        Preconditions.checkNotNull(fctsId);
+
+        final FacturaVO fctr = fctrDAO.select(fctrId);
+
+        if (fctr == null) {
+            throw new Error("Factura no encontrada");
+        }
+
+        final FacturaServicioVO fcts = fctsDAO.select(fctsId);
+
+        if (fcts == null) {
+            throw new Error("Servicio de Factura no encontrado");
+        }
+
+        if (fcts.getFctrId() != fctr.getId()) {
+            throw new Error("No coinciden los identificadores de factura de la factura y el servicio de la factura");
+        }
+
+        // Busqueda de los datos de la factura que se van a copiar.
+        final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
+        final FacturaServicioCriterioVO fctsCriterioVO = new FacturaServicioCriterioVO();
+        final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
+        final FacturaDetalleCriterioVO fctdCriterioVO = new FacturaDetalleCriterioVO();
+
+        fctrCriterioVO.setId(fctrId);
+        fctsCriterioVO.setId(fctsId);
+
+        fctrCriterioVO.setFcts(fctsCriterioVO);
+        fctlCriterioVO.setFctr(fctrCriterioVO);
+        fctdCriterioVO.setFctl(fctlCriterioVO);
+
+        final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
+        final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
+        final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);
+
+        // Creacion de la valoracion
+        final IgBO igBO = new IgBO();
+
+        final ValoracionVO vlrc = new ValoracionVO();
+
+        vlrc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+        vlrc.setAspc(fcts.getAspc());
+        // vlrc.setCodExencion(fctr.get); // FIXME
+        vlrc.setFalta(Calendar.getInstance().getTime());
+        vlrc.setFini(fcts.getFini());
+        vlrc.setFfin(fcts.getFfin());
+        vlrc.setFliq(Calendar.getInstance().getTime());
+        vlrc.setFref(fcts.getFref());
+        vlrc.setPagador(fctr.getPagador());
+        vlrc.setSrvc(fcts.getSrvc());
+        // vlrc.setSujPasivo(value); // FIXME
+        vlrc.setInfo1(fctr.getInfo1());
+        vlrc.setInfo2(fctr.getInfo2());
+        vlrc.setInfo3(fctr.getInfo3());
+        vlrc.setInfo4(fctr.getInfo4());
+        vlrc.setInfo5(fctr.getInfo5());
+        vlrc.setInfo6(fctr.getInfo6());
+
+        // FIXME Acabar
+        return null;
     }
 
     /**

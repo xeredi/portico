@@ -43,6 +43,9 @@ public final class FacturaVO {
     /** The ffin. */
     private Date ffin;
 
+    /** The estado. */
+    private FacturaEstado estado;
+
     /** The importe. */
     private Double importe;
 
@@ -413,6 +416,25 @@ public final class FacturaVO {
      */
     public void setImpuesto(final Double value) {
         impuesto = value;
+    }
+
+    /**
+     * Gets the estado.
+     *
+     * @return the estado
+     */
+    public FacturaEstado getEstado() {
+        return estado;
+    }
+
+    /**
+     * Sets the estado.
+     *
+     * @param value
+     *            the estado
+     */
+    public void setEstado(FacturaEstado value) {
+        this.estado = value;
     }
 
 }

@@ -48,6 +48,11 @@
         </where>
     </sql>
 
+    <select id="select" resultMap="ResultMap" parameterType="Long">
+        <include refid="SelectPrefix" />
+        WHERE fcts_pk = #{value}
+    </select>
+
     <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />

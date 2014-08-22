@@ -32,6 +32,7 @@ import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.FacturaAgregadaVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
+import xeredi.integra.model.facturacion.vo.FacturaEstado;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaAgregadaVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
@@ -203,6 +204,7 @@ public class FacturadorBO implements Facturador {
             fctr.getFctr().setNumero(fcsrDAO.select(fcsrId).getNumeroUltimo());
             fctr.getFctr().setFalta(Calendar.getInstance().getTime());
             fctr.getFctr().setFref(fechaFacturacion);
+            fctr.getFctr().setEstado(FacturaEstado.NO);
 
             if (contextoVO.getAspc() == null) {
                 final FacturaServicioVO fcts = fctr.getFctsList().iterator().next().getFcts();
