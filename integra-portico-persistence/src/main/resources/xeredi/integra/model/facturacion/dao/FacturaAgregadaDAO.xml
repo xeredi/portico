@@ -22,8 +22,11 @@
             <result column="fctr_info5" property="info5" />
             <result column="fctr_info6" property="info6" />
 
-            <association property="pagador" columnPrefix="fctr_pagador_"
-                resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
+            <association property="pagador" javaType="ParametroVO">
+                <id column="fctr_pagador_prmt_pk" />
+
+                <result column="fctr_pagador_prmt_pk" property="id" />
+            </association>
         </association>
         <collection property="fctsList" ofType="FacturaServicioAgregadaVO" javaType="ArrayList">
             <id column="fcts_pk" />
@@ -34,10 +37,16 @@
                 <result column="fcts_fini" property="fini" />
                 <result column="fcts_ffin" property="ffin" />
 
-                <association property="srvc" columnPrefix="fcts_"
-                    resultMap="xeredi.integra.model.servicio.dao.ServicioDAO.ResultMap" />
-                <association property="aspc" columnPrefix="fcts_"
-                    resultMap="xeredi.integra.model.facturacion.dao.AspectoDAO.ResultMap" />
+                <association property="srvc" javaType="ServicioVO">
+                    <id column="fcts_srvc_pk" />
+
+                    <result column="fcts_srvc_pk" property="id" />
+                </association>
+                <association property="aspc" javaType="AspectoVO">
+                    <id column="fcts_aspc_pk" />
+
+                    <result column="fcts_aspc_pk" property="id" />
+                </association>
             </association>
 
             <collection property="fctlList" ofType="FacturaLineaAgregadaVO" javaType="ArrayList">
@@ -61,12 +70,21 @@
                     <result column="fctl_info5" property="info5" />
                     <result column="fctl_info6" property="info6" />
 
-                    <association property="rgla" columnPrefix="fctl_"
-                        resultMap="xeredi.integra.model.facturacion.dao.ReglaDAO.ResultMap" />
-                    <association property="impuesto" columnPrefix="fctl_impuesto_"
-                        resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
-                    <association property="ssrv" columnPrefix="fctl_"
-                        resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
+                    <association property="rgla" javaType="ReglaVO">
+                        <id column="fctl_rgla_pk" />
+
+                        <result column="fctl_rgla_pk" property="id" />
+                    </association>
+                    <association property="impuesto" javaType="ParametroVO">
+                        <id column="fctl_impuesto_prmt_pk" />
+
+                        <result column="fctl_impuesto_prmt_pk" property="id" />
+                    </association>
+                    <association property="ssrv" javaType="SubservicioVO">
+                        <id column="fctl_ssrv_pk" />
+
+                        <result column="fctl_ssrv_pk" property="id" />
+                    </association>
                 </association>
 
                 <collection property="fctdList" ofType="FacturaDetalleVO" javaType="ArrayList">
@@ -88,8 +106,11 @@
                     <result column="fctd_info5" property="info5" />
                     <result column="fctd_info6" property="info6" />
 
-                    <association property="ssrv" columnPrefix="fctd_"
-                        resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
+                    <association property="ssrv" javaType="SubservicioVO">
+                        <id column="fctd_ssrv_pk" />
+
+                        <result column="fctd_ssrv_pk" property="id" />
+                    </association>
                 </collection>
             </collection>
         </collection>
@@ -186,10 +207,10 @@
         	, vlrd_info5 AS fctd_info5
         	, vlrd_info6 AS fctd_info6
         FROM
-        	vw_valoracion_vlrc
-        	INNER JOIN vw_valoracion_lin_vlrl ON
+        	tbl_valoracion_vlrc
+        	INNER JOIN tbl_valoracion_lin_vlrl ON
         		vlrl_vlrc_pk = vlrc_pk
-        	INNER JOIN vw_valoracion_det_vlrd ON
+        	INNER JOIN tbl_valoracion_det_vlrd ON
         		vlrd_vlrl_pk = vlrl_pk
         		AND vlrd_vlrc_pk = vlrc_pk
         WHERE vlrc_pk IN

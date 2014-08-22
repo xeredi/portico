@@ -169,14 +169,14 @@ SELECT * FROM tbl_factura_fctr;
 SELECT * FROM tbl_factura_cargo_fctc;
 SELECT * FROM tbl_factura_srv_fcts;
 SELECT * FROM tbl_factura_imp_fcti;
-SELECT * FROM tbl_factura_lin_fctl ORDER BY fctl_pk;
-SELECT * FROM tbl_factura_det_fctd ORDER BY fctd_fctl_pk, fctd_pk;
+SELECT * FROM tbl_factura_lin_fctl ORDER BY fctl_fctr_pk, fctl_pk;
+SELECT * FROM tbl_factura_det_fctd ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk;
 SELECT * FROM vw_factura_fctr;
 SELECT * FROM vw_factura_cargo_fctc;
 SELECT * FROM vw_factura_srv_fcts;
 SELECT * FROM vw_factura_imp_fcti;
-SELECT * FROM vw_factura_lin_fctl;
-SELECT * FROM vw_factura_det_fctd;
+SELECT * FROM vw_factura_lin_fctl ORDER BY fctl_fctr_pk, fctl_padre_pk, fctl_pk;
+SELECT * FROM vw_factura_det_fctd ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk;
 
 
 
@@ -342,72 +342,10 @@ WHERE
 
 
 
-        UPDATE tbl_valoracion_tmp_vlrt vlrt SET
-            vlrt_importe_base = (
-                SELECT SUM(vlrtAux.vlrt_importe)
-                FROM tbl_valoracion_tmp_vlrt vlrtAux
-                WHERE
-                    vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
-                    AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
-                    AND (
-                        (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
-                        OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
-                    )
-                    AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
-                    AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
-            )
-            , vlrt_importe = (
-                CASE
-                    WHEN vlrt_rgla_tipo = 'C'
-                    THEN (
-                        SELECT sql.vlrt_importe * (vlrt_valor_base - 1)
-                        FROM (
-                            SELECT SUM(vlrtAux.vlrt_importe) AS vlrt_importe
-                            FROM tbl_valoracion_tmp_vlrt vlrtAux
-                            WHERE
-                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
-                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
-                                AND (
-                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
-                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
-                                )
-                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
-                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
-                        ) sql
-                    )
-
-                    WHEN vlrt_rgla_tipo = 'D'
-                    THEN (
-                        SELECT sql.vlrt_importe * (- vlrt_valor_base) / 100
-                        FROM (
-                            SELECT SUM(vlrtAux.vlrt_importe_base) AS vlrt_importe
-                            FROM tbl_valoracion_tmp_vlrt vlrtAux
-                            WHERE
-                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
-                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
-                                AND (
-                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
-                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
-                                )
-                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
-                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
-                        ) sql
-                    )
-                END
-            )
-        WHERE
-            vlrt_prbt_pk = 1237001
-            AND vlrt_srvc_pk = 1259571
-            AND vlrt_crgo_pk = 60001
-            AND vlrt_rgla_tipo <> 'T'
-;
 
 
-SELECT *
-FROM tbl_valoracion_tmp_vlrt 
-;
 
-SELECT vlrt_srvc_pk, COUNT(1)
-FROM tbl_valoracion_tmp_vlrt 
-GROUP BY vlrt_srvc_pk
-;
+
+
+
+

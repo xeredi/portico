@@ -100,7 +100,7 @@
     <select id="selectList" resultMap="ResultMap" parameterType="FacturaLineaCriterioVO">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY fctl_fctr_pk, fctl_pk
+        ORDER BY fctl_fctr_pk, fctl_padre_pk, fctl_pk
     </select>
 
     <select id="count" resultType="Integer" parameterType="FacturaLineaCriterioVO">
