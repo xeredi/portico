@@ -597,7 +597,8 @@ CREATE TABLE portico.tbl_valoracion_tmp_vlrt
 )
 \
 
-CREATE INDEX ix_vlrt ON portico.tbl_valoracion_tmp_vlrt (vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk)
+CREATE INDEX ix_vlrt ON portico.tbl_valoracion_tmp_vlrt (
+	vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_crgo_pk, vlrt_rgla_tipo)
 \
 CREATE INDEX ix_vlrt_padre_pk ON portico.tbl_valoracion_tmp_vlrt (vlrt_padre_pk)
 \

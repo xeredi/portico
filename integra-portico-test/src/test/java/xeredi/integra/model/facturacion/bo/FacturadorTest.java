@@ -10,10 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Facturador;
-import xeredi.integra.model.facturacion.bo.FacturadorBO;
-import xeredi.integra.model.facturacion.bo.Valoracion;
-import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.util.pagination.PaginatedList;
@@ -35,8 +31,8 @@ public final class FacturadorTest {
         LOG.info("Start test");
 
         try {
-            final Long prbtId = 1644001L;
-         // final Long prbtId = 1237001L;
+            // final Long prbtId = 1644001L;
+            final Long prbtId = 1237001L;
             final Valoracion valoracion = BOFactory.getInjector().getInstance(ValoracionBO.class);
             final Facturador facturador = BOFactory.getInjector().getInstance(FacturadorBO.class);
 
@@ -52,7 +48,7 @@ public final class FacturadorTest {
             }
 
             facturador
-                    .facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(), prbtId);
+            .facturarValoraciones(vlrcIds, /* 61001L */null, 68001L, Calendar.getInstance().getTime(), prbtId);
         } catch (final Throwable ex) {
             LOG.error(ex, ex);
 

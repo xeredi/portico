@@ -371,6 +371,8 @@ public class ValoradorBO implements Valorador {
                     break;
                 }
 
+                final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
                     vlrt.setPadreId(vlrt.getId());
@@ -389,11 +391,17 @@ public class ValoradorBO implements Valorador {
                     }
 
                     if (vlrt.getImporteInc() == null) {
-                        vlrtDAO.insert(vlrt);
+                        vlrtListGanadores.add(vlrt);
+
                     } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
+                        vlrtListGanadores.add(vlrt);
+
                         vlrtDAO.deleteIncompatibilidadList(vlrt);
-                        vlrtDAO.insert(vlrt);
                     }
+                }
+
+                for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+                    vlrtDAO.insert(vlrt);
                 }
             }
         }
@@ -426,6 +434,8 @@ public class ValoradorBO implements Valorador {
 
                 boolean incompatibilidadFound = false;
 
+                final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
@@ -443,13 +453,17 @@ public class ValoradorBO implements Valorador {
                     }
 
                     if (vlrt.getImporteInc() == null) {
-                        vlrtDAO.insert(vlrt);
+                        vlrtListGanadores.add(vlrt);
                     } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
                         incompatibilidadFound = true;
 
+                        vlrtListGanadores.add(vlrt);
                         vlrtDAO.deleteIncompatibilidadList(vlrt);
-                        vlrtDAO.insert(vlrt);
                     }
+                }
+
+                for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+                    vlrtDAO.insert(vlrt);
                 }
 
                 if (incompatibilidadFound) {
@@ -488,6 +502,8 @@ public class ValoradorBO implements Valorador {
 
                 boolean incompatibilidadFound = false;
 
+                final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
+
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
                     vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
@@ -505,13 +521,17 @@ public class ValoradorBO implements Valorador {
                     }
 
                     if (vlrt.getImporteInc() == null) {
-                        vlrtDAO.insert(vlrt);
+                        vlrtListGanadores.add(vlrt);
                     } else if (vlrt.getImporte() < vlrt.getImporteInc()) {
                         incompatibilidadFound = true;
 
+                        vlrtListGanadores.add(vlrt);
                         vlrtDAO.deleteIncompatibilidadList(vlrt);
-                        vlrtDAO.insert(vlrt);
                     }
+                }
+
+                for (final ValoracionTemporalVO vlrt : vlrtListGanadores) {
+                    vlrtDAO.insert(vlrt);
                 }
 
                 if (incompatibilidadFound) {

@@ -4,11 +4,17 @@
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionLineaDAO">
     <resultMap type="ValoracionLineaVO" id="ResultMap">
-        <id column="vlrl_pk" property="id" />
-        <id column="vlrl_padre_pk" property="padreId" />
-        <id column="vlrl_vlrc_pk" property="vlrcId" />
-        <id column="vlrl_fini" property="fini" />
-        <id column="vlrl_ffin" property="ffin" />
+        <id column="vlrl_pk" />
+        <id column="vlrl_padre_pk" />
+        <id column="vlrl_vlrc_pk" />
+        <id column="vlrl_fini" />
+        <id column="vlrl_ffin" />
+
+        <result column="vlrl_pk" property="id" />
+        <result column="vlrl_padre_pk" property="padreId" />
+        <result column="vlrl_vlrc_pk" property="vlrcId" />
+        <result column="vlrl_fini" property="fini" />
+        <result column="vlrl_ffin" property="ffin" />
 
         <result column="vlrl_importe" property="importe" />
 

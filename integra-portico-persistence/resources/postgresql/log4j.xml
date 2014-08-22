@@ -56,12 +56,19 @@
             <param name="LevelMin" value="DEBUG" />
         </filter>
     </appender>
-    <logger name='xeredi.integra.model.dao.facturacion.ValoracionAgregadaDAO'>
+    <logger name='xeredi.integra.model.facturacion.dao.ValoracionAgregadaDAO'>
         <level value="DEBUG" />
 
         <appender-ref ref="dbLog" />
     </logger>
-    <logger name='xeredi.integra.model.dao.facturacion.FacturaAgregadaDAO'>
+<!--
+    <logger name='xeredi.integra.model.facturacion.dao.ValoracionTemporalDAO'>
+        <level value="DEBUG" />
+
+        <appender-ref ref="dbLog" />
+    </logger>
+ -->
+    <logger name='xeredi.integra.model.facturacion.dao.FacturaAgregadaDAO'>
         <level value="DEBUG" />
 
         <appender-ref ref="dbLog" />

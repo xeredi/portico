@@ -4,8 +4,9 @@
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionDAO">
     <resultMap type="ValoracionVO" id="ResultMap">
-        <id column="vlrc_pk" property="id" />
+        <id column="vlrc_pk" />
 
+        <result column="vlrc_pk" property="id" />
         <result column="vlrc_fref" property="fref" />
         <result column="vlrc_falta" property="falta" />
         <result column="vlrc_fliq" property="fliq" />

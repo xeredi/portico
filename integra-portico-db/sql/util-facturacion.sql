@@ -156,7 +156,7 @@ SELECT * FROM tbl_regla_rgla;
 SELECT * FROM tbl_servicio_cargo_srcr;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
 SELECT * FROM vw_valoracion_vlrc;
-SELECT * FROM vw_valoracion_lin_vlrl WHERE vlrl_vlrc_pk = 2156046 ORDER BY vlrl_vlrc_pk, vlrl_padre_pk, vlrl_pk;
+SELECT * FROM vw_valoracion_lin_vlrl ORDER BY vlrl_vlrc_pk, vlrl_padre_pk, vlrl_pk;
 SELECT * FROM vw_valoracion_det_vlrd;
 SELECT * FROM vw_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_vlrc;
@@ -342,6 +342,72 @@ WHERE
 
 
 
+        UPDATE tbl_valoracion_tmp_vlrt vlrt SET
+            vlrt_importe_base = (
+                SELECT SUM(vlrtAux.vlrt_importe)
+                FROM tbl_valoracion_tmp_vlrt vlrtAux
+                WHERE
+                    vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
+                    AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
+                    AND (
+                        (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
+                        OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
+                    )
+                    AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
+                    AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+            )
+            , vlrt_importe = (
+                CASE
+                    WHEN vlrt_rgla_tipo = 'C'
+                    THEN (
+                        SELECT sql.vlrt_importe * (vlrt_valor_base - 1)
+                        FROM (
+                            SELECT SUM(vlrtAux.vlrt_importe) AS vlrt_importe
+                            FROM tbl_valoracion_tmp_vlrt vlrtAux
+                            WHERE
+                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
+                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
+                                AND (
+                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
+                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
+                                )
+                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
+                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+                        ) sql
+                    )
+
+                    WHEN vlrt_rgla_tipo = 'D'
+                    THEN (
+                        SELECT sql.vlrt_importe * (- vlrt_valor_base) / 100
+                        FROM (
+                            SELECT SUM(vlrtAux.vlrt_importe_base) AS vlrt_importe
+                            FROM tbl_valoracion_tmp_vlrt vlrtAux
+                            WHERE
+                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
+                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
+                                AND (
+                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
+                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
+                                )
+                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
+                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+                        ) sql
+                    )
+                END
+            )
+        WHERE
+            vlrt_prbt_pk = 1237001
+            AND vlrt_srvc_pk = 1259571
+            AND vlrt_crgo_pk = 60001
+            AND vlrt_rgla_tipo <> 'T'
+;
 
 
+SELECT *
+FROM tbl_valoracion_tmp_vlrt 
+;
 
+SELECT vlrt_srvc_pk, COUNT(1)
+FROM tbl_valoracion_tmp_vlrt 
+GROUP BY vlrt_srvc_pk
+;
