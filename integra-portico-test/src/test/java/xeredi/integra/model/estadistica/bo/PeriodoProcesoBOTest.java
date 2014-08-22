@@ -1,4 +1,4 @@
-package xeredi.integra.model.bo.estadistica;
+package xeredi.integra.model.estadistica.bo;
 
 import java.io.IOException;
 

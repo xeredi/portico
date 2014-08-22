@@ -1,4 +1,4 @@
-package xeredi.integra.model.bo.maestro;
+package xeredi.integra.model.maestro.bo;
 
 import java.util.Arrays;
 import java.util.Calendar;

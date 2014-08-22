@@ -1,4 +1,4 @@
-package xeredi.integra.model.bo.facturacion;
+package xeredi.integra.model.facturacion.bo;
 
 import java.util.HashSet;
 import java.util.List;

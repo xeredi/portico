@@ -1,4 +1,4 @@
-package xeredi.integra.model.util.grammar;
+package xeredi.integra.model.facturacion.grammar;
 
 import java.io.IOException;
 
@@ -13,6 +13,8 @@ import xeredi.integra.model.facturacion.grammar.PathSqlGenerator;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
+import xeredi.integra.model.util.grammar.PathLexer;
+import xeredi.integra.model.util.grammar.PathParser;
 
 // TODO: Auto-generated Javadoc
 /**

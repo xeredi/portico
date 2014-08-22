@@ -1,4 +1,4 @@
-package xeredi.integra.model.proxy.configuracion;
+package xeredi.integra.model.configuracion.proxy;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

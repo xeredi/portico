@@ -1,4 +1,4 @@
-package xeredi.integra.model.proxy.metamodelo;
+package xeredi.integra.model.metamodelo.proxy;
 
 import java.util.Map;
 

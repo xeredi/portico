@@ -1,4 +1,4 @@
-package xeredi.integra.model.bo.util.pdf;
+package xeredi.integra.model.facturacion.report;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;

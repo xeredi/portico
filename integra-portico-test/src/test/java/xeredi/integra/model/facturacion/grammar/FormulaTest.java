@@ -1,4 +1,4 @@
-package xeredi.integra.model.util.grammar;
+package xeredi.integra.model.facturacion.grammar;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -13,6 +13,8 @@ import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
+import xeredi.integra.model.util.grammar.FormulaLexer;
+import xeredi.integra.model.util.grammar.FormulaParser;
 
 // TODO: Auto-generated Javadoc
 /**

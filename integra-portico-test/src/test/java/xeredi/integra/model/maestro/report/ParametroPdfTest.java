@@ -1,4 +1,4 @@
-package xeredi.integra.model.bo.util.pdf;
+package xeredi.integra.model.maestro.report;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,10 +36,16 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
  */
 public final class ParametroPdfTest {
 
+    /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ParametroPdfTest.class);
 
     /**
      * Test.
+     *
+     * @throws IOException
+     *             the IO exception
+     * @throws DRException
+     *             the DR exception
      */
     @Test
     public void test() throws IOException, DRException {

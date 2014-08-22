@@ -1,4 +1,4 @@
-package xeredi.integra.model.bo.facturacion;
+package xeredi.integra.model.facturacion.bo;
 
 import java.util.Calendar;
 import java.util.HashSet;
@@ -35,8 +35,8 @@ public final class FacturadorTest {
         LOG.info("Start test");
 
         try {
-            // final Long prbtId = 1644001L;
-            final Long prbtId = 1237001L;
+            final Long prbtId = 1644001L;
+         // final Long prbtId = 1237001L;
             final Valoracion valoracion = BOFactory.getInjector().getInstance(ValoracionBO.class);
             final Facturador facturador = BOFactory.getInjector().getInstance(FacturadorBO.class);
 
