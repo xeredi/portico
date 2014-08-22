@@ -728,11 +728,14 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_cargo_fctc TO portic
 CREATE TABLE portico.tbl_factura_lin_fctl
 (
 	fctl_pk BIGINT NOT NULL
+	, fctl_padre_pk BIGINT NOT NULL
 	, fctl_fctr_pk BIGINT NOT NULL
 	, fctl_fcts_pk BIGINT NOT NULL
 	, fctl_rgla_pk BIGINT NOT NULL
 	, fctl_impuesto_prmt_pk BIGINT NOT NULL
 	, fctl_ssrv_pk BIGINT
+	, fctl_fini TIMESTAMP
+	, fctl_ffin TIMESTAMP
 
 	, fctl_cuant1 DOUBLE PRECISION
 	, fctl_cuant2 DOUBLE PRECISION
@@ -750,6 +753,8 @@ CREATE TABLE portico.tbl_factura_lin_fctl
 
 	, CONSTRAINT pk_fctl PRIMARY KEY (fctl_pk)
 
+	, CONSTRAINT fk_fctl_padre_pk FOREIGN KEY (fctl_padre_pk)
+		REFERENCES portico.tbl_factura_lin_fctl (fctl_pk)
 	, CONSTRAINT fk_fctl_fctr_pk FOREIGN KEY (fctl_fctr_pk)
 		REFERENCES portico.tbl_factura_fctr (fctr_pk)
 	, CONSTRAINT fk_fctl_fcts_pk FOREIGN KEY (fctl_fcts_pk)
@@ -763,6 +768,8 @@ CREATE TABLE portico.tbl_factura_lin_fctl
 )
 \
 
+CREATE INDEX ix_fctl_padre_pk ON portico.tbl_factura_lin_fctl (fctl_padre_pk)
+\
 CREATE INDEX ix_fctl_fctr_pk ON portico.tbl_factura_lin_fctl (fctl_fctr_pk)
 \
 CREATE INDEX ix_fctl_fcts_pk ON portico.tbl_factura_lin_fctl (fctl_fcts_pk)
@@ -782,6 +789,8 @@ CREATE TABLE portico.tbl_factura_det_fctd
 	, fctd_importe_base NUMERIC(10, 2) NOT NULL
 	, fctd_importe NUMERIC(10, 2) NOT NULL
 	, fctd_ssrv_pk BIGINT
+	, fctd_fini TIMESTAMP
+	, fctd_ffin TIMESTAMP
 
 	, fctd_cuant1 DOUBLE PRECISION
 	, fctd_cuant2 DOUBLE PRECISION

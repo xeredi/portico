@@ -20,6 +20,11 @@ import xeredi.integra.model.facturacion.dao.FacturaImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaLineaDAO;
 import xeredi.integra.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.integra.model.facturacion.dao.FacturaServicioDAO;
+import xeredi.integra.model.facturacion.dao.ValoracionCargoDAO;
+import xeredi.integra.model.facturacion.dao.ValoracionDAO;
+import xeredi.integra.model.facturacion.dao.ValoracionDetalleDAO;
+import xeredi.integra.model.facturacion.dao.ValoracionImpuestoDAO;
+import xeredi.integra.model.facturacion.dao.ValoracionLineaDAO;
 import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleCriterioVO;
@@ -32,6 +37,11 @@ import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturaVO;
+import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
+import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
@@ -75,6 +85,26 @@ public class FacturaBO implements Factura {
     @Inject
     FacturaSerieDAO fcsrDAO;
 
+    /** The vlrc dao. */
+    @Inject
+    ValoracionDAO vlrcDAO;
+
+    /** The vlri dao. */
+    @Inject
+    ValoracionImpuestoDAO vlriDAO;
+
+    /** The vlrg dao. */
+    @Inject
+    ValoracionCargoDAO vlrgDAO;
+
+    /** The vlrl dao. */
+    @Inject
+    ValoracionLineaDAO vlrlDAO;
+
+    /** The vlrd dao. */
+    @Inject
+    ValoracionDetalleDAO vlrdDAO;
+
     /**
      * {@inheritDoc}
      */
@@ -114,6 +144,11 @@ public class FacturaBO implements Factura {
             throw new Error("No se encuentra serie de anulacion");
         }
 
+        // Modificar el estado de la factura original - Pasa a Anulada
+        fctr.setEstado(FacturaEstado.AN);
+        fctrDAO.updateEstado(fctr);
+
+        // Crear nueva factura a partir de los datos de la factura anulada.
         final FacturaSerieVO fcsr = fcsrDAO.select(fcsrId);
         final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
         final List<FacturaCargoVO> fctgList = fctgDAO.selectList(fctrCriterioVO);
@@ -130,6 +165,7 @@ public class FacturaBO implements Factura {
         fctr.setFcsr(fcsr);
         fctr.setNumero(fcsr.getNumeroUltimo());
         fctr.setFalta(Calendar.getInstance().getTime());
+        fctr.setEstado(fctr.getImporte() > 0 ? FacturaEstado.RN : FacturaEstado.RP);
 
         // FIXME Donde guardo la fecha de anulacion
 
@@ -162,6 +198,7 @@ public class FacturaBO implements Factura {
             generatedIds.put(fctl.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
             fctl.setId(generatedIds.get(fctl.getId()));
+            fctl.setPadreId(generatedIds.get(fctl.getPadreId()));
             fctl.setFctrId(generatedIds.get(fctl.getFctrId()));
 
             fctlDAO.insert(fctl);
@@ -221,18 +258,17 @@ public class FacturaBO implements Factura {
         fctdCriterioVO.setFctl(fctlCriterioVO);
 
         final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
-        final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
-        final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);
 
         // Creacion de la valoracion
         final IgBO igBO = new IgBO();
 
         final ValoracionVO vlrc = new ValoracionVO();
+        final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
+        final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
 
         vlrc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
         vlrc.setAspc(fcts.getAspc());
-        // vlrc.setCodExencion(fctr.get); // FIXME
         vlrc.setFalta(Calendar.getInstance().getTime());
         vlrc.setFini(fcts.getFini());
         vlrc.setFfin(fcts.getFfin());
@@ -240,7 +276,10 @@ public class FacturaBO implements Factura {
         vlrc.setFref(fcts.getFref());
         vlrc.setPagador(fctr.getPagador());
         vlrc.setSrvc(fcts.getSrvc());
+
+        // vlrc.setCodExencion(fctr.get); // FIXME
         // vlrc.setSujPasivo(value); // FIXME
+
         vlrc.setInfo1(fctr.getInfo1());
         vlrc.setInfo2(fctr.getInfo2());
         vlrc.setInfo3(fctr.getInfo3());
@@ -248,8 +287,102 @@ public class FacturaBO implements Factura {
         vlrc.setInfo5(fctr.getInfo5());
         vlrc.setInfo6(fctr.getInfo6());
 
-        // FIXME Acabar
-        return null;
+        final Map<Long, Long> generatedIds = new HashMap<>();
+
+        if (duplicarDatos) {
+            final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
+            final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);
+
+            for (final FacturaLineaVO fctl : fctlList) {
+                generatedIds.put(fctl.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                final ValoracionLineaVO vlrl = new ValoracionLineaVO();
+
+                vlrl.setId(generatedIds.get(fctl.getId()));
+                vlrl.setPadreId(generatedIds.get(fctl.getPadreId()));
+                vlrl.setVlrcId(vlrc.getId());
+
+                vlrl.setImpuesto(fctl.getImpuesto());
+                vlrl.setRgla(fctl.getRgla());
+                vlrl.setSsrv(fctl.getSsrv());
+                vlrl.setFini(fctl.getFini());
+                vlrl.setFfin(fctl.getFfin());
+
+                vlrl.setCuant1(fctl.getCuant1());
+                vlrl.setCuant2(fctl.getCuant2());
+                vlrl.setCuant3(fctl.getCuant3());
+                vlrl.setCuant4(fctl.getCuant4());
+                vlrl.setCuant5(fctl.getCuant5());
+                vlrl.setCuant6(fctl.getCuant6());
+                vlrl.setInfo1(fctl.getInfo1());
+                vlrl.setInfo2(fctl.getInfo2());
+                vlrl.setInfo3(fctl.getInfo3());
+                vlrl.setInfo4(fctl.getInfo4());
+                vlrl.setInfo5(fctl.getInfo5());
+                vlrl.setInfo6(fctl.getInfo6());
+
+                vlrlList.add(vlrl);
+            }
+
+            for (final FacturaDetalleVO fctd : fctdList) {
+                generatedIds.put(fctd.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                final ValoracionDetalleVO vlrd = new ValoracionDetalleVO();
+
+                vlrd.setId(generatedIds.get(fctd.getId()));
+                vlrd.setVlrcId(vlrc.getId());
+                vlrd.setVlrlId(generatedIds.get(fctd.getFctlId()));
+
+                vlrd.setSsrv(fctd.getSsrv());
+                vlrd.setFini(fctd.getFini());
+                vlrd.setFfin(fctd.getFfin());
+                vlrd.setImporte(-fctd.getImporte());
+                vlrd.setImporteBase(-fctd.getImporteBase());
+
+                vlrd.setCuant1(fctd.getCuant1());
+                vlrd.setCuant2(fctd.getCuant2());
+                vlrd.setCuant3(fctd.getCuant3());
+                vlrd.setCuant4(fctd.getCuant4());
+                vlrd.setCuant5(fctd.getCuant5());
+                vlrd.setCuant6(fctd.getCuant6());
+                vlrd.setInfo1(fctd.getInfo1());
+                vlrd.setInfo2(fctd.getInfo2());
+                vlrd.setInfo3(fctd.getInfo3());
+                vlrd.setInfo4(fctd.getInfo4());
+                vlrd.setInfo5(fctd.getInfo5());
+                vlrd.setInfo6(fctd.getInfo6());
+
+                vlrdList.add(vlrd);
+            }
+        } else {
+            // FIXME Acabar
+        }
+
+        // Guardar datos de la valoracion de rectificacion
+
+        vlrcDAO.insert(vlrc);
+
+        for (final ValoracionLineaVO vlrl : vlrlList) {
+            vlrlDAO.insert(vlrl);
+        }
+
+        for (final ValoracionDetalleVO vlrd : vlrdList) {
+            vlrdDAO.insert(vlrd);
+        }
+
+        final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+
+        vlrcCriterioVO.setId(vlrc.getId());
+
+        vlrgDAO.insertGenerate(vlrcCriterioVO);
+
+        final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
+
+        for (final ValoracionImpuestoVO vlri : vlriList) {
+            vlriDAO.insert(vlri);
+        }
+
+        return vlrc.getId();
     }
 
     /**

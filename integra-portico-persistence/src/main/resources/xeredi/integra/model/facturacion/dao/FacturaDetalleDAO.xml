@@ -9,6 +9,8 @@
         <result column="fctd_pk" property="id" />
         <result column="fctd_fctr_pk" property="fctrId" />
         <result column="fctd_fctl_pk" property="fctlId" />
+        <result column="fctd_fini" property="fini" />
+        <result column="fctd_ffin" property="ffin" />
 
         <result column="fctd_importe_base" property="importeBase" />
         <result column="fctd_importe" property="importe" />
@@ -33,11 +35,11 @@
     <insert id="insert" parameterType="FacturaDetalleVO">
     <![CDATA[
         INSERT INTO tbl_factura_det_fctd (
-            fctd_pk, fctd_fctr_pk, fctd_fctl_pk, fctd_importe_base, fctd_importe, fctd_ssrv_pk
+            fctd_pk, fctd_fctr_pk, fctd_fctl_pk, fctd_importe_base, fctd_importe, fctd_ssrv_pk, fctd_fini, fctd_ffin
             , fctd_cuant1, fctd_cuant2, fctd_cuant3, fctd_cuant4, fctd_cuant5, fctd_cuant6
             , fctd_info1, fctd_info2, fctd_info3, fctd_info4, fctd_info5, fctd_info6
         ) VALUES (
-            #{id}, #{fctrId}, #{fctlId}, #{importeBase}, #{importe}, #{ssrv.id}
+            #{id}, #{fctrId}, #{fctlId}, #{importeBase}, #{importe}, #{ssrv.id}, #{fini}, #{ffin}
             , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )

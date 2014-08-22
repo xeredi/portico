@@ -22,6 +22,15 @@ public interface FacturaDAO {
     void insert(final FacturaVO fctr);
 
     /**
+     * Update estado.
+     *
+     * @param fctr
+     *            the fctr
+     * @return the int
+     */
+    int updateEstado(final FacturaVO fctr);
+
+    /**
      * Select.
      *
      * @param id

@@ -11,12 +11,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Factura;
-import xeredi.integra.model.facturacion.bo.FacturaBO;
-import xeredi.integra.model.facturacion.bo.FacturaImpresionVO;
 import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
+import xeredi.integra.model.facturacion.vo.FacturaEstado;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
@@ -52,9 +50,11 @@ public final class FacturaTest {
                         LOG.info("Busqueda de factura");
                         Assert.assertNotNull(factura.select(fctr.getId()));
 
-                        LOG.info("Anulacion de factura");
-                        factura.anular(fctr.getId(), Calendar.getInstance().getTime(), fctr.getFcsr().getId(),
-                                "Observaciones de prueba de anulacion");
+                        if (fctr.getEstado() == FacturaEstado.NO) {
+                            LOG.info("Anulacion de factura");
+                            factura.anular(fctr.getId(), Calendar.getInstance().getTime(), fctr.getFcsr().getId(),
+                                    "Observaciones de prueba de anulacion");
+                        }
 
                         LOG.info("Busqueda de cargos de factura");
                         final List<FacturaCargoVO> fctgList = factura.selectFctgList(fctr.getId());

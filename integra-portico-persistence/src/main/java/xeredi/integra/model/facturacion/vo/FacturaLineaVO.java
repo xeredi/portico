@@ -1,5 +1,7 @@
 package xeredi.integra.model.facturacion.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -13,6 +15,9 @@ public final class FacturaLineaVO {
 
     /** The id. */
     private Long id;
+
+    /** The padre id. */
+    private Long padreId;
 
     /** The fctr id. */
     private Long fctrId;
@@ -28,6 +33,12 @@ public final class FacturaLineaVO {
 
     /** The ssrv. */
     private SubservicioVO ssrv;
+
+    /** The fini. */
+    private Date fini;
+
+    /** The ffin. */
+    private Date ffin;
 
     /** The importe base. */
     private Double importeBase;
@@ -457,6 +468,63 @@ public final class FacturaLineaVO {
      */
     public void setImporteBase(final Double value) {
         importeBase = value;
+    }
+
+    /**
+     * Gets the padre id.
+     *
+     * @return the padre id
+     */
+    public Long getPadreId() {
+        return padreId;
+    }
+
+    /**
+     * Sets the padre id.
+     *
+     * @param value
+     *            the padre id
+     */
+    public void setPadreId(Long value) {
+        this.padreId = value;
+    }
+
+    /**
+     * Gets the fini.
+     *
+     * @return the fini
+     */
+    public Date getFini() {
+        return fini;
+    }
+
+    /**
+     * Sets the fini.
+     *
+     * @param value
+     *            the fini
+     */
+    public void setFini(Date value) {
+        this.fini = value;
+    }
+
+    /**
+     * Gets the ffin.
+     *
+     * @return the ffin
+     */
+    public Date getFfin() {
+        return ffin;
+    }
+
+    /**
+     * Sets the ffin.
+     *
+     * @param value
+     *            the ffin
+     */
+    public void setFfin(Date value) {
+        this.ffin = value;
     }
 
 }

@@ -3,7 +3,9 @@ package xeredi.integra.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -197,6 +199,8 @@ public class FacturadorBO implements Facturador {
 
         LOG.info("Preparacion de Facturas");
         for (final FacturaAgregadaVO fctr : fctrList) {
+            final Map<Long, Long> generatedIds = new HashMap<>();
+
             fcsrDAO.updateIncrementar(fcsrId);
 
             fctr.getFctr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
@@ -221,7 +225,10 @@ public class FacturadorBO implements Facturador {
                 fctsList.add(fcts.getFcts());
 
                 for (final FacturaLineaAgregadaVO fctl : fcts.getFctlList()) {
-                    fctl.getFctl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    generatedIds.put(fctl.getFctl().getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                    fctl.getFctl().setId(generatedIds.get(fctl.getFctl().getId()));
+                    fctl.getFctl().setPadreId(generatedIds.get(fctl.getFctl().getPadreId()));
                     fctl.getFctl().setFctrId(fcts.getFcts().getFctrId());
                     fctl.getFctl().setFctsId(fcts.getFcts().getId());
 

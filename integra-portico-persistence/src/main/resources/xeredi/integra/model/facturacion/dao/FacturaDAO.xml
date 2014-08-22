@@ -42,6 +42,15 @@
     ]]>
     </insert>
 
+    <insert id="updateEstado" parameterType="FacturaVO">
+    <![CDATA[
+        UPDATE tbl_factura_fctr SET
+            fctr_estado = #{estado}
+        WHERE
+            fctr_pk = #{id}
+    ]]>
+    </insert>
+
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT *

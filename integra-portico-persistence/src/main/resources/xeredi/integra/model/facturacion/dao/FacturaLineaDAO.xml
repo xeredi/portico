@@ -7,8 +7,11 @@
         <id column="fctl_pk" />
 
         <result column="fctl_pk" property="id" />
+        <result column="fctl_padre_pk" property="padreId" />
         <result column="fctl_fctr_pk" property="fctrId" />
         <result column="fctl_fcts_pk" property="fctsId" />
+        <result column="fctl_fini" property="fini" />
+        <result column="fctl_ffin" property="ffin" />
 
         <result column="fctl_importe_base" property="importeBase" />
         <result column="fctl_importe" property="importe" />
@@ -35,11 +38,11 @@
     <insert id="insert" parameterType="FacturaLineaVO">
     <![CDATA[
         INSERT INTO tbl_factura_lin_fctl (
-            fctl_pk, fctl_fctr_pk, fctl_fcts_pk, fctl_rgla_pk, fctl_impuesto_prmt_pk, fctl_ssrv_pk
+            fctl_pk, fctl_padre_pk, fctl_fctr_pk, fctl_fcts_pk, fctl_rgla_pk, fctl_impuesto_prmt_pk, fctl_ssrv_pk, fctl_fini, fctl_ffin
             , fctl_cuant1, fctl_cuant2, fctl_cuant3, fctl_cuant4, fctl_cuant5, fctl_cuant6
             , fctl_info1, fctl_info2, fctl_info3, fctl_info4, fctl_info5, fctl_info6
         ) VALUES (
-            #{id}, #{fctrId}, #{fctsId}, #{rgla.id}, #{impuesto.id}, #{ssrv.id}
+            #{id}, #{padreId}, #{fctrId}, #{fctsId}, #{rgla.id}, #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}
             , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )

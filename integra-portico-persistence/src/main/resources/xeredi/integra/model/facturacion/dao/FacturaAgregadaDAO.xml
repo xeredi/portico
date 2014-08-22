@@ -45,6 +45,9 @@
 
                 <association property="fctl" javaType="FacturaLineaVO">
                     <result column="fctl_pk" property="id" />
+                    <result column="fctl_padre_pk" property="padreId" />
+                    <result column="fctl_fini" property="fini" />
+                    <result column="fctl_ffin" property="ffin" />
                     <result column="fctl_cuant1" property="cuant1" />
                     <result column="fctl_cuant2" property="cuant2" />
                     <result column="fctl_cuant3" property="cuant3" />
@@ -70,7 +73,8 @@
                     <result column="fctd_pk" property="id" />
                     <result column="fctd_importe_base" property="importeBase" />
                     <result column="fctd_importe" property="importe" />
-                    <result column="fctd_pk" property="id" />
+                    <result column="fctd_fini" property="fini" />
+                    <result column="fctd_ffin" property="ffin" />
                     <result column="fctd_cuant1" property="cuant1" />
                     <result column="fctd_cuant2" property="cuant2" />
                     <result column="fctd_cuant3" property="cuant3" />
@@ -143,10 +147,13 @@
         	, vlrc_ffin AS fcts_ffin
             , vlrc_aspc_pk AS fcts_aspc_pk
 
-        	, vlrl_pk AS fctl_pk
+            , vlrl_pk AS fctl_pk
+            , vlrl_padre_pk AS fctl_padre_pk
         	, vlrl_rgla_pk AS fctl_rgla_pk
         	, vlrl_impuesto_prmt_pk AS fctl_impuesto_prmt_pk
-        	, vlrl_ssrv_pk AS fctl_ssrv_pk
+            , vlrl_ssrv_pk AS fctl_ssrv_pk
+            , vlrl_fini AS fctl_fini
+            , vlrl_ffin AS fctl_ffin
         	, vlrl_cuant1 AS fctl_cuant1
         	, vlrl_cuant2 AS fctl_cuant2
         	, vlrl_cuant3 AS fctl_cuant3
@@ -164,6 +171,8 @@
         	, vlrd_importe_base AS fctd_importe_base
         	, vlrd_importe AS fctd_importe
         	, vlrd_ssrv_pk AS fctd_ssrv_pk
+            , vlrd_fini AS fctd_fini
+            , vlrd_ffin AS fctd_ffin
         	, vlrd_cuant1 AS fctd_cuant1
         	, vlrd_cuant2 AS fctd_cuant2
         	, vlrd_cuant3 AS fctd_cuant3
