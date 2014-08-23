@@ -664,63 +664,34 @@
     <update id="updateRecalcularCargo" parameterType="ValoradorContextoVO">
         <![CDATA[
         UPDATE tbl_valoracion_tmp_vlrt vlrt SET
-            vlrt_importe_base = (
-                SELECT SUM(vlrtAux.vlrt_importe)
-                FROM tbl_valoracion_tmp_vlrt vlrtAux
-                WHERE
-                    vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
-                    AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
-                    AND (
-                        (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
-                        OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
-                    )
-                    AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
-                    AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
-            )
-            , vlrt_importe = (
-                CASE
-                    WHEN vlrt_rgla_tipo = 'C'
-                    THEN (
-                        SELECT sql.vlrt_importe * (vlrt_valor_base - 1)
-                        FROM (
-                            SELECT SUM(vlrtAux.vlrt_importe) AS vlrt_importe
-                            FROM tbl_valoracion_tmp_vlrt vlrtAux
-                            WHERE
-                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
-                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
-                                AND (
-                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
-                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
-                                )
-                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
-                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
-                        ) sql
-                    )
+        	vlrt_importe_base = sql.importe_base_corr
+        	, vlrt_importe = (
+                        CASE
+                            WHEN vlrt_rgla_tipo = 'C'
+                            THEN sql.importe_base_corr * (vlrt_valor_base - 1)
 
-                    WHEN vlrt_rgla_tipo = 'D'
-                    THEN (
-                        SELECT sql.vlrt_importe * (- vlrt_valor_base) / 100
-                        FROM (
-                            SELECT SUM(vlrtAux.vlrt_importe_base) AS vlrt_importe
-                            FROM tbl_valoracion_tmp_vlrt vlrtAux
-                            WHERE
-                                vlrtAux.vlrt_prbt_pk = vlrt.vlrt_prbt_pk
-                                AND vlrtAux.vlrt_srvc_pk = vlrt.vlrt_srvc_pk
-                                AND (
-                                    (vlrtAux.vlrt_ssrv_pk IS NULL AND vlrt.vlrt_ssrv_pk IS NULL)
-                                    OR (vlrtAux.vlrt_ssrv_pk = vlrt.vlrt_ssrv_pk)
-                                )
-                                AND vlrtAux.vlrt_crgo_pk = vlrt.vlrt_crgo_pk
-                                AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
-                        ) sql
-                    )
-                END
-            )
+                            WHEN vlrt_rgla_tipo = 'D'
+                            THEN sql.importe_base_corr * (- vlrt_valor_base) / 100
+                        END
+        	)
+        FROM
+        	(
+        		SELECT vlrt.vlrt_pk
+        			, SUM(vlrtAux.vlrt_importe) AS importe_base_corr
+        		FROM
+        			tbl_valoracion_tmp_vlrt vlrt
+        			JOIN tbl_valoracion_tmp_vlrt vlrtAux ON
+        				vlrtAux.vlrt_padre_pk = vlrt.vlrt_padre_pk
+        				AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+        		WHERE
+        			vlrt.vlrt_prbt_pk = #{prbt.id}
+        			AND vlrt.vlrt_srvc_pk = #{srvc.id}
+        			AND vlrt.vlrt_crgo_pk = #{crgo.id}
+        			AND vlrt.vlrt_rgla_tipo <> 'T'
+        		GROUP BY vlrt.vlrt_pk
+        	) sql
         WHERE
-            vlrt_prbt_pk = #{prbt.id}
-            AND vlrt_srvc_pk = #{srvc.id}
-            AND vlrt_crgo_pk = #{crgo.id}
-            AND vlrt_rgla_tipo <> 'T'
+        	vlrt.vlrt_pk = sql.vlrt_pk
         ]]>
     </update>
 </mapper>
