@@ -353,12 +353,9 @@ public class FacturaBO implements Factura {
 
                 vlrdList.add(vlrd);
             }
-        } else {
-            // FIXME Acabar
         }
 
         // Guardar datos de la valoracion de rectificacion
-
         vlrcDAO.insert(vlrc);
 
         for (final ValoracionLineaVO vlrl : vlrlList) {

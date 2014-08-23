@@ -15,6 +15,7 @@
         <result column="fctr_importe" property="importe" />
         <result column="fctr_impuesto" property="impuesto" />
         <result column="fctr_estado" property="estado" />
+        <result column="fctr_es_suj_pasivo" property="sujPasivo" />
 
         <result column="fctr_info1" property="info1" />
         <result column="fctr_info2" property="info2" />
@@ -32,11 +33,11 @@
     <![CDATA[
         INSERT INTO tbl_factura_fctr (
             fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
-            , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado
+            , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
             , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
         ) VALUES (
             #{id}, #{aspc.id}, #{pagador.id}, #{fcsr.id}, #{numero}
-            , #{fref}, #{falta}, #{fini}, #{ffin}, #{estado}
+            , #{fref}, #{falta}, #{fini}, #{ffin}, #{estado}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>

@@ -14,7 +14,7 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 public final class FacturaVO {
 
     /** The Constant NUMERO_LENGTH. */
-    public static final int NUMERO_LENGTH = 5;
+    private static final int NUMERO_LENGTH = 5;
 
     /** The id. */
     private Long id;
@@ -45,6 +45,9 @@ public final class FacturaVO {
 
     /** The estado. */
     private FacturaEstado estado;
+
+    /** The suj pasivo. */
+    private Boolean sujPasivo;
 
     /** The importe. */
     private Double importe;
@@ -433,8 +436,27 @@ public final class FacturaVO {
      * @param value
      *            the estado
      */
-    public void setEstado(FacturaEstado value) {
-        this.estado = value;
+    public void setEstado(final FacturaEstado value) {
+        estado = value;
+    }
+
+    /**
+     * Gets the suj pasivo.
+     *
+     * @return the suj pasivo
+     */
+    public Boolean getSujPasivo() {
+        return sujPasivo;
+    }
+
+    /**
+     * Sets the suj pasivo.
+     *
+     * @param value
+     *            the new suj pasivo
+     */
+    public void setSujPasivo(final Boolean value) {
+        sujPasivo = value;
     }
 
 }

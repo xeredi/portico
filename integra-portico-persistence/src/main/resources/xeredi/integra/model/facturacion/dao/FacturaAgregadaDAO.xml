@@ -6,6 +6,7 @@
     <resultMap type="FacturaAgregadaVO" id="ResultMap">
         <id column="fctr_pk" />
         <id column="fctr_pagador_prmt_pk" />
+        <id column="fctr_es_suj_pasivo" />
         <id column="fctr_info1" />
         <id column="fctr_info2" />
         <id column="fctr_info3" />
@@ -15,6 +16,7 @@
 
         <association property="fctr" javaType="FacturaVO">
             <result column="fctr_pk" property="id" />
+            <result column="fctr_es_suj_pasivo" property="sujPasivo" />
             <result column="fctr_info1" property="info1" />
             <result column="fctr_info2" property="info2" />
             <result column="fctr_info3" property="info3" />
@@ -35,6 +37,7 @@
             <result column="fcts_fref" property="fref" />
             <result column="fcts_fini" property="fini" />
             <result column="fcts_ffin" property="ffin" />
+            <result column="fcts_cod_exen" property="codExencion" />
 
             <association property="srvc" javaType="ServicioVO">
                 <id column="fcts_srvc_pk" />
@@ -58,6 +61,7 @@
         <![CDATA[
             vlrc_pk AS fctr_pk
             , vlrc_pagador_prmt_pk AS fctr_pagador_prmt_pk
+            , vlrc_es_suj_pasivo AS fctr_es_suj_pasivo
 
             , vlrc_info1 AS fctr_info1
             , vlrc_info2 AS fctr_info2
@@ -100,6 +104,7 @@
         	, vlrc_fini AS fcts_fini
         	, vlrc_ffin AS fcts_ffin
             , vlrc_aspc_pk AS fcts_aspc_pk
+            , vlrc_cod_exen AS fcts_cod_exen
         FROM
         	tbl_valoracion_vlrc
         WHERE vlrc_pk IN
@@ -108,7 +113,7 @@
         </foreach>
         <![CDATA[
         ORDER BY
-            fctr_pk, fctr_pagador_prmt_pk
+            fctr_pk, fctr_pagador_prmt_pk, fctr_es_suj_pasivo
         ]]>
         <if test="aspc != null">
             <if test="aspc.aspv.cgrpInfo1">

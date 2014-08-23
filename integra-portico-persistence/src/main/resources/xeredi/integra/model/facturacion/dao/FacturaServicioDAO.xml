@@ -11,6 +11,7 @@
         <result column="fcts_fref" property="fref" />
         <result column="fcts_fini" property="fini" />
         <result column="fcts_ffin" property="ffin" />
+        <result column="fcts_cod_exen" property="codExencion" />
 
         <association property="aspc" resultMap="xeredi.integra.model.facturacion.dao.AspectoDAO.ResultMap" />
         <association property="srvc" resultMap="xeredi.integra.model.servicio.dao.ServicioDAO.ResultMap" />
@@ -19,10 +20,10 @@
     <insert id="insert" parameterType="FacturaServicioVO">
     <![CDATA[
         INSERT INTO tbl_factura_srv_fcts (
-            fcts_pk, fcts_fctr_pk, fcts_aspc_pk, fcts_srvc_pk
+            fcts_pk, fcts_fctr_pk, fcts_aspc_pk, fcts_srvc_pk, fcts_cod_exen
             , fcts_fref, fcts_fini, fcts_ffin
         ) VALUES (
-            #{id}, #{fctrId}, #{aspc.id}, #{srvc.id}
+            #{id}, #{fctrId}, #{aspc.id}, #{srvc.id}, #{codExencion}
             , #{fref}, #{fini}, #{ffin}
         )
     ]]>

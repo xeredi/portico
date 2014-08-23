@@ -24,6 +24,9 @@ public final class FacturaServicioVO {
     /** The aspc. */
     private AspectoVO aspc;
 
+    /** The cod exencion. */
+    private String codExencion;
+
     /** The fref. */
     private Date fref;
 
@@ -172,6 +175,25 @@ public final class FacturaServicioVO {
      */
     public void setFfin(final Date value) {
         ffin = value;
+    }
+
+    /**
+     * Gets the cod exencion.
+     *
+     * @return the cod exencion
+     */
+    public String getCodExencion() {
+        return codExencion;
+    }
+
+    /**
+     * Sets the cod exencion.
+     *
+     * @param value
+     *            the new cod exencion
+     */
+    public void setCodExencion(final String value) {
+        codExencion = value;
     }
 
 }

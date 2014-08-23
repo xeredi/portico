@@ -621,6 +621,7 @@ CREATE TABLE portico.tbl_factura_fctr
 	, fctr_fini TIMESTAMP
 	, fctr_ffin TIMESTAMP
 	, fctr_estado CHAR(2) NOT NULL
+	, fctr_es_suj_pasivo INT NOT NULL
 	, fctr_info1 VARCHAR(100)
 	, fctr_info2 VARCHAR(100)
 	, fctr_info3 VARCHAR(100)
@@ -656,6 +657,7 @@ CREATE TABLE portico.tbl_factura_srv_fcts
 	, fcts_fctr_pk BIGINT NOT NULL
 	, fcts_srvc_pk BIGINT NOT NULL
 	, fcts_aspc_pk BIGINT NOT NULL
+	, fcts_cod_exen CHAR(1) NOT NULL
 	, fcts_fref TIMESTAMP NOT NULL
 	, fcts_fini TIMESTAMP 
 	, fcts_ffin TIMESTAMP 
