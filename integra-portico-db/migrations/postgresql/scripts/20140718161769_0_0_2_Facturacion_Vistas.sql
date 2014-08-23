@@ -43,9 +43,6 @@ GRANT SELECT ON portico.vw_valoracion_vlrc TO portico
 
 CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 	SELECT * 
-		, (SELECT prmt_parametro 
-			FROM portico.tbl_parametro_prmt
-			WHERE prmt_pk = vlrl_impuesto_prmt_pk) AS vlrl_impuesto_prmt_parametro
 		, (SELECT prvr_pk
 			FROM portico.tbl_parametro_version_prvr
 			WHERE prvr_prmt_pk = vlrl_impuesto_prmt_pk
@@ -63,6 +60,8 @@ CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 		) AS vlrl_importe
 	FROM 
 		portico.tbl_valoracion_lin_vlrl
+		INNER JOIN portico.tbl_parametro_prmt ON
+			prmt_pk = vlrl_impuesto_prmt_pk
 		INNER JOIN portico.tbl_regla_rgla ON
 			rgla_pk = vlrl_rgla_pk
 		INNER JOIN portico.tbl_regla_version_rglv ON

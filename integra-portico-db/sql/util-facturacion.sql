@@ -179,7 +179,6 @@ SELECT * FROM vw_factura_lin_fctl ORDER BY fctl_fctr_pk, fctl_padre_pk, fctl_pk;
 SELECT * FROM vw_factura_det_fctd ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk;
 
 
-
 DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
 DELETE FROM tbl_valoracion_det_vlrd;

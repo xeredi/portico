@@ -28,91 +28,24 @@
                 <result column="fctr_pagador_prmt_pk" property="id" />
             </association>
         </association>
-        <collection property="fctsList" ofType="FacturaServicioAgregadaVO" javaType="ArrayList">
+        <collection property="fctsList" ofType="FacturaServicioVO" javaType="ArrayList">
             <id column="fcts_pk" />
 
-            <association property="fcts" javaType="FacturaServicioVO">
-                <result column="fcts_pk" property="id" />
-                <result column="fcts_fref" property="fref" />
-                <result column="fcts_fini" property="fini" />
-                <result column="fcts_ffin" property="ffin" />
+            <result column="fcts_pk" property="id" />
+            <result column="fcts_fref" property="fref" />
+            <result column="fcts_fini" property="fini" />
+            <result column="fcts_ffin" property="ffin" />
 
-                <association property="srvc" javaType="ServicioVO">
-                    <id column="fcts_srvc_pk" />
+            <association property="srvc" javaType="ServicioVO">
+                <id column="fcts_srvc_pk" />
 
-                    <result column="fcts_srvc_pk" property="id" />
-                </association>
-                <association property="aspc" javaType="AspectoVO">
-                    <id column="fcts_aspc_pk" />
-
-                    <result column="fcts_aspc_pk" property="id" />
-                </association>
+                <result column="fcts_srvc_pk" property="id" />
             </association>
+            <association property="aspc" javaType="AspectoVO">
+                <id column="fcts_aspc_pk" />
 
-            <collection property="fctlList" ofType="FacturaLineaAgregadaVO" javaType="ArrayList">
-                <id column="fctl_pk" />
-
-                <association property="fctl" javaType="FacturaLineaVO">
-                    <result column="fctl_pk" property="id" />
-                    <result column="fctl_padre_pk" property="padreId" />
-                    <result column="fctl_fini" property="fini" />
-                    <result column="fctl_ffin" property="ffin" />
-                    <result column="fctl_cuant1" property="cuant1" />
-                    <result column="fctl_cuant2" property="cuant2" />
-                    <result column="fctl_cuant3" property="cuant3" />
-                    <result column="fctl_cuant4" property="cuant4" />
-                    <result column="fctl_cuant5" property="cuant5" />
-                    <result column="fctl_cuant6" property="cuant6" />
-                    <result column="fctl_info1" property="info1" />
-                    <result column="fctl_info2" property="info2" />
-                    <result column="fctl_info3" property="info3" />
-                    <result column="fctl_info4" property="info4" />
-                    <result column="fctl_info5" property="info5" />
-                    <result column="fctl_info6" property="info6" />
-
-                    <association property="rgla" javaType="ReglaVO">
-                        <id column="fctl_rgla_pk" />
-
-                        <result column="fctl_rgla_pk" property="id" />
-                    </association>
-                    <association property="impuesto" javaType="ParametroVO">
-                        <id column="fctl_impuesto_prmt_pk" />
-
-                        <result column="fctl_impuesto_prmt_pk" property="id" />
-                    </association>
-                    <association property="ssrv" javaType="SubservicioVO">
-                        <id column="fctl_ssrv_pk" />
-
-                        <result column="fctl_ssrv_pk" property="id" />
-                    </association>
-                </association>
-
-                <collection property="fctdList" ofType="FacturaDetalleVO" javaType="ArrayList">
-                    <result column="fctd_pk" property="id" />
-                    <result column="fctd_importe_base" property="importeBase" />
-                    <result column="fctd_importe" property="importe" />
-                    <result column="fctd_fini" property="fini" />
-                    <result column="fctd_ffin" property="ffin" />
-                    <result column="fctd_cuant1" property="cuant1" />
-                    <result column="fctd_cuant2" property="cuant2" />
-                    <result column="fctd_cuant3" property="cuant3" />
-                    <result column="fctd_cuant4" property="cuant4" />
-                    <result column="fctd_cuant5" property="cuant5" />
-                    <result column="fctd_cuant6" property="cuant6" />
-                    <result column="fctd_info1" property="info1" />
-                    <result column="fctd_info2" property="info2" />
-                    <result column="fctd_info3" property="info3" />
-                    <result column="fctd_info4" property="info4" />
-                    <result column="fctd_info5" property="info5" />
-                    <result column="fctd_info6" property="info6" />
-
-                    <association property="ssrv" javaType="SubservicioVO">
-                        <id column="fctd_ssrv_pk" />
-
-                        <result column="fctd_ssrv_pk" property="id" />
-                    </association>
-                </collection>
-            </collection>
+                <result column="fcts_aspc_pk" property="id" />
+            </association>
         </collection>
     </resultMap>
 
@@ -167,52 +100,8 @@
         	, vlrc_fini AS fcts_fini
         	, vlrc_ffin AS fcts_ffin
             , vlrc_aspc_pk AS fcts_aspc_pk
-
-            , vlrl_pk AS fctl_pk
-            , vlrl_padre_pk AS fctl_padre_pk
-        	, vlrl_rgla_pk AS fctl_rgla_pk
-        	, vlrl_impuesto_prmt_pk AS fctl_impuesto_prmt_pk
-            , vlrl_ssrv_pk AS fctl_ssrv_pk
-            , vlrl_fini AS fctl_fini
-            , vlrl_ffin AS fctl_ffin
-        	, vlrl_cuant1 AS fctl_cuant1
-        	, vlrl_cuant2 AS fctl_cuant2
-        	, vlrl_cuant3 AS fctl_cuant3
-        	, vlrl_cuant4 AS fctl_cuant4
-        	, vlrl_cuant5 AS fctl_cuant5
-        	, vlrl_cuant6 AS fctl_cuant6
-        	, vlrl_info1 AS fctl_info1
-        	, vlrl_info2 AS fctl_info2
-        	, vlrl_info3 AS fctl_info3
-        	, vlrl_info4 AS fctl_info4
-        	, vlrl_info5 AS fctl_info5
-        	, vlrl_info6 AS fctl_info6
-
-        	, vlrd_pk AS fctd_pk
-        	, vlrd_importe_base AS fctd_importe_base
-        	, vlrd_importe AS fctd_importe
-        	, vlrd_ssrv_pk AS fctd_ssrv_pk
-            , vlrd_fini AS fctd_fini
-            , vlrd_ffin AS fctd_ffin
-        	, vlrd_cuant1 AS fctd_cuant1
-        	, vlrd_cuant2 AS fctd_cuant2
-        	, vlrd_cuant3 AS fctd_cuant3
-        	, vlrd_cuant4 AS fctd_cuant4
-        	, vlrd_cuant5 AS fctd_cuant5
-        	, vlrd_cuant6 AS fctd_cuant6
-        	, vlrd_info1 AS fctd_info1
-        	, vlrd_info2 AS fctd_info2
-        	, vlrd_info3 AS fctd_info3
-        	, vlrd_info4 AS fctd_info4
-        	, vlrd_info5 AS fctd_info5
-        	, vlrd_info6 AS fctd_info6
         FROM
         	tbl_valoracion_vlrc
-        	INNER JOIN tbl_valoracion_lin_vlrl ON
-        		vlrl_vlrc_pk = vlrc_pk
-        	INNER JOIN tbl_valoracion_det_vlrd ON
-        		vlrd_vlrl_pk = vlrl_pk
-        		AND vlrd_vlrc_pk = vlrc_pk
         WHERE vlrc_pk IN
         ]]>
         <foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}
@@ -242,7 +131,7 @@
             </if>
         </if>
         <![CDATA[
-            , fcts_pk, fctl_pk, fctd_pk
+            , fcts_pk
         ]]>
     </select>
 </mapper>

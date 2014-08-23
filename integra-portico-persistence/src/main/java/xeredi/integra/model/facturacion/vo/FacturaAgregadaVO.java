@@ -14,7 +14,7 @@ public final class FacturaAgregadaVO {
     private FacturaVO fctr;
 
     /** The fcts list. */
-    private List<FacturaServicioAgregadaVO> fctsList;
+    private List<FacturaServicioVO> fctsList;
 
     /**
      * {@inheritDoc}
@@ -48,7 +48,7 @@ public final class FacturaAgregadaVO {
      *
      * @return the fcts list
      */
-    public List<FacturaServicioAgregadaVO> getFctsList() {
+    public List<FacturaServicioVO> getFctsList() {
         return fctsList;
     }
 
@@ -58,7 +58,7 @@ public final class FacturaAgregadaVO {
      * @param value
      *            the new fcts list
      */
-    public void setFctsList(final List<FacturaServicioAgregadaVO> value) {
+    public void setFctsList(final List<FacturaServicioVO> value) {
         fctsList = value;
     }
 

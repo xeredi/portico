@@ -34,8 +34,7 @@
 
         <association property="ssrv" resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
         <association property="rgla" resultMap="xeredi.integra.model.facturacion.dao.ReglaDAO.ResultMap" />
-        <association property="impuesto" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap"
-            columnPrefix="impuesto_" />
+        <association property="impuesto" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
     </resultMap>
 
     <insert id="insert" parameterType="ValoracionLineaVO">

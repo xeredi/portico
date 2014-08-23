@@ -36,16 +36,16 @@ import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
 import xeredi.integra.model.facturacion.vo.FacturaEstado;
 import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
-import xeredi.integra.model.facturacion.vo.FacturaLineaAgregadaVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
-import xeredi.integra.model.facturacion.vo.FacturaServicioAgregadaVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturadorContextoVO;
 import xeredi.integra.model.facturacion.vo.ServicioCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.proceso.dao.ProcesoDAO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.util.GlobalNames;
@@ -197,10 +197,23 @@ public class FacturadorBO implements Facturador {
         final List<FacturaLineaVO> fctlList = new ArrayList<>();
         final List<FacturaDetalleVO> fctdList = new ArrayList<>();
 
-        LOG.info("Preparacion de Facturas");
-        for (final FacturaAgregadaVO fctr : fctrList) {
-            final Map<Long, Long> generatedIds = new HashMap<>();
+        LOG.info("Busqueda de lineas y detalles de valoraciones a facturar");
+        final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+        final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+        final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
 
+        vlrcCriterioVO.setIds(vlrcIds);
+        vlrlCriterioVO.setVlrc(vlrcCriterioVO);
+        vlrdCriterioVO.setVlrl(vlrlCriterioVO);
+
+        final List<ValoracionLineaVO> vlrlList = vlrlDAO.selectList(vlrlCriterioVO);
+        final List<ValoracionDetalleVO> vlrdList = vlrdDAO.selectList(vlrdCriterioVO);
+
+        LOG.info("Preparacion de Facturas");
+        final Map<Long, Long> generatedIds = new HashMap<>();
+        final Map<Long, FacturaServicioVO> generatedFcts = new HashMap<>();
+
+        for (final FacturaAgregadaVO fctr : fctrList) {
             fcsrDAO.updateIncrementar(fcsrId);
 
             fctr.getFctr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
@@ -211,38 +224,86 @@ public class FacturadorBO implements Facturador {
             fctr.getFctr().setEstado(FacturaEstado.NO);
 
             if (contextoVO.getAspc() == null) {
-                final FacturaServicioVO fcts = fctr.getFctsList().iterator().next().getFcts();
+                final FacturaServicioVO fcts = fctr.getFctsList().iterator().next();
 
                 fctr.getFctr().setAspc(fcts.getAspc());
             } else {
                 fctr.getFctr().setAspc(contextoVO.getAspc());
             }
 
-            for (final FacturaServicioAgregadaVO fcts : fctr.getFctsList()) {
-                fcts.getFcts().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                fcts.getFcts().setFctrId(fctr.getFctr().getId());
+            for (final FacturaServicioVO fcts : fctr.getFctsList()) {
+                final Long fctsOldId = fcts.getId();
 
-                fctsList.add(fcts.getFcts());
+                generatedIds.put(fcts.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-                for (final FacturaLineaAgregadaVO fctl : fcts.getFctlList()) {
-                    generatedIds.put(fctl.getFctl().getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                fcts.setId(generatedIds.get(fcts.getId()));
+                fcts.setFctrId(fctr.getFctr().getId());
 
-                    fctl.getFctl().setId(generatedIds.get(fctl.getFctl().getId()));
-                    fctl.getFctl().setPadreId(generatedIds.get(fctl.getFctl().getPadreId()));
-                    fctl.getFctl().setFctrId(fcts.getFcts().getFctrId());
-                    fctl.getFctl().setFctsId(fcts.getFcts().getId());
+                generatedFcts.put(fctsOldId, fcts);
 
-                    fctlList.add(fctl.getFctl());
-
-                    for (final FacturaDetalleVO fctd : fctl.getFctdList()) {
-                        fctd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                        fctd.setFctrId(fctl.getFctl().getFctrId());
-                        fctd.setFctlId(fctl.getFctl().getId());
-
-                        fctdList.add(fctd);
-                    }
-                }
+                fctsList.add(fcts);
             }
+        }
+
+        for (final ValoracionLineaVO vlrl : vlrlList) {
+            generatedIds.put(vlrl.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            final FacturaLineaVO fctl = new FacturaLineaVO();
+
+            fctl.setId(generatedIds.get(vlrl.getId()));
+            fctl.setPadreId(generatedIds.get(vlrl.getPadreId()));
+            fctl.setFctsId(generatedIds.get(vlrl.getVlrcId()));
+            fctl.setFctrId(generatedFcts.get(vlrl.getVlrcId()).getFctrId());
+
+            fctl.setFini(vlrl.getFini());
+            fctl.setFfin(vlrl.getFfin());
+            fctl.setImpuesto(vlrl.getImpuesto());
+            fctl.setRgla(vlrl.getRgla());
+            fctl.setSsrv(vlrl.getSsrv());
+
+            fctl.setCuant1(vlrl.getCuant1());
+            fctl.setCuant2(vlrl.getCuant2());
+            fctl.setCuant3(vlrl.getCuant3());
+            fctl.setCuant4(vlrl.getCuant4());
+            fctl.setCuant5(vlrl.getCuant5());
+            fctl.setCuant6(vlrl.getCuant6());
+            fctl.setInfo1(vlrl.getInfo1());
+            fctl.setInfo2(vlrl.getInfo2());
+            fctl.setInfo3(vlrl.getInfo3());
+            fctl.setInfo4(vlrl.getInfo4());
+            fctl.setInfo5(vlrl.getInfo5());
+            fctl.setInfo6(vlrl.getInfo6());
+
+            fctlList.add(fctl);
+        }
+
+        for (final ValoracionDetalleVO vlrd : vlrdList) {
+            final FacturaDetalleVO fctd = new FacturaDetalleVO();
+
+            fctd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            fctd.setFctlId(generatedIds.get(vlrd.getVlrlId()));
+            fctd.setFctrId(generatedFcts.get(vlrd.getVlrcId()).getFctrId());
+
+            fctd.setFini(vlrd.getFini());
+            fctd.setFfin(vlrd.getFfin());
+            fctd.setSsrv(vlrd.getSsrv());
+            fctd.setImporteBase(vlrd.getImporteBase());
+            fctd.setImporte(vlrd.getImporte());
+
+            fctd.setCuant1(vlrd.getCuant1());
+            fctd.setCuant2(vlrd.getCuant2());
+            fctd.setCuant3(vlrd.getCuant3());
+            fctd.setCuant4(vlrd.getCuant4());
+            fctd.setCuant5(vlrd.getCuant5());
+            fctd.setCuant6(vlrd.getCuant6());
+            fctd.setInfo1(vlrd.getInfo1());
+            fctd.setInfo2(vlrd.getInfo2());
+            fctd.setInfo3(vlrd.getInfo3());
+            fctd.setInfo4(vlrd.getInfo4());
+            fctd.setInfo5(vlrd.getInfo5());
+            fctd.setInfo6(vlrd.getInfo6());
+
+            fctdList.add(fctd);
         }
 
         LOG.info("Insercion de Facturas");
@@ -287,14 +348,6 @@ public class FacturadorBO implements Facturador {
         srcrDAO.deleteValoracion(srcrCriterioVO);
 
         LOG.info("Borrado de Valoraciones");
-        final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-        final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
-        final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
-
-        vlrcCriterioVO.setIds(vlrcIds);
-        vlrlCriterioVO.setVlrc(vlrcCriterioVO);
-        vlrdCriterioVO.setVlrl(vlrlCriterioVO);
-
         vlrdDAO.delete(vlrdCriterioVO);
         vlrlDAO.delete(vlrlCriterioVO);
         vlriDAO.delete(vlrcCriterioVO);

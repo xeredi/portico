@@ -37,7 +37,6 @@ import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturaVO;
-import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;

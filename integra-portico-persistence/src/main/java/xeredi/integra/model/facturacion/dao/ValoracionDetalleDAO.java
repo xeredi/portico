@@ -58,4 +58,13 @@ public interface ValoracionDetalleDAO {
      * @return the list
      */
     List<ValoracionDetalleVO> selectList(final ValoracionDetalleCriterioVO vlrdCriterioVO, final RowBounds bounds);
+
+    /**
+     * Select list.
+     *
+     * @param vlrdCriterioVO
+     *            the vlrd criterio vo
+     * @return the list
+     */
+    List<ValoracionDetalleVO> selectList(final ValoracionDetalleCriterioVO vlrdCriterioVO);
 }
