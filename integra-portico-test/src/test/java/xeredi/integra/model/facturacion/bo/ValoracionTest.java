@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Valoracion;
-import xeredi.integra.model.facturacion.bo.ValoracionImpresionVO;
 import xeredi.integra.model.facturacion.report.ValoracionPdf;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
@@ -87,7 +85,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrl");
 
-                final ValoracionLineaVO vlrl = vlrcBO.selectLinea(vlrlId);
+                final ValoracionLineaVO vlrl = vlrcBO.selectVlrl(vlrlId);
 
                 Assert.assertNotNull(vlrl);
 
@@ -97,7 +95,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrlList");
 
-                final List<ValoracionLineaVO> vlrlList = vlrcBO.selectLineasList(vlrlCriterioVO);
+                final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterioVO);
 
                 Assert.assertNotNull(vlrlList);
                 Assert.assertTrue(!vlrlList.isEmpty());
@@ -110,7 +108,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrlList Paginated");
 
-                final PaginatedList<ValoracionLineaVO> vlrlList = vlrcBO.selectLineasList(vlrlCriterioVO, 0, 20);
+                final PaginatedList<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterioVO, 0, 20);
 
                 Assert.assertNotNull(vlrlList);
                 Assert.assertNotNull(vlrlList.getList());
@@ -124,7 +122,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrd");
 
-                final ValoracionDetalleVO vlrd = vlrcBO.selectDetalle(vlrdId);
+                final ValoracionDetalleVO vlrd = vlrcBO.selectVlrd(vlrdId);
 
                 Assert.assertNotNull(vlrd);
 
@@ -134,7 +132,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrdList Paginated");
 
-                final PaginatedList<ValoracionDetalleVO> vlrdList = vlrcBO.selectDetallesList(vlrdCriterioVO, 0, 20);
+                final PaginatedList<ValoracionDetalleVO> vlrdList = vlrcBO.selectVlrdList(vlrdCriterioVO, 0, 20);
 
                 Assert.assertNotNull(vlrdList);
                 Assert.assertNotNull(vlrdList.getList());
@@ -148,7 +146,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlriList");
 
-                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectImpuestosList(vlrcCriterioVO);
+                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterioVO);
 
                 for (final ValoracionImpuestoVO vlri : vlriList) {
                     LOG.info("vlri: " + vlri);
@@ -158,7 +156,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrgList");
 
-                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectCargosList(vlrcCriterioVO);
+                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterioVO);
 
                 for (final ValoracionCargoVO vlrg : vlrgList) {
                     LOG.info("vlrg: " + vlrg);

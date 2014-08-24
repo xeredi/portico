@@ -76,4 +76,13 @@ public interface ValoracionLineaDAO {
      * @return true, if successful
      */
     boolean existsDependencia(final Long vlrlId);
+
+    /**
+     * Checks if is regla valida.
+     *
+     * @param vlrl
+     *            the vlrl
+     * @return true, if is regla valida
+     */
+    boolean isRglaValida(final ValoracionLineaVO vlrl);
 }

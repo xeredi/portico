@@ -73,7 +73,7 @@ public interface Valoracion {
      *            the vlrc criterio vo
      * @return the list
      */
-    List<ValoracionImpuestoVO> selectImpuestosList(final ValoracionCriterioVO vlrcCriterioVO);
+    List<ValoracionImpuestoVO> selectVlriList(final ValoracionCriterioVO vlrcCriterioVO);
 
     /**
      * Select cargos list.
@@ -82,7 +82,7 @@ public interface Valoracion {
      *            the vlrc criterio vo
      * @return the list
      */
-    List<ValoracionCargoVO> selectCargosList(final ValoracionCriterioVO vlrcCriterioVO);
+    List<ValoracionCargoVO> selectVlrgList(final ValoracionCriterioVO vlrcCriterioVO);
 
     /**
      * Select linea.
@@ -91,7 +91,7 @@ public interface Valoracion {
      *            the vlrl id
      * @return the valoracion linea vo
      */
-    ValoracionLineaVO selectLinea(final Long vlrlId);
+    ValoracionLineaVO selectVlrl(final Long vlrlId);
 
     /**
      * Exists linea dependencia.
@@ -100,7 +100,17 @@ public interface Valoracion {
      *            the vlrl id
      * @return true, if successful
      */
-    boolean existsLineaDependencia(final Long vlrlId);
+    boolean existsVlrlHija(final Long vlrlId);
+
+    /**
+     * Insert linea.
+     *
+     * @param vlrl
+     *            the vlrl
+     * @param vlrd
+     *            the vlrd
+     */
+    void insertVlrl(final ValoracionLineaVO vlrl, final ValoracionDetalleVO vlrd);
 
     /**
      * Delete linea.
@@ -108,7 +118,7 @@ public interface Valoracion {
      * @param vlrlId
      *            the vlrl id
      */
-    void deleteLinea(final Long vlrlId);
+    void deleteVlrl(final Long vlrlId);
 
     /**
      * Select lineas list.
@@ -117,7 +127,7 @@ public interface Valoracion {
      *            the vlrl criterio vo
      * @return the list
      */
-    List<ValoracionLineaVO> selectLineasList(final ValoracionLineaCriterioVO vlrlCriterioVO);
+    List<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO);
 
     /**
      * Select lineas list.
@@ -130,7 +140,7 @@ public interface Valoracion {
      *            the limit
      * @return the paginated list
      */
-    PaginatedList<ValoracionLineaVO> selectLineasList(final ValoracionLineaCriterioVO vlrlCriterioVO, final int offset,
+    PaginatedList<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO, final int offset,
             final int limit);
 
     /**
@@ -140,7 +150,7 @@ public interface Valoracion {
      *            the vlrd id
      * @return the valoracion detalle vo
      */
-    ValoracionDetalleVO selectDetalle(final Long vlrdId);
+    ValoracionDetalleVO selectVlrd(final Long vlrdId);
 
     /**
      * Select detalles list.
@@ -153,7 +163,7 @@ public interface Valoracion {
      *            the limit
      * @return the paginated list
      */
-    PaginatedList<ValoracionDetalleVO> selectDetallesList(final ValoracionDetalleCriterioVO vlrdCriterioVO,
+    PaginatedList<ValoracionDetalleVO> selectVlrdList(final ValoracionDetalleCriterioVO vlrdCriterioVO,
             final int offset, final int limit);
 
 }

@@ -666,13 +666,13 @@
         UPDATE tbl_valoracion_tmp_vlrt vlrt SET
         	vlrt_importe_base = sql.importe_base_corr
         	, vlrt_importe = (
-                        CASE
-                            WHEN vlrt_rgla_tipo = 'C'
-                            THEN sql.importe_base_corr * (vlrt_valor_base - 1)
+                CASE
+                    WHEN vlrt_rgla_tipo = 'C'
+                    THEN sql.importe_base_corr * (vlrt_valor_base - 1)
 
-                            WHEN vlrt_rgla_tipo = 'D'
-                            THEN sql.importe_base_corr * (- vlrt_valor_base) / 100
-                        END
+                    WHEN vlrt_rgla_tipo = 'D'
+                    THEN sql.importe_base_corr * (- vlrt_valor_base) / 100
+                END
         	)
         FROM
         	(
