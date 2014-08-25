@@ -1,1 +1,133 @@
-aspc-detalle
+<fieldset>
+    <div class="row">
+        <div class="col-md-1 form-group">
+            <label>{{'aspc_codigo' | translate}}</label> <input type="text" value="{{aspc.codigo}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-3 form-group">
+            <label>{{'aspc_descripcion' | translate}}</label> <input type="text" value="{{aspc.descripcion}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{'aspc_tpsr' | translate}}</label> <input type="text" value="{{aspc.tpsr.nombre}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'aspc_aspv_fini' | translate}}</label> <input type="text" value="{{aspc.aspv.fini | date:('fmt_date' | translate)}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'aspc_aspv_ffin' | translate}}</label> <input type="text" value="{{aspc.aspv.ffin | date:('fmt_date' | translate)}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'aspc_aspv_prioridad' | translate}}</label> <input type="text" value="{{aspc.aspv.prioridad}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Elementos de Cabecera</label>
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th />
+                        <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cpathInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cgrpInfo' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-if="aspc.aspv.cetiqInfo1">
+                        <td>info1</td>
+                        <td>{{aspc.aspv.cetiqInfo1}}</td>
+                        <td>{{aspc.aspv.cpathInfo1}}</td>
+                        <td>{{aspc.aspv.cgrpInfo1}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo2">
+                        <td>info2</td>
+                        <td>{{aspc.aspv.cetiqInfo2}}</td>
+                        <td>{{aspc.aspv.cpathInfo2}}</td>
+                        <td>{{aspc.aspv.cgrpInfo2}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo3">
+                        <td>info3</td>
+                        <td>{{aspc.aspv.cetiqInfo3}}</td>
+                        <td>{{aspc.aspv.cpathInfo3}}</td>
+                        <td>{{aspc.aspv.cgrpInfo3}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo4">
+                        <td>info4</td>
+                        <td>{{aspc.aspv.cetiqInfo4}}</td>
+                        <td>{{aspc.aspv.cpathInfo4}}</td>
+                        <td>{{aspc.aspv.cgrpInfo4}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo5">
+                        <td>info5</td>
+                        <td>{{aspc.aspv.cetiqInfo5}}</td>
+                        <td>{{aspc.aspv.cpathInfo5}}</td>
+                        <td>{{aspc.aspv.cgrpInfo5}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo6">
+                        <td>info6</td>
+                        <td>{{aspc.aspv.cetiqInfo6}}</td>
+                        <td>{{aspc.aspv.cpathInfo6}}</td>
+                        <td>{{aspc.aspv.cgrpInfo6}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Elementos Informativos de Linea</label>
+            <!--
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cpathInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cgrpInfo' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-if="aspc.aspv.cetiqInfo1">
+                        <td>{{aspc.aspv.cetiqInfo1}}</td>
+                        <td>{{aspc.aspv.cpathInfo1}}</td>
+                        <td>{{aspc.aspv.cgrpInfo1}}</td>
+                    </tr>
+                </tbody>
+            </table>
+ -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Elementos Cuantitativos de Linea</label>
+            <!--
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cpathInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cgrpInfo' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-if="aspc.aspv.cetiqInfo1">
+                        <td>{{aspc.aspv.cetiqInfo1}}</td>
+                        <td>{{aspc.aspv.cpathInfo1}}</td>
+                        <td>{{aspc.aspv.cgrpInfo1}}</td>
+                    </tr>
+                </tbody>
+            </table>
+ -->
+        </div>
+    </div>
+</fieldset>

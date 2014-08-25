@@ -93,7 +93,14 @@ app.config(function($translateProvider) {
         vlrc_impuesto_porcentaje : '%',
         vlrc_impuesto_importe_base : 'Importe Base',
         vlrc_impuesto_importe_impuesto : 'Importe IVA',
-    });
+
+        aspc_codigo : 'C\u00f3digo',
+        aspc_descripcion : 'Descripci\u00f3n',
+        aspc_tpsr : 'Tipo de Servicio',
+        aspc_aspv_fini : 'F. Inicio',
+        aspc_aspv_ffin : 'F. Fin',
+        aspc_aspv_prioridad : 'Prioridad',
+});
 
     $translateProvider.preferredLanguage('es');
 });
