@@ -113,6 +113,14 @@
         <include refid="SelectWhere" />
     </select>
 
+    <select id="count" parameterType="AspectoCriterioVO" resultType="Integer">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_valoracion_cargo_vlrg
+    ]]>
+        <include refid="SelectWhere" />
+    </select>
+
     <select id="isInaplicable" parameterType="FacturadorContextoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)

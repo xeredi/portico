@@ -424,6 +424,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public FacturaVO select(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
@@ -434,6 +435,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public PaginatedList<FacturaVO> selectList(final FacturaCriterioVO fctrCriterioVO, final int offset, final int limit) {
         Preconditions.checkNotNull(fctrCriterioVO);
         Preconditions.checkArgument(offset >= 0);
@@ -453,6 +455,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public List<FacturaServicioVO> selectFctsList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
@@ -467,6 +470,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public List<FacturaImpuestoVO> selectFctiList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
@@ -481,6 +485,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public List<FacturaCargoVO> selectFctgList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
@@ -495,6 +500,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public PaginatedList<FacturaLineaVO> selectFctlList(final Long fctrId, final int offset, final int limit) {
         Preconditions.checkNotNull(fctrId);
         Preconditions.checkArgument(offset >= 0);
@@ -520,6 +526,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public FacturaLineaVO selectFctl(final Long fctlId) {
         Preconditions.checkNotNull(fctlId);
 
@@ -533,6 +540,7 @@ public class FacturaBO implements Factura {
      * @see FacturaDetalleDAO#selectList(FacturaDetalleCriterioVO, RowBounds)
      */
     @Override
+    @Transactional
     public PaginatedList<FacturaDetalleVO> selectFctdList(final Long fctlId, final int offset, final int limit) {
         Preconditions.checkNotNull(fctlId);
         Preconditions.checkArgument(offset >= 0);
@@ -558,6 +566,7 @@ public class FacturaBO implements Factura {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public FacturaDetalleVO selectFctd(final Long fctdId) {
         Preconditions.checkNotNull(fctdId);
 
