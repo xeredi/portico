@@ -78,6 +78,30 @@
                 <foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
             </if>
 
+            <if test="incompatibleId != null">
+            <![CDATA[
+            	AND EXISTS (
+            		SELECT 1
+            		FROM tbl_regla_inc_rgin
+            		WHERE
+            			rgin_rgla1_pk = rgla_pk
+            ]]>
+                <if test="fechaVigencia != null">
+                <![CDATA[
+            			AND EXISTS (
+            				SELECT 1
+            				FROM tbl_regla_inc_version_rgiv
+            				WHERE rgiv_rgin_pk = rgin_pk
+            					AND #{fechaVigencia} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fechaVigencia})
+            			)
+                ]]>
+                </if>
+            <![CDATA[
+            			AND  rgin_rgla2_pk = #{incompatibleId}
+            	)
+            ]]>
+            </if>
+
             <if test="rglvId != null">
                 AND rglv_pk = #{rglvId}
             </if>

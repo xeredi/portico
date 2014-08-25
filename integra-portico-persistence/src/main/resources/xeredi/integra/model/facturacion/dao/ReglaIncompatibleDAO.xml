@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.facturacion.dao.ReglaIncompatibleDAO">
+    <resultMap type="ReglaIncompatibleVO" id="ResultMap">
+        <id column="rgiv_pk" />
+
+        <result column="rgin_pk" property="id" />
+        <result column="rgin_rgla1_pk" property="rgla1Id" />
+
+        <association property="rgla2" resultMap="xeredi.integra.model.facturacion.dao.ReglaDAO.ResultMap" />
+
+        <association property="rgiv" javaType="ReglaIncompatibleVersionVO">
+            <result column="rgiv_pk" property="id" />
+            <result column="rgiv_fini" property="fini" />
+            <result column="rgiv_ffin" property="ffin" />
+        </association>
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+        SELECT *
+        FROM portico.vw_regla_inc_rgin
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="fechaVigencia != null">
+                AND #{fechaVigencia} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{fechaVigencia})
+            </if>
+
+            <if test="id != null">
+                AND rgin_pk = #{id}
+            </if>
+
+            <if test="rgla1Id != null">
+                AND rgin_rgla1_pk = #{rgla1Id}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="ReglaIncompatibleCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+</mapper>

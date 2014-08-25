@@ -1,0 +1,180 @@
+<fieldset>
+    <div class="row">
+        <div class="col-md-1 form-group">
+            <label>{{'rgla_codigo' | translate}}</label> <input type="text" value="{{rgla.codigo}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'rgla_tipo' | translate}}</label> <input type="text" value="{{rgla.tipo}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{'rgla_enti' | translate}}</label> <input type="text" value="{{rgla.enti.nombre}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{'rgla_crgo' | translate}}</label> <input type="text" value="{{rgla.crgo.etiqueta}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'rgla_rglv_fini' | translate}}</label> <input type="text"
+                value="{{rgla.rglv.fini | date:('fmt_date' | translate)}}" class="form-control input-sm"
+                disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'rgla_rglv_ffin' | translate}}</label> <input type="text"
+                value="{{rgla.rglv.ffin | date:('fmt_date' | translate)}}" class="form-control input-sm"
+                disabled="disabled" />
+        </div>
+        <div ng-if="rgla.tipo == 'T'" class="col-md-1 form-group">
+            <label>{{'rgla_rglv_importeBase' | translate}}</label> <input type="text"
+                value="{{rgla.rglv.importeBase | number:4}}" class="form-control input-sm" disabled="disabled" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label>{{'rgla_rglv_condicion' | translate}}</label>
+            <textarea class="form-control input-sm" disabled='disabled' rows="4">{{rgla.rglv.condicion}}</textarea>
+        </div>
+        <div class="col-md-6 form-group">
+            <label>{{'rgla_rglv_formula' | translate}}</label>
+            <textarea class="form-control input-sm" disabled='disabled' rows="4">{{rgla.rglv.formula}}</textarea>
+        </div>
+    </div>
+
+    <div ng-if="rgla.tipo == 'T'" class="row">
+        <div class="col-md-9 form-group">
+            <label>{{'rgla_rglv_pathImpuesto' | translate}}</label> <input type="text"
+                value="{{rgla.rglv.pathImpuesto}}" class="form-control input-sm" disabled="disabled" />
+        </div>
+    </div>
+
+    <div ng-if="rgla.tipo == 'T'" class="row">
+        <div class="col-md-9 form-group">
+            <label>{{'rgla_rglv_pathPagador' | translate}}</label> <input type="text" value="{{rgla.rglv.pathPagador}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+    </div>
+
+    <div ng-if="rgla.tipo == 'T'" class="row">
+        <div class="col-md-9 form-group">
+            <label>{{'rgla_rglv_pathEsSujPasivo' | translate}}</label> <input type="text"
+                value="{{rgla.rglv.pathEsSujPasivo}}" class="form-control input-sm" disabled="disabled" />
+        </div>
+    </div>
+
+    <div ng-if="rgla.tipo == 'T'" class="row">
+        <div class="col-md-9 form-group">
+            <label>{{'rgla_rglv_pathCodExen' | translate}}</label> <input type="text" value="{{rgla.rglv.pathCodExen}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+    </div>
+
+    <div ng-if="rgla.tipo == 'T'" class="row">
+        <div class="col-md-9 form-group">
+            <label>Datos Variables</label>
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Etiqueta</th>
+                        <th>Ruta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="rgla.rglv.pathInfo1 != null">
+                        <td>Info 1</td>
+                        <td>{{rgla.rglv.etiqInfo1}}</td>
+                        <td>{{rgla.rglv.pathInfo1}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathInfo2 != null">
+                        <td>Info 2</td>
+                        <td>{{rgla.rglv.etiqInfo2}}</td>
+                        <td>{{rgla.rglv.pathInfo2}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathInfo3 != null">
+                        <td>Info 3</td>
+                        <td>{{rgla.rglv.etiqInfo3}}</td>
+                        <td>{{rgla.rglv.pathInfo3}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathInfo4 != null">
+                        <td>Info 4</td>
+                        <td>{{rgla.rglv.etiqInfo4}}</td>
+                        <td>{{rgla.rglv.pathInfo4}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathInfo5 != null">
+                        <td>Info 5</td>
+                        <td>{{rgla.rglv.etiqInfo5}}</td>
+                        <td>{{rgla.rglv.pathInfo5}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathInfo6 != null">
+                        <td>Info 6</td>
+                        <td>{{rgla.rglv.etiqInfo6}}</td>
+                        <td>{{rgla.rglv.pathInfo6}}</td>
+                    </tr>
+
+                    <tr ng-if="rgla.rglv.pathCuant1 != null">
+                        <td>Cuant 1</td>
+                        <td>{{rgla.rglv.etiqCuant1}}</td>
+                        <td>{{rgla.rglv.pathCuant1}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathCuant2 != null">
+                        <td>Cuant 2</td>
+                        <td>{{rgla.rglv.etiqCuant2}}</td>
+                        <td>{{rgla.rglv.pathCuant2}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathCuant3 != null">
+                        <td>Cuant 3</td>
+                        <td>{{rgla.rglv.etiqCuant3}}</td>
+                        <td>{{rgla.rglv.pathCuant3}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathCuant4 != null">
+                        <td>Cuant 4</td>
+                        <td>{{rgla.rglv.etiqCuant4}}</td>
+                        <td>{{rgla.rglv.pathCuant4}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathCuant5 != null">
+                        <td>Cuant 5</td>
+                        <td>{{rgla.rglv.etiqCuant5}}</td>
+                        <td>{{rgla.rglv.pathCuant5}}</td>
+                    </tr>
+                    <tr ng-if="rgla.rglv.pathCuant6 != null">
+                        <td>Cuant 6</td>
+                        <td>{{rgla.rglv.etiqCuant6}}</td>
+                        <td>{{rgla.rglv.pathCuant6}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-9 form-group">
+            <label>Reglas Incompatibles</label>
+            <table ng-if="rginList" class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>{{'rgla_codigo' | translate}}</th>
+                        <th>{{'rgla_tipo' | translate}}</th>
+                        <th>{{'rgla_enti' | translate}}</th>
+                        <th>{{'rgin_rgiv_fini' | translate}}</th>
+                        <th>{{'rgin_rgiv_ffin' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rgin in rginList">
+                        <td>{{rgin.rgla2.codigo}}</td>
+                        <td>{{rgin.rgla2.tipo}}</td>
+                        <td>{{rgin.rgla2.enti.nombre}}</td>
+                        <td>{{rgin.rgiv.fini | date:('fmt_date' | translate)}}</td>
+                        <td>{{rgin.rgiv.ffin | date:('fmt_date' | translate)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</fieldset>

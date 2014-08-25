@@ -7,7 +7,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
+import xeredi.integra.model.facturacion.dao.ReglaIncompatibleDAO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
+import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
+import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -25,6 +28,9 @@ public class ReglaBO implements Regla {
     /** The rgla dao. */
     @Inject
     ReglaDAO rglaDAO;
+
+    @Inject
+    ReglaIncompatibleDAO rginDAO;
 
     /**
      * {@inheritDoc}
@@ -57,6 +63,17 @@ public class ReglaBO implements Regla {
                 && rglaCriterioVO.getFechaVigencia() != null);
 
         return rglaDAO.selectObject(rglaCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public List<ReglaIncompatibleVO> selectRginList(final ReglaIncompatibleCriterioVO rginCriterioVO) {
+        Preconditions.checkNotNull(rginCriterioVO);
+
+        return rginDAO.selectList(rginCriterioVO);
     }
 
 }

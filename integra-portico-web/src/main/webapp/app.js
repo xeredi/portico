@@ -114,11 +114,20 @@ app.config(function($translateProvider) {
         rgla_codigo : 'C\u00f3digo',
         rgla_tipo : 'Tipo',
         rgla_enti : 'Entidad',
+        rgla_crgo : 'Cargo',
         rgla_rglv_fini : 'F. Inicio',
         rgla_rglv_ffin : 'F. Fin',
         rgla_rglv_orden : 'Orden',
         rgla_rglv_importeBase : 'Importe Base',
         rgla_rglv_formula : 'F\u00f3rmula',
+        rgla_rglv_condicion : 'Condici\u00f3n',
+        rgla_rglv_pathImpuesto : 'Ruta Impuesto',
+        rgla_rglv_pathPagador : 'Ruta Pagador',
+        rgla_rglv_pathEsSujPasivo : 'Ruta Es Suj. Pasivo',
+        rgla_rglv_pathCodExen : 'Ruta C\u00f3d. Exenci\u00f3n',
+
+        rgin_rgiv_fini : 'F. Inicio Incomp.',
+        rgin_rgiv_ffin : 'F. Fin Incomp.',
     });
 
     $translateProvider.preferredLanguage('es');

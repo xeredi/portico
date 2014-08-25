@@ -30,7 +30,7 @@ public interface AspectoDAO {
      *            the criterio vo
      * @param bounds
      *            the bounds
-     * @return the list< aspecto v o>
+     * @return the list
      */
     List<AspectoVO> selectList(final AspectoCriterioVO criterioVO, final RowBounds bounds);
 

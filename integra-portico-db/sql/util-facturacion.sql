@@ -194,7 +194,29 @@ DELETE FROM tbl_factura_srv_fcts;
 DELETE FROM tbl_factura_cargo_fctc;
 DELETE FROM tbl_factura_fctr;
 
+SELECT * 
+FROM vw_regla_rgla
+WHERE 
+	EXISTS (
+		SELECT 1
+		FROM tbl_regla_inc_rgin
+		WHERE 
+			rgin_rgla1_pk = rgla_pk
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_regla_inc_version_rgiv
+				WHERE rgiv_rgin_pk = rgin_pk
+					AND NOW() BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, NOW())
+			)
+			AND  rgin_rgla2_pk = 63003
+	)
+;
 
+		SELECT *
+		FROM tbl_regla_inc_rgin
+;
+
+SELECT * FROM tbl_regla_rgla;
 
 -- Facturar
 -- Facturar

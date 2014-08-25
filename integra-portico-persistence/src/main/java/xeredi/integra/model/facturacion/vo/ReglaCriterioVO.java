@@ -20,6 +20,9 @@ public final class ReglaCriterioVO {
     /** The ids. */
     private Set<Long> ids;
 
+    /** The incompatible id. */
+    private Long incompatibleId;
+
     /** The rglv id. */
     private Long rglvId;
 
@@ -149,6 +152,25 @@ public final class ReglaCriterioVO {
      */
     public void setRglvId(final Long value) {
         rglvId = value;
+    }
+
+    /**
+     * Gets the incompatible id.
+     *
+     * @return the incompatible id
+     */
+    public Long getIncompatibleId() {
+        return incompatibleId;
+    }
+
+    /**
+     * Sets the incompatible id.
+     *
+     * @param value
+     *            the new incompatible id
+     */
+    public void setIncompatibleId(final Long value) {
+        incompatibleId = value;
     }
 
 }

@@ -7,7 +7,7 @@ angular.module('facturacion', [ 'ui.router' ])
             .state('vlrcs', {
                 abstract : true,
                 url : '/facturacion/vlrcs',
-                templateUrl : 'modules/facturacion/vlrcs.html'
+                templateUrl : 'modules/facturacion/vlrcs.html',
             })
 
             .state('vlrcs.list', {
@@ -177,6 +177,46 @@ angular.module('facturacion', [ 'ui.router' ])
 
                                     $scope.editar = function() {
                                         alert("Editar: " + $stateParams.crgvId);
+
+                                        $state.go('crgos.editar', $stateParams);
+                                    };
+                                }
+                            }
+                        }
+                    })
+
+            .state('rglas', {
+                abstract : true,
+                url : '/facturacion/rglas',
+                templateUrl : 'modules/facturacion/rglas.html'
+            })
+
+            .state(
+                    'rglas.detalle',
+                    {
+                        url : '/detalle/:rglvId',
+                        views : {
+                            '' : {
+                                templateUrl : 'modules/facturacion/rgla-detalle.html',
+                                controller : function($http, $scope, $state, $stateParams) {
+                                    var url = "facturacion/rgla-detalle.action?rgla.rglv.id=" + $stateParams.rglvId;
+
+                                    $http.get(url).success(
+                                            function(data) {
+                                                $scope.rgla = data.rgla;
+
+                                                var urlRgin = "facturacion/rgin-listado.action?rginCriterio.rgla1Id="
+                                                        + $scope.rgla.id + "&rginCriterio.fechaVigencia="
+                                                        + $scope.rgla.rglv.fini;
+
+                                                $http.get(urlRgin).success(function(data) {
+                                                    $scope.rginList = data.rginList;
+                                                });
+
+                                            });
+
+                                    $scope.editar = function() {
+                                        alert("Editar: " + $stateParams.rglvId);
 
                                         $state.go('crgos.editar', $stateParams);
                                     };

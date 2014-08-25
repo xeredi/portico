@@ -21,6 +21,25 @@ GRANT SELECT ON portico.vw_regla_rgla TO portico
 
 
 
+CREATE VIEW portico.vw_regla_inc_rgin AS
+	SELECT * 
+	FROM 
+		portico.tbl_regla_inc_rgin
+		INNER JOIN portico.tbl_regla_inc_version_rgiv ON
+			rgiv_rgin_pk = rgin_pk
+		INNER JOIN portico.tbl_regla_rgla ON
+			rgla_pk = rgin_rgla2_pk
+		INNER JOIN portico.tbl_entidad_enti ON
+			enti_pk = rgla_enti_pk
+		INNER JOIN portico.tbl_regla_version_rglv ON
+			rglv_rgla_pk = rgin_rgla2_pk
+\
+
+GRANT SELECT ON portico.vw_regla_inc_rgin TO portico
+\
+
+
+
 CREATE VIEW portico.vw_aspecto_aspc AS
 	SELECT *
 	FROM
@@ -335,6 +354,8 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 DROP VIEW portico.vw_aspecto_aspc
 \
 DROP VIEW portico.vw_regla_rgla
+\
+DROP VIEW portico.vw_regla_inc_rgin
 \
 
 DROP VIEW portico.vw_factura_det_fctd

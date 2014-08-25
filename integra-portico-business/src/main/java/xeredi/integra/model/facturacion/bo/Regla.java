@@ -1,6 +1,10 @@
 package xeredi.integra.model.facturacion.bo;
 
+import java.util.List;
+
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
+import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
+import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -31,4 +35,13 @@ public interface Regla {
      * @return the regla vo
      */
     ReglaVO select(final ReglaCriterioVO rglaCriterioVO);
+
+    /**
+     * Select rgin list.
+     *
+     * @param rginCriterioVO
+     *            the rgin criterio vo
+     * @return the list
+     */
+    List<ReglaIncompatibleVO> selectRginList(final ReglaIncompatibleCriterioVO rginCriterioVO);
 }
