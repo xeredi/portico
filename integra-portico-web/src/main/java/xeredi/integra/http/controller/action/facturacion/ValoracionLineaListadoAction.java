@@ -8,8 +8,8 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.facturacion.bo.Valoracion;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
-import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
-import xeredi.integra.model.facturacion.vo.ValoracionVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
@@ -17,18 +17,18 @@ import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ValoracionListadoAction.
+ * The Class ValoracionLineaListadoAction.
  */
-public final class ValoracionListadoAction extends BaseAction {
+public final class ValoracionLineaListadoAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -8684408096397399011L;
+    private static final long serialVersionUID = 4531375285740204285L;
 
-    /** The vlrc list. */
-    private PaginatedList<ValoracionVO> vlrcList;
+    /** The vlrl list. */
+    private PaginatedList<ValoracionLineaVO> vlrlList;
 
-    /** The vlrc criterio. */
-    private ValoracionCriterioVO vlrcCriterio;
+    /** The vlrl criterio. */
+    private ValoracionLineaCriterioVO vlrlCriterio;
 
     /** The page. */
     private int page = 1;
@@ -39,10 +39,10 @@ public final class ValoracionListadoAction extends BaseAction {
     /**
      * The Constructor.
      */
-    public ValoracionListadoAction() {
+    public ValoracionLineaListadoAction() {
         super();
 
-        vlrcCriterio = new ValoracionCriterioVO();
+        vlrlCriterio = new ValoracionLineaCriterioVO();
     }
 
     /**
@@ -60,9 +60,9 @@ public final class ValoracionListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "vlrc-listado") })
+    @Actions({ @Action(value = "vlrl-listado") })
     public String listado() {
-        Preconditions.checkNotNull(vlrcCriterio);
+        Preconditions.checkNotNull(vlrlCriterio);
 
         final Valoracion vlrcBO = BOFactory.getInjector().getInstance(ValoracionBO.class);
 
@@ -70,31 +70,12 @@ public final class ValoracionListadoAction extends BaseAction {
             return INPUT;
         }
 
-        vlrcList = vlrcBO.selectList(vlrcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        vlrlList = vlrcBO.selectVlrlList(vlrlCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
         return SUCCESS;
     }
 
     // get / set
-
-    /**
-     * Gets the vlrc criterio.
-     *
-     * @return the vlrc criterio
-     */
-    public ValoracionCriterioVO getVlrcCriterio() {
-        return vlrcCriterio;
-    }
-
-    /**
-     * Sets the vlrc criterio.
-     *
-     * @param value
-     *            the vlrc criterio
-     */
-    public void setVlrcCriterio(final ValoracionCriterioVO value) {
-        vlrcCriterio = value;
-    }
 
     /**
      * Gets the page.
@@ -135,12 +116,31 @@ public final class ValoracionListadoAction extends BaseAction {
     }
 
     /**
-     * Gets the vlrc list.
+     * Gets the vlrl criterio.
      *
-     * @return the vlrc list
+     * @return the vlrl criterio
      */
-    public PaginatedList<ValoracionVO> getVlrcList() {
-        return vlrcList;
+    public ValoracionLineaCriterioVO getVlrlCriterio() {
+        return vlrlCriterio;
+    }
+
+    /**
+     * Sets the vlrl criterio.
+     *
+     * @param value
+     *            the new vlrl criterio
+     */
+    public void setVlrlCriterio(final ValoracionLineaCriterioVO value) {
+        vlrlCriterio = value;
+    }
+
+    /**
+     * Gets the vlrl list.
+     *
+     * @return the vlrl list
+     */
+    public PaginatedList<ValoracionLineaVO> getVlrlList() {
+        return vlrlList;
     }
 
 }

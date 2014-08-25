@@ -218,17 +218,8 @@ public class ValoracionBO implements Valoracion {
         return vlrlDAO.select(vlrlId);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see xeredi.integra.model.bo.facturacion.Valoracion#existsLineaDependencia(java.lang.Long)
-     */
     /**
-     * Exists linea dependencia.
-     *
-     * @param vlrlId
-     *            the vlrl id
-     * @return true, if successful
+     * {@inheritDoc}
      */
     @Override
     @Transactional

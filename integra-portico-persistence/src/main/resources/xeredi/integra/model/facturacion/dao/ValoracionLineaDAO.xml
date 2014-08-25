@@ -16,6 +16,7 @@
         <result column="vlrl_fini" property="fini" />
         <result column="vlrl_ffin" property="ffin" />
 
+        <result column="vlrl_importe_base" property="importeBase" />
         <result column="vlrl_importe" property="importe" />
 
         <result column="vlrl_info1" property="info1" />

@@ -106,6 +106,11 @@ CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 				)
 		) AS vlrl_impuesto_prvr_pk
 		, (
+			SELECT SUM(vlrd_importe_base)
+			FROM portico.tbl_valoracion_det_vlrd
+			WHERE vlrd_vlrl_pk = vlrl_pk
+		) AS vlrl_importe_base
+		, (
 			SELECT SUM(vlrd_importe)
 			FROM portico.tbl_valoracion_det_vlrd
 			WHERE vlrd_vlrl_pk = vlrl_pk

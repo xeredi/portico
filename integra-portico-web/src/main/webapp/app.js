@@ -94,6 +94,11 @@ app.config(function($translateProvider) {
         vlrc_impuesto_importe_base : 'Importe Base',
         vlrc_impuesto_importe_impuesto : 'Importe IVA',
 
+        vlrl_rgla : 'Regla',
+        vlrl_importeBase : 'Imp. Base',
+        vlrl_importe : 'Importe',
+        vlrl_impuesto : 'IVA',
+
         aspc_codigo : 'C\u00f3digo',
         aspc_descripcion : 'Descripci\u00f3n',
         aspc_tpsr : 'Tipo de Servicio',

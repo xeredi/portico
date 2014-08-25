@@ -106,5 +106,34 @@
             </table>
         </div>
     </div>
+</fieldset>
 
+<fieldset>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Lineas</label>
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>{{'vlrl_rgla' | translate}}</th>
+                        <th>{{'vlrl_importeBase' | translate}}</th>
+                        <th>{{'vlrl_importe' | translate}}</th>
+                        <th>{{'vlrl_impuesto' | translate}}</th>
+                        <th ng-if="vlrc.aspc.aspv.lgrpInfo1">Info 1</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="vlrl in vlrlList.list">
+                        <td>{{vlrl.rgla.codigo}}</td>
+                        <td class="number">{{vlrl.importeBase | number:2}}</td>
+                        <td class="number">{{vlrl.importe | number:2}}</td>
+                        <td>{{vlrl.impuesto.etiqueta}}</td>
+                        <td ng-if="vlrc.aspc.aspv.lgrpInfo1"><span ng-if="vlrl.rgla.tipo == 'T'">{{vlrl.rgla.rglv.etiqInfo1}}:
+                                {{vlrl.info1}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </fieldset>

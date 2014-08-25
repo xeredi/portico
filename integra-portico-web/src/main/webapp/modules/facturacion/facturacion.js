@@ -38,29 +38,39 @@ angular.module('facturacion', [ 'ui.router' ])
                 }
             })
 
-            .state('vlrcs.detalle', {
-                url : '/detalle/:vlrcId',
-                views : {
-                    '' : {
-                        templateUrl : 'modules/facturacion/vlrc-detalle.html',
-                        controller : function($http, $scope, $state, $stateParams) {
-                            var url = "facturacion/vlrc-detalle.action?vlrc.id=" + $stateParams.vlrcId;
+            .state(
+                    'vlrcs.detalle',
+                    {
+                        url : '/detalle/:vlrcId',
+                        views : {
+                            '' : {
+                                templateUrl : 'modules/facturacion/vlrc-detalle.html',
+                                controller : function($http, $scope, $state, $stateParams) {
+                                    var url = "facturacion/vlrc-detalle.action?vlrc.id=" + $stateParams.vlrcId;
 
-                            $http.get(url).success(function(data) {
-                                $scope.vlrc = data.vlrc;
-                                $scope.vlrgList = data.vlrgList;
-                                $scope.vlriList = data.vlriList;
-                            });
+                                    $http.get(url).success(
+                                            function(data) {
+                                                $scope.vlrc = data.vlrc;
+                                                $scope.vlrgList = data.vlrgList;
+                                                $scope.vlriList = data.vlriList;
 
-                            $scope.editar = function() {
-                                alert("Editar: " + $stateParams.vlrcId);
+                                                var urlVlrl = "facturacion/vlrl-listado.action?vlrlCriterio.vlrcId="
+                                                        + $scope.vlrc.id + "&page=1";
 
-                                $state.go('vlrcs.editar', $stateParams);
-                            };
+                                                $http.get(urlVlrl).success(function(data) {
+                                                    $scope.vlrlList = data.vlrlList;
+                                                });
+                                            });
+
+                                    $scope.editar = function() {
+                                        alert("Editar: " + $stateParams.vlrcId);
+
+                                        $state.go('vlrcs.editar', $stateParams);
+                                    };
+                                }
+                            }
                         }
-                    }
-                }
-            })
+                    })
 
             .state('aspcs', {
                 abstract : true,
