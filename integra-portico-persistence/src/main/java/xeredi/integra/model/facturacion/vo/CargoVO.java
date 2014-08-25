@@ -46,6 +46,23 @@ public final class CargoVO {
     }
 
     /**
+     * Gets the etiqueta.
+     *
+     * @return the etiqueta
+     */
+    public String getEtiqueta() {
+        final StringBuffer buffer = new StringBuffer();
+
+        buffer.append(codigo);
+
+        if (descripcion != null) {
+            buffer.append(" - ").append(descripcion);
+        }
+
+        return buffer.toString();
+    }
+
+    /**
      * Gets the ig.
      *
      * @return the ig

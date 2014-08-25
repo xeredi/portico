@@ -23,18 +23,17 @@
 
         <tbody>
             <tr ng-repeat="item in vlrcList.list">
-                <td><a ui-sref="vlrcs.detalle({id:item.id})"><i class="glyphicon glyphicon-search"></i></a> <a
-                    href="#/facturacion/vlrc/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ui-sref="vlrcs.detalle({vlrcId:item.id})"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{item.id}}</td>
                 <td>{{item.srvc.etiqueta}}</td>
                 <td>{{item.aspc.etiqueta}}</td>
                 <td>{{item.pagador.etiqueta}}</td>
-                <td>{{item.importe}}</td>
-                <td>{{item.impuesto}}</td>
+                <td class="number">{{item.importe | number:2}}</td>
+                <td class="number">{{item.impuesto | number:2}}</td>
                 <td>{{item.fliq | date:('fmt_datetime' | translate)}}</td>
                 <td>{{item.fini | date:('fmt_datetime' | translate)}}</td>
                 <td>{{item.ffin | date:('fmt_datetime' | translate)}}</td>
-                <td>{{item.sujPasivo}}</td>
+                <td>{{'fmt_' + item.sujPasivo | translate}}</td>
                 <td>{{item.codExencion}}</td>
             </tr>
         </tbody>

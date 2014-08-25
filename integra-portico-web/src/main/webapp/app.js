@@ -77,10 +77,11 @@ app.config(function($translateProvider) {
         vlrc_pagador : 'Pagador',
         vlrc_importe : 'Importe',
         vlrc_impuesto : 'IVA',
+        vlrc_falta : 'F. Alta',
         vlrc_fliq : 'F. Liquidacion',
         vlrc_fini : 'F. Inicio',
         vlrc_ffin : 'F. Fin',
-        vlrc_sujPasivo : 'Es Suj. Pasivo',
+        vlrc_sujPasivo : 'Es Suj. Pasivo?',
         vlrc_codExencion : 'C\u00f3d. Exenci\u00f3n',
         vlrc_info1 : 'Elem. Info1',
         vlrc_info2 : 'Elem. Info2',
@@ -88,6 +89,10 @@ app.config(function($translateProvider) {
         vlrc_info4 : 'Elem. Info4',
         vlrc_info5 : 'Elem. Info5',
         vlrc_info6 : 'Elem. Info6',
+        vlrc_impuesto : 'Tipo de IVA',
+        vlrc_impuesto_porcentaje : '%',
+        vlrc_impuesto_importe_base : 'Importe Base',
+        vlrc_impuesto_importe_impuesto : 'Importe IVA',
     });
 
     $translateProvider.preferredLanguage('es');

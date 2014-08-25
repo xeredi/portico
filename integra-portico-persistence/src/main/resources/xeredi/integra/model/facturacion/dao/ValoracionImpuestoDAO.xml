@@ -12,15 +12,14 @@
         <result column="vlri_importe" property="importeBase" />
         <result column="vlri_impuesto" property="importeImpuesto" />
 
-        <association property="impuesto" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap"
-            columnPrefix="vlri_impuesto_" />
+        <association property="impuesto" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
     </resultMap>
 
     <select id="selectGenerateList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
     <![CDATA[
         SELECT
             sql.vlrl_vlrc_pk AS vlri_vlrc_pk
-            , sql.vlrl_impuesto_prmt_pk AS vlri_impuesto_prmt_pk
+            , sql.vlrl_impuesto_prmt_pk AS prmt_pk
             , sql.importe_base AS vlri_importe
             , sql.impuesto_porcentaje AS vlri_porcentaje
             , importe_base * impuesto_porcentaje / 100 AS vlri_impuesto
@@ -75,11 +74,8 @@
     <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
     <![CDATA[
         SELECT *
-        	, vlri_impuesto_prmt_pk AS impuesto_prmt_pk
-        	, (SELECT prmt_parametro FROM tbl_parametro_prmt
-        		WHERE prmt_pk = vlri_impuesto_prmt_pk) AS impuesto_prmt_parametro
         FROM
-        	tbl_valoracion_imp_vlri
+        	vw_valoracion_imp_vlri
     ]]>
         <include refid="SelectWhere" />
     </select>

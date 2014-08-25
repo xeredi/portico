@@ -5,6 +5,10 @@ body {
     font-family: Verdana, sans-serif;
 }
 
+.number {
+    text-align: right;
+}
+
 #body-content {
     margin-top: 55px;
     margin-left: 10px;
@@ -27,7 +31,7 @@ body {
     font-weight: bold;
 }
 
-label,legend,.btn,.form-control,.form-control-static,.bootstrap-datetimepicker-widget,.table-condensed,.dropdown-menu,.list-group,.nav-tabs,.tt-dropdown-menu,.typeahead,.modal-title
+label,legend,li,.btn,.form-control,.form-control-static,.bootstrap-datetimepicker-widget,.table-condensed,.dropdown-menu,.list-group,.nav-tabs,.tt-dropdown-menu,.typeahead,.modal-title
     {
     font-size: 11px;
 }

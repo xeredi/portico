@@ -114,6 +114,27 @@ GRANT SELECT ON portico.vw_valoracion_cargo_vlrg TO portico
 
 
 
+CREATE VIEW portico.vw_valoracion_imp_vlri AS
+	SELECT * 
+	FROM portico.tbl_valoracion_imp_vlri
+		INNER JOIN portico.tbl_parametro_prmt ON 
+			prmt_pk = vlri_impuesto_prmt_pk
+		JOIN portico.tbl_parametro_version_prvr ON
+			prvr_prmt_pk = vlri_impuesto_prmt_pk
+			AND EXISTS (
+				SELECT 1
+				FROM portico.tbl_valoracion_vlrc
+				WHERE 
+					vlrc_pk = vlri_vlrc_pk
+					AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+			)
+\
+
+GRANT SELECT ON portico.vw_valoracion_imp_vlri TO portico
+\
+
+
+
 CREATE VIEW portico.vw_factura_fctr AS
 	SELECT * 
 		, (
@@ -289,6 +310,8 @@ DROP VIEW portico.vw_factura_imp_fcti
 DROP VIEW portico.vw_factura_cargo_fctc
 \
 DROP VIEW portico.vw_factura_fctr
+\
+DROP VIEW portico.vw_valoracion_imp_vlri
 \
 DROP VIEW portico.vw_valoracion_cargo_vlrg
 \

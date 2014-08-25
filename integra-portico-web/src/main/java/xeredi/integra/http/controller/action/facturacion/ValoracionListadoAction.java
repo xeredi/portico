@@ -52,6 +52,8 @@ public final class ValoracionListadoAction extends BaseAction {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    // acciones web
+
     /**
      * Listado.
      *
