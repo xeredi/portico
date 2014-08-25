@@ -16,6 +16,9 @@ public final class AspectoCriterioVO {
     /** The id. */
     private Long id;
 
+    /** The aspv id. */
+    private Long aspvId;
+
     /** The srvc id. */
     private Long srvcId;
 
@@ -82,6 +85,25 @@ public final class AspectoCriterioVO {
      */
     public void setSrvcId(Long value) {
         this.srvcId = value;
+    }
+
+    /**
+     * Gets the aspv id.
+     *
+     * @return the aspv id
+     */
+    public Long getAspvId() {
+        return aspvId;
+    }
+
+    /**
+     * Sets the aspv id.
+     *
+     * @param value
+     *            the aspv id
+     */
+    public void setAspvId(Long value) {
+        this.aspvId = value;
     }
 
 }

@@ -3,6 +3,22 @@
 
 
 
+
+CREATE VIEW portico.vw_aspecto_aspc AS
+	SELECT *
+	FROM
+		portico.tbl_aspecto_aspc
+		JOIN portico.tbl_aspecto_version_aspv ON
+			aspv_aspc_pk = aspc_pk
+		JOIN portico.tbl_entidad_enti ON
+			enti_pk = aspc_tpsr_pk
+\
+
+GRANT SELECT ON portico.vw_aspecto_aspc TO portico
+\
+
+
+
 CREATE VIEW portico.vw_valoracion_vlrc AS
 	SELECT * 
 		, (
@@ -298,6 +314,9 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+DROP VIEW portico.vw_aspecto_aspc
+\
 
 DROP VIEW portico.vw_factura_det_fctd
 \

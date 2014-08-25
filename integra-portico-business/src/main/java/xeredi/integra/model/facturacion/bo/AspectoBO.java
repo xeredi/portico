@@ -53,7 +53,8 @@ public class AspectoBO implements Aspecto {
     @Transactional
     public AspectoVO selectObject(AspectoCriterioVO aspcCriterioVO) {
         Preconditions.checkNotNull(aspcCriterioVO);
-        Preconditions.checkArgument(aspcCriterioVO.getId() != null && aspcCriterioVO.getFechaVigencia() != null);
+        Preconditions.checkArgument(aspcCriterioVO.getAspvId() != null
+                || (aspcCriterioVO.getId() != null && aspcCriterioVO.getFechaVigencia() != null));
 
         return aspcDAO.selectObject(aspcCriterioVO);
     }
