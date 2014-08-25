@@ -15,22 +15,21 @@
 
         <association property="crgv" javaType="CargoVersionVO">
             <result column="crgv_pk" property="id" />
-            <result column="crgv_fini" property="finicio" />
+            <result column="crgv_fini" property="fini" />
             <result column="crgv_ffin" property="ffin" />
         </association>
 
-        <association property="tpsr" javaType="TipoServicioVO">
-            <result column="crgo_tpsr_pk" property="id" />
-        </association>
+        <association property="tpsr" resultMap="xeredi.integra.model.metamodelo.dao.TipoServicioDAO.ResultMap" />
     </resultMap>
 
     <sql id="SelectPrefix">
     <![CDATA[
-        SELECT crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tpsr_pk, crgo_tipo, crgo_descripcion
-        	, crgv_pk, crgv_fini, crgv_ffin
+        SELECT *
         FROM portico.tbl_cargo_crgo
-        	JOIN portico.tbl_cargo_version_crgv ON
-        		crgv_crgo_pk = crgo_pk
+            JOIN portico.tbl_cargo_version_crgv ON
+                crgv_crgo_pk = crgo_pk
+            JOIN portico.tbl_entidad_enti ON
+                enti_pk = crgo_tpsr_pk
     ]]>
     </sql>
 
@@ -47,6 +46,10 @@
             <if test="ids != null">
                 AND crgo_pk IN
                 <foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
+            </if>
+
+            <if test="crgvId != null">
+                AND crgv_pk = #{crgvId}
             </if>
 
             <if test="padreId != null">
@@ -105,6 +108,14 @@
             </if>
         </where>
     </sql>
+
+    <select id="count" parameterType="CargoCriterioVO" resultType="Integer">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_cargo_crgo
+    ]]>
+        <include refid="SelectWhere" />
+    </select>
 
     <select id="selectList" parameterType="CargoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />

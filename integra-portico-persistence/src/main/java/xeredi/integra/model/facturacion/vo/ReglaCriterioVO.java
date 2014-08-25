@@ -20,6 +20,9 @@ public final class ReglaCriterioVO {
     /** The ids. */
     private Set<Long> ids;
 
+    /** The rglv id. */
+    private Long rglvId;
+
     /** The tipo. */
     private ReglaTipo tipo;
 
@@ -49,8 +52,8 @@ public final class ReglaCriterioVO {
      * @param value
      *            the fecha referencia
      */
-    public void setFechaVigencia(Date value) {
-        this.fechaVigencia = value;
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
     /**
@@ -68,8 +71,8 @@ public final class ReglaCriterioVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -87,8 +90,8 @@ public final class ReglaCriterioVO {
      * @param value
      *            the ids
      */
-    public void setIds(Set<Long> value) {
-        this.ids = value;
+    public void setIds(final Set<Long> value) {
+        ids = value;
     }
 
     /**
@@ -106,8 +109,8 @@ public final class ReglaCriterioVO {
      * @param value
      *            the tipo
      */
-    public void setTipo(ReglaTipo value) {
-        this.tipo = value;
+    public void setTipo(final ReglaTipo value) {
+        tipo = value;
     }
 
     /**
@@ -125,8 +128,27 @@ public final class ReglaCriterioVO {
      * @param value
      *            the crgo id
      */
-    public void setCrgoId(Long value) {
-        this.crgoId = value;
+    public void setCrgoId(final Long value) {
+        crgoId = value;
+    }
+
+    /**
+     * Gets the rglv id.
+     *
+     * @return the rglv id
+     */
+    public Long getRglvId() {
+        return rglvId;
+    }
+
+    /**
+     * Sets the rglv id.
+     *
+     * @param value
+     *            the new rglv id
+     */
+    public void setRglvId(final Long value) {
+        rglvId = value;
     }
 
 }

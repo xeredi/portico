@@ -14,7 +14,7 @@ public final class ReglaVersionVO {
     private Long id;
 
     /** The finicio. */
-    private Date finicio;
+    private Date fini;
 
     /** The ffin. */
     private Date ffin;
@@ -192,8 +192,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -201,8 +201,8 @@ public final class ReglaVersionVO {
      *
      * @return the finicio
      */
-    public Date getFinicio() {
-        return finicio;
+    public Date getFini() {
+        return fini;
     }
 
     /**
@@ -211,8 +211,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the finicio
      */
-    public void setFinicio(Date value) {
-        this.finicio = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
@@ -230,8 +230,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
+    public void setFfin(final Date value) {
+        ffin = value;
     }
 
     /**
@@ -249,8 +249,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the condicion
      */
-    public void setCondicion(String value) {
-        this.condicion = value;
+    public void setCondicion(final String value) {
+        condicion = value;
     }
 
     /**
@@ -268,8 +268,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the formula
      */
-    public void setFormula(String value) {
-        this.formula = value;
+    public void setFormula(final String value) {
+        formula = value;
     }
 
     /**
@@ -287,8 +287,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path impuesto
      */
-    public void setPathImpuesto(String value) {
-        this.pathImpuesto = value;
+    public void setPathImpuesto(final String value) {
+        pathImpuesto = value;
     }
 
     /**
@@ -306,8 +306,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path pagador
      */
-    public void setPathPagador(String value) {
-        this.pathPagador = value;
+    public void setPathPagador(final String value) {
+        pathPagador = value;
     }
 
     /**
@@ -325,8 +325,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path es suj pasivo
      */
-    public void setPathEsSujPasivo(String value) {
-        this.pathEsSujPasivo = value;
+    public void setPathEsSujPasivo(final String value) {
+        pathEsSujPasivo = value;
     }
 
     /**
@@ -344,8 +344,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cod exen
      */
-    public void setPathCodExen(String value) {
-        this.pathCodExen = value;
+    public void setPathCodExen(final String value) {
+        pathCodExen = value;
     }
 
     /**
@@ -363,8 +363,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq info1
      */
-    public void setEtiqInfo1(String value) {
-        this.etiqInfo1 = value;
+    public void setEtiqInfo1(final String value) {
+        etiqInfo1 = value;
     }
 
     /**
@@ -382,8 +382,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info1
      */
-    public void setPathInfo1(String value) {
-        this.pathInfo1 = value;
+    public void setPathInfo1(final String value) {
+        pathInfo1 = value;
     }
 
     /**
@@ -401,8 +401,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq info2
      */
-    public void setEtiqInfo2(String value) {
-        this.etiqInfo2 = value;
+    public void setEtiqInfo2(final String value) {
+        etiqInfo2 = value;
     }
 
     /**
@@ -420,8 +420,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info2
      */
-    public void setPathInfo2(String value) {
-        this.pathInfo2 = value;
+    public void setPathInfo2(final String value) {
+        pathInfo2 = value;
     }
 
     /**
@@ -439,8 +439,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq info3
      */
-    public void setEtiqInfo3(String value) {
-        this.etiqInfo3 = value;
+    public void setEtiqInfo3(final String value) {
+        etiqInfo3 = value;
     }
 
     /**
@@ -458,8 +458,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info3
      */
-    public void setPathInfo3(String value) {
-        this.pathInfo3 = value;
+    public void setPathInfo3(final String value) {
+        pathInfo3 = value;
     }
 
     /**
@@ -477,8 +477,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq info4
      */
-    public void setEtiqInfo4(String value) {
-        this.etiqInfo4 = value;
+    public void setEtiqInfo4(final String value) {
+        etiqInfo4 = value;
     }
 
     /**
@@ -496,8 +496,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info4
      */
-    public void setPathInfo4(String value) {
-        this.pathInfo4 = value;
+    public void setPathInfo4(final String value) {
+        pathInfo4 = value;
     }
 
     /**
@@ -515,8 +515,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq info5
      */
-    public void setEtiqInfo5(String value) {
-        this.etiqInfo5 = value;
+    public void setEtiqInfo5(final String value) {
+        etiqInfo5 = value;
     }
 
     /**
@@ -534,8 +534,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info5
      */
-    public void setPathInfo5(String value) {
-        this.pathInfo5 = value;
+    public void setPathInfo5(final String value) {
+        pathInfo5 = value;
     }
 
     /**
@@ -553,8 +553,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq info6
      */
-    public void setEtiqInfo6(String value) {
-        this.etiqInfo6 = value;
+    public void setEtiqInfo6(final String value) {
+        etiqInfo6 = value;
     }
 
     /**
@@ -572,8 +572,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info6
      */
-    public void setPathInfo6(String value) {
-        this.pathInfo6 = value;
+    public void setPathInfo6(final String value) {
+        pathInfo6 = value;
     }
 
     /**
@@ -591,8 +591,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq cuant1
      */
-    public void setEtiqCuant1(String value) {
-        this.etiqCuant1 = value;
+    public void setEtiqCuant1(final String value) {
+        etiqCuant1 = value;
     }
 
     /**
@@ -610,8 +610,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant1
      */
-    public void setPathCuant1(String value) {
-        this.pathCuant1 = value;
+    public void setPathCuant1(final String value) {
+        pathCuant1 = value;
     }
 
     /**
@@ -629,8 +629,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq cuant2
      */
-    public void setEtiqCuant2(String value) {
-        this.etiqCuant2 = value;
+    public void setEtiqCuant2(final String value) {
+        etiqCuant2 = value;
     }
 
     /**
@@ -648,8 +648,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant2
      */
-    public void setPathCuant2(String value) {
-        this.pathCuant2 = value;
+    public void setPathCuant2(final String value) {
+        pathCuant2 = value;
     }
 
     /**
@@ -667,8 +667,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq cuant3
      */
-    public void setEtiqCuant3(String value) {
-        this.etiqCuant3 = value;
+    public void setEtiqCuant3(final String value) {
+        etiqCuant3 = value;
     }
 
     /**
@@ -686,8 +686,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant3
      */
-    public void setPathCuant3(String value) {
-        this.pathCuant3 = value;
+    public void setPathCuant3(final String value) {
+        pathCuant3 = value;
     }
 
     /**
@@ -705,8 +705,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq cuant4
      */
-    public void setEtiqCuant4(String value) {
-        this.etiqCuant4 = value;
+    public void setEtiqCuant4(final String value) {
+        etiqCuant4 = value;
     }
 
     /**
@@ -724,8 +724,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant4
      */
-    public void setPathCuant4(String value) {
-        this.pathCuant4 = value;
+    public void setPathCuant4(final String value) {
+        pathCuant4 = value;
     }
 
     /**
@@ -743,8 +743,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq cuant5
      */
-    public void setEtiqCuant5(String value) {
-        this.etiqCuant5 = value;
+    public void setEtiqCuant5(final String value) {
+        etiqCuant5 = value;
     }
 
     /**
@@ -762,8 +762,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant5
      */
-    public void setPathCuant5(String value) {
-        this.pathCuant5 = value;
+    public void setPathCuant5(final String value) {
+        pathCuant5 = value;
     }
 
     /**
@@ -781,8 +781,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the etiq cuant6
      */
-    public void setEtiqCuant6(String value) {
-        this.etiqCuant6 = value;
+    public void setEtiqCuant6(final String value) {
+        etiqCuant6 = value;
     }
 
     /**
@@ -800,8 +800,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant6
      */
-    public void setPathCuant6(String value) {
-        this.pathCuant6 = value;
+    public void setPathCuant6(final String value) {
+        pathCuant6 = value;
     }
 
     /**
@@ -819,8 +819,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the condicion sql
      */
-    public void setCondicionSql(String value) {
-        this.condicionSql = value;
+    public void setCondicionSql(final String value) {
+        condicionSql = value;
     }
 
     /**
@@ -838,8 +838,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the formula sql
      */
-    public void setFormulaSql(String value) {
-        this.formulaSql = value;
+    public void setFormulaSql(final String value) {
+        formulaSql = value;
     }
 
     /**
@@ -857,8 +857,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path impuesto sql
      */
-    public void setPathImpuestoSql(String value) {
-        this.pathImpuestoSql = value;
+    public void setPathImpuestoSql(final String value) {
+        pathImpuestoSql = value;
     }
 
     /**
@@ -876,8 +876,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path pagador sql
      */
-    public void setPathPagadorSql(String value) {
-        this.pathPagadorSql = value;
+    public void setPathPagadorSql(final String value) {
+        pathPagadorSql = value;
     }
 
     /**
@@ -895,8 +895,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path es suj pasivo sql
      */
-    public void setPathEsSujPasivoSql(String value) {
-        this.pathEsSujPasivoSql = value;
+    public void setPathEsSujPasivoSql(final String value) {
+        pathEsSujPasivoSql = value;
     }
 
     /**
@@ -914,8 +914,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cod exen sql
      */
-    public void setPathCodExenSql(String value) {
-        this.pathCodExenSql = value;
+    public void setPathCodExenSql(final String value) {
+        pathCodExenSql = value;
     }
 
     /**
@@ -933,8 +933,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info1 sql
      */
-    public void setPathInfo1Sql(String value) {
-        this.pathInfo1Sql = value;
+    public void setPathInfo1Sql(final String value) {
+        pathInfo1Sql = value;
     }
 
     /**
@@ -952,8 +952,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info2 sql
      */
-    public void setPathInfo2Sql(String value) {
-        this.pathInfo2Sql = value;
+    public void setPathInfo2Sql(final String value) {
+        pathInfo2Sql = value;
     }
 
     /**
@@ -971,8 +971,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info3 sql
      */
-    public void setPathInfo3Sql(String value) {
-        this.pathInfo3Sql = value;
+    public void setPathInfo3Sql(final String value) {
+        pathInfo3Sql = value;
     }
 
     /**
@@ -990,8 +990,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info4 sql
      */
-    public void setPathInfo4Sql(String value) {
-        this.pathInfo4Sql = value;
+    public void setPathInfo4Sql(final String value) {
+        pathInfo4Sql = value;
     }
 
     /**
@@ -1009,8 +1009,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info5 sql
      */
-    public void setPathInfo5Sql(String value) {
-        this.pathInfo5Sql = value;
+    public void setPathInfo5Sql(final String value) {
+        pathInfo5Sql = value;
     }
 
     /**
@@ -1028,8 +1028,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path info6 sql
      */
-    public void setPathInfo6Sql(String value) {
-        this.pathInfo6Sql = value;
+    public void setPathInfo6Sql(final String value) {
+        pathInfo6Sql = value;
     }
 
     /**
@@ -1047,8 +1047,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant1 sql
      */
-    public void setPathCuant1Sql(String value) {
-        this.pathCuant1Sql = value;
+    public void setPathCuant1Sql(final String value) {
+        pathCuant1Sql = value;
     }
 
     /**
@@ -1066,8 +1066,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant2 sql
      */
-    public void setPathCuant2Sql(String value) {
-        this.pathCuant2Sql = value;
+    public void setPathCuant2Sql(final String value) {
+        pathCuant2Sql = value;
     }
 
     /**
@@ -1085,8 +1085,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant3 sql
      */
-    public void setPathCuant3Sql(String value) {
-        this.pathCuant3Sql = value;
+    public void setPathCuant3Sql(final String value) {
+        pathCuant3Sql = value;
     }
 
     /**
@@ -1104,8 +1104,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant4 sql
      */
-    public void setPathCuant4Sql(String value) {
-        this.pathCuant4Sql = value;
+    public void setPathCuant4Sql(final String value) {
+        pathCuant4Sql = value;
     }
 
     /**
@@ -1123,8 +1123,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant5 sql
      */
-    public void setPathCuant5Sql(String value) {
-        this.pathCuant5Sql = value;
+    public void setPathCuant5Sql(final String value) {
+        pathCuant5Sql = value;
     }
 
     /**
@@ -1142,8 +1142,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the path cuant6 sql
      */
-    public void setPathCuant6Sql(String value) {
-        this.pathCuant6Sql = value;
+    public void setPathCuant6Sql(final String value) {
+        pathCuant6Sql = value;
     }
 
     /**
@@ -1161,8 +1161,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the new orden
      */
-    public void setOrden(Integer value) {
-        this.orden = value;
+    public void setOrden(final Integer value) {
+        orden = value;
     }
 
     /**
@@ -1180,8 +1180,8 @@ public final class ReglaVersionVO {
      * @param value
      *            the new importe base
      */
-    public void setImporteBase(Double value) {
-        this.importeBase = value;
+    public void setImporteBase(final Double value) {
+        importeBase = value;
     }
 
 }

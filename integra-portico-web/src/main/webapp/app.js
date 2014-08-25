@@ -100,7 +100,26 @@ app.config(function($translateProvider) {
         aspc_aspv_fini : 'F. Inicio',
         aspc_aspv_ffin : 'F. Fin',
         aspc_aspv_prioridad : 'Prioridad',
-});
+
+        crgo_codigo : 'C\u00f3digo',
+        crgo_descripcion : 'Descripci\u00f3n',
+        crgo_codigoNormalizado : 'C\u00f3d. Normalizado',
+        crgo_tipo : 'Tipo',
+        crgo_tpsr : 'Tipo Servicio',
+        crgo_principal : 'Principal?',
+        crgo_temporal : 'Temporal?',
+        crgo_crgv_fini : 'F. Inicio',
+        crgo_crgv_ffin : 'F. Fin',
+
+        rgla_codigo : 'C\u00f3digo',
+        rgla_tipo : 'Tipo',
+        rgla_enti : 'Entidad',
+        rgla_rglv_fini : 'F. Inicio',
+        rgla_rglv_ffin : 'F. Fin',
+        rgla_rglv_orden : 'Orden',
+        rgla_rglv_importeBase : 'Importe Base',
+        rgla_rglv_formula : 'F\u00f3rmula',
+    });
 
     $translateProvider.preferredLanguage('es');
 });

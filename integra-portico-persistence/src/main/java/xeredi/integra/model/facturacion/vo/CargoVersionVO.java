@@ -14,7 +14,7 @@ public final class CargoVersionVO {
     private Long id;
 
     /** The finicio. */
-    private Date finicio;
+    private Date fini;
 
     /** The ffin. */
     private Date ffin;
@@ -42,8 +42,8 @@ public final class CargoVersionVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -51,8 +51,8 @@ public final class CargoVersionVO {
      *
      * @return the finicio
      */
-    public Date getFinicio() {
-        return finicio;
+    public Date getFini() {
+        return fini;
     }
 
     /**
@@ -61,8 +61,8 @@ public final class CargoVersionVO {
      * @param value
      *            the finicio
      */
-    public void setFinicio(Date value) {
-        this.finicio = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
@@ -80,8 +80,8 @@ public final class CargoVersionVO {
      * @param value
      *            the ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
+    public void setFfin(final Date value) {
+        ffin = value;
     }
 
 }

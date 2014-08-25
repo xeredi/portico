@@ -20,6 +20,9 @@ public final class CargoCriterioVO {
     /** The ids. */
     private Set<Long> ids;
 
+    /** The crgv id. */
+    private Long crgvId;
+
     /** The padre id. */
     private Long padreId;
 
@@ -58,8 +61,8 @@ public final class CargoCriterioVO {
      * @param value
      *            the fecha vigencia
      */
-    public void setFechaVigencia(Date value) {
-        this.fechaVigencia = value;
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
     /**
@@ -77,8 +80,8 @@ public final class CargoCriterioVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -96,8 +99,8 @@ public final class CargoCriterioVO {
      * @param value
      *            the ids
      */
-    public void setIds(Set<Long> value) {
-        this.ids = value;
+    public void setIds(final Set<Long> value) {
+        ids = value;
     }
 
     /**
@@ -115,8 +118,8 @@ public final class CargoCriterioVO {
      * @param value
      *            the padre id
      */
-    public void setPadreId(Long value) {
-        this.padreId = value;
+    public void setPadreId(final Long value) {
+        padreId = value;
     }
 
     /**
@@ -134,8 +137,8 @@ public final class CargoCriterioVO {
      * @param value
      *            the padre ids
      */
-    public void setPadreIds(Set<Long> value) {
-        this.padreIds = value;
+    public void setPadreIds(final Set<Long> value) {
+        padreIds = value;
     }
 
     /**
@@ -153,8 +156,8 @@ public final class CargoCriterioVO {
      * @param value
      *            the solo principales
      */
-    public void setSoloPrincipales(boolean value) {
-        this.soloPrincipales = value;
+    public void setSoloPrincipales(final boolean value) {
+        soloPrincipales = value;
     }
 
     /**
@@ -172,8 +175,8 @@ public final class CargoCriterioVO {
      * @param value
      *            the solo dependientes
      */
-    public void setSoloDependientes(boolean value) {
-        this.soloDependientes = value;
+    public void setSoloDependientes(final boolean value) {
+        soloDependientes = value;
     }
 
     /**
@@ -191,8 +194,27 @@ public final class CargoCriterioVO {
      * @param value
      *            the srvc id
      */
-    public void setSrvcId(Long value) {
-        this.srvcId = value;
+    public void setSrvcId(final Long value) {
+        srvcId = value;
+    }
+
+    /**
+     * Gets the crgv id.
+     *
+     * @return the crgv id
+     */
+    public Long getCrgvId() {
+        return crgvId;
+    }
+
+    /**
+     * Sets the crgv id.
+     *
+     * @param value
+     *            the new crgv id
+     */
+    public void setCrgvId(final Long value) {
+        crgvId = value;
     }
 
 }

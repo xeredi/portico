@@ -55,7 +55,7 @@ public final class AspectoAction extends BaseAction {
 
         aspcCriterioVO.setAspvId(aspc.getAspv().getId());
 
-        aspc = aspcBO.selectObject(aspcCriterioVO);
+        aspc = aspcBO.select(aspcCriterioVO);
 
         return SUCCESS;
     }
@@ -77,8 +77,8 @@ public final class AspectoAction extends BaseAction {
      * @param value
      *            the aspc
      */
-    public void setAspc(AspectoVO value) {
-        this.aspc = value;
+    public void setAspc(final AspectoVO value) {
+        aspc = value;
     }
 
 }

@@ -30,5 +30,5 @@ public interface Aspecto {
      *            Criterio de busqueda de aspectos.
      * @return Datos del asperto que cumpla el criterio de busqueda.
      */
-    AspectoVO selectObject(final AspectoCriterioVO aspcCriterioVO);
+    AspectoVO select(final AspectoCriterioVO aspcCriterioVO);
 }

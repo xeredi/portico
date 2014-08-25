@@ -31,7 +31,7 @@ public class AspectoBO implements Aspecto {
      */
     @Override
     @Transactional
-    public PaginatedList<AspectoVO> selectList(AspectoCriterioVO aspcCriterioVO, int offset, int limit) {
+    public PaginatedList<AspectoVO> selectList(final AspectoCriterioVO aspcCriterioVO, final int offset, final int limit) {
         Preconditions.checkNotNull(aspcCriterioVO);
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
@@ -51,10 +51,10 @@ public class AspectoBO implements Aspecto {
      */
     @Override
     @Transactional
-    public AspectoVO selectObject(AspectoCriterioVO aspcCriterioVO) {
+    public AspectoVO select(final AspectoCriterioVO aspcCriterioVO) {
         Preconditions.checkNotNull(aspcCriterioVO);
-        Preconditions.checkArgument(aspcCriterioVO.getAspvId() != null
-                || (aspcCriterioVO.getId() != null && aspcCriterioVO.getFechaVigencia() != null));
+        Preconditions.checkArgument(aspcCriterioVO.getAspvId() != null || aspcCriterioVO.getId() != null
+                && aspcCriterioVO.getFechaVigencia() != null);
 
         return aspcDAO.selectObject(aspcCriterioVO);
     }

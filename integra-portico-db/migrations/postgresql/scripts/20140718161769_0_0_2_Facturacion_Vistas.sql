@@ -4,6 +4,23 @@
 
 
 
+CREATE VIEW portico.vw_regla_rgla AS
+	SELECT *
+	FROM
+		portico.tbl_regla_rgla
+		INNER JOIN portico.tbl_entidad_enti ON
+			enti_pk = rgla_enti_pk
+		INNER JOIN portico.tbl_cargo_crgo ON
+			crgo_pk = rgla_crgo_pk
+		INNER JOIN portico.tbl_regla_version_rglv ON
+			rglv_rgla_pk = rgla_pk
+\
+
+GRANT SELECT ON portico.vw_regla_rgla TO portico
+\
+
+
+
 CREATE VIEW portico.vw_aspecto_aspc AS
 	SELECT *
 	FROM
@@ -316,6 +333,8 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 -- SQL to undo the change goes here.
 
 DROP VIEW portico.vw_aspecto_aspc
+\
+DROP VIEW portico.vw_regla_rgla
 \
 
 DROP VIEW portico.vw_factura_det_fctd

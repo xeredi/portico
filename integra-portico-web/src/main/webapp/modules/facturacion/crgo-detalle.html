@@ -1,0 +1,184 @@
+<fieldset>
+    <div class="row">
+        <div class="col-md-1 form-group">
+            <label>{{'crgo_codigo' | translate}}</label> <input type="text" value="{{crgo.codigo}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-3 form-group">
+            <label>{{'crgo_descripcion' | translate}}</label> <input type="text" value="{{crgo.descripcion}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{'crgo_codigoNormalizado' | translate}}</label> <input type="text"
+                value="{{crgo.codigoNormalizado}}" class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'crgo_tipo' | translate}}</label> <input type="text" value="{{crgo.tipo}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{'crgo_tpsr' | translate}}</label> <input type="text" value="{{crgo.tpsr.nombre}}"
+                class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'crgo_principal' | translate}}</label> <input type="text"
+                value="{{'fmt_' + crgo.principal | translate}}" class="form-control input-sm" disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'crgo_temporal' | translate}}</label> <input type="text"
+                value="{{'fmt_' + crgo.temporal | translate}}" class="form-control input-sm" disabled="disabled" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1 form-group">
+            <label>{{'crgo_crgv_fini' | translate}}</label> <input type="text"
+                value="{{crgo.crgv.fini | date:('fmt_date' | translate)}}" class="form-control input-sm"
+                disabled="disabled" />
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'crgo_crgv_ffin' | translate}}</label> <input type="text"
+                value="{{aspc.crgv.ffin | date:('fmt_date' | translate)}}" class="form-control input-sm"
+                disabled="disabled" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Reglas</label>
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th />
+                        <th>{{'rgla_codigo' | translate}}</th>
+                        <th>{{'rgla_tipo' | translate}}</th>
+                        <th>{{'rgla_enti' | translate}}</th>
+                        <th>{{'rgla_rglv_fini' | translate}}</th>
+                        <th>{{'rgla_rglv_ffin' | translate}}</th>
+                        <th>{{'rgla_rglv_orden' | translate}}</th>
+                        <th>{{'rgla_rglv_importeBase' | translate}}</th>
+                        <th>{{'rgla_rglv_formula' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="rgla in rglaList.list">
+                        <td></td>
+                        <td>{{rgla.codigo}}</td>
+                        <td>{{rgla.tipo}}</td>
+                        <td>{{rgla.enti.nombre}}</td>
+                        <td>{{rgla.rglv.fini | date:('fmt_date' | translate)}}</td>
+                        <td>{{rgla.rglv.ffin | date:('fmt_date' | translate)}}</td>
+                        <td class="number">{{rgla.rglv.orden}}</td>
+                        <td class="number">{{rgla.rglv.importeBase | number:4}}</td>
+                        <td>{{rgla.rglv.formula}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Elementos de Cabecera</label>
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th />
+                        <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cpathInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cgrpInfo' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-if="aspc.aspv.cetiqInfo1">
+                        <td>info1</td>
+                        <td>{{aspc.aspv.cetiqInfo1}}</td>
+                        <td>{{aspc.aspv.cpathInfo1}}</td>
+                        <td>{{aspc.aspv.cgrpInfo1}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo2">
+                        <td>info2</td>
+                        <td>{{aspc.aspv.cetiqInfo2}}</td>
+                        <td>{{aspc.aspv.cpathInfo2}}</td>
+                        <td>{{aspc.aspv.cgrpInfo2}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo3">
+                        <td>info3</td>
+                        <td>{{aspc.aspv.cetiqInfo3}}</td>
+                        <td>{{aspc.aspv.cpathInfo3}}</td>
+                        <td>{{aspc.aspv.cgrpInfo3}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo4">
+                        <td>info4</td>
+                        <td>{{aspc.aspv.cetiqInfo4}}</td>
+                        <td>{{aspc.aspv.cpathInfo4}}</td>
+                        <td>{{aspc.aspv.cgrpInfo4}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo5">
+                        <td>info5</td>
+                        <td>{{aspc.aspv.cetiqInfo5}}</td>
+                        <td>{{aspc.aspv.cpathInfo5}}</td>
+                        <td>{{aspc.aspv.cgrpInfo5}}</td>
+                    </tr>
+                    <tr ng-if="aspc.aspv.cetiqInfo6">
+                        <td>info6</td>
+                        <td>{{aspc.aspv.cetiqInfo6}}</td>
+                        <td>{{aspc.aspv.cpathInfo6}}</td>
+                        <td>{{aspc.aspv.cgrpInfo6}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Elementos Informativos de Linea</label>
+            <!--
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cpathInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cgrpInfo' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-if="aspc.aspv.cetiqInfo1">
+                        <td>{{aspc.aspv.cetiqInfo1}}</td>
+                        <td>{{aspc.aspv.cpathInfo1}}</td>
+                        <td>{{aspc.aspv.cgrpInfo1}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label>Elementos Cuantitativos de Linea</label>
+            <!--
+            <table class="table table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cpathInfo' | translate}}</th>
+                        <th>{{'aspc_aspv_cgrpInfo' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-if="aspc.aspv.cetiqInfo1">
+                        <td>{{aspc.aspv.cetiqInfo1}}</td>
+                        <td>{{aspc.aspv.cpathInfo1}}</td>
+                        <td>{{aspc.aspv.cgrpInfo1}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ -->
+</fieldset>
