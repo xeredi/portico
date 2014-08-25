@@ -33,6 +33,18 @@ public final class AspectoVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    public String getEtiqueta() {
+        final StringBuffer buffer = new StringBuffer();
+
+        buffer.append(codigo);
+
+        if (descripcion != null) {
+            buffer.append(" - ").append(descripcion);
+        }
+
+        return buffer.toString();
+    }
+
     /**
      * Gets the id.
      *
@@ -64,7 +76,8 @@ public final class AspectoVO {
     /**
      * Sets the codigo.
      *
-     * @param value the codigo
+     * @param value
+     *            the codigo
      */
     public void setCodigo(String value) {
         this.codigo = value;
@@ -82,7 +95,8 @@ public final class AspectoVO {
     /**
      * Sets the descripcion.
      *
-     * @param value the descripcion
+     * @param value
+     *            the descripcion
      */
     public void setDescripcion(String value) {
         this.descripcion = value;
@@ -100,7 +114,8 @@ public final class AspectoVO {
     /**
      * Sets the tpsr.
      *
-     * @param value the tpsr
+     * @param value
+     *            the tpsr
      */
     public void setTpsr(TipoServicioVO value) {
         this.tpsr = value;
@@ -118,7 +133,8 @@ public final class AspectoVO {
     /**
      * Sets the aspv.
      *
-     * @param value the aspv
+     * @param value
+     *            the aspv
      */
     public void setAspv(AspectoVersionVO value) {
         this.aspv = value;

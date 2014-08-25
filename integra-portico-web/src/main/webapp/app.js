@@ -1,5 +1,5 @@
 var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.router', 'ngRoute', 'ui.bootstrap.datetimepicker',
-        'pascalprecht.translate', 'configuracion', 'maestro', 'servicio', 'proceso', 'metamodelo' ]);
+        'pascalprecht.translate', 'configuracion', 'maestro', 'servicio', 'proceso', 'metamodelo', 'facturacion' ]);
 
 app.config(function($translateProvider) {
     $translateProvider.translations('es', {
@@ -29,11 +29,16 @@ app.config(function($translateProvider) {
         menu_peprs : 'Estadisticas',
         menu_tpprs : 'Maestros',
         menu_prbts : 'Procesos',
+        menu_fctrmain : 'Facturaci\u00f3n',
         menu_metamodelo_tpsrs : 'Tipos de Servicio',
         menu_metamodelo_tpess : 'Tipos de Estadistica',
         menu_metamodelo_tpprs : 'Tipos de Maestro',
         menu_metamodelo_tpdts : 'Tipos de Dato',
         menu_confs : 'Configuracion',
+        menu_vlrcs : 'Valoraciones',
+        menu_fctrs : 'Facturas',
+        menu_crgos : 'Cargos',
+        menu_aspcs : 'Aspectos',
 
         modal_filtro : 'Filtro',
         limit : 'Max. Resultados',
@@ -65,6 +70,24 @@ app.config(function($translateProvider) {
         ssrv_ffin : 'F. Fin',
         ssrv_numero : 'N\u00famero',
         ssrv_estado : 'Estado',
+
+        vlrc_id : 'Id',
+        vlrc_srvc : 'Servicio',
+        vlrc_aspc : 'Aspecto',
+        vlrc_pagador : 'Pagador',
+        vlrc_importe : 'Importe',
+        vlrc_impuesto : 'IVA',
+        vlrc_fliq : 'F. Liquidacion',
+        vlrc_fini : 'F. Inicio',
+        vlrc_ffin : 'F. Fin',
+        vlrc_sujPasivo : 'Es Suj. Pasivo',
+        vlrc_codExencion : 'C\u00f3d. Exenci\u00f3n',
+        vlrc_info1 : 'Elem. Info1',
+        vlrc_info2 : 'Elem. Info2',
+        vlrc_info3 : 'Elem. Info3',
+        vlrc_info4 : 'Elem. Info4',
+        vlrc_info5 : 'Elem. Info5',
+        vlrc_info6 : 'Elem. Info6',
     });
 
     $translateProvider.preferredLanguage('es');
@@ -133,28 +156,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
             });
         }
     })
-});
 
-/*
- * app.config([ '$routeProvider', function($routeProvider) {
- * $routeProvider.when('/servicio/tpsrs', { templateUrl :
- * 'modules/servicio/tpsr-listado.html', controller : 'tpsrsCtrl'
- * }).when('/estadistica/peprs', { templateUrl :
- * 'modules/estadistica/pepr-listado.html', controller : 'tpprsCtrl'
- * }).when('/maestro/tpprs', { templateUrl :
- * 'modules/maestro/tppr-listado.html', controller : 'tpprsCtrl'
- * }).when('/proceso/prbts', { templateUrl :
- * 'modules/proceso/prbt-listado.html', controller : 'ProcesoListController'
- * }).when('/metamodelo/tpprs', { templateUrl :
- * 'modules/metamodelo/tppr-listado.html', controller : 'tpprsCtrl'
- * }).when('/metamodelo/tpsrs', { templateUrl :
- * 'modules/metamodelo/tpsr-listado.html', controller : 'tpsrsCtrl'
- * }).when('/metamodelo/tpess', { templateUrl :
- * 'modules/metamodelo/tpes-listado.html', controller : 'tpprsCtrl'
- * }).when('/metamodelo/tpdts', { templateUrl :
- * 'modules/metamodelo/tpdt-listado.html', controller : 'tpprsCtrl'
- * }).when('/configuracion/confs', { templateUrl :
- * 'modules/configuracion/conf-listado.html', controller : 'tpprsCtrl'
- * }).when('/acceso', { templateUrl : 'modules/usro-acceso.html', controller :
- * 'tpprsCtrl' }); } ]);
- */
+    .state('fctrmain', {
+        url : '/facturacion/main',
+        templateUrl : 'modules/facturacion/facturacion.html'
+    })
+});

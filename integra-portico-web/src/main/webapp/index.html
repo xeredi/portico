@@ -39,6 +39,7 @@
 <script type="text/javascript" src="modules/servicio/servicio.js"></script>
 <script type="text/javascript" src="modules/proceso/proceso.js"></script>
 <script type="text/javascript" src="modules/metamodelo/metamodelo.js"></script>
+<script type="text/javascript" src="modules/facturacion/facturacion.js"></script>
 
 <title>{{'app_nombre' | translate}}</title>
 </head>
@@ -51,15 +52,18 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Menu</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li role="presentation" class="dropdown-header">Gestion</li>
+                        <li role="presentation" class="dropdown-header">Gestión</li>
                         <li><a ui-sref="tpsrs">{{'menu_tpsrs' | translate}}</a></li>
                         <li><a ui-sref="peprs">{{'menu_peprs' | translate}}</a></li>
                         <li><a ui-sref="tpprs">{{'menu_tpprs' | translate}}</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Administracion</li>
+                        <li role="presentation" class="dropdown-header">Facturación</li>
+                        <li><a ui-sref="fctrmain">{{'menu_fctrmain' | translate}}</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation" class="dropdown-header">Administración</li>
                         <li><a ui-sref="prbts">{{'menu_prbts' | translate}}</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Parametrizacion</li>
+                        <li role="presentation" class="dropdown-header">Parametrización</li>
                         <li><a href="#/metamodelo/tpsrs">{{'menu_metamodelo_tpsrs' | translate}}</a></li>
                         <li><a href="#/metamodelo/tpess">{{'menu_metamodelo_tpess' | translate}}</a></li>
                         <li><a href="#/metamodelo/tpprs">{{'menu_metamodelo_tpprs' | translate}}</a></li>
