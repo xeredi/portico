@@ -4,78 +4,76 @@
     <fieldset>
         <div class="row">
             <div class="col-md-2 form-group">
-                <label>{{'vlrc_id' | translate}}</label> <input type="text" value="{{vlrc.id}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{'vlrc_id' | translate}}</label>
+                <p class="form-control-static">{{vlrc.id}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{'vlrc_srvc' | translate}}</label> <input type="text" value="{{vlrc.srvc.etiqueta}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{'vlrc_srvc' | translate}}</label>
+                <p class="form-control-static">{{vlrc.srvc.etiqueta}}</p>
             </div>
             <div class="col-md-3 form-group">
-                <label>{{'vlrc_aspc' | translate}}</label> <input type="text" value="{{vlrc.aspc.etiqueta}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{'vlrc_aspc' | translate}}</label>
+                <p class="form-control-static">
+                    <a ui-sref="aspcs.detalle({aspcId:vlrc.aspc.id})">{{vlrc.aspc.etiqueta}}</a>
+                </p>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{'vlrc_importe' | translate}}</label> <input type="text" value="{{vlrc.importe | number:2}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{'vlrc_importe' | translate}}</label>
+                <p class="form-control-static">{{vlrc.importe | number:2}}</p>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{'vlrc_impuesto' | translate}}</label> <input type="text" value="{{vlrc.impuesto | number:2}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{'vlrc_impuesto' | translate}}</label>
+                <p class="form-control-static">{{vlrc.impuesto | number:2}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{'vlrc_codExencion' | translate}}</label> <input type="text" value="{{vlrc.codExencion}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{'vlrc_codExencion' | translate}}</label>
+                <p class="form-control-static">{{vlrc.codExencion}}</p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-2 form-group">
-                <label>{{'vlrc_falta' | translate}}</label> <input type="text"
-                    value="{{vlrc.falta | date:('fmt_datetime' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
+                <label>{{'vlrc_falta' | translate}}</label>
+                <p class="form-control-static">{{vlrc.falta | date:('fmt_datetime' | translate)}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{'vlrc_fliq' | translate}}</label> <input type="text"
-                    value="{{vlrc.fliq | date:('fmt_datetime' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
+                <label>{{'vlrc_fliq' | translate}}</label>
+                <p class="form-control-static">{{vlrc.fliq | date:('fmt_datetime' | translate)}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{'vlrc_fini' | translate}}</label> <input type="text"
-                    value="{{vlrc.fini | date:('fmt_datetime' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
+                <label>{{'vlrc_fini' | translate}}</label>
+                <p class="form-control-static">{{vlrc.fini | date:('fmt_datetime' | translate)}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{'vlrc_ffin' | translate}}</label> <input type="text"
-                    value="{{vlrc.ffin | date:('fmt_datetime' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
+                <label>{{'vlrc_ffin' | translate}}</label>
+                <p class="form-control-static">{{vlrc.ffin | date:('fmt_datetime' | translate)}}</p>
             </div>
         </div>
 
         <div class="row">
             <div ng-if="vlrc.aspc.aspv.cetiqInfo1" class="col-md-4 form-group">
-                <label>{{vlrc.aspc.aspv.cetiqInfo1}}</label> <input type="text" value="{{vlrc.info1}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{vlrc.aspc.aspv.cetiqInfo1}}</label>
+                <p class="form-control-static">{{vlrc.info1}}</p>
             </div>
             <div ng-if="vlrc.aspc.aspv.cetiqInfo2" class="col-md-4 form-group">
-                <label>{{vlrc.aspc.aspv.cetiqInfo2}}</label> <input type="text" value="{{vlrc.info2}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{vlrc.aspc.aspv.cetiqInfo2}}</label>
+                <p class="form-control-static">{{vlrc.info2}}</p>
             </div>
             <div ng-if="vlrc.aspc.aspv.cetiqInfo3" class="col-md-4 form-group">
-                <label>{{vlrc.aspc.aspv.cetiqInfo3}}</label> <input type="text" value="{{vlrc.info3}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{vlrc.aspc.aspv.cetiqInfo3}}</label>
+                <p class="form-control-static">{{vlrc.info3}}</p>
             </div>
             <div ng-if="vlrc.aspc.aspv.cetiqInfo4" class="col-md-4 form-group">
-                <label>{{vlrc.aspc.aspv.cetiqInfo4}}</label> <input type="text" value="{{vlrc.info4}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{vlrc.aspc.aspv.cetiqInfo4}}</label>
+                <p class="form-control-static">{{vlrc.info4}}</p>
             </div>
             <div ng-if="vlrc.aspc.aspv.cetiqInfo5" class="col-md-4 form-group">
-                <label>{{vlrc.aspc.aspv.cetiqInfo5}}</label> <input type="text" value="{{vlrc.info5}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{vlrc.aspc.aspv.cetiqInfo5}}</label>
+                <p class="form-control-static">{{vlrc.info5}}</p>
             </div>
             <div ng-if="vlrc.aspc.aspv.cetiqInfo6" class="col-md-4 form-group">
-                <label>{{vlrc.aspc.aspv.cetiqInfo6}}</label> <input type="text" value="{{vlrc.info6}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{vlrc.aspc.aspv.cetiqInfo6}}</label>
+                <p class="form-control-static">{{vlrc.info6}}</p>
             </div>
         </div>
 
@@ -83,7 +81,7 @@
             <div class="col-md-4 form-group">
                 <label>Cargos Aplicados</label>
                 <ul>
-                    <li ng-repeat="vlrg in vlrgList">{{vlrg.crgo.etiqueta}}</li>
+                    <li ng-repeat="vlrg in vlrgList"><a ui-sref="crgos.detalle({crgoId:vlrg.crgo.id})">{{vlrg.crgo.etiqueta}}</a></li>
                 </ul>
             </div>
             <div class="col-md-4 form-group">
@@ -91,10 +89,10 @@
                 <table class="table-bordered table-condensed table-hover table-nonfluid">
                     <thead>
                         <tr>
-                            <th>{{'vlrc_impuesto' | translate}}</th>
-                            <th>{{'vlrc_impuesto_porcentaje' | translate}}</th>
-                            <th>{{'vlrc_impuesto_importe_base' | translate}}</th>
-                            <th>{{'vlrc_impuesto_importe_impuesto' | translate}}</th>
+                            <th>{{'vlrc_vlri_impuesto' | translate}}</th>
+                            <th>{{'vlrc_vlri_porcentaje' | translate}}</th>
+                            <th>{{'vlrc_vlri_importe_base' | translate}}</th>
+                            <th>{{'vlrc_vlri_importe_impuesto' | translate}}</th>
                         </tr>
                     </thead>
 

@@ -48,19 +48,18 @@ angular.module('facturacion', [ 'ui.router' ])
                                 controller : function($http, $scope, $state, $stateParams) {
                                     var url = "facturacion/vlrc-detalle.action?vlrc.id=" + $stateParams.vlrcId;
 
-                                    $http.get(url).success(
-                                            function(data) {
-                                                $scope.vlrc = data.vlrc;
-                                                $scope.vlrgList = data.vlrgList;
-                                                $scope.vlriList = data.vlriList;
+                                    $http.get(url).success(function(data) {
+                                        $scope.vlrc = data.vlrc;
+                                        $scope.vlrgList = data.vlrgList;
+                                        $scope.vlriList = data.vlriList;
+                                    });
 
-                                                var urlVlrl = "facturacion/vlrl-listado.action?vlrlCriterio.vlrc.id="
-                                                        + $scope.vlrc.id + "&page=1";
+                                    var urlVlrl = "facturacion/vlrl-listado.action?vlrlCriterio.vlrc.id="
+                                            + $stateParams.vlrcId + "&page=1";
 
-                                                $http.get(urlVlrl).success(function(data) {
-                                                    $scope.vlrlList = data.vlrlList;
-                                                });
-                                            });
+                                    $http.get(urlVlrl).success(function(data) {
+                                        $scope.vlrlList = data.vlrlList;
+                                    });
 
                                     $scope.editar = function() {
                                         alert("Editar: " + $stateParams.vlrcId);
