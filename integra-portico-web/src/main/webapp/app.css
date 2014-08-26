@@ -96,11 +96,12 @@ td {
 .btn-toolbar {
     margin-top: 5px;
 }
-
+/*
 .pagination {
     margin-top: 5px;
     margin-bottom: 3px;
 }
+*/
 
 /* Typeahead */
 .twitter-typeahead,.typeahead {

@@ -54,7 +54,7 @@ angular.module('facturacion', [ 'ui.router' ])
                                                 $scope.vlrgList = data.vlrgList;
                                                 $scope.vlriList = data.vlriList;
 
-                                                var urlVlrl = "facturacion/vlrl-listado.action?vlrlCriterio.vlrcId="
+                                                var urlVlrl = "facturacion/vlrl-listado.action?vlrlCriterio.vlrc.id="
                                                         + $scope.vlrc.id + "&page=1";
 
                                                 $http.get(urlVlrl).success(function(data) {
@@ -66,6 +66,44 @@ angular.module('facturacion', [ 'ui.router' ])
                                         alert("Editar: " + $stateParams.vlrcId);
 
                                         $state.go('vlrcs.editar', $stateParams);
+                                    };
+                                }
+                            }
+                        }
+                    })
+
+            .state('vlrls', {
+                abstract : true,
+                url : '/facturacion/vlrls',
+                templateUrl : 'modules/facturacion/vlrls.html',
+            })
+
+            .state(
+                    'vlrls.detalle',
+                    {
+                        url : '/detalle/:vlrlId',
+                        views : {
+                            '' : {
+                                templateUrl : 'modules/facturacion/vlrl-detalle.html',
+                                controller : function($http, $scope, $state, $stateParams) {
+                                    var url = "facturacion/vlrl-detalle.action?vlrl.id=" + $stateParams.vlrlId;
+
+                                    $http.get(url).success(
+                                            function(data) {
+                                                $scope.vlrl = data.vlrl;
+
+                                                var urlVlrd = "facturacion/vlrd-listado.action?vlrdCriterio.vlrl.id="
+                                                        + $scope.vlrl.id + "&page=1";
+
+                                                $http.get(urlVlrd).success(function(data) {
+                                                    $scope.vlrdList = data.vlrdList;
+                                                });
+                                            });
+
+                                    $scope.editar = function() {
+                                        alert("Editar: " + $stateParams.vlrlId);
+
+                                        $state.go('vlrls.editar', $stateParams);
                                     };
                                 }
                             }

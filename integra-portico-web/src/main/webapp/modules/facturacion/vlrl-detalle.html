@@ -1,0 +1,51 @@
+<div>
+    <tabset> <tab heading="General">
+    <fieldset>
+        <div class="row">
+            <div class="col-md-1 form-group">
+                <label>{{'vlrl_rgla' | translate}}</label> <input type="text" value="{{vlrl.rgla.codigo}}"
+                    class="form-control input-sm" disabled="disabled" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{'vlrl_importeBase' | translate}}</label> <input type="text"
+                    value="{{vlrl.importeBase | number:2}}" class="form-control input-sm" disabled="disabled" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{'vlrl_importe' | translate}}</label> <input type="text" value="{{vlrl.importe | number:2}}"
+                    class="form-control input-sm" disabled="disabled" />
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{'vlrl_impuesto' | translate}}</label> <input type="text" value="{{vlrl.impuesto.etiqueta}}"
+                    class="form-control input-sm" disabled="disabled" />
+            </div>
+        </div>
+    </fieldset>
+    </tab> <tab heading="Detalles Economicos">
+    <fieldset>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <span class="label label-default">{{vlrdList.count}} resultado(s)</span>
+
+                <table class="table table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th>{{'vlrd_importeBase' | translate}}</th>
+                            <th>{{'vlrd_importe' | translate}}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="vlrd in vlrdList.list">
+                            <td><a ui-sref="vlrds.detalle({vlrdId:vlrd.id})"><i
+                                    class="glyphicon glyphicon-search"></i></a></td>
+                            <td class="number">{{vlrd.importeBase | number:2}}</td>
+                            <td class="number">{{vlrd.importe | number:2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+    </tab></tabset>
+</div>

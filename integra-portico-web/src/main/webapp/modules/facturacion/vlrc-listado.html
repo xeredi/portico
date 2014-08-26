@@ -1,8 +1,9 @@
 <pagination total-items="vlrcList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
     max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
-<span>{{vlrcList.count}} resultado(s)</span>
 
 <div class="table-responsive">
+    <span class="label label-default">{{vlrcList.count}} resultado(s)</span>
+
     <table class="table table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
