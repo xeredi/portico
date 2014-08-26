@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.TipoParametro;
+import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -37,7 +38,7 @@ public final class TipoParametroProxy {
 
     /**
      * Select label values.
-     * 
+     *
      * @return the list
      */
     public static List<LabelValueVO> selectLabelValues() {
@@ -46,7 +47,7 @@ public final class TipoParametroProxy {
 
     /**
      * Select map.
-     * 
+     *
      * @return the map
      */
     public static Map<Long, TipoParametroVO> selectMap() {
@@ -55,7 +56,7 @@ public final class TipoParametroProxy {
 
     /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo parametro vo
@@ -76,7 +77,7 @@ public final class TipoParametroProxy {
     private static void load() {
         LOG.info("Carga de tipos de parametro");
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametro.class);
+        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
         final List<TipoParametroVO> tpprList = tpprBO.selectList(new TipoParametroCriterioVO());
 
         for (final TipoParametroVO tpprVO : tpprList) {

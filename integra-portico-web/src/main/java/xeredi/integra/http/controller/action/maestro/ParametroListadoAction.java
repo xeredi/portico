@@ -12,6 +12,7 @@ import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -71,10 +72,10 @@ public final class ParametroListadoAction extends ItemListadoAction {
      * @return the string
      */
     @Actions({
-            @Action(value = "prmt-filtro"),
-            @Action(value = "prmt-filtro-json", results = { @Result(name = "success", type = "json", params = {
-                    "ignoreHierarchy", "false" }) }),
-            @Action(value = "prmt-filtro-popup", results = { @Result(name = "success", location = "prmt-filtro.jsp") }) })
+        @Action(value = "prmt-filtro"),
+        @Action(value = "prmt-filtro-json", results = { @Result(name = "success", type = "json", params = {
+                "ignoreHierarchy", "false" }) }),
+                @Action(value = "prmt-filtro-popup", results = { @Result(name = "success", location = "prmt-filtro.jsp") }) })
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -107,7 +108,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
         enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
