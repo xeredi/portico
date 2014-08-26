@@ -104,6 +104,7 @@
 
                 <result column="vlrd_fini" property="fini" />
                 <result column="vlrd_ffin" property="ffin" />
+                <result column="vlrd_valor_base" property="valorBase" />
                 <result column="vlrd_importe_base" property="importeBase" />
                 <result column="vlrd_importe" property="importe" />
 
@@ -226,6 +227,7 @@
         ]]>
         </if>
     <![CDATA[
+                , vlrt_valor_base AS vlrd_valor_base
                 , vlrt_importe_base AS vlrd_importe_base
                 , vlrt_importe AS vlrd_importe
 

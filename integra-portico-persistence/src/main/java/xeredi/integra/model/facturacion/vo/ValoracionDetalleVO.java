@@ -21,6 +21,9 @@ public final class ValoracionDetalleVO {
     /** The vlrl id. */
     private Long vlrlId;
 
+    /** The valor base. */
+    private Double valorBase;
+
     /** The importe base. */
     private Double importeBase;
 
@@ -458,6 +461,25 @@ public final class ValoracionDetalleVO {
      */
     public void setFfin(Date value) {
         this.ffin = value;
+    }
+
+    /**
+     * Gets the valor base.
+     *
+     * @return the valor base
+     */
+    public Double getValorBase() {
+        return valorBase;
+    }
+
+    /**
+     * Sets the valor base.
+     *
+     * @param value
+     *            the valor base
+     */
+    public void setValorBase(Double value) {
+        this.valorBase = value;
     }
 
 }

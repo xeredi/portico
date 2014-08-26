@@ -495,6 +495,7 @@ CREATE TABLE portico.tbl_valoracion_det_vlrd
 	vlrd_pk BIGINT NOT NULL
 	, vlrd_vlrc_pk BIGINT NOT NULL
 	, vlrd_vlrl_pk BIGINT NOT NULL
+	, vlrd_valor_base NUMERIC(10, 4) NOT NULL
 	, vlrd_importe_base NUMERIC(10, 2) NOT NULL
 	, vlrd_importe NUMERIC(10, 2) NOT NULL
 	, vlrd_ssrv_pk BIGINT

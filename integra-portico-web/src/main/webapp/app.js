@@ -99,6 +99,12 @@ app.config(function($translateProvider) {
         vlrl_importeBase : 'Imp. Base',
         vlrl_importe : 'Importe',
         vlrl_impuesto : 'IVA',
+        vlrl_fini : 'F. Inicio',
+        vlrl_ffin : 'F. Fin',
+
+        vlrd_valorBase : 'Valor Base',
+        vlrd_importeBase : 'Imp. Base',
+        vlrd_importe : 'Importe',
 
         aspc_codigo : 'C\u00f3digo',
         aspc_descripcion : 'Descripci\u00f3n',
