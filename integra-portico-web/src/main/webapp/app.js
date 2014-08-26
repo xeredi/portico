@@ -105,6 +105,8 @@ app.config(function($translateProvider) {
         vlrd_valorBase : 'Valor Base',
         vlrd_importeBase : 'Imp. Base',
         vlrd_importe : 'Importe',
+        vlrd_fini : 'F. Inicio',
+        vlrd_ffin : 'F. Fin',
 
         aspc_codigo : 'C\u00f3digo',
         aspc_descripcion : 'Descripci\u00f3n',

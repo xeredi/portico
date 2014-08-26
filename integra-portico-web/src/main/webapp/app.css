@@ -81,13 +81,14 @@ fieldset {
     margin-left: 10px;
 }
 
-.number {
-    text-align: right;
-}
-
 .table {
     width: auto;
 }
+/*
+.table th, .table td {
+    padding-right: 100px;
+}
+*/
 
 td {
     max-width: 500px;
@@ -96,12 +97,6 @@ td {
 .btn-toolbar {
     margin-top: 5px;
 }
-/*
-.pagination {
-    margin-top: 5px;
-    margin-bottom: 3px;
-}
-*/
 
 /* Typeahead */
 .twitter-typeahead,.typeahead {

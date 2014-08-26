@@ -30,25 +30,27 @@
             <div class="col-md-12 form-group">
                 <span class="label label-default">{{vlrdList.count}} resultado(s)</span>
 
-                <table class="table table-condensed table-hover table-nonfluid">
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
                     <thead>
                         <tr>
                             <th />
                             <th>{{'vlrd_valorBase' | translate}}</th>
                             <th>{{'vlrd_importeBase' | translate}}</th>
                             <th>{{'vlrd_importe' | translate}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathInfo1">{{vlrl.rgla.rglv.etiqInfo1}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathInfo2">{{vlrl.rgla.rglv.etiqInfo2}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathInfo3">{{vlrl.rgla.rglv.etiqInfo3}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathInfo4">{{vlrl.rgla.rglv.etiqInfo4}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathInfo5">{{vlrl.rgla.rglv.etiqInfo5}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathInfo6">{{vlrl.rgla.rglv.etiqInfo6}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathCuant1">{{vlrl.rgla.rglv.etiqCuant1}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathCuant2">{{vlrl.rgla.rglv.etiqCuant2}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathCuant3">{{vlrl.rgla.rglv.etiqCuant3}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathCuant4">{{vlrl.rgla.rglv.etiqCuant4}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathCuant5">{{vlrl.rgla.rglv.etiqCuant5}}</th>
-                            <th ng-if="vlrl.rgla.rglv.pathCuant6">{{vlrl.rgla.rglv.etiqCuant6}}</th>
+                            <th>{{'vlrd_fini' | translate}}</th>
+                            <th>{{'vlrd_ffin' | translate}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathInfo1">Info 1: {{vlrl.rgla.rglv.etiqInfo1}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathInfo2">Info 2: {{vlrl.rgla.rglv.etiqInfo2}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathInfo3">Info 3: {{vlrl.rgla.rglv.etiqInfo3}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathInfo4">Info 4: {{vlrl.rgla.rglv.etiqInfo4}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathInfo5">Info 5: {{vlrl.rgla.rglv.etiqInfo5}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathInfo6">Info 6: {{vlrl.rgla.rglv.etiqInfo6}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathCuant1">Cuant 1: {{vlrl.rgla.rglv.etiqCuant1}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathCuant2">Cuant 2: {{vlrl.rgla.rglv.etiqCuant2}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathCuant3">Cuant 3: {{vlrl.rgla.rglv.etiqCuant3}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathCuant4">Cuant 4: {{vlrl.rgla.rglv.etiqCuant4}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathCuant5">Cuant 5: {{vlrl.rgla.rglv.etiqCuant5}}</th>
+                            <th ng-if="vlrl.rgla.rglv.pathCuant6">Cuant 6: {{vlrl.rgla.rglv.etiqCuant6}}</th>
                         </tr>
                     </thead>
 
@@ -59,6 +61,8 @@
                             <td class="number">{{vlrd.valorBase | number:4}}</td>
                             <td class="number">{{vlrd.importeBase | number:2}}</td>
                             <td class="number">{{vlrd.importe | number:2}}</td>
+                            <td>{{vlrd.fini | date:('fmt_datetime' | translate)}}</td>
+                            <td>{{vlrd.ffin | date:('fmt_datetime' | translate)}}</td>
                             <td ng-if="vlrl.rgla.rglv.pathInfo1">{{vlrd.info1}}</td>
                             <td ng-if="vlrl.rgla.rglv.pathInfo2">{{vlrd.info2}}</td>
                             <td ng-if="vlrl.rgla.rglv.pathInfo3">{{vlrd.info3}}</td>
