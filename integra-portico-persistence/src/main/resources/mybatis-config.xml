@@ -7,8 +7,8 @@
     <properties resource="Configuration_env.properties" />
 
 	<settings>
-		<setting name="proxyFactory" value="JAVASSIST" />
-		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="proxyFactory" value="CGLIB" />
+		<setting name="lazyLoadingEnabled" value="false" />
 		<setting name="aggressiveLazyLoading" value="false" />
 		<setting name="useColumnLabel" value="false"/>
 		<setting name="defaultExecutorType" value="REUSE"/>
