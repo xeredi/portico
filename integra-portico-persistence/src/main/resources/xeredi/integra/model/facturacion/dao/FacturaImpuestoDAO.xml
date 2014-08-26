@@ -5,7 +5,7 @@
 <mapper namespace="xeredi.integra.model.facturacion.dao.FacturaImpuestoDAO">
     <resultMap type="FacturaImpuestoVO" id="ResultMap">
         <id column="fcti_fctr_pk" />
-        <id column="fcti_impuesto_prmt_pk" />
+        <id column="prmt_pk" />
         <id column="fcti_porcentaje" />
 
         <result column="fcti_fctr_pk" property="fctrId" />
