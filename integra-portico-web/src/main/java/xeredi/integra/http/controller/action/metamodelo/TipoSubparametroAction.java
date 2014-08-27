@@ -37,14 +37,14 @@ public final class TipoSubparametroAction extends BaseAction {
     // Acciones Web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      */
     @Action(value = "tpsp-alta", results = { @Result(name = "success", location = "tpsp-edicion.jsp") })
     public String alta() {
         accion = ACCION_EDICION.alta;
 
-        if (tpsp.getTppr() == null) {
+        if (tpsp.getTpprId() == null) {
             throw new Error("No se ha especificado un tipo de parametro");
         }
 
@@ -53,7 +53,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -75,14 +75,14 @@ public final class TipoSubparametroAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
     @Action(value = "tpsp-guardar", results = {
             @Result(name = "success", type = "redirectAction", params = { "actionName", "enti-detalle", "enti.id",
-            "%{tpsp.tppr.id}" }), @Result(name = "input", location = "tpsp-edicion.jsp") })
+                    "%{tpsp.tppr.id}" }), @Result(name = "input", location = "tpsp-edicion.jsp") })
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
@@ -115,7 +115,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -132,7 +132,7 @@ public final class TipoSubparametroAction extends BaseAction {
     // get / set
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -141,7 +141,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */
@@ -151,7 +151,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
     /**
      * Gets the tpsp.
-     * 
+     *
      * @return the tpsp
      */
     public TipoSubparametroVO getTpsp() {
@@ -160,7 +160,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
     /**
      * Sets the tpsp.
-     * 
+     *
      * @param value
      *            the new tpsp
      */
@@ -170,7 +170,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
     /**
      * Gets the tpprs.
-     * 
+     *
      * @return the tpprs
      */
     public List<LabelValueVO> getTpprs() {

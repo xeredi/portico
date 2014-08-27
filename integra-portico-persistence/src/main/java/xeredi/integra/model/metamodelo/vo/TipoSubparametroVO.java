@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class TipoSubparametroVO extends EntidadVO {
 
     /** The tppr. */
-    private TipoParametroVO tppr;
+    private Long tpprId;
 
     /** The tppr asociado. */
     private TipoParametroVO tpprAsociado;
@@ -29,27 +29,27 @@ public final class TipoSubparametroVO extends EntidadVO {
     }
 
     /**
-     * Gets the tppr.
-     * 
-     * @return the tppr
+     * Gets the tppr id.
+     *
+     * @return the tppr id
      */
-    public TipoParametroVO getTppr() {
-        return tppr;
+    public Long getTpprId() {
+        return tpprId;
     }
 
     /**
-     * Sets the tppr.
-     * 
+     * Sets the tppr id.
+     *
      * @param value
-     *            the new tppr
+     *            the new tppr id
      */
-    public void setTppr(final TipoParametroVO value) {
-        tppr = value;
+    public void setTpprId(final Long value) {
+        tpprId = value;
     }
 
     /**
      * Gets the tppr asociado.
-     * 
+     *
      * @return the tppr asociado
      */
     public TipoParametroVO getTpprAsociado() {
@@ -58,7 +58,7 @@ public final class TipoSubparametroVO extends EntidadVO {
 
     /**
      * Sets the tppr asociado.
-     * 
+     *
      * @param value
      *            the new tppr asociado
      */
@@ -68,7 +68,7 @@ public final class TipoSubparametroVO extends EntidadVO {
 
     /**
      * Checks if is i18n.
-     * 
+     *
      * @return true, if is i18n
      */
     public boolean isI18n() {
@@ -77,7 +77,7 @@ public final class TipoSubparametroVO extends EntidadVO {
 
     /**
      * Sets the i18n.
-     * 
+     *
      * @param value
      *            the new i18n
      */
@@ -87,7 +87,7 @@ public final class TipoSubparametroVO extends EntidadVO {
 
     /**
      * Checks if is temp exp.
-     * 
+     *
      * @return true, if is temp exp
      */
     public boolean isTempExp() {
@@ -96,7 +96,7 @@ public final class TipoSubparametroVO extends EntidadVO {
 
     /**
      * Sets the temp exp.
-     * 
+     *
      * @param value
      *            the new temp exp
      */

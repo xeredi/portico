@@ -55,12 +55,6 @@ angular.module('maestro', [ 'ui.router' ])
                                 $scope.itemHijosMap = data.itemHijosMap;
                                 $scope.availableLanguages = data.availableLanguages;
                             });
-
-                            $scope.editar = function() {
-                                alert("Editar: " + $stateParams.itemId);
-
-                                $state.go('prmts.editar', $stateParams);
-                            };
                         }
                     }
                 }
@@ -72,6 +66,20 @@ angular.module('maestro', [ 'ui.router' ])
                     '' : {
                         templateUrl : 'modules/maestro/prmt-edicion.html',
                         controller : function($http, $scope, $stateParams) {
+                            var url = "maestro/prmt-crear-json.action?item.entiId=" + $stateParams.entiId;
+
+                            $http.get(url).success(function(data) {
+                                $scope.enti = data.enti;
+                                $scope.item = data.item;
+                                $scope.availableLanguages = data.availableLanguages;
+                                $scope.labelValuesMap = data.labelValuesMap;
+                            });
+
+                            $scope.guardar = function() {
+                                alert("Editar: " + $stateParams.itemId);
+
+                                $state.go('prmts.editar', $stateParams);
+                            };
                         }
                     }
                 }

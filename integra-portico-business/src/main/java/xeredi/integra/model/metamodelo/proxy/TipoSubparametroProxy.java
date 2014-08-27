@@ -79,7 +79,7 @@ public final class TipoSubparametroProxy {
         final List<TipoSubparametroVO> tpspList = tpspBO.selectList(new TipoSubparametroCriterioVO());
 
         for (final TipoSubparametroVO tpspVO : tpspList) {
-            tpspVO.setTppr(TipoParametroProxy.select(tpspVO.getTppr().getId()));
+            // tpspVO.setTppr(TipoParametroProxy.select(tpspVO.getTppr().getId()));
 
             if (tpspVO.getTpprAsociado() != null) {
                 tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));

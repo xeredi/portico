@@ -32,7 +32,7 @@ public interface Regla {
      *
      * @param rglaCriterioVO
      *            the rgla criterio vo
-     * @return the list< regla v o>
+     * @return the list
      */
     List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO);
 

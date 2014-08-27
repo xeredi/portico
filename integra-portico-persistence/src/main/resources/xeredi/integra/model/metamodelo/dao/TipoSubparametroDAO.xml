@@ -7,11 +7,12 @@
         extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
         <result column="tpsp_es_i18n" property="i18n" />
         <result column="tpsp_es_tmp_exp" property="tempExp" />
-
+        <result column="tpsp_tppr_pk" property="tpprId" />
+<!--
         <association property="tppr" javaType="TipoParametroVO">
             <result column="tpsp_tppr_pk" property="id" />
         </association>
-
+ -->
         <association property="tpprAsociado" javaType="TipoParametroVO">
             <result column="tppr_asociado_pk" property="id" />
             <result column="tppr_asociado_nombre" property="nombre" />
