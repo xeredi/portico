@@ -28,6 +28,15 @@ public interface Regla {
     PaginatedList<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO, final int offset, final int limit);
 
     /**
+     * Select list.
+     *
+     * @param rglaCriterioVO
+     *            the rgla criterio vo
+     * @return the list< regla v o>
+     */
+    List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO);
+
+    /**
      * Select.
      *
      * @param rglaCriterioVO

@@ -32,6 +32,9 @@ public final class ReglaCriterioVO {
     /** The crgo id. */
     private Long crgoId;
 
+    /** The vlrc id. */
+    private Long vlrcId;
+
     /**
      * {@inheritDoc}
      */
@@ -171,6 +174,25 @@ public final class ReglaCriterioVO {
      */
     public void setIncompatibleId(final Long value) {
         incompatibleId = value;
+    }
+
+    /**
+     * Gets the vlrc id.
+     *
+     * @return the vlrc id
+     */
+    public Long getVlrcId() {
+        return vlrcId;
+    }
+
+    /**
+     * Sets the vlrc id.
+     *
+     * @param value
+     *            the vlrc id
+     */
+    public void setVlrcId(final Long value) {
+        this.vlrcId = value;
     }
 
 }

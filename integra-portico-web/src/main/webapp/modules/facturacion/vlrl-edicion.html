@@ -1,1 +1,19 @@
-vlrl-edicion
+
+<input type="hidden" name="vlrl.id" value="{{vlrl.id}}" />
+<input type="hidden" name="vlrl.vlrcId" value="{{vlrl.vlrcId}}" />
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label>{{'vlrl_rgla' | translate}}</label> <select ng-if="!vlrl.rgla.id" name="vlrl.rgla.id"
+                class="form-control">
+                <option />
+                <option ng-repeat="rgla in rglaList" value="{{rgla.id}}">{{rgla.codigo}}</option>
+            </select>
+
+            <p ng-if="vlrl.rgla.id" class="form-control-static">
+                <a ui-sref="rglas.detalle({rglaId:vlrl.rgla.id})">{{vlrl.rgla.codigo}}</a>
+            </p>
+        </div>
+    </div>
+</fieldset>

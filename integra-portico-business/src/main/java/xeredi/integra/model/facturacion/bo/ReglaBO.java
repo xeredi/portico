@@ -57,6 +57,17 @@ public class ReglaBO implements Regla {
      */
     @Override
     @Transactional
+    public List<ReglaVO> selectList(ReglaCriterioVO rglaCriterioVO) {
+        Preconditions.checkNotNull(rglaCriterioVO);
+
+        return rglaDAO.selectList(rglaCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public ReglaVO select(final ReglaCriterioVO rglaCriterioVO) {
         Preconditions.checkNotNull(rglaCriterioVO);
         Preconditions.checkArgument(rglaCriterioVO.getRglvId() != null || rglaCriterioVO.getId() != null

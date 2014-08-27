@@ -66,10 +66,6 @@ public final class ReglaListadoAction extends BaseAction {
 
         final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
 
-        if (hasErrors()) {
-            return INPUT;
-        }
-
         rglaList = rglaBO.selectList(rglaCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
         return SUCCESS;

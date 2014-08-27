@@ -97,8 +97,8 @@
                 ]]>
                 </if>
             <![CDATA[
-            			AND  rgin_rgla2_pk = #{incompatibleId}
-            	)
+                        AND  rgin_rgla2_pk = #{incompatibleId}
+                )
             ]]>
             </if>
 
@@ -112,6 +112,31 @@
 
             <if test="tipo != null">
                 AND rgla_tipo = #{tipo}
+            </if>
+
+            <if test="vlrcId != null">
+            <![CDATA[
+            	AND EXISTS (
+            		SELECT 1
+            		FROM tbl_valoracion_vlrc
+            		WHERE
+            			EXISTS (
+            				SELECT 1
+            				FROM tbl_aspecto_version_aspv
+            				WHERE aspv_aspc_pk = vlrc_aspc_pk
+            					AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
+            					AND EXISTS (
+            						SELECT 1
+            						FROM tbl_aspecto_cargo_ascr
+            						WHERE
+            							ascr_aspv_pk = aspv_pk
+            							AND ascr_crgo_pk = rgla_crgo_pk
+            					)
+            			)
+            			AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
+            			AND vlrc_pk = #{vlrcId}
+            	)
+            ]]>
             </if>
         </where>
     </sql>

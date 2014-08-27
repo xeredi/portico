@@ -23,7 +23,6 @@ angular.module('facturacion', [ 'ui.router' ])
                         var url = "facturacion/vlrc-listado.action?page=" + $stateParams.page;
 
                         $http.get(url).success(function(data) {
-                            // console.log(data);
                             $scope.vlrcList = data.vlrcList;
                         });
                     };
@@ -119,6 +118,12 @@ angular.module('facturacion', [ 'ui.router' ])
 
                             $http.get(url).success(function(data) {
                                 $scope.vlrc = data.vlrc;
+                            });
+
+                            var urlRgla = "facturacion/rgla-filtro.action?rglaCriterio.vlrcId=" + $stateParams.vlrcId;
+
+                            $http.get(urlRgla).success(function(data) {
+                                $scope.rglaList = data.rglaList;
                             });
                         }
                     }
