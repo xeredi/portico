@@ -1,35 +1,35 @@
 <fieldset>
     <div class="row">
         <div class="col-md-1 form-group">
-            <label>{{'aspc_codigo' | translate}}</label> <input type="text" value="{{aspc.codigo}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'aspc_codigo' | translate}}</label>
+            <p class="form-control-static">{{aspc.codigo}}</p>
         </div>
         <div class="col-md-3 form-group">
-            <label>{{'aspc_descripcion' | translate}}</label> <input type="text" value="{{aspc.descripcion}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'aspc_descripcion' | translate}}</label>
+            <p class="form-control-static">{{aspc.descripcion}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'aspc_tpsr' | translate}}</label> <input type="text" value="{{aspc.tpsr.nombre}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'aspc_tpsr' | translate}}</label>
+            <p class="form-control-static">{{aspc.tpsr.nombre}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'aspc_aspv_fini' | translate}}</label> <input type="text" value="{{aspc.aspv.fini | date:('fmt_date' | translate)}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'aspc_aspv_fini' | translate}}</label>
+            <p class="form-control-static">{{aspc.aspv.fini | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'aspc_aspv_ffin' | translate}}</label> <input type="text" value="{{aspc.aspv.ffin | date:('fmt_date' | translate)}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'aspc_aspv_ffin' | translate}}</label>
+            <p class="form-control-static">{{aspc.aspv.ffin | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'aspc_aspv_prioridad' | translate}}</label> <input type="text" value="{{aspc.aspv.prioridad}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'aspc_aspv_prioridad' | translate}}</label>
+            <p class="form-control-static">{{aspc.aspv.prioridad}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12 form-group">
             <label>Elementos de Cabecera</label>
-            <table class="table table-condensed table-hover table-nonfluid">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
                         <th />
@@ -85,7 +85,7 @@
         <div class="col-md-12 form-group">
             <label>Elementos Informativos de Linea</label>
             <!--
-            <table class="table table-condensed table-hover table-nonfluid">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
                         <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>
@@ -110,7 +110,7 @@
         <div class="col-md-12 form-group">
             <label>Elementos Cuantitativos de Linea</label>
             <!--
-            <table class="table table-condensed table-hover table-nonfluid">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
                         <th>{{'aspc_aspv_cetiqInfo' | translate}}</th>

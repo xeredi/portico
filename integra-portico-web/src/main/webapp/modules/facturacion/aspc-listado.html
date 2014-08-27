@@ -1,9 +1,10 @@
 <pagination total-items="aspcList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
     max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
-<span>{{aspcList.count}} resultado(s)</span>
 
 <div class="table-responsive">
-    <table class="table table-condensed table-hover table-nonfluid">
+    <span class="label label-default">{{aspcList.count}} resultado(s)</span>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />

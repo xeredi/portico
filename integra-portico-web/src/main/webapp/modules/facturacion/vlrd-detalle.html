@@ -1,0 +1,36 @@
+<div>
+    <tabset> <tab heading="General">
+    <fieldset>
+        <div class="row">
+            <div class="col-md-1 form-group">
+                <label>{{'vlrd_valorBase' | translate}}</label>
+                <p class="form-control-static">{{vlrd.valorBase | number:4}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{'vlrd_importeBase' | translate}}</label>
+                <p class="form-control-static">{{vlrd.importeBase | number:2}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{'vlrd_importe' | translate}}</label>
+                <p class="form-control-static">{{vlrd.importe | number:2}}</p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{'vlrd_ssrv' | translate}}</label>
+                <p class="form-control-static">{{vlrd.ssrv.numero}}</p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{'vlrd_fini' | translate}}</label>
+                <p class="form-control-static">{{vlrd.fini | date:('fmt_datetime' | translate)}}</p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{'vlrd_ffin' | translate}}</label>
+                <p class="form-control-static">{{vlrd.ffin | date:('fmt_datetime' | translate)}}</p>
+            </div>
+        </div>
+    </fieldset>
+    </tab></tabset>
+</div>
+
+<!--
+                    <a ui-sref="rglas.detalle({rglaId:vlrl.rgla.id})">{{vlrl.rgla.codigo}}</a>
+ -->

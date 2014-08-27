@@ -1,80 +1,80 @@
 <fieldset>
     <div class="row">
         <div class="col-md-1 form-group">
-            <label>{{'rgla_codigo' | translate}}</label> <input type="text" value="{{rgla.codigo}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_codigo' | translate}}</label>
+            <p class="form-control-static">{{rgla.codigo}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_tipo' | translate}}</label> <input type="text" value="{{rgla.tipo}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_tipo' | translate}}</label>
+            <p class="form-control-static">{{rgla.tipo}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'rgla_enti' | translate}}</label> <input type="text" value="{{rgla.enti.nombre}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_enti' | translate}}</label>
+            <p class="form-control-static">{{rgla.enti.nombre}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'rgla_crgo' | translate}}</label> <input type="text" value="{{rgla.crgo.etiqueta}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_crgo' | translate}}</label>
+            <p class="form-control-static">
+                <a ui-sref="rglas.detalle({rglaId:rgla.crgo.id})">{{rgla.crgo.etiqueta}}</a>
+            </p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_rglv_fini' | translate}}</label> <input type="text"
-                value="{{rgla.rglv.fini | date:('fmt_date' | translate)}}" class="form-control input-sm"
-                disabled="disabled" />
+            <label>{{'rgla_rglv_fini' | translate}}</label>
+            <p class="form-control-static">{{rgla.rglv.fini | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_rglv_ffin' | translate}}</label> <input type="text"
-                value="{{rgla.rglv.ffin | date:('fmt_date' | translate)}}" class="form-control input-sm"
-                disabled="disabled" />
+            <label>{{'rgla_rglv_ffin' | translate}}</label>
+            <p class="form-control-static">{{rgla.rglv.ffin | date:('fmt_date' | translate)}}</p>
         </div>
         <div ng-if="rgla.tipo == 'T'" class="col-md-1 form-group">
-            <label>{{'rgla_rglv_importeBase' | translate}}</label> <input type="text"
-                value="{{rgla.rglv.importeBase | number:4}}" class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_rglv_importeBase' | translate}}</label>
+            <p class="form-control-static">{{rgla.rglv.importeBase | number:4}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6 form-group">
             <label>{{'rgla_rglv_condicion' | translate}}</label>
-            <textarea class="form-control input-sm" disabled='disabled' rows="4">{{rgla.rglv.condicion}}</textarea>
+            <p class="form-control-static">{{rgla.rglv.condicion}}</p>
         </div>
         <div class="col-md-6 form-group">
             <label>{{'rgla_rglv_formula' | translate}}</label>
-            <textarea class="form-control input-sm" disabled='disabled' rows="4">{{rgla.rglv.formula}}</textarea>
+            <p class="form-control-static">{{rgla.rglv.formula}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.tipo == 'T'" class="row">
         <div class="col-md-9 form-group">
-            <label>{{'rgla_rglv_pathImpuesto' | translate}}</label> <input type="text"
-                value="{{rgla.rglv.pathImpuesto}}" class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_rglv_pathImpuesto' | translate}}</label>
+            <p class="form-control-static">{{rgla.rglv.pathImpuesto}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.tipo == 'T'" class="row">
         <div class="col-md-9 form-group">
-            <label>{{'rgla_rglv_pathPagador' | translate}}</label> <input type="text" value="{{rgla.rglv.pathPagador}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_rglv_pathPagador' | translate}}</label>
+            <p class="form-control-static">{{rgla.rglv.pathPagador}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.tipo == 'T'" class="row">
         <div class="col-md-9 form-group">
-            <label>{{'rgla_rglv_pathEsSujPasivo' | translate}}</label> <input type="text"
-                value="{{rgla.rglv.pathEsSujPasivo}}" class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_rglv_pathEsSujPasivo' | translate}}</label>
+            <p class="form-control-static">{{rgla.rglv.pathEsSujPasivo}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.tipo == 'T'" class="row">
         <div class="col-md-9 form-group">
-            <label>{{'rgla_rglv_pathCodExen' | translate}}</label> <input type="text" value="{{rgla.rglv.pathCodExen}}"
-                class="form-control input-sm" disabled="disabled" />
+            <label>{{'rgla_rglv_pathCodExen' | translate}}</label>
+            <p class="form-control-static">{{rgla.rglv.pathCodExen}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.tipo == 'T'" class="row">
         <div class="col-md-9 form-group">
             <label>Datos Variables</label>
-            <table class="table table-condensed table-hover table-nonfluid">
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
                         <th>Campo</th>
@@ -155,7 +155,7 @@
     <div class="row">
         <div class="col-md-9 form-group">
             <label>Reglas Incompatibles</label>
-            <table ng-if="rginList" class="table table-condensed table-hover table-nonfluid">
+            <table ng-if="rginList" class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
                         <th>{{'rgla_codigo' | translate}}</th>

@@ -1,6 +1,13 @@
 <div>
     <tabset> <tab heading="General">
     <fieldset>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" ui-sref="vlrls.edicion({vlrlId:vlrl.id})"><i
+                    class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-1 form-group">
                 <label>{{'vlrl_rgla' | translate}}</label>

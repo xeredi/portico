@@ -112,6 +112,13 @@
     <fieldset>
         <div class="row">
             <div class="col-md-12 form-group">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group">
+                        <a class="btn btn-default" ui-sref="vlrls.alta({vlrcId:vlrc.id})"><i
+                            class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+                    </div>
+                </div>
+
                 <span class="label label-default">{{vlrlList.count}} resultado(s)</span>
 
                 <table class="table-bordered table-condensed table-hover table-nonfluid">

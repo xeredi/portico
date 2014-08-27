@@ -109,6 +109,74 @@ angular.module('facturacion', [ 'ui.router' ])
                         }
                     })
 
+            .state('vlrls.alta', {
+                url : '/alta/:vlrcId',
+                views : {
+                    '' : {
+                        templateUrl : 'modules/facturacion/vlrl-edicion.html',
+                        controller : function($http, $scope, $state, $stateParams) {
+                            var url = "facturacion/vlrc-detalle.action?vlrc.id=" + $stateParams.vlrcId;
+
+                            $http.get(url).success(function(data) {
+                                $scope.vlrc = data.vlrc;
+                            });
+                        }
+                    }
+                }
+            })
+
+            .state('vlrls.edicion', {
+                url : '/edicion/:vlrlId',
+                views : {
+                    '' : {
+                        templateUrl : 'modules/facturacion/vlrl-edicion.html',
+                        controller : function($http, $scope, $state, $stateParams) {
+                            var url = "facturacion/vlrl-detalle.action?vlrl.id=" + $stateParams.vlrlId;
+
+                            $http.get(url).success(function(data) {
+                                $scope.vlrl = data.vlrl;
+
+                                if ($scope.vlrl.vlrcId != null) {
+                                    var urlVlrc = "facturacion/vlrc-detalle.action?vlrc.id=" + $scope.vlrl.vlrcId;
+
+                                    $http.get(urlVlrc).success(function(data) {
+                                        $scope.vlrc = data.vlrc;
+                                    });
+                                }
+                            });
+                        }
+                    }
+                }
+            })
+
+            .state('vlrds', {
+                abstract : true,
+                url : '/facturacion/vlrds',
+                templateUrl : 'modules/facturacion/vlrds.html',
+            })
+
+            .state('vlrds.detalle', {
+                url : '/detalle/:vlrdId',
+                views : {
+                    '' : {
+                        templateUrl : 'modules/facturacion/vlrd-detalle.html',
+                        controller : function($http, $scope, $state, $stateParams) {
+                            var url = "facturacion/vlrd-detalle.action?vlrd.id=" + $stateParams.vlrdId;
+
+                            $http.get(url).success(function(data) {
+                                $scope.vlrd = data.vlrd;
+                            });
+
+                            $scope.editar = function() {
+                                alert("Editar: " + $stateParams.vlrdId);
+
+                                $state.go('vlrds.editar', $stateParams);
+                            };
+                        }
+                    }
+                }
+            })
+
             .state('aspcs', {
                 abstract : true,
                 url : '/facturacion/aspcs',
