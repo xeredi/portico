@@ -24,36 +24,40 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        prmt.prmt_pk, prmt.prmt_tppr_pk, prmt.prmt_parametro
-        , prvr.prvr_pk, prvr.prvr_fini, prvr.prvr_ffin
+        prmt.*
+        , prvr.*
     ]]>
         <if test="idioma != null">
         <![CDATA[
-    	, CASE
-    		WHEN
-    			EXISTS (
-    				SELECT 1 FROM tbl_tipo_parametro_tppr
-    				WHERE tppr_pk = prmt_tppr_pk
-    					AND tppr_es_i18n = 1
-    			)
-    		THEN (SELECT p18n_texto FROM tbl_parametro_i18n_p18n p18n WHERE p18n.p18n_prvr_pk = prvr.prvr_pk AND p18n.p18n_idioma = 'es_ES')
-
-    		ELSE (
-    			SELECT prdt_cadena
-    			FROM tbl_parametro_dato_prdt
-    			WHERE prdt_prvr_pk = prvr_pk
-    				AND prdt_tpdt_pk = (
-    					SELECT tppr_tpdt_pk FROM tbl_tipo_parametro_tppr
-    					WHERE tppr_pk = prmt_tppr_pk
-    				)
-    		)
-    	END AS p18n_texto
+        , (
+            CASE
+                WHEN tppr_es_i18n = 1
+                THEN (
+                    SELECT p18n_texto
+                    FROM tbl_parametro_i18n_p18n
+                    WHERE
+                        p18n_prvr_pk = prvr_pk
+                        AND tppr_es_i18n = 1
+                        AND p18n_idioma = 'es_ES'
+                )
+                ELSE (
+                    SELECT prdt_cadena
+                    FROM tbl_parametro_dato_prdt
+                    WHERE
+                        prdt_prvr_pk = prvr_pk
+                        AND prdt_tpdt_pk = tppr_tpdt_pk
+                )
+            END
+        ) AS p18n_texto
         ]]>
         </if>
     <![CDATA[
-    FROM tbl_parametro_prmt prmt
+    FROM
+        tbl_parametro_prmt prmt
         JOIN tbl_parametro_version_prvr prvr ON
-            prvr.prvr_prmt_pk = prmt.prmt_pk
+            prvr_prmt_pk = prmt_pk
+        JOIN tbl_tipo_parametro_tppr tppr ON
+            tppr_pk = prmt_tppr_pk
     ]]>
     </sql>
 
