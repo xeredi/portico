@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicio;
+import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -74,7 +75,7 @@ public final class TipoSubservicioProxy {
      */
     private static void load() {
         LOG.info("Carga de tipos de subservicio");
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicio.class);
+        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
         final List<TipoSubservicioVO> tpssList = tpssBO.selectList(new TipoSubservicioCriterioVO());
 
         for (final TipoSubservicioVO tpssVO : tpssList) {

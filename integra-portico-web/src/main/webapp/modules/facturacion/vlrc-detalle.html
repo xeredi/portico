@@ -1,5 +1,5 @@
 <div>
-    <tabset> <tab heading="General">
+    <tabset> <tab heading="{{'vlrc' | translate}}">
 
     <fieldset>
         <div class="row">
@@ -32,6 +32,12 @@
         </div>
 
         <div class="row">
+            <div class="col-md-3 form-group">
+                <label>{{'vlrc_pagador' | translate}}</label>
+                <p class="form-control-static">
+                    <a ui-sref="prmts.detalle({itemId:vlrc.pagador.id})">{{vlrc.pagador.etiqueta}}</a>
+                </p>
+            </div>
             <div class="col-md-2 form-group">
                 <label>{{'vlrc_falta' | translate}}</label>
                 <p class="form-control-static">{{vlrc.falta | date:('fmt_datetime' | translate)}}</p>
@@ -108,7 +114,7 @@
             </div>
         </div>
     </fieldset>
-    </tab> <tab heading="Lineas">
+    </tab> <tab heading="{{'vlrls' | translate}}">
     <fieldset>
         <div class="row">
             <div class="col-md-12 form-group">

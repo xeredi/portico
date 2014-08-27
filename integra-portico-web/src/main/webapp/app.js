@@ -71,6 +71,8 @@ app.config(function($translateProvider) {
         ssrv_numero : 'N\u00famero',
         ssrv_estado : 'Estado',
 
+        vlrc : 'Valoraci\u00f3n',
+        vlrcs : 'Valoraciones',
         vlrc_id : 'Id',
         vlrc_srvc : 'Servicio',
         vlrc_aspc : 'Aspecto',
@@ -94,6 +96,8 @@ app.config(function($translateProvider) {
         vlrc_vlri_importe_base : 'Importe Base',
         vlrc_vlri_importe_impuesto : 'Importe IVA',
 
+        vlrl : 'Linea de Valoraci\u00f3n',
+        vlrls : 'Lineas de Valoraci\u00f3n',
         vlrl_rgla : 'Regla',
         vlrl_rgla_tipo : 'Tipo',
         vlrl_importeBase : 'Imp. Base',
@@ -103,6 +107,8 @@ app.config(function($translateProvider) {
         vlrl_ffin : 'F. Fin',
         vlrl_ssrv : 'Subservicio',
 
+        vlrd : 'Detalle de Valoraci\u00f3n',
+        vlrds : 'Detalles de Valoraci\u00f3n',
         vlrd_valorBase : 'Valor Base',
         vlrd_importeBase : 'Imp. Base',
         vlrd_importe : 'Importe',

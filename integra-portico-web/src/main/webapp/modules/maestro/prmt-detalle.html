@@ -1,117 +1,43 @@
-<!--
-<c:if test="${not empty entiHijasList}">
-    <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tabEnti_${enti.id}" data-toggle="tab">${enti.nombre}</a></li>
-            <c:if test="${not empty entiHijasList}">
-                <c:forEach items="${entiHijasList}" var="enti">
-                    <li><a href="#tabEnti_${enti.id}" data-toggle="tab">${enti.nombre}</a></li>
-                </c:forEach>
-            </c:if>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="tabEnti_${enti.id}">
-</c:if>
-
-<c:if test="${param.btnOn eq 'true'}">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <c:if test="${enti.cmdEdicion}">
-                <a class="btn btn-default"
-                    href="${pageContext.request.contextPath}/maestro/prmt-modificar-popup.action?item.id=${item.id}"
-                    role="button" data-toggle="modal" data-target="#prmt-modificar-div"><i
-                    class="glyphicon glyphicon-edit"></i> <fmt:message key="boton.modificar" /></a>
-                <div class="modal" id="prmt-modificar-div" tabindex="-1" role="dialog"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content"></div>
-                    </div>
-                </div>
-            </c:if>
-            <c:if test="${enti.cmdDuplicado}">
-                <a class="btn btn-default"
-                    href="${pageContext.request.contextPath}/maestro/prmt-duplicar-popup.action?item.id=${item.id}"
-                    role="button" data-toggle="modal" data-target="#prmt-duplicar-div"><i
-                    class="glyphicon glyphicon-tags"></i> <fmt:message key="boton.duplicar" /></a>
-                <div class="modal" id="prmt-duplicar-div" tabindex="-1" role="dialog"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content"></div>
-                    </div>
-                </div>
-            </c:if>
-
-            <a class="btn btn-default"
-                href="${pageContext.request.contextPath}/maestro/prmt-imprimir.action?item.id=${item.id}"><i
-                class="glyphicon glyphicon-print"></i> <fmt:message key="boton.imprimir" /></a>
-        </div>
-    </div>
-</c:if>
--->
 <div>
     <tabset> <tab heading="{{enti.nombre}}">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a href="#/maestro/prmt/crear/{{enti.id}}" class="btn btn-default"><i class="glyphicon glyphicon-file"></i>
-                {{'boton_crear' | translate}}</a>
-            <button ng-click="editar()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
-            </button>
-            <button ng-click="duplicar()" class="btn btn-default">
-                <i class="glyphicon glyphicon-share"></i> {{'boton_duplicar' | translate}}
-            </button>
+            <a ng-if="enti.cmdEdicion" ui-sref="prmts.editar({itemId:item.id})" class="btn btn-default"><i
+                class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a><a ng-if="enti.cmdDuplicado"
+                ui-sref="prmts.duplicar({itemId:item.id})" class="btn btn-default"><i
+                class="glyphicon glyphicon-share"></i> {{'boton_duplicar' | translate}}</a>
             <button ng-click="borrar()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
             </button>
             <button class="btn btn-default" ng-click="imprimir(item.id)">
                 <i class="glyphicon glyphicon-print"></i> {{'boton_imprimir' | translate}}
             </button>
-
-            <!--
-            <c:if test="${enti.cmdDuplicado}">
-                <a class="btn btn-default"
-                    href="${pageContext.request.contextPath}/maestro/prmt-duplicar-popup.action?item.id=${item.id}"
-                    role="button" data-toggle="modal" data-target="#prmt-duplicar-div"><i
-                    class="glyphicon glyphicon-tags"></i> <fmt:message key="boton.duplicar" /></a>
-                <div class="modal" id="prmt-duplicar-div" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content"></div>
-                    </div>
-                </div>
-            </c:if>
-
-            <a class="btn btn-default"
-                href="${pageContext.request.contextPath}/maestro/prmt-imprimir.action?item.id=${item.id}"><i
-                class="glyphicon glyphicon-print"></i> <fmt:message key="boton.imprimir" /></a>
- -->
         </div>
     </div>
 
     <fieldset>
         <div class="row">
             <div class="col-md-2 form-group">
-                <label>{{'prmt_codigo' | translate}}</label> <input type="text" value="{{item.parametro}}"
-                    class="form-control input-sm" disabled="disabled" />
+                <label>{{'prmt_codigo' | translate}}</label>
+                <p class="form-control-static">{{item.parametro}}</p>
             </div>
 
             <div ng-if="enti.tempExp" class="col-md-2 form-group">
-                <label>{{'prmt_finicio' | translate}}</label> <input type="text"
-                    value="{{item.prvr.finicio | date:('fmt_date' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
+                <label>{{'prmt_finicio' | translate}}</label>
+                <p class="form-control-static">{{item.prvr.finicio | date:('fmt_date' | translate)}}</p>
             </div>
 
             <div ng-if="enti.tempExp" class="col-md-2 form-group">
-                <label>{{'prmt_ffin' | translate}}</label> <input type="text"
-                    value="{{item.prvr.ffin | date:('fmt_date' | translate)}}" class="form-control input-sm"
-                    disabled="disabled" />
+                <label>{{'prmt_ffin' | translate}}</label>
+                <p class="form-control-static">{{item.prvr.ffin | date:('fmt_date' | translate)}}</p>
             </div>
         </div>
 
         <div ng-if="enti.i18n">
             <div ng-repeat="availableLanguage in availableLanguages" class="row">
                 <div class="col-md-10 form-group">
-                    <label>Texto {{availableLanguage}}</label> <input type="text"
-                        value="{{p18nMap[availableLanguage].texto}}" class="form-control input-sm" disabled="disabled" />
+                    <label>Texto {{availableLanguage}}</label>
+                    <p class="form-control-static">{{p18nMap[availableLanguage].texto}}</p>
                 </div>
             </div>
         </div>
@@ -124,34 +50,17 @@
             <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
                 class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
                 <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
-                <div ng-if="!item.itdtMap[tpdtId].filled">
-                    <input type="text" value="" class="form-control input-sm" disabled='disabled' />
-                </div>
-
-                <div ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
-                    <input ng-switch-when="BO" type="text"
-                        value="{{'fmt_' + item.itdtMap[tpdtId].booleano | translate}}" class="form-control input-sm"
-                        disabled='disabled' /> <input ng-switch-when="ND" type="text"
-                        value="{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}" class="form-control input-sm number"
-                        disabled='disabled' /> <input ng-switch-when="NE" type="text"
-                        value="{{item.itdtMap[tpdtId].cantidadEntera | number:0}}" class="form-control input-sm number"
-                        disabled='disabled' /> <input ng-switch-when="FE" type="text"
-                        value="{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}"
-                        class="form-control input-sm" disabled='disabled' /> <input ng-switch-when="FH" type="text"
-                        value="{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}"
-                        class="form-control input-sm" disabled='disabled' /> <input ng-switch-when="CR" type="text"
-                        value="{{item.itdtMap[tpdtId].cadena}}" class="form-control input-sm" disabled='disabled' /> <input
-                        ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
-                        value="{{item.itdtMap[tpdtId].cadena}}" class="form-control input-sm" disabled='disabled' />
-                    <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
-                        class="form-control input-sm" disabled='disabled'>{{item.itdtMap[tpdtId].cadena}}</textarea>
-                    <div ng-switch-when="PR" class='input-group'>
-                        <input type='text' class="form-control input-sm" value="{{item.itdtMap[tpdtId].prmt.etiqueta}}"
-                            disabled='disabled' /> <span class="input-group-addon"><a
-                            href="#/maestro/prmt/{{item.itdtMap[tpdtId].prmt.id}}"><span
-                                class="glyphicon glyphicon-share-alt"></span></a></span>
-                    </div>
-                </div>
+                <p ng-if="!item.itdtMap[tpdtId].filled" class="form-control-static">&nbsp;</p>
+                <p ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
+                    class="form-control-static">
+                    <span ng-switch-when="BO">{{'fmt_' + item.itdtMap[tpdtId].booleano | translate}}</span> <span
+                        ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}</span> <span
+                        ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</span> <span
+                        ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span
+                        ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}</span> <span
+                        ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
+                    <span ng-switch-when="PR"><a ui-sref="prmts.detalle({itemId:item.itdtMap[tpdtId].prmt.id})">{{item.itdtMap[tpdtId].prmt.etiqueta}}</a></span>
+                </p>
             </div>
         </div>
     </fieldset>
@@ -192,89 +101,3 @@
     </table>
     </tab> </tabset>
 </div>
-
-<!--
-    <jsp:include page="/WEB-INF/content/include/item/item-detalle.jsp" flush="true">
-        <jsp:param value="${param.btnOn}" name="btnOn" />
-    </jsp:include>
--->
-
-<!--
-<c:if test="${not empty entiHijasList}">
-    </div>
-    <c:forEach items="${entiHijasList}" var="enti">
-        <c:set var="itemList" value="${itemHijosMap[enti.id]}" />
-        <div class="tab-pane" id="tabEnti_${enti.id}">
-            <c:if test="${param.btnOn eq 'true'}">
-                <div class="btn-toolbar" role="toolbar">
-                    <div class="btn-group">
-                        <a class="btn btn-default"
-                            href="sprm-alta-popup.action?item.entiId=${enti.id}&item.prmtId=${item.id}"
-                            role="button" data-toggle="modal"
-                            data-target="#sprm-alta-${enti.id}-div"><i
-                            class="glyphicon glyphicon-file"></i> <fmt:message key="boton.alta" /></a>
-                    </div>
-                </div>
-
-                <div class="modal" id="sprm-alta-${enti.id}-div" tabindex="-1" role="dialog"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content"></div>
-                    </div>
-                </div>
-            </c:if>
-
-            <div id="enti-grid-div_${enti.id}">
-                <c:if test="${not empty itemList}">
-                    <c:url
-                        value="sprm-listado-grid.action?itemCriterio.prmt.id=${item.id}&itemCriterio.entiId=${enti.id}"
-                        var="urlListado">
-                        <c:forEach items="${itemList.criterio.searchLinks}" var="mapEntry">
-                            <c:param name="itemCriterio.${mapEntry.key}" value="${mapEntry.value}" />
-                        </c:forEach>
-                    </c:url>
-
-                    <c:url value="${urlListado}" var="urlListadoPrev">
-                        <c:param name="page" value="${itemList.page - 1}" />
-                    </c:url>
-                    <c:url value="${urlListado}" var="urlListadoNext">
-                        <c:param name="page" value="${itemList.page + 1}" />
-                    </c:url>
-
-                    <ul class="pagination">
-                        <c:if test="${itemList.hasPrevious}">
-                            <li><a class="btn" href="${urlListadoPrev}"
-                                data-target="#enti-grid-div_${enti.id}"><i
-                                    class="glyphicon glyphicon-chevron-left"></i></a></li>
-                        </c:if>
-                        <c:if test="${!itemList.hasPrevious}">
-                            <li><span class="btn"><i
-                                    class="glyphicon glyphicon-chevron-left"></i></span></li>
-                        </c:if>
-                        <c:if test="${itemList.hasNext}">
-                            <li><a class="btn" href="${urlListadoNext}"
-                                data-target="#enti-grid-div_${enti.id}"><i
-                                    class="glyphicon glyphicon-chevron-right"></i></a></li>
-                        </c:if>
-                        <c:if test="${!itemList.hasNext}">
-                            <li><span class="btn"> <i
-                                    class="glyphicon glyphicon-chevron-right"></i></span></li>
-                        </c:if>
-                        <c:if test="${itemList.pageCount > 0}">
-                            <li><span class="btn"> <fmt:message key="paginacion.leyenda">
-                                        <fmt:param value="${itemList.page}" />
-                                        <fmt:param value="${itemList.pageCount}" />
-                                        <fmt:param value="${itemList.count}" />
-                                    </fmt:message></span></li>
-                        </c:if>
-                    </ul>
-                </c:if>
-                <table class="table table-condensed table-hover table-nonfluid">
-                </table>
-            </div>
-        </div>
-    </c:forEach>
-    </div>
-    </div>
-</c:if>
- -->

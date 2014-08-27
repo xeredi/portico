@@ -11,7 +11,7 @@ angular.module('facturacion', [ 'ui.router' ])
             })
 
             .state('vlrcs.list', {
-                url : '/:page',
+                url : '/listado/:page',
                 templateUrl : 'modules/facturacion/vlrc-listado.html',
 
                 controller : function($http, $scope, $stateParams) {
@@ -19,21 +19,21 @@ angular.module('facturacion', [ 'ui.router' ])
                         $stateParams.page = 1;
                     }
 
-                    $scope.loadData = function() {
+//                    $scope.loadData = function() {
                         var url = "facturacion/vlrc-listado.action?page=" + $stateParams.page;
 
                         $http.get(url).success(function(data) {
                             $scope.vlrcList = data.vlrcList;
                         });
-                    };
+//                    };
 
                     $scope.pageChanged = function() {
                         $stateParams.page = $scope.currentPage;
 
-                        $scope.loadData();
+//                        $scope.loadData();
                     };
 
-                    $scope.loadData();
+//                    $scope.loadData();
                 }
             })
 
@@ -189,7 +189,7 @@ angular.module('facturacion', [ 'ui.router' ])
             })
 
             .state('aspcs.list', {
-                url : '/:page',
+                url : '/listado/:page',
                 templateUrl : 'modules/facturacion/aspc-listado.html',
 
                 controller : function($http, $scope, $stateParams) {
@@ -245,7 +245,7 @@ angular.module('facturacion', [ 'ui.router' ])
             })
 
             .state('crgos.list', {
-                url : '/:page',
+                url : '/listado/:page',
                 templateUrl : 'modules/facturacion/crgo-listado.html',
 
                 controller : function($http, $scope, $stateParams) {

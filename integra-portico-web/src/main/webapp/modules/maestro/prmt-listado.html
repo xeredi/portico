@@ -10,16 +10,8 @@
         </div>
 
         <div class="btn-group">
-            <a ng-if="enti.cmdAlta" class="btn btn-default" href="#/maestro/prmt/crear/{{enti.id}}"><i
-                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a> <a ng-if="enti.cmdEdicion"
-                class="btn btn-default" href="#/maestro/prmt/editar"><i class="glyphicon glyphicon-edit"></i>
-                {{'boton_modificar' | translate}}</a>
-            <button class="btn btn-default" ng-click="editar()">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_modificar' | translate}}
-            </button>
-
-            <a ng-if="enti.cmdDuplicado" class="btn btn-default" href="#/maestro/prmt/duplicar/"><i
-                class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a> <a ng-if="enti.cmdBaja"
+            <a ng-if="enti.cmdAlta" ui-sref="prmts.alta({entiId:enti.id})" class="btn btn-default"><i
+                class="glyphicon glyphicon-file"></i> {{'boton_crear' | translate}}</a> <a ng-if="enti.cmdBaja"
                 class="btn btn-default" href="#/maestro/prmt/borrar/"><i class="glyphicon glyphicon-remove"></i>
                 {{'boton_borrar' | translate}}</a>
         </div>
@@ -27,10 +19,11 @@
 
     <pagination total-items="itemList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
         max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
-    <span>{{itemList.count}} resultado(s)</span>
 
     <div class="table-responsive">
-        <table class="table table-condensed table-hover table-nonfluid">
+        <span class="label label-default">{{itemList.count}} resultado(s)</span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
                     <th class="buttonLinks" nowrap="nowrap" />
@@ -44,10 +37,7 @@
 
             <tbody>
                 <tr ng-repeat="item in itemList.list">
-                    <td>
-                    <a ui-sref="prmts.detalle({itemId:item.id})">Detalle</a>
-                    <a href="#/maestro/prmt/{{item.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a ui-sref="prmts.detalle({itemId:item.id})"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.parametro}}</td>
                     <td ng-if="enti.i18n">{{item.i18n.texto}}</td>
                     <td ng-if="enti.tempExp">{{item.prvr.finicio | date:('fmt_date' | translate)}}</td>

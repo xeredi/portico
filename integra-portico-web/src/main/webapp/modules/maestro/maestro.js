@@ -1,153 +1,171 @@
 angular.module('maestro', [ 'ui.router' ])
 
-.config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
+.config(
+        function($stateProvider, $urlRouterProvider) {
+            $stateProvider
 
-    .state('prmts', {
-        abstract : true,
-        url : '/maestro/prmts',
-        templateUrl : 'modules/maestro/prmts.html'/*,
-        resolve : {
-            itemList : {}
-        },
-        controller : function($scope, $state, itemList) {
-            $scope.enti = {};
-            $scope.itemList = itemList;
-            $scope.itemCriterio = {};
-        }*/
-    })
+            .state('prmts', {
+                abstract : true,
+                url : '/maestro/prmts',
+                templateUrl : 'modules/maestro/prmts.html'
+            })
 
-    .state(
-            'prmts.list',
-            {
-                url : '/:entiId/:page',
-                templateUrl : 'modules/maestro/prmt-listado.html',
+            .state(
+                    'prmts.list',
+                    {
+                        url : '/listado/:entiId/:page',
+                        templateUrl : 'modules/maestro/prmt-listado.html',
 
-                controller : function($http, $scope, $stateParams) {
-                    $scope.loadData = function() {
-                        var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $stateParams.entiId
-                                + "&page=" + $stateParams.page;
+                        controller : function($http, $scope, $stateParams) {
+                            $scope.loadData = function() {
+                                var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $stateParams.entiId
+                                        + "&page=" + $stateParams.page;
 
-                        $http.get(url).success(function(data) {
-                            // console.log(data);
-                            $scope.enti = data.enti;
-                            $scope.itemList = data.itemList;
-                            $scope.itemCriterio = data.itemCriterio;
-                        });
-                    };
+                                $http.get(url).success(function(data) {
+                                    // console.log(data);
+                                    $scope.enti = data.enti;
+                                    $scope.itemList = data.itemList;
+                                    $scope.itemCriterio = data.itemCriterio;
+                                });
+                            };
 
-                    $scope.pageChanged = function() {
-                        $stateParams.page = $scope.currentPage;
+                            $scope.pageChanged = function() {
+                                $stateParams.page = $scope.currentPage;
 
-                        $scope.loadData();
-                    };
+                                $scope.loadData();
+                            };
 
-                    $scope.loadData();
+                            $scope.loadData();
+                        }
+                    })
+
+            .state('prmts.detalle', {
+                url : '/detalle/:itemId',
+                views : {
+                    '' : {
+                        templateUrl : 'modules/maestro/prmt-detalle.html',
+                        controller : function($http, $scope, $state, $stateParams) {
+                            var url = "maestro/prmt-detalle-json.action?item.id=" + $stateParams.itemId;
+
+                            $http.get(url).success(function(data) {
+                                $scope.enti = data.enti;
+                                $scope.item = data.item;
+                                $scope.p18nMap = data.p18nMap;
+                                $scope.entiHijasList = data.entiHijasList;
+                                $scope.itemHijosMap = data.itemHijosMap;
+                                $scope.availableLanguages = data.availableLanguages;
+                            });
+
+                            $scope.editar = function() {
+                                alert("Editar: " + $stateParams.itemId);
+
+                                $state.go('prmts.editar', $stateParams);
+                            };
+                        }
+                    }
                 }
             })
 
-    .state('prmts.detalle', {
-        url : '/:itemId',
-        views : {
-            '' : {
-                templateUrl : 'modules/maestro/prmt-detalle.html',
-                controller : function($http, $scope, $state, $stateParams) {
-                    var url = "maestro/prmt-detalle-json.action?item.id=" + $stateParams.itemId;
-
-                    $http.get(url).success(function(data) {
-                        $scope.enti = data.enti;
-                        $scope.item = data.item;
-                        $scope.p18nMap = data.p18nMap;
-                        $scope.entiHijasList = data.entiHijasList;
-                        $scope.itemHijosMap = data.itemHijosMap;
-                        $scope.availableLanguages = data.availableLanguages;
-                    });
-
-                    $scope.editar = function() {
-                        alert("Editar: " + $stateParams.itemId);
-
-                        $state.go('prmts.editar', $stateParams);
-                    };
+            .state('prmts.alta', {
+                url : '/alta/:entiId',
+                views : {
+                    '' : {
+                        templateUrl : 'modules/maestro/prmt-edicion.html',
+                        controller : function($http, $scope, $stateParams) {
+                        }
+                    }
                 }
-            }
-        }
-    })
+            })
 
-    .state('prmts.editar', {
-        views : {
-            '' : {
-                templateUrl : 'modules/maestro/prmt-edicion.html',
-                controller : function($http, $scope, $stateParams) {
-                    alert("Controller de edicion: " + $stateParams.itemId);
+            .state('prmts.editar', {
+                url : '/editar/:itemId',
+                views : {
+                    '' : {
+                        templateUrl : 'modules/maestro/prmt-edicion.html',
+                        controller : function($http, $scope, $stateParams) {
+                            alert("Controller de edicion: " + $stateParams.itemId);
 
-                    var url = "maestro/prmt-detalle-json.action?item.id=" + $stateParams.itemId;
+                            var url = "maestro/prmt-detalle-json.action?item.id=" + $stateParams.itemId;
 
-                    $http.get(url).success(function(data) {
-                        $scope.enti = data.enti;
-                        $scope.item = data.item;
-                        $scope.p18nMap = data.p18nMap;
-                        $scope.entiHijasList = data.entiHijasList;
-                        $scope.itemHijosMap = data.itemHijosMap;
-                        $scope.availableLanguages = data.availableLanguages;
-                    });
+                            $http.get(url).success(function(data) {
+                                $scope.enti = data.enti;
+                                $scope.item = data.item;
+                                $scope.p18nMap = data.p18nMap;
+                                $scope.entiHijasList = data.entiHijasList;
+                                $scope.itemHijosMap = data.itemHijosMap;
+                                $scope.availableLanguages = data.availableLanguages;
+                            });
+                        }
+                    }
                 }
-            }
-        }
-    })
-})
+            })
 
-.controller('prmtsCtrl', function($http, $scope, $routeParams, $modal) {
-    $scope.loadData = function() {
-        var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $routeParams.entiId + "&page="
-                + $routeParams.page;
-
-        // alert($routeParams.page);
-
-        $http.get(url).success(function(data) {
-            // console.log(data);
-            $scope.enti = data.enti;
-            $scope.itemList = data.itemList;
-            $scope.itemCriterio = data.itemCriterio;
-        });
-    };
-
-    $scope.pageChanged = function() {
-        $routeParams.page = $scope.currentPage;
-
-        $scope.loadData();
-    };
-
-    $scope.openFiltro = function(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/maestro/prmt-filtro.html',
-            controller : 'prmtsFiltroCtrl',
-            size : size,
-            resolve : {
-                entiId : function() {
-                    return $routeParams.entiId;
-                },
-                itemCriterio : function() {
-                    return $scope.itemCriterio;
+            .state('prmts.duplicar', {
+                url : '/duplicar/:itemId',
+                views : {
+                    '' : {
+                        templateUrl : 'modules/maestro/prmt-edicion.html',
+                        controller : function($http, $scope, $stateParams) {
+                        }
+                    }
                 }
+            })
+        })
+
+.controller(
+        'prmtsCtrl',
+        function($http, $scope, $routeParams, $modal) {
+            $scope.loadData = function() {
+                var url = "maestro/prmt-listado-json.action?itemCriterio.entiId=" + $routeParams.entiId + "&page="
+                        + $routeParams.page;
+
+                // alert($routeParams.page);
+
+                $http.get(url).success(function(data) {
+                    // console.log(data);
+                    $scope.enti = data.enti;
+                    $scope.itemList = data.itemList;
+                    $scope.itemCriterio = data.itemCriterio;
+                });
+            };
+
+            $scope.pageChanged = function() {
+                $routeParams.page = $scope.currentPage;
+
+                $scope.loadData();
+            };
+
+            $scope.openFiltro = function(size) {
+                var modalInstance = $modal.open({
+                    templateUrl : 'modules/maestro/prmt-filtro.html',
+                    controller : 'prmtsFiltroCtrl',
+                    size : size,
+                    resolve : {
+                        entiId : function() {
+                            return $routeParams.entiId;
+                        },
+                        itemCriterio : function() {
+                            return $scope.itemCriterio;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(function() {
+                }, function() {
+                });
+            };
+
+            if ($routeParams.page == null) {
+                // alert('inicializar numero de pagina');
+
+                $routeParams.page = 1;
             }
-        });
 
-        modalInstance.result.then(function() {
-        }, function() {
-        });
-    };
+            $scope.page = $routeParams.page;
+            $scope.currentPage = $routeParams.page;
 
-    if ($routeParams.page == null) {
-        // alert('inicializar numero de pagina');
-
-        $routeParams.page = 1;
-    }
-
-    $scope.page = $routeParams.page;
-    $scope.currentPage = $routeParams.page;
-
-    $scope.loadData();
-})
+            $scope.loadData();
+        })
 
 .controller('prmtsFiltroCtrl', function($http, $scope, $modalInstance, entiId, itemCriterio) {
     // $scope.itemCriterio = itemCriterio;
@@ -185,23 +203,26 @@ angular.module('maestro', [ 'ui.router' ])
     };
 })
 
-.controller('prmtsLupaCtrl', function($http, $scope) {
-    $scope.getLabelValues = function(entiId, textoBusqueda) {
-        return $http.get(
-                'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.textoBusqueda="
-                        + textoBusqueda + "&itemLupaCriterio.fechaVigencia=11/12/2014").then(function(res) {
-            // console.log(res.data);
+.controller(
+        'prmtsLupaCtrl',
+        function($http, $scope) {
+            $scope.getLabelValues = function(entiId, textoBusqueda) {
+                return $http.get(
+                        'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId
+                                + "&itemLupaCriterio.textoBusqueda=" + textoBusqueda
+                                + "&itemLupaCriterio.fechaVigencia=11/12/2014").then(function(res) {
+                    // console.log(res.data);
 
-            var labelValues = [];
+                    var labelValues = [];
 
-            angular.forEach(res.data.itemList, function(item) {
-                labelValues.push(item.label);
-            });
+                    angular.forEach(res.data.itemList, function(item) {
+                        labelValues.push(item.label);
+                    });
 
-            return labelValues;
-        });
-    };
-})
+                    return labelValues;
+                });
+            };
+        })
 
 .controller('ParametroDetailController', function($scope, $http, $route, $routeParams, $location) {
     var url = "maestro/prmt-detalle-json.action?item.id=" + $routeParams.itemId;
@@ -366,5 +387,4 @@ angular.module('maestro', [ 'ui.router' ])
 
 .controller('prmtBorrarCtrl', function($http, $scope, $routeParams, $location) {
     alert('Borrar');
-})
-;
+});

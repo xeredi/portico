@@ -153,3 +153,8 @@ td {
 
 /* AngularJs */
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.pagination {
+    margin-top: 8px;
+    margin-bottom: 3px;
+}
