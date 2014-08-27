@@ -61,6 +61,9 @@ public class GlobalNames {
     /** The Constant MESSAGES. */
     public static final String MESSAGES = "messages";
 
+    /** The Constant ERRORS. */
+    public static final String ERRORS = "errors";
+
     /** The Constant SQ_INTEGRA. */
     public static final String SQ_INTEGRA = "sq_integra";
 

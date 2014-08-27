@@ -65,20 +65,23 @@ angular.module('maestro', [ 'ui.router' ])
                 views : {
                     '' : {
                         templateUrl : 'modules/maestro/prmt-edicion.html',
-                        controller : function($http, $scope, $stateParams) {
+                        controller : function($http, $scope, $state, $stateParams) {
                             var url = "maestro/prmt-crear-json.action?item.entiId=" + $stateParams.entiId;
 
                             $http.get(url).success(function(data) {
+                                $scope.accion = data.accion;
+                                $scope.availableLanguages = data.availableLanguages;
                                 $scope.enti = data.enti;
                                 $scope.item = data.item;
-                                $scope.availableLanguages = data.availableLanguages;
+                                $scope.p18nMap = data.p18nMap;
                                 $scope.labelValuesMap = data.labelValuesMap;
                             });
 
                             $scope.guardar = function() {
-                                alert("Editar: " + $stateParams.itemId);
-
-                                $state.go('prmts.editar', $stateParams);
+                                console.log($scope.item);
+                                console.log($scope.p18nMap);
+                                console.log($scope.accion);
+                                // $state.go('prmts.detalle', $stateParams);
                             };
                         }
                     }
@@ -91,17 +94,17 @@ angular.module('maestro', [ 'ui.router' ])
                     '' : {
                         templateUrl : 'modules/maestro/prmt-edicion.html',
                         controller : function($http, $scope, $stateParams) {
-                            alert("Controller de edicion: " + $stateParams.itemId);
-
-                            var url = "maestro/prmt-detalle-json.action?item.id=" + $stateParams.itemId;
+                            var url = "maestro/prmt-editar-json.action?item.id=" + $stateParams.itemId;
 
                             $http.get(url).success(function(data) {
+                                $scope.accion = data.accion;
+                                $scope.availableLanguages = data.availableLanguages;
                                 $scope.enti = data.enti;
                                 $scope.item = data.item;
                                 $scope.p18nMap = data.p18nMap;
                                 $scope.entiHijasList = data.entiHijasList;
                                 $scope.itemHijosMap = data.itemHijosMap;
-                                $scope.availableLanguages = data.availableLanguages;
+                                $scope.labelValuesMap = data.labelValuesMap;
                             });
                         }
                     }
@@ -114,6 +117,18 @@ angular.module('maestro', [ 'ui.router' ])
                     '' : {
                         templateUrl : 'modules/maestro/prmt-edicion.html',
                         controller : function($http, $scope, $stateParams) {
+                            var url = "maestro/prmt-duplicar-json.action?item.id=" + $stateParams.itemId;
+
+                            $http.get(url).success(function(data) {
+                                $scope.accion = data.accion;
+                                $scope.availableLanguages = data.availableLanguages;
+                                $scope.enti = data.enti;
+                                $scope.item = data.item;
+                                $scope.p18nMap = data.p18nMap;
+                                $scope.entiHijasList = data.entiHijasList;
+                                $scope.itemHijosMap = data.itemHijosMap;
+                                $scope.labelValuesMap = data.labelValuesMap;
+                            });
                         }
                     }
                 }

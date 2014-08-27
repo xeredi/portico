@@ -90,10 +90,10 @@ public final class ParametroAction extends ItemAction {
      *             the instance not found exception
      */
     @Actions({
-            @Action(value = "prmt-crear", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
-            @Action(value = "prmt-crear-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
-            @Action(value = "prmt-crear-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
+        @Action(value = "prmt-crear", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
+        @Action(value = "prmt-crear-json", results = { @Result(name = "success", type = "json", params = {
+                "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
+                @Action(value = "prmt-crear-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
     public String crear() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
@@ -101,6 +101,7 @@ public final class ParametroAction extends ItemAction {
         accion = ACCION_EDICION.alta;
         enti = TipoParametroProxy.select(item.getEntiId());
         item = ParametroVO.newInstance(enti);
+        p18nMap = new HashMap<>();
 
         loadLabelValuesMap();
 
@@ -115,10 +116,10 @@ public final class ParametroAction extends ItemAction {
      *             the instance not found exception
      */
     @Actions({
-            @Action(value = "prmt-editar", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
-            @Action(value = "prmt-editar-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
-            @Action(value = "prmt-editar-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
+        @Action(value = "prmt-editar", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
+        @Action(value = "prmt-editar-json", results = { @Result(name = "success", type = "json", params = {
+                "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
+                @Action(value = "prmt-editar-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
     public String editar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -152,10 +153,10 @@ public final class ParametroAction extends ItemAction {
      *             the instance not found exception
      */
     @Actions({
-            @Action(value = "prmt-duplicar", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
-            @Action(value = "prmt-duplicar-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
-            @Action(value = "prmt-duplicar-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
+        @Action(value = "prmt-duplicar", results = { @Result(name = "success", location = "prmt-edicion.jsp") }),
+        @Action(value = "prmt-duplicar-json", results = { @Result(name = "success", type = "json", params = {
+                "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
+                @Action(value = "prmt-duplicar-popup", results = { @Result(name = "success", location = "prmt-edicion.jsp") }) })
     public String duplicar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -301,10 +302,10 @@ public final class ParametroAction extends ItemAction {
      *             the instance not found exception
      */
     @Actions({
-            @Action(value = "prmt-detalle"),
-            @Action(value = "prmt-detalle-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
-            @Action(value = "prmt-detalle-popup") })
+        @Action(value = "prmt-detalle"),
+        @Action(value = "prmt-detalle-json", results = { @Result(name = "success", type = "json", params = {
+                "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
+                @Action(value = "prmt-detalle-popup") })
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());

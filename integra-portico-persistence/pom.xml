@@ -58,8 +58,7 @@
             <artifactId>cglib</artifactId>
             <version>2.2.2</version>
         </dependency>
-<!--
- -->
+        <!-- -->
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>

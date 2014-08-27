@@ -154,7 +154,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
      * {@inheritDoc}
      */
     @Override
-    @Transactional
+    @Transactional(executorType = ExecutorType.BATCH)
     public final void delete(final Long peprId) {
         Preconditions.checkNotNull(peprId);
 
@@ -166,7 +166,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
 
     /**
      * Delete.
-     * 
+     *
      * @param peprVO
      *            the pepr vo
      */
@@ -341,7 +341,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
 
     /**
      * Obtener estadisticas.
-     * 
+     *
      * @param peprVO
      *            the pepr vo
      * @param tpesId
@@ -428,8 +428,8 @@ public class PeriodoProcesoBO implements PeriodoProceso {
                         case FE:
                         case FH:
                             /*
-                             * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP)
-                             * value).dateValue()); } else { itdtVO.setFecha((Date) value); }
+                             * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP) value).dateValue()); }
+                             * else { itdtVO.setFecha((Date) value); }
                              */
                             itdtVO.setFecha((Date) value);
 
@@ -450,7 +450,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
 
     /**
      * Generar archivo.
-     * 
+     *
      * @param peprVO
      *            the pepr vo
      * @throws IOException
@@ -687,7 +687,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
 
     /**
      * Insert estadistica agregado list.
-     * 
+     *
      * @param peprVO
      *            the pepr vo
      * @param tpesId
@@ -718,7 +718,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
 
     /**
      * Generar cuadro mensual.
-     * 
+     *
      * @param peprId
      *            the pepr id
      * @param sobreescribir

@@ -38,7 +38,7 @@ label,legend,li,.btn,.form-control,.form-control-static,.bootstrap-datetimepicke
 
 .jumbotron {background-color: white;}
 
-input[type='password'], input[type='text'], input[type='text']:disabled, textarea, textarea:disabled, select.form-control {
+input[type='password'], input[type='text'], input[type='text']:disabled, textarea.form-control, textarea.form-control:disabled, select.form-control {
     color: #000000;
     cursor: default;
     background-color: #f2f2f2;

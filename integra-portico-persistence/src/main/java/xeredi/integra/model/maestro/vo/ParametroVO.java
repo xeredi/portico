@@ -35,7 +35,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * New instance.
-     * 
+     *
      * @param tpprVO
      *            the tppr vo
      * @return the parametro vo
@@ -68,7 +68,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Gets the etiqueta string buffer.
-     * 
+     *
      * @return the etiqueta string buffer
      */
     private StringBuffer getEtiquetaStringBuffer() {
@@ -87,7 +87,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Gets the etiqueta.
-     * 
+     *
      * @return the etiqueta
      */
     @Override
@@ -99,10 +99,10 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Gets the etiqueta csv.
-     * 
+     *
      * @return the etiqueta csv
      */
-    public String getEtiquetaCSV() {
+    public String obtenerEtiquetaCSV() {
         final StringBuffer buffer = getEtiquetaStringBuffer();
 
         return buffer.length() == 0 ? null : StringEscapeUtils.escapeCsv(buffer.toString());
@@ -110,7 +110,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Gets the descripcion.
-     * 
+     *
      * @return the descripcion
      */
     public String getParametro() {
@@ -119,7 +119,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Sets the descripcion.
-     * 
+     *
      * @param value
      *            the new descripcion
      */
@@ -131,7 +131,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Gets the i18n.
-     * 
+     *
      * @return the i18n
      */
     public ParametroI18nVO getI18n() {
@@ -140,7 +140,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Sets the i18n.
-     * 
+     *
      * @param value
      *            the new i18n
      */
@@ -150,7 +150,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Gets the prvr.
-     * 
+     *
      * @return the prvr
      */
     public ParametroVersionVO getPrvr() {
@@ -159,7 +159,7 @@ public final class ParametroVO extends ItemVO {
 
     /**
      * Sets the prvr.
-     * 
+     *
      * @param value
      *            the new prvr
      */

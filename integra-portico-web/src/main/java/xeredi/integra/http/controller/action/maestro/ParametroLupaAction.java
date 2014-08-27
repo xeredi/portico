@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -45,7 +46,7 @@ public final class ParametroLupaAction extends BaseAction {
     // Acciones Web
     /**
      * Editar lupa.
-     * 
+     *
      * @return the string
      */
     @Action(value = "prmt-lupa", results = { @Result(name = "success", type = "json") })
@@ -55,7 +56,7 @@ public final class ParametroLupaAction extends BaseAction {
         Preconditions.checkNotNull(itemLupaCriterio.getFechaVigencia());
         Preconditions.checkNotNull(itemLupaCriterio.getTextoBusqueda());
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final TipoParametroVO enti = TipoParametroProxy.select(itemLupaCriterio.getEntiId());
 
         if (enti.isI18n()) {
@@ -74,7 +75,7 @@ public final class ParametroLupaAction extends BaseAction {
     // get / set
     /**
      * Gets the item lupa criterio.
-     * 
+     *
      * @return the item lupa criterio
      */
     public ParametroLupaCriterioVO getItemLupaCriterio() {
@@ -83,7 +84,7 @@ public final class ParametroLupaAction extends BaseAction {
 
     /**
      * Sets the item lupa criterio.
-     * 
+     *
      * @param value
      *            the new item lupa criterio
      */
@@ -93,7 +94,7 @@ public final class ParametroLupaAction extends BaseAction {
 
     /**
      * Gets the item list.
-     * 
+     *
      * @return the item list
      */
     public List<LabelValueVO> getItemList() {

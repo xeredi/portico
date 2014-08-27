@@ -49,7 +49,7 @@ public final class ExcelUtil {
 
     /**
      * Instantiates a new excel util.
-     * 
+     *
      * @param alocale
      *            the alocale
      */
@@ -64,7 +64,7 @@ public final class ExcelUtil {
 
     /**
      * Generar maestros.
-     * 
+     *
      * @param prmtList
      *            the prmt list
      * @param tpprVO
@@ -137,7 +137,7 @@ public final class ExcelUtil {
 
     /**
      * Generar servicios.
-     * 
+     *
      * @param srvcList
      *            the srvc list
      * @param tpsrVO
@@ -220,7 +220,7 @@ public final class ExcelUtil {
 
     /**
      * Generar subservicios.
-     * 
+     *
      * @param ssrvList
      *            the ssrv list
      * @param tpssVO
@@ -297,7 +297,7 @@ public final class ExcelUtil {
 
     /**
      * Generar estadisticas.
-     * 
+     *
      * @param estdList
      *            the estd list
      * @param tpesVO
@@ -354,7 +354,7 @@ public final class ExcelUtil {
 
     /**
      * Generar procesos.
-     * 
+     *
      * @param prbtList
      *            the prbt list
      * @param stream
@@ -412,7 +412,7 @@ public final class ExcelUtil {
 
     /**
      * Sets the cell value.
-     * 
+     *
      * @param row
      *            the row
      * @param position
@@ -449,7 +449,7 @@ public final class ExcelUtil {
                 break;
             case PR:
                 if (itdtVO.getPrmt() != null) {
-                    setCellValue(row, position, itdtVO.getPrmt().getEtiquetaCSV());
+                    setCellValue(row, position, itdtVO.getPrmt().obtenerEtiquetaCSV());
                 }
 
                 break;
@@ -486,7 +486,7 @@ public final class ExcelUtil {
 
     /**
      * Sets the cell value.
-     * 
+     *
      * @param row
      *            the row
      * @param position
@@ -520,7 +520,7 @@ public final class ExcelUtil {
 
     /**
      * Autosize columns.
-     * 
+     *
      * @param sheet
      *            the sheet
      * @param header

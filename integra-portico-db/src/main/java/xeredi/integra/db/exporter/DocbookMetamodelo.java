@@ -103,12 +103,13 @@ public final class DocbookMetamodelo {
 
             for (final LabelValueVO labelValueVO : TipoSubparametroProxy.selectLabelValues()) {
                 final TipoSubparametroVO entiVO = TipoSubparametroProxy.select((Long) labelValueVO.getValue());
+                final TipoParametroVO tpprPadreVO = TipoParametroProxy.select(entiVO.getTpprId());
 
                 writer.println("<row>");
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
                 writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
-                writer.println("<entry>" + entiVO.getTppr().getNombre() + "</entry>");
+                writer.println("<entry>" + tpprPadreVO.getNombre() + "</entry>");
                 writer.println("<entry>" + entiVO.getTpprAsociado().getNombre() + "</entry>");
                 writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isI18n() ? "S" : "") + "</entry>");
@@ -314,6 +315,7 @@ public final class DocbookMetamodelo {
 
             for (final LabelValueVO labelValueVO : TipoSubparametroProxy.selectLabelValues()) {
                 final TipoSubparametroVO entiVO = TipoSubparametroProxy.select((Long) labelValueVO.getValue());
+                final TipoParametroVO tpprPadreVO = TipoParametroProxy.select(entiVO.getTpprId());
 
                 writer.println("<section xml:id='ent_" + entiVO.getCodigo() + "'><title>" + entiVO.getNombre()
                         + "</title>");
@@ -327,7 +329,7 @@ public final class DocbookMetamodelo {
                 writer.println("<row><entry>Codigo</entry><entry>" + entiVO.getCodigo() + "</entry></row>");
                 writer.println("<row><entry>Nombre</entry><entry>" + entiVO.getNombre() + "</entry></row>");
                 writer.println("<row><entry>Etiqueta</entry><entry>" + entiVO.getEtiqueta() + "</entry></row>");
-                writer.println("<row><entry>Maestro Padre</entry><entry>" + getLinkEntidad(entiVO.getTppr())
+                writer.println("<row><entry>Maestro Padre</entry><entry>" + getLinkEntidad(tpprPadreVO)
                         + "</entry></row>");
                 writer.println("<row><entry>Maestro Asoc.</entry><entry>" + getLinkEntidad(entiVO.getTpprAsociado())
                         + "</entry></row>");
@@ -492,7 +494,8 @@ public final class DocbookMetamodelo {
     private void writeEntiInfo(final EntidadVO entiVO, final PrintWriter writer) throws IOException {
         if (entiVO.getEngdList() != null) {
             writer.println("<section><title>Grupos de Datos Asociados</title>");
-            writer.println("<informaltable><title>Grupos de Datos Asociados de " + entiVO.getNombre() + "</title><tgroup cols='2'>");
+            writer.println("<informaltable><title>Grupos de Datos Asociados de " + entiVO.getNombre()
+                    + "</title><tgroup cols='2'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='2*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
             writer.println("<thead><row>");
@@ -516,7 +519,8 @@ public final class DocbookMetamodelo {
         if (entiVO.getEntdList() != null) {
             writer.println("<section><title>Datos Asociados</title>");
 
-            writer.println("<informaltable><title>Datos Asociados de " + entiVO.getNombre() + "</title><tgroup cols='13'>");
+            writer.println("<informaltable><title>Datos Asociados de " + entiVO.getNombre()
+                    + "</title><tgroup cols='13'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='5*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='8*' />");
             writer.println("<colspec colnum='3' colname='col3' colwidth='1.5*' />");
@@ -576,7 +580,8 @@ public final class DocbookMetamodelo {
         if (entiVO.getEntiHijasList() != null) {
             writer.println("<section><title>Entidades hijas</title>");
 
-            writer.println("<informaltable><title>Entidades Hijas de " + entiVO.getNombre() + "</title><tgroup cols='2'>");
+            writer.println("<informaltable><title>Entidades Hijas de " + entiVO.getNombre()
+                    + "</title><tgroup cols='2'>");
             writer.println("<colspec colnum='1' colname='col1' colwidth='8*' />");
             writer.println("<colspec colnum='2' colname='col2' colwidth='6*' />");
             writer.println("<thead><row>");

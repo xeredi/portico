@@ -32,6 +32,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.Subparametro;
+import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -301,8 +302,9 @@ public final class MaestroImporterBO {
      */
     private void importSubtipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException {
-        final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
         final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(entidad.getId());
+        final TipoParametroVO tpprPadreVO = TipoParametroProxy.select(tpspVO.getTpprId());
 
         if (tpspVO == null) {
             throw new Error("No se encuentra el tipo de subparametro con id: " + entidad.getId());
@@ -336,7 +338,7 @@ public final class MaestroImporterBO {
                 final SubparametroVO sprmVO = SubparametroVO.newInstance(tpspVO);
                 final String parametro = rs.getString(i++);
                 final String parametroAsociado = rs.getString(i++);
-                final Long prmtId = tpprPrmtMap.get(tpspVO.getTppr().getId()).get(parametro);
+                final Long prmtId = tpprPrmtMap.get(tpspVO.getTpprId()).get(parametro);
                 final Long prmtAsociadoId = tpprPrmtMap.get(tpspVO.getTpprAsociado().getId()).get(parametroAsociado);
                 final ParametroVO prmtAsociadoVO = new ParametroVO();
 
@@ -364,7 +366,7 @@ public final class MaestroImporterBO {
 
                 if (prmtId == null) {
                     LOG.error("No encontrado parametro: " + parametro + " para la entidad: "
-                            + tpspVO.getTppr().getEtiqueta());
+                            + tpprPadreVO.getEtiqueta());
                 }
 
                 if (prmtAsociadoId == null) {
