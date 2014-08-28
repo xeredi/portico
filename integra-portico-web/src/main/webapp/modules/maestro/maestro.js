@@ -10,6 +10,13 @@ angular.module('maestro', [ 'ui.router' ])
                 templateUrl : 'modules/maestro/prmts.html'
             })
 
+            .state('prmts.filtro', {
+                templateUrl : 'modules/maestro/prmt-filtro.html',
+
+                controller : function($http, $scope, $stateParams) {
+                }
+            })
+
             .state(
                     'prmts.list',
                     {
