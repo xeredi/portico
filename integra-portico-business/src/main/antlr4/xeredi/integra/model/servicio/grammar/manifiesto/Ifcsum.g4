@@ -2,17 +2,12 @@ grammar Ifcsum;
 
 LINE_SEPARATOR
 :
-	[\n]
+	'\r\n'
 ;
 
 ANYCHAR
 :
-	[A-Za-z0-9]
-;
-
-WS
-:
-	[ \t\r]+ -> skip
+	[A-Za-z0-9(). ]
 ;
 
 ifcsum
