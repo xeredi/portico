@@ -26,7 +26,7 @@ public class IfcsumLoaderTest {
      */
     @Test
     public void test() throws IOException {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             test("/xeredi/git/portico/integra-portico-test/etc/examples/ifcsum/MZ1NO605_b.itc");
         }
     }
