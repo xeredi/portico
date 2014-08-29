@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -71,11 +70,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "prmt-filtro"),
-        @Action(value = "prmt-filtro-json", results = { @Result(name = "success", type = "json", params = {
-                "ignoreHierarchy", "false" }) }),
-                @Action(value = "prmt-filtro-popup", results = { @Result(name = "success", location = "prmt-filtro.jsp") }) })
+    @Actions({ @Action("prmt-filtro"), @Action("prmt-filtro-popup") })
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -103,7 +98,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "prmt-listado-json"), @Action(value = "prmt-listado-grid") })
+    @Actions({ @Action("prmt-listado"), @Action("prmt-listado-grid") })
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
