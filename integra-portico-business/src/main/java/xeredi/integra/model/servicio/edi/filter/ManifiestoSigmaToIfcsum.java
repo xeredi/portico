@@ -1,15 +1,16 @@
 package xeredi.integra.model.servicio.edi.filter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -20,22 +21,24 @@ public final class ManifiestoSigmaToIfcsum {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ManifiestoSigmaToIfcsum.class);
 
+    private static final String FIELD_SEPARATOR = "+";
+    private static final String SEGMENT_SEPARATOR = "'";
+
     /**
      * Convert.
      *
-     * @param filepathSource
-     *            the filepath source
-     * @param folderpathDest
-     *            the folderpath dest
+     * @param source
+     *            the source
+     * @param dest
+     *            the dest
      * @throws IOException
      *             the IO exception
      */
-    public void convert(final String filepathSource, final String folderpathDest) throws IOException {
-        final File sourceFile = new File(filepathSource);
-        final File destFolder = new File(folderpathDest);
-        final File destFile = new File(destFolder, sourceFile.getName());
+    public void convert(final InputStream source, final OutputStream dest) throws IOException {
+        Preconditions.checkNotNull(source);
+        Preconditions.checkNotNull(dest);
 
-        final List<String> sourceLines = IOUtils.readLines(new FileInputStream(sourceFile));
+        final List<String> sourceLines = IOUtils.readLines(source);
         final List<String> destLines = new ArrayList<>();
 
         for (final String sourceLine : sourceLines) {
@@ -46,20 +49,82 @@ public final class ManifiestoSigmaToIfcsum {
             String funcion;
             String numeroEdi;
 
+            destLine.append(segment).append(FIELD_SEPARATOR);
+
             switch (segment) {
+            case "SND":
+                break;
+            case "REC":
+                break;
+            case "MSG":
+                break;
+            case "APL":
+                break;
+            case "PRI":
+                break;
+            case "TES":
+                break;
             case "UNB":
                 numeroEdi = sourceLine.substring(102, 116).trim();
                 tipoOperacion = sourceLine.substring(139, 142).trim();
                 funcion = sourceLine.substring(142, 145).trim();
 
                 break;
+            case "IFC":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "NAD":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "CNI":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "GID":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "PCI":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "GOR":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "DOC":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "SGP":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "DGS":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "EQD":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "SEL":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
+            case "FTX":
+                destLines.add(destLine.append(SEGMENT_SEPARATOR).toString());
+
+                break;
 
             default:
-                break;
+                throw new Error("Segmento desconocido: " + segment);
             }
         }
 
-        IOUtils.writeLines(destLines, null, new FileOutputStream(destFile));
+        IOUtils.writeLines(destLines, null, dest);
     }
 
 }

@@ -1,8 +1,12 @@
+/**
+ * D93a http://www.unece.org/trade/untdid/d93/
+ * http://content.portdebarcelona.cat/cntmng/d/d/workspace/SpacesStore/2185ccaf-a590-4dba-8a64-74d95cb929b7/GuiaDSDescarga_Carga33b.pdf%7cGuiaDSDescarga_Carga33b.pdf
+ */
 grammar Ifcsum;
 
 ifcsum
 :
-	unh bgm dtm* moa* ftx* cnt* pcd? gds*
+	una? unb ung? unh bgm dtm* moa* ftx* cnt* pcd? gds*
 	(
 		rff dtm*
 	)*
@@ -26,46 +30,7 @@ ifcsum
 	)*
 	(
 		icd dtm? ftx*
-	)* grTdt* grEqd*
-	(
-		cni
-		(
-			sgp
-			(
-				mea eqn?
-			)*
-		)*
-		(
-			tpl
-			(
-				mea eqn?
-			)*
-		)* cta? com* dtm* cnt* tsr* cux* pcd* moa* ftx* gds*
-		(
-			loc dtm*
-		)*
-		(
-			tod loc*
-		)*
-		(
-			rff dtm*
-		)*
-		(
-			gor dtm* loc* sel* ftx*
-			(
-				doc dtm?
-			)*
-		)*
-		(
-			cpi rff* cux? loc* moa*
-		)*
-		(
-			tcc loc? ftx? cux? pri? eqn? pcd? moa* qty*
-		)*
-		(
-			icd dtm? ftx*
-		)* grCniTdt* grCniNad* grCniGid* grCniEqd*
-	)* unt
+	)* grTdt* grEqd* grCni* unt une? unz
 ;
 
 grTdt
@@ -124,6 +89,47 @@ grEqd
 			cta com*
 		)*
 	)*
+;
+
+grCni
+:
+	cni
+	(
+		sgp
+		(
+			mea eqn?
+		)*
+	)*
+	(
+		tpl
+		(
+			mea eqn?
+		)*
+	)* cta? com* dtm* cnt* tsr* cux* pcd* moa* ftx* gds*
+	(
+		loc dtm*
+	)*
+	(
+		tod loc*
+	)*
+	(
+		rff dtm*
+	)*
+	(
+		gor dtm* loc* sel* ftx*
+		(
+			doc dtm?
+		)*
+	)*
+	(
+		cpi rff* cux? loc* moa*
+	)*
+	(
+		tcc loc? ftx? cux? pri? eqn? pcd? moa* qty*
+	)*
+	(
+		icd dtm? ftx*
+	)* grCniTdt* grCniNad* grCniGid* grCniEqd*
 ;
 
 grCniTdt
@@ -251,9 +257,34 @@ grCniEqd
 	)*
 ;
 
+una
+:
+	'UNA' ANYCHAR+ LINE_SEPARATOR
+;
+
+unb
+:
+	'UNB' ANYCHAR+ LINE_SEPARATOR
+;
+
+ung
+:
+	'UNG' ANYCHAR+ LINE_SEPARATOR
+;
+
 unh
 :
 	'UNH' ANYCHAR+ LINE_SEPARATOR
+;
+
+une
+:
+	'UNE' ANYCHAR+ LINE_SEPARATOR
+;
+
+unz
+:
+	'UNZ' ANYCHAR+ LINE_SEPARATOR
 ;
 
 bgm
@@ -493,19 +524,9 @@ ANYCHAR
 	| '('
 	| ')'
 ;
-/*
-FTX
-:
-	'FTX'
-;
 
-COM
-:
-	'COM'
-;
- */
 LINE_SEPARATOR
 :
-	'\r'? '\n'
+	'\''
 ;
 
