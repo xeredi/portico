@@ -10,28 +10,13 @@ angular.module('maestro', [ 'ui.router' ])
                 templateUrl : 'modules/maestro/prmts.html'
             })
 
-            .state('prmts.filtro', {
-                url : '/filtro/:entiId',
-                templateUrl : 'modules/maestro/prmt-filtro.html',
-
-                controller : function($http, $scope, $stateParams) {
-                    var url = "maestro/prmt-filtro.action?itemCriterio.entiId=" + $stateParams.entiId;
-
-                    $http.get(url).success(function(data) {
-                        $scope.enti = data.enti;
-                        $scope.itemCriterio = data.itemCriterio;
-                        $scope.labelValuesMap = data.labelValuesMap;
-                    });
-                }
-            })
-
             .state(
                     'prmts.list',
                     {
                         url : '/listado/:entiId/:page',
                         templateUrl : 'modules/maestro/prmt-listado.html',
 
-                        controller : function($http, $scope, $stateParams) {
+                        controller : function($http, $scope, $state, $stateParams) {
                             $scope.loadData = function() {
                                 var url = "maestro/prmt-listado.action?itemCriterio.entiId=" + $stateParams.entiId
                                         + "&page=" + $stateParams.page;
@@ -50,9 +35,36 @@ angular.module('maestro', [ 'ui.router' ])
                                 $scope.loadData();
                             };
 
+                            $scope.filtro = function() {
+                                alert('page: ' + $stateParams.page);
+
+                                $state.go('prmts.filtro', $stateParams);
+                            }
+
                             $scope.loadData();
                         }
                     })
+
+            .state('prmts.filtro', {
+                url : '/filtro/:entiId',
+                templateUrl : 'modules/maestro/prmt-filtro.html',
+
+                controller : function($http, $scope, $state, $stateParams) {
+                    alert('page en filtro:' + $stateParams.page);
+
+                    var url = "maestro/prmt-filtro.action?itemCriterio.entiId=" + $stateParams.entiId;
+
+                    $http.get(url).success(function(data) {
+                        $scope.enti = data.enti;
+                        $scope.itemCriterio = data.itemCriterio;
+                        $scope.labelValuesMap = data.labelValuesMap;
+                    });
+
+                    $scope.buscar = function() {
+                        alert('Buscar');
+                    }
+                }
+            })
 
             .state('prmts.detalle', {
                 url : '/detalle/:itemId',

@@ -11,6 +11,7 @@ app.config(function($translateProvider) {
         fmt_date : 'dd/MM/yyyy',
         fmt_datetime : 'dd/MM/yyyy HH:mm',
 
+        boton_buscar : 'Buscar',
         boton_aceptar : 'Aceptar',
         boton_cancelar : 'Cancelar',
         boton_alta : 'Nuevo',
