@@ -1,4 +1,4 @@
-<alert ng-if="actionErrors" type="danger"> Errores
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
 <ul>
     <li ng-repeat="error in actionErrors">{{error}}</li>
 </ul>

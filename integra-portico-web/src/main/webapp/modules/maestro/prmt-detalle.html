@@ -1,3 +1,9 @@
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
+
 <div>
     <tabset> <tab heading="{{enti.nombre}}">
     <div class="btn-toolbar" role="toolbar">

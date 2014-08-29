@@ -15,6 +15,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.Subparametro;
@@ -85,11 +86,9 @@ public final class ParametroAction extends ItemAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Actions({ @Action("prmt-crear"), @Action("prmt-crear-popup") })
-    public String crear() throws InstanceNotFoundException {
+    public String crear() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
@@ -107,11 +106,9 @@ public final class ParametroAction extends ItemAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Actions({ @Action("prmt-editar"), @Action("prmt-editar-popup") })
-    public String editar() throws InstanceNotFoundException {
+    public String editar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -120,18 +117,22 @@ public final class ParametroAction extends ItemAction {
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-        prmtCriterioVO.setId(item.getId());
-        prmtCriterioVO.setFechaVigencia(fechaVigencia);
-        prmtCriterioVO.setIdioma(getIdioma());
+        try {
+            prmtCriterioVO.setId(item.getId());
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            prmtCriterioVO.setIdioma(getIdioma());
 
-        item = prmtBO.selectObject(prmtCriterioVO);
-        enti = TipoParametroProxy.select(item.getEntiId());
+            item = prmtBO.selectObject(prmtCriterioVO);
+            enti = TipoParametroProxy.select(item.getEntiId());
 
-        if (enti.isI18n()) {
-            p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+            if (enti.isI18n()) {
+                p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+            }
+
+            loadLabelValuesMap();
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
         }
-
-        loadLabelValuesMap();
 
         return SUCCESS;
     }
@@ -140,11 +141,9 @@ public final class ParametroAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Actions({ @Action("prmt-duplicar"), @Action("prmt-duplicar-popup") })
-    public String duplicar() throws InstanceNotFoundException {
+    public String duplicar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -157,14 +156,18 @@ public final class ParametroAction extends ItemAction {
         prmtCriterioVO.setFechaVigencia(fechaVigencia);
         prmtCriterioVO.setIdioma(getIdioma());
 
-        item = prmtBO.selectObject(prmtCriterioVO);
-        enti = TipoParametroProxy.select(item.getEntiId());
+        try {
+            item = prmtBO.selectObject(prmtCriterioVO);
+            enti = TipoParametroProxy.select(item.getEntiId());
 
-        if (enti.isI18n()) {
-            p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+            if (enti.isI18n()) {
+                p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+            }
+
+            loadLabelValuesMap();
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
         }
-
-        loadLabelValuesMap();
 
         return SUCCESS;
     }
@@ -184,15 +187,26 @@ public final class ParametroAction extends ItemAction {
         enti = TipoParametroProxy.select(item.getEntiId());
 
         // Validacion de Datos
-        if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "parametro", item.getParametro());
-        } else {
+        if (accion != ACCION_EDICION.modificar) {
+            if (item.getParametro() == null || item.getParametro().isEmpty()) {
+                addActionError(getText(ErrorCode.E00004.name()));
+            }
+        }
+
+        if (accion != ACCION_EDICION.alta) {
             PropertyValidator.validateRequired(this, "id", item.getId());
             PropertyValidator.validateRequired(this, "prvr.id", item.getPrvr().getId());
         }
 
+        if (item.getPrvr().getFinicio() != null && item.getPrvr().getFfin() != null
+                && !item.getPrvr().getFinicio().before(item.getPrvr().getFfin())) {
+            addActionError(getText(ErrorCode.E00006.name()));
+        }
+
         if (enti.isTempExp()) {
-            PropertyValidator.validateRequired(this, "prvr.finicio", item.getPrvr().getFinicio());
+            if (item.getPrvr().getFinicio() == null) {
+                addActionError(getText(ErrorCode.E00003.name()));
+            }
         } else {
             if (accion == ACCION_EDICION.alta) {
                 item.getPrvr().setFinicio(Calendar.getInstance().getTime());
@@ -203,7 +217,9 @@ public final class ParametroAction extends ItemAction {
             for (final String idioma : p18nMap.keySet()) {
                 final ParametroI18nVO i18nVO = p18nMap.get(idioma);
 
-                PropertyValidator.validateRequired(this, "p18nMap['" + idioma + "'].texto", i18nVO.getTexto());
+                if (i18nVO == null || i18nVO.getTexto() == null || i18nVO.getTexto().isEmpty()) {
+                    addActionError(getText(ErrorCode.E00002.name(), new String[] { idioma }));
+                }
 
                 i18nVO.setIdioma(idioma);
             }
@@ -240,7 +256,7 @@ public final class ParametroAction extends ItemAction {
 
             addActionMessage("Parametro guardado correctamente!!");
         } catch (final DuplicateInstanceException ex) {
-            addFieldError("prmt.parametro", getText("error.prmt.duplicate"));
+            addActionError(getText(ErrorCode.E00005.name(), new String[] { enti.getNombre() }));
         }
 
         if (hasErrors()) {
@@ -284,11 +300,9 @@ public final class ParametroAction extends ItemAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Actions({ @Action("prmt-detalle"), @Action("prmt-detalle-popup") })
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -299,34 +313,38 @@ public final class ParametroAction extends ItemAction {
         prmtCriterioVO.setFechaVigencia(fechaVigencia);
         prmtCriterioVO.setIdioma(getIdioma());
 
-        item = prmtBO.selectObject(prmtCriterioVO);
-        enti = TipoParametroProxy.select(item.getEntiId());
+        try {
+            item = prmtBO.selectObject(prmtCriterioVO);
+            enti = TipoParametroProxy.select(item.getEntiId());
 
-        // LOG.info(enti);
+            // LOG.info(enti);
 
-        if (enti.isI18n()) {
-            p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
-        }
-
-        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-            final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
-
-            entiHijasList = new ArrayList<>();
-            itemHijosMap = new HashMap<>();
-
-            for (final Long tpspId : enti.getEntiHijasList()) {
-                final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
-
-                sprmCriterioVO.setEntiId(tpspId);
-                sprmCriterioVO.setPrmt(new ParametroCriterioVO());
-                sprmCriterioVO.getPrmt().setId(item.getId());
-                sprmCriterioVO.setFechaVigencia(fechaVigencia);
-                sprmCriterioVO.setIdioma(getIdioma());
-
-                entiHijasList.add(TipoSubparametroProxy.select(tpspId));
-                itemHijosMap.put(tpspId, sprmBO.selectList(sprmCriterioVO,
-                        PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
+            if (enti.isI18n()) {
+                p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
+
+            if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
+                final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+
+                entiHijasList = new ArrayList<>();
+                itemHijosMap = new HashMap<>();
+
+                for (final Long tpspId : enti.getEntiHijasList()) {
+                    final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+
+                    sprmCriterioVO.setEntiId(tpspId);
+                    sprmCriterioVO.setPrmt(new ParametroCriterioVO());
+                    sprmCriterioVO.getPrmt().setId(item.getId());
+                    sprmCriterioVO.setFechaVigencia(fechaVigencia);
+                    sprmCriterioVO.setIdioma(getIdioma());
+
+                    entiHijasList.add(TipoSubparametroProxy.select(tpspId));
+                    itemHijosMap.put(tpspId, sprmBO.selectList(sprmCriterioVO,
+                            PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
+                }
+            }
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
         }
 
         return SUCCESS;

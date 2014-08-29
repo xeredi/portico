@@ -7,7 +7,6 @@ import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
-import xeredi.util.struts.PropertyValidator;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -31,7 +30,6 @@ public final class ItemDatoValidator {// srdtMap
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
             for (final EntidadTipoDatoVO entdVO : entiVO.getEntdMap().values()) {
-                final String fieldname = "itdtMap[" + entdVO.getTpdt().getId() + "]";
                 final Long tpdtId = entdVO.getTpdt().getId();
                 final ItemDatoVO itdtVO = itdtMap.get(tpdtId);
 

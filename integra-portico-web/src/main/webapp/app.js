@@ -5,6 +5,7 @@ app.config(function($translateProvider) {
     $translateProvider.translations('es', {
         app_nombre : 'PORTICO',
 
+        errors : 'Errores',
         fmt_true : 'Si',
         fmt_false : 'No',
         fmt_integer : '#,###,###,##0',
