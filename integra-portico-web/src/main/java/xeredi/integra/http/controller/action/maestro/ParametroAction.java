@@ -216,7 +216,7 @@ public final class ParametroAction extends ItemAction {
         // Fin de validacion de datos
 
         if (hasErrors()) {
-            return ERROR;
+            return SUCCESS;
         }
 
         try {
@@ -244,7 +244,7 @@ public final class ParametroAction extends ItemAction {
         }
 
         if (hasErrors()) {
-            return ERROR;
+            return SUCCESS;
         }
 
         return SUCCESS;

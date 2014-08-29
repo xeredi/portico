@@ -1,4 +1,9 @@
-
 <alert type="success">Alerta de Prueba en layout de parametros!!!</alert>
+
+<alert ng-if="actionErrors" type="danger"> Errores
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
 
 <div ui-view></div>

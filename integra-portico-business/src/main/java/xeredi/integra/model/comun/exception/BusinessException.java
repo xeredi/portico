@@ -71,7 +71,7 @@ public final class BusinessException extends Exception {
      * @return the list
      */
     public List<String> toI18n(final Locale locale) {
-        final ResourceBundle bundle = ResourceBundle.getBundle(GlobalNames.ERRORS, locale);
+        final ResourceBundle bundle = ResourceBundle.getBundle(GlobalNames.MESSAGES, locale);
         final List<String> messages = new ArrayList<>();
 
         Preconditions.checkNotNull(bundle);

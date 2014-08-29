@@ -1,5 +1,8 @@
 package xeredi.integra.http.util;
 
+import java.util.Map;
+
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -15,7 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public final class ItemDatoValidator {// srdtMap
     /**
      * Validate.
-     * 
+     *
      * @param support
      *            the support
      * @param entiVO
@@ -25,61 +28,63 @@ public final class ItemDatoValidator {// srdtMap
      */
     public static void validate(final ActionSupport support, final EntidadVO entiVO, final ItemVO itemVO) {
         if (entiVO.getEntdMap() != null) {
+            final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
+
             for (final EntidadTipoDatoVO entdVO : entiVO.getEntdMap().values()) {
                 final String fieldname = "itdtMap[" + entdVO.getTpdt().getId() + "]";
-                final ItemDatoVO itdtVO = itemVO.getItdtMap().get(entdVO.getTpdt().getId());
+                final Long tpdtId = entdVO.getTpdt().getId();
+                final ItemDatoVO itdtVO = itdtMap.get(tpdtId);
 
-                if (entdVO.isObligatorio()) {
-                    PropertyValidator.validateRequired(support, fieldname, itdtVO);
+                if (entdVO.isObligatorio() && itdtVO == null) {
+                    support.addActionError(support.getText(ErrorCode.E00001.name(),
+                            new String[] { entdVO.getEtiqueta() }));
                 }
 
                 if (itdtVO != null) {
                     itdtVO.setTpdtId(entdVO.getTpdt().getId());
                     switch (entdVO.getTpdt().getTipoElemento()) {
                     case BO:
-                        if (entdVO.isObligatorio()) {
-                            PropertyValidator.validateRequired(support, entdVO.getEtiqueta(),
-                                    itdtVO.getCantidadEntera());
+                    case NE:
+                        if (entdVO.isObligatorio() && itdtVO.getCantidadEntera() == null) {
+                            support.addActionError(support.getText(ErrorCode.E00001.name(),
+                                    new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case ND:
-                        if (entdVO.isObligatorio()) {
-                            PropertyValidator.validateRequired(support, entdVO.getEtiqueta(),
-                                    itdtVO.getCantidadDecimal());
-                        }
-
-                        break;
-                    case NE:
-                        if (entdVO.isObligatorio()) {
-                            PropertyValidator.validateRequired(support, entdVO.getEtiqueta(),
-                                    itdtVO.getCantidadEntera());
+                        if (entdVO.isObligatorio() && itdtVO.getCantidadDecimal() == null) {
+                            support.addActionError(support.getText(ErrorCode.E00001.name(),
+                                    new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case PR:
-                        if (entdVO.isObligatorio()) {
-                            PropertyValidator.validateRequired(support, entdVO.getEtiqueta(), itdtVO.getPrmt());
+                        if (entdVO.isObligatorio() && (itdtVO.getPrmt() == null || itdtVO.getPrmt().getId() == null)) {
+                            support.addActionError(support.getText(ErrorCode.E00001.name(),
+                                    new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case SR:
-                        if (entdVO.isObligatorio()) {
-                            PropertyValidator.validateRequired(support, entdVO.getEtiqueta(), itdtVO.getSrvc());
+                        if (entdVO.isObligatorio() && (itdtVO.getSrvc() == null || itdtVO.getSrvc().getId() == null)) {
+                            support.addActionError(support.getText(ErrorCode.E00001.name(),
+                                    new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case CR:
                     case TX:
-                        if (entdVO.isObligatorio()) {
-                            PropertyValidator.validateRequired(support, entdVO.getEtiqueta(), itdtVO.getCadena());
+                        if (entdVO.isObligatorio() && (itdtVO.getCadena() == null || itdtVO.getCadena().isEmpty())) {
+                            support.addActionError(support.getText(ErrorCode.E00001.name(),
+                                    new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case FE:
                     case FH:
-                        if (entdVO.isObligatorio()) {
-                            PropertyValidator.validateRequired(support, entdVO.getEtiqueta(), itdtVO.getFecha());
+                        if (entdVO.isObligatorio() && itdtVO.getFecha() == null) {
+                            support.addActionError(support.getText(ErrorCode.E00001.name(),
+                                    new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
