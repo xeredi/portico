@@ -11,9 +11,17 @@ angular.module('maestro', [ 'ui.router' ])
             })
 
             .state('prmts.filtro', {
+                url : '/filtro/:entiId',
                 templateUrl : 'modules/maestro/prmt-filtro.html',
 
                 controller : function($http, $scope, $stateParams) {
+                    var url = "maestro/prmt-filtro.action?itemCriterio.entiId=" + $stateParams.entiId;
+
+                    $http.get(url).success(function(data) {
+                        $scope.enti = data.enti;
+                        $scope.itemCriterio = data.itemCriterio;
+                        $scope.labelValuesMap = data.labelValuesMap;
+                    });
                 }
             })
 

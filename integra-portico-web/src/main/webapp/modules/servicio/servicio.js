@@ -26,10 +26,8 @@ angular.module('servicio', [ 'ui.router' ])
                         templateUrl : 'modules/servicio/srvc-listado.html',
 
                         controller : function($http, $scope, $stateParams) {
-                            alert('Listado');
-
                             $scope.loadData = function() {
-                                var url = "maestro/srvc-listado-json.action?itemCriterio.entiId=" + $stateParams.entiId
+                                var url = "servicio/srvc-listado.action?itemCriterio.entiId=" + $stateParams.entiId
                                         + "&page=" + $stateParams.page;
 
                                 $http.get(url).success(function(data) {

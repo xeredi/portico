@@ -12,6 +12,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
@@ -75,7 +76,7 @@ public abstract class ItemListadoAction extends BaseAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
                         getItemCriterio().getIdioma()));

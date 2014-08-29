@@ -14,9 +14,11 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.Entidad;
@@ -107,15 +109,12 @@ public final class ServicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({
-            @Action(value = "srvc-listado"),
-            @Action(value = "srvc-listado-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true" }) }) })
+    @Actions({ @Action(value = "srvc-listado") })
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
         enti = TipoServicioProxy.select(itemCriterio.getEntiId());
 
@@ -139,7 +138,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
         if (subpList == null) {
             subpList = new ArrayList<>();
 
-            final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+            final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
             final Set<Long> tpprIds = new HashSet<>();
 
             tpprIds.add(Entidad.SUBPUERTO.getId());
