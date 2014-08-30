@@ -2,6 +2,8 @@ package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -16,6 +18,7 @@ import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -32,9 +35,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
     /** The prmts. */
     private PaginatedList<ParametroVO> itemList;
-
-    /** The tppr. */
-    private TipoParametroVO enti;
 
     /** The criterio vo. */
     private ParametroCriterioVO itemCriterio;
@@ -75,16 +75,18 @@ public final class ParametroListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        final TipoParametroVO enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
         // Inicializar el filtro - Necesario para AngularJS
         if (itemCriterio.getItdtMap() == null) {
-            itemCriterio.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
+            itemCriterio.setItdtMap(new HashMap<String, ItemDatoCriterioVO>());
         }
 
-        for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
-            if (entdVO.isFiltrable() && !itemCriterio.getItdtMap().containsKey(entdVO.getTpdt().getId())) {
-                itemCriterio.getItdtMap().put(entdVO.getTpdt().getId(), new ItemDatoCriterioVO());
+        if (enti.getEntdMap() != null) {
+            for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+                if (entdVO.isFiltrable() && !itemCriterio.getItdtMap().containsKey(entdVO.getTpdt().getId())) {
+                    itemCriterio.getItdtMap().put(entdVO.getTpdt().getId().toString(), new ItemDatoCriterioVO());
+                }
             }
         }
 
@@ -105,8 +107,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
-        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
-
         if (hasErrors()) {
             return INPUT;
         }
@@ -118,6 +118,36 @@ public final class ParametroListadoAction extends ItemListadoAction {
         itemList = prmtBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
         return SUCCESS;
+    }
+
+    /**
+     * Load label values map.
+     */
+    protected final void loadLabelValuesMap() {
+        if (labelValuesMap == null) {
+            labelValuesMap = new HashMap<>();
+
+            final TipoParametroVO enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+
+            // Carga de los labelValues (Si los hay)
+            final Set<Long> tpprIds = new HashSet<>();
+
+            if (enti.getEntdMap() != null) {
+                for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+                    if (entdVO.isFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                            && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                        tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                    }
+                }
+            }
+
+            if (!tpprIds.isEmpty()) {
+                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                        getItemCriterio().getIdioma()));
+            }
+        }
     }
 
     // get / set
@@ -147,14 +177,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<ParametroVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final TipoParametroVO getEnti() {
-        return enti;
     }
 
 }

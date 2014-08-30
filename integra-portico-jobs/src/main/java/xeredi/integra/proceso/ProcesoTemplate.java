@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -140,7 +137,7 @@ public abstract class ProcesoTemplate {
         itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
         itdtCriterioVO.setCadenas(nifSet);
 
-        prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
+        prmtCriterioVO.getItdtMap().put(String.valueOf(TipoDato.CADENA_02.getId()), itdtCriterioVO);
 
         final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
 

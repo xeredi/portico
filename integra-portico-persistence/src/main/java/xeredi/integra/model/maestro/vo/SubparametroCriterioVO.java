@@ -1,6 +1,5 @@
 package xeredi.integra.model.maestro.vo;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -35,25 +34,8 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void fillSpecificSearchLinks(Map<String, Object> map) {
-        if (tpsp != null) {
-            if (tpsp.getId() != null) {
-                map.put("tpsp.id", tpsp.getId());
-            }
-        }
-        if (prmt != null) {
-            if (prmt.getId() != null) {
-                map.put("prmt.id", prmt.getId());
-            }
-        }
-    }
-
-    /**
      * Gets the prmt.
-     * 
+     *
      * @return the prmt
      */
     public ParametroCriterioVO getPrmt() {
@@ -62,17 +44,17 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the prmt.
-     * 
+     *
      * @param value
      *            the new prmt
      */
-    public void setPrmt(ParametroCriterioVO value) {
-        this.prmt = value;
+    public void setPrmt(final ParametroCriterioVO value) {
+        prmt = value;
     }
 
     /**
      * Gets the prmt asociado.
-     * 
+     *
      * @return the prmt asociado
      */
     public ParametroCriterioVO getPrmtAsociado() {
@@ -81,17 +63,17 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the prmt asociado.
-     * 
+     *
      * @param value
      *            the new prmt asociado
      */
-    public void setPrmtAsociado(ParametroCriterioVO value) {
-        this.prmtAsociado = value;
+    public void setPrmtAsociado(final ParametroCriterioVO value) {
+        prmtAsociado = value;
     }
 
     /**
      * Gets the tpsp.
-     * 
+     *
      * @return the tpsp
      */
     public TipoSubparametroCriterioVO getTpsp() {
@@ -100,17 +82,17 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the tpsp.
-     * 
+     *
      * @param value
      *            the new tpsp
      */
-    public void setTpsp(TipoSubparametroCriterioVO value) {
-        this.tpsp = value;
+    public void setTpsp(final TipoSubparametroCriterioVO value) {
+        tpsp = value;
     }
 
     /**
      * Gets the spvr ids.
-     * 
+     *
      * @return the spvr ids
      */
     public final Set<Long> getSpvrIds() {
@@ -119,12 +101,12 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the spvr ids.
-     * 
+     *
      * @param value
      *            the new spvr ids
      */
-    public final void setSpvrIds(Set<Long> value) {
-        this.spvrIds = value;
+    public final void setSpvrIds(final Set<Long> value) {
+        spvrIds = value;
     }
 
 }

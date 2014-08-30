@@ -1,8 +1,5 @@
 package xeredi.integra.model.proceso.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.util.pagination.Criterio;
@@ -28,27 +25,6 @@ public final class ProcesoCriterioVO implements Criterio {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Map<String, Object> getSearchLinks() {
-        final Map<String, Object> map = new HashMap<>();
-
-        if (modulo != null) {
-            map.put("modulo", modulo);
-        }
-        if (tipo != null) {
-            map.put("tipo", tipo);
-        }
-        if (estado != null) {
-            map.put("estado", estado);
-        }
-
-        return map;
     }
 
     /**

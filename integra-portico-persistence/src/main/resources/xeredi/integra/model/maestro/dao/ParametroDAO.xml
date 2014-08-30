@@ -126,7 +126,7 @@
                                 FROM tbl_parametro_dato_prdt
                                 WHERE
                                     prdt_prvr_pk = prvr_pk
-                                    AND prdt_tpdt_pk = #{key}
+                                    AND prdt_tpdt_pk = #{itdt.tpdtId}
                             ]]>
                         <if test="itdt.prmtId != null">
                             AND prdt_prmt_pk = #{itdt.prmtId}

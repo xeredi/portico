@@ -1,21 +1,12 @@
 package xeredi.integra.http.controller.action.comun;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
-import xeredi.integra.model.maestro.bo.Parametro;
-import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
-import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
@@ -59,32 +50,6 @@ public abstract class ItemListadoAction extends BaseAction {
     }
 
     /**
-     * Load label values map.
-     */
-    protected final void loadLabelValuesMap() {
-        if (labelValuesMap == null) {
-            labelValuesMap = new HashMap<>();
-
-            // Carga de los labelValues (Si los hay)
-            final Set<Long> tpprIds = new HashSet<>();
-
-            for (final EntidadTipoDatoVO entdVO : getEnti().getEntdMap().values()) {
-                if (entdVO.isFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
-                        && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
-                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
-                }
-            }
-
-            if (!tpprIds.isEmpty()) {
-                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
-
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
-                        getItemCriterio().getIdioma()));
-            }
-        }
-    }
-
-    /**
      * Gets the label values map.
      *
      * @return the label values map
@@ -92,13 +57,6 @@ public abstract class ItemListadoAction extends BaseAction {
     public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
         return labelValuesMap;
     }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public abstract EntidadVO getEnti();
 
     /**
      * Gets the item criterio.

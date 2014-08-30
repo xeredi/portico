@@ -1,7 +1,5 @@
 package xeredi.integra.model.metamodelo.vo;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -47,34 +45,8 @@ public final class TipoDatoCriterioVO implements Criterio {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Map<String, Object> getSearchLinks() {
-        final Map<String, Object> map = new HashMap<>();
-
-        if (codigo != null) {
-            map.put("codigo", codigo);
-        }
-        if (nombre != null) {
-            map.put("nombre", nombre);
-        }
-        if (tpht != null) {
-            map.put("tpht", tpht);
-        }
-        if (tipoElemento != null) {
-            map.put("tipoElemento", tipoElemento);
-        }
-        if (entiId != null) {
-            map.put("entiId", entiId);
-        }
-
-        return map;
-    }
-
-    /**
      * Gets the ids.
-     * 
+     *
      * @return the ids
      */
     public Set<Long> getIds() {
@@ -83,7 +55,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the ids.
-     * 
+     *
      * @param value
      *            the new ids
      */
@@ -93,7 +65,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the nombre.
-     * 
+     *
      * @return the nombre
      */
     public String getNombre() {
@@ -102,7 +74,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the nombre.
-     * 
+     *
      * @param value
      *            the new nombre
      */
@@ -112,7 +84,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the tipo elemento.
-     * 
+     *
      * @return the tipo elemento
      */
     public TipoElemento getTipoElemento() {
@@ -121,7 +93,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the tipo elemento.
-     * 
+     *
      * @param value
      *            the new tipo elemento
      */
@@ -131,7 +103,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the tpht id.
-     * 
+     *
      * @return the tpht id
      */
     public TipoHtml getTpht() {
@@ -140,7 +112,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the tpht id.
-     * 
+     *
      * @param value
      *            the new tpht id
      */
@@ -150,7 +122,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -159,7 +131,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -169,7 +141,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the offset.
-     * 
+     *
      * @return the offset
      */
     public Integer getOffset() {
@@ -178,7 +150,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the offset.
-     * 
+     *
      * @param value
      *            the new offset
      */
@@ -188,7 +160,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the limit.
-     * 
+     *
      * @return the limit
      */
     public Integer getLimit() {
@@ -197,7 +169,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the limit.
-     * 
+     *
      * @param value
      *            the new limit
      */
@@ -207,7 +179,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the codigo.
-     * 
+     *
      * @return the codigo
      */
     public String getCodigo() {
@@ -216,7 +188,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the codigo.
-     * 
+     *
      * @param value
      *            the new codigo
      */

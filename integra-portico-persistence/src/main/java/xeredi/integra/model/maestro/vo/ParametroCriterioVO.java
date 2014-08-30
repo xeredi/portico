@@ -1,6 +1,5 @@
 package xeredi.integra.model.maestro.vo;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,18 +29,8 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void fillSpecificSearchLinks(final Map<String, Object> map) {
-        if (parametro != null && !parametro.trim().isEmpty()) {
-            map.put("parametro", parametro.trim());
-        }
-    }
-
-    /**
      * Gets the prvr ids.
-     * 
+     *
      * @return the prvr ids
      */
     public Set<Long> getPrvrIds() {
@@ -50,7 +39,7 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the prvr ids.
-     * 
+     *
      * @param value
      *            the new prvr ids
      */
@@ -60,7 +49,7 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the parametro.
-     * 
+     *
      * @return the parametro
      */
     public String getParametro() {
@@ -69,7 +58,7 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the parametro.
-     * 
+     *
      * @param value
      *            the new parametro
      */
@@ -81,7 +70,7 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the parametros.
-     * 
+     *
      * @return the parametros
      */
     public Set<String> getParametros() {
@@ -90,7 +79,7 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the parametros.
-     * 
+     *
      * @param value
      *            the new parametros
      */

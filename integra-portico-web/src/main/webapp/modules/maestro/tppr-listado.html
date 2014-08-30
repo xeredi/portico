@@ -6,6 +6,10 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item col-md-3" ng-repeat="tppr in tpprList | filter:tpprSearch"><a
+            ui-sref="prmts.filter({entiId:tppr.value})">{{tppr.label}}</a></li>
+        <!--
+        <li class="list-group-item col-md-3" ng-repeat="tppr in tpprList | filter:tpprSearch"><a
             ui-sref="prmts.list({entiId:tppr.value, page:1})">{{tppr.label}}</a></li>
+ -->
     </ul>
 </div>

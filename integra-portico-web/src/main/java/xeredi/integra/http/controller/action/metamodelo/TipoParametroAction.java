@@ -3,13 +3,15 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoParametro;
+import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametro;
+import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -56,12 +58,12 @@ public final class TipoParametroAction extends BaseAction {
     // Acciones Web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tppr-alta", results = { @Result(name = "success", location = "tppr-edicion.jsp") })
+    @Action("tppr-alta")
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
 
@@ -70,12 +72,12 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tppr-modificar", results = { @Result(name = "success", location = "tppr-edicion.jsp") })
+    @Action("tppr-modificar")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
@@ -83,8 +85,8 @@ public final class TipoParametroAction extends BaseAction {
             throw new Error("Identificador de tipo de parametro no especificado");
         }
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametro.class);
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         tppr = tpprBO.select(tppr.getId());
 
@@ -109,14 +111,12 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    @Action(value = "tppr-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "enti-detalle", "enti.id",
-            "%{tppr.id}" }), @Result(name = "input", location = "tppr-edicion.jsp") })
+    @Action("tppr-guardar")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
@@ -130,7 +130,7 @@ public final class TipoParametroAction extends BaseAction {
             return INPUT;
         }
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametro.class);
+        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             tppr.setCodigo(tppr.getCodigo().toUpperCase());
@@ -149,15 +149,15 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tppr-detalle")
+    @Action("tppr-detalle")
     public String detalle() throws InstanceNotFoundException {
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametro.class);
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametro.class);
+        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
+        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
         tppr = tpprBO.select(tppr.getId());
 
@@ -173,7 +173,7 @@ public final class TipoParametroAction extends BaseAction {
     // get / set
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -182,7 +182,7 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */
@@ -192,7 +192,7 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Gets the tppr.
-     * 
+     *
      * @return the tppr
      */
     public TipoParametroVO getTppr() {
@@ -201,7 +201,7 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Sets the tppr.
-     * 
+     *
      * @param value
      *            the new tppr
      */
@@ -211,7 +211,7 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Gets the enti hijas list.
-     * 
+     *
      * @return the enti hijas list
      */
     public List<EntidadVO> getEntiHijasList() {
@@ -220,7 +220,7 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Gets the enti padres list.
-     * 
+     *
      * @return the enti padres list
      */
     public List<EntidadVO> getEntiPadresList() {
@@ -229,7 +229,7 @@ public final class TipoParametroAction extends BaseAction {
 
     /**
      * Gets the tpsp list.
-     * 
+     *
      * @return the tpsp list
      */
     public List<TipoSubparametroVO> getTpspList() {

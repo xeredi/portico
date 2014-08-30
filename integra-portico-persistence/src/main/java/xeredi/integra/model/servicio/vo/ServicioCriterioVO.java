@@ -1,7 +1,5 @@
 package xeredi.integra.model.servicio.vo;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
@@ -30,25 +28,6 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void fillSpecificSearchLinks(Map<String, Object> map) {
-        if (subpId != null) {
-            map.put("subpId", subpId);
-        }
-        if (anno != null && !anno.isEmpty()) {
-            map.put("anno", anno);
-        }
-        if (numero != null && !numero.isEmpty()) {
-            map.put("numero", numero);
-        }
-        if (estado != null && !estado.isEmpty()) {
-            map.put("estado", estado);
-        }
     }
 
     /**
@@ -110,7 +89,7 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the estado.
-     * 
+     *
      * @return the estado
      */
     public String getEstado() {
@@ -119,7 +98,7 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the estado.
-     * 
+     *
      * @param value
      *            the new estado
      */

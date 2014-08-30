@@ -1,8 +1,5 @@
 package xeredi.integra.model.configuracion.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.util.pagination.Criterio;
@@ -37,28 +34,8 @@ public final class ClaveCriterioVO implements Criterio {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Map<String, Object> getSearchLinks() {
-        final Map<String, Object> map = new HashMap<>();
-
-        if (clave != null) {
-            map.put("clave", clave);
-        }
-        if (tipoValor != null) {
-            map.put("tipoValor", tipoValor);
-        }
-        if (valorDefecto != null) {
-            map.put("valorDefecto", valorDefecto);
-        }
-
-        return map;
-    }
-
-    /**
      * Gets the offset.
-     * 
+     *
      * @return the offset
      */
     public Integer getOffset() {
@@ -67,7 +44,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Sets the offset.
-     * 
+     *
      * @param value
      *            the new offset
      */
@@ -77,7 +54,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Gets the limit.
-     * 
+     *
      * @return the limit
      */
     public Integer getLimit() {
@@ -86,7 +63,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Sets the limit.
-     * 
+     *
      * @param value
      *            the new limit
      */
@@ -96,7 +73,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Gets the clave.
-     * 
+     *
      * @return the clave
      */
     public String getClave() {
@@ -105,7 +82,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Sets the clave.
-     * 
+     *
      * @param value
      *            the new clave
      */
@@ -115,7 +92,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Gets the tipo valor.
-     * 
+     *
      * @return the tipo valor
      */
     public TipoValor getTipoValor() {
@@ -124,7 +101,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Sets the tipo valor.
-     * 
+     *
      * @param value
      *            the new tipo valor
      */
@@ -134,7 +111,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Gets the valor defecto.
-     * 
+     *
      * @return the valor defecto
      */
     public String getValorDefecto() {
@@ -143,7 +120,7 @@ public final class ClaveCriterioVO implements Criterio {
 
     /**
      * Sets the valor defecto.
-     * 
+     *
      * @param value
      *            the new valor defecto
      */

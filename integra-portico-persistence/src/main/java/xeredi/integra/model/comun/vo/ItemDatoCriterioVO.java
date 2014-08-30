@@ -1,13 +1,9 @@
 package xeredi.integra.model.comun.vo;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import xeredi.integra.model.util.GlobalNames;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -78,63 +74,8 @@ public final class ItemDatoCriterioVO {
     }
 
     /**
-     * Populate search links.
-     * 
-     * @param map
-     *            the map
-     * @param fieldnamePrefix
-     *            the fieldname prefix
-     */
-    public void populateSearchLinks(final Map<String, Object> map, final String fieldnamePrefix) {
-        map.put(fieldnamePrefix + "tpdtId", tpdtId);
-
-        if (cadena != null && !cadena.isEmpty()) {
-            map.put(fieldnamePrefix + "cadena", StringEscapeUtils.escapeHtml4(cadena.trim()));
-        }
-        if (cantidadDecimal != null) {
-            map.put(fieldnamePrefix + "cantidadDecimal", cantidadDecimal);
-        }
-        if (cantidadDecimalMax != null) {
-            map.put(fieldnamePrefix + "cantidadDecimalMax", cantidadDecimalMax);
-        }
-        if (cantidadDecimalMin != null) {
-            map.put(fieldnamePrefix + "cantidadDecimalMin", cantidadDecimalMin);
-        }
-        if (cantidadEntera != null) {
-            map.put(fieldnamePrefix + "cantidadEntera", cantidadEntera);
-        }
-        if (cantidadEnteraMax != null) {
-            map.put(fieldnamePrefix + "cantidadEnteraMax", cantidadEnteraMax);
-        }
-        if (cantidadEnteraMin != null) {
-            map.put(fieldnamePrefix + "cantidadEnteraMin", cantidadEnteraMin);
-        }
-        if (fecha != null) {
-            map.put(fieldnamePrefix + "fecha", GlobalNames.DATETIME_FORMAT.format(fecha));
-        }
-        if (fechaMax != null) {
-            map.put(fieldnamePrefix + "fechaMax", GlobalNames.DATETIME_FORMAT.format(fechaMax));
-        }
-        if (fechaMin != null) {
-            map.put(fieldnamePrefix + "fechaMin", GlobalNames.DATETIME_FORMAT.format(fechaMin));
-        }
-        if (prmtId != null) {
-            map.put(fieldnamePrefix + "prmtId", prmtId);
-        }
-        if (prmtEtiqueta != null) {
-            map.put(fieldnamePrefix + "prmtEtiqueta", StringEscapeUtils.escapeHtml4(prmtEtiqueta));
-        }
-        if (srvcId != null) {
-            map.put(fieldnamePrefix + "srvcId", srvcId);
-        }
-        if (srvcEtiqueta != null) {
-            map.put(fieldnamePrefix + "srvcEtiqueta", StringEscapeUtils.escapeHtml4(srvcEtiqueta));
-        }
-    }
-
-    /**
      * Gets the booleano.
-     * 
+     *
      * @return the booleano
      */
     public Boolean getBooleano() {
@@ -143,7 +84,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the booleano.
-     * 
+     *
      * @param value
      *            the new booleano
      */
@@ -155,7 +96,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the item id.
-     * 
+     *
      * @return the item id
      */
     public Long getItemId() {
@@ -164,7 +105,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the item id.
-     * 
+     *
      * @param value
      *            the new item id
      */
@@ -174,7 +115,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the item ids.
-     * 
+     *
      * @return the item ids
      */
     public Set<Long> getItemIds() {
@@ -183,7 +124,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the item ids.
-     * 
+     *
      * @param value
      *            the new item ids
      */
@@ -193,7 +134,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the tpdt id.
-     * 
+     *
      * @return the tpdt id
      */
     public Long getTpdtId() {
@@ -202,7 +143,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the tpdt id.
-     * 
+     *
      * @param value
      *            the new tpdt id
      */
@@ -212,7 +153,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cantidad entera.
-     * 
+     *
      * @return the cantidad entera
      */
     public Long getCantidadEntera() {
@@ -221,7 +162,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cantidad entera.
-     * 
+     *
      * @param value
      *            the new cantidad entera
      */
@@ -231,7 +172,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cantidad entera min.
-     * 
+     *
      * @return the cantidad entera min
      */
     public Long getCantidadEnteraMin() {
@@ -240,7 +181,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cantidad entera min.
-     * 
+     *
      * @param value
      *            the new cantidad entera min
      */
@@ -250,7 +191,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cantidad entera max.
-     * 
+     *
      * @return the cantidad entera max
      */
     public Long getCantidadEnteraMax() {
@@ -259,7 +200,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cantidad entera max.
-     * 
+     *
      * @param value
      *            the new cantidad entera max
      */
@@ -269,7 +210,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cantidad decimal.
-     * 
+     *
      * @return the cantidad decimal
      */
     public Double getCantidadDecimal() {
@@ -278,7 +219,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cantidad decimal.
-     * 
+     *
      * @param value
      *            the new cantidad decimal
      */
@@ -288,7 +229,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cantidad decimal min.
-     * 
+     *
      * @return the cantidad decimal min
      */
     public Double getCantidadDecimalMin() {
@@ -297,7 +238,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cantidad decimal min.
-     * 
+     *
      * @param value
      *            the new cantidad decimal min
      */
@@ -307,7 +248,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cantidad decimal max.
-     * 
+     *
      * @return the cantidad decimal max
      */
     public Double getCantidadDecimalMax() {
@@ -316,7 +257,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cantidad decimal max.
-     * 
+     *
      * @param value
      *            the new cantidad decimal max
      */
@@ -326,7 +267,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the fecha.
-     * 
+     *
      * @return the fecha
      */
     public Date getFecha() {
@@ -335,7 +276,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the fecha.
-     * 
+     *
      * @param value
      *            the new fecha
      */
@@ -345,7 +286,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the fecha min.
-     * 
+     *
      * @return the fecha min
      */
     public Date getFechaMin() {
@@ -354,7 +295,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the fecha min.
-     * 
+     *
      * @param value
      *            the new fecha min
      */
@@ -364,7 +305,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the fecha max.
-     * 
+     *
      * @return the fecha max
      */
     public Date getFechaMax() {
@@ -373,7 +314,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the fecha max.
-     * 
+     *
      * @param value
      *            the new fecha max
      */
@@ -383,7 +324,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cadena.
-     * 
+     *
      * @return the cadena
      */
     public String getCadena() {
@@ -392,7 +333,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cadena.
-     * 
+     *
      * @param value
      *            the new cadena
      */
@@ -402,7 +343,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the prmt id.
-     * 
+     *
      * @return the prmt id
      */
     public Long getPrmtId() {
@@ -411,7 +352,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the prmt id.
-     * 
+     *
      * @param value
      *            the new prmt id
      */
@@ -421,7 +362,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the cadenas.
-     * 
+     *
      * @return the cadenas
      */
     public Set<String> getCadenas() {
@@ -430,7 +371,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the cadenas.
-     * 
+     *
      * @param value
      *            the new cadenas
      */
@@ -440,7 +381,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the srvc id.
-     * 
+     *
      * @return the srvc id
      */
     public Long getSrvcId() {
@@ -449,7 +390,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the srvc id.
-     * 
+     *
      * @param value
      *            the new srvc id
      */
@@ -459,7 +400,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the prmt etiqueta.
-     * 
+     *
      * @return the prmt etiqueta
      */
     public String getPrmtEtiqueta() {
@@ -468,7 +409,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the prmt etiqueta.
-     * 
+     *
      * @param value
      *            the new prmt etiqueta
      */
@@ -478,7 +419,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Gets the srvc etiqueta.
-     * 
+     *
      * @return the srvc etiqueta
      */
     public String getSrvcEtiqueta() {
@@ -487,7 +428,7 @@ public final class ItemDatoCriterioVO {
 
     /**
      * Sets the srvc etiqueta.
-     * 
+     *
      * @param value
      *            the new srvc etiqueta
      */

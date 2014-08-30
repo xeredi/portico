@@ -1,6 +1,5 @@
 package xeredi.integra.model.servicio.vo;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -43,38 +42,8 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void fillSpecificSearchLinks(final Map<String, Object> map) {
-        if (padreId != null) {
-            map.put("padreId", padreId);
-        }
-        if (padreIds != null && !padreIds.isEmpty()) {
-            map.put("padreIds", padreIds);
-        }
-        if (hijoId != null) {
-            map.put("hijoId", hijoId);
-        }
-        if (hijoIds != null && !hijoIds.isEmpty()) {
-            map.put("hijoIds", hijoIds);
-        }
-        if (numero != null) {
-            map.put("numero", numero);
-        }
-        if (estado != null && !estado.isEmpty()) {
-            map.put("estado", estado);
-        }
-        if (srvc != null) {
-            if (srvc.getId() != null) {
-                map.put("srvc.id", srvc.getId());
-            }
-        }
-    }
-
-    /**
      * Gets the srvc.
-     * 
+     *
      * @return the srvc
      */
     public ServicioCriterioVO getSrvc() {
@@ -83,7 +52,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the srvc.
-     * 
+     *
      * @param value
      *            the new srvc
      */
@@ -93,7 +62,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the numero.
-     * 
+     *
      * @return the numero
      */
     public Integer getNumero() {
@@ -102,7 +71,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the numero.
-     * 
+     *
      * @param value
      *            the new numero
      */
@@ -112,7 +81,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the padre id.
-     * 
+     *
      * @return the padre id
      */
     public Long getPadreId() {
@@ -121,7 +90,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the padre id.
-     * 
+     *
      * @param value
      *            the new padre id
      */
@@ -131,7 +100,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the padre ids.
-     * 
+     *
      * @return the padre ids
      */
     public Set<Long> getPadreIds() {
@@ -140,7 +109,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the padre ids.
-     * 
+     *
      * @param value
      *            the new padre ids
      */
@@ -150,7 +119,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the hijo id.
-     * 
+     *
      * @return the hijo id
      */
     public Long getHijoId() {
@@ -159,7 +128,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the hijo id.
-     * 
+     *
      * @param value
      *            the new hijo id
      */
@@ -169,7 +138,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the hijo ids.
-     * 
+     *
      * @return the hijo ids
      */
     public Set<Long> getHijoIds() {
@@ -178,7 +147,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the hijo ids.
-     * 
+     *
      * @param value
      *            the new hijo ids
      */
@@ -188,7 +157,7 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Gets the estado.
-     * 
+     *
      * @return the estado
      */
     public final String getEstado() {
@@ -197,12 +166,12 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /**
      * Sets the estado.
-     * 
+     *
      * @param value
      *            the new estado
      */
-    public final void setEstado(String value) {
-        this.estado = value;
+    public final void setEstado(final String value) {
+        estado = value;
     }
 
 }

@@ -1,8 +1,5 @@
 package xeredi.integra.model.estadistica.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.util.pagination.Criterio;
@@ -34,26 +31,6 @@ public final class PeriodoProcesoCriterioVO implements Criterio {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Map<String, Object> getSearchLinks() {
-        final Map<String, Object> map = new HashMap<>();
-
-        if (autpId != null) {
-            map.put("autpId", autpId);
-        }
-        if (anio != null) {
-            map.put("anio", anio);
-        }
-        if (mes != null) {
-            map.put("mes", mes);
-        }
-
-        return map;
     }
 
     /**
