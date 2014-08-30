@@ -1,10 +1,10 @@
-<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
-<ul>
-    <li ng-repeat="error in actionErrors">{{error}}</li>
-</ul>
-</alert>
+<div ui-view>
+    <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+    <ul>
+        <li ng-repeat="error in actionErrors">{{error}}</li>
+    </ul>
+    </alert>
 
-<form>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" href="#/maestro/tpprs"><i class="glyphicon glyphicon-home"></i>
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <pagination total-items="itemList.count" ng-model="page" ng-change="pageChanged()" class="pagination-sm"
+    <pagination total-items="itemList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
         max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
@@ -43,7 +43,7 @@
 
             <tbody>
                 <tr ng-repeat="item in itemList.list">
-                    <td><a ui-sref="prmts.detalle({itemId:item.id})"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a ui-sref="prmts.detail({itemId:item.id})"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.parametro}}</td>
                     <td ng-if="enti.i18n">{{item.i18n.texto}}</td>
                     <td ng-if="enti.tempExp">{{item.prvr.finicio | date:('fmt_date' | translate)}}</td>
@@ -62,4 +62,4 @@
             </tbody>
         </table>
     </div>
-</form>
+</div>

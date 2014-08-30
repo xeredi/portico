@@ -11,54 +11,63 @@ angular.module('maestro', [ 'ui.router' ])
     })
 
     .state('prmts.filter', {
+        parent : 'prmts',
         url : '/filter',
         templateUrl : 'modules/maestro/prmts-filter.html',
         controller : 'prmtsFilterController'
     })
 
-    .state('prmts.filter.grid', {
+    .state('prmts.grid', {
+        parent : 'prmts.filter',
         url : '/grid',
         templateUrl : 'modules/maestro/prmts-grid.html',
         controller : 'prmtsGridController'
     })
 
-    .state('prmts.filter.grid.create', {
+    .state('prmts.create', {
+        parent : 'prmts.grid',
         url : '/grid',
         templateUrl : 'modules/maestro/prmts-edit.html'
     })
 
-    .state('prmts.filter.grid.detail', {
-        url : '/detail',
-        templateUrl : 'modules/maestro/prmts-detail.html'
+    .state('prmts.detail', {
+        parent : 'prmts.grid',
+        url : '/detail/:itemId',
+        templateUrl : 'modules/maestro/prmts-detail.html',
+        controller : 'prmtsDetailController'
     })
 
-    .state('prmts.filter.grid.detail.edit', {
+    .state('prmts.edit', {
+        parent : 'prmts.detail',
         url : '/edit',
         templateUrl : 'modules/maestro/prmts-edit.html'
     })
 
-    .state('prmts.filter.grid.detail.duplicate', {
+    .state('prmts.duplicate', {
+        parent : 'prmts.detail',
         url : '/duplicate',
         templateUrl : 'modules/maestro/prmts-edit.html'
     })
 
-    .state('prmts.filter.grid.detail.delete', {
+    .state('prmts.delete', {
+        parent : 'prmts.detail',
         url : '/delete'
     })
 
-    .state('prmts.filter.grid.delete', {
+    .state('prmts.deleteList', {
+        parent : 'prmts.grid',
         url : '/delete'
     })
 })
 
 .controller('prmtsController', function($scope, $http, $state, $stateParams) {
-    // console.log('En el controlador: ' + $stateParams.entiId);
+    console.log('En el controlador Principal: ' + JSON.stringify($stateParams));
 
     if ($stateParams.entiId != null && ($scope.enti == null || $stateParams.entiId != $scope.enti.id)) {
         // console.log('Busqueda de la estructura de la entidad');
         $scope.itemCriterio = {
-                entiId : $stateParams.entiId
-            };
+            entiId : $stateParams.entiId
+        };
 
         var url = "metamodelo/tppr-proxy-detalle.action?tppr.id=" + $stateParams.entiId;
 
@@ -84,7 +93,8 @@ angular.module('maestro', [ 'ui.router' ])
         $scope.itemCriterio = data.itemCriterio;
         $scope.limits = data.limits;
         $scope.limit = data.limit;
-        $scope.page = data.page;
+        // $scope.page = data.page;
+        // $scope.currentPage = data.page;
         $scope.labelValuesMap = data.labelValuesMap;
     });
 })
@@ -108,7 +118,7 @@ angular.module('maestro', [ 'ui.router' ])
     };
 
     $scope.pageChanged = function() {
-//        $scope.page = $scope.currentPage;
+        $scope.page = $scope.currentPage;
 
         console.log('New page: ' + $scope.page);
 
@@ -116,6 +126,20 @@ angular.module('maestro', [ 'ui.router' ])
     };
 
     $scope.loadPage();
+})
+
+.controller('prmtsDetailController', function($scope, $http, $state, $stateParams) {
+    console.log('En el controlador de prmtsDetail: ' + JSON.stringify($stateParams));
+    console.log('En el controlador de prmtsDetail: ' + JSON.stringify($scope.itemCriterio));
+    console.log('En el controlador de prmtsDetail: ' + JSON.stringify($scope.limit));
+    console.log('En el controlador de prmtsDetail: ' + JSON.stringify($scope.page));
+
+    var url = "maestro/prmt-detalle.action?item.id=" + $stateParams.itemId;
+
+    $http.get(url).success(function(data) {
+        $scope.item = data.item;
+        $scope.p18nMap = data.p18nMap;
+    });
 })
 
 .controller(
