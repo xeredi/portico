@@ -114,6 +114,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
         itemCriterio.setSoloDatosGrid(true);
+        itemCriterio.setIdioma(getIdioma());
 
         itemList = prmtBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 

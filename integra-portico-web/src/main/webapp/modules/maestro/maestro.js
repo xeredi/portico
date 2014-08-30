@@ -16,37 +16,37 @@ angular.module('maestro', [ 'ui.router' ])
         controller : 'prmtsFilterController'
     })
 
-    .state('prmts.grid', {
+    .state('prmts.filter.grid', {
         url : '/grid',
         templateUrl : 'modules/maestro/prmts-grid.html',
         controller : 'prmtsGridController'
     })
 
-    .state('prmts.grid.create', {
+    .state('prmts.filter.grid.create', {
         url : '/grid',
         templateUrl : 'modules/maestro/prmts-edit.html'
     })
 
-    .state('prmts.grid.detail', {
+    .state('prmts.filter.grid.detail', {
         url : '/detail',
         templateUrl : 'modules/maestro/prmts-detail.html'
     })
 
-    .state('prmts.grid.detail.edit', {
+    .state('prmts.filter.grid.detail.edit', {
         url : '/edit',
         templateUrl : 'modules/maestro/prmts-edit.html'
     })
 
-    .state('prmts.grid.detail.duplicate', {
+    .state('prmts.filter.grid.detail.duplicate', {
         url : '/duplicate',
         templateUrl : 'modules/maestro/prmts-edit.html'
     })
 
-    .state('prmts.grid.detail.delete', {
+    .state('prmts.filter.grid.detail.delete', {
         url : '/delete'
     })
 
-    .state('prmts.grid.delete', {
+    .state('prmts.filter.grid.delete', {
         url : '/delete'
     })
 })
@@ -57,10 +57,8 @@ angular.module('maestro', [ 'ui.router' ])
     if ($stateParams.entiId != null && ($scope.enti == null || $stateParams.entiId != $scope.enti.id)) {
         // console.log('Busqueda de la estructura de la entidad');
         $scope.itemCriterio = {
-            entiId : $stateParams.entiId
-        };
-        $scope.page = 1;
-        $scope.limit = 20;
+                entiId : $stateParams.entiId
+            };
 
         var url = "metamodelo/tppr-proxy-detalle.action?tppr.id=" + $stateParams.entiId;
 
@@ -76,34 +74,48 @@ angular.module('maestro', [ 'ui.router' ])
 .controller('prmtsFilterController', function($scope, $http, $state, $stateParams) {
     console.log('En el controlador de prmtsFilter: ' + JSON.stringify($stateParams));
     console.log('En el controlador de prmtsFilter: ' + JSON.stringify($scope.itemCriterio));
+    console.log('En el controlador de prmtsFilter: ' + JSON.stringify($scope.limit));
+    console.log('En el controlador de prmtsFilter: ' + JSON.stringify($scope.page));
+
     var url = "maestro/prmt-filtro.action?itemCriterio.entiId=" + $stateParams.entiId;
 
     $http.get(url).success(function(data) {
-        // console.log('data: ' + JSON.stringify(data));
+        console.log('data: ' + JSON.stringify(data));
+        $scope.itemCriterio = data.itemCriterio;
         $scope.limits = data.limits;
+        $scope.limit = data.limit;
+        $scope.page = data.page;
         $scope.labelValuesMap = data.labelValuesMap;
     });
-
-    $scope.buscar = function() {
-        console.log('itemCriterio: ' + JSON.stringify($scope.itemCriterio));
-
-        $state.go('prmts.grid');
-    };
 })
 
 .controller('prmtsGridController', function($scope, $http, $state, $stateParams) {
     console.log('En el controlador de prmtsGrid: ' + JSON.stringify($stateParams));
     console.log('En el controlador de prmtsGrid: ' + JSON.stringify($scope.itemCriterio));
+    console.log('En el controlador de prmtsGrid: ' + JSON.stringify($scope.limit));
+    console.log('En el controlador de prmtsGrid: ' + JSON.stringify($scope.page));
 
-    var url = "maestro/prmt-listado.action";
+    $scope.loadPage = function() {
+        var url = "maestro/prmt-listado.action";
 
-    $http.post(url, {
-        itemCriterio : $scope.itemCriterio
-    }).success(function(data) {
-        console.log('data: ' + JSON.stringify(data));
+        $http.post(url, {
+            itemCriterio : $scope.itemCriterio,
+            limit : $scope.limit,
+            page : $scope.page
+        }).success(function(data) {
+            $scope.itemList = data.itemList;
+        });
+    };
 
-        $scope.itemList = data.itemList;
-    });
+    $scope.pageChanged = function() {
+//        $scope.page = $scope.currentPage;
+
+        console.log('New page: ' + $scope.page);
+
+        $scope.loadPage();
+    };
+
+    $scope.loadPage();
 })
 
 .controller(
