@@ -64,8 +64,14 @@
                             ng-model="itemCriterio.itdtMap[tpdtId].prmtId" class="form-control input-sm">
                             <option value="" />
                             <option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
-                                value="{{labelValue.value}}">{{labelValue.label}}</option>
+                                value="{{labelValue.value}}"
+                                ng-selected="labelValue.value == itemCriterio.itdtMap[tpdtId].prmtId">{{labelValue.label}}</option>
                         </select>
+                        <!--
+                    <select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
+                        ng-model="itemCriterio.itdtMap[tpdtId].prmtId"
+                        ng-options="labelValue.value as labelValue.label in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
+                        class="form-control input-sm"></select> -->
                         <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm">
                             <input type="text" ng-controller="prmtsLupaCtrl" ng-model="asyncSelected"
                                 typeahead="labelValue for labelValue in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
