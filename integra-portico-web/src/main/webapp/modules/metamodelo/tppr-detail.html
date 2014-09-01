@@ -1,1 +1,120 @@
-tppr-detail
+<tabset> <tab heading="{{enti.nombre}}">
+<fieldset>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label> {{"enti_codigo" | translate}} </label>
+            <p class="form-control-static">{{enti.codigo}}</p>
+        </div>
+        <div class="col-md-3 form-group">
+            <label> {{"enti_nombre" | translate}} </label>
+            <p class="form-control-static">{{enti.nombre}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label> {{"enti_cmd_alta" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label> {{"enti_cmd_baja" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label> {{"enti_cmd_edicion" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label> {{"enti_cmd_duplicado" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label> {{"enti_i18n" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label> {{"enti_tempExp" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+    </div>
+</fieldset>
+</tab> <tab heading="Datos">
+<table class="table-bordered table-condensed table-hover table-nonfluid">
+    <thead>
+        <tr>
+            <th class="buttonLinks" nowrap="nowrap" />
+            <th>{{"entd_grupo" | translate}}</th>
+            <th>{{"entd_fila" | translate}}</th>
+            <th>{{"entd_orden" | translate}}</th>
+            <th>{{"entd_span" | translate}}</th>
+            <th>{{"entd_spanLg" | translate}}</th>
+            <th>{{"entd_etiqueta" | translate}}</th>
+            <th>{{"entd_obligatorio" | translate}}</th>
+            <th>{{"entd_gridable" | translate}}</th>
+            <th>{{"entd_filtrable" | translate}}</th>
+            <th>{{"entd_tpdt_nombre" | translate}}</th>
+            <th>{{"entd_tpdt_tipoElemento" | translate}}</th>
+            <th>{{"entd_tpdt_tpht" | translate}}</th>
+            <th>{{"entd_tpdt_enti" | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="entd in enti.entdList">
+            <td />
+            <td>{{enti.entdMap[entd].grupo}}</td>
+            <td>{{enti.entdMap[entd].fila}}</td>
+            <td>{{enti.entdMap[entd].orden}}</td>
+            <td>{{enti.entdMap[entd].span}}</td>
+            <td>{{enti.entdMap[entd].spanLg}}</td>
+            <td>{{enti.entdMap[entd].etiqueta}}</td>
+            <td><i ng-if="enti.entdMap[entd].obligatorio" class="glyphicon glyphicon-ok"></i></td>
+            <td><i ng-if="enti.entdMap[entd].gridable" class="glyphicon glyphicon-ok"></i></td>
+            <td><i ng-if="enti.entdMap[entd].filtrable" class="glyphicon glyphicon-ok"></i></td>
+            <td>{{enti.entdMap[entd].tpdt.nombre}}</td>
+            <td>{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
+            <td>{{enti.entdMap[entd].tpdt.tpht}}</td>
+            <td>{{enti.entdMap[entd].tpdt.enti.etiqueta}}</td>
+        </tr>
+    </tbody>
+</table>
+</tab>
+
+<tab heading="Subentidades">
+<table class="table-bordered table-condensed table-hover table-nonfluid">
+    <thead>
+        <tr>
+            <th class="buttonLinks" nowrap="nowrap" />
+            <th>{{"enti_codigo" | translate}}</th>
+            <th>{{"enti_nombre" | translate}}</th>
+            <th>{{"enti_cmd_alta" | translate}}</th>
+            <th>{{"enti_cmd_baja" | translate}}</th>
+            <th>{{"enti_cmd_edicion" | translate}}</th>
+            <th>{{"enti_cmd_duplicado" | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="subenti in subentiList">
+            <td />
+            <td>{{subenti.codigo}}</td>
+            <td>{{subenti.nombre}}</td>
+            <td><i ng-if="subenti.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
+            <td><i ng-if="subenti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
+            <td><i ng-if="subenti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
+            <td><i ng-if="subenti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+        </tr>
+    </tbody>
+</table>
+</tab>
+
+</tabset>

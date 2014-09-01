@@ -89,7 +89,7 @@ public class TipoParametroBO implements TipoParametro {
             throw new Error("Tipo de parametro no encontrado: " + id);
         }
 
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         entiBO.fillDependencies(entiVO);
 

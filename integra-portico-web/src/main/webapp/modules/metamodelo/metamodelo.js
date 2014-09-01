@@ -67,11 +67,12 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 
 metamodelo.controller("tpprsDetailController", function($scope, $http, $route, $routeParams) {
     console.log("tpprsDetailController");
+    console.log($routeParams.entiId);
 
-    var url = "metamodelo/tppr-detalle.action?enti.id="
-    $routeParams.entiId;
+    var url = "metamodelo/tppr-detalle.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;
+        $scope.subentiList = data.subentiList;
     });
 });

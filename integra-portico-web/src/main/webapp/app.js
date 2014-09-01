@@ -171,6 +171,20 @@ app.config(function($translateProvider) {
         enti_cmd_duplicado : 'Dupl.?',
         enti_i18n : 'i18n?',
         enti_tempExp : 'Tmp. Expl.?',
+
+        entd_grupo : 'Grupo',
+        entd_fila : 'Fila',
+        entd_orden : 'Orden',
+        entd_span : 'Span',
+        entd_spanLg : 'Span Lg',
+        entd_etiqueta : 'Etiq.',
+        entd_obligatorio : 'Oblig.?',
+        entd_gridable : 'Grid?',
+        entd_filtrable : 'Filtrable?',
+        entd_tpdt_nombre : 'T. Dato',
+        entd_tpdt_tipoElemento : 'T. Elem.',
+        entd_tpdt_tpht : 'T. HTML',
+        entd_tpdt_enti : 'Entidad',
     });
 
     $translateProvider.preferredLanguage('es');

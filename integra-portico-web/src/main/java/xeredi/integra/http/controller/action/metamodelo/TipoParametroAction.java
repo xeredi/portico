@@ -38,7 +38,7 @@ public final class TipoParametroAction extends BaseAction {
     private TipoParametroVO enti;
 
     /** The tpsp list. */
-    private List<TipoSubparametroVO> tpspList;
+    private List<TipoSubparametroVO> subentiList;
 
     /** The enti hijas list. */
     private List<EntidadVO> entiHijasList;
@@ -165,7 +165,7 @@ public final class TipoParametroAction extends BaseAction {
 
         tpspCriterioVO.setTpprId(enti.getId());
 
-        tpspList = tpspBO.selectList(tpspCriterioVO);
+        subentiList = tpspBO.selectList(tpspCriterioVO);
 
         return SUCCESS;
     }
@@ -209,12 +209,12 @@ public final class TipoParametroAction extends BaseAction {
     }
 
     /**
-     * Gets the tpsp list.
+     * Gets the subenti list.
      *
-     * @return the tpsp list
+     * @return the subenti list
      */
-    public List<TipoSubparametroVO> getTpspList() {
-        return tpspList;
+    public List<TipoSubparametroVO> getSubentiList() {
+        return subentiList;
     }
 
     /**
