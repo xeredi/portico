@@ -70,7 +70,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-filtro"), @Action("prmt-filtro-popup") })
+    @Actions({ @Action("prmt-filtro") })
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -100,7 +100,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-listado"), @Action("prmt-listado-grid") })
+    @Actions({ @Action("prmt-listado") })
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());

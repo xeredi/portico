@@ -1,5 +1,7 @@
 angular.module('maestro', [ 'ui.router' ])
 
+// http://es.slideshare.net/kennystoltz/angular-js-routing
+
 .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
@@ -88,27 +90,23 @@ angular.module('maestro', [ 'ui.router' ])
 
 .controller('prmtsGridController', function($scope, $http, $state, $stateParams) {
     $scope.loadPage = function() {
-        console.log('loadPage - currentPage: ' + $scope.currentPage);
+        console.log('loadPage - page: ' + $scope.page);
         var url = "maestro/prmt-listado.action";
 
         $http.post(url, {
             itemCriterio : $scope.itemCriterio,
             limit : $scope.limit,
-            page : $scope.currentPage
+            page : $scope.page
         }).success(function(data) {
             $scope.itemList = data.itemList;
         });
     };
 
     $scope.pageChanged = function() {
-        console.log('pageChanged - currentPage: ' + $scope.currentPage);
-
         $scope.loadPage();
     };
 
     $scope.loadPage();
-
-    $scope.currentPage = 1;
 })
 
 .controller('prmtsCreateController', function($scope, $http, $state, $stateParams) {

@@ -2,11 +2,11 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.TipoParametro;
+import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -26,10 +26,10 @@ public final class TipoParametroListadoAction extends BaseAction {
     private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The list. */
-    private PaginatedList<TipoParametroVO> tpprs;
+    private PaginatedList<TipoParametroVO> entiList;
 
     /** The tppr criterio. */
-    private TipoParametroCriterioVO tpprCriterio;
+    private TipoParametroCriterioVO entiCriterio;
 
     /** The page. */
     private int page;
@@ -41,7 +41,7 @@ public final class TipoParametroListadoAction extends BaseAction {
         super();
 
         page = PaginatedList.FIRST_PAGE;
-        tpprCriterio = new TipoParametroCriterioVO();
+        entiCriterio = new TipoParametroCriterioVO();
     }
 
     // Acciones Web
@@ -50,18 +50,18 @@ public final class TipoParametroListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "tppr-listado")
+    @Action("tppr-listado")
     public String listado() {
-        if (tpprCriterio.getCodigo() != null) {
-            tpprCriterio.setCodigo(tpprCriterio.getCodigo().toUpperCase());
+        if (entiCriterio.getCodigo() != null) {
+            entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
         }
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametro.class);
+        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
 
         // Traemos solo los maestros
-        tpprCriterio.setTipo(TipoEntidad.P);
+        entiCriterio.setTipo(TipoEntidad.P);
 
-        tpprs = tpprBO.selectList(tpprCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        entiList = tpprBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
         return SUCCESS;
     }
@@ -71,9 +71,7 @@ public final class TipoParametroListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "tppr-filtro"),
-        @Action(value = "tppr-filtro-popup", results = { @Result(name = "success", location = "tppr-filtro.jsp") }) })
+    @Actions({ @Action("tppr-filtro") })
     public static String editarFiltro() {
         return SUCCESS;
     }
@@ -99,31 +97,31 @@ public final class TipoParametroListadoAction extends BaseAction {
     }
 
     /**
-     * Gets the list.
+     * Gets the enti criterio.
      *
-     * @return the list
+     * @return the enti criterio
      */
-    public PaginatedList<TipoParametroVO> getTpprs() {
-        return tpprs;
+    public TipoParametroCriterioVO getEntiCriterio() {
+        return entiCriterio;
     }
 
     /**
-     * Gets the tppr criterio.
-     *
-     * @return the tppr criterio
-     */
-    public TipoParametroCriterioVO getTpprCriterio() {
-        return tpprCriterio;
-    }
-
-    /**
-     * Sets the tppr criterio.
+     * Sets the enti criterio.
      *
      * @param value
-     *            the new tppr criterio
+     *            the enti criterio
      */
-    public void setTpprCriterio(final TipoParametroCriterioVO value) {
-        tpprCriterio = value;
+    public void setEntiCriterio(TipoParametroCriterioVO value) {
+        this.entiCriterio = value;
+    }
+
+    /**
+     * Gets the enti list.
+     *
+     * @return the enti list
+     */
+    public PaginatedList<TipoParametroVO> getEntiList() {
+        return entiList;
     }
 
 }

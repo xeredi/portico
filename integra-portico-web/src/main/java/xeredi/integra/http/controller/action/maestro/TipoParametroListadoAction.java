@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -17,7 +15,6 @@ import xeredi.util.applicationobjects.LabelValueVO;
 /**
  * The Class MensajeListadoAction.
  */
-@ParentPackage("json-default")
 public final class TipoParametroListadoAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -43,10 +40,7 @@ public final class TipoParametroListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "tppr-listado"),
-        @Action(value = "tppr-listado-json", results = { @Result(name = "success", type = "json") }),
-        @Action(value = "tppr-listado-ftl", results = { @Result(name = "success", type = "freemarker", location = "tppr-listado.ftl") }) })
+    @Actions({ @Action(value = "tppr-listado") })
     public String listado() {
         tpprList = TipoParametroProxy.selectLabelValues();
 

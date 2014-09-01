@@ -1,5 +1,9 @@
-var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.router', 'ngRoute', 'ui.bootstrap.datetimepicker',
-        'pascalprecht.translate', 'configuracion', 'maestro', 'servicio', 'proceso', 'metamodelo', 'facturacion' ]);
+var app = angular.module('integraApp',
+        [ 'ui.bootstrap', 'ui.router', 'ui.bootstrap.datetimepicker', 'pascalprecht.translate', 'ngRoute',
+                'metamodelo', /*
+                                 * 'configuracion', 'maestro', 'servicio',
+                                 * 'proceso', 'facturacion'
+                                 */]);
 
 app.config(function($translateProvider) {
     $translateProvider.translations('es', {
@@ -155,77 +159,41 @@ app.config(function($translateProvider) {
 
         rgin_rgiv_fini : 'F. Inicio Incomp.',
         rgin_rgiv_ffin : 'F. Fin Incomp.',
+
+        tppr_codigo : 'C\u00f3digo',
+        tppr_nombre : 'Nombre',
     });
 
     $translateProvider.preferredLanguage('es');
 });
-
-app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.when('/c?id', '/contacts/:id').when('/user/:id', '/contacts/:id').otherwise('/');
-
-    $stateProvider.state("home", {
-        url : "/",
-        templateUrl : 'modules/home.html'
-    })
-
-    .state('tpsrs', {
-        url : '/servicio/tpsrs',
-        templateUrl : 'modules/servicio/tpsr-listado.html',
-        controller : function($http, $scope) {
-            $http.get("servicio/tpsr-listado-json.action").success(function(data) {
-                // console.log(data);
-                $scope.tpsrList = data.tpsrList;
-                $scope.tpssMap = data.tpssMap;
-            });
-        }
-    })
-
-    .state('tpprs', {
-        url : '/maestro/tpprs',
-        templateUrl : 'modules/maestro/tppr-listado.html',
-        controller : function($http, $scope) {
-            $http.get("maestro/tppr-listado-json.action").success(function(data) {
-                // console.log(data);
-                $scope.tpprList = data.tpprList;
-            });
-        }
-    })
-
-    .state('peprs', {
-        url : '/estadistica/peprs',
-        templateUrl : 'modules/estadistica/pepr-listado.html',
-        controller : function($http, $scope) {
-            $http.get("estadistica/pepr-listado-json.action").success(function(data) {
-                // console.log(data);
-                $scope.peprList = data.peprList;
-            });
-        }
-    })
-
-    .state('prbts', {
-        url : '/proceso/prbts',
-        templateUrl : 'modules/proceso/prbt-listado.html',
-        controller : function($http, $scope) {
-            $http.get("proceso/prbt-listado-json.action").success(function(data) {
-                // console.log(data);
-                $scope.prbtList = data.prbtList;
-            });
-        }
-    })
-
-    .state('tpdts', {
-        url : '/metamodelo/tpdts',
-        templateUrl : 'modules/metamodelo/tpdt-listado.html',
-        controller : function($http, $scope) {
-            $http.get("metamodelo/tpdt-listado-json.action").success(function(data) {
-                // console.log(data);
-                $scope.tpdtList = data.tpdtList;
-            });
-        }
-    })
-
-    .state('fctrmain', {
-        url : '/facturacion/main',
-        templateUrl : 'modules/facturacion/facturacion.html'
-    })
-});
+/*
+ * app.config(function($stateProvider, $urlRouterProvider) {
+ * $urlRouterProvider.when('/c?id', '/contacts/:id').when('/user/:id',
+ * '/contacts/:id')//.otherwise('/') ;
+ *
+ * $stateProvider.state("home", { url : "/", templateUrl : 'modules/home.html' })
+ *
+ * .state('tpsrs', { url : '/servicio/tpsrs', templateUrl :
+ * 'modules/servicio/tpsr-listado.html', controller : function($http, $scope) {
+ * $http.get("servicio/tpsr-listado-json.action").success(function(data) { //
+ * console.log(data); $scope.tpsrList = data.tpsrList; $scope.tpssMap =
+ * data.tpssMap; }); } })
+ *
+ * .state('tpprs', { url : '/maestro/tpprs', templateUrl :
+ * 'modules/maestro/tppr-listado.html', controller : function($http, $scope) {
+ * $http.get("maestro/tppr-listado-json.action").success(function(data) { //
+ * console.log(data); $scope.tpprList = data.tpprList; }); } })
+ *
+ * .state('peprs', { url : '/estadistica/peprs', templateUrl :
+ * 'modules/estadistica/pepr-listado.html', controller : function($http, $scope) {
+ * $http.get("estadistica/pepr-listado-json.action").success(function(data) { //
+ * console.log(data); $scope.peprList = data.peprList; }); } })
+ *
+ * .state('prbts', { url : '/proceso/prbts', templateUrl :
+ * 'modules/proceso/prbt-listado.html', controller : function($http, $scope) {
+ * $http.get("proceso/prbt-listado-json.action").success(function(data) { //
+ * console.log(data); $scope.prbtList = data.prbtList; }); } })
+ *
+ * .state('fctrmain', { url : '/facturacion/main', templateUrl :
+ * 'modules/facturacion/facturacion.html' }) })
+ */;

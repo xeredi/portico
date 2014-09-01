@@ -1,0 +1,20 @@
+<form name="searchForm" novalidate role="form">
+    <input type="hidden" ng-model="page" />
+
+    <fieldset>
+        <div class="row">
+            <div class="col-md-1 form-group">
+                <label>{{"tppr_codigo" | translate}}</label> <input type="text" ng-model="entiCriterio.codigo"
+                    class="form-control input-sm" maxlength="4" />
+            </div>
+            <div class="col-md-5 form-group">
+                <label>{{"tppr_nombre" | translate}}</label> <input type="text" ng-model="entiCriterio.nombre"
+                    class="form-control input-sm" maxlength="50" />
+            </div>
+        </div>
+
+        <button data-ng-click="submit(searchForm)" class="btn btn-default">
+            <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+        </button>
+    </fieldset>
+</form>
