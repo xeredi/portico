@@ -82,7 +82,6 @@ angular.module('maestro', [ 'ui.router' ])
         // console.log('data: ' + JSON.stringify(data));
         $scope.itemCriterio = data.itemCriterio;
         $scope.limits = data.limits;
-        $scope.limit = data.limit;
         $scope.labelValuesMap = data.labelValuesMap;
     });
 })
