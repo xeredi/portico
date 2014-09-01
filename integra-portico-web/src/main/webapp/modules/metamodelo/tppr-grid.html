@@ -1,1 +1,33 @@
-tppr-grid
+<div class="table-responsive">
+    <span class="label label-default">{{entiList.count}} resultado(s)</span>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap">{{"enti_codigo" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_nombre" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_cmd_alta" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_cmd_baja" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_cmd_edicion" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_cmd_duplicado" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_i18n" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_tempExp" | translate}}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="enti in entiList.list">
+                <td><a href="#/metamodelo/tpprs/detail/{{enti.id}}">Detalle</a></td>
+                <td>{{enti.codigo}}</td>
+                <td>{{enti.nombre}}</td>
+                <td><i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

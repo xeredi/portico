@@ -35,7 +35,7 @@ public final class TipoParametroAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tppr. */
-    private TipoParametroVO tppr;
+    private TipoParametroVO enti;
 
     /** The tpsp list. */
     private List<TipoSubparametroVO> tpspList;
@@ -52,7 +52,7 @@ public final class TipoParametroAction extends BaseAction {
     public TipoParametroAction() {
         super();
 
-        tppr = new TipoParametroVO();
+        enti = new TipoParametroVO();
     }
 
     // Acciones Web
@@ -81,27 +81,27 @@ public final class TipoParametroAction extends BaseAction {
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        if (tppr.getId() == null) {
+        if (enti.getId() == null) {
             throw new Error("Identificador de tipo de parametro no especificado");
         }
 
         final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
-        tppr = tpprBO.select(tppr.getId());
+        enti = tpprBO.select(enti.getId());
 
         EntidadCriterioVO entiCriterioVO = null;
 
-        if (tppr.getEntiPadresList() != null && !tppr.getEntiPadresList().isEmpty()) {
+        if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiHijaId(tppr.getId());
+            entiCriterioVO.setEntiHijaId(enti.getId());
 
             entiPadresList = entiBO.selectList(entiCriterioVO);
         }
 
-        if (tppr.getEntiHijasList() != null && !tppr.getEntiHijasList().isEmpty()) {
+        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiPadreId(tppr.getId());
+            entiCriterioVO.setEntiPadreId(enti.getId());
 
             entiHijasList = entiBO.selectList(entiCriterioVO);
         }
@@ -120,10 +120,10 @@ public final class TipoParametroAction extends BaseAction {
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "tppr.codigo", tppr.getCodigo());
-            PropertyValidator.validateRequired(this, "tppr.nombre", tppr.getNombre());
+            PropertyValidator.validateRequired(this, "enti.codigo", enti.getCodigo());
+            PropertyValidator.validateRequired(this, "enti.nombre", enti.getNombre());
         } else {
-            PropertyValidator.validateRequired(this, "tppr.id", tppr.getId());
+            PropertyValidator.validateRequired(this, "enti.id", enti.getId());
         }
 
         if (hasErrors()) {
@@ -133,12 +133,12 @@ public final class TipoParametroAction extends BaseAction {
         final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
 
         if (accion == ACCION_EDICION.alta) {
-            tppr.setCodigo(tppr.getCodigo().toUpperCase());
+            enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpprBO.insert(tppr);
+            tpprBO.insert(enti);
         } else {
             try {
-                tpprBO.update(tppr);
+                tpprBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
                 throw new Error(ex);
             }
@@ -159,11 +159,11 @@ public final class TipoParametroAction extends BaseAction {
         final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
-        tppr = tpprBO.select(tppr.getId());
+        enti = tpprBO.select(enti.getId());
 
         final TipoSubparametroCriterioVO tpspCriterioVO = new TipoSubparametroCriterioVO();
 
-        tpspCriterioVO.setTpprId(tppr.getId());
+        tpspCriterioVO.setTpprId(enti.getId());
 
         tpspList = tpspBO.selectList(tpspCriterioVO);
 
@@ -191,25 +191,6 @@ public final class TipoParametroAction extends BaseAction {
     }
 
     /**
-     * Gets the tppr.
-     *
-     * @return the tppr
-     */
-    public TipoParametroVO getTppr() {
-        return tppr;
-    }
-
-    /**
-     * Sets the tppr.
-     *
-     * @param value
-     *            the new tppr
-     */
-    public void setTppr(final TipoParametroVO value) {
-        tppr = value;
-    }
-
-    /**
      * Gets the enti hijas list.
      *
      * @return the enti hijas list
@@ -234,6 +215,25 @@ public final class TipoParametroAction extends BaseAction {
      */
     public List<TipoSubparametroVO> getTpspList() {
         return tpspList;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoParametroVO getEnti() {
+        return enti;
+    }
+
+    /**
+     * Sets the enti.
+     *
+     * @param value
+     *            the enti
+     */
+    public void setEnti(TipoParametroVO value) {
+        this.enti = value;
     }
 
 }

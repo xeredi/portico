@@ -162,6 +162,15 @@ app.config(function($translateProvider) {
 
         tppr_codigo : 'C\u00f3digo',
         tppr_nombre : 'Nombre',
+
+        enti_codigo : 'C\u00f3d.',
+        enti_nombre : 'Nombre',
+        enti_cmd_alta : 'Alta?',
+        enti_cmd_baja : 'Baja?',
+        enti_cmd_edicion : 'Edici\u00f3n?',
+        enti_cmd_duplicado : 'Dupl.?',
+        enti_i18n : 'i18n?',
+        enti_tempExp : 'Tmp. Expl.?',
     });
 
     $translateProvider.preferredLanguage('es');
