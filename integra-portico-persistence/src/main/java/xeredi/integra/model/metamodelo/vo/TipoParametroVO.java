@@ -9,10 +9,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class TipoParametroVO extends EntidadVO {
 
     /** The i18n. */
-    private boolean i18n;
+    private Boolean i18n;
 
     /** The temp exp. */
-    private boolean tempExp;
+    private Boolean tempExp;
 
     /** The tpdt nombre id. */
     private Long tpdtNombreId;
@@ -27,45 +27,45 @@ public final class TipoParametroVO extends EntidadVO {
 
     /**
      * Checks if is i18n.
-     * 
+     *
      * @return true, if is i18n
      */
-    public boolean isI18n() {
+    public Boolean getI18n() {
         return i18n;
     }
 
     /**
      * Sets the i18n.
-     * 
+     *
      * @param value
      *            the new i18n
      */
-    public void setI18n(final boolean value) {
+    public void setI18n(final Boolean value) {
         i18n = value;
     }
 
     /**
      * Checks if is temp exp.
-     * 
+     *
      * @return true, if is temp exp
      */
-    public boolean isTempExp() {
+    public Boolean getTempExp() {
         return tempExp;
     }
 
     /**
      * Sets the temp exp.
-     * 
+     *
      * @param value
      *            the new temp exp
      */
-    public void setTempExp(final boolean value) {
+    public void setTempExp(final Boolean value) {
         tempExp = value;
     }
 
     /**
      * Gets the tpdt nombre id.
-     * 
+     *
      * @return the tpdt nombre id
      */
     public final Long getTpdtNombreId() {
@@ -74,12 +74,12 @@ public final class TipoParametroVO extends EntidadVO {
 
     /**
      * Sets the tpdt nombre id.
-     * 
+     *
      * @param value
      *            the new tpdt nombre id
      */
-    public final void setTpdtNombreId(Long value) {
-        this.tpdtNombreId = value;
+    public final void setTpdtNombreId(final Long value) {
+        tpdtNombreId = value;
     }
 
 }

@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
@@ -23,7 +21,8 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -137,10 +136,9 @@ public final class TipoParametroAction extends BaseAction {
             }
         }
 
-//        if (enti.isCmdAlta() == null || enti.getCodigo().isEmpty()) {
-//            addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_codigo" }));
-//        }
-
+        // if (enti.isCmdAlta() == null || enti.getCodigo().isEmpty()) {
+        // addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_codigo" }));
+        // }
 
         if (hasErrors()) {
             return SUCCESS;
@@ -248,8 +246,8 @@ public final class TipoParametroAction extends BaseAction {
      * @param value
      *            the enti
      */
-    public void setEnti(TipoParametroVO value) {
-        this.enti = value;
+    public void setEnti(final TipoParametroVO value) {
+        enti = value;
     }
 
 }

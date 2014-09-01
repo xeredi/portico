@@ -136,13 +136,12 @@
     <insert id="insert" parameterType="EntidadVO">
         <![CDATA[
         INSERT INTO tbl_entidad_enti(enti_pk, enti_nombre, enti_codigo, enti_tipo
-            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_borrado, enti_cmd_duplicado)
+            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado)
         VALUES (
         	#{id}, #{nombre}, #{codigo}, #{tipo}
             , #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
-            , #{cmdBorrado, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
         )
         ]]>
@@ -154,7 +153,6 @@
             enti_cmd_alta = #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_baja = #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_edicion = #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
-            , enti_cmd_borrado = #{cmdBorrado, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_duplicado = #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
         WHERE enti_pk = #{id}
         ]]>
