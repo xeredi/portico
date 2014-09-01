@@ -97,6 +97,17 @@ metamodelo.controller("tpprsEditController", function($scope, $http, $route, $ro
         $scope.enti = data.enti;
         $scope.accion = data.accion;
     });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tppr-guardar.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            $location.path("/metamodelo/tpprs/detail/" + data.enti.id);
+        });
+    }
 });
 
 metamodelo.controller("tpprsCreateController", function($scope, $http, $route, $routeParams) {
@@ -108,4 +119,15 @@ metamodelo.controller("tpprsCreateController", function($scope, $http, $route, $
         $scope.enti = data.enti;
         $scope.accion = data.accion;
     });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tppr-guardar.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            $location.path("/metamodelo/tpprs/detail/" + data.enti.id);
+        });
+    }
 });

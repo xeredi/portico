@@ -90,7 +90,7 @@
         UPDATE tbl_tipo_parametro_tppr SET
             tppr_es_i18n = #{i18n, jdbcType=INTEGER, javaType=Boolean}
             , tppr_es_tmp_exp = #{tempExp, jdbcType=INTEGER, javaType=Boolean}
-            , , tppr_tpdt_pk = #{tpdtNombreId}
+            , tppr_tpdt_pk = #{tpdtNombreId}
         WHERE tppr_pk = #{id}
         ]]>
     </update>

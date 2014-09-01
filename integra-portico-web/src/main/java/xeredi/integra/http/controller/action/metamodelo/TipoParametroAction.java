@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoParametro;
@@ -118,16 +121,29 @@ public final class TipoParametroAction extends BaseAction {
      */
     @Action("tppr-guardar")
     public String guardar() throws DuplicateInstanceException {
+        Preconditions.checkNotNull(enti);
+
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "enti.codigo", enti.getCodigo());
-            PropertyValidator.validateRequired(this, "enti.nombre", enti.getNombre());
+            if (enti.getCodigo() == null || enti.getCodigo().isEmpty()) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_codigo" }));
+            }
+            if (enti.getNombre() == null || enti.getNombre().isEmpty()) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_nombre" }));
+            }
         } else {
-            PropertyValidator.validateRequired(this, "enti.id", enti.getId());
+            if (enti.getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_id" }));
+            }
         }
 
+//        if (enti.isCmdAlta() == null || enti.getCodigo().isEmpty()) {
+//            addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_codigo" }));
+//        }
+
+
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
         final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
