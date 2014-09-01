@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+    <description>
+        <![CDATA[
+        description
+        ]]>
+    </description>
+    <display-name>Pagination JSP Tag Library</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>pagination</short-name>
+    <uri>http://xeredi/pagination</uri>
+
+    <tag>
+        <description><![CDATA[<p>description</p>]]></description>
+        <name>pagination</name>
+        <tag-class>xeredi.util.taglib.pagination.PaginationTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <description>description.</description>
+            <name>id</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>description.</description>
+            <name>href</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>description.</description>
+            <name>searchCriteria</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>description.</description>
+            <name>targets</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>description.</description>
+            <name>totalPages</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>description.</description>
+            <name>currentPage</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>description.</description>
+            <name>totalResults</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>
