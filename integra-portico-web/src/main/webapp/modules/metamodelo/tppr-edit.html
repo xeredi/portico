@@ -1,0 +1,64 @@
+<input type="hidden" ng-model="enti.id" />
+<input type="hidden" ng-model="accion" />
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label>{{"enti_codigo" | translate}}</label> <input type="text" ng-model="enti.codigo"
+                class="form-control input-sm" />
+        </div>
+        <div class="col-md-3 form-group">
+            <label>{{"enti_nombre" | translate}}</label> <input type="text" ng-model="enti.nombre"
+                class="form-control input-sm" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label>{{"enti_cmd_alta" | translate}}</label> <select ng-model="enti.cmdAlta" class="form-control input-sm">
+                <option />
+                <option value="true">{{"fmt_true" | translate}}</option>
+                <option value="false">{{"fmt_false" | translate}}</option>
+            </select>
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{"enti_cmd_baja" | translate}}</label> <select ng-model="enti.cmdBaja" class="form-control input-sm">
+                <option />
+                <option value="true">{{"fmt_true" | translate}}</option>
+                <option value="false">{{"fmt_false" | translate}}</option>
+            </select>
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{"enti_cmd_edicion" | translate}}</label> <select ng-model="enti.cmdEdicion"
+                class="form-control input-sm">
+                <option />
+                <option value="true">{{"fmt_true" | translate}}</option>
+                <option value="false">{{"fmt_false" | translate}}</option>
+            </select>
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{"enti_cmd_duplicado" | translate}}</label> <select ng-model="enti.cmdDuplicado"
+                class="form-control input-sm">
+                <option />
+                <option value="true">{{"fmt_true" | translate}}</option>
+                <option value="false">{{"fmt_false" | translate}}</option>
+            </select>
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{"enti_i18n" | translate}}</label> <select ng-model="enti.i18n" class="form-control input-sm">
+                <option />
+                <option value="true">{{"fmt_true" | translate}}</option>
+                <option value="false">{{"fmt_false" | translate}}</option>
+            </select>
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{"enti_tempExp" | translate}}</label> <select ng-model="enti.tempExp" class="form-control input-sm">
+                <option />
+                <option value="true">{{"fmt_true" | translate}}</option>
+                <option value="false">{{"fmt_false" | translate}}</option>
+            </select>
+        </div>
+    </div>
+</fieldset>
+
+

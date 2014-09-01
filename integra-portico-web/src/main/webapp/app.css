@@ -63,8 +63,9 @@ label {
 }
 
 fieldset {
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 5px;
+    margin-left: 5px;
 }
 
 .row {

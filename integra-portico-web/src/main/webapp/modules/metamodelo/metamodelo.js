@@ -18,6 +18,16 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpprsDetailController"
     })
 
+    .when("/metamodelo/tpprs/edit/:entiId", {
+        templateUrl : "modules/metamodelo/tppr-edit.html",
+        controller : "tpprsEditController"
+    })
+
+    .when("/metamodelo/tpprs/create", {
+        templateUrl : "modules/metamodelo/tppr-edit.html",
+        controller : "tpprsCreateController"
+    })
+
     .otherwise({
         redirectTo : "/phones"
     });
@@ -74,5 +84,28 @@ metamodelo.controller("tpprsDetailController", function($scope, $http, $route, $
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;
         $scope.subentiList = data.subentiList;
+    });
+});
+
+metamodelo.controller("tpprsEditController", function($scope, $http, $route, $routeParams) {
+    console.log("tpprsEditController");
+    console.log($routeParams.entiId);
+
+    var url = "metamodelo/tppr-modificar.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+});
+
+metamodelo.controller("tpprsCreateController", function($scope, $http, $route, $routeParams) {
+    console.log("tpprsCreateController");
+
+    var url = "metamodelo/tppr-alta.action";
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
     });
 });

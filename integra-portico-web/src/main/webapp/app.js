@@ -171,6 +171,7 @@ app.config(function($translateProvider) {
         enti_cmd_duplicado : 'Dupl.?',
         enti_i18n : 'i18n?',
         enti_tempExp : 'Tmp. Expl.?',
+        enti_tpprAsociado : 'Entidad Asociada',
 
         entd_grupo : 'Grupo',
         entd_fila : 'Fila',
