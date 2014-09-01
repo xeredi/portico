@@ -8,23 +8,20 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" href="#/maestro/tpprs"><i class="glyphicon glyphicon-home"></i>
-                {{'boton_volver' | translate}}</a> <a ui-sref="prmts.filtro({entiId:enti.id})" class="btn btn-default"><i
+                {{'boton_volver' | translate}}</a> <a ui-sref="prmts.filter" class="btn btn-default"><i
                 class="glyphicon glyphicon-filter"></i> {{'boton_filtro' | translate}}</a>
-            <button class="btn btn-default" ng-click="filtro()">
-                <i class="glyphicon glyphicon-filter"></i> {{'boton_filtro' | translate}}
-            </button>
         </div>
 
         <div class="btn-group">
-            <a ng-if="enti.cmdAlta" ui-sref="prmts.alta({entiId:enti.id})" class="btn btn-default"><i
+            <a ng-if="enti.cmdAlta" ui-sref="prmts.create" class="btn btn-default"><i
                 class="glyphicon glyphicon-file"></i> {{'boton_crear' | translate}}</a> <a ng-if="enti.cmdBaja"
                 class="btn btn-default" href="#/maestro/prmt/borrar/"><i class="glyphicon glyphicon-remove"></i>
                 {{'boton_borrar' | translate}}</a>
         </div>
     </div>
 
-    <pagination total-items="itemList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
-        max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+    <pagination total-items="itemList.count" items-per-page="limit" ng-model="currentPage" ng-change="pageChanged()"
+        class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{itemList.count}} resultado(s)</span>
@@ -43,7 +40,7 @@
 
             <tbody>
                 <tr ng-repeat="item in itemList.list">
-                    <td><a ui-sref="prmts.detail({itemId:item.id})"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a ui-sref="prmts.grid.detail({itemId:item.id})"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.parametro}}</td>
                     <td ng-if="enti.i18n">{{item.i18n.texto}}</td>
                     <td ng-if="enti.tempExp">{{item.prvr.finicio | date:('fmt_date' | translate)}}</td>

@@ -87,7 +87,7 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-crear"), @Action("prmt-crear-popup") })
+    @Actions({ @Action("prmt-crear") })
     public String crear() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
@@ -107,7 +107,7 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-editar"), @Action("prmt-editar-popup") })
+    @Actions({ @Action("prmt-editar") })
     public String editar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -142,7 +142,7 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-duplicar"), @Action("prmt-duplicar-popup") })
+    @Actions({ @Action("prmt-duplicar") })
     public String duplicar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
