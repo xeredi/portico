@@ -1,14 +1,7 @@
 var metamodelo = angular.module("metamodelo", [ "ngRoute" ]);
 
 metamodelo.config([ "$routeProvider", function($routeProvider) {
-    console.log("metamodelo config");
-
     $routeProvider
-
-    .when("/metamodelo/enti/detail/:entiId", {
-        templateUrl : "modules/metamodelo/enti-detail.html",
-        controller : "entiDetailController"
-    })
 
     .when("/metamodelo/tpprs", {
         templateUrl : "modules/metamodelo/tppr-filter.html",
@@ -35,10 +28,7 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpprsCreateController"
     })
 
-    .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
-        templateUrl : "modules/metamodelo/entd-detail.html",
-        controller : "entdDetailController"
-    })
+    // ----------------- TIPO DE SERVICIO -----------------
 
     .when("/metamodelo/tpsrs", {
         templateUrl : "modules/metamodelo/tpsr-filter.html",
@@ -65,42 +55,50 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpsrsCreateController"
     })
 
+    // ----------------- TIPO DE ESTADISTICA -----------------
+
+    .when("/metamodelo/tpess", {
+        templateUrl : "modules/metamodelo/tpes-filter.html",
+        controller : "tpessFilterController"
+    })
+
+    .when("/metamodelo/tpess/grid", {
+        templateUrl : "modules/metamodelo/tpes-grid.html",
+        controller : "tpessGridController"
+    })
+
+    .when("/metamodelo/tpess/detail/:entiId", {
+        templateUrl : "modules/metamodelo/tpes-detail.html",
+        controller : "tpessDetailController"
+    })
+
+    .when("/metamodelo/tpess/edit/:entiId", {
+        templateUrl : "modules/metamodelo/tpes-edit.html",
+        controller : "tpessEditController"
+    })
+
+    .when("/metamodelo/tpess/create", {
+        templateUrl : "modules/metamodelo/tpes-edit.html",
+        controller : "tpessCreateController"
+    })
+
+    // ------------------ DATO DE ENTIDAD -----------------
+
+    .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
+        templateUrl : "modules/metamodelo/entd-detail.html",
+        controller : "entdDetailController"
+    })
+
     .otherwise({
         redirectTo : "/phones"
     });
 } ])
 
-metamodelo.controller("entiDetailController", function($scope, $http, $location, $route, $routeParams) {
-    console.log("entiDetailController");
-    console.log($routeParams.entiId);
+// ----------------- CONTROLLERS --------------------------
+// ----------------- CONTROLLERS --------------------------
+// ----------------- CONTROLLERS --------------------------
 
-    var url = "metamodelo/enti-detalle.action?entiId=" + $routeParams.entiId;
-
-    $http.get(url).success(function(data) {
-        $scope.tipo = data.tipo;
-        $scope.entiId = data.entiId;
-
-        var urlDetail;
-
-        switch (data.tipo) {
-        case "P":
-            urlDetail = "metamodelo/tppr-detalle.action?enti.id=" + data.entiId;
-            break;
-        case "T":
-            urlDetail = "metamodelo/tpsr-detalle.action?enti.id=" + data.entiId;
-            break;
-
-        default:
-            console.log("Error de tipo desconocido: " + data.tipo);
-        }
-
-        $http.get(urlDetail).success(function(data) {
-            $scope.enti = data.enti;
-            $scope.subentiList = data.subentiList;
-        });
-    });
-
-});
+// -------------------- MAESTRO ------------------
 
 metamodelo.controller("tpprsFilterController", function($scope, $http, $location) {
     console.log("tpprsFilterController");
@@ -209,18 +207,7 @@ metamodelo.controller("tpprsCreateController", function($scope, $http, $location
     }
 });
 
-metamodelo.controller("entdDetailController", function($scope, $http, $location, $route, $routeParams) {
-    console.log("entdDetailController");
-    console.log($routeParams.entiId);
-    console.log($routeParams.tpdtId);
-
-    var url = "metamodelo/entd-detalle.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
-            + $routeParams.tpdtId;
-
-    $http.get(url).success(function(data) {
-        $scope.entd = data.entd;
-    });
-});
+// -------------------- TIPO DE SERVICIO ------------------
 
 metamodelo.controller("tpsrsFilterController", function($scope, $http, $location) {
     console.log("tpsrsFilterController");
@@ -327,4 +314,125 @@ metamodelo.controller("tpsrsCreateController", function($scope, $http, $location
             }
         });
     }
+});
+
+// -------------------- ESTADISTICA ------------------
+
+metamodelo.controller("tpessFilterController", function($scope, $http, $location) {
+    console.log("tpessFilterController");
+
+    $scope.submit = function(form) {
+        console.log("tpessFilterController Submit");
+
+        $location.path("/metamodelo/tpess/grid").search({
+            entiCriterio : {
+                codigo : $scope.entiCriterio.codigo,
+                nombre : $scope.entiCriterio.nombre
+            },
+            page : $scope.page
+        });
+    }
+
+    $scope.page = 1;
+    $scope.limit = 20;
+});
+
+metamodelo.controller("tpessGridController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("tpessGridController");
+    console.log($routeParams.entiCriterio);
+
+    $scope.entiCriterio = $routeParams.entiCriterio;
+    $scope.page = $routeParams.page;
+
+    console.log($scope.entiCriterio);
+
+    var url = "metamodelo/tpes-listado.action";
+
+    $http.post(url, {
+        entiCriterio : $scope.entiCriterio,
+        limit : $scope.limit,
+        page : $scope.page
+    }).success(function(data) {
+        $scope.entiList = data.entiList;
+    });
+});
+
+metamodelo.controller("tpessDetailController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("tpessDetailController");
+    console.log($routeParams.entiId);
+
+    var url = "metamodelo/tpes-detalle.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.subentiList = data.subentiList;
+    });
+});
+
+metamodelo.controller("tpessEditController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("tpessEditController");
+    console.log($routeParams.entiId);
+
+    var url = "metamodelo/tpes-modificar.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpes-guardar.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpess/detail/" + data.enti.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+metamodelo.controller("tpessCreateController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("tpessCreateController");
+
+    var url = "metamodelo/tpes-alta.action";
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpes-guardar.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpess/detail/" + data.enti.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+// ------------------- DATO DE ENTIDAD --------------------
+
+metamodelo.controller("entdDetailController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("entdDetailController");
+    console.log($routeParams.entiId);
+    console.log($routeParams.tpdtId);
+
+    var url = "metamodelo/entd-detalle.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
+            + $routeParams.tpdtId;
+
+    $http.get(url).success(function(data) {
+        $scope.entd = data.entd;
+    });
 });

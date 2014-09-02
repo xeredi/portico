@@ -187,6 +187,12 @@ app.config(function($translateProvider) {
         tppr_codigo : 'C\u00f3digo',
         tppr_nombre : 'Nombre',
 
+        tpsr_codigo : 'C\u00f3digo',
+        tpsr_nombre : 'Nombre',
+
+        tpes_codigo : 'C\u00f3digo',
+        tpes_nombre : 'Nombre',
+
         enti_codigo : 'C\u00f3d.',
         enti_nombre : 'Nombre',
         enti_tipo : 'Tipo',

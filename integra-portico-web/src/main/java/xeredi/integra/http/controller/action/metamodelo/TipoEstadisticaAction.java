@@ -26,7 +26,7 @@ public final class TipoEstadisticaAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tpes form. */
-    private TipoEstadisticaVO tpes;
+    private TipoEstadisticaVO enti;
 
     /**
      * Instantiates a new tipo estadistica action.
@@ -34,7 +34,7 @@ public final class TipoEstadisticaAction extends BaseAction {
     public TipoEstadisticaAction() {
         super();
 
-        tpes = new TipoEstadisticaVO();
+        enti = new TipoEstadisticaVO();
     }
 
     // Acciones Web
@@ -63,13 +63,13 @@ public final class TipoEstadisticaAction extends BaseAction {
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        if (tpes.getId() == null) {
+        if (enti.getId() == null) {
             throw new Error("Identificador de tipo de estadistica no especificado");
         }
 
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
-        tpes = tpesBO.select(tpes.getId());
+        enti = tpesBO.select(enti.getId());
 
         return SUCCESS;
     }
@@ -83,15 +83,15 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     @Action(value = "tpes-guardar", results = {
             @Result(name = "success", type = "redirectAction", params = { "actionName", "enti-detalle", "enti.id",
-            "%{tpes.id}" }), @Result(name = "input", location = "tpes-edicion.jsp") })
+                    "%{tpes.id}" }), @Result(name = "input", location = "tpes-edicion.jsp") })
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.modificar) {
-            PropertyValidator.validateRequired(this, "tpes.id", tpes.getId());
+            PropertyValidator.validateRequired(this, "tpes.id", enti.getId());
         }
 
-        PropertyValidator.validateRequired(this, "tpes.codigo", tpes.getCodigo());
-        PropertyValidator.validateRequired(this, "tpes.nombre", tpes.getNombre());
+        PropertyValidator.validateRequired(this, "tpes.codigo", enti.getCodigo());
+        PropertyValidator.validateRequired(this, "tpes.nombre", enti.getNombre());
 
         if (hasErrors()) {
             return INPUT;
@@ -100,12 +100,12 @@ public final class TipoEstadisticaAction extends BaseAction {
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
         if (accion == ACCION_EDICION.alta) {
-            tpes.setCodigo(tpes.getCodigo().toUpperCase());
+            enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpesBO.insert(tpes);
+            tpesBO.insert(enti);
         } else {
             try {
-                tpesBO.update(tpes);
+                tpesBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
                 throw new Error(ex);
             }
@@ -125,7 +125,7 @@ public final class TipoEstadisticaAction extends BaseAction {
     public String detalle() throws InstanceNotFoundException {
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
-        tpes = tpesBO.select(tpes.getId());
+        enti = tpesBO.select(enti.getId());
 
         return SUCCESS;
     }
@@ -152,22 +152,22 @@ public final class TipoEstadisticaAction extends BaseAction {
     }
 
     /**
-     * Gets the tpes.
+     * Gets the enti.
      *
-     * @return the tpes
+     * @return the enti
      */
-    public TipoEstadisticaVO getTpes() {
-        return tpes;
+    public TipoEstadisticaVO getEnti() {
+        return enti;
     }
 
     /**
-     * Sets the tpes.
+     * Sets the enti.
      *
      * @param value
-     *            the new tpes
+     *            the enti
      */
-    public void setTpes(final TipoEstadisticaVO value) {
-        tpes = value;
+    public void setEnti(TipoEstadisticaVO value) {
+        this.enti = value;
     }
 
 }

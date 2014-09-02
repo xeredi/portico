@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -27,10 +26,10 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
     private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The list. */
-    private PaginatedList<TipoEstadisticaVO> tpess;
+    private PaginatedList<TipoEstadisticaVO> entiList;
 
     /** The tpes criterio. */
-    private TipoEstadisticaCriterioVO tpesCriterio;
+    private TipoEstadisticaCriterioVO entiCriterio;
 
     /** The page. */
     private int page;
@@ -42,7 +41,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
         super();
 
         page = PaginatedList.FIRST_PAGE;
-        tpesCriterio = new TipoEstadisticaCriterioVO();
+        entiCriterio = new TipoEstadisticaCriterioVO();
     }
 
     // Acciones Web
@@ -51,18 +50,18 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "tpes-listado")
+    @Action("tpes-listado")
     public String listado() {
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
-        if (tpesCriterio.getCodigo() != null) {
-            tpesCriterio.setCodigo(tpesCriterio.getCodigo().toUpperCase());
+        if (entiCriterio.getCodigo() != null) {
+            entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
         }
 
         // Traemos solo los tipos de estadistica
-        tpesCriterio.setTipo(TipoEntidad.E);
+        entiCriterio.setTipo(TipoEntidad.E);
 
-        tpess = tpesBO.selectList(tpesCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        entiList = tpesBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
         return SUCCESS;
     }
@@ -72,9 +71,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "tpes-filtro"),
-        @Action(value = "tpes-filtro-popup", results = { @Result(name = "success", location = "tpes-filtro.jsp") }) })
+    @Actions({ @Action("tpes-filtro") })
     public String editarFiltro() {
         return SUCCESS;
     }
@@ -101,31 +98,31 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
     }
 
     /**
-     * Gets the list.
+     * Gets the enti criterio.
      *
-     * @return the list
+     * @return the enti criterio
      */
-    public PaginatedList<TipoEstadisticaVO> getTpess() {
-        return tpess;
+    public TipoEstadisticaCriterioVO getEntiCriterio() {
+        return entiCriterio;
     }
 
     /**
-     * Gets the tpes criterio.
-     *
-     * @return the tpes criterio
-     */
-    public TipoEstadisticaCriterioVO getTpesCriterio() {
-        return tpesCriterio;
-    }
-
-    /**
-     * Sets the tpes criterio.
+     * Sets the enti criterio.
      *
      * @param value
-     *            the new tpes criterio
+     *            the enti criterio
      */
-    public void setTpesCriterio(final TipoEstadisticaCriterioVO value) {
-        tpesCriterio = value;
+    public void setEntiCriterio(TipoEstadisticaCriterioVO value) {
+        this.entiCriterio = value;
+    }
+
+    /**
+     * Gets the enti list.
+     *
+     * @return the enti list
+     */
+    public PaginatedList<TipoEstadisticaVO> getEntiList() {
+        return entiList;
     }
 
 }
