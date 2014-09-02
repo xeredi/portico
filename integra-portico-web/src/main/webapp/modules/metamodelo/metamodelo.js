@@ -436,3 +436,22 @@ metamodelo.controller("entdDetailController", function($scope, $http, $location,
         $scope.entd = data.entd;
     });
 });
+
+metamodelo.controller("entdEditController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("entdEditController");
+    console.log($routeParams.entiId);
+    console.log($routeParams.tpdtId);
+
+    var url = "metamodelo/entd-editar.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
+            + $routeParams.tpdtId;
+
+    $http.get(url).success(function(data) {
+        $scope.entd = data.entd;
+    });
+
+    var urlTpdt = "metamodelo/tpdt-lv-list.action";
+
+    $http.get(urlTpdt).success(function(data) {
+        $scope.tpdtList = data.lvList;
+    });
+});

@@ -11,8 +11,6 @@ import xeredi.integra.model.metamodelo.bo.EntidadGrupoDato;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDato;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
-import xeredi.integra.model.metamodelo.bo.TipoDato;
-import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -132,17 +130,6 @@ public final class EntidadTipoDatoAction extends BaseAction {
     }
 
     // get/set
-    /**
-     * Gets the tpdt list.
-     *
-     * @return the tpdt list
-     */
-    public List<LabelValueVO> getTpdts() {
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
-
-        return tpdtBO.selectLabelValues();
-    }
-
     /**
      * Gets the engds.
      *
