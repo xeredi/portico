@@ -4,7 +4,7 @@
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/tpprs/edit/{{enti.id}}"><i
+                <a class="btn btn-default" href="#/metamodelo/tpsrs/edit/{{enti.id}}"><i
                     class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-<!--
+            <!--
             <div class="col-md-1 form-group">
                 <label> {{"enti_i18n" | translate}} </label>
                 <p class="form-control-static">
@@ -102,8 +102,12 @@
                     <td>{{enti.entdMap[entd].tpdt.nombre}}</td>
                     <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}">{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
                     <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
-                    <td><a ng-id="entd.tpdt.enti"
-                        href="#/metamodelo/tpprs/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></td>
+                    <td><span ng-if="enti.entdMap[entd].tpdt.enti"> <a
+                            ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'P'"
+                            href="#/metamodelo/tpprs/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a><a
+                            ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'T'"
+                            href="#/metamodelo/tpsrs/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></span>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -133,8 +137,7 @@
                     <td><i ng-if="subenti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="subenti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="subenti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
-                    <td><a ng-if="subenti.tpprAsociado"
-                        href="#/metamodelo/tpprs/detail/{{subenti.tpprAsociado.id}}">{{subenti.tpprAsociado.etiqueta}}</a></td>
+                    <td><a ng-if="subenti.tpprAsociado" href="#/metamodelo/enti/detail/{{subenti.tpprAsociado.id}}">{{subenti.tpprAsociado.etiqueta}}</a></td>
                 </tr>
             </tbody>
         </table>

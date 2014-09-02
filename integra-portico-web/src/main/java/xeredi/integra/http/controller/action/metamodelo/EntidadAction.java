@@ -1,13 +1,13 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,7 +19,10 @@ public final class EntidadAction extends BaseAction {
     private static final long serialVersionUID = -5675312476405724624L;
 
     /** The id. */
-    private EntidadVO enti;
+    private Long entiId;
+
+    /** The tipo. */
+    private TipoEntidad tipo;
 
     // Acciones Web
     /**
@@ -27,35 +30,42 @@ public final class EntidadAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "enti-detalle", results = {
-            @Result(name = "P", location = "tppr-detalle", type = "redirect", params = { "tppr.id", "%{enti.id}" }),
-            @Result(name = "T", location = "tpsr-detalle", type = "redirect", params = { "tpsr.id", "%{enti.id}" }),
-            @Result(name = "S", location = "tpss-detalle", type = "redirect", params = { "tpss.id", "%{enti.id}" }),
-            @Result(name = "B", location = "tpsp-detalle", type = "redirect", params = { "tpsp.id", "%{enti.id}" }) })
+    @Action("enti-detalle")
     public String detalle() {
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
-        return entiBO.selectTipoEntidad(enti.getId()).name();
+        tipo = entiBO.selectTipoEntidad(entiId);
+
+        return SUCCESS;
     }
 
     // get/set
     /**
-     * Gets the enti.
+     * Gets the tipo.
      *
-     * @return the enti
+     * @return the tipo
      */
-    public EntidadVO getEnti() {
-        return enti;
+    public TipoEntidad getTipo() {
+        return tipo;
     }
 
     /**
-     * Sets the enti.
+     * Gets the enti id.
+     *
+     * @return the enti id
+     */
+    public Long getEntiId() {
+        return entiId;
+    }
+
+    /**
+     * Sets the enti id.
      *
      * @param value
-     *            the new enti
+     *            the enti id
      */
-    public void setEnti(final EntidadVO value) {
-        enti = value;
+    public void setEntiId(Long value) {
+        this.entiId = value;
     }
 
 }

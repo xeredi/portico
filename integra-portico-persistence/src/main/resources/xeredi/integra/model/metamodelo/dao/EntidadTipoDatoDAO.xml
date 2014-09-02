@@ -25,7 +25,8 @@
 			<association property="enti" javaType="EntidadVO">
 				<result column="tpdt_enti_pk" property="id" />
 				<result column="enti_codigo" property="codigo" />
-				<result column="enti_nombre" property="nombre" />
+                <result column="enti_nombre" property="nombre" />
+                <result column="enti_tipo" property="tipo" />
 			</association>
 		</association>
 	</resultMap>
@@ -36,14 +37,13 @@
             entd.entd_enti_pk, entd.entd_tpdt_pk, entd.entd_grupo, entd.entd_fila, entd.entd_orden, entd.entd_span, entd.entd_obligatorio
             , entd.entd_gridable, entd.entd_filtrable, entd.entd_valor_defecto, entd.entd_etiqueta
             , tpdt.tpdt_nombre, tpdt.tpdt_tipo_elemento, tpdt.tpdt_tipo_html
-            , tpdt.tpdt_enti_pk, enti.enti_codigo, enti.enti_nombre
+            , tpdt.tpdt_enti_pk, enti.enti_codigo, enti.enti_nombre, enti.enti_tipo
         FROM
             tbl_entidad_tipo_dato_entd entd
             JOIN tbl_tipo_dato_tpdt tpdt ON
                 tpdt.tpdt_pk = entd.entd_tpdt_pk
             LEFT JOIN tbl_entidad_enti enti ON
                 enti.enti_pk = tpdt.tpdt_enti_pk
-
     ]]>
 	</sql>
 

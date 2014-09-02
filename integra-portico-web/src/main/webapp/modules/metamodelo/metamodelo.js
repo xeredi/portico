@@ -3,7 +3,14 @@ var metamodelo = angular.module("metamodelo", [ "ngRoute" ]);
 metamodelo.config([ "$routeProvider", function($routeProvider) {
     console.log("metamodelo config");
 
-    $routeProvider.when("/metamodelo/tpprs", {
+    $routeProvider
+
+    .when("/metamodelo/enti/detail/:entiId", {
+        templateUrl : "modules/metamodelo/enti-detail.html",
+        controller : "entiDetailController"
+    })
+
+    .when("/metamodelo/tpprs", {
         templateUrl : "modules/metamodelo/tppr-filter.html",
         controller : "tpprsFilterController"
     })
@@ -63,7 +70,39 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     });
 } ])
 
-.controller("tpprsFilterController", function($scope, $http, $location) {
+metamodelo.controller("entiDetailController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("entiDetailController");
+    console.log($routeParams.entiId);
+
+    var url = "metamodelo/enti-detalle.action?entiId=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.tipo = data.tipo;
+        $scope.entiId = data.entiId;
+
+        var urlDetail;
+
+        switch (data.tipo) {
+        case "P":
+            urlDetail = "metamodelo/tppr-detalle.action?enti.id=" + data.entiId;
+            break;
+        case "T":
+            urlDetail = "metamodelo/tpsr-detalle.action?enti.id=" + data.entiId;
+            break;
+
+        default:
+            console.log("Error de tipo desconocido: " + data.tipo);
+        }
+
+        $http.get(urlDetail).success(function(data) {
+            $scope.enti = data.enti;
+            $scope.subentiList = data.subentiList;
+        });
+    });
+
+});
+
+metamodelo.controller("tpprsFilterController", function($scope, $http, $location) {
     console.log("tpprsFilterController");
 
     $scope.submit = function(form) {
@@ -85,7 +124,7 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     $scope.limit = 20;
 })
 
-.controller("tpprsGridController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpprsGridController", function($scope, $http, $location, $route, $routeParams) {
     console.log("tpprsGridController");
     console.log($routeParams.entiCriterio);
 

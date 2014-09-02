@@ -98,13 +98,13 @@
                     <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
                         nowrap="nowrap"><span ng-switch-when="BO"><i
                             ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i></span> <span
-                        ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadEntera | number:2}}</i>
-                    </span> <span ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</i>
-                    </span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</i></span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</i></span>
-                        <span ng-switch-when="PR" title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</i></span>
-                        <span ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</i></span>
+                        ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadEntera | number:2}}
+                    </span> <span ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}
+                    </span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
+                        <span ng-switch-when="PR" title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span>
+                        <span ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span>
                         <span ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' |
-                            translate)}}</i>
+                            translate)}}
                     </span></td>
                 </tr>
             </tbody>

@@ -29,7 +29,9 @@
             <div class="col-md-3 form-group">
                 <label> {{"entd_tpdt_enti" | translate}} </label>
                 <p class="form-control-static">
-                    <a ng-id="entd.tpdt.enti" href="#/metamodelo/tpprs/detail/{{entd.tpdt.enti.id}}">{{entd.tpdt.enti.etiqueta}}</a>
+                    <span ng-if="entd.tpdt.enti"> <a ng-if="entd.tpdt.enti.tipo == 'P'"
+                        href="#/metamodelo/tpprs/detail/{{entd.tpdt.enti.id}}">{{entd.tpdt.enti.etiqueta}}</a><a
+                        ng-if="entd.tpdt.enti.tipo == 'T'" href="#/metamodelo/tpsrs/detail/{{entd.tpdt.enti.id}}">{{entd.tpdt.enti.etiqueta}}</a></span>
                 </p>
             </div>
         </div>

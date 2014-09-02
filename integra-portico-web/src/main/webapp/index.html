@@ -7,27 +7,6 @@
 <link rel="stylesheet" type="text/css" href="static/angular-datetimepicker/0.2.4/css/datetimepicker.css" />
 <link rel="stylesheet" type="text/css" href="app.css" />
 
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.min.js"></script>
-<script type="text/javascript"
-    src="//cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js"></script>
-<script type="text/javascript"
-    src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
-<script type="text/javascript" src="static/angular-datetimepicker/0.2.4/js/datetimepicker.js"></script>
-
-
-<script type="text/javascript" src="app.js"></script>
-<script type="text/javascript" src="modules/configuracion/configuracion.js"></script>
-<script type="text/javascript" src="modules/maestro/maestro.js"></script>
-<script type="text/javascript" src="modules/servicio/servicio.js"></script>
-<script type="text/javascript" src="modules/proceso/proceso.js"></script>
-<script type="text/javascript" src="modules/metamodelo/metamodelo.js"></script>
-<script type="text/javascript" src="modules/facturacion/facturacion.js"></script>
-
 <title>{{'app_nombre' | translate}}</title>
 </head>
 <body>
@@ -65,6 +44,33 @@
 
     <div ui-view id="body-content"></div>
 
-    <div ng-view></div>
+    <div ng-view>
+        <div class="jumbotron">
+            <h1>Portico 2.0</h1>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.min.js"></script>
+    <script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/bower-angular-translate/2.0.1/angular-translate.min.js"></script>
+    <script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="static/angular-datetimepicker/0.2.4/js/datetimepicker.js"></script>
+
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="modules/configuracion/configuracion.js"></script>
+    <script type="text/javascript" src="modules/maestro/maestro.js"></script>
+    <script type="text/javascript" src="modules/servicio/servicio.js"></script>
+    <script type="text/javascript" src="modules/proceso/proceso.js"></script>
+    <script type="text/javascript" src="modules/metamodelo/metamodelo.js"></script>
+    <script type="text/javascript" src="modules/facturacion/facturacion.js"></script>
 </body>
 </html>
