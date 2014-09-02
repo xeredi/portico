@@ -8,8 +8,11 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicio;
+import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
@@ -46,7 +49,7 @@ public final class TipoSubservicioAction extends BaseAction {
     // Acciones web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      */
     @Action(value = "tpss-alta", results = { @Result(name = "success", location = "tpss-edicion.jsp") })
@@ -64,7 +67,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -77,7 +80,7 @@ public final class TipoSubservicioAction extends BaseAction {
             throw new Error("Identificador de tipo de subservicio no especificado");
         }
 
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicio.class);
+        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
 
         tpss = tpssBO.select(tpss.getId());
 
@@ -86,7 +89,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
@@ -109,7 +112,7 @@ public final class TipoSubservicioAction extends BaseAction {
             return INPUT;
         }
 
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicio.class);
+        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             tpss.setCodigo(tpss.getCodigo().toUpperCase());
@@ -128,13 +131,13 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      */
     @Action("tpss-detalle")
     public String detalle() {
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicio.class);
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         tpss = tpssBO.select(tpss.getId());
 
@@ -161,7 +164,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -170,7 +173,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param accion
      *            the new accion
      */
@@ -180,7 +183,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Gets the tpss.
-     * 
+     *
      * @return the tpss
      */
     public TipoSubservicioVO getTpss() {
@@ -189,7 +192,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Sets the tpss.
-     * 
+     *
      * @param value
      *            the new tpss
      */
@@ -199,7 +202,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Gets the enti hijas list.
-     * 
+     *
      * @return the enti hijas list
      */
     public List<EntidadVO> getEntiHijasList() {
@@ -208,7 +211,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Gets the enti padres list.
-     * 
+     *
      * @return the enti padres list
      */
     public List<EntidadVO> getEntiPadresList() {
@@ -217,12 +220,12 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /**
      * Gets the tpdt list.
-     * 
+     *
      * @return the tpdt list
      */
     public List<LabelValueVO> getTpdtList() {
         if (tpdtList == null || tpdtList.isEmpty()) {
-            final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
+            final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
             tpdtList = tpdtBO.selectLabelValues();
         }

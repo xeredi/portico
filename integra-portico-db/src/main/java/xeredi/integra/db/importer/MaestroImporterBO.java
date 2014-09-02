@@ -31,6 +31,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
@@ -187,7 +188,7 @@ public final class MaestroImporterBO {
      */
     private void importTipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final TipoParametroVO tpprVO = TipoParametroProxy.select(entidad.getId());
 
         if (tpprVO == null) {
@@ -203,7 +204,7 @@ public final class MaestroImporterBO {
         try (final PreparedStatement stmt = con.prepareStatement(sql.toString());) {
             int i = 1;
 
-            if (tpprVO.isI18n()) {
+            if (tpprVO.getI18n()) {
                 stmt.setString(i++, idioma);
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
@@ -224,7 +225,7 @@ public final class MaestroImporterBO {
                 Date fechaInicio = null;
                 Date fechaFin = null;
 
-                if (tpprVO.isTempExp()) {
+                if (tpprVO.getTempExp()) {
                     fechaInicio = rs.getDate(i++);
                     fechaFin = rs.getDate(i++);
                 } else {
@@ -250,7 +251,7 @@ public final class MaestroImporterBO {
 
                 final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
 
-                if (tpprVO.isI18n()) {
+                if (tpprVO.getI18n()) {
                     final ParametroI18nVO i18nVO = new ParametroI18nVO();
                     final String texto = rs.getString(i++);
 

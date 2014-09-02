@@ -86,7 +86,7 @@ public class TipoEstadisticaBO implements TipoEstadistica {
             throw new Error("Tipo de estadistica no encontrado: " + id);
         }
 
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         entiBO.fillDependencies(entiVO);
 

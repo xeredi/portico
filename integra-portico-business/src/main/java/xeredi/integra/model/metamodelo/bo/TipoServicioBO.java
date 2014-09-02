@@ -89,7 +89,7 @@ public class TipoServicioBO implements TipoServicio {
             throw new InstanceNotFoundException(TipoServicioVO.class.getName(), id);
         }
 
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         entiBO.fillDependencies(entiVO);
 

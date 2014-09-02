@@ -15,6 +15,7 @@ import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 
 import com.google.common.base.Preconditions;
@@ -49,7 +50,7 @@ public final class ServicioXlsAction extends BaseAction {
 
     /**
      * Excel export.
-     * 
+     *
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
@@ -60,7 +61,7 @@ public final class ServicioXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
         enti = TipoServicioProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
@@ -80,7 +81,7 @@ public final class ServicioXlsAction extends BaseAction {
 
     /**
      * Gets the enti.
-     * 
+     *
      * @return the enti
      */
     public final TipoServicioVO getEnti() {
@@ -89,7 +90,7 @@ public final class ServicioXlsAction extends BaseAction {
 
     /**
      * Gets the item criterio.
-     * 
+     *
      * @return the item criterio
      */
     public final ServicioCriterioVO getItemCriterio() {
@@ -98,7 +99,7 @@ public final class ServicioXlsAction extends BaseAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param value
      *            the new item criterio
      */
@@ -108,7 +109,7 @@ public final class ServicioXlsAction extends BaseAction {
 
     /**
      * Gets the stream.
-     * 
+     *
      * @return the stream
      */
     public final InputStream getStream() {

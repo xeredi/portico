@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.bo.Estadistica;
+import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
@@ -44,7 +45,7 @@ public final class EstadisticaAction extends ItemAction {
     // Acciones web
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -56,7 +57,7 @@ public final class EstadisticaAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Estadistica estdBO = BOFactory.getInjector().getInstance(Estadistica.class);
+        final Estadistica estdBO = BOFactory.getInjector().getInstance(EstadisticaBO.class);
         final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
 
         estdCriterioVO.setId(item.getId());

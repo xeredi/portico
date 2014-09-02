@@ -14,7 +14,9 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.escala.AtraqueBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.Entidad;
@@ -65,8 +67,8 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -147,8 +149,8 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -217,8 +219,8 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -287,8 +289,8 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -363,8 +365,8 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -428,8 +430,8 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());

@@ -8,6 +8,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.proceso.bo.Proceso;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoEstado;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
@@ -65,7 +66,7 @@ public final class ProcesoListadoAction extends BaseAction {
         @Action(value = "prbt-listado-json", results = { @Result(name = "success", type = "json", params = {
                 "excludeNullProperties", "true" }) }) })
     public String listado() {
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
+        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
 
         prbtList = prbtBO.selectList(prbtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 

@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.bo.PeriodoProceso;
+import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -45,7 +46,7 @@ public final class PeriodoProcesoAction extends BaseAction {
     // Acciones web
     /**
      * Preparar carga.
-     * 
+     *
      * @return the string
      */
     @Action(value = "pepr-preparar-carga", results = { @Result(name = "success", location = "pepr-preparar-carga.jsp") })
@@ -55,7 +56,7 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /**
      * Cargar.
-     * 
+     *
      * @return the string
      */
     @Action(value = "pepr-cargar", results = {
@@ -75,7 +76,7 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /**
      * Borrar.
-     * 
+     *
      * @return the string
      */
     @Action(value = "pepr-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
@@ -85,7 +86,7 @@ public final class PeriodoProcesoAction extends BaseAction {
             throw new Error("No se ha especificado un periodo de proceso");
         }
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProceso.class);
+        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
 
         peprBO.delete(pepr.getId());
 
@@ -96,7 +97,7 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -107,7 +108,7 @@ public final class PeriodoProcesoAction extends BaseAction {
             throw new Error("No se ha especificado un periodo de proceso");
         }
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProceso.class);
+        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
 
         pepr = peprBO.select(pepr.getId());
 
@@ -116,7 +117,7 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /**
      * Exportar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -134,7 +135,7 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /**
      * Gets the tpess.
-     * 
+     *
      * @return the tpess
      */
     public List<LabelValueVO> getTpess() {
@@ -143,7 +144,7 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /**
      * Gets the pepr.
-     * 
+     *
      * @return the pepr
      */
     public PeriodoProcesoVO getPepr() {
@@ -152,7 +153,7 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /**
      * Sets the pepr.
-     * 
+     *
      * @param value
      *            the new pepr
      */

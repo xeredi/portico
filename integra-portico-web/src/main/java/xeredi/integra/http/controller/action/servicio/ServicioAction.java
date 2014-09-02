@@ -18,12 +18,15 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
@@ -99,8 +102,8 @@ public final class ServicioAction extends ItemAction {
 		Preconditions.checkNotNull(item);
 		Preconditions.checkNotNull(item.getId());
 
-		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
-		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
 		accion = ACCION_EDICION.modificar;
 		item = srvcBO.select(item.getId(), getIdioma());
@@ -159,7 +162,7 @@ public final class ServicioAction extends ItemAction {
 
 		accion = ACCION_EDICION.modificar;
 
-		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
 		item = srvcBO.select(item.getId(), getIdioma());
 		enti = TipoServicioProxy.select(item.getEntiId());
@@ -183,7 +186,7 @@ public final class ServicioAction extends ItemAction {
 
 		accion = ACCION_EDICION.duplicar;
 
-		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
 		item = srvcBO.select(item.getId(), getIdioma());
 		enti = TipoServicioProxy.select(item.getEntiId());
@@ -220,7 +223,7 @@ public final class ServicioAction extends ItemAction {
 		ItemDatoValidator.validate(this, enti, item);
 
 		// FIXME ACABAR
-		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
 		if (accion == ACCION_EDICION.alta) {
 			try {
@@ -247,7 +250,7 @@ public final class ServicioAction extends ItemAction {
 	public String borrar() throws InstanceNotFoundException {
 		enti = TipoServicioProxy.select(item.getEntiId());
 
-		final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+		final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
 		srvcBO.delete(item.getId());
 
@@ -263,7 +266,7 @@ public final class ServicioAction extends ItemAction {
 	 */
 	public List<LabelValueVO> getSubpList() {
 		if (subpList == null) {
-			final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+			final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
 			final Set<Long> tpprIds = new HashSet<>();
 

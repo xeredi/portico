@@ -79,7 +79,7 @@ public final class ParametroPdf extends BasePdf {
 
         rowCells.add(new PdfCell(tpprVO.getNombre(), prmtVO.getEtiqueta(), 4, TipoElemento.TX));
 
-        if (tpprVO.isTempExp()) {
+        if (tpprVO.getTempExp()) {
             rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFinicio()), 4,
                     TipoElemento.FE));
             rowCells.add(new PdfCell("F. Fin", prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
@@ -88,7 +88,7 @@ public final class ParametroPdf extends BasePdf {
 
         listCells.add(rowCells);
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             for (final ParametroI18nVO p18nVO : p18nMap.values()) {
                 rowCells = new ArrayList<>();
 

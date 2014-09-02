@@ -20,6 +20,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileKeyword;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileType;
 import xeredi.integra.model.estadistica.bo.PeriodoProceso;
+import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -134,7 +135,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
         if (prbtVO.getPrmnList().isEmpty()) {
             LOG.info("Guardar Datos");
-            final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProceso.class);
+            final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
 
             try {
                 peprBO.cargarArchivo(peprVO, autpMap, estaList, sobreescribir);

@@ -59,7 +59,7 @@ public final class ParametroLupaAction extends BaseAction {
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final TipoParametroVO enti = TipoParametroProxy.select(itemLupaCriterio.getEntiId());
 
-        if (enti.isI18n()) {
+        if (enti.getI18n()) {
             itemLupaCriterio.setIdioma(getIdioma());
         } else {
             itemLupaCriterio.setTpdtNombreId(enti.getTpdtNombreId());

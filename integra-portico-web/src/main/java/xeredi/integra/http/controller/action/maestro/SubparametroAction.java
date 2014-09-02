@@ -15,7 +15,9 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.Subparametro;
+import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
@@ -69,7 +71,7 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Alta.
-	 * 
+	 *
 	 * @return the string
 	 */
 	@Actions({ @Action(value = "sprm-alta", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
@@ -89,7 +91,7 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Modificar.
-	 * 
+	 *
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -103,7 +105,7 @@ public final class SubparametroAction extends ItemAction {
 
 		accion = ACCION_EDICION.modificar;
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 		final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
 		sprmCriterioVO.setId(item.getId());
@@ -120,7 +122,7 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Duplicar.
-	 * 
+	 *
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -134,7 +136,7 @@ public final class SubparametroAction extends ItemAction {
 
 		accion = ACCION_EDICION.duplicar;
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 		final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
 		sprmCriterioVO.setId(item.getId());
@@ -151,7 +153,7 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Guardar.
-	 * 
+	 *
 	 * @return the string
 	 */
 	@Action(value = "sprm-guardar", results = {
@@ -160,7 +162,7 @@ public final class SubparametroAction extends ItemAction {
 	public String guardar() {
 		Preconditions.checkNotNull(item);
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 
 		enti = TipoSubparametroProxy.select(item.getEntiId());
 
@@ -221,7 +223,7 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Borrar.
-	 * 
+	 *
 	 * @return the string
 	 */
 	@Action(value = "sprm-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
@@ -234,7 +236,7 @@ public final class SubparametroAction extends ItemAction {
 			throw new Error("Identificador de version del subparametro no especificado");
 		}
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 
 		enti = TipoSubparametroProxy.select(item.getEntiId());
 
@@ -251,7 +253,7 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Detalle.
-	 * 
+	 *
 	 * @return the string
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
@@ -261,7 +263,7 @@ public final class SubparametroAction extends ItemAction {
 		Preconditions.checkNotNull(item);
 		Preconditions.checkNotNull(item.getId());
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 		final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
 		sprmCriterioVO.setId(item.getId());
@@ -278,12 +280,12 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Gets the prmt asociado list.
-	 * 
+	 *
 	 * @return the prmt asociado list
 	 */
 	public List<LabelValueVO> getPrmtAsociadoList() {
 		if (prmtAsociadoList == null) {
-			final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+			final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
 			final Set<Long> tpprIds = new HashSet<>();
 
@@ -321,7 +323,7 @@ public final class SubparametroAction extends ItemAction {
 
 	/**
 	 * Sets the item.
-	 * 
+	 *
 	 * @param value
 	 *            the new item
 	 */

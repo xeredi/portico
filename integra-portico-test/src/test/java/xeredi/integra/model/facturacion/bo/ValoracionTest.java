@@ -42,7 +42,7 @@ public final class ValoracionTest {
             final Long vlrlId = 2156047L;
             final Long vlrdId = 2156048L;
 
-            final Valoracion vlrcBO = BOFactory.getInjector().getInstance(Valoracion.class);
+            final Valoracion vlrcBO = BOFactory.getInjector().getInstance(ValoracionBO.class);
 
             final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
             final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();

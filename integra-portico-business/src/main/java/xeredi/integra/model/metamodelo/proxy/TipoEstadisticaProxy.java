@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.TipoEstadistica;
+import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -36,7 +37,7 @@ public final class TipoEstadisticaProxy {
 
     /**
      * Select label values.
-     * 
+     *
      * @return the list
      */
     public static List<LabelValueVO> selectLabelValues() {
@@ -45,7 +46,7 @@ public final class TipoEstadisticaProxy {
 
     /**
      * Select map.
-     * 
+     *
      * @return the map
      */
     public static Map<Long, TipoEstadisticaVO> selectMap() {
@@ -54,7 +55,7 @@ public final class TipoEstadisticaProxy {
 
     /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo parametro vo
@@ -79,7 +80,7 @@ public final class TipoEstadisticaProxy {
     private static void load() {
         LOG.info("Carga de tipos de servicio");
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadistica.class);
+        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
         final List<TipoEstadisticaVO> tpesList = tpesBO.selectList(new TipoEstadisticaCriterioVO());
 
         for (final TipoEstadisticaVO tpesVO : tpesList) {

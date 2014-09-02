@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.CodigoReferencia;
+import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -62,7 +63,7 @@ public final class CodigoReferenciaAction extends BaseAction {
             @Result(name = "success", location = "tpdt-detalle", type = "redirect", params = { "tpdtForm.id",
             "%{cdrfForm.tpdtId}" }), @Result(name = "input", location = "cdrf-edicion.jsp") })
     public String guardar() throws InstanceNotFoundException {
-        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferencia.class);
+        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
 
         if (cdrf.getTpdtId() == null) {
             throw new Error("No se ha especificado un tipo de dato");
@@ -98,7 +99,7 @@ public final class CodigoReferenciaAction extends BaseAction {
     @Action(value = "cdrf-eliminar", results = { @Result(name = "success", location = "tpdt-detalle", type = "redirect", params = {
             "tpdt.id", "%{cdrf.tpdtId}" }) })
     public String eliminar() throws InstanceNotFoundException {
-        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferencia.class);
+        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
 
         if (cdrf.getTpdtId() == null) {
             throw new Error("No se ha especificado un tipo de dato");

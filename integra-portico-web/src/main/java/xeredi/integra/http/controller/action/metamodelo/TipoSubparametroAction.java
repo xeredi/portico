@@ -8,7 +8,9 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.TipoParametro;
+import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametro;
+import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -66,7 +68,7 @@ public final class TipoSubparametroAction extends BaseAction {
             throw new Error("Identificador de tipo de subparametro no especificado");
         }
 
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametro.class);
+        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
         tpsp = tpspBO.select(tpsp.getId());
 
@@ -96,7 +98,7 @@ public final class TipoSubparametroAction extends BaseAction {
             return INPUT;
         }
 
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametro.class);
+        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             tpsp.setCodigo(tpsp.getCodigo().toUpperCase());
@@ -122,7 +124,7 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action(value = "tpsp-detalle")
     public String detalle() throws InstanceNotFoundException {
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametro.class);
+        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
         tpsp = tpspBO.select(tpsp.getId());
 
@@ -175,7 +177,7 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     public List<LabelValueVO> getTpprs() {
         if (tpprs == null) {
-            final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametro.class);
+            final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
 
             tpprs = tpprBO.selectLabelValues();
         }

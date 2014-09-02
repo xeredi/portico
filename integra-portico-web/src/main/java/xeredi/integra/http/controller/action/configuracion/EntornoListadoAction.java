@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.Entorno;
+import xeredi.integra.model.configuracion.bo.EntornoBO;
 import xeredi.integra.model.configuracion.vo.EntornoVO;
 
 // TODO: Auto-generated Javadoc
@@ -37,14 +38,14 @@ public final class EntornoListadoAction extends BaseAction {
     // acciones web
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Actions({
         @Action(value = "cnen-listado"),
         @Action(value = "cnen-listado-json", results = { @Result(name = "success", type = "json") }) })
     public String listado() {
-        final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);
+        final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
         cnens = cnenBO.selectAll();
 
@@ -55,7 +56,7 @@ public final class EntornoListadoAction extends BaseAction {
 
     /**
      * Gets the cnen list.
-     * 
+     *
      * @return the cnen list
      */
     public List<EntornoVO> getCnens() {

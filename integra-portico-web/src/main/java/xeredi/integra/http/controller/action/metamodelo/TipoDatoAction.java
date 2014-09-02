@@ -8,8 +8,9 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
@@ -46,7 +47,7 @@ public final class TipoDatoAction extends BaseAction {
     // Acciones Web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -60,7 +61,7 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -69,7 +70,7 @@ public final class TipoDatoAction extends BaseAction {
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
+        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         tpdt = tpdtBO.select(tpdt.getId());
 
@@ -78,7 +79,7 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -103,7 +104,7 @@ public final class TipoDatoAction extends BaseAction {
             return INPUT;
         }
 
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
+        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             try {
@@ -124,14 +125,14 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      */
     @Actions({
         @Action(value = "tpdt-detalle"),
         @Action(value = "tpdt-detalle-popup", results = { @Result(name = "success", location = "tpdt-detalle.jsp") }) })
     public String detalle() {
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
+        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         tpdt = tpdtBO.select(tpdt.getId());
 
@@ -141,7 +142,7 @@ public final class TipoDatoAction extends BaseAction {
     // get / set
     /**
      * Gets the tphts.
-     * 
+     *
      * @return the tphts
      */
     public TipoHtml[] getTphts() {
@@ -150,16 +151,16 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Gets the tpprs.
-     * 
+     *
      * @return the tpprs
      */
     public List<LabelValueVO> getEntis() {
-        return BOFactory.getInjector().getInstance(Entidad.class).selectLabelValues();
+        return BOFactory.getInjector().getInstance(EntidadBO.class).selectLabelValues();
     }
 
     /**
      * Gets the tipos elemento.
-     * 
+     *
      * @return the tipos elemento
      */
     public TipoElemento[] getTiposElemento() {
@@ -168,7 +169,7 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -177,7 +178,7 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */
@@ -187,7 +188,7 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Gets the tpdt.
-     * 
+     *
      * @return the tpdt
      */
     public TipoDatoVO getTpdt() {
@@ -196,7 +197,7 @@ public final class TipoDatoAction extends BaseAction {
 
     /**
      * Sets the tpdt.
-     * 
+     *
      * @param value
      *            the new tpdt
      */

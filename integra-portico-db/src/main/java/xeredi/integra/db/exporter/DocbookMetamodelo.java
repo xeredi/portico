@@ -70,9 +70,9 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
                 writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
-                writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entiVO.isI18n() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entiVO.isTempExp() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.getCmdDuplicado() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.getI18n() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.getTempExp() ? "S" : "") + "</entry>");
                 writer.println("</row>");
             }
 
@@ -111,7 +111,7 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
                 writer.println("<entry>" + tpprPadreVO.getNombre() + "</entry>");
                 writer.println("<entry>" + entiVO.getTpprAsociado().getNombre() + "</entry>");
-                writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.getCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isI18n() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isTempExp() ? "S" : "") + "</entry>");
                 writer.println("</row>");
@@ -147,7 +147,7 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
                 writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
-                writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.getCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isTemporal() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isFacturable() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.getTpdtEstado() == null ? "" : entiVO.getTpdtEstado().getNombre())
@@ -185,7 +185,7 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + entiVO.getId() + "</entry>");
                 writer.println("<entry>" + entiVO.getNombre() + "</entry>");
                 writer.println("<entry>" + entiVO.getCodigo() + "</entry>");
-                writer.println("<entry>" + (entiVO.isCmdDuplicado() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiVO.getCmdDuplicado() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isTemporal() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.isFacturable() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entiVO.getTpdtEstado() == null ? "" : entiVO.getTpdtEstado().getNombre())
@@ -289,16 +289,16 @@ public final class DocbookMetamodelo {
                 writer.println("<row><entry>Codigo</entry><entry>" + entiVO.getCodigo() + "</entry></row>");
                 writer.println("<row><entry>Nombre</entry><entry>" + entiVO.getNombre() + "</entry></row>");
                 writer.println("<row><entry>Etiqueta</entry><entry>" + entiVO.getEtiqueta() + "</entry></row>");
-                writer.println("<row><entry>Temporalidad Explicita?</entry><entry>" + (entiVO.isTempExp() ? "S" : "N")
+                writer.println("<row><entry>Temporalidad Explicita?</entry><entry>" + (entiVO.getTempExp() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>I18N?</entry><entry>" + (entiVO.isI18n() ? "S" : "N") + "</entry></row>");
-                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" : "N")
+                writer.println("<row><entry>I18N?</entry><entry>" + (entiVO.getI18n() ? "S" : "N") + "</entry></row>");
+                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.getCmdAlta() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.isCmdBaja() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.getCmdBaja() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.isCmdEdicion() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.getCmdEdicion() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.getCmdDuplicado() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("</tbody></tgroup></informaltable>");
                 writer.println("</section>");
@@ -336,13 +336,13 @@ public final class DocbookMetamodelo {
                 writer.println("<row><entry>Temporalidad Explicita?</entry><entry>" + (entiVO.isTempExp() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("<row><entry>I18N?</entry><entry>" + (entiVO.isI18n() ? "S" : "N") + "</entry></row>");
-                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.getCmdAlta() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.isCmdBaja() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.getCmdBaja() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.isCmdEdicion() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.getCmdEdicion() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.getCmdDuplicado() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("</tbody></tgroup></informaltable>");
                 writer.println("</section>");
@@ -376,13 +376,13 @@ public final class DocbookMetamodelo {
                         + "</entry></row>");
                 writer.println("<row><entry>Facturable?</entry><entry>" + (entiVO.isFacturable() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.getCmdAlta() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.isCmdBaja() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.getCmdBaja() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.isCmdEdicion() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.getCmdEdicion() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.getCmdDuplicado() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("</tbody></tgroup></informaltable>");
                 writer.println("</section>");
@@ -419,13 +419,13 @@ public final class DocbookMetamodelo {
                         + "</entry></row>");
                 writer.println("<row><entry>Facturable?</entry><entry>" + (entiVO.isFacturable() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.isCmdAlta() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Alta?</entry><entry>" + (entiVO.getCmdAlta() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.isCmdBaja() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Baja?</entry><entry>" + (entiVO.getCmdBaja() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.isCmdEdicion() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Edicion?</entry><entry>" + (entiVO.getCmdEdicion() ? "S" : "N")
                         + "</entry></row>");
-                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.isCmdDuplicado() ? "S" : "N")
+                writer.println("<row><entry>Cmd. Duplicado?</entry><entry>" + (entiVO.getCmdDuplicado() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("</tbody></tgroup></informaltable>");
                 writer.println("</section>");

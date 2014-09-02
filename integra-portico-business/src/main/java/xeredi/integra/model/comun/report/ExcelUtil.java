@@ -91,11 +91,11 @@ public final class ExcelUtil {
 
         setCellValue(rowhead, i++, bundle.getString("prmt.parametro"));
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             setCellValue(rowhead, i++, bundle.getString("p18n.texto"));
         }
 
-        if (tpprVO.isTempExp()) {
+        if (tpprVO.getTempExp()) {
             setCellValue(rowhead, i++, bundle.getString("prmt.finicio"));
             setCellValue(rowhead, i++, bundle.getString("prmt.ffin"));
         }
@@ -112,11 +112,11 @@ public final class ExcelUtil {
 
             setCellValue(row, j++, prmtVO.getParametro());
 
-            if (tpprVO.isI18n()) {
+            if (tpprVO.getI18n()) {
                 setCellValue(row, j++, prmtVO.getI18n().getTexto());
             }
 
-            if (tpprVO.isTempExp()) {
+            if (tpprVO.getTempExp()) {
                 setCellValue(row, j++, prmtVO.getPrvr().getFinicio());
                 setCellValue(row, j++, prmtVO.getPrvr().getFfin());
             }

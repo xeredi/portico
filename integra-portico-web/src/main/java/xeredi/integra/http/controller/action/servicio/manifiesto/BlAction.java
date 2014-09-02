@@ -8,6 +8,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.manifiesto.Bl;
+import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
@@ -34,14 +35,14 @@ public final class BlAction extends BaseAction {
     // Acciones web
     /**
      * Bloquear.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
     @Action(value = "mabl-bloquear-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
     public String bloquear() throws InstanceNotFoundException {
-        final Bl mablBO = BOFactory.getInjector().getInstance(Bl.class);
+        final Bl mablBO = BOFactory.getInjector().getInstance(BlBO.class);
 
         try {
             mablBO.bloquear(item.getId());
@@ -56,14 +57,14 @@ public final class BlAction extends BaseAction {
 
     /**
      * Completar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
     @Action(value = "mabl-completar-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
     public String completar() throws InstanceNotFoundException {
-        final Bl mablBO = BOFactory.getInjector().getInstance(Bl.class);
+        final Bl mablBO = BOFactory.getInjector().getInstance(BlBO.class);
 
         try {
             mablBO.completar(item.getId());
@@ -78,14 +79,14 @@ public final class BlAction extends BaseAction {
 
     /**
      * Iniciar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
     @Action(value = "mabl-iniciar-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
     public String iniciar() throws InstanceNotFoundException {
-        final Bl mablBO = BOFactory.getInjector().getInstance(Bl.class);
+        final Bl mablBO = BOFactory.getInjector().getInstance(BlBO.class);
 
         try {
             mablBO.iniciar(item.getId());
@@ -100,14 +101,14 @@ public final class BlAction extends BaseAction {
 
     /**
      * Anular.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
     @Action(value = "mabl-anular-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
     public String anular() throws InstanceNotFoundException {
-        final Bl mablBO = BOFactory.getInjector().getInstance(Bl.class);
+        final Bl mablBO = BOFactory.getInjector().getInstance(BlBO.class);
 
         try {
             mablBO.anular(item.getId());
@@ -124,7 +125,7 @@ public final class BlAction extends BaseAction {
 
     /**
      * Gets the item.
-     * 
+     *
      * @return the item
      */
     public final SubservicioVO getItem() {
@@ -133,7 +134,7 @@ public final class BlAction extends BaseAction {
 
     /**
      * Sets the item.
-     * 
+     *
      * @param value
      *            the new item
      */

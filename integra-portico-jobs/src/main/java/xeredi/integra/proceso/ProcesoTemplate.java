@@ -13,10 +13,12 @@ import org.apache.commons.logging.LogFactory;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.proceso.bo.OperacionNoPermitidaException;
 import xeredi.integra.model.proceso.bo.Proceso;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
@@ -60,7 +62,7 @@ public abstract class ProcesoTemplate {
             LOG.info("Inicio del proceso batch");
         }
 
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
+        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
 
         do {
             prbtVO = prbtBO.proteger(getProcesoModulo(), getProcesoTipo());
@@ -101,7 +103,7 @@ public abstract class ProcesoTemplate {
             LOG.info("Busqueda de Maestros");
         }
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
         for (final Entidad entidad : codigoMaestroMap.keySet()) {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -126,7 +128,7 @@ public abstract class ProcesoTemplate {
             LOG.info("Busqueda de Organizaciones");
         }
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());

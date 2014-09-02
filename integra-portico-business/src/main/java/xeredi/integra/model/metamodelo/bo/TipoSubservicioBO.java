@@ -89,7 +89,7 @@ public class TipoSubservicioBO implements TipoSubservicio {
             throw new Error("Tipo de servicio no encontrado: " + id);
         }
 
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         entiBO.fillDependencies(entiVO);
 

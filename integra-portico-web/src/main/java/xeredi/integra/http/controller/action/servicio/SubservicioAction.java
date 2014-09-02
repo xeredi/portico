@@ -17,6 +17,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -84,7 +85,7 @@ public final class SubservicioAction extends ItemAction {
 		@Action(value = "ssrv-detalle-json", results = { @Result(name = "success", type = "json", params = {
 				"excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
 	public String detalle() throws InstanceNotFoundException {
-		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
 		accion = ACCION_EDICION.modificar;
 		item = ssrvBO.select(item.getId(), getIdioma());
@@ -149,7 +150,7 @@ public final class SubservicioAction extends ItemAction {
 
 		accion = ACCION_EDICION.modificar;
 
-		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
 		item = ssrvBO.select(item.getId(), getIdioma());
 		enti = TipoSubservicioProxy.select(item.getEntiId());
@@ -170,7 +171,7 @@ public final class SubservicioAction extends ItemAction {
 	public String duplicar() throws InstanceNotFoundException {
 		accion = ACCION_EDICION.duplicar;
 
-		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
 		item = ssrvBO.select(item.getId(), getIdioma());
 		enti = TipoSubservicioProxy.select(item.getEntiId());
@@ -201,7 +202,7 @@ public final class SubservicioAction extends ItemAction {
 			return INPUT;
 		}
 
-		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+		final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
 		if (accion == ACCION_EDICION.alta) {
 			try {

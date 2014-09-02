@@ -10,7 +10,9 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.ClaveIdioma;
+import xeredi.integra.model.configuracion.bo.ClaveIdiomaBO;
 import xeredi.integra.model.configuracion.bo.Idioma;
+import xeredi.integra.model.configuracion.bo.IdiomaBO;
 import xeredi.integra.model.configuracion.vo.ClaveIdiomaCriterioVO;
 import xeredi.integra.model.configuracion.vo.ClaveIdiomaVO;
 import xeredi.integra.model.configuracion.vo.IdiomaVO;
@@ -54,7 +56,7 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
     // Acciones web
     /**
      * Filtro.
-     * 
+     *
      * @return the string
      */
     @Actions({ @Action(value = "cnci-filtro"),
@@ -65,13 +67,13 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
 
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Action(value = "cnci-listado")
     public String listado() {
-        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdioma.class);
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdiomaBO.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         cnids = cnidBO.selectAll();
         cncis = cnciBO.selectList(cnciCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
@@ -83,7 +85,7 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
 
     /**
      * Gets the page.
-     * 
+     *
      * @return the page
      */
     @Override
@@ -93,7 +95,7 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
 
     /**
      * Sets the page.
-     * 
+     *
      * @param value
      *            the new page
      */
@@ -104,7 +106,7 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
 
     /**
      * Gets the cnci criterio.
-     * 
+     *
      * @return the cnci criterio
      */
     public ClaveIdiomaCriterioVO getCnciCriterio() {
@@ -113,7 +115,7 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
 
     /**
      * Sets the cnci criterio.
-     * 
+     *
      * @param value
      *            the new cnci criterio
      */
@@ -123,7 +125,7 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
 
     /**
      * Gets the cncis.
-     * 
+     *
      * @return the cncis
      */
     public PaginatedList<ClaveIdiomaVO> getCncis() {
@@ -132,7 +134,7 @@ public final class ClaveIdiomaListadoAction extends BaseAction implements Pagina
 
     /**
      * Gets the cnids.
-     * 
+     *
      * @return the cnids
      */
     public List<IdiomaVO> getCnids() {

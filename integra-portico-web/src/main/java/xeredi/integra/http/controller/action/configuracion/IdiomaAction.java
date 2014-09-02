@@ -8,6 +8,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.Idioma;
+import xeredi.integra.model.configuracion.bo.IdiomaBO;
 import xeredi.integra.model.configuracion.vo.IdiomaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -41,7 +42,7 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Alta.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -55,7 +56,7 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -64,7 +65,7 @@ public final class IdiomaAction extends BaseAction {
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         cnid = cnidBO.select(cnid.getId());
 
@@ -73,7 +74,7 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -93,7 +94,7 @@ public final class IdiomaAction extends BaseAction {
             return INPUT;
         }
 
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             try {
@@ -114,14 +115,14 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      */
     @Actions({
         @Action(value = "cnid-detalle"),
         @Action(value = "cnid-detalle-popup", results = { @Result(name = "success", location = "cnid-detalle.jsp") }) })
     public String detalle() {
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         cnid = cnidBO.select(cnid.getId());
 
@@ -132,7 +133,7 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -141,7 +142,7 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */
@@ -151,7 +152,7 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Gets the cnid.
-     * 
+     *
      * @return the cnid
      */
     public IdiomaVO getCnid() {
@@ -160,7 +161,7 @@ public final class IdiomaAction extends BaseAction {
 
     /**
      * Sets the cnid.
-     * 
+     *
      * @param value
      *            the new cnid
      */

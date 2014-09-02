@@ -46,7 +46,7 @@ public final class ParametroVO extends ItemVO {
         prmtVO.setEntiId(tpprVO.getId());
         prmtVO.setPrvr(new ParametroVersionVO());
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             prmtVO.setI18n(new ParametroI18nVO());
         }
 

@@ -27,7 +27,7 @@ public final class ParametroBOTest {
      */
     @Test
     public static void testSelect() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO criterioVO = new ParametroCriterioVO();
         final Set<Long> tpprIds = new HashSet<>();
 
@@ -49,7 +49,7 @@ public final class ParametroBOTest {
      */
     @Test
     public static void testSelectMap() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
         final Set<Long> tpprIds = new HashSet<>(Arrays.asList(new Long[] { Entidad.PAIS.getId() }));
 

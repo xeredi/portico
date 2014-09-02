@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -65,7 +66,7 @@ public final class AngularAction extends BaseAction {
     @Action(value = "prmt-list", results = { @Result(name = "success", type = "json", params = {
             "excludeNullProperties", "true", "enableGZIP", "true" }) })
     public String list() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
         if (prmtCriterio.getEntiId() == null) {
             throw new Error("Especifique un tipo de parametro: " + prmtCriterio);

@@ -10,7 +10,9 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.Clave;
+import xeredi.integra.model.configuracion.bo.ClaveBO;
 import xeredi.integra.model.configuracion.bo.Entorno;
+import xeredi.integra.model.configuracion.bo.EntornoBO;
 import xeredi.integra.model.configuracion.vo.ClaveCriterioVO;
 import xeredi.integra.model.configuracion.vo.ClaveVO;
 import xeredi.integra.model.configuracion.vo.EntornoVO;
@@ -54,7 +56,7 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
     // Acciones web
     /**
      * Filtro.
-     * 
+     *
      * @return the string
      */
     @Actions({ @Action(value = "cncl-filtro"),
@@ -65,13 +67,13 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
 
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Action(value = "cncl-listado")
     public String listado() {
-        final Clave cnclBO = BOFactory.getInjector().getInstance(Clave.class);
-        final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);
+        final Clave cnclBO = BOFactory.getInjector().getInstance(ClaveBO.class);
+        final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
         cnens = cnenBO.selectAll();
         cncls = cnclBO.selectList(cnclCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
@@ -83,7 +85,7 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
 
     /**
      * Gets the page.
-     * 
+     *
      * @return the page
      */
     @Override
@@ -93,7 +95,7 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
 
     /**
      * Sets the page.
-     * 
+     *
      * @param value
      *            the new page
      */
@@ -104,7 +106,7 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
 
     /**
      * Gets the cncl criterio.
-     * 
+     *
      * @return the cncl criterio
      */
     public ClaveCriterioVO getCnclCriterio() {
@@ -113,7 +115,7 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
 
     /**
      * Sets the cncl criterio.
-     * 
+     *
      * @param value
      *            the new cncl criterio
      */
@@ -123,7 +125,7 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
 
     /**
      * Gets the cncls.
-     * 
+     *
      * @return the cncls
      */
     public PaginatedList<ClaveVO> getCncls() {
@@ -132,7 +134,7 @@ public final class ClaveListadoAction extends BaseAction implements PaginableAct
 
     /**
      * Gets the cnens.
-     * 
+     *
      * @return the cnens
      */
     public List<EntornoVO> getCnens() {

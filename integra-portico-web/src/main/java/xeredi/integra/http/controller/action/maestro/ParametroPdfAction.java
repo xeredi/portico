@@ -18,7 +18,9 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.Subparametro;
+import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
@@ -78,7 +80,7 @@ public final class ParametroPdfAction extends BaseAction {
             fechaVigencia = Calendar.getInstance().getTime();
         }
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
 
         item = prmtBO.select(item.getId(), getIdioma(), fechaVigencia);
@@ -87,7 +89,7 @@ public final class ParametroPdfAction extends BaseAction {
         final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
 
         if (enti.getEntiHijasList() != null) {
-            final Subparametro sprmBO = BOFactory.getInjector().getInstance(Subparametro.class);
+            final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setId(item.getId());
@@ -109,7 +111,7 @@ public final class ParametroPdfAction extends BaseAction {
 
         final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
 
-        if (enti.isI18n()) {
+        if (enti.getI18n()) {
             p18nMap.putAll(prmtBO.selectI18nMap(item.getPrvr().getId()));
         }
 

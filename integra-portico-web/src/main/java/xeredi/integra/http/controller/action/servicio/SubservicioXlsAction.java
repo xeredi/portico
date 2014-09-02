@@ -15,6 +15,7 @@ import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
 import com.google.common.base.Preconditions;
@@ -49,7 +50,7 @@ public final class SubservicioXlsAction extends BaseAction {
 
     /**
      * Excel export.
-     * 
+     *
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
@@ -60,7 +61,7 @@ public final class SubservicioXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
         enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
@@ -80,7 +81,7 @@ public final class SubservicioXlsAction extends BaseAction {
 
     /**
      * Gets the item criterio.
-     * 
+     *
      * @return the item criterio
      */
     public final SubservicioCriterioVO getItemCriterio() {
@@ -89,7 +90,7 @@ public final class SubservicioXlsAction extends BaseAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param value
      *            the new item criterio
      */
@@ -99,7 +100,7 @@ public final class SubservicioXlsAction extends BaseAction {
 
     /**
      * Gets the serialversionuid.
-     * 
+     *
      * @return the serialversionuid
      */
     public static final long getSerialversionuid() {
@@ -108,7 +109,7 @@ public final class SubservicioXlsAction extends BaseAction {
 
     /**
      * Gets the enti.
-     * 
+     *
      * @return the enti
      */
     public final TipoSubservicioVO getEnti() {
@@ -117,7 +118,7 @@ public final class SubservicioXlsAction extends BaseAction {
 
     /**
      * Gets the stream.
-     * 
+     *
      * @return the stream
      */
     public final InputStream getStream() {

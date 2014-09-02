@@ -7,7 +7,9 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.Bl;
+import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -41,7 +43,7 @@ public final class BlTotalAction extends BaseAction {
 
     /**
      * Totales.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -53,8 +55,8 @@ public final class BlTotalAction extends BaseAction {
         Preconditions.checkNotNull(item.getSrvc());
         Preconditions.checkNotNull(item.getSrvc().getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
-        final Bl mablBO = BOFactory.getInjector().getInstance(Bl.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final Bl mablBO = BOFactory.getInjector().getInstance(BlBO.class);
 
         item = ssrvBO.select(item.getId(), getIdioma());
         resumen = mablBO.selectResumen(item.getSrvc().getId(), item.getId());
@@ -66,7 +68,7 @@ public final class BlTotalAction extends BaseAction {
 
     /**
      * Gets the total vo.
-     * 
+     *
      * @return the total vo
      */
     public ResumenTotalesVO getResumen() {
@@ -75,7 +77,7 @@ public final class BlTotalAction extends BaseAction {
 
     /**
      * Gets the ssrv.
-     * 
+     *
      * @return the ssrv
      */
     public SubservicioVO getItem() {
@@ -84,7 +86,7 @@ public final class BlTotalAction extends BaseAction {
 
     /**
      * Sets the ssrv.
-     * 
+     *
      * @param value
      *            the new ssrv
      */

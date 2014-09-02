@@ -13,6 +13,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.proceso.bo.Proceso;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -42,7 +43,7 @@ public final class ProcesoXlsAction extends BaseAction {
 
     /**
      * Excel export.
-     * 
+     *
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
@@ -50,7 +51,7 @@ public final class ProcesoXlsAction extends BaseAction {
     @Action(value = "prbt-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "application/xls", "inputName", "stream", "contentDisposition", "filename=PROCESOS.xls" }) })
     public String xlsExport() throws IOException {
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
+        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ExcelUtil excelUtil = new ExcelUtil(getLocale());
@@ -67,7 +68,7 @@ public final class ProcesoXlsAction extends BaseAction {
 
     /**
      * Gets the item criterio.
-     * 
+     *
      * @return the item criterio
      */
     public final ProcesoCriterioVO getItemCriterio() {
@@ -76,7 +77,7 @@ public final class ProcesoXlsAction extends BaseAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param value
      *            the new item criterio
      */
@@ -86,7 +87,7 @@ public final class ProcesoXlsAction extends BaseAction {
 
     /**
      * Gets the stream.
-     * 
+     *
      * @return the stream
      */
     public final InputStream getStream() {

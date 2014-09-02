@@ -8,6 +8,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.Idioma;
+import xeredi.integra.model.configuracion.bo.IdiomaBO;
 import xeredi.integra.model.configuracion.vo.IdiomaVO;
 
 // TODO: Auto-generated Javadoc
@@ -33,12 +34,12 @@ public final class IdiomaListadoAction extends BaseAction {
     // acciones web
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Action(value = "cnid-listado")
     public String listado() {
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         cnids = cnidBO.selectAll();
 
@@ -49,7 +50,7 @@ public final class IdiomaListadoAction extends BaseAction {
 
     /**
      * Gets the cnid list.
-     * 
+     *
      * @return the cnid list
      */
     public List<IdiomaVO> getCnids() {

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.proceso.bo.Proceso;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 // TODO: Auto-generated Javadoc
@@ -26,7 +27,7 @@ public final class ProcesoCargaOppeTest {
         try {
 
             final ProcesoCargaOppe cargaOppe = new ProcesoCargaOppe();
-            final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
+            final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
             final ProcesoVO prbtVO = new ProcesoVO();
 
             prbtVO.setModulo(cargaOppe.getProcesoModulo());

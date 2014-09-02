@@ -12,6 +12,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.pagination.PaginatedList;
@@ -89,7 +90,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
         enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
 

@@ -3,14 +3,17 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoServicio;
+import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicio;
+import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -35,10 +38,10 @@ public final class TipoServicioAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tpsr. */
-    private TipoServicioVO tpsr;
+    private TipoServicioVO enti;
 
     /** The tpss list. */
-    private List<TipoSubservicioVO> tpssList;
+    private List<TipoSubservicioVO> subentiList;
 
     /** The enti hijas list. */
     private List<EntidadVO> entiHijasList;
@@ -49,72 +52,70 @@ public final class TipoServicioAction extends BaseAction {
     // Acciones Web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      */
-    @Action(value = "tpsr-alta", results = { @Result(name = "success", location = "tpsr-edicion.jsp") })
+    @Action("tpsr-alta")
     public String alta() {
         accion = ACCION_EDICION.alta;
 
-        tpsr = new TipoServicioVO();
+        enti = new TipoServicioVO();
 
         return SUCCESS;
     }
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpsr-modificar", results = { @Result(name = "success", location = "tpsr-edicion.jsp") })
+    @Action("tpsr-modificar")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        if (tpsr.getId() == null) {
+        if (enti.getId() == null) {
             throw new Error("Identificador de tipo de servicio no especificado");
         }
 
-        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicio.class);
+        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
-        tpsr = tpsrBO.select(tpsr.getId());
+        enti = tpsrBO.select(enti.getId());
 
         return SUCCESS;
     }
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    @Action(value = "tpsr-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "enti-detalle", "enti.id",
-            "%{tpsr.id}" }), @Result(name = "input", location = "tpsr-edicion.jsp") })
+    @Action("tpsr-guardar")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "tpsr.codigo", tpsr.getCodigo());
-            PropertyValidator.validateRequired(this, "tpsr.nombre", tpsr.getNombre());
+            PropertyValidator.validateRequired(this, "tpsr.codigo", enti.getCodigo());
+            PropertyValidator.validateRequired(this, "tpsr.nombre", enti.getNombre());
         } else {
-            PropertyValidator.validateRequired(this, "tpsr.id", tpsr.getId());
+            PropertyValidator.validateRequired(this, "tpsr.id", enti.getId());
         }
 
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
-        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicio.class);
+        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
         if (accion == ACCION_EDICION.alta) {
-            tpsr.setCodigo(tpsr.getCodigo().toUpperCase());
+            enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpsrBO.insert(tpsr);
+            tpsrBO.insert(enti);
         } else {
             try {
-                tpsrBO.update(tpsr);
+                tpsrBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
                 throw new Error(ex);
             }
@@ -125,30 +126,30 @@ public final class TipoServicioAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpsr-detalle")
+    @Action("tpsr-detalle")
     public String detalle() throws InstanceNotFoundException {
-        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicio.class);
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicio.class);
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
+        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
-        tpsr = tpsrBO.select(tpsr.getId());
+        enti = tpsrBO.select(enti.getId());
 
         TipoSubservicioCriterioVO tpssCriterioVO = null;
 
         tpssCriterioVO = new TipoSubservicioCriterioVO();
-        tpssCriterioVO.setTpsrId(tpsr.getId());
-        tpssList = tpssBO.selectList(tpssCriterioVO);
+        tpssCriterioVO.setTpsrId(enti.getId());
+        subentiList = tpssBO.selectList(tpssCriterioVO);
 
-        if (tpsr.getEntiHijasList() != null && !tpsr.getEntiHijasList().isEmpty()) {
+        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
             EntidadCriterioVO entiCriterioVO = null;
 
             entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiPadreId(tpsr.getId());
+            entiCriterioVO.setEntiPadreId(enti.getId());
 
             entiHijasList = entiBO.selectList(entiCriterioVO);
         }
@@ -159,35 +160,35 @@ public final class TipoServicioAction extends BaseAction {
     // get / set
     /**
      * Gets the tpsr form.
-     * 
+     *
      * @return the tpsr form
      */
-    public TipoServicioVO getTpsr() {
-        return tpsr;
+    public TipoServicioVO getEnti() {
+        return enti;
     }
 
     /**
      * Sets the tpsr form.
-     * 
+     *
      * @param value
      *            the new tpsr form
      */
-    public void setTpsr(final TipoServicioVO value) {
-        tpsr = value;
+    public void setEnti(final TipoServicioVO value) {
+        enti = value;
     }
 
     /**
      * Gets the tpss list.
-     * 
+     *
      * @return the tpss list
      */
-    public List<TipoSubservicioVO> getTpssList() {
-        return tpssList;
+    public List<TipoSubservicioVO> getSubentiList() {
+        return subentiList;
     }
 
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -196,7 +197,7 @@ public final class TipoServicioAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param accion
      *            the new accion
      */
@@ -206,7 +207,7 @@ public final class TipoServicioAction extends BaseAction {
 
     /**
      * Gets the enti hijas list.
-     * 
+     *
      * @return the enti hijas list
      */
     public List<EntidadVO> getEntiHijasList() {
@@ -215,12 +216,12 @@ public final class TipoServicioAction extends BaseAction {
 
     /**
      * Gets the tpdt list.
-     * 
+     *
      * @return the tpdt list
      */
     public List<LabelValueVO> getTpdtList() {
         if (tpdtList == null || tpdtList.isEmpty()) {
-            final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
+            final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
             tpdtList = tpdtBO.selectLabelValues();
         }

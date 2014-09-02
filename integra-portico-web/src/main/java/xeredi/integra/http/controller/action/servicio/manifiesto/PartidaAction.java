@@ -8,6 +8,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.manifiesto.Partida;
+import xeredi.integra.model.servicio.bo.manifiesto.PartidaBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
@@ -36,7 +37,7 @@ public final class PartidaAction extends BaseAction {
     // Acciones web
     /**
      * Bloquear.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -46,7 +47,7 @@ public final class PartidaAction extends BaseAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Partida partBO = BOFactory.getInjector().getInstance(Partida.class);
+        final Partida partBO = BOFactory.getInjector().getInstance(PartidaBO.class);
 
         try {
             partBO.bloquear(item.getId());
@@ -61,7 +62,7 @@ public final class PartidaAction extends BaseAction {
 
     /**
      * Iniciar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -71,7 +72,7 @@ public final class PartidaAction extends BaseAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Partida partBO = BOFactory.getInjector().getInstance(Partida.class);
+        final Partida partBO = BOFactory.getInjector().getInstance(PartidaBO.class);
 
         try {
             partBO.iniciar(item.getId());
@@ -86,7 +87,7 @@ public final class PartidaAction extends BaseAction {
 
     /**
      * Anular.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -96,7 +97,7 @@ public final class PartidaAction extends BaseAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Partida partBO = BOFactory.getInjector().getInstance(Partida.class);
+        final Partida partBO = BOFactory.getInjector().getInstance(PartidaBO.class);
 
         try {
             partBO.anular(item.getId());
@@ -112,7 +113,7 @@ public final class PartidaAction extends BaseAction {
     // get / set
     /**
      * Gets the item.
-     * 
+     *
      * @return the item
      */
     public final SubservicioVO getItem() {
@@ -121,7 +122,7 @@ public final class PartidaAction extends BaseAction {
 
     /**
      * Sets the item.
-     * 
+     *
      * @param value
      *            the new item
      */

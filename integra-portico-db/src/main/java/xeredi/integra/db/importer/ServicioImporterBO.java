@@ -33,6 +33,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
@@ -44,7 +45,9 @@ import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.ConfigurationUtil;
@@ -136,9 +139,9 @@ public final class ServicioImporterBO {
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
     DuplicateInstanceException {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(Subservicio.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
         final EntidadVO entiVO = EntidadProxy.select(entidad.getId());
 
         if (entiVO == null) {

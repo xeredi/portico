@@ -10,7 +10,9 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.Clave;
+import xeredi.integra.model.configuracion.bo.ClaveBO;
 import xeredi.integra.model.configuracion.bo.Entorno;
+import xeredi.integra.model.configuracion.bo.EntornoBO;
 import xeredi.integra.model.configuracion.vo.ClaveVO;
 import xeredi.integra.model.configuracion.vo.EntornoVO;
 import xeredi.integra.model.configuracion.vo.TipoValor;
@@ -48,7 +50,7 @@ public final class ClaveAction extends BaseAction {
     // Acciones web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -57,7 +59,7 @@ public final class ClaveAction extends BaseAction {
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
 
-        final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);
+        final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
         cnens = cnenBO.selectAll();
 
@@ -66,7 +68,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -75,11 +77,11 @@ public final class ClaveAction extends BaseAction {
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        final Clave cnclBO = BOFactory.getInjector().getInstance(Clave.class);
+        final Clave cnclBO = BOFactory.getInjector().getInstance(ClaveBO.class);
 
         cncl = cnclBO.select(cncl.getId());
 
-        final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);
+        final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
         cnens = cnenBO.selectAll();
 
@@ -88,7 +90,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -109,7 +111,7 @@ public final class ClaveAction extends BaseAction {
             return INPUT;
         }
 
-        final Clave cnclBO = BOFactory.getInjector().getInstance(Clave.class);
+        final Clave cnclBO = BOFactory.getInjector().getInstance(ClaveBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             try {
@@ -130,7 +132,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -139,11 +141,11 @@ public final class ClaveAction extends BaseAction {
         @Action(value = "cncl-detalle"),
         @Action(value = "cncl-detalle-popup", results = { @Result(name = "success", location = "cncl-detalle.jsp") }) })
     public String detalle() throws InstanceNotFoundException {
-        final Clave cnclBO = BOFactory.getInjector().getInstance(Clave.class);
+        final Clave cnclBO = BOFactory.getInjector().getInstance(ClaveBO.class);
 
         cncl = cnclBO.select(cncl.getId());
 
-        final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);
+        final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
         cnens = cnenBO.selectAll();
 
@@ -153,7 +155,7 @@ public final class ClaveAction extends BaseAction {
     // get / set
     /**
      * Gets the cncl.
-     * 
+     *
      * @return the cncl
      */
     public ClaveVO getCncl() {
@@ -162,7 +164,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Sets the cncl.
-     * 
+     *
      * @param value
      *            the new cncl
      */
@@ -172,7 +174,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Gets the cnens.
-     * 
+     *
      * @return the cnens
      */
     public List<EntornoVO> getCnens() {
@@ -181,7 +183,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Gets the tipos valor.
-     * 
+     *
      * @return the tipos valor
      */
     public TipoValor[] getTiposValor() {
@@ -190,7 +192,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -199,7 +201,7 @@ public final class ClaveAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */

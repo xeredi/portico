@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -64,7 +65,7 @@ public final class ServicioLupaAction extends BaseAction {
             itemLupaCriterio.setNumero(tokenizer.nextToken() + "%");
         }
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
         itemList = srvcBO.selectLupaList(itemLupaCriterio, ROWS);
 

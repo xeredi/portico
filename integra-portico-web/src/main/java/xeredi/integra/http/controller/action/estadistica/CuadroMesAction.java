@@ -9,7 +9,9 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.bo.CuadroMes;
+import xeredi.integra.model.estadistica.bo.CuadroMesBO;
 import xeredi.integra.model.estadistica.bo.PeriodoProceso;
+import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -40,7 +42,7 @@ public final class CuadroMesAction extends BaseAction {
     // acciones web
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -51,8 +53,8 @@ public final class CuadroMesAction extends BaseAction {
             throw new Error("Periodo de Proceso nulo");
         }
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProceso.class);
-        final CuadroMes cdmsBO = BOFactory.getInjector().getInstance(CuadroMes.class);
+        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
+        final CuadroMes cdmsBO = BOFactory.getInjector().getInstance(CuadroMesBO.class);
 
         pepr = peprBO.select(pepr.getId());
         cdmsMap = cdmsBO.selectMap(pepr.getId());
@@ -64,7 +66,7 @@ public final class CuadroMesAction extends BaseAction {
 
     /**
      * Gets the cdms map.
-     * 
+     *
      * @return the cdms map
      */
     public Map<String, List<CuadroMesVO>> getCdmsMap() {
@@ -73,7 +75,7 @@ public final class CuadroMesAction extends BaseAction {
 
     /**
      * Gets the pepr.
-     * 
+     *
      * @return the pepr
      */
     public PeriodoProcesoVO getPepr() {
@@ -82,7 +84,7 @@ public final class CuadroMesAction extends BaseAction {
 
     /**
      * Sets the pepr.
-     * 
+     *
      * @param value
      *            the new pepr
      */

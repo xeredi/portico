@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 
@@ -42,7 +43,7 @@ public final class EntidadListadoAction extends BaseAction {
      */
     @Action(value = "enti-hija-listado-content")
     public String hijaListado() {
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         if (entiCriterio.getEntiPadreId() == null) {
             throw new Error("No se ha proporcionado una entidad padre");
@@ -60,7 +61,7 @@ public final class EntidadListadoAction extends BaseAction {
      */
     @Action(value = "enti-padre-listado-content")
     public String padreListado() {
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         if (entiCriterio.getEntiHijaId() == null) {
             throw new Error("No se ha proporcionado una entidad hija");

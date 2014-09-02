@@ -22,7 +22,9 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.Subservicio;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.report.ServicioPdf;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -55,7 +57,7 @@ public final class ServicioPdfTest {
         final String locale = "es_ES";
 
         final ServicioPdf srvcPdf = new ServicioPdf(new Locale(language, country));
-        final Servicio srvc = BOFactory.getInjector().getInstance(Servicio.class);
+        final Servicio srvc = BOFactory.getInjector().getInstance(ServicioBO.class);
 
         for (final Long tpsrId : tpsrIds) {
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
@@ -85,7 +87,7 @@ public final class ServicioPdfTest {
 
                 if (tpsrVO.getEntiHijasList() != null) {
                     for (final Long entiId : tpsrVO.getEntiHijasList()) {
-                        final Subservicio ssrv = BOFactory.getInjector().getInstance(Subservicio.class);
+                        final Subservicio ssrv = BOFactory.getInjector().getInstance(SubservicioBO.class);
                         final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
                         ssrvCriterioVO.setFechaVigencia(srvcCriterioVO.getFechaVigencia());

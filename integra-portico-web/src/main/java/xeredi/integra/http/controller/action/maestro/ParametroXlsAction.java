@@ -13,6 +13,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -49,7 +50,7 @@ public final class ParametroXlsAction extends BaseAction {
 
     /**
      * Excel export.
-     * 
+     *
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
@@ -60,7 +61,7 @@ public final class ParametroXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
         enti = TipoParametroProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
@@ -80,7 +81,7 @@ public final class ParametroXlsAction extends BaseAction {
 
     /**
      * Gets the item criterio.
-     * 
+     *
      * @return the item criterio
      */
     public final ParametroCriterioVO getItemCriterio() {
@@ -89,7 +90,7 @@ public final class ParametroXlsAction extends BaseAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param value
      *            the new item criterio
      */
@@ -99,7 +100,7 @@ public final class ParametroXlsAction extends BaseAction {
 
     /**
      * Gets the enti.
-     * 
+     *
      * @return the enti
      */
     public final TipoParametroVO getEnti() {
@@ -108,7 +109,7 @@ public final class ParametroXlsAction extends BaseAction {
 
     /**
      * Gets the stream.
-     * 
+     *
      * @return the stream
      */
     public final InputStream getStream() {

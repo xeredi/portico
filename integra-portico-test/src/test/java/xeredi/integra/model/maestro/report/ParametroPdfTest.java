@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -57,7 +58,7 @@ public final class ParametroPdfTest {
         final String locale = "es_ES";
 
         final ParametroPdf prmtPdf = new ParametroPdf(new Locale(language, country));
-        final Parametro prmt = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmt = BOFactory.getInjector().getInstance(ParametroBO.class);
 
         for (final Long tpprId : tpprIds) {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -104,7 +105,7 @@ public final class ParametroPdfTest {
 
                 final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
 
-                if (tpprVO.isI18n()) {
+                if (tpprVO.getI18n()) {
                     p18nMap.putAll(prmt.selectI18nMap(prmtVO.getPrvr().getId()));
                 }
 

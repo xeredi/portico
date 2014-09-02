@@ -12,6 +12,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -50,7 +51,7 @@ public final class EscalaAction extends ItemAction {
 
     /**
      * Autorizar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -60,7 +61,7 @@ public final class EscalaAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final EscalaBO escaBO = new EscalaBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
@@ -77,7 +78,7 @@ public final class EscalaAction extends ItemAction {
 
     /**
      * Notificar guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -124,7 +125,7 @@ public final class EscalaAction extends ItemAction {
 
     /**
      * Sets the item.
-     * 
+     *
      * @param value
      *            the new item
      */
@@ -134,7 +135,7 @@ public final class EscalaAction extends ItemAction {
 
     /**
      * Checks if is notificado.
-     * 
+     *
      * @return true, if is notificado
      */
     public final boolean isNotificado() {

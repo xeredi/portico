@@ -13,9 +13,11 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.bo.Estadistica;
+import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.util.Entidad;
@@ -90,7 +92,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Estadistica estdBO = BOFactory.getInjector().getInstance(Estadistica.class);
+        final Estadistica estdBO = BOFactory.getInjector().getInstance(EstadisticaBO.class);
 
         enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(true);
@@ -112,7 +114,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      * @return the autps
      */
     public List<LabelValueVO> getAutpList() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final Set<Long> tpprIds = new HashSet<>();
 
         tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());

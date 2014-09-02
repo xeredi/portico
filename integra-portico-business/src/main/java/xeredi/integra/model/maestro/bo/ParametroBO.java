@@ -91,18 +91,18 @@ public class ParametroBO implements Parametro {
         Preconditions.checkNotNull(prmtVO.getParametro());
         Preconditions.checkNotNull(tpprVO);
 
-        if (tpprVO.isTempExp()) {
+        if (tpprVO.getTempExp()) {
             Preconditions.checkNotNull(prmtVO.getPrvr());
             Preconditions.checkNotNull(prmtVO.getPrvr().getFinicio());
         }
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             Preconditions.checkNotNull(i18nMap);
         }
 
         final IgBO igBO = new IgBO();
 
-        if (!tpprVO.isTempExp()) {
+        if (!tpprVO.getTempExp()) {
             // FIXME Esto lo meto para poder dar de alta datos en maestros
             // 'Sobre la marcha'
             final Calendar calendar = Calendar.getInstance();
@@ -111,7 +111,7 @@ public class ParametroBO implements Parametro {
             prmtVO.getPrvr().setFinicio(calendar.getTime());
         }
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             final Set<String> languages = GlobalNames.AVAILABLE_LANGUAGES;
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
@@ -158,7 +158,7 @@ public class ParametroBO implements Parametro {
             }
         }
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             for (final ParametroI18nVO i18nVO : i18nMap.values()) {
                 i18nVO.setPrvrId(prmtVO.getPrvr().getId());
                 p18nDAO.insert(i18nVO);
@@ -179,11 +179,11 @@ public class ParametroBO implements Parametro {
         Preconditions.checkNotNull(prmtVO.getParametro());
         Preconditions.checkNotNull(tpprVO);
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             Preconditions.checkNotNull(i18nMap);
         }
 
-        if (tpprVO.isTempExp()) {
+        if (tpprVO.getTempExp()) {
             Preconditions.checkNotNull(prmtVO.getPrvr());
             Preconditions.checkNotNull(prmtVO.getPrvr().getFinicio());
         } else {
@@ -227,7 +227,7 @@ public class ParametroBO implements Parametro {
             }
         }
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             for (final ParametroI18nVO p18nVO : i18nMap.values()) {
                 p18nVO.setPrvrId(prmtVO.getPrvr().getId());
 
@@ -250,7 +250,7 @@ public class ParametroBO implements Parametro {
             for (final SubparametroVO sprmVO : sprmList) {
                 final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(sprmVO.getEntiId());
 
-                if (tpspVO.isCmdDuplicado()) {
+                if (tpspVO.getCmdDuplicado()) {
                     sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
                     spvrIds.add(sprmVO.getSpvr().getId());
                 }
@@ -312,18 +312,18 @@ public class ParametroBO implements Parametro {
         Preconditions.checkNotNull(prmtVO.getPrvr());
         Preconditions.checkNotNull(prmtVO.getPrvr().getId());
 
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             Preconditions.checkNotNull(i18nMap);
         }
 
-        if (tpprVO.isTempExp()) {
+        if (tpprVO.getTempExp()) {
             Preconditions.checkNotNull(prmtVO.getPrvr().getFinicio());
         }
 
         final IgBO igBO = new IgBO();
 
         // Validaciones
-        if (tpprVO.isI18n()) {
+        if (tpprVO.getI18n()) {
             final Set<String> languages = GlobalNames.AVAILABLE_LANGUAGES;
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
@@ -343,7 +343,7 @@ public class ParametroBO implements Parametro {
             }
         }
 
-        if (tpprVO.isTempExp()) {
+        if (tpprVO.getTempExp()) {
             prmtVO.getPrvr().setFinicio(Calendar.getInstance().getTime());
 
             throw new Error("No implementado!");
@@ -392,7 +392,7 @@ public class ParametroBO implements Parametro {
         Preconditions.checkNotNull(tpprVO);
 
         // Un parametro con temporalidad explicita NO SE PUEDE BORRAR
-        if (tpprVO.isTempExp()) {
+        if (tpprVO.getTempExp()) {
             throw new Error("El parametro con versionId: " + prvrId + " de la entidad: " + tpprVO
                     + " no se puede borrar debido a que tiene temporalidad explicita");
         }

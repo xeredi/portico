@@ -25,6 +25,7 @@ import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.Servicio;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.ConfigurationUtil;
@@ -108,7 +109,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                 }
 
                 if (prbtVO.getPrmnList().isEmpty()) {
-                    final Servicio srvcBO = BOFactory.getInjector().getInstance(Servicio.class);
+                    final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
                     try {
                         srvcBO.insert(manifiestoPescaVO, partidaPescaList);

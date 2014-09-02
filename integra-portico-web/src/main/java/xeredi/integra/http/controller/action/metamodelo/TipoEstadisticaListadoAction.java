@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.TipoEstadistica;
+import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -52,7 +53,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      */
     @Action(value = "tpes-listado")
     public String listado() {
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadistica.class);
+        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
         if (tpesCriterio.getCodigo() != null) {
             tpesCriterio.setCodigo(tpesCriterio.getCodigo().toUpperCase());

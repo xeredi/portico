@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 
 // TODO: Auto-generated Javadoc
@@ -23,7 +24,7 @@ public final class EntidadAction extends BaseAction {
     // Acciones Web
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      */
     @Action(value = "enti-detalle", results = {
@@ -32,7 +33,7 @@ public final class EntidadAction extends BaseAction {
             @Result(name = "S", location = "tpss-detalle", type = "redirect", params = { "tpss.id", "%{enti.id}" }),
             @Result(name = "B", location = "tpsp-detalle", type = "redirect", params = { "tpsp.id", "%{enti.id}" }) })
     public String detalle() {
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         return entiBO.selectTipoEntidad(enti.getId()).name();
     }
@@ -40,7 +41,7 @@ public final class EntidadAction extends BaseAction {
     // get/set
     /**
      * Gets the enti.
-     * 
+     *
      * @return the enti
      */
     public EntidadVO getEnti() {
@@ -49,7 +50,7 @@ public final class EntidadAction extends BaseAction {
 
     /**
      * Sets the enti.
-     * 
+     *
      * @param value
      *            the new enti
      */

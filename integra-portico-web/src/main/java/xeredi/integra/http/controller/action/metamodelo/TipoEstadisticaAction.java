@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.TipoEstadistica;
+import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -66,7 +67,7 @@ public final class TipoEstadisticaAction extends BaseAction {
             throw new Error("Identificador de tipo de estadistica no especificado");
         }
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadistica.class);
+        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
         tpes = tpesBO.select(tpes.getId());
 
@@ -96,7 +97,7 @@ public final class TipoEstadisticaAction extends BaseAction {
             return INPUT;
         }
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadistica.class);
+        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             tpes.setCodigo(tpes.getCodigo().toUpperCase());
@@ -122,7 +123,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     @Action(value = "tpes-detalle")
     public String detalle() throws InstanceNotFoundException {
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadistica.class);
+        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
         tpes = tpesBO.select(tpes.getId());
 

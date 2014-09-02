@@ -9,8 +9,9 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.Entidad;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
@@ -60,7 +61,7 @@ public final class TipoDatoListadoAction extends BaseAction {
     @Actions({ @Action(value = "tpdt-listado"),
             @Action(value = "tpdt-listado-json", results = { @Result(name = "success", type = "json") }), })
     public String listado() {
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
+        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
@@ -122,7 +123,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      * @return the tpprs
      */
     public List<LabelValueVO> getEntis() {
-        return BOFactory.getInjector().getInstance(Entidad.class).selectLabelValues();
+        return BOFactory.getInjector().getInstance(EntidadBO.class).selectLabelValues();
     }
 
     /**

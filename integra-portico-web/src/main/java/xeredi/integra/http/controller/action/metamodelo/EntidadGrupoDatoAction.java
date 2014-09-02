@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDato;
+import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -39,7 +40,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     // Acciones Web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -57,7 +58,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -66,7 +67,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDato.class);
+        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
         engd = engdBO.select(engd.getEntiId(), engd.getNumero());
 
@@ -75,7 +76,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -85,7 +86,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             @Result(name = "success", location = "enti-detalle", type = "redirect", params = { "enti.id",
             "%{engd.entiId}" }) })
     public String guardar() throws InstanceNotFoundException {
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDato.class);
+        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
         PropertyValidator.validateRequired(this, "engd.entiId", engd.getEntiId());
         PropertyValidator.validateRequired(this, "engd.numero", engd.getNumero());
@@ -111,14 +112,14 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
     @Action(value = "engd-detalle")
     public String detalle() throws InstanceNotFoundException {
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDato.class);
+        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
         engd = engdBO.select(engd.getEntiId(), engd.getNumero());
 
@@ -128,7 +129,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     // get/set
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -137,7 +138,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */
@@ -147,7 +148,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     /**
      * Gets the engd.
-     * 
+     *
      * @return the engd
      */
     public EntidadGrupoDatoVO getEngd() {
@@ -156,7 +157,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     /**
      * Sets the engd.
-     * 
+     *
      * @param value
      *            the new engd
      */

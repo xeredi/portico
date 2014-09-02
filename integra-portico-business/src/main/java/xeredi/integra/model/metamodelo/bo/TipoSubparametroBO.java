@@ -89,7 +89,7 @@ public class TipoSubparametroBO implements TipoSubparametro {
             throw new Error("Tipo de subparametro no encontrado: " + id);
         }
 
-        final Entidad entiBO = BOFactory.getInjector().getInstance(Entidad.class);
+        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
         entiBO.fillDependencies(entiVO);
 

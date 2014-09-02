@@ -10,7 +10,9 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.ClaveIdioma;
+import xeredi.integra.model.configuracion.bo.ClaveIdiomaBO;
 import xeredi.integra.model.configuracion.bo.Idioma;
+import xeredi.integra.model.configuracion.bo.IdiomaBO;
 import xeredi.integra.model.configuracion.vo.ClaveIdiomaVO;
 import xeredi.integra.model.configuracion.vo.IdiomaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -47,7 +49,7 @@ public final class ClaveIdiomaAction extends BaseAction {
     // Acciones web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -56,7 +58,7 @@ public final class ClaveIdiomaAction extends BaseAction {
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
 
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         cnids = cnidBO.selectAll();
 
@@ -65,7 +67,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -74,8 +76,8 @@ public final class ClaveIdiomaAction extends BaseAction {
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdioma.class);
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdiomaBO.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         cnci = cnciBO.select(cnci.getId());
         cnids = cnidBO.selectAll();
@@ -85,7 +87,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -105,7 +107,7 @@ public final class ClaveIdiomaAction extends BaseAction {
             return INPUT;
         }
 
-        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdioma.class);
+        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdiomaBO.class);
 
         if (accion == ACCION_EDICION.alta) {
             try {
@@ -126,7 +128,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -135,11 +137,11 @@ public final class ClaveIdiomaAction extends BaseAction {
         @Action(value = "cnci-detalle"),
         @Action(value = "cnci-detalle-popup", results = { @Result(name = "success", location = "cnci-detalle.jsp") }) })
     public String detalle() throws InstanceNotFoundException {
-        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdioma.class);
+        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdiomaBO.class);
 
         cnci = cnciBO.select(cnci.getId());
 
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
         cnids = cnidBO.selectAll();
 
@@ -150,7 +152,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -159,7 +161,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */
@@ -169,7 +171,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Gets the cnci.
-     * 
+     *
      * @return the cnci
      */
     public ClaveIdiomaVO getCnci() {
@@ -178,7 +180,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Sets the cnci.
-     * 
+     *
      * @param value
      *            the new cnci
      */
@@ -188,7 +190,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
     /**
      * Gets the cnids.
-     * 
+     *
      * @return the cnids
      */
     public List<IdiomaVO> getCnids() {

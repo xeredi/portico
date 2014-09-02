@@ -10,6 +10,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.util.Entidad;
@@ -27,7 +28,7 @@ public final class PeriodoProcesoBOTest {
 
     /**
      * Test agregacion.
-     * 
+     *
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws DuplicateInstanceException
@@ -39,8 +40,8 @@ public final class PeriodoProcesoBOTest {
     public void testAgregacion() throws InstanceNotFoundException, DuplicateInstanceException, IOException {
         LOG.info("Start test");
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProceso.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
 
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 

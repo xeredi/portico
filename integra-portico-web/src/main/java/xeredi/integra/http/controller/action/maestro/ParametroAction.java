@@ -125,7 +125,7 @@ public final class ParametroAction extends ItemAction {
             item = prmtBO.selectObject(prmtCriterioVO);
             enti = TipoParametroProxy.select(item.getEntiId());
 
-            if (enti.isI18n()) {
+            if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
 
@@ -160,7 +160,7 @@ public final class ParametroAction extends ItemAction {
             item = prmtBO.selectObject(prmtCriterioVO);
             enti = TipoParametroProxy.select(item.getEntiId());
 
-            if (enti.isI18n()) {
+            if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
 
@@ -203,7 +203,7 @@ public final class ParametroAction extends ItemAction {
             addActionError(getText(ErrorCode.E00006.name()));
         }
 
-        if (enti.isTempExp()) {
+        if (enti.getTempExp()) {
             if (item.getPrvr().getFinicio() == null) {
                 addActionError(getText(ErrorCode.E00003.name()));
             }
@@ -213,7 +213,7 @@ public final class ParametroAction extends ItemAction {
             }
         }
 
-        if (enti.isI18n()) {
+        if (enti.getI18n()) {
             for (final String idioma : p18nMap.keySet()) {
                 final ParametroI18nVO i18nVO = p18nMap.get(idioma);
 
@@ -319,7 +319,7 @@ public final class ParametroAction extends ItemAction {
 
             // LOG.info(enti);
 
-            if (enti.isI18n()) {
+            if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
 

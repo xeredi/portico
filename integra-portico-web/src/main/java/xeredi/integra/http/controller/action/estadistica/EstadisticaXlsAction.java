@@ -13,6 +13,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.estadistica.bo.Estadistica;
+import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -49,7 +50,7 @@ public final class EstadisticaXlsAction extends BaseAction {
 
     /**
      * Excel export.
-     * 
+     *
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
@@ -60,7 +61,7 @@ public final class EstadisticaXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Estadistica estdBO = BOFactory.getInjector().getInstance(Estadistica.class);
+        final Estadistica estdBO = BOFactory.getInjector().getInstance(EstadisticaBO.class);
 
         enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
@@ -80,7 +81,7 @@ public final class EstadisticaXlsAction extends BaseAction {
 
     /**
      * Gets the item criterio.
-     * 
+     *
      * @return the item criterio
      */
     public final EstadisticaCriterioVO getItemCriterio() {
@@ -89,7 +90,7 @@ public final class EstadisticaXlsAction extends BaseAction {
 
     /**
      * Sets the item criterio.
-     * 
+     *
      * @param itemCriterio
      *            the new item criterio
      */
@@ -99,7 +100,7 @@ public final class EstadisticaXlsAction extends BaseAction {
 
     /**
      * Gets the enti.
-     * 
+     *
      * @return the enti
      */
     public final TipoEstadisticaVO getEnti() {
@@ -108,7 +109,7 @@ public final class EstadisticaXlsAction extends BaseAction {
 
     /**
      * Gets the stream.
-     * 
+     *
      * @return the stream
      */
     public final InputStream getStream() {

@@ -9,6 +9,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.proceso.bo.OperacionNoPermitidaException;
 import xeredi.integra.model.proceso.bo.Proceso;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
@@ -46,7 +47,7 @@ public final class ProcesoAction extends BaseAction {
             @Action(value = "prbt-detalle-json", results = { @Result(name = "success", type = "json", params = {
                     "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
     public String detalle() throws InstanceNotFoundException {
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
+        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
 
         prbt = prbtBO.select(prbt.getId());
 
@@ -68,7 +69,7 @@ public final class ProcesoAction extends BaseAction {
         }
 
         try {
-            final Proceso prbtBO = BOFactory.getInjector().getInstance(Proceso.class);
+            final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
 
             prbtBO.cancelar(prbt.getId());
             addActionMessage("Proceso cancelado correctamente");

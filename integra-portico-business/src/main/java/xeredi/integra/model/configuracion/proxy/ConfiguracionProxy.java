@@ -10,9 +10,13 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.configuracion.bo.Clave;
+import xeredi.integra.model.configuracion.bo.ClaveBO;
 import xeredi.integra.model.configuracion.bo.ClaveIdioma;
+import xeredi.integra.model.configuracion.bo.ClaveIdiomaBO;
 import xeredi.integra.model.configuracion.bo.Entorno;
+import xeredi.integra.model.configuracion.bo.EntornoBO;
 import xeredi.integra.model.configuracion.bo.Idioma;
+import xeredi.integra.model.configuracion.bo.IdiomaBO;
 import xeredi.integra.model.configuracion.dao.ValorDAO;
 import xeredi.integra.model.configuracion.dao.ValorIdiomaDAO;
 import xeredi.integra.model.configuracion.vo.ClaveIdiomaVO;
@@ -59,7 +63,7 @@ public final class ConfiguracionProxy {
 
     /**
      * Gets the long.
-     * 
+     *
      * @param key
      *            the key
      * @return the long
@@ -80,7 +84,7 @@ public final class ConfiguracionProxy {
 
     /**
      * Gets the double.
-     * 
+     *
      * @param key
      *            the key
      * @return the double
@@ -101,7 +105,7 @@ public final class ConfiguracionProxy {
 
     /**
      * Gets the boolean.
-     * 
+     *
      * @param key
      *            the key
      * @return the boolean
@@ -118,7 +122,7 @@ public final class ConfiguracionProxy {
 
     /**
      * Gets the string.
-     * 
+     *
      * @param key
      *            the key
      * @return the string
@@ -133,7 +137,7 @@ public final class ConfiguracionProxy {
 
     /**
      * Gets the string.
-     * 
+     *
      * @param key
      *            the key
      * @param tipoValor
@@ -162,7 +166,7 @@ public final class ConfiguracionProxy {
 
     /**
      * Gets the message.
-     * 
+     *
      * @param key
      *            the key
      * @return the message
@@ -183,10 +187,10 @@ public final class ConfiguracionProxy {
     private static void load() {
         LOG.info("Database configuration load start");
 
-        final Idioma cnidBO = BOFactory.getInjector().getInstance(Idioma.class);
-        final Entorno cnenBO = BOFactory.getInjector().getInstance(Entorno.class);
-        final Clave cnclBO = BOFactory.getInjector().getInstance(Clave.class);
-        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdioma.class);
+        final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
+        final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
+        final Clave cnclBO = BOFactory.getInjector().getInstance(ClaveBO.class);
+        final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdiomaBO.class);
 
         cnidMap.putAll(cnidBO.selectAllMap());
         cnenMap.putAll(cnenBO.selectAllMap());

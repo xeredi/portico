@@ -13,9 +13,11 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.bo.PeriodoProceso;
+import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -84,7 +86,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
             return INPUT;
         }
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProceso.class);
+        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
 
         peprList = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
@@ -145,7 +147,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      * @return the autps
      */
     public List<LabelValueVO> getAutps() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(Parametro.class);
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final Set<Long> tpprIds = new HashSet<>();
 
         tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
