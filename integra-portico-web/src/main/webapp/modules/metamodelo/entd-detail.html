@@ -1,0 +1,77 @@
+<div class="table-responsive">
+    <fieldset>
+        <legend>{{enti.nombre | uppercase}}</legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#/metamodelo/entd/edit/{{entd.entiId}}/{{entd.tpdt.id}}"><i
+                    class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label> {{"entd_etiqueta" | translate}} </label>
+                <p class="form-control-static">{{entd.etiqueta}}</p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label> {{"entd_tpdt_nombre" | translate}} </label>
+                <p class="form-control-static">{{entd.tpdt.nombre}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_tpdt_tipoElemento" | translate}} </label>
+                <p class="form-control-static">{{entd.tpdt.tipoElemento}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_tpdt_tpht" | translate}} </label>
+                <p class="form-control-static">{{entd.tpdt.tpht}}</p>
+            </div>
+            <div class="col-md-3 form-group">
+                <label> {{"entd_tpdt_enti" | translate}} </label>
+                <p class="form-control-static">
+                    <a ng-id="entd.tpdt.enti" href="#/metamodelo/tpprs/detail/{{entd.tpdt.enti.id}}">{{entd.tpdt.enti.etiqueta}}</a>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 form-group">
+                <label> {{"entd_grupo" | translate}} </label>
+                <p class="form-control-static">{{entd.grupo}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_fila" | translate}} </label>
+                <p class="form-control-static">{{entd.fila}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_orden" | translate}} </label>
+                <p class="form-control-static">{{entd.orden}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_span" | translate}} </label>
+                <p class="form-control-static">{{entd.span}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_spanLg" | translate}} </label>
+                <p class="form-control-static">{{entd.spanLg}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_obligatorio" | translate}} </label>
+                <p class="form-control-static">
+                    <i ng-if="entd.obligatorio" class="glyphicon glyphicon-ok"></i>
+                </p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_gridable" | translate}} </label>
+                <p class="form-control-static">
+                    <i ng-if="entd.gridable" class="glyphicon glyphicon-ok"></i>
+                </p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_filtrable" | translate}} </label>
+                <p class="form-control-static">
+                    <i ng-if="entd.filtrable" class="glyphicon glyphicon-ok"></i>
+                </p>
+            </div>
+        </div>
+    </fieldset>
+</div>

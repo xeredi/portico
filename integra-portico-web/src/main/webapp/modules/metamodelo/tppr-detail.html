@@ -18,33 +18,37 @@
                 <label> {{"enti_nombre" | translate}} </label>
                 <p class="form-control-static">{{enti.nombre}}</p>
             </div>
+            <div class="col-md-2 form-group">
+                <label> {{"enti_tipo" | translate}} </label>
+                <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
+            </div>
         </div>
         <div class="row">
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label> {{"enti_cmd_alta" | translate}} </label>
                 <p class="form-control-static">
                     <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label> {{"enti_cmd_baja" | translate}} </label>
                 <p class="form-control-static">
                     <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label> {{"enti_cmd_edicion" | translate}} </label>
                 <p class="form-control-static">
                     <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label> {{"enti_cmd_duplicado" | translate}} </label>
                 <p class="form-control-static">
                     <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label> {{"enti_i18n" | translate}} </label>
                 <p class="form-control-static">
                     <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i>
@@ -82,7 +86,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="entd in enti.entdList">
-                    <td />
+                    <td><a href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{enti.entdMap[entd].grupo}}</td>
                     <td>{{enti.entdMap[entd].fila}}</td>
                     <td>{{enti.entdMap[entd].orden}}</td>
@@ -93,9 +98,10 @@
                     <td><i ng-if="enti.entdMap[entd].gridable" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="enti.entdMap[entd].filtrable" class="glyphicon glyphicon-ok"></i></td>
                     <td>{{enti.entdMap[entd].tpdt.nombre}}</td>
-                    <td>{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
-                    <td>{{enti.entdMap[entd].tpdt.tpht}}</td>
-                    <td>{{enti.entdMap[entd].tpdt.enti.etiqueta}}</td>
+                    <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}">{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
+                    <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
+                    <td><a ng-id="entd.tpdt.enti"
+                        href="#/metamodelo/tpprs/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></td>
                 </tr>
             </tbody>
         </table>

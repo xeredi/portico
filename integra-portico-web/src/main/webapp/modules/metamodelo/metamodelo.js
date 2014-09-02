@@ -28,6 +28,11 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpprsCreateController"
     })
 
+    .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
+        templateUrl : "modules/metamodelo/entd-detail.html",
+        controller : "entdDetailController"
+    })
+
     .otherwise({
         redirectTo : "/phones"
     });
@@ -138,4 +143,17 @@ metamodelo.controller("tpprsCreateController", function($scope, $http, $location
             }
         });
     }
+});
+
+metamodelo.controller("entdDetailController", function($scope, $http, $location, $route, $routeParams) {
+    console.log("entdDetailController");
+    console.log($routeParams.entiId);
+    console.log($routeParams.tpdtId);
+
+    var url = "metamodelo/entd-detalle.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
+            + $routeParams.tpdtId;
+
+    $http.get(url).success(function(data) {
+        $scope.entd = data.entd;
+    });
 });

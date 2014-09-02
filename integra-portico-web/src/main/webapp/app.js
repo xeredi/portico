@@ -16,6 +16,30 @@ app.config(function($translateProvider) {
         fmt_date : 'dd/MM/yyyy',
         fmt_datetime : 'dd/MM/yyyy HH:mm',
 
+        TipoElemento_BO : "Booleano",
+        TipoElemento_CR : "Cod. Referencia",
+        TipoElemento_FE : "Fecha",
+        TipoElemento_FH : "Fecha/Hora",
+        TipoElemento_ND : "N\u00famero Decimal",
+        TipoElemento_NE : "N\u00famero Entero",
+        TipoElemento_PR : "Maestro",
+        TipoElemento_SR : "Servicio",
+        TipoElemento_TX : "Texto",
+
+        TipoEntidad_P : "Maestro",
+        TipoEntidad_B : "Submaestro",
+        TipoEntidad_T : "Tipo de Servicio",
+        TipoEntidad_S : "Tipo de Subservicio",
+        TipoEntidad_E : "Tipo de Estad\u00edstica",
+
+        TipoHtml_T : "Textfield",
+        TipoHtml_S : "Select",
+        TipoHtml_CB : "Checkbox",
+        TipoHtml_D : "Date",
+        TipoHtml_DT : "Datetime",
+        TipoHtml_F : "Filtro (Lupa)",
+        TipoHtml_TA : "Textarea",
+
         boton_buscar : 'Buscar',
         boton_aceptar : 'Aceptar',
         boton_cancelar : 'Cancelar',
@@ -165,6 +189,7 @@ app.config(function($translateProvider) {
 
         enti_codigo : 'C\u00f3d.',
         enti_nombre : 'Nombre',
+        enti_tipo : 'Tipo',
         enti_cmd_alta : 'Alta?',
         enti_cmd_baja : 'Baja?',
         enti_cmd_edicion : 'Edici\u00f3n?',

@@ -8,8 +8,11 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDato;
+import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDato;
+import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -44,7 +47,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
     // Acciones Web
     /**
      * Alta.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -62,14 +65,14 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /**
      * Modificar.
-     * 
+     *
      * @return the string
      */
     @Action(value = "entd-modificar", results = { @Result(name = "success", location = "entd-edicion.jsp") })
     public String modificar() {
         accion = ACCION_EDICION.modificar;
 
-        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDato.class);
+        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());
 
@@ -78,7 +81,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -88,7 +91,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
             @Result(name = "success", location = "enti-detalle", type = "redirect", params = { "enti.id",
             "%{entd.entiId}" }) })
     public String guardar() throws InstanceNotFoundException {
-        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDato.class);
+        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
         // PropertyValidator.validateRequired(this, "entd.grupo", entd.getGrupo());
         PropertyValidator.validateRequired(this, "entd.fila", entd.getFila());
@@ -97,7 +100,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
         PropertyValidator.validateRequired(this, "entd.etiqueta", entd.getEtiqueta());
 
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
         if (accion == ACCION_EDICION.alta) {
@@ -116,12 +119,12 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /**
      * Detalle.
-     * 
+     *
      * @return the string
      */
     @Action(value = "entd-detalle")
     public String detalle() {
-        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDato.class);
+        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());
 
@@ -131,29 +134,29 @@ public final class EntidadTipoDatoAction extends BaseAction {
     // get/set
     /**
      * Gets the tpdt list.
-     * 
+     *
      * @return the tpdt list
      */
     public List<LabelValueVO> getTpdts() {
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDato.class);
+        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         return tpdtBO.selectLabelValues();
     }
 
     /**
      * Gets the engds.
-     * 
+     *
      * @return the engds
      */
     public List<LabelValueVO> getEngds() {
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDato.class);
+        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
         return engdBO.selectLabelValues(entd.getEntiId());
     }
 
     /**
      * Gets the accion.
-     * 
+     *
      * @return the accion
      */
     public ACCION_EDICION getAccion() {
@@ -162,7 +165,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /**
      * Sets the accion.
-     * 
+     *
      * @param value
      *            the new accion
      */
@@ -172,7 +175,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /**
      * Gets the entd.
-     * 
+     *
      * @return the entd
      */
     public EntidadTipoDatoVO getEntd() {
@@ -181,7 +184,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /**
      * Sets the entd.
-     * 
+     *
      * @param value
      *            the new entd
      */
