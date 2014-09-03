@@ -1,9 +1,11 @@
-var app = angular.module('integraApp',
-        [ 'ui.bootstrap', 'ui.router', 'ui.bootstrap.datetimepicker', 'pascalprecht.translate', 'ngRoute',
-                'metamodelo', /*
-                                 * 'configuracion', 'maestro', 'servicio',
-                                 * 'proceso', 'facturacion'
-                                 */]);
+var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.router', 'ui.bootstrap.datetimepicker',
+        'pascalprecht.translate', 'ngRoute', 'metamodelo', /*
+                                                             * 'configuracion',
+                                                             * 'maestro',
+                                                             * 'servicio',
+                                                             * 'proceso',
+                                                             * 'facturacion'
+                                                             */]);
 
 app.config(function($translateProvider) {
     $translateProvider.translations('es', {
@@ -184,6 +186,11 @@ app.config(function($translateProvider) {
         rgin_rgiv_fini : 'F. Inicio Incomp.',
         rgin_rgiv_ffin : 'F. Fin Incomp.',
 
+        tppr_filter_title : 'Maestros - Filtro',
+        tppr_grid_title : 'Maestros - Listado',
+        tppr_detail_title : 'Maestro - Detalle',
+        tppr_edit_title : 'Maestro - Edicion',
+        tppr_create_title : 'Maestro - Alta',
         tppr_codigo : 'C\u00f3digo',
         tppr_nombre : 'Nombre',
 

@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -50,7 +49,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "entd-alta", results = { @Result(name = "success", location = "entd-edicion.jsp") })
+    @Action("entd-alta")
     public String alta() throws InstanceNotFoundException {
         if (entd.getEntiId() == null) {
             throw new Error("No se ha seleccionado una entidad");
@@ -66,7 +65,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "entd-modificar", results = { @Result(name = "success", location = "entd-edicion.jsp") })
+    @Action("entd-modificar")
     public String modificar() {
         accion = ACCION_EDICION.modificar;
 
@@ -84,10 +83,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "entd-guardar", results = {
-            @Result(name = "input", location = "entd-edicion.jsp"),
-            @Result(name = "success", location = "enti-detalle", type = "redirect", params = { "enti.id",
-            "%{entd.entiId}" }) })
+    @Action("entd-guardar")
     public String guardar() throws InstanceNotFoundException {
         final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
@@ -120,7 +116,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "entd-detalle")
+    @Action("entd-detalle")
     public String detalle() {
         final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 

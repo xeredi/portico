@@ -1,0 +1,82 @@
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
+
+<form name="editForm" novalidate role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="entd.entiId" /> <input type="hidden"
+        ng-model="entd.tpdt.id" />
+
+    <fieldset>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label>{{"entd_etiqueta" | translate}}</label> <input type="text" ng-model="entd.etiqueta"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{"entd_tpdt_nombre" | translate}}</label> <span ng-if="accion == 'alta'"> <select
+                    ng-model="entd.tpdt.id" class="form-control input-sm">
+                        <option value="" />
+                        <option ng-repeat="labelValue in tpdtList" value="{{labelValue.value}}"
+                            ng-selected="entd.tpdt.id == labelValue.value">{{labelValue.label}}</option>
+                </select>
+                </span><span ng-if="accion != 'alta'">
+                    <p class="form-control-static">{{entd.tpdt.nombre}}</p>
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 form-group">
+                <label> {{"entd_grupo" | translate}} </label> <input type="text" ng-model="entd.grupo"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_fila" | translate}} </label> <input type="text" ng-model="entd.fila"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_orden" | translate}} </label> <input type="text" ng-model="entd.orden"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_span" | translate}} </label> <input type="text" ng-model="entd.span"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_spanLg" | translate}} </label> <input type="text" ng-model="entd.spanLg"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_obligatorio" | translate}} </label> <select ng-model="entd.obligatorio"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option value="true" ng-selected="entd.obligatorio">{{'fmt_true' | translate}}</option>
+                    <option value="false" ng-selected="!entd.obligatorio">{{'fmt_false' | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_gridable" | translate}} </label> <select ng-model="entd.gridable"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option value="true" ng-selected="entd.gridable">{{'fmt_true' | translate}}</option>
+                    <option value="false" ng-selected="!entd.gridable">{{'fmt_false' | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"entd_filtrable" | translate}} </label> <select ng-model="entd.filtrable"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option value="true" ng-selected="entd.filtrable">{{'fmt_true' | translate}}</option>
+                    <option value="false" ng-selected="!entd.filtrable">{{'fmt_false' | translate}}</option>
+                </select>
+            </div>
+        </div>
+
+        <button data-ng-click="submit(editForm)" class="btn btn-default">
+            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+    </fieldset>
+</form>
+
