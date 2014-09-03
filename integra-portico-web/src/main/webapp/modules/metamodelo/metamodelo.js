@@ -367,6 +367,74 @@ metamodelo.controller("tpprCreateController", function($scope, $http, $location,
     }
 });
 
+metamodelo.controller("tpspDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpsp-detail.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+    });
+});
+
+metamodelo.controller("tpspEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpsp-edit.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    var urlEntiList = "metamodelo/enti-lv-list.action";
+
+    $http.get(urlEntiList).success(function(data) {
+        $scope.entiList = data.lvList;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpsp-save.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpsp/detail/" + data.enti.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+metamodelo.controller("tpspCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpsp-create.action?enti.tpprId=" + $routeParams.tpprId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    var urlEntiList = "metamodelo/enti-lv-list.action";
+
+    $http.get(urlEntiList).success(function(data) {
+        $scope.entiList = data.lvList;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpsp-save.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpsp/detail/" + data.enti.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
 // -------------------- TIPO DE SERVICIO ------------------
 
 metamodelo.controller("tpsrFilterController", function($scope, $http, $location) {

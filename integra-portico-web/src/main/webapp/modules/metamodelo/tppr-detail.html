@@ -121,6 +121,14 @@
 
     <fieldset>
         <legend>{{"Subentidades" | uppercase}}</legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#/metamodelo/tpsp/create/{{enti.id}}"><i
+                    class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+            </div>
+        </div>
+
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
@@ -136,14 +144,14 @@
             </thead>
             <tbody>
                 <tr ng-repeat="subenti in subentiList">
-                    <td />
+                    <td><a href="#/metamodelo/tpsp/detail/{{subenti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{subenti.codigo}}</td>
                     <td>{{subenti.nombre}}</td>
                     <td><i ng-if="subenti.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="subenti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="subenti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="subenti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
-                    <td><a ng-if="subenti.tpprAsociado" href="#/metamodelo/enti/detail/{{subenti.tpprAsociado.id}}">{{subenti.tpprAsociado.etiqueta}}</a></td>
+                    <td><a ng-if="subenti.tpprAsociado" href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}">{{subenti.tpprAsociado.etiqueta}}</a></td>
                 </tr>
             </tbody>
         </table>

@@ -1,19 +1,13 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import java.util.List;
-
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoParametro;
-import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametro;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.struts.PropertyValidator;

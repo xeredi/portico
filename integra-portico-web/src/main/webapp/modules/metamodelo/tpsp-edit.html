@@ -18,6 +18,14 @@
                 <label>{{"enti_nombre" | translate}}</label> <input type="text" ng-model="enti.nombre"
                     class="form-control input-sm" />
             </div>
+            <div class="col-md-3 form-group">
+                <label>{{"enti_tpprAsociado" | translate}}</label> <select ng-model="enti.tpprAsociado.id"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}"
+                        ng-selected="enti.tpprAsociado.id == labelValue.value">{{labelValue.label}}</option>
+                </select>
+            </div>
         </div>
 
         <div class="row">
@@ -53,7 +61,6 @@
                     <option value="false" ng-selected="enti.cmdDuplicado != true">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
-            <!--
             <div class="col-md-1 form-group">
                 <label>{{"enti_i18n" | translate}}</label> <select ng-model="enti.i18n" class="form-control input-sm">
                     <option />
@@ -69,7 +76,6 @@
                     <option value="false" ng-selected="enti.tempExp != true">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
- -->
         </div>
 
         <button data-ng-click="submit(editForm)" class="btn btn-default">
