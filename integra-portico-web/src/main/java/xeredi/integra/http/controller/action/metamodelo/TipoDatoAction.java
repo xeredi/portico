@@ -5,6 +5,7 @@ import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
@@ -13,7 +14,6 @@ import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -83,14 +83,30 @@ public final class TipoDatoAction extends BaseAction {
     public String guardar() throws InstanceNotFoundException {
         // Validacion de datos
         if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "tpdt.nombre", tpdt.getNombre());
+            if (tpdt.getCodigo() == null || tpdt.getCodigo().isEmpty()) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_codigo") }));
+            }
+        } else {
+            if (tpdt.getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_id") }));
+            }
         }
 
-        PropertyValidator.validateRequired(this, "tpdt.tpht", tpdt.getTpht());
-        PropertyValidator.validateRequired(this, "tpdt.tipoElemento", tpdt.getTipoElemento());
+        if (tpdt.getNombre() == null || tpdt.getNombre().isEmpty()) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_nombre") }));
+        }
+        if (tpdt.getTpht() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_tpht") }));
+        }
+        if (tpdt.getTipoElemento() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_tipoElemento") }));
+        }
 
-        if (tpdt.getTipoElemento() != null && tpdt.getTipoElemento() == TipoElemento.PR) {
-            PropertyValidator.validateRequired(this, "tpdt.tppr", tpdt.getEnti());
+        if (tpdt.getTipoElemento() != null
+                && (tpdt.getTipoElemento() == TipoElemento.PR || tpdt.getTipoElemento() == TipoElemento.SR)) {
+            if (tpdt.getEnti() == null || tpdt.getEnti().getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_enti") }));
+            }
         }
 
         if (hasErrors()) {
@@ -103,7 +119,7 @@ public final class TipoDatoAction extends BaseAction {
             try {
                 tpdtBO.insert(tpdt);
             } catch (final DuplicateInstanceException ex) {
-                addFieldError("tpdt.nombre", getText("error.tpdt.duplicate"));
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpdt_codigo") }));
             }
         } else {
             tpdtBO.update(tpdt);
