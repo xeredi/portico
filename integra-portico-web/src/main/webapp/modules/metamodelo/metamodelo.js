@@ -30,6 +30,21 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpdtCreateController"
     })
 
+    .when("/metamodelo/cdrf/detail/:tpdtId/:valor", {
+        templateUrl : "modules/metamodelo/cdrf-detail.html",
+        controller : "cdrfDetailController"
+    })
+
+    .when("/metamodelo/cdrf/edit/:tpdtId/:valor", {
+        templateUrl : "modules/metamodelo/cdrf-edit.html",
+        controller : "cdrfEditController"
+    })
+
+    .when("/metamodelo/cdrf/create/:tpdtId", {
+        templateUrl : "modules/metamodelo/cdrf-edit.html",
+        controller : "cdrfCreateController"
+    })
+
     // ----------- MAESTRO ------------------
 
     .when("/metamodelo/tppr", {
@@ -271,6 +286,62 @@ metamodelo.controller("tpdtCreateController", function($scope, $http, $location,
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpdt/detail/" + data.tpdt.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+metamodelo.controller("cdrfDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/cdrf-detail.action?cdrf.tpdtId=" + $routeParams.tpdtId + "&cdrf.valor=" + $routeParams.valor;
+
+    $http.get(url).success(function(data) {
+        $scope.cdrf = data.cdrf;
+    });
+});
+
+metamodelo.controller("cdrfEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/cdrf-edit.action?cdrf.tpdtId=" + $routeParams.tpdtId + "&cdrf.valor=" + $routeParams.valor;
+
+    $http.get(url).success(function(data) {
+        $scope.cdrf = data.cdrf;
+        $scope.accion = data.accion;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/cdrf-save.action";
+
+        $http.post(url, {
+            cdrf : $scope.cdrf,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpdt/detail/" + data.cdrf.tpdtId);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+metamodelo.controller("cdrfCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/cdrf-create.action?cdrf.tpdtId=" + $routeParams.tpdtId;
+
+    $http.get(url).success(function(data) {
+        $scope.cdrf = data.cdrf;
+        $scope.accion = data.accion;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/cdrf-save.action";
+
+        $http.post(url, {
+            cdrf : $scope.cdrf,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpdt/detail/" + data.cdrf.tpdtId);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }

@@ -3,6 +3,7 @@ package xeredi.integra.model.metamodelo.bo;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
+import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -50,5 +51,16 @@ public class CodigoReferenciaBO implements CodigoReferencia {
         if (deleted == 0) {
             throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public CodigoReferenciaVO selectObject(CodigoReferenciaCriterioVO cdrfCriterioVO) {
+        Preconditions.checkNotNull(cdrfCriterioVO);
+
+        return cdrfDAO.selectObject(cdrfCriterioVO);
     }
 }

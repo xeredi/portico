@@ -38,4 +38,33 @@
             </div>
         </div>
     </fieldset>
+
+    <fieldset ng-if="tpdt.tipoElemento == 'CR'">
+        <legend>{{"Valores de Codigo de Referencia" | uppercase}}</legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#/metamodelo/cdrf/create/{{tpdt.id}}"><i
+                    class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+            </div>
+        </div>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th>{{"cdrf_valor" | translate}}</th>
+                    <th>{{"cdrf_orden" | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cdrf in tpdt.cdrfList">
+                    <td><a href="#/metamodelo/cdrf/detail/{{tpdt.id}}/{{cdrf.valor}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{cdrf.valor}}</td>
+                    <td>{{cdrf.orden}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 </div>

@@ -6,6 +6,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.CodigoReferencia;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
+import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -47,6 +48,28 @@ public final class CodigoReferenciaAction extends BaseAction {
     @Action("cdrf-create")
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
+
+        return SUCCESS;
+    }
+
+    /**
+     * Modificar.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Action("cdrf-edit")
+    public String modificar() throws InstanceNotFoundException {
+        accion = ACCION_EDICION.modificar;
+
+        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+        final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
+
+        cdrfCriterioVO.setTpdtId(cdrf.getTpdtId());
+        cdrfCriterioVO.setValor(cdrf.getValor());
+
+        cdrf = cdrfBO.selectObject(cdrfCriterioVO);
 
         return SUCCESS;
     }

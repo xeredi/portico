@@ -206,6 +206,9 @@ app.config(function($translateProvider) {
         tpdt_tpht : 'T. HTML',
         tpdt_enti : 'Entidad',
 
+        cdrf_valor : 'Valor',
+        cdrf_orden : 'Orden',
+
         enti_codigo : 'C\u00f3d.',
         enti_nombre : 'Nombre',
         enti_tipo : 'Tipo',
@@ -230,6 +233,7 @@ app.config(function($translateProvider) {
         entd_tpdt_tipoElemento : 'T. Elem.',
         entd_tpdt_tpht : 'T. HTML',
         entd_tpdt_enti : 'Entidad',
+
     });
 
     $translateProvider.preferredLanguage('es');
