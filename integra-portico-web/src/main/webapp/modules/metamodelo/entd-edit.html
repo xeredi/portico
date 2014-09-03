@@ -15,15 +15,13 @@
                     class="form-control input-sm" />
             </div>
             <div class="col-md-2 form-group">
-                <label>{{"entd_tpdt_nombre" | translate}}</label> <span ng-if="accion == 'alta'"> <select
+                <label>{{"entd_tpdt_nombre" | translate}}</label> <select ng-if="accion == 'alta'"
                     ng-model="entd.tpdt.id" class="form-control input-sm">
-                        <option value="" />
-                        <option ng-repeat="labelValue in tpdtList" value="{{labelValue.value}}"
-                            ng-selected="entd.tpdt.id == labelValue.value">{{labelValue.label}}</option>
+                    <option value="" />
+                    <option ng-repeat="labelValue in tpdtList" value="{{labelValue.value}}"
+                        ng-selected="entd.tpdt.id == labelValue.value">{{labelValue.label}}</option>
                 </select>
-                </span><span ng-if="accion != 'alta'">
-                    <p class="form-control-static">{{entd.tpdt.nombre}}</p>
-                </span>
+                <p ng-if="accion != 'alta'" class="form-control-static">{{entd.tpdt.nombre}}</p>
             </div>
         </div>
 

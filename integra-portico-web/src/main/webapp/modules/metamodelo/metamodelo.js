@@ -179,7 +179,7 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 metamodelo.controller("tpdtFilterController", function($scope, $http, $location) {
     $scope.submit = function(form) {
         $location.path("/metamodelo/tpdt/grid").search({
-            entiCriterio : {
+            tpdtCriterio : {
                 codigo : $scope.tpdtCriterio.codigo,
                 nombre : $scope.tpdtCriterio.nombre
             },
@@ -197,7 +197,7 @@ metamodelo.controller("tpdtGridController", function($scope, $http, $location, $
 
     var url = "metamodelo/tpdt-list.action";
 
-    $http.post(url, {
+    $http.get(url, {
         tpdtCriterio : $scope.tpdtCriterio,
         limit : $scope.limit,
         page : $scope.page
