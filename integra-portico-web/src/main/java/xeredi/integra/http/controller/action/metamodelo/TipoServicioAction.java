@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -38,10 +39,10 @@ public final class TipoServicioAction extends BaseAction {
     private TipoServicioVO enti;
 
     /** The tpss list. */
-    private List<TipoSubservicioVO> subentiList;
+    private final List<TipoSubservicioVO> subentiList = new ArrayList<>();
 
     /** The enti hijas list. */
-    private List<EntidadVO> entiHijasList;
+    private final List<EntidadVO> entiHijasList = new ArrayList<>();
 
     // Acciones Web
     /**
@@ -49,7 +50,7 @@ public final class TipoServicioAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("tpsr-alta")
+    @Action("tpsr-create")
     public String alta() {
         accion = ACCION_EDICION.alta;
 
@@ -65,7 +66,7 @@ public final class TipoServicioAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("tpsr-modificar")
+    @Action("tpsr-edit")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
@@ -87,7 +88,7 @@ public final class TipoServicioAction extends BaseAction {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    @Action("tpsr-guardar")
+    @Action("tpsr-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
@@ -125,7 +126,7 @@ public final class TipoServicioAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("tpsr-detalle")
+    @Action("tpsr-detail")
     public String detalle() throws InstanceNotFoundException {
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
         final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
@@ -137,7 +138,7 @@ public final class TipoServicioAction extends BaseAction {
 
         tpssCriterioVO = new TipoSubservicioCriterioVO();
         tpssCriterioVO.setTpsrId(enti.getId());
-        subentiList = tpssBO.selectList(tpssCriterioVO);
+        subentiList.addAll(tpssBO.selectList(tpssCriterioVO));
 
         if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
             EntidadCriterioVO entiCriterioVO = null;
@@ -145,7 +146,7 @@ public final class TipoServicioAction extends BaseAction {
             entiCriterioVO = new EntidadCriterioVO();
             entiCriterioVO.setEntiPadreId(enti.getId());
 
-            entiHijasList = entiBO.selectList(entiCriterioVO);
+            entiHijasList.addAll(entiBO.selectList(entiCriterioVO));
         }
 
         return SUCCESS;

@@ -31,10 +31,7 @@ public final class TipoSubparametroAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The tpsp. */
-    private TipoSubparametroVO tpsp;
-
-    /** The tpprs. */
-    private List<LabelValueVO> tpprs;
+    private TipoSubparametroVO enti;
 
     // Acciones Web
     /**
@@ -42,11 +39,11 @@ public final class TipoSubparametroAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "tpsp-alta", results = { @Result(name = "success", location = "tpsp-edicion.jsp") })
+    @Action("tpsp-create")
     public String alta() {
         accion = ACCION_EDICION.alta;
 
-        if (tpsp.getTpprId() == null) {
+        if (enti.getTpprId() == null) {
             throw new Error("No se ha especificado un tipo de parametro");
         }
 
@@ -60,17 +57,17 @@ public final class TipoSubparametroAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpsp-modificar", results = { @Result(name = "success", location = "tpsp-edicion.jsp") })
+    @Action("tpsp-edit")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
-        if (tpsp.getId() == null) {
+        if (enti.getId() == null) {
             throw new Error("Identificador de tipo de subparametro no especificado");
         }
 
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
-        tpsp = tpspBO.select(tpsp.getId());
+        enti = tpspBO.select(enti.getId());
 
         return SUCCESS;
     }
@@ -82,31 +79,29 @@ public final class TipoSubparametroAction extends BaseAction {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    @Action(value = "tpsp-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "enti-detalle", "enti.id",
-                    "%{tpsp.tppr.id}" }), @Result(name = "input", location = "tpsp-edicion.jsp") })
+    @Action("tpsp-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
-            PropertyValidator.validateRequired(this, "tpsp.codigo", tpsp.getCodigo());
-            PropertyValidator.validateRequired(this, "tpsp.nombre", tpsp.getNombre());
+            PropertyValidator.validateRequired(this, "tpsp.codigo", enti.getCodigo());
+            PropertyValidator.validateRequired(this, "tpsp.nombre", enti.getNombre());
         } else {
-            PropertyValidator.validateRequired(this, "tpsp.id", tpsp.getId());
+            PropertyValidator.validateRequired(this, "tpsp.id", enti.getId());
         }
 
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
         if (accion == ACCION_EDICION.alta) {
-            tpsp.setCodigo(tpsp.getCodigo().toUpperCase());
+            enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpspBO.insert(tpsp);
+            tpspBO.insert(enti);
         } else {
             try {
-                tpspBO.update(tpsp);
+                tpspBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
                 throw new Error(ex);
             }
@@ -122,11 +117,11 @@ public final class TipoSubparametroAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpsp-detalle")
+    @Action("tpsp-detail")
     public String detalle() throws InstanceNotFoundException {
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
-        tpsp = tpspBO.select(tpsp.getId());
+        enti = tpspBO.select(enti.getId());
 
         return SUCCESS;
     }
@@ -152,37 +147,22 @@ public final class TipoSubparametroAction extends BaseAction {
     }
 
     /**
-     * Gets the tpsp.
+     * Gets the enti.
      *
-     * @return the tpsp
+     * @return the enti
      */
-    public TipoSubparametroVO getTpsp() {
-        return tpsp;
+    public TipoSubparametroVO getEnti() {
+        return enti;
     }
 
     /**
-     * Sets the tpsp.
+     * Sets the enti.
      *
      * @param value
-     *            the new tpsp
+     *            the enti
      */
-    public void setTpsp(final TipoSubparametroVO value) {
-        tpsp = value;
-    }
-
-    /**
-     * Gets the tpprs.
-     *
-     * @return the tpprs
-     */
-    public List<LabelValueVO> getTpprs() {
-        if (tpprs == null) {
-            final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
-
-            tpprs = tpprBO.selectLabelValues();
-        }
-
-        return tpprs;
+    public void setEnti(TipoSubparametroVO value) {
+        this.enti = value;
     }
 
 }

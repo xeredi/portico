@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -21,7 +22,7 @@ public final class EntidadListadoAction extends BaseAction {
     private static final long serialVersionUID = 1250990272188228335L;
 
     /** The entis. */
-    private List<EntidadVO> entis;
+    private final List<EntidadVO> entiList = new ArrayList<>();
 
     /** The enti criterio form. */
     private EntidadCriterioVO entiCriterio;
@@ -41,7 +42,7 @@ public final class EntidadListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "enti-hija-listado-content")
+    @Action("enti-hija-list-content")
     public String hijaListado() {
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
@@ -49,7 +50,7 @@ public final class EntidadListadoAction extends BaseAction {
             throw new Error("No se ha proporcionado una entidad padre");
         }
 
-        entis = entiBO.selectList(entiCriterio);
+        entiList.addAll(entiBO.selectList(entiCriterio));
 
         return SUCCESS;
     }
@@ -59,7 +60,7 @@ public final class EntidadListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "enti-padre-listado-content")
+    @Action("enti-padre-list-content")
     public String padreListado() {
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
@@ -67,7 +68,7 @@ public final class EntidadListadoAction extends BaseAction {
             throw new Error("No se ha proporcionado una entidad hija");
         }
 
-        entis = entiBO.selectList(entiCriterio);
+        entiList.addAll(entiBO.selectList(entiCriterio));
 
         return SUCCESS;
     }
@@ -78,8 +79,8 @@ public final class EntidadListadoAction extends BaseAction {
      *
      * @return the list
      */
-    public List<EntidadVO> getEntis() {
-        return entis;
+    public List<EntidadVO> getEntiList() {
+        return entiList;
     }
 
     /**

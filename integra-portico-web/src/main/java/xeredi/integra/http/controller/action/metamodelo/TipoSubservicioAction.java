@@ -45,7 +45,7 @@ public final class TipoSubservicioAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("tpss-alta")
+    @Action("tpss-create")
     public String alta() {
         accion = ACCION_EDICION.alta;
 
@@ -65,7 +65,7 @@ public final class TipoSubservicioAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("tpss-modificar")
+    @Action("tpss-edit")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
@@ -87,7 +87,7 @@ public final class TipoSubservicioAction extends BaseAction {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    @Action("tpss-guardar")
+    @Action("tpss-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.alta) {
@@ -125,7 +125,7 @@ public final class TipoSubservicioAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("tpss-detalle")
+    @Action("tpss-detail")
     public String detalle() {
         final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);

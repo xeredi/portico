@@ -50,7 +50,7 @@ public final class TipoParametroListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("tppr-listado")
+    @Action("tppr-list")
     public String listado() {
         if (entiCriterio.getCodigo() != null) {
             entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
@@ -71,7 +71,7 @@ public final class TipoParametroListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("tppr-filtro") })
+    @Actions({ @Action("tppr-filter") })
     public static String editarFiltro() {
         return SUCCESS;
     }

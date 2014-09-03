@@ -50,7 +50,7 @@ public final class TipoServicioListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("tpsr-listado")
+    @Action("tpsr-list")
     public String listado() {
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
@@ -71,7 +71,7 @@ public final class TipoServicioListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("tpsr-filtro") })
+    @Actions({ @Action("tpsr-filter") })
     public static String editarFiltro() {
         return SUCCESS;
     }

@@ -50,7 +50,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("tpes-listado")
+    @Action("tpes-list")
     public String listado() {
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
@@ -71,7 +71,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("tpes-filtro") })
+    @Actions({ @Action("tpes-filter") })
     public String editarFiltro() {
         return SUCCESS;
     }

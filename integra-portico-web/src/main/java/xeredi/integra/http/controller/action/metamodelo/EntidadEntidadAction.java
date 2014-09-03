@@ -10,30 +10,30 @@ public final class EntidadEntidadAction {
 
     /**
      * Alta.
-     * 
+     *
      * @return the string
      */
-    @Action("enen-alta")
+    @Action("enen-create")
     public String alta() {
         throw new Error("Noimplementado");
     }
 
     /**
      * Guardar.
-     * 
+     *
      * @return the string
      */
-    @Action("enen-guardar")
+    @Action("enen-save")
     public String guardar() {
         throw new Error("Noimplementado");
     }
 
     /**
      * Eliminar.
-     * 
+     *
      * @return the string
      */
-    @Action("enen-eliminar")
+    @Action("enen-delete")
     public String eliminar() {
         throw new Error("Noimplementado");
     }

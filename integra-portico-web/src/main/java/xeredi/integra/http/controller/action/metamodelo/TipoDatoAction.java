@@ -1,21 +1,16 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import java.util.List;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.struts.PropertyValidator;
@@ -52,7 +47,7 @@ public final class TipoDatoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpdt-alta", results = { @Result(name = "success", location = "tpdt-edicion.jsp") })
+    @Action("tpdt-create")
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
 
@@ -66,7 +61,7 @@ public final class TipoDatoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpdt-modificar", results = { @Result(name = "success", location = "tpdt-edicion.jsp") })
+    @Action("tpdt-edit")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
@@ -84,9 +79,7 @@ public final class TipoDatoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpdt-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "tpdt-detalle", "tpdt.id",
-            "%{tpdt.id}" }), @Result(name = "input", location = "tpdt-edicion.jsp") })
+    @Action("tpdt-save")
     public String guardar() throws InstanceNotFoundException {
         // Validacion de datos
         if (accion == ACCION_EDICION.alta) {
@@ -101,7 +94,7 @@ public final class TipoDatoAction extends BaseAction {
         }
 
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
@@ -116,10 +109,6 @@ public final class TipoDatoAction extends BaseAction {
             tpdtBO.update(tpdt);
         }
 
-        if (hasErrors()) {
-            return INPUT;
-        }
-
         return SUCCESS;
     }
 
@@ -128,9 +117,7 @@ public final class TipoDatoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "tpdt-detalle"),
-        @Action(value = "tpdt-detalle-popup", results = { @Result(name = "success", location = "tpdt-detalle.jsp") }) })
+    @Actions({ @Action("tpdt-detail") })
     public String detalle() {
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
@@ -147,15 +134,6 @@ public final class TipoDatoAction extends BaseAction {
      */
     public TipoHtml[] getTphts() {
         return TipoHtml.values();
-    }
-
-    /**
-     * Gets the tpprs.
-     *
-     * @return the tpprs
-     */
-    public List<LabelValueVO> getEntis() {
-        return BOFactory.getInjector().getInstance(EntidadBO.class).selectLabelValues();
     }
 
     /**

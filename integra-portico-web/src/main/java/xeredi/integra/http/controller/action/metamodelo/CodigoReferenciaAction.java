@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -45,7 +44,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "cdrf-alta", results = { @Result(name = "success", location = "cdrf-edicion.jsp") })
+    @Action("cdrf-create")
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
 
@@ -59,9 +58,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "cdrf-guardar", results = {
-            @Result(name = "success", location = "tpdt-detalle", type = "redirect", params = { "tpdtForm.id",
-            "%{cdrfForm.tpdtId}" }), @Result(name = "input", location = "cdrf-edicion.jsp") })
+    @Action("cdrf-save")
     public String guardar() throws InstanceNotFoundException {
         final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
 
@@ -96,8 +93,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "cdrf-eliminar", results = { @Result(name = "success", location = "tpdt-detalle", type = "redirect", params = {
-            "tpdt.id", "%{cdrf.tpdtId}" }) })
+    @Action("cdrf-delete")
     public String eliminar() throws InstanceNotFoundException {
         final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
 

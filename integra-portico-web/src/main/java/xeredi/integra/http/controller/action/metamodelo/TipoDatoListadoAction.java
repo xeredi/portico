@@ -1,15 +1,11 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import java.util.List;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDato;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
@@ -17,7 +13,6 @@ import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
@@ -58,8 +53,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "tpdt-listado"),
-            @Action(value = "tpdt-listado-json", results = { @Result(name = "success", type = "json") }), })
+    @Actions({ @Action("tpdt-list") })
     public String listado() {
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
@@ -73,8 +67,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "tpdt-filtro"),
-            @Action(value = "tpdt-filtro-popup", results = { @Result(name = "success", location = "tpdt-filtro.jsp") }) })
+    @Actions({ @Action("tpdt-filter") })
     public static String editarFiltro() {
         return SUCCESS;
     }
@@ -115,15 +108,6 @@ public final class TipoDatoListadoAction extends BaseAction {
      */
     public TipoHtml[] getTphts() {
         return TipoHtml.values();
-    }
-
-    /**
-     * Gets the tpprs.
-     *
-     * @return the tpprs
-     */
-    public List<LabelValueVO> getEntis() {
-        return BOFactory.getInjector().getInstance(EntidadBO.class).selectLabelValues();
     }
 
     /**

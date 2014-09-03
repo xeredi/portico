@@ -6,7 +6,6 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 
 // TODO: Auto-generated Javadoc
@@ -30,7 +29,7 @@ public final class EntidadAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("enti-detalle")
+    @Action("enti-detail")
     public String detalle() {
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 

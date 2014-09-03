@@ -22,10 +22,10 @@ public final class TipoParametroProxyAction extends BaseAction {
     private static final long serialVersionUID = -756347154813875782L;
 
     /** The tppr. */
-    private TipoParametroVO tppr;
+    private TipoParametroVO enti;
 
     /** The tpsp list. */
-    private List<TipoSubparametroVO> tpspList;
+    private final List<TipoSubparametroVO> subentiList = new ArrayList<>();
 
     /**
      * Detalle.
@@ -34,14 +34,13 @@ public final class TipoParametroProxyAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("tppr-proxy-detalle")
+    @Action("tppr-proxy-detail")
     public String detalle() throws InstanceNotFoundException {
-        tppr = TipoParametroProxy.select(tppr.getId());
-        tpspList = new ArrayList<>();
+        enti = TipoParametroProxy.select(enti.getId());
 
-        if (tppr.getEntiHijasList() != null) {
-            for (final Long tpspId : tppr.getEntiHijasList()) {
-                tpspList.add(TipoSubparametroProxy.select(tpspId));
+        if (enti.getEntiHijasList() != null) {
+            for (final Long tpspId : enti.getEntiHijasList()) {
+                subentiList.add(TipoSubparametroProxy.select(tpspId));
             }
         }
 
@@ -49,31 +48,31 @@ public final class TipoParametroProxyAction extends BaseAction {
     }
 
     /**
-     * Gets the tppr.
+     * Gets the enti.
      *
-     * @return the tppr
+     * @return the enti
      */
-    public TipoParametroVO getTppr() {
-        return tppr;
+    public TipoParametroVO getEnti() {
+        return enti;
     }
 
     /**
-     * Sets the tppr.
+     * Sets the enti.
      *
      * @param value
-     *            the new tppr
+     *            the enti
      */
-    public void setTppr(final TipoParametroVO value) {
-        tppr = value;
+    public void setEnti(TipoParametroVO value) {
+        this.enti = value;
     }
 
     /**
-     * Gets the tpsp list.
+     * Gets the subenti list.
      *
-     * @return the tpsp list
+     * @return the subenti list
      */
-    public List<TipoSubparametroVO> getTpspList() {
-        return tpspList;
+    public List<TipoSubparametroVO> getSubentiList() {
+        return subentiList;
     }
 
 }

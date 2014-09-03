@@ -65,7 +65,7 @@ public final class TipoParametroAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("tppr-alta")
+    @Action("tppr-create")
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
 
@@ -79,7 +79,7 @@ public final class TipoParametroAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("tppr-modificar")
+    @Action("tppr-edit")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
@@ -118,7 +118,7 @@ public final class TipoParametroAction extends BaseAction {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    @Action("tppr-guardar")
+    @Action("tppr-save")
     public String guardar() throws DuplicateInstanceException {
         Preconditions.checkNotNull(enti);
 
@@ -168,7 +168,7 @@ public final class TipoParametroAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("tppr-detalle")
+    @Action("tppr-detail")
     public String detalle() throws InstanceNotFoundException {
         final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);

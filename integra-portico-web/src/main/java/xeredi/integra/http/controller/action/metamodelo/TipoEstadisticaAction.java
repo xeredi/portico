@@ -45,7 +45,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpes-alta", results = { @Result(name = "success", location = "tpes-edicion.jsp") })
+    @Action("tpes-create")
     public String alta() throws InstanceNotFoundException {
         accion = ACCION_EDICION.alta;
 
@@ -59,7 +59,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpes-modificar", results = { @Result(name = "success", location = "tpes-edicion.jsp") })
+    @Action("tpes-edit")
     public String modificar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.modificar;
 
@@ -81,9 +81,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    @Action(value = "tpes-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "enti-detalle", "enti.id",
-                    "%{tpes.id}" }), @Result(name = "input", location = "tpes-edicion.jsp") })
+    @Action("tpes-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
         if (accion == ACCION_EDICION.modificar) {
@@ -94,7 +92,7 @@ public final class TipoEstadisticaAction extends BaseAction {
         PropertyValidator.validateRequired(this, "tpes.nombre", enti.getNombre());
 
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
@@ -121,7 +119,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "tpes-detalle")
+    @Action("tpes-detail")
     public String detalle() throws InstanceNotFoundException {
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 

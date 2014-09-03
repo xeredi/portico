@@ -40,6 +40,10 @@
                 AND enti_codigo LIKE #{codigo}
             </if>
 
+            <if test="tipo != null">
+                AND enti_tipo = #{tipo}
+            </if>
+
             <if test="entiPadreId != null">
             <![CDATA[
                 AND EXISTS (

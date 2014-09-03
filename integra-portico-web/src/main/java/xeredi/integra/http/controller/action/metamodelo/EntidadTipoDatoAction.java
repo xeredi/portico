@@ -49,7 +49,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("entd-alta")
+    @Action("entd-create")
     public String alta() throws InstanceNotFoundException {
         if (entd.getEntiId() == null) {
             throw new Error("No se ha seleccionado una entidad");
@@ -65,7 +65,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("entd-modificar")
+    @Action("entd-edit")
     public String modificar() {
         accion = ACCION_EDICION.modificar;
 
@@ -83,7 +83,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("entd-guardar")
+    @Action("entd-save")
     public String guardar() throws InstanceNotFoundException {
         final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
@@ -116,7 +116,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("entd-detalle")
+    @Action("entd-detail")
     public String detalle() {
         final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
