@@ -239,10 +239,16 @@ metamodelo.controller("tpdtEditController", function($scope, $http, $location, $
         $scope.tiposElemento = data.tiposElemento;
     });
 
-    var urlEntiList = "metamodelo/enti-lv-list.action";
+    var urlEntiTpprList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=P";
 
-    $http.get(urlEntiList).success(function(data) {
-        $scope.entiList = data.lvList;
+    $http.get(urlEntiTpprList).success(function(data) {
+        $scope.entiTpprList = data.lvList;
+    });
+
+    var urlEntiTpsrList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
+
+    $http.get(urlEntiTpsrList).success(function(data) {
+        $scope.entiTpsrList = data.lvList;
     });
 
     $scope.submit = function(form) {
@@ -271,10 +277,16 @@ metamodelo.controller("tpdtCreateController", function($scope, $http, $location,
         $scope.tiposElemento = data.tiposElemento;
     });
 
-    var urlEntiList = "metamodelo/enti-lv-list.action";
+    var urlEntiTpprList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=P";
 
-    $http.get(urlEntiList).success(function(data) {
-        $scope.entiList = data.lvList;
+    $http.get(urlEntiTpprList).success(function(data) {
+        $scope.entiTpprList = data.lvList;
+    });
+
+    var urlEntiTpsrList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
+
+    $http.get(urlEntiTpsrList).success(function(data) {
+        $scope.entiTpsrList = data.lvList;
     });
 
     $scope.submit = function(form) {
@@ -454,7 +466,7 @@ metamodelo.controller("tpspEditController", function($scope, $http, $location, $
         $scope.accion = data.accion;
     });
 
-    var urlEntiList = "metamodelo/enti-lv-list.action";
+    var urlEntiList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=P";
 
     $http.get(urlEntiList).success(function(data) {
         $scope.entiList = data.lvList;
@@ -484,7 +496,7 @@ metamodelo.controller("tpspCreateController", function($scope, $http, $location,
         $scope.accion = data.accion;
     });
 
-    var urlEntiList = "metamodelo/enti-lv-list.action";
+    var urlEntiList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=P";
 
     $http.get(urlEntiList).success(function(data) {
         $scope.entiList = data.lvList;
@@ -787,9 +799,15 @@ metamodelo.controller("entdCreateController", function($scope, $http, $location,
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
 
 metamodelo.controller("enenCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/enen-create.action?enen.entipId=" + $routeParams.entipId;
+    var url = "metamodelo/enen-create.action?enen.entiPadreId=" + $routeParams.entipId;
 
     $http.get(url).success(function(data) {
-        $scope.entd = data.enen;
+        $scope.enen = data.enen;
+    });
+
+    var urlEnti = "metamodelo/enti-lv-list.action?entiCriterio.tipo=S";
+
+    $http.get(urlEnti).success(function(data) {
+        $scope.entiList = data.lvList;
     });
 });

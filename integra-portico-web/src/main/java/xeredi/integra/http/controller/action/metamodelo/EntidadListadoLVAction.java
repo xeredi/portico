@@ -9,6 +9,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -19,6 +20,9 @@ public final class EntidadListadoLVAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8905486687387327395L;
+
+    /** The enti criterio. */
+    private EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
     /** The lv list. */
     private final List<LabelValueVO> lvList = new ArrayList<>();
@@ -32,7 +36,7 @@ public final class EntidadListadoLVAction extends BaseAction {
     public String list() {
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
-        lvList.addAll(entiBO.selectLabelValues());
+        lvList.addAll(entiBO.selectLabelValues(entiCriterio));
 
         return SUCCESS;
     }
@@ -44,6 +48,25 @@ public final class EntidadListadoLVAction extends BaseAction {
      */
     public List<LabelValueVO> getLvList() {
         return lvList;
+    }
+
+    /**
+     * Gets the enti criterio.
+     *
+     * @return the enti criterio
+     */
+    public EntidadCriterioVO getEntiCriterio() {
+        return entiCriterio;
+    }
+
+    /**
+     * Sets the enti criterio.
+     *
+     * @param value
+     *            the new enti criterio
+     */
+    public void setEntiCriterio(final EntidadCriterioVO value) {
+        entiCriterio = value;
     }
 
 }

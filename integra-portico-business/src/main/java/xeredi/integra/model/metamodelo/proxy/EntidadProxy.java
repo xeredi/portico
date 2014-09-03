@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -81,7 +82,7 @@ public final class EntidadProxy {
         final Map<Long, TipoDatoVO> tpdtMap = TipoDatoProxy.selectMap();
 
         ENTIDAD_MAP.putAll(entiBO.selectMap(tpdtMap));
-        LABEL_VALUE_LIST.addAll(entiBO.selectLabelValues());
+        LABEL_VALUE_LIST.addAll(entiBO.selectLabelValues(new EntidadCriterioVO()));
 
         LOG.info("Carga de entidades OK");
     }

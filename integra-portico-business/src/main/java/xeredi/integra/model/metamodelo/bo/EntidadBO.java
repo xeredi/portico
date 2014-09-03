@@ -177,8 +177,8 @@ public class EntidadBO implements Entidad {
      */
     @Override
     @Transactional
-    public final List<LabelValueVO> selectLabelValues() {
-        return entiDAO.selectLabelValues(new EntidadCriterioVO());
+    public final List<LabelValueVO> selectLabelValues(final EntidadCriterioVO entiCriterioVO) {
+        return entiDAO.selectLabelValues(entiCriterioVO);
     }
 
     /**

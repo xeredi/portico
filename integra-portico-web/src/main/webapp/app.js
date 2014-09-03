@@ -234,6 +234,9 @@ app.config(function($translateProvider) {
         entd_tpdt_tpht : 'T. HTML',
         entd_tpdt_enti : 'Entidad',
 
+        enen_entih: "Entidad Hija",
+        enen_orden: "Orden",
+
     });
 
     $translateProvider.preferredLanguage('es');

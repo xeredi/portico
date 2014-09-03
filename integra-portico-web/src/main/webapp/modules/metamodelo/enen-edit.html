@@ -1,1 +1,32 @@
-enen-edit
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
+
+<form name="editForm" novalidate role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enen.entiPadreId" /> <input type="hidden"
+        ng-model="enti.tipo" />
+
+    <fieldset>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label>{{"enen_entih" | translate}}</label> <select ng-model="enen.entiHijaId"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}"
+                        ng-selected="enen.entiHijaId == labelValue.value">{{labelValue.label}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"enen_orden" | translate}}</label> <input type="text" ng-model="enen.orden"
+                    class="form-control input-sm" />
+            </div>
+        </div>
+
+        <button data-ng-click="submit(editForm)" class="btn btn-default">
+            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+    </fieldset>
+</form>
+

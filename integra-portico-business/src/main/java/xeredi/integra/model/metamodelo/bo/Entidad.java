@@ -17,7 +17,7 @@ public interface Entidad {
 
     /**
      * Select tipo entidad.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo entidad
@@ -26,7 +26,7 @@ public interface Entidad {
 
     /**
      * Select list.
-     * 
+     *
      * @param entiCriterioVO
      *            the enti criterio vo
      * @return the list
@@ -35,7 +35,7 @@ public interface Entidad {
 
     /**
      * Select map.
-     * 
+     *
      * @param tpdtMap
      *            the tpdt map
      * @return the map
@@ -44,14 +44,16 @@ public interface Entidad {
 
     /**
      * Select label values.
-     * 
+     *
+     * @param entiCriterioVO
+     *            the enti criterio vo
      * @return the list
      */
-    List<LabelValueVO> selectLabelValues();
+    List<LabelValueVO> selectLabelValues(final EntidadCriterioVO entiCriterioVO);
 
     /**
      * Fill dependencies.
-     * 
+     *
      * @param entiVO
      *            the enti vo
      */
