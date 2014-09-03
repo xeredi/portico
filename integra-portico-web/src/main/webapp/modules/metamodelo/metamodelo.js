@@ -3,98 +3,98 @@ var metamodelo = angular.module("metamodelo", [ "ngRoute" ]);
 metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
-    .when("/metamodelo/tpprs", {
+    .when("/metamodelo/tppr", {
         templateUrl : "modules/metamodelo/tppr-filter.html",
-        controller : "tpprsFilterController"
+        controller : "tpprFilterController"
     })
 
-    .when("/metamodelo/tpprs/grid", {
+    .when("/metamodelo/tppr/grid", {
         templateUrl : "modules/metamodelo/tppr-grid.html",
-        controller : "tpprsGridController"
+        controller : "tpprGridController"
     })
 
-    .when("/metamodelo/tpprs/detail/:entiId", {
+    .when("/metamodelo/tppr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tppr-detail.html",
-        controller : "tpprsDetailController"
+        controller : "tpprDetailController"
     })
 
-    .when("/metamodelo/tpprs/edit/:entiId", {
+    .when("/metamodelo/tppr/edit/:entiId", {
         templateUrl : "modules/metamodelo/tppr-edit.html",
-        controller : "tpprsEditController"
+        controller : "tpprEditController"
     })
 
-    .when("/metamodelo/tpprs/create", {
+    .when("/metamodelo/tppr/create", {
         templateUrl : "modules/metamodelo/tppr-edit.html",
-        controller : "tpprsCreateController"
+        controller : "tpprCreateController"
     })
 
     // ----------------- TIPO DE SERVICIO -----------------
 
-    .when("/metamodelo/tpsrs", {
+    .when("/metamodelo/tpsr", {
         templateUrl : "modules/metamodelo/tpsr-filter.html",
-        controller : "tpsrsFilterController"
+        controller : "tpsrFilterController"
     })
 
-    .when("/metamodelo/tpsrs/grid", {
+    .when("/metamodelo/tpsr/grid", {
         templateUrl : "modules/metamodelo/tpsr-grid.html",
-        controller : "tpsrsGridController"
+        controller : "tpsrGridController"
     })
 
-    .when("/metamodelo/tpsrs/detail/:entiId", {
+    .when("/metamodelo/tpsr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpsr-detail.html",
-        controller : "tpsrsDetailController"
+        controller : "tpsrDetailController"
     })
 
-    .when("/metamodelo/tpsrs/edit/:entiId", {
+    .when("/metamodelo/tpsr/edit/:entiId", {
         templateUrl : "modules/metamodelo/tpsr-edit.html",
-        controller : "tpsrsEditController"
+        controller : "tpsrEditController"
     })
 
-    .when("/metamodelo/tpsrs/create", {
+    .when("/metamodelo/tpsr/create", {
         templateUrl : "modules/metamodelo/tpsr-edit.html",
-        controller : "tpsrsCreateController"
+        controller : "tpsrCreateController"
     })
 
-    .when("/metamodelo/tpsss/detail/:entiId", {
+    .when("/metamodelo/tpss/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpss-detail.html",
-        controller : "tpsssDetailController"
+        controller : "tpssDetailController"
     })
 
-    .when("/metamodelo/tpsss/edit/:entiId", {
+    .when("/metamodelo/tpss/edit/:entiId", {
         templateUrl : "modules/metamodelo/tpss-edit.html",
-        controller : "tpsssEditController"
+        controller : "tpssEditController"
     })
 
-    .when("/metamodelo/tpsss/create/:tpsrId", {
+    .when("/metamodelo/tpss/create/:tpsrId", {
         templateUrl : "modules/metamodelo/tpss-edit.html",
-        controller : "tpsssCreateController"
+        controller : "tpssCreateController"
     })
 
     // ----------------- TIPO DE ESTADISTICA -----------------
 
-    .when("/metamodelo/tpess", {
+    .when("/metamodelo/tpes", {
         templateUrl : "modules/metamodelo/tpes-filter.html",
-        controller : "tpessFilterController"
+        controller : "tpesFilterController"
     })
 
-    .when("/metamodelo/tpess/grid", {
+    .when("/metamodelo/tpes/grid", {
         templateUrl : "modules/metamodelo/tpes-grid.html",
-        controller : "tpessGridController"
+        controller : "tpesGridController"
     })
 
-    .when("/metamodelo/tpess/detail/:entiId", {
+    .when("/metamodelo/tpes/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpes-detail.html",
-        controller : "tpessDetailController"
+        controller : "tpesDetailController"
     })
 
-    .when("/metamodelo/tpess/edit/:entiId", {
+    .when("/metamodelo/tpes/edit/:entiId", {
         templateUrl : "modules/metamodelo/tpes-edit.html",
-        controller : "tpessEditController"
+        controller : "tpesEditController"
     })
 
-    .when("/metamodelo/tpess/create", {
+    .when("/metamodelo/tpes/create", {
         templateUrl : "modules/metamodelo/tpes-edit.html",
-        controller : "tpessCreateController"
+        controller : "tpesCreateController"
     })
 
     // ------------------ DATO DE ENTIDAD -----------------
@@ -125,9 +125,9 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 
 // -------------------- MAESTRO ------------------
 
-metamodelo.controller("tpprsFilterController", function($scope, $http, $location) {
+metamodelo.controller("tpprFilterController", function($scope, $http, $location) {
     $scope.submit = function(form) {
-        $location.path("/metamodelo/tpprs/grid").search({
+        $location.path("/metamodelo/tppr/grid").search({
             entiCriterio : {
                 codigo : $scope.entiCriterio.codigo,
                 nombre : $scope.entiCriterio.nombre
@@ -141,7 +141,7 @@ metamodelo.controller("tpprsFilterController", function($scope, $http, $location
     $scope.pageTitle = 'tppr_filter_title';
 })
 
-metamodelo.controller("tpprsGridController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpprGridController", function($scope, $http, $location, $route, $routeParams) {
     $scope.entiCriterio = $routeParams.entiCriterio;
     $scope.page = $routeParams.page;
 
@@ -156,7 +156,7 @@ metamodelo.controller("tpprsGridController", function($scope, $http, $location, 
     });
 });
 
-metamodelo.controller("tpprsDetailController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpprDetailController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tppr-detalle.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -165,7 +165,7 @@ metamodelo.controller("tpprsDetailController", function($scope, $http, $location
     });
 });
 
-metamodelo.controller("tpprsEditController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpprEditController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tppr-modificar.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -181,7 +181,7 @@ metamodelo.controller("tpprsEditController", function($scope, $http, $location, 
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpprs/detail/" + data.enti.id);
+                $location.path("/metamodelo/tppr/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -189,7 +189,7 @@ metamodelo.controller("tpprsEditController", function($scope, $http, $location, 
     }
 });
 
-metamodelo.controller("tpprsCreateController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpprCreateController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tppr-alta.action";
 
     $http.get(url).success(function(data) {
@@ -205,7 +205,7 @@ metamodelo.controller("tpprsCreateController", function($scope, $http, $location
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpprs/detail/" + data.enti.id);
+                $location.path("/metamodelo/tppr/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -215,14 +215,14 @@ metamodelo.controller("tpprsCreateController", function($scope, $http, $location
 
 // -------------------- TIPO DE SERVICIO ------------------
 
-metamodelo.controller("tpsrsFilterController", function($scope, $http, $location) {
+metamodelo.controller("tpsrFilterController", function($scope, $http, $location) {
     $scope.submit = function(form) {
-        console.log("tpsrsFilterController Submit");
+        console.log("tpsrFilterController Submit");
         console.log($scope.entiCriterio);
         console.log(JSON.stringify($scope.entiCriterio));
         console.log($scope.page);
 
-        $location.path("/metamodelo/tpsrs/grid").search({
+        $location.path("/metamodelo/tpsr/grid").search({
             entiCriterio : {
                 codigo : $scope.entiCriterio.codigo,
                 nombre : $scope.entiCriterio.nombre
@@ -235,7 +235,7 @@ metamodelo.controller("tpsrsFilterController", function($scope, $http, $location
     $scope.limit = 20;
 });
 
-metamodelo.controller("tpsrsGridController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpsrGridController", function($scope, $http, $location, $route, $routeParams) {
     $scope.entiCriterio = $routeParams.entiCriterio;
     $scope.page = $routeParams.page;
 
@@ -252,7 +252,7 @@ metamodelo.controller("tpsrsGridController", function($scope, $http, $location, 
     });
 });
 
-metamodelo.controller("tpsrsDetailController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpsrDetailController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpsr-detalle.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -261,7 +261,7 @@ metamodelo.controller("tpsrsDetailController", function($scope, $http, $location
     });
 });
 
-metamodelo.controller("tpsrsEditController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpsrEditController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpsr-modificar.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -277,7 +277,7 @@ metamodelo.controller("tpsrsEditController", function($scope, $http, $location, 
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsrs/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpsr/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -285,7 +285,7 @@ metamodelo.controller("tpsrsEditController", function($scope, $http, $location, 
     }
 });
 
-metamodelo.controller("tpsrsCreateController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpsrCreateController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpsr-alta.action";
 
     $http.get(url).success(function(data) {
@@ -301,7 +301,7 @@ metamodelo.controller("tpsrsCreateController", function($scope, $http, $location
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsrs/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpsr/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -309,7 +309,7 @@ metamodelo.controller("tpsrsCreateController", function($scope, $http, $location
     }
 });
 
-metamodelo.controller("tpsssDetailController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpssDetailController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpss-detalle.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -319,7 +319,7 @@ metamodelo.controller("tpsssDetailController", function($scope, $http, $location
     });
 });
 
-metamodelo.controller("tpsssEditController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpssEditController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpss-modificar.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -335,7 +335,7 @@ metamodelo.controller("tpsssEditController", function($scope, $http, $location, 
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsss/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpss/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -343,7 +343,7 @@ metamodelo.controller("tpsssEditController", function($scope, $http, $location, 
     }
 });
 
-metamodelo.controller("tpsssCreateController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpssCreateController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpss-alta.action?enti.tpsr.id=" + $routeParams.tpsrId;
 
     $http.get(url).success(function(data) {
@@ -359,7 +359,7 @@ metamodelo.controller("tpsssCreateController", function($scope, $http, $location
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsss/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpss/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -369,11 +369,11 @@ metamodelo.controller("tpsssCreateController", function($scope, $http, $location
 
 // -------------------- ESTADISTICA ------------------
 
-metamodelo.controller("tpessFilterController", function($scope, $http, $location) {
+metamodelo.controller("tpesFilterController", function($scope, $http, $location) {
     $scope.submit = function(form) {
-        console.log("tpessFilterController Submit");
+        console.log("tpesFilterController Submit");
 
-        $location.path("/metamodelo/tpess/grid").search({
+        $location.path("/metamodelo/tpes/grid").search({
             entiCriterio : {
                 codigo : $scope.entiCriterio.codigo,
                 nombre : $scope.entiCriterio.nombre
@@ -386,7 +386,7 @@ metamodelo.controller("tpessFilterController", function($scope, $http, $location
     $scope.limit = 20;
 });
 
-metamodelo.controller("tpessGridController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpesGridController", function($scope, $http, $location, $route, $routeParams) {
     $scope.entiCriterio = $routeParams.entiCriterio;
     $scope.page = $routeParams.page;
 
@@ -401,7 +401,7 @@ metamodelo.controller("tpessGridController", function($scope, $http, $location, 
     });
 });
 
-metamodelo.controller("tpessDetailController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpesDetailController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpes-detalle.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -410,7 +410,7 @@ metamodelo.controller("tpessDetailController", function($scope, $http, $location
     });
 });
 
-metamodelo.controller("tpessEditController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpesEditController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpes-modificar.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -426,7 +426,7 @@ metamodelo.controller("tpessEditController", function($scope, $http, $location, 
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpess/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpes/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -434,7 +434,7 @@ metamodelo.controller("tpessEditController", function($scope, $http, $location, 
     }
 });
 
-metamodelo.controller("tpessCreateController", function($scope, $http, $location, $route, $routeParams) {
+metamodelo.controller("tpesCreateController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpes-alta.action";
 
     $http.get(url).success(function(data) {
@@ -450,7 +450,7 @@ metamodelo.controller("tpessCreateController", function($scope, $http, $location
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpess/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpes/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }

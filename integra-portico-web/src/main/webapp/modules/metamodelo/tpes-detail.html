@@ -4,7 +4,7 @@
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/tpess/edit/{{enti.id}}"><i
+                <a class="btn btn-default" href="#/metamodelo/tpes/edit/{{enti.id}}"><i
                     class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
             </div>
         </div>
@@ -88,9 +88,9 @@
                     <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
                     <td><span ng-if="enti.entdMap[entd].tpdt.enti"> <a
                             ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'P'"
-                            href="#/metamodelo/tpprs/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a><a
+                            href="#/metamodelo/tppr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a><a
                             ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'T'"
-                            href="#/metamodelo/tpsrs/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></span>
+                            href="#/metamodelo/tpsr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></span>
                     </td>
                 </tr>
             </tbody>

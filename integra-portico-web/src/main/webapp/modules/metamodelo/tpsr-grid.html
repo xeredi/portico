@@ -1,6 +1,6 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" href="#/metamodelo/tpsrs/create"><i class="glyphicon glyphicon-file"></i>
+        <a class="btn btn-default" href="#/metamodelo/tpsr/create"><i class="glyphicon glyphicon-file"></i>
             {{'boton_alta' | translate}}</a>
     </div>
 </div>
@@ -23,7 +23,7 @@
 
         <tbody>
             <tr ng-repeat="enti in entiList.list">
-                <td><a href="#/metamodelo/tpsrs/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a href="#/metamodelo/tpsr/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{enti.codigo}}</td>
                 <td>{{enti.nombre}}</td>
                 <td><i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
