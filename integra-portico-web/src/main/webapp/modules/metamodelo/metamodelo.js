@@ -55,6 +55,21 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpsrsCreateController"
     })
 
+    .when("/metamodelo/tpsss/detail/:entiId", {
+        templateUrl : "modules/metamodelo/tpss-detail.html",
+        controller : "tpsssDetailController"
+    })
+
+    .when("/metamodelo/tpsss/edit/:entiId", {
+        templateUrl : "modules/metamodelo/tpss-edit.html",
+        controller : "tpsssEditController"
+    })
+
+    .when("/metamodelo/tpsss/create/:tpsrId", {
+        templateUrl : "modules/metamodelo/tpss-edit.html",
+        controller : "tpsssCreateController"
+    })
+
     // ----------------- TIPO DE ESTADISTICA -----------------
 
     .when("/metamodelo/tpess", {
@@ -287,6 +302,64 @@ metamodelo.controller("tpsrsCreateController", function($scope, $http, $location
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpsrs/detail/" + data.enti.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+metamodelo.controller("tpsssDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpss-detalle.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.entiHijasList = data.entiHijasList;
+        $scope.entiPadresList = data.entiPadresList;
+    });
+});
+
+metamodelo.controller("tpsssEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpss-modificar.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpss-guardar.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpsss/detail/" + data.enti.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+metamodelo.controller("tpsssCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpss-alta.action?enti.tpsr.id=" + $routeParams.tpsrId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpss-guardar.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpsss/detail/" + data.enti.id);
             } else {
                 $scope.actionErrors = data.actionErrors;
             }

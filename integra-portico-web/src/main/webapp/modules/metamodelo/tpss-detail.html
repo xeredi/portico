@@ -48,20 +48,6 @@
                     <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <!--
-            <div class="col-md-1 form-group">
-                <label> {{"enti_i18n" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-2 form-group">
-                <label> {{"enti_tempExp" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
- -->
         </div>
     </fieldset>
 
@@ -122,15 +108,7 @@
     </fieldset>
 
     <fieldset>
-        <legend>{{"Subentidades" | uppercase}}</legend>
-
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/tpsss/create/{{enti.id}}"><i
-                    class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
-            </div>
-        </div>
-
+        <legend>{{"Entidades Hijas" | uppercase}}</legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
@@ -144,15 +122,42 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="subenti in subentiList">
-                    <td><a href="#/metamodelo/tpsss/detail/{{subenti.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{subenti.codigo}}</td>
-                    <td>{{subenti.nombre}}</td>
-                    <td><i ng-if="subenti.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="subenti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="subenti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="subenti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+                <tr ng-repeat="entiHija in entiHijasList">
+                    <td />
+                    <td>{{entiHija.codigo}}</td>
+                    <td>{{entiHija.nombre}}</td>
+                    <td><i ng-if="entiHija.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="entiHija.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="entiHija.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="entiHija.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset>
+        <legend>{{"Entidades Padres" | uppercase}}</legend>
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th>{{"enti_codigo" | translate}}</th>
+                    <th>{{"enti_nombre" | translate}}</th>
+                    <th>{{"enti_cmd_alta" | translate}}</th>
+                    <th>{{"enti_cmd_baja" | translate}}</th>
+                    <th>{{"enti_cmd_edicion" | translate}}</th>
+                    <th>{{"enti_cmd_duplicado" | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="entiPadre in entiPadresList">
+                    <td />
+                    <td>{{entiPadre.codigo}}</td>
+                    <td>{{entiPadre.nombre}}</td>
+                    <td><i ng-if="entiPadre.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="entiPadre.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="entiPadre.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="entiPadre.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
                 </tr>
             </tbody>
         </table>

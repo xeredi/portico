@@ -8,8 +8,6 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
-import xeredi.integra.model.metamodelo.bo.TipoDato;
-import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.bo.TipoServicio;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicio;
@@ -20,7 +18,6 @@ import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.struts.PropertyValidator;
@@ -45,9 +42,6 @@ public final class TipoServicioAction extends BaseAction {
 
     /** The enti hijas list. */
     private List<EntidadVO> entiHijasList;
-
-    /** The tpdt list. */
-    private List<LabelValueVO> tpdtList;
 
     // Acciones Web
     /**
@@ -212,21 +206,6 @@ public final class TipoServicioAction extends BaseAction {
      */
     public List<EntidadVO> getEntiHijasList() {
         return entiHijasList;
-    }
-
-    /**
-     * Gets the tpdt list.
-     *
-     * @return the tpdt list
-     */
-    public List<LabelValueVO> getTpdtList() {
-        if (tpdtList == null || tpdtList.isEmpty()) {
-            final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
-
-            tpdtList = tpdtBO.selectLabelValues();
-        }
-
-        return tpdtList;
     }
 
 }
