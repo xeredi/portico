@@ -4,7 +4,7 @@
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/tpsr/edit/{{enti.id}}"><i
+                <a class="btn btn-default" href="#/metamodelo/tpss/edit/{{enti.id}}"><i
                     class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
             </div>
         </div>
@@ -123,7 +123,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="entiHija in entiHijasList">
-                    <td />
+                    <td><a href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{entiHija.codigo}}</td>
                     <td>{{entiHija.nombre}}</td>
                     <td><i ng-if="entiHija.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
@@ -151,7 +152,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="entiPadre in entiPadresList">
-                    <td />
+                    <td><a ng-if="entiPadre.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
+                        href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{entiPadre.codigo}}</td>
                     <td>{{entiPadre.nombre}}</td>
                     <td><i ng-if="entiPadre.cmdAlta" class="glyphicon glyphicon-ok"></i></td>

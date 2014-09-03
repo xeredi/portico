@@ -3,6 +3,8 @@ var metamodelo = angular.module("metamodelo", [ "ngRoute" ]);
 metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
+    // ----------- MAESTRO ------------------
+
     .when("/metamodelo/tppr", {
         templateUrl : "modules/metamodelo/tppr-filter.html",
         controller : "tpprFilterController"
@@ -26,6 +28,21 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     .when("/metamodelo/tppr/create", {
         templateUrl : "modules/metamodelo/tppr-edit.html",
         controller : "tpprCreateController"
+    })
+
+    .when("/metamodelo/tpsp/detail/:entiId", {
+        templateUrl : "modules/metamodelo/tpsp-detail.html",
+        controller : "tpspDetailController"
+    })
+
+    .when("/metamodelo/tpsp/edit/:entiId", {
+        templateUrl : "modules/metamodelo/tpsp-edit.html",
+        controller : "tpspEditController"
+    })
+
+    .when("/metamodelo/tpsp/create/:tpprId", {
+        templateUrl : "modules/metamodelo/tpsp-edit.html",
+        controller : "tpspCreateController"
     })
 
     // ----------------- TIPO DE SERVICIO -----------------
@@ -112,6 +129,13 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     .when("/metamodelo/entd/create/:entiId", {
         templateUrl : "modules/metamodelo/entd-edit.html",
         controller : "entdCreateController"
+    })
+
+    // ------------------ DEPENDENCIA ENTRE ENTIDADES -----------------
+
+    .when("/metamodelo/enen/create/:entipId", {
+        templateUrl : "modules/metamodelo/enen-edit.html",
+        controller : "enenCreateController"
     })
 
     .otherwise({
@@ -258,6 +282,7 @@ metamodelo.controller("tpsrDetailController", function($scope, $http, $location,
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;
         $scope.subentiList = data.subentiList;
+        $scope.entiHijasList = data.entiHijasList;
     });
 });
 
@@ -491,5 +516,15 @@ metamodelo.controller("entdCreateController", function($scope, $http, $location,
 
     $http.get(urlTpdt).success(function(data) {
         $scope.tpdtList = data.lvList;
+    });
+});
+
+//------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
+
+metamodelo.controller("enenCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/enen-alta.action?enen.entipId=" + $routeParams.entipId;
+
+    $http.get(url).success(function(data) {
+        $scope.entd = data.enen;
     });
 });
