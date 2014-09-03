@@ -200,6 +200,12 @@ app.config(function($translateProvider) {
         tpes_codigo : 'C\u00f3digo',
         tpes_nombre : 'Nombre',
 
+        tpdt_codigo : 'C\u00f3digo',
+        tpdt_nombre : 'Nombre',
+        tpdt_tipoElemento : 'T. Elem.',
+        tpdt_tpht : 'T. HTML',
+        tpdt_enti : 'Entidad',
+
         enti_codigo : 'C\u00f3d.',
         enti_nombre : 'Nombre',
         enti_tipo : 'Tipo',

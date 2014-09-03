@@ -1,0 +1,41 @@
+<div class="table-responsive">
+    <fieldset>
+        <legend>{{tpdt.nombre | uppercase}}</legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#/metamodelo/tpdt/edit/{{tpdt.id}}"><i
+                    class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label> {{"tpdt_codigo" | translate}} </label>
+                <p class="form-control-static">{{tpdt.codigo}}</p>
+            </div>
+            <div class="col-md-3 form-group">
+                <label> {{"tpdt_nombre" | translate}} </label>
+                <p class="form-control-static">{{tpdt.nombre}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"tpdt_tpht" | translate}} </label>
+                <p class="form-control-static" title="{{'TipoEntidad_' + tpdt.tpht | translate}}">{{tpdt.tpht}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label> {{"tpdt_tipoElemento" | translate}} </label>
+                <p class="form-control-static" title="{{'TipoElemento_' + tpdt.tipoElemento | translate}}">{{tpdt.tipoElemento}}</p>
+            </div>
+            <div class="col-md-3 form-group">
+                <label> {{"tpdt_enti" | translate}} </label>
+                <p class="form-control-static">
+                    <a ng-if="tpdt.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
+                        ng-if="tpdt.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
+                        ng-if="tpdt.enti.tipo == 'P'" href="#/metamodelo/tppr/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
+                        ng-if="tpdt.enti.tipo == 'B'" href="#/metamodelo/tpsp/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a>
+                    <a ng-if="tpdt.enti.tipo == 'E'" href="#/metamodelo/tpes/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a>
+                </p>
+            </div>
+        </div>
+    </fieldset>
+</div>

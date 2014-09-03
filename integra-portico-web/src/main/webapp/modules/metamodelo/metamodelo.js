@@ -3,6 +3,33 @@ var metamodelo = angular.module("metamodelo", [ "ngRoute" ]);
 metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
+    // ----------- TIPO DE DATO ------------------
+
+    .when("/metamodelo/tpdt", {
+        templateUrl : "modules/metamodelo/tpdt-filter.html",
+        controller : "tpdtFilterController"
+    })
+
+    .when("/metamodelo/tpdt/grid", {
+        templateUrl : "modules/metamodelo/tpdt-grid.html",
+        controller : "tpdtGridController"
+    })
+
+    .when("/metamodelo/tpdt/detail/:tpdtId", {
+        templateUrl : "modules/metamodelo/tpdt-detail.html",
+        controller : "tpdtDetailController"
+    })
+
+    .when("/metamodelo/tpdt/edit/:tpdtId", {
+        templateUrl : "modules/metamodelo/tpdt-edit.html",
+        controller : "tpdtEditController"
+    })
+
+    .when("/metamodelo/tpdt/create", {
+        templateUrl : "modules/metamodelo/tpdt-edit.html",
+        controller : "tpdtCreateController"
+    })
+
     // ----------- MAESTRO ------------------
 
     .when("/metamodelo/tppr", {
@@ -146,6 +173,110 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 // ----------------- CONTROLLERS --------------------------
 // ----------------- CONTROLLERS --------------------------
 // ----------------- CONTROLLERS --------------------------
+
+// -------------------- TIPO DE DATO ------------------
+
+metamodelo.controller("tpdtFilterController", function($scope, $http, $location) {
+    $scope.submit = function(form) {
+        $location.path("/metamodelo/tpdt/grid").search({
+            entiCriterio : {
+                codigo : $scope.tpdtCriterio.codigo,
+                nombre : $scope.tpdtCriterio.nombre
+            },
+            page : $scope.page
+        });
+    }
+
+    $scope.page = 1;
+    $scope.limit = 20;
+})
+
+metamodelo.controller("tpdtGridController", function($scope, $http, $location, $route, $routeParams) {
+    $scope.tpdtCriterio = $routeParams.tpdtCriterio;
+    $scope.page = $routeParams.page;
+
+    var url = "metamodelo/tpdt-list.action";
+
+    $http.post(url, {
+        tpdtCriterio : $scope.tpdtCriterio,
+        limit : $scope.limit,
+        page : $scope.page
+    }).success(function(data) {
+        $scope.tpdtList = data.tpdtList;
+    });
+});
+
+metamodelo.controller("tpdtDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpdt-detail.action?tpdt.id=" + $routeParams.tpdtId;
+
+    $http.get(url).success(function(data) {
+        $scope.tpdt = data.tpdt;
+    });
+});
+
+metamodelo.controller("tpdtEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpdt-edit.action?tpdt.id=" + $routeParams.tpdtId;
+
+    $http.get(url).success(function(data) {
+        $scope.tpdt = data.tpdt;
+        $scope.accion = data.accion;
+        $scope.tphts = data.tphts;
+        $scope.tiposElemento = data.tiposElemento;
+    });
+
+    var urlEntiList = "metamodelo/enti-lv-list.action";
+
+    $http.get(urlEntiList).success(function(data) {
+        $scope.entiList = data.lvList;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpdt-save.action";
+
+        $http.post(url, {
+            tpdt : $scope.tpdt,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpdt/detail/" + data.tpdt.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
+
+metamodelo.controller("tpdtCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpdt-create.action";
+
+    $http.get(url).success(function(data) {
+        $scope.tpdt = data.tpdt;
+        $scope.accion = data.accion;
+        $scope.tphts = data.tphts;
+        $scope.tiposElemento = data.tiposElemento;
+    });
+
+    var urlEntiList = "metamodelo/enti-lv-list.action";
+
+    $http.get(urlEntiList).success(function(data) {
+        $scope.entiList = data.lvList;
+    });
+
+    $scope.submit = function(form) {
+        var url = "metamodelo/tpdt-save.action";
+
+        $http.post(url, {
+            tpdt : $scope.tpdt,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpdt/detail/" + data.tpdt.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+});
 
 // -------------------- MAESTRO ------------------
 
@@ -488,15 +619,16 @@ metamodelo.controller("entdDetailController", function($scope, $http, $location,
     });
 });
 
-metamodelo.controller("entdEditController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/entd-edit.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
-            + $routeParams.tpdtId;
+metamodelo.controller("entdEditController",
+        function($scope, $http, $location, $route, $routeParams) {
+            var url = "metamodelo/entd-edit.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
+                    + $routeParams.tpdtId;
 
-    $http.get(url).success(function(data) {
-        $scope.entd = data.entd;
-        $scope.accion = data.accion;
-    });
-});
+            $http.get(url).success(function(data) {
+                $scope.entd = data.entd;
+                $scope.accion = data.accion;
+            });
+        });
 
 metamodelo.controller("entdCreateController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/entd-create.action?entd.entiId=" + $routeParams.entiId;
@@ -513,7 +645,7 @@ metamodelo.controller("entdCreateController", function($scope, $http, $location,
     });
 });
 
-//------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
+// ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
 
 metamodelo.controller("enenCreateController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/enen-create.action?enen.entipId=" + $routeParams.entipId;

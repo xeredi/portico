@@ -1,0 +1,47 @@
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
+
+<form name="editForm" novalidate role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="tpdt.id" />
+
+    <fieldset>
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{"tpdt_codigo" | translate}}</label> <input type="text" ng-model="tpdt.codigo"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-3 form-group">
+                <label>{{"tpdt_nombre" | translate}}</label> <input type="text" ng-model="tpdt.nombre"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"tpdt_tpht" | translate}}</label> <select ng-model="tpdt.tpht" class="form-control input-sm">
+                    <option />
+                    <option ng-repeat="cdrf in tphts" ng-selected="tpdt.tpht == cdrf" value="{{cdrf}}">{{cdrf}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"tpdt_tipoElemento" | translate}}</label> <select ng-model="tpdt.tipoElemento"
+                    class="form-control input-sm">
+                    <option />
+                    <option ng-repeat="cdrf in tiposElemento" ng-selected="tpdt.tipoElemento == cdrf" value="{{cdrf}}">{{cdrf}}</option>
+                </select>
+            </div>
+            <div class="col-md-3 form-group" ng-if="tpdt.tipoElemento == 'PR' || tpdt.tipoElemento == 'SR'">
+                <label>{{"tpdt_enti" | translate}}</label> <select ng-model="entd.tpdt.id" class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}"
+                        ng-selected="tpdt.enti.id == labelValue.value">{{labelValue.label}}</option>
+                </select>
+            </div>
+        </div>
+
+        <button data-ng-click="submit(editForm)" class="btn btn-default">
+            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+    </fieldset>
+</form>
+
