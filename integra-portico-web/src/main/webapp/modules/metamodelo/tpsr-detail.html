@@ -10,7 +10,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-3 form-group">
+            <div class="col-md-2 form-group">
                 <label> {{"enti_codigo" | translate}} </label>
                 <p class="form-control-static">{{enti.codigo}}</p>
             </div>
@@ -107,7 +107,7 @@
                     <td><i ng-if="enti.entdMap[entd].obligatorio" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="enti.entdMap[entd].gridable" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="enti.entdMap[entd].filtrable" class="glyphicon glyphicon-ok"></i></td>
-                    <td>{{enti.entdMap[entd].tpdt.nombre}}</td>
+                    <td><a href="#/metamodelo/tpdt/detail/{{enti.entdMap[entd].tpdt.id}}">{{enti.entdMap[entd].tpdt.nombre}}</a></td>
                     <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}">{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
                     <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
                     <td><span ng-if="enti.entdMap[entd].tpdt.enti"> <a

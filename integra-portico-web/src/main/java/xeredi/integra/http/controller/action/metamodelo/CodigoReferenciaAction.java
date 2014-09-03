@@ -135,6 +135,28 @@ public final class CodigoReferenciaAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * Detalle.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Action("cdrf-detail")
+    public String detalle() throws InstanceNotFoundException {
+        accion = ACCION_EDICION.modificar;
+
+        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+        final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
+
+        cdrfCriterioVO.setTpdtId(cdrf.getTpdtId());
+        cdrfCriterioVO.setValor(cdrf.getValor());
+
+        cdrf = cdrfBO.selectObject(cdrfCriterioVO);
+
+        return SUCCESS;
+    }
+
     // get / set
 
     /**

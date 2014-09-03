@@ -1,1 +1,63 @@
-tpss-edit
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
+
+<form name="editForm" novalidate role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enti.id" /> <input type="hidden"
+        ng-model="enti.tipo" /><input type="hidden" ng-model="enti.tpsr.id" />
+
+    <fieldset>
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{"enti_codigo" | translate}}</label> <input type="text" ng-model="enti.codigo"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-3 form-group">
+                <label>{{"enti_nombre" | translate}}</label> <input type="text" ng-model="enti.nombre"
+                    class="form-control input-sm" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1 form-group">
+                <label>{{"enti_cmd_alta" | translate}}</label> <select ng-model="enti.cmdAlta"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="enti.cmdAlta == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdAlta != true">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"enti_cmd_baja" | translate}}</label> <select ng-model="enti.cmdBaja"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="enti.cmdBaja == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdBaja != true">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"enti_cmd_edicion" | translate}}</label> <select ng-model="enti.cmdEdicion"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="enti.cmdEdicion == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdEdicion != true">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"enti_cmd_duplicado" | translate}}</label> <select ng-model="enti.cmdDuplicado"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="enti.cmdDuplicado == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdDuplicado != true">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+        </div>
+
+        <button data-ng-click="submit(editForm)" class="btn btn-default">
+            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+    </fieldset>
+</form>
+

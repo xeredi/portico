@@ -1,1 +1,21 @@
-cdrf-detail
+<div class="table-responsive">
+    <fieldset>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#/metamodelo/cdrf/edit/{{cdrf.tpdtId}}/{{cdrf.valor}}"><i
+                    class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label> {{"cdrf_valor" | translate}} </label>
+                <p class="form-control-static">{{cdrf.valor}}</p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label> {{"cdrf_orden" | translate}} </label>
+                <p class="form-control-static">{{cdrf.orden}}</p>
+            </div>
+        </div>
+    </fieldset>
+</div>
