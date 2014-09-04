@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -93,10 +92,8 @@ public final class CodigoReferenciaAction extends BaseAction {
     public String guardar() {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
+        Preconditions.checkNotNull(cdrf.getValor());
 
-        if (GenericValidator.isBlankOrNull(cdrf.getValor())) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("cdrf_valor") }));
-        }
         if (cdrf.getOrden() == null) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("cdrf_orden") }));
         }
