@@ -105,7 +105,7 @@
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_tipo_dato_tpdt tpdt
-        WHERE tpdt.tpdt_pk = #{id}
+        WHERE tpdt.tpdt_codigo = #{codigo}
             OR tpdt.tpdt_nombre = #{nombre}
         ]]>
     </select>

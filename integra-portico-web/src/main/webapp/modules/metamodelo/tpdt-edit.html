@@ -31,7 +31,7 @@
                 </select>
             </div>
             <div class="col-md-3 form-group" ng-if="tpdt.tipoElemento == 'PR'">
-                <label>{{"tpdt_enti" | translate}}</label> <select ng-model="entd.tpdt.id" class="form-control input-sm">
+                <label>{{"tpdt_enti" | translate}}</label> <select ng-model="tpdt.enti.id" class="form-control input-sm">
                     <option value="" />
                     <option ng-repeat="labelValue in entiTpprList" value="{{labelValue.value}}"
                         ng-selected="tpdt.enti.id == labelValue.value">{{labelValue.label}}</option>

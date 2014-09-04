@@ -119,7 +119,7 @@ public final class TipoDatoAction extends BaseAction {
             try {
                 tpdtBO.insert(tpdt);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpdt_codigo") }));
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpdt") }));
             }
         } else {
             tpdtBO.update(tpdt);
