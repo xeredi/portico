@@ -1,9 +1,11 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.CodigoReferencia;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
@@ -11,7 +13,8 @@ import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,11 +45,12 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("cdrf-create")
-    public String alta() throws InstanceNotFoundException {
+    public String alta() {
+        Preconditions.checkNotNull(cdrf);
+        Preconditions.checkNotNull(cdrf.getTpdtId());
+
         accion = ACCION_EDICION.alta;
 
         return SUCCESS;
@@ -56,11 +60,13 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("cdrf-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String modificar() {
+        Preconditions.checkNotNull(cdrf);
+        Preconditions.checkNotNull(cdrf.getTpdtId());
+        Preconditions.checkNotNull(cdrf.getValor());
+
         accion = ACCION_EDICION.modificar;
 
         final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
@@ -71,6 +77,10 @@ public final class CodigoReferenciaAction extends BaseAction {
 
         cdrf = cdrfBO.selectObject(cdrfCriterioVO);
 
+        if (cdrf == null) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("cdrf"), cdrf.getValor() }));
+        }
+
         return SUCCESS;
     }
 
@@ -78,32 +88,35 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("cdrf-save")
-    public String guardar() throws InstanceNotFoundException {
-        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+    public String guardar() {
+        Preconditions.checkNotNull(cdrf);
+        Preconditions.checkNotNull(cdrf.getTpdtId());
 
-        if (cdrf.getTpdtId() == null) {
-            throw new Error("No se ha especificado un tipo de dato");
+        if (GenericValidator.isBlankOrNull(cdrf.getValor())) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("cdrf_valor") }));
+        }
+        if (cdrf.getOrden() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("cdrf_orden") }));
         }
 
-        PropertyValidator.validateRequired(this, "cdrf.valor", cdrf.getValor());
-        PropertyValidator.validateRequired(this, "cdrf.orden", cdrf.getOrden());
-
         if (!hasErrors()) {
+            final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+
             if (accion == ACCION_EDICION.alta) {
                 try {
                     cdrfBO.insert(cdrf);
                 } catch (final DuplicateInstanceException ex) {
-                    addFieldError("cdrf.valor", "errors.duplicado");
+                    addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("cdrf") }));
+                }
+            } else {
+                try {
+                    cdrfBO.update(cdrf);
+                } catch (final InstanceNotFoundException ex) {
+                    addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("cdrf"), cdrf.getValor() }));
                 }
             }
-        }
-
-        if (hasErrors()) {
-            return INPUT;
         }
 
         return SUCCESS;
@@ -113,24 +126,20 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Eliminar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("cdrf-delete")
-    public String eliminar() throws InstanceNotFoundException {
+    public String eliminar() {
+        Preconditions.checkNotNull(cdrf);
+        Preconditions.checkNotNull(cdrf.getTpdtId());
+        Preconditions.checkNotNull(cdrf.getValor());
+
         final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
 
-        if (cdrf.getTpdtId() == null) {
-            throw new Error("No se ha especificado un tipo de dato");
+        try {
+            cdrfBO.delete(cdrf);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("cdrf"), cdrf.getValor() }));
         }
-
-        PropertyValidator.validateRequired(this, "cdrf.valor", cdrf.getValor());
-
-        if (hasErrors()) {
-            throw new Error("Error recogiendo los datos del codigo de referencia: " + cdrf);
-        }
-
-        cdrfBO.delete(cdrf);
 
         return SUCCESS;
     }
@@ -139,11 +148,13 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("cdrf-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
+        Preconditions.checkNotNull(cdrf);
+        Preconditions.checkNotNull(cdrf.getTpdtId());
+        Preconditions.checkNotNull(cdrf.getValor());
+
         accion = ACCION_EDICION.modificar;
 
         final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
@@ -153,6 +164,10 @@ public final class CodigoReferenciaAction extends BaseAction {
         cdrfCriterioVO.setValor(cdrf.getValor());
 
         cdrf = cdrfBO.selectObject(cdrfCriterioVO);
+
+        if (cdrf == null) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("cdrf"), cdrf.getValor() }));
+        }
 
         return SUCCESS;
     }

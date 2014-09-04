@@ -26,7 +26,7 @@
                 <label> {{"tpdt_tipoElemento" | translate}} </label>
                 <p class="form-control-static" title="{{'TipoElemento_' + tpdt.tipoElemento | translate}}">{{tpdt.tipoElemento}}</p>
             </div>
-            <div class="col-md-3 form-group">
+            <div ng-if="tpdt.enti" class="col-md-3 form-group">
                 <label> {{"tpdt_enti" | translate}} </label>
                 <p class="form-control-static">
                     <a ng-if="tpdt.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a

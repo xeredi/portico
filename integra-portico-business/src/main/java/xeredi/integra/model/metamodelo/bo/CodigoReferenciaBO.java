@@ -43,6 +43,21 @@ public class CodigoReferenciaBO implements CodigoReferencia {
      */
     @Override
     @Transactional
+    public void update(CodigoReferenciaVO cdrfVO) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(cdrfVO);
+
+        final int updated = cdrfDAO.update(cdrfVO);
+
+        if (updated == 0) {
+            throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public final void delete(final CodigoReferenciaVO cdrfVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrfVO);
 

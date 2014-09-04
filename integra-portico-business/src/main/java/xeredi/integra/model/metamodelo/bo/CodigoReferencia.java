@@ -22,6 +22,16 @@ public interface CodigoReferencia {
     void insert(final CodigoReferenciaVO cdrfVO) throws DuplicateInstanceException;
 
     /**
+     * Update.
+     *
+     * @param cdrfVO
+     *            the cdrf vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    void update(final CodigoReferenciaVO cdrfVO) throws InstanceNotFoundException;
+
+    /**
      * Delete.
      *
      * @param cdrfVO

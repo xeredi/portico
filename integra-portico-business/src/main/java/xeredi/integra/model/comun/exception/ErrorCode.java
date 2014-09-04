@@ -20,7 +20,7 @@ public enum ErrorCode {
     /** Codigo Obligatorio para un maestro. Sin argumentos. */
     E00004,
 
-    /** Código Duplicado para un maestro. Se pasa como argumento la etiqueta de la entidad. */
+    /** Instancia Duplicada. Se pasa como argumento el nombre de la entidad. */
     E00005,
 
     /** Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin argumentos. */
@@ -28,6 +28,9 @@ public enum ErrorCode {
 
     /** Parametro no encontrado. Se pasa como argumento el identificador no encontrado. */
     E00007,
+
+    /** Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su identificador. */
+    E00008,
 
     ;
 }

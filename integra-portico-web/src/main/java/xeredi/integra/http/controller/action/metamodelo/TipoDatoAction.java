@@ -3,6 +3,8 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
@@ -62,12 +64,20 @@ public final class TipoDatoAction extends BaseAction {
      *             the instance not found exception
      */
     @Action("tpdt-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String modificar() {
+        Preconditions.checkNotNull(tpdt);
+        Preconditions.checkNotNull(tpdt.getId());
+
         accion = ACCION_EDICION.modificar;
 
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         tpdt = tpdtBO.select(tpdt.getId());
+
+        if (tpdt == null) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tptd"), String.valueOf(tpdt.getId()) }));
+        }
 
         return SUCCESS;
     }
@@ -81,6 +91,8 @@ public final class TipoDatoAction extends BaseAction {
      */
     @Action("tpdt-save")
     public String guardar() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(tpdt);
+
         // Validacion de datos
         if (accion == ACCION_EDICION.alta) {
             if (tpdt.getCodigo() == null || tpdt.getCodigo().isEmpty()) {
@@ -135,9 +147,17 @@ public final class TipoDatoAction extends BaseAction {
      */
     @Actions({ @Action("tpdt-detail") })
     public String detalle() {
+        Preconditions.checkNotNull(tpdt);
+        Preconditions.checkNotNull(tpdt.getId());
+
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         tpdt = tpdtBO.select(tpdt.getId());
+
+        if (tpdt == null) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tptd"), String.valueOf(tpdt.getId()) }));
+        }
 
         return SUCCESS;
     }
