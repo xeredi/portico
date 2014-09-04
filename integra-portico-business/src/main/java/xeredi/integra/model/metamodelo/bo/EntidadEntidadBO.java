@@ -36,6 +36,9 @@ public class EntidadEntidadBO implements EntidadEntidad {
     @Transactional
     public final void insert(final EntidadEntidadVO enenVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(enenVO);
+        Preconditions.checkNotNull(enenVO.getEntiPadreId());
+        Preconditions.checkNotNull(enenVO.getEntiHijaId());
+        Preconditions.checkNotNull(enenVO.getOrden());
 
         final EntidadVO entiPadreVO = entiDAO.select(enenVO.getEntiPadreId());
         final EntidadVO entiHijaVO = entiDAO.select(enenVO.getEntiHijaId());
@@ -63,8 +66,28 @@ public class EntidadEntidadBO implements EntidadEntidad {
      */
     @Override
     @Transactional
+    public final void update(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enenVO);
+        Preconditions.checkNotNull(enenVO.getEntiPadreId());
+        Preconditions.checkNotNull(enenVO.getEntiHijaId());
+        Preconditions.checkNotNull(enenVO.getOrden());
+
+        final int updated = enenDAO.update(enenVO);
+
+        if (updated == 0) {
+            throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public final void delete(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenVO);
+        Preconditions.checkNotNull(enenVO.getEntiPadreId());
+        Preconditions.checkNotNull(enenVO.getEntiHijaId());
 
         final int updated = enenDAO.delete(enenVO);
 

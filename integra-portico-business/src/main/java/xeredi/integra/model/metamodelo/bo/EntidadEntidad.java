@@ -12,7 +12,7 @@ public interface EntidadEntidad {
 
     /**
      * Insert.
-     * 
+     *
      * @param enenVO
      *            the enen vo
      * @throws DuplicateInstanceException
@@ -21,8 +21,18 @@ public interface EntidadEntidad {
     void insert(final EntidadEntidadVO enenVO) throws DuplicateInstanceException;
 
     /**
+     * Update.
+     *
+     * @param enenVO
+     *            the enen vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    void update(final EntidadEntidadVO enenVO) throws InstanceNotFoundException;
+
+    /**
      * Delete.
-     * 
+     *
      * @param enenVO
      *            the enen vo
      * @throws InstanceNotFoundException
