@@ -17,7 +17,7 @@ public interface TipoDato {
 
     /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo dato vo
@@ -26,7 +26,7 @@ public interface TipoDato {
 
     /**
      * Insert.
-     * 
+     *
      * @param tpdtVO
      *            the tpdt vo
      * @throws DuplicateInstanceException
@@ -36,7 +36,7 @@ public interface TipoDato {
 
     /**
      * Update.
-     * 
+     *
      * @param tpdtVO
      *            the tpdt vo
      */
@@ -44,7 +44,7 @@ public interface TipoDato {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpdtCriterioVO
      *            the tpdt criterio vo
      * @return the list
@@ -53,7 +53,7 @@ public interface TipoDato {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpdtCriterioVO
      *            the tpdt criterio vo
      * @param offset
@@ -66,14 +66,16 @@ public interface TipoDato {
 
     /**
      * Select label values.
-     * 
+     *
+     * @param tpdtCriterioVO
+     *            the tpdt criterio vo
      * @return the list
      */
-    List<LabelValueVO> selectLabelValues();
+    List<LabelValueVO> selectLabelValues(final TipoDatoCriterioVO tpdtCriterioVO);
 
     /**
      * Select map.
-     * 
+     *
      * @param tpdtCriterioVO
      *            the tpdt criterio vo
      * @return the map

@@ -138,7 +138,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-    DuplicateInstanceException {
+            DuplicateInstanceException {
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
@@ -276,7 +276,7 @@ public final class ServicioImporterBO {
                                 LOG.trace("Guardar " + value + " en el dato " + entdVO.getTpdt().getNombre());
                             }
 
-                            if (rs.wasNull() && entdVO.isObligatorio()
+                            if (rs.wasNull() && entdVO.getObligatorio()
                                     && entdVO.getTpdt().getTipoElemento() != TipoElemento.BO) {
                                 throw new Error("Campo obligatorio no encontrado para el dato: "
                                         + entdVO.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());
@@ -380,7 +380,7 @@ public final class ServicioImporterBO {
                                     LOG.trace("Guardar " + value + " en el dato " + entdVO.getTpdt().getNombre());
                                 }
 
-                                if (rs.wasNull() && entdVO.isObligatorio()
+                                if (rs.wasNull() && entdVO.getObligatorio()
                                         && entdVO.getTpdt().getTipoElemento() != TipoElemento.BO) {
                                     throw new Error("Campo obligatorio no encontrado para el dato: "
                                             + entdVO.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());

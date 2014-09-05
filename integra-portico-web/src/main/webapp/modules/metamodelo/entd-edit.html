@@ -50,24 +50,24 @@
                 <label> {{"entd_obligatorio" | translate}} </label> <select ng-model="entd.obligatorio"
                     class="form-control input-sm">
                     <option value="" />
-                    <option value="true" ng-selected="entd.obligatorio">{{'fmt_true' | translate}}</option>
-                    <option value="false" ng-selected="!entd.obligatorio">{{'fmt_false' | translate}}</option>
+                    <option value="true" ng-selected="entd.obligatorio == true">{{'fmt_true' | translate}}</option>
+                    <option value="false" ng-selected="entd.obligatorio == false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_gridable" | translate}} </label> <select ng-model="entd.gridable"
                     class="form-control input-sm">
                     <option value="" />
-                    <option value="true" ng-selected="entd.gridable">{{'fmt_true' | translate}}</option>
-                    <option value="false" ng-selected="!entd.gridable">{{'fmt_false' | translate}}</option>
+                    <option value="true" ng-selected="entd.gridable == true">{{'fmt_true' | translate}}</option>
+                    <option value="false" ng-selected="entd.gridable == false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_filtrable" | translate}} </label> <select ng-model="entd.filtrable"
                     class="form-control input-sm">
                     <option value="" />
-                    <option value="true" ng-selected="entd.filtrable">{{'fmt_true' | translate}}</option>
-                    <option value="false" ng-selected="!entd.filtrable">{{'fmt_false' | translate}}</option>
+                    <option value="true" ng-selected="entd.filtrable == true">{{'fmt_true' | translate}}</option>
+                    <option value="false" ng-selected="entd.filtrable == false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
         </div>

@@ -36,7 +36,7 @@
                     class="form-control input-sm">
                     <option />
                     <option value="true" ng-selected="enti.cmdAlta == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="enti.cmdAlta != true">{{"fmt_false" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdAlta == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
@@ -44,7 +44,7 @@
                     class="form-control input-sm">
                     <option />
                     <option value="true" ng-selected="enti.cmdBaja == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="enti.cmdBaja != true">{{"fmt_false" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdBaja == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
@@ -52,7 +52,7 @@
                     class="form-control input-sm">
                     <option />
                     <option value="true" ng-selected="enti.cmdEdicion == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="enti.cmdEdicion != true">{{"fmt_false" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdEdicion == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
@@ -60,14 +60,14 @@
                     class="form-control input-sm">
                     <option />
                     <option value="true" ng-selected="enti.cmdDuplicado == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="enti.cmdDuplicado != true">{{"fmt_false" | translate}}</option>
+                    <option value="false" ng-selected="enti.cmdDuplicado == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{"enti_i18n" | translate}}</label> <select ng-model="enti.i18n" class="form-control input-sm">
                     <option />
                     <option value="true" ng-selected="enti.i18n == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="enti.i18n != true">{{"fmt_false" | translate}}</option>
+                    <option value="false" ng-selected="enti.i18n == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
@@ -75,7 +75,7 @@
                     class="form-control input-sm">
                     <option />
                     <option value="true" ng-selected="enti.tempExp == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="enti.tempExp != true">{{"fmt_false" | translate}}</option>
+                    <option value="false" ng-selected="enti.tempExp == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
         </div>

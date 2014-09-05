@@ -18,6 +18,9 @@
                 <th nowrap="nowrap">{{"enti_cmd_baja" | translate}}</th>
                 <th nowrap="nowrap">{{"enti_cmd_edicion" | translate}}</th>
                 <th nowrap="nowrap">{{"enti_cmd_duplicado" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_temporal" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_facturable" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_tpdt_estado" | translate}}</th>
             </tr>
         </thead>
 
@@ -30,6 +33,9 @@
                 <td><i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
                 <td><i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
                 <td><i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i></td>
+                <td><a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a></td>
             </tr>
         </tbody>
     </table>

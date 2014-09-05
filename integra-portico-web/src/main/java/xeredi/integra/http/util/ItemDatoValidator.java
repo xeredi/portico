@@ -33,7 +33,7 @@ public final class ItemDatoValidator {// srdtMap
                 final Long tpdtId = entdVO.getTpdt().getId();
                 final ItemDatoVO itdtVO = itdtMap.get(tpdtId);
 
-                if (entdVO.isObligatorio() && itdtVO == null) {
+                if (entdVO.getObligatorio() && itdtVO == null) {
                     support.addActionError(support.getText(ErrorCode.E00001.name(),
                             new String[] { entdVO.getEtiqueta() }));
                 }
@@ -43,28 +43,28 @@ public final class ItemDatoValidator {// srdtMap
                     switch (entdVO.getTpdt().getTipoElemento()) {
                     case BO:
                     case NE:
-                        if (entdVO.isObligatorio() && itdtVO.getCantidadEntera() == null) {
+                        if (entdVO.getObligatorio() && itdtVO.getCantidadEntera() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
                                     new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case ND:
-                        if (entdVO.isObligatorio() && itdtVO.getCantidadDecimal() == null) {
+                        if (entdVO.getObligatorio() && itdtVO.getCantidadDecimal() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
                                     new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case PR:
-                        if (entdVO.isObligatorio() && (itdtVO.getPrmt() == null || itdtVO.getPrmt().getId() == null)) {
+                        if (entdVO.getObligatorio() && (itdtVO.getPrmt() == null || itdtVO.getPrmt().getId() == null)) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
                                     new String[] { entdVO.getEtiqueta() }));
                         }
 
                         break;
                     case SR:
-                        if (entdVO.isObligatorio() && (itdtVO.getSrvc() == null || itdtVO.getSrvc().getId() == null)) {
+                        if (entdVO.getObligatorio() && (itdtVO.getSrvc() == null || itdtVO.getSrvc().getId() == null)) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
                                     new String[] { entdVO.getEtiqueta() }));
                         }
@@ -72,7 +72,7 @@ public final class ItemDatoValidator {// srdtMap
                         break;
                     case CR:
                     case TX:
-                        if (entdVO.isObligatorio() && (itdtVO.getCadena() == null || itdtVO.getCadena().isEmpty())) {
+                        if (entdVO.getObligatorio() && (itdtVO.getCadena() == null || itdtVO.getCadena().isEmpty())) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
                                     new String[] { entdVO.getEtiqueta() }));
                         }
@@ -80,7 +80,7 @@ public final class ItemDatoValidator {// srdtMap
                         break;
                     case FE:
                     case FH:
-                        if (entdVO.isObligatorio() && itdtVO.getFecha() == null) {
+                        if (entdVO.getObligatorio() && itdtVO.getFecha() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
                                     new String[] { entdVO.getEtiqueta() }));
                         }

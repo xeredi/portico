@@ -84,7 +84,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         if (enti.getEntdMap() != null) {
             for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
-                if (entdVO.isFiltrable() && !itemCriterio.getItdtMap().containsKey(entdVO.getTpdt().getId())) {
+                if (entdVO.getFiltrable() && !itemCriterio.getItdtMap().containsKey(entdVO.getTpdt().getId())) {
                     itemCriterio.getItdtMap().put(entdVO.getTpdt().getId().toString(), new ItemDatoCriterioVO());
                 }
             }
@@ -135,7 +135,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
             if (enti.getEntdMap() != null) {
                 for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
-                    if (entdVO.isFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                    if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
                             && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
                         tpprIds.add(entdVO.getTpdt().getEnti().getId());
                     }

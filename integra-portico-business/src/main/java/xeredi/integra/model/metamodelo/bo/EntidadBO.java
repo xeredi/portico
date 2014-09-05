@@ -139,7 +139,7 @@ public class EntidadBO implements Entidad {
             entiVO.getEntdList().add(entdVO.getTpdt().getId());
             entiVO.getEntdMap().put(entdVO.getTpdt().getId(), entdVO);
 
-            if (entdVO.isGridable()) {
+            if (entdVO.getGridable()) {
                 entiVO.getEntdGridList().add(entdVO.getTpdt().getId());
             }
 
@@ -227,7 +227,7 @@ public class EntidadBO implements Entidad {
                 entiVO.getEntdMap().put(entdVO.getTpdt().getId(), entdVO);
                 entiVO.getEntdList().add(entdVO.getTpdt().getId());
 
-                if (entdVO.isGridable()) {
+                if (entdVO.getGridable()) {
                     entiVO.getEntdGridList().add(entdVO.getTpdt().getId());
                 }
             }

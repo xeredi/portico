@@ -25,15 +25,3 @@ public enum TipoElemento {
     /** Servicio. */
     SR;
 }
-
-// FIXME Cambiar valores
-//
-// D -> ND (Nº Decimal)
-// L -> NE (Nº Entero)
-// S -> TX (Texto)
-// T -> FE (Fecha)
-// ? -> FH (Fecha/Hora)
-// P -> PR (Maestro)
-// B -> BO (Booleano)
-// R -> CR (Codigo de Referencia)
-// A -> SR (Servicio)

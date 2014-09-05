@@ -570,6 +570,12 @@ metamodelo.controller("tpsrEditController", function($scope, $http, $location, $
         $scope.accion = data.accion;
     });
 
+    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
+
+    $http.get(urlTpdtEstado).success(function(data) {
+        $scope.tpdtEstadoList = data.lvList;
+    });
+
     $scope.submit = function(form) {
         var url = "metamodelo/tpsr-save.action";
 
@@ -592,6 +598,12 @@ metamodelo.controller("tpsrCreateController", function($scope, $http, $location,
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;
         $scope.accion = data.accion;
+    });
+
+    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
+
+    $http.get(urlTpdtEstado).success(function(data) {
+        $scope.tpdtEstadoList = data.lvList;
     });
 
     $scope.submit = function(form) {

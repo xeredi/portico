@@ -139,8 +139,8 @@ public class TipoDatoBO implements TipoDato {
      */
     @Override
     @Transactional
-    public final List<LabelValueVO> selectLabelValues() {
-        return tpdtDAO.selectLabelValues(new TipoDatoCriterioVO());
+    public final List<LabelValueVO> selectLabelValues(final TipoDatoCriterioVO tpdtCriterioVO) {
+        return tpdtDAO.selectLabelValues(tpdtCriterioVO);
     }
 
     /**

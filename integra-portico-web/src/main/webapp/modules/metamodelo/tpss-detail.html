@@ -22,6 +22,12 @@
                 <label> {{"enti_tipo" | translate}} </label>
                 <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
             </div>
+            <div class="col-md-3 form-group">
+                <label> {{"enti_tpsr" | translate}} </label>
+                <p class="form-control-static">
+                    <a href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}">{{enti.tpsr.etiqueta}}</a>
+                </p>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-1 form-group">

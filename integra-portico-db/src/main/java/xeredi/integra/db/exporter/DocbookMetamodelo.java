@@ -565,9 +565,9 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + entdVO.getFila() + "</entry>");
                 writer.println("<entry>" + entdVO.getOrden() + "</entry>");
                 writer.println("<entry>" + entdVO.getSpan() + "</entry>");
-                writer.println("<entry>" + (entdVO.isObligatorio() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entdVO.isGridable() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entdVO.isFiltrable() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entdVO.getObligatorio() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entdVO.getGridable() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entdVO.getFiltrable() ? "S" : "") + "</entry>");
                 writer.println("<entry>" + (entdVO.getValorDefecto() == null ? "" : entdVO.getValorDefecto())
                         + "</entry>");
                 writer.println("</row>");

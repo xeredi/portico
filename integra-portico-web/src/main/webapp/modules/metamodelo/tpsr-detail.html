@@ -48,20 +48,24 @@
                     <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <!--
             <div class="col-md-1 form-group">
-                <label> {{"enti_i18n" | translate}} </label>
+                <label> {{"enti_temporal" | translate}} </label>
                 <p class="form-control-static">
-                    <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i>
+                    <i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <div class="col-md-2 form-group">
-                <label> {{"enti_tempExp" | translate}} </label>
+            <div class="col-md-1 form-group">
+                <label> {{"enti_facturable" | translate}} </label>
                 <p class="form-control-static">
-                    <i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i>
+                    <i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
- -->
+            <div class="col-md-3 form-group">
+                <label> {{"enti_tpdt_estado" | translate}} </label>
+                <p class="form-control-static">
+                    <a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a>
+                </p>
+            </div>
         </div>
     </fieldset>
 

@@ -125,14 +125,14 @@ public final class TipoParametroAction extends BaseAction {
         // Validaciones
         if (accion == ACCION_EDICION.create) {
             if (enti.getCodigo() == null || enti.getCodigo().isEmpty()) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_codigo" }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_codigo") }));
             }
             if (enti.getNombre() == null || enti.getNombre().isEmpty()) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_nombre" }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_nombre") }));
             }
         } else {
             if (enti.getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_id" }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_id") }));
             }
         }
 

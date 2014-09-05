@@ -27,13 +27,13 @@ public final class EntidadTipoDatoVO {
     private Integer span;
 
     /** The obligatorio. */
-    private boolean obligatorio;
+    private Boolean obligatorio;
 
     /** The gridable. */
-    private boolean gridable;
+    private Boolean gridable;
 
     /** The filtrable. */
-    private boolean filtrable;
+    private Boolean filtrable;
 
     /** The valor defecto. */
     private String valorDefecto;
@@ -51,7 +51,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the span lg.
-     * 
+     *
      * @return the span lg
      */
     public Integer getSpanLg() {
@@ -61,7 +61,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the tpdt.
-     * 
+     *
      * @return the tpdt
      */
     public TipoDatoVO getTpdt() {
@@ -70,7 +70,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the tpdt.
-     * 
+     *
      * @param value
      *            the new tpdt
      */
@@ -80,7 +80,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the orden.
-     * 
+     *
      * @return the orden
      */
     public Integer getOrden() {
@@ -89,7 +89,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the orden.
-     * 
+     *
      * @param value
      *            the new orden
      */
@@ -99,7 +99,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the etiqueta.
-     * 
+     *
      * @return the etiqueta
      */
     public String getEtiqueta() {
@@ -108,7 +108,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the etiqueta.
-     * 
+     *
      * @param value
      *            the new etiqueta
      */
@@ -117,65 +117,8 @@ public final class EntidadTipoDatoVO {
     }
 
     /**
-     * Checks if is obligatorio.
-     * 
-     * @return true, if is obligatorio
-     */
-    public boolean isObligatorio() {
-        return obligatorio;
-    }
-
-    /**
-     * Sets the obligatorio.
-     * 
-     * @param value
-     *            the new obligatorio
-     */
-    public void setObligatorio(final boolean value) {
-        obligatorio = value;
-    }
-
-    /**
-     * Checks if is gridable.
-     * 
-     * @return true, if is gridable
-     */
-    public boolean isGridable() {
-        return gridable;
-    }
-
-    /**
-     * Sets the gridable.
-     * 
-     * @param value
-     *            the new gridable
-     */
-    public void setGridable(final boolean value) {
-        gridable = value;
-    }
-
-    /**
-     * Checks if is filtrable.
-     * 
-     * @return true, if is filtrable
-     */
-    public boolean isFiltrable() {
-        return filtrable;
-    }
-
-    /**
-     * Sets the filtrable.
-     * 
-     * @param value
-     *            the new filtrable
-     */
-    public void setFiltrable(final boolean value) {
-        filtrable = value;
-    }
-
-    /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -184,7 +127,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -194,7 +137,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the fila.
-     * 
+     *
      * @return the fila
      */
     public Integer getFila() {
@@ -203,7 +146,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the fila.
-     * 
+     *
      * @param value
      *            the new fila
      */
@@ -213,7 +156,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the span.
-     * 
+     *
      * @return the span
      */
     public Integer getSpan() {
@@ -222,7 +165,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the span.
-     * 
+     *
      * @param value
      *            the new span
      */
@@ -232,7 +175,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the valor defecto.
-     * 
+     *
      * @return the valor defecto
      */
     public String getValorDefecto() {
@@ -241,7 +184,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the valor defecto.
-     * 
+     *
      * @param value
      *            the new valor defecto
      */
@@ -251,7 +194,7 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Gets the grupo.
-     * 
+     *
      * @return the grupo
      */
     public Integer getGrupo() {
@@ -260,12 +203,69 @@ public final class EntidadTipoDatoVO {
 
     /**
      * Sets the grupo.
-     * 
+     *
      * @param value
      *            the new grupo
      */
     public void setGrupo(final Integer value) {
         grupo = value;
+    }
+
+    /**
+     * Gets the obligatorio.
+     *
+     * @return the obligatorio
+     */
+    public Boolean getObligatorio() {
+        return obligatorio;
+    }
+
+    /**
+     * Sets the obligatorio.
+     *
+     * @param value
+     *            the new obligatorio
+     */
+    public void setObligatorio(final Boolean value) {
+        obligatorio = value;
+    }
+
+    /**
+     * Gets the gridable.
+     *
+     * @return the gridable
+     */
+    public Boolean getGridable() {
+        return gridable;
+    }
+
+    /**
+     * Sets the gridable.
+     *
+     * @param value
+     *            the new gridable
+     */
+    public void setGridable(final Boolean value) {
+        gridable = value;
+    }
+
+    /**
+     * Gets the filtrable.
+     *
+     * @return the filtrable
+     */
+    public Boolean getFiltrable() {
+        return filtrable;
+    }
+
+    /**
+     * Sets the filtrable.
+     *
+     * @param value
+     *            the new filtrable
+     */
+    public void setFiltrable(final Boolean value) {
+        filtrable = value;
     }
 
 }

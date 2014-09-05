@@ -75,7 +75,7 @@ public final class TipoDatoProxy {
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         TIPO_DATO_MAP.putAll(tpdtBO.selectMap(new TipoDatoCriterioVO()));
-        LABEL_VALUE_LIST.addAll(tpdtBO.selectLabelValues());
+        LABEL_VALUE_LIST.addAll(tpdtBO.selectLabelValues(new TipoDatoCriterioVO()));
 
         LOG.info("Carga de tipos de Dato OK");
     }

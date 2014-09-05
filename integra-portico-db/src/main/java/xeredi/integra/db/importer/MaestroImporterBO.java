@@ -405,7 +405,7 @@ public final class MaestroImporterBO {
      */
     private ItemDatoVO getItdt(final Object value, final EntidadTipoDatoVO entdVO, final String nombreEntidad)
             throws SQLException {
-        if (value == null && entdVO.isObligatorio()) {
+        if (value == null && entdVO.getObligatorio()) {
             throw new Error("Campo obligatorio no encontrado para el dato: " + entdVO.getTpdt().getNombre() + " ("
                     + entdVO.getEtiqueta() + ") de la entidad: " + nombreEntidad);
         }

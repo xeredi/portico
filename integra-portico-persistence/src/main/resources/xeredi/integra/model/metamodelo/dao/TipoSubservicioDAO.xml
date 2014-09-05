@@ -9,7 +9,9 @@
         <result column="tpss_es_facturable" property="facturable" />
 
 		<association property="tpsr" javaType="TipoServicioVO">
-			<result column="tpss_tpsr_pk" property="id" />
+            <result column="tpss_tpsr_pk" property="id" />
+            <result column="tpsr_codigo" property="codigo" />
+            <result column="tpsr_nombre" property="nombre" />
 		</association>
 
 		<association property="tpdtEstado" javaType="TipoDatoVO">
@@ -25,10 +27,13 @@
             , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
             , tpss.tpss_es_temporal, tpss.tpss_es_facturable, tpss.tpss_tpsr_pk
             , tpss.tpss_tpdt_estado_pk, tpdt.tpdt_nombre
+            , tpsr.enti_codigo AS tpsr_codigo, tpsr.enti_nombre AS tpsr_nombre
         FROM
             tbl_tipo_subservicio_tpss tpss
             INNER JOIN tbl_entidad_enti enti ON
                 enti.enti_pk = tpss.tpss_pk
+            INNER JOIN tbl_entidad_enti tpsr ON
+                tpsr.enti_pk = tpss.tpss_tpsr_pk
             LEFT JOIN tbl_tipo_dato_tpdt tpdt ON
                 tpdt.tpdt_pk = tpss.tpss_tpdt_estado_pk
     ]]>

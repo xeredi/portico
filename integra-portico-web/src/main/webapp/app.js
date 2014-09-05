@@ -219,6 +219,10 @@ app.config(function($translateProvider) {
         enti_i18n : 'i18n?',
         enti_tempExp : 'Tmp. Expl.?',
         enti_tpprAsociado : 'Entidad Asociada',
+        enti_tpsr : 'T. Servicio',
+        enti_temporal : 'Temporal?',
+        enti_facturable : 'Facturable?',
+        enti_tpdt_estado : 'T. Dato Estado',
 
         entd_grupo : 'Grupo',
         entd_fila : 'Fila',
@@ -234,8 +238,8 @@ app.config(function($translateProvider) {
         entd_tpdt_tpht : 'T. HTML',
         entd_tpdt_enti : 'Entidad',
 
-        enen_entih: "Entidad Hija",
-        enen_orden: "Orden",
+        enen_entih : "Entidad Hija",
+        enen_orden : "Orden",
 
     });
 
