@@ -56,6 +56,8 @@ public final class ExcelUtil {
     public ExcelUtil(final Locale alocale) {
         super();
 
+        Preconditions.checkNotNull(alocale);
+
         locale = alocale;
         bundle = ResourceBundle.getBundle(GlobalNames.MESSAGES, locale);
         datetimeFormat = new SimpleDateFormat(bundle.getString(GlobalNames.DATETIME_FORMAT_KEY));
@@ -527,6 +529,9 @@ public final class ExcelUtil {
      *            the header
      */
     private void autoSizeColumns(final HSSFSheet sheet, final HSSFRow header) {
+        Preconditions.checkNotNull(sheet);
+        Preconditions.checkNotNull(header);
+
         for (int index = header.getFirstCellNum(); index < header.getLastCellNum(); index++) {
             sheet.autoSizeColumn(index);
         }

@@ -121,6 +121,7 @@ public class TipoEstadisticaBO implements TipoEstadistica {
     @Transactional
     public final void update(final TipoEstadisticaVO tpesVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpesVO);
+        Preconditions.checkNotNull(tpesVO.getId());
 
         final int updated = tpesDAO.update(tpesVO);
 

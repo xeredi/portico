@@ -32,6 +32,9 @@ public abstract class BasePdf {
      */
     public BasePdf(final Locale alocale) {
         super();
+
+        Preconditions.checkNotNull(alocale);
+
         locale = alocale;
         bundle = ResourceBundle.getBundle(GlobalNames.MESSAGES, locale);
     }
@@ -109,6 +112,8 @@ public abstract class BasePdf {
      * @return the form
      */
     public final HorizontalListBuilder getForm(final List<List<PdfCell>> listCells) {
+        Preconditions.checkNotNull(listCells);
+
         final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
 
         for (final List<PdfCell> row : listCells) {
@@ -136,6 +141,8 @@ public abstract class BasePdf {
      * @return the label
      */
     public final TextFieldBuilder<String> getFieldLabel(final PdfCell pdfCell) {
+        Preconditions.checkNotNull(pdfCell);
+
         final TextFieldBuilder<String> label = DynamicReports.cmp.text(pdfCell.getLabel())
                 .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.LABEL_STYLE);
 
@@ -150,6 +157,8 @@ public abstract class BasePdf {
      * @return the data
      */
     public final TextFieldBuilder<String> getFieldValue(final PdfCell pdfCell) {
+        Preconditions.checkNotNull(pdfCell);
+
         final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue())
                 .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.VALUE_STYLE);
 

@@ -124,6 +124,7 @@ public class TipoParametroBO implements TipoParametro {
     @Transactional
     public final void update(final TipoParametroVO tpprVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpprVO);
+        Preconditions.checkNotNull(tpprVO.getId());
 
         final int updated = tpprDAO.update(tpprVO);
 

@@ -99,6 +99,7 @@ public class TipoDatoBO implements TipoDato {
     @Transactional
     public final void update(final TipoDatoVO tpdtVO) {
         Preconditions.checkNotNull(tpdtVO);
+        Preconditions.checkNotNull(tpdtVO.getId());
 
         tpdtDAO.update(tpdtVO);
     }

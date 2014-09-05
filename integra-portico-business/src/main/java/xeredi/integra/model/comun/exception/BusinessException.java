@@ -33,6 +33,8 @@ public final class BusinessException extends Exception {
     public BusinessException(final BusinessExceptionVO vo) {
         super();
 
+        Preconditions.checkNotNull(vo);
+
         list = Arrays.asList(new BusinessExceptionVO[] { vo });
     }
 
@@ -44,6 +46,8 @@ public final class BusinessException extends Exception {
      */
     public BusinessException(final List<BusinessExceptionVO> alist) {
         super();
+
+        Preconditions.checkNotNull(alist);
 
         list = alist;
     }
@@ -71,6 +75,8 @@ public final class BusinessException extends Exception {
      * @return the list
      */
     public List<String> toI18n(final Locale locale) {
+        Preconditions.checkNotNull(locale);
+
         final ResourceBundle bundle = ResourceBundle.getBundle(GlobalNames.MESSAGES, locale);
         final List<String> messages = new ArrayList<>();
 

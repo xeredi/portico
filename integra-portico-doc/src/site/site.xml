@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="${project.name}">
+  <bannerLeft>
+    <name>Portico</name>
+  </bannerLeft>
+  <body>
+    <menu name="Doc">
+      <item name="Ejemplo" href="ejemplo.html"/>
+    </menu>
+
+    <menu ref="parent"/>
+    <menu ref="reports"/>
+  </body>
+</project>

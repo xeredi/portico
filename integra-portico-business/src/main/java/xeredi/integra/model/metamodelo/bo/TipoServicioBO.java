@@ -124,6 +124,7 @@ public class TipoServicioBO implements TipoServicio {
     @Transactional
     public final void update(final TipoServicioVO tpsrVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpsrVO);
+        Preconditions.checkNotNull(tpsrVO.getId());
 
         final int updated = tpsrDAO.update(tpsrVO);
 

@@ -56,6 +56,9 @@ public class EntidadTipoDatoBO implements EntidadTipoDato {
     @Transactional
     public final void update(final EntidadTipoDatoVO entdVO) {
         Preconditions.checkNotNull(entdVO);
+        Preconditions.checkNotNull(entdVO.getEntiId());
+        Preconditions.checkNotNull(entdVO.getTpdt());
+        Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
         final int updated = entdDAO.update(entdVO);
 

@@ -2,6 +2,8 @@ package xeredi.integra.model.comun.exception;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class BusinessExceptionVO.
@@ -24,6 +26,9 @@ public final class BusinessExceptionVO {
      */
     public BusinessExceptionVO(final ErrorCode aerrorCode, final Object[] aerrorArgs) {
         super();
+
+        Preconditions.checkNotNull(aerrorCode);
+
         errorCode = aerrorCode;
         errorArgs = aerrorArgs;
     }

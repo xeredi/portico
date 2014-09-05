@@ -178,6 +178,8 @@ public class EntidadBO implements Entidad {
     @Override
     @Transactional
     public final List<LabelValueVO> selectLabelValues(final EntidadCriterioVO entiCriterioVO) {
+        Preconditions.checkNotNull(entiCriterioVO);
+
         return entiDAO.selectLabelValues(entiCriterioVO);
     }
 
@@ -187,6 +189,9 @@ public class EntidadBO implements Entidad {
     @Override
     @Transactional
     public final void fillDependencies(final EntidadVO entiVO) {
+        Preconditions.checkNotNull(entiVO);
+        Preconditions.checkNotNull(entiVO.getId());
+
         // Grupos de datos de la entidad
         final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
