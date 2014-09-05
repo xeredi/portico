@@ -9,10 +9,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class TipoServicioVO extends EntidadVO {
 
     /** The temporal. */
-    private boolean temporal;
+    private Boolean temporal;
 
     /** The facturable. */
-    private boolean facturable;
+    private Boolean facturable;
 
     /** The tpdt estado. */
     private TipoDatoVO tpdtEstado;
@@ -26,46 +26,46 @@ public final class TipoServicioVO extends EntidadVO {
     }
 
     /**
-     * Checks if is temporal.
-     * 
-     * @return true, if is temporal
+     * Gets the temporal.
+     *
+     * @return the temporal
      */
-    public boolean isTemporal() {
+    public Boolean getTemporal() {
         return temporal;
     }
 
     /**
      * Sets the temporal.
-     * 
+     *
      * @param value
      *            the new temporal
      */
-    public void setTemporal(final boolean value) {
+    public void setTemporal(final Boolean value) {
         temporal = value;
     }
 
     /**
-     * Checks if is facturable.
-     * 
-     * @return true, if is facturable
+     * Gets the facturable.
+     *
+     * @return the facturable
      */
-    public boolean isFacturable() {
+    public Boolean getFacturable() {
         return facturable;
     }
 
     /**
      * Sets the facturable.
-     * 
+     *
      * @param value
      *            the new facturable
      */
-    public void setFacturable(final boolean value) {
+    public void setFacturable(final Boolean value) {
         facturable = value;
     }
 
     /**
      * Gets the tpdt estado.
-     * 
+     *
      * @return the tpdt estado
      */
     public TipoDatoVO getTpdtEstado() {
@@ -74,12 +74,12 @@ public final class TipoServicioVO extends EntidadVO {
 
     /**
      * Sets the tpdt estado.
-     * 
+     *
      * @param value
      *            the new tpdt estado
      */
-    public void setTpdtEstado(TipoDatoVO value) {
-        this.tpdtEstado = value;
+    public void setTpdtEstado(final TipoDatoVO value) {
+        tpdtEstado = value;
     }
 
 }

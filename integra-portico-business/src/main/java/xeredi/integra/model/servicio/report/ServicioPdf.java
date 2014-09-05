@@ -75,7 +75,7 @@ public final class ServicioPdf extends BasePdf {
 
         rowCells.add(new PdfCell(tpsrVO.getNombre(), srvcVO.getEtiqueta(), 4, TipoElemento.TX));
 
-        if (tpsrVO.isTemporal()) {
+        if (tpsrVO.getTemporal()) {
             rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT.format(srvcVO.getFinicio()), 4,
                     TipoElemento.FE));
             rowCells.add(new PdfCell("F. Fin", srvcVO.getFfin() == null ? "" : PdfConstants.DATE_FORMAT.format(srvcVO

@@ -92,7 +92,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
         enti = TipoParametroProxy.select(item.getEntiId());
         item = ParametroVO.newInstance(enti);
         p18nMap = new HashMap<>();
@@ -112,7 +112,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -147,7 +147,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        accion = ACCION_EDICION.duplicar;
+        accion = ACCION_EDICION.duplicate;
 
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -187,13 +187,13 @@ public final class ParametroAction extends ItemAction {
         enti = TipoParametroProxy.select(item.getEntiId());
 
         // Validacion de Datos
-        if (accion != ACCION_EDICION.modificar) {
+        if (accion != ACCION_EDICION.edit) {
             if (item.getParametro() == null || item.getParametro().isEmpty()) {
                 addActionError(getText(ErrorCode.E00004.name()));
             }
         }
 
-        if (accion != ACCION_EDICION.alta) {
+        if (accion != ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "id", item.getId());
             PropertyValidator.validateRequired(this, "prvr.id", item.getPrvr().getId());
         }
@@ -208,7 +208,7 @@ public final class ParametroAction extends ItemAction {
                 addActionError(getText(ErrorCode.E00003.name()));
             }
         } else {
-            if (accion == ACCION_EDICION.alta) {
+            if (accion == ACCION_EDICION.create) {
                 item.getPrvr().setFinicio(Calendar.getInstance().getTime());
             }
         }
@@ -237,15 +237,15 @@ public final class ParametroAction extends ItemAction {
 
         try {
             switch (accion) {
-            case alta:
+            case create:
                 prmtBO.insert(item, enti, p18nMap);
 
                 break;
-            case modificar:
+            case edit:
                 prmtBO.update(item, enti, p18nMap);
 
                 break;
-            case duplicar:
+            case duplicate:
                 prmtBO.duplicate(item, enti, p18nMap);
 
                 break;

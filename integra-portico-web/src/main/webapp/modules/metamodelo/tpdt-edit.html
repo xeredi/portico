@@ -10,12 +10,14 @@
     <fieldset>
         <div class="row">
             <div class="col-md-2 form-group">
-                <label>{{"tpdt_codigo" | translate}}</label> <input type="text" ng-model="tpdt.codigo"
-                    class="form-control input-sm" />
+                <label>{{"tpdt_codigo" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                    ng-model="tpdt.codigo" class="form-control input-sm" />
+                <p ng-if="accion == 'edit'" class="form-control-static">{{tpdt.codigo}}</p>
             </div>
             <div class="col-md-3 form-group">
-                <label>{{"tpdt_nombre" | translate}}</label> <input type="text" ng-model="tpdt.nombre"
-                    class="form-control input-sm" />
+                <label>{{"tpdt_nombre" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                    ng-model="tpdt.nombre" class="form-control input-sm" />
+                <p ng-if="accion == 'edit'" class="form-control-static">{{tpdt.nombre}}</p>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{"tpdt_tpht" | translate}}</label> <select ng-model="tpdt.tpht" class="form-control input-sm">

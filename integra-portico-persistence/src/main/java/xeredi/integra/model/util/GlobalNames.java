@@ -19,11 +19,11 @@ public class GlobalNames {
      */
     public static enum ACCION_EDICION {
         /** The alta. */
-        alta,
+        create,
         /** The modificar. */
-        modificar,
+        edit,
         /** The duplicar. */
-        duplicar
+        duplicate
 
         ;
     }

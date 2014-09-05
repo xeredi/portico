@@ -56,7 +56,7 @@ public final class ClaveIdiomaAction extends BaseAction {
      */
     @Action(value = "cnci-alta", results = { @Result(name = "success", location = "cnci-edicion.jsp") })
     public String alta() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
@@ -74,7 +74,7 @@ public final class ClaveIdiomaAction extends BaseAction {
      */
     @Action(value = "cnci-modificar", results = { @Result(name = "success", location = "cnci-edicion.jsp") })
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdiomaBO.class);
         final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
@@ -97,7 +97,7 @@ public final class ClaveIdiomaAction extends BaseAction {
             "%{cnci.id}" }), @Result(name = "input", location = "cnci-edicion.jsp") })
     public String guardar() throws InstanceNotFoundException {
         // Validacion de datos
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "cnci.clave", cnci.getClave());
         }
 
@@ -109,7 +109,7 @@ public final class ClaveIdiomaAction extends BaseAction {
 
         final ClaveIdioma cnciBO = BOFactory.getInjector().getInstance(ClaveIdiomaBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             try {
                 cnciBO.insert(cnci);
             } catch (final DuplicateInstanceException ex) {

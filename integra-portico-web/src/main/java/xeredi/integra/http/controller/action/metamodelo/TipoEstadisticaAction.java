@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -47,7 +46,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     @Action("tpes-create")
     public String alta() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -61,7 +60,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     @Action("tpes-edit")
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         if (enti.getId() == null) {
             throw new Error("Identificador de tipo de estadistica no especificado");
@@ -84,7 +83,7 @@ public final class TipoEstadisticaAction extends BaseAction {
     @Action("tpes-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
-        if (accion == ACCION_EDICION.modificar) {
+        if (accion == ACCION_EDICION.edit) {
             PropertyValidator.validateRequired(this, "tpes.id", enti.getId());
         }
 
@@ -97,7 +96,7 @@ public final class TipoEstadisticaAction extends BaseAction {
 
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             tpesBO.insert(enti);
@@ -164,8 +163,8 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @param value
      *            the enti
      */
-    public void setEnti(TipoEstadisticaVO value) {
-        this.enti = value;
+    public void setEnti(final TipoEstadisticaVO value) {
+        enti = value;
     }
 
 }

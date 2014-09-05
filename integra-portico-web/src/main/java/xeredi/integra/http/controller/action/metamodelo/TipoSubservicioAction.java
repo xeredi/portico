@@ -47,7 +47,7 @@ public final class TipoSubservicioAction extends BaseAction {
      */
     @Action("tpss-create")
     public String alta() {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         if (enti == null || enti.getTpsr() == null || enti.getTpsr().getId() == null) {
             throw new Error("Especifique un tipo de servicio para poder crear un tipo de subservicio");
@@ -67,7 +67,7 @@ public final class TipoSubservicioAction extends BaseAction {
      */
     @Action("tpss-edit")
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         if (enti.getId() == null) {
             throw new Error("Identificador de tipo de subservicio no especificado");
@@ -90,7 +90,7 @@ public final class TipoSubservicioAction extends BaseAction {
     @Action("tpss-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "tpss.codigo", enti.getCodigo());
             PropertyValidator.validateRequired(this, "tpss.nombre", enti.getNombre());
         } else {
@@ -105,7 +105,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
         final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             tpssBO.insert(enti);

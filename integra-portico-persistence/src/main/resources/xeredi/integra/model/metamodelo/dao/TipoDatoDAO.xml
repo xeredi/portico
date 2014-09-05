@@ -120,9 +120,7 @@
     <update id="update" parameterType="TipoDatoVO">
         <![CDATA[
         UPDATE tbl_tipo_dato_tpdt SET
-            tpdt_codigo = #{codigo}
-            , tpdt_nombre = #{nombre}
-            , tpdt_tipo_elemento = #{tipoElemento}
+            tpdt_tipo_elemento = #{tipoElemento}
             , tpdt_tipo_html = #{tpht}
             , tpdt_enti_pk = #{enti.id}
         WHERE tpdt_pk = #{id}

@@ -320,7 +320,7 @@ public final class MaestroImporterBO {
         try (final PreparedStatement stmt = con.prepareStatement(sql.toString());) {
             int i = 1;
 
-            if (tpspVO.isI18n()) {
+            if (tpspVO.getI18n()) {
                 stmt.setString(i++, idioma);
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
                 stmt.setDate(i++, new java.sql.Date(fechaVigencia.getTime()));
@@ -347,7 +347,7 @@ public final class MaestroImporterBO {
                 sprmVO.setPrmtId(prmtId);
                 sprmVO.setPrmtAsociado(prmtAsociadoVO);
 
-                if (tpspVO.isTempExp()) {
+                if (tpspVO.getTempExp()) {
                     sprmVO.getSpvr().setFinicio(rs.getDate(i++));
                     sprmVO.getSpvr().setFfin(rs.getDate(i++));
                 } else {

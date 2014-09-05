@@ -35,7 +35,7 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action("tpsp-create")
     public String alta() {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         if (enti.getTpprId() == null) {
             throw new Error("No se ha especificado un tipo de parametro");
@@ -53,7 +53,7 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action("tpsp-edit")
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         if (enti.getId() == null) {
             throw new Error("Identificador de tipo de subparametro no especificado");
@@ -76,7 +76,7 @@ public final class TipoSubparametroAction extends BaseAction {
     @Action("tpsp-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "tpsp.codigo", enti.getCodigo());
             PropertyValidator.validateRequired(this, "tpsp.nombre", enti.getNombre());
         } else {
@@ -89,7 +89,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             tpspBO.insert(enti);
@@ -155,8 +155,8 @@ public final class TipoSubparametroAction extends BaseAction {
      * @param value
      *            the enti
      */
-    public void setEnti(TipoSubparametroVO value) {
-        this.enti = value;
+    public void setEnti(final TipoSubparametroVO value) {
+        enti = value;
     }
 
 }

@@ -2,8 +2,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
@@ -13,6 +11,8 @@ import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,7 +39,7 @@ public final class EntidadEntidadAction extends BaseAction {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
 
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -55,7 +55,7 @@ public final class EntidadEntidadAction extends BaseAction {
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHijaId());
 
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
 
@@ -130,8 +130,8 @@ public final class EntidadEntidadAction extends BaseAction {
      * @param value
      *            the accion
      */
-    public void setAccion(ACCION_EDICION value) {
-        this.accion = value;
+    public void setAccion(final ACCION_EDICION value) {
+        accion = value;
     }
 
     /**

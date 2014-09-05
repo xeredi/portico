@@ -3,8 +3,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
@@ -16,6 +14,8 @@ import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -51,7 +51,7 @@ public final class TipoDatoAction extends BaseAction {
      */
     @Action("tpdt-create")
     public String alta() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -68,7 +68,7 @@ public final class TipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
@@ -94,7 +94,7 @@ public final class TipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(tpdt);
 
         // Validacion de datos
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             if (tpdt.getCodigo() == null || tpdt.getCodigo().isEmpty()) {
                 addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_codigo") }));
             }
@@ -127,7 +127,7 @@ public final class TipoDatoAction extends BaseAction {
 
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             try {
                 tpdtBO.insert(tpdt);
             } catch (final DuplicateInstanceException ex) {

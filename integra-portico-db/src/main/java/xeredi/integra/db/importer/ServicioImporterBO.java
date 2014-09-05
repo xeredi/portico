@@ -203,13 +203,13 @@ public final class ServicioImporterBO {
                     final String numero = rs.getString(i++);
 
                     Date fechaEstadistica = null;
-                    final Timestamp tsEstadistica= rs.getTimestamp(i++);
+                    final Timestamp tsEstadistica = rs.getTimestamp(i++);
                     if (!rs.wasNull()) {
                         fechaEstadistica = new Date(tsEstadistica.getTime());
                     }
 
                     Date fechaAnulaFactura = null;
-                    final Timestamp tsAnulaFactura= rs.getTimestamp(i++);
+                    final Timestamp tsAnulaFactura = rs.getTimestamp(i++);
                     if (!rs.wasNull()) {
                         fechaAnulaFactura = new Date(tsAnulaFactura.getTime());
                     }
@@ -237,7 +237,7 @@ public final class ServicioImporterBO {
                     srvcVO.setFbaja(fechaBaja);
                     srvcVO.setFreferencia(fechaReferencia);
 
-                    if (tpsrVO.isTemporal()) {
+                    if (tpsrVO.getTemporal()) {
                         Date fechaInicio = null;
                         Date fechaFin = null;
 
@@ -319,7 +319,7 @@ public final class ServicioImporterBO {
                         rs.getInt(i++);
                         ssrvVO.setNumero(numeroSubservicio++);
 
-                        if (tpssVO.isTemporal()) {
+                        if (tpssVO.getTemporal()) {
                             Date fechaInicio = null;
                             Date fechaFin = null;
 
@@ -454,7 +454,8 @@ public final class ServicioImporterBO {
 
                 break;
             case PR:
-                final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId()).get(value.toString().toUpperCase());
+                final Long prmtId = tpprPrmtMap.get(entdVO.getTpdt().getEnti().getId()).get(
+                        value.toString().toUpperCase());
 
                 if (prmtId == null) {
                     final String errorMessage = "Parametro no encontrado para el codigo: " + value

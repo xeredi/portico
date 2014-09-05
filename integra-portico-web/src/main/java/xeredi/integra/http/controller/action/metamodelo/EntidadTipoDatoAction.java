@@ -55,7 +55,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
             throw new Error("No se ha seleccionado una entidad");
         }
 
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -67,7 +67,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     @Action("entd-edit")
     public String modificar() {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
@@ -97,7 +97,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
             return SUCCESS;
         }
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             try {
                 entdBO.insert(entd);
             } catch (final DuplicateInstanceException ex) {

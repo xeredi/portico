@@ -102,7 +102,7 @@ public class SubparametroBO implements Subparametro {
         Preconditions.checkNotNull(sprmVO.getId());
         Preconditions.checkNotNull(tpsrVO);
 
-        if (tpsrVO.isTempExp()) {
+        if (tpsrVO.getTempExp()) {
             Preconditions.checkNotNull(sprmVO.getSpvr());
             Preconditions.checkNotNull(sprmVO.getSpvr().getFinicio());
         } else {
@@ -153,7 +153,7 @@ public class SubparametroBO implements Subparametro {
         Preconditions.checkNotNull(sprmVO.getSpvr());
         Preconditions.checkNotNull(sprmVO.getSpvr().getId());
 
-        if (tpspVO.isTempExp()) {
+        if (tpspVO.getTempExp()) {
             Preconditions.checkNotNull(sprmVO.getSpvr().getFinicio());
         }
 
@@ -171,7 +171,7 @@ public class SubparametroBO implements Subparametro {
             }
         }
 
-        if (tpspVO.isTempExp()) {
+        if (tpspVO.getTempExp()) {
             sprmVO.getSpvr().setFinicio(Calendar.getInstance().getTime());
 
             throw new Error("No implementado!");
@@ -213,7 +213,7 @@ public class SubparametroBO implements Subparametro {
         Preconditions.checkNotNull(tpspVO);
 
         // Un parametro con temporalidad explicita NO SE PUEDE BORRAR
-        if (tpspVO.isTempExp()) {
+        if (tpspVO.getTempExp()) {
             throw new Error("El subparametro con versionId: " + spvrId + " de la entidad: " + tpspVO
                     + " no se puede borrar debido a que tiene temporalidad explicita");
         }

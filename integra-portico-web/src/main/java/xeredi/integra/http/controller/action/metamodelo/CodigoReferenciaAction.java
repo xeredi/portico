@@ -51,7 +51,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
 
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -67,7 +67,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf.getTpdtId());
         Preconditions.checkNotNull(cdrf.getValor());
 
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
         final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
@@ -95,7 +95,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf.getTpdtId());
 
         // Validacion de datos
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             if (GenericValidator.isBlankOrNull(cdrf.getValor())) {
                 addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("cdrf_valor") }));
             }
@@ -110,7 +110,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         if (!hasErrors()) {
             final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
 
-            if (accion == ACCION_EDICION.alta) {
+            if (accion == ACCION_EDICION.create) {
                 try {
                     cdrfBO.insert(cdrf);
                 } catch (final DuplicateInstanceException ex) {
@@ -161,7 +161,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf.getTpdtId());
         Preconditions.checkNotNull(cdrf.getValor());
 
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
         final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();

@@ -67,7 +67,7 @@ public final class TipoParametroAction extends BaseAction {
      */
     @Action("tppr-create")
     public String alta() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -81,7 +81,7 @@ public final class TipoParametroAction extends BaseAction {
      */
     @Action("tppr-edit")
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         if (enti.getId() == null) {
             throw new Error("Identificador de tipo de parametro no especificado");
@@ -123,7 +123,7 @@ public final class TipoParametroAction extends BaseAction {
         Preconditions.checkNotNull(enti);
 
         // Validaciones
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             if (enti.getCodigo() == null || enti.getCodigo().isEmpty()) {
                 addActionError(getText(ErrorCode.E00001.name(), new String[] { "enti_codigo" }));
             }
@@ -146,7 +146,7 @@ public final class TipoParametroAction extends BaseAction {
 
         final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             tpprBO.insert(enti);

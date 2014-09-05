@@ -36,299 +36,299 @@ import com.google.common.base.Preconditions;
  */
 public final class SubparametroAction extends ItemAction {
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 2326503947837608186L;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 2326503947837608186L;
 
-	/** The item. */
-	private SubparametroVO item;
+    /** The item. */
+    private SubparametroVO item;
 
-	/** The enti. */
-	private TipoSubparametroVO enti;
+    /** The enti. */
+    private TipoSubparametroVO enti;
 
-	/** The fecha vigencia. */
-	private final Date fechaVigencia;
+    /** The fecha vigencia. */
+    private final Date fechaVigencia;
 
-	/** The prmt asociado list. */
-	private List<LabelValueVO> prmtAsociadoList;
+    /** The prmt asociado list. */
+    private List<LabelValueVO> prmtAsociadoList;
 
-	/**
-	 * Instantiates a new subparametro action.
-	 */
-	public SubparametroAction() {
-		super();
-		fechaVigencia = Calendar.getInstance().getTime();
-	}
+    /**
+     * Instantiates a new subparametro action.
+     */
+    public SubparametroAction() {
+        super();
+        fechaVigencia = Calendar.getInstance().getTime();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
-	// Acciones Web
+    // Acciones Web
 
-	/**
-	 * Alta.
-	 *
-	 * @return the string
-	 */
-	@Actions({ @Action(value = "sprm-alta", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
-		@Action(value = "sprm-alta-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
-	public String alta() {
-		Preconditions.checkNotNull(item);
-		Preconditions.checkNotNull(item.getEntiId());
-		Preconditions.checkNotNull(item.getPrmtId());
+    /**
+     * Alta.
+     *
+     * @return the string
+     */
+    @Actions({ @Action(value = "sprm-alta", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
+            @Action(value = "sprm-alta-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
+    public String alta() {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getEntiId());
+        Preconditions.checkNotNull(item.getPrmtId());
 
-		accion = ACCION_EDICION.alta;
-		enti = TipoSubparametroProxy.select(item.getEntiId());
+        accion = ACCION_EDICION.create;
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
-		loadLabelValuesMap();
+        loadLabelValuesMap();
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Modificar.
-	 *
-	 * @return the string
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	@Actions({
-		@Action(value = "sprm-modificar", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
-		@Action(value = "sprm-modificar-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
-	public String modificar() throws InstanceNotFoundException {
-		Preconditions.checkNotNull(item);
-		Preconditions.checkNotNull(item.getId());
+    /**
+     * Modificar.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Actions({
+            @Action(value = "sprm-modificar", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
+            @Action(value = "sprm-modificar-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
+    public String modificar() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
 
-		accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
-		final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-		sprmCriterioVO.setId(item.getId());
-		sprmCriterioVO.setFechaVigencia(fechaVigencia);
-		sprmCriterioVO.setIdioma(getIdioma());
+        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setFechaVigencia(fechaVigencia);
+        sprmCriterioVO.setIdioma(getIdioma());
 
-		item = sprmBO.selectObject(sprmCriterioVO);
-		enti = TipoSubparametroProxy.select(item.getEntiId());
+        item = sprmBO.selectObject(sprmCriterioVO);
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
-		loadLabelValuesMap();
+        loadLabelValuesMap();
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Duplicar.
-	 *
-	 * @return the string
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	@Actions({
-		@Action(value = "sprm-duplicar", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
-		@Action(value = "sprm-duplicar-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
-	public String duplicar() throws InstanceNotFoundException {
-		Preconditions.checkNotNull(item);
-		Preconditions.checkNotNull(item.getId());
+    /**
+     * Duplicar.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Actions({
+            @Action(value = "sprm-duplicar", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
+            @Action(value = "sprm-duplicar-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
+    public String duplicar() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
 
-		accion = ACCION_EDICION.duplicar;
+        accion = ACCION_EDICION.duplicate;
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
-		final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-		sprmCriterioVO.setId(item.getId());
-		sprmCriterioVO.setFechaVigencia(fechaVigencia);
-		sprmCriterioVO.setIdioma(getIdioma());
+        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setFechaVigencia(fechaVigencia);
+        sprmCriterioVO.setIdioma(getIdioma());
 
-		item = sprmBO.selectObject(sprmCriterioVO);
-		enti = TipoSubparametroProxy.select(item.getEntiId());
+        item = sprmBO.selectObject(sprmCriterioVO);
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
-		loadLabelValuesMap();
+        loadLabelValuesMap();
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Guardar.
-	 *
-	 * @return the string
-	 */
-	@Action(value = "sprm-guardar", results = {
-			@Result(name = "success", type = "redirectAction", params = { "actionName", "prmt-detalle", "item.id",
-			"%{item.prmtId}" }), @Result(name = "input", location = "sprm-edicion.jsp") })
-	public String guardar() {
-		Preconditions.checkNotNull(item);
+    /**
+     * Guardar.
+     *
+     * @return the string
+     */
+    @Action(value = "sprm-guardar", results = {
+            @Result(name = "success", type = "redirectAction", params = { "actionName", "prmt-detalle", "item.id",
+                    "%{item.prmtId}" }), @Result(name = "input", location = "sprm-edicion.jsp") })
+    public String guardar() {
+        Preconditions.checkNotNull(item);
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 
-		enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
-		// Validacion de Datos
-		if (accion == ACCION_EDICION.alta) {
-			PropertyValidator.validateRequired(this, "prmtAsociado", item.getPrmtAsociado());
-		} else {
-			PropertyValidator.validateRequired(this, "id", item.getId());
-			PropertyValidator.validateRequired(this, "spvr.id", item.getSpvr().getId());
-		}
+        // Validacion de Datos
+        if (accion == ACCION_EDICION.create) {
+            PropertyValidator.validateRequired(this, "prmtAsociado", item.getPrmtAsociado());
+        } else {
+            PropertyValidator.validateRequired(this, "id", item.getId());
+            PropertyValidator.validateRequired(this, "spvr.id", item.getSpvr().getId());
+        }
 
-		if (enti.isTempExp()) {
-			PropertyValidator.validateRequired(this, "spvr.finicio", item.getSpvr().getFinicio());
-		} else {
-			if (accion == ACCION_EDICION.alta) {
-				item.getSpvr().setFinicio(Calendar.getInstance().getTime());
-			}
-		}
+        if (enti.getTempExp()) {
+            PropertyValidator.validateRequired(this, "spvr.finicio", item.getSpvr().getFinicio());
+        } else {
+            if (accion == ACCION_EDICION.create) {
+                item.getSpvr().setFinicio(Calendar.getInstance().getTime());
+            }
+        }
 
-		ItemDatoValidator.validate(this, enti, item);
+        ItemDatoValidator.validate(this, enti, item);
 
-		// Fin de validacion de datos
+        // Fin de validacion de datos
 
-		if (hasErrors()) {
-			return INPUT;
-		}
+        if (hasErrors()) {
+            return INPUT;
+        }
 
-		try {
-			switch (accion) {
-			case alta:
-				sprmBO.insert(item, enti);
+        try {
+            switch (accion) {
+            case create:
+                sprmBO.insert(item, enti);
 
-				break;
-			case modificar:
-				sprmBO.update(item, enti);
+                break;
+            case edit:
+                sprmBO.update(item, enti);
 
-				break;
-			case duplicar:
-				sprmBO.duplicate(item, enti);
+                break;
+            case duplicate:
+                sprmBO.duplicate(item, enti);
 
-				break;
+                break;
 
-			default:
-				throw new Error("Accion no valida: " + accion);
-			}
+            default:
+                throw new Error("Accion no valida: " + accion);
+            }
 
-			addActionMessage("Subparametro guardado correctamente!!");
-		} catch (final DuplicateInstanceException ex) {
-			addFieldError("prmt.parametro", getText("error.prmt.duplicate"));
-		}
+            addActionMessage("Subparametro guardado correctamente!!");
+        } catch (final DuplicateInstanceException ex) {
+            addFieldError("prmt.parametro", getText("error.prmt.duplicate"));
+        }
 
-		if (hasErrors()) {
-			return INPUT;
-		}
+        if (hasErrors()) {
+            return INPUT;
+        }
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Borrar.
-	 *
-	 * @return the string
-	 */
-	@Action(value = "sprm-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
-			"actionName", "prmt-detalle", "item.id", "%{item.prmtId}" }) })
-	public String borrar() {
-		Preconditions.checkNotNull(item);
-		Preconditions.checkNotNull(item.getEntiId());
+    /**
+     * Borrar.
+     *
+     * @return the string
+     */
+    @Action(value = "sprm-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
+            "actionName", "prmt-detalle", "item.id", "%{item.prmtId}" }) })
+    public String borrar() {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getEntiId());
 
-		if (item.getSpvr() == null || item.getSpvr().getId() == null) {
-			throw new Error("Identificador de version del subparametro no especificado");
-		}
+        if (item.getSpvr() == null || item.getSpvr().getId() == null) {
+            throw new Error("Identificador de version del subparametro no especificado");
+        }
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 
-		enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
-		try {
-			sprmBO.delete(item.getSpvr().getId(), enti);
+        try {
+            sprmBO.delete(item.getSpvr().getId(), enti);
 
-			addActionMessage("Elemento del Maestro '" + enti.getNombre() + "' eliminado correctamente");
-		} catch (final InstanceNotFoundException ex) {
-			addActionError(getText("error.sprm.notFound"));
-		}
+            addActionMessage("Elemento del Maestro '" + enti.getNombre() + "' eliminado correctamente");
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText("error.sprm.notFound"));
+        }
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	/**
-	 * Detalle.
-	 *
-	 * @return the string
-	 * @throws InstanceNotFoundException
-	 *             the instance not found exception
-	 */
-	@Actions({ @Action(value = "sprm-detalle"), @Action(value = "sprm-detalle-popup") })
-	public String detalle() throws InstanceNotFoundException {
-		Preconditions.checkNotNull(item);
-		Preconditions.checkNotNull(item.getId());
+    /**
+     * Detalle.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Actions({ @Action(value = "sprm-detalle"), @Action(value = "sprm-detalle-popup") })
+    public String detalle() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
 
-		final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
-		final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-		sprmCriterioVO.setId(item.getId());
-		sprmCriterioVO.setFechaVigencia(fechaVigencia);
-		sprmCriterioVO.setIdioma(getIdioma());
+        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setFechaVigencia(fechaVigencia);
+        sprmCriterioVO.setIdioma(getIdioma());
 
-		item = sprmBO.selectObject(sprmCriterioVO);
-		enti = TipoSubparametroProxy.select(item.getEntiId());
+        item = sprmBO.selectObject(sprmCriterioVO);
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
-		return SUCCESS;
-	}
+        return SUCCESS;
+    }
 
-	// get / set
+    // get / set
 
-	/**
-	 * Gets the prmt asociado list.
-	 *
-	 * @return the prmt asociado list
-	 */
-	public List<LabelValueVO> getPrmtAsociadoList() {
-		if (prmtAsociadoList == null) {
-			final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+    /**
+     * Gets the prmt asociado list.
+     *
+     * @return the prmt asociado list
+     */
+    public List<LabelValueVO> getPrmtAsociadoList() {
+        if (prmtAsociadoList == null) {
+            final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
-			final Set<Long> tpprIds = new HashSet<>();
+            final Set<Long> tpprIds = new HashSet<>();
 
-			tpprIds.add(enti.getTpprAsociado().getId());
-			prmtAsociadoList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(
-					enti.getTpprAsociado().getId());
-		}
+            tpprIds.add(enti.getTpprAsociado().getId());
+            prmtAsociadoList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(
+                    enti.getTpprAsociado().getId());
+        }
 
-		return prmtAsociadoList;
-	}
+        return prmtAsociadoList;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Date getFechaVigencia() {
-		return fechaVigencia;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TipoSubparametroVO getEnti() {
-		return enti;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TipoSubparametroVO getEnti() {
+        return enti;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public SubparametroVO getItem() {
-		return item;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SubparametroVO getItem() {
+        return item;
+    }
 
-	/**
-	 * Sets the item.
-	 *
-	 * @param value
-	 *            the new item
-	 */
-	public void setItem(final SubparametroVO value) {
-		item = value;
-	}
+    /**
+     * Sets the item.
+     *
+     * @param value
+     *            the new item
+     */
+    public void setItem(final SubparametroVO value) {
+        item = value;
+    }
 
 }

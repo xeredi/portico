@@ -57,7 +57,7 @@ public final class ClaveAction extends BaseAction {
      */
     @Action(value = "cncl-alta", results = { @Result(name = "success", location = "cncl-edicion.jsp") })
     public String alta() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
@@ -75,7 +75,7 @@ public final class ClaveAction extends BaseAction {
      */
     @Action(value = "cncl-modificar", results = { @Result(name = "success", location = "cncl-edicion.jsp") })
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final Clave cnclBO = BOFactory.getInjector().getInstance(ClaveBO.class);
 
@@ -100,7 +100,7 @@ public final class ClaveAction extends BaseAction {
             "%{cncl.id}" }), @Result(name = "input", location = "cncl-edicion.jsp") })
     public String guardar() throws InstanceNotFoundException {
         // Validacion de datos
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "cncl.clave", cncl.getClave());
         }
 
@@ -113,7 +113,7 @@ public final class ClaveAction extends BaseAction {
 
         final Clave cnclBO = BOFactory.getInjector().getInstance(ClaveBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             try {
                 cnclBO.insert(cncl);
             } catch (final DuplicateInstanceException ex) {

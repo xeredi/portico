@@ -180,7 +180,7 @@ public final class ParametroPdf extends BasePdf {
         report.addColumn(DynamicReports.col.column(entiVO.getTpprAsociado().getNombre(),
                 entiVO.getTpprAsociado().getNombre(), DynamicReports.type.stringType()).setWidth(4));
 
-        if (entiVO.isTempExp()) {
+        if (entiVO.getTempExp()) {
             columns.add("finicio");
             columns.add("ffin");
 
@@ -208,7 +208,7 @@ public final class ParametroPdf extends BasePdf {
 
             objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
 
-            if (entiVO.isTempExp()) {
+            if (entiVO.getTempExp()) {
                 objects[i++] = itemVO.getSpvr().getFinicio() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO
                         .getSpvr().getFinicio());
                 objects[i++] = itemVO.getSpvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO

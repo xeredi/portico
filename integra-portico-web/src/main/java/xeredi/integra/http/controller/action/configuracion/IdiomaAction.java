@@ -49,7 +49,7 @@ public final class IdiomaAction extends BaseAction {
      */
     @Action(value = "cnid-alta", results = { @Result(name = "success", location = "cnid-edicion.jsp") })
     public String alta() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -63,7 +63,7 @@ public final class IdiomaAction extends BaseAction {
      */
     @Action(value = "cnid-modificar", results = { @Result(name = "success", location = "cnid-edicion.jsp") })
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
@@ -84,7 +84,7 @@ public final class IdiomaAction extends BaseAction {
             "%{cnid.id}" }), @Result(name = "input", location = "cnid-edicion.jsp") })
     public String guardar() throws InstanceNotFoundException {
         // Validacion de datos
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "cnid.codigo", cnid.getCodigo());
         }
 
@@ -96,7 +96,7 @@ public final class IdiomaAction extends BaseAction {
 
         final Idioma cnidBO = BOFactory.getInjector().getInstance(IdiomaBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             try {
                 cnidBO.insert(cnid);
             } catch (final DuplicateInstanceException ex) {

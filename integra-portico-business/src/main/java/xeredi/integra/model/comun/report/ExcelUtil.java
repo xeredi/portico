@@ -175,7 +175,7 @@ public final class ExcelUtil {
             setCellValue(rowhead, i++, bundle.getString("srvc.estado"));
         }
 
-        if (tpsrVO.isTemporal()) {
+        if (tpsrVO.getTemporal()) {
             setCellValue(rowhead, i++, bundle.getString("srvc.finicio"));
             setCellValue(rowhead, i++, bundle.getString("srvc.ffin"));
         }
@@ -201,7 +201,7 @@ public final class ExcelUtil {
                 setCellValue(row, j++, srvcVO.getEstado());
             }
 
-            if (tpsrVO.isTemporal()) {
+            if (tpsrVO.getTemporal()) {
                 setCellValue(row, j++, srvcVO.getFinicio());
                 setCellValue(row, j++, srvcVO.getFfin());
             }
@@ -255,7 +255,7 @@ public final class ExcelUtil {
             setCellValue(rowhead, i++, bundle.getString("ssrv.estado"));
         }
 
-        if (tpssVO.isTemporal()) {
+        if (tpssVO.getTemporal()) {
             setCellValue(rowhead, i++, bundle.getString("ssrv.finicio"));
             setCellValue(rowhead, i++, bundle.getString("ssrv.ffin"));
         }
@@ -278,7 +278,7 @@ public final class ExcelUtil {
                 setCellValue(row, j++, ssrvVO.getEstado());
             }
 
-            if (tpssVO.isTemporal()) {
+            if (tpssVO.getTemporal()) {
                 setCellValue(row, j++, ssrvVO.getFinicio());
                 setCellValue(row, j++, ssrvVO.getFfin());
             }

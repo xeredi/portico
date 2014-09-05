@@ -52,7 +52,7 @@ public final class TipoServicioAction extends BaseAction {
      */
     @Action("tpsr-create")
     public String alta() {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         enti = new TipoServicioVO();
 
@@ -68,7 +68,7 @@ public final class TipoServicioAction extends BaseAction {
      */
     @Action("tpsr-edit")
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         if (enti.getId() == null) {
             throw new Error("Identificador de tipo de servicio no especificado");
@@ -91,7 +91,7 @@ public final class TipoServicioAction extends BaseAction {
     @Action("tpsr-save")
     public String guardar() throws DuplicateInstanceException {
         // Validaciones
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "tpsr.codigo", enti.getCodigo());
             PropertyValidator.validateRequired(this, "tpsr.nombre", enti.getNombre());
         } else {
@@ -104,7 +104,7 @@ public final class TipoServicioAction extends BaseAction {
 
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             tpsrBO.insert(enti);

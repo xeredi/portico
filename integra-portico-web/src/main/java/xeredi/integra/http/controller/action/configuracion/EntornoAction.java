@@ -51,7 +51,7 @@ public final class EntornoAction extends BaseAction {
      */
     @Action(value = "cnen-alta", results = { @Result(name = "success", location = "cnen-edicion.jsp") })
     public String alta() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -65,7 +65,7 @@ public final class EntornoAction extends BaseAction {
      */
     @Action(value = "cnen-modificar", results = { @Result(name = "success", location = "cnen-edicion.jsp") })
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
@@ -86,7 +86,7 @@ public final class EntornoAction extends BaseAction {
             "%{cnen.id}" }), @Result(name = "input", location = "cnen-edicion.jsp") })
     public String guardar() throws InstanceNotFoundException {
         // Validacion de datos
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "cnen.codigo", cnen.getCodigo());
         }
 
@@ -98,7 +98,7 @@ public final class EntornoAction extends BaseAction {
 
         final Entorno cnenBO = BOFactory.getInjector().getInstance(EntornoBO.class);
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             try {
                 cnenBO.insert(cnen);
             } catch (final DuplicateInstanceException ex) {

@@ -50,7 +50,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             throw new Error("No se ha seleccionado una entidad");
         }
 
-        accion = ACCION_EDICION.alta;
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -64,7 +64,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-edit")
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.modificar;
+        accion = ACCION_EDICION.edit;
 
         final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
@@ -92,7 +92,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             return SUCCESS;
         }
 
-        if (accion == ACCION_EDICION.alta) {
+        if (accion == ACCION_EDICION.create) {
             try {
                 engdBO.insert(engd);
             } catch (final DuplicateInstanceException ex) {

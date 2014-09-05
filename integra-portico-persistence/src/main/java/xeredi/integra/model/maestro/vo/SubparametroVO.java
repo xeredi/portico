@@ -34,7 +34,7 @@ public final class SubparametroVO extends ItemVO {
 
     /**
      * New instance.
-     * 
+     *
      * @param tpspVO
      *            the tpsp vo
      * @return the subparametro vo
@@ -45,7 +45,7 @@ public final class SubparametroVO extends ItemVO {
         sprmVO.setEntiId(tpspVO.getId());
         sprmVO.setSpvr(new SubparametroVersionVO());
 
-        if (tpspVO.isI18n()) {
+        if (tpspVO.getI18n()) {
             // TODO Implementar si puede haber i18n
         }
 
@@ -75,7 +75,7 @@ public final class SubparametroVO extends ItemVO {
 
     /**
      * Gets the prmt id.
-     * 
+     *
      * @return the prmt id
      */
     public Long getPrmtId() {
@@ -84,17 +84,17 @@ public final class SubparametroVO extends ItemVO {
 
     /**
      * Sets the prmt id.
-     * 
+     *
      * @param value
      *            the new prmt id
      */
-    public void setPrmtId(Long value) {
-        this.prmtId = value;
+    public void setPrmtId(final Long value) {
+        prmtId = value;
     }
 
     /**
      * Gets the prmt asociado.
-     * 
+     *
      * @return the prmt asociado
      */
     public ParametroVO getPrmtAsociado() {
@@ -103,17 +103,17 @@ public final class SubparametroVO extends ItemVO {
 
     /**
      * Sets the prmt asociado.
-     * 
+     *
      * @param value
      *            the new prmt asociado
      */
-    public void setPrmtAsociado(ParametroVO value) {
-        this.prmtAsociado = value;
+    public void setPrmtAsociado(final ParametroVO value) {
+        prmtAsociado = value;
     }
 
     /**
      * Gets the spvr.
-     * 
+     *
      * @return the spvr
      */
     public SubparametroVersionVO getSpvr() {
@@ -122,12 +122,12 @@ public final class SubparametroVO extends ItemVO {
 
     /**
      * Sets the spvr.
-     * 
+     *
      * @param value
      *            the new spvr
      */
-    public void setSpvr(SubparametroVersionVO value) {
-        this.spvr = value;
+    public void setSpvr(final SubparametroVersionVO value) {
+        spvr = value;
     }
 
 }

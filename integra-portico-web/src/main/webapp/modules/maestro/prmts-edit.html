@@ -11,8 +11,8 @@
     <div class="row">
         <div class="col-md-2 form-group">
             <label>{{'prmt_codigo' | translate}}</label>
-            <p ng-if="accion == 'modificar'" class="form-control-static">{{item.parametro}}</p>
-            <input ng-if="accion != 'modificar'" type="text" ng-model="item.parametro" required="required"
+            <p ng-if="accion == 'edit'" class="form-control-static">{{item.parametro}}</p>
+            <input ng-if="accion != 'edit'" type="text" ng-model="item.parametro" required="required"
                 maxlength="30" class="form-control input-sm" />
         </div>
 

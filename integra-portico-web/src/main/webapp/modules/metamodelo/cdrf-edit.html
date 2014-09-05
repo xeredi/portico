@@ -10,9 +10,9 @@
     <fieldset>
         <div class="row">
             <div class="col-md-3 form-group">
-                <label>{{"cdrf_valor" | translate}}</label> <input ng-if="accion == 'alta'" type="text"
+                <label>{{"cdrf_valor" | translate}}</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="cdrf.orden" class="form-control input-sm" />
-                <p ng-if="accion == 'modificar'" class="form-control-static">{{cdrf.valor}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static">{{cdrf.valor}}</p>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{"cdrf_orden" | translate}}</label> <input type="text" ng-model="cdrf.orden"
