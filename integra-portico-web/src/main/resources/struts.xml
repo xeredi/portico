@@ -1,0 +1,24 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.custom.i18n.resources" value="messages" />
+    <constant name="struts.i18n.reload" value="false" />
+    <constant name="struts.configuration.xml.reload" value="false" />
+
+    <package name="portico" extends="json-default">
+        <interceptors>
+            <interceptor name="jsonPortico" class="xeredi.integra.http.controller.interceptor.json.IntegraJsonInterceptor" />
+
+            <interceptor-stack name="porticoStack">
+                <interceptor-ref name="timer" />
+                <interceptor-ref name="jsonPortico" />
+                <interceptor-ref name="basicStack" />
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="porticoStack" />
+    </package>
+</struts>
