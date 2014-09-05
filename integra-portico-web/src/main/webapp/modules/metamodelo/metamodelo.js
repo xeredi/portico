@@ -736,7 +736,7 @@ metamodelo.controller("tpesEditController", function($scope, $http, $location, $
 });
 
 metamodelo.controller("tpesCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/tpes-alta.action";
+    var url = "metamodelo/tpes-create.action";
 
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;
