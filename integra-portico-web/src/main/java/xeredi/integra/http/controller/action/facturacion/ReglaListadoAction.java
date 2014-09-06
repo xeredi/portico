@@ -60,7 +60,7 @@ public final class ReglaListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "rgla-listado") })
+    @Actions({ @Action("rgla-list") })
     public String listado() {
         Preconditions.checkNotNull(rglaCriterio);
 

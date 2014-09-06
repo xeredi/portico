@@ -24,6 +24,7 @@ label, legend, li, .btn, .form-control, .form-control-static,
 }
 
 legend {
+	font-size: 12px;
 	font-weight: bold;
 	margin-bottom: 5px;
 }
@@ -63,6 +64,10 @@ table {
 
 .tab-content {
 	padding-top: 10px;
+}
+
+.pagination {
+	margin: 5px;
 }
 
 /*

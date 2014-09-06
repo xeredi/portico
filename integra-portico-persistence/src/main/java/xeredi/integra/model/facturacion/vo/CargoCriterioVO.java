@@ -35,6 +35,15 @@ public final class CargoCriterioVO {
     /** The solo dependientes. */
     private boolean soloDependientes;
 
+    /** The codigo. */
+    private String codigo;
+
+    /** The codigo normalizado. */
+    private String codigoNormalizado;
+
+    /** The tpsr id. */
+    private Long tpsrId;
+
     /** The srvc id. */
     private Long srvcId;
 
@@ -215,6 +224,63 @@ public final class CargoCriterioVO {
      */
     public void setCrgvId(final Long value) {
         crgvId = value;
+    }
+
+    /**
+     * Gets the codigo.
+     *
+     * @return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * Sets the codigo.
+     *
+     * @param value
+     *            the new codigo
+     */
+    public void setCodigo(final String value) {
+        codigo = value;
+    }
+
+    /**
+     * Gets the codigo normalizado.
+     *
+     * @return the codigo normalizado
+     */
+    public String getCodigoNormalizado() {
+        return codigoNormalizado;
+    }
+
+    /**
+     * Sets the codigo normalizado.
+     *
+     * @param value
+     *            the new codigo normalizado
+     */
+    public void setCodigoNormalizado(final String value) {
+        codigoNormalizado = value;
+    }
+
+    /**
+     * Gets the tpsr id.
+     *
+     * @return the tpsr id
+     */
+    public Long getTpsrId() {
+        return tpsrId;
+    }
+
+    /**
+     * Sets the tpsr id.
+     *
+     * @param value
+     *            the new tpsr id
+     */
+    public void setTpsrId(final Long value) {
+        tpsrId = value;
     }
 
 }

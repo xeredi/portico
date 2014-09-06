@@ -106,6 +106,14 @@
             <if test="soloDependientes">
                 AND crgo_es_principal = 0
             </if>
+
+            <if test="codigo != null">
+                AND crgo_codigo LIKE #{codigo}
+            </if>
+
+            <if test="codigoNormalizado != null">
+                AND crgo_codigo_norm LIKE #{codigoNormalizado}
+            </if>
         </where>
     </sql>
 

@@ -1,0 +1,48 @@
+<fieldset>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/facturacion/crgo/create"><i class="glyphicon glyphicon-file"></i>
+                {{'boton_alta' | translate}}</a>
+        </div>
+    </div>
+
+    <pagination total-items="crgoList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
+        max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+
+    <div class="table-responsive">
+        <span class="label label-default">{{crgoList.count}} resultado(s)</span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap">{{'crgo_codigo' | translate}}</th>
+                    <th>{{'crgo_descripcion' | translate}}</th>
+                    <th class="codigo" nowrap="nowrap">{{'crgo_codigoNormalizado' | translate}}</th>
+                    <th>{{'crgo_tipo' | translate}}</th>
+                    <th>{{'crgo_tpsr' | translate}}</th>
+                    <th>{{'crgo_principal' | translate}}</th>
+                    <th>{{'crgo_temporal' | translate}}</th>
+                    <th>{{'crgo_crgv_fini' | translate}}</th>
+                    <th>{{'crgo_crgv_ffin' | translate}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="crgo in crgoList.list">
+                    <td><a href="#/facturacion/crgv/detail/{{crgo.crgv.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{crgo.codigo}}</td>
+                    <td>{{crgo.descripcion}}</td>
+                    <td>{{crgo.codigoNormalizado}}</td>
+                    <td>{{crgo.tipo}}</td>
+                    <td>{{crgo.tpsr.nombre}}</td>
+                    <td>{{'fmt_' + crgo.principal | translate}}</td>
+                    <td>{{'fmt_' + crgo.temporal | translate}}</td>
+                    <td>{{crgo.crgv.fini | date:('fmt_date' | translate)}}</td>
+                    <td>{{crgo.crgv.ffin | date:('fmt_date' | translate)}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

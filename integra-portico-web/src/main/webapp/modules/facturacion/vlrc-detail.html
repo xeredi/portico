@@ -91,7 +91,7 @@
     <div class="row">
         <div class="col-md-4 form-group">
             <ul>
-                <li ng-repeat="vlrg in vlrgList"><a ui-sref="crgos.detalle({crgoId:vlrg.crgo.id})">{{vlrg.crgo.etiqueta}}</a></li>
+                <li ng-repeat="vlrg in vlrgList"><a href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrc.fref}}">{{vlrg.crgo.etiqueta}}</a></li>
             </ul>
         </div>
     </div>

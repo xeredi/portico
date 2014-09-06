@@ -1,4 +1,6 @@
 <fieldset>
+    <legend>{{'Regla' | uppercase}}</legend>
+
     <div class="row">
         <div class="col-md-1 form-group">
             <label>{{'rgla_codigo' | translate}}</label>
@@ -44,36 +46,32 @@
     </div>
 
     <div ng-if="rgla.tipo == 'T'" class="row">
-        <div class="col-md-9 form-group">
+        <div class="col-md-6 form-group">
             <label>{{'rgla_rglv_pathImpuesto' | translate}}</label>
             <p class="form-control-static">{{rgla.rglv.pathImpuesto}}</p>
         </div>
-    </div>
-
-    <div ng-if="rgla.tipo == 'T'" class="row">
-        <div class="col-md-9 form-group">
+        <div class="col-md-6 form-group">
             <label>{{'rgla_rglv_pathPagador' | translate}}</label>
             <p class="form-control-static">{{rgla.rglv.pathPagador}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.tipo == 'T'" class="row">
-        <div class="col-md-9 form-group">
+        <div class="col-md-6 form-group">
             <label>{{'rgla_rglv_pathEsSujPasivo' | translate}}</label>
             <p class="form-control-static">{{rgla.rglv.pathEsSujPasivo}}</p>
         </div>
-    </div>
-
-    <div ng-if="rgla.tipo == 'T'" class="row">
-        <div class="col-md-9 form-group">
+        <div class="col-md-6 form-group">
             <label>{{'rgla_rglv_pathCodExen' | translate}}</label>
             <p class="form-control-static">{{rgla.rglv.pathCodExen}}</p>
         </div>
     </div>
+</fieldset>
 
-    <div ng-if="rgla.tipo == 'T'" class="row">
+<fieldset ng-if="rgla.tipo == 'T'">
+    <legend>{{'Datos Variables' | uppercase}}</legend>
+    <div class="row">
         <div class="col-md-9 form-group">
-            <label>Datos Variables</label>
             <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
@@ -152,9 +150,9 @@
 </fieldset>
 
 <fieldset>
+    <legend>{{'Reglas Incompatibles' | uppercase}}</legend>
     <div class="row">
         <div class="col-md-9 form-group">
-            <label>Reglas Incompatibles</label>
             <table ng-if="rginList" class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>

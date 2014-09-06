@@ -1,8 +1,9 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.Calendar;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -27,7 +28,7 @@ public final class CargoListadoAction extends BaseAction {
     private PaginatedList<CargoVO> crgoList;
 
     /** The aspc criterio. */
-    private CargoCriterioVO crgoCriterio;
+    private CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
     /** The page. */
     private int page = 1;
@@ -59,7 +60,7 @@ public final class CargoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "crgo-listado") })
+    @Action("crgo-list")
     public String listado() {
         Preconditions.checkNotNull(crgoCriterio);
 
@@ -70,6 +71,18 @@ public final class CargoListadoAction extends BaseAction {
         }
 
         crgoList = crgoBO.selectList(crgoCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+
+        return SUCCESS;
+    }
+
+    /**
+     * Filtro.
+     *
+     * @return the string
+     */
+    @Action("crgo-filter")
+    public String filtro() {
+        crgoCriterio.setFechaVigencia(Calendar.getInstance().getTime());
 
         return SUCCESS;
     }

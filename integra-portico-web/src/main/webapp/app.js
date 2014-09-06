@@ -167,6 +167,7 @@ app.config(function($translateProvider) {
         crgo_temporal : 'Temporal?',
         crgo_crgv_fini : 'F. Inicio',
         crgo_crgv_ffin : 'F. Fin',
+        crgo_fechaVigencia : 'F. Vigencia',
 
         rgla_codigo : 'C\u00f3digo',
         rgla_tipo : 'Tipo',

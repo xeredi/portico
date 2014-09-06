@@ -1,5 +1,7 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
@@ -25,6 +27,9 @@ public final class ReglaAction extends BaseAction {
     /** The rgla. */
     private ReglaVO rgla;
 
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
+
     /**
      * {@inheritDoc}
      */
@@ -40,20 +45,22 @@ public final class ReglaAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "rgla-detalle") })
+    @Actions({ @Action("rgla-detail") })
     public String detalle() {
         Preconditions.checkNotNull(rgla);
-        Preconditions.checkNotNull(rgla.getRglv());
-        Preconditions.checkNotNull(rgla.getRglv().getId());
+        Preconditions.checkArgument(rgla.getId() != null && fechaVigencia != null || rgla.getRglv() != null
+                && rgla.getRglv().getId() != null);
 
         final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
-        if (hasErrors()) {
-            return INPUT;
+        rglaCriterioVO.setId(rgla.getId());
+        rglaCriterioVO.setFechaVigencia(fechaVigencia);
+
+        if (rgla.getRglv() != null) {
+            rglaCriterioVO.setRglvId(rgla.getRglv().getId());
         }
 
-        rglaCriterioVO.setRglvId(rgla.getRglv().getId());
         rgla = rglaBO.select(rglaCriterioVO);
 
         return SUCCESS;
@@ -78,6 +85,25 @@ public final class ReglaAction extends BaseAction {
      */
     public void setRgla(final ReglaVO value) {
         rgla = value;
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
 }
