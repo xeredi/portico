@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-2 form-group">
                 <label> {{"tpdt_tpht" | translate}} </label>
-                <p class="form-control-static">{{tpdt.tpht}} - {{'TipoEntidad_' + tpdt.tpht | translate}}</p>
+                <p class="form-control-static">{{tpdt.tpht}} - {{'TipoHtml_' + tpdt.tpht | translate}}</p>
             </div>
             <div class="col-md-2 form-group">
                 <label> {{"tpdt_tipoElemento" | translate}} </label>
@@ -63,7 +63,7 @@
                     <td><a href="#/metamodelo/cdrf/detail/{{tpdt.id}}/{{cdrf.valor}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{cdrf.valor}}</td>
-                    <td>{{cdrf.orden}}</td>
+                    <td class="number">{{cdrf.orden}}</td>
                 </tr>
             </tbody>
         </table>

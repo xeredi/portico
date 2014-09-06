@@ -60,7 +60,7 @@ public final class ValoracionListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "vlrc-listado") })
+    @Actions({ @Action("vlrc-list") })
     public String listado() {
         Preconditions.checkNotNull(vlrcCriterio);
 
@@ -72,6 +72,16 @@ public final class ValoracionListadoAction extends BaseAction {
 
         vlrcList = vlrcBO.selectList(vlrcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
+        return SUCCESS;
+    }
+
+    /**
+     * Editar filtro.
+     *
+     * @return the string
+     */
+    @Actions({ @Action("vlrc-filter") })
+    public String editarFiltro() {
         return SUCCESS;
     }
 

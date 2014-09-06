@@ -2,6 +2,8 @@
     <tabset> <tab heading="{{'vlrc' | translate}}">
 
     <fieldset>
+        <legend>{{'Datos Generales' | uppercase}}</legend>
+
         <div class="row">
             <div class="col-md-2 form-group">
                 <label>{{'vlrc_id' | translate}}</label>
@@ -82,16 +84,23 @@
                 <p class="form-control-static">{{vlrc.info6}}</p>
             </div>
         </div>
+    </fieldset>
 
+    <fieldset>
+        <legend>{{'Cargos Aplicados' | uppercase}}</legend>
         <div class="row">
             <div class="col-md-4 form-group">
-                <label>Cargos Aplicados</label>
                 <ul>
                     <li ng-repeat="vlrg in vlrgList"><a ui-sref="crgos.detalle({crgoId:vlrg.crgo.id})">{{vlrg.crgo.etiqueta}}</a></li>
                 </ul>
             </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{{'Desglose de IVA' | uppercase}}</legend>
+        <div class="row">
             <div class="col-md-4 form-group">
-                <label>Desglose de IVA</label>
                 <table class="table-bordered table-condensed table-hover table-nonfluid">
                     <thead>
                         <tr>
@@ -198,5 +207,5 @@
             </div>
         </div>
     </fieldset>
-    </tab></tabset>
+    </tab> </tabset>
 </div>

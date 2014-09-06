@@ -60,7 +60,7 @@ public final class ValoracionLineaListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "vlrl-listado") })
+    @Actions({ @Action("vlrl-list") })
     public String listado() {
         Preconditions.checkNotNull(vlrlCriterio);
 

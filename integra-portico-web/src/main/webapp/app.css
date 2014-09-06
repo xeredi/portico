@@ -13,28 +13,51 @@ body {
 	margin-right: 20px;
 }
 
-.modal-dialog {
-	width: 90%;
-}
-
-.modal-body {
-	padding-top: 10px;
-	margin-right: 10px;
-}
-
-.modal-header {
-	padding: 10px;
-	background-color: #383838;
-	color: #FFFFFF;
-	font-weight: bold;
-}
-
 label, legend, li, .btn, .form-control, .form-control-static,
 	.bootstrap-datetimepicker-widget, .table-condensed, .dropdown-menu,
 	.list-group, .nav-tabs, .tt-dropdown-menu, .typeahead, .modal-title {
 	font-size: 11px;
 }
 
+legend {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.form-control {
+	padding: 5px;
+}
+
+fieldset {
+	padding-bottom: 20px;
+	padding-right: 20px;
+	padding-left: 15px;
+}
+
+.btn-toolbar {
+	padding-bottom: 5px;
+}
+
+.row {
+	padding-left: 10px;
+}
+
+.form-group {
+	padding-right: 0px;
+	padding-left: 5px;
+	margin-bottom: 10px;
+}
+
+.form-control-static {
+	padding-top: 4px;
+/*	margin-left: 5px;*/
+}
+
+table {
+	margin-bottom: 15px;
+}
+
+/*
 .jumbotron {
 	background-color: white;
 }
@@ -45,20 +68,6 @@ input[type='password'], input[type='text'], input[type='text']:disabled,
 	color: #000000;
 	cursor: default;
 	background-color: #f2f2f2;
-}
-
-legend {
-	font-weight: bold;
-	margin-top: 15px;
-	margin-bottom: 5px;
-}
-
-label {
-	/*
-    font-weight: normal;
-    color: gray;
-*/
-
 }
 
 .form-horizontal label:after {
@@ -75,20 +84,6 @@ form {
 	margin-right: 5px;
 }
 
-.form-group {
-	margin-bottom: 7px;
-	padding-right: 0px;
-	padding-left: 10px;
-}
-
-.form-control {
-	padding: 5px 5px 5px 5px;
-}
-
-.form-control-static {
-	margin-left: 5px;
-}
-
 .table {
 	width: auto;
 }
@@ -102,7 +97,6 @@ td {
 	margin-bottom: 5px;
 }
 
-/* Typeahead */
 .twitter-typeahead, .typeahead {
 	width: 100%;
 }
@@ -154,7 +148,6 @@ td {
 	background-color: black;
 }
 
-/* AngularJs */
 .nav, .pagination, .carousel, .panel-title a {
 	cursor: pointer;
 }
@@ -163,3 +156,22 @@ td {
 	margin-top: 8px;
 	margin-bottom: 3px;
 }
+
+.modal-dialog {
+	width: 90%;
+}
+
+.modal-body {
+	padding-top: 10px;
+	margin-right: 10px;
+}
+
+.modal-header {
+	padding: 10px;
+	background-color: #383838;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+
+*/

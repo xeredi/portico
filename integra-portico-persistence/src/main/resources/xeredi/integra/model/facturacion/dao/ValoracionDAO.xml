@@ -71,6 +71,15 @@
                 <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
                 </foreach>
             </if>
+            <if test="srvcId != null">
+                AND vlrc_srvc_pk = #{srvcId}
+            </if>
+            <if test="aspcId != null">
+                AND vlrc_aspc_pk = #{aspcId}
+            </if>
+            <if test="pagadorId != null">
+                AND vlrc_pagador_prmt_pk = #{pagadorId}
+            </if>
         </where>
     </sql>
 

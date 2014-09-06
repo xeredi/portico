@@ -1,200 +1,198 @@
-<div class="table-responsive">
-    <fieldset>
-        <legend>{{enti.nombre | uppercase}}</legend>
 
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/tpss/edit/{{enti.id}}"><i
-                    class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
-            </div>
+<fieldset>
+    <legend>{{enti.nombre | uppercase}}</legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/metamodelo/tpss/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
+                {{'boton_editar' | translate}}</a>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-md-2 form-group">
-                <label> {{"enti_codigo" | translate}} </label>
-                <p class="form-control-static">{{enti.codigo}}</p>
-            </div>
-            <div class="col-md-3 form-group">
-                <label> {{"enti_nombre" | translate}} </label>
-                <p class="form-control-static">{{enti.nombre}}</p>
-            </div>
-            <div class="col-md-2 form-group">
-                <label> {{"enti_tipo" | translate}} </label>
-                <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
-            </div>
-            <div class="col-md-3 form-group">
-                <label> {{"enti_tpsr" | translate}} </label>
-                <p class="form-control-static">
-                    <a href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}">{{enti.tpsr.etiqueta}}</a>
-                </p>
-            </div>
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label> {{"enti_codigo" | translate}} </label>
+            <p class="form-control-static">{{enti.codigo}}</p>
         </div>
-        <div class="row">
-            <div class="col-md-1 form-group">
-                <label> {{"enti_cmd_alta" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-1 form-group">
-                <label> {{"enti_cmd_baja" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-1 form-group">
-                <label> {{"enti_cmd_edicion" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-1 form-group">
-                <label> {{"enti_cmd_duplicado" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-1 form-group">
-                <label> {{"enti_temporal" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-1 form-group">
-                <label> {{"enti_facturable" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-3 form-group">
-                <label> {{"enti_tpdt_estado" | translate}} </label>
-                <p class="form-control-static">
-                    <a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a>
-                </p>
-            </div>
+        <div class="col-md-3 form-group">
+            <label> {{"enti_nombre" | translate}} </label>
+            <p class="form-control-static">{{enti.nombre}}</p>
         </div>
-    </fieldset>
-
-    <fieldset>
-        <legend>{{"Datos" | uppercase}}</legend>
-
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/entd/create/{{enti.id}}"><i
-                    class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
-            </div>
+        <div class="col-md-2 form-group">
+            <label> {{"enti_tipo" | translate}} </label>
+            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
         </div>
-
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th>{{"entd_grupo" | translate}}</th>
-                    <th>{{"entd_fila" | translate}}</th>
-                    <th>{{"entd_orden" | translate}}</th>
-                    <th>{{"entd_span" | translate}}</th>
-                    <th>{{"entd_spanLg" | translate}}</th>
-                    <th>{{"entd_etiqueta" | translate}}</th>
-                    <th>{{"entd_obligatorio" | translate}}</th>
-                    <th>{{"entd_gridable" | translate}}</th>
-                    <th>{{"entd_filtrable" | translate}}</th>
-                    <th>{{"entd_tpdt_nombre" | translate}}</th>
-                    <th>{{"entd_tpdt_tipoElemento" | translate}}</th>
-                    <th>{{"entd_tpdt_tpht" | translate}}</th>
-                    <th>{{"entd_tpdt_enti" | translate}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="entd in enti.entdList">
-                    <td><a href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{enti.entdMap[entd].grupo}}</td>
-                    <td>{{enti.entdMap[entd].fila}}</td>
-                    <td>{{enti.entdMap[entd].orden}}</td>
-                    <td>{{enti.entdMap[entd].span}}</td>
-                    <td>{{enti.entdMap[entd].spanLg}}</td>
-                    <td>{{enti.entdMap[entd].etiqueta}}</td>
-                    <td><i ng-if="enti.entdMap[entd].obligatorio" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="enti.entdMap[entd].gridable" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="enti.entdMap[entd].filtrable" class="glyphicon glyphicon-ok"></i></td>
-                    <td><a href="#/metamodelo/tpdt/detail/{{enti.entdMap[entd].tpdt.id}}">{{enti.entdMap[entd].tpdt.nombre}}</a></td>
-                    <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}">{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
-                    <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
-                    <td><span ng-if="enti.entdMap[entd].tpdt.enti"> <a
-                            ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'P'"
-                            href="#/metamodelo/tppr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a><a
-                            ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'T'"
-                            href="#/metamodelo/tpsr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </fieldset>
-
-    <fieldset>
-        <legend>{{"Entidades Hijas" | uppercase}}</legend>
-
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/enen/create/{{enti.id}}"><i
-                    class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
-            </div>
+        <div class="col-md-3 form-group">
+            <label> {{"enti_tpsr" | translate}} </label>
+            <p class="form-control-static">
+                <a href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}">{{enti.tpsr.etiqueta}}</a>
+            </p>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 form-group">
+            <label> {{"enti_cmd_alta" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label> {{"enti_cmd_baja" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label> {{"enti_cmd_edicion" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label> {{"enti_cmd_duplicado" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label> {{"enti_temporal" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label> {{"enti_facturable" | translate}} </label>
+            <p class="form-control-static">
+                <i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i>
+            </p>
+        </div>
+        <div class="col-md-3 form-group">
+            <label> {{"enti_tpdt_estado" | translate}} </label>
+            <p class="form-control-static">
+                <a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a>
+            </p>
+        </div>
+    </div>
+</fieldset>
 
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th>{{"enti_codigo" | translate}}</th>
-                    <th>{{"enti_nombre" | translate}}</th>
-                    <th>{{"enti_cmd_alta" | translate}}</th>
-                    <th>{{"enti_cmd_baja" | translate}}</th>
-                    <th>{{"enti_cmd_edicion" | translate}}</th>
-                    <th>{{"enti_cmd_duplicado" | translate}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="entiHija in entiHijasList">
-                    <td><a href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{entiHija.codigo}}</td>
-                    <td>{{entiHija.nombre}}</td>
-                    <td><i ng-if="entiHija.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="entiHija.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="entiHija.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="entiHija.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
-                </tr>
-            </tbody>
-        </table>
-    </fieldset>
+<fieldset>
+    <legend>{{"Datos" | uppercase}}</legend>
 
-    <fieldset>
-        <legend>{{"Entidades Padres" | uppercase}}</legend>
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th>{{"enti_codigo" | translate}}</th>
-                    <th>{{"enti_nombre" | translate}}</th>
-                    <th>{{"enti_cmd_alta" | translate}}</th>
-                    <th>{{"enti_cmd_baja" | translate}}</th>
-                    <th>{{"enti_cmd_edicion" | translate}}</th>
-                    <th>{{"enti_cmd_duplicado" | translate}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="entiPadre in entiPadresList">
-                    <td><a ng-if="entiPadre.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
-                        href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{entiPadre.codigo}}</td>
-                    <td>{{entiPadre.nombre}}</td>
-                    <td><i ng-if="entiPadre.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="entiPadre.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="entiPadre.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="entiPadre.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
-                </tr>
-            </tbody>
-        </table>
-    </fieldset>
-</div>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/metamodelo/entd/create/{{enti.id}}"><i
+                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+        </div>
+    </div>
+
+    <table ng-if="enti.entdList" class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th>{{"entd_grupo" | translate}}</th>
+                <th>{{"entd_fila" | translate}}</th>
+                <th>{{"entd_orden" | translate}}</th>
+                <th>{{"entd_span" | translate}}</th>
+                <th>{{"entd_spanLg" | translate}}</th>
+                <th>{{"entd_etiqueta" | translate}}</th>
+                <th>{{"entd_obligatorio" | translate}}</th>
+                <th>{{"entd_gridable" | translate}}</th>
+                <th>{{"entd_filtrable" | translate}}</th>
+                <th>{{"entd_tpdt_nombre" | translate}}</th>
+                <th>{{"entd_tpdt_tipoElemento" | translate}}</th>
+                <th>{{"entd_tpdt_tpht" | translate}}</th>
+                <th>{{"entd_tpdt_enti" | translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="entd in enti.entdList">
+                <td><a href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td>{{enti.entdMap[entd].grupo}}</td>
+                <td>{{enti.entdMap[entd].fila}}</td>
+                <td>{{enti.entdMap[entd].orden}}</td>
+                <td>{{enti.entdMap[entd].span}}</td>
+                <td>{{enti.entdMap[entd].spanLg}}</td>
+                <td>{{enti.entdMap[entd].etiqueta}}</td>
+                <td><i ng-if="enti.entdMap[entd].obligatorio" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.entdMap[entd].gridable" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="enti.entdMap[entd].filtrable" class="glyphicon glyphicon-ok"></i></td>
+                <td><a href="#/metamodelo/tpdt/detail/{{enti.entdMap[entd].tpdt.id}}">{{enti.entdMap[entd].tpdt.nombre}}</a></td>
+                <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}">{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
+                <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
+                <td><span ng-if="enti.entdMap[entd].tpdt.enti"> <a
+                        ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'P'"
+                        href="#/metamodelo/tppr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a><a
+                        ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'T'"
+                        href="#/metamodelo/tpsr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>{{"Entidades Hijas" | uppercase}}</legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/metamodelo/enen/create/{{enti.id}}"><i
+                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+        </div>
+    </div>
+
+    <table ng-if="entiHijasList" class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th>{{"enti_codigo" | translate}}</th>
+                <th>{{"enti_nombre" | translate}}</th>
+                <th>{{"enti_cmd_alta" | translate}}</th>
+                <th>{{"enti_cmd_baja" | translate}}</th>
+                <th>{{"enti_cmd_edicion" | translate}}</th>
+                <th>{{"enti_cmd_duplicado" | translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="entiHija in entiHijasList">
+                <td><a href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td>{{entiHija.codigo}}</td>
+                <td>{{entiHija.nombre}}</td>
+                <td><i ng-if="entiHija.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="entiHija.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="entiHija.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="entiHija.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+
+<fieldset>
+    <legend>{{"Entidades Padres" | uppercase}}</legend>
+    <table ng-if="entiPadresList" class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th>{{"enti_codigo" | translate}}</th>
+                <th>{{"enti_nombre" | translate}}</th>
+                <th>{{"enti_cmd_alta" | translate}}</th>
+                <th>{{"enti_cmd_baja" | translate}}</th>
+                <th>{{"enti_cmd_edicion" | translate}}</th>
+                <th>{{"enti_cmd_duplicado" | translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="entiPadre in entiPadresList">
+                <td><a ng-if="entiPadre.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
+                    href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td>{{entiPadre.codigo}}</td>
+                <td>{{entiPadre.nombre}}</td>
+                <td><i ng-if="entiPadre.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="entiPadre.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="entiPadre.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
+                <td><i ng-if="entiPadre.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>

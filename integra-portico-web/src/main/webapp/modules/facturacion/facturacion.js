@@ -1,347 +1,105 @@
-angular.module('facturacion', [ 'ui.router' ])
-
-.config(
-        function($stateProvider, $urlRouterProvider) {
-            $stateProvider
-
-            .state('vlrcs', {
-                abstract : true,
-                url : '/facturacion/vlrcs',
-                templateUrl : 'modules/facturacion/vlrcs.html',
-            })
-
-            .state('vlrcs.list', {
-                url : '/listado/:page',
-                templateUrl : 'modules/facturacion/vlrc-listado.html',
-
-                controller : function($http, $scope, $stateParams) {
-                    if ($stateParams.page == null) {
-                        $stateParams.page = 1;
-                    }
-
-//                    $scope.loadData = function() {
-                        var url = "facturacion/vlrc-listado.action?page=" + $stateParams.page;
-
-                        $http.get(url).success(function(data) {
-                            $scope.vlrcList = data.vlrcList;
-                        });
-//                    };
-
-                    $scope.pageChanged = function() {
-                        $stateParams.page = $scope.currentPage;
-
-//                        $scope.loadData();
-                    };
-
-//                    $scope.loadData();
-                }
-            })
-
-            .state(
-                    'vlrcs.detalle',
-                    {
-                        url : '/detalle/:vlrcId',
-                        views : {
-                            '' : {
-                                templateUrl : 'modules/facturacion/vlrc-detalle.html',
-                                controller : function($http, $scope, $state, $stateParams) {
-                                    var url = "facturacion/vlrc-detalle.action?vlrc.id=" + $stateParams.vlrcId;
-
-                                    $http.get(url).success(function(data) {
-                                        $scope.vlrc = data.vlrc;
-                                        $scope.vlrgList = data.vlrgList;
-                                        $scope.vlriList = data.vlriList;
-                                    });
-
-                                    var urlVlrl = "facturacion/vlrl-listado.action?vlrlCriterio.vlrc.id="
-                                            + $stateParams.vlrcId + "&page=1";
-
-                                    $http.get(urlVlrl).success(function(data) {
-                                        $scope.vlrlList = data.vlrlList;
-                                    });
-
-                                    $scope.editar = function() {
-                                        alert("Editar: " + $stateParams.vlrcId);
-
-                                        $state.go('vlrcs.editar', $stateParams);
-                                    };
-                                }
-                            }
-                        }
-                    })
-
-            .state('vlrls', {
-                abstract : true,
-                url : '/facturacion/vlrls',
-                templateUrl : 'modules/facturacion/vlrls.html',
-            })
-
-            .state(
-                    'vlrls.detalle',
-                    {
-                        url : '/detalle/:vlrlId',
-                        views : {
-                            '' : {
-                                templateUrl : 'modules/facturacion/vlrl-detalle.html',
-                                controller : function($http, $scope, $state, $stateParams) {
-                                    var url = "facturacion/vlrl-detalle.action?vlrl.id=" + $stateParams.vlrlId;
-
-                                    $http.get(url).success(
-                                            function(data) {
-                                                $scope.vlrl = data.vlrl;
-
-                                                var urlVlrd = "facturacion/vlrd-listado.action?vlrdCriterio.vlrl.id="
-                                                        + $scope.vlrl.id + "&page=1";
-
-                                                $http.get(urlVlrd).success(function(data) {
-                                                    $scope.vlrdList = data.vlrdList;
-                                                });
-                                            });
-
-                                    $scope.editar = function() {
-                                        alert("Editar: " + $stateParams.vlrlId);
-
-                                        $state.go('vlrls.editar', $stateParams);
-                                    };
-                                }
-                            }
-                        }
-                    })
-
-            .state('vlrls.alta', {
-                url : '/alta/:vlrcId',
-                views : {
-                    '' : {
-                        templateUrl : 'modules/facturacion/vlrl-edicion.html',
-                        controller : function($http, $scope, $state, $stateParams) {
-                            var url = "facturacion/vlrc-detalle.action?vlrc.id=" + $stateParams.vlrcId;
-
-                            $http.get(url).success(function(data) {
-                                $scope.vlrc = data.vlrc;
-                            });
-
-                            var urlRgla = "facturacion/rgla-filtro.action?rglaCriterio.vlrcId=" + $stateParams.vlrcId;
-
-                            $http.get(urlRgla).success(function(data) {
-                                $scope.rglaList = data.rglaList;
-                            });
-                        }
-                    }
-                }
-            })
-
-            .state('vlrls.edicion', {
-                url : '/edicion/:vlrlId',
-                views : {
-                    '' : {
-                        templateUrl : 'modules/facturacion/vlrl-edicion.html',
-                        controller : function($http, $scope, $state, $stateParams) {
-                            var url = "facturacion/vlrl-detalle.action?vlrl.id=" + $stateParams.vlrlId;
-
-                            $http.get(url).success(function(data) {
-                                $scope.vlrl = data.vlrl;
-
-                                if ($scope.vlrl.vlrcId != null) {
-                                    var urlVlrc = "facturacion/vlrc-detalle.action?vlrc.id=" + $scope.vlrl.vlrcId;
-
-                                    $http.get(urlVlrc).success(function(data) {
-                                        $scope.vlrc = data.vlrc;
-                                    });
-                                }
-                            });
-                        }
-                    }
-                }
-            })
-
-            .state('vlrds', {
-                abstract : true,
-                url : '/facturacion/vlrds',
-                templateUrl : 'modules/facturacion/vlrds.html',
-            })
-
-            .state('vlrds.detalle', {
-                url : '/detalle/:vlrdId',
-                views : {
-                    '' : {
-                        templateUrl : 'modules/facturacion/vlrd-detalle.html',
-                        controller : function($http, $scope, $state, $stateParams) {
-                            var url = "facturacion/vlrd-detalle.action?vlrd.id=" + $stateParams.vlrdId;
-
-                            $http.get(url).success(function(data) {
-                                $scope.vlrd = data.vlrd;
-                            });
-
-                            $scope.editar = function() {
-                                alert("Editar: " + $stateParams.vlrdId);
-
-                                $state.go('vlrds.editar', $stateParams);
-                            };
-                        }
-                    }
-                }
-            })
-
-            .state('aspcs', {
-                abstract : true,
-                url : '/facturacion/aspcs',
-                templateUrl : 'modules/facturacion/aspcs.html'
-            })
-
-            .state('aspcs.list', {
-                url : '/listado/:page',
-                templateUrl : 'modules/facturacion/aspc-listado.html',
-
-                controller : function($http, $scope, $stateParams) {
-                    if ($stateParams.page == null) {
-                        $stateParams.page = 1;
-                    }
-
-                    $scope.loadData = function() {
-                        var url = "facturacion/aspc-listado.action?page=" + $stateParams.page;
-
-                        $http.get(url).success(function(data) {
-                            // console.log(data);
-                            $scope.aspcList = data.aspcList;
-                        });
-                    };
-
-                    $scope.pageChanged = function() {
-                        $stateParams.page = $scope.currentPage;
-
-                        $scope.loadData();
-                    };
-
-                    $scope.loadData();
-                }
-            })
-
-            .state('aspcs.detalle', {
-                url : '/detalle/:aspvId',
-                views : {
-                    '' : {
-                        templateUrl : 'modules/facturacion/aspc-detalle.html',
-                        controller : function($http, $scope, $state, $stateParams) {
-                            var url = "facturacion/aspc-detalle.action?aspc.aspv.id=" + $stateParams.aspvId;
-
-                            $http.get(url).success(function(data) {
-                                $scope.aspc = data.aspc;
-                            });
-
-                            $scope.editar = function() {
-                                alert("Editar: " + $stateParams.aspvId);
-
-                                $state.go('aspcs.editar', $stateParams);
-                            };
-                        }
-                    }
-                }
-            })
-
-            .state('crgos', {
-                abstract : true,
-                url : '/facturacion/crgos',
-                templateUrl : 'modules/facturacion/crgos.html'
-            })
-
-            .state('crgos.list', {
-                url : '/listado/:page',
-                templateUrl : 'modules/facturacion/crgo-listado.html',
-
-                controller : function($http, $scope, $stateParams) {
-                    if ($stateParams.page == null) {
-                        $stateParams.page = 1;
-                    }
-
-                    $scope.loadData = function() {
-                        var url = "facturacion/crgo-listado.action?page=" + $stateParams.page;
-
-                        $http.get(url).success(function(data) {
-                            // console.log(data);
-                            $scope.crgoList = data.crgoList;
-                        });
-                    };
-
-                    $scope.pageChanged = function() {
-                        $stateParams.page = $scope.currentPage;
-
-                        $scope.loadData();
-                    };
-
-                    $scope.loadData();
-                }
-            })
-
-            .state(
-                    'crgos.detalle',
-                    {
-                        url : '/detalle/:crgvId',
-                        views : {
-                            '' : {
-                                templateUrl : 'modules/facturacion/crgo-detalle.html',
-                                controller : function($http, $scope, $state, $stateParams) {
-                                    var url = "facturacion/crgo-detalle.action?crgo.crgv.id=" + $stateParams.crgvId;
-
-                                    $http.get(url).success(
-                                            function(data) {
-                                                $scope.crgo = data.crgo;
-
-                                                var urlRgla = "facturacion/rgla-listado.action?rglaCriterio.crgoId="
-                                                        + $scope.crgo.id + "&rglaCriterio.fechaVigencia="
-                                                        + $scope.crgo.crgv.fini + "&page=1";
-
-                                                $http.get(urlRgla).success(function(data) {
-                                                    $scope.rglaList = data.rglaList;
-                                                });
-                                            });
-
-                                    $scope.editar = function() {
-                                        alert("Editar: " + $stateParams.crgvId);
-
-                                        $state.go('crgos.editar', $stateParams);
-                                    };
-                                }
-                            }
-                        }
-                    })
-
-            .state('rglas', {
-                abstract : true,
-                url : '/facturacion/rglas',
-                templateUrl : 'modules/facturacion/rglas.html'
-            })
-
-            .state(
-                    'rglas.detalle',
-                    {
-                        url : '/detalle/:rglvId',
-                        views : {
-                            '' : {
-                                templateUrl : 'modules/facturacion/rgla-detalle.html',
-                                controller : function($http, $scope, $state, $stateParams) {
-                                    var url = "facturacion/rgla-detalle.action?rgla.rglv.id=" + $stateParams.rglvId;
-
-                                    $http.get(url).success(
-                                            function(data) {
-                                                $scope.rgla = data.rgla;
-
-                                                var urlRgin = "facturacion/rgin-listado.action?rginCriterio.rgla1Id="
-                                                        + $scope.rgla.id + "&rginCriterio.fechaVigencia="
-                                                        + $scope.rgla.rglv.fini;
-
-                                                $http.get(urlRgin).success(function(data) {
-                                                    $scope.rginList = data.rginList;
-                                                });
-
-                                            });
-
-                                    $scope.editar = function() {
-                                        alert("Editar: " + $stateParams.rglvId);
-
-                                        $state.go('crgos.editar', $stateParams);
-                                    };
-                                }
-                            }
-                        }
-                    })
+var facturacion = angular.module("facturacion", [ "ngRoute" ]);
+
+facturacion.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
+
+    .when("/facturacion", {
+        templateUrl : "modules/facturacion/facturacion.html",
+        controller : "facturacionController"
+    })
+
+    // ----------- VALORACION ------------------
+
+    .when("/facturacion/vlrc", {
+        templateUrl : "modules/facturacion/vlrc-filter.html",
+        controller : "vlrcFilterController"
+    })
+
+    .when("/facturacion/vlrc/grid", {
+        templateUrl : "modules/facturacion/vlrc-grid.html",
+        controller : "vlrcGridController"
+    })
+
+    .when("/facturacion/vlrc/detail/:vlrcId", {
+        templateUrl : "modules/facturacion/vlrc-detail.html",
+        controller : "vlrcDetailController"
+    })
+
+    .when("/facturacion/vlrc/edit/:vlrcId", {
+        templateUrl : "modules/facturacion/vlrc-edit.html",
+        controller : "vlrcEditController"
+    })
+
+    .when("/facturacion/vlrl/detail/:vlrlId", {
+        templateUrl : "modules/facturacion/vlrl-detail.html",
+        controller : "vlrlDetailController"
+    })
+
+    .when("/facturacion/vlrl/edit/:vlrlId", {
+        templateUrl : "modules/facturacion/vlrl-edit.html",
+        controller : "vlrlEditController"
+    })
+
+    .when("/facturacion/vlrd/detail/:vlrdId", {
+        templateUrl : "modules/facturacion/vlrd-detail.html",
+        controller : "vlrdDetailController"
+    })
+
+    .when("/facturacion/vlrd/edit/:vlrdId", {
+        templateUrl : "modules/facturacion/vlrd-edit.html",
+        controller : "vlrdEditController"
+    })
+
+} ]);
+
+// ----------------- CONTROLLERS --------------------------
+// ----------------- CONTROLLERS --------------------------
+// ----------------- CONTROLLERS --------------------------
+
+facturacion.controller("facturacionController", function($scope, $http, $location) {
+});
+
+// ----------- VALORACION ------------------
+
+facturacion.controller("vlrcFilterController", function($scope, $http, $location) {
+    $scope.submit = function() {
+        $location.path("/facturacion/vlrc/grid").search({
+            vlrcCriterio : {},
+            page : $scope.page
         });
+    }
+
+    $scope.page = 1;
+    $scope.limit = 20;
+});
+
+facturacion.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
+    $scope.vlrcCriterio = $routeParams.vlrcCriterio;
+    $scope.page = $routeParams.page;
+
+    var url = "facturacion/vlrc-list.action";
+
+    $http.get(url, {
+        vlrcCriterio : $scope.vlrcCriterio,
+        limit : $scope.limit,
+        page : $scope.page
+    }).success(function(data) {
+        $scope.vlrcList = data.vlrcList;
+    });
+});
+
+facturacion.controller("vlrcDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/vlrc-detail.action?vlrc.id=" + $routeParams.vlrcId;
+
+    $http.get(url).success(function(data) {
+        $scope.vlrc = data.vlrc;
+        $scope.vlrgList = data.vlrgList;
+        $scope.vlriList = data.vlriList;
+    });
+
+    var urlVlrlList = "facturacion/vlrl-list.action?vlrlCriterio.vlrc.id=" + $routeParams.vlrcId;
+
+    $http.get(urlVlrlList).success(function(data) {
+        $scope.vlrlList = data.vlrlList;
+    });
+});

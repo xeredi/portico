@@ -1,11 +1,11 @@
 var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.router', 'ui.bootstrap.datetimepicker',
-        'pascalprecht.translate', 'ngRoute', 'metamodelo', /*
-                                                             * 'configuracion',
-                                                             * 'maestro',
-                                                             * 'servicio',
-                                                             * 'proceso',
-                                                             * 'facturacion'
-                                                             */]);
+        'pascalprecht.translate', 'ngRoute', 'metamodelo', 'facturacion'/*
+                                                                         * 'configuracion',
+                                                                         * 'maestro',
+                                                                         * 'servicio',
+                                                                         * 'proceso',
+                                                                         *
+                                                                         */]);
 
 app.config(function($translateProvider) {
     $translateProvider.translations('es', {

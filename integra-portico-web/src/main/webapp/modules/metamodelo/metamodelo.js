@@ -178,12 +178,9 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     .when("/metamodelo/enen/create/:entipId", {
         templateUrl : "modules/metamodelo/enen-edit.html",
         controller : "enenCreateController"
-    })
-
-    .otherwise({
-        redirectTo : "/phones"
     });
-} ])
+
+} ]);
 
 // ----------------- CONTROLLERS --------------------------
 // ----------------- CONTROLLERS --------------------------
@@ -204,7 +201,7 @@ metamodelo.controller("tpdtFilterController", function($scope, $http, $location)
 
     $scope.page = 1;
     $scope.limit = 20;
-})
+});
 
 metamodelo.controller("tpdtGridController", function($scope, $http, $location, $route, $routeParams) {
     $scope.tpdtCriterio = $routeParams.tpdtCriterio;

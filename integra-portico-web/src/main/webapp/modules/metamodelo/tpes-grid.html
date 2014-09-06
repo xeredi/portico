@@ -1,28 +1,30 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" href="#/metamodelo/tpes/create"><i class="glyphicon glyphicon-file"></i>
-            {{'boton_alta' | translate}}</a>
+<fieldset>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/metamodelo/tpes/create"><i class="glyphicon glyphicon-file"></i>
+                {{'boton_alta' | translate}}</a>
+        </div>
     </div>
-</div>
 
-<div class="table-responsive">
-    <span class="label label-default">{{entiList.count}} resultado(s)</span>
+    <div class="table-responsive">
+        <span class="label label-default">{{entiList.count}} resultado(s)</span>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap">{{"enti_codigo" | translate}}</th>
-                <th nowrap="nowrap">{{"enti_nombre" | translate}}</th>
-            </tr>
-        </thead>
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap">{{"enti_codigo" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_nombre" | translate}}</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr ng-repeat="enti in entiList.list">
-                <td><a href="#/metamodelo/tpes/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{enti.codigo}}</td>
-                <td>{{enti.nombre}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <tbody>
+                <tr ng-repeat="enti in entiList.list">
+                    <td><a href="#/metamodelo/tpes/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{enti.codigo}}</td>
+                    <td>{{enti.nombre}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

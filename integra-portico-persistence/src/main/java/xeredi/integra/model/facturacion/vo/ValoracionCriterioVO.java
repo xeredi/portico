@@ -16,6 +16,15 @@ public final class ValoracionCriterioVO {
     /** The ids. */
     private Set<Long> ids;
 
+    /** The aspc id. */
+    private Long aspcId;
+
+    /** The srvc id. */
+    private Long srvcId;
+
+    /** The pagador id. */
+    private Long pagadorId;
+
     /**
      * {@inheritDoc}
      */
@@ -39,8 +48,8 @@ public final class ValoracionCriterioVO {
      * @param value
      *            the new id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -58,8 +67,65 @@ public final class ValoracionCriterioVO {
      * @param value
      *            the ids
      */
-    public void setIds(Set<Long> value) {
-        this.ids = value;
+    public void setIds(final Set<Long> value) {
+        ids = value;
+    }
+
+    /**
+     * Gets the aspc id.
+     *
+     * @return the aspc id
+     */
+    public Long getAspcId() {
+        return aspcId;
+    }
+
+    /**
+     * Sets the aspc id.
+     *
+     * @param value
+     *            the new aspc id
+     */
+    public void setAspcId(final Long value) {
+        aspcId = value;
+    }
+
+    /**
+     * Gets the srvc id.
+     *
+     * @return the srvc id
+     */
+    public Long getSrvcId() {
+        return srvcId;
+    }
+
+    /**
+     * Sets the srvc id.
+     *
+     * @param value
+     *            the new srvc id
+     */
+    public void setSrvcId(final Long value) {
+        srvcId = value;
+    }
+
+    /**
+     * Gets the pagador id.
+     *
+     * @return the pagador id
+     */
+    public Long getPagadorId() {
+        return pagadorId;
+    }
+
+    /**
+     * Sets the pagador id.
+     *
+     * @param value
+     *            the new pagador id
+     */
+    public void setPagadorId(final Long value) {
+        pagadorId = value;
     }
 
 }

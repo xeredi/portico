@@ -50,7 +50,7 @@ public final class ValoracionAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "vlrc-detalle") })
+    @Actions({ @Action("vlrc-detail") })
     public String detalle() {
         Preconditions.checkNotNull(vlrc);
         Preconditions.checkNotNull(vlrc.getId());
@@ -88,8 +88,8 @@ public final class ValoracionAction extends BaseAction {
      * @param value
      *            the vlrc
      */
-    public void setVlrc(ValoracionVO value) {
-        this.vlrc = value;
+    public void setVlrc(final ValoracionVO value) {
+        vlrc = value;
     }
 
     /**
