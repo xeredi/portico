@@ -39,7 +39,7 @@ public final class ValoracionLineaAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "vlrl-detalle") })
+    @Actions({ @Action("vlrl-detail") })
     public String detalle() {
         Preconditions.checkNotNull(vlrl);
         Preconditions.checkNotNull(vlrl.getId());
@@ -72,8 +72,8 @@ public final class ValoracionLineaAction extends BaseAction {
      * @param value
      *            the vlrl
      */
-    public void setVlrl(ValoracionLineaVO value) {
-        this.vlrl = value;
+    public void setVlrl(final ValoracionLineaVO value) {
+        vlrl = value;
     }
 
 }

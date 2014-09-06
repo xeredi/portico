@@ -60,7 +60,7 @@ public final class ValoracionDetalleListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "vlrd-listado") })
+    @Actions({ @Action("vlrd-list") })
     public String listado() {
         Preconditions.checkNotNull(vlrdCriterio);
 
@@ -130,8 +130,8 @@ public final class ValoracionDetalleListadoAction extends BaseAction {
      * @param value
      *            the vlrd criterio
      */
-    public void setVlrdCriterio(ValoracionDetalleCriterioVO value) {
-        this.vlrdCriterio = value;
+    public void setVlrdCriterio(final ValoracionDetalleCriterioVO value) {
+        vlrdCriterio = value;
     }
 
     /**

@@ -103,3 +103,25 @@ facturacion.controller("vlrcDetailController", function($scope, $http, $location
         $scope.vlrlList = data.vlrlList;
     });
 });
+
+facturacion.controller("vlrlDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/vlrl-detail.action?vlrl.id=" + $routeParams.vlrlId;
+
+    $http.get(url).success(function(data) {
+        $scope.vlrl = data.vlrl;
+    });
+
+    var urlVlrdList = "facturacion/vlrd-list.action?vlrdCriterio.vlrl.id=" + $routeParams.vlrlId;
+
+    $http.get(urlVlrdList).success(function(data) {
+        $scope.vlrdList = data.vlrdList;
+    });
+});
+
+facturacion.controller("vlrdDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/vlrd-detail.action?vlrd.id=" + $routeParams.vlrdId;
+
+    $http.get(url).success(function(data) {
+        $scope.vlrd = data.vlrd;
+    });
+});
