@@ -18,13 +18,14 @@
                 <label> {{"tpdt_nombre" | translate}} </label>
                 <p class="form-control-static">{{tpdt.nombre}}</p>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-md-2 form-group">
                 <label> {{"tpdt_tpht" | translate}} </label>
-                <p class="form-control-static" title="{{'TipoEntidad_' + tpdt.tpht | translate}}">{{tpdt.tpht}}</p>
+                <p class="form-control-static">{{tpdt.tpht}} - {{'TipoEntidad_' + tpdt.tpht | translate}}</p>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-md-2 form-group">
                 <label> {{"tpdt_tipoElemento" | translate}} </label>
-                <p class="form-control-static" title="{{'TipoElemento_' + tpdt.tipoElemento | translate}}">{{tpdt.tipoElemento}}</p>
+                <p class="form-control-static">{{tpdt.tipoElemento}} - {{'TipoElemento_' + tpdt.tipoElemento |
+                    translate}}</p>
             </div>
             <div ng-if="tpdt.enti" class="col-md-3 form-group">
                 <label> {{"tpdt_enti" | translate}} </label>

@@ -4,7 +4,7 @@
 </ul>
 </alert>
 
-<form name="editForm" novalidate role="form">
+<form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="tpdt.id" />
 
     <fieldset>
@@ -19,17 +19,19 @@
                     ng-model="tpdt.nombre" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{tpdt.nombre}}</p>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-md-2 form-group">
                 <label>{{"tpdt_tpht" | translate}}</label> <select ng-model="tpdt.tpht" class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tphts" ng-selected="tpdt.tpht == cdrf" value="{{cdrf}}">{{cdrf}}</option>
+                    <option ng-repeat="cdrf in tphts" ng-selected="tpdt.tpht == cdrf" value="{{cdrf}}">{{cdrf}}
+                        - {{"TipoHtml_" + cdrf | translate}}</option>
                 </select>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-md-2 form-group">
                 <label>{{"tpdt_tipoElemento" | translate}}</label> <select ng-model="tpdt.tipoElemento"
                     class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tiposElemento" ng-selected="tpdt.tipoElemento == cdrf" value="{{cdrf}}">{{cdrf}}</option>
+                    <option ng-repeat="cdrf in tiposElemento" ng-selected="tpdt.tipoElemento == cdrf" value="{{cdrf}}">{{cdrf}}
+                        - {{"TipoElemento_" + cdrf | translate}}</option>
                 </select>
             </div>
             <div class="col-md-3 form-group" ng-if="tpdt.tipoElemento == 'PR'">

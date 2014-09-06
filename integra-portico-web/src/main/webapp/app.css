@@ -1,57 +1,60 @@
-
-
 body {
-    background-color: white;
-    font-family: Verdana, sans-serif;
+	background-color: white;
+	font-family: Verdana, sans-serif;
 }
 
 .number {
-    text-align: right;
+	text-align: right;
 }
 
 #body-content {
-    margin-top: 55px;
-    margin-left: 10px;
-    margin-right: 20px;
+	margin-top: 55px;
+	margin-left: 10px;
+	margin-right: 20px;
 }
 
 .modal-dialog {
-    width: 90%;
+	width: 90%;
 }
 
 .modal-body {
-    padding-top: 10px;
-    margin-right: 10px;
+	padding-top: 10px;
+	margin-right: 10px;
 }
 
 .modal-header {
-    padding: 10px;
-    background-color: #383838;
-    color: #FFFFFF;
-    font-weight: bold;
+	padding: 10px;
+	background-color: #383838;
+	color: #FFFFFF;
+	font-weight: bold;
 }
 
-label,legend,li,.btn,.form-control,.form-control-static,.bootstrap-datetimepicker-widget,.table-condensed,.dropdown-menu,.list-group,.nav-tabs,.tt-dropdown-menu,.typeahead,.modal-title
-    {
-    font-size: 11px;
+label, legend, li, .btn, .form-control, .form-control-static,
+	.bootstrap-datetimepicker-widget, .table-condensed, .dropdown-menu,
+	.list-group, .nav-tabs, .tt-dropdown-menu, .typeahead, .modal-title {
+	font-size: 11px;
 }
 
-.jumbotron {background-color: white;}
+.jumbotron {
+	background-color: white;
+}
 
-input[type='password'], input[type='text'], input[type='text']:disabled, textarea.form-control, textarea.form-control:disabled, select.form-control {
-    color: #000000;
-    cursor: default;
-    background-color: #f2f2f2;
+input[type='password'], input[type='text'], input[type='text']:disabled,
+	textarea.form-control, textarea.form-control:disabled, select.form-control
+	{
+	color: #000000;
+	cursor: default;
+	background-color: #f2f2f2;
 }
 
 legend {
-    font-weight: bold;
-    margin-top: 15px;
-    margin-bottom: 5px;
+	font-weight: bold;
+	margin-top: 15px;
+	margin-bottom: 5px;
 }
 
 label {
-    /*
+	/*
     font-weight: normal;
     color: gray;
 */
@@ -59,103 +62,104 @@ label {
 }
 
 .form-horizontal label:after {
-    content: " :"
+	content: " :"
 }
 
 fieldset {
-    margin-top: 15px;
-    margin-bottom: 5px;
-    margin-left: 5px;
+	margin-top: 15px;
+	margin-bottom: 5px;
 }
 
-.row {
-    margin-left: 5px;
+form {
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
 .form-group {
-    margin-bottom: 7px;
-    padding-right: 0px;
-    padding-left: 10px;
+	margin-bottom: 7px;
+	padding-right: 0px;
+	padding-left: 10px;
+}
+
+.form-control {
+	padding: 5px 5px 5px 5px;
 }
 
 .form-control-static {
-    margin-left: 10px;
+	margin-left: 5px;
 }
 
 .table {
-    width: auto;
+	width: auto;
 }
-/*
-.table th, .table td {
-    padding-right: 100px;
-}
-*/
 
 td {
-    max-width: 500px;
+	max-width: 500px;
 }
 
 .btn-toolbar {
-    margin-top: 5px;
-    margin-bottom: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 /* Typeahead */
-.twitter-typeahead,.typeahead {
-    width: 100%;
+.twitter-typeahead, .typeahead {
+	width: 100%;
 }
 
 .tt-query {
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
 .tt-hint {
-    color: #fff
+	color: #fff
 }
 
 .tt-dropdown-menu {
-    width: 422px;
-    margin-top: 12px;
-    padding: 8px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	width: 422px;
+	margin-top: 12px;
+	padding: 8px 0;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
 .tt-suggestion {
-    padding: 3px 20px;
+	padding: 3px 20px;
 }
 
 .tt-suggestion.tt-is-under-cursor {
-    color: #fff;
-    background-color: #0097cf;
+	color: #fff;
+	background-color: #0097cf;
 }
 
 .tt-suggestion p {
-    margin: 0;
+	margin: 0;
 }
 
 .navbar-right {
-    padding-right: 10px;
+	padding-right: 10px;
 }
 
 .navbar-inverse {
-    color: white;
-    background-color: black;
+	color: white;
+	background-color: black;
 }
 
 /* AngularJs */
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.nav, .pagination, .carousel, .panel-title a {
+	cursor: pointer;
+}
 
 .pagination {
-    margin-top: 8px;
-    margin-bottom: 3px;
+	margin-top: 8px;
+	margin-bottom: 3px;
 }
