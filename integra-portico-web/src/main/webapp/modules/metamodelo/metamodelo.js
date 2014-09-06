@@ -410,6 +410,13 @@ metamodelo.controller("tpprEditController", function($scope, $http, $location, $
         $scope.accion = data.accion;
     });
 
+    var urlTpdtNombreList = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
+            + $routeParams.entiId;
+
+    $http.get(urlTpdtNombreList).success(function(data) {
+        $scope.tpdtNombreList = data.lvList;
+    });
+
     $scope.submit = function(form) {
         var url = "metamodelo/tppr-save.action";
 
@@ -432,6 +439,13 @@ metamodelo.controller("tpprCreateController", function($scope, $http, $location,
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;
         $scope.accion = data.accion;
+    });
+
+    var urlTpdtNombreList = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
+            + $routeParams.entiId;
+
+    $http.get(urlTpdtNombreList).success(function(data) {
+        $scope.tpdtNombreList = data.lvList;
     });
 
     $scope.submit = function(form) {
@@ -640,6 +654,12 @@ metamodelo.controller("tpssEditController", function($scope, $http, $location, $
         $scope.accion = data.accion;
     });
 
+    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
+
+    $http.get(urlTpdtEstado).success(function(data) {
+        $scope.tpdtEstadoList = data.lvList;
+    });
+
     $scope.submit = function(form) {
         var url = "metamodelo/tpss-save.action";
 
@@ -662,6 +682,12 @@ metamodelo.controller("tpssCreateController", function($scope, $http, $location,
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;
         $scope.accion = data.accion;
+    });
+
+    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
+
+    $http.get(urlTpdtEstado).success(function(data) {
+        $scope.tpdtEstadoList = data.lvList;
     });
 
     $scope.submit = function(form) {

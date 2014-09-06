@@ -36,6 +36,9 @@ public final class TipoDatoCriterioVO implements Criterio {
     /** The tppr id. */
     private Long entiId;
 
+    /** The enti ref id. */
+    private Long entiRefId;
+
     /**
      * {@inheritDoc}
      */
@@ -194,6 +197,25 @@ public final class TipoDatoCriterioVO implements Criterio {
      */
     public void setCodigo(final String value) {
         codigo = value;
+    }
+
+    /**
+     * Gets the enti ref id.
+     *
+     * @return the enti ref id
+     */
+    public Long getEntiRefId() {
+        return entiRefId;
+    }
+
+    /**
+     * Sets the enti ref id.
+     *
+     * @param value
+     *            the new enti ref id
+     */
+    public void setEntiRefId(final Long value) {
+        entiRefId = value;
     }
 
 }

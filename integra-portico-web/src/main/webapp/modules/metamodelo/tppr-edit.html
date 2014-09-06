@@ -70,6 +70,14 @@
                     <option value="false" ng-selected="enti.tempExp == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
+            <div ng-if="!(enti.i18n == 'true')" class="col-md-3 form-group">
+                <label>{{"enti_tpdt_nombre" | translate}}</label> <select ng-model="enti.tpdtNombre.id"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in tpdtNombreList" value="{{labelValue.value}}"
+                        ng-selected="enti.tpdtNombre.id == labelValue.value">{{labelValue.label}}</option>
+                </select>
+            </div>
         </div>
 
         <button data-ng-click="submit(editForm)" class="btn btn-default">

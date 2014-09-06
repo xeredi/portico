@@ -138,13 +138,16 @@
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th>{{"enti_codigo" | translate}}</th>
-                    <th>{{"enti_nombre" | translate}}</th>
-                    <th>{{"enti_cmd_alta" | translate}}</th>
-                    <th>{{"enti_cmd_baja" | translate}}</th>
-                    <th>{{"enti_cmd_edicion" | translate}}</th>
-                    <th>{{"enti_cmd_duplicado" | translate}}</th>
+                    <th nowrap="nowrap" class="buttonLinks" nowrap="nowrap" />
+                    <th nowrap="nowrap">{{"enti_codigo" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_nombre" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_cmd_alta" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_cmd_baja" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_cmd_edicion" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_cmd_duplicado" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_temporal" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_facturable" | translate}}</th>
+                    <th nowrap="nowrap">{{"enti_tpdt_estado" | translate}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -156,6 +159,9 @@
                     <td><i ng-if="subenti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="subenti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
                     <td><i ng-if="subenti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="subenti.temporal" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="subenti.facturable" class="glyphicon glyphicon-ok"></i></td>
+                    <td><a ng-if="subenti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a></td>
                 </tr>
             </tbody>
         </table>

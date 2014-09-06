@@ -223,6 +223,7 @@ app.config(function($translateProvider) {
         enti_temporal : 'Temporal?',
         enti_facturable : 'Facturable?',
         enti_tpdt_estado : 'T. Dato Estado',
+        enti_tpdt_nombre : 'T. Dato Nombre',
 
         entd_grupo : 'Grupo',
         entd_fila : 'Fila',

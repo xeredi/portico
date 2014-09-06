@@ -54,10 +54,16 @@
                     <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i>
                 </p>
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label> {{"enti_tempExp" | translate}} </label>
                 <p class="form-control-static">
                     <i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i>
+                </p>
+            </div>
+            <div class="col-md-3 form-group">
+                <label> {{"enti_tpdt_nombre" | translate}} </label>
+                <p class="form-control-static">
+                    <a href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}">{{enti.tpdtNombre.nombre}}</a>
                 </p>
             </div>
         </div>

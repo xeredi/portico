@@ -20,6 +20,7 @@
                 <th nowrap="nowrap">{{"enti_cmd_duplicado" | translate}}</th>
                 <th nowrap="nowrap">{{"enti_i18n" | translate}}</th>
                 <th nowrap="nowrap">{{"enti_tempExp" | translate}}</th>
+                <th nowrap="nowrap">{{"enti_tpdt_nombre" | translate}}</th>
             </tr>
         </thead>
 
@@ -34,6 +35,7 @@
                 <td><i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
                 <td><i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i></td>
                 <td><i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i></td>
+                <td><a href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}">{{enti.tpdtNombre.nombre}}</a></td>
             </tr>
         </tbody>
     </table>

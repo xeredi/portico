@@ -15,7 +15,7 @@ public final class TipoParametroVO extends EntidadVO {
     private Boolean tempExp;
 
     /** The tpdt nombre id. */
-    private Long tpdtNombreId;
+    private TipoDatoVO tpdtNombre;
 
     /**
      * {@inheritDoc}
@@ -68,8 +68,8 @@ public final class TipoParametroVO extends EntidadVO {
      *
      * @return the tpdt nombre id
      */
-    public final Long getTpdtNombreId() {
-        return tpdtNombreId;
+    public final TipoDatoVO getTpdtNombre() {
+        return tpdtNombre;
     }
 
     /**
@@ -78,8 +78,8 @@ public final class TipoParametroVO extends EntidadVO {
      * @param value
      *            the new tpdt nombre id
      */
-    public final void setTpdtNombreId(final Long value) {
-        tpdtNombreId = value;
+    public final void setTpdtNombre(final TipoDatoVO value) {
+        tpdtNombre = value;
     }
 
 }

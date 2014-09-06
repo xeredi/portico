@@ -55,6 +55,30 @@
                     <option value="false" ng-selected="enti.cmdDuplicado == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
+            <div class="col-md-1 form-group">
+                <label>{{"enti_temporal" | translate}}</label> <select ng-model="enti.temporal"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="enti.temporal == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="enti.temporal == false">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"enti_facturable" | translate}}</label> <select ng-model="enti.facturable"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="enti.facturable == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="enti.facturable == false">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label>{{"enti_tpdt_estado" | translate}}</label> <select ng-model="enti.tpdtEstado.id"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in tpdtEstadoList" value="{{labelValue.value}}"
+                        ng-selected="enti.tpdtEstado.id == labelValue.value">{{labelValue.label}}</option>
+                </select>
+            </div>
         </div>
 
         <button data-ng-click="submit(editForm)" class="btn btn-default">

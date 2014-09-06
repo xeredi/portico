@@ -3,8 +3,6 @@ package xeredi.integra.http.controller.action.maestro;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -21,7 +19,6 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ParametroLupaAction.
  */
-@ParentPackage("json-default")
 public final class ParametroLupaAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -49,7 +46,7 @@ public final class ParametroLupaAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "prmt-lupa", results = { @Result(name = "success", type = "json") })
+    @Action("prmt-lupa")
     public String lupa() {
         Preconditions.checkNotNull(itemLupaCriterio);
         Preconditions.checkNotNull(itemLupaCriterio.getEntiId());
@@ -62,7 +59,7 @@ public final class ParametroLupaAction extends BaseAction {
         if (enti.getI18n()) {
             itemLupaCriterio.setIdioma(getIdioma());
         } else {
-            itemLupaCriterio.setTpdtNombreId(enti.getTpdtNombreId());
+            itemLupaCriterio.setTpdtNombreId(enti.getTpdtNombre().getId());
         }
 
         itemLupaCriterio.setLimit(ROWS);
