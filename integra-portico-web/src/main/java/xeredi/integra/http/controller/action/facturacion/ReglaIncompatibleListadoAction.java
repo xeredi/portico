@@ -45,7 +45,7 @@ public final class ReglaIncompatibleListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "rgin-listado") })
+    @Actions({ @Action("rgin-list") })
     public String listado() {
         Preconditions.checkNotNull(rginCriterio);
 

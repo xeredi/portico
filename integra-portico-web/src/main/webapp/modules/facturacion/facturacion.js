@@ -290,6 +290,13 @@ facturacion.controller("rglaDetailController", function($scope, $http, $location
     $http.get(url).success(function(data) {
         $scope.rgla = data.rgla;
     });
+
+    var urlRginList = "facturacion/rgin-list.action?rginCriterio.rgla1Id=" + $routeParams.rglaId
+            + "&rginCriterio.fechaVigencia=" + $routeParams.fechaVigencia;
+
+    $http.get(urlRginList).success(function(data) {
+        $scope.rginList = data.rginList;
+    });
 });
 
 facturacion.controller("rglvDetailController", function($scope, $http, $location, $route, $routeParams) {
