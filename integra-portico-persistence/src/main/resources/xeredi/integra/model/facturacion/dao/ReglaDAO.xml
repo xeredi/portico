@@ -110,6 +110,20 @@
                 AND rgla_crgo_pk = #{crgoId}
             </if>
 
+            <if test="crgvId != null">
+            <![CDATA[
+            	EXISTS (
+            		SELECT 1
+            		FROM tbl_cargo_version_crgv
+            		WHERE
+            			crgv_crgo_pk = rgla_crgo_pk
+            			AND rglv_fini BETWEEN crgv_fini AND COALESCE(crgv_ffin, rglv_fini)
+            			AND COALESCE(rglv_ffin, GETSYSDATETIME()) BETWEEN crgv_fini AND COALESCE(crgv_ffin, COALESCE(rglv_ffin, GETSYSDATETIME()))
+                        AND crgv_pk = #{crgvId}
+            	)
+            ]]>
+            </if>
+
             <if test="tipo != null">
                 AND rgla_tipo = #{tipo}
             </if>

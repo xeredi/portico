@@ -1,1 +1,104 @@
-crgo-edit
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
+
+<form role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="crgo.id" /><input type="hidden"
+        ng-model="crgo.crgv.id" />
+
+    <fieldset>
+        <legend>{{'Cargo' | uppercase}}</legend>
+
+        <div class="row">
+            <div class="col-md-1 form-group">
+                <label>{{"crgo_codigo" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                    ng-model="crgo.codigo" class="form-control input-sm" />
+                <p ng-if="accion == 'edit'" class="form-control-static">{{crgo.codigo}}</p>
+            </div>
+            <div class="col-md-3 form-group">
+                <label>{{"crgo_tpsr" | translate}}</label> <select ng-if="accion == 'create'" ng-model="crgo.tpsr.id"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}"
+                        ng-selected="crgo.tpsr.id == labelValue.value">{{labelValue.label}}</option>
+                </select>
+                <p ng-if="accion == 'edit'" class="form-control-static">{{crgo.tpsr.nombre}}</p>
+            </div>
+            <div class="col-md-3 form-group">
+                <label>{{"crgo_descripcion" | translate}}</label> <input type="text" ng-model="crgo.descripcion"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{"crgo_codigoNormalizado" | translate}}</label> <input type="text"
+                    ng-model="crgo.codigoNormalizado" class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"crgo_tipo" | translate}}</label> <select ng-model="crgo.tipo" class="form-control input-sm">
+                    <option />
+                    <option ng-repeat="cdrf in tipos" ng-selected="crgo.tipo == cdrf" value="{{cdrf}}">{{cdrf}}
+                        - {{"CargoTipo_" + cdrf | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"crgo_principal" | translate}}</label> <select ng-model="crgo.principal"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="crgo.principal == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="crgo.principal == false">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"crgo_temporal" | translate}}</label> <select ng-model="crgo.temporal"
+                    class="form-control input-sm">
+                    <option />
+                    <option value="true" ng-selected="crgo.temporal == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="crgo.temporal == false">{{"fmt_false" | translate}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{'crgo_crgv_fini' | translate}}</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="datepickerFIni" role="button" data-toggle="dropdown" data-target="#"
+                        href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="crgo.crgv.fini"
+                                value="{{crgo.crgv.fini | date:('fmt_date' | translate)}}"><span
+                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="crgo.crgv.fini"
+                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFIni', startView:'day', minView:'day'  }" />
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{'crgo_crgv_ffin' | translate}}</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="datepickerFFin" role="button" data-toggle="dropdown" data-target="#"
+                        href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="crgo.crgv.ffin"
+                                value="{{crgo.crgv.ffin | date:('fmt_date' | translate)}}"><span
+                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="crgo.crgv.ffin"
+                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFFin', startView:'day', minView:'day'  }" />
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <button data-ng-click="submit()" class="btn btn-default">
+            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+    </fieldset>
+</form>
+

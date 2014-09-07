@@ -245,6 +245,12 @@ facturacion.controller("crgvDetailController", function($scope, $http, $location
     $http.get(url).success(function(data) {
         $scope.crgo = data.crgo;
     });
+
+    var urlRglaList = "facturacion/rgla-list.action?rglaCriterio.crgvId=" + $routeParams.crgvId;
+
+    $http.get(urlRglaList).success(function(data) {
+        $scope.rglaList = data.rglaList;
+    });
 });
 
 facturacion.controller("crgvEditController", function($scope, $http, $location, $route, $routeParams) {
@@ -252,6 +258,7 @@ facturacion.controller("crgvEditController", function($scope, $http, $location, 
 
     $http.get(url).success(function(data) {
         $scope.crgo = data.crgo;
+        $scope.tipos = data.tipos;
         $scope.accion = data.accion;
     });
 });
@@ -261,11 +268,18 @@ facturacion.controller("crgoCreateController", function($scope, $http, $location
 
     $http.get(url).success(function(data) {
         $scope.crgo = data.crgo;
+        $scope.tipos = data.tipos;
         $scope.accion = data.accion;
+    });
+
+    var urlEntiList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
+
+    $http.get(urlEntiList).success(function(data) {
+        $scope.entiList = data.lvList;
     });
 });
 
-//----------- REGLA ------------------
+// ----------- REGLA ------------------
 
 facturacion.controller("rglaDetailController", function($scope, $http, $location, $route, $routeParams) {
     $scope.fechaVigencia = $routeParams.fechaVigencia;
@@ -303,4 +317,3 @@ facturacion.controller("rglaCreateController", function($scope, $http, $location
         $scope.accion = data.accion;
     });
 });
-

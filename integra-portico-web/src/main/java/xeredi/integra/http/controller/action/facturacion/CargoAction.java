@@ -11,6 +11,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.facturacion.bo.Cargo;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
+import xeredi.integra.model.facturacion.vo.CargoTipo;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 
@@ -82,6 +83,11 @@ public final class CargoAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * Modificar.
+     *
+     * @return the string
+     */
     @Actions({ @Action("crgo-edit") })
     public String modificar() {
         Preconditions.checkNotNull(crgo);
@@ -101,6 +107,15 @@ public final class CargoAction extends BaseAction {
     }
 
     // get / set
+
+    /**
+     * Gets the tipos.
+     *
+     * @return the tipos
+     */
+    public CargoTipo[] getTipos() {
+        return CargoTipo.values();
+    }
 
     /**
      * Gets the crgo.

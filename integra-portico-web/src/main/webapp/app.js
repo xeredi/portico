@@ -42,6 +42,9 @@ app.config(function($translateProvider) {
         TipoHtml_F : "Filtro (Lupa)",
         TipoHtml_TA : "Textarea",
 
+        CargoTipo_B : "Tasa",
+        CargoTipo_T : "Tarifa",
+
         boton_buscar : 'Buscar',
         boton_aceptar : 'Aceptar',
         boton_cancelar : 'Cancelar',

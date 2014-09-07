@@ -32,6 +32,9 @@ public final class ReglaCriterioVO {
     /** The crgo id. */
     private Long crgoId;
 
+    /** The crgv id. */
+    private Long crgvId;
+
     /** The vlrc id. */
     private Long vlrcId;
 
@@ -192,7 +195,26 @@ public final class ReglaCriterioVO {
      *            the vlrc id
      */
     public void setVlrcId(final Long value) {
-        this.vlrcId = value;
+        vlrcId = value;
+    }
+
+    /**
+     * Gets the crgv id.
+     *
+     * @return the crgv id
+     */
+    public Long getCrgvId() {
+        return crgvId;
+    }
+
+    /**
+     * Sets the crgv id.
+     *
+     * @param value
+     *            the new crgv id
+     */
+    public void setCrgvId(final Long value) {
+        crgvId = value;
     }
 
 }
