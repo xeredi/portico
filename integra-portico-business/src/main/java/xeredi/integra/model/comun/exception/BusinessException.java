@@ -72,6 +72,8 @@ public final class BusinessException extends Exception {
     /**
      * To i18n.
      *
+     * @param locale
+     *            the locale
      * @return the list
      */
     public List<String> toI18n(final Locale locale) {

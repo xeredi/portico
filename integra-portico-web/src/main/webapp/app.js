@@ -160,6 +160,8 @@ app.config(function($translateProvider) {
         aspc_aspv_cetiqInfo : 'Etiq. Elem. Cabecera',
         aspc_aspv_cpathInfo : 'Ruta Elem. Cabecera',
         aspc_aspv_cgrpInfo : 'Elem. de Agrupaci\u00f3n?',
+        aspc_aspv_lsumCuant : "Elem. Sumarizable?",
+        aspc_aspv_lgrpInfo : 'Elem. de Agrupaci\u00f3n?',
 
         crgo_codigo : 'C\u00f3digo',
         crgo_descripcion : 'Descripci\u00f3n',

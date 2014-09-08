@@ -59,7 +59,7 @@ public final class AspectoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "aspc-listado") })
+    @Actions({ @Action("aspc-list") })
     public String listado() {
         Preconditions.checkNotNull(aspcCriterio);
 
@@ -100,8 +100,8 @@ public final class AspectoListadoAction extends BaseAction {
      * @param value
      *            the aspc criterio
      */
-    public void setAspcCriterio(AspectoCriterioVO value) {
-        this.aspcCriterio = value;
+    public void setAspcCriterio(final AspectoCriterioVO value) {
+        aspcCriterio = value;
     }
 
     /**
@@ -119,8 +119,8 @@ public final class AspectoListadoAction extends BaseAction {
      * @param value
      *            the page
      */
-    public void setPage(int value) {
-        this.page = value;
+    public void setPage(final int value) {
+        page = value;
     }
 
     /**
@@ -138,8 +138,8 @@ public final class AspectoListadoAction extends BaseAction {
      * @param value
      *            the limit
      */
-    public void setLimit(int value) {
-        this.limit = value;
+    public void setLimit(final int value) {
+        limit = value;
     }
 
 }

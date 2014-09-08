@@ -104,6 +104,22 @@ facturacion.config([ "$routeProvider", function($routeProvider) {
         controller : "crgoCreateController"
     })
 
+    // ----------- ASPECTO ------------------
+
+    .when("/facturacion/aspc/list", {
+        templateUrl : "modules/facturacion/aspcs.html",
+        controller : "aspcListController"
+    })
+
+    .when("/facturacion/aspv/detail/:aspvId", {
+        templateUrl : "modules/facturacion/aspc.html",
+        controller : "aspcDetailController"
+    })
+
+    .when("/facturacion/aspc/detail/:aspcId/:fechaVigencia", {
+        templateUrl : "modules/facturacion/aspc.html",
+        controller : "aspcDetailController"
+    })
 } ]);
 
 // ----------------- CONTROLLERS --------------------------
@@ -323,4 +339,135 @@ facturacion.controller("rglaCreateController", function($scope, $http, $location
         $scope.rgla = data.rgla;
         $scope.accion = data.accion;
     });
+});
+
+// ----------- ASPECTO ------------------
+
+facturacion.controller("aspcListController", function($scope, $http, $location, $route, $routeParams) {
+    console.log('routeParams: ' + JSON.stringify($routeParams));
+    console.log('urlInclude: ' + $scope.urlInclude);
+    console.log('aspcCriterio: ' + JSON.stringify($scope.aspcCriterio));
+
+    $scope.urlInclude = 'modules/facturacion/aspc-filter.html';
+    $scope.aspcCriterio = {};
+    $scope.limit = 20;
+    $scope.page = 1;
+
+    var urlEntiList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
+
+    $http.get(urlEntiList).success(function(data) {
+        $scope.entiList = data.lvList;
+    });
+
+    $scope.list = function() {
+        console.log('routeParams: ' + JSON.stringify($routeParams));
+        console.log('aspcCriterio: ' + JSON.stringify($scope.aspcCriterio));
+
+        var url = "facturacion/aspc-list.action";
+
+        $http.get(url, {
+            aspcCriterio : $scope.aspcCriterio,
+            limit : $scope.limit,
+            page : $scope.page
+        }).success(function(data) {
+            $scope.aspcList = data.aspcList;
+            $routeParams.aspcCriterio = $scope.aspcCriterio;
+            $scope.urlInclude = 'modules/facturacion/aspc-grid.html';
+        });
+    }
+
+    $scope.filter = function() {
+        console.log('routeParams: ' + JSON.stringify($routeParams));
+        console.log('aspcCriterio: ' + $scope.aspcCriterio);
+
+        $scope.urlInclude = 'modules/facturacion/aspc-filter.html';
+    }
+
+    $scope.create = function() {
+        $scope.urlInclude = 'modules/facturacion/aspc-edit.html';
+
+        var url = "facturacion/aspc-create.action";
+
+        $http.get(url).success(function(data) {
+            $scope.accion = data.accion;
+            $scope.aspc = data.aspc;
+        });
+    }
+
+    $scope.save = function() {
+        var url = "facturacion/aspc-save.action";
+
+        $http.post(url, {
+            aspc : $scope.aspc,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/aspv/detail/" + data.aspc.aspv.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancelSave = function() {
+        $scope.list();
+    }
+});
+
+facturacion.controller("aspcDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/aspc-detail.action?aspc.aspv.id=" + $routeParams.aspvId;
+
+    $http.get(url).success(function(data) {
+        $scope.urlInclude = 'modules/facturacion/aspc-detail.html';
+        $scope.aspc = data.aspc;
+    });
+
+    $scope.edit = function() {
+        $scope.urlInclude = 'modules/facturacion/aspc-edit.html';
+
+        var url = "facturacion/aspc-edit.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
+
+        $http.get(url).success(function(data) {
+            $scope.accion = data.accion;
+            $scope.aspc = data.aspc;
+        });
+    }
+
+    $scope.duplicate = function() {
+        $scope.urlInclude = 'modules/facturacion/aspc-edit.html';
+
+        var url = "facturacion/aspc-duplicate.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
+
+        $http.get(url).success(function(data) {
+            $scope.accion = data.accion;
+            $scope.aspc = data.aspc;
+        });
+    }
+
+    $scope.save = function() {
+        alert("save");
+
+        var url = "facturacion/aspc-save.action";
+
+        $http.post(url, {
+            aspc : $scope.aspc,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/aspv/detail/" + data.aspc.aspv.id);
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancelSave = function() {
+        $scope.urlInclude = 'modules/facturacion/aspc-detail.html';
+
+        var url = "facturacion/aspc-detail.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
+
+        $http.get(url).success(function(data) {
+            $scope.aspc = data.aspc;
+        });
+    }
 });

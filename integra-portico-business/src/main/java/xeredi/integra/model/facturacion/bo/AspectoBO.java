@@ -9,6 +9,8 @@ import org.mybatis.guice.transactional.Transactional;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
+import xeredi.util.exception.DuplicateInstanceException;
+import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -57,6 +59,60 @@ public class AspectoBO implements Aspecto {
                 && aspcCriterioVO.getFechaVigencia() != null);
 
         return aspcDAO.selectObject(aspcCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void insert(final AspectoVO aspc) throws DuplicateInstanceException {
+        Preconditions.checkNotNull(aspc);
+        Preconditions.checkNotNull(aspc.getAspv());
+
+        if (aspcDAO.exists(aspc)) {
+            throw new DuplicateInstanceException(AspectoVO.class.getName(), aspc);
+        }
+
+        aspcDAO.insert(aspc);
+        aspcDAO.insertVersion(aspc);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void update(final AspectoVO aspc) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(aspc);
+        Preconditions.checkNotNull(aspc.getAspv());
+        Preconditions.checkNotNull(aspc.getId());
+        Preconditions.checkNotNull(aspc.getAspv().getId());
+
+        final int updated = aspcDAO.update(aspc);
+
+        if (updated == 0) {
+            throw new InstanceNotFoundException(AspectoVO.class.getName(), aspc);
+        }
+
+        aspcDAO.updateVersion(aspc);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void duplicate(final AspectoVO aspc) throws DuplicateInstanceException {
+        Preconditions.checkNotNull(aspc);
+        Preconditions.checkNotNull(aspc.getAspv());
+
+        if (aspcDAO.exists(aspc)) {
+            throw new DuplicateInstanceException(AspectoVO.class.getName(), aspc);
+        }
+
+        aspcDAO.insert(aspc);
+        aspcDAO.insertVersion(aspc);
     }
 
 }

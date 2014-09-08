@@ -60,4 +60,47 @@ public interface AspectoDAO {
      * @return true, if checks if is inaplicable
      */
     boolean isInaplicable(final FacturadorContextoVO contextoVO);
+
+    /**
+     * Exists.
+     *
+     * @param aspc
+     *            the aspc
+     * @return true, if successful
+     */
+    boolean exists(final AspectoVO aspc);
+
+    /**
+     * Insert.
+     *
+     * @param aspc
+     *            the aspc
+     */
+    void insert(final AspectoVO aspc);
+
+    /**
+     * Insert version.
+     *
+     * @param aspc
+     *            the aspc
+     */
+    void insertVersion(final AspectoVO aspc);
+
+    /**
+     * Update.
+     *
+     * @param aspc
+     *            the aspc
+     * @return the int
+     */
+    int update(final AspectoVO aspc);
+
+    /**
+     * Update version.
+     *
+     * @param aspc
+     *            the aspc
+     * @return the int
+     */
+    int updateVersion(final AspectoVO aspc);
 }

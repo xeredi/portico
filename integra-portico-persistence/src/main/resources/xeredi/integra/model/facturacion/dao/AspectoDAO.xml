@@ -77,6 +77,14 @@
                 AND aspv_pk = #{aspvId}
             </if>
 
+            <if test="tpsrId != null">
+                AND aspc_tpsr_pk = #{tpsrId}
+            </if>
+
+            <if test="codigo != null">
+                AND aspc_codigo LIKE #{codigo}
+            </if>
+
             <if test="srvcId != null">
             <![CDATA[
                 AND EXISTS (
@@ -99,6 +107,14 @@
     <select id="selectObject" parameterType="AspectoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="AspectoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM vw_aspecto_aspc
+        WHERE aspc_codigo = #{codigo} AND aspc_tpsr_pk = #{tpsr.id}
+    ]]>
     </select>
 
     <select id="count" parameterType="AspectoCriterioVO" resultType="Integer">
@@ -133,4 +149,11 @@
         <foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}
         </foreach>
     </select>
+
+    <insert id="insert" parameterType="AspectoVO">
+    <![CDATA[
+        INSERT INTO tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion)
+        VALUES (#{id}, #{codigo}, #{tpsr.id}, #{descripcion})
+    ]]>
+    </insert>
 </mapper>

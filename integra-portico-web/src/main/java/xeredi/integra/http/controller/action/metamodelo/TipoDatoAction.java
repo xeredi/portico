@@ -46,11 +46,9 @@ public final class TipoDatoAction extends BaseAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpdt-create")
-    public String alta() throws InstanceNotFoundException {
+    public String alta() {
         accion = ACCION_EDICION.create;
 
         return SUCCESS;
@@ -60,8 +58,6 @@ public final class TipoDatoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpdt-edit")
     public String modificar() {

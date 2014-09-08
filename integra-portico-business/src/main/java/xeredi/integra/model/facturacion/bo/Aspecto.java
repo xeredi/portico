@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.bo;
 
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
+import xeredi.util.exception.DuplicateInstanceException;
+import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
@@ -31,4 +33,35 @@ public interface Aspecto {
      * @return Datos del asperto que cumpla el criterio de busqueda.
      */
     AspectoVO select(final AspectoCriterioVO aspcCriterioVO);
+
+    /**
+     * Insert.
+     *
+     * @param aspc
+     *            the aspc
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    void insert(final AspectoVO aspc) throws DuplicateInstanceException;
+
+    /**
+     * Update.
+     *
+     * @param aspc
+     *            the aspc
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    void update(final AspectoVO aspc) throws InstanceNotFoundException;
+
+    /**
+     * Duplicate.
+     *
+     * @param aspc
+     *            the aspc
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    void duplicate(final AspectoVO aspc) throws DuplicateInstanceException;
+
 }

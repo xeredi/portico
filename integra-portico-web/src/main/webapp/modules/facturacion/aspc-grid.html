@@ -1,0 +1,43 @@
+<fieldset>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-click="filter()"><i class="glyphicon glyphicon-search"></i>
+                {{'boton_filtro' | translate}}</a> <a class="btn btn-default" ng-click="create()"><i
+                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+        </div>
+    </div>
+
+    <pagination total-items="aspcList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
+        max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+
+    <div class="table-responsive">
+        <span class="label label-default">{{aspcList.count}} resultado(s)</span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap">{{'aspc_codigo' | translate}}</th>
+                    <th>{{'aspc_descripcion' | translate}}</th>
+                    <th>{{'aspc_tpsr' | translate}}</th>
+                    <th>{{'aspc_aspv_fini' | translate}}</th>
+                    <th>{{'aspc_aspv_ffin' | translate}}</th>
+                    <th>{{'aspc_aspv_prioridad' | translate}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="aspc in aspcList.list">
+                    <td><a href="#/facturacion/aspv/detail/{{aspc.aspv.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{aspc.codigo}}</td>
+                    <td>{{aspc.descripcion}}</td>
+                    <td>{{aspc.tpsr.nombre}}</td>
+                    <td>{{aspc.aspv.fini | date:('fmt_date' | translate)}}</td>
+                    <td>{{aspc.aspv.ffin | date:('fmt_date' | translate)}}</td>
+                    <td class="number">{{aspc.aspv.prioridad}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

@@ -55,7 +55,12 @@ fieldset {
 
 .form-control-static {
 	padding-top: 4px;
-/*	margin-left: 5px;*/
+	/*	margin-left: 5px;*/
+}
+
+.input-group-addon {
+	padding-left: 3px;
+	padding-right: 3px;
 }
 
 table {

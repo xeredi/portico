@@ -22,6 +22,12 @@ public final class AspectoCriterioVO {
     /** The srvc id. */
     private Long srvcId;
 
+    /** The codigo. */
+    private String codigo;
+
+    /** The tpsr id. */
+    private Long tpsrId;
+
     /**
      * {@inheritDoc}
      */
@@ -45,8 +51,8 @@ public final class AspectoCriterioVO {
      * @param value
      *            the fecha vigencia
      */
-    public void setFechaVigencia(Date value) {
-        this.fechaVigencia = value;
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
     /**
@@ -64,8 +70,8 @@ public final class AspectoCriterioVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -83,8 +89,8 @@ public final class AspectoCriterioVO {
      * @param value
      *            the srvc id
      */
-    public void setSrvcId(Long value) {
-        this.srvcId = value;
+    public void setSrvcId(final Long value) {
+        srvcId = value;
     }
 
     /**
@@ -102,8 +108,46 @@ public final class AspectoCriterioVO {
      * @param value
      *            the aspv id
      */
-    public void setAspvId(Long value) {
-        this.aspvId = value;
+    public void setAspvId(final Long value) {
+        aspvId = value;
+    }
+
+    /**
+     * Gets the codigo.
+     *
+     * @return the codigo
+     */
+    public String getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * Sets the codigo.
+     *
+     * @param value
+     *            the new codigo
+     */
+    public void setCodigo(final String value) {
+        codigo = value;
+    }
+
+    /**
+     * Gets the tpsr id.
+     *
+     * @return the tpsr id
+     */
+    public Long getTpsrId() {
+        return tpsrId;
+    }
+
+    /**
+     * Sets the tpsr id.
+     *
+     * @param value
+     *            the new tpsr id
+     */
+    public void setTpsrId(final Long value) {
+        tpsrId = value;
     }
 
 }
