@@ -104,7 +104,7 @@
     </select>
 
     <insert id="insert" parameterType="TipoSubparametroVO">
-        <![CDATA[
+    <![CDATA[
         INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp)
         VALUES (
             #{id}
@@ -113,6 +113,16 @@
             , #{i18n, jdbcType=INTEGER, javaType=Boolean}
             , #{tempExp, jdbcType=INTEGER, javaType=Boolean}
         )
-        ]]>
+    ]]>
+    </insert>
+
+    <insert id="update" parameterType="TipoSubparametroVO">
+    <![CDATA[
+        UPDATE tbl_tipo_subparametro_tpsp SET
+            tpsp_tppr_dep_pk = #{tpprAsociado.id}
+            , tpsp_es_i18n = #{i18n, jdbcType=INTEGER, javaType=Boolean}
+            , tpsp_es_tmp_exp = #{tempExp, jdbcType=INTEGER, javaType=Boolean}
+        WHERE tpsp_pk = #{id}
+    ]]>
     </insert>
 </mapper>

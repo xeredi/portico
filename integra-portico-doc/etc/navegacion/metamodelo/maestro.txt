@@ -1,0 +1,62 @@
+* tpprGrid
+	- url:	'metamodelo/tppr/grid'
+	- html:	'metamodelo/tppr-grid.html'
+	- funciones:
+		* tpprDetail
+			- url: "metamodelo/tppr/detail/:entiId"
+			- html:	'metamodelo/tppr-detail.html'
+			- replace: No
+			- funciones:
+				* tpprEdit
+					- url: "metamodelo/tppr/edit/:entiId"
+					- html:	'metamodelo/tppr-edit.html'
+					- replace: Si
+					- funciones
+						* save
+							- url: "metamodelo/tppr/detail/:entiId"
+							- replace: Si
+						* cancel
+							- url: "metamodelo/tppr/detail/:entiId"
+							- replace: Si
+				* tpprRemove
+					history.back()
+				* entdCreate
+					- url: "metamodelo/entd/create/:entiId"
+					- html:	'metamodelo/entd-edit.html'
+					- replace: No
+					- funciones:
+						* save
+							- url: "metamodelo/entd/detail/:entiId/:tpdtId"
+							- replace: Si
+						* cancel
+							history.back()
+				* entdDetail
+					- url: "metamodelo/entd/detail/:entiId/:tpdtId"
+					- html:	'metamodelo/entd-detail.html'
+					- replace: No
+					- funciones:
+						* entdEdit
+							- url: "metamodelo/entd/edit/:entiId/:tpdtId"
+							- html:	'metamodelo/entd-edit.html'
+							- replace: Si
+							- funciones
+								* save
+									- url: "metamodelo/entd/detail/:entiId/:tpdtId"
+									- replace: Si
+								* cancel
+									- url: "metamodelo/entd/detail/:entiId/:tpdtId"
+									- replace: Si
+						* entdRemove
+							history.back()
+		* tpprCreate
+			- url: "metamodelo/tppr/create"
+			- html:	'metamodelo/tppr-edit.html'
+			- replace: No
+			- funciones:
+				* save
+					- url: "metamodelo/tppr/detail/:entiId"
+					- replace: Si
+				* cancel
+					- url: "metamodelo/tppr/detail/:entiId"
+					- replace: Si
+

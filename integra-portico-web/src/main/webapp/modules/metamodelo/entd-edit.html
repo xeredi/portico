@@ -72,8 +72,11 @@
             </div>
         </div>
 
-        <button data-ng-click="submit(editForm)" class="btn btn-default">
+        <button data-ng-click="save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+        <button data-ng-click="cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
         </button>
     </fieldset>
 </form>

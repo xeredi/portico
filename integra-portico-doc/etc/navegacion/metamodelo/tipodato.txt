@@ -1,0 +1,62 @@
+* tpdtGrid
+	- url:	'metamodelo/tpdt/grid'
+	- html:	'metamodelo/tpdt-grid.html'
+	- funciones:
+		* tpdtDetail
+			- url: "metamodelo/tpdt/detail/:tpdtId"
+			- html:	'metamodelo/tpdt-detail.html'
+			- replace: No
+			- funciones:
+				* tpdtEdit
+					- url: "metamodelo/tpdt/edit/:tpdtId"
+					- html:	'metamodelo/tpdt-edit.html'
+					- replace: Si
+					- funciones
+						* save
+							- url: "metamodelo/tpdt/detail/:tpdtId"
+							- replace: Si
+						* cancel
+							- url: "metamodelo/tpdt/detail/:tpdtId"
+							- replace: Si
+				* tpdtRemove
+					history.back()
+				* cdrfCreate
+					- url: "metamodelo/cdrf/create/:tpdtId"
+					- html:	'metamodelo/cdrf-edit.html'
+					- replace: No
+					- funciones:
+						* save
+							- url: "metamodelo/cdrf/detail/:tpdtId/:valor"
+							- replace: Si
+						* cancel
+							history.back()
+				* cdrfDetail
+					- url: "metamodelo/cdrf/detail/:tpdtId/:valor"
+					- html:	'metamodelo/cdrf-detail.html'
+					- replace: No
+					- funciones:
+						* cdrfEdit
+							- url: "metamodelo/cdrf/edit/:tpdtId/:valor"
+							- html:	'metamodelo/cdrf-edit.html'
+							- replace: Si
+							- funciones
+								* save
+									- url: "metamodelo/cdrf/detail/:tpdtId/:valor"
+									- replace: Si
+								* cancel
+									- url: "metamodelo/cdrf/detail/:tpdtId/:valor"
+									- replace: Si
+						* cdrfRemove
+							history.back()
+		* tpdtCreate
+			- url: "metamodelo/tpdt/create/"
+			- html:	'metamodelo/tpdt-edit.html'
+			- replace: No
+			- funciones:
+				* save
+					- url: "metamodelo/tpdt/detail/:tpdtId"
+					- replace: Si
+				* cancel
+					- url: "metamodelo/tpdt/detail/:tpdtId"
+					- replace: Si
+
