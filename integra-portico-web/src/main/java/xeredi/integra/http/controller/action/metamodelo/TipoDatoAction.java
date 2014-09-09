@@ -86,6 +86,7 @@ public final class TipoDatoAction extends BaseAction {
      */
     @Action("tpdt-save")
     public String save() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(tpdt);
 
         // Validacion de datos

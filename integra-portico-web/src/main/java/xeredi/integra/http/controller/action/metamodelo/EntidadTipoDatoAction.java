@@ -69,6 +69,11 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     @Action("entd-edit")
     public String edit() {
+        Preconditions.checkNotNull(entd);
+        Preconditions.checkNotNull(entd.getEntiId());
+        Preconditions.checkNotNull(entd.getTpdt());
+        Preconditions.checkNotNull(entd.getTpdt().getId());
+
         accion = ACCION_EDICION.edit;
 
         final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
@@ -87,6 +92,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     @Action("entd-save")
     public String save() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
 
@@ -153,6 +159,11 @@ public final class EntidadTipoDatoAction extends BaseAction {
      */
     @Action("entd-detail")
     public String detail() {
+        Preconditions.checkNotNull(entd);
+        Preconditions.checkNotNull(entd.getEntiId());
+        Preconditions.checkNotNull(entd.getTpdt());
+        Preconditions.checkNotNull(entd.getTpdt().getId());
+
         final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());

@@ -587,12 +587,12 @@ metamodelo.controller("tpspCreateController", function($scope, $http, $location,
 metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
-    .when("/metamodelo/tpsr", {
-        templateUrl : "modules/metamodelo/tpsr-filter.html",
-        controller : "tpsrFilterController"
+    .when("/metamodelo/tpsr/grid", {
+        templateUrl : "modules/metamodelo/tpsr-grid.html",
+        controller : "tpsrGridController"
     })
 
-    .when("/metamodelo/tpsr/grid", {
+    .when("/metamodelo/tpsr/grid/:page", {
         templateUrl : "modules/metamodelo/tpsr-grid.html",
         controller : "tpsrGridController"
     })
@@ -611,116 +611,6 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/metamodelo/tpsr-edit.html",
         controller : "tpsrCreateController"
     })
-} ]);
-
-metamodelo.controller("tpsrFilterController", function($scope, $http, $location) {
-    $scope.submit = function(form) {
-        $location.path("/metamodelo/tpsr/grid").search({
-            entiCriterio : {
-                codigo : $scope.entiCriterio.codigo,
-                nombre : $scope.entiCriterio.nombre
-            },
-            page : $scope.page
-        });
-    }
-
-    $scope.page = 1;
-    $scope.limit = 20;
-});
-
-metamodelo.controller("tpsrGridController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.entiCriterio = $routeParams.entiCriterio;
-    $scope.page = $routeParams.page;
-
-    console.log($scope.entiCriterio);
-
-    var url = "metamodelo/tpsr-list.action";
-
-    $http.post(url, {
-        entiCriterio : $scope.entiCriterio,
-        limit : $scope.limit,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.entiList = data.entiList;
-    });
-});
-
-metamodelo.controller("tpsrDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/tpsr-detail.action?enti.id=" + $routeParams.entiId;
-
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.subentiList = data.subentiList;
-        $scope.entiHijasList = data.entiHijasList;
-    });
-});
-
-metamodelo.controller("tpsrEditController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/tpsr-edit.action?enti.id=" + $routeParams.entiId;
-
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.accion = data.accion;
-    });
-
-    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
-
-    $http.get(urlTpdtEstado).success(function(data) {
-        $scope.tpdtEstadoList = data.lvList;
-    });
-
-    $scope.submit = function(form) {
-        var url = "metamodelo/tpsr-save.action";
-
-        $http.post(url, {
-            enti : $scope.enti,
-            accion : $scope.accion
-        }).success(function(data) {
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsr/detail/" + data.enti.id);
-            } else {
-                $scope.actionErrors = data.actionErrors;
-            }
-        });
-    }
-});
-
-metamodelo.controller("tpsrCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/tpsr-create.action";
-
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.accion = data.accion;
-    });
-
-    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
-
-    $http.get(urlTpdtEstado).success(function(data) {
-        $scope.tpdtEstadoList = data.lvList;
-    });
-
-    $scope.submit = function(form) {
-        var url = "metamodelo/tpsr-save.action";
-
-        $http.post(url, {
-            enti : $scope.enti,
-            accion : $scope.accion
-        }).success(function(data) {
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsr/detail/" + data.enti.id);
-            } else {
-                $scope.actionErrors = data.actionErrors;
-            }
-        });
-    }
-});
-
-// -------------------- SUBSERVICIO ------------------
-// -------------------- SUBSERVICIO ------------------
-// -------------------- SUBSERVICIO ------------------
-
-metamodelo.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/metamodelo/tpss/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpss-detail.html",
@@ -738,6 +628,150 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
+metamodelo.controller("tpsrGridController", function($scope, $http, $location, $route, $routeParams) {
+    loaded = false;
+
+    $scope.showFilter = false;
+    $scope.page = $routeParams.page ? $routeParams.page : 1;
+    $scope.limit = 20;
+    $scope.entiCriterio = $routeParams.entiCriterio;
+
+    var url = "metamodelo/tpsr-list.action";
+
+    $http.post(url, {
+        entiCriterio : $scope.entiCriterio,
+        page : $scope.page
+    }).success(function(data) {
+        $scope.entiList = data.entiList;
+        $scope.page = data.page;
+        $scope.currentPage = data.page;
+        $scope.limit = data.entiList.limit;
+        loaded = true;
+    });
+
+    $scope.pageChanged = function() {
+        if (loaded) {
+            $location.path("/metamodelo/tpsr/grid/" + $scope.currentPage).replace();
+        }
+    }
+
+    $scope.filter = function() {
+        $scope.showFilter = true;
+    }
+
+    $scope.search = function() {
+        $location.path("/metamodelo/tpsr/grid").search({
+            tpdtCriterio : {
+                codigo : $scope.entiCriterio.codigo,
+                nombre : $scope.entiCriterio.nombre
+            },
+            page : 1
+        }).replace();
+    }
+
+    $scope.cancelSearch = function() {
+        $scope.showFilter = false;
+    }
+});
+
+metamodelo.controller("tpsrDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpsr-detail.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.subentiList = data.subentiList;
+        $scope.entiHijasList = data.entiHijasList;
+    });
+
+    $scope.edit = function() {
+        $location.path("/metamodelo/tpsr/edit/" + $scope.enti.id).replace();
+    }
+
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "metamodelo/tpsr-remove.action?enti.id=" + $scope.enti.id;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
+    }
+});
+
+metamodelo.controller("tpsrEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpsr-edit.action?enti.id=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
+
+    $http.get(urlTpdtEstado).success(function(data) {
+        $scope.tpdtEstadoList = data.lvList;
+    });
+
+    $scope.save = function() {
+        var url = "metamodelo/tpsr-save.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpsr/detail/" + data.enti.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/metamodelo/tpsr/detail/" + $scope.enti.id).replace();
+    }
+});
+
+metamodelo.controller("tpsrCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/tpsr-create.action";
+
+    $http.get(url).success(function(data) {
+        $scope.enti = data.enti;
+        $scope.accion = data.accion;
+    });
+
+    var urlTpdtEstado = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR";
+
+    $http.get(urlTpdtEstado).success(function(data) {
+        $scope.tpdtEstadoList = data.lvList;
+    });
+
+    $scope.save = function() {
+        var url = "metamodelo/tpsr-save.action";
+
+        $http.post(url, {
+            enti : $scope.enti,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/tpsr/detail/" + data.enti.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
+});
+
 metamodelo.controller("tpssDetailController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/tpss-detail.action?enti.id=" + $routeParams.entiId;
 
@@ -746,6 +780,26 @@ metamodelo.controller("tpssDetailController", function($scope, $http, $location,
         $scope.entiHijasList = data.entiHijasList;
         $scope.entiPadresList = data.entiPadresList;
     });
+
+    $scope.edit = function() {
+        $location.path("/metamodelo/tpss/edit/" + $scope.enti.id).replace();
+    }
+
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "metamodelo/tpss-remove.action?enti.id=" + $scope.enti.id;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
+    }
 });
 
 metamodelo.controller("tpssEditController", function($scope, $http, $location, $route, $routeParams) {
@@ -762,7 +816,7 @@ metamodelo.controller("tpssEditController", function($scope, $http, $location, $
         $scope.tpdtEstadoList = data.lvList;
     });
 
-    $scope.submit = function(form) {
+    $scope.save = function() {
         var url = "metamodelo/tpss-save.action";
 
         $http.post(url, {
@@ -770,11 +824,15 @@ metamodelo.controller("tpssEditController", function($scope, $http, $location, $
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpss/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpss/detail/" + data.enti.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
         });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/metamodelo/tpss/detail/" + $scope.enti.id).replace();
     }
 });
 
@@ -792,7 +850,7 @@ metamodelo.controller("tpssCreateController", function($scope, $http, $location,
         $scope.tpdtEstadoList = data.lvList;
     });
 
-    $scope.submit = function(form) {
+    $scope.save = function() {
         var url = "metamodelo/tpss-save.action";
 
         $http.post(url, {
@@ -800,11 +858,15 @@ metamodelo.controller("tpssCreateController", function($scope, $http, $location,
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpss/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpss/detail/" + data.enti.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
         });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
     }
 });
 

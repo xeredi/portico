@@ -3,10 +3,12 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoServicio;
@@ -21,7 +23,8 @@ import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,11 +71,10 @@ public final class TipoServicioAction extends BaseAction {
      */
     @Action("tpsr-edit")
     public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.edit;
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
 
-        if (enti.getId() == null) {
-            throw new Error("Identificador de tipo de servicio no especificado");
-        }
+        accion = ACCION_EDICION.edit;
 
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
@@ -90,12 +92,39 @@ public final class TipoServicioAction extends BaseAction {
      */
     @Action("tpsr-save")
     public String guardar() throws DuplicateInstanceException {
+        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(enti);
+
         // Validaciones
+
         if (accion == ACCION_EDICION.create) {
-            PropertyValidator.validateRequired(this, "tpsr.codigo", enti.getCodigo());
-            PropertyValidator.validateRequired(this, "tpsr.nombre", enti.getNombre());
+            if (GenericValidator.isBlankOrNull(enti.getCodigo())) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_codigo") }));
+            }
+            if (GenericValidator.isBlankOrNull(enti.getNombre())) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_nombre") }));
+            }
         } else {
-            PropertyValidator.validateRequired(this, "tpsr.id", enti.getId());
+            Preconditions.checkNotNull(enti.getId());
+        }
+
+        if (enti.getCmdAlta() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdAlta") }));
+        }
+        if (enti.getCmdBaja() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdBaja") }));
+        }
+        if (enti.getCmdEdicion() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdEdicion") }));
+        }
+        if (enti.getCmdDuplicado() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdDuplicado") }));
+        }
+        if (enti.getTemporal() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_temporal") }));
+        }
+        if (enti.getFacturable() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_facturable") }));
         }
 
         if (hasErrors()) {

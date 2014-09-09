@@ -4,8 +4,12 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/metamodelo/tpss/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
-                {{'boton_editar' | translate}}</a>
+            <button data-ng-click="edit()" class="btn btn-default">
+                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            </button>
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            </button>
         </div>
     </div>
 

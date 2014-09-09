@@ -1,16 +1,19 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametro;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,11 +38,10 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action("tpsp-create")
     public String alta() {
-        accion = ACCION_EDICION.create;
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getTpprId());
 
-        if (enti.getTpprId() == null) {
-            throw new Error("No se ha especificado un tipo de parametro");
-        }
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -53,6 +55,9 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action("tpsp-edit")
     public String modificar() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
+
         accion = ACCION_EDICION.edit;
 
         if (enti.getId() == null) {
@@ -75,12 +80,41 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action("tpsp-save")
     public String guardar() throws DuplicateInstanceException {
+        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(enti);
+
         // Validaciones
         if (accion == ACCION_EDICION.create) {
-            PropertyValidator.validateRequired(this, "tpsp.codigo", enti.getCodigo());
-            PropertyValidator.validateRequired(this, "tpsp.nombre", enti.getNombre());
+            if (GenericValidator.isBlankOrNull(enti.getCodigo())) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_codigo") }));
+            }
+            if (GenericValidator.isBlankOrNull(enti.getNombre())) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_nombre") }));
+            }
         } else {
-            PropertyValidator.validateRequired(this, "tpsp.id", enti.getId());
+            Preconditions.checkNotNull(enti.getId());
+        }
+
+        if (enti.getTpprAsociado() == null || enti.getTpprAsociado().getId() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_tpprAsociado") }));
+        }
+        if (enti.getCmdAlta() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdAlta") }));
+        }
+        if (enti.getCmdBaja() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdBaja") }));
+        }
+        if (enti.getCmdEdicion() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdEdicion") }));
+        }
+        if (enti.getCmdDuplicado() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdDuplicado") }));
+        }
+        if (enti.getI18n() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_i18n") }));
+        }
+        if (enti.getTempExp() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_tempExp") }));
         }
 
         if (hasErrors()) {
@@ -113,6 +147,9 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     @Action("tpsp-detail")
     public String detalle() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
+
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
         enti = tpspBO.select(enti.getId());
