@@ -161,6 +161,22 @@ metamodelo.controller("tpdtDetailController", function($scope, $http, $location,
         $location.path("/metamodelo/tpdt/edit/" + $scope.tpdt.id).replace();
     }
 
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "metamodelo/tpdt-remove.action?tpdt.id=" + $scope.tpdt.id;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
+    }
+
     $scope.cdrfCreate = function() {
         $location.path("/metamodelo/cdrf/create/" + $scope.tpdt.id);
     }
@@ -245,6 +261,23 @@ metamodelo.controller("cdrfDetailController", function($scope, $http, $location,
 
     $scope.edit = function() {
         $location.path("/metamodelo/cdrf/edit/" + $scope.cdrf.tpdtId + "/" + $scope.cdrf.valor).replace();
+    }
+
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "metamodelo/cdrf-remove.action?cdrf.tpdtId=" + $scope.cdrf.tpdtId + "&cdrf.valor="
+                        + $scope.cdrf.valor;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
     }
 });
 

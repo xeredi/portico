@@ -43,6 +43,14 @@ public interface TipoDato {
     void update(final TipoDatoVO tpdtVO);
 
     /**
+     * Delete.
+     *
+     * @param tpdtVO
+     *            the tpdt vo
+     */
+    void delete(final TipoDatoVO tpdtVO);
+
+    /**
      * Select list.
      *
      * @param tpdtCriterioVO

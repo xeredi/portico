@@ -109,6 +109,18 @@ public class TipoDatoBO implements TipoDato {
      */
     @Override
     @Transactional
+    public void delete(final TipoDatoVO tpdtVO) {
+        Preconditions.checkNotNull(tpdtVO);
+        Preconditions.checkNotNull(tpdtVO.getId());
+
+        tpdtDAO.delete(tpdtVO.getId());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public final List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 

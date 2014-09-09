@@ -47,7 +47,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      * @return the string
      */
     @Action("cdrf-create")
-    public String alta() {
+    public String create() {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
 
@@ -62,7 +62,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      * @return the string
      */
     @Action("cdrf-edit")
-    public String modificar() {
+    public String edit() {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
         Preconditions.checkNotNull(cdrf.getValor());
@@ -90,7 +90,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      * @return the string
      */
     @Action("cdrf-save")
-    public String guardar() {
+    public String save() {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
 
@@ -133,8 +133,8 @@ public final class CodigoReferenciaAction extends BaseAction {
      *
      * @return the string
      */
-    @Action("cdrf-delete")
-    public String eliminar() {
+    @Action("cdrf-remove")
+    public String remove() {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
         Preconditions.checkNotNull(cdrf.getValor());
@@ -156,7 +156,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      * @return the string
      */
     @Action("cdrf-detail")
-    public String detalle() {
+    public String detail() {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
         Preconditions.checkNotNull(cdrf.getValor());

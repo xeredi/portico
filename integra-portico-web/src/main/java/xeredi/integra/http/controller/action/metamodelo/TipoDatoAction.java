@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -48,7 +47,7 @@ public final class TipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-create")
-    public String alta() {
+    public String create() {
         accion = ACCION_EDICION.create;
 
         return SUCCESS;
@@ -60,7 +59,7 @@ public final class TipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-edit")
-    public String modificar() {
+    public String edit() {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
@@ -86,7 +85,7 @@ public final class TipoDatoAction extends BaseAction {
      *             the instance not found exception
      */
     @Action("tpdt-save")
-    public String guardar() throws InstanceNotFoundException {
+    public String save() throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt);
 
         // Validacion de datos
@@ -137,12 +136,29 @@ public final class TipoDatoAction extends BaseAction {
     }
 
     /**
+     * Removes the.
+     *
+     * @return the string
+     */
+    @Action("tpdt-remove")
+    public String remove() {
+        Preconditions.checkNotNull(tpdt);
+        Preconditions.checkNotNull(tpdt.getId());
+
+        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
+
+        tpdtBO.delete(tpdt);
+
+        return SUCCESS;
+    }
+
+    /**
      * Detalle.
      *
      * @return the string
      */
-    @Actions({ @Action("tpdt-detail") })
-    public String detalle() {
+    @Action("tpdt-detail")
+    public String detail() {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
