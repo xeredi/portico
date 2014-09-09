@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.ParentPackage;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -53,7 +52,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("tpdt-list") })
+    @Action("tpdt-list")
     public String listado() {
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
@@ -67,7 +66,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("tpdt-filter") })
+    @Action("tpdt-filter")
     public static String editarFiltro() {
         return SUCCESS;
     }

@@ -10,6 +10,9 @@
         </div>
     </div>
 
+    <pagination total-items="tpdtList.count" items-per-page="limit" ng-model="currentPage" ng-change="pageChanged()"
+        class="pagination-sm" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" />
+
     <div class="table-responsive">
         <span class="label label-default">{{tpdtList.count}} resultado(s)</span>
 

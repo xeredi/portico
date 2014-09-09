@@ -12,6 +12,11 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpdtGridController"
     })
 
+    .when("/metamodelo/tpdt/grid/:page", {
+        templateUrl : "modules/metamodelo/tpdt-grid.html",
+        controller : "tpdtGridController"
+    })
+
     .when("/metamodelo/tpdt/filter", {
         templateUrl : "modules/metamodelo/tpdt-filter.html",
         controller : "tpdtFilterController"
@@ -31,20 +36,41 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/metamodelo/tpdt-edit.html",
         controller : "tpdtEditController"
     })
+
+    .when("/metamodelo/cdrf/detail/:tpdtId/:valor", {
+        templateUrl : "modules/metamodelo/cdrf-detail.html",
+        controller : "cdrfDetailController"
+    })
+
+    .when("/metamodelo/cdrf/edit/:tpdtId/:valor", {
+        templateUrl : "modules/metamodelo/cdrf-edit.html",
+        controller : "cdrfEditController"
+    })
+
+    .when("/metamodelo/cdrf/create/:tpdtId", {
+        templateUrl : "modules/metamodelo/cdrf-edit.html",
+        controller : "cdrfCreateController"
+    })
 } ]);
 
 metamodelo.controller("tpdtGridController", function($scope, $http, $location, $route, $routeParams) {
+    loaded = false;
+
+    $scope.page = $routeParams.page ? $routeParams.page : 1;
+    $scope.limit = 20;
     $scope.tpdtCriterio = $routeParams.tpdtCriterio;
-    $scope.page = $routeParams.page;
 
     var url = "metamodelo/tpdt-list.action";
 
-    $http.get(url, {
+    $http.post(url, {
         tpdtCriterio : $scope.tpdtCriterio,
-        limit : $scope.limit,
         page : $scope.page
     }).success(function(data) {
         $scope.tpdtList = data.tpdtList;
+        $scope.page = data.page;
+        $scope.currentPage = data.page;
+        $scope.limit = data.tpdtList.limit;
+        loaded = true;
     });
 
     $scope.filter = function() {
@@ -53,6 +79,16 @@ metamodelo.controller("tpdtGridController", function($scope, $http, $location, $
 
     $scope.create = function() {
         $location.path("/metamodelo/tpdt/create");
+    }
+
+    $scope.DoCtrlPagingAct = function(text, page) {
+        console.log(text, page);
+    };
+
+    $scope.pageChanged = function() {
+        if (loaded) {
+            $location.path("/metamodelo/tpdt/grid/" + $scope.currentPage).replace();
+        }
     }
 });
 
@@ -70,9 +106,6 @@ metamodelo.controller("tpdtFilterController", function($scope, $http, $location)
     $scope.cancel = function() {
         $location.path("/metamodelo/tpdt/grid").replace();
     }
-
-    $scope.page = 1;
-    $scope.limit = 20;
 });
 
 metamodelo.controller("tpdtCreateController", function($scope, $http, $location, $route, $routeParams) {
@@ -175,29 +208,6 @@ metamodelo.controller("tpdtEditController", function($scope, $http, $location, $
     }
 });
 
-// -------------------- CODIGO DE REFERENCIA ------------------
-// -------------------- CODIGO DE REFERENCIA ------------------
-// -------------------- CODIGO DE REFERENCIA ------------------
-
-metamodelo.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
-
-    .when("/metamodelo/cdrf/detail/:tpdtId/:valor", {
-        templateUrl : "modules/metamodelo/cdrf-detail.html",
-        controller : "cdrfDetailController"
-    })
-
-    .when("/metamodelo/cdrf/edit/:tpdtId/:valor", {
-        templateUrl : "modules/metamodelo/cdrf-edit.html",
-        controller : "cdrfEditController"
-    })
-
-    .when("/metamodelo/cdrf/create/:tpdtId", {
-        templateUrl : "modules/metamodelo/cdrf-edit.html",
-        controller : "cdrfCreateController"
-    })
-} ]);
-
 metamodelo.controller("cdrfCreateController", function($scope, $http, $location, $route, $routeParams) {
     var url = "metamodelo/cdrf-create.action?cdrf.tpdtId=" + $routeParams.tpdtId;
 
@@ -214,7 +224,7 @@ metamodelo.controller("cdrfCreateController", function($scope, $http, $location,
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/cdrf/detail/" + data.cdrf.tpdtId + "/" + data.cdrf.valor);
+                $location.path("/metamodelo/cdrf/detail/" + data.cdrf.tpdtId + "/" + data.cdrf.valor).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
