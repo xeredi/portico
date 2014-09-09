@@ -4,8 +4,9 @@
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/tpdt/edit/{{tpdt.id}}"><i
-                    class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+                <button ng-click="edit()" class="btn btn-default">
+                    <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+                </button>
             </div>
         </div>
 
@@ -45,8 +46,9 @@
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/cdrf/create/{{tpdt.id}}"><i
-                    class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+                <button ng-click="cdrfCreate()" class="btn btn-default">
+                    <i class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}
+                </button>
             </div>
         </div>
 

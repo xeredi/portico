@@ -2,8 +2,9 @@
     <fieldset>
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
-                <a class="btn btn-default" href="#/metamodelo/cdrf/edit/{{cdrf.tpdtId}}/{{cdrf.valor}}"><i
-                    class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+                <button data-ng-click="edit()" class="btn btn-default">
+                    <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+                </button>
             </div>
         </div>
 

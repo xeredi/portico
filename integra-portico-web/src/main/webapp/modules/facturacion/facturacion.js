@@ -408,10 +408,7 @@ facturacion.controller("aspcListController", function($scope, $http, $location, 
     });
 
     $scope.filter = function() {
-        console.log('routeParams: ' + JSON.stringify($routeParams));
-        console.log('aspcCriterio: ' + $scope.aspcCriterio);
-
-        $scope.urlInclude = 'modules/facturacion/aspc-filter.html';
+        $location.path("/facturacion/aspc/filter").replace();
     }
 
     $scope.create = function() {

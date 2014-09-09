@@ -15,8 +15,11 @@
 
         <div class="row">
             <div class="form-group">
-                <button data-ng-click="submit(searchForm)" class="btn btn-default">
+                <button data-ng-click="search()" class="btn btn-primary">
                     <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+                </button>
+                <button data-ng-click="cancel()" class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
                 </button>
             </div>
         </div>
