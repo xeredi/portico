@@ -2,6 +2,7 @@ package xeredi.integra.http.controller.action.servicio;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,8 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.bo.ServicioBO;
@@ -38,9 +41,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
 
     /** The srvcs. */
     private PaginatedList<ServicioVO> itemList;
-
-    /** The tpsr. */
-    private TipoServicioVO enti;
 
     /** The srvc criterio form. */
     private ServicioCriterioVO itemCriterio;
@@ -75,14 +75,12 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * @return the string
      */
     @Actions({
-            @Action(value = "srvc-filtro"),
-            @Action(value = "srvc-filtro-popup", results = { @Result(name = "success", location = "srvc-filtro.jsp") }),
-            @Action(value = "srvc-filtro-ftl-popup", results = { @Result(name = "success", type = "freemarker", location = "srvc-filtro.ftl") }) })
+        @Action(value = "srvc-filtro"),
+        @Action(value = "srvc-filtro-popup", results = { @Result(name = "success", location = "srvc-filtro.jsp") }),
+        @Action(value = "srvc-filtro-ftl-popup", results = { @Result(name = "success", type = "freemarker", location = "srvc-filtro.ftl") }) })
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
-
-        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
 
         loadLabelValuesMap();
 
@@ -99,8 +97,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
-
         return SUCCESS;
     }
 
@@ -116,8 +112,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
 
         final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
 
-        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
-
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
         itemCriterio.setSoloDatosGrid(true);
@@ -128,6 +122,36 @@ public final class ServicioListadoAction extends ItemListadoAction {
     }
 
     // get /set
+
+    /**
+     * Load label values map.
+     */
+    protected final void loadLabelValuesMap() {
+        if (labelValuesMap == null) {
+            labelValuesMap = new HashMap<>();
+
+            final TipoServicioVO enti = TipoServicioProxy.select(itemCriterio.getEntiId());
+
+            // Carga de los labelValues (Si los hay)
+            final Set<Long> tpprIds = new HashSet<>();
+
+            if (enti.getEntdMap() != null) {
+                for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+                    if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                            && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                        tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                    }
+                }
+            }
+
+            if (!tpprIds.isEmpty()) {
+                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                        getItemCriterio().getIdioma()));
+            }
+        }
+    }
 
     /**
      * Gets the subps.
@@ -175,14 +199,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     public PaginatedList<ServicioVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TipoServicioVO getEnti() {
-        return enti;
     }
 
 }

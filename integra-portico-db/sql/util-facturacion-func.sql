@@ -1,20 +1,19 @@
-﻿
 SELECT * FROM tbl_entidad_enti
 ORDER BY enti_codigo;
 
-SELECT * 
+SELECT *
 FROM tbl_servicio_cargo_srcr
 ;
 
-SELECT * 
+SELECT *
 FROM tbl_cargo_crgo
 ;
 
 
 
 -- Vista de situacion
-SELECT * 
-FROM 
+SELECT *
+FROM
 	tbl_servicio_srvc
 	JOIN tbl_cargo_crgo ON
 		crgo_tpsr_pk = srvc_tpsr_pk
@@ -49,7 +48,7 @@ WITH sql AS (
 				AND srcr_crgo_pk = ANY (
 					SELECT crgo_pk
 					FROM tbl_cargo_crgo
-					WHERE 
+					WHERE
 						crgo_tpsr_pk = srvc_tpsr_pk
 						AND crgo_codigo_norm = 'BO'
 				)
@@ -57,7 +56,7 @@ WITH sql AS (
 		, (
 			SELECT COUNT(1)
 			FROM tbl_servicio_srvc srvc2
-			WHERE 
+			WHERE
 				srvc2.srvc_tpsr_pk = srvc.srvc_tpsr_pk
 				AND srvc2.srvc_subp_pk = srvc.srvc_subp_pk
 				AND srvc2.srvc_anno = srvc.srvc_anno
@@ -84,20 +83,20 @@ WITH sql AS (
 						AND srcr_crgo_pk = ANY (
 							SELECT crgo_pk
 							FROM tbl_cargo_crgo
-							WHERE 
+							WHERE
 								crgo_tpsr_pk = srvc_tpsr_pk
 								AND crgo_codigo_norm = 'BO'
 						)
 				)
 		) AS bo_buque_anio_subp
 	FROM tbl_servicio_srvc srvc
-	WHERE 
+	WHERE
 		srvc_tpsr_pk = portico.getEntidad('ESCALA')
 		AND srvc_pk = 1192001
 )
 SELECT *
 FROM sql
-WHERE 
+WHERE
 	bo_liquidada = 0
 	AND bo_buque_anio_subp < 3
 ;
@@ -138,7 +137,7 @@ SELECT *
 			AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
 	) AS numAtraques
 FROM tbl_servicio_srvc
-WHERE 
+WHERE
 	srvc_tpsr_pk = portico.getEntidad('ESCALA')
 	AND srvc_estado IN ('I', 'F');
 ;
@@ -157,11 +156,11 @@ SELECT *
 		WHERE ssdt_ssrv_pk = ssrv_pk
 			AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ATR_3')
 	) AS ssrv_tipo_estancia
-FROM 
+FROM
 	tbl_subservicio_ssrv
-WHERE 
+WHERE
 	ssrv_srvc_pk = (
-		SELECT ssrv_srvc_pk 
+		SELECT ssrv_srvc_pk
 		FROM tbl_subservicio_ssrv
 		WHERE ssrv_pk = 1628291
 	)
@@ -195,24 +194,24 @@ WHERE prmt_tppr_pk = portico.getEntidad('TIPO_CERTIFICADO')
 ;
 
 SELECT *
-FROM 
+FROM
 	tbl_entidad_tipo_dato_entd
 	JOIN tbl_entidad_enti ON
 		enti_pk = entd_enti_pk
 	JOIN tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
-WHERE entd_enti_pk = portico.getEntidad('ESCALA')		
+WHERE entd_enti_pk = portico.getEntidad('ESCALA')
 order by entd_grupo, entd_fila, entd_orden
 ;
 
 SELECT *
 FROM tbl_servicio_srvc
-WHERE 
+WHERE
 	srvc_tpsr_pk = portico.getEntidad('ESCALA')
 	AND NOW() BETWEEN srvc_fini AND COALESCE(srvc_ffin, NOW())
 	AND EXISTS (
 		SELECT 1
-		FROM tbl_servicio_dato_srdt 
+		FROM tbl_servicio_dato_srdt
 		WHERE srdt_srvc_pk = srvc_pk
 			AND srdt_tpdt_pk = portico.getTipoDato('AMARRE_DEP')
 	)
@@ -234,7 +233,7 @@ SELECT *
 	, (
 		CASE
 			WHEN NOT EXISTS (
-				SELECT 1 
+				SELECT 1
 				FROM tbl_cargo_crgo
 				WHERE crgo_tpsr_pk = srvc_tpsr_pk
 					AND crgo_es_principal = 1
@@ -249,5 +248,5 @@ FROM tbl_servicio_srvc
 WHERE srvc_pk = 1628895;
 
 
-SELECT * 
+SELECT *
 FROM tbl_cargo_crgo;

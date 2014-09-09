@@ -71,6 +71,15 @@ public interface AspectoDAO {
     boolean exists(final AspectoVO aspc);
 
     /**
+     * Intersects.
+     *
+     * @param aspc
+     *            the aspc
+     * @return true, if successful
+     */
+    boolean intersects(final AspectoVO aspc);
+
+    /**
      * Insert.
      *
      * @param aspc

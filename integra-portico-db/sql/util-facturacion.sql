@@ -1,26 +1,26 @@
-﻿SELECT * 
-FROM tbl_servicio_srvc 
+SELECT *
+FROM tbl_servicio_srvc
 	JOIN tbl_entidad_enti ON
 		enti_pk = srvc_tpsr_pk;
 
 -- 1192001, 1192002, 1192003
 -- Contar tipos de servicio
 SELECT COUNT(DISTINCT srvc_tpsr_pk)
-FROM tbl_servicio_srvc 
+FROM tbl_servicio_srvc
 WHERE srvc_pk IN (1192001, 1192002, 1192003);
 
 
 -- Tasas propuestas para un servicio
-SELECT * 
+SELECT *
 FROM tbl_cargo_crgo
-WHERE 
+WHERE
 	EXISTS (
 		SELECT 1
 		FROM tbl_servicio_srvc
 		WHERE
 			srvc_tpsr_pk = crgo_tpsr_pk
 			AND EXISTS (
-				SELECT 1 
+				SELECT 1
 				FROM tbl_tipo_servicio_tpsr
 				WHERE tpsr_pk = srvc_tpsr_pk
 					AND (
@@ -33,7 +33,7 @@ WHERE
 									AND srvc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, NOW())
 							)
 						)
-						OR 
+						OR
 						(
 							tpsr_es_temporal = 1
 							AND EXISTS (
@@ -59,7 +59,7 @@ WHERE
 
 -- Valorar manifiesto
 select prmt_tppr_pk, enti_nombre, count(1)
-from 
+from
 	tbl_parametro_prmt
 	join tbl_entidad_enti on
 		enti_pk = prmt_tppr_pk
@@ -68,7 +68,7 @@ order by enti_nombre
 ;
 
 select srvc_tpsr_pk, enti_nombre, count(1)
-from 
+from
 	tbl_servicio_srvc
 	join tbl_entidad_enti on
 		enti_pk = srvc_tpsr_pk
@@ -76,7 +76,7 @@ group by srvc_tpsr_pk, enti_nombre
 ;
 
 select ssrv_tpss_pk, enti_nombre, count(1)
-from 
+from
 	tbl_subservicio_ssrv
 	join tbl_entidad_enti on
 		enti_pk = ssrv_tpss_pk
@@ -84,8 +84,8 @@ from
 group by ssrv_tpss_pk, enti_nombre
 ;
 
-select * 
-from 
+select *
+from
 	portico.tbl_servicio_srvc
 	join portico.tbl_entidad_enti on
 		enti_pk = srvc_tpsr_pk
@@ -99,7 +99,7 @@ FROM
 	portico.tbl_entidad_tipo_dato_entd
 	JOIN portico.tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
-WHERE 
+WHERE
 	entd_enti_pk = portico.getEntidad('TIPO_IVA')
 --	AND entd_tpdt_pk = portico.getTipoDato('BOOLEANO_02')
 ;
@@ -114,8 +114,8 @@ SELECT * FROM tbl_entidad_enti
 ORDER BY enti_codigo
 ;
 
-SELECT * 
-FROM 
+SELECT *
+FROM
 	tbl_entidad_tipo_dato_entd
 	JOIN tbl_tipo_dato_tpdt ON
 		tpdt_pk = entd_tpdt_pk
@@ -138,7 +138,7 @@ order by tpdt_codigo
 SELECT * FROM tbl_proceso_batch_prbt;
 
 select ssrv_srvc_pk, count(1)
-from 
+from
 	portico.tbl_subservicio_ssrv
 group by ssrv_srvc_pk
 ;
@@ -204,16 +204,16 @@ DELETE FROM tbl_factura_fctr;
 -- Comprobar que todos los cargos de las valoraciones encajan en el aspecto.
 SELECT COUNT(1)
 FROM tbl_valoracion_cargo_vlrg
-WHERE 
+WHERE
 	NOT EXISTS (
 		SELECT 1
 		FROM tbl_aspecto_cargo_ascr
-		WHERE 
+		WHERE
 			ascr_crgo_pk = vlrg_crgo_pk
 			AND EXISTS (
 				SELECT 1
 				FROM tbl_aspecto_version_aspv
-				WHERE 
+				WHERE
 					aspv_pk = ascr_aspv_pk
 					AND NOW() BETWEEN aspv_fini AND COALESCE(aspv_ffin, NOW())
 					AND aspv_aspc_pk = 61001
@@ -222,8 +222,8 @@ WHERE
 ;
 
 
-SELECT * 
-FROM 
+SELECT *
+FROM
 	tbl_aspecto_aspc
 	INNER JOIN tbl_aspecto_version_aspv ON
 		aspv_aspc_pk = aspc_pk
@@ -232,7 +232,7 @@ FROM
 
 
 SELECT *
-FROM 
+FROM
 	tbl_valoracion_vlrc
 	INNER JOIN tbl_valoracion_lin_vlrl ON
 		vlrl_vlrc_pk = vlrc_pk
@@ -300,16 +300,16 @@ WHERE rgla_tipo = 'T'
 
 SELECT *
 	, (
-		CASE 
+		CASE
 			WHEN
 				crgo_es_temporal = 0
-			THEN 
+			THEN
 				'Cargo no Temporal'
-			ELSE 
+			ELSE
 				'Cargo Temporal'
 		END
 	) AS estado
-FROM 
+FROM
 	tbl_servicio_srvc
 	INNER JOIN tbl_tipo_servicio_tpsr ON
 		tpsr_pk = srvc_tpsr_pk
@@ -317,7 +317,7 @@ FROM
 		crgo_tpsr_pk = tpsr_pk
 		AND crgo_es_principal = 1
 		AND EXISTS (
-			SELECT 1 
+			SELECT 1
 			FROM tbl_cargo_version_crgv
 			WHERE crgv_crgo_pk = crgo_pk
 				AND (
@@ -335,7 +335,7 @@ FROM
 					)
 				)
 		)
-WHERE 
+WHERE
 	srvc_pk = 1259571
 ;
 

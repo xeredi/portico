@@ -1,4 +1,4 @@
-﻿-- Iniciar Servicio
+-- Iniciar Servicio
 SELECT srvc.*
 	, CASE
 		WHEN EXISTS (
@@ -54,12 +54,6 @@ from tbl_tipo_subservicio_tpss
 
 -- Propagar CodExen Partida
 -- Se propaga al Bl y Manifiesto
-UPDATE tbl_subservicio_dato_ssdt ssdtBL
-	SET ssdtBL.ssdt_cadena
-FROM
-	tbl_subservicio_dato_ssdt ssdtPart
-;
-
 SELECT ssdtPart
 FROM tbl_subservicio_dato_ssdt ssdtPart
 WHERE
@@ -67,7 +61,6 @@ WHERE
 	AND ssdtPart.ssdt_tpdt_pk = 43000
 ;
 
-	http://127.0.0.1:8080/web/servicio/ssrv-detalle.action?ssrv.id=
 
 
 

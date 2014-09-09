@@ -1,5 +1,9 @@
 var facturacion = angular.module("facturacion", [ "ngRoute" ]);
 
+// ----------------- MENU PRINCIPAL --------------------------
+// ----------------- MENU PRINCIPAL --------------------------
+// ----------------- MENU PRINCIPAL --------------------------
+
 facturacion.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
@@ -7,8 +11,17 @@ facturacion.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/facturacion/facturacion.html",
         controller : "facturacionController"
     })
+} ]);
 
-    // ----------- VALORACION ------------------
+facturacion.controller("facturacionController", function($scope, $http, $location) {
+});
+
+// ----------- VALORACION ------------------
+// ----------- VALORACION ------------------
+// ----------- VALORACION ------------------
+
+facturacion.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
 
     .when("/facturacion/vlrc", {
         templateUrl : "modules/facturacion/vlrc-filter.html",
@@ -49,87 +62,7 @@ facturacion.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/facturacion/vlrd-edit.html",
         controller : "vlrdEditController"
     })
-
-    // ----------- CARGO ------------------
-
-    .when("/facturacion/crgo", {
-        templateUrl : "modules/facturacion/crgo-filter.html",
-        controller : "crgoFilterController"
-    })
-
-    .when("/facturacion/crgo/grid", {
-        templateUrl : "modules/facturacion/crgo-grid.html",
-        controller : "crgoGridController"
-    })
-
-    .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
-        templateUrl : "modules/facturacion/crgo-detail.html",
-        controller : "crgoDetailController"
-    })
-
-    .when("/facturacion/crgv/detail/:crgvId", {
-        templateUrl : "modules/facturacion/crgo-detail.html",
-        controller : "crgvDetailController"
-    })
-
-    .when("/facturacion/crgv/edit/:crgvId", {
-        templateUrl : "modules/facturacion/crgo-edit.html",
-        controller : "crgvEditController"
-    })
-
-    .when("/facturacion/crgo/create", {
-        templateUrl : "modules/facturacion/crgo-edit.html",
-        controller : "crgoCreateController"
-    })
-
-    // ----------- REGLA ------------------
-
-    .when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
-        templateUrl : "modules/facturacion/rgla-detail.html",
-        controller : "rglaDetailController"
-    })
-
-    .when("/facturacion/rglv/detail/:rglvId", {
-        templateUrl : "modules/facturacion/rgla-detail.html",
-        controller : "rglvDetailController"
-    })
-
-    .when("/facturacion/rglv/edit/:rglvId", {
-        templateUrl : "modules/facturacion/rgla-edit.html",
-        controller : "rglvEditController"
-    })
-
-    .when("/facturacion/rgla/create", {
-        templateUrl : "modules/facturacion/rgla-edit.html",
-        controller : "crgoCreateController"
-    })
-
-    // ----------- ASPECTO ------------------
-
-    .when("/facturacion/aspc/list", {
-        templateUrl : "modules/facturacion/aspcs.html",
-        controller : "aspcListController"
-    })
-
-    .when("/facturacion/aspv/detail/:aspvId", {
-        templateUrl : "modules/facturacion/aspc.html",
-        controller : "aspcDetailController"
-    })
-
-    .when("/facturacion/aspc/detail/:aspcId/:fechaVigencia", {
-        templateUrl : "modules/facturacion/aspc.html",
-        controller : "aspcDetailController"
-    })
 } ]);
-
-// ----------------- CONTROLLERS --------------------------
-// ----------------- CONTROLLERS --------------------------
-// ----------------- CONTROLLERS --------------------------
-
-facturacion.controller("facturacionController", function($scope, $http, $location) {
-});
-
-// ----------- VALORACION ------------------
 
 facturacion.controller("vlrcFilterController", function($scope, $http, $location) {
     $scope.submit = function() {
@@ -197,6 +130,42 @@ facturacion.controller("vlrdDetailController", function($scope, $http, $location
 });
 
 // ----------- CARGO ------------------
+// ----------- CARGO ------------------
+// ----------- CARGO ------------------
+
+facturacion.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
+
+    .when("/facturacion/crgo", {
+        templateUrl : "modules/facturacion/crgo-filter.html",
+        controller : "crgoFilterController"
+    })
+
+    .when("/facturacion/crgo/grid", {
+        templateUrl : "modules/facturacion/crgo-grid.html",
+        controller : "crgoGridController"
+    })
+
+    .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
+        templateUrl : "modules/facturacion/crgo-detail.html",
+        controller : "crgoDetailController"
+    })
+
+    .when("/facturacion/crgv/detail/:crgvId", {
+        templateUrl : "modules/facturacion/crgo-detail.html",
+        controller : "crgvDetailController"
+    })
+
+    .when("/facturacion/crgv/edit/:crgvId", {
+        templateUrl : "modules/facturacion/crgo-edit.html",
+        controller : "crgvEditController"
+    })
+
+    .when("/facturacion/crgo/create", {
+        templateUrl : "modules/facturacion/crgo-edit.html",
+        controller : "crgoCreateController"
+    })
+} ]);
 
 facturacion.controller("crgoFilterController", function($scope, $http, $location) {
     var url = "facturacion/crgo-filter.action";
@@ -296,6 +265,32 @@ facturacion.controller("crgoCreateController", function($scope, $http, $location
 });
 
 // ----------- REGLA ------------------
+// ----------- REGLA ------------------
+// ----------- REGLA ------------------
+
+facturacion.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
+
+    .when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
+        templateUrl : "modules/facturacion/rgla-detail.html",
+        controller : "rglaDetailController"
+    })
+
+    .when("/facturacion/rglv/detail/:rglvId", {
+        templateUrl : "modules/facturacion/rgla-detail.html",
+        controller : "rglvDetailController"
+    })
+
+    .when("/facturacion/rglv/edit/:rglvId", {
+        templateUrl : "modules/facturacion/rgla-edit.html",
+        controller : "rglvEditController"
+    })
+
+    .when("/facturacion/rgla/create", {
+        templateUrl : "modules/facturacion/rgla-edit.html",
+        controller : "crgoCreateController"
+    })
+} ]);
 
 facturacion.controller("rglaDetailController", function($scope, $http, $location, $route, $routeParams) {
     $scope.fechaVigencia = $routeParams.fechaVigencia;
@@ -342,13 +337,49 @@ facturacion.controller("rglaCreateController", function($scope, $http, $location
 });
 
 // ----------- ASPECTO ------------------
+// ----------- ASPECTO ------------------
+// ----------- ASPECTO ------------------
 
-facturacion.controller("aspcListController", function($scope, $http, $location, $route, $routeParams) {
-    console.log('routeParams: ' + JSON.stringify($routeParams));
-    console.log('urlInclude: ' + $scope.urlInclude);
-    console.log('aspcCriterio: ' + JSON.stringify($scope.aspcCriterio));
+facturacion.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
 
-    $scope.urlInclude = 'modules/facturacion/aspc-filter.html';
+    .when("/facturacion/aspc/filter", {
+        templateUrl : "modules/facturacion/aspc-filter.html",
+        controller : "aspcFilterController"
+    })
+
+    .when("/facturacion/aspc/list", {
+        templateUrl : "modules/facturacion/aspc-grid.html",
+        controller : "aspcListController"
+    })
+
+    .when("/facturacion/aspc/create", {
+        templateUrl : "modules/facturacion/aspc-edit.html",
+        controller : "aspcCreateController"
+    })
+
+    .when("/facturacion/aspv/detail/:aspvId", {
+        templateUrl : "modules/facturacion/aspc.html",
+        controller : "aspcDetailController"
+    })
+
+    .when("/facturacion/aspv/edit/:aspvId", {
+        templateUrl : "modules/facturacion/aspc-edit.html",
+        controller : "aspcEditController"
+    })
+
+    .when("/facturacion/aspv/duplicate/:aspvId", {
+        templateUrl : "modules/facturacion/aspc-edit.html",
+        controller : "aspcDuplicateController"
+    })
+
+    .when("/facturacion/aspc/detail/:aspcId/:fechaVigencia", {
+        templateUrl : "modules/facturacion/aspc.html",
+        controller : "aspcDetailController"
+    })
+} ]);
+
+facturacion.controller("aspcFilterController", function($scope, $http, $location, $route, $routeParams) {
     $scope.aspcCriterio = {};
     $scope.limit = 20;
     $scope.page = 1;
@@ -360,21 +391,21 @@ facturacion.controller("aspcListController", function($scope, $http, $location, 
     });
 
     $scope.list = function() {
-        console.log('routeParams: ' + JSON.stringify($routeParams));
-        console.log('aspcCriterio: ' + JSON.stringify($scope.aspcCriterio));
-
-        var url = "facturacion/aspc-list.action";
-
-        $http.get(url, {
-            aspcCriterio : $scope.aspcCriterio,
-            limit : $scope.limit,
-            page : $scope.page
-        }).success(function(data) {
-            $scope.aspcList = data.aspcList;
-            $routeParams.aspcCriterio = $scope.aspcCriterio;
-            $scope.urlInclude = 'modules/facturacion/aspc-grid.html';
-        });
+        $location.path("/facturacion/aspc/list").replace();
     }
+});
+
+facturacion.controller("aspcListController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/aspc-list.action";
+
+    $http.get(url, {
+        aspcCriterio : $scope.aspcCriterio,
+        limit : $scope.limit,
+        page : $scope.page
+    }).success(function(data) {
+        $scope.aspcList = data.aspcList;
+        $routeParams.aspcCriterio = $scope.aspcCriterio;
+    });
 
     $scope.filter = function() {
         console.log('routeParams: ' + JSON.stringify($routeParams));
@@ -384,15 +415,17 @@ facturacion.controller("aspcListController", function($scope, $http, $location, 
     }
 
     $scope.create = function() {
-        $scope.urlInclude = 'modules/facturacion/aspc-edit.html';
-
-        var url = "facturacion/aspc-create.action";
-
-        $http.get(url).success(function(data) {
-            $scope.accion = data.accion;
-            $scope.aspc = data.aspc;
-        });
+        $location.path("/facturacion/aspc/create");
     }
+});
+
+facturacion.controller("aspcCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/aspc-create.action";
+
+    $http.get(url).success(function(data) {
+        $scope.aspc = data.aspc;
+        $scope.accion = data.accion;
+    });
 
     $scope.save = function() {
         var url = "facturacion/aspc-save.action";
@@ -402,7 +435,7 @@ facturacion.controller("aspcListController", function($scope, $http, $location, 
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/aspv/detail/" + data.aspc.aspv.id);
+                $location.path("/facturacion/aspv/detail/" + $scope.aspc.aspv.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -410,7 +443,7 @@ facturacion.controller("aspcListController", function($scope, $http, $location, 
     }
 
     $scope.cancelSave = function() {
-        $scope.list();
+        window.history.back();
     }
 });
 
@@ -423,30 +456,23 @@ facturacion.controller("aspcDetailController", function($scope, $http, $location
     });
 
     $scope.edit = function() {
-        $scope.urlInclude = 'modules/facturacion/aspc-edit.html';
-
-        var url = "facturacion/aspc-edit.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
-
-        $http.get(url).success(function(data) {
-            $scope.accion = data.accion;
-            $scope.aspc = data.aspc;
-        });
+        $location.path("/facturacion/aspv/edit/" + $scope.aspc.aspv.id).replace();
     }
 
     $scope.duplicate = function() {
-        $scope.urlInclude = 'modules/facturacion/aspc-edit.html';
-
-        var url = "facturacion/aspc-duplicate.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
-
-        $http.get(url).success(function(data) {
-            $scope.accion = data.accion;
-            $scope.aspc = data.aspc;
-        });
+        $location.path("/facturacion/aspv/duplicate/" + $scope.aspc.aspv.id);
     }
+});
+
+facturacion.controller("aspcEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/aspc-edit.action?aspc.aspv.id=" + $routeParams.aspvId;
+
+    $http.get(url).success(function(data) {
+        $scope.aspc = data.aspc;
+        $scope.accion = data.accion;
+    });
 
     $scope.save = function() {
-        alert("save");
-
         var url = "facturacion/aspc-save.action";
 
         $http.post(url, {
@@ -454,7 +480,7 @@ facturacion.controller("aspcDetailController", function($scope, $http, $location
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/aspv/detail/" + data.aspc.aspv.id);
+                $location.path("/facturacion/aspv/detail/" + $scope.aspc.aspv.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -462,12 +488,34 @@ facturacion.controller("aspcDetailController", function($scope, $http, $location
     }
 
     $scope.cancelSave = function() {
-        $scope.urlInclude = 'modules/facturacion/aspc-detail.html';
+        $location.path("/facturacion/aspv/detail/" + $scope.aspc.aspv.id).replace();
+    }
+});
 
-        var url = "facturacion/aspc-detail.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
+facturacion.controller("aspcDuplicateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/aspc-duplicate.action?aspc.aspv.id=" + $routeParams.aspvId;
 
-        $http.get(url).success(function(data) {
-            $scope.aspc = data.aspc;
+    $http.get(url).success(function(data) {
+        $scope.aspc = data.aspc;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "facturacion/aspc-save.action";
+
+        $http.post(url, {
+            aspc : $scope.aspc,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/aspv/detail/" + $scope.aspc.aspv.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
         });
+    }
+
+    $scope.cancelSave = function() {
+        window.history.back();
     }
 });

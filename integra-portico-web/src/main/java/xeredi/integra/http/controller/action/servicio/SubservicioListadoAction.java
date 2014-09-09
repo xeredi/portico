@@ -1,6 +1,9 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -9,7 +12,11 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.maestro.bo.Parametro;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
@@ -33,9 +40,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
 
     /** The srvc criterio form. */
     private SubservicioCriterioVO itemCriterio;
-
-    /** The tpss. */
-    private TipoSubservicioVO enti;
 
     /**
      * Instantiates a new subservicio listado action.
@@ -64,12 +68,10 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * @return the string
      */
     @Actions({ @Action(value = "ssrv-filtro"),
-            @Action(value = "ssrv-filtro-popup", results = { @Result(name = "success", location = "ssrv-filtro.jsp") }) })
+        @Action(value = "ssrv-filtro-popup", results = { @Result(name = "success", location = "ssrv-filtro.jsp") }) })
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
-
-        enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
 
         loadLabelValuesMap();
 
@@ -82,17 +84,15 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * @return the string
      */
     @Actions({
-            @Action(value = "ssrv-listado"),
-            @Action(value = "ssrv-listado-grid", results = { @Result(name = "success", location = "ssrv-listado.jsp") }),
-            @Action(value = "ssrv-listado-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true" }) }) })
+        @Action(value = "ssrv-listado"),
+        @Action(value = "ssrv-listado-grid", results = { @Result(name = "success", location = "ssrv-listado.jsp") }),
+        @Action(value = "ssrv-listado-json", results = { @Result(name = "success", type = "json", params = {
+                "excludeNullProperties", "true" }) }) })
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
-
-        enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
 
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
@@ -104,6 +104,36 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     }
 
     // get /set
+
+    /**
+     * Load label values map.
+     */
+    protected final void loadLabelValuesMap() {
+        if (labelValuesMap == null) {
+            labelValuesMap = new HashMap<>();
+
+            final TipoSubservicioVO enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
+
+            // Carga de los labelValues (Si los hay)
+            final Set<Long> tpprIds = new HashSet<>();
+
+            if (enti.getEntdMap() != null) {
+                for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+                    if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                            && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                        tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                    }
+                }
+            }
+
+            if (!tpprIds.isEmpty()) {
+                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                        getItemCriterio().getIdioma()));
+            }
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -130,14 +160,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<SubservicioVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final TipoSubservicioVO getEnti() {
-        return enti;
     }
 
 }

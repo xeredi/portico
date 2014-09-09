@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.estadistica;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,9 @@ import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
+import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.Entidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
@@ -37,9 +40,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
     /** The estds. */
     private PaginatedList<EstadisticaVO> itemList;
-
-    /** The tppr. */
-    private TipoEstadisticaVO enti;
 
     /** The estd criterio form. */
     private EstadisticaCriterioVO itemCriterio;
@@ -75,8 +75,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
-
         loadLabelValuesMap();
 
         return SUCCESS;
@@ -94,7 +92,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
         final Estadistica estdBO = BOFactory.getInjector().getInstance(EstadisticaBO.class);
 
-        enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(true);
 
         if (hasErrors()) {
@@ -107,6 +104,36 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     }
 
     // get / set
+
+    /**
+     * Load label values map.
+     */
+    protected final void loadLabelValuesMap() {
+        if (labelValuesMap == null) {
+            labelValuesMap = new HashMap<>();
+
+            final TipoEstadisticaVO enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
+
+            // Carga de los labelValues (Si los hay)
+            final Set<Long> tpprIds = new HashSet<>();
+
+            if (enti.getEntdMap() != null) {
+                for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+                    if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                            && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                        tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                    }
+                }
+            }
+
+            if (!tpprIds.isEmpty()) {
+                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                        getItemCriterio().getIdioma()));
+            }
+        }
+    }
 
     /**
      * Gets the autps.
@@ -148,14 +175,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<EstadisticaVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final TipoEstadisticaVO getEnti() {
-        return enti;
     }
 
 }

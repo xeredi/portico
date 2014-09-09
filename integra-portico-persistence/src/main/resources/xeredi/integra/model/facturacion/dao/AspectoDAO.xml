@@ -109,14 +109,6 @@
         <include refid="SelectWhere" />
     </select>
 
-    <select id="exists" parameterType="AspectoVO" resultType="Boolean">
-    <![CDATA[
-        SELECT COUNT(1)
-        FROM vw_aspecto_aspc
-        WHERE aspc_codigo = #{codigo} AND aspc_tpsr_pk = #{tpsr.id}
-    ]]>
-    </select>
-
     <select id="count" parameterType="AspectoCriterioVO" resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
@@ -150,10 +142,86 @@
         </foreach>
     </select>
 
+    <select id="exists" parameterType="AspectoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM vw_aspecto_aspc
+        WHERE aspc_codigo = #{codigo} AND aspc_tpsr_pk = #{tpsr.id}
+    ]]>
+    </select>
+
+    <select id="intersects" parameterType="AspectoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM vw_aspecto_aspc
+        WHERE
+            aspc_codigo = #{codigo}
+            AND aspc_tpsr_pk = #{tpsr.id}
+            AND (
+                #{aspv.fini} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{aspv.fini})
+                OR
+                COALESCE(#{aspv.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime())
+                    BETWEEN aspv_fini AND COALESCE(aspv_ffin, COALESCE(#{aspv.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()))
+            )
+    ]]>
+    </select>
+
     <insert id="insert" parameterType="AspectoVO">
     <![CDATA[
         INSERT INTO tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion)
         VALUES (#{id}, #{codigo}, #{tpsr.id}, #{descripcion})
+    ]]>
+    </insert>
+
+    <insert id="insertVersion" parameterType="AspectoVO">
+    <![CDATA[
+        INSERT INTO tbl_aspecto_version_aspv (
+            aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad
+            , aspv_cpath_info1, aspv_cpath_info2, aspv_cpath_info3, aspv_cpath_info4, aspv_cpath_info5, aspv_cpath_info6
+            , aspv_cetiq_info1, aspv_cetiq_info2, aspv_cetiq_info3, aspv_cetiq_info4, aspv_cetiq_info5, aspv_cetiq_info6
+            , aspv_cgrp_info1, aspv_cgrp_info2, aspv_cgrp_info3, aspv_cgrp_info4, aspv_cgrp_info5, aspv_cgrp_info6
+            , aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
+            , aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+        ) VALUES (
+            #{aspv.id}, #{id}, #{aspv.fini}, #{aspv.ffin}, #{aspv.prioridad}
+            , #{aspv.cpathInfo1}, #{aspv.cpathInfo2}, #{aspv.cpathInfo3}, #{aspv.cpathInfo4}, #{aspv.cpathInfo5}, #{aspv.cpathInfo6}
+            , #{aspv.cetiqInfo1}, #{aspv.cetiqInfo2}, #{aspv.cetiqInfo3}, #{aspv.cetiqInfo4}, #{aspv.cetiqInfo5}, #{aspv.cetiqInfo6}
+            , #{aspv.cgrpInfo1, jdbcType=INTEGER, javaType=Boolean}, #{aspv.cgrpInfo2, jdbcType=INTEGER, javaType=Boolean}, #{aspv.cgrpInfo3, jdbcType=INTEGER, javaType=Boolean}
+            , #{aspv.cgrpInfo4, jdbcType=INTEGER, javaType=Boolean}, #{aspv.cgrpInfo5, jdbcType=INTEGER, javaType=Boolean}, #{aspv.cgrpInfo6, jdbcType=INTEGER, javaType=Boolean}
+            , #{aspv.lsumCuant1, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lsumCuant2, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lsumCuant3, jdbcType=INTEGER, javaType=Boolean}
+            , #{aspv.lsumCuant4, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lsumCuant5, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lsumCuant6, jdbcType=INTEGER, javaType=Boolean}
+            , #{aspv.lgrpInfo1, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lgrpInfo2, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lgrpInfo3, jdbcType=INTEGER, javaType=Boolean}
+            , #{aspv.lgrpInfo4, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lgrpInfo5, jdbcType=INTEGER, javaType=Boolean}, #{aspv.lgrpInfo6, jdbcType=INTEGER, javaType=Boolean}
+        )
+    ]]>
+    </insert>
+
+    <insert id="update" parameterType="AspectoVO">
+    <![CDATA[
+        UPDATE tbl_aspecto_aspc SET
+            aspc_descripcion = #{descripcion}
+        WHERE aspc_pk = #{id}
+    ]]>
+    </insert>
+
+    <insert id="updateVersion" parameterType="AspectoVO">
+    <![CDATA[
+        UPDATE tbl_aspecto_version_aspv SET
+            aspv_fini = #{aspv.fini}, aspv_ffin = #{aspv.ffin}, aspv_prioridad = #{aspv.prioridad}
+            , aspv_cpath_info1 = #{aspv.cpathInfo1}, aspv_cpath_info2 = #{aspv.cpathInfo2}, aspv_cpath_info3 = #{aspv.cpathInfo3}
+            , aspv_cpath_info4 = #{aspv.cpathInfo4}, aspv_cpath_info5 = #{aspv.cpathInfo5}, aspv_cpath_info6 = #{aspv.cpathInfo6}
+            , aspv_cetiq_info1 = #{aspv.cetiqInfo1}, aspv_cetiq_info2 = #{aspv.cetiqInfo2}, aspv_cetiq_info3 = #{aspv.cetiqInfo3}
+            , aspv_cetiq_info4 = #{aspv.cetiqInfo4}, aspv_cetiq_info5 = #{aspv.cetiqInfo5}, aspv_cetiq_info6 = #{aspv.cetiqInfo6}
+            , aspv_cgrp_info1 = #{aspv.cgrpInfo1, jdbcType=INTEGER, javaType=Boolean}, aspv_cgrp_info2 = #{aspv.cgrpInfo2, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_cgrp_info3 = #{aspv.cgrpInfo3, jdbcType=INTEGER, javaType=Boolean}, aspv_cgrp_info4 = #{aspv.cgrpInfo4, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_cgrp_info5 = #{aspv.cgrpInfo5, jdbcType=INTEGER, javaType=Boolean}, aspv_cgrp_info6 = #{aspv.cgrpInfo6, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_lsum_cuant1 = #{aspv.lsumCuant1, jdbcType=INTEGER, javaType=Boolean}, aspv_lsum_cuant2 = #{aspv.lsumCuant2, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_lsum_cuant3 = #{aspv.lsumCuant3, jdbcType=INTEGER, javaType=Boolean}, aspv_lsum_cuant4 = #{aspv.lsumCuant4, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_lsum_cuant5 = #{aspv.lsumCuant5, jdbcType=INTEGER, javaType=Boolean}, aspv_lsum_cuant6 = #{aspv.lsumCuant6, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_lgrp_info1 = #{aspv.lgrpInfo1, jdbcType=INTEGER, javaType=Boolean}, aspv_lgrp_info2 = #{aspv.lgrpInfo2, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_lgrp_info3 = #{aspv.lgrpInfo3, jdbcType=INTEGER, javaType=Boolean}, aspv_lgrp_info4 = #{aspv.lgrpInfo4, jdbcType=INTEGER, javaType=Boolean}
+            , aspv_lgrp_info5 = #{aspv.lgrpInfo5, jdbcType=INTEGER, javaType=Boolean}, aspv_lgrp_info6 = #{aspv.lgrpInfo6, jdbcType=INTEGER, javaType=Boolean}
+        WHERE aspv_pk = #{aspv.id}
     ]]>
     </insert>
 </mapper>

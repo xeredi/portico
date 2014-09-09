@@ -1,8 +1,8 @@
-﻿SELECT * FROM tbl_periodo_proceso_pepr 
+SELECT * FROM tbl_periodo_proceso_pepr
 ;
 
-SELECT * 
-FROM tbl_estadistica_estd 
+SELECT *
+FROM tbl_estadistica_estd
 ;
 
 SELECT *
@@ -10,18 +10,18 @@ FROM
 	tbl_estadistica_estd
 	JOIN tbl_periodo_proceso_pepr ON
 		pepr_pk = estd_pepr_pk
-WHERE 
+WHERE
 	estd_tpes_pk = 23000
 	AND estd_pepr_pk = 2446054
 ;
 
-SELECT 
+SELECT
     estd_autp, TIPO_BUQUE_EEE
 
     , SUM(ENTERO_01) AS ENTERO_01
     , SUM(ENTERO_02) AS ENTERO_02
-FROM ( 
-	SELECT 
+FROM (
+	SELECT
 		(
 			SELECT prmt_parametro
 			FROM tbl_parametro_prmt
@@ -30,7 +30,7 @@ FROM (
 		, (
 			SELECT prmt_parametro
 			FROM tbl_parametro_prmt
-			WHERE 
+			WHERE
 				EXISTS (
 					SELECT 1
 					FROM tbl_estadistica_dato_esdt
@@ -56,7 +56,7 @@ FROM (
 		tbl_estadistica_estd
 		JOIN tbl_periodo_proceso_pepr ON
 			pepr_pk = estd_pepr_pk
-	WHERE 
+	WHERE
 		estd_tpes_pk = getEntidad('MOVIMIENTO_TIPO_BUQUE_EEE')
 --		AND estd_pepr_pk = 2020207
 ) sql

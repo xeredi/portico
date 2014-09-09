@@ -1,4 +1,4 @@
-﻿-- Borrado de servicios
+-- Borrado de servicios
 DELETE FROM tbl_subservicio_subservicio_ssss;
 -- DELETE FROM tbl_servicio_secuencia_srsc;
 TRUNCATE TABLE tbl_subservicio_dato_ssdt;

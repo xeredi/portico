@@ -1,4 +1,5 @@
-﻿/* Buscar entidades hijas */
+
+-- Buscar entidades hijas
 SELECT *
 FROM tbl_entidad_enti
 WHERE

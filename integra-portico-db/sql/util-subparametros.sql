@@ -1,4 +1,4 @@
-﻿-- exists
+-- exists
 select *
 from tbl_subparametro_sprm
 ;
