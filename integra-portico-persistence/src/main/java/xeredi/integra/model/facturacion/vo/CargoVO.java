@@ -23,10 +23,10 @@ public final class CargoVO {
     private TipoServicioVO tpsr;
 
     /** The principal. */
-    private boolean principal;
+    private Boolean principal;
 
     /** The temporal. */
-    private boolean temporal;
+    private Boolean temporal;
 
     /** The tipo. */
     private CargoTipo tipo;
@@ -77,8 +77,8 @@ public final class CargoVO {
      * @param value
      *            the ig
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -96,8 +96,8 @@ public final class CargoVO {
      * @param value
      *            the codigo
      */
-    public void setCodigo(String value) {
-        this.codigo = value;
+    public void setCodigo(final String value) {
+        codigo = value;
     }
 
     /**
@@ -115,8 +115,8 @@ public final class CargoVO {
      * @param value
      *            the codigo normalizado
      */
-    public void setCodigoNormalizado(String value) {
-        this.codigoNormalizado = value;
+    public void setCodigoNormalizado(final String value) {
+        codigoNormalizado = value;
     }
 
     /**
@@ -134,8 +134,8 @@ public final class CargoVO {
      * @param value
      *            the tpsr
      */
-    public void setTpsr(TipoServicioVO value) {
-        this.tpsr = value;
+    public void setTpsr(final TipoServicioVO value) {
+        tpsr = value;
     }
 
     /**
@@ -143,7 +143,7 @@ public final class CargoVO {
      *
      * @return true, if checks if is principal
      */
-    public boolean isPrincipal() {
+    public Boolean getPrincipal() {
         return principal;
     }
 
@@ -153,8 +153,8 @@ public final class CargoVO {
      * @param value
      *            the principal
      */
-    public void setPrincipal(boolean value) {
-        this.principal = value;
+    public void setPrincipal(final Boolean value) {
+        principal = value;
     }
 
     /**
@@ -162,7 +162,7 @@ public final class CargoVO {
      *
      * @return true, if checks if is temporal
      */
-    public boolean isTemporal() {
+    public Boolean getTemporal() {
         return temporal;
     }
 
@@ -172,8 +172,8 @@ public final class CargoVO {
      * @param value
      *            the temporal
      */
-    public void setTemporal(boolean value) {
-        this.temporal = value;
+    public void setTemporal(final Boolean value) {
+        temporal = value;
     }
 
     /**
@@ -191,8 +191,8 @@ public final class CargoVO {
      * @param value
      *            the tipo
      */
-    public void setTipo(CargoTipo value) {
-        this.tipo = value;
+    public void setTipo(final CargoTipo value) {
+        tipo = value;
     }
 
     /**
@@ -210,8 +210,8 @@ public final class CargoVO {
      * @param value
      *            the descripcion
      */
-    public void setDescripcion(String value) {
-        this.descripcion = value;
+    public void setDescripcion(final String value) {
+        descripcion = value;
     }
 
     /**
@@ -229,8 +229,8 @@ public final class CargoVO {
      * @param value
      *            the crgv
      */
-    public void setCrgv(CargoVersionVO value) {
-        this.crgv = value;
+    public void setCrgv(final CargoVersionVO value) {
+        crgv = value;
     }
 
 }

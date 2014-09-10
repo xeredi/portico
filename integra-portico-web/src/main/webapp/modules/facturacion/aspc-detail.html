@@ -3,10 +3,14 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" data-ng-click="edit()"><i class="glyphicon glyphicon-edit"></i>
-                {{'boton_editar' | translate}}</a>
-            <a class="btn btn-default" data-ng-click="duplicate()"><i class="glyphicon glyphicon-tags"></i>
-                {{'boton_duplicar' | translate}}</a>
+            <button data-ng-click="edit()" class="btn btn-default">
+                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            </button>
+            <a class="btn btn-default" href="#/facturacion/aspc/duplicate/{{aspc.aspv.id}}"><i
+                class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            </button>
         </div>
     </div>
 

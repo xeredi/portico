@@ -71,13 +71,22 @@ public interface AspectoDAO {
     boolean exists(final AspectoVO aspc);
 
     /**
-     * Intersects.
+     * Exists overlap.
      *
      * @param aspc
      *            the aspc
      * @return true, if successful
      */
-    boolean intersects(final AspectoVO aspc);
+    boolean existsOverlap(final AspectoVO aspc);
+
+    /**
+     * Select id.
+     *
+     * @param aspc
+     *            the aspc
+     * @return the long
+     */
+    Long selectId(final AspectoVO aspc);
 
     /**
      * Insert.

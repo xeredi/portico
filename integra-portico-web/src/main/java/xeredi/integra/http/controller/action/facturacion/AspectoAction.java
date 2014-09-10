@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.bo.Aspecto;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
@@ -55,7 +56,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-detail")
-    public String detalle() {
+    public String detail() {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkArgument(aspc.getId() != null && fechaVigencia != null || aspc.getAspv() != null
                 && aspc.getAspv().getId() != null);
@@ -81,7 +82,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-create")
-    public String alta() {
+    public String create() {
         accion = ACCION_EDICION.create;
 
         aspc = new AspectoVO();
@@ -97,7 +98,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-edit")
-    public String modificar() {
+    public String edit() {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getAspv().getId());
@@ -120,7 +121,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-duplicate")
-    public String duplicar() {
+    public String duplicate() {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getAspv().getId());
@@ -143,7 +144,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-save")
-    public String guardar() {
+    public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
@@ -158,7 +159,7 @@ public final class AspectoAction extends BaseAction {
             }
         }
 
-        if (ACCION_EDICION.edit == accion) {
+        if (ACCION_EDICION.create != accion) {
             Preconditions.checkNotNull(aspc.getId());
             Preconditions.checkNotNull(aspc.getAspv().getId());
         }
@@ -280,8 +281,8 @@ public final class AspectoAction extends BaseAction {
         case create:
             try {
                 aspcBO.insert(aspc);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("aspc") }));
+            } catch (final OverlapException ex) {
+                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("aspc") }));
             }
 
             break;

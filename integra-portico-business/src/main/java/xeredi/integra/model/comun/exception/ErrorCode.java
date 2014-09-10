@@ -32,5 +32,8 @@ public enum ErrorCode {
     /** Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su identificador. */
     E00008,
 
+    /** Error de solape de rangos de vigencia de una entidad. Se pasa como argumento el nombre de la entidad. */
+    E00009,
+
     ;
 }

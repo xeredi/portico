@@ -3,23 +3,23 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/facturacion/crgv/edit/{{crgo.crgv.id}}"><i
-                class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}</a>
+            <button data-ng-click="edit()" class="btn btn-default">
+                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            </button>
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            </button>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-1 form-group">
-            <label>{{'crgo_codigo' | translate}}</label>
-            <p class="form-control-static">{{crgo.codigo}}</p>
-        </div>
         <div class="col-md-2 form-group">
             <label>{{'crgo_tpsr' | translate}}</label>
             <p class="form-control-static">{{crgo.tpsr.nombre}}</p>
         </div>
-        <div class="col-md-3 form-group">
-            <label>{{'crgo_descripcion' | translate}}</label>
-            <p class="form-control-static">{{crgo.descripcion}}</p>
+        <div class="col-md-1 form-group">
+            <label>{{'crgo_codigo' | translate}}</label>
+            <p class="form-control-static">{{crgo.codigo}}</p>
         </div>
         <div class="col-md-2 form-group">
             <label>{{'crgo_codigoNormalizado' | translate}}</label>
@@ -47,6 +47,10 @@
         <div class="col-md-1 form-group">
             <label>{{'crgo_crgv_ffin' | translate}}</label>
             <p class="form-control-static">{{aspc.crgv.ffin | date:('fmt_date' | translate)}}</p>
+        </div>
+        <div class="col-md-3 form-group">
+            <label>{{'crgo_descripcion' | translate}}</label>
+            <p class="form-control-static">{{crgo.descripcion}}</p>
         </div>
     </div>
 </fieldset>

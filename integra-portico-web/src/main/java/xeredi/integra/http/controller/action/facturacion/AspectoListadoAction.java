@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -59,15 +58,11 @@ public final class AspectoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("aspc-list") })
-    public String listado() {
+    @Action("aspc-list")
+    public String list() {
         Preconditions.checkNotNull(aspcCriterio);
 
         final Aspecto aspcBO = BOFactory.getInjector().getInstance(AspectoBO.class);
-
-        if (hasErrors()) {
-            return INPUT;
-        }
 
         aspcList = aspcBO.selectList(aspcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 

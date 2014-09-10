@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
@@ -68,20 +69,29 @@ public class AspectoBO implements Aspecto {
      */
     @Override
     @Transactional
-    public void insert(final AspectoVO aspc) throws DuplicateInstanceException {
+    public void insert(final AspectoVO aspc) throws OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
-
-        if (aspcDAO.exists(aspc)) {
-            throw new DuplicateInstanceException(AspectoVO.class.getName(), aspc);
-        }
+        Preconditions.checkNotNull(aspc.getAspv().getFini());
+        Preconditions.checkNotNull(aspc.getTpsr());
+        Preconditions.checkNotNull(aspc.getTpsr().getId());
 
         final IgBO igBO = new IgBO();
 
-        aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+        if (aspcDAO.exists(aspc)) {
+            aspc.setId(aspcDAO.selectId(aspc));
+
+            if (aspcDAO.existsOverlap(aspc)) {
+                throw new OverlapException(AspectoVO.class.getName(), aspc);
+            }
+        } else {
+            aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            aspcDAO.insert(aspc);
+        }
+
         aspc.getAspv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-        aspcDAO.insert(aspc);
         aspcDAO.insertVersion(aspc);
     }
 

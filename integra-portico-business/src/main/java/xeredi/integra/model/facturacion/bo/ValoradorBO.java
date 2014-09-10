@@ -381,7 +381,7 @@ public class ValoradorBO implements Valorador {
                     vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
 
-                    if (contextoVO.getCrgo().isTemporal()) {
+                    if (contextoVO.getCrgo().getTemporal()) {
                         vlrt.setFinicio(contextoVO.getFini());
                         vlrt.setFfin(contextoVO.getFfin());
                     }
@@ -443,7 +443,7 @@ public class ValoradorBO implements Valorador {
                     vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
 
-                    if (contextoVO.getCrgo().isTemporal()) {
+                    if (contextoVO.getCrgo().getTemporal()) {
                         vlrt.setFinicio(contextoVO.getFini());
                         vlrt.setFfin(contextoVO.getFfin());
                     }
@@ -511,7 +511,7 @@ public class ValoradorBO implements Valorador {
                     vlrt.setFreferencia(contextoVO.getFref());
                     vlrt.setFliquidacion(contextoVO.getFliquidacion());
 
-                    if (contextoVO.getCrgo().isTemporal()) {
+                    if (contextoVO.getCrgo().getTemporal()) {
                         vlrt.setFinicio(contextoVO.getFini());
                         vlrt.setFfin(contextoVO.getFfin());
                     }

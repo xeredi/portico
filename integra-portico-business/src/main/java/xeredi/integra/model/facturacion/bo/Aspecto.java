@@ -1,5 +1,6 @@
 package xeredi.integra.model.facturacion.bo;
 
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -39,10 +40,10 @@ public interface Aspecto {
      *
      * @param aspc
      *            the aspc
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    void insert(final AspectoVO aspc) throws DuplicateInstanceException;
+    void insert(final AspectoVO aspc) throws OverlapException;
 
     /**
      * Update.

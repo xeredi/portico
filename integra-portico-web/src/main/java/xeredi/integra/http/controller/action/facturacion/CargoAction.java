@@ -1,19 +1,24 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.bo.Cargo;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoTipo;
 import xeredi.integra.model.facturacion.vo.CargoVO;
+import xeredi.integra.model.facturacion.vo.CargoVersionVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
+import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -50,8 +55,8 @@ public final class CargoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("crgo-detail") })
-    public String detalle() {
+    @Action("crgo-detail")
+    public String detail() {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkArgument(crgo.getId() != null && fechaVigencia != null || crgo.getCrgv() != null
                 && crgo.getCrgv().getId() != null);
@@ -76,9 +81,13 @@ public final class CargoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("crgo-create") })
-    public String alta() {
+    @Action("crgo-create")
+    public String create() {
         accion = ACCION_EDICION.create;
+
+        crgo = new CargoVO();
+        crgo.setCrgv(new CargoVersionVO());
+        crgo.getCrgv().setFini(Calendar.getInstance().getTime());
 
         return SUCCESS;
     }
@@ -88,8 +97,8 @@ public final class CargoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("crgo-edit") })
-    public String modificar() {
+    @Action("crgo-edit")
+    public String edit() {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());
@@ -102,6 +111,101 @@ public final class CargoAction extends BaseAction {
         crgoCriterioVO.setCrgvId(crgo.getCrgv().getId());
 
         crgo = crgoBO.select(crgoCriterioVO);
+
+        return SUCCESS;
+    }
+
+    /**
+     * Save.
+     *
+     * @return the string
+     */
+    @Action("crgo-save")
+    public String save() {
+        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(crgo);
+        Preconditions.checkNotNull(crgo.getCrgv());
+
+        if (ACCION_EDICION.create == accion) {
+            if (GenericValidator.isBlankOrNull(crgo.getCodigo())) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_codigo") }));
+            }
+
+            if (crgo.getTpsr() == null || crgo.getTpsr().getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_tpsr") }));
+            }
+        }
+
+        if (ACCION_EDICION.create != accion) {
+            Preconditions.checkNotNull(crgo.getId());
+            Preconditions.checkNotNull(crgo.getCrgv().getId());
+        }
+
+        if (GenericValidator.isBlankOrNull(crgo.getDescripcion())) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_descripcion") }));
+        }
+        if (crgo.getTipo() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_tipo") }));
+        }
+        if (crgo.getTemporal() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_temporal") }));
+        }
+        if (crgo.getPrincipal() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_principal") }));
+        }
+        if (crgo.getCrgv().getFini() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_crgv_fini") }));
+        }
+
+        if (hasErrors()) {
+            return SUCCESS;
+        }
+
+        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+
+        switch (accion) {
+        case create:
+            try {
+                crgoBO.insert(crgo);
+            } catch (final OverlapException ex) {
+                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("crgo") }));
+            }
+
+            break;
+        case edit:
+            try {
+                crgoBO.update(crgo);
+            } catch (final InstanceNotFoundException ex) {
+                addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("crgo"), crgo.getCodigo() }));
+            }
+
+            break;
+
+        default:
+            throw new Error("Accion no valida: " + accion);
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Removes the.
+     *
+     * @return the string
+     */
+    @Action("crgo-remove")
+    public String remove() {
+        Preconditions.checkNotNull(crgo);
+        Preconditions.checkNotNull(crgo.getCrgv());
+        Preconditions.checkNotNull(crgo.getCrgv().getId());
+
+        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+
+        try {
+            crgoBO.delete(crgo);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("crgo"), crgo.getCodigo() }));
+        }
 
         return SUCCESS;
     }

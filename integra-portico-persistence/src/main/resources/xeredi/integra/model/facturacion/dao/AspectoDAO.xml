@@ -150,19 +150,29 @@
     ]]>
     </select>
 
-    <select id="intersects" parameterType="AspectoVO" resultType="Boolean">
+    <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM vw_aspecto_aspc
         WHERE
-            aspc_codigo = #{codigo}
-            AND aspc_tpsr_pk = #{tpsr.id}
+            aspc_pk = #{id}
             AND (
                 #{aspv.fini} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{aspv.fini})
-                OR
-                COALESCE(#{aspv.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime())
-                    BETWEEN aspv_fini AND COALESCE(aspv_ffin, COALESCE(#{aspv.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()))
+                OR COALESCE(#{aspv.ffin}, portico.getSysdateTime()) BETWEEN aspv_fini AND COALESCE(aspv_ffin, COALESCE(#{aspv.ffin}, portico.getSysdateTime()))
             )
+    ]]>
+        <if test="aspv.id != null">
+        <![CDATA[
+            AND aspv_pk <> #{aspv.id}
+        ]]>
+        </if>
+    </select>
+
+    <select id="selectId" parameterType="CargoVO" resultType="Long">
+    <![CDATA[
+        SELECT aspc_pk
+        FROM tbl_aspecto_aspc
+        WHERE aspc_codigo = #{codigo}
     ]]>
     </select>
 

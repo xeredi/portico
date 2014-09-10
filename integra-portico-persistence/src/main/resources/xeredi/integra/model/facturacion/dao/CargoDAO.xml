@@ -25,11 +25,7 @@
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT *
-        FROM portico.tbl_cargo_crgo
-            JOIN portico.tbl_cargo_version_crgv ON
-                crgv_crgo_pk = crgo_pk
-            JOIN portico.tbl_entidad_enti ON
-                enti_pk = crgo_tpsr_pk
+        FROM vw_cargo_crgo
     ]]>
     </sql>
 
@@ -120,9 +116,43 @@
     <select id="count" parameterType="CargoCriterioVO" resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
-        FROM tbl_cargo_crgo
+        FROM vw_cargo_crgo
     ]]>
         <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="CargoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_cargo_crgo
+        WHERE crgo_codigo = #{codigo}
+    ]]>
+    </select>
+
+    <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM vw_cargo_crgo
+        WHERE
+            crgo_pk = #{id}
+            AND (
+        		#{crgv.fini} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{crgv.fini})
+        		OR COALESCE(#{crgv.ffin}, portico.getSysdateTime()) BETWEEN crgv_fini AND COALESCE(crgv_ffin, COALESCE(#{crgv.ffin}, portico.getSysdateTime()))
+            )
+    ]]>
+        <if test="crgv.id != null">
+        <![CDATA[
+            AND crgv_pk <> #{crgv.id}
+        ]]>
+        </if>
+    </select>
+
+    <select id="selectId" parameterType="CargoVO" resultType="Long">
+    <![CDATA[
+        SELECT crgo_pk
+        FROM tbl_cargo_crgo
+        WHERE crgo_codigo = #{codigo}
+    ]]>
     </select>
 
     <select id="selectList" parameterType="CargoCriterioVO" resultMap="ResultMap">
@@ -134,4 +164,51 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
     </select>
+
+    <insert id="insert" parameterType="CargoVO">
+    <![CDATA[
+        INSERT INTO tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tipo, crgo_descripcion, crgo_tpsr_pk)
+        VALUES (
+            #{id}, #{codigo}, #{codigoNormalizado}
+            , #{principal, jdbcType=INTEGER, javaType=Boolean}, #{temporal, jdbcType=INTEGER, javaType=Boolean}
+            , #{tipo}, #{descripcion}, #{tpsr.id})
+    ]]>
+    </insert>
+
+    <insert id="insertVersion" parameterType="CargoVO">
+    <![CDATA[
+        INSERT INTO tbl_cargo_version_crgv (crgv_pk, crgv_crgo_pk, crgv_fini, crgv_ffin)
+        VALUES (#{crgv.id}, #{id}, #{crgv.fini}, #{crgv.ffin})
+    ]]>
+    </insert>
+
+    <update id="update" parameterType="CargoVO">
+    <![CDATA[
+        UPDATE tbl_cargo_crgo SET
+            crgo_codigo_norm = #{codigoNormalizado}
+            , crgo_es_principal = #{principal, jdbcType=INTEGER, javaType=Boolean}
+            , crgo_es_temporal = #{temporal, jdbcType=INTEGER, javaType=Boolean}
+            , crgo_tipo = #{tipo}
+            , crgo_descripcion = #{descripcion}
+        WHERE
+            crgo_pk = #{id}
+    ]]>
+    </update>
+
+    <update id="updateVersion" parameterType="CargoVO">
+    <![CDATA[
+        UPDATE tbl_cargo_version_crgv SET
+            crgv_fini = #{crgv.fini}
+            , crgv_ffin = #{crgv.ffin}
+        WHERE
+            crgv_pk = #{crgv.id}
+    ]]>
+    </update>
+
+    <insert id="deleteVersion" parameterType="CargoVO">
+    <![CDATA[
+        DELETE FROM tbl_cargo_version_crgv
+        WHERE crgv_pk = #{crgv.id}
+    ]]>
+    </insert>
 </mapper>
