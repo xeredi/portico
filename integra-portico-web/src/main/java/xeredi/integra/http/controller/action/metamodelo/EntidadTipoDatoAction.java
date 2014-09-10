@@ -153,6 +153,27 @@ public final class EntidadTipoDatoAction extends BaseAction {
     }
 
     /**
+     * Removes the.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Action("entd-remove")
+    public String remove() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(entd);
+        Preconditions.checkNotNull(entd.getEntiId());
+        Preconditions.checkNotNull(entd.getTpdt());
+        Preconditions.checkNotNull(entd.getTpdt().getId());
+
+        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
+
+        entdBO.delete(entd);
+
+        return SUCCESS;
+    }
+
+    /**
      * Detalle.
      *
      * @return the string

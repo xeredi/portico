@@ -107,7 +107,7 @@ public class TipoServicioBO implements TipoServicio {
         final Long id = entiDAO.nextSequence();
 
         tpsrVO.setId(id);
-        tpsrVO.setTipo(TipoEntidad.P);
+        tpsrVO.setTipo(TipoEntidad.T);
 
         if (entiDAO.exists(tpsrVO)) {
             throw new DuplicateInstanceException(TipoServicioVO.class.getName(), tpsrVO);

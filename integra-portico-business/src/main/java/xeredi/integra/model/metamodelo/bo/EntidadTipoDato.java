@@ -11,7 +11,7 @@ public interface EntidadTipoDato {
 
     /**
      * Insert.
-     * 
+     *
      * @param entdVO
      *            the entd vo
      * @throws DuplicateInstanceException
@@ -21,7 +21,7 @@ public interface EntidadTipoDato {
 
     /**
      * Update.
-     * 
+     *
      * @param entdVO
      *            the entd vo
      */
@@ -29,7 +29,7 @@ public interface EntidadTipoDato {
 
     /**
      * Select.
-     * 
+     *
      * @param entiId
      *            the enti id
      * @param tpdtId
@@ -37,4 +37,13 @@ public interface EntidadTipoDato {
      * @return the entidad tipo dato vo
      */
     EntidadTipoDatoVO select(final Long entiId, final Long tpdtId);
+
+    /**
+     * Delete.
+     *
+     * @param entdVO
+     *            the entd vo
+     */
+    void delete(final EntidadTipoDatoVO entdVO);
+
 }

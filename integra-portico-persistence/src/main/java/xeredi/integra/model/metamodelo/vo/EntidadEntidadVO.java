@@ -12,7 +12,7 @@ public final class EntidadEntidadVO {
     private Long entiPadreId;
 
     /** The enti hija id. */
-    private Long entiHijaId;
+    private EntidadVO entiHija;
 
     /** The orden. */
     private Integer orden;
@@ -27,7 +27,7 @@ public final class EntidadEntidadVO {
 
     /**
      * Gets the enti padre id.
-     * 
+     *
      * @return the enti padre id
      */
     public Long getEntiPadreId() {
@@ -36,7 +36,7 @@ public final class EntidadEntidadVO {
 
     /**
      * Sets the enti padre id.
-     * 
+     *
      * @param value
      *            the new enti padre id
      */
@@ -46,26 +46,26 @@ public final class EntidadEntidadVO {
 
     /**
      * Gets the enti hija id.
-     * 
+     *
      * @return the enti hija id
      */
-    public Long getEntiHijaId() {
-        return entiHijaId;
+    public EntidadVO getEntiHija() {
+        return entiHija;
     }
 
     /**
      * Sets the enti hija id.
-     * 
+     *
      * @param value
      *            the new enti hija id
      */
-    public void setEntiHijaId(final Long value) {
-        entiHijaId = value;
+    public void setEntiHija(final EntidadVO value) {
+        entiHija = value;
     }
 
     /**
      * Gets the orden.
-     * 
+     *
      * @return the orden
      */
     public Integer getOrden() {
@@ -74,7 +74,7 @@ public final class EntidadEntidadVO {
 
     /**
      * Sets the orden.
-     * 
+     *
      * @param value
      *            the new orden
      */

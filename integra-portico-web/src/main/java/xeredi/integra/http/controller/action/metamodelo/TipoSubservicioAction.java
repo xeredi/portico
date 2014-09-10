@@ -146,6 +146,25 @@ public final class TipoSubservicioAction extends BaseAction {
     }
 
     /**
+     * Removes the.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Action("tpss-remove")
+    public String remove() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
+
+        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+
+        tpssBO.delete(enti.getId());
+
+        return SUCCESS;
+    }
+
+    /**
      * Detalle.
      *
      * @return the string

@@ -1,9 +1,12 @@
 package xeredi.integra.model.metamodelo.bo;
 
+import java.util.List;
+
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO;
+import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
@@ -37,11 +40,12 @@ public class EntidadEntidadBO implements EntidadEntidad {
     public final void insert(final EntidadEntidadVO enenVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(enenVO);
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
-        Preconditions.checkNotNull(enenVO.getEntiHijaId());
+        Preconditions.checkNotNull(enenVO.getEntiHija());
+        Preconditions.checkNotNull(enenVO.getEntiHija().getId());
         Preconditions.checkNotNull(enenVO.getOrden());
 
         final EntidadVO entiPadreVO = entiDAO.select(enenVO.getEntiPadreId());
-        final EntidadVO entiHijaVO = entiDAO.select(enenVO.getEntiHijaId());
+        final EntidadVO entiHijaVO = entiDAO.select(enenVO.getEntiHija().getId());
 
         if (entiPadreVO.getTipo() == TipoEntidad.P
                 && (entiHijaVO.getTipo() == TipoEntidad.T || entiHijaVO.getTipo() == TipoEntidad.S)) {
@@ -69,7 +73,8 @@ public class EntidadEntidadBO implements EntidadEntidad {
     public final void update(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenVO);
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
-        Preconditions.checkNotNull(enenVO.getEntiHijaId());
+        Preconditions.checkNotNull(enenVO.getEntiHija());
+        Preconditions.checkNotNull(enenVO.getEntiHija().getId());
         Preconditions.checkNotNull(enenVO.getOrden());
 
         final int updated = enenDAO.update(enenVO);
@@ -87,12 +92,37 @@ public class EntidadEntidadBO implements EntidadEntidad {
     public final void delete(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenVO);
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
-        Preconditions.checkNotNull(enenVO.getEntiHijaId());
+        Preconditions.checkNotNull(enenVO.getEntiHija());
+        Preconditions.checkNotNull(enenVO.getEntiHija().getId());
 
         final int updated = enenDAO.delete(enenVO);
 
         if (updated == 0) {
             throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public final List<EntidadEntidadVO> selectList(final EntidadEntidadCriterioVO enenCriterioVO) {
+        Preconditions.checkNotNull(enenCriterioVO);
+
+        return enenDAO.selectList(enenCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public final EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO) {
+        Preconditions.checkNotNull(enenCriterioVO);
+        Preconditions.checkNotNull(enenCriterioVO.getEntiPadreId());
+        Preconditions.checkNotNull(enenCriterioVO.getEntiHijaId());
+
+        return enenDAO.selectObject(enenCriterioVO);
     }
 }

@@ -37,7 +37,7 @@ public final class TipoSubparametroAction extends BaseAction {
      * @return the string
      */
     @Action("tpsp-create")
-    public String alta() {
+    public String create() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getTpprId());
 
@@ -54,7 +54,7 @@ public final class TipoSubparametroAction extends BaseAction {
      *             the instance not found exception
      */
     @Action("tpsp-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -79,7 +79,7 @@ public final class TipoSubparametroAction extends BaseAction {
      *             the duplicate instance exception
      */
     @Action("tpsp-save")
-    public String guardar() throws DuplicateInstanceException {
+    public String save() throws DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
 
@@ -139,6 +139,25 @@ public final class TipoSubparametroAction extends BaseAction {
     }
 
     /**
+     * Removes the.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Action("tpsp-remove")
+    public String remove() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
+
+        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
+
+        tpspBO.delete(enti.getId());
+
+        return SUCCESS;
+    }
+
+    /**
      * Detalle.
      *
      * @return the string
@@ -146,7 +165,7 @@ public final class TipoSubparametroAction extends BaseAction {
      *             the instance not found exception
      */
     @Action("tpsp-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 

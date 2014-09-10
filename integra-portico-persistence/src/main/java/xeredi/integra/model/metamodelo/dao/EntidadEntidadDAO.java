@@ -2,6 +2,7 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
+import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 
 // TODO: Auto-generated Javadoc
@@ -12,7 +13,7 @@ public interface EntidadEntidadDAO {
 
     /**
      * Exists.
-     * 
+     *
      * @param enenVO
      *            the enen vo
      * @return true, if successful
@@ -21,7 +22,7 @@ public interface EntidadEntidadDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param enenVO
      *            the enen vo
      */
@@ -29,7 +30,7 @@ public interface EntidadEntidadDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param enenVO
      *            the enen vo
      * @return the int
@@ -38,7 +39,7 @@ public interface EntidadEntidadDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param enenVO
      *            the enen vo
      * @return the int
@@ -47,8 +48,19 @@ public interface EntidadEntidadDAO {
 
     /**
      * Select list.
-     * 
+     *
+     * @param enenCriterioVO
+     *            the enen criterio vo
      * @return the list
      */
-    List<EntidadEntidadVO> selectList();
+    List<EntidadEntidadVO> selectList(final EntidadEntidadCriterioVO enenCriterioVO);
+
+    /**
+     * Select object.
+     *
+     * @param enenCriterioVO
+     *            the enen criterio vo
+     * @return the entidad entidad vo
+     */
+    EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO);
 }

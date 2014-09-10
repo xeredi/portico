@@ -177,6 +177,25 @@ public final class TipoParametroAction extends BaseAction {
     }
 
     /**
+     * Removes the.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Action("tppr-remove")
+    public String remove() throws InstanceNotFoundException {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
+
+        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
+
+        tpprBO.delete(enti.getId());
+
+        return SUCCESS;
+    }
+
+    /**
      * Detalle.
      *
      * @return the string

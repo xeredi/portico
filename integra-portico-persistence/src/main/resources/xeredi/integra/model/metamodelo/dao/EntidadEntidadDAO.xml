@@ -4,41 +4,68 @@
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO">
     <resultMap type="EntidadEntidadVO" id="ResultMap">
-        <id column="enen_entip_pk" property="entiPadreId" />
-        <id column="enen_entih_pk" property="entiHijaId" />
+        <id column="enen_entip_pk" />
+        <id column="enen_entih_pk" />
+
+        <result column="enen_entip_pk" property="entiPadreId" />
         <result column="enen_orden" property="orden" />
+
+        <association property="entiHija" javaType="EntidadVO">
+            <result column="enen_entih_pk" property="id" />
+            <result column="enti_codigo" property="codigo" />
+            <result column="enti_tipo" property="tipo" />
+            <result column="enti_nombre" property="nombre" />
+        </association>
     </resultMap>
 
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enen.enen_entip_pk, enen.enen_entih_pk, enen.enen_orden
+            enen_entip_pk, enen_entih_pk, enen_orden
+            , enti_codigo, enti_tipo, enti_nombre
         FROM
             tbl_entidad_entidad_enen enen
+            JOIN tbl_entidad_enti ON
+                enti_pk = enen_entih_pk
     ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <if test="entiPadreId != null">
+            AND enen_entip_pk = #{entiPadreId}
+        </if>
+        <if test="entiHijaId != null">
+            AND enen_entih_pk = #{entiHijaId}
+        </if>
     </sql>
 
     <select id="selectList" parameterType="EntidadEntidadCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
         <![CDATA[
-        ORDER BY enen.enen_entip_pk, enen.enen_entih_pk, enen.enen_orden
+        ORDER BY enen_entip_pk, enen_entih_pk, enen_orden
         ]]>
+    </select>
+
+    <select id="selectObject" parameterType="EntidadEntidadCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
     </select>
 
     <select id="exists" parameterType="EntidadEntidadCriterioVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
-        FROM tbl_entidad_entidad_enen enen
+        FROM tbl_entidad_entidad_enen
         WHERE
-            enen.enen_entip_pk = #{entiPadreId}
-            AND enen.enen_entih_pk = #{entiHijaId}
+            enen_entip_pk = #{entiPadreId}
+            AND enen_entih_pk = #{entiHijaId}
         ]]>
     </select>
 
     <insert id="insert" parameterType="EntidadEntidadVO">
         <![CDATA[
         INSERT INTO tbl_entidad_entidad_enen(enen_entip_pk, enen_entih_pk, enen_orden)
-        VALUES (#{entiPadreId}, #{entiHijaId}, #{orden})
+        VALUES (#{entiPadreId}, #{entiHija.id}, #{orden})
         ]]>
     </insert>
 
@@ -47,8 +74,8 @@
         UPDATE tbl_entidad_entidad_enen SET
             enen_orden = #{orden}
         WHERE
-            enen.enen_entip_pk = #{entiPadreId}
-            AND enen.enen_entih_pk = #{entiHijaId}
+            enen_entip_pk = #{entiPadreId}
+            AND enen_entih_pk = #{entiHija.id}
         ]]>
     </update>
 
@@ -56,8 +83,8 @@
         <![CDATA[
         DELETE FROM tbl_entidad_entidad_enen
         WHERE
-            enen.enen_entip_pk = #{entiPadreId}
-            AND enen.enen_entih_pk = #{entiHijaId}
+            enen_entip_pk = #{entiPadreId}
+            AND enen_entih_pk = #{entiHija.id}
         ]]>
     </update>
 </mapper>

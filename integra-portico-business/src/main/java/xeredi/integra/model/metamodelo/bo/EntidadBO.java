@@ -15,6 +15,7 @@ import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
@@ -93,11 +94,11 @@ public class EntidadBO implements Entidad {
         Preconditions.checkNotNull(tpdtMap);
 
         final Map<Long, EntidadVO> entiMap = entiDAO.selectMap(new EntidadCriterioVO());
-        final List<EntidadEntidadVO> enenList = enenDAO.selectList();
+        final List<EntidadEntidadVO> enenList = enenDAO.selectList(new EntidadEntidadCriterioVO());
 
         for (final EntidadEntidadVO enenVO : enenList) {
             final EntidadVO entiPadreVO = entiMap.get(enenVO.getEntiPadreId());
-            final EntidadVO entiHijaVO = entiMap.get(enenVO.getEntiHijaId());
+            final EntidadVO entiHijaVO = entiMap.get(enenVO.getEntiHija().getId());
 
             if (entiPadreVO.getEntiHijasList() == null) {
                 entiPadreVO.setEntiHijasList(new ArrayList<Long>());

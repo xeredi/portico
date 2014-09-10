@@ -72,6 +72,25 @@ public class EntidadTipoDatoBO implements EntidadTipoDato {
      */
     @Override
     @Transactional
+    public final void delete(final EntidadTipoDatoVO entdVO) {
+        Preconditions.checkNotNull(entdVO);
+        Preconditions.checkNotNull(entdVO.getEntiId());
+        Preconditions.checkNotNull(entdVO.getTpdt());
+        Preconditions.checkNotNull(entdVO.getTpdt().getId());
+
+        final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
+
+        entdCriterioVO.setEntiId(entdVO.getEntiId());
+        entdCriterioVO.setTpdtId(entdVO.getTpdt().getId());
+
+        entdDAO.deleteCriterio(entdCriterioVO);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
     public final EntidadTipoDatoVO select(final Long entiId, final Long tpdtId) {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(tpdtId);

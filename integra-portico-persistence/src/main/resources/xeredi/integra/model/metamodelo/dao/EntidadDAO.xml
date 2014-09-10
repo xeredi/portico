@@ -125,8 +125,7 @@
         FROM
             tbl_entidad_enti
         WHERE
-            enti_pk = #{id}
-            OR enti_codigo = #{codigo}
+            enti_codigo = #{codigo}
             OR enti_nombre = #{nombre}
         ]]>
     </select>

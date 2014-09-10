@@ -7,6 +7,7 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidad;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
+import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -35,7 +36,7 @@ public final class EntidadEntidadAction extends BaseAction {
      * @return the string
      */
     @Action("enen-create")
-    public String alta() {
+    public String create() {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
 
@@ -50,16 +51,21 @@ public final class EntidadEntidadAction extends BaseAction {
      * @return the string
      */
     @Action("enen-edit")
-    public String modificar() {
+    public String edit() {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
-        Preconditions.checkNotNull(enen.getEntiHijaId());
+        Preconditions.checkNotNull(enen.getEntiHija());
+        Preconditions.checkNotNull(enen.getEntiHija().getId());
 
         accion = ACCION_EDICION.edit;
 
         final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        // FIXME Busqueda
+        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
+        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
+
+        enen = enenBO.selectObject(enenCriterioVO);
 
         return SUCCESS;
     }
@@ -72,7 +78,7 @@ public final class EntidadEntidadAction extends BaseAction {
      *             the duplicate instance exception
      */
     @Action("enen-save")
-    public String guardar() throws DuplicateInstanceException {
+    public String save() throws DuplicateInstanceException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
 
@@ -100,15 +106,41 @@ public final class EntidadEntidadAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("enen-delete")
-    public String eliminar() throws InstanceNotFoundException {
+    @Action("enen-remove")
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
-        Preconditions.checkNotNull(enen.getEntiHijaId());
+        Preconditions.checkNotNull(enen.getEntiHija());
+        Preconditions.checkNotNull(enen.getEntiHija().getId());
 
         final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
 
         enenBO.delete(enen);
+
+        return SUCCESS;
+    }
+
+    /**
+     * Detail.
+     *
+     * @return the string
+     */
+    @Action("enen-detail")
+    public String detail() {
+        Preconditions.checkNotNull(enen);
+        Preconditions.checkNotNull(enen.getEntiPadreId());
+        Preconditions.checkNotNull(enen.getEntiHija());
+        Preconditions.checkNotNull(enen.getEntiHija().getId());
+
+        accion = ACCION_EDICION.edit;
+
+        final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
+
+        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
+        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
+
+        enen = enenBO.selectObject(enenCriterioVO);
 
         return SUCCESS;
     }

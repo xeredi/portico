@@ -54,7 +54,7 @@ public final class TipoServicioAction extends BaseAction {
      * @return the string
      */
     @Action("tpsr-create")
-    public String alta() {
+    public String create() {
         accion = ACCION_EDICION.create;
 
         enti = new TipoServicioVO();
@@ -70,7 +70,7 @@ public final class TipoServicioAction extends BaseAction {
      *             the instance not found exception
      */
     @Action("tpsr-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -91,7 +91,7 @@ public final class TipoServicioAction extends BaseAction {
      *             the duplicate instance exception
      */
     @Action("tpsr-save")
-    public String guardar() throws DuplicateInstanceException {
+    public String save() throws DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
 
@@ -149,6 +149,22 @@ public final class TipoServicioAction extends BaseAction {
     }
 
     /**
+     * Removes the.
+     *
+     * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    @Action("tpsr-remove")
+    public String remove() throws InstanceNotFoundException {
+        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
+
+        tpsrBO.delete(enti.getId());
+
+        return SUCCESS;
+    }
+
+    /**
      * Detalle.
      *
      * @return the string
@@ -156,7 +172,7 @@ public final class TipoServicioAction extends BaseAction {
      *             the instance not found exception
      */
     @Action("tpsr-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detail() throws InstanceNotFoundException {
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
         final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
