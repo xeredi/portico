@@ -4,13 +4,15 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.TipoEstadistica;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,11 +43,9 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpes-create")
-    public String alta() throws InstanceNotFoundException {
+    public String create() {
         accion = ACCION_EDICION.create;
 
         return SUCCESS;
@@ -55,16 +55,13 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpes-edit")
-    public String modificar() throws InstanceNotFoundException {
-        accion = ACCION_EDICION.edit;
+    public String modificar() {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
 
-        if (enti.getId() == null) {
-            throw new Error("Identificador de tipo de estadistica no especificado");
-        }
+        accion = ACCION_EDICION.edit;
 
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
@@ -77,18 +74,23 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
      */
     @Action("tpes-save")
-    public String guardar() throws DuplicateInstanceException {
-        // Validaciones
-        if (accion == ACCION_EDICION.edit) {
-            PropertyValidator.validateRequired(this, "tpes.id", enti.getId());
-        }
+    public String save() {
+        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(enti);
 
-        PropertyValidator.validateRequired(this, "tpes.codigo", enti.getCodigo());
-        PropertyValidator.validateRequired(this, "tpes.nombre", enti.getNombre());
+        // Validaciones
+        if (accion == ACCION_EDICION.create) {
+            if (enti.getCodigo() == null || enti.getCodigo().isEmpty()) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_codigo") }));
+            }
+            if (enti.getNombre() == null || enti.getNombre().isEmpty()) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_nombre") }));
+            }
+        } else {
+            Preconditions.checkNotNull(enti.getId());
+        }
 
         if (hasErrors()) {
             return SUCCESS;
@@ -99,13 +101,40 @@ public final class TipoEstadisticaAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpesBO.insert(enti);
+            try {
+                tpesBO.insert(enti);
+            } catch (final DuplicateInstanceException ex) {
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpes") }));
+            }
         } else {
             try {
                 tpesBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
+                addActionError(getText(ErrorCode.E00008.name(),
+                        new String[] { getText("tpes"), String.valueOf(enti.getId()) }));
             }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Removes the.
+     *
+     * @return the string
+     */
+    @Action("tpes-remove")
+    public String remove() {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
+
+        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
+
+        try {
+            tpesBO.delete(enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tpes"), String.valueOf(enti.getId()) }));
         }
 
         return SUCCESS;
@@ -115,11 +144,12 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpes-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detail() {
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
+
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
         enti = tpesBO.select(enti.getId());

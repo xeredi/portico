@@ -12,7 +12,6 @@ import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -81,11 +80,9 @@ public final class TipoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpdt-save")
-    public String save() throws InstanceNotFoundException {
+    public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(tpdt);
 

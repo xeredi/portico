@@ -50,11 +50,9 @@ public final class TipoSubparametroAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpsp-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -75,11 +73,9 @@ public final class TipoSubparametroAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
      */
     @Action("tpsp-save")
-    public String save() throws DuplicateInstanceException {
+    public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
 
@@ -126,12 +122,17 @@ public final class TipoSubparametroAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpspBO.insert(enti);
+            try {
+                tpspBO.insert(enti);
+            } catch (final DuplicateInstanceException ex) {
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpsp") }));
+            }
         } else {
             try {
                 tpspBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
+                addActionError(getText(ErrorCode.E00008.name(),
+                        new String[] { getText("tpsp"), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -142,17 +143,20 @@ public final class TipoSubparametroAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpsp-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
         final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
 
-        tpspBO.delete(enti.getId());
+        try {
+            tpspBO.delete(enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tpsp"), String.valueOf(enti.getId()) }));
+        }
 
         return SUCCESS;
     }
@@ -161,11 +165,9 @@ public final class TipoSubparametroAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpsp-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 

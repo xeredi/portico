@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -18,7 +17,6 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class TipoDatoListadoAction.
  */
-@ParentPackage("json-default")
 public final class TipoDatoListadoAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
@@ -53,7 +51,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-list")
-    public String listado() {
+    public String list() {
         final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
 
         tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
@@ -67,7 +65,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-filter")
-    public static String editarFiltro() {
+    public static String filter() {
         return SUCCESS;
     }
 

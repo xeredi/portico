@@ -91,6 +91,7 @@ public final class CodigoReferenciaAction extends BaseAction {
      */
     @Action("cdrf-save")
     public String save() {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
 

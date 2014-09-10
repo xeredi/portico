@@ -10,7 +10,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,11 +30,9 @@ public final class TipoParametroProxyAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tppr-proxy-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
         enti = TipoParametroProxy.select(enti.getId());
 
         if (enti.getEntiHijasList() != null) {
@@ -47,6 +44,7 @@ public final class TipoParametroProxyAction extends BaseAction {
         return SUCCESS;
     }
 
+    // get / set
     /**
      * Gets the enti.
      *
@@ -62,8 +60,8 @@ public final class TipoParametroProxyAction extends BaseAction {
      * @param value
      *            the enti
      */
-    public void setEnti(TipoParametroVO value) {
-        this.enti = value;
+    public void setEnti(final TipoParametroVO value) {
+        enti = value;
     }
 
     /**

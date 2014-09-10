@@ -2,13 +2,13 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -32,7 +32,7 @@ public final class EntidadAction extends BaseAction {
      * @return the string
      */
     @Action("enti-detail")
-    public String detalle() {
+    public String detail() {
         Preconditions.checkNotNull(entiId);
 
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
@@ -67,8 +67,8 @@ public final class EntidadAction extends BaseAction {
      * @param value
      *            the enti id
      */
-    public void setEntiId(Long value) {
-        this.entiId = value;
+    public void setEntiId(final Long value) {
+        entiId = value;
     }
 
 }

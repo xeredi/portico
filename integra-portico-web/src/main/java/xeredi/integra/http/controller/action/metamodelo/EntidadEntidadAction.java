@@ -74,26 +74,44 @@ public final class EntidadEntidadAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
      */
     @Action("enen-save")
-    public String save() throws DuplicateInstanceException {
+    public String save() {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
 
-        if (enen.getEntiPadreId() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enen_entiPadreId") }));
+        if (accion == ACCION_EDICION.create) {
+            if (enen.getEntiHija() == null || enen.getEntiHija().getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enen_entiHija") }));
+            }
+        } else {
+            Preconditions.checkNotNull(enen.getEntiHija());
+            Preconditions.checkNotNull(enen.getEntiHija().getId());
         }
 
         if (enen.getOrden() == null) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enen_orden") }));
         }
 
-        if (!hasErrors()) {
-            final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+        if (hasErrors()) {
+            return SUCCESS;
+        }
 
-            enenBO.insert(enen);
+        final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+
+        if (accion == ACCION_EDICION.create) {
+            try {
+                enenBO.insert(enen);
+            } catch (final DuplicateInstanceException ex) {
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("enen") }));
+            }
+        } else {
+            try {
+                enenBO.update(enen);
+            } catch (final InstanceNotFoundException ex) {
+                addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("enen"), String.valueOf(enen) }));
+            }
         }
 
         return SUCCESS;
@@ -103,11 +121,9 @@ public final class EntidadEntidadAction extends BaseAction {
      * Eliminar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("enen-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHija());
@@ -115,7 +131,11 @@ public final class EntidadEntidadAction extends BaseAction {
 
         final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
 
-        enenBO.delete(enen);
+        try {
+            enenBO.delete(enen);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("enen"), String.valueOf(enen) }));
+        }
 
         return SUCCESS;
     }

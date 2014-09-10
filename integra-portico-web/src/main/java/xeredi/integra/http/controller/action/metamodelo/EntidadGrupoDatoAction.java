@@ -4,6 +4,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDato;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
@@ -41,11 +42,9 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("engd-create")
-    public String alta() throws InstanceNotFoundException {
+    public String create() {
         if (engd.getEntiId() == null) {
             throw new Error("No se ha seleccionado una entidad");
         }
@@ -59,16 +58,18 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("engd-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String edit() {
         accion = ACCION_EDICION.edit;
 
         final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
-        engd = engdBO.select(engd.getEntiId(), engd.getNumero());
+        try {
+            engd = engdBO.select(engd.getEntiId(), engd.getNumero());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("engd"), String.valueOf(engd) }));
+        }
 
         return SUCCESS;
     }
@@ -77,11 +78,9 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("engd-save")
-    public String guardar() throws InstanceNotFoundException {
+    public String save() throws InstanceNotFoundException {
         final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
         PropertyValidator.validateRequired(this, "engd.entiId", engd.getEntiId());
@@ -96,11 +95,14 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             try {
                 engdBO.insert(engd);
             } catch (final DuplicateInstanceException ex) {
-                // FIXME Error
-                throw new Error("No implementado");
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("engd") }));
             }
         } else {
-            engdBO.update(engd);
+            try {
+                engdBO.update(engd);
+            } catch (final InstanceNotFoundException ex) {
+                addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("engd"), String.valueOf(engd) }));
+            }
         }
 
         return SUCCESS;
@@ -110,14 +112,16 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("engd-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detail() {
         final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
 
-        engd = engdBO.select(engd.getEntiId(), engd.getNumero());
+        try {
+            engd = engdBO.select(engd.getEntiId(), engd.getNumero());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("engd"), String.valueOf(engd) }));
+        }
 
         return SUCCESS;
     }

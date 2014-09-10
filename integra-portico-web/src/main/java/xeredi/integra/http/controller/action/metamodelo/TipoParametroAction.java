@@ -62,11 +62,9 @@ public final class TipoParametroAction extends BaseAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tppr-create")
-    public String create() throws InstanceNotFoundException {
+    public String create() {
         accion = ACCION_EDICION.create;
 
         enti = new TipoParametroVO();
@@ -78,11 +76,9 @@ public final class TipoParametroAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tppr-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -116,11 +112,9 @@ public final class TipoParametroAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
      */
     @Action("tppr-save")
-    public String save() throws DuplicateInstanceException {
+    public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
 
@@ -164,12 +158,17 @@ public final class TipoParametroAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpprBO.insert(enti);
+            try {
+                tpprBO.insert(enti);
+            } catch (final DuplicateInstanceException ex) {
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tppr") }));
+            }
         } else {
             try {
                 tpprBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
+                addActionError(getText(ErrorCode.E00008.name(),
+                        new String[] { getText("tppr"), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -180,17 +179,20 @@ public final class TipoParametroAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tppr-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
         final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
 
-        tpprBO.delete(enti.getId());
+        try {
+            tpprBO.delete(enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tppr"), String.valueOf(enti.getId()) }));
+        }
 
         return SUCCESS;
     }
@@ -199,11 +201,9 @@ public final class TipoParametroAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tppr-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 

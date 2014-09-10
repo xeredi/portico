@@ -16,7 +16,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -49,11 +48,9 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("entd-create")
-    public String create() throws InstanceNotFoundException {
+    public String create() {
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
 
@@ -87,11 +84,9 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("entd-save")
-    public String save() throws InstanceNotFoundException {
+    public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
@@ -156,11 +151,9 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("entd-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() {
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
         Preconditions.checkNotNull(entd.getTpdt());

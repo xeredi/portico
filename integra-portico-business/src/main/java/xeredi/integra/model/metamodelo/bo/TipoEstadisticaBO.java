@@ -27,9 +27,12 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class TipoEstadisticaBO implements TipoEstadistica {
+
+    /** The tpes dao. */
     @Inject
     TipoEstadisticaDAO tpesDAO;
 
+    /** The enti dao. */
     @Inject
     EntidadDAO entiDAO;
 
@@ -123,13 +126,11 @@ public class TipoEstadisticaBO implements TipoEstadistica {
         Preconditions.checkNotNull(tpesVO);
         Preconditions.checkNotNull(tpesVO.getId());
 
-        final int updated = tpesDAO.update(tpesVO);
+        final int updated = entiDAO.update(tpesVO);
 
         if (updated == 0) {
             throw new InstanceNotFoundException(TipoEstadisticaVO.class.getName(), tpesVO);
         }
-
-        entiDAO.update(tpesVO);
     }
 
     /**

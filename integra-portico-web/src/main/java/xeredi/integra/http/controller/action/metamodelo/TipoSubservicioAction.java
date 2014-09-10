@@ -63,11 +63,9 @@ public final class TipoSubservicioAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpss-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -84,11 +82,9 @@ public final class TipoSubservicioAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
      */
     @Action("tpss-save")
-    public String save() throws DuplicateInstanceException {
+    public String save() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getTpsr());
         Preconditions.checkNotNull(enti.getTpsr().getId());
@@ -133,12 +129,17 @@ public final class TipoSubservicioAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpssBO.insert(enti);
+            try {
+                tpssBO.insert(enti);
+            } catch (final DuplicateInstanceException ex) {
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpss") }));
+            }
         } else {
             try {
                 tpssBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
+                addActionError(getText(ErrorCode.E00008.name(),
+                        new String[] { getText("tpss"), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -149,17 +150,20 @@ public final class TipoSubservicioAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpss-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
         final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
 
-        tpssBO.delete(enti.getId());
+        try {
+            tpssBO.delete(enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tpss"), String.valueOf(enti.getId()) }));
+        }
 
         return SUCCESS;
     }

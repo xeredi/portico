@@ -877,12 +877,12 @@ metamodelo.controller("tpssCreateController", function($scope, $http, $location,
 metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
-    .when("/metamodelo/tpes", {
-        templateUrl : "modules/metamodelo/tpes-filter.html",
-        controller : "tpesFilterController"
+    .when("/metamodelo/tpes/grid", {
+        templateUrl : "modules/metamodelo/tpes-grid.html",
+        controller : "tpesGridController"
     })
 
-    .when("/metamodelo/tpes/grid", {
+    .when("/metamodelo/tpes/grid/:page", {
         templateUrl : "modules/metamodelo/tpes-grid.html",
         controller : "tpesGridController"
     })
@@ -903,36 +903,50 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-metamodelo.controller("tpesFilterController", function($scope, $http, $location) {
-    $scope.submit = function(form) {
-        console.log("tpesFilterController Submit");
-
-        $location.path("/metamodelo/tpes/grid").search({
-            entiCriterio : {
-                codigo : $scope.entiCriterio.codigo,
-                nombre : $scope.entiCriterio.nombre
-            },
-            page : $scope.page
-        });
-    }
-
-    $scope.page = 1;
-    $scope.limit = 20;
-});
-
 metamodelo.controller("tpesGridController", function($scope, $http, $location, $route, $routeParams) {
+    loaded = false;
+
+    $scope.showFilter = false;
+    $scope.page = $routeParams.page ? $routeParams.page : 1;
+    $scope.limit = 20;
     $scope.entiCriterio = $routeParams.entiCriterio;
-    $scope.page = $routeParams.page;
 
     var url = "metamodelo/tpes-list.action";
 
     $http.post(url, {
         entiCriterio : $scope.entiCriterio,
-        limit : $scope.limit,
         page : $scope.page
     }).success(function(data) {
         $scope.entiList = data.entiList;
+        $scope.page = data.page;
+        $scope.currentPage = data.page;
+        $scope.limit = data.entiList.limit;
+        loaded = true;
     });
+
+    $scope.pageChanged = function() {
+        if (loaded) {
+            $location.path("/metamodelo/tpes/grid/" + $scope.currentPage).replace();
+        }
+    }
+
+    $scope.filter = function() {
+        $scope.showFilter = true;
+    }
+
+    $scope.search = function() {
+        $location.path("/metamodelo/tpes/grid").search({
+            entiCriterio : {
+                codigo : $scope.entiCriterio.codigo,
+                nombre : $scope.entiCriterio.nombre
+            },
+            page : 1
+        }).replace();
+    }
+
+    $scope.cancelSearch = function() {
+        $scope.showFilter = false;
+    }
 });
 
 metamodelo.controller("tpesDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -942,6 +956,26 @@ metamodelo.controller("tpesDetailController", function($scope, $http, $location,
         $scope.enti = data.enti;
         $scope.subentiList = data.subentiList;
     });
+
+    $scope.edit = function() {
+        $location.path("/metamodelo/tpes/edit/" + $scope.enti.id).replace();
+    }
+
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "metamodelo/tpes-remove.action?enti.id=" + $scope.enti.id;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
+    }
 });
 
 metamodelo.controller("tpesEditController", function($scope, $http, $location, $route, $routeParams) {
@@ -952,7 +986,7 @@ metamodelo.controller("tpesEditController", function($scope, $http, $location, $
         $scope.accion = data.accion;
     });
 
-    $scope.submit = function(form) {
+    $scope.save = function() {
         var url = "metamodelo/tpes-save.action";
 
         $http.post(url, {
@@ -960,11 +994,15 @@ metamodelo.controller("tpesEditController", function($scope, $http, $location, $
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpes/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpes/detail/" + data.enti.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
         });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/metamodelo/tpes/detail/" + $scope.enti.id).replace();
     }
 });
 
@@ -976,7 +1014,7 @@ metamodelo.controller("tpesCreateController", function($scope, $http, $location,
         $scope.accion = data.accion;
     });
 
-    $scope.submit = function(form) {
+    $scope.save = function() {
         var url = "metamodelo/tpes-save.action";
 
         $http.post(url, {
@@ -984,11 +1022,15 @@ metamodelo.controller("tpesCreateController", function($scope, $http, $location,
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpes/detail/" + data.enti.id);
+                $location.path("/metamodelo/tpes/detail/" + data.enti.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
         });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
     }
 });
 

@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -51,7 +50,7 @@ public final class TipoServicioListadoAction extends BaseAction {
      * @return the string
      */
     @Action("tpsr-list")
-    public String listado() {
+    public String list() {
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
         if (entiCriterio.getCodigo() != null) {
@@ -71,8 +70,8 @@ public final class TipoServicioListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("tpsr-filter") })
-    public static String editarFiltro() {
+    @Action("tpsr-filter")
+    public static String filter() {
         return SUCCESS;
     }
 
@@ -111,8 +110,8 @@ public final class TipoServicioListadoAction extends BaseAction {
      * @param value
      *            the enti criterio
      */
-    public void setEntiCriterio(TipoServicioCriterioVO value) {
-        this.entiCriterio = value;
+    public void setEntiCriterio(final TipoServicioCriterioVO value) {
+        entiCriterio = value;
     }
 
     /**

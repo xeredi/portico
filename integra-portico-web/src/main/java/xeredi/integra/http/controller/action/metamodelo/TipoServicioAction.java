@@ -66,11 +66,9 @@ public final class TipoServicioAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpsr-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -78,7 +76,12 @@ public final class TipoServicioAction extends BaseAction {
 
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
-        enti = tpsrBO.select(enti.getId());
+        try {
+            enti = tpsrBO.select(enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tpsr"), String.valueOf(enti.getId()) }));
+        }
 
         return SUCCESS;
     }
@@ -87,11 +90,9 @@ public final class TipoServicioAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
      */
     @Action("tpsr-save")
-    public String save() throws DuplicateInstanceException {
+    public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
 
@@ -136,12 +137,17 @@ public final class TipoServicioAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
-            tpsrBO.insert(enti);
+            try {
+                tpsrBO.insert(enti);
+            } catch (final DuplicateInstanceException ex) {
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpsr") }));
+            }
         } else {
             try {
                 tpsrBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
+                addActionError(getText(ErrorCode.E00008.name(),
+                        new String[] { getText("tpsr"), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -152,14 +158,17 @@ public final class TipoServicioAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpsr-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() {
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
 
-        tpsrBO.delete(enti.getId());
+        try {
+            tpsrBO.delete(enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tpsr"), String.valueOf(enti.getId()) }));
+        }
 
         return SUCCESS;
     }
@@ -168,30 +177,33 @@ public final class TipoServicioAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("tpsr-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() {
         final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
         final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
         final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
 
-        enti = tpsrBO.select(enti.getId());
+        try {
+            enti = tpsrBO.select(enti.getId());
 
-        TipoSubservicioCriterioVO tpssCriterioVO = null;
+            TipoSubservicioCriterioVO tpssCriterioVO = null;
 
-        tpssCriterioVO = new TipoSubservicioCriterioVO();
-        tpssCriterioVO.setTpsrId(enti.getId());
-        subentiList.addAll(tpssBO.selectList(tpssCriterioVO));
+            tpssCriterioVO = new TipoSubservicioCriterioVO();
+            tpssCriterioVO.setTpsrId(enti.getId());
+            subentiList.addAll(tpssBO.selectList(tpssCriterioVO));
 
-        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-            EntidadCriterioVO entiCriterioVO = null;
+            if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
+                EntidadCriterioVO entiCriterioVO = null;
 
-            entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiPadreId(enti.getId());
+                entiCriterioVO = new EntidadCriterioVO();
+                entiCriterioVO.setEntiPadreId(enti.getId());
 
-            entiHijasList.addAll(entiBO.selectList(entiCriterioVO));
+                entiHijasList.addAll(entiBO.selectList(entiCriterioVO));
+            }
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("tpsr"), String.valueOf(enti.getId()) }));
         }
 
         return SUCCESS;

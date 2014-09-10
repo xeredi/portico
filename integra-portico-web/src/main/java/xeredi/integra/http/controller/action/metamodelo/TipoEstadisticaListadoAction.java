@@ -51,7 +51,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      * @return the string
      */
     @Action("tpes-list")
-    public String listado() {
+    public String list() {
         final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
 
         if (entiCriterio.getCodigo() != null) {
@@ -72,7 +72,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      * @return the string
      */
     @Actions({ @Action("tpes-filter") })
-    public String editarFiltro() {
+    public String filter() {
         return SUCCESS;
     }
 
@@ -112,8 +112,8 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      * @param value
      *            the enti criterio
      */
-    public void setEntiCriterio(TipoEstadisticaCriterioVO value) {
-        this.entiCriterio = value;
+    public void setEntiCriterio(final TipoEstadisticaCriterioVO value) {
+        entiCriterio = value;
     }
 
     /**

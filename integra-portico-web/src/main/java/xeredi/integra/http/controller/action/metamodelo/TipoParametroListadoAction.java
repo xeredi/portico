@@ -51,7 +51,7 @@ public final class TipoParametroListadoAction extends BaseAction {
      * @return the string
      */
     @Action("tppr-list")
-    public String listado() {
+    public String list() {
         if (entiCriterio.getCodigo() != null) {
             entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
         }
@@ -72,7 +72,7 @@ public final class TipoParametroListadoAction extends BaseAction {
      * @return the string
      */
     @Actions({ @Action("tppr-filter") })
-    public static String editarFiltro() {
+    public static String filter() {
         return SUCCESS;
     }
 
@@ -111,8 +111,8 @@ public final class TipoParametroListadoAction extends BaseAction {
      * @param value
      *            the enti criterio
      */
-    public void setEntiCriterio(TipoParametroCriterioVO value) {
-        this.entiCriterio = value;
+    public void setEntiCriterio(final TipoParametroCriterioVO value) {
+        entiCriterio = value;
     }
 
     /**

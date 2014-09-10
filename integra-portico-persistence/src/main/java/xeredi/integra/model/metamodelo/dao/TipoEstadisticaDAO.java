@@ -16,7 +16,7 @@ public interface TipoEstadisticaDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpesCriterioVO
      *            the tpes criterio vo
      * @return the list
@@ -25,7 +25,7 @@ public interface TipoEstadisticaDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpesCriterioVO
      *            the tpes criterio vo
      * @param bounds
@@ -36,7 +36,7 @@ public interface TipoEstadisticaDAO {
 
     /**
      * Select label values.
-     * 
+     *
      * @param tpesCriterioVO
      *            the tpes criterio vo
      * @return the list
@@ -45,7 +45,7 @@ public interface TipoEstadisticaDAO {
 
     /**
      * Select.
-     * 
+     *
      * @param tpesId
      *            the tpes id
      * @return the tipo estadistica vo
@@ -54,7 +54,7 @@ public interface TipoEstadisticaDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param tpesCriterioVO
      *            the tpes criterio vo
      * @return the int
@@ -63,24 +63,15 @@ public interface TipoEstadisticaDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param tpesVO
      *            the tpes vo
      */
     void insert(final TipoEstadisticaVO tpesVO);
 
     /**
-     * Update.
-     * 
-     * @param tpesVO
-     *            the tpes vo
-     * @return the int
-     */
-    int update(final TipoEstadisticaVO tpesVO);
-
-    /**
      * Delete.
-     * 
+     *
      * @param tpesId
      *            the tpes id
      * @return the int
