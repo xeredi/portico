@@ -22,6 +22,9 @@ public final class ValoracionLineaVO {
     /** The vlrc id. */
     private Long vlrcId;
 
+    /** The fref. */
+    private Date fref;
+
     /** The rgla. */
     private ReglaVO rgla;
 
@@ -102,8 +105,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -121,8 +124,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the vlrc id
      */
-    public void setVlrcId(Long value) {
-        this.vlrcId = value;
+    public void setVlrcId(final Long value) {
+        vlrcId = value;
     }
 
     /**
@@ -140,8 +143,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the rgla
      */
-    public void setRgla(ReglaVO value) {
-        this.rgla = value;
+    public void setRgla(final ReglaVO value) {
+        rgla = value;
     }
 
     /**
@@ -159,8 +162,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the importe base
      */
-    public void setImporteBase(Double value) {
-        this.importeBase = value;
+    public void setImporteBase(final Double value) {
+        importeBase = value;
     }
 
     /**
@@ -178,8 +181,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the importe
      */
-    public void setImporte(Double value) {
-        this.importe = value;
+    public void setImporte(final Double value) {
+        importe = value;
     }
 
     /**
@@ -197,8 +200,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the impuesto
      */
-    public void setImpuesto(ParametroVO value) {
-        this.impuesto = value;
+    public void setImpuesto(final ParametroVO value) {
+        impuesto = value;
     }
 
     /**
@@ -216,8 +219,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the ssrv
      */
-    public void setSsrv(SubservicioVO value) {
-        this.ssrv = value;
+    public void setSsrv(final SubservicioVO value) {
+        ssrv = value;
     }
 
     /**
@@ -235,8 +238,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the cuant1
      */
-    public void setCuant1(Double value) {
-        this.cuant1 = value;
+    public void setCuant1(final Double value) {
+        cuant1 = value;
     }
 
     /**
@@ -254,8 +257,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the cuant2
      */
-    public void setCuant2(Double value) {
-        this.cuant2 = value;
+    public void setCuant2(final Double value) {
+        cuant2 = value;
     }
 
     /**
@@ -273,8 +276,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the cuant3
      */
-    public void setCuant3(Double value) {
-        this.cuant3 = value;
+    public void setCuant3(final Double value) {
+        cuant3 = value;
     }
 
     /**
@@ -292,8 +295,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the cuant4
      */
-    public void setCuant4(Double value) {
-        this.cuant4 = value;
+    public void setCuant4(final Double value) {
+        cuant4 = value;
     }
 
     /**
@@ -311,8 +314,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the cuant5
      */
-    public void setCuant5(Double value) {
-        this.cuant5 = value;
+    public void setCuant5(final Double value) {
+        cuant5 = value;
     }
 
     /**
@@ -330,8 +333,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the cuant6
      */
-    public void setCuant6(Double value) {
-        this.cuant6 = value;
+    public void setCuant6(final Double value) {
+        cuant6 = value;
     }
 
     /**
@@ -349,8 +352,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the info1
      */
-    public void setInfo1(String value) {
-        this.info1 = value;
+    public void setInfo1(final String value) {
+        info1 = value;
     }
 
     /**
@@ -368,8 +371,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the info2
      */
-    public void setInfo2(String value) {
-        this.info2 = value;
+    public void setInfo2(final String value) {
+        info2 = value;
     }
 
     /**
@@ -387,8 +390,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the info3
      */
-    public void setInfo3(String value) {
-        this.info3 = value;
+    public void setInfo3(final String value) {
+        info3 = value;
     }
 
     /**
@@ -406,8 +409,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the info4
      */
-    public void setInfo4(String value) {
-        this.info4 = value;
+    public void setInfo4(final String value) {
+        info4 = value;
     }
 
     /**
@@ -425,8 +428,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the info5
      */
-    public void setInfo5(String value) {
-        this.info5 = value;
+    public void setInfo5(final String value) {
+        info5 = value;
     }
 
     /**
@@ -444,8 +447,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the info6
      */
-    public void setInfo6(String value) {
-        this.info6 = value;
+    public void setInfo6(final String value) {
+        info6 = value;
     }
 
     /**
@@ -463,8 +466,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the fini
      */
-    public void setFini(Date value) {
-        this.fini = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
@@ -482,8 +485,8 @@ public final class ValoracionLineaVO {
      * @param value
      *            the ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
+    public void setFfin(final Date value) {
+        ffin = value;
     }
 
     /**
@@ -501,8 +504,27 @@ public final class ValoracionLineaVO {
      * @param value
      *            the new padre id
      */
-    public void setPadreId(Long value) {
-        this.padreId = value;
+    public void setPadreId(final Long value) {
+        padreId = value;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
     }
 
 }

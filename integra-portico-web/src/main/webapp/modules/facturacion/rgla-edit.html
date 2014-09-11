@@ -92,7 +92,7 @@
             </div>
         </div>
 
-        <div ng-if="rgla.tipo == 'T'" class="row">
+        <div ng-if="rgla.rglv.tipo == 'T'" class="row">
             <div class="col-md-6 form-group">
                 <label>{{"rgla_pathImpuesto" | translate}}</label> <input type="text" ng-model="rgla.rglv.pathImpuesto"
                     class="form-control input-sm" />
@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <div ng-if="rgla.tipo == 'T'" class="row">
+        <div ng-if="rgla.rglv.tipo == 'T'" class="row">
             <div class="col-md-6 form-group">
                 <label>{{"rgla_pathEsSujPasivo" | translate}}</label> <input type="text"
                     ng-model="rgla.rglv.pathEsSujPasivo" class="form-control input-sm" />
@@ -115,7 +115,7 @@
         </div>
     </fieldset>
 
-    <fieldset ng-if="rgla.tipo == 'T'">
+    <fieldset ng-if="rgla.rglv.tipo == 'T'">
         <legend>{{'Elementos Informativos' | uppercase}}</legend>
 
         <div class="row">
@@ -165,7 +165,7 @@
         </div>
     </fieldset>
 
-    <fieldset ng-if="rgla.tipo == 'T'">
+    <fieldset ng-if="rgla.rglv.tipo == 'T'">
         <legend>{{'Elementos Cuantitativos' | uppercase}}</legend>
 
         <div class="row">

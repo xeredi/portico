@@ -75,6 +75,10 @@ table {
 	margin: 5px;
 }
 
+.nav, .pagination, .carousel, .panel-title a {
+	cursor: pointer;
+}
+
 /*
 .jumbotron {
 	background-color: white;

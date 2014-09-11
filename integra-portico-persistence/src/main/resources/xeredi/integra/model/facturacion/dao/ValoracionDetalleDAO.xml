@@ -9,6 +9,7 @@
         <result column="vlrd_pk" property="id" />
         <result column="vlrd_vlrc_pk" property="vlrcId" />
         <result column="vlrd_vlrl_pk" property="vlrlId" />
+        <result column="vlrd_fref" property="fref" />
         <result column="vlrd_valor_base" property="valorBase" />
         <result column="vlrd_importe_base" property="importeBase" />
         <result column="vlrd_importe" property="importe" />

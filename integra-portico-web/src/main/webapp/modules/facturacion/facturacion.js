@@ -662,7 +662,14 @@ facturacion.controller("aspcCreateController", function($scope, $http, $location
 });
 
 facturacion.controller("aspcDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "facturacion/aspc-detail.action?aspc.aspv.id=" + $routeParams.aspvId;
+    var url = "facturacion/aspc-detail.action";
+
+    if ($routeParams.fechaVigencia) {
+        $scope.fechaVigencia = $routeParams.fechaVigencia;
+        url += "?aspc.id=" + $routeParams.aspcId + "&fechaVigencia=" + $routeParams.fechaVigencia;
+    } else {
+        url += "?aspc.aspv.id=" + $routeParams.aspvId;
+    }
 
     $http.get(url).success(function(data) {
         $scope.urlInclude = 'modules/facturacion/aspc-detail.html';

@@ -130,6 +130,11 @@ CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 			FROM portico.tbl_valoracion_det_vlrd
 			WHERE vlrd_vlrl_pk = vlrl_pk
 		) AS vlrl_importe
+		, (
+			SELECT vlrc_fref
+			FROM portico.tbl_valoracion_vlrc
+			WHERE vlrc_pk = vlrl_vlrc_pk
+		) AS vlrl_fref
 	FROM 
 		portico.tbl_valoracion_lin_vlrl
 		INNER JOIN portico.tbl_parametro_prmt ON
@@ -155,6 +160,11 @@ GRANT SELECT ON portico.vw_valoracion_lin_vlrl TO portico
 
 CREATE VIEW portico.vw_valoracion_det_vlrd AS
 	SELECT * 
+		, (
+			SELECT vlrc_fref
+			FROM portico.tbl_valoracion_vlrc
+			WHERE vlrc_pk = vlrd_vlrc_pk
+		) AS vlrd_fref
 	FROM portico.tbl_valoracion_det_vlrd
 		LEFT JOIN portico.tbl_subservicio_ssrv ON
 			ssrv_pk = vlrd_ssrv_pk
