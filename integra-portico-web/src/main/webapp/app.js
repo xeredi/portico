@@ -1,4 +1,4 @@
-var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.router', 'ui.bootstrap.datetimepicker',
+var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.bootstrap.datetimepicker',
         'pascalprecht.translate', 'ngRoute', 'metamodelo', 'facturacion'/*
                                                                          * 'configuracion',
                                                                          * 'maestro',
@@ -158,14 +158,14 @@ app.config(function($translateProvider) {
         aspc_codigo : 'C\u00f3digo',
         aspc_descripcion : 'Descripci\u00f3n',
         aspc_tpsr : 'Tipo de Servicio',
-        aspc_aspv_fini : 'F. Inicio',
-        aspc_aspv_ffin : 'F. Fin',
-        aspc_aspv_prioridad : 'Prioridad',
-        aspc_aspv_cetiqInfo : 'Etiq. Elem. Cabecera',
-        aspc_aspv_cpathInfo : 'Ruta Elem. Cabecera',
-        aspc_aspv_cgrpInfo : 'Elem. de Agrupaci\u00f3n?',
-        aspc_aspv_lsumCuant : "Elem. Sumarizable?",
-        aspc_aspv_lgrpInfo : 'Elem. de Agrupaci\u00f3n?',
+        aspc_fini : 'F. Inicio',
+        aspc_ffin : 'F. Fin',
+        aspc_prioridad : 'Prioridad',
+        aspc_cetiqInfo : 'Etiq. Elem. Cabecera',
+        aspc_cpathInfo : 'Ruta Elem. Cabecera',
+        aspc_cgrpInfo : 'Elem. de Agrupaci\u00f3n?',
+        aspc_lsumCuant : "Elem. Sumarizable?",
+        aspc_lgrpInfo : 'Elem. de Agrupaci\u00f3n?',
 
         crgo_codigo : 'C\u00f3digo',
         crgo_descripcion : 'Descripci\u00f3n',
@@ -174,8 +174,8 @@ app.config(function($translateProvider) {
         crgo_tpsr : 'Tipo Servicio',
         crgo_principal : 'Principal?',
         crgo_temporal : 'Temporal?',
-        crgo_crgv_fini : 'F. Inicio',
-        crgo_crgv_ffin : 'F. Fin',
+        crgo_fini : 'F. Inicio',
+        crgo_ffin : 'F. Fin',
         crgo_fechaVigencia : 'F. Vigencia',
 
         rgla_codigo : 'C\u00f3digo',
@@ -261,34 +261,4 @@ app.config(function($translateProvider) {
 
     $translateProvider.preferredLanguage('es');
 });
-/*
- * app.config(function($stateProvider, $urlRouterProvider) {
- * $urlRouterProvider.when('/c?id', '/contacts/:id').when('/user/:id',
- * '/contacts/:id')//.otherwise('/') ;
- *
- * $stateProvider.state("home", { url : "/", templateUrl : 'modules/home.html' })
- *
- * .state('tpsrs', { url : '/servicio/tpsrs', templateUrl :
- * 'modules/servicio/tpsr-listado.html', controller : function($http, $scope) {
- * $http.get("servicio/tpsr-listado-json.action").success(function(data) { //
- * console.log(data); $scope.tpsrList = data.tpsrList; $scope.tpssMap =
- * data.tpssMap; }); } })
- *
- * .state('tpprs', { url : '/maestro/tpprs', templateUrl :
- * 'modules/maestro/tppr-listado.html', controller : function($http, $scope) {
- * $http.get("maestro/tppr-listado-json.action").success(function(data) { //
- * console.log(data); $scope.tpprList = data.tpprList; }); } })
- *
- * .state('peprs', { url : '/estadistica/peprs', templateUrl :
- * 'modules/estadistica/pepr-listado.html', controller : function($http, $scope) {
- * $http.get("estadistica/pepr-listado-json.action").success(function(data) { //
- * console.log(data); $scope.peprList = data.peprList; }); } })
- *
- * .state('prbts', { url : '/proceso/prbts', templateUrl :
- * 'modules/proceso/prbt-listado.html', controller : function($http, $scope) {
- * $http.get("proceso/prbt-listado-json.action").success(function(data) { //
- * console.log(data); $scope.prbtList = data.prbtList; }); } })
- *
- * .state('fctrmain', { url : '/facturacion/main', templateUrl :
- * 'modules/facturacion/facturacion.html' }) })
- */;
+

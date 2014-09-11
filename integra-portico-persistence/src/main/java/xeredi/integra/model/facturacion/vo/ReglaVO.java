@@ -2,8 +2,6 @@ package xeredi.integra.model.facturacion.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaVO.
@@ -18,12 +16,6 @@ public final class ReglaVO {
 
     /** The crgo. */
     private CargoVO crgo;
-
-    /** The enti. */
-    private EntidadVO enti;
-
-    /** The tipo. */
-    private ReglaTipo tipo;
 
     /** The rglv. */
     private ReglaVersionVO rglv;
@@ -51,8 +43,8 @@ public final class ReglaVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -70,8 +62,8 @@ public final class ReglaVO {
      * @param value
      *            the codigo
      */
-    public void setCodigo(String value) {
-        this.codigo = value;
+    public void setCodigo(final String value) {
+        codigo = value;
     }
 
     /**
@@ -89,46 +81,8 @@ public final class ReglaVO {
      * @param value
      *            the crgo
      */
-    public void setCrgo(CargoVO value) {
-        this.crgo = value;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public EntidadVO getEnti() {
-        return enti;
-    }
-
-    /**
-     * Sets the enti.
-     *
-     * @param value
-     *            the enti
-     */
-    public void setEnti(EntidadVO value) {
-        this.enti = value;
-    }
-
-    /**
-     * Gets the tipo.
-     *
-     * @return the tipo
-     */
-    public ReglaTipo getTipo() {
-        return tipo;
-    }
-
-    /**
-     * Sets the tipo.
-     *
-     * @param value
-     *            the tipo
-     */
-    public void setTipo(ReglaTipo value) {
-        this.tipo = value;
+    public void setCrgo(final CargoVO value) {
+        crgo = value;
     }
 
     /**
@@ -146,8 +100,8 @@ public final class ReglaVO {
      * @param value
      *            the rglv
      */
-    public void setRglv(ReglaVersionVO value) {
-        this.rglv = value;
+    public void setRglv(final ReglaVersionVO value) {
+        rglv = value;
     }
 
 }

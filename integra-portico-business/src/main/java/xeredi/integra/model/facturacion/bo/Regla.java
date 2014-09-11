@@ -42,6 +42,8 @@ public interface Regla {
      * @param rglaCriterioVO
      *            the rgla criterio vo
      * @return the regla vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     ReglaVO select(final ReglaCriterioVO rglaCriterioVO) throws InstanceNotFoundException;
 
@@ -62,8 +64,10 @@ public interface Regla {
      *            the rgla
      * @throws InstanceNotFoundException
      *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    void update(final ReglaVO rgla) throws InstanceNotFoundException;
+    void update(final ReglaVO rgla) throws InstanceNotFoundException, OverlapException;
 
     /**
      * Delete.

@@ -7,16 +7,16 @@
         <id column="crgv_pk" />
         <result column="crgo_pk" property="id" />
         <result column="crgo_codigo" property="codigo" />
-        <result column="crgo_codigo_norm" property="codigoNormalizado" />
-        <result column="crgo_es_principal" property="principal" />
-        <result column="crgo_es_temporal" property="temporal" />
-        <result column="crgo_tipo" property="tipo" />
-        <result column="crgo_descripcion" property="descripcion" />
 
         <association property="crgv" javaType="CargoVersionVO">
             <result column="crgv_pk" property="id" />
             <result column="crgv_fini" property="fini" />
             <result column="crgv_ffin" property="ffin" />
+            <result column="crgv_codigo_norm" property="codigoNormalizado" />
+            <result column="crgv_es_principal" property="principal" />
+            <result column="crgv_es_temporal" property="temporal" />
+            <result column="crgv_tipo" property="tipo" />
+            <result column="crgv_descripcion" property="descripcion" />
         </association>
 
         <association property="tpsr" resultMap="xeredi.integra.model.metamodelo.dao.TipoServicioDAO.ResultMap" />
@@ -96,11 +96,11 @@
             </if>
 
             <if test="soloPrincipales">
-                AND crgo_es_principal = 1
+                AND crgv_es_principal = 1
             </if>
 
             <if test="soloDependientes">
-                AND crgo_es_principal = 0
+                AND crgv_es_principal = 0
             </if>
 
             <if test="codigo != null">
@@ -108,7 +108,7 @@
             </if>
 
             <if test="codigoNormalizado != null">
-                AND crgo_codigo_norm LIKE #{codigoNormalizado}
+                AND crgv_codigo_norm LIKE #{codigoNormalizado}
             </if>
         </where>
     </sql>
@@ -126,6 +126,7 @@
         SELECT COUNT(1)
         FROM tbl_cargo_crgo
         WHERE crgo_codigo = #{codigo}
+            AND crgo_tpsr_pk = #{tpsr.id}
     ]]>
     </select>
 
@@ -152,12 +153,14 @@
         SELECT crgo_pk
         FROM tbl_cargo_crgo
         WHERE crgo_codigo = #{codigo}
+            AND crgo_tpsr_pk = #{tpsr.id}
     ]]>
     </select>
 
     <select id="selectList" parameterType="CargoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
+        ORDER BY crgo_tpsr_pk, crgo_codigo
     </select>
 
     <select id="selectObject" parameterType="CargoCriterioVO" resultMap="ResultMap">
@@ -167,39 +170,32 @@
 
     <insert id="insert" parameterType="CargoVO">
     <![CDATA[
-        INSERT INTO tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_codigo_norm, crgo_es_principal, crgo_es_temporal, crgo_tipo, crgo_descripcion, crgo_tpsr_pk)
+        INSERT INTO tbl_cargo_crgo (crgo_pk, crgo_codigo, crgo_tpsr_pk)
         VALUES (
-            #{id}, #{codigo}, #{codigoNormalizado}
-            , #{principal, jdbcType=INTEGER, javaType=Boolean}, #{temporal, jdbcType=INTEGER, javaType=Boolean}
-            , #{tipo}, #{descripcion}, #{tpsr.id})
+            #{id}, #{codigo}, #{tpsr.id})
     ]]>
     </insert>
 
     <insert id="insertVersion" parameterType="CargoVO">
     <![CDATA[
-        INSERT INTO tbl_cargo_version_crgv (crgv_pk, crgv_crgo_pk, crgv_fini, crgv_ffin)
-        VALUES (#{crgv.id}, #{id}, #{crgv.fini}, #{crgv.ffin})
+        INSERT INTO tbl_cargo_version_crgv (crgv_pk, crgv_crgo_pk, crgv_fini, crgv_ffin, crgv_codigo_norm, crgv_es_principal, crgv_es_temporal, crgv_tipo, crgv_descripcion)
+        VALUES (#{crgv.id}, #{id}, #{crgv.fini}, #{crgv.ffin}, #{crgv.codigoNormalizado}
+            , #{crgv.principal, jdbcType=INTEGER, javaType=Boolean}
+            , #{crgv.temporal, jdbcType=INTEGER, javaType=Boolean}
+            , #{crgv.tipo}, #{crgv.descripcion})
     ]]>
     </insert>
-
-    <update id="update" parameterType="CargoVO">
-    <![CDATA[
-        UPDATE tbl_cargo_crgo SET
-            crgo_codigo_norm = #{codigoNormalizado}
-            , crgo_es_principal = #{principal, jdbcType=INTEGER, javaType=Boolean}
-            , crgo_es_temporal = #{temporal, jdbcType=INTEGER, javaType=Boolean}
-            , crgo_tipo = #{tipo}
-            , crgo_descripcion = #{descripcion}
-        WHERE
-            crgo_pk = #{id}
-    ]]>
-    </update>
 
     <update id="updateVersion" parameterType="CargoVO">
     <![CDATA[
         UPDATE tbl_cargo_version_crgv SET
             crgv_fini = #{crgv.fini}
             , crgv_ffin = #{crgv.ffin}
+            , crgv_codigo_norm = #{crgv.codigoNormalizado}
+            , crgv_es_principal = #{crgv.principal, jdbcType=INTEGER, javaType=Boolean}
+            , crgv_es_temporal = #{crgv.temporal, jdbcType=INTEGER, javaType=Boolean}
+            , crgv_tipo = #{crgv.tipo}
+            , crgv_descripcion = #{crgv.descripcion}
         WHERE
             crgv_pk = #{crgv.id}
     ]]>

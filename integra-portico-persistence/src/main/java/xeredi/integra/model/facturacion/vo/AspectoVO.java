@@ -16,9 +16,6 @@ public final class AspectoVO {
     /** The codigo. */
     private String codigo;
 
-    /** The descripcion. */
-    private String descripcion;
-
     /** The tpsr. */
     private TipoServicioVO tpsr;
 
@@ -33,13 +30,18 @@ public final class AspectoVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    /**
+     * Gets the etiqueta.
+     *
+     * @return the etiqueta
+     */
     public String getEtiqueta() {
         final StringBuffer buffer = new StringBuffer();
 
         buffer.append(codigo);
 
-        if (descripcion != null) {
-            buffer.append(" - ").append(descripcion);
+        if (aspv != null && aspv.getDescripcion() != null) {
+            buffer.append(" - ").append(aspv.getDescripcion());
         }
 
         return buffer.toString();
@@ -60,8 +62,8 @@ public final class AspectoVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -79,27 +81,8 @@ public final class AspectoVO {
      * @param value
      *            the codigo
      */
-    public void setCodigo(String value) {
-        this.codigo = value;
-    }
-
-    /**
-     * Gets the descripcion.
-     *
-     * @return the descripcion
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * Sets the descripcion.
-     *
-     * @param value
-     *            the descripcion
-     */
-    public void setDescripcion(String value) {
-        this.descripcion = value;
+    public void setCodigo(final String value) {
+        codigo = value;
     }
 
     /**
@@ -117,8 +100,8 @@ public final class AspectoVO {
      * @param value
      *            the tpsr
      */
-    public void setTpsr(TipoServicioVO value) {
-        this.tpsr = value;
+    public void setTpsr(final TipoServicioVO value) {
+        tpsr = value;
     }
 
     /**
@@ -136,8 +119,8 @@ public final class AspectoVO {
      * @param value
      *            the aspv
      */
-    public void setAspv(AspectoVersionVO value) {
-        this.aspv = value;
+    public void setAspv(final AspectoVersionVO value) {
+        aspv = value;
     }
 
 }

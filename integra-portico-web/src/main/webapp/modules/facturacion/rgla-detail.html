@@ -25,13 +25,13 @@
         </div>
         <div class="col-md-1 form-group">
             <label>{{'rgla_tipo' | translate}}</label>
-            <p class="form-control-static">{{rgla.tipo}}</p>
+            <p class="form-control-static">{{rgla.rglv.tipo}}</p>
         </div>
         <div class="col-md-2 form-group">
             <label>{{'rgla_enti' | translate}}</label>
             <p class="form-control-static">
-                <a ng-if="rgla.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{rgla.enti.id}}">{{rgla.enti.nombre}}</a>
-                <a ng-if="rgla.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{rgla.enti.id}}">{{rgla.enti.nombre}}</a>
+                <a ng-if="rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
+                <a ng-if="rgla.rglv.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">

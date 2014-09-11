@@ -83,7 +83,10 @@
                     <id column="vlrl_rgla_pk" />
 
                     <result column="vlrl_rgla_pk" property="id" />
-                    <result column="vlrl_rgla_tipo" property="tipo" />
+
+                    <association property="rglv" javaType="ReglaVersionVO">
+                        <result column="vlrl_rgla_tipo" property="tipo" />
+                    </association>
 
                     <association property="crgo" javaType="CargoVO">
                         <id column="vlrl_rgla_crgo_pk" />
@@ -169,7 +172,7 @@
                 , vlrt_fref AS vlrc_fref
 
                 , rgla_pk AS vlrl_rgla_pk
-                , rgla_tipo AS vlrl_rgla_tipo
+                , rglv_tipo AS vlrl_rgla_tipo
                 , rgla_crgo_pk AS vlrl_rgla_crgo_pk
 
                 , vlrt_impuesto_prmt_pk AS vlrl_impuesto_prmt_pk
@@ -233,8 +236,8 @@
 
                 , (
                     CASE
-                        WHEN rgla_tipo = 'T' THEN 1
-                        WHEN rgla_tipo = 'C' THEN 2
+                        WHEN rglv_tipo = 'T' THEN 1
+                        WHEN rglv_tipo = 'C' THEN 2
                         ELSE 3
                     END
                 ) AS regla_tipo_orden

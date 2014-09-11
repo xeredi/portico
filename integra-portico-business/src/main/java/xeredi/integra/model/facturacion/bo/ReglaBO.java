@@ -94,10 +94,14 @@ public class ReglaBO implements Regla {
      */
     @Override
     @Transactional
-    public void update(final ReglaVO rgla) throws InstanceNotFoundException {
+    public void update(final ReglaVO rgla) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());
+
+        if (rglaDAO.existsOverlap(rgla)) {
+            throw new OverlapException(ReglaVO.class.getName(), rgla);
+        }
 
         final int updated = rglaDAO.updateVersion(rgla);
 

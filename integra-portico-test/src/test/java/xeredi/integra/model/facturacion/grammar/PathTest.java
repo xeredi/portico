@@ -9,8 +9,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.facturacion.grammar.PathSqlGenerator;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
+import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.grammar.PathLexer;
@@ -71,9 +71,10 @@ public final class PathTest {
 
         final ReglaVO reglaVO = new ReglaVO();
 
-        reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
+        reglaVO.setRglv(new ReglaVersionVO());
+        reglaVO.getRglv().setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
 
-        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO.getEnti(), generateLabel);
+        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO.getRglv().getEnti(), generateLabel);
 
         LOG.info(extractor.visit(tree));
     }

@@ -164,30 +164,30 @@ public final class AspectoAction extends BaseAction {
             Preconditions.checkNotNull(aspc.getAspv().getId());
         }
 
-        if (GenericValidator.isBlankOrNull(aspc.getDescripcion())) {
+        if (GenericValidator.isBlankOrNull(aspc.getAspv().getDescripcion())) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_descripcion") }));
         }
 
         if (aspc.getAspv().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_fini") }));
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_fini") }));
         }
         if (aspc.getAspv().getPrioridad() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_prioridad") }));
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_prioridad") }));
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())
                 || aspc.getAspv().getCgrpInfo1() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cetiqInfo1") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo1") }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cpathInfo1") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo1") }));
             }
 
             if (aspc.getAspv().getCgrpInfo1() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cgrpInfo1") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo1") }));
             }
         }
 
@@ -195,15 +195,15 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())
                 || aspc.getAspv().getCgrpInfo2() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo2())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cetiqInfo2") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo2") }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cpathInfo2") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo2") }));
             }
 
             if (aspc.getAspv().getCgrpInfo2() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cgrpInfo2") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo2") }));
             }
         }
 
@@ -211,15 +211,15 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())
                 || aspc.getAspv().getCgrpInfo3() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo3())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cetiqInfo3") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo3") }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cpathInfo3") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo3") }));
             }
 
             if (aspc.getAspv().getCgrpInfo3() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cgrpInfo3") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo3") }));
             }
         }
 
@@ -227,15 +227,15 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())
                 || aspc.getAspv().getCgrpInfo4() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo4())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cetiqInfo4") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo4") }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cpathInfo4") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo4") }));
             }
 
             if (aspc.getAspv().getCgrpInfo4() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cgrpInfo4") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo4") }));
             }
         }
 
@@ -243,15 +243,15 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())
                 || aspc.getAspv().getCgrpInfo5() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo5())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cetiqInfo5") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo5") }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cpathInfo5") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo5") }));
             }
 
             if (aspc.getAspv().getCgrpInfo5() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cgrpInfo5") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo5") }));
             }
         }
 
@@ -259,15 +259,15 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())
                 || aspc.getAspv().getCgrpInfo6() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo6())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cetiqInfo6") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo6") }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cpathInfo6") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo6") }));
             }
 
             if (aspc.getAspv().getCgrpInfo6() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_aspv_cgrpInfo6") }));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo6") }));
             }
         }
 
@@ -299,6 +299,8 @@ public final class AspectoAction extends BaseAction {
                 aspcBO.update(aspc);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("aspc"), aspc.getCodigo() }));
+            } catch (final OverlapException ex) {
+                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("aspc") }));
             }
 
             break;

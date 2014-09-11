@@ -67,9 +67,9 @@
                     <th class="codigo" nowrap="nowrap">{{'aspc_codigo' | translate}}</th>
                     <th>{{'aspc_descripcion' | translate}}</th>
                     <th>{{'aspc_tpsr' | translate}}</th>
-                    <th>{{'aspc_aspv_fini' | translate}}</th>
-                    <th>{{'aspc_aspv_ffin' | translate}}</th>
-                    <th>{{'aspc_aspv_prioridad' | translate}}</th>
+                    <th>{{'aspc_fini' | translate}}</th>
+                    <th>{{'aspc_ffin' | translate}}</th>
+                    <th>{{'aspc_prioridad' | translate}}</th>
                 </tr>
             </thead>
 
@@ -78,7 +78,7 @@
                     <td><a href="#/facturacion/aspc/detail/{{aspc.aspv.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{aspc.codigo}}</td>
-                    <td>{{aspc.descripcion}}</td>
+                    <td>{{aspc.aspv.descripcion}}</td>
                     <td>{{aspc.tpsr.nombre}}</td>
                     <td>{{aspc.aspv.fini | date:('fmt_date' | translate)}}</td>
                     <td>{{aspc.aspv.ffin | date:('fmt_date' | translate)}}</td>

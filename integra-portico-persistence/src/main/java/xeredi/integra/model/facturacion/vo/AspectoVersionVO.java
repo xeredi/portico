@@ -19,6 +19,9 @@ public final class AspectoVersionVO {
     /** The ffin. */
     private Date ffin;
 
+    /** The descripcion. */
+    private String descripcion;
+
     /** The prioridad. */
     private Integer prioridad;
 
@@ -175,8 +178,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -194,8 +197,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the fini
      */
-    public void setFini(Date value) {
-        this.fini = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
@@ -213,8 +216,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
+    public void setFfin(final Date value) {
+        ffin = value;
     }
 
     /**
@@ -232,8 +235,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info1
      */
-    public void setCpathInfo1(String value) {
-        this.cpathInfo1 = value;
+    public void setCpathInfo1(final String value) {
+        cpathInfo1 = value;
     }
 
     /**
@@ -251,8 +254,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cetiq info1
      */
-    public void setCetiqInfo1(String value) {
-        this.cetiqInfo1 = value;
+    public void setCetiqInfo1(final String value) {
+        cetiqInfo1 = value;
     }
 
     /**
@@ -270,8 +273,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info2
      */
-    public void setCpathInfo2(String value) {
-        this.cpathInfo2 = value;
+    public void setCpathInfo2(final String value) {
+        cpathInfo2 = value;
     }
 
     /**
@@ -289,8 +292,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cetiq info2
      */
-    public void setCetiqInfo2(String value) {
-        this.cetiqInfo2 = value;
+    public void setCetiqInfo2(final String value) {
+        cetiqInfo2 = value;
     }
 
     /**
@@ -308,8 +311,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info3
      */
-    public void setCpathInfo3(String value) {
-        this.cpathInfo3 = value;
+    public void setCpathInfo3(final String value) {
+        cpathInfo3 = value;
     }
 
     /**
@@ -327,8 +330,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cetiq info3
      */
-    public void setCetiqInfo3(String value) {
-        this.cetiqInfo3 = value;
+    public void setCetiqInfo3(final String value) {
+        cetiqInfo3 = value;
     }
 
     /**
@@ -346,8 +349,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info4
      */
-    public void setCpathInfo4(String value) {
-        this.cpathInfo4 = value;
+    public void setCpathInfo4(final String value) {
+        cpathInfo4 = value;
     }
 
     /**
@@ -365,8 +368,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cetiq info4
      */
-    public void setCetiqInfo4(String value) {
-        this.cetiqInfo4 = value;
+    public void setCetiqInfo4(final String value) {
+        cetiqInfo4 = value;
     }
 
     /**
@@ -384,8 +387,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info5
      */
-    public void setCpathInfo5(String value) {
-        this.cpathInfo5 = value;
+    public void setCpathInfo5(final String value) {
+        cpathInfo5 = value;
     }
 
     /**
@@ -403,8 +406,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cetiq info5
      */
-    public void setCetiqInfo5(String value) {
-        this.cetiqInfo5 = value;
+    public void setCetiqInfo5(final String value) {
+        cetiqInfo5 = value;
     }
 
     /**
@@ -422,8 +425,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info6
      */
-    public void setCpathInfo6(String value) {
-        this.cpathInfo6 = value;
+    public void setCpathInfo6(final String value) {
+        cpathInfo6 = value;
     }
 
     /**
@@ -441,8 +444,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cetiq info6
      */
-    public void setCetiqInfo6(String value) {
-        this.cetiqInfo6 = value;
+    public void setCetiqInfo6(final String value) {
+        cetiqInfo6 = value;
     }
 
     /**
@@ -460,8 +463,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lsum cuant1
      */
-    public void setLsumCuant1(Boolean value) {
-        this.lsumCuant1 = value;
+    public void setLsumCuant1(final Boolean value) {
+        lsumCuant1 = value;
     }
 
     /**
@@ -479,8 +482,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lsum cuant2
      */
-    public void setLsumCuant2(Boolean value) {
-        this.lsumCuant2 = value;
+    public void setLsumCuant2(final Boolean value) {
+        lsumCuant2 = value;
     }
 
     /**
@@ -498,8 +501,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lsum cuant3
      */
-    public void setLsumCuant3(Boolean value) {
-        this.lsumCuant3 = value;
+    public void setLsumCuant3(final Boolean value) {
+        lsumCuant3 = value;
     }
 
     /**
@@ -517,8 +520,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lsum cuant4
      */
-    public void setLsumCuant4(Boolean value) {
-        this.lsumCuant4 = value;
+    public void setLsumCuant4(final Boolean value) {
+        lsumCuant4 = value;
     }
 
     /**
@@ -536,8 +539,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lsum cuant5
      */
-    public void setLsumCuant5(Boolean value) {
-        this.lsumCuant5 = value;
+    public void setLsumCuant5(final Boolean value) {
+        lsumCuant5 = value;
     }
 
     /**
@@ -555,8 +558,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lsum cuant6
      */
-    public void setLsumCuant6(Boolean value) {
-        this.lsumCuant6 = value;
+    public void setLsumCuant6(final Boolean value) {
+        lsumCuant6 = value;
     }
 
     /**
@@ -574,8 +577,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lgrp info1
      */
-    public void setLgrpInfo1(Boolean value) {
-        this.lgrpInfo1 = value;
+    public void setLgrpInfo1(final Boolean value) {
+        lgrpInfo1 = value;
     }
 
     /**
@@ -593,8 +596,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lgrp info2
      */
-    public void setLgrpInfo2(Boolean value) {
-        this.lgrpInfo2 = value;
+    public void setLgrpInfo2(final Boolean value) {
+        lgrpInfo2 = value;
     }
 
     /**
@@ -612,8 +615,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lgrp info3
      */
-    public void setLgrpInfo3(Boolean value) {
-        this.lgrpInfo3 = value;
+    public void setLgrpInfo3(final Boolean value) {
+        lgrpInfo3 = value;
     }
 
     /**
@@ -631,8 +634,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lgrp info4
      */
-    public void setLgrpInfo4(Boolean value) {
-        this.lgrpInfo4 = value;
+    public void setLgrpInfo4(final Boolean value) {
+        lgrpInfo4 = value;
     }
 
     /**
@@ -650,8 +653,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lgrp info5
      */
-    public void setLgrpInfo5(Boolean value) {
-        this.lgrpInfo5 = value;
+    public void setLgrpInfo5(final Boolean value) {
+        lgrpInfo5 = value;
     }
 
     /**
@@ -669,8 +672,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the lgrp info6
      */
-    public void setLgrpInfo6(Boolean value) {
-        this.lgrpInfo6 = value;
+    public void setLgrpInfo6(final Boolean value) {
+        lgrpInfo6 = value;
     }
 
     /**
@@ -688,8 +691,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the prioridad
      */
-    public void setPrioridad(Integer value) {
-        this.prioridad = value;
+    public void setPrioridad(final Integer value) {
+        prioridad = value;
     }
 
     /**
@@ -707,8 +710,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info1 sql
      */
-    public void setCpathInfo1Sql(String value) {
-        this.cpathInfo1Sql = value;
+    public void setCpathInfo1Sql(final String value) {
+        cpathInfo1Sql = value;
     }
 
     /**
@@ -726,8 +729,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info2 sql
      */
-    public void setCpathInfo2Sql(String value) {
-        this.cpathInfo2Sql = value;
+    public void setCpathInfo2Sql(final String value) {
+        cpathInfo2Sql = value;
     }
 
     /**
@@ -745,8 +748,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info3 sql
      */
-    public void setCpathInfo3Sql(String value) {
-        this.cpathInfo3Sql = value;
+    public void setCpathInfo3Sql(final String value) {
+        cpathInfo3Sql = value;
     }
 
     /**
@@ -764,8 +767,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info4 sql
      */
-    public void setCpathInfo4Sql(String value) {
-        this.cpathInfo4Sql = value;
+    public void setCpathInfo4Sql(final String value) {
+        cpathInfo4Sql = value;
     }
 
     /**
@@ -783,8 +786,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info5 sql
      */
-    public void setCpathInfo5Sql(String value) {
-        this.cpathInfo5Sql = value;
+    public void setCpathInfo5Sql(final String value) {
+        cpathInfo5Sql = value;
     }
 
     /**
@@ -802,8 +805,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the cpath info6 sql
      */
-    public void setCpathInfo6Sql(String value) {
-        this.cpathInfo6Sql = value;
+    public void setCpathInfo6Sql(final String value) {
+        cpathInfo6Sql = value;
     }
 
     /**
@@ -821,8 +824,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the new cgrp info1
      */
-    public void setCgrpInfo1(Boolean value) {
-        this.cgrpInfo1 = value;
+    public void setCgrpInfo1(final Boolean value) {
+        cgrpInfo1 = value;
     }
 
     /**
@@ -840,8 +843,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the new cgrp info2
      */
-    public void setCgrpInfo2(Boolean value) {
-        this.cgrpInfo2 = value;
+    public void setCgrpInfo2(final Boolean value) {
+        cgrpInfo2 = value;
     }
 
     /**
@@ -859,8 +862,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the new cgrp info3
      */
-    public void setCgrpInfo3(Boolean value) {
-        this.cgrpInfo3 = value;
+    public void setCgrpInfo3(final Boolean value) {
+        cgrpInfo3 = value;
     }
 
     /**
@@ -878,8 +881,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the new cgrp info4
      */
-    public void setCgrpInfo4(Boolean value) {
-        this.cgrpInfo4 = value;
+    public void setCgrpInfo4(final Boolean value) {
+        cgrpInfo4 = value;
     }
 
     /**
@@ -897,8 +900,8 @@ public final class AspectoVersionVO {
      * @param value
      *            the new cgrp info5
      */
-    public void setCgrpInfo5(Boolean value) {
-        this.cgrpInfo5 = value;
+    public void setCgrpInfo5(final Boolean value) {
+        cgrpInfo5 = value;
     }
 
     /**
@@ -916,8 +919,27 @@ public final class AspectoVersionVO {
      * @param value
      *            the new cgrp info6
      */
-    public void setCgrpInfo6(Boolean value) {
-        this.cgrpInfo6 = value;
+    public void setCgrpInfo6(final Boolean value) {
+        cgrpInfo6 = value;
+    }
+
+    /**
+     * Gets the descripcion.
+     *
+     * @return the descripcion
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    /**
+     * Sets the descripcion.
+     *
+     * @param value
+     *            the descripcion
+     */
+    public void setDescripcion(final String value) {
+        descripcion = value;
     }
 
 }

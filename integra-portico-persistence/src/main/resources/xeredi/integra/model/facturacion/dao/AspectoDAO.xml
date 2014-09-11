@@ -7,7 +7,6 @@
         <id column="aspv_pk" />
         <result column="aspc_pk" property="id" />
         <result column="aspc_codigo" property="codigo" />
-        <result column="aspc_descripcion" property="descripcion" />
 
         <association property="tpsr" resultMap="xeredi.integra.model.metamodelo.dao.TipoServicioDAO.ResultMap" />
 
@@ -15,6 +14,7 @@
             <result column="aspv_pk" property="id" />
             <result column="aspv_fini" property="fini" />
             <result column="aspv_ffin" property="ffin" />
+            <result column="aspv_descripcion" property="descripcion" />
             <result column="aspv_prioridad" property="prioridad" />
 
             <result column="aspv_cpath_info1" property="cpathInfo1" />

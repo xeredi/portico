@@ -22,23 +22,20 @@
                 <p ng-if="accion != 'create'" class="form-control-static">{{rgla.codigo}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{"rgla_tipo" | translate}}</label> <select ng-if="accion == 'create'" ng-model="rgla.tipo"
+                <label>{{"rgla_tipo" | translate}}</label> <select ng-model="rgla.rglv.tipo"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="cdrf in tipos" value="{{cdrf}}" ng-selected="rgla.tipo == cdrf">{{cdrf}}
+                    <option ng-repeat="cdrf in tipos" value="{{cdrf}}" ng-selected="rgla.rglv.tipo == cdrf">{{cdrf}}
                         - {{'ReglaTipo_' + cdrf | translate}}</option>
                 </select>
-                <p ng-if="accion != 'create'" class="form-control-static">{{rgla.tipo}} - {{'ReglaTipo_' + rgla.tipo
-                    | translate}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{"rgla_enti" | translate}}</label> <select ng-if="accion == 'create'" ng-model="rgla.enti.id"
+                <label>{{"rgla_enti" | translate}}</label> <select ng-model="rgla.rglv.enti.id"
                     class="form-control input-sm">
                     <option value="" />
                     <option ng-repeat="enti in entiFacturableList" value="{{enti.id}}"
-                        ng-selected="rgla.enti.id == enti.id">{{enti.nombre}}</option>
+                        ng-selected="rgla.rglv.enti.id == enti.id">{{enti.nombre}}</option>
                 </select>
-                <p ng-if="accion != 'create'" class="form-control-static">{{rgla.enti.nombre}}</p>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'rgla_fini' | translate}}</label>
@@ -75,12 +72,12 @@
                 </div>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"rgla_orden" | translate}}</label> <input type="text"
-                    ng-model="rgla.rglv.orden" class="form-control input-sm" />
+                <label>{{"rgla_orden" | translate}}</label> <input type="text" ng-model="rgla.rglv.orden"
+                    class="form-control input-sm" />
             </div>
             <div ng-if="rgla.tipo == 'T'" class="col-md-1 form-group">
-                <label>{{"rgla_importeBase" | translate}}</label> <input type="text"
-                    ng-model="rgla.rglv.importeBase" class="form-control input-sm" />
+                <label>{{"rgla_importeBase" | translate}}</label> <input type="text" ng-model="rgla.rglv.importeBase"
+                    class="form-control input-sm" />
             </div>
         </div>
 
@@ -97,12 +94,12 @@
 
         <div ng-if="rgla.tipo == 'T'" class="row">
             <div class="col-md-6 form-group">
-                <label>{{"rgla_pathImpuesto" | translate}}</label> <input type="text"
-                    ng-model="rgla.rglv.pathImpuesto" class="form-control input-sm" />
+                <label>{{"rgla_pathImpuesto" | translate}}</label> <input type="text" ng-model="rgla.rglv.pathImpuesto"
+                    class="form-control input-sm" />
             </div>
             <div class="col-md-6 form-group">
-                <label>{{"rgla_pathPagador" | translate}}</label> <input type="text"
-                    ng-model="rgla.rglv.pathPagador" class="form-control input-sm" />
+                <label>{{"rgla_pathPagador" | translate}}</label> <input type="text" ng-model="rgla.rglv.pathPagador"
+                    class="form-control input-sm" />
             </div>
         </div>
 
@@ -112,8 +109,8 @@
                     ng-model="rgla.rglv.pathEsSujPasivo" class="form-control input-sm" />
             </div>
             <div class="col-md-6 form-group">
-                <label>{{"rgla_pathCodExen" | translate}}</label> <input type="text"
-                    ng-model="rgla.rglv.pathCodExen" class="form-control input-sm" />
+                <label>{{"rgla_pathCodExen" | translate}}</label> <input type="text" ng-model="rgla.rglv.pathCodExen"
+                    class="form-control input-sm" />
             </div>
         </div>
     </fieldset>

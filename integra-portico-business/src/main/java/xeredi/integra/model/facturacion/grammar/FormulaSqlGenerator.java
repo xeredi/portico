@@ -94,7 +94,7 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
     public String visitPath(final PathContext ctx) {
         String sqlPath = "";
 
-        final EntidadVO entiBase = EntidadProxy.select(reglaVO.getEnti().getId());
+        final EntidadVO entiBase = EntidadProxy.select(reglaVO.getRglv().getEnti().getId());
         EntidadVO entiElem = entiBase;
 
         boolean isFirst = true;
@@ -197,13 +197,13 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
-                        + " AND srdt_srvc_pk = ";
+                                + " AND srdt_srvc_pk = ";
                         sqlElement += isFirst ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
                                 : "item.ssrv_srvc_pk" : "ANY(#{any})";
                         break;
                     case S:
                         sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
-                        + " AND ssdt_ssrv_pk = ";
+                                + " AND ssdt_ssrv_pk = ";
                         sqlElement += isFirst ? "item.ssrv_pk" : "ANY(#{any})";
 
                         break;

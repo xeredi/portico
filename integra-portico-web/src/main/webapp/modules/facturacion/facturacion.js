@@ -393,6 +393,8 @@ facturacion.controller("rglaEditController", function($scope, $http, $location, 
 
     $http.get(url).success(function(data) {
         $scope.rgla = data.rgla;
+        $scope.tipos = data.tipos;
+        $scope.entiFacturableList = data.entiFacturableList;
         $scope.accion = data.accion;
     });
 

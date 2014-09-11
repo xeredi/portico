@@ -122,19 +122,21 @@ public class AspectoBO implements Aspecto {
      */
     @Override
     @Transactional
-    public void update(final AspectoVO aspc) throws InstanceNotFoundException {
+    public void update(final AspectoVO aspc) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getId());
         Preconditions.checkNotNull(aspc.getAspv().getId());
 
-        final int updated = aspcDAO.update(aspc);
+        if (aspcDAO.existsOverlap(aspc)) {
+            throw new OverlapException(AspectoVO.class.getName(), aspc);
+        }
+
+        final int updated = aspcDAO.updateVersion(aspc);
 
         if (updated == 0) {
             throw new InstanceNotFoundException(AspectoVO.class.getName(), aspc);
         }
-
-        aspcDAO.updateVersion(aspc);
     }
 
 }

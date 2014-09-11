@@ -105,15 +105,6 @@ public interface AspectoDAO {
     void insertVersion(final AspectoVO aspc);
 
     /**
-     * Update.
-     *
-     * @param aspc
-     *            the aspc
-     * @return the int
-     */
-    int update(final AspectoVO aspc);
-
-    /**
      * Update version.
      *
      * @param aspc

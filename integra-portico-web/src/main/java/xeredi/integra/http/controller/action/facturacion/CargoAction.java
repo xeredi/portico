@@ -158,20 +158,20 @@ public final class CargoAction extends BaseAction {
             Preconditions.checkNotNull(crgo.getCrgv().getId());
         }
 
-        if (GenericValidator.isBlankOrNull(crgo.getDescripcion())) {
+        if (GenericValidator.isBlankOrNull(crgo.getCrgv().getDescripcion())) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_descripcion") }));
         }
-        if (crgo.getTipo() == null) {
+        if (crgo.getCrgv().getTipo() == null) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_tipo") }));
         }
-        if (crgo.getTemporal() == null) {
+        if (crgo.getCrgv().getTemporal() == null) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_temporal") }));
         }
-        if (crgo.getPrincipal() == null) {
+        if (crgo.getCrgv().getPrincipal() == null) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_principal") }));
         }
         if (crgo.getCrgv().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_crgv_fini") }));
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_fini") }));
         }
 
         if (hasErrors()) {
@@ -194,10 +194,11 @@ public final class CargoAction extends BaseAction {
                 crgoBO.update(crgo);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("crgo"), crgo.getCodigo() }));
+            } catch (final OverlapException ex) {
+                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("crgo") }));
             }
 
             break;
-
         default:
             throw new Error("Accion no valida: " + accion);
         }

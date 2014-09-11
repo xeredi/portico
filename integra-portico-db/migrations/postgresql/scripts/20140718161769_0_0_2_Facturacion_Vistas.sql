@@ -23,12 +23,12 @@ CREATE VIEW portico.vw_regla_rgla AS
 	SELECT *
 	FROM
 		portico.tbl_regla_rgla
-		INNER JOIN portico.tbl_entidad_enti ON
-			enti_pk = rgla_enti_pk
-		INNER JOIN portico.tbl_cargo_crgo ON
-			crgo_pk = rgla_crgo_pk
 		INNER JOIN portico.tbl_regla_version_rglv ON
 			rglv_rgla_pk = rgla_pk
+		INNER JOIN portico.tbl_cargo_crgo ON
+			crgo_pk = rgla_crgo_pk
+		INNER JOIN portico.tbl_entidad_enti ON
+			enti_pk = rglv_enti_pk
 \
 
 GRANT SELECT ON portico.vw_regla_rgla TO portico
@@ -44,10 +44,10 @@ CREATE VIEW portico.vw_regla_inc_rgin AS
 			rgiv_rgin_pk = rgin_pk
 		INNER JOIN portico.tbl_regla_rgla ON
 			rgla_pk = rgin_rgla2_pk
-		INNER JOIN portico.tbl_entidad_enti ON
-			enti_pk = rgla_enti_pk
 		INNER JOIN portico.tbl_regla_version_rglv ON
 			rglv_rgla_pk = rgin_rgla2_pk
+		INNER JOIN portico.tbl_entidad_enti ON
+			enti_pk = rglv_enti_pk
 \
 
 GRANT SELECT ON portico.vw_regla_inc_rgin TO portico

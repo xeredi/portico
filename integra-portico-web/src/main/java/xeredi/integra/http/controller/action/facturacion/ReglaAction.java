@@ -137,24 +137,7 @@ public final class ReglaAction extends BaseAction {
         rgla.setRglv(rglv);
         rgla.setCrgo(crgo);
 
-        {
-            // Busqueda de entidades Facturables para el cargo al que va a pertenecer la regla
-            final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
-            final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
-
-            tpsrCriterioVO.setId(crgo.getTpsr().getId());
-            tpsrCriterioVO.setFacturable(Boolean.TRUE);
-
-            entiFacturableList.addAll(tpsrBO.selectList(tpsrCriterioVO));
-
-            final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
-            final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
-
-            tpssCriterioVO.setTpsrId(crgo.getTpsr().getId());
-            tpssCriterioVO.setFacturable(Boolean.TRUE);
-
-            entiFacturableList.addAll(tpssBO.selectList(tpssCriterioVO));
-        }
+        loadEntiFacturables();
 
         return SUCCESS;
     }
@@ -179,12 +162,35 @@ public final class ReglaAction extends BaseAction {
 
         try {
             rgla = rglaBO.select(rglaCriterioVO);
+
+            loadEntiFacturables();
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(ErrorCode.E00008.name(),
                     new String[] { getText("rgla"), String.valueOf(rgla.getRglv().getId()) }));
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * Busqueda de entidades Facturables para el cargo al que va a pertenecer la regla.
+     */
+    private void loadEntiFacturables() {
+        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
+        final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
+
+        tpsrCriterioVO.setId(rgla.getCrgo().getTpsr().getId());
+        tpsrCriterioVO.setFacturable(Boolean.TRUE);
+
+        entiFacturableList.addAll(tpsrBO.selectList(tpsrCriterioVO));
+
+        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+        final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
+
+        tpssCriterioVO.setTpsrId(rgla.getCrgo().getTpsr().getId());
+        tpssCriterioVO.setFacturable(Boolean.TRUE);
+
+        entiFacturableList.addAll(tpssBO.selectList(tpssCriterioVO));
     }
 
     /**
@@ -204,17 +210,17 @@ public final class ReglaAction extends BaseAction {
             if (GenericValidator.isBlankOrNull(rgla.getCodigo())) {
                 addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgla_codigo") }));
             }
-
-            if (rgla.getTipo() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgla_tipo") }));
-            }
-
-            if (rgla.getEnti() == null || rgla.getEnti().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgla_enti") }));
-            }
         } else {
             Preconditions.checkNotNull(rgla.getId());
             Preconditions.checkNotNull(rgla.getRglv().getId());
+        }
+
+        if (rgla.getRglv().getTipo() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgla_tipo") }));
+        }
+
+        if (rgla.getRglv().getEnti() == null || rgla.getRglv().getEnti().getId() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgla_enti") }));
         }
 
         if (rgla.getRglv().getFini() == null) {
@@ -233,7 +239,7 @@ public final class ReglaAction extends BaseAction {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgla_formula") }));
         }
 
-        if (ReglaTipo.T == rgla.getTipo()) {
+        if (ReglaTipo.T == rgla.getRglv().getTipo()) {
             if (rgla.getRglv().getImporteBase() == null) {
                 addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgla_importeBase") }));
             }
@@ -394,6 +400,8 @@ public final class ReglaAction extends BaseAction {
                 rglaBO.update(rgla);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("rgla"), rgla.getCodigo() }));
+            } catch (final OverlapException ex) {
+                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("rgla") }));
             }
             break;
         default:

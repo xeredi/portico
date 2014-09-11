@@ -75,8 +75,8 @@
                     <th>{{'crgo_tpsr' | translate}}</th>
                     <th>{{'crgo_principal' | translate}}</th>
                     <th>{{'crgo_temporal' | translate}}</th>
-                    <th>{{'crgo_crgv_fini' | translate}}</th>
-                    <th>{{'crgo_crgv_ffin' | translate}}</th>
+                    <th>{{'crgo_fini' | translate}}</th>
+                    <th>{{'crgo_ffin' | translate}}</th>
                 </tr>
             </thead>
 
@@ -85,12 +85,12 @@
                     <td><a href="#/facturacion/crgo/detail/{{crgo.crgv.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{crgo.codigo}}</td>
-                    <td>{{crgo.descripcion}}</td>
-                    <td>{{crgo.codigoNormalizado}}</td>
-                    <td>{{crgo.tipo}}</td>
+                    <td>{{crgo.crgv.descripcion}}</td>
+                    <td>{{crgo.crgv.codigoNormalizado}}</td>
+                    <td>{{crgo.crgv.tipo}}</td>
                     <td>{{crgo.tpsr.nombre}}</td>
-                    <td>{{'fmt_' + crgo.principal | translate}}</td>
-                    <td>{{'fmt_' + crgo.temporal | translate}}</td>
+                    <td>{{'fmt_' + crgo.crgv.principal | translate}}</td>
+                    <td>{{'fmt_' + crgo.crgv.temporal | translate}}</td>
                     <td>{{crgo.crgv.fini | date:('fmt_date' | translate)}}</td>
                     <td>{{crgo.crgv.ffin | date:('fmt_date' | translate)}}</td>
                 </tr>

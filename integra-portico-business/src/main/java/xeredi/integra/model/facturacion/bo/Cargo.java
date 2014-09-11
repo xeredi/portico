@@ -51,8 +51,10 @@ public interface Cargo {
      *            the crgo
      * @throws InstanceNotFoundException
      *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    void update(final CargoVO crgo) throws InstanceNotFoundException;
+    void update(final CargoVO crgo) throws InstanceNotFoundException, OverlapException;
 
     /**
      * Delete.

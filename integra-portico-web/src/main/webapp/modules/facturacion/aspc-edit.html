@@ -27,11 +27,11 @@
                 <p ng-if="accion == 'edit'" class="form-control-static">{{aspc.codigo}}</p>
             </div>
             <div class="col-md-3 form-group">
-                <label>{{"aspc_descripcion" | translate}}</label> <input type="text" ng-model="aspc.descripcion"
+                <label>{{"aspc_descripcion" | translate}}</label> <input type="text" ng-model="aspc.aspv.descripcion"
                     class="form-control input-sm" />
             </div>
             <div class="col-md-1 form-group">
-                <label>{{'aspc_aspv_fini' | translate}}</label>
+                <label>{{'aspc_fini' | translate}}</label>
                 <div class="dropdown">
                     <a class="dropdown-toggle" id="datepickerFIni" role="button" data-toggle="dropdown" data-target="#"
                         href="#">
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{'aspc_aspv_ffin' | translate}}</label>
+                <label>{{'aspc_ffin' | translate}}</label>
                 <div class="dropdown">
                     <a class="dropdown-toggle" id="datepickerFFin" role="button" data-toggle="dropdown" data-target="#"
                         href="#">
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"aspc_aspv_prioridad" | translate}}</label> <input type="text" ng-model="aspc.aspv.prioridad"
+                <label>{{"aspc_prioridad" | translate}}</label> <input type="text" ng-model="aspc.aspv.prioridad"
                     class="form-control input-sm" />
             </div>
         </div>
@@ -80,9 +80,9 @@
                     <thead>
                         <tr>
                             <th class="col-md-1" />
-                            <th class="col-md-2">{{'aspc_aspv_cetiqInfo' | translate}}</th>
-                            <th class="col-md-8">{{'aspc_aspv_cpathInfo' | translate}}</th>
-                            <th class="col-md-1">{{'aspc_aspv_cgrpInfo' | translate}}</th>
+                            <th class="col-md-2">{{'aspc_cetiqInfo' | translate}}</th>
+                            <th class="col-md-8">{{'aspc_cpathInfo' | translate}}</th>
+                            <th class="col-md-1">{{'aspc_cgrpInfo' | translate}}</th>
                         </tr>
                     </thead>
 
@@ -176,7 +176,7 @@
                             <thead>
                                 <tr>
                                     <th />
-                                    <th>{{'aspc_aspv_lsumCuant' | translate}}</th>
+                                    <th>{{'aspc_lsumCuant' | translate}}</th>
                                 </tr>
                             </thead>
 
@@ -258,7 +258,7 @@
                             <thead>
                                 <tr>
                                     <th />
-                                    <th>{{'aspc_aspv_lgrpInfo' | translate}}</th>
+                                    <th>{{'aspc_lgrpInfo' | translate}}</th>
                                 </tr>
                             </thead>
 

@@ -7,12 +7,12 @@
         <id column="rglv_pk" />
         <result column="rgla_pk" property="id" />
         <result column="rgla_codigo" property="codigo" />
-        <result column="rgla_tipo" property="tipo" />
 
         <association property="rglv" javaType="ReglaVersionVO">
             <result column="rglv_pk" property="id" />
             <result column="rglv_fini" property="fini" />
             <result column="rglv_ffin" property="ffin" />
+            <result column="rglv_tipo" property="tipo" />
             <result column="rglv_orden" property="orden" />
             <result column="rglv_importe_base" property="importeBase" />
             <result column="rglv_condicion" property="condicion" />
@@ -49,11 +49,11 @@
             <result column="rglv_etiq_cuant4" property="etiqCuant4" />
             <result column="rglv_etiq_cuant5" property="etiqCuant5" />
             <result column="rglv_etiq_cuant6" property="etiqCuant6" />
+
+            <association property="enti" resultMap="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap" />
         </association>
 
         <association property="crgo" resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
-
-        <association property="enti" resultMap="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap" />
     </resultMap>
 
     <sql id="SelectPrefix">
@@ -125,7 +125,7 @@
             </if>
 
             <if test="tipo != null">
-                AND rgla_tipo = #{tipo}
+                AND rglv_tipo = #{tipo}
             </if>
 
             <if test="vlrcId != null">
@@ -158,7 +158,7 @@
     <select id="selectList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY rgla_crgo_pk, rgla_enti_pk, rglv_orden
+        ORDER BY rgla_crgo_pk, rglv_enti_pk, rglv_orden
     </select>
 
     <select id="selectObject" parameterType="ReglaCriterioVO" resultMap="ResultMap">
@@ -179,6 +179,7 @@
         SELECT COUNT(1)
         FROM tbl_regla_rgla
         WHERE rgla_codigo = #{codigo}
+            AND rgla_crgo_pk = #{crgo.id}
     ]]>
     </select>
 
@@ -205,27 +206,28 @@
         SELECT rgla_pk
         FROM tbl_regla_rgla
         WHERE rgla_codigo = #{codigo}
+            AND rgla_crgo_pk = #{crgo.id}
     ]]>
     </select>
 
     <insert id="insert" parameterType="ReglaVO">
     <![CDATA[
-        INSERT INTO tbl_regla_rgla (rgla_pk, rgla_codigo, rgla_tipo, rgla_crgo_pk, rgla_enti_pk)
-        VALUES (#{id}, #{codigo}, #{tipo}, #{crgo.id}, #{enti.id})
+        INSERT INTO tbl_regla_rgla (rgla_pk, rgla_codigo, rgla_crgo_pk)
+        VALUES (#{id}, #{codigo}, #{crgo.id})
     ]]>
     </insert>
 
     <insert id="insertVersion" parameterType="ReglaVO">
     <![CDATA[
         INSERT INTO tbl_regla_version_rglv (
-            rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+            rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_enti_pk, rglv_tipo, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
             , rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
             , rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
             , rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
             , rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
             , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
         ) VALUES (
-            #{rglv.id}, #{id}, #{rglv.fini}, #{rglv.ffin}, #{rglv.orden}, #{rglv.importeBase}, #{rglv.condicion}, #{rglv.formula}
+            #{rglv.id}, #{id}, #{rglv.fini}, #{rglv.ffin}, #{rglv.enti.id}, #{rglv.tipo}, #{rglv.orden}, #{rglv.importeBase}, #{rglv.condicion}, #{rglv.formula}
             , #{rglv.pathImpuesto}, #{rglv.pathPagador}, #{rglv.pathEsSujPasivo}, #{rglv.pathCodExen}
             , #{rglv.pathInfo1}, #{rglv.pathInfo2}, #{rglv.pathInfo3}, #{rglv.pathInfo4}, #{rglv.pathInfo5}, #{rglv.pathInfo6}
             , #{rglv.etiqInfo1}, #{rglv.etiqInfo2}, #{rglv.etiqInfo3}, #{rglv.etiqInfo4}, #{rglv.etiqInfo5}, #{rglv.etiqInfo6}
@@ -240,6 +242,8 @@
         UPDATE tbl_regla_version_rglv SET
             rglv_fini = #{rglv.fini}
             , rglv_ffin = #{rglv.ffin}
+            , rglv_enti_pk = #{rglv.enti.id}
+            , rglv_tipo = #{rglv.tipo}
             , rglv_orden = #{rglv.orden}
             , rglv_importe_base = #{rglv.importeBase}
             , rglv_condicion = #{rglv.condicion}

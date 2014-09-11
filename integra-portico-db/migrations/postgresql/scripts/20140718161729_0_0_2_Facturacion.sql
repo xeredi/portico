@@ -6,12 +6,7 @@ CREATE TABLE portico.tbl_cargo_crgo
 (
 	crgo_pk BIGINT NOT NULL
 	, crgo_codigo VARCHAR(15) NOT NULL
-	, crgo_codigo_norm VARCHAR(15)
-	, crgo_es_principal INT NOT NULL
-	, crgo_es_temporal INT NOT NULL
 	, crgo_tpsr_pk BIGINT NOT NULL
-	, crgo_tipo VARCHAR(1) NOT NULL
-	, crgo_descripcion VARCHAR(200) NOT NULL
 
 	, CONSTRAINT pk_crgo PRIMARY KEY (crgo_pk)
 	, CONSTRAINT uq_crgo UNIQUE (crgo_tpsr_pk, crgo_codigo)
@@ -42,6 +37,11 @@ CREATE TABLE portico.tbl_cargo_version_crgv
 	, crgv_crgo_pk BIGINT NOT NULL
 	, crgv_fini TIMESTAMP NOT NULL
 	, crgv_ffin TIMESTAMP
+	, crgv_codigo_norm VARCHAR(15)
+	, crgv_es_principal INT NOT NULL
+	, crgv_es_temporal INT NOT NULL
+	, crgv_tipo VARCHAR(1) NOT NULL
+	, crgv_descripcion VARCHAR(200) NOT NULL
 
 	, CONSTRAINT pk_crgv PRIMARY KEY (crgv_pk)
 
@@ -104,22 +104,15 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_cargo_dep_version_crdv TO po
 CREATE TABLE portico.tbl_regla_rgla
 (
 	rgla_pk BIGINT NOT NULL
-	, rgla_codigo VARCHAR(20) NOT NULL
 	, rgla_crgo_pk BIGINT NOT NULL
-	, rgla_enti_pk BIGINT NOT NULL
-	, rgla_tipo VARCHAR(1) NOT NULL
+	, rgla_codigo VARCHAR(20) NOT NULL
 
 	, CONSTRAINT pk_rgla PRIMARY KEY (rgla_pk)
-	, CONSTRAINT uq_rgla UNIQUE (rgla_codigo)
+	, CONSTRAINT uq_rgla UNIQUE (rgla_crgo_pk, rgla_codigo)
 
 	, CONSTRAINT fk_rgla_crgo_pk FOREIGN KEY (rgla_crgo_pk)
 		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
-	, CONSTRAINT fk_rgla_enti_pk FOREIGN KEY (rgla_enti_pk)
-		REFERENCES portico.tbl_entidad_enti (enti_pk)
 )
-\
-
-CREATE INDEX ix_rgla_crgo_pk ON portico.tbl_regla_rgla (rgla_crgo_pk)
 \
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_regla_rgla TO portico
@@ -134,6 +127,8 @@ CREATE TABLE portico.tbl_regla_version_rglv
 	, rglv_rgla_pk BIGINT NOT NULL
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
+	, rglv_enti_pk BIGINT NOT NULL
+	, rglv_tipo VARCHAR(1) NOT NULL
 	, rglv_orden INT NOT NULL
 	, rglv_importe_base NUMERIC(10, 4)
 	, rglv_condicion VARCHAR(2000) NOT NULL
@@ -176,6 +171,8 @@ CREATE TABLE portico.tbl_regla_version_rglv
 
 	, CONSTRAINT fk_rglv_rgla_pk FOREIGN KEY (rglv_rgla_pk)
 		REFERENCES portico.tbl_regla_rgla (rgla_pk)
+	, CONSTRAINT fk_rglv_enti_pk FOREIGN KEY (rglv_enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
 )
 \
 
@@ -238,10 +235,9 @@ CREATE TABLE portico.tbl_aspecto_aspc
 	aspc_pk BIGINT NOT NULL
 	, aspc_codigo VARCHAR(10) NOT NULL
 	, aspc_tpsr_pk BIGINT NOT NULL
-	, aspc_descripcion VARCHAR(200) NOT NULL
 
 	, CONSTRAINT pk_aspc PRIMARY KEY (aspc_pk)
-	, CONSTRAINT uq_aspc UNIQUE (aspc_codigo)
+	, CONSTRAINT uq_aspc UNIQUE (aspc_tpsr_pk, aspc_codigo)
 
 	, CONSTRAINT fk_aspc_tpsr_pk FOREIGN KEY (aspc_tpsr_pk)
 		REFERENCES portico.tbl_tipo_servicio_tpsr (tpsr_pk)
@@ -260,6 +256,7 @@ CREATE TABLE portico.tbl_aspecto_version_aspv
 	, aspv_aspc_pk BIGINT NOT NULL
 	, aspv_fini TIMESTAMP NOT NULL
 	, aspv_ffin TIMESTAMP
+	, aspv_descripcion VARCHAR(200) NOT NULL
 	, aspv_prioridad INT NOT NULL
 
 	, aspv_cpath_info1 VARCHAR(250)

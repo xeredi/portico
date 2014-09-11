@@ -60,9 +60,15 @@
                         SELECT 1
                         FROM tbl_cargo_crgo
                         WHERE crgo_tpsr_pk = srvc_tpsr_pk
-                            AND crgo_es_principal = 1
-                            AND crgo_es_temporal = 1
                             AND crgo_pk = #{crgo.id}
+                            AND EXISTS (
+                                SELECT 1
+                                FROM tbl_cargo_version_crgv
+                                WHERE crgv_crgo_pk = crgo_pk
+                                    AND #{fref} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fref})
+                                    AND crgv_es_principal = 1
+                                    AND crgv_es_temporal = 1
+                            )
                     )
                     THEN srvc_fini
 
@@ -83,9 +89,15 @@
                         SELECT 1
                         FROM tbl_cargo_crgo
                         WHERE crgo_tpsr_pk = srvc_tpsr_pk
-                            AND crgo_es_principal = 1
-                            AND crgo_es_temporal = 1
                             AND crgo_pk = #{crgo.id}
+                            AND EXISTS (
+                                SELECT 1
+                                FROM tbl_cargo_version_crgv
+                                WHERE crgv_crgo_pk = crgo_pk
+                                    AND #{fref} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fref})
+                                    AND crgv_es_principal = 1
+                                    AND crgv_es_temporal = 1
+                            )
                     )
                     THEN srvc_ffin
 

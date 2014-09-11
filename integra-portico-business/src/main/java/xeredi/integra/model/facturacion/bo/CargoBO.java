@@ -97,18 +97,20 @@ public class CargoBO implements Cargo {
      */
     @Override
     @Transactional
-    public void update(final CargoVO crgo) throws InstanceNotFoundException {
+    public void update(final CargoVO crgo) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());
 
-        final int updated = crgoDAO.update(crgo);
+        if (crgoDAO.existsOverlap(crgo)) {
+            throw new OverlapException(CargoVO.class.getName(), crgo);
+        }
+
+        final int updated = crgoDAO.updateVersion(crgo);
 
         if (updated == 0) {
             throw new InstanceNotFoundException(CargoVO.class.getName(), crgo);
         }
-
-        crgoDAO.updateVersion(crgo);
     }
 
     /**

@@ -28,36 +28,36 @@
             </div>
             <div class="col-md-2 form-group">
                 <label>{{"crgo_codigoNormalizado" | translate}}</label> <input type="text"
-                    ng-model="crgo.codigoNormalizado" class="form-control input-sm" />
+                    ng-model="crgo.crgv.codigoNormalizado" class="form-control input-sm" />
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"crgo_tipo" | translate}}</label> <select ng-model="crgo.tipo" class="form-control input-sm">
+                <label>{{"crgo_tipo" | translate}}</label> <select ng-model="crgo.crgv.tipo" class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tipos" ng-selected="crgo.tipo == cdrf" value="{{cdrf}}">{{cdrf}}
+                    <option ng-repeat="cdrf in tipos" ng-selected="crgo.crgv.tipo == cdrf" value="{{cdrf}}">{{cdrf}}
                         - {{"CargoTipo_" + cdrf | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"crgo_principal" | translate}}</label> <select ng-model="crgo.principal"
+                <label>{{"crgo_principal" | translate}}</label> <select ng-model="crgo.crgv.principal"
                     class="form-control input-sm">
                     <option />
-                    <option value="true" ng-selected="crgo.principal == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="crgo.principal == false">{{"fmt_false" | translate}}</option>
+                    <option value="true" ng-selected="crgo.crgv.principal == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="crgo.crgv.principal == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"crgo_temporal" | translate}}</label> <select ng-model="crgo.temporal"
+                <label>{{"crgo_temporal" | translate}}</label> <select ng-model="crgo.crgv.temporal"
                     class="form-control input-sm">
                     <option />
-                    <option value="true" ng-selected="crgo.temporal == true">{{"fmt_true" | translate}}</option>
-                    <option value="false" ng-selected="crgo.temporal == false">{{"fmt_false" | translate}}</option>
+                    <option value="true" ng-selected="crgo.crgv.temporal == true">{{"fmt_true" | translate}}</option>
+                    <option value="false" ng-selected="crgo.crgv.temporal == false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-1 form-group">
-                <label>{{'crgo_crgv_fini' | translate}}</label>
+                <label>{{'crgo_fini' | translate}}</label>
                 <div class="dropdown">
                     <a class="dropdown-toggle" id="datepickerFIni" role="button" data-toggle="dropdown" data-target="#"
                         href="#">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{'crgo_crgv_ffin' | translate}}</label>
+                <label>{{'crgo_ffin' | translate}}</label>
                 <div class="dropdown">
                     <a class="dropdown-toggle" id="datepickerFFin" role="button" data-toggle="dropdown" data-target="#"
                         href="#">
@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div class="col-md-3 form-group">
-                <label>{{"crgo_descripcion" | translate}}</label> <input type="text" ng-model="crgo.descripcion"
+                <label>{{"crgo_descripcion" | translate}}</label> <input type="text" ng-model="crgo.crgv.descripcion"
                     class="form-control input-sm" />
             </div>
         </div>

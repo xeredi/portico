@@ -52,8 +52,10 @@ public interface Aspecto {
      *            the aspc
      * @throws InstanceNotFoundException
      *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    void update(final AspectoVO aspc) throws InstanceNotFoundException;
+    void update(final AspectoVO aspc) throws InstanceNotFoundException, OverlapException;
 
     /**
      * Duplicate.

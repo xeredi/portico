@@ -116,10 +116,10 @@
         SELECT item.*, rgla.*, srvc_fref AS fref
             , NULL AS importe_inc
         FROM
-            portico.tbl_servicio_srvc item
-            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+            tbl_servicio_srvc item
+            JOIN tbl_tipo_servicio_tpsr tpsr ON
                 tpsr_pk = srvc_tpsr_pk
-            JOIN portico.tbl_regla_rgla rgla ON
+            JOIN tbl_regla_rgla rgla ON
                 rgla_enti_pk = srvc_tpsr_pk
                 AND rgla_pk = #{rgla.id}
         WHERE
@@ -136,7 +136,7 @@
                 tpsr_es_exencionable = 0
                 OR EXISTS (
                     SELECT 1
-                    FROM portico.tbl_servicio_dato_srdt
+                    FROM tbl_servicio_dato_srdt
                     WHERE srdt_srvc_pk = srvc_pk
                         AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
                         AND srdt_cadena IN ('0', '1')
@@ -151,7 +151,7 @@
     <![CDATA[
             AND NOT EXISTS (
                 SELECT 1
-                FROM portico.tbl_servicio_cargo_srcr
+                FROM tbl_servicio_cargo_srcr
                 WHERE
                     srcr_srvc_pk = srvc_pk
                     AND srcr_crgo_pk = rgla_crgo_pk
@@ -331,19 +331,22 @@
 
     <![CDATA[
     FROM (
-        SELECT item.*, rgla.*, srvc.*, srvc_fref AS fref
+        SELECT item.*, rgla.*, rglv.*, srvc.*, srvc_fref AS fref
             , NULL AS importe_inc
         FROM
-            portico.tbl_subservicio_ssrv item
-            JOIN portico.tbl_servicio_srvc srvc ON
+            tbl_subservicio_ssrv item
+            JOIN tbl_servicio_srvc srvc ON
                 srvc_pk = ssrv_srvc_pk
-            JOIN portico.tbl_tipo_subservicio_tpss tpss ON
+            JOIN tbl_tipo_subservicio_tpss tpss ON
                 tpss_pk = ssrv_tpss_pk
-            JOIN portico.tbl_tipo_servicio_tpsr tpsr ON
+            JOIN tbl_tipo_servicio_tpsr tpsr ON
                 tpsr_pk = srvc_tpsr_pk
-            JOIN portico.tbl_regla_rgla rgla ON
-                rgla_enti_pk = ssrv_tpss_pk
-                AND rgla_pk = #{rgla.id}
+            JOIN tbl_regla_rgla rgla ON
+                rgla_pk = #{rgla.id}
+            JOIN tbl_regla_version_rglv rglv ON
+                rglv_enti_pk = ssrv_tpss_pk
+                AND rglv_rgla_pk = rgla_pk
+                AND #{fref} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fref})
         WHERE
             tpsr_es_facturable = 1
             AND tpss_es_facturable = 1
@@ -357,19 +360,19 @@
                             -- Regimen simplificado
                             EXISTS (
                                 SELECT 1
-                                FROM portico.tbl_subservicio_dato_ssdt
+                                FROM tbl_subservicio_dato_ssdt
                                 WHERE
 
                                     EXISTS (
                                         SELECT 1
-                                        FROM portico.tbl_subservicio_ssrv
+                                        FROM tbl_subservicio_ssrv
                                         WHERE
                                             ssrv_pk = ssdt_ssrv_pk
                                             AND ssrv_tpss_pk = portico.getEntidad('BL')
                                     )
                                     AND EXISTS (
                                         SELECT 1
-                                        FROM portico.tbl_subserv_subserv_ssss
+                                        FROM tbl_subserv_subserv_ssss
                                         WHERE
                                             ssss_ssrvp_pk = ssdt_ssrv_pk
                                             AND ssss_ssrvh_pk = item.ssrv_pk
@@ -383,18 +386,18 @@
                                 EXISTS (
                                     SELECT 1
                                     FROM
-                                        portico.tbl_parametro_dato_prdt
+                                        tbl_parametro_dato_prdt
                                     WHERE
                                         prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
                                         AND EXISTS (
                                             SELECT 1
-                                            FROM portico.tbl_parametro_version_prvr
+                                            FROM tbl_parametro_version_prvr
                                             WHERE
                                                 prvr_pk = prdt_prvr_pk
                                                 AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
                                                 AND EXISTS (
                                                     SELECT 1
-                                                    FROM portico.tbl_subservicio_dato_ssdt
+                                                    FROM tbl_subservicio_dato_ssdt
                                                     WHERE
                                                         ssdt_prmt_pk = prvr_prmt_pk
                                                         AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
@@ -419,7 +422,7 @@
                 tpss_es_exencionable = 0
                 OR EXISTS (
                     SELECT 1
-                    FROM portico.tbl_subservicio_dato_ssdt
+                    FROM tbl_subservicio_dato_ssdt
                     WHERE ssdt_ssrv_pk = ssrv_pk
                         AND ssdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
                         AND ssdt_cadena IN ('0', '1')
@@ -429,7 +432,7 @@
                 tpsr_es_exencionable = 0
                 OR EXISTS (
                     SELECT 1
-                    FROM portico.tbl_servicio_dato_srdt
+                    FROM tbl_servicio_dato_srdt
                     WHERE srdt_srvc_pk = srvc_pk
                         AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
                         AND srdt_cadena IN ('0', '1')
@@ -444,10 +447,10 @@
     <![CDATA[
             AND (
                 (
-                    rgla_tipo = 'T'
+                    rglv_tipo = 'T'
                     AND NOT EXISTS (
                         SELECT 1
-                        FROM portico.tbl_servicio_cargo_srcr
+                        FROM tbl_servicio_cargo_srcr
                         WHERE
                             srcr_srvc_pk = srvc_pk
                             AND srcr_ssrv_pk = ssrv_pk
@@ -457,11 +460,11 @@
                     -- TODO Ojo lo de temporalidad
                 )
                 OR (
-                    rgla_tipo IN ('C', 'D')
+                    rglv_tipo IN ('C', 'D')
                     AND EXISTS (
                         SELECT 1
                         FROM
-                            portico.tbl_valoracion_tmp_vlrt
+                            tbl_valoracion_tmp_vlrt
                         WHERE
                             vlrt_prbt_pk = #{prbt.id}
                             AND vlrt_srvc_pk = srvc_pk
@@ -469,10 +472,10 @@
                             AND vlrt_crgo_pk = rgla_crgo_pk
                             AND vlrt_rgla_pk = ANY(
                                 SELECT rgla_pk
-                                FROM portico.tbl_regla_rgla
+                                FROM tbl_regla_rgla
                                 WHERE
                                     rgla_crgo_pk = vlrt_crgo_pk
-                                    AND rgla_tipo = 'T'
+                                    AND rglv_tipo = 'T'
                             )
                     )
                 )
@@ -497,9 +500,9 @@
         , importe_base AS vlrt_importe_base
         , (
             CASE
-                WHEN rgla_tipo = 'C'
+                WHEN rglv_tipo = 'C'
                 THEN importe_base * (valor_base - 1)
-                WHEN rgla_tipo = 'B'
+                WHEN rglv_tipo = 'B'
                 THEN importe_base * (- valor_base) / 100
                 ELSE 0
             END
@@ -558,20 +561,18 @@
             ) AS importe_inc
             , (${rgla.rglv.formulaSql}) AS valor_base
         FROM tbl_subservicio_ssrv item
-            JOIN tbl_regla_rgla ON
-                rgla_enti_pk = ssrv_tpss_pk
-                AND rgla_pk = #{rgla.id}
+            JOIN tbl_regla_rgla rgla ON
+                rgla_pk = #{rgla.id}
+            JOIN tbl_regla_version_rglv rglv ON
+                rglv_enti_pk = ssrv_tpss_pk
+                AND rglv_rgla_pk = rgla_pk
+                AND #{fref} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fref})
             JOIN tbl_valoracion_tmp_vlrt ON
                 vlrt_srvc_pk = ssrv_srvc_pk
                 AND vlrt_ssrv_pk = ssrv_pk
                 AND vlrt_prbt_pk = #{prbt.id}
-                        AND vlrt_crgo_pk = rgla_crgo_pk
-                AND vlrt_rgla_pk = ANY (
-                    SELECT rgla_pk
-                    FROM tbl_regla_rgla
-                    WHERE rgla_crgo_pk = vlrt_crgo_pk
-                    AND rgla_tipo = 'T'
-                )
+                AND vlrt_crgo_pk = rgla_crgo_pk
+                AND vlrt_rgla_tipo = 'T'
         WHERE
             ssrv_srvc_pk = #{srvc.id}
     ]]>
@@ -595,7 +596,7 @@
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
     ) VALUES (
-        #{id}, #{padreId}, #{prbtId}, #{srvcId}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rgla.tipo}, #{impuesto.id}, #{pagador.id}
+        #{id}, #{padreId}, #{prbtId}, #{srvcId}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rgla.rglv.tipo}, #{impuesto.id}, #{pagador.id}
         , #{orden}, #{valorBase}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
         , #{freferencia}, #{fliquidacion}, #{finicio}, #{ffin}
         , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}

@@ -23,34 +23,34 @@
         </div>
         <div class="col-md-2 form-group">
             <label>{{'crgo_codigoNormalizado' | translate}}</label>
-            <p class="form-control-static">{{crgo.codigoNormalizado}}</p>
+            <p class="form-control-static">{{crgo.crgv.codigoNormalizado}}</p>
         </div>
         <div class="col-md-1 form-group">
             <label>{{'crgo_tipo' | translate}}</label>
-            <p class="form-control-static">{{crgo.tipo}}</p>
+            <p class="form-control-static">{{crgo.crgv.tipo}}</p>
         </div>
         <div class="col-md-1 form-group">
             <label>{{'crgo_principal' | translate}}</label>
-            <p class="form-control-static">{{'fmt_' + crgo.principal | translate}}</p>
+            <p class="form-control-static">{{'fmt_' + crgo.crgv.principal | translate}}</p>
         </div>
         <div class="col-md-1 form-group">
             <label>{{'crgo_temporal' | translate}}</label>
-            <p class="form-control-static">{{'fmt_' + crgo.temporal | translate}}</p>
+            <p class="form-control-static">{{'fmt_' + crgo.crgv.temporal | translate}}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-1 form-group">
-            <label>{{'crgo_crgv_fini' | translate}}</label>
+            <label>{{'crgo_fini' | translate}}</label>
             <p class="form-control-static">{{crgo.crgv.fini | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'crgo_crgv_ffin' | translate}}</label>
-            <p class="form-control-static">{{aspc.crgv.ffin | date:('fmt_date' | translate)}}</p>
+            <label>{{'crgo_ffin' | translate}}</label>
+            <p class="form-control-static">{{crgo.crgv.ffin | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-3 form-group">
             <label>{{'crgo_descripcion' | translate}}</label>
-            <p class="form-control-static">{{crgo.descripcion}}</p>
+            <p class="form-control-static">{{crgo.crgv.descripcion}}</p>
         </div>
     </div>
 </fieldset>
@@ -87,8 +87,8 @@
                             class="glyphicon glyphicon-search"></i></a><a ng-if="!fechaVigencia"
                         href="#/facturacion/rgla/detail/{{rgla.rglv.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{rgla.codigo}}</td>
-                    <td>{{rgla.tipo}}</td>
-                    <td>{{rgla.enti.nombre}}</td>
+                    <td>{{rgla.rglv.tipo}}</td>
+                    <td>{{rgla.rglv.enti.nombre}}</td>
                     <td>{{rgla.rglv.fini | date:('fmt_date' | translate)}}</td>
                     <td>{{rgla.rglv.ffin | date:('fmt_date' | translate)}}</td>
                     <td class="number">{{rgla.rglv.orden}}</td>

@@ -95,15 +95,6 @@ public interface CargoDAO {
     void insertVersion(final CargoVO crgo);
 
     /**
-     * Update.
-     *
-     * @param crgo
-     *            the crgo
-     * @return the int
-     */
-    int update(final CargoVO crgo);
-
-    /**
      * Update version.
      *
      * @param crgo
