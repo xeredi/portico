@@ -3,15 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoServicioDAO">
-    <resultMap type="TipoServicioVO" id="ResultMap"
-        extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+    <resultMap type="TipoServicioVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
         <result column="tpsr_es_temporal" property="temporal" />
         <result column="tpsr_es_facturable" property="facturable" />
 
-		<association property="tpdtEstado" javaType="TipoDatoVO">
-			<result column="tpsr_tpdt_estado_pk" property="id" />
-			<result column="tpdt_nombre" property="nombre" />
-		</association>
+        <association property="tpdtEstado" javaType="TipoDatoVO">
+            <result column="tpsr_tpdt_estado_pk" property="id" />
+            <result column="tpdt_nombre" property="nombre" />
+        </association>
     </resultMap>
 
     <sql id="SelectPrefix">
@@ -31,18 +30,24 @@
     </sql>
 
     <sql id="SelectWhere">
-    <where>
-        <if test="ids != null">
-            AND enti.enti_pk IN
-            <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
-        </if>
-        <if test="nombre != null and !nombre.empty">
-            AND enti.enti_nombre LIKE #{nombre}
-        </if>
-        <if test="codigo != null and !codigo.empty">
-            AND enti.enti_codigo LIKE #{codigo}
-        </if>
-    </where>
+        <where>
+            <if test="id != null">
+                AND enti.enti_pk = #{id}
+            </if>
+            <if test="ids != null">
+                AND enti.enti_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
+            </if>
+            <if test="nombre != null and !nombre.empty">
+                AND enti.enti_nombre LIKE #{nombre}
+            </if>
+            <if test="codigo != null and !codigo.empty">
+                AND enti.enti_codigo LIKE #{codigo}
+            </if>
+            <if test="facturable != null">
+                AND tpsr.tpsr_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
+            </if>
+        </where>
     </sql>
 
     <select id="selectList" parameterType="TipoServicioCriterioVO" resultMap="ResultMap">
@@ -73,8 +78,7 @@
         </where>
     </select>
 
-    <select id="selectLabelValues" parameterType="TipoServicioCriterioVO"
-        resultType="LabelValueVO">
+    <select id="selectLabelValues" parameterType="TipoServicioCriterioVO" resultType="LabelValueVO">
         <![CDATA[
         SELECT
             enti.enti_pk AS value

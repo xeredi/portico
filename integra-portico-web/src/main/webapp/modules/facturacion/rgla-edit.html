@@ -1,0 +1,231 @@
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
+
+<form role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="rgla.id" /><input type="hidden"
+        ng-model="rgla.rglv.id" />
+
+    <fieldset>
+        <legend>{{'Regla' | uppercase}}</legend>
+
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{"rgla_crgo" | translate}}</label>
+                <p class="form-control-static">{{rgla.crgo.etiqueta}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"rgla_codigo" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                    ng-model="rgla.codigo" class="form-control input-sm" />
+                <p ng-if="accion != 'create'" class="form-control-static">{{rgla.codigo}}</p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{"rgla_tipo" | translate}}</label> <select ng-if="accion == 'create'" ng-model="rgla.tipo"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="cdrf in tipos" value="{{cdrf}}" ng-selected="rgla.tipo == cdrf">{{cdrf}}
+                        - {{'ReglaTipo_' + cdrf | translate}}</option>
+                </select>
+                <p ng-if="accion != 'create'" class="form-control-static">{{rgla.tipo}} - {{'ReglaTipo_' + rgla.tipo
+                    | translate}}</p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label>{{"rgla_enti" | translate}}</label> <select ng-if="accion == 'create'" ng-model="rgla.enti.id"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="enti in entiFacturableList" value="{{enti.id}}"
+                        ng-selected="rgla.enti.id == enti.id">{{enti.nombre}}</option>
+                </select>
+                <p ng-if="accion != 'create'" class="form-control-static">{{rgla.enti.nombre}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{'rgla_fini' | translate}}</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="datepickerFIni" role="button" data-toggle="dropdown" data-target="#"
+                        href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="rgla.rglv.fini"
+                                value="{{rgla.rglv.fini | date:('fmt_date' | translate)}}"><span
+                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="rgla.rglv.fini"
+                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFIni', startView:'day', minView:'day'  }" />
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{'rgla_ffin' | translate}}</label>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="datepickerFFin" role="button" data-toggle="dropdown" data-target="#"
+                        href="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" name="crgo.crgv.ffin"
+                                value="{{rgla.rglv.ffin | date:('fmt_date' | translate)}}"><span
+                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="rgla.rglv.ffin"
+                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFFin', startView:'day', minView:'day'  }" />
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"rgla_orden" | translate}}</label> <input type="text"
+                    ng-model="rgla.rglv.orden" class="form-control input-sm" />
+            </div>
+            <div ng-if="rgla.tipo == 'T'" class="col-md-1 form-group">
+                <label>{{"rgla_importeBase" | translate}}</label> <input type="text"
+                    ng-model="rgla.rglv.importeBase" class="form-control input-sm" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label>{{"rgla_condicion" | translate}}</label>
+                <textarea class="form-control input-sm" rows="7" ng-model="rgla.rglv.condicion">{{rgla.rglv.condicion}}</textarea>
+            </div>
+            <div class="col-md-6 form-group">
+                <label>{{"rgla_formula" | translate}}</label>
+                <textarea class="form-control input-sm" rows="7" ng-model="rgla.rglv.formula">{{rgla.rglv.formula}}</textarea>
+            </div>
+        </div>
+
+        <div ng-if="rgla.tipo == 'T'" class="row">
+            <div class="col-md-6 form-group">
+                <label>{{"rgla_pathImpuesto" | translate}}</label> <input type="text"
+                    ng-model="rgla.rglv.pathImpuesto" class="form-control input-sm" />
+            </div>
+            <div class="col-md-6 form-group">
+                <label>{{"rgla_pathPagador" | translate}}</label> <input type="text"
+                    ng-model="rgla.rglv.pathPagador" class="form-control input-sm" />
+            </div>
+        </div>
+
+        <div ng-if="rgla.tipo == 'T'" class="row">
+            <div class="col-md-6 form-group">
+                <label>{{"rgla_pathEsSujPasivo" | translate}}</label> <input type="text"
+                    ng-model="rgla.rglv.pathEsSujPasivo" class="form-control input-sm" />
+            </div>
+            <div class="col-md-6 form-group">
+                <label>{{"rgla_pathCodExen" | translate}}</label> <input type="text"
+                    ng-model="rgla.rglv.pathCodExen" class="form-control input-sm" />
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset ng-if="rgla.tipo == 'T'">
+        <legend>{{'Elementos Informativos' | uppercase}}</legend>
+
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <table class="table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-3">{{'rgla_etiqInfo' | translate}}</th>
+                            <th class="col-md-8">{{'rgla_pathInfo' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>info1</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqInfo1" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathInfo1" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>info2</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqInfo2" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathInfo2" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>info3</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqInfo3" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathInfo3" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>info4</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqInfo4" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathInfo4" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>info5</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqInfo5" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathInfo5" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>info6</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqInfo6" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathInfo6" class="form-control input-sm" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset ng-if="rgla.tipo == 'T'">
+        <legend>{{'Elementos Cuantitativos' | uppercase}}</legend>
+
+        <div class="row">
+            <div class="col-md-11 form-group">
+                <table class="table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1" />
+                            <th class="col-md-3">{{'rgla_etiqCuant' | translate}}</th>
+                            <th class="col-md-8">{{'rgla_pathCuant' | translate}}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>cuant1</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqCuant1" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathCuant1" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>cuant2</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqCuant2" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathCuant2" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>cuant3</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqCuant3" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathCuant3" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>cuant4</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqCuant4" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathCuant4" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>cuant5</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqCuant5" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathCuant5" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr>
+                            <td>cuant6</td>
+                            <td><input type="text" ng-model="rgla.rglv.etiqCuant6" class="form-control input-sm" /></td>
+                            <td><input type="text" ng-model="rgla.rglv.pathCuant6" class="form-control input-sm" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <button data-ng-click="save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+        <button data-ng-click="cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+        </button>
+    </fieldset>
+</form>
+

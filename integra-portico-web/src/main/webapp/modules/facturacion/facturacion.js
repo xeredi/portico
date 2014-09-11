@@ -129,9 +129,9 @@ facturacion.controller("vlrdDetailController", function($scope, $http, $location
     });
 });
 
-//----------- CARGO y REGLA------------------
-//----------- CARGO y REGLA------------------
-//----------- CARGO y REGLA------------------
+// ----------- CARGO y REGLA------------------
+// ----------- CARGO y REGLA------------------
+// ----------- CARGO y REGLA------------------
 
 facturacion.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -173,17 +173,17 @@ facturacion.config([ "$routeProvider", function($routeProvider) {
 
     .when("/facturacion/rgla/detail/:rglvId", {
         templateUrl : "modules/facturacion/rgla-detail.html",
-        controller : "rglvDetailController"
+        controller : "rglaDetailController"
     })
 
     .when("/facturacion/rgla/edit/:rglvId", {
         templateUrl : "modules/facturacion/rgla-edit.html",
-        controller : "rglvEditController"
+        controller : "rglaEditController"
     })
 
-    .when("/facturacion/rgla/create", {
+    .when("/facturacion/rgla/create/:crgvId", {
         templateUrl : "modules/facturacion/rgla-edit.html",
-        controller : "crgoCreateController"
+        controller : "rglaCreateController"
     })
 } ]);
 
@@ -282,16 +282,15 @@ facturacion.controller("crgoDetailController", function($scope, $http, $location
         url += "?crgo.crgv.id=" + $routeParams.crgvId;
     }
 
-    $http.get(url).success(
-            function(data) {
-                $scope.crgo = data.crgo;
+    $http.get(url).success(function(data) {
+        $scope.crgo = data.crgo;
 
-                var urlRglaList = "facturacion/rgla-list.action?rglaCriterio.crgvId=" + data.crgo.crgv.id;
+        var urlRglaList = "facturacion/rgla-list.action?rglaCriterio.crgvId=" + data.crgo.crgv.id;
 
-                $http.get(urlRglaList).success(function(data) {
-                    $scope.rglaList = data.rglaList;
-                });
-            });
+        $http.get(urlRglaList).success(function(data) {
+            $scope.rglaList = data.rglaList;
+        });
+    });
 
     $scope.edit = function() {
         $location.path("/facturacion/crgo/edit/" + $scope.crgo.crgv.id).replace();
@@ -344,47 +343,102 @@ facturacion.controller("crgoEditController", function($scope, $http, $location, 
 });
 
 facturacion.controller("rglaDetailController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.fechaVigencia = $routeParams.fechaVigencia;
+    var url = "facturacion/rgla-detail.action";
 
-    var url = "facturacion/rgla-detail.action?rgla.id=" + $routeParams.rglaId + "&fechaVigencia="
-            + $routeParams.fechaVigencia;
-
-    $http.get(url).success(function(data) {
-        $scope.rgla = data.rgla;
-    });
-
-    var urlRginList = "facturacion/rgin-list.action?rginCriterio.rgla1Id=" + $routeParams.rglaId
-            + "&rginCriterio.fechaVigencia=" + $routeParams.fechaVigencia;
-
-    $http.get(urlRginList).success(function(data) {
-        $scope.rginList = data.rginList;
-    });
-});
-
-facturacion.controller("rglvDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "facturacion/rgla-detail.action?rgla.rglv.id=" + $routeParams.rglvId;
+    if ($routeParams.fechaVigencia) {
+        $scope.fechaVigencia = $routeParams.fechaVigencia;
+        url += "?rgla.id=" + $routeParams.rglaId + "&fechaVigencia=" + $routeParams.fechaVigencia;
+    } else {
+        url += "?rgla.rglv.id=" + $routeParams.rglvId;
+    }
 
     $http.get(url).success(function(data) {
         $scope.rgla = data.rgla;
+
+        var urlRginList = "facturacion/rgin-list.action?rginCriterio.rgla1Id=" + data.rgla.id;
+
+        $http.get(urlRginList).success(function(data) {
+            $scope.rginList = data.rginList;
+        });
     });
+
+    $scope.edit = function() {
+        $location.path("/facturacion/rgla/edit/" + $scope.rgla.rglv.id).replace();
+    }
+
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "facturacion/rgla-remove.action?rgla.rglv.id=" + $scope.rgla.rglv.id;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
+    }
 });
 
-facturacion.controller("rglvEditController", function($scope, $http, $location, $route, $routeParams) {
+facturacion.controller("rglaEditController", function($scope, $http, $location, $route, $routeParams) {
     var url = "facturacion/rgla-edit.action?rgla.rglv.id=" + $routeParams.rglvId;
 
     $http.get(url).success(function(data) {
         $scope.rgla = data.rgla;
         $scope.accion = data.accion;
     });
+
+    $scope.save = function() {
+        var url = "facturacion/rgla-save.action";
+
+        $http.post(url, {
+            rgla : $scope.rgla,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/facturacion/rgla/detail/" + $scope.rgla.rglv.id).replace();
+    }
 });
 
 facturacion.controller("rglaCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "facturacion/rgla-create.action";
+    var url = "facturacion/rgla-create.action?rgla.crgo.crgv.id=" + $routeParams.crgvId;
 
     $http.get(url).success(function(data) {
         $scope.rgla = data.rgla;
+        $scope.tipos = data.tipos;
+        $scope.entiFacturableList = data.entiFacturableList;
         $scope.accion = data.accion;
     });
+
+    $scope.save = function() {
+        var url = "facturacion/rgla-save.action";
+
+        $http.post(url, {
+            rgla : $scope.rgla,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
 });
 
 // ----------- ASPECTO ------------------

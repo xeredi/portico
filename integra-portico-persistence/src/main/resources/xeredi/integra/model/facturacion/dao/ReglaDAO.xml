@@ -169,8 +169,123 @@
     <select id="count" parameterType="ReglaCriterioVO" resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
-        FROM portico.vw_regla_rgla
+        FROM vw_regla_rgla
     ]]>
         <include refid="SelectWhere" />
     </select>
+
+    <select id="exists" parameterType="ReglaVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM tbl_regla_rgla
+        WHERE rgla_codigo = #{codigo}
+    ]]>
+    </select>
+
+    <select id="existsOverlap" parameterType="ReglaVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM vw_regla_rgla
+        WHERE
+            rgla_pk = #{id}
+            AND (
+                #{rglv.fini} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{rglv.fini})
+                OR COALESCE(#{rglv.ffin}, portico.getSysdateTime()) BETWEEN rglv_fini AND COALESCE(rglv_ffin, COALESCE(#{rglv.ffin}, portico.getSysdateTime()))
+            )
+    ]]>
+        <if test="rglv.id != null">
+        <![CDATA[
+            AND rglv_pk <> #{rglv.id}
+        ]]>
+        </if>
+    </select>
+
+    <select id="selectId" parameterType="ReglaVO" resultType="Long">
+    <![CDATA[
+        SELECT rgla_pk
+        FROM tbl_regla_rgla
+        WHERE rgla_codigo = #{codigo}
+    ]]>
+    </select>
+
+    <insert id="insert" parameterType="ReglaVO">
+    <![CDATA[
+        INSERT INTO tbl_regla_rgla (rgla_pk, rgla_codigo, rgla_tipo, rgla_crgo_pk, rgla_enti_pk)
+        VALUES (#{id}, #{codigo}, #{tipo}, #{crgo.id}, #{enti.id})
+    ]]>
+    </insert>
+
+    <insert id="insertVersion" parameterType="ReglaVO">
+    <![CDATA[
+        INSERT INTO tbl_regla_version_rglv (
+            rglv_pk, rglv_rgla_pk, rglv_fini, rglv_ffin, rglv_orden, rglv_importe_base, rglv_condicion, rglv_formula
+            , rglv_path_impuesto, rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
+            , rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
+            , rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+            , rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
+            , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
+        ) VALUES (
+            #{rglv.id}, #{id}, #{rglv.fini}, #{rglv.ffin}, #{rglv.orden}, #{rglv.importeBase}, #{rglv.condicion}, #{rglv.formula}
+            , #{rglv.pathImpuesto}, #{rglv.pathPagador}, #{rglv.pathEsSujPasivo}, #{rglv.pathCodExen}
+            , #{rglv.pathInfo1}, #{rglv.pathInfo2}, #{rglv.pathInfo3}, #{rglv.pathInfo4}, #{rglv.pathInfo5}, #{rglv.pathInfo6}
+            , #{rglv.etiqInfo1}, #{rglv.etiqInfo2}, #{rglv.etiqInfo3}, #{rglv.etiqInfo4}, #{rglv.etiqInfo5}, #{rglv.etiqInfo6}
+            , #{rglv.pathCuant1}, #{rglv.pathCuant2}, #{rglv.pathCuant3}, #{rglv.pathCuant4}, #{rglv.pathCuant5}, #{rglv.pathCuant6}
+            , #{rglv.etiqCuant1}, #{rglv.etiqCuant2}, #{rglv.etiqCuant3}, #{rglv.etiqCuant4}, #{rglv.etiqCuant5}, #{rglv.etiqCuant6}
+        )
+    ]]>
+    </insert>
+
+    <update id="updateVersion" parameterType="ReglaVO">
+    <![CDATA[
+        UPDATE tbl_regla_version_rglv SET
+            rglv_fini = #{rglv.fini}
+            , rglv_ffin = #{rglv.ffin}
+            , rglv_orden = #{rglv.orden}
+            , rglv_importe_base = #{rglv.importeBase}
+            , rglv_condicion = #{rglv.condicion}
+            , rglv_formula   = #{rglv.formula}
+            , rglv_path_impuesto = #{rglv.pathImpuesto}
+            , rglv_path_pagador = #{rglv.pathPagador}
+            , rglv_path_es_suj_pasivo = #{rglv.pathEsSujPasivo}
+            , rglv_path_cod_exen = #{rglv.pathCodExen}
+
+            , rglv_path_info1 = #{rglv.pathInfo1}
+            , rglv_path_info2 = #{rglv.pathInfo2}
+            , rglv_path_info3 = #{rglv.pathInfo3}
+            , rglv_path_info4 = #{rglv.pathInfo4}
+            , rglv_path_info5 = #{rglv.pathInfo5}
+            , rglv_path_info6 = #{rglv.pathInfo6}
+
+            , rglv_etiq_info1 = #{rglv.etiqInfo1}
+            , rglv_etiq_info2 = #{rglv.etiqInfo2}
+            , rglv_etiq_info3 = #{rglv.etiqInfo3}
+            , rglv_etiq_info4 = #{rglv.etiqInfo4}
+            , rglv_etiq_info5 = #{rglv.etiqInfo5}
+            , rglv_etiq_info6 = #{rglv.etiqInfo6}
+
+            , rglv_path_cuant1 = #{rglv.pathCuant1}
+            , rglv_path_cuant2 = #{rglv.pathCuant2}
+            , rglv_path_cuant3 = #{rglv.pathCuant3}
+            , rglv_path_cuant4 = #{rglv.pathCuant4}
+            , rglv_path_cuant5 = #{rglv.pathCuant5}
+            , rglv_path_cuant6 = #{rglv.pathCuant6}
+
+            , rglv_etiq_cuant1 = #{rglv.etiqCuant1}
+            , rglv_etiq_cuant2 = #{rglv.etiqCuant2}
+            , rglv_etiq_cuant3 = #{rglv.etiqCuant3}
+            , rglv_etiq_cuant4 = #{rglv.etiqCuant4}
+            , rglv_etiq_cuant5 = #{rglv.etiqCuant5}
+            , rglv_etiq_cuant6 = #{rglv.etiqCuant6}
+        WHERE
+            rglv_pk = #{rglv.id}
+    ]]>
+    </update>
+
+    <delete id="deleteVersion" parameterType="ReglaVO">
+    <![CDATA[
+        DELETE FROM tbl_regla_version_rglv
+        WHERE
+            rglv_pk = #{rglv.id}
+    ]]>
+    </delete>
 </mapper>

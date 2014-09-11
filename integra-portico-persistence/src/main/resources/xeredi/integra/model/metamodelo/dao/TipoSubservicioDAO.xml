@@ -52,9 +52,12 @@
 			<if test="codigo != null and !codigo.empty">
 				AND enti.enti_codigo LIKE #{codigo}
 			</if>
-			<if test="tpsrId != null">
-				AND tpss.tpss_tpsr_pk = #{tpsrId}
-			</if>
+            <if test="tpsrId != null">
+                AND tpss.tpss_tpsr_pk = #{tpsrId}
+            </if>
+            <if test="facturable != null">
+                AND tpss.tpss_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
+            </if>
 		</where>
 	</sql>
 

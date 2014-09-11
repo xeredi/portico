@@ -50,4 +50,65 @@ public interface ReglaDAO {
      * @return the int
      */
     int count(final ReglaCriterioVO rglaCriterioVO);
+
+    /**
+     * Exists.
+     *
+     * @param rgla
+     *            the rgla
+     * @return true, if successful
+     */
+    boolean exists(final ReglaVO rgla);
+
+    /**
+     * Exists overlap.
+     *
+     * @param rgla
+     *            the rgla
+     * @return true, if successful
+     */
+    boolean existsOverlap(final ReglaVO rgla);
+
+    /**
+     * Select id.
+     *
+     * @param rgla
+     *            the rgla
+     * @return the long
+     */
+    Long selectId(final ReglaVO rgla);
+
+    /**
+     * Insert.
+     *
+     * @param rgla
+     *            the rgla
+     */
+    void insert(final ReglaVO rgla);
+
+    /**
+     * Insert version.
+     *
+     * @param rgla
+     *            the rgla
+     */
+    void insertVersion(final ReglaVO rgla);
+
+    /**
+     * Update version.
+     *
+     * @param rgla
+     *            the rgla
+     * @return the int
+     */
+    int updateVersion(final ReglaVO rgla);
+
+    /**
+     * Delete version.
+     *
+     * @param rgla
+     *            the rgla
+     * @return the int
+     */
+    int deleteVersion(final ReglaVO rgla);
 }

@@ -10,6 +10,9 @@ public final class TipoSubservicioCriterioVO extends EntidadCriterioVO {
     /** The tpsr id. */
     private Long tpsrId;
 
+    /** The facturable. */
+    private Boolean facturable;
+
     /**
      * {@inheritDoc}
      */
@@ -19,8 +22,27 @@ public final class TipoSubservicioCriterioVO extends EntidadCriterioVO {
     }
 
     /**
+     * Gets the facturable.
+     *
+     * @return the facturable
+     */
+    public Boolean getFacturable() {
+        return facturable;
+    }
+
+    /**
+     * Sets the facturable.
+     *
+     * @param value
+     *            the new facturable
+     */
+    public void setFacturable(final Boolean value) {
+        facturable = value;
+    }
+
+    /**
      * Gets the tpsr id.
-     * 
+     *
      * @return the tpsr id
      */
     public Long getTpsrId() {
@@ -29,7 +51,7 @@ public final class TipoSubservicioCriterioVO extends EntidadCriterioVO {
 
     /**
      * Sets the tpsr id.
-     * 
+     *
      * @param value
      *            the new tpsr id
      */
