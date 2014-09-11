@@ -1,7 +1,9 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.validator.GenericValidator;
@@ -13,10 +15,14 @@ import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.bo.Cargo;
 import xeredi.integra.model.facturacion.bo.CargoBO;
+import xeredi.integra.model.facturacion.bo.Regla;
+import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoTipo;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.CargoVersionVO;
+import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
+import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.InstanceNotFoundException;
 
@@ -36,6 +42,9 @@ public final class CargoAction extends BaseAction {
 
     /** The crgo. */
     private CargoVO crgo;
+
+    /** The rgla list. */
+    private final List<ReglaVO> rglaList = new ArrayList<>();
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
@@ -72,6 +81,14 @@ public final class CargoAction extends BaseAction {
         }
 
         crgo = crgoBO.select(crgoCriterioVO);
+
+        if (crgo != null) {
+            final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+            final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
+
+            rglaCriterioVO.setCrgvId(crgo.getCrgv().getId());
+            rglaList.addAll(rglaBO.selectList(rglaCriterioVO));
+        }
 
         return SUCCESS;
     }
@@ -276,6 +293,15 @@ public final class CargoAction extends BaseAction {
      */
     public void setAccion(final ACCION_EDICION value) {
         accion = value;
+    }
+
+    /**
+     * Gets the rgla list.
+     *
+     * @return the rgla list
+     */
+    public List<ReglaVO> getRglaList() {
+        return rglaList;
     }
 
 }

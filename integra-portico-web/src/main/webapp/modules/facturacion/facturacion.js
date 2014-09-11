@@ -185,6 +185,21 @@ facturacion.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/facturacion/rgla-edit.html",
         controller : "rglaCreateController"
     })
+
+    .when("/facturacion/rgin/detail/:rgivId", {
+        templateUrl : "modules/facturacion/rgin-detail.html",
+        controller : "rginDetailController"
+    })
+
+    .when("/facturacion/rgin/edit/:rgivId", {
+        templateUrl : "modules/facturacion/rgin-edit.html",
+        controller : "rginEditController"
+    })
+
+    .when("/facturacion/rgin/create/:crgoId/:rglaId", {
+        templateUrl : "modules/facturacion/rgin-edit.html",
+        controller : "rginCreateController"
+    })
 } ]);
 
 facturacion.controller("crgoGridController", function($scope, $http, $location, $route, $routeParams) {
@@ -284,12 +299,7 @@ facturacion.controller("crgoDetailController", function($scope, $http, $location
 
     $http.get(url).success(function(data) {
         $scope.crgo = data.crgo;
-
-        var urlRglaList = "facturacion/rgla-list.action?rglaCriterio.crgvId=" + data.crgo.crgv.id;
-
-        $http.get(urlRglaList).success(function(data) {
-            $scope.rglaList = data.rglaList;
-        });
+        $scope.rglaList = data.rglaList;
     });
 
     $scope.edit = function() {
@@ -354,12 +364,7 @@ facturacion.controller("rglaDetailController", function($scope, $http, $location
 
     $http.get(url).success(function(data) {
         $scope.rgla = data.rgla;
-
-        var urlRginList = "facturacion/rgin-list.action?rginCriterio.rgla1Id=" + data.rgla.id;
-
-        $http.get(urlRginList).success(function(data) {
-            $scope.rginList = data.rginList;
-        });
+        $scope.rginList = data.rginList;
     });
 
     $scope.edit = function() {
@@ -430,6 +435,92 @@ facturacion.controller("rglaCreateController", function($scope, $http, $location
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
+});
+
+facturacion.controller("rginDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/rgin-detail.action?rgin.rgiv.id=" + $routeParams.rgivId;
+
+    $http.get(url).success(function(data) {
+        $scope.rgin = data.rgin;
+    });
+
+    $scope.edit = function() {
+        $location.path("/facturacion/rgin/edit/" + $scope.rgin.rgiv.id).replace();
+    }
+
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "facturacion/rgin-remove.action?rgin.rgiv.id=" + $scope.rgin.rgiv.id;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
+    }
+});
+
+facturacion.controller("rginEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/rgin-edit.action?rgin.rgiv.id=" + $routeParams.rgivId;
+
+    $http.get(url).success(function(data) {
+        $scope.rgin = data.rgin;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "facturacion/rgin-save.action";
+
+        $http.post(url, {
+            rgin : $scope.rgin,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/facturacion/rgin/detail/" + $scope.rgin.rgiv.id).replace();
+    }
+});
+
+facturacion.controller("rginCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/rgin-create.action?rgin.rgla1Id=" + $routeParams.rglaId + "&rgin.rgla2.crgo.id="
+            + $routeParams.crgoId;
+
+    $http.get(url).success(function(data) {
+        $scope.rgin = data.rgin;
+        $scope.accion = data.accion;
+        $scope.rgla2List = data.rgla2List;
+    });
+
+    $scope.save = function() {
+        var url = "facturacion/rgin-save.action";
+
+        $http.post(url, {
+            rgin : $scope.rgin,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }

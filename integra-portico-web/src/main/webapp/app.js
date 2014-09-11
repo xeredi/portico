@@ -197,9 +197,9 @@ app.config(function($translateProvider) {
         rgla_etiqCuant : 'Etiq. Elem. Cuantitativo',
         rgla_pathCuant : 'Ruta Elem. Cuantitativo',
 
-
-        rgin_rgiv_fini : 'F. Inicio Incomp.',
-        rgin_rgiv_ffin : 'F. Fin Incomp.',
+        rgin_rgla2 : 'Regla Incompatible',
+        rgin_fini : 'F. Inicio',
+        rgin_ffin : 'F. Fin',
 
         tppr_filter_title : 'Maestros - Filtro',
         tppr_grid_title : 'Maestros - Listado',

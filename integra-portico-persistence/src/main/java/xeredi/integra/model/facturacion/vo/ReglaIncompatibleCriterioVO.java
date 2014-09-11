@@ -13,6 +13,9 @@ public final class ReglaIncompatibleCriterioVO {
     /** The id. */
     private Long id;
 
+    /** The rgiv id. */
+    private Long rgivId;
+
     /** The rgla1 id. */
     private Long rgla1Id;
 
@@ -82,6 +85,25 @@ public final class ReglaIncompatibleCriterioVO {
      */
     public void setFechaVigencia(final Date value) {
         fechaVigencia = value;
+    }
+
+    /**
+     * Gets the rgiv id.
+     *
+     * @return the rgiv id
+     */
+    public Long getRgivId() {
+        return rgivId;
+    }
+
+    /**
+     * Sets the rgiv id.
+     *
+     * @param value
+     *            the new rgiv id
+     */
+    public void setRgivId(final Long value) {
+        rgivId = value;
     }
 
 }

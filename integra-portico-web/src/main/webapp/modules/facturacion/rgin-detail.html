@@ -1,0 +1,31 @@
+<fieldset>
+    <legend>{{'Incompatibilidad' | uppercase}}</legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button data-ng-click="edit()" class="btn btn-default">
+                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            </button>
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label>{{'rgin_rgla2' | translate}}</label>
+            <p class="form-control-static">
+                <a href="#/facturacion/rgla/detail/{{rgin.rgla2.rglv.id}}">{{rgin.rgla2.codigo}}</a>
+            </p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'rgin_fini' | translate}}</label>
+            <p class="form-control-static">{{rgin.rgiv.fini | date:('fmt_date' | translate)}}</p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'rgin_ffin' | translate}}</label>
+            <p class="form-control-static">{{rgin.rgiv.ffin | date:('fmt_date' | translate)}}</p>
+        </div>
+    </div>
+</fieldset>

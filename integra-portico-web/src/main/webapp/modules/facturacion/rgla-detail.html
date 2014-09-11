@@ -169,21 +169,32 @@
 
 <fieldset>
     <legend>{{'Reglas Incompatibles' | uppercase}}</legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/facturacion/rgin/create/{{rgla.crgo.id}}/{{rgla.id}}"><i
+                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-9 form-group">
             <table ng-if="rginList" class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
+                        <th />
                         <th>{{'rgla_codigo' | translate}}</th>
                         <th>{{'rgla_tipo' | translate}}</th>
                         <th>{{'rgla_enti' | translate}}</th>
-                        <th>{{'rgin_rgiv_fini' | translate}}</th>
-                        <th>{{'rgin_rgiv_ffin' | translate}}</th>
+                        <th>{{'rgin_fini' | translate}}</th>
+                        <th>{{'rgin_ffin' | translate}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="rgin in rginList">
-                        <td><a href="#/facturacion/rgla/detail/{{rgin.rgla2.id}}/{{rgla.rglv.fini}}">{{rgin.rgla2.codigo}}</a></td>
+                        <td><a href="#/facturacion/rgin/detail/{{rgin.rgiv.id}}"><i
+                                class="glyphicon glyphicon-search"></i></a></td>
+                        <td>{{rgin.rgla2.codigo}}</td>
                         <td>{{rgin.rgla2.tipo}}</td>
                         <td>{{rgin.rgla2.enti.nombre}}</td>
                         <td>{{rgin.rgiv.fini | date:('fmt_date' | translate)}}</td>

@@ -17,9 +17,13 @@ import xeredi.integra.model.facturacion.bo.Cargo;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.Regla;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
+import xeredi.integra.model.facturacion.bo.ReglaIncompatible;
+import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
+import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
+import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaTipo;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
@@ -49,6 +53,9 @@ public final class ReglaAction extends BaseAction {
 
     /** The rgla. */
     private ReglaVO rgla;
+
+    /** The rgin list. */
+    private final List<ReglaIncompatibleVO> rginList = new ArrayList<>();
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
@@ -87,7 +94,18 @@ public final class ReglaAction extends BaseAction {
             rglaCriterioVO.setRglvId(rgla.getRglv().getId());
         }
 
-        rgla = rglaBO.select(rglaCriterioVO);
+        try {
+            rgla = rglaBO.select(rglaCriterioVO);
+
+            final ReglaIncompatible rginBO = BOFactory.getInjector().getInstance(ReglaIncompatibleBO.class);
+            final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
+
+            rginCriterioVO.setRgla1Id(rgla.getId());
+
+            rginList.addAll(rginBO.selectList(rginCriterioVO));
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("rgla"), rglaCriterioVO.toString() }));
+        }
 
         return SUCCESS;
     }
@@ -159,7 +177,12 @@ public final class ReglaAction extends BaseAction {
 
         rglaCriterioVO.setRglvId(rgla.getRglv().getId());
 
-        rgla = rglaBO.select(rglaCriterioVO);
+        try {
+            rgla = rglaBO.select(rglaCriterioVO);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { getText("rgla"), String.valueOf(rgla.getRglv().getId()) }));
+        }
 
         return SUCCESS;
     }
@@ -477,6 +500,15 @@ public final class ReglaAction extends BaseAction {
      */
     public List<EntidadVO> getEntiFacturableList() {
         return entiFacturableList;
+    }
+
+    /**
+     * Gets the rgin list.
+     *
+     * @return the rgin list
+     */
+    public List<ReglaIncompatibleVO> getRginList() {
+        return rginList;
     }
 
 }

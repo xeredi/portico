@@ -65,12 +65,7 @@
         </div>
     </div>
 
-    <pagination total-items="rglaList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
-        max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
-
     <div class="table-responsive">
-        <span class="label label-default">{{rglaList.count}} resultado(s)</span>
-
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
@@ -78,16 +73,16 @@
                     <th>{{'rgla_codigo' | translate}}</th>
                     <th>{{'rgla_tipo' | translate}}</th>
                     <th>{{'rgla_enti' | translate}}</th>
-                    <th>{{'rgla_rglv_fini' | translate}}</th>
-                    <th>{{'rgla_rglv_ffin' | translate}}</th>
-                    <th>{{'rgla_rglv_orden' | translate}}</th>
-                    <th>{{'rgla_rglv_importeBase' | translate}}</th>
-                    <th>{{'rgla_rglv_formula' | translate}}</th>
+                    <th>{{'rgla_fini' | translate}}</th>
+                    <th>{{'rgla_ffin' | translate}}</th>
+                    <th>{{'rgla_orden' | translate}}</th>
+                    <th>{{'rgla_importeBase' | translate}}</th>
+                    <th>{{'rgla_formula' | translate}}</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr ng-repeat="rgla in rglaList.list">
+                <tr ng-repeat="rgla in rglaList">
                     <td><a ng-if="fechaVigencia" href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a><a ng-if="!fechaVigencia"
                         href="#/facturacion/rgla/detail/{{rgla.rglv.id}}"><i class="glyphicon glyphicon-search"></i></a></td>

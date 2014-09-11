@@ -9,10 +9,7 @@ import org.mybatis.guice.transactional.Transactional;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
-import xeredi.integra.model.facturacion.dao.ReglaIncompatibleDAO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
-import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
-import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -32,10 +29,6 @@ public class ReglaBO implements Regla {
     /** The rgla dao. */
     @Inject
     ReglaDAO rglaDAO;
-
-    /** The rgin dao. */
-    @Inject
-    ReglaIncompatibleDAO rginDAO;
 
     /**
      * {@inheritDoc}
@@ -135,23 +128,18 @@ public class ReglaBO implements Regla {
      */
     @Override
     @Transactional
-    public ReglaVO select(final ReglaCriterioVO rglaCriterioVO) {
+    public ReglaVO select(final ReglaCriterioVO rglaCriterioVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rglaCriterioVO);
         Preconditions.checkArgument(rglaCriterioVO.getRglvId() != null || rglaCriterioVO.getId() != null
                 && rglaCriterioVO.getFechaVigencia() != null);
 
-        return rglaDAO.selectObject(rglaCriterioVO);
-    }
+        final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional
-    public List<ReglaIncompatibleVO> selectRginList(final ReglaIncompatibleCriterioVO rginCriterioVO) {
-        Preconditions.checkNotNull(rginCriterioVO);
+        if (rgla == null) {
+            throw new InstanceNotFoundException(ReglaVO.class.getName(), rglaCriterioVO);
+        }
 
-        return rginDAO.selectList(rginCriterioVO);
+        return rgla;
     }
 
 }

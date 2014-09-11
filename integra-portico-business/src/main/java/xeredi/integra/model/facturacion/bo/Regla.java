@@ -4,8 +4,6 @@ import java.util.List;
 
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
-import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
-import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
@@ -45,16 +43,7 @@ public interface Regla {
      *            the rgla criterio vo
      * @return the regla vo
      */
-    ReglaVO select(final ReglaCriterioVO rglaCriterioVO);
-
-    /**
-     * Select rgin list.
-     *
-     * @param rginCriterioVO
-     *            the rgin criterio vo
-     * @return the list
-     */
-    List<ReglaIncompatibleVO> selectRginList(final ReglaIncompatibleCriterioVO rginCriterioVO);
+    ReglaVO select(final ReglaCriterioVO rglaCriterioVO) throws InstanceNotFoundException;
 
     /**
      * Insert.
