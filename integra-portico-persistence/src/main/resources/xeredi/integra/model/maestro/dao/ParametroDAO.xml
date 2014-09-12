@@ -226,61 +226,43 @@
         ]]>
     </select>
 
-    <select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultType="LabelValueVO">
+    <select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultType="LabelValueVO" fetchSize="10">
         <![CDATA[
-            SELECT
-                prmt_pk AS value
-                , prmt_parametro
-        ]]>
-        <if test="idioma != null and !idioma.empty">
-            , CONCAT(CONCAT(prmt_parametro, ' - '), p18n_texto)
-        </if>
-        <if test="tpdtNombreId != null">
-            , CONCAT(CONCAT(prmt_parametro, ' - '), prdt_cadena)
-        </if>
-        <if test="tpdtNombreId == null or idioma == null or idioma.empty">
-            , prmt_parametro
-        </if>
-        <![CDATA[
-                AS label
-            FROM
-                tbl_parametro_prmt
-                    JOIN TBL_PARAMETRO_VERSION_PRVR ON
-                        prvr_prmt_pk = prmt_pk
-                        AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(PRVR_Ffin, #{fechaVigencia})
-        ]]>
-        <if test="idioma != null and !idioma.empty">
-        <![CDATA[
-                    LEFT JOIN TBL_PARAMETRO_i18n_P18n P18n ON
-                        p18n_prvr_pk = prvr_pk
-                        AND p18n_idioma = #{idioma}
-        ]]>
-        </if>
-        <if test="tpdtNombreId != null">
-        <![CDATA[
-                    LEFT JOIN tbl_parametro_dato_prdt ON
-            			prdt_prvr_pk = prvr_pk
-			            AND prdt_tpdt_pk = #{tpdtNombreId}
-        ]]>
-        </if>
-        <![CDATA[
-            WHERE
-                prmt_tppr_pk = #{entiId}
-                AND (
-                    prmt_parametro LIKE #{textoBusqueda}
-        ]]>
-        <if test="idioma != null and !idioma.empty">
-        <![CDATA[
-                    OR p18n_texto LIKE #{textoBusqueda}
-        ]]>
-        </if>
-        <if test="tpdtNombreId != null">
-        <![CDATA[
-                    OR prdt_cadena LIKE #{textoBusqueda}
-        ]]>
-        </if>
-        <![CDATA[
-                )
+        SELECT
+        	prmt_pk AS value
+        	, portico.CONCAT(
+        		prmt_parametro
+        		, (
+        			CASE
+        				WHEN tppr_es_i18n = 1
+        				THEN (
+        					SELECT portico.CONCAT(' - ', p18n_texto)
+        					FROM tbl_parametro_i18n_p18n
+        					WHERE p18n_prvr_pk = prvr_pk
+        						AND p18n_idioma = 'es_ES'
+        				)
+        				WHEN tppr_tpdt_pk IS NOT NULL
+        				THEN (
+        					SELECT portico.CONCAT(' - ', prdt_cadena)
+        					FROM tbl_parametro_dato_prdt
+        					WHERE prdt_prvr_pk = prvr_pk
+        						AND prdt_tpdt_pk = tppr_tpdt_pk
+        				)
+        			END
+        		)
+        	) AS label
+        FROM
+        	tbl_parametro_prmt
+        	INNER JOIN tbl_parametro_version_prvr ON
+        		prvr_prmt_pk = prmt_pk
+        		AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+        	INNER JOIN tbl_tipo_parametro_tppr ON
+        		tppr_pk = prmt_tppr_pk
+        WHERE
+        	prmt_tppr_pk = #{entiId}
+        	AND (
+        		prmt_parametro LIKE #{textoBusqueda}
+        	)
         ]]>
     </select>
 

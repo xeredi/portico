@@ -8,6 +8,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/maestro", {
+        title : 'maestro_main',
         templateUrl : "modules/maestro/maestro.html",
         controller : "maestroController"
     })
@@ -29,36 +30,43 @@ module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/maestro/prmt/grid/:entiId", {
+        title : 'prmt_grid',
         templateUrl : "modules/maestro/prmt-grid.html",
         controller : "prmtGridController"
     })
 
     .when("/maestro/prmt/grid/:entiId/:page", {
+        title : 'prmt_grid',
         templateUrl : "modules/maestro/prmt-grid.html",
         controller : "prmtGridController"
     })
 
     .when("/maestro/prmt/create/:entiId", {
+        title : 'prmt_create',
         templateUrl : "modules/maestro/prmt-edit.html",
         controller : "prmtCreateController"
     })
 
     .when("/maestro/prmt/detail/:prvrId", {
+        title : 'prmt_detail',
         templateUrl : "modules/maestro/prmt-detail.html",
         controller : "prmtDetailController"
     })
 
     .when("/maestro/prmt/edit/:prvrId", {
+        title : 'prmt_edit',
         templateUrl : "modules/maestro/prmt-edit.html",
         controller : "prmtEditController"
     })
 
     .when("/maestro/prmt/duplicate/:prvrId", {
+        title : 'prmt_duplicate',
         templateUrl : "modules/maestro/prmt-edit.html",
         controller : "prmtDuplicateController"
     })
 
     .when("/maestro/prmt/detail/:itemId/:fechaVigencia", {
+        title : 'prmt_detail',
         templateUrl : "modules/maestro/prmt-detail.html",
         controller : "prmtDetailController"
     })
@@ -148,20 +156,48 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
     }
 });
 
+module.controller("prmtCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "maestro/prmt-create.action?item.entiId=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.item = data.item;
+        $scope.p18nMap = data.p18nMap;
+        $scope.enti = data.enti;
+        $scope.availableLanguages = data.availableLanguages;
+        $scope.labelValuesMap = data.labelValuesMap;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "maestro/prmt-save.action";
+
+        $http.post(url, {
+            crgo : $scope.prmt,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/maestro/prmt/detail/" + data.prmt.prvr.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
+});
+
 module.controller('prmtsLupaCtrl', function($http, $scope) {
-    $scope.getLabelValues = function(entiId, textoBusqueda) {
+    $scope.asyncSelected = undefined;
+
+    $scope.getLabelValues = function(entiId, tpdtId, textoBusqueda) {
+        alert('Eo');
+
         return $http.get(
                 'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.textoBusqueda="
                         + textoBusqueda + "&itemLupaCriterio.fechaVigencia=11/12/2014").then(function(res) {
-            // console.log(res.data);
-
-            var labelValues = [];
-
-            angular.forEach(res.data.itemList, function(item) {
-                labelValues.push(item.label);
-            });
-
-            return labelValues;
+            return res.data.itemList;
         });
     };
 });
@@ -174,26 +210,31 @@ module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/maestro/sprm/create/:entiId/:prmtPadreId", {
+        title : 'sprm_create',
         templateUrl : "modules/maestro/sprm-edit.html",
         controller : "sprmCreateController"
     })
 
     .when("/maestro/sprm/detail/:spvrId", {
+        title : 'sprm_detail',
         templateUrl : "modules/maestro/sprm-detail.html",
         controller : "sprmDetailController"
     })
 
     .when("/maestro/sprm/edit/:spvrId", {
+        title : 'sprm_edit',
         templateUrl : "modules/maestro/sprm-edit.html",
         controller : "sprmEditController"
     })
 
     .when("/maestro/sprm/duplicate/:spvrId", {
+        title : 'sprm_duplicate',
         templateUrl : "modules/maestro/sprm-edit.html",
         controller : "sprmDuplicateController"
     })
 
     .when("/maestro/sprm/detail/:itemId/:fechaVigencia", {
+        title : 'sprm_detail',
         templateUrl : "modules/maestro/sprm-detail.html",
         controller : "sprmDetailController"
     })

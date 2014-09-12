@@ -91,6 +91,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
+
         enti = TipoParametroProxy.select(item.getEntiId());
         item = ParametroVO.newInstance(enti);
         p18nMap = new HashMap<>();
@@ -108,7 +109,8 @@ public final class ParametroAction extends ItemAction {
     @Action("prmt-edit")
     public String edit() {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getPrvr());
+        Preconditions.checkNotNull(item.getPrvr().getId());
 
         accion = ACCION_EDICION.edit;
 
@@ -116,8 +118,7 @@ public final class ParametroAction extends ItemAction {
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         try {
-            prmtCriterioVO.setId(item.getId());
-            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            prmtCriterioVO.setPrvrId(item.getPrvr().getId());
             prmtCriterioVO.setIdioma(getIdioma());
 
             item = prmtBO.selectObject(prmtCriterioVO);
@@ -143,15 +144,15 @@ public final class ParametroAction extends ItemAction {
     @Action("prmt-duplicate")
     public String duplicate() {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getPrvr());
+        Preconditions.checkNotNull(item.getPrvr().getId());
 
         accion = ACCION_EDICION.duplicate;
 
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-        prmtCriterioVO.setId(item.getId());
-        prmtCriterioVO.setFechaVigencia(fechaVigencia);
+        prmtCriterioVO.setPrvrId(item.getPrvr().getId());
         prmtCriterioVO.setIdioma(getIdioma());
 
         try {
@@ -177,8 +178,9 @@ public final class ParametroAction extends ItemAction {
      */
     @Action("prmt-save")
     public String save() {
-        Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getPrvr());
 
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
@@ -423,5 +425,4 @@ public final class ParametroAction extends ItemAction {
     public final Map<Long, PaginatedList<SubparametroVO>> getItemHijosMap() {
         return itemHijosMap;
     }
-
 }

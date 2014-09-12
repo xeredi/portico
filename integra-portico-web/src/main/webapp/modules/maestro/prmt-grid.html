@@ -34,6 +34,8 @@
 </fieldset>
 
 <fieldset>
+    <legend>{{enti.nombre | uppercase}}</legend>
+
     <div ng-if="!showFilter" class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" href="#/maestro/prmt/create/{{enti.id}}"><i class="glyphicon glyphicon-file"></i>
@@ -48,7 +50,7 @@
         max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
-        <span class="label label-default">{{aspcList.count}} resultado(s)</span>
+        <span class="label label-default">{{itemList.count}} resultado(s)</span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>

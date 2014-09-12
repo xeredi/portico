@@ -17,10 +17,15 @@ body {
 	padding-right: 30px;
 }
 
-label, legend, li, .btn, .form-control, .form-control-static,
+label, legend, li, .btn, .form-control, .input-group-sm>.form-control, .form-control-static,
 	.bootstrap-datetimepicker-widget, .table-condensed, .dropdown-menu,
 	.list-group, .nav-tabs, .tt-dropdown-menu, .typeahead, .modal-title {
 	font-size: 11px;
+}
+
+.brand {
+	font-size: 15px;
+	font-weight: normal;
 }
 
 legend {
@@ -31,10 +36,10 @@ legend {
 
 .nav-tabs {
 	font-size: 12px;
-	font-weight: bold;
+	font-weight: normal;
 }
 
-.form-control {
+.form-control, .input-group-sm>.form-control {
 	padding: 5px;
 }
 

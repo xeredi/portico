@@ -138,8 +138,7 @@
                         typeahead="labelValue for labelValue in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
                         typeahead-loading="loading" class="form-control input-sm"> <i ng-show="loading"
                         class="glyphicon glyphicon-refresh"></i> <input type="hidden"
-                        name="item.itdtMap[tpdtId].prmt.id" id="item_itdtMap[tpdtId]_prmt_id"
-                        value="{{item.itdtMap[tpdtId].prmt.id}}" />
+                        ng-model="item.itdtMap[tpdtId].prmt.id" /> - {{asyncSelected}}
                 </div>
             </div>
         </div>

@@ -1,10 +1,10 @@
-var app = angular.module("integraApp", [ "ui.bootstrap", "ui.bootstrap.datetimepicker",
-        "pascalprecht.translate", "ngRoute", "metamodelo", "facturacion", "maestro"/*
-                                                                         * 'configuracion',
-                                                                         * 'servicio',
-                                                                         * 'proceso',
-                                                                         *
-                                                                         */]);
+var app = angular.module("integraApp", [ "ui.bootstrap", "ui.bootstrap.datetimepicker", "pascalprecht.translate",
+        "ngRoute", "metamodelo", "facturacion", "maestro"/*
+                                                             * 'configuracion',
+                                                             * 'servicio',
+                                                             * 'proceso',
+                                                             *
+                                                             */]);
 
 app.config(function($translateProvider) {
     $translateProvider.translations('es', {
@@ -80,6 +80,11 @@ app.config(function($translateProvider) {
 
         modal_filtro : 'Filtro',
         limit : 'Max. Resultados',
+
+        maestro_main : 'Maestro - Inicio',
+        prmt_grid : 'Maestro - Listado',
+        prmt_detail : 'Maestro - Detalle',
+        prmt_create : 'Maestro - Nuevo',
 
         prmt_parametro : 'Codigo',
         prmt_fini : 'F. Inicio',
@@ -260,3 +265,8 @@ app.config(function($translateProvider) {
     $translateProvider.preferredLanguage('es');
 });
 
+app.run([ '$location', '$rootScope', function($location, $rootScope) {
+    $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+        $rootScope.title = current.$$route.title;
+    });
+} ]);
