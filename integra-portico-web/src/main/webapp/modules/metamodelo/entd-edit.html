@@ -18,8 +18,7 @@
                 <label>{{"entd_tpdt_nombre" | translate}}</label> <select ng-if="accion == 'create'"
                     ng-model="entd.tpdt.id" class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in tpdtList" value="{{labelValue.value}}"
-                        ng-selected="entd.tpdt.id == labelValue.value">{{labelValue.label}}</option>
+                    <option ng-repeat="labelValue in tpdtList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
                 <p ng-if="accion != 'create'" class="form-control-static">{{entd.tpdt.nombre}}</p>
             </div>
@@ -50,24 +49,24 @@
                 <label> {{"entd_obligatorio" | translate}} </label> <select ng-model="entd.obligatorio"
                     class="form-control input-sm">
                     <option value="" />
-                    <option value="true" ng-selected="entd.obligatorio == true">{{'fmt_true' | translate}}</option>
-                    <option value="false" ng-selected="entd.obligatorio == false">{{'fmt_false' | translate}}</option>
+                    <option value="true">{{'fmt_true' | translate}}</option>
+                    <option value="false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_gridable" | translate}} </label> <select ng-model="entd.gridable"
                     class="form-control input-sm">
                     <option value="" />
-                    <option value="true" ng-selected="entd.gridable == true">{{'fmt_true' | translate}}</option>
-                    <option value="false" ng-selected="entd.gridable == false">{{'fmt_false' | translate}}</option>
+                    <option value="true">{{'fmt_true' | translate}}</option>
+                    <option value="false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_filtrable" | translate}} </label> <select ng-model="entd.filtrable"
                     class="form-control input-sm">
                     <option value="" />
-                    <option value="true" ng-selected="entd.filtrable == true">{{'fmt_true' | translate}}</option>
-                    <option value="false" ng-selected="entd.filtrable == false">{{'fmt_false' | translate}}</option>
+                    <option value="true">{{'fmt_true' | translate}}</option>
+                    <option value="false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
         </div>

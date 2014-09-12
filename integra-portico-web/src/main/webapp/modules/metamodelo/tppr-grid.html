@@ -33,8 +33,8 @@
         </div>
     </div>
 
-    <pagination total-items="entiList.count" items-per-page="limit" ng-model="currentPage" ng-change="pageChanged()"
-        class="pagination-sm" max-size="5" previous-text="&lsaquo;" next-text="&rsaquo;" />
+    <pagination total-items="entiList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
+        max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{entiList.count}} resultado(s)</span>

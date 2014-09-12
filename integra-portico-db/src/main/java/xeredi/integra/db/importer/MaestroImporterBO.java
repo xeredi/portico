@@ -245,7 +245,7 @@ public final class MaestroImporterBO {
                         final Object value = rs.getObject(i++);
                         final ItemDatoVO itdtVO = getItdt(value, entdVO, tpprVO.getNombre());
 
-                        prmtVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                        prmtVO.getItdtMap().put(entdVO.getTpdt().getId().toString(), itdtVO);
                     }
                 }
 
@@ -361,7 +361,7 @@ public final class MaestroImporterBO {
                         final Object value = rs.getObject(i++);
                         final ItemDatoVO itdtVO = getItdt(value, entdVO, tpspVO.getNombre());
 
-                        sprmVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                        sprmVO.getItdtMap().put(entdVO.getTpdt().getId().toString(), itdtVO);
                     }
                 }
 

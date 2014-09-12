@@ -27,11 +27,11 @@ public final class ItemDatoValidator {// srdtMap
      */
     public static void validate(final ActionSupport support, final EntidadVO entiVO, final ItemVO itemVO) {
         if (entiVO.getEntdMap() != null) {
-            final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
+            final Map<String, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
             for (final EntidadTipoDatoVO entdVO : entiVO.getEntdMap().values()) {
                 final Long tpdtId = entdVO.getTpdt().getId();
-                final ItemDatoVO itdtVO = itdtMap.get(tpdtId);
+                final ItemDatoVO itdtVO = itdtMap.get(tpdtId.toString());
 
                 if (entdVO.getObligatorio() && itdtVO == null) {
                     support.addActionError(support.getText(ErrorCode.E00001.name(),
@@ -42,6 +42,12 @@ public final class ItemDatoValidator {// srdtMap
                     itdtVO.setTpdtId(entdVO.getTpdt().getId());
                     switch (entdVO.getTpdt().getTipoElemento()) {
                     case BO:
+                        if (entdVO.getObligatorio() && itdtVO.getBooleano() == null) {
+                            support.addActionError(support.getText(ErrorCode.E00001.name(),
+                                    new String[] { entdVO.getEtiqueta() }));
+                        }
+
+                        break;
                     case NE:
                         if (entdVO.getObligatorio() && itdtVO.getCantidadEntera() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),

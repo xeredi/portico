@@ -5,12 +5,14 @@
 <mapper namespace="xeredi.integra.model.maestro.dao.ParametroDAO">
     <resultMap type="ParametroVO" id="ResultMap">
         <id column="prvr_pk" />
+        <id column="prmt_pk" />
+
         <result column="prmt_pk" property="id" />
         <result column="prmt_parametro" property="parametro" />
         <result column="prmt_tppr_pk" property="entiId" />
 
         <association property="prvr" javaType="ParametroVersionVO">
-            <id column="prvr_pk" property="id" />
+            <result column="prvr_pk" property="id" />
             <result column="prvr_fini" property="fini" />
             <result column="prvr_ffin" property="ffin" />
         </association>
@@ -18,7 +20,6 @@
         <association property="i18n" javaType="ParametroI18nVO">
             <result column="p18n_texto" property="texto" />
         </association>
-        <!-- -->
     </resultMap>
 
     <sql id="SelectPrefix">
@@ -226,10 +227,10 @@
         ]]>
     </select>
 
-    <select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultType="LabelValueVO" fetchSize="10">
+    <select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         SELECT
-        	prmt_pk AS value
+        	prmt_pk
         	, portico.CONCAT(
         		prmt_parametro
         		, (
@@ -250,7 +251,7 @@
         				)
         			END
         		)
-        	) AS label
+        	) AS p18n_texto
         FROM
         	tbl_parametro_prmt
         	INNER JOIN tbl_parametro_version_prvr ON

@@ -172,11 +172,12 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
         var url = "maestro/prmt-save.action";
 
         $http.post(url, {
-            crgo : $scope.prmt,
+            item : $scope.item,
+            p18nMap : $scope.p18nMap,
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/maestro/prmt/detail/" + data.prmt.prvr.id).replace();
+                $location.path("/maestro/prmt/detail/" + data.item.prvr.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -188,12 +189,41 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
     }
 });
 
+module.controller("prmtEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "maestro/prmt-edit.action?item.prvr.id=" + $routeParams.prvrId;
+
+    $http.get(url).success(function(data) {
+        $scope.item = data.item;
+        $scope.p18nMap = data.p18nMap;
+        $scope.enti = data.enti;
+        $scope.availableLanguages = data.availableLanguages;
+        $scope.labelValuesMap = data.labelValuesMap;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "maestro/prmt-save.action";
+
+        $http.post(url, {
+            item : $scope.item,
+            p18nMap : $scope.p18nMap,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/maestro/prmt/detail/" + data.item.prvr.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/maestro/prmt/detail/" + $scope.item.prvr.id).replace();
+    }
+});
+
 module.controller('prmtsLupaCtrl', function($http, $scope) {
-    $scope.asyncSelected = undefined;
-
-    $scope.getLabelValues = function(entiId, tpdtId, textoBusqueda) {
-        alert('Eo');
-
+    $scope.getLabelValues = function(entiId, textoBusqueda) {
         return $http.get(
                 'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.textoBusqueda="
                         + textoBusqueda + "&itemLupaCriterio.fechaVigencia=11/12/2014").then(function(res) {

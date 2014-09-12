@@ -284,7 +284,7 @@ public final class ServicioImporterBO {
 
                             final ItemDatoVO itdtVO = getItemDato(entdVO, value);
 
-                            srvcVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                            srvcVO.getItdtMap().put(entdVO.getTpdt().getId().toString(), itdtVO);
                         }
                     }
 
@@ -388,7 +388,7 @@ public final class ServicioImporterBO {
 
                                 final ItemDatoVO itdtVO = getItemDato(entdVO, value);
 
-                                ssrvVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                                ssrvVO.getItdtMap().put(entdVO.getTpdt().getId().toString(), itdtVO);
                             }
                         }
 

@@ -51,13 +51,13 @@ public final class ParametroVO extends ItemVO {
         }
 
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-            final Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
+            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
 
             for (final Long tpdtId : tpprVO.getEntdList()) {
                 final ItemDatoVO itdtVO = new ItemDatoVO();
 
                 itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId(), itdtVO);
+                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             prmtVO.setItdtMap(itdtMap);

@@ -8,8 +8,7 @@
             <label>{{"aspc_tpsr" | translate}}</label> <select ng-model="aspcCriterio.tpsrId"
                 class="form-control input-sm">
                 <option value="" />
-                <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}"
-                    ng-selected="aspcCriterio.tpsrId == labelValue.value">{{labelValue.label}}</option>
+                <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}">{{labelValue.label}}</option>
             </select>
         </div>
         <div class="col-md-1 form-group">

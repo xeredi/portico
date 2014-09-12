@@ -44,13 +44,13 @@ public final class SubservicioVO extends ItemVO {
         ssrvVO.setEntiId(tpssVO.getId());
 
         if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
-            final Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
+            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
 
             for (final Long tpdtId : tpssVO.getEntdList()) {
                 final ItemDatoVO itdtVO = new ItemDatoVO();
 
                 itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId(), itdtVO);
+                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             ssrvVO.setItdtMap(itdtMap);

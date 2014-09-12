@@ -105,8 +105,7 @@ public interface Parametro {
      *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
-     * @return {@link Map} de parametros que cumplen el criterio de busqueda, indexados por
-     *         identificador de parámetro.
+     * @return {@link Map} de parametros que cumplen el criterio de busqueda, indexados por identificador de parámetro.
      */
     Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO);
 
@@ -115,47 +114,44 @@ public interface Parametro {
      *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
-     * @return {@link Map} de parametros que cumplen el criterio de busqueda, indexados por código
-     *         de parámetro.
+     * @return {@link Map} de parametros que cumplen el criterio de busqueda, indexados por código de parámetro.
      */
     Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO);
 
     /**
-     * Búsqueda de pares (codigo de parámetro, identificador de parámetro) de parámetros que cumplan
-     * un criterio de búsqueda.
+     * Búsqueda de pares (codigo de parámetro, identificador de parámetro) de parámetros que cumplan un criterio de
+     * búsqueda.
      *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
-     * @return {@link Map} de identificadores de parametros que cumplen el criterio de busqueda,
-     *         indexados por código de parámetro.
+     * @return {@link Map} de identificadores de parametros que cumplen el criterio de busqueda, indexados por código de
+     *         parámetro.
      */
     Map<String, Long> selectMapCodigoId(final ParametroCriterioVO prmtCriterioVO);
 
     /**
-     * Búsqueda de pares (identificador de parámetro, codigo de parámetro) de parámetros que cumplan
-     * un criterio de búsqueda.
+     * Búsqueda de pares (identificador de parámetro, codigo de parámetro) de parámetros que cumplan un criterio de
+     * búsqueda.
      *
      * @param prmtCriterioVO
      *            Criterio de búsqueda de parámetros.
-     * @return {@link Map} de códigos de parametros que cumplen el criterio de busqueda, indexados
-     *         por identificador de parámetro.
+     * @return {@link Map} de códigos de parametros que cumplen el criterio de busqueda, indexados por identificador de
+     *         parámetro.
      */
     Map<Long, String> selectMapIdCodigo(final ParametroCriterioVO prmtCriterioVO);
 
     /**
-     * Map de Listas de pares (etiqueta de parametro, identificador de parametro), para una lista de
-     * tipos de parámetro, una fecha de referencia y un idioma.
+     * Map de Listas de pares (etiqueta de parametro, identificador de parametro), para una lista de tipos de parámetro,
+     * una fecha de referencia y un idioma.
      *
      * @param tpprIds
      *            Lista de identificadores de tipo de parámetro.
      * @param fechaReferencia
      *            Fecha de referencia. Utilizada para obtener la versión correcta de cada parámetro.
      * @param idioma
-     *            Idioma. Utilizado para obtener la etiqueta correcta de cada parámetro
-     *            internacionalizado.
-     * @return {@link Map} de listas de pares (etiqueta de parametro, identificador de parametro)
-     *         que cumplen el criterio de busqueda, indexados por identificador de tipo de
-     *         parámetro.
+     *            Idioma. Utilizado para obtener la etiqueta correcta de cada parámetro internacionalizado.
+     * @return {@link Map} de listas de pares (etiqueta de parametro, identificador de parametro) que cumplen el
+     *         criterio de busqueda, indexados por identificador de tipo de parámetro.
      */
     Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
             final String idioma);
@@ -201,23 +197,22 @@ public interface Parametro {
     ParametroVO select(final Long prvrId, final String idioma) throws InstanceNotFoundException;
 
     /**
-     * Búsqueda de Lista de pares (etiqueta de parametro, identificador de parametro) de parámetros
-     * que cumplan un criterio de búsqueda.
+     * Búsqueda de Lista de pares (etiqueta de parametro, identificador de parametro) de parámetros que cumplan un
+     * criterio de búsqueda.
      *
      * @param prmtLupaCriterioVO
      *            the prmt lupa criterio vo
-     * @return {@link List} de pares (etiqueta de parametro, identificador de parametro) que cumplen
-     *         el criterio de busqueda.
+     * @return {@link List} de pares (etiqueta de parametro, identificador de parametro) que cumplen el criterio de
+     *         busqueda.
      */
-    List<LabelValueVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO);
+    List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO);
 
     /**
      * Búsqueda de los textos internacionalizados para una versión de un parámetro.
      *
      * @param prvrId
      *            Identificador de la versión de un parámetro.
-     * @return {@link Map} de textos internacionalizados de la versión de un parámetro, indexados
-     *         por código de idioma.
+     * @return {@link Map} de textos internacionalizados de la versión de un parámetro, indexados por código de idioma.
      */
     Map<String, ParametroI18nVO> selectI18nMap(final Long prvrId);
 }

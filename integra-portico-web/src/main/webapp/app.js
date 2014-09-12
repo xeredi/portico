@@ -15,6 +15,7 @@ app.config(function($translateProvider) {
         fmt_false : 'No',
         fmt_integer : '#,###,###,##0',
         fmt_date : 'dd/MM/yyyy',
+        fmt_calendar_date : 'yyyy-MM-dd',
         fmt_datetime : 'dd/MM/yyyy HH:mm',
 
         TipoElemento_BO : "Booleano",

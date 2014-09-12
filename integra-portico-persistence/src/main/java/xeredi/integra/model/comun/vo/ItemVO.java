@@ -15,11 +15,11 @@ public abstract class ItemVO implements ItemEntidad {
     private Long entiId;
 
     /** The itdt map. */
-    private Map<Long, ItemDatoVO> itdtMap;
+    private Map<String, ItemDatoVO> itdtMap;
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     @Override
@@ -29,18 +29,18 @@ public abstract class ItemVO implements ItemEntidad {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
     @Override
-    public final void setId(Long value) {
-        this.id = value;
+    public final void setId(final Long value) {
+        id = value;
     }
 
     /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public final Long getEntiId() {
@@ -49,31 +49,31 @@ public abstract class ItemVO implements ItemEntidad {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
-    public final void setEntiId(Long value) {
-        this.entiId = value;
+    public final void setEntiId(final Long value) {
+        entiId = value;
     }
 
     /**
      * Gets the itdt map.
-     * 
+     *
      * @return the itdt map
      */
-    public final Map<Long, ItemDatoVO> getItdtMap() {
+    public final Map<String, ItemDatoVO> getItdtMap() {
         return itdtMap;
     }
 
     /**
      * Sets the itdt map.
-     * 
+     *
      * @param value
      *            the value
      */
-    public final void setItdtMap(Map<Long, ItemDatoVO> value) {
-        this.itdtMap = value;
+    public final void setItdtMap(final Map<String, ItemDatoVO> value) {
+        itdtMap = value;
     }
 
 }

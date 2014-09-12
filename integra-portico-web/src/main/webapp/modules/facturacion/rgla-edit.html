@@ -25,16 +25,15 @@
                 <label>{{"rgla_tipo" | translate}}</label> <select ng-model="rgla.rglv.tipo"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="cdrf in tipos" value="{{cdrf}}" ng-selected="rgla.rglv.tipo == cdrf">{{cdrf}}
-                        - {{'ReglaTipo_' + cdrf | translate}}</option>
+                    <option ng-repeat="cdrf in tipos" value="{{cdrf}}">{{cdrf}} - {{'ReglaTipo_' + cdrf |
+                        translate}}</option>
                 </select>
             </div>
             <div class="col-md-2 form-group">
                 <label>{{"rgla_enti" | translate}}</label> <select ng-model="rgla.rglv.enti.id"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="enti in entiFacturableList" value="{{enti.id}}"
-                        ng-selected="rgla.rglv.enti.id == enti.id">{{enti.nombre}}</option>
+                    <option ng-repeat="enti in entiFacturableList" value="{{enti.id}}">{{enti.nombre}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">

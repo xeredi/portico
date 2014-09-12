@@ -266,10 +266,10 @@ public class ParametroBO implements Parametro {
 
                     if (sprmVO != null) {
                         if (sprmVO.getItdtMap() == null) {
-                            sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                            sprmVO.setItdtMap(new HashMap<String, ItemDatoVO>());
                         }
 
-                        sprmVO.getItdtMap().put(itdtVO.getTpdtId(), itdtVO);
+                        sprmVO.getItdtMap().put(itdtVO.getTpdtId().toString(), itdtVO);
                     }
                 }
 
@@ -336,7 +336,7 @@ public class ParametroBO implements Parametro {
         // Validar que los datos del parametro son correctos
         if (!tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
-                if (!prmtVO.getItdtMap().containsKey(tpdtId)) {
+                if (!prmtVO.getItdtMap().containsKey(tpdtId.toString())) {
                     throw new Error("No se ha pasado informacion del dato "
                             + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmtVO);
                 }
@@ -632,7 +632,7 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional
-    public final List<LabelValueVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO) {
+    public final List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO) {
         Preconditions.checkNotNull(prmtLupaCriterioVO);
 
         prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
@@ -693,14 +693,14 @@ public class ParametroBO implements Parametro {
             }
 
             final List<ItemDatoVO> itdtList = prdtDAO.selectList(prmtCriterioVO);
-            final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
+            final Map<Long, Map<String, ItemDatoVO>> map = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : itdtList) {
                 if (!map.containsKey(itdtVO.getItemId())) {
-                    map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
+                    map.put(itdtVO.getItemId(), new HashMap<String, ItemDatoVO>());
                 }
 
-                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
+                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             for (final ParametroVO prmtVO : prmtList) {

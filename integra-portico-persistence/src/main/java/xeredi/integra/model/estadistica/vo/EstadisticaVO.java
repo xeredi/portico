@@ -31,7 +31,7 @@ public final class EstadisticaVO extends ItemVO {
 
     /**
      * New instance.
-     * 
+     *
      * @param tpesVO
      *            the tpes vo
      * @return the estadistica vo
@@ -42,13 +42,13 @@ public final class EstadisticaVO extends ItemVO {
         estdVO.setEntiId(tpesVO.getId());
 
         if (tpesVO.getEntdList() != null && !tpesVO.getEntdList().isEmpty()) {
-            final Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
+            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
 
             for (final Long tpdtId : tpesVO.getEntdList()) {
                 final ItemDatoVO itdtVO = new ItemDatoVO();
 
                 itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId(), itdtVO);
+                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             estdVO.setItdtMap(itdtMap);
@@ -68,7 +68,7 @@ public final class EstadisticaVO extends ItemVO {
 
     /**
      * Gets the autp.
-     * 
+     *
      * @return the autp
      */
     public ParametroVO getAutp() {
@@ -77,7 +77,7 @@ public final class EstadisticaVO extends ItemVO {
 
     /**
      * Sets the autp.
-     * 
+     *
      * @param value
      *            the new autp
      */
@@ -87,7 +87,7 @@ public final class EstadisticaVO extends ItemVO {
 
     /**
      * Gets the pepr.
-     * 
+     *
      * @return the pepr
      */
     public PeriodoProcesoVO getPepr() {
@@ -96,12 +96,12 @@ public final class EstadisticaVO extends ItemVO {
 
     /**
      * Sets the pepr.
-     * 
+     *
      * @param value
      *            the new pepr
      */
-    public void setPepr(PeriodoProcesoVO value) {
-        this.pepr = value;
+    public void setPepr(final PeriodoProcesoVO value) {
+        pepr = value;
     }
 
 }

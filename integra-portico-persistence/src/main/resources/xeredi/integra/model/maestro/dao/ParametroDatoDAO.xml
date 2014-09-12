@@ -26,7 +26,7 @@
         <![CDATA[
         SELECT sql.*
         ]]>
-        <if test="idioma != null">
+        <if test="idioma != null and fechaVigencia != null">
         <![CDATA[
             , (
                     CASE

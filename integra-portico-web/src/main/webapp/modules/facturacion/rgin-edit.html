@@ -16,7 +16,7 @@
                 <label>{{"rgin_rgla2" | translate}}</label> <select ng-if="accion == 'create'" ng-model="rgin.rgla2.id"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="rgla in rgla2List" value="{{rgla.id}}" ng-selected="rgin.rgla2.id == rgla.id">{{rgla.codigo}}</option>
+                    <option ng-repeat="rgla in rgla2List" value="{{rgla.id}}">{{rgla.codigo}}</option>
                 </select>
                 <p ng-if="accion != 'create'" class="form-control-static">{{rgin.rgla2.codigo}}</p>
             </div>

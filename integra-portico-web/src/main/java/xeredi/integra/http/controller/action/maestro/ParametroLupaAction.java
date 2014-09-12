@@ -9,9 +9,9 @@ import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -28,7 +28,7 @@ public final class ParametroLupaAction extends BaseAction {
     private static final int ROWS = 5;
 
     /** The prmts. */
-    private List<LabelValueVO> itemList;
+    private List<ParametroVO> itemList;
 
     /** The criterio vo. */
     private ParametroLupaCriterioVO itemLupaCriterio;
@@ -94,7 +94,7 @@ public final class ParametroLupaAction extends BaseAction {
      *
      * @return the item list
      */
-    public List<LabelValueVO> getItemList() {
+    public List<ParametroVO> getItemList() {
         return itemList;
     }
 

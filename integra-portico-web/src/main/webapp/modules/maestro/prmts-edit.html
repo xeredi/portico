@@ -12,8 +12,8 @@
         <div class="col-md-2 form-group">
             <label>{{'prmt_codigo' | translate}}</label>
             <p ng-if="accion == 'edit'" class="form-control-static">{{item.parametro}}</p>
-            <input ng-if="accion != 'edit'" type="text" ng-model="item.parametro" required="required"
-                maxlength="30" class="form-control input-sm" />
+            <input ng-if="accion != 'edit'" type="text" ng-model="item.parametro" required="required" maxlength="30"
+                class="form-control input-sm" />
         </div>
 
         <div ng-if="enti.tempExp" class="col-md-2 form-group">
@@ -76,10 +76,8 @@
                 <select ng-switch-when="BO" ng-model="item.itdtMap[tpdtId].booleano"
                     ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm">
                     <option value="" />
-                    <option value="true" ng-selected="item.itdtMap[tpdtId].booleano == true">{{'fmt_true' |
-                        translate}}</option>
-                    <option value="false" ng-selected="item.itdtMap[tpdtId].booleano == false">{{'fmt_false' |
-                        translate}}</option>
+                    <option value="true">{{'fmt_true' | translate}}</option>
+                    <option value="false">{{'fmt_false' | translate}}</option>
                 </select> <input ng-switch-when="ND" type="text" ng-model="item.itdtMap[tpdtId].cantidadDecimal"
                     ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm number" /> <input
                     ng-switch-when="NE" type="text" ng-model="item.itdtMap[tpdtId].cantidadEntera"
@@ -117,8 +115,7 @@
                 <select ng-switch-when="CR" ng-model="item.itdtMap[tpdtId].cadena"
                     ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}"
-                        ng-selected="item.itdtMap[tpdtId].cadena == cdrf.valor">{{cdrf.valor}}</option>
+                    <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}">{{cdrf.valor}}</option>
                 </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
                     ng-model="item.itdtMap[tpdtId].cadena" ng-required="item.itdtMap[tpdtId].obligatorio"
                     class="form-control input-sm" />
@@ -130,7 +127,7 @@
                     class="form-control input-sm">
                     <option value="" />
                     <option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
-                        value="{{labelValue.value}}" ng-selected="item.itdtMap[tpdtId].prmt.id == labelValue.value">{{labelValue.label}}</option>
+                        value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
                 <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm">
                     <input type="text" ng-controller="prmtsLupaCtrl" ng-model="asyncSelected"

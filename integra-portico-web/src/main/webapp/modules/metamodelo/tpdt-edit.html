@@ -22,30 +22,28 @@
             <div class="col-md-2 form-group">
                 <label>{{"tpdt_tpht" | translate}}</label> <select ng-model="tpdt.tpht" class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tphts" ng-selected="tpdt.tpht == cdrf" value="{{cdrf}}">{{cdrf}}
-                        - {{"TipoHtml_" + cdrf | translate}}</option>
+                    <option ng-repeat="cdrf in tphts" value="{{cdrf}}">{{cdrf}} - {{"TipoHtml_" + cdrf |
+                        translate}}</option>
                 </select>
             </div>
             <div class="col-md-2 form-group">
                 <label>{{"tpdt_tipoElemento" | translate}}</label> <select ng-model="tpdt.tipoElemento"
                     class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tiposElemento" ng-selected="tpdt.tipoElemento == cdrf" value="{{cdrf}}">{{cdrf}}
-                        - {{"TipoElemento_" + cdrf | translate}}</option>
+                    <option ng-repeat="cdrf in tiposElemento" value="{{cdrf}}">{{cdrf}} - {{"TipoElemento_" +
+                        cdrf | translate}}</option>
                 </select>
             </div>
             <div class="col-md-3 form-group" ng-if="tpdt.tipoElemento == 'PR'">
                 <label>{{"tpdt_enti" | translate}}</label> <select ng-model="tpdt.enti.id" class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in entiTpprList" value="{{labelValue.value}}"
-                        ng-selected="tpdt.enti.id == labelValue.value">{{labelValue.label}}</option>
+                    <option ng-repeat="labelValue in entiTpprList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
             </div>
             <div class="col-md-3 form-group" ng-if="tpdt.tipoElemento == 'SR'">
                 <label>{{"tpdt_enti" | translate}}</label> <select ng-model="entd.tpdt.id" class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in entiTpsrList" value="{{labelValue.value}}"
-                        ng-selected="tpdt.enti.id == labelValue.value">{{labelValue.label}}</option>
+                    <option ng-repeat="labelValue in entiTpsrList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
             </div>
         </div>

@@ -116,7 +116,7 @@ public class SubservicioBO implements Subservicio {
 
     /**
      * Fill dependencies.
-     * 
+     *
      * @param ssrvList
      *            the ssrv list
      * @param ssrvCriterioVO
@@ -140,14 +140,14 @@ public class SubservicioBO implements Subservicio {
 
             ssrvCriterioVO.setIds(null);
 
-            final Map<Long, Map<Long, ItemDatoVO>> itdtMap = new HashMap<>();
+            final Map<Long, Map<String, ItemDatoVO>> itdtMap = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : ssdtList) {
                 if (!itdtMap.containsKey(itdtVO.getItemId())) {
-                    itdtMap.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
+                    itdtMap.put(itdtVO.getItemId(), new HashMap<String, ItemDatoVO>());
                 }
 
-                itdtMap.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
+                itdtMap.get(itdtVO.getItemId()).put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             for (final SubservicioVO ssrvVO : ssrvList) {
@@ -174,11 +174,11 @@ public class SubservicioBO implements Subservicio {
         ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
         ssrvDAO.insert(ssrvVO);
 
-        for (final Long tpdtId : ssrvVO.getItdtMap().keySet()) {
-            final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
+        for (final String tpdtIdString : ssrvVO.getItdtMap().keySet()) {
+            final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtIdString);
 
             itdtVO.setItemId(ssrvVO.getId());
-            itdtVO.setTpdtId(tpdtId);
+            itdtVO.setTpdtId(Long.valueOf(tpdtIdString));
             ssdtDAO.insert(itdtVO);
         }
 
@@ -197,11 +197,11 @@ public class SubservicioBO implements Subservicio {
     public void update(final SubservicioVO ssrvVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(ssrvVO);
 
-        for (final Long tpdtId : ssrvVO.getItdtMap().keySet()) {
-            final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
+        for (final String tpdtIdString : ssrvVO.getItdtMap().keySet()) {
+            final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtIdString);
 
             itdtVO.setItemId(ssrvVO.getId());
-            itdtVO.setTpdtId(tpdtId);
+            itdtVO.setTpdtId(Long.valueOf(tpdtIdString));
 
             if (ssdtDAO.update(itdtVO) == 0) {
                 throw new Error("Error modificando un subservicio de dato no existente: " + itdtVO);

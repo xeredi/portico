@@ -60,13 +60,13 @@ public final class ServicioVO extends ItemVO {
         srvcVO.setEntiId(tpsrVO.getId());
 
         if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
-            final HashMap<Long, ItemDatoVO> itdtMap = new HashMap<>();
+            final HashMap<String, ItemDatoVO> itdtMap = new HashMap<>();
 
             for (final Long tpdtId : tpsrVO.getEntdList()) {
                 final ItemDatoVO itdtVO = new ItemDatoVO();
 
                 itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId(), itdtVO);
+                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             srvcVO.setItdtMap(itdtMap);

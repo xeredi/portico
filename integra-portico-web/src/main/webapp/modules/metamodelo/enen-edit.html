@@ -14,8 +14,7 @@
                 <label>{{"enen_entih" | translate}}</label> <select ng-model="enen.entiHijaId"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}"
-                        ng-selected="enen.entiHijaId == labelValue.value">{{labelValue.label}}</option>
+                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">

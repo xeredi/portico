@@ -9,7 +9,6 @@ import org.apache.ibatis.session.RowBounds;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -135,6 +134,6 @@ public interface ParametroDAO {
      *            the bounds
      * @return the list
      */
-    List<LabelValueVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO, final RowBounds bounds);
+    List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO, final RowBounds bounds);
 
 }

@@ -80,11 +80,11 @@ public class SubparametroBO implements Subparametro {
         spvrDAO.insert(sprmVO);
 
         if (sprmVO.getItdtMap() != null) {
-            for (final Long tpdtId : sprmVO.getItdtMap().keySet()) {
-                final ItemDatoVO itdtVO = sprmVO.getItdtMap().get(tpdtId);
+            for (final String tpdtIdString : sprmVO.getItdtMap().keySet()) {
+                final ItemDatoVO itdtVO = sprmVO.getItdtMap().get(tpdtIdString);
 
                 itdtVO.setItemId(sprmVO.getSpvr().getId());
-                itdtVO.setTpdtId(tpdtId);
+                itdtVO.setTpdtId(Long.valueOf(tpdtIdString));
                 spdtDAO.insert(itdtVO);
             }
         }
@@ -318,14 +318,14 @@ public class SubparametroBO implements Subparametro {
             sprmCriterioVO.setSpvrIds(spvrIds);
 
             final List<ItemDatoVO> itdtList = spdtDAO.selectList(sprmCriterioVO);
-            final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
+            final Map<Long, Map<String, ItemDatoVO>> map = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : itdtList) {
                 if (!map.containsKey(itdtVO.getItemId())) {
-                    map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
+                    map.put(itdtVO.getItemId(), new HashMap<String, ItemDatoVO>());
                 }
 
-                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
+                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             for (final SubparametroVO sprmVO : sprmList) {

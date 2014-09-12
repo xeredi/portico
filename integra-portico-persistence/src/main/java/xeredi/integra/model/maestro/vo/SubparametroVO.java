@@ -50,13 +50,13 @@ public final class SubparametroVO extends ItemVO {
         }
 
         if (tpspVO.getEntdList() != null && !tpspVO.getEntdList().isEmpty()) {
-            final Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
+            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
 
             for (final Long tpdtId : tpspVO.getEntdList()) {
                 final ItemDatoVO itdtVO = new ItemDatoVO();
 
                 itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId(), itdtVO);
+                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
             }
 
             sprmVO.setItdtMap(itdtMap);

@@ -75,25 +75,25 @@
                 <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
 
                 <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
-                    <select ng-switch-when="BO" ng-model="item.itdtMap[tpdtId].booleano"
+                    <select ng-switch-when="BO" ng-model="item.itdtMap[tpdtId].cantidadEntera"
                         ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm">
                         <option value="" />
-                        <option value="true" ng-selected="item.itdtMap[tpdtId].booleano == true">{{'fmt_true' |
-                            translate}}</option>
-                        <option value="false" ng-selected="item.itdtMap[tpdtId].booleano == false">{{'fmt_false'
-                            | translate}}</option>
+                        <option value="1">{{'fmt_true' | translate}}</option>
+                        <option value="0">{{'fmt_false' | translate}}</option>
                     </select> <input ng-switch-when="ND" type="text" ng-model="item.itdtMap[tpdtId].cantidadDecimal"
                         ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm number" /> <input
                         ng-switch-when="NE" type="text" ng-model="item.itdtMap[tpdtId].cantidadEntera"
-                        class="form-control input-sm number" />
+                        ng-pattern="/^\d+$/" class="form-control input-sm number" />
                     <div ng-switch-when="FE" class="dropdown">
                         <a class="dropdown-toggle" id="datepicker_{{tpdtId}}" role="button" data-toggle="dropdown"
                             data-target="#" href="#">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm" name="item.itdtMap[tpdtId].fecha"
-                                    value="{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}"
+                                <input type="text" class="form-control input-sm" ng-model="item.itdtMap[tpdtId].fecha"
                                     ng-required="item.itdtMap[tpdtId].obligatorio"><span
                                     class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <!-- $
+                                {{item.itdtMap[tpdtId].fecha}} $ {{item.itdtMap[tpdtId].fecha |
+                                date:('fmt_calendar_date' | translate)}} -->
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -119,8 +119,7 @@
                     <select ng-switch-when="CR" ng-model="item.itdtMap[tpdtId].cadena"
                         ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm">
                         <option value="" />
-                        <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}"
-                            ng-selected="item.itdtMap[tpdtId].cadena == cdrf.valor">{{cdrf.valor}}</option>
+                        <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}">{{cdrf.valor}}</option>
                     </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
                         ng-model="item.itdtMap[tpdtId].cadena" ng-required="item.itdtMap[tpdtId].obligatorio"
                         class="form-control input-sm" />
@@ -132,14 +131,19 @@
                         class="form-control input-sm">
                         <option value="" />
                         <option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
-                            value="{{labelValue.value}}" ng-selected="item.itdtMap[tpdtId].prmt.id == labelValue.value">{{labelValue.label}}</option>
+                            value="{{labelValue.value}}">{{labelValue.label}}</option>
                     </select>
                     <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm"
                         ng-controller="prmtsLupaCtrl">
-                        <input type="text" ng-model="asyncSelected" ng-required="item.itdtMap[tpdtId].obligatorio"
-                            typeahead="labelValue as labelValue.label for labelValue in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, tpdtId, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
-                            ng-show="loading" class="glyphicon glyphicon-refresh"></i> - {{asyncSelected.value}}
+                        <input type="text" ng-model="item.itdtMap[tpdtId].prmt"
+                            ng-required="item.itdtMap[tpdtId].obligatorio"
+                            typeahead="prmt as prmt.i18n.texto for prmt in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+                            typeahead-loading="loading" typeahead-wait-ms="500" typeahead-editable="false"
+                            class="form-control input-sm"> <i ng-show="loading"
+                            class="glyphicon glyphicon-refresh"></i>
+                        <!--  $ {{item.itdtMap[tpdtId].prmt.id}} $
+                        {{item.itdtMap[tpdtId].prmt.etiqueta}}
+                        -->
                     </div>
                 </div>
             </div>
