@@ -93,7 +93,7 @@ public class ParametroBO implements Parametro {
 
         if (tpprVO.getTempExp()) {
             Preconditions.checkNotNull(prmtVO.getPrvr());
-            Preconditions.checkNotNull(prmtVO.getPrvr().getFinicio());
+            Preconditions.checkNotNull(prmtVO.getPrvr().getFini());
         }
 
         if (tpprVO.getI18n()) {
@@ -108,7 +108,7 @@ public class ParametroBO implements Parametro {
             final Calendar calendar = Calendar.getInstance();
 
             calendar.add(Calendar.YEAR, -10);
-            prmtVO.getPrvr().setFinicio(calendar.getTime());
+            prmtVO.getPrvr().setFini(calendar.getTime());
         }
 
         if (tpprVO.getI18n()) {
@@ -185,14 +185,14 @@ public class ParametroBO implements Parametro {
 
         if (tpprVO.getTempExp()) {
             Preconditions.checkNotNull(prmtVO.getPrvr());
-            Preconditions.checkNotNull(prmtVO.getPrvr().getFinicio());
+            Preconditions.checkNotNull(prmtVO.getPrvr().getFini());
         } else {
             if (prmtVO.getPrvr() == null) {
                 prmtVO.setPrvr(new ParametroVersionVO());
             }
 
-            if (prmtVO.getPrvr().getFinicio() == null) {
-                prmtVO.getPrvr().setFinicio(Calendar.getInstance().getTime());
+            if (prmtVO.getPrvr().getFini() == null) {
+                prmtVO.getPrvr().setFini(Calendar.getInstance().getTime());
             }
         }
 
@@ -241,7 +241,7 @@ public class ParametroBO implements Parametro {
 
             prmtCriterioVO.setId(prmtActualId);
             sprmCriterioVO.setPrmt(prmtCriterioVO);
-            sprmCriterioVO.setFechaVigencia(prmtVO.getPrvr().getFinicio());
+            sprmCriterioVO.setFechaVigencia(prmtVO.getPrvr().getFini());
 
             final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
             final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
@@ -277,7 +277,7 @@ public class ParametroBO implements Parametro {
                     sprmVO.setPrmtId(prmtVO.getId());
                     sprmVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
                     sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                    sprmVO.getSpvr().setFinicio(prmtVO.getPrvr().getFinicio());
+                    sprmVO.getSpvr().setFinicio(prmtVO.getPrvr().getFini());
                     sprmVO.getSpvr().setFfin(prmtVO.getPrvr().getFfin());
 
                     sprmDAO.insert(sprmVO);
@@ -317,7 +317,7 @@ public class ParametroBO implements Parametro {
         }
 
         if (tpprVO.getTempExp()) {
-            Preconditions.checkNotNull(prmtVO.getPrvr().getFinicio());
+            Preconditions.checkNotNull(prmtVO.getPrvr().getFini());
         }
 
         final IgBO igBO = new IgBO();
@@ -344,7 +344,7 @@ public class ParametroBO implements Parametro {
         }
 
         if (tpprVO.getTempExp()) {
-            prmtVO.getPrvr().setFinicio(Calendar.getInstance().getTime());
+            prmtVO.getPrvr().setFini(Calendar.getInstance().getTime());
 
             throw new Error("No implementado!");
             // TODO Implementar
@@ -362,7 +362,7 @@ public class ParametroBO implements Parametro {
             }
 
             prmtVO.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            prmtVO.getPrvr().setFinicio(fechaCambioPeriodo);
+            prmtVO.getPrvr().setFini(fechaCambioPeriodo);
             prmtVO.getPrvr().setFfin(null);
             prvrDAO.insert(prmtVO);
 
@@ -605,7 +605,7 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional
-    public ParametroVO select(Long prvrId, String idioma) throws InstanceNotFoundException {
+    public ParametroVO select(final Long prvrId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prvrId);
 
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();

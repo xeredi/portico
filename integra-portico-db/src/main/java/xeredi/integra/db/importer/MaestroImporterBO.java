@@ -236,7 +236,7 @@ public final class MaestroImporterBO {
                 final ParametroVO prmtVO = ParametroVO.newInstance(tpprVO);
 
                 prmtVO.setParametro(parametro);
-                prmtVO.getPrvr().setFinicio(fechaInicio);
+                prmtVO.getPrvr().setFini(fechaInicio);
                 prmtVO.getPrvr().setFfin(fechaFin);
 
                 if (tpprVO.getEntdList() != null) {

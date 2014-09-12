@@ -11,6 +11,10 @@ import xeredi.integra.model.comun.vo.ItemCriterioVO;
  * The Class ParametroCriterioVO.
  */
 public final class ParametroCriterioVO extends ItemCriterioVO {
+
+    /** The prvr id. */
+    private Long prvrId;
+
     /** The prvr ids. */
     private Set<Long> prvrIds;
 
@@ -85,5 +89,24 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
      */
     public void setParametros(final Set<String> value) {
         parametros = value;
+    }
+
+    /**
+     * Gets the prvr id.
+     *
+     * @return the prvr id
+     */
+    public Long getPrvrId() {
+        return prvrId;
+    }
+
+    /**
+     * Sets the prvr id.
+     *
+     * @param value
+     *            the new prvr id
+     */
+    public void setPrvrId(final Long value) {
+        prvrId = value;
     }
 }

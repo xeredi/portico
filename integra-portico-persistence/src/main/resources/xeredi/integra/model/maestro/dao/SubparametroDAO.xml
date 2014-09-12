@@ -30,6 +30,9 @@
             <if test="id != null">
                 AND sprm_pk = #{id}
             </if>
+            <if test="spvrId != null">
+                AND spvr_pk = #{spvrId}
+            </if>
             <if test="entiId != null">
                 AND sprm_tpsp_pk = #{entiId}
             </if>

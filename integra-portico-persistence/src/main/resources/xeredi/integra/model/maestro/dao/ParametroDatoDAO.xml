@@ -1,39 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--
-SELECT *
-    , (
-        SELECT prmt_parametro
-        FROM tbl_parametro_prmt
-        WHERE prmt_pk = prdt_prmt_pk
-    ) AS prmt_parametro
-    , (
-        SELECT p18n_texto
-        FROM tbl_parametro_i18n_p18n
-        WHERE p18n_prvr_pk = prdt_prmt_prvr_pk
-            AND p18n_idioma = 'es_ES'
-    )
-FROM (
-    select prdt.*
-        , (
-            SELECT prvr_pk
-            FROM tbl_parametro_version_prvr
-            WHERE prvr_prmt_pk = prdt_prmt_pk
-                AND portico.getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
-        ) AS prdt_prmt_prvr_pk
-    FROM tbl_parametro_prmt prmt
-        JOIN tbl_parametro_version_prvr prvr on
-            prvr_prmt_pk = prmt_pk
-            AND portico.getSysDatetime() BETWEEN prvr_fini AND COALESCE(prvr_ffin, portico.getSysDatetime())
-            AND prmt_tppr_pk = 20049
-        join tbl_parametro_dato_prdt prdt ON
-            prdt_prvr_pk = prvr_pk
-    LIMIT 100
-) sql
-;
 
- -->
 <mapper namespace="xeredi.integra.model.maestro.dao.ParametroDatoDAO">
     <resultMap type="ItemDatoVO" id="ResultMap">
         <id column="prdt_prvr_pk" property="itemId" />
@@ -66,13 +34,14 @@ FROM (
                         THEN (
                             SELECT p18n_texto
                             FROM tbl_parametro_i18n_p18n
-                            WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = 'es_ES'
+                            WHERE p18n_prvr_pk = prvr_pk
+                                AND p18n_idioma = #{idioma}
                         )
 
                         WHEN tppr_tpdt_pk IS NOT NULL
                         THEN (
                             SELECT prdt_cadena
-                            FROM tbl_parametro_dato_prdt
+                            FROM tbl_parametro_dato_prdt prdt
                             WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_pk
                         )
 

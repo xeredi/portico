@@ -8,13 +8,13 @@ body {
 }
 
 #body-content {
-	margin-top: 55px;
+	margin-top: 60px;
 	margin-left: 10px;
 	margin-right: 20px;
 }
 
 .navbar-right {
-	padding-right: 20px;
+	padding-right: 30px;
 }
 
 label, legend, li, .btn, .form-control, .form-control-static,
@@ -27,6 +27,11 @@ legend {
 	font-size: 12px;
 	font-weight: bold;
 	margin-bottom: 5px;
+}
+
+.nav-tabs {
+	font-size: 12px;
+	font-weight: bold;
 }
 
 .form-control {

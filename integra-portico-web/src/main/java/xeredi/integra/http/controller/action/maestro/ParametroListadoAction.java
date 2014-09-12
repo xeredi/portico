@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -39,6 +38,9 @@ public final class ParametroListadoAction extends ItemListadoAction {
     /** The criterio vo. */
     private ParametroCriterioVO itemCriterio;
 
+    /** The enti. */
+    private TipoParametroVO enti;
+
     /**
      * Instantiates a new parametro listado action.
      */
@@ -47,12 +49,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         itemCriterio = new ParametroCriterioVO();
 
-        final Calendar calendar = Calendar.getInstance();
-
-        // FIXME Superñapa debido a que los borrados son demasiado rapidos
-        calendar.add(Calendar.SECOND, 1);
-
-        itemCriterio.setFechaVigencia(calendar.getTime());
+        itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
         itemCriterio.setIdioma(getIdioma());
     }
 
@@ -70,12 +67,12 @@ public final class ParametroListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-filtro") })
-    public String filtro() {
+    @Action("prmt-filter")
+    public String filter() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final TipoParametroVO enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
         // Inicializar el filtro - Necesario para AngularJS
         if (itemCriterio.getItdtMap() == null) {
@@ -100,21 +97,20 @@ public final class ParametroListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-listado") })
-    public String listado() {
+    @Action("prmt-list")
+    public String list() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
-
-        if (hasErrors()) {
-            return INPUT;
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
         }
-
-        // Traemos solo los datos 'gridables' de los parametros (Minimiza el
-        // trafico con la BD)
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());
+
+        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
         itemList = prmtBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
@@ -178,6 +174,15 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<ParametroVO> getItemList() {
         return itemList;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoParametroVO getEnti() {
+        return enti;
     }
 
 }

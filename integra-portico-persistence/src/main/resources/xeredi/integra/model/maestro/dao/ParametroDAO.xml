@@ -11,7 +11,7 @@
 
         <association property="prvr" javaType="ParametroVersionVO">
             <id column="prvr_pk" property="id" />
-            <result column="prvr_fini" property="finicio" />
+            <result column="prvr_fini" property="fini" />
             <result column="prvr_ffin" property="ffin" />
         </association>
 
@@ -101,6 +101,10 @@
                 AND prmt.prmt_parametro IN
                 <foreach collection="parametros" item="item" open="(" close=")" separator=",">#{item}
                 </foreach>
+            </if>
+
+            <if test="prvrId != null">
+                AND prvr_pk = #{prvrId}
             </if>
 
             <if test="prvrIds != null and !prvrIds.empty">
@@ -206,12 +210,12 @@
                 INNER JOIN tbl_parametro_version_prvr ON
                     prvr_prmt_pk = prmt_pk
                     AND (
-                        #{prvr.finicio} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.finicio})
+                        #{prvr.fini} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.fini})
                         OR
                         COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime())
                             BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()))
                         OR (
-                            #{prvr.finicio} < prvr_fini
+                            #{prvr.fini} < prvr_fini
                             AND COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime())
                                 >= COALESCE(prvr_ffin, COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()))
                         )

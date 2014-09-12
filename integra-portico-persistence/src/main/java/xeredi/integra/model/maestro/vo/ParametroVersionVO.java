@@ -14,7 +14,7 @@ public final class ParametroVersionVO {
     private Long id;
 
     /** The finicio. */
-    private Date finicio;
+    private Date fini;
 
     /** The ffin. */
     private Date ffin;
@@ -29,7 +29,7 @@ public final class ParametroVersionVO {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public Long getId() {
@@ -38,7 +38,7 @@ public final class ParametroVersionVO {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
@@ -48,26 +48,26 @@ public final class ParametroVersionVO {
 
     /**
      * Gets the finicio.
-     * 
+     *
      * @return the finicio
      */
-    public Date getFinicio() {
-        return finicio;
+    public Date getFini() {
+        return fini;
     }
 
     /**
      * Sets the finicio.
-     * 
+     *
      * @param value
      *            the new finicio
      */
-    public void setFinicio(final Date value) {
-        finicio = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
      * Gets the ffin.
-     * 
+     *
      * @return the ffin
      */
     public Date getFfin() {
@@ -76,7 +76,7 @@ public final class ParametroVersionVO {
 
     /**
      * Sets the ffin.
-     * 
+     *
      * @param value
      *            the new ffin
      */

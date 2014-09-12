@@ -9,8 +9,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
@@ -87,8 +85,8 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-crear") })
-    public String crear() {
+    @Action("prmt-create")
+    public String create() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
@@ -107,8 +105,8 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-editar") })
-    public String editar() {
+    @Action("prmt-edit")
+    public String edit() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -142,8 +140,8 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-duplicar") })
-    public String duplicar() {
+    @Action("prmt-duplicate")
+    public String duplicate() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -177,8 +175,8 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-guardar") })
-    public String guardar() {
+    @Action("prmt-save")
+    public String save() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(accion);
 
@@ -198,18 +196,18 @@ public final class ParametroAction extends ItemAction {
             PropertyValidator.validateRequired(this, "prvr.id", item.getPrvr().getId());
         }
 
-        if (item.getPrvr().getFinicio() != null && item.getPrvr().getFfin() != null
-                && !item.getPrvr().getFinicio().before(item.getPrvr().getFfin())) {
+        if (item.getPrvr().getFini() != null && item.getPrvr().getFfin() != null
+                && !item.getPrvr().getFini().before(item.getPrvr().getFfin())) {
             addActionError(getText(ErrorCode.E00006.name()));
         }
 
         if (enti.getTempExp()) {
-            if (item.getPrvr().getFinicio() == null) {
+            if (item.getPrvr().getFini() == null) {
                 addActionError(getText(ErrorCode.E00003.name()));
             }
         } else {
             if (accion == ACCION_EDICION.create) {
-                item.getPrvr().setFinicio(Calendar.getInstance().getTime());
+                item.getPrvr().setFini(Calendar.getInstance().getTime());
             }
         }
 
@@ -271,9 +269,8 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "prmt-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "prmt-listado", "itemCriterio.entiId", "%{enti.id}" }) })
-    public String borrar() {
+    @Action("prmt-remove")
+    public String remove() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
@@ -301,10 +298,11 @@ public final class ParametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action("prmt-detalle"), @Action("prmt-detalle-popup") })
-    public String detalle() {
+    @Action("prmt-detail")
+    public String detail() {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkArgument(item.getId() != null && fechaVigencia != null || item.getPrvr() != null
+                && item.getPrvr().getId() != null);
 
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -313,11 +311,13 @@ public final class ParametroAction extends ItemAction {
         prmtCriterioVO.setFechaVigencia(fechaVigencia);
         prmtCriterioVO.setIdioma(getIdioma());
 
+        if (item.getPrvr() != null) {
+            prmtCriterioVO.setPrvrId(item.getPrvr().getId());
+        }
+
         try {
             item = prmtBO.selectObject(prmtCriterioVO);
             enti = TipoParametroProxy.select(item.getEntiId());
-
-            // LOG.info(enti);
 
             if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
@@ -344,7 +344,8 @@ public final class ParametroAction extends ItemAction {
                 }
             }
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { enti.getNombre(), String.valueOf(prmtCriterioVO) }));
         }
 
         return SUCCESS;

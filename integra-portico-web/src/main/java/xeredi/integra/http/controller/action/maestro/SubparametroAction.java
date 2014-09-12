@@ -8,8 +8,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
@@ -74,9 +72,8 @@ public final class SubparametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "sprm-alta", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
-            @Action(value = "sprm-alta-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
-    public String alta() {
+    @Action("sprm-create")
+    public String create() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
         Preconditions.checkNotNull(item.getPrmtId());
@@ -85,6 +82,7 @@ public final class SubparametroAction extends ItemAction {
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
+        loadPrmtAsociadoList();
 
         return SUCCESS;
     }
@@ -96,10 +94,8 @@ public final class SubparametroAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({
-            @Action(value = "sprm-modificar", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
-            @Action(value = "sprm-modificar-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
-    public String modificar() throws InstanceNotFoundException {
+    @Action("sprm-edit")
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -116,6 +112,7 @@ public final class SubparametroAction extends ItemAction {
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
+        loadPrmtAsociadoList();
 
         return SUCCESS;
     }
@@ -127,10 +124,8 @@ public final class SubparametroAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({
-            @Action(value = "sprm-duplicar", results = { @Result(name = "success", location = "sprm-edicion.jsp") }),
-            @Action(value = "sprm-duplicar-popup", results = { @Result(name = "success", location = "sprm-edicion.jsp") }) })
-    public String duplicar() throws InstanceNotFoundException {
+    @Action("sprm-duplicate")
+    public String duplicate() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -147,6 +142,7 @@ public final class SubparametroAction extends ItemAction {
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
+        loadPrmtAsociadoList();
 
         return SUCCESS;
     }
@@ -156,10 +152,8 @@ public final class SubparametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "sprm-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "prmt-detalle", "item.id",
-                    "%{item.prmtId}" }), @Result(name = "input", location = "sprm-edicion.jsp") })
-    public String guardar() {
+    @Action("sprm-save")
+    public String save() {
         Preconditions.checkNotNull(item);
 
         final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
@@ -226,9 +220,8 @@ public final class SubparametroAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "sprm-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "prmt-detalle", "item.id", "%{item.prmtId}" }) })
-    public String borrar() {
+    @Action("sprm-remove")
+    public String remove() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
@@ -258,22 +251,35 @@ public final class SubparametroAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({ @Action(value = "sprm-detalle"), @Action(value = "sprm-detalle-popup") })
+    @Action("sprm-detail")
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getSpvr());
+        Preconditions.checkNotNull(item.getSpvr().getId());
 
         final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setId(item.getId());
-        sprmCriterioVO.setFechaVigencia(fechaVigencia);
+        sprmCriterioVO.setSpvrId(item.getSpvr().getId());
         sprmCriterioVO.setIdioma(getIdioma());
 
         item = sprmBO.selectObject(sprmCriterioVO);
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         return SUCCESS;
+    }
+
+    /**
+     * Load prmt asociado list.
+     */
+    private void loadPrmtAsociadoList() {
+        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+
+        final Set<Long> tpprIds = new HashSet<>();
+
+        tpprIds.add(enti.getTpprAsociado().getId());
+        prmtAsociadoList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(
+                enti.getTpprAsociado().getId());
     }
 
     // get / set
@@ -284,16 +290,6 @@ public final class SubparametroAction extends ItemAction {
      * @return the prmt asociado list
      */
     public List<LabelValueVO> getPrmtAsociadoList() {
-        if (prmtAsociadoList == null) {
-            final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
-
-            final Set<Long> tpprIds = new HashSet<>();
-
-            tpprIds.add(enti.getTpprAsociado().getId());
-            prmtAsociadoList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(
-                    enti.getTpprAsociado().getId());
-        }
-
         return prmtAsociadoList;
     }
 

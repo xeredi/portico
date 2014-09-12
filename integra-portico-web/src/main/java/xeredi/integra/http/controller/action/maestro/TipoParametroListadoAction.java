@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -40,8 +39,8 @@ public final class TipoParametroListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "tppr-listado") })
-    public String listado() {
+    @Action("tppr-list")
+    public String list() {
         tpprList = TipoParametroProxy.selectLabelValues();
 
         return SUCCESS;

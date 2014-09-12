@@ -1,7 +1,6 @@
-var app = angular.module('integraApp', [ 'ui.bootstrap', 'ui.bootstrap.datetimepicker',
-        'pascalprecht.translate', 'ngRoute', 'metamodelo', 'facturacion'/*
+var app = angular.module("integraApp", [ "ui.bootstrap", "ui.bootstrap.datetimepicker",
+        "pascalprecht.translate", "ngRoute", "metamodelo", "facturacion", "maestro"/*
                                                                          * 'configuracion',
-                                                                         * 'maestro',
                                                                          * 'servicio',
                                                                          * 'proceso',
                                                                          *
@@ -82,12 +81,11 @@ app.config(function($translateProvider) {
         modal_filtro : 'Filtro',
         limit : 'Max. Resultados',
 
-        prmt_codigo : 'Codigo',
-        prmt_finicio : 'F. Inicio',
+        prmt_parametro : 'Codigo',
+        prmt_fini : 'F. Inicio',
         prmt_ffin : 'F. Fin',
         prmt_i18n_texto : 'Descripcion',
-        prmtCriterio_parametro : 'Parametro',
-        prmtCriterio_fechaVigencia : 'Fec. Vigencia',
+        prmt_fechaVigencia : 'Fec. Vigencia',
 
         sprm_finicio : 'F. Inicio',
         sprm_ffin : 'F. Fin',

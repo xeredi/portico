@@ -13,6 +13,9 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
  */
 public final class SubparametroCriterioVO extends ItemCriterioVO {
 
+    /** The spvr id. */
+    private Long spvrId;
+
     /** The spvr ids. */
     private Set<Long> spvrIds;
 
@@ -107,6 +110,25 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
      */
     public final void setSpvrIds(final Set<Long> value) {
         spvrIds = value;
+    }
+
+    /**
+     * Gets the spvr id.
+     *
+     * @return the spvr id
+     */
+    public Long getSpvrId() {
+        return spvrId;
+    }
+
+    /**
+     * Sets the spvr id.
+     *
+     * @param value
+     *            the new spvr id
+     */
+    public void setSpvrId(final Long value) {
+        spvrId = value;
     }
 
 }

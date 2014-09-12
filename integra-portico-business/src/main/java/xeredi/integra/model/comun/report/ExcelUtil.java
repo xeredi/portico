@@ -119,7 +119,7 @@ public final class ExcelUtil {
             }
 
             if (tpprVO.getTempExp()) {
-                setCellValue(row, j++, prmtVO.getPrvr().getFinicio());
+                setCellValue(row, j++, prmtVO.getPrvr().getFini());
                 setCellValue(row, j++, prmtVO.getPrvr().getFfin());
             }
 

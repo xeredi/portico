@@ -1,5 +1,5 @@
 
-<tabset> <tab heading="{{'vlrl' | translate}}">
+<tabset> <tab heading="{{'vlrl' | translate | uppercase}}">
 <fieldset>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -30,7 +30,7 @@
         <div class="col-md-2 form-group">
             <label>{{'vlrl_impuesto' | translate}}</label>
             <p class="form-control-static">
-                <a ui-sref="prmts.detalle({itemId:vlrl.impuesto.id})">{{vlrl.impuesto.etiqueta}}</a>
+                <a href="#/maestro/prmt/detail/{{vlrl.impuesto.id}}/{{vlrl.fref}}">{{vlrl.impuesto.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -101,7 +101,7 @@
         </div>
     </div>
 </fieldset>
-</tab> <tab heading="{{'vlrds' | translate}}">
+</tab> <tab heading="{{'vlrds' | translate | uppercase}}">
 <fieldset>
     <div class="row">
         <div class="col-md-12 form-group">
