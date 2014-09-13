@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
@@ -18,7 +19,6 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
 
 import com.google.common.base.Preconditions;
 
@@ -71,6 +71,7 @@ public final class SubparametroAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
         enti = TipoSubparametroProxy.select(item.getEntiId());
+        item = SubparametroVO.newInstance(enti);
 
         loadLabelValuesMap();
 
@@ -144,22 +145,35 @@ public final class SubparametroAction extends ItemAction {
      */
     @Action("sprm-save")
     public String save() {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getSpvr());
 
         final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         // Validacion de Datos
-        if (accion == ACCION_EDICION.create) {
-            PropertyValidator.validateRequired(this, "prmtAsociado", item.getPrmtAsociado());
-        } else {
-            PropertyValidator.validateRequired(this, "id", item.getId());
-            PropertyValidator.validateRequired(this, "spvr.id", item.getSpvr().getId());
+        if (accion != ACCION_EDICION.edit) {
+            if (item.getPrmtAsociado() == null || item.getPrmtAsociado().getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { enti.getTpprAsociado().getNombre() }));
+            }
+        }
+
+        if (accion != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(item.getId());
+            Preconditions.checkNotNull(item.getSpvr().getId());
+        }
+
+        if (item.getSpvr().getFini() != null && item.getSpvr().getFfin() != null
+                && !item.getSpvr().getFini().before(item.getSpvr().getFfin())) {
+            addActionError(getText(ErrorCode.E00006.name()));
         }
 
         if (enti.getTempExp()) {
-            PropertyValidator.validateRequired(this, "spvr.finicio", item.getSpvr().getFini());
+            if (item.getSpvr().getFini() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("sprm_fini") }));
+            }
         } else {
             if (accion == ACCION_EDICION.create) {
                 item.getSpvr().setFini(Calendar.getInstance().getTime());

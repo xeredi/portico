@@ -8,6 +8,7 @@ app.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/", {
+        title : 'home',
         templateUrl : "modules/home.html",
     })
 } ]);
@@ -21,6 +22,7 @@ app.run([ '$location', '$rootScope', function($location, $rootScope) {
 app.config(function($translateProvider) {
     $translateProvider.translations('es', {
         app_nombre : 'PORTICO',
+        home : 'Inicio',
 
         errors : 'Errores',
         fmt_true : 'Si',

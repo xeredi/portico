@@ -31,7 +31,6 @@ import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
-import xeredi.util.struts.PropertyValidator;
 
 import com.google.common.base.Preconditions;
 
@@ -189,13 +188,13 @@ public final class ParametroAction extends ItemAction {
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
             if (item.getParametro() == null || item.getParametro().isEmpty()) {
-                addActionError(getText(ErrorCode.E00004.name()));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_parametro") }));
             }
         }
 
         if (accion != ACCION_EDICION.create) {
-            PropertyValidator.validateRequired(this, "id", item.getId());
-            PropertyValidator.validateRequired(this, "prvr.id", item.getPrvr().getId());
+            Preconditions.checkNotNull(item.getId());
+            Preconditions.checkNotNull(item.getPrvr().getId());
         }
 
         if (item.getPrvr().getFini() != null && item.getPrvr().getFfin() != null
@@ -205,7 +204,7 @@ public final class ParametroAction extends ItemAction {
 
         if (enti.getTempExp()) {
             if (item.getPrvr().getFini() == null) {
-                addActionError(getText(ErrorCode.E00003.name()));
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_fini") }));
             }
         } else {
             if (accion == ACCION_EDICION.create) {
