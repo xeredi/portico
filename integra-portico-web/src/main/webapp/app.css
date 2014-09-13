@@ -85,7 +85,7 @@ table {
 	margin: 5px;
 }
 
-.nav, .pagination, .carousel, .panel-title a {
+.nav, .pagination, .carousel, .panel-title a, .input-group-addon {
 	cursor: pointer;
 }
 

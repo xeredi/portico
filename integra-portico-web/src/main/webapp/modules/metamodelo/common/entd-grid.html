@@ -1,0 +1,58 @@
+<fieldset>
+    <legend>{{"Datos" | uppercase}}</legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" href="#/metamodelo/entd/create/{{enti.id}}"><i
+                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+        </div>
+    </div>
+
+    <table ng-if="enti.entdList" class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th>{{"entd_grupo" | translate}}</th>
+                <th>{{"entd_fila" | translate}}</th>
+                <th>{{"entd_orden" | translate}}</th>
+                <th>{{"entd_span" | translate}}</th>
+                <th>{{"entd_spanLg" | translate}}</th>
+                <th>{{"entd_etiqueta" | translate}}</th>
+                <th>{{"entd_obligatorio" | translate}}</th>
+                <th>{{"entd_gridable" | translate}}</th>
+                <th>{{"entd_filtrable" | translate}}</th>
+                <th>{{"entd_tpdt_nombre" | translate}}</th>
+                <th>{{"entd_tpdt_tipoElemento" | translate}}</th>
+                <th>{{"entd_tpdt_tpht" | translate}}</th>
+                <th>{{"entd_tpdt_enti" | translate}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="entd in enti.entdList">
+                <td><a href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td>{{enti.entdMap[entd].grupo}}</td>
+                <td>{{enti.entdMap[entd].fila}}</td>
+                <td>{{enti.entdMap[entd].orden}}</td>
+                <td>{{enti.entdMap[entd].span}}</td>
+                <td>{{enti.entdMap[entd].spanLg}}</td>
+                <td>{{enti.entdMap[entd].etiqueta}}</td>
+                <td><i ng-if="enti.entdMap[entd].obligatorio" class="glyphicon glyphicon-ok"></i><i
+                    ng-if="!enti.entdMap[entd].obligatorio" class="glyphicon glyphicon-remove"></td>
+                <td><i ng-if="enti.entdMap[entd].gridable" class="glyphicon glyphicon-ok"></i><i
+                    ng-if="!enti.entdMap[entd].gridable" class="glyphicon glyphicon-remove"></td>
+                <td><i ng-if="enti.entdMap[entd].filtrable" class="glyphicon glyphicon-ok"></i><i
+                    ng-if="!enti.entdMap[entd].filtrable" class="glyphicon glyphicon-remove"></td>
+                <td><a href="#/metamodelo/tpdt/detail/{{enti.entdMap[entd].tpdt.id}}">{{enti.entdMap[entd].tpdt.nombre}}</a></td>
+                <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}">{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
+                <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
+                <td><span ng-if="enti.entdMap[entd].tpdt.enti"> <a
+                        ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'P'"
+                        href="#/metamodelo/tppr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a><a
+                        ng-if="enti.entdMap[entd].tpdt.enti.tipo == 'T'"
+                        href="#/metamodelo/tpsr/detail/{{enti.entdMap[entd].tpdt.enti.id}}">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</a></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>

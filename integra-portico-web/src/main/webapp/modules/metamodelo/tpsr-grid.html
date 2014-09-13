@@ -57,12 +57,18 @@
                     <td><a href="#/metamodelo/tpsr/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{enti.codigo}}</td>
                     <td>{{enti.nombre}}</td>
-                    <td><i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i></td>
-                    <td><i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i></td>
+                    <td><i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdAlta"
+                        class="glyphicon glyphicon-remove"></td>
+                    <td><i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdBaja"
+                        class="glyphicon glyphicon-remove"></td>
+                    <td><i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdEdicion"
+                        class="glyphicon glyphicon-remove"></td>
+                    <td><i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!enti.cmdDuplicado" class="glyphicon glyphicon-remove"></td>
+                    <td><i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.temporal"
+                        class="glyphicon glyphicon-remove"></td>
+                    <td><i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.facturable"
+                        class="glyphicon glyphicon-remove"></i></td>
                     <td><a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a></td>
                 </tr>
             </tbody>

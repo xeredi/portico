@@ -63,19 +63,22 @@
             <div class="col-md-1 form-group">
                 <label> {{"entd_obligatorio" | translate}} </label>
                 <p class="form-control-static">
-                    <i ng-if="entd.obligatorio" class="glyphicon glyphicon-ok"></i>
+                    <i ng-if="entd.obligatorio" class="glyphicon glyphicon-ok"></i><i ng-if="!entd.obligatorio"
+                        class="glyphicon glyphicon-remove"></i>
                 </p>
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_gridable" | translate}} </label>
                 <p class="form-control-static">
-                    <i ng-if="entd.gridable" class="glyphicon glyphicon-ok"></i>
+                    <i ng-if="entd.gridable" class="glyphicon glyphicon-ok"></i><i ng-if="!entd.gridable"
+                        class="glyphicon glyphicon-remove"></i>
                 </p>
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_filtrable" | translate}} </label>
                 <p class="form-control-static">
-                    <i ng-if="entd.filtrable" class="glyphicon glyphicon-ok"></i>
+                    <i ng-if="entd.filtrable" class="glyphicon glyphicon-ok"></i><i ng-if="!entd.filtrable"
+                        class="glyphicon glyphicon-remove"></i>
                 </p>
             </div>
         </div>
