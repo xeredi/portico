@@ -1,0 +1,23 @@
+<fieldset ng-repeat="engdId in enti.engdList">
+    <legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
+
+    <div class="row">
+        <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
+            class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
+            <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
+            <p ng-if="!item.itdtMap[tpdtId].filled" class="form-control-static">&nbsp;</p>
+            <p ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
+                class="form-control-static">
+                <span ng-switch-when="BO">{{'fmt_' + item.itdtMap[tpdtId].booleano | translate}}</span> <span
+                    ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}</span> <span
+                    ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</span> <span
+                    ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span
+                    ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}</span> <span
+                    ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
+                <span ng-switch-when="PR"> <a
+                    href="#/maestro/prmt/detail/{{item.itdtMap[tpdtId].prmt.id}}/{{fechaVigencia}}">{{item.itdtMap[tpdtId].prmt.etiqueta}}</a></span>
+                <span ng-switch-when="SR"> <a href="#/servicio/srvc/detail/{{item.itdtMap[tpdtId].srvc.id}}">{{item.itdtMap[tpdtId].srvc.etiqueta}}</a></span>
+            </p>
+        </div>
+    </div>
+</fieldset>

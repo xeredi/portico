@@ -9,7 +9,7 @@ module.config([ "$routeProvider", function($routeProvider) {
 
     .when("/maestro", {
         title : 'maestro_main',
-        templateUrl : "modules/maestro/maestro.html",
+        templateUrl : "modules/entidad/maestro/maestro.html",
         controller : "maestroController"
     })
 } ]);
@@ -31,37 +31,37 @@ module.config([ "$routeProvider", function($routeProvider) {
 
     .when("/maestro/prmt/grid/:entiId", {
         title : 'prmt_grid',
-        templateUrl : "modules/maestro/prmt-grid.html",
+        templateUrl : "modules/entidad/maestro/prmt-grid.html",
         controller : "prmtGridController"
     })
 
     .when("/maestro/prmt/create/:entiId", {
         title : 'prmt_create',
-        templateUrl : "modules/maestro/prmt-edit.html",
+        templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "prmtCreateController"
     })
 
     .when("/maestro/prmt/detail/:prvrId", {
         title : 'prmt_detail',
-        templateUrl : "modules/maestro/prmt-detail.html",
+        templateUrl : "modules/entidad/maestro/prmt-detail.html",
         controller : "prmtDetailController"
     })
 
     .when("/maestro/prmt/edit/:prvrId", {
         title : 'prmt_edit',
-        templateUrl : "modules/maestro/prmt-edit.html",
+        templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "prmtEditController"
     })
 
     .when("/maestro/prmt/duplicate/:prvrId", {
         title : 'prmt_duplicate',
-        templateUrl : "modules/maestro/prmt-edit.html",
+        templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "prmtDuplicateController"
     })
 
     .when("/maestro/prmt/detail/:itemId/:fechaVigencia", {
         title : 'prmt_detail',
-        templateUrl : "modules/maestro/prmt-detail.html",
+        templateUrl : "modules/entidad/maestro/prmt-detail.html",
         controller : "prmtDetailController"
     })
 } ]);
@@ -237,31 +237,31 @@ module.config([ "$routeProvider", function($routeProvider) {
 
     .when("/maestro/sprm/create/:entiId/:prmtPadreId", {
         title : 'sprm_create',
-        templateUrl : "modules/maestro/sprm-edit.html",
+        templateUrl : "modules/entidad/maestro/sprm-edit.html",
         controller : "sprmCreateController"
     })
 
     .when("/maestro/sprm/detail/:spvrId", {
         title : 'sprm_detail',
-        templateUrl : "modules/maestro/sprm-detail.html",
+        templateUrl : "modules/entidad/maestro/sprm-detail.html",
         controller : "sprmDetailController"
     })
 
     .when("/maestro/sprm/edit/:spvrId", {
         title : 'sprm_edit',
-        templateUrl : "modules/maestro/sprm-edit.html",
+        templateUrl : "modules/entidad/maestro/sprm-edit.html",
         controller : "sprmEditController"
     })
 
     .when("/maestro/sprm/duplicate/:spvrId", {
         title : 'sprm_duplicate',
-        templateUrl : "modules/maestro/sprm-edit.html",
+        templateUrl : "modules/entidad/maestro/sprm-edit.html",
         controller : "sprmDuplicateController"
     })
 
     .when("/maestro/sprm/detail/:itemId/:fechaVigencia", {
         title : 'sprm_detail',
-        templateUrl : "modules/maestro/sprm-detail.html",
+        templateUrl : "modules/entidad/maestro/sprm-detail.html",
         controller : "sprmDetailController"
     })
 } ]);
