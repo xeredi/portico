@@ -66,17 +66,22 @@ module.config([ "$routeProvider", function($routeProvider) {
 
 module.controller("vlrcFilterController", function($scope, $http, $location) {
     $scope.submit = function() {
+        console.log(JSON.stringify($scope.vlrcCriterio));
+
         $location.path("/facturacion/vlrc/grid").search({
-            vlrcCriterio : {},
+            vlrcCriterio : $scope.vlrcCriterio,
             page : $scope.page
         });
     }
 
     $scope.page = 1;
     $scope.limit = 20;
+    $scope.vlrcCriterio = {};
 });
 
 module.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
+    console.log(JSON.stringify($routeParams.vlrcCriterio));
+
     $scope.vlrcCriterio = $routeParams.vlrcCriterio;
     $scope.page = $routeParams.page;
 
