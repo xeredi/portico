@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="integraApp">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -20,18 +21,18 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Menu</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li role="presentation" class="dropdown-header">Gestión</li>
+                        <li role="presentation" class="dropdown-header">GestiÃ³n</li>
                         <li><a ui-sref="tpsrs">{{'menu_tpsrs' | translate}}</a></li>
                         <li><a ui-sref="peprs">{{'menu_peprs' | translate}}</a></li>
                         <li><a href="#/maestro">{{'menu_tpprs' | translate}}</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Facturación</li>
+                        <li role="presentation" class="dropdown-header">FacturaciÃ³n</li>
                         <li><a href="#/facturacion">{{'menu_fctrmain' | translate}}</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Administración</li>
+                        <li role="presentation" class="dropdown-header">AdministraciÃ³n</li>
                         <li><a ui-sref="prbts">{{'menu_prbts' | translate}}</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Parametrización</li>
+                        <li role="presentation" class="dropdown-header">ParametrizaciÃ³n</li>
                         <li><a href="#/metamodelo/tpsr/grid">{{'menu_metamodelo_tpsrs' | translate}}</a></li>
                         <li><a href="#/metamodelo/tpes/grid">{{'menu_metamodelo_tpess' | translate}}</a></li>
                         <li><a href="#/metamodelo/tppr/grid">{{'menu_metamodelo_tpprs' | translate}}</a></li>
@@ -45,12 +46,9 @@
     <!--     <alert type="success">Alerta de Prueba en layout principal!!!</alert> -->
 
     <div id="body-content" ng-view>
-        <div class="jumbotron">
-            <h1>Portico 2.0</h1>
-        </div>
     </div>
 
-<!--     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="static/angular-datetimepicker/0.2.4/js/datetimepicker.js"></script>
@@ -58,8 +56,7 @@
 
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular.min.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.24/angular-route.min.js"></script>
-    <script type="text/javascript"
-        src="//cdn.jsdelivr.net/angular.translate/2.2.0/angular-translate.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/angular.translate/2.2.0/angular-translate.min.js"></script>
     <script type="text/javascript"
         src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.2.0/bootbox.min.js"></script>

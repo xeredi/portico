@@ -4,6 +4,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.maestro.vo.ParametroVO;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionCriterioVO.
@@ -23,7 +25,7 @@ public final class ValoracionCriterioVO {
     private Long srvcId;
 
     /** The pagador id. */
-    private Long pagadorId;
+    private ParametroVO pagador;
 
     /**
      * {@inheritDoc}
@@ -114,8 +116,8 @@ public final class ValoracionCriterioVO {
      *
      * @return the pagador id
      */
-    public Long getPagadorId() {
-        return pagadorId;
+    public ParametroVO getPagador() {
+        return pagador;
     }
 
     /**
@@ -124,8 +126,8 @@ public final class ValoracionCriterioVO {
      * @param value
      *            the new pagador id
      */
-    public void setPagadorId(final Long value) {
-        pagadorId = value;
+    public void setPagador(final ParametroVO value) {
+        pagador = value;
     }
 
 }

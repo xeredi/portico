@@ -77,8 +77,8 @@
             <if test="aspcId != null">
                 AND vlrc_aspc_pk = #{aspcId}
             </if>
-            <if test="pagadorId != null">
-                AND vlrc_pagador_prmt_pk = #{pagadorId}
+            <if test="pagador != null and pagador.id != null">
+                AND vlrc_pagador_prmt_pk = #{pagador.id}
             </if>
         </where>
     </sql>

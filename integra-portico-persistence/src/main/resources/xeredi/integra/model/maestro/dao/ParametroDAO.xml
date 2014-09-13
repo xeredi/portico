@@ -231,27 +231,25 @@
         <![CDATA[
         SELECT
         	prmt_pk
-        	, portico.CONCAT(
-        		prmt_parametro
-        		, (
-        			CASE
-        				WHEN tppr_es_i18n = 1
-        				THEN (
-        					SELECT portico.CONCAT(' - ', p18n_texto)
-        					FROM tbl_parametro_i18n_p18n
-        					WHERE p18n_prvr_pk = prvr_pk
-        						AND p18n_idioma = 'es_ES'
-        				)
-        				WHEN tppr_tpdt_pk IS NOT NULL
-        				THEN (
-        					SELECT portico.CONCAT(' - ', prdt_cadena)
-        					FROM tbl_parametro_dato_prdt
-        					WHERE prdt_prvr_pk = prvr_pk
-        						AND prdt_tpdt_pk = tppr_tpdt_pk
-        				)
-        			END
-        		)
-        	) AS p18n_texto
+        	, prmt_parametro
+    		, (
+    			CASE
+    				WHEN tppr_es_i18n = 1
+    				THEN (
+    					SELECT p18n_texto
+    					FROM tbl_parametro_i18n_p18n
+    					WHERE p18n_prvr_pk = prvr_pk
+    						AND p18n_idioma = 'es_ES'
+    				)
+    				WHEN tppr_tpdt_pk IS NOT NULL
+    				THEN (
+    					SELECT prdt_cadena
+    					FROM tbl_parametro_dato_prdt
+    					WHERE prdt_prvr_pk = prvr_pk
+    						AND prdt_tpdt_pk = tppr_tpdt_pk
+    				)
+    			END
+    		) AS p18n_texto
         FROM
         	tbl_parametro_prmt
         	INNER JOIN tbl_parametro_version_prvr ON

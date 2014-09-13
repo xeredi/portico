@@ -19,9 +19,9 @@
                 <label>{{"vlrc_pagador" | translate}}</label>
                 <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="vlrcCriterio.pagador"
-                        typeahead="prmt as prmt.i18n.texto for prmt in getLabelValues(20010, $viewValue)"
-                        typeahead-loading="loading" typeahead-wait-ms="500" typeahead-editable="false"
-                        class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
+                        typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                        ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                     <!-- -->
                     $ {{vlrcCriterio.pagador.id}} $ {{vlrcCriterio.pagador.etiqueta}}
                 </div>
