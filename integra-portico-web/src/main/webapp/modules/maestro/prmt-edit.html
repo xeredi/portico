@@ -20,38 +20,22 @@
 
             <div ng-if="enti.tempExp" class="col-md-1 form-group">
                 <label>{{'prmt_fini' | translate}}</label>
-                <div class="dropdown">
-                    <a class="dropdown-toggle" id="datepickerFinicio" role="button" data-toggle="dropdown"
-                        data-target="#" href="#">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="item.prvr.finicio"
-                                value="{{item.prvr.fini | date:('fmt_date' | translate)}}"><span
-                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="item.prvr.finicio"
-                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFinicio', startView:'day', minView:'day'  }" />
-                    </ul>
-                </div>
+                <p class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.fini" ng-required="true" />
+                    <span class="input-group-addon" ng-click="open($event)"><i
+                        class="glyphicon glyphicon-calendar"></i></span>
+                </p>
             </div>
 
             <div ng-if="enti.tempExp" class="col-md-1 form-group">
                 <label>{{'prmt_ffin' | translate}}</label>
-                <div class="dropdown">
-                    <a class="dropdown-toggle" id="datepickerFfin" role="button" data-toggle="dropdown" data-target="#"
-                        href="#">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="item.prvr.ffin"
-                                value="{{item.prvr.ffin | date:('fmt_date' | translate)}}"><span
-                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="item.prvr.ffin"
-                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFfin', startView:'day', minView:'day'  }" />
-                    </ul>
-                </div>
+                <p class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.ffin" ng-required="true" />
+                    <span class="input-group-addon" ng-click="open($event)"><i
+                        class="glyphicon glyphicon-calendar"></i></span>
+                </p>
             </div>
         </div>
 
@@ -85,21 +69,13 @@
                         ng-switch-when="NE" type="text" ng-model="item.itdtMap[tpdtId].cantidadEntera"
                         ng-pattern="/^\d+$/" class="form-control input-sm number" />
                     <div ng-switch-when="FE" class="dropdown">
-                        <a class="dropdown-toggle" id="datepicker_{{tpdtId}}" role="button" data-toggle="dropdown"
-                            data-target="#" href="#">
-                            <div class="input-group">
-                                <input type="text" class="form-control input-sm" ng-model="item.itdtMap[tpdtId].fecha"
-                                    ng-required="item.itdtMap[tpdtId].obligatorio"><span
-                                    class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <!-- $
-                                {{item.itdtMap[tpdtId].fecha}} $ {{item.itdtMap[tpdtId].fecha |
-                                date:('fmt_calendar_date' | translate)}} -->
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="item.itdtMap[tpdtId].fecha"
-                                data-datetimepicker-config="{ dropdownSelector: '#datepicker_tpdtId', startView:'day', minView:'day' }" />
-                        </ul>
+                        <p class="input-group" ng-controller="datepickerController">
+                            <input type="text" class="form-control input-sm"
+                                datepicker-popup="{{'fmt_date' | translate}}" datepicker-options="dateOptions"
+                                is-open="opened" ng-model="item.itdtMap[tpdtId].fecha" ng-required="true" /> <span
+                                class="input-group-addon" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i></span>
+                        </p>
                     </div>
                     <div ng-switch-when="FH" class="dropdown">
                         <a class="dropdown-toggle" id="datepicker_{{tpdtId}}" role="button" data-toggle="dropdown"

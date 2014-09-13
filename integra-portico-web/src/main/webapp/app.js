@@ -1,5 +1,5 @@
-var app = angular.module("integraApp", [ "ui.bootstrap", "ui.bootstrap.datetimepicker", "pascalprecht.translate",
-        "ngRoute", "metamodelo", "facturacion", "maestro"/*
+var app = angular.module("integraApp", [ "ui.bootstrap"/*, "ui.bootstrap.datetimepicker"*/, "pascalprecht.translate",
+        "ngRoute", "util", "metamodelo", "facturacion", "maestro"/*
                                                              * 'configuracion',
                                                              * 'servicio',
                                                              * 'proceso',

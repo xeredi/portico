@@ -19,7 +19,7 @@ body {
 
 label, legend, li, .btn, .form-control, .input-group-sm>.form-control, .form-control-static,
 	.bootstrap-datetimepicker-widget, .table-condensed, .dropdown-menu,
-	.list-group, .nav-tabs, .tt-dropdown-menu, .typeahead, .modal-title {
+	.list-group, .nav-tabs, .tt-dropdown-menu, .typeahead, .pagination-sm>li>a {
 	font-size: 11px;
 }
 
@@ -69,8 +69,8 @@ fieldset {
 }
 
 .input-group-addon {
-	padding-left: 3px;
-	padding-right: 3px;
+	padding-left: 1px;
+	padding-right: 1px;
 }
 
 table {

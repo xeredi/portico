@@ -31,37 +31,21 @@
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'aspc_fini' | translate}}</label>
-                <div class="dropdown">
-                    <a class="dropdown-toggle" id="datepickerFIni" role="button" data-toggle="dropdown" data-target="#"
-                        href="#">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" ng-model="aspc.aspv.fini"
-                                value="{{aspc.aspv.fini | date:('fmt_date' | translate)}}"><span
-                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="aspc.aspv.fini"
-                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFIni', startView:'day', minView:'day'  }" />
-                    </ul>
-                </div>
+                <p class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.fini" ng-required="true" />
+                    <span class="input-group-addon" ng-click="open($event)"><i
+                        class="glyphicon glyphicon-calendar"></i></span>
+                </p>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'aspc_ffin' | translate}}</label>
-                <div class="dropdown">
-                    <a class="dropdown-toggle" id="datepickerFFin" role="button" data-toggle="dropdown" data-target="#"
-                        href="#">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="aspc.aspv.ffin"
-                                value="{{aspc.aspv.ffin | date:('fmt_date' | translate)}}"><span
-                                class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="crgo.crgv.ffin"
-                            data-datetimepicker-config="{ dropdownSelector: '#datepickerFFin', startView:'day', minView:'day'  }" />
-                    </ul>
-                </div>
+                <p class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.ffin" ng-required="true" />
+                    <span class="input-group-addon" ng-click="open($event)"><i
+                        class="glyphicon glyphicon-calendar"></i></span>
+                </p>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{"aspc_prioridad" | translate}}</label> <input type="text" ng-model="aspc.aspv.prioridad"
