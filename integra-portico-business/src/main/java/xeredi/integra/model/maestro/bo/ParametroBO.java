@@ -277,7 +277,7 @@ public class ParametroBO implements Parametro {
                     sprmVO.setPrmtId(prmtVO.getId());
                     sprmVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
                     sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                    sprmVO.getSpvr().setFinicio(prmtVO.getPrvr().getFini());
+                    sprmVO.getSpvr().setFini(prmtVO.getPrvr().getFini());
                     sprmVO.getSpvr().setFfin(prmtVO.getPrvr().getFfin());
 
                     sprmDAO.insert(sprmVO);

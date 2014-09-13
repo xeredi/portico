@@ -346,8 +346,7 @@ public final class ParametroAction extends ItemAction {
                 }
             }
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { enti.getNombre(), String.valueOf(prmtCriterioVO) }));
+            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(prmtCriterioVO) }));
         }
 
         return SUCCESS;

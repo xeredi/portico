@@ -13,7 +13,7 @@ public final class SubparametroVersionVO {
     private Long id;
 
     /** The finicio. */
-    private Date finicio;
+    private Date fini;
 
     /** The ffin. */
     private Date ffin;
@@ -28,7 +28,7 @@ public final class SubparametroVersionVO {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public Long getId() {
@@ -37,36 +37,36 @@ public final class SubparametroVersionVO {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
      * Gets the finicio.
-     * 
+     *
      * @return the finicio
      */
-    public Date getFinicio() {
-        return finicio;
+    public Date getFini() {
+        return fini;
     }
 
     /**
      * Sets the finicio.
-     * 
+     *
      * @param value
      *            the new finicio
      */
-    public void setFinicio(Date value) {
-        this.finicio = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
      * Gets the ffin.
-     * 
+     *
      * @return the ffin
      */
     public Date getFfin() {
@@ -75,12 +75,12 @@ public final class SubparametroVersionVO {
 
     /**
      * Sets the ffin.
-     * 
+     *
      * @param value
      *            the new ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
+    public void setFfin(final Date value) {
+        ffin = value;
     }
 
 }

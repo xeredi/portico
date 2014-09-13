@@ -2,9 +2,6 @@ package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -12,8 +9,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.maestro.bo.Parametro;
-import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
@@ -21,7 +16,6 @@ import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.struts.PropertyValidator;
@@ -45,9 +39,6 @@ public final class SubparametroAction extends ItemAction {
 
     /** The fecha vigencia. */
     private final Date fechaVigencia;
-
-    /** The prmt asociado list. */
-    private List<LabelValueVO> prmtAsociadoList;
 
     /**
      * Instantiates a new subparametro action.
@@ -82,7 +73,6 @@ public final class SubparametroAction extends ItemAction {
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
-        loadPrmtAsociadoList();
 
         return SUCCESS;
     }
@@ -97,14 +87,15 @@ public final class SubparametroAction extends ItemAction {
     @Action("sprm-edit")
     public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getSpvr());
+        Preconditions.checkNotNull(item.getSpvr().getId());
 
         accion = ACCION_EDICION.edit;
 
         final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setSpvrId(item.getSpvr().getId());
         sprmCriterioVO.setFechaVigencia(fechaVigencia);
         sprmCriterioVO.setIdioma(getIdioma());
 
@@ -112,7 +103,6 @@ public final class SubparametroAction extends ItemAction {
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
-        loadPrmtAsociadoList();
 
         return SUCCESS;
     }
@@ -127,14 +117,15 @@ public final class SubparametroAction extends ItemAction {
     @Action("sprm-duplicate")
     public String duplicate() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getSpvr());
+        Preconditions.checkNotNull(item.getSpvr().getId());
 
         accion = ACCION_EDICION.duplicate;
 
         final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setSpvrId(item.getSpvr().getId());
         sprmCriterioVO.setFechaVigencia(fechaVigencia);
         sprmCriterioVO.setIdioma(getIdioma());
 
@@ -142,7 +133,6 @@ public final class SubparametroAction extends ItemAction {
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
-        loadPrmtAsociadoList();
 
         return SUCCESS;
     }
@@ -169,10 +159,10 @@ public final class SubparametroAction extends ItemAction {
         }
 
         if (enti.getTempExp()) {
-            PropertyValidator.validateRequired(this, "spvr.finicio", item.getSpvr().getFinicio());
+            PropertyValidator.validateRequired(this, "spvr.finicio", item.getSpvr().getFini());
         } else {
             if (accion == ACCION_EDICION.create) {
-                item.getSpvr().setFinicio(Calendar.getInstance().getTime());
+                item.getSpvr().setFini(Calendar.getInstance().getTime());
             }
         }
 
@@ -181,7 +171,7 @@ public final class SubparametroAction extends ItemAction {
         // Fin de validacion de datos
 
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
         try {
@@ -206,10 +196,6 @@ public final class SubparametroAction extends ItemAction {
             addActionMessage("Subparametro guardado correctamente!!");
         } catch (final DuplicateInstanceException ex) {
             addFieldError("prmt.parametro", getText("error.prmt.duplicate"));
-        }
-
-        if (hasErrors()) {
-            return INPUT;
         }
 
         return SUCCESS;
@@ -269,29 +255,7 @@ public final class SubparametroAction extends ItemAction {
         return SUCCESS;
     }
 
-    /**
-     * Load prmt asociado list.
-     */
-    private void loadPrmtAsociadoList() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
-
-        final Set<Long> tpprIds = new HashSet<>();
-
-        tpprIds.add(enti.getTpprAsociado().getId());
-        prmtAsociadoList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(
-                enti.getTpprAsociado().getId());
-    }
-
     // get / set
-
-    /**
-     * Gets the prmt asociado list.
-     *
-     * @return the prmt asociado list
-     */
-    public List<LabelValueVO> getPrmtAsociadoList() {
-        return prmtAsociadoList;
-    }
 
     /**
      * {@inheritDoc}

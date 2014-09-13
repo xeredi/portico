@@ -104,14 +104,14 @@ public class SubparametroBO implements Subparametro {
 
         if (tpsrVO.getTempExp()) {
             Preconditions.checkNotNull(sprmVO.getSpvr());
-            Preconditions.checkNotNull(sprmVO.getSpvr().getFinicio());
+            Preconditions.checkNotNull(sprmVO.getSpvr().getFini());
         } else {
             if (sprmVO.getSpvr() == null) {
                 sprmVO.setSpvr(new SubparametroVersionVO());
             }
 
-            if (sprmVO.getSpvr().getFinicio() == null) {
-                sprmVO.getSpvr().setFinicio(Calendar.getInstance().getTime());
+            if (sprmVO.getSpvr().getFini() == null) {
+                sprmVO.getSpvr().setFini(Calendar.getInstance().getTime());
             }
         }
 
@@ -154,7 +154,7 @@ public class SubparametroBO implements Subparametro {
         Preconditions.checkNotNull(sprmVO.getSpvr().getId());
 
         if (tpspVO.getTempExp()) {
-            Preconditions.checkNotNull(sprmVO.getSpvr().getFinicio());
+            Preconditions.checkNotNull(sprmVO.getSpvr().getFini());
         }
 
         final IgBO igBO = new IgBO();
@@ -172,7 +172,7 @@ public class SubparametroBO implements Subparametro {
         }
 
         if (tpspVO.getTempExp()) {
-            sprmVO.getSpvr().setFinicio(Calendar.getInstance().getTime());
+            sprmVO.getSpvr().setFini(Calendar.getInstance().getTime());
 
             throw new Error("No implementado!");
             // TODO Implementar
@@ -190,7 +190,7 @@ public class SubparametroBO implements Subparametro {
             }
 
             sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            sprmVO.getSpvr().setFinicio(fechaCambioPeriodo);
+            sprmVO.getSpvr().setFini(fechaCambioPeriodo);
             sprmVO.getSpvr().setFfin(null);
             spvrDAO.insert(sprmVO);
 

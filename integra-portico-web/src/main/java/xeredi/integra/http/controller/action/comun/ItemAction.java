@@ -75,10 +75,12 @@ public abstract class ItemAction extends BaseAction {
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
 
-            for (final EntidadTipoDatoVO entdVO : getEnti().getEntdMap().values()) {
-                if (entdVO.getTpdt().getTpht() != TipoHtml.F && entdVO.getTpdt().getEnti() != null
-                        && entdVO.getTpdt().getEnti().getId() != null) {
-                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
+            if (getEnti().getEntdMap() != null) {
+                for (final EntidadTipoDatoVO entdVO : getEnti().getEntdMap().values()) {
+                    if (entdVO.getTpdt().getTpht() != TipoHtml.F && entdVO.getTpdt().getEnti() != null
+                            && entdVO.getTpdt().getEnti().getId() != null) {
+                        tpprIds.add(entdVO.getTpdt().getEnti().getId());
+                    }
                 }
             }
 

@@ -95,9 +95,12 @@ app.config(function($translateProvider) {
         limit : 'Max. Resultados',
 
         maestro_main : 'Maestro - Inicio',
+
         prmt_grid : 'Maestro - Listado',
         prmt_detail : 'Maestro - Detalle',
+        prmt_duplicate : 'Maestro - Duplicado',
         prmt_create : 'Maestro - Nuevo',
+        prmt_edit : 'Maestro - Edici\u00f3n',
 
         prmt_parametro : 'Codigo',
         prmt_fini : 'F. Inicio',
@@ -105,10 +108,15 @@ app.config(function($translateProvider) {
         prmt_i18n_texto : 'Descripcion',
         prmt_fechaVigencia : 'Fec. Vigencia',
 
-        sprm_finicio : 'F. Inicio',
+        sprm_detail : 'Submaestro - Detalle',
+        sprm_duplicate : 'Submaestro - Duplicado',
+        sprm_create : 'Submaestro - Nuevo',
+        sprm_edit : 'Submaestro - Edici\u00f3n',
+
+        sprm_fini : 'F. Inicio',
         sprm_ffin : 'F. Fin',
 
-        cnen_codigo : 'Codigo',
+        cnen_codigo : 'C\u00f3digo',
         cnen_nombre : 'Nombre',
 
         srvc_servicio : 'Servicio',

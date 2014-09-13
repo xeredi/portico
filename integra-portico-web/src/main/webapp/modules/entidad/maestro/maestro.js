@@ -235,7 +235,7 @@ module.controller('prmtsLupaCtrl', function($http, $scope) {
 module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
-    .when("/maestro/sprm/create/:entiId/:prmtPadreId", {
+    .when("/maestro/sprm/create/:entiId/:prmtId", {
         title : 'sprm_create',
         templateUrl : "modules/entidad/maestro/sprm-edit.html",
         controller : "sprmCreateController"
@@ -299,5 +299,65 @@ module.controller("sprmDetailController", function($scope, $http, $location, $ro
                 });
             }
         });
+    }
+});
+
+module.controller("sprmCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "maestro/sprm-create.action?item.entiId=" + $routeParams.entiId + "&item.prmtId=" + $routeParams.prmtId;
+
+    $http.get(url).success(function(data) {
+        $scope.item = data.item;
+        $scope.enti = data.enti;
+        $scope.labelValuesMap = data.labelValuesMap;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "maestro/sprm-save.action";
+
+        $http.post(url, {
+            item : $scope.item,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/maestro/sprm/detail/" + data.item.spvr.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
+});
+
+module.controller("sprmEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "maestro/sprm-edit.action?item.spvr.id=" + $routeParams.spvrId;
+
+    $http.get(url).success(function(data) {
+        $scope.item = data.item;
+        $scope.enti = data.enti;
+        $scope.labelValuesMap = data.labelValuesMap;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "maestro/sprm-save.action";
+
+        $http.post(url, {
+            item : $scope.item,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/maestro/sprm/detail/" + data.item.spvr.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/maestro/sprm/detail/" + $scope.item.spvr.id).replace();
     }
 });

@@ -8,7 +8,8 @@
             <p ng-if="!item.itdtMap[tpdtId].filled" class="form-control-static">&nbsp;</p>
             <p ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
                 class="form-control-static">
-                <span ng-switch-when="BO">{{'fmt_' + item.itdtMap[tpdtId].booleano | translate}}</span> <span
+                <span ng-switch-when="BO"><i ng-if="item.itdtMap[tpdtId].booleano" class="glyphicon glyphicon-ok"></i><i
+                    ng-if="!item.itdtMap[tpdtId].booleano" class="glyphicon glyphicon-remove"></i></span> <span
                     ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}</span> <span
                     ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</span> <span
                     ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span

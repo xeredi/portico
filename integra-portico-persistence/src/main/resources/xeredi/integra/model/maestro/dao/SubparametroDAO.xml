@@ -20,7 +20,7 @@
 
         <association property="spvr" javaType="SubparametroVersionVO">
             <result column="spvr_pk" property="id" />
-            <result column="spvr_fini" property="finicio" />
+            <result column="spvr_fini" property="fini" />
             <result column="spvr_ffin" property="ffin" />
         </association>
     </resultMap>
@@ -154,7 +154,7 @@
             AND sprm_prmt_dep_pk = #{prmtAsociado.id}
         	AND (
         		(
-                    #{spvr.finicio} BETWEEN
+                    #{spvr.fini} BETWEEN
                         spvr_fini AND COALESCE(spvr_ffin, portico.getSysDatetime())
                 )
         		OR (
@@ -162,7 +162,7 @@
                         spvr_fini AND COALESCE(spvr_ffin, portico.getSysDatetime())
                 )
         		OR (
-                    #{spvr.finicio} <= spvr_fini
+                    #{spvr.fini} <= spvr_fini
                     AND COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()) >= COALESCE(spvr_ffin, portico.getSysDatetime())
                 )
         	)

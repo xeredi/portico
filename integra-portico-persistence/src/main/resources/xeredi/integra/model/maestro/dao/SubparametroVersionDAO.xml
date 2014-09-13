@@ -6,7 +6,7 @@
 	<insert id="insert" parameterType="SubparametroVO">
         <![CDATA[
         INSERT INTO tbl_subparametro_version_spvr (spvr_pk, spvr_sprm_pk, spvr_fini, spvr_ffin)
-        VALUES (#{spvr.id}, #{id}, #{spvr.finicio}, #{spvr.ffin, jdbcType=TIMESTAMP})
+        VALUES (#{spvr.id}, #{id}, #{spvr.fini}, #{spvr.ffin, jdbcType=TIMESTAMP})
         ]]>
 	</insert>
 </mapper>

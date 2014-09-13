@@ -209,8 +209,8 @@ public final class ParametroPdf extends BasePdf {
             objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
 
             if (entiVO.getTempExp()) {
-                objects[i++] = itemVO.getSpvr().getFinicio() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO
-                        .getSpvr().getFinicio());
+                objects[i++] = itemVO.getSpvr().getFini() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO
+                        .getSpvr().getFini());
                 objects[i++] = itemVO.getSpvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO
                         .getSpvr().getFfin());
             }

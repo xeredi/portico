@@ -348,10 +348,10 @@ public final class MaestroImporterBO {
                 sprmVO.setPrmtAsociado(prmtAsociadoVO);
 
                 if (tpspVO.getTempExp()) {
-                    sprmVO.getSpvr().setFinicio(rs.getDate(i++));
+                    sprmVO.getSpvr().setFini(rs.getDate(i++));
                     sprmVO.getSpvr().setFfin(rs.getDate(i++));
                 } else {
-                    sprmVO.getSpvr().setFinicio(fechaInicioReferencia);
+                    sprmVO.getSpvr().setFini(fechaInicioReferencia);
                     sprmVO.getSpvr().setFfin(null);
                 }
 
