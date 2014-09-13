@@ -141,11 +141,6 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "crgoGridController"
     })
 
-    .when("/facturacion/crgo/grid/:page", {
-        templateUrl : "modules/facturacion/crgo-grid.html",
-        controller : "crgoGridController"
-    })
-
     .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
         templateUrl : "modules/facturacion/crgo-detail.html",
         controller : "crgoDetailController"
@@ -226,7 +221,9 @@ module.controller("crgoGridController", function($scope, $http, $location, $rout
 
     $scope.pageChanged = function() {
         if (loaded) {
-            $location.path("/facturacion/crgo/grid/" + $scope.currentPage).replace();
+            $location.search({
+                page : $scope.currentPage
+            }).replace();
         }
     }
 
@@ -546,11 +543,6 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "aspcGridController"
     })
 
-    .when("/facturacion/aspc/grid/:page", {
-        templateUrl : "modules/facturacion/aspc-grid.html",
-        controller : "aspcGridController"
-    })
-
     .when("/facturacion/aspc/create", {
         templateUrl : "modules/facturacion/aspc-edit.html",
         controller : "aspcCreateController"
@@ -601,7 +593,9 @@ module.controller("aspcGridController", function($scope, $http, $location, $rout
 
     $scope.pageChanged = function() {
         if (loaded) {
-            $location.path("/metamodelo/aspc/grid/" + $scope.currentPage).replace();
+            $location.search({
+                page : $scope.currentPage
+            }).replace();
         }
     }
 

@@ -12,11 +12,6 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpdtGridController"
     })
 
-    .when("/metamodelo/tpdt/grid/:page", {
-        templateUrl : "modules/metamodelo/tpdt-grid.html",
-        controller : "tpdtGridController"
-    })
-
     .when("/metamodelo/tpdt/create", {
         templateUrl : "modules/metamodelo/tpdt-edit.html",
         controller : "tpdtCreateController"
@@ -71,10 +66,15 @@ metamodelo.controller("tpdtGridController", function($scope, $http, $location, $
 
     $scope.pageChanged = function() {
         if (loaded) {
-            $location.path("/metamodelo/tpdt/grid/" + $scope.currentPage).replace();
+            $location.search({
+                page : $scope.currentPage
+            }).replace();
         }
     }
-
+    /*
+     * $scope.pageChanged = function() { if (loaded) {
+     * $location.path("/metamodelo/tpdt/grid/" + $scope.currentPage).replace(); } }
+     */
     $scope.filter = function() {
         $scope.showFilter = true;
     }
@@ -303,11 +303,6 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpprGridController"
     })
 
-    .when("/metamodelo/tppr/grid/:page", {
-        templateUrl : "modules/metamodelo/tppr-grid.html",
-        controller : "tpprGridController"
-    })
-
     .when("/metamodelo/tppr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tppr-detail.html",
         controller : "tpprDetailController"
@@ -362,7 +357,9 @@ metamodelo.controller("tpprGridController", function($scope, $http, $location, $
 
     $scope.pageChanged = function() {
         if (loaded) {
-            $location.path("/metamodelo/tppr/grid/" + $scope.currentPage).replace();
+            $location.search({
+                page : $scope.currentPage
+            }).replace();
         }
     }
 
@@ -592,11 +589,6 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpsrGridController"
     })
 
-    .when("/metamodelo/tpsr/grid/:page", {
-        templateUrl : "modules/metamodelo/tpsr-grid.html",
-        controller : "tpsrGridController"
-    })
-
     .when("/metamodelo/tpsr/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpsr-detail.html",
         controller : "tpsrDetailController"
@@ -651,7 +643,9 @@ metamodelo.controller("tpsrGridController", function($scope, $http, $location, $
 
     $scope.pageChanged = function() {
         if (loaded) {
-            $location.path("/metamodelo/tpsr/grid/" + $scope.currentPage).replace();
+            $location.search({
+                page : $scope.currentPage
+            }).replace();
         }
     }
 
@@ -882,11 +876,6 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpesGridController"
     })
 
-    .when("/metamodelo/tpes/grid/:page", {
-        templateUrl : "modules/metamodelo/tpes-grid.html",
-        controller : "tpesGridController"
-    })
-
     .when("/metamodelo/tpes/detail/:entiId", {
         templateUrl : "modules/metamodelo/tpes-detail.html",
         controller : "tpesDetailController"
@@ -926,7 +915,9 @@ metamodelo.controller("tpesGridController", function($scope, $http, $location, $
 
     $scope.pageChanged = function() {
         if (loaded) {
-            $location.path("/metamodelo/tpes/grid/" + $scope.currentPage).replace();
+            $location.search({
+                page : $scope.currentPage
+            }).replace();
         }
     }
 

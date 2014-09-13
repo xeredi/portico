@@ -35,12 +35,6 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "prmtGridController"
     })
 
-    .when("/maestro/prmt/grid/:entiId/:page", {
-        title : 'prmt_grid',
-        templateUrl : "modules/maestro/prmt-grid.html",
-        controller : "prmtGridController"
-    })
-
     .when("/maestro/prmt/create/:entiId", {
         title : 'prmt_create',
         templateUrl : "modules/maestro/prmt-edit.html",
@@ -98,7 +92,9 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
 
     $scope.pageChanged = function() {
         if (loaded) {
-            $location.path("/maestro/prmt/grid/" + $scope.itemCriterio.entiId + "/" + $scope.currentPage).replace();
+            $location.search({
+                page : $scope.currentPage
+            }).replace();
         }
     }
 
