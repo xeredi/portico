@@ -135,10 +135,10 @@
         ]]>
     </update>
 
-    <update id="delete" parameterType="Long">
+    <delete id="delete" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_tipo_dato_tpdt
         WHERE tpdt_pk = #{value}
         ]]>
-    </update>
+    </delete>
 </mapper>

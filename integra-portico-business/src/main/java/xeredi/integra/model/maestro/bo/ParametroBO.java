@@ -22,7 +22,6 @@ import xeredi.integra.model.maestro.dao.ParametroDatoDAO;
 import xeredi.integra.model.maestro.dao.ParametroI18nDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
-import xeredi.integra.model.maestro.dao.SubparametroVersionDAO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
@@ -64,10 +63,6 @@ public class ParametroBO implements Parametro {
     @Inject
     SubparametroDAO sprmDAO;
 
-    /** The spvr dao. */
-    @Inject
-    SubparametroVersionDAO spvrDAO;
-
     /** The spdt dao. */
     @Inject
     SubparametroDatoDAO spdtDAO;
@@ -103,8 +98,13 @@ public class ParametroBO implements Parametro {
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
                 if (!prmt.getItdtMap().containsKey(String.valueOf(tpdtId))) {
-                    throw new Error("No se ha pasado informacion del dato "
-                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
+                    final ItemDatoVO itdt = new ItemDatoVO();
+
+                    itdt.setTpdtId(tpdtId);
+                    prmt.getItdtMap().put(String.valueOf(tpdtId), itdt);
+
+                    // throw new Error("No se ha pasado informacion del dato "
+                    // + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
                 }
             }
         }
@@ -175,8 +175,13 @@ public class ParametroBO implements Parametro {
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
                 if (!prmt.getItdtMap().containsKey(tpdtId)) {
-                    throw new Error("No se ha pasado informacion del dato "
-                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
+                    final ItemDatoVO itdt = new ItemDatoVO();
+
+                    itdt.setTpdtId(tpdtId);
+                    prmt.getItdtMap().put(String.valueOf(tpdtId), itdt);
+
+                    // throw new Error("No se ha pasado informacion del dato "
+                    // + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
                 }
             }
         }
@@ -287,7 +292,7 @@ public class ParametroBO implements Parametro {
                     }
 
                     for (final SubparametroVO sprmVO : sprmMap.values()) {
-                        spvrDAO.insert(sprmVO);
+                        sprmDAO.insertVersion(sprmVO);
                     }
 
                     for (final SubparametroVO sprmVO : sprmMap.values()) {

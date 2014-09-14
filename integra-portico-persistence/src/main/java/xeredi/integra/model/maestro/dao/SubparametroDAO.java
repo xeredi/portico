@@ -29,7 +29,16 @@ public interface SubparametroDAO {
      *            the sprm vo
      * @return true, if successful
      */
-    boolean intersects(final SubparametroVO sprmVO);
+    boolean existsOverlap(final SubparametroVO sprmVO);
+
+    /**
+     * Select id.
+     *
+     * @param sprmVO
+     *            the sprm vo
+     * @return the long
+     */
+    Long selectId(final SubparametroVO sprmVO);
 
     /**
      * Insert.
@@ -38,6 +47,32 @@ public interface SubparametroDAO {
      *            the sprm vo
      */
     void insert(final SubparametroVO sprmVO);
+
+    /**
+     * Insert version.
+     *
+     * @param sprmVO
+     *            the sprm vo
+     */
+    void insertVersion(final SubparametroVO sprmVO);
+
+    /**
+     * Update version.
+     *
+     * @param sprmVO
+     *            the sprm vo
+     * @return the int
+     */
+    int updateVersion(final SubparametroVO sprmVO);
+
+    /**
+     * Delete version.
+     *
+     * @param sprmVO
+     *            the sprm vo
+     * @return the int
+     */
+    int deleteVersion(final SubparametroVO sprmVO);
 
     /**
      * Count.
@@ -76,13 +111,4 @@ public interface SubparametroDAO {
      * @return the subparametro vo
      */
     SubparametroVO selectObject(final SubparametroCriterioVO sprmCriterioVO);
-
-    /**
-     * Select id.
-     *
-     * @param sprmVO
-     *            the sprm vo
-     * @return the long
-     */
-    Long selectId(final SubparametroVO sprmVO);
 }

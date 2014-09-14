@@ -92,7 +92,6 @@ public final class ParametroAction extends ItemAction {
         accion = ACCION_EDICION.create;
 
         enti = TipoParametroProxy.select(item.getEntiId());
-        item = ParametroVO.newInstance(enti);
         p18nMap = new HashMap<>();
 
         loadLabelValuesMap();

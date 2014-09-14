@@ -1,5 +1,6 @@
 package xeredi.integra.model.comun.vo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 // TODO: Auto-generated Javadoc
@@ -16,6 +17,15 @@ public abstract class ItemVO implements ItemEntidad {
 
     /** The itdt map. */
     private Map<String, ItemDatoVO> itdtMap;
+
+    /**
+     * Instantiates a new item vo.
+     */
+    public ItemVO() {
+        super();
+
+        itdtMap = new HashMap<String, ItemDatoVO>();
+    }
 
     /**
      * Gets the id.

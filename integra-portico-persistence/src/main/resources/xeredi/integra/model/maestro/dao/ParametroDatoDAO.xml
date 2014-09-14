@@ -233,4 +233,12 @@
             AND prdt_tpdt_pk = #{tpdtId}
     ]]>
     </update>
+
+    <delete id="deleteVersion" parameterType="ParametroVO">
+    <![CDATA[
+        DELETE FROM tbl_parametro_dato_prdt
+        WHERE
+            prdt_prvr_pk = #{prvr.id}
+    ]]>
+    </delete>
 </mapper>

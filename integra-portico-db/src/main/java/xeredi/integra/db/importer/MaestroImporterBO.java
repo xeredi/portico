@@ -234,7 +234,7 @@ public final class MaestroImporterBO {
                 }
 
                 // Creacion del parametro
-                final ParametroVO prmtVO = ParametroVO.newInstance(tpprVO);
+                final ParametroVO prmtVO = new ParametroVO();
 
                 prmtVO.setParametro(parametro);
                 prmtVO.getPrvr().setFini(fechaInicio);
@@ -337,7 +337,7 @@ public final class MaestroImporterBO {
             while (rs.next()) {
                 i = 1;
 
-                final SubparametroVO sprmVO = SubparametroVO.newInstance(tpspVO);
+                final SubparametroVO sprmVO = new SubparametroVO();
                 final String parametro = rs.getString(i++);
                 final String parametroAsociado = rs.getString(i++);
                 final Long prmtId = tpprPrmtMap.get(tpspVO.getTpprId()).get(parametro);
@@ -381,8 +381,8 @@ public final class MaestroImporterBO {
                 if (sprmVO.getPrmtId() != null && sprmVO.getPrmtAsociado().getId() != null) {
                     try {
                         sprmBO.insert(sprmVO, tpspVO);
-                    } catch (final DuplicateInstanceException ex) {
-                        LOG.info(tpspVO.getNombre() + " Duplicado: " + sprmVO.getEtiqueta());
+                    } catch (final OverlapException ex) {
+                        LOG.info(tpspVO.getNombre() + " Solapado: " + sprmVO.getEtiqueta());
                     }
                 }
             }

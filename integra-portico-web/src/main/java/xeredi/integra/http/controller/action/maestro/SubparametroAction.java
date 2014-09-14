@@ -10,6 +10,7 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
@@ -17,7 +18,6 @@ import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
@@ -71,7 +71,7 @@ public final class SubparametroAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
         enti = TipoSubparametroProxy.select(item.getEntiId());
-        item = SubparametroVO.newInstance(enti);
+        // item = SubparametroVO.newInstance(enti);
 
         loadLabelValuesMap();
 
@@ -147,7 +147,6 @@ public final class SubparametroAction extends ItemAction {
     public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getSpvr());
 
         final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 
@@ -162,21 +161,15 @@ public final class SubparametroAction extends ItemAction {
 
         if (accion != ACCION_EDICION.create) {
             Preconditions.checkNotNull(item.getId());
+            Preconditions.checkNotNull(item.getSpvr());
             Preconditions.checkNotNull(item.getSpvr().getId());
         }
 
-        if (item.getSpvr().getFini() != null && item.getSpvr().getFfin() != null
-                && !item.getSpvr().getFini().before(item.getSpvr().getFfin())) {
-            addActionError(getText(ErrorCode.E00006.name()));
-        }
-
-        if (enti.getTempExp()) {
-            if (item.getSpvr().getFini() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("sprm_fini") }));
-            }
+        if (item.getSpvr() == null || item.getSpvr().getFini() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("sprm_fini") }));
         } else {
-            if (accion == ACCION_EDICION.create) {
-                item.getSpvr().setFini(Calendar.getInstance().getTime());
+            if (item.getSpvr().getFfin() != null && !item.getSpvr().getFini().before(item.getSpvr().getFfin())) {
+                addActionError(getText(ErrorCode.E00006.name()));
             }
         }
 
@@ -206,10 +199,11 @@ public final class SubparametroAction extends ItemAction {
             default:
                 throw new Error("Accion no valida: " + accion);
             }
-
-            addActionMessage("Subparametro guardado correctamente!!");
-        } catch (final DuplicateInstanceException ex) {
-            addFieldError("prmt.parametro", getText("error.prmt.duplicate"));
+        } catch (final OverlapException ex) {
+            addActionError(getText(ErrorCode.E00009.name(), new String[] { enti.getNombre() }));
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { enti.getNombre(), String.valueOf(item.getId()) }));
         }
 
         return SUCCESS;
@@ -223,6 +217,8 @@ public final class SubparametroAction extends ItemAction {
     @Action("sprm-remove")
     public String remove() {
         Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getSpvr());
+        Preconditions.checkNotNull(item.getSpvr().getId());
         Preconditions.checkNotNull(item.getEntiId());
 
         if (item.getSpvr() == null || item.getSpvr().getId() == null) {
@@ -234,7 +230,7 @@ public final class SubparametroAction extends ItemAction {
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         try {
-            sprmBO.delete(item.getSpvr().getId(), enti);
+            sprmBO.delete(item, enti);
 
             addActionMessage("Elemento del Maestro '" + enti.getNombre() + "' eliminado correctamente");
         } catch (final InstanceNotFoundException ex) {

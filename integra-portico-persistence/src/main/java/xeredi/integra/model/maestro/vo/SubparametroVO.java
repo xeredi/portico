@@ -1,13 +1,8 @@
 package xeredi.integra.model.maestro.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,6 +20,16 @@ public final class SubparametroVO extends ItemVO {
     private SubparametroVersionVO spvr;
 
     /**
+     * Instantiates a new subparametro vo.
+     */
+    public SubparametroVO() {
+        super();
+
+        prmtAsociado = new ParametroVO();
+        spvr = new SubparametroVersionVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -32,38 +37,38 @@ public final class SubparametroVO extends ItemVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    /**
-     * New instance.
-     *
-     * @param tpspVO
-     *            the tpsp vo
-     * @return the subparametro vo
-     */
-    public static SubparametroVO newInstance(final TipoSubparametroVO tpspVO) {
-        final SubparametroVO sprmVO = new SubparametroVO();
-
-        sprmVO.setEntiId(tpspVO.getId());
-        sprmVO.setSpvr(new SubparametroVersionVO());
-
-        if (tpspVO.getI18n()) {
-            // TODO Implementar si puede haber i18n
-        }
-
-        if (tpspVO.getEntdList() != null && !tpspVO.getEntdList().isEmpty()) {
-            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
-
-            for (final Long tpdtId : tpspVO.getEntdList()) {
-                final ItemDatoVO itdtVO = new ItemDatoVO();
-
-                itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-            }
-
-            sprmVO.setItdtMap(itdtMap);
-        }
-
-        return sprmVO;
-    }
+    // /**
+    // * New instance.
+    // *
+    // * @param tpspVO
+    // * the tpsp vo
+    // * @return the subparametro vo
+    // */
+    // public static SubparametroVO newInstance(final TipoSubparametroVO tpspVO) {
+    // final SubparametroVO sprmVO = new SubparametroVO();
+    //
+    // sprmVO.setEntiId(tpspVO.getId());
+    // sprmVO.setSpvr(new SubparametroVersionVO());
+    //
+    // if (tpspVO.getI18n()) {
+    // // TODO Implementar si puede haber i18n
+    // }
+    //
+    // if (tpspVO.getEntdList() != null && !tpspVO.getEntdList().isEmpty()) {
+    // final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
+    //
+    // for (final Long tpdtId : tpspVO.getEntdList()) {
+    // final ItemDatoVO itdtVO = new ItemDatoVO();
+    //
+    // itdtVO.setTpdtId(tpdtId);
+    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
+    // }
+    //
+    // sprmVO.setItdtMap(itdtMap);
+    // }
+    //
+    // return sprmVO;
+    // }
 
     /**
      * {@inheritDoc}

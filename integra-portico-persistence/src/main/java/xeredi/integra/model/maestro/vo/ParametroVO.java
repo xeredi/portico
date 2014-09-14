@@ -1,14 +1,9 @@
 package xeredi.integra.model.maestro.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,6 +21,16 @@ public final class ParametroVO extends ItemVO {
     private ParametroI18nVO i18n;
 
     /**
+     * Instantiates a new parametro vo.
+     */
+    public ParametroVO() {
+        super();
+
+        prvr = new ParametroVersionVO();
+        i18n = new ParametroI18nVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -33,38 +38,38 @@ public final class ParametroVO extends ItemVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    /**
-     * New instance.
-     *
-     * @param tpprVO
-     *            the tppr vo
-     * @return the parametro vo
-     */
-    public static ParametroVO newInstance(final TipoParametroVO tpprVO) {
-        final ParametroVO prmtVO = new ParametroVO();
-
-        prmtVO.setEntiId(tpprVO.getId());
-        prmtVO.setPrvr(new ParametroVersionVO());
-
-        if (tpprVO.getI18n()) {
-            prmtVO.setI18n(new ParametroI18nVO());
-        }
-
-        if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
-
-            for (final Long tpdtId : tpprVO.getEntdList()) {
-                final ItemDatoVO itdtVO = new ItemDatoVO();
-
-                itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-            }
-
-            prmtVO.setItdtMap(itdtMap);
-        }
-
-        return prmtVO;
-    }
+    // /**
+    // * New instance.
+    // *
+    // * @param tpprVO
+    // * the tppr vo
+    // * @return the parametro vo
+    // */
+    // public static ParametroVO newInstance(final TipoParametroVO tpprVO) {
+    // final ParametroVO prmtVO = new ParametroVO();
+    //
+    // prmtVO.setEntiId(tpprVO.getId());
+    // prmtVO.setPrvr(new ParametroVersionVO());
+    //
+    // if (tpprVO.getI18n()) {
+    // prmtVO.setI18n(new ParametroI18nVO());
+    // }
+    //
+    // if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
+    // final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
+    //
+    // for (final Long tpdtId : tpprVO.getEntdList()) {
+    // final ItemDatoVO itdtVO = new ItemDatoVO();
+    //
+    // itdtVO.setTpdtId(tpdtId);
+    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
+    // }
+    //
+    // prmtVO.setItdtMap(itdtMap);
+    // }
+    //
+    // return prmtVO;
+    // }
 
     /**
      * Gets the etiqueta string buffer.

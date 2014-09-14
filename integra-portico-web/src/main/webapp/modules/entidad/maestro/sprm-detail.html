@@ -19,12 +19,15 @@
             <label>{{enti.tpprAsociado.nombre}}</label>
             <p class="form-control-static">{{item.prmtAsociado.etiqueta}}</p>
         </div>
-        <div ng-if="enti.tempExp" class="col-md-2 form-group">
+
+        <!-- ng-if="enti.tempExp" -->
+        <div class="col-md-2 form-group">
             <label>{{'sprm_fini' | translate}}</label>
             <p class="form-control-static">{{item.spvr.fini | date:('fmt_date' | translate)}}</p>
         </div>
 
-        <div ng-if="enti.tempExp" class="col-md-2 form-group">
+        <!-- ng-if="enti.tempExp" -->
+        <div class="col-md-2 form-group">
             <label>{{'sprm_ffin' | translate}}</label>
             <p class="form-control-static">{{item.spvr.ffin | date:('fmt_date' | translate)}}</p>
         </div>

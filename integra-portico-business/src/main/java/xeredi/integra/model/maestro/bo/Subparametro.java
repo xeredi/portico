@@ -2,10 +2,10 @@ package xeredi.integra.model.maestro.bo;
 
 import java.util.List;
 
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 
@@ -17,53 +17,58 @@ public interface Subparametro {
 
     /**
      * Insert.
-     * 
+     *
      * @param sprmVO
      *            the sprm vo
      * @param tpspVO
      *            the tpsp vo
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    void insert(final SubparametroVO sprmVO, final TipoSubparametroVO tpspVO) throws DuplicateInstanceException;
+    void insert(final SubparametroVO sprmVO, final TipoSubparametroVO tpspVO) throws OverlapException;
 
     /**
      * Duplicate.
-     * 
+     *
      * @param sprmVO
      *            the sprm vo
      * @param tpsrVO
      *            the tpsr vo
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    void duplicate(final SubparametroVO sprmVO, final TipoSubparametroVO tpsrVO) throws DuplicateInstanceException;
+    void duplicate(final SubparametroVO sprmVO, final TipoSubparametroVO tpsrVO) throws OverlapException;
 
     /**
      * Update.
-     * 
+     *
      * @param sprmVO
      *            the sprm vo
      * @param tpspVO
      *            the tpsp vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    void update(final SubparametroVO sprmVO, final TipoSubparametroVO tpspVO);
+    void update(final SubparametroVO sprmVO, final TipoSubparametroVO tpspVO) throws InstanceNotFoundException,
+    OverlapException;
 
     /**
      * Delete.
-     * 
-     * @param spvrId
-     *            the spvr id
+     *
+     * @param sprm
+     *            the sprm
      * @param tpspVO
      *            the tpsp vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void delete(final Long spvrId, final TipoSubparametroVO tpspVO) throws InstanceNotFoundException;
+    void delete(final SubparametroVO sprm, final TipoSubparametroVO tpspVO) throws InstanceNotFoundException;
 
     /**
      * Select list.
-     * 
+     *
      * @param sprmCriterioVO
      *            the sprm criterio vo
      * @param offset
@@ -77,7 +82,7 @@ public interface Subparametro {
 
     /**
      * Select list.
-     * 
+     *
      * @param sprmCriterioVO
      *            the sprm criterio vo
      * @return the list
@@ -86,7 +91,7 @@ public interface Subparametro {
 
     /**
      * Select object.
-     * 
+     *
      * @param sprmCriterioVO
      *            the sprm criterio vo
      * @return the subparametro vo

@@ -135,38 +135,33 @@
 
     <select id="exists" parameterType="SubparametroVO" resultType="Boolean">
         <![CDATA[
-        select COUNT(1)
-        from tbl_subparametro_sprm
+        SELECT COUNT(1)
+        FROM tbl_subparametro_sprm
         WHERE
             sprm_prmt_pk = #{prmtId}
             AND sprm_prmt_dep_pk = #{prmtAsociado.id}
         ]]>
     </select>
 
-    <select id="intersects" parameterType="SubparametroVO" resultType="Boolean">
-        <![CDATA[
+    <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
+    <![CDATA[
         SELECT COUNT(1)
-        FROM tbl_subparametro_sprm
-            JOIN tbl_subparametro_version_spvr ON
+        FROM
+            tbl_subparametro_sprm
+            INNER JOIN tbl_subparametro_version_spvr ON
                 spvr_sprm_pk = sprm_pk
         WHERE
-            sprm_prmt_pk = #{prmtId}
-            AND sprm_prmt_dep_pk = #{prmtAsociado.id}
-        	AND (
-        		(
-                    #{spvr.fini} BETWEEN
-                        spvr_fini AND COALESCE(spvr_ffin, portico.getSysDatetime())
-                )
-        		OR (
-                    COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()) BETWEEN
-                        spvr_fini AND COALESCE(spvr_ffin, portico.getSysDatetime())
-                )
-        		OR (
-                    #{spvr.fini} <= spvr_fini
-                    AND COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()) >= COALESCE(spvr_ffin, portico.getSysDatetime())
-                )
-        	)
+            sprm_pk = #{id}
+            AND (
+                #{spvr.fini} BETWEEN spvr_fini AND COALESCE(spvr_ffin, #{spvr.fini})
+                OR COALESCE(#{spvr.ffin}, portico.getSysdateTime()) BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{spvr.ffin}, portico.getSysdateTime()))
+            )
+    ]]>
+        <if test="prvr.id != null">
+        <![CDATA[
+            AND spvr_pk <> #{spvr.id}
         ]]>
+        </if>
     </select>
 
     <insert id="insert" parameterType="SubparametroVO">
@@ -175,4 +170,27 @@
         VALUES (#{id}, #{prmtId}, #{prmtAsociado.id}, #{entiId})
         ]]>
     </insert>
+
+    <insert id="insertVersion" parameterType="SubparametroVO">
+    <![CDATA[
+        INSERT INTO tbl_subparametro_version_spvr (spvr_pk, spvr_sprm_pk, spvr_fini, spvr_ffin)
+        VALUES (#{spvr.id}, #{id}, #{spvr.fini}, #{spvr.ffin, jdbcType=TIMESTAMP})
+    ]]>
+    </insert>
+
+    <update id="updateVersion" parameterType="SubparametroVO">
+    <![CDATA[
+        UPDATE tbl_subparametro_version_spvr SET
+            spvr_fini = #{spvr.fini}
+            , spvr_ffin = #{spvr.ffin, jdbcType=TIMESTAMP}
+        WHERE spvr_pk = #{spvr.id}
+    ]]>
+    </update>
+
+    <delete id="deleteVersion" parameterType="SubparametroVO">
+    <![CDATA[
+        DELETE FROM tbl_subparametro_version_spvr
+        WHERE spvr_pk = #{spvr.id}
+    ]]>
+    </delete>
 </mapper>
