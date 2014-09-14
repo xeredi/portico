@@ -16,7 +16,7 @@
                 <label>{{enti.tpprAsociado.nombre}}</label>
                 <div ng-if="accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="item.prmtAsociado"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
+                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(enti.tpprAsociado.id, $viewValue)"
                         typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
                         ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                     <!--

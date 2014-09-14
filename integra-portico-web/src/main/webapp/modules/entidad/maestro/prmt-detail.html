@@ -41,12 +41,12 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="enti in entiHijasList" heading="{{enti.nombre | uppercase}}" active="tab.active"
+</tab> <tab ng-repeat="entiHija in entiHijasList" heading="{{entiHija.nombre | uppercase}}" active="tab.active"
     disabled="tab.disabled">
 <fieldset>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/maestro/sprm/create/{{enti.id}}/{{item.id}}"><i
+            <a class="btn btn-default" href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i
                 class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
         </div>
     </div>
@@ -55,31 +55,31 @@
         <thead>
             <tr>
                 <th class="buttonLinks" />
-                <th>{{enti.tpprAsociado.nombre}}</th>
+                <th>{{entiHija.tpprAsociado.nombre}}</th>
 
-                <th ng-if="enti.tempExp" class="date">{{'sprm_fini' | translate}}</th>
-                <th ng-if="enti.tempExp" class="date">{{'sprm_ffin' | translate}}</th>
+                <th ng-if="entiHija.tempExp" class="date">{{'sprm_fini' | translate}}</th>
+                <th ng-if="entiHija.tempExp" class="date">{{'sprm_ffin' | translate}}</th>
 
-                <th ng-repeat="tpdtId in enti.entdGridList">{{enti.entdMap[tpdtId].etiqueta}}</th>
+                <th ng-repeat="tpdtId in entiHija.entdGridList">{{enti.entdMap[tpdtId].etiqueta}}</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="item in itemHijosMap[enti.id].list">
+            <tr ng-repeat="item in itemHijosMap[entiHija.id].list">
                 <td><a href="#/maestro/sprm/detail/{{item.spvr.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{item.prmtAsociado.etiqueta}}</td>
 
-                <td ng-if="enti.tempExp">{{item.spvr.fini | date:('fmt_date' | translate)}}</td>
-                <td ng-if="enti.tempExp">{{item.spvr.ffin | date:('fmt_date' | translate)}}</td>
+                <td ng-if="entiHija.tempExp">{{item.spvr.fini | date:('fmt_date' | translate)}}</td>
+                <td ng-if="entiHija.tempExp">{{item.spvr.ffin | date:('fmt_date' | translate)}}</td>
 
-                <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
-                    nowrap="nowrap"><span ng-switch-when="BO"><i ng-if="item.itdtMap[tpdtId].cantidadEntera"
-                        class="glyphicon glyphicon-ok"></i></span> <span ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadEntera
-                        | number:2}} </span> <span ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera |
-                        number:0}} </span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span
-                    ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="PR"
-                    title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span> <span
-                    ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span
+                <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch
+                    on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                        ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i></span> <span
+                    ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadEntera | number:2}} </span> <span
+                    ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}} </span> <span
+                    ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
+                    <span ng-switch-when="PR" title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span>
+                    <span ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span
                     ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}} </span></td>
             </tr>
         </tbody>
