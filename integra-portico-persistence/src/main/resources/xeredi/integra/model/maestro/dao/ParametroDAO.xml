@@ -157,7 +157,7 @@
         </where>
     </sql>
 
-    <select id="selectCount" parameterType="ParametroCriterioVO" resultType="Integer">
+    <select id="count" parameterType="ParametroCriterioVO" resultType="Integer">
         <include refid="SelectCountPrefix" />
         <include refid="SelectWhere" />
     </select>
@@ -184,6 +184,44 @@
         <include refid="SelectWhere" />
     </select>
 
+    <select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
+        <![CDATA[
+        SELECT
+            prmt_pk
+            , prmt_parametro
+            , (
+                CASE
+                    WHEN tppr_es_i18n = 1
+                    THEN (
+                        SELECT p18n_texto
+                        FROM tbl_parametro_i18n_p18n
+                        WHERE p18n_prvr_pk = prvr_pk
+                            AND p18n_idioma = 'es_ES'
+                    )
+                    WHEN tppr_tpdt_pk IS NOT NULL
+                    THEN (
+                        SELECT prdt_cadena
+                        FROM tbl_parametro_dato_prdt
+                        WHERE prdt_prvr_pk = prvr_pk
+                            AND prdt_tpdt_pk = tppr_tpdt_pk
+                    )
+                END
+            ) AS p18n_texto
+        FROM
+            tbl_parametro_prmt
+            INNER JOIN tbl_parametro_version_prvr ON
+                prvr_prmt_pk = prmt_pk
+                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+            INNER JOIN tbl_tipo_parametro_tppr ON
+                tppr_pk = prmt_tppr_pk
+        WHERE
+            prmt_tppr_pk = #{entiId}
+            AND (
+                prmt_parametro LIKE #{textoBusqueda}
+            )
+        ]]>
+    </select>
+
     <select id="selectId" parameterType="ParametroVO" resultType="Long">
         <![CDATA[
         SELECT prmt_pk
@@ -203,66 +241,25 @@
         ]]>
     </select>
 
-    <select id="intersects" parameterType="ParametroVO" resultType="Boolean">
-        <![CDATA[
-            SELECT COUNT(1)
-            FROM
-                tbl_parametro_prmt
-                INNER JOIN tbl_parametro_version_prvr ON
-                    prvr_prmt_pk = prmt_pk
-                    AND (
-                        #{prvr.fini} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.fini})
-                        OR
-                        COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime())
-                            BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()))
-                        OR (
-                            #{prvr.fini} < prvr_fini
-                            AND COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime())
-                                >= COALESCE(prvr_ffin, COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP}, portico.getSysDatetime()))
-                        )
-                    )
-            WHERE
-                prmt_tppr_pk = #{entiId}
-                AND prmt_parametro = #{parametro}
-        ]]>
-    </select>
-
-    <select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
-        <![CDATA[
-        SELECT
-        	prmt_pk
-        	, prmt_parametro
-    		, (
-    			CASE
-    				WHEN tppr_es_i18n = 1
-    				THEN (
-    					SELECT p18n_texto
-    					FROM tbl_parametro_i18n_p18n
-    					WHERE p18n_prvr_pk = prvr_pk
-    						AND p18n_idioma = 'es_ES'
-    				)
-    				WHEN tppr_tpdt_pk IS NOT NULL
-    				THEN (
-    					SELECT prdt_cadena
-    					FROM tbl_parametro_dato_prdt
-    					WHERE prdt_prvr_pk = prvr_pk
-    						AND prdt_tpdt_pk = tppr_tpdt_pk
-    				)
-    			END
-    		) AS p18n_texto
+    <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
         FROM
-        	tbl_parametro_prmt
-        	INNER JOIN tbl_parametro_version_prvr ON
-        		prvr_prmt_pk = prmt_pk
-        		AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-        	INNER JOIN tbl_tipo_parametro_tppr ON
-        		tppr_pk = prmt_tppr_pk
+            tbl_parametro_prmt
+            INNER JOIN tbl_parametro_version_prvr ON
+                prvr_prmt_pk = prmt_pk
         WHERE
-        	prmt_tppr_pk = #{entiId}
-        	AND (
-        		prmt_parametro LIKE #{textoBusqueda}
-        	)
+            prmt_pk = #{id}
+            AND (
+                #{prvr.fini} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.fini})
+                OR COALESCE(#{prvr.ffin}, portico.getSysdateTime()) BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, portico.getSysdateTime()))
+            )
+    ]]>
+        <if test="prvr.id != null">
+        <![CDATA[
+            AND prvr_pk <> #{prvr.id}
         ]]>
+        </if>
     </select>
 
     <insert id="insert" parameterType="ParametroVO">
@@ -271,4 +268,27 @@
         VALUES (#{id}, #{entiId}, #{parametro})
         ]]>
     </insert>
+
+    <insert id="insertVersion" parameterType="ParametroVO">
+    <![CDATA[
+        INSERT INTO tbl_parametro_version_prvr(prvr_pk, prvr_prmt_pk, prvr_fini, prvr_ffin)
+        VALUES (#{prvr.id}, #{id}, #{prvr.fini}, #{prvr.ffin})
+    ]]>
+    </insert>
+
+    <update id="updateVersion" parameterType="ParametroVO">
+    <![CDATA[
+        UPDATE tbl_parametro_version_prvr SET
+            prvr_fini = #{prvr.fini}
+            , prvr_ffin = #{prvr.ffin}
+        WHERE prvr_pk = #{prvr.id}
+    ]]>
+    </update>
+
+    <delete id="deleteVersion" parameterType="ParametroVO">
+    <![CDATA[
+        DELETE FROM tbl_parametro_version_prvr
+        WHERE prvr_pk = #{prvr.id}
+    ]]>
+    </delete>
 </mapper>

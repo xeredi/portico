@@ -17,46 +17,65 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 public interface ParametroDAO {
 
     /**
-     * Eists.
+     * Exists.
      *
-     * @param prmtVO
-     *            the prmt vo
+     * @param prmt
+     *            the prmt
      * @return true, if successful
      */
-    boolean exists(final ParametroVO prmtVO);
+    boolean exists(final ParametroVO prmt);
 
     /**
-     * Intersects.
+     * Exists overlap.
      *
-     * @param prmtVO
-     *            the prmt vo
+     * @param prmt
+     *            the prmt
      * @return true, if successful
      */
-    boolean intersects(final ParametroVO prmtVO);
+    boolean existsOverlap(final ParametroVO prmt);
+
+    /**
+     * Select id.
+     *
+     * @param prmt
+     *            the prmt
+     * @return the long
+     */
+    Long selectId(final ParametroVO prmt);
 
     /**
      * Insert.
      *
-     * @param prmtVO
-     *            the prmt vo
+     * @param prmt
+     *            the prmt
      */
-    void insert(final ParametroVO prmtVO);
+    void insert(final ParametroVO prmt);
 
     /**
-     * Update.
+     * Insert version.
      *
-     * @param prmtVO
-     *            the prmt vo
+     * @param prmt
+     *            the prmt
      */
-    void update(final ParametroVO prmtVO);
+    void insertVersion(final ParametroVO prmt);
 
     /**
-     * Update delete.
+     * Update version.
      *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
+     * @param prmt
+     *            the prmt
+     * @return the int
      */
-    void updateDelete(final ParametroCriterioVO prmtCriterioVO);
+    int updateVersion(final ParametroVO prmt);
+
+    /**
+     * Delete version.
+     *
+     * @param prmt
+     *            the prmt
+     * @return the int
+     */
+    int deleteVersion(final ParametroVO prmt);
 
     /**
      * Select object.
@@ -66,15 +85,6 @@ public interface ParametroDAO {
      * @return the parametro vo
      */
     ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO);
-
-    /**
-     * Select id.
-     *
-     * @param prmtVO
-     *            the prmt vo
-     * @return the long
-     */
-    Long selectId(final ParametroVO prmtVO);
 
     /**
      * Select list.
@@ -117,13 +127,13 @@ public interface ParametroDAO {
     Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO);
 
     /**
-     * Select count.
+     * Count.
      *
      * @param prmtCriterioVO
      *            the prmt criterio vo
-     * @return the long
+     * @return the int
      */
-    int selectCount(final ParametroCriterioVO prmtCriterioVO);
+    int count(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select lupa list.

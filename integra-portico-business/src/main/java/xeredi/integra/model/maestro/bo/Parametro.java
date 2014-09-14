@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 
@@ -30,11 +30,11 @@ public interface Parametro {
      *            Tipo de parámetro al que pertenece el parámetro.
      * @param i18nMap
      *            Datos de internacionalizacion del parámetro.
-     * @throws DuplicateInstanceException
-     *             Si ya existe un parámetro con los mismos datos.
+     * @throws OverlapException
+     *             the overlap exception
      */
     void insert(final ParametroVO prmtVO, final TipoParametroVO tpprVO, final Map<String, ParametroI18nVO> i18nMap)
-            throws DuplicateInstanceException;
+            throws OverlapException;
 
     /**
      * Duplicado de los datos de un parámetro.
@@ -45,11 +45,13 @@ public interface Parametro {
      *            Tipo de parámetro al que pertenece el parámetro.
      * @param i18nMap
      *            Datos de internacionalizacion del parámetro.
-     * @throws DuplicateInstanceException
-     *             Si ya existe un parámetro con los mismos datos.
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     void duplicate(final ParametroVO prmtVO, final TipoParametroVO tpprVO, final Map<String, ParametroI18nVO> i18nMap)
-            throws DuplicateInstanceException;
+            throws OverlapException, InstanceNotFoundException;
 
     /**
      * Modificación de los datos de un parámetro existente.
@@ -60,23 +62,25 @@ public interface Parametro {
      *            Tipo de parámetro al que pertenece el parámetro.
      * @param i18nMap
      *            Datos de internacionalizacion del parámetro.
-     * @throws DuplicateInstanceException
-     *             Si ya existe un parámetro con los mismos datos.
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     void update(final ParametroVO prmtVO, final TipoParametroVO tpprVO, final Map<String, ParametroI18nVO> i18nMap)
-            throws DuplicateInstanceException;
+            throws OverlapException, InstanceNotFoundException;
 
     /**
      * Borrado de los datos de una version de un parametro.
      *
-     * @param prvrId
-     *            Identificador de la version de un parámetro.
+     * @param prmt
+     *            the prmt
      * @param tpprVO
      *            Tipo de parámetro al que pertenece el parámetro.
      * @throws InstanceNotFoundException
      *             Si no se encuentra la versión del parámetro a eliminar.
      */
-    void delete(final Long prvrId, final TipoParametroVO tpprVO) throws InstanceNotFoundException;
+    void delete(final ParametroVO prmt, final TipoParametroVO tpprVO) throws InstanceNotFoundException;
 
     /**
      * Búsqueda de parámetros que cumplan un criterio de búsqueda.

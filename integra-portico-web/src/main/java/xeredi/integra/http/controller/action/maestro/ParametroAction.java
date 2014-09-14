@@ -14,6 +14,7 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.Subparametro;
@@ -28,7 +29,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 
@@ -213,17 +213,15 @@ public final class ParametroAction extends ItemAction {
         }
 
         if (enti.getI18n()) {
-            for (final String idioma : p18nMap.keySet()) {
+            for (final String idioma : getAvailableLanguages()) {
                 final ParametroI18nVO i18nVO = p18nMap.get(idioma);
 
                 if (i18nVO == null || i18nVO.getTexto() == null || i18nVO.getTexto().isEmpty()) {
                     addActionError(getText(ErrorCode.E00002.name(), new String[] { idioma }));
+                } else {
+                    i18nVO.setIdioma(idioma);
                 }
-
-                i18nVO.setIdioma(idioma);
             }
-            // TODO Comprobar que los idiomas coinciden con la lista de idiomas
-            // disponibles
         }
 
         ItemDatoValidator.validate(this, enti, item);
@@ -254,8 +252,11 @@ public final class ParametroAction extends ItemAction {
             }
 
             addActionMessage("Parametro guardado correctamente!!");
-        } catch (final DuplicateInstanceException ex) {
-            addActionError(getText(ErrorCode.E00005.name(), new String[] { enti.getNombre() }));
+        } catch (final OverlapException ex) {
+            addActionError(getText(ErrorCode.E00009.name(), new String[] { enti.getNombre() }));
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(getText(ErrorCode.E00008.name(),
+                    new String[] { enti.getNombre(), String.valueOf(item.getId()) }));
         }
 
         if (hasErrors()) {
@@ -284,7 +285,7 @@ public final class ParametroAction extends ItemAction {
         enti = TipoParametroProxy.select(item.getEntiId());
 
         try {
-            prmtBO.delete(item.getPrvr().getId(), enti);
+            prmtBO.delete(item, enti);
 
             addActionMessage("Elemento del Maestro '" + enti.getNombre() + "' eliminado correctamente");
         } catch (final InstanceNotFoundException ex) {

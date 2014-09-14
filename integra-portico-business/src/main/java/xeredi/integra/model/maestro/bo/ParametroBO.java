@@ -2,7 +2,6 @@ package xeredi.integra.model.maestro.bo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,17 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.dao.ParametroDAO;
 import xeredi.integra.model.maestro.dao.ParametroDatoDAO;
 import xeredi.integra.model.maestro.dao.ParametroI18nDAO;
-import xeredi.integra.model.maestro.dao.ParametroVersionDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.dao.SubparametroVersionDAO;
@@ -29,7 +27,6 @@ import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.maestro.vo.ParametroVersionVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
@@ -37,7 +34,6 @@ import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
 
@@ -55,10 +51,6 @@ public class ParametroBO implements Parametro {
     /** The prmt dao. */
     @Inject
     ParametroDAO prmtDAO;
-
-    /** The prvr dao. */
-    @Inject
-    ParametroVersionDAO prvrDAO;
 
     /** The prdt dao. */
     @Inject
@@ -85,30 +77,16 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional(executorType = ExecutorType.BATCH)
-    public final void insert(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
-            final Map<String, ParametroI18nVO> i18nMap) throws DuplicateInstanceException {
-        Preconditions.checkNotNull(prmtVO);
-        Preconditions.checkNotNull(prmtVO.getParametro());
+    public final void insert(final ParametroVO prmt, final TipoParametroVO tpprVO,
+            final Map<String, ParametroI18nVO> i18nMap) throws OverlapException {
+        Preconditions.checkNotNull(prmt);
+        Preconditions.checkNotNull(prmt.getParametro());
+        Preconditions.checkNotNull(prmt.getPrvr());
+        Preconditions.checkNotNull(prmt.getPrvr().getFini());
         Preconditions.checkNotNull(tpprVO);
-
-        if (tpprVO.getTempExp()) {
-            Preconditions.checkNotNull(prmtVO.getPrvr());
-            Preconditions.checkNotNull(prmtVO.getPrvr().getFini());
-        }
 
         if (tpprVO.getI18n()) {
             Preconditions.checkNotNull(i18nMap);
-        }
-
-        final IgBO igBO = new IgBO();
-
-        if (!tpprVO.getTempExp()) {
-            // FIXME Esto lo meto para poder dar de alta datos en maestros
-            // 'Sobre la marcha'
-            final Calendar calendar = Calendar.getInstance();
-
-            calendar.add(Calendar.YEAR, -10);
-            prmtVO.getPrvr().setFini(calendar.getTime());
         }
 
         if (tpprVO.getI18n()) {
@@ -116,7 +94,7 @@ public class ParametroBO implements Parametro {
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language
-                            + " del parametro: " + prmtVO);
+                            + " del parametro: " + prmt);
                 }
             }
         }
@@ -124,43 +102,41 @@ public class ParametroBO implements Parametro {
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
-                if (!prmtVO.getItdtMap().containsKey(tpdtId)) {
+                if (!prmt.getItdtMap().containsKey(String.valueOf(tpdtId))) {
                     throw new Error("No se ha pasado informacion del dato "
-                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmtVO);
+                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
                 }
             }
         }
 
-        try {
-            prmtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            prmtDAO.insert(prmtVO);
-        } catch (final PersistenceException ex) {
-            if (prmtDAO.exists(prmtVO)) {
-                if (prmtDAO.intersects(prmtVO)) {
-                    throw new DuplicateInstanceException(ParametroVO.class.getName(), prmtVO);
-                }
+        final IgBO igBO = new IgBO();
 
-                final Long id = prmtDAO.selectId(prmtVO);
+        if (prmtDAO.exists(prmt)) {
+            prmt.setId(prmtDAO.selectId(prmt));
 
-                prmtVO.setId(id);
-            } else {
-                throw new Error(ex);
+            if (prmtDAO.existsOverlap(prmt)) {
+                throw new OverlapException(ParametroVO.class.getName(), prmt);
             }
+        } else {
+            prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            prmtDAO.insert(prmt);
         }
 
-        prmtVO.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        prvrDAO.insert(prmtVO);
+        prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-        if (prmtVO.getItdtMap() != null) {
-            for (final ItemDatoVO itdtVO : prmtVO.getItdtMap().values()) {
-                itdtVO.setItemId(prmtVO.getPrvr().getId());
+        prmtDAO.insertVersion(prmt);
+
+        if (prmt.getItdtMap() != null) {
+            for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
+                itdtVO.setItemId(prmt.getPrvr().getId());
                 prdtDAO.insert(itdtVO);
             }
         }
 
         if (tpprVO.getI18n()) {
             for (final ParametroI18nVO i18nVO : i18nMap.values()) {
-                i18nVO.setPrvrId(prmtVO.getPrvr().getId());
+                i18nVO.setPrvrId(prmt.getPrvr().getId());
                 p18nDAO.insert(i18nVO);
             }
         }
@@ -171,57 +147,73 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional(executorType = ExecutorType.BATCH)
-    public void duplicate(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
-            final Map<String, ParametroI18nVO> i18nMap) throws DuplicateInstanceException {
+    public void duplicate(final ParametroVO prmt, final TipoParametroVO tpprVO,
+            final Map<String, ParametroI18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         // TODO Implementar
-        Preconditions.checkNotNull(prmtVO);
-        Preconditions.checkNotNull(prmtVO.getId());
-        Preconditions.checkNotNull(prmtVO.getParametro());
+        Preconditions.checkNotNull(prmt);
+        Preconditions.checkNotNull(prmt.getId());
+        Preconditions.checkNotNull(prmt.getParametro());
+        Preconditions.checkNotNull(prmt.getPrvr());
+        Preconditions.checkNotNull(prmt.getPrvr().getFini());
         Preconditions.checkNotNull(tpprVO);
 
         if (tpprVO.getI18n()) {
             Preconditions.checkNotNull(i18nMap);
         }
 
-        if (tpprVO.getTempExp()) {
-            Preconditions.checkNotNull(prmtVO.getPrvr());
-            Preconditions.checkNotNull(prmtVO.getPrvr().getFini());
-        } else {
-            if (prmtVO.getPrvr() == null) {
-                prmtVO.setPrvr(new ParametroVersionVO());
+        if (tpprVO.getI18n()) {
+            final Set<String> languages = GlobalNames.AVAILABLE_LANGUAGES;
+            for (final String language : languages) {
+                if (!i18nMap.containsKey(language)) {
+                    throw new Error("No se ha pasado informacion de i18n para el idioma " + language
+                            + " del parametro: " + prmt);
+                }
             }
+        }
 
-            if (prmtVO.getPrvr().getFini() == null) {
-                prmtVO.getPrvr().setFini(Calendar.getInstance().getTime());
+        // Validar que los datos del parametro son correctos
+        if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
+            for (final Long tpdtId : tpprVO.getEntdList()) {
+                if (!prmt.getItdtMap().containsKey(tpdtId)) {
+                    throw new Error("No se ha pasado informacion del dato "
+                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
+                }
             }
         }
 
         final IgBO igBO = new IgBO();
-        final Long prmtActualId = prmtVO.getId();
 
-        try {
-            prmtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            prmtDAO.insert(prmtVO);
-        } catch (final PersistenceException ex) {
-            if (prmtDAO.exists(prmtVO)) {
-                if (prmtDAO.intersects(prmtVO)) {
-                    throw new DuplicateInstanceException(ParametroVO.class.getName(), prmtVO);
-                }
+        // Busqueda del parametro a duplicar
+        final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-                final Long id = prmtDAO.selectId(prmtVO);
+        prmtCriterio.setPrvrId(prmt.getPrvr().getId());
 
-                prmtVO.setId(id);
-            } else {
-                throw new Error(ex);
-            }
+        final ParametroVO prmtActual = prmtDAO.selectObject(prmtCriterio);
+
+        if (prmtActual == null) {
+            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
         }
 
-        prmtVO.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        prvrDAO.insert(prmtVO);
+        // Alta del nuevo parametro
+        if (prmtDAO.exists(prmt)) {
+            prmt.setId(prmtDAO.selectId(prmt));
 
-        if (prmtVO.getItdtMap() != null) {
-            for (final ItemDatoVO itdtVO : prmtVO.getItdtMap().values()) {
-                itdtVO.setItemId(prmtVO.getPrvr().getId());
+            if (prmtDAO.existsOverlap(prmt)) {
+                throw new OverlapException(ParametroVO.class.getName(), prmt);
+            }
+        } else {
+            prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            prmtDAO.insert(prmt);
+        }
+
+        prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+        prmtDAO.insertVersion(prmt);
+
+        if (prmt.getItdtMap() != null) {
+            for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
+                itdtVO.setItemId(prmt.getPrvr().getId());
 
                 prdtDAO.insert(itdtVO);
             }
@@ -229,70 +221,80 @@ public class ParametroBO implements Parametro {
 
         if (tpprVO.getI18n()) {
             for (final ParametroI18nVO p18nVO : i18nMap.values()) {
-                p18nVO.setPrvrId(prmtVO.getPrvr().getId());
+                p18nVO.setPrvrId(prmt.getPrvr().getId());
 
                 p18nDAO.insert(p18nVO);
             }
         }
 
-        if (tpprVO.getEntiHijasList() != null && !tpprVO.getEntiHijasList().isEmpty()) {
-            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
-            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+        if (!prmtActual.getId().equals(prmt.getId())) {
+            // Duplicado de subparametros
 
-            prmtCriterioVO.setId(prmtActualId);
-            sprmCriterioVO.setPrmt(prmtCriterioVO);
-            sprmCriterioVO.setFechaVigencia(prmtVO.getPrvr().getFini());
+            if (tpprVO.getEntiHijasList() != null && !tpprVO.getEntiHijasList().isEmpty()) {
+                final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+                final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-            final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
-            final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
-            final Set<Long> spvrIds = new HashSet<>();
+                prmtCriterioVO.setId(prmtActual.getId());
+                sprmCriterioVO.setPrmt(prmtCriterioVO);
+                sprmCriterioVO.setFechaVigencia(prmtActual.getPrvr().getFini());
 
-            for (final SubparametroVO sprmVO : sprmList) {
-                final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(sprmVO.getEntiId());
+                final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
+                final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
+                final Set<Long> spvrIds = new HashSet<>();
 
-                if (tpspVO.getCmdDuplicado()) {
-                    sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
-                    spvrIds.add(sprmVO.getSpvr().getId());
-                }
-            }
+                for (final SubparametroVO sprmVO : sprmList) {
+                    final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(sprmVO.getEntiId());
 
-            if (!spvrIds.isEmpty()) {
-                sprmCriterioVO.setSpvrIds(spvrIds);
-
-                final List<ItemDatoVO> spdtList = spdtDAO.selectList(sprmCriterioVO);
-
-                for (final ItemDatoVO itdtVO : spdtList) {
-                    final SubparametroVO sprmVO = sprmMap.get(itdtVO.getItemId());
-
-                    if (sprmVO != null) {
-                        if (sprmVO.getItdtMap() == null) {
-                            sprmVO.setItdtMap(new HashMap<String, ItemDatoVO>());
-                        }
-
-                        sprmVO.getItdtMap().put(itdtVO.getTpdtId().toString(), itdtVO);
+                    if (tpspVO.getCmdDuplicado()) {
+                        sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
+                        spvrIds.add(sprmVO.getSpvr().getId());
                     }
                 }
 
-                for (final SubparametroVO sprmVO : sprmMap.values()) {
-                    sprmVO.setPrmtId(prmtVO.getId());
-                    sprmVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                    sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                    sprmVO.getSpvr().setFini(prmtVO.getPrvr().getFini());
-                    sprmVO.getSpvr().setFfin(prmtVO.getPrvr().getFfin());
+                if (!spvrIds.isEmpty()) {
+                    sprmCriterioVO.setSpvrIds(spvrIds);
 
-                    sprmDAO.insert(sprmVO);
-                }
+                    final List<ItemDatoVO> spdtList = spdtDAO.selectList(sprmCriterioVO);
 
-                for (final SubparametroVO sprmVO : sprmMap.values()) {
-                    spvrDAO.insert(sprmVO);
-                }
+                    for (final ItemDatoVO itdtVO : spdtList) {
+                        final SubparametroVO sprmVO = sprmMap.get(itdtVO.getItemId());
 
-                for (final SubparametroVO sprmVO : sprmMap.values()) {
-                    if (sprmVO.getItdtMap() != null) {
-                        for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
-                            itdtVO.setItemId(sprmVO.getSpvr().getId());
+                        if (sprmVO != null) {
+                            if (sprmVO.getItdtMap() == null) {
+                                sprmVO.setItdtMap(new HashMap<String, ItemDatoVO>());
+                            }
 
-                            spdtDAO.insert(itdtVO);
+                            sprmVO.getItdtMap().put(itdtVO.getTpdtId().toString(), itdtVO);
+                        }
+                    }
+
+                    for (final SubparametroVO sprmVO : sprmMap.values()) {
+                        sprmVO.setPrmtId(prmt.getId());
+                        sprmVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                        sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                        sprmVO.getSpvr().setFini(prmt.getPrvr().getFini());
+                        sprmVO.getSpvr().setFfin(prmt.getPrvr().getFfin());
+
+                        if (sprmVO.getItdtMap() != null) {
+                            for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
+                                itdtVO.setItemId(sprmVO.getSpvr().getId());
+                            }
+                        }
+                    }
+
+                    for (final SubparametroVO sprmVO : sprmMap.values()) {
+                        sprmDAO.insert(sprmVO);
+                    }
+
+                    for (final SubparametroVO sprmVO : sprmMap.values()) {
+                        spvrDAO.insert(sprmVO);
+                    }
+
+                    for (final SubparametroVO sprmVO : sprmMap.values()) {
+                        if (sprmVO.getItdtMap() != null) {
+                            for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
+                                spdtDAO.insert(itdtVO);
+                            }
                         }
                     }
                 }
@@ -305,22 +307,20 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional(executorType = ExecutorType.BATCH)
-    public final void update(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
-            final Map<String, ParametroI18nVO> i18nMap) throws DuplicateInstanceException {
-        Preconditions.checkNotNull(prmtVO);
+    public final void update(final ParametroVO prmt, final TipoParametroVO tpprVO,
+            final Map<String, ParametroI18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
+        Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(tpprVO);
-        Preconditions.checkNotNull(prmtVO.getPrvr());
-        Preconditions.checkNotNull(prmtVO.getPrvr().getId());
+        Preconditions.checkNotNull(prmt.getPrvr());
+        Preconditions.checkNotNull(prmt.getPrvr().getId());
 
         if (tpprVO.getI18n()) {
             Preconditions.checkNotNull(i18nMap);
         }
 
         if (tpprVO.getTempExp()) {
-            Preconditions.checkNotNull(prmtVO.getPrvr().getFini());
+            Preconditions.checkNotNull(prmt.getPrvr().getFini());
         }
-
-        final IgBO igBO = new IgBO();
 
         // Validaciones
         if (tpprVO.getI18n()) {
@@ -328,7 +328,7 @@ public class ParametroBO implements Parametro {
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language
-                            + " del parametro: " + prmtVO);
+                            + " del parametro: " + prmt);
                 }
             }
         }
@@ -336,48 +336,34 @@ public class ParametroBO implements Parametro {
         // Validar que los datos del parametro son correctos
         if (!tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
-                if (!prmtVO.getItdtMap().containsKey(tpdtId.toString())) {
+                if (!prmt.getItdtMap().containsKey(tpdtId.toString())) {
                     throw new Error("No se ha pasado informacion del dato "
-                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmtVO);
+                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
                 }
             }
         }
 
-        if (tpprVO.getTempExp()) {
-            prmtVO.getPrvr().setFini(Calendar.getInstance().getTime());
+        if (prmtDAO.existsOverlap(prmt)) {
+            throw new OverlapException(ParametroVO.class.getName(), prmt);
+        }
 
-            throw new Error("No implementado!");
-            // TODO Implementar
-        } else {
-            // Si no es temporalidad eplicita, se cierra la version actual y
-            // se crea una version nueva
-            final Date fechaCambioPeriodo = Calendar.getInstance().getTime();
+        final int updated = prmtDAO.updateVersion(prmt);
 
-            prmtVO.getPrvr().setFfin(fechaCambioPeriodo);
+        if (updated == 0) {
+            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
+        }
 
-            final int updatedRows = prvrDAO.updateDelete(prmtVO);
-
-            if (updatedRows == 0) {
-                throw new Error("No hay version que cerrar para el parametro: " + prmtVO);
+        if (prmt.getItdtMap() != null) {
+            for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
+                itdtVO.setItemId(prmt.getPrvr().getId());
+                prdtDAO.update(itdtVO);
             }
+        }
 
-            prmtVO.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            prmtVO.getPrvr().setFini(fechaCambioPeriodo);
-            prmtVO.getPrvr().setFfin(null);
-            prvrDAO.insert(prmtVO);
-
-            if (prmtVO.getItdtMap() != null) {
-                for (final ItemDatoVO itdtVO : prmtVO.getItdtMap().values()) {
-                    itdtVO.setItemId(prmtVO.getPrvr().getId());
-                    prdtDAO.insert(itdtVO);
-                }
-            }
-
-            if (i18nMap != null) {
-                for (final ParametroI18nVO i18nVO : i18nMap.values()) {
-                    i18nVO.setPrvrId(prmtVO.getPrvr().getId());
-                    p18nDAO.insert(i18nVO);
-                }
+        if (i18nMap != null) {
+            for (final ParametroI18nVO i18nVO : i18nMap.values()) {
+                i18nVO.setPrvrId(prmt.getPrvr().getId());
+                p18nDAO.update(i18nVO);
             }
         }
     }
@@ -387,31 +373,20 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional
-    public final void delete(final Long prvrId, final TipoParametroVO tpprVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(prvrId);
+    public final void delete(final ParametroVO prmt, final TipoParametroVO tpprVO) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(prmt);
+        Preconditions.checkNotNull(prmt.getPrvr());
+        Preconditions.checkNotNull(prmt.getPrvr().getId());
         Preconditions.checkNotNull(tpprVO);
 
-        // Un parametro con temporalidad explicita NO SE PUEDE BORRAR
-        if (tpprVO.getTempExp()) {
-            throw new Error("El parametro con versionId: " + prvrId + " de la entidad: " + tpprVO
-                    + " no se puede borrar debido a que tiene temporalidad explicita");
+        final int updated = prmtDAO.deleteVersion(prmt);
+
+        if (updated == 0) {
+            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
         }
 
-        final ParametroVO prmtVO = new ParametroVO();
-        final ParametroVersionVO prvrVO = new ParametroVersionVO();
-
-        prvrVO.setId(prvrId);
-        prvrVO.setFfin(Calendar.getInstance().getTime());
-        prmtVO.setPrvr(prvrVO);
-
-        // FIXME Pasar el tipo de parametro para asegurarnos de que el tipo
-        // pasado por argumento
-        // corresponde con el tipo de prvrId
-        final int updatedRows = prvrDAO.updateDelete(prmtVO);
-
-        if (updatedRows == 0) {
-            throw new InstanceNotFoundException(ParametroVersionVO.class.getName(), prvrId);
-        }
+        prdtDAO.deleteVersion(prmt);
+        p18nDAO.deleteVersion(prmt);
     }
 
     /**
@@ -439,7 +414,7 @@ public class ParametroBO implements Parametro {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         final List<ParametroVO> prmtList = new ArrayList<>();
-        final int count = prmtDAO.selectCount(prmtCriterioVO);
+        final int count = prmtDAO.count(prmtCriterioVO);
 
         if (count > offset) {
             prmtList.addAll(prmtDAO.selectList(prmtCriterioVO, new RowBounds(offset, limit)));

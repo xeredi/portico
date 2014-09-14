@@ -38,10 +38,20 @@
         ]]>
 	</select>
 
-	<insert id="insert" parameterType="ParametroI18nVO">
-        <![CDATA[
+    <insert id="insert" parameterType="ParametroI18nVO">
+    <![CDATA[
         INSERT INTO tbl_parametro_i18n_p18n (p18n_prvr_pk, p18n_idioma, p18n_texto)
         VALUES (#{prvrId}, #{idioma}, #{texto})
-        ]]>
-	</insert>
+    ]]>
+    </insert>
+
+    <update id="update" parameterType="ParametroI18nVO">
+    <![CDATA[
+        UPDATE tbl_parametro_i18n_p18n SET
+            p18n_texto = #{texto}
+        WHERE
+            p18n_prvr_pk = #{prvrId}
+            AND p18n_idioma = #{idioma}
+    ]]>
+    </update>
 </mapper>

@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -276,8 +277,8 @@ public final class MaestroImporterBO {
                     prmtBO.insert(prmtVO, tpprVO, p18nMap);
 
                     tpprPrmtMap.get(prmtVO.getEntiId()).put(prmtVO.getParametro(), prmtVO.getId());
-                } catch (final DuplicateInstanceException ex) {
-                    LOG.info(tpprVO.getNombre() + " Duplicado: " + prmtVO.getEtiqueta());
+                } catch (final OverlapException ex) {
+                    LOG.info(tpprVO.getNombre() + " Solapado: " + prmtVO.getEtiqueta());
                 }
             }
         } finally {

@@ -206,14 +206,6 @@
     ]]>
     </insert>
 
-    <insert id="update" parameterType="AspectoVO">
-    <![CDATA[
-        UPDATE tbl_aspecto_aspc SET
-            aspc_descripcion = #{descripcion}
-        WHERE aspc_pk = #{id}
-    ]]>
-    </insert>
-
     <insert id="updateVersion" parameterType="AspectoVO">
     <![CDATA[
         UPDATE tbl_aspecto_version_aspv SET

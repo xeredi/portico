@@ -18,12 +18,15 @@
             <label>{{'prmt_parametro' | translate}}</label>
             <p class="form-control-static">{{item.parametro}}</p>
         </div>
-        <div ng-if="enti.tempExp" class="col-md-2 form-group">
+
+        <!-- ng-if="enti.tempExp" -->
+        <div class="col-md-2 form-group">
             <label>{{'prmt_fini' | translate}}</label>
             <p class="form-control-static">{{item.prvr.fini | date:('fmt_date' | translate)}}</p>
         </div>
 
-        <div ng-if="enti.tempExp" class="col-md-2 form-group">
+        <!-- ng-if="enti.tempExp" -->
+        <div class="col-md-2 form-group">
             <label>{{'prmt_ffin' | translate}}</label>
             <p class="form-control-static">{{item.prvr.ffin | date:('fmt_date' | translate)}}</p>
         </div>

@@ -80,17 +80,24 @@ public final class AtraqueAction extends ItemAction {
         }
 
         // Copiar los datos de solicitud a autorizacion
-        item.getItdtMap().put(TipoDato.DECIMAL_07.getId(), item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
-        item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
-        item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
-        item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
-        item.getItdtMap()
-                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
-        item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
-        item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
-        item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
-        item.getItdtMap().put(TipoDato.TEXTO_02.getId(), item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
-        item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
+        item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_07.getId()),
+                item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_08.getId()),
+                item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.ALIN_2.getId()), item.getItdtMap().get(TipoDato.ALIN.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ATR_EDI_2.getId()),
+                item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ESTAN_ATR_2.getId()),
+                item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_09.getId()),
+                item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_10.getId()),
+                item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ACT_2.getId()),
+                item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TEXTO_02.getId()),
+                item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
+        item.getItdtMap().get(String.valueOf(TipoDato.FECHA_01.getId())).setFecha(Calendar.getInstance().getTime());
 
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
@@ -302,15 +309,21 @@ public final class AtraqueAction extends ItemAction {
         }
 
         // Copiar los datos de autorizacion a real
-        item.getItdtMap().put(TipoDato.DECIMAL_13.getId(), item.getItdtMap().get(TipoDato.DECIMAL_07.getId()));
-        item.getItdtMap().put(TipoDato.DECIMAL_14.getId(), item.getItdtMap().get(TipoDato.DECIMAL_08.getId()));
-        item.getItdtMap().put(TipoDato.ALIN_3.getId(), item.getItdtMap().get(TipoDato.ALIN_2.getId()));
-        item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_3.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI_2.getId()));
-        item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_3.getId(),
+        item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_13.getId()),
+                item.getItdtMap().get(TipoDato.DECIMAL_07.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_14.getId()),
+                item.getItdtMap().get(TipoDato.DECIMAL_08.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.ALIN_3.getId()), item.getItdtMap().get(TipoDato.ALIN_2.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ATR_EDI_3.getId()),
+                item.getItdtMap().get(TipoDato.TIPO_ATR_EDI_2.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ESTAN_ATR_3.getId()),
                 item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR_2.getId()));
-        item.getItdtMap().put(TipoDato.DECIMAL_15.getId(), item.getItdtMap().get(TipoDato.DECIMAL_09.getId()));
-        item.getItdtMap().put(TipoDato.TIPO_ACT_3.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT_2.getId()));
-        item.getItdtMap().put(TipoDato.TEXTO_03.getId(), item.getItdtMap().get(TipoDato.TEXTO_02.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_15.getId()),
+                item.getItdtMap().get(TipoDato.DECIMAL_09.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ACT_3.getId()),
+                item.getItdtMap().get(TipoDato.TIPO_ACT_2.getId()));
+        item.getItdtMap().put(String.valueOf(TipoDato.TEXTO_03.getId()),
+                item.getItdtMap().get(TipoDato.TEXTO_02.getId()));
 
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
@@ -444,17 +457,24 @@ public final class AtraqueAction extends ItemAction {
 
         if ("S".equals(item.getEstado())) {
             // Copiar los datos de solicitud a autorizacion
-            item.getItdtMap().put(TipoDato.DECIMAL_07.getId(), item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
-            item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_07.getId()),
+                    item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_08.getId()),
+                    item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
             item.getItdtMap()
-                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
-            item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
+            .put(String.valueOf(TipoDato.ALIN_2.getId()), item.getItdtMap().get(TipoDato.ALIN.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ATR_EDI_2.getId()),
+                    item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ESTAN_ATR_2.getId()),
                     item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
-            item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
-            item.getItdtMap().put(TipoDato.TEXTO_02.getId(), item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_09.getId()),
+                    item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.DECIMAL_10.getId()),
+                    item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.TIPO_ACT_2.getId()),
+                    item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
+            item.getItdtMap().put(String.valueOf(TipoDato.TEXTO_02.getId()),
+                    item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
         }
 
         item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
