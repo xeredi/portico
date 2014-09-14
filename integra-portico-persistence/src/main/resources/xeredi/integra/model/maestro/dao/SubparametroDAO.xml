@@ -157,7 +157,7 @@
                 OR COALESCE(#{spvr.ffin}, portico.getSysdateTime()) BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{spvr.ffin}, portico.getSysdateTime()))
             )
     ]]>
-        <if test="prvr.id != null">
+        <if test="spvr.id != null">
         <![CDATA[
             AND spvr_pk <> #{spvr.id}
         ]]>
