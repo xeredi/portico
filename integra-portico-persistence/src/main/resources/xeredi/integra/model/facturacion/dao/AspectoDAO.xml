@@ -178,22 +178,22 @@
 
     <insert id="insert" parameterType="AspectoVO">
     <![CDATA[
-        INSERT INTO tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk, aspc_descripcion)
-        VALUES (#{id}, #{codigo}, #{tpsr.id}, #{descripcion})
+        INSERT INTO tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk)
+        VALUES (#{id}, #{codigo}, #{tpsr.id})
     ]]>
     </insert>
 
     <insert id="insertVersion" parameterType="AspectoVO">
     <![CDATA[
         INSERT INTO tbl_aspecto_version_aspv (
-            aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad
+            aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_prioridad, aspv_descripcion
             , aspv_cpath_info1, aspv_cpath_info2, aspv_cpath_info3, aspv_cpath_info4, aspv_cpath_info5, aspv_cpath_info6
             , aspv_cetiq_info1, aspv_cetiq_info2, aspv_cetiq_info3, aspv_cetiq_info4, aspv_cetiq_info5, aspv_cetiq_info6
             , aspv_cgrp_info1, aspv_cgrp_info2, aspv_cgrp_info3, aspv_cgrp_info4, aspv_cgrp_info5, aspv_cgrp_info6
             , aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
             , aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
         ) VALUES (
-            #{aspv.id}, #{id}, #{aspv.fini}, #{aspv.ffin}, #{aspv.prioridad}
+            #{aspv.id}, #{id}, #{aspv.fini}, #{aspv.ffin}, #{aspv.prioridad}, #{aspv.descripcion}
             , #{aspv.cpathInfo1}, #{aspv.cpathInfo2}, #{aspv.cpathInfo3}, #{aspv.cpathInfo4}, #{aspv.cpathInfo5}, #{aspv.cpathInfo6}
             , #{aspv.cetiqInfo1}, #{aspv.cetiqInfo2}, #{aspv.cetiqInfo3}, #{aspv.cetiqInfo4}, #{aspv.cetiqInfo5}, #{aspv.cetiqInfo6}
             , #{aspv.cgrpInfo1, jdbcType=INTEGER, javaType=Boolean}, #{aspv.cgrpInfo2, jdbcType=INTEGER, javaType=Boolean}, #{aspv.cgrpInfo3, jdbcType=INTEGER, javaType=Boolean}
@@ -209,7 +209,7 @@
     <insert id="updateVersion" parameterType="AspectoVO">
     <![CDATA[
         UPDATE tbl_aspecto_version_aspv SET
-            aspv_fini = #{aspv.fini}, aspv_ffin = #{aspv.ffin}, aspv_prioridad = #{aspv.prioridad}
+            aspv_fini = #{aspv.fini}, aspv_ffin = #{aspv.ffin}, aspv_prioridad = #{aspv.prioridad}, aspv_descripcion = #{aspv.descripcion}
             , aspv_cpath_info1 = #{aspv.cpathInfo1}, aspv_cpath_info2 = #{aspv.cpathInfo2}, aspv_cpath_info3 = #{aspv.cpathInfo3}
             , aspv_cpath_info4 = #{aspv.cpathInfo4}, aspv_cpath_info5 = #{aspv.cpathInfo5}, aspv_cpath_info6 = #{aspv.cpathInfo6}
             , aspv_cetiq_info1 = #{aspv.cetiqInfo1}, aspv_cetiq_info2 = #{aspv.cetiqInfo2}, aspv_cetiq_info3 = #{aspv.cetiqInfo3}

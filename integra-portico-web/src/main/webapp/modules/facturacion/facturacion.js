@@ -680,19 +680,17 @@ module.controller("aspcDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "facturacion/aspc-remove.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
+        if (confirm("Are you sure?")) {
+            var url = "facturacion/aspc-remove.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
 
-                $http.get(url).success(function(data) {
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
-                    }
-                });
-            }
-        });
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+        }
     }
 });
 
