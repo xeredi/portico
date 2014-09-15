@@ -60,8 +60,10 @@
                 <th class="buttonLinks" />
                 <th>{{entiHija.tpprAsociado.nombre}}</th>
 
-                <th ng-if="entiHija.tempExp" class="date">{{'sprm_fini' | translate}}</th>
-                <th ng-if="entiHija.tempExp" class="date">{{'sprm_ffin' | translate}}</th>
+                <!-- ng-if="entiHija.tempExp" -->
+                <th class="date">{{'sprm_fini' | translate}}</th>
+                <!-- ng-if="entiHija.tempExp" -->
+                <th class="date">{{'sprm_ffin' | translate}}</th>
 
                 <th ng-repeat="tpdtId in entiHija.entdGridList">{{enti.entdMap[tpdtId].etiqueta}}</th>
             </tr>
@@ -72,8 +74,10 @@
                 <td><a href="#/maestro/sprm/detail/{{item.spvr.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{item.prmtAsociado.etiqueta}}</td>
 
-                <td ng-if="entiHija.tempExp">{{item.spvr.fini | date:('fmt_date' | translate)}}</td>
-                <td ng-if="entiHija.tempExp">{{item.spvr.ffin | date:('fmt_date' | translate)}}</td>
+                <!-- ng-if="entiHija.tempExp" -->
+                <td>{{item.spvr.fini | date:('fmt_date' | translate)}}</td>
+                <!-- ng-if="entiHija.tempExp" -->
+                <td>{{item.spvr.ffin | date:('fmt_date' | translate)}}</td>
 
                 <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch
                     on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i

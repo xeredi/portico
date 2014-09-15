@@ -50,8 +50,10 @@
                     <th class="buttonLinks" nowrap="nowrap" />
                     <th class="codigo" nowrap="nowrap">{{'prmt_parametro' | translate}}</th>
                     <th ng-if="enti.i18n">{{'prmt_i18n_texto' | translate}}</th>
-                    <th ng-if="enti.tempExp">{{'prmt_fini' | translate}}</th>
-                    <th ng-if="enti.tempExp">{{'prmt_ffin' | translate}}</th>
+                    <!-- ng-if="enti.tempExp" -->
+                    <th>{{'prmt_fini' | translate}}</th>
+                    <!-- ng-if="enti.tempExp" -->
+                    <th>{{'prmt_ffin' | translate}}</th>
                     <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
                 </tr>
             </thead>
@@ -60,8 +62,10 @@
                     <td><a href="#/maestro/prmt/detail/{{item.prvr.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.parametro}}</td>
                     <td ng-if="enti.i18n">{{item.i18n.texto}}</td>
-                    <td ng-if="enti.tempExp">{{item.prvr.fini | date:('fmt_date' | translate)}}</td>
-                    <td ng-if="enti.tempExp">{{item.prvr.ffin | date:('fmt_date' | translate)}}</td>
+                    <!-- ng-if="enti.tempExp" -->
+                    <td>{{item.prvr.fini | date:('fmt_date' | translate)}}</td>
+                    <!-- ng-if="enti.tempExp" -->
+                    <td>{{item.prvr.ffin | date:('fmt_date' | translate)}}</td>
                     <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
                         nowrap="nowrap"><span ng-switch-when="BO"><i
                             ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
