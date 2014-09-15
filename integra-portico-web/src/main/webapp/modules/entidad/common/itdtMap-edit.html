@@ -45,7 +45,8 @@
                 <select ng-switch-when="CR" ng-model="item.itdtMap[tpdtId].cadena"
                     ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}">{{cdrf.valor}}</option>
+                    <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}"
+                        ng-selected="cdrf.valor == item.itdtMap[tpdtId].cadena">{{cdrf.valor}}</option>
                 </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
                     ng-model="item.itdtMap[tpdtId].cadena" ng-required="item.itdtMap[tpdtId].obligatorio"
                     class="form-control input-sm" />
@@ -57,7 +58,7 @@
                     class="form-control input-sm">
                     <option value="" />
                     <option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
-                        value="{{labelValue.value}}">{{labelValue.label}}</option>
+                        value="{{labelValue.value}}" ng-selected="labelValue.value == item.itdtMap[tpdtId].prmt.id">{{labelValue.label}}</option>
                 </select>
                 <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm"
                     ng-controller="prmtsLupaCtrl">

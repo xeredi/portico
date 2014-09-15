@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
@@ -186,7 +187,7 @@ public final class ParametroAction extends ItemAction {
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
-            if (item.getParametro() == null || item.getParametro().isEmpty()) {
+            if (GenericValidator.isBlankOrNull(item.getParametro())) {
                 addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_parametro") }));
             }
         }
@@ -196,18 +197,11 @@ public final class ParametroAction extends ItemAction {
             Preconditions.checkNotNull(item.getPrvr().getId());
         }
 
-        if (item.getPrvr().getFini() != null && item.getPrvr().getFfin() != null
-                && !item.getPrvr().getFini().before(item.getPrvr().getFfin())) {
-            addActionError(getText(ErrorCode.E00006.name()));
-        }
-
-        if (enti.getTempExp()) {
-            if (item.getPrvr().getFini() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_fini") }));
-            }
+        if (item.getPrvr().getFini() == null) {
+            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_fini") }));
         } else {
-            if (accion == ACCION_EDICION.create) {
-                item.getPrvr().setFini(Calendar.getInstance().getTime());
+            if (item.getPrvr().getFfin() != null && !item.getPrvr().getFini().before(item.getPrvr().getFfin())) {
+                addActionError(getText(ErrorCode.E00006.name()));
             }
         }
 
@@ -273,22 +267,15 @@ public final class ParametroAction extends ItemAction {
     @Action("prmt-remove")
     public String remove() {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getEntiId());
-
-        if (item.getPrvr() == null || item.getPrvr().getId() == null) {
-            throw new Error("Identificador de version del parametro no especificado");
-        }
+        Preconditions.checkNotNull(item.getPrvr());
+        Preconditions.checkNotNull(item.getPrvr().getId());
 
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
 
-        enti = TipoParametroProxy.select(item.getEntiId());
-
         try {
-            prmtBO.delete(item, enti);
-
-            addActionMessage("Elemento del Maestro '" + enti.getNombre() + "' eliminado correctamente");
+            prmtBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText("error.prmt.notFound"));
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { String.valueOf(item.getPrvr().getId()) }));
         }
 
         return SUCCESS;

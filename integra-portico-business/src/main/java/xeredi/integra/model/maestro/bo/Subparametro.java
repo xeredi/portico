@@ -52,19 +52,17 @@ public interface Subparametro {
      *             the overlap exception
      */
     void update(final SubparametroVO sprmVO, final TipoSubparametroVO tpspVO) throws InstanceNotFoundException,
-    OverlapException;
+            OverlapException;
 
     /**
      * Delete.
      *
      * @param sprm
      *            the sprm
-     * @param tpspVO
-     *            the tpsp vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void delete(final SubparametroVO sprm, final TipoSubparametroVO tpspVO) throws InstanceNotFoundException;
+    void delete(final SubparametroVO sprm) throws InstanceNotFoundException;
 
     /**
      * Select list.

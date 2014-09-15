@@ -164,6 +164,16 @@
         </if>
     </select>
 
+    <select id="selectId" parameterType="SubparametroVO" resultType="Long">
+        <![CDATA[
+        SELECT sprm_pk
+        FROM
+            tbl_subparametro_sprm
+        WHERE sprm_prmt_pk = #{prmtId}
+            AND sprm_prmt_dep_pk = #{prmtAsociado.id}
+        ]]>
+    </select>
+
     <insert id="insert" parameterType="SubparametroVO">
         <![CDATA[
         INSERT INTO tbl_subparametro_sprm (sprm_pk, sprm_prmt_pk, sprm_prmt_dep_pk, sprm_tpsp_pk)

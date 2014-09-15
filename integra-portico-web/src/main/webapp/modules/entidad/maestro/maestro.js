@@ -136,19 +136,17 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "maestro/prmt-remove.action?item.prvr.id=" + $scope.item.prvr.id;
+        if (confirm("Are you sure?")) {
+            var url = "maestro/prmt-remove.action?item.prvr.id=" + $scope.item.prvr.id;
 
-                $http.get(url).success(function(data) {
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
-                    }
-                });
-            }
-        });
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+        }
     }
 });
 
@@ -319,19 +317,17 @@ module.controller("sprmDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "maestro/sprm-remove.action?item.spvr.id=" + $scope.item.spvr.id;
+        if (confirm("Are you sure?")) {
+            var url = "maestro/sprm-remove.action?item.spvr.id=" + $scope.item.spvr.id;
 
-                $http.get(url).success(function(data) {
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
-                    }
-                });
-            }
-        });
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+        }
     }
 });
 

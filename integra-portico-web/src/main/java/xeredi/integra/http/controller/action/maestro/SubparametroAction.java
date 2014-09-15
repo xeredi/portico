@@ -219,7 +219,6 @@ public final class SubparametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getSpvr());
         Preconditions.checkNotNull(item.getSpvr().getId());
-        Preconditions.checkNotNull(item.getEntiId());
 
         if (item.getSpvr() == null || item.getSpvr().getId() == null) {
             throw new Error("Identificador de version del subparametro no especificado");
@@ -227,14 +226,10 @@ public final class SubparametroAction extends ItemAction {
 
         final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
 
-        enti = TipoSubparametroProxy.select(item.getEntiId());
-
         try {
-            sprmBO.delete(item, enti);
-
-            addActionMessage("Elemento del Maestro '" + enti.getNombre() + "' eliminado correctamente");
+            sprmBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText("error.sprm.notFound"));
+            addActionError(getText(ErrorCode.E00008.name(), new String[] { String.valueOf(item.getSpvr().getId()) }));
         }
 
         return SUCCESS;

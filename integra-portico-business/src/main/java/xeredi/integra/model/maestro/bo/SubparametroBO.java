@@ -57,10 +57,6 @@ public class SubparametroBO implements Subparametro {
 
         if (sprmDAO.exists(sprm)) {
             sprm.setId(sprmDAO.selectId(sprm));
-
-            if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(SubparametroVO.class.getName(), sprm);
-            }
         } else {
             sprm.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
@@ -68,6 +64,10 @@ public class SubparametroBO implements Subparametro {
         }
 
         sprm.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+        if (sprmDAO.existsOverlap(sprm)) {
+            throw new OverlapException(SubparametroVO.class.getName(), sprm);
+        }
 
         sprmDAO.insertVersion(sprm);
 
@@ -94,10 +94,6 @@ public class SubparametroBO implements Subparametro {
 
         if (sprmDAO.exists(sprm)) {
             sprm.setId(sprmDAO.selectId(sprm));
-
-            if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(SubparametroVO.class.getName(), sprm);
-            }
         } else {
             sprm.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
@@ -105,6 +101,10 @@ public class SubparametroBO implements Subparametro {
         }
 
         sprm.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+        if (sprmDAO.existsOverlap(sprm)) {
+            throw new OverlapException(SubparametroVO.class.getName(), sprm);
+        }
 
         sprmDAO.insertVersion(sprm);
 
@@ -127,10 +127,7 @@ public class SubparametroBO implements Subparametro {
         Preconditions.checkNotNull(tpspVO);
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
-
-        if (tpspVO.getTempExp()) {
-            Preconditions.checkNotNull(sprm.getSpvr().getFini());
-        }
+        Preconditions.checkNotNull(sprm.getSpvr().getFini());
 
         // Validaciones
 
@@ -172,12 +169,10 @@ public class SubparametroBO implements Subparametro {
      */
     @Override
     @Transactional
-    public final void delete(final SubparametroVO sprm, final TipoSubparametroVO tpspVO)
-            throws InstanceNotFoundException {
+    public final void delete(final SubparametroVO sprm) throws InstanceNotFoundException {
         Preconditions.checkNotNull(sprm);
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
-        Preconditions.checkNotNull(tpspVO);
 
         final int updated = sprmDAO.deleteVersion(sprm);
 

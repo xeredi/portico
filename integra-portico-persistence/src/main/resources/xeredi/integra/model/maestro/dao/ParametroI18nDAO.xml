@@ -54,4 +54,12 @@
             AND p18n_idioma = #{idioma}
     ]]>
     </update>
+
+    <delete id="deleteVersion" parameterType="ParametroVO">
+    <![CDATA[
+        DELETE FROM tbl_parametro_i18n_p18n
+        WHERE
+            p18n_prvr_pk = #{prvr.id}
+    ]]>
+    </delete>
 </mapper>

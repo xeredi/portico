@@ -75,12 +75,10 @@ public interface Parametro {
      *
      * @param prmt
      *            the prmt
-     * @param tpprVO
-     *            Tipo de parámetro al que pertenece el parámetro.
      * @throws InstanceNotFoundException
      *             Si no se encuentra la versión del parámetro a eliminar.
      */
-    void delete(final ParametroVO prmt, final TipoParametroVO tpprVO) throws InstanceNotFoundException;
+    void delete(final ParametroVO prmt) throws InstanceNotFoundException;
 
     /**
      * Búsqueda de parámetros que cumplan un criterio de búsqueda.

@@ -113,10 +113,6 @@ public class ParametroBO implements Parametro {
 
         if (prmtDAO.exists(prmt)) {
             prmt.setId(prmtDAO.selectId(prmt));
-
-            if (prmtDAO.existsOverlap(prmt)) {
-                throw new OverlapException(ParametroVO.class.getName(), prmt);
-            }
         } else {
             prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
@@ -124,6 +120,10 @@ public class ParametroBO implements Parametro {
         }
 
         prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+        if (prmtDAO.existsOverlap(prmt)) {
+            throw new OverlapException(ParametroVO.class.getName(), prmt);
+        }
 
         prmtDAO.insertVersion(prmt);
 
@@ -174,11 +174,11 @@ public class ParametroBO implements Parametro {
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
-                if (!prmt.getItdtMap().containsKey(tpdtId)) {
+                if (!prmt.getItdtMap().containsKey(tpdtId.toString())) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);
-                    prmt.getItdtMap().put(String.valueOf(tpdtId), itdt);
+                    prmt.getItdtMap().put(tpdtId.toString(), itdt);
 
                     // throw new Error("No se ha pasado informacion del dato "
                     // + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
@@ -202,10 +202,6 @@ public class ParametroBO implements Parametro {
         // Alta del nuevo parametro
         if (prmtDAO.exists(prmt)) {
             prmt.setId(prmtDAO.selectId(prmt));
-
-            if (prmtDAO.existsOverlap(prmt)) {
-                throw new OverlapException(ParametroVO.class.getName(), prmt);
-            }
         } else {
             prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
@@ -213,6 +209,10 @@ public class ParametroBO implements Parametro {
         }
 
         prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+        if (prmtDAO.existsOverlap(prmt)) {
+            throw new OverlapException(ParametroVO.class.getName(), prmt);
+        }
 
         prmtDAO.insertVersion(prmt);
 
@@ -378,20 +378,19 @@ public class ParametroBO implements Parametro {
      */
     @Override
     @Transactional
-    public final void delete(final ParametroVO prmt, final TipoParametroVO tpprVO) throws InstanceNotFoundException {
+    public final void delete(final ParametroVO prmt) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(prmt.getPrvr());
         Preconditions.checkNotNull(prmt.getPrvr().getId());
-        Preconditions.checkNotNull(tpprVO);
+
+        prdtDAO.deleteVersion(prmt);
+        p18nDAO.deleteVersion(prmt);
 
         final int updated = prmtDAO.deleteVersion(prmt);
 
         if (updated == 0) {
             throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
         }
-
-        prdtDAO.deleteVersion(prmt);
-        p18nDAO.deleteVersion(prmt);
     }
 
     /**
