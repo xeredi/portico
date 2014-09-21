@@ -81,9 +81,9 @@ public final class SubservicioAction extends ItemAction {
      *             the instance not found exception
      */
     @Actions({
-        @Action(value = "ssrv-detalle"),
-        @Action(value = "ssrv-detalle-json", results = { @Result(name = "success", type = "json", params = {
-                "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
+            @Action(value = "ssrv-detalle"),
+            @Action(value = "ssrv-detalle-json", results = { @Result(name = "success", type = "json", params = {
+                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
     public String detalle() throws InstanceNotFoundException {
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
@@ -129,7 +129,7 @@ public final class SubservicioAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        item = SubservicioVO.newInstance(enti);
+        item = new SubservicioVO();
 
         loadLabelValuesMap();
 
@@ -188,7 +188,7 @@ public final class SubservicioAction extends ItemAction {
      */
     @Action(value = "ssrv-guardar", results = {
             @Result(name = "success", type = "redirectAction", params = { "actionName", "ssrv-detalle", "item.id",
-            "%{item.id}" }), @Result(name = "input", location = "ssrv-edicion.jsp") })
+                    "%{item.id}" }), @Result(name = "input", location = "ssrv-edicion.jsp") })
     public String guardar() {
         enti = TipoSubservicioProxy.select(item.getEntiId());
 

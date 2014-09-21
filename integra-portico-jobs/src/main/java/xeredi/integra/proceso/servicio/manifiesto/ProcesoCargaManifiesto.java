@@ -15,8 +15,6 @@ import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
@@ -62,8 +60,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
     private String numeroEDI;
 
     /** The manifiesto vo. */
-    private final ServicioVO manifiestoVO = ServicioVO
-            .newInstance(TipoServicioProxy.select(Entidad.MANIFIESTO.getId()));
+    private final ServicioVO manifiestoVO = new ServicioVO();
 
     /** The ssrv list. */
     private final List<SubservicioVO> ssrvList = new ArrayList<>();
@@ -362,8 +359,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 break;
             case NAD:
-                manifiestoConsignatarioActualVO = SubservicioVO.newInstance(TipoSubservicioProxy
-                        .select(Entidad.MANIFIESTO_CONSIGNATARIO.getId()));
+                manifiestoConsignatarioActualVO = new SubservicioVO();
 
                 manifiestoConsignatarioActualVO.getItdtMap().get(TipoDato.ORGA.getId())
                 .setPrmt(getTokenOrganizacion(ManifiestoKeyword.NAD_NIFConsignatarioMercancia, line, i));
@@ -372,7 +368,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 break;
             case CNI:
-                blActualVO = SubservicioVO.newInstance(TipoSubservicioProxy.select(Entidad.BL.getId()));
+                blActualVO = new SubservicioVO();
 
                 blActualVO.setNumero(getTokenInteger(ManifiestoKeyword.CNI_NumeroBL, line, i));
 
@@ -420,8 +416,8 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 .getItdtMap()
                 .get(TipoDato.ALIN.getId())
                 .setPrmt(
-                        alineacionBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ALIN.getId())
-                                .getPrmt() : alineacionBlVO);
+                        alineacionBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ALIN.getId()).getPrmt()
+                                : alineacionBlVO);
 
                 final ParametroVO terminalBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoTerminal, line, i,
                         Entidad.TERMINAL);
@@ -457,10 +453,10 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 blActualVO
                 .getItdtMap()
-                        .get(TipoDato.ORGA_2.getId())
+                .get(TipoDato.ORGA_2.getId())
                 .setPrmt(
-                                estibadorVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ORGA.getId())
-                                .getPrmt() : estibadorVO);
+                        estibadorVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ORGA.getId()).getPrmt()
+                                : estibadorVO);
 
                 ssrvList.add(blActualVO);
 
@@ -470,7 +466,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                     throw new Error("BL no puede ser nulo");
                 }
 
-                partidaActualVO = SubservicioVO.newInstance(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
+                partidaActualVO = new SubservicioVO();
 
                 partidaActualVO.setNumero(getTokenInteger(ManifiestoKeyword.GID_NumeroPartida, line, i));
 
@@ -511,16 +507,16 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 partidaActualVO
                 .getItdtMap()
-                        .get(TipoDato.ORGA.getId())
+                .get(TipoDato.ORGA.getId())
                 .setPrmt(
-                                estibadorVO == null ? blActualVO.getItdtMap().get(TipoDato.ORGA_2.getId())
-                                .getPrmt() : estibadorVO);
+                        estibadorVO == null ? blActualVO.getItdtMap().get(TipoDato.ORGA_2.getId()).getPrmt()
+                                : estibadorVO);
 
                 ssrvList.add(partidaActualVO);
 
                 break;
             case PCI:
-                partidaImActualVO = SubservicioVO.newInstance(TipoSubservicioProxy.select(Entidad.PARTIDA_IM.getId()));
+                partidaImActualVO = new SubservicioVO();
 
                 partidaImActualVO
                 .getItdtMap()
@@ -535,8 +531,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 break;
             case GOR:
-                partidaDocumentoActualVO = SubservicioVO.newInstance(TipoSubservicioProxy
-                        .select(Entidad.PARTIDA_DOCUMENTO.getId()));
+                partidaDocumentoActualVO = new SubservicioVO();
 
                 partidaDocumentoActualVO
                 .getItdtMap()
@@ -570,8 +565,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 break;
             case SGP:
-                partidaEquipamientoActualVO = SubservicioVO.newInstance(TipoSubservicioProxy
-                        .select(Entidad.PARTIDA_EQUIPAMIENTO.getId()));
+                partidaEquipamientoActualVO = new SubservicioVO();
 
                 partidaEquipamientoActualVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
                 .setCantidadEntera(getTokenLong(ManifiestoKeyword.SGP_NumeroBultos, line, i));
@@ -585,8 +579,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 break;
             case DGS:
-                partidaMmppActualVO = SubservicioVO.newInstance(TipoSubservicioProxy.select(Entidad.PARTIDA_MMPP
-                        .getId()));
+                partidaMmppActualVO = new SubservicioVO();
 
                 final String codigoMmpp = getTokenString(ManifiestoKeyword.DGS_NumeroONU, line, i)
                         + getTokenString(ManifiestoKeyword.DGS_Clase, line, i);
@@ -598,8 +591,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 break;
             case EQD:
-                equipamientoActualVO = SubservicioVO.newInstance(TipoSubservicioProxy.select(Entidad.EQUIPAMIENTO
-                        .getId()));
+                equipamientoActualVO = new SubservicioVO();
 
                 final String indicadorLleno = getTokenString(ManifiestoKeyword.EQD_IndicadorLleno, line, i);
 
@@ -624,8 +616,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 break;
             case SEL:
-                precintoEquipamientoActualVO = SubservicioVO.newInstance(TipoSubservicioProxy
-                        .select(Entidad.PRECINTO_EQUIPAMIENTO.getId()));
+                precintoEquipamientoActualVO = new SubservicioVO();
 
                 precintoEquipamientoActualVO.getItdtMap().get(TipoDato.CADENA_01.getId())
                 .setCadena(getTokenString(ManifiestoKeyword.SEL_Precinto, line, i));

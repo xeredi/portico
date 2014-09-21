@@ -16,7 +16,7 @@ public abstract class ItemVO implements ItemEntidad {
     private Long entiId;
 
     /** The itdt map. */
-    private Map<String, ItemDatoVO> itdtMap;
+    private Map<Long, ItemDatoVO> itdtMap;
 
     /**
      * Instantiates a new item vo.
@@ -24,7 +24,7 @@ public abstract class ItemVO implements ItemEntidad {
     public ItemVO() {
         super();
 
-        itdtMap = new HashMap<String, ItemDatoVO>();
+        itdtMap = new HashMap<Long, ItemDatoVO>();
     }
 
     /**
@@ -72,7 +72,7 @@ public abstract class ItemVO implements ItemEntidad {
      *
      * @return the itdt map
      */
-    public final Map<String, ItemDatoVO> getItdtMap() {
+    public final Map<Long, ItemDatoVO> getItdtMap() {
         return itdtMap;
     }
 
@@ -82,7 +82,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public final void setItdtMap(final Map<String, ItemDatoVO> value) {
+    public final void setItdtMap(final Map<Long, ItemDatoVO> value) {
         itdtMap = value;
     }
 

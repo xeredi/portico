@@ -169,14 +169,14 @@ public class ServicioBO implements Servicio {
             }
 
             final List<ItemDatoVO> itdtList = srdtDAO.selectList(srvcCriterioVO);
-            final Map<Long, Map<String, ItemDatoVO>> map = new HashMap<>();
+            final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : itdtList) {
                 if (!map.containsKey(itdtVO.getItemId())) {
-                    map.put(itdtVO.getItemId(), new HashMap<String, ItemDatoVO>());
+                    map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }
 
-                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId().toString(), itdtVO);
+                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
             }
 
             for (final ServicioVO srvcVO : srvcList) {

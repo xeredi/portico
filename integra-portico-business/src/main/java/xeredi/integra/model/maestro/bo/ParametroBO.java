@@ -101,7 +101,7 @@ public class ParametroBO implements Parametro {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);
-                    prmt.getItdtMap().put(String.valueOf(tpdtId), itdt);
+                    prmt.getItdtMap().put(tpdtId, itdt);
 
                     // throw new Error("No se ha pasado informacion del dato "
                     // + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
@@ -178,7 +178,7 @@ public class ParametroBO implements Parametro {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);
-                    prmt.getItdtMap().put(tpdtId.toString(), itdt);
+                    prmt.getItdtMap().put(tpdtId, itdt);
 
                     // throw new Error("No se ha pasado informacion del dato "
                     // + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
@@ -266,10 +266,10 @@ public class ParametroBO implements Parametro {
 
                         if (sprmVO != null) {
                             if (sprmVO.getItdtMap() == null) {
-                                sprmVO.setItdtMap(new HashMap<String, ItemDatoVO>());
+                                sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
                             }
 
-                            sprmVO.getItdtMap().put(itdtVO.getTpdtId().toString(), itdtVO);
+                            sprmVO.getItdtMap().put(itdtVO.getTpdtId(), itdtVO);
                         }
                     }
 
@@ -672,14 +672,14 @@ public class ParametroBO implements Parametro {
             }
 
             final List<ItemDatoVO> itdtList = prdtDAO.selectList(prmtCriterioVO);
-            final Map<Long, Map<String, ItemDatoVO>> map = new HashMap<>();
+            final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : itdtList) {
                 if (!map.containsKey(itdtVO.getItemId())) {
-                    map.put(itdtVO.getItemId(), new HashMap<String, ItemDatoVO>());
+                    map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }
 
-                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId().toString(), itdtVO);
+                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
             }
 
             for (final ParametroVO prmtVO : prmtList) {

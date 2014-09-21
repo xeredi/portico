@@ -141,7 +141,7 @@ public final class ServicioAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
         enti = TipoServicioProxy.select(item.getEntiId());
-        item = ServicioVO.newInstance(enti);
+        item = new ServicioVO();
 
         loadLabelValuesMap();
 
@@ -209,7 +209,7 @@ public final class ServicioAction extends ItemAction {
         Preconditions.checkNotNull(item.getEntiId());
 
         enti = TipoServicioProxy.select(item.getEntiId());
-        item = ServicioVO.newInstance(enti);
+        item = new ServicioVO();
 
         if (accion == ACCION_EDICION.create) {
             PropertyValidator.validateRequired(this, "item.subp", item.getSubp());

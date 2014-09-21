@@ -119,14 +119,14 @@ public class EstadisticaBO implements Estadistica {
             estdCriterioVO.setIds(ids);
 
             final List<ItemDatoVO> itdtList = esdtDAO.selectList(estdCriterioVO);
-            final Map<Long, Map<String, ItemDatoVO>> itdtMap = new HashMap<>();
+            final Map<Long, Map<Long, ItemDatoVO>> itdtMap = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : itdtList) {
                 if (!itdtMap.containsKey(itdtVO.getItemId())) {
-                    itdtMap.put(itdtVO.getItemId(), new HashMap<String, ItemDatoVO>());
+                    itdtMap.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }
 
-                itdtMap.get(itdtVO.getItemId()).put(itdtVO.getTpdtId().toString(), itdtVO);
+                itdtMap.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
             }
 
             for (final EstadisticaVO estdVO : estdList) {

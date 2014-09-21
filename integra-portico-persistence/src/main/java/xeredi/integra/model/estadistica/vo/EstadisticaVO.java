@@ -1,14 +1,9 @@
 package xeredi.integra.model.estadistica.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,6 +17,16 @@ public final class EstadisticaVO extends ItemVO {
     private ParametroVO autp;
 
     /**
+     * Instantiates a new estadistica vo.
+     */
+    public EstadisticaVO() {
+        super();
+
+        pepr = new PeriodoProcesoVO();
+        autp = new ParametroVO();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -29,33 +34,33 @@ public final class EstadisticaVO extends ItemVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    /**
-     * New instance.
-     *
-     * @param tpesVO
-     *            the tpes vo
-     * @return the estadistica vo
-     */
-    public static EstadisticaVO newInstance(final TipoEstadisticaVO tpesVO) {
-        final EstadisticaVO estdVO = new EstadisticaVO();
-
-        estdVO.setEntiId(tpesVO.getId());
-
-        if (tpesVO.getEntdList() != null && !tpesVO.getEntdList().isEmpty()) {
-            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
-
-            for (final Long tpdtId : tpesVO.getEntdList()) {
-                final ItemDatoVO itdtVO = new ItemDatoVO();
-
-                itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-            }
-
-            estdVO.setItdtMap(itdtMap);
-        }
-
-        return estdVO;
-    }
+    // /**
+    // * New instance.
+    // *
+    // * @param tpesVO
+    // * the tpes vo
+    // * @return the estadistica vo
+    // */
+    // public static EstadisticaVO newInstance(final TipoEstadisticaVO tpesVO) {
+    // final EstadisticaVO estdVO = new EstadisticaVO();
+    //
+    // estdVO.setEntiId(tpesVO.getId());
+    //
+    // if (tpesVO.getEntdList() != null && !tpesVO.getEntdList().isEmpty()) {
+    // final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
+    //
+    // for (final Long tpdtId : tpesVO.getEntdList()) {
+    // final ItemDatoVO itdtVO = new ItemDatoVO();
+    //
+    // itdtVO.setTpdtId(tpdtId);
+    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
+    // }
+    //
+    // estdVO.setItdtMap(itdtMap);
+    // }
+    //
+    // return estdVO;
+    // }
 
     /**
      * {@inheritDoc}

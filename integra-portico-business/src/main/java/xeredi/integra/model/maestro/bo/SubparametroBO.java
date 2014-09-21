@@ -138,7 +138,7 @@ public class SubparametroBO implements Subparametro {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);
-                    sprm.getItdtMap().put(String.valueOf(tpdtId), itdt);
+                    sprm.getItdtMap().put(tpdtId, itdt);
 
                     // throw new Error("No se ha pasado informacion del dato "
                     // + tpspVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del subparametro: " + sprm);
@@ -266,14 +266,14 @@ public class SubparametroBO implements Subparametro {
             sprmCriterioVO.setSpvrIds(spvrIds);
 
             final List<ItemDatoVO> itdtList = spdtDAO.selectList(sprmCriterioVO);
-            final Map<Long, Map<String, ItemDatoVO>> map = new HashMap<>();
+            final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : itdtList) {
                 if (!map.containsKey(itdtVO.getItemId())) {
-                    map.put(itdtVO.getItemId(), new HashMap<String, ItemDatoVO>());
+                    map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }
 
-                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId().toString(), itdtVO);
+                map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
             }
 
             for (final SubparametroVO sprmVO : sprmList) {

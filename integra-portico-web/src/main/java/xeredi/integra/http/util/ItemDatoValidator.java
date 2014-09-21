@@ -27,7 +27,7 @@ public final class ItemDatoValidator {// srdtMap
      */
     public static void validate(final ActionSupport support, final EntidadVO entiVO, final ItemVO itemVO) {
         if (entiVO.getEntdMap() != null) {
-            final Map<String, ItemDatoVO> itdtMap = itemVO.getItdtMap();
+            final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
             for (final EntidadTipoDatoVO entdVO : entiVO.getEntdMap().values()) {
                 final Long tpdtId = entdVO.getTpdt().getId();

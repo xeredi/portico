@@ -138,7 +138,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-            DuplicateInstanceException {
+    DuplicateInstanceException {
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
         final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
@@ -190,7 +190,7 @@ public final class ServicioImporterBO {
                 case T:
                     final TipoServicioVO tpsrVO = TipoServicioProxy.select(entiVO.getId());
 
-                    srvcVO = ServicioVO.newInstance(tpsrVO);
+                    srvcVO = new ServicioVO();
 
                     servId = rs.getLong(i++);
                     final Date fechaCreacion = rs.getDate(i++);
@@ -284,7 +284,7 @@ public final class ServicioImporterBO {
 
                             final ItemDatoVO itdtVO = getItemDato(entdVO, value);
 
-                            srvcVO.getItdtMap().put(entdVO.getTpdt().getId().toString(), itdtVO);
+                            srvcVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
                         }
                     }
 
@@ -302,7 +302,7 @@ public final class ServicioImporterBO {
                     break;
                 case S:
                     final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(entiVO.getId());
-                    final SubservicioVO ssrvVO = SubservicioVO.newInstance(tpssVO);
+                    final SubservicioVO ssrvVO = new SubservicioVO();
                     srvcVO = new ServicioVO();
                     servId = rs.getLong(i++);
 
@@ -388,7 +388,7 @@ public final class ServicioImporterBO {
 
                                 final ItemDatoVO itdtVO = getItemDato(entdVO, value);
 
-                                ssrvVO.getItdtMap().put(entdVO.getTpdt().getId().toString(), itdtVO);
+                                ssrvVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
                             }
                         }
 

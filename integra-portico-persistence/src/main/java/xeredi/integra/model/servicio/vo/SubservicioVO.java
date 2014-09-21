@@ -1,14 +1,10 @@
 package xeredi.integra.model.servicio.vo;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,32 +27,41 @@ public final class SubservicioVO extends ItemVO {
     /** The estado. */
     private String estado;
 
+    // /**
+    // * Instancia un nuevo {@link SubservicioVO} con todos sus datos asociados.
+    // *
+    // * @param tpssVO
+    // * Tipo de Subervicio del que se quiere instanciar un subservicio.
+    // * @return Subservicio creado.
+    // */
+    // public static SubservicioVO newInstance(final TipoSubservicioVO tpssVO) {
+    // final SubservicioVO ssrvVO = new SubservicioVO();
+    //
+    // ssrvVO.setEntiId(tpssVO.getId());
+    //
+    // if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
+    // final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
+    //
+    // for (final Long tpdtId : tpssVO.getEntdList()) {
+    // final ItemDatoVO itdtVO = new ItemDatoVO();
+    //
+    // itdtVO.setTpdtId(tpdtId);
+    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
+    // }
+    //
+    // ssrvVO.setItdtMap(itdtMap);
+    // }
+    //
+    // return ssrvVO;
+    // }
+
     /**
-     * Instancia un nuevo {@link SubservicioVO} con todos sus datos asociados.
-     *
-     * @param tpssVO
-     *            Tipo de Subervicio del que se quiere instanciar un subservicio.
-     * @return Subservicio creado.
+     * Instantiates a new subservicio vo.
      */
-    public static SubservicioVO newInstance(final TipoSubservicioVO tpssVO) {
-        final SubservicioVO ssrvVO = new SubservicioVO();
+    public SubservicioVO() {
+        super();
 
-        ssrvVO.setEntiId(tpssVO.getId());
-
-        if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
-            final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
-
-            for (final Long tpdtId : tpssVO.getEntdList()) {
-                final ItemDatoVO itdtVO = new ItemDatoVO();
-
-                itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-            }
-
-            ssrvVO.setItdtMap(itdtMap);
-        }
-
-        return ssrvVO;
+        srvc = new ServicioVO();
     }
 
     /**

@@ -357,7 +357,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
         final List<EstadisticaVO> estdList = new ArrayList<>();
 
         for (final EstadisticaAgregadoVO esagVO : esagList) {
-            final EstadisticaVO estdVO = EstadisticaVO.newInstance(tpesVO);
+            final EstadisticaVO estdVO = new EstadisticaVO();
             final ParametroVO autpVO = new ParametroVO();
 
             autpVO.setId(esagVO.getSubpId());
@@ -369,7 +369,10 @@ public class PeriodoProcesoBO implements PeriodoProceso {
             if (tpesVO.getEntdMap() != null) {
                 for (final EntidadTipoDatoVO entdVO : tpesVO.getEntdMap().values()) {
                     final Object value = esagVO.getEsdtMap().get(entdVO.getTpdt().getCodigo());
-                    final ItemDatoVO itdtVO = estdVO.getItdtMap().get(entdVO.getTpdt().getId());
+                    final ItemDatoVO itdtVO = new ItemDatoVO();
+
+                    itdtVO.setTpdtId(entdVO.getTpdt().getId());
+                    estdVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
 
                     if (value == null) {
                         if (entdVO.getTpdt().getTipoElemento() == TipoElemento.BO) {

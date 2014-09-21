@@ -16,8 +16,6 @@ import org.apache.commons.io.IOUtils;
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
@@ -73,8 +71,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
     private Date fechaReferencia = null;
 
     /** The manifiesto pesca vo. */
-    private final ServicioVO manifiestoPescaVO = ServicioVO.newInstance(TipoServicioProxy
-            .select(Entidad.MANIFIESTO_PESCA.getId()));
+    private final ServicioVO manifiestoPescaVO = new ServicioVO();
 
     /** The partida pesca list. */
     private final List<SubservicioVO> partidaPescaList = new ArrayList<>();
@@ -222,8 +219,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
             manifiestoPescaVO.getItdtMap().get(TipoDato.TIPO_IVA.getId()).setPrmt(tipoIvaVO);
             manifiestoPescaVO.getItdtMap().get(TipoDato.BOOLEANO_01.getId()).setCantidadEntera(SUJ_PAS_SUST ? 1L : 0L);
 
-            final SubservicioVO ssrv = SubservicioVO.newInstance(TipoSubservicioProxy.select(Entidad.PARTIDA_PESCA
-                    .getId()));
+            final SubservicioVO ssrv = new SubservicioVO();
 
             pesoTotal += getTokenDouble(PescaKeyword.PAR_Peso, line, i);
             importeTotal += getTokenDouble(PescaKeyword.PAR_Importe, line, i);

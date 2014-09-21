@@ -1,15 +1,12 @@
 package xeredi.integra.model.servicio.vo;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,32 +44,41 @@ public final class ServicioVO extends ItemVO {
     /** The estado. */
     private String estado;
 
+    // /**
+    // * Instancia un nuevo {@link ServicioVO} con todos sus datos asociados.
+    // *
+    // * @param tpsrVO
+    // * Tipo de Servicio del que se quiere instanciar un servicio.
+    // * @return Servicio creado.
+    // */
+    // public static ServicioVO newInstance(final TipoServicioVO tpsrVO) {
+    // final ServicioVO srvcVO = new ServicioVO();
+    //
+    // srvcVO.setEntiId(tpsrVO.getId());
+    //
+    // if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
+    // final HashMap<String, ItemDatoVO> itdtMap = new HashMap<>();
+    //
+    // for (final Long tpdtId : tpsrVO.getEntdList()) {
+    // final ItemDatoVO itdtVO = new ItemDatoVO();
+    //
+    // itdtVO.setTpdtId(tpdtId);
+    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
+    // }
+    //
+    // srvcVO.setItdtMap(itdtMap);
+    // }
+    //
+    // return srvcVO;
+    // }
+
     /**
-     * Instancia un nuevo {@link ServicioVO} con todos sus datos asociados.
-     *
-     * @param tpsrVO
-     *            Tipo de Servicio del que se quiere instanciar un servicio.
-     * @return Servicio creado.
+     * Instantiates a new servicio vo.
      */
-    public static ServicioVO newInstance(final TipoServicioVO tpsrVO) {
-        final ServicioVO srvcVO = new ServicioVO();
+    public ServicioVO() {
+        super();
 
-        srvcVO.setEntiId(tpsrVO.getId());
-
-        if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
-            final HashMap<String, ItemDatoVO> itdtMap = new HashMap<>();
-
-            for (final Long tpdtId : tpsrVO.getEntdList()) {
-                final ItemDatoVO itdtVO = new ItemDatoVO();
-
-                itdtVO.setTpdtId(tpdtId);
-                itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-            }
-
-            srvcVO.setItdtMap(itdtMap);
-        }
-
-        return srvcVO;
+        subp = new ParametroVO();
     }
 
     /**
