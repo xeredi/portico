@@ -136,6 +136,10 @@ app.config(function($translateProvider) {
         ssrv_numero : 'N\u00famero',
         ssrv_estado : 'Estado',
 
+        vlrc_grid : 'Valoraci\u00f3n - Listado',
+        vlrc_detail : 'Valoraci\u00f3n - Detalle',
+        vlrc_edit : 'Valoraci\u00f3n - Edici\u00f3n',
+
         vlrc : 'Valoraci\u00f3n',
         vlrcs : 'Valoraciones',
         vlrc_id : 'Id',
@@ -161,6 +165,9 @@ app.config(function($translateProvider) {
         vlrc_vlri_importe_base : 'Importe Base',
         vlrc_vlri_importe_impuesto : 'Importe IVA',
 
+        vlrl_detail : 'L\u00ednea de Valoraci\u00f3n - Detalle',
+        vlrl_edit : 'L\u00ednea de Valoraci\u00f3n - Edici\u00f3n',
+
         vlrl : 'Linea de Valoraci\u00f3n',
         vlrls : 'Lineas de Valoraci\u00f3n',
         vlrl_rgla : 'Regla',
@@ -172,6 +179,9 @@ app.config(function($translateProvider) {
         vlrl_ffin : 'F. Fin',
         vlrl_ssrv : 'Subservicio',
 
+        vlrd_detail : 'Detalle de Valoraci\u00f3n - Detalle',
+        vlrd_edit : 'Detalle de Valoraci\u00f3n - Edici\u00f3n',
+
         vlrd : 'Detalle de Valoraci\u00f3n',
         vlrds : 'Detalles de Valoraci\u00f3n',
         vlrd_valorBase : 'Valor Base',
@@ -180,6 +190,12 @@ app.config(function($translateProvider) {
         vlrd_fini : 'F. Inicio',
         vlrd_ffin : 'F. Fin',
         vlrd_ssrv : 'Subservicio',
+
+        aspc_grid : 'Aspecto - Listado',
+        aspc_detail : 'Aspecto - Detalle',
+        aspc_create : 'Aspecto - Nuevo',
+        aspc_edit : 'Aspecto - Edici\u00f3n',
+        aspc_duplicate : 'Aspecto - Duplicado',
 
         aspc_codigo : 'C\u00f3digo',
         aspc_descripcion : 'Descripci\u00f3n',
@@ -193,6 +209,11 @@ app.config(function($translateProvider) {
         aspc_lsumCuant : "Elem. Sumarizable?",
         aspc_lgrpInfo : 'Elem. de Agrupaci\u00f3n?',
 
+        crgo_grid : 'Cargo - Listado',
+        crgo_detail : 'Cargo - Detalle',
+        crgo_create : 'Cargo - Nuevo',
+        crgo_edit : 'Cargo - Edici\u00f3n',
+
         crgo_codigo : 'C\u00f3digo',
         crgo_descripcion : 'Descripci\u00f3n',
         crgo_codigoNormalizado : 'C\u00f3d. Normalizado',
@@ -203,6 +224,10 @@ app.config(function($translateProvider) {
         crgo_fini : 'F. Inicio',
         crgo_ffin : 'F. Fin',
         crgo_fechaVigencia : 'F. Vigencia',
+
+        rgla_detail : 'Regla - Detalle',
+        rgla_create : 'Regla - Nuevo',
+        rgla_edit : 'Regla - Edici\u00f3n',
 
         rgla_codigo : 'C\u00f3digo',
         rgla_tipo : 'Tipo',
@@ -222,6 +247,10 @@ app.config(function($translateProvider) {
         rgla_pathInfo : 'Ruta Elem. Informativo',
         rgla_etiqCuant : 'Etiq. Elem. Cuantitativo',
         rgla_pathCuant : 'Ruta Elem. Cuantitativo',
+
+        rgin_detail : 'Incompatibilidad - Detalle',
+        rgin_create : 'Incompatibilidad - Nuevo',
+        rgin_edit : 'Incompatibilidad - Edici\u00f3n',
 
         rgin_rgla2 : 'Regla Incompatible',
         rgin_fini : 'F. Inicio',

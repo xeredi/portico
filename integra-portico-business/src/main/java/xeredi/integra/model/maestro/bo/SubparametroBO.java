@@ -53,6 +53,18 @@ public class SubparametroBO implements Subparametro {
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(tpspVO);
 
+        // Validar que los datos del subparametro son correctos
+        if (tpspVO.getEntdList() != null && !tpspVO.getEntdList().isEmpty()) {
+            for (final Long tpdtId : tpspVO.getEntdList()) {
+                if (!sprm.getItdtMap().containsKey(String.valueOf(tpdtId))) {
+                    final ItemDatoVO itdt = new ItemDatoVO();
+
+                    itdt.setTpdtId(tpdtId);
+                    sprm.getItdtMap().put(tpdtId, itdt);
+                }
+            }
+        }
+
         final IgBO igBO = new IgBO();
 
         if (sprmDAO.exists(sprm)) {
@@ -174,13 +186,13 @@ public class SubparametroBO implements Subparametro {
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
 
+        spdtDAO.deleteVersion(sprm);
+
         final int updated = sprmDAO.deleteVersion(sprm);
 
         if (updated == 0) {
             throw new InstanceNotFoundException(SubparametroVO.class.getName(), sprm);
         }
-
-        spdtDAO.deleteVersion(sprm);
     }
 
     /**

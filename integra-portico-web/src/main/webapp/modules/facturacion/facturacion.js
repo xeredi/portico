@@ -29,36 +29,43 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 
     .when("/facturacion/vlrc/grid", {
+        title : 'vlrc_grid',
         templateUrl : "modules/facturacion/vlrc-grid.html",
         controller : "vlrcGridController"
     })
 
     .when("/facturacion/vlrc/detail/:vlrcId", {
+        title : 'vlrc_detail',
         templateUrl : "modules/facturacion/vlrc-detail.html",
         controller : "vlrcDetailController"
     })
 
     .when("/facturacion/vlrc/edit/:vlrcId", {
+        title : 'vlrc_edit',
         templateUrl : "modules/facturacion/vlrc-edit.html",
         controller : "vlrcEditController"
     })
 
     .when("/facturacion/vlrl/detail/:vlrlId", {
+        title : 'vlrl_detail',
         templateUrl : "modules/facturacion/vlrl-detail.html",
         controller : "vlrlDetailController"
     })
 
     .when("/facturacion/vlrl/edit/:vlrlId", {
+        title : 'vlrl_edit',
         templateUrl : "modules/facturacion/vlrl-edit.html",
         controller : "vlrlEditController"
     })
 
     .when("/facturacion/vlrd/detail/:vlrdId", {
+        title : 'vlrd_detail',
         templateUrl : "modules/facturacion/vlrd-detail.html",
         controller : "vlrdDetailController"
     })
 
     .when("/facturacion/vlrd/edit/:vlrdId", {
+        title : 'vlrd_edit',
         templateUrl : "modules/facturacion/vlrd-edit.html",
         controller : "vlrdEditController"
     })
@@ -142,61 +149,73 @@ module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/facturacion/crgo/grid", {
+        title : 'crgo_grid',
         templateUrl : "modules/facturacion/crgo-grid.html",
         controller : "crgoGridController"
     })
 
     .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
+        title : 'crgo_detail',
         templateUrl : "modules/facturacion/crgo-detail.html",
         controller : "crgoDetailController"
     })
 
     .when("/facturacion/crgo/detail/:crgvId", {
+        title : 'crgo_detail',
         templateUrl : "modules/facturacion/crgo-detail.html",
         controller : "crgoDetailController"
     })
 
     .when("/facturacion/crgo/edit/:crgvId", {
+        title : 'crgo_edit',
         templateUrl : "modules/facturacion/crgo-edit.html",
         controller : "crgoEditController"
     })
 
     .when("/facturacion/crgo/create", {
+        title : 'crgo_create',
         templateUrl : "modules/facturacion/crgo-edit.html",
         controller : "crgoCreateController"
     })
 
     .when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
+        title : 'rgla_detail',
         templateUrl : "modules/facturacion/rgla-detail.html",
         controller : "rglaDetailController"
     })
 
     .when("/facturacion/rgla/detail/:rglvId", {
+        title : 'rgla_detail',
         templateUrl : "modules/facturacion/rgla-detail.html",
         controller : "rglaDetailController"
     })
 
     .when("/facturacion/rgla/edit/:rglvId", {
+        title : 'rgla_edit',
         templateUrl : "modules/facturacion/rgla-edit.html",
         controller : "rglaEditController"
     })
 
     .when("/facturacion/rgla/create/:crgvId", {
+        title : 'rgla_create',
         templateUrl : "modules/facturacion/rgla-edit.html",
         controller : "rglaCreateController"
     })
 
     .when("/facturacion/rgin/detail/:rgivId", {
+        title : 'rgin_detail',
         templateUrl : "modules/facturacion/rgin-detail.html",
         controller : "rginDetailController"
     })
 
     .when("/facturacion/rgin/edit/:rgivId", {
+        title : 'rgin_edit',
         templateUrl : "modules/facturacion/rgin-edit.html",
         controller : "rginEditController"
     })
 
     .when("/facturacion/rgin/create/:crgoId/:rglaId", {
+        title : 'rgin_create',
         templateUrl : "modules/facturacion/rgin-edit.html",
         controller : "rginCreateController"
     })
@@ -309,19 +328,17 @@ module.controller("crgoDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "facturacion/crgo-remove.action?crgo.crgv.id=" + $scope.crgo.crgv.id;
+        if (confirm("Are you sure?")) {
+            var url = "facturacion/crgo-remove.action?crgo.crgv.id=" + $scope.crgo.crgv.id;
 
-                $http.get(url).success(function(data) {
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
-                    }
-                });
-            }
-        });
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+        }
     }
 });
 
@@ -374,19 +391,17 @@ module.controller("rglaDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "facturacion/rgla-remove.action?rgla.rglv.id=" + $scope.rgla.rglv.id;
+        if (confirm("Are you sure?")) {
+            var url = "facturacion/rgla-remove.action?rgla.rglv.id=" + $scope.rgla.rglv.id;
 
-                $http.get(url).success(function(data) {
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
-                    }
-                });
-            }
-        });
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+        }
     }
 });
 
@@ -462,19 +477,17 @@ module.controller("rginDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "facturacion/rgin-remove.action?rgin.rgiv.id=" + $scope.rgin.rgiv.id;
+        if (confirm("Are you sure?")) {
+            var url = "facturacion/rgin-remove.action?rgin.rgiv.id=" + $scope.rgin.rgiv.id;
 
-                $http.get(url).success(function(data) {
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
-                    }
-                });
-            }
-        });
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+        }
     }
 });
 
@@ -544,31 +557,37 @@ module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/facturacion/aspc/grid", {
+        title : 'aspc_grid',
         templateUrl : "modules/facturacion/aspc-grid.html",
         controller : "aspcGridController"
     })
 
     .when("/facturacion/aspc/create", {
+        title : 'aspc_create',
         templateUrl : "modules/facturacion/aspc-edit.html",
         controller : "aspcCreateController"
     })
 
     .when("/facturacion/aspc/detail/:aspvId", {
+        title : 'aspc_detail',
         templateUrl : "modules/facturacion/aspc-detail.html",
         controller : "aspcDetailController"
     })
 
     .when("/facturacion/aspc/edit/:aspvId", {
+        title : 'aspc_edit',
         templateUrl : "modules/facturacion/aspc-edit.html",
         controller : "aspcEditController"
     })
 
     .when("/facturacion/aspc/duplicate/:aspvId", {
+        title : 'aspc_duplicate',
         templateUrl : "modules/facturacion/aspc-edit.html",
         controller : "aspcDuplicateController"
     })
 
     .when("/facturacion/aspc/detail/:aspcId/:fechaVigencia", {
+        title : 'aspc_detail',
         templateUrl : "modules/facturacion/aspc-detail.html",
         controller : "aspcDetailController"
     })

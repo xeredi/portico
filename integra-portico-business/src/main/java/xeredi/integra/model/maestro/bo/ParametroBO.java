@@ -2,6 +2,7 @@ package xeredi.integra.model.maestro.bo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -102,9 +103,6 @@ public class ParametroBO implements Parametro {
 
                     itdt.setTpdtId(tpdtId);
                     prmt.getItdtMap().put(tpdtId, itdt);
-
-                    // throw new Error("No se ha pasado informacion del dato "
-                    // + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
                 }
             }
         }
@@ -241,7 +239,8 @@ public class ParametroBO implements Parametro {
 
                 prmtCriterioVO.setId(prmtActual.getId());
                 sprmCriterioVO.setPrmt(prmtCriterioVO);
-                sprmCriterioVO.setFechaVigencia(prmtActual.getPrvr().getFini());
+                sprmCriterioVO.setFechaVigencia(prmtActual.getPrvr().getFfin() == null ? Calendar.getInstance()
+                        .getTime() : prmtActual.getPrvr().getFfin());
 
                 final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
                 final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
