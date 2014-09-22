@@ -7,8 +7,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -41,6 +39,9 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     /** The srvc criterio form. */
     private SubservicioCriterioVO itemCriterio;
 
+    /** The enti. */
+    private TipoSubservicioVO enti;
+
     /**
      * Instantiates a new subservicio listado action.
      */
@@ -67,8 +68,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "ssrv-filtro"),
-        @Action(value = "ssrv-filtro-popup", results = { @Result(name = "success", location = "ssrv-filtro.jsp") }) })
+    @Action(value = "ssrv-filter")
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -83,14 +83,12 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "ssrv-listado"),
-        @Action(value = "ssrv-listado-grid", results = { @Result(name = "success", location = "ssrv-listado.jsp") }),
-        @Action(value = "ssrv-listado-json", results = { @Result(name = "success", type = "json", params = {
-                "excludeNullProperties", "true" }) }) })
+    @Action(value = "ssrv-list")
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+
+        enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
@@ -139,7 +137,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * {@inheritDoc}
      */
     @Override
-    public final SubservicioCriterioVO getItemCriterio() {
+    public SubservicioCriterioVO getItemCriterio() {
         return itemCriterio;
     }
 
@@ -149,7 +147,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * @param value
      *            the new item criterio
      */
-    public final void setItemCriterio(final SubservicioCriterioVO value) {
+    public void setItemCriterio(final SubservicioCriterioVO value) {
         itemCriterio = value;
     }
 
@@ -158,8 +156,17 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      *
      * @return the item list
      */
-    public final PaginatedList<SubservicioVO> getItemList() {
+    public PaginatedList<SubservicioVO> getItemList() {
         return itemList;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoSubservicioVO getEnti() {
+        return enti;
     }
 
 }

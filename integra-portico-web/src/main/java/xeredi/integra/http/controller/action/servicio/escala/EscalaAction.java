@@ -8,10 +8,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
@@ -61,7 +59,7 @@ public final class EscalaAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final EscalaBO escaBO = new EscalaBO();
 
         item = srvcBO.select(item.getId(), getIdioma());

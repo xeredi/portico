@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -30,116 +32,392 @@ import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioBO.
  */
-@Singleton
-public class ServicioBO implements Servicio {
+public class ServicioBO {
+
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(ServicioBO.class);
 
     /** The srvc dao. */
-    @Inject
     ServicioDAO srvcDAO;
 
-    @Inject
+    /** The srsc dao. */
     ServicioSecuenciaDAO srscDAO;
 
     /** The srdt dao. */
-    @Inject
     ServicioDatoDAO srdtDAO;
 
     /** The ssrv dao. */
-    @Inject
     SubservicioDAO ssrvDAO;
 
     /** The ssdt dao. */
-    @Inject
     SubservicioDatoDAO ssdtDAO;
 
     /** The ssss dao. */
-    @Inject
     SubservicioSubservicioDAO ssssDAO;
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param srvcId
+     *            the srvc id
+     * @param idioma
+     *            the idioma
+     * @return the servicio vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final ServicioVO select(final Long srvcId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(srvcId);
         Preconditions.checkNotNull(idioma);
 
-        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        srvcCriterioVO.setId(srvcId);
-        srvcCriterioVO.setIdioma(idioma);
+        srvcDAO = session.getMapper(ServicioDAO.class);
 
-        final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
+        try {
+            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
-        if (srvcVO == null) {
-            throw new InstanceNotFoundException(ServicioVO.class.getName(), srvcId);
+            srvcCriterioVO.setId(srvcId);
+            srvcCriterioVO.setIdioma(idioma);
+
+            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
+
+            if (srvcVO == null) {
+                throw new InstanceNotFoundException(ServicioVO.class.getName(), srvcId);
+            }
+
+            fillDependencies(session, Arrays.asList(new ServicioVO[] { srvcVO }), srvcCriterioVO, true);
+
+            return srvcVO;
+        } finally {
+            session.close();
         }
-
-        fillDependencies(Arrays.asList(new ServicioVO[] { srvcVO }), srvcCriterioVO, true);
-
-        return srvcVO;
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param srvcCriterioVO
+     *            the srvc criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public final PaginatedList<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(srvcCriterioVO);
 
-        final int count = srvcDAO.selectCount(srvcCriterioVO);
-        final List<ServicioVO> srvcList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count > offset) {
-            srvcList.addAll(srvcDAO.selectList(srvcCriterioVO, new RowBounds(offset, limit)));
+        srvcDAO = session.getMapper(ServicioDAO.class);
 
-            // FIXME Ojo en la paginacion, puede traer una barbaridad de
-            // dependencias
-            fillDependencies(srvcList, srvcCriterioVO, true);
+        try {
+            final int count = srvcDAO.selectCount(srvcCriterioVO);
+            final List<ServicioVO> srvcList = new ArrayList<>();
+
+            if (count > offset) {
+                srvcList.addAll(srvcDAO.selectList(srvcCriterioVO, new RowBounds(offset, limit)));
+
+                fillDependencies(session, srvcList, srvcCriterioVO, true);
+            }
+
+            return new PaginatedList<>(srvcList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<>(srvcList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param srvcCriterioVO
+     *            the srvc criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO) {
         Preconditions.checkNotNull(srvcCriterioVO);
 
-        final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        // FIXME Ojo en la paginacion, puede traer una barbaridad de
-        // dependencias
-        fillDependencies(srvcList, srvcCriterioVO, srvcCriterioVO.getLimit() != null);
+        srvcDAO = session.getMapper(ServicioDAO.class);
 
-        return srvcList;
+        try {
+            final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
+
+            fillDependencies(session, srvcList, srvcCriterioVO, srvcCriterioVO.getLimit() != null);
+
+            return srvcList;
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select lupa list.
+     *
+     * @param srvcLupaCriterioVO
+     *            the srvc lupa criterio vo
+     * @param limit
+     *            the limit
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<LabelValueVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(srvcLupaCriterioVO);
 
-        return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(0, limit));
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        srvcDAO = session.getMapper(ServicioDAO.class);
+
+        try {
+            return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(0, limit));
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Insert.
+     *
+     * @param srvcVO
+     *            the srvc vo
+     * @param ssrvList
+     *            the ssrv list
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    public final void insert(final ServicioVO srvcVO, final List<SubservicioVO> ssrvList)
+            throws DuplicateInstanceException {
+        Preconditions.checkNotNull(srvcVO);
+        // Preconditions.checkNotNull(ssrvList);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        srvcDAO = session.getMapper(ServicioDAO.class);
+        ssrvDAO = session.getMapper(SubservicioDAO.class);
+        srdtDAO = session.getMapper(ServicioDatoDAO.class);
+        ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+        srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+
+        try {
+            final IgBO igBO = new IgBO();
+
+            srscDAO.incrementarSecuencia(srvcVO);
+
+            final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
+
+            if (secuencia == null) {
+                throw new Error("No se encuentra secuencia para: " + srvcVO);
+            }
+
+            srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
+
+            if (srvcDAO.exists(srvcVO)) {
+                throw new DuplicateInstanceException(ServicioVO.class.getName(), srvcVO);
+            }
+
+            srvcVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            srvcDAO.insert(srvcVO);
+
+            if (srvcVO.getItdtMap() != null) {
+                for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+                    itdtVO.setItemId(srvcVO.getId());
+                    srdtDAO.insert(itdtVO);
+                }
+            }
+
+            if (ssrvList != null) {
+                for (final SubservicioVO ssrvVO : ssrvList) {
+                    ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    ssrvVO.setSrvc(srvcVO);
+                    ssrvDAO.insert(ssrvVO);
+                }
+
+                for (final SubservicioVO ssrvVO : ssrvList) {
+                    if (ssrvVO.getItdtMap() != null) {
+                        for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
+                            itdtVO.setItemId(ssrvVO.getId());
+                            ssdtDAO.insert(itdtVO);
+                        }
+                    }
+                }
+            }
+
+            session.commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Update.
+     *
+     * @param srvcVO
+     *            the srvc vo
+     */
+    public final void update(final ServicioVO srvcVO) {
+        Preconditions.checkNotNull(srvcVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        srdtDAO = session.getMapper(ServicioDatoDAO.class);
+
+        try {
+            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+                srdtDAO.update(itdtVO);
+            }
+
+            // TODO Actualizar datos del servicio??
+
+            session.commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Duplicate.
+     *
+     * @param srvcVO
+     *            the srvc vo
+     */
+    public final void duplicate(final ServicioVO srvcVO) {
+        LOG.info("duplicate start");
+
+        Preconditions.checkNotNull(srvcVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        srvcDAO = session.getMapper(ServicioDAO.class);
+        ssrvDAO = session.getMapper(SubservicioDAO.class);
+        srdtDAO = session.getMapper(ServicioDatoDAO.class);
+        ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+        srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+
+        try {
+            final IgBO igBO = new IgBO();
+            final Map<Long, Long> ssrvIds = new HashMap<>();
+
+            // Busqueda de los elementos a duplicar
+            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+            srvcCriterioVO.setId(srvcVO.getId());
+            ssrvCriterioVO.setSrvc(srvcCriterioVO);
+
+            final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
+            final List<ItemDatoVO> ssdtList = ssdtDAO.selectList(ssrvCriterioVO);
+            final List<SubservicioSubservicioVO> ssssList = ssssDAO.selectList(ssrvCriterioVO);
+
+            // Duplicado del servicio. Se duplica el propio servicio y sus datos
+            // asociados, los
+            // subservicios y
+            // los datos asociados, y las relaciones entre subservicios.
+            srscDAO.incrementarSecuencia(srvcVO);
+
+            final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
+            final Long srvcIdActual = srvcVO.getId();
+
+            if (secuencia == null) {
+                throw new Error("No se encuentra secuencia para: " + srvcVO.getEtiqueta());
+            }
+
+            srvcVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
+
+            for (final SubservicioVO ssrvVO : ssrvList) {
+                final Long ssrvIdActual = ssrvVO.getId();
+
+                ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                ssrvVO.setSrvc(srvcVO);
+
+                ssrvIds.put(ssrvIdActual, ssrvVO.getId());
+            }
+
+            srvcDAO.insert(srvcVO);
+
+            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+                itdtVO.setItemId(srvcVO.getId());
+
+                srdtDAO.insert(itdtVO);
+            }
+
+            for (final SubservicioVO ssrvVO : ssrvList) {
+                ssrvDAO.insert(ssrvVO);
+            }
+
+            for (final ItemDatoVO ssdtVO : ssdtList) {
+                ssdtVO.setItemId(ssrvIds.get(ssdtVO.getItemId()));
+
+                ssdtDAO.insert(ssdtVO);
+            }
+
+            for (final SubservicioSubservicioVO ssssVO : ssssList) {
+                ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()), ssrvIds.get(ssssVO
+                        .getSsrvHijoId())));
+            }
+
+            session.commit();
+        } finally {
+            session.close();
+        }
+
+        LOG.info("duplicate end");
+    }
+
+    /**
+     * Delete.
+     *
+     * @param srvcId
+     *            the srvc id
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public final void delete(final Long srvcId) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(srvcId);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        srvcDAO = session.getMapper(ServicioDAO.class);
+        ssrvDAO = session.getMapper(SubservicioDAO.class);
+        srdtDAO = session.getMapper(ServicioDatoDAO.class);
+        ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+
+        try {
+            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+            srvcCriterioVO.setId(srvcId);
+            ssrvCriterioVO.setSrvc(srvcCriterioVO);
+
+            ssssDAO.delete(ssrvCriterioVO);
+            ssdtDAO.delete(ssrvCriterioVO);
+            ssrvDAO.delete(ssrvCriterioVO);
+            srdtDAO.delete(srvcCriterioVO);
+
+            final int updated = srvcDAO.delete(srvcId);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ServicioVO.class.getName(), srvcId);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
@@ -152,10 +430,12 @@ public class ServicioBO implements Servicio {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final List<ServicioVO> srvcList, final ServicioCriterioVO srvcCriterioVO,
-            final boolean useIds) {
+    private final void fillDependencies(final SqlSession session, final List<ServicioVO> srvcList,
+            final ServicioCriterioVO srvcCriterioVO, final boolean useIds) {
         Preconditions.checkNotNull(srvcList);
         Preconditions.checkNotNull(srvcCriterioVO);
+
+        srdtDAO = session.getMapper(ServicioDatoDAO.class);
 
         if (!srvcList.isEmpty()) {
             if (useIds) {
@@ -188,166 +468,4 @@ public class ServicioBO implements Servicio {
             }
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
-    public final void insert(final ServicioVO srvcVO, final List<SubservicioVO> ssrvList)
-            throws DuplicateInstanceException {
-        Preconditions.checkNotNull(srvcVO);
-        // Preconditions.checkNotNull(ssrvList);
-
-        final IgBO igBO = new IgBO();
-
-        srscDAO.incrementarSecuencia(srvcVO);
-
-        final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
-
-        if (secuencia == null) {
-            throw new Error("No se encuentra secuencia para: " + srvcVO);
-        }
-
-        srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
-
-        if (srvcDAO.exists(srvcVO)) {
-            throw new DuplicateInstanceException(ServicioVO.class.getName(), srvcVO);
-        }
-
-        srvcVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        srvcDAO.insert(srvcVO);
-
-        if (srvcVO.getItdtMap() != null) {
-            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-                itdtVO.setItemId(srvcVO.getId());
-                srdtDAO.insert(itdtVO);
-            }
-        }
-
-        if (ssrvList != null) {
-            for (final SubservicioVO ssrvVO : ssrvList) {
-                ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                ssrvVO.setSrvc(srvcVO);
-                ssrvDAO.insert(ssrvVO);
-            }
-
-            for (final SubservicioVO ssrvVO : ssrvList) {
-                if (ssrvVO.getItdtMap() != null) {
-                    for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
-                        itdtVO.setItemId(ssrvVO.getId());
-                        ssdtDAO.insert(itdtVO);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
-    public final void update(final ServicioVO srvcVO) {
-        Preconditions.checkNotNull(srvcVO);
-
-        for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-            srdtDAO.update(itdtVO);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
-    public final void duplicate(final ServicioVO srvcVO) {
-        Preconditions.checkNotNull(srvcVO);
-
-        final IgBO igBO = new IgBO();
-        final Map<Long, Long> ssrvIds = new HashMap<>();
-
-        // Busqueda de los elementos a duplicar
-        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-        srvcCriterioVO.setId(srvcVO.getId());
-        ssrvCriterioVO.setSrvc(srvcCriterioVO);
-
-        final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
-        final List<ItemDatoVO> ssdtList = ssdtDAO.selectList(ssrvCriterioVO);
-        final List<SubservicioSubservicioVO> ssssList = ssssDAO.selectList(ssrvCriterioVO);
-
-        // Duplicado del servicio. Se duplica el propio servicio y sus datos
-        // asociados, los
-        // subservicios y
-        // los datos asociados, y las relaciones entre subservicios.
-        srscDAO.incrementarSecuencia(srvcVO);
-
-        final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
-        final Long srvcIdActual = srvcVO.getId();
-
-        if (secuencia == null) {
-            throw new Error("No se encuentra secuencia para: " + srvcVO.getEtiqueta());
-        }
-
-        srvcVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
-
-        srvcDAO.insert(srvcVO);
-
-        for (final SubservicioVO ssrvVO : ssrvList) {
-            final Long ssrvIdActual = ssrvVO.getId();
-
-            ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            ssrvVO.setSrvc(srvcVO);
-            ssrvDAO.insert(ssrvVO);
-
-            ssrvIds.put(ssrvIdActual, ssrvVO.getId());
-        }
-
-        for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-            itdtVO.setItemId(srvcVO.getId());
-            srdtDAO.insert(itdtVO);
-        }
-
-        for (final ItemDatoVO ssdtVO : ssdtList) {
-            ssdtVO.setItemId(ssrvIds.get(ssdtVO.getItemId()));
-            ssdtDAO.insert(ssdtVO);
-        }
-
-        for (final SubservicioSubservicioVO ssssVO : ssssList) {
-            ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()), ssrvIds.get(ssssVO
-                    .getSsrvHijoId())));
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional
-    public final void delete(final Long srvcId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(srvcId);
-
-        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-        srvcCriterioVO.setId(srvcId);
-        ssrvCriterioVO.setSrvc(srvcCriterioVO);
-
-        ssssDAO.delete(ssrvCriterioVO);
-
-        ssdtDAO.delete(ssrvCriterioVO);
-        ssrvDAO.delete(ssrvCriterioVO);
-
-        srdtDAO.delete(srvcCriterioVO);
-
-        final int updated = srvcDAO.delete(srvcId);
-
-        if (updated == 0) {
-            throw new InstanceNotFoundException(ServicioVO.class.getName(), srvcId);
-        }
-    }
-
 }

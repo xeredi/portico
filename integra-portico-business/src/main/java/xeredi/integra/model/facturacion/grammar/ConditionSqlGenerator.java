@@ -161,7 +161,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
 
                     final TipoSubservicioVO tpss = TipoSubservicioProxy.select(entiElem.getId());
 
-                    entiElem = TipoServicioProxy.select(tpss.getTpsr().getId());
+                    entiElem = TipoServicioProxy.select(tpss.getTpsrId());
 
                     sqlElement += "SELECT srvc_pk FROM tbl_servicio_srvc WHERE srvc_pk = ";
                     sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
@@ -237,13 +237,13 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND srdt_srvc_pk = ";
+                        + " AND srdt_srvc_pk = ";
                         sqlElement += isFirst ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
                                 : "item.ssrv_srvc_pk" : "ANY(#{any})";
                         break;
                     case S:
                         sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND ssdt_ssrv_pk = ";
+                        + " AND ssdt_ssrv_pk = ";
                         sqlElement += isFirst ? "item.ssrv_pk" : "ANY(#{any})";
 
                         break;

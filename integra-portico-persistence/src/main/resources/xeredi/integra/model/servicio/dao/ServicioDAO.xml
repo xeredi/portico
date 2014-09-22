@@ -10,7 +10,7 @@
         <result column="srvc_numero" property="numero" />
         <result column="srvc_falta" property="falta" />
         <result column="srvc_fref" property="freferencia" />
-        <result column="srvc_fini" property="finicio" />
+        <result column="srvc_fini" property="fini" />
         <result column="srvc_ffin" property="ffin" />
         <result column="srvc_estado" property="estado" />
 
@@ -166,7 +166,7 @@
             , srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado
         ) VALUES (
             #{id}, #{entiId}, #{subp.id}, #{anno}, #{numero}
-            , portico.getSysDatetime(), #{freferencia}, #{finicio}, #{ffin}, #{estado}
+            , portico.getSysDatetime(), #{freferencia}, #{fini}, #{ffin}, #{estado}
         )
         ]]>
     </insert>

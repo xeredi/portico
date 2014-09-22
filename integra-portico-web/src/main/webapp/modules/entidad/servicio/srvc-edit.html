@@ -1,0 +1,84 @@
+<form role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
+        ng-model="item.id" />
+
+    <fieldset>
+        <legend>{{enti.nombre | uppercase}}</legend>
+
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{"srvc_subp" | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in subpList" value="{{labelValue.value}}"
+                        ng-selected="labelValue.value == item.subp.id">{{labelValue.label}}</option>
+                </select>
+                <p ng-if="accion == 'edit'" class="form-control-static">{{item.subp.etiqueta}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"srvc_anno" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
+                    ng-model="item.anno" class="form-control input-sm" />
+                <p ng-if="accion == 'edit'" class="form-control-static">{{item.anno}}</p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"srvc_numero" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
+                    ng-model="item.numero" class="form-control input-sm" />
+                <p ng-if="accion == 'edit'" class="form-control-static">{{item.numero}}</p>
+            </div>
+
+            <div ng-if="enti.tpdtEstado" class="col-md-1 form-group">
+                <label>{{'srvc_estado' | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="cdrf in enti.tpdtEstado.cdrfList" value="{{cdrf.valor}}"
+                        ng-selected="cdrf.valor == item.estado">{{cdrf.valor}}</option>
+                </select>
+                <p ng-if="accion == 'edit'" class="form-control-static">{{item.estado}}</p>
+            </div>
+
+            <div ng-if="!enti.temporal" class="col-md-1 form-group">
+                <label>{{'srvc_freferencia' | translate}}</label>
+                <p class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="item.freferencia" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                </p>
+            </div>
+
+            <div ng-if="enti.temporal" class="col-md-1 form-group">
+                <label>{{'srvc_fini' | translate}}</label>
+                <p class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="item.fini" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                </p>
+            </div>
+
+            <div ng-if="enti.temporal" class="col-md-1 form-group">
+                <label>{{'srvc_ffin' | translate}}</label>
+                <p class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="item.ffin" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                </p>
+            </div>
+        </div>
+    </fieldset>
+
+    <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+
+    <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+    <ul>
+        <li ng-repeat="error in actionErrors">{{error}}</li>
+    </ul>
+    </alert>
+
+    <fieldset>
+        <button data-ng-click="save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+        </button>
+        <button data-ng-click="cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+        </button>
+    </fieldset>
+</form>

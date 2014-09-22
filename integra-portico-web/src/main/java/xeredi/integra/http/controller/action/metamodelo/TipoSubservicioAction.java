@@ -51,8 +51,7 @@ public final class TipoSubservicioAction extends BaseAction {
     @Action("tpss-create")
     public String create() {
         Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getTpsr());
-        Preconditions.checkNotNull(enti.getTpsr().getId());
+        Preconditions.checkNotNull(enti.getTpsrId());
 
         accion = ACCION_EDICION.create;
 
@@ -86,8 +85,7 @@ public final class TipoSubservicioAction extends BaseAction {
     @Action("tpss-save")
     public String save() {
         Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getTpsr());
-        Preconditions.checkNotNull(enti.getTpsr().getId());
+        Preconditions.checkNotNull(enti.getTpsrId());
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {

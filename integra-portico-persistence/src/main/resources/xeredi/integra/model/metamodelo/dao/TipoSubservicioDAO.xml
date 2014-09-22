@@ -3,24 +3,18 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoSubservicioDAO">
-	<resultMap type="TipoSubservicioVO" id="ResultMap"
-        extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+    <resultMap type="TipoSubservicioVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
         <result column="tpss_es_temporal" property="temporal" />
         <result column="tpss_es_facturable" property="facturable" />
+        <result column="tpss_tpsr_pk" property="tpsrId" />
 
-		<association property="tpsr" javaType="TipoServicioVO">
-            <result column="tpss_tpsr_pk" property="id" />
-            <result column="tpsr_codigo" property="codigo" />
-            <result column="tpsr_nombre" property="nombre" />
-		</association>
+        <association property="tpdtEstado" javaType="TipoDatoVO">
+            <result column="tpss_tpdt_estado_pk" property="id" />
+            <result column="tpdt_nombre" property="nombre" />
+        </association>
+    </resultMap>
 
-		<association property="tpdtEstado" javaType="TipoDatoVO">
-			<result column="tpss_tpdt_estado_pk" property="id" />
-			<result column="tpdt_nombre" property="nombre" />
-		</association>
-	</resultMap>
-
-	<sql id="SelectPrefix">
+    <sql id="SelectPrefix">
     <![CDATA[
         SELECT
             enti.enti_pk, enti.enti_nombre, enti.enti_codigo, enti.enti_tipo
@@ -37,40 +31,38 @@
             LEFT JOIN tbl_tipo_dato_tpdt tpdt ON
                 tpdt.tpdt_pk = tpss.tpss_tpdt_estado_pk
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<where>
-			<if test="ids != null">
-				AND enti.enti_pk IN
-				<foreach collection="ids" item="item" open="(" close=")"
-					separator=", ">#{item}</foreach>
-			</if>
-			<if test="nombre != null and !nombre.empty">
-				AND enti.enti_nombre LIKE #{nombre}
-			</if>
-			<if test="codigo != null and !codigo.empty">
-				AND enti.enti_codigo LIKE #{codigo}
-			</if>
+    <sql id="SelectWhere">
+        <where>
+            <if test="ids != null">
+                AND enti.enti_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
+            </if>
+            <if test="nombre != null and !nombre.empty">
+                AND enti.enti_nombre LIKE #{nombre}
+            </if>
+            <if test="codigo != null and !codigo.empty">
+                AND enti.enti_codigo LIKE #{codigo}
+            </if>
             <if test="tpsrId != null">
                 AND tpss.tpss_tpsr_pk = #{tpsrId}
             </if>
             <if test="facturable != null">
                 AND tpss.tpss_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
             </if>
-		</where>
-	</sql>
+        </where>
+    </sql>
 
-	<select id="selectList" parameterType="TipoSubservicioCriterioVO"
-		resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
+    <select id="selectList" parameterType="TipoSubservicioCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
         <![CDATA[
         ORDER BY enti.enti_nombre, enti.enti_pk
         ]]>
-	</select>
+    </select>
 
-	<select id="count" resultType="int">
+    <select id="count" resultType="int">
         <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -78,20 +70,19 @@
             INNER JOIN tbl_entidad_enti enti ON
                 enti.enti_pk = tpss.tpss_pk
         ]]>
-		<include refid="SelectWhere" />
-	</select>
+        <include refid="SelectWhere" />
+    </select>
 
-	<select id="select" resultMap="ResultMap" parameterType="Long">
-		<include refid="SelectPrefix" />
-		<where>
+    <select id="select" resultMap="ResultMap" parameterType="Long">
+        <include refid="SelectPrefix" />
+        <where>
         <![CDATA[
         enti.enti_pk = #{value}
         ]]>
-		</where>
-	</select>
+        </where>
+    </select>
 
-	<select id="selectLabelValues" parameterType="TipoSubservicioCriterioVO"
-		resultType="LabelValueVO">
+    <select id="selectLabelValues" parameterType="TipoSubservicioCriterioVO" resultType="LabelValueVO">
         <![CDATA[
         SELECT
             enti.enti_pk AS value
@@ -101,26 +92,26 @@
             INNER JOIN tbl_entidad_enti enti ON
                 enti.enti_pk = tpss.tpss_pk
         ]]>
-		<include refid="SelectWhere" />
+        <include refid="SelectWhere" />
         <![CDATA[
         ORDER BY enti.enti_nombre
         ]]>
-	</select>
+    </select>
 
-	<insert id="insert" parameterType="TipoSubservicioVO">
+    <insert id="insert" parameterType="TipoSubservicioVO">
         <![CDATA[
         INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk)
         VALUES (
             #{id}
-            , #{tpsr.id}
+            , #{tpsrId}
             , #{temporal, jdbcType=INTEGER, javaType=Boolean}
             , #{facturable, jdbcType=INTEGER, javaType=Boolean}
             , #{tpdtEstado.id}
         )
         ]]>
-	</insert>
+    </insert>
 
-	<update id="update" parameterType="TipoSubservicioVO">
+    <update id="update" parameterType="TipoSubservicioVO">
         <![CDATA[
         UPDATE tbl_tipo_subservicio_tpss SET
         	tpss_es_temporal = #{temporal, jdbcType=INTEGER, javaType=Boolean}
@@ -128,7 +119,7 @@
         	, tpss_tpdt_estado_pk = #{tpdtEstado.id}
         WHERE
         	tpss_pk = #{id}
-        	AND tpss_tpsr_pk = #{tpsr.id}
+        	AND tpss_tpsr_pk = #{tpsrId}
         ]]>
-	</update>
+    </update>
 </mapper>

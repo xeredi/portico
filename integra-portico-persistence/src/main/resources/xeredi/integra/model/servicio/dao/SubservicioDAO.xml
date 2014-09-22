@@ -7,7 +7,7 @@
         <id column="ssrv_pk" property="id" />
         <result column="ssrv_tpss_pk" property="entiId" />
         <result column="ssrv_numero" property="numero" />
-        <result column="ssrv_fini" property="finicio" />
+        <result column="ssrv_fini" property="fini" />
         <result column="ssrv_ffin" property="ffin" />
         <result column="ssrv_estado" property="estado" />
 
@@ -155,7 +155,7 @@
         INSERT INTO tbl_subservicio_ssrv (
             ssrv_pk, ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado
         ) VALUES (
-            #{id}, #{srvc.id}, #{entiId}, #{numero}, #{finicio}, #{ffin}, #{estado}
+            #{id}, #{srvc.id}, #{entiId}, #{numero}, #{fini}, #{ffin}, #{estado}
         )
         ]]>
     </insert>

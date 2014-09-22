@@ -17,6 +17,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileKeyword;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileType;
 import xeredi.integra.model.estadistica.bo.PeriodoProceso;
@@ -218,20 +219,39 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 final String line = lines.get(i);
 
                 if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
-                    final EstadisticaVO estaVO = new EstadisticaVO();
+                    final EstadisticaVO estd = new EstadisticaVO();
 
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_CAPTURA_PESCA.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EAP_TipoCaptura, line, i,
-                                    Entidad.TIPO_CAPTURA_PESCA));
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                    .setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAP_Kilos, line, i));
-                    estaVO.getItdtMap().get(TipoDato.DECIMAL_01.getId())
-                    .setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EAP_Euros, line, i) / 100);
-                    estaVO.setAutp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
 
-                    estaList.add(estaVO);
+                        itdt.setTpdtId(TipoDato.TIPO_CAPTURA_PESCA.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAP_TipoCaptura, line, i,
+                                Entidad.TIPO_CAPTURA_PESCA));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_01.getId());
+                        itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAP_Kilos, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.DECIMAL_01.getId());
+                        itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EAP_Euros, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    estd.setAutp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+
+                    estaList.add(estd);
                 }
             }
         } catch (final IOException ex) {

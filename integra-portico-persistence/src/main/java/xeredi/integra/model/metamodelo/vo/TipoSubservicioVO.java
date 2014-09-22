@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class TipoSubservicioVO extends EntidadVO {
 
     /** The tpsr id. */
-    private TipoServicioVO tpsr;
+    private Long tpsrId;
 
     /** The temporal. */
     private Boolean temporal;
@@ -33,8 +33,8 @@ public final class TipoSubservicioVO extends EntidadVO {
      *
      * @return the tpsr id
      */
-    public TipoServicioVO getTpsr() {
-        return tpsr;
+    public Long getTpsrId() {
+        return tpsrId;
     }
 
     /**
@@ -43,8 +43,8 @@ public final class TipoSubservicioVO extends EntidadVO {
      * @param value
      *            the new tpsr id
      */
-    public void setTpsr(final TipoServicioVO value) {
-        tpsr = value;
+    public void setTpsrId(final Long value) {
+        tpsrId = value;
     }
 
     /**

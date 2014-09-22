@@ -36,7 +36,7 @@ public final class ServicioVO extends ItemVO {
     private Date freferencia;
 
     /** The finicio. */
-    private Date finicio;
+    private Date fini;
 
     /** The ffin. */
     private Date ffin;
@@ -231,8 +231,8 @@ public final class ServicioVO extends ItemVO {
      *
      * @return the finicio
      */
-    public Date getFinicio() {
-        return finicio;
+    public Date getFini() {
+        return fini;
     }
 
     /**
@@ -241,8 +241,8 @@ public final class ServicioVO extends ItemVO {
      * @param value
      *            the new finicio
      */
-    public void setFinicio(final Date value) {
-        finicio = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**

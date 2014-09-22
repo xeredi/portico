@@ -44,7 +44,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
@@ -138,9 +137,9 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-    DuplicateInstanceException {
+            DuplicateInstanceException {
         final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
         final EntidadVO entiVO = EntidadProxy.select(entidad.getId());
 
@@ -253,7 +252,7 @@ public final class ServicioImporterBO {
                             fechaFin = new Date(tsFin.getTime());
                         }
 
-                        srvcVO.setFinicio(fechaInicio);
+                        srvcVO.setFini(fechaInicio);
                         srvcVO.setFfin(fechaFin);
                     }
 
@@ -306,7 +305,7 @@ public final class ServicioImporterBO {
                     srvcVO = new ServicioVO();
                     servId = rs.getLong(i++);
 
-                    srvcVO.setId(entiMap.get(tpssVO.getTpsr().getId()).get(servId));
+                    srvcVO.setId(entiMap.get(tpssVO.getTpsrId()).get(servId));
                     ssrvVO.setSrvc(srvcVO);
 
                     final Long subservId = rs.getLong(i++);
@@ -335,7 +334,7 @@ public final class ServicioImporterBO {
                                 fechaFin = new Date(tsFin.getTime());
                             }
 
-                            ssrvVO.setFinicio(fechaInicio);
+                            ssrvVO.setFini(fechaInicio);
                             ssrvVO.setFfin(fechaFin);
                         }
 
@@ -355,7 +354,7 @@ public final class ServicioImporterBO {
 
                         if (tpssVO.getEntiPadresList() != null) {
                             for (final Long entdId : tpssVO.getEntiPadresList()) {
-                                if (!entdId.equals(tpssVO.getTpsr().getId())) {
+                                if (!entdId.equals(tpssVO.getTpsrId())) {
                                     final Long padreIntegraId = rs.getLong(i++);
                                     final Long padrePorticoId = entiMap.get(entdId).get(padreIntegraId);
 

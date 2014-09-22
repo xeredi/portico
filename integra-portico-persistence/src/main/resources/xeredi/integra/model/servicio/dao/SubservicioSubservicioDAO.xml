@@ -4,8 +4,13 @@
 
 <mapper namespace="xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO">
     <resultMap type="SubservicioSubservicioVO" id="ResultMap">
-        <id column="ssss_ssrvp_pk" property="ssrvPadreId" />
-        <id column="ssss_ssrvh_pk" property="ssrvHijoId" />
+        <constructor>
+            <arg column="ssss_ssrvp_pk" javaType="Long" />
+            <arg column="ssss_ssrvh_pk" javaType="Long" />
+        </constructor>
+
+        <id column="ssss_ssrvp_pk" />
+        <id column="ssss_ssrvh_pk" />
     </resultMap>
 
     <select id="exists" parameterType="SubservicioSubservicioVO" resultType="boolean">
@@ -26,4 +31,29 @@
         )
         ]]>
     </insert>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="srvc != null">
+                <if test="srvc.id != null">
+                <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_subservicio_ssrv
+                    WHERE ssrv_pk = ssss_ssrvp_pk
+                        AND ssrv_srvc_pk = #{srvc.id}
+                )
+                ]]>
+                </if>
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT ssss_ssrvp_pk, ssss_ssrvh_pk
+        FROM tbl_subserv_subserv_ssss
+    ]]>
+        <include refid="SelectWhere" />
+    </select>
 </mapper>

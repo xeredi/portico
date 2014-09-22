@@ -19,7 +19,7 @@ public final class SubservicioVO extends ItemVO {
     private Integer numero;
 
     /** The finicio. */
-    private Date finicio;
+    private Date fini;
 
     /** The ffin. */
     private Date ffin;
@@ -132,8 +132,8 @@ public final class SubservicioVO extends ItemVO {
      *
      * @return the finicio
      */
-    public Date getFinicio() {
-        return finicio;
+    public Date getFini() {
+        return fini;
     }
 
     /**
@@ -142,8 +142,8 @@ public final class SubservicioVO extends ItemVO {
      * @param value
      *            the new finicio
      */
-    public void setFinicio(final Date value) {
-        finicio = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**

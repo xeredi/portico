@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.Manifiesto;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
@@ -48,7 +47,7 @@ public final class ManifiestoTotalAction extends BaseAction {
      */
     @Action(value = "mani-totales-popup", results = { @Result(name = "success", location = "manifiesto/mani-totales.jsp") })
     public String totales() throws InstanceNotFoundException {
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final Manifiesto maniBO = BOFactory.getInjector().getInstance(ManifiestoBO.class);
 
         item = srvcBO.select(item.getId(), getIdioma());

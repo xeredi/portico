@@ -10,20 +10,19 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
@@ -37,7 +36,6 @@ import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
-import xeredi.util.struts.PropertyValidator;
 
 import com.google.common.base.Preconditions;
 
@@ -93,16 +91,12 @@ public final class ServicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({
-            @Action(value = "srvc-detalle"),
-            @Action(value = "srvc-detalle-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }),
-            @Action(value = "srvc-detalle-popup") })
+    @Action(value = "srvc-detail")
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
         accion = ACCION_EDICION.edit;
@@ -134,16 +128,22 @@ public final class ServicioAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "srvc-alta-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
+    @Action(value = "srvc-create")
     public String alta() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
         enti = TipoServicioProxy.select(item.getEntiId());
-        item = new ServicioVO();
+
+        if (!enti.getTemporal()) {
+            item.setFreferencia(Calendar.getInstance().getTime());
+        }
+
+        item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
         loadLabelValuesMap();
+        loadSubpList();
 
         return SUCCESS;
     }
@@ -155,19 +155,20 @@ public final class ServicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "srvc-modificar-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
+    @Action(value = "srvc-edit")
     public String modificar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         accion = ACCION_EDICION.edit;
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
+        loadSubpList();
 
         return SUCCESS;
     }
@@ -179,19 +180,20 @@ public final class ServicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "srvc-duplicar-popup", results = { @Result(name = "success", location = "srvc-edicion.jsp") })
+    @Action(value = "srvc-duplicate")
     public String duplicar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         accion = ACCION_EDICION.duplicate;
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
 
         loadLabelValuesMap();
+        loadSubpList();
 
         return SUCCESS;
     }
@@ -201,38 +203,74 @@ public final class ServicioAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "srvc-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "srvc-listado",
-                    "itemCriterio.entiId", "%{enti.id}" }), @Result(name = "input", location = "srvc-edicion.jsp") })
+    @Action(value = "srvc-save")
     public String guardar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
         enti = TipoServicioProxy.select(item.getEntiId());
-        item = new ServicioVO();
 
         if (accion == ACCION_EDICION.create) {
-            PropertyValidator.validateRequired(this, "item.subp", item.getSubp());
-            PropertyValidator.validateRequired(this, "item.numero", item.getNumero());
-            PropertyValidator.validateRequired(this, "item.anno", item.getAnno());
+            if (item.getSubp() == null || item.getSubp().getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_subp") }));
+            }
+            if (item.getAnno() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_anno") }));
+            }
+            if (item.getNumero() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_numero") }));
+            }
         } else {
             Preconditions.checkNotNull(item.getId());
         }
 
-        PropertyValidator.validateRequired(this, "item.freferencia", item.getFreferencia());
+        if (enti.getTpdtEstado() != null) {
+            if (GenericValidator.isBlankOrNull(item.getEstado())) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_estado") }));
+            }
+        }
+
+        if (enti.getTemporal()) {
+            if (item.getFini() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_fini") }));
+            }
+            if (item.getFfin() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_ffin") }));
+            }
+        } else {
+            if (item.getFreferencia() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_freferencia") }));
+            }
+        }
+
         ItemDatoValidator.validate(this, enti, item);
 
-        // FIXME ACABAR
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        if (hasErrors()) {
+            return SUCCESS;
+        }
 
-        if (accion == ACCION_EDICION.create) {
+        // FIXME ACABAR
+        final ServicioBO srvcBO = new ServicioBO();
+
+        switch (accion) {
+        case create:
             try {
                 srvcBO.insert(item, null);
             } catch (final DuplicateInstanceException ex) {
                 throw new Error(ex);
             }
-        } else if (accion == ACCION_EDICION.edit) {
+
+            break;
+        case edit:
             srvcBO.update(item);
+
+            break;
+        case duplicate:
+            srvcBO.duplicate(item);
+
+            break;
+        default:
+            throw new Error("Accion no soportada: " + accion);
         }
 
         return SUCCESS;
@@ -245,16 +283,29 @@ public final class ServicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "srvc-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "srvc-listado", "itemCriterio.entiId", "%{enti.id}" }) })
+    @Action(value = "srvc-remove")
     public String borrar() throws InstanceNotFoundException {
         enti = TipoServicioProxy.select(item.getEntiId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
 
         srvcBO.delete(item.getId());
 
         return SUCCESS;
+    }
+
+    /**
+     * Load subp list.
+     */
+    private void loadSubpList() {
+        if (subpList == null) {
+            final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+
+            final Set<Long> tpprIds = new HashSet<>();
+
+            tpprIds.add(Entidad.SUBPUERTO.getId());
+            subpList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(Entidad.SUBPUERTO.getId());
+        }
     }
 
     // get / set
@@ -265,15 +316,6 @@ public final class ServicioAction extends ItemAction {
      * @return the subps
      */
     public List<LabelValueVO> getSubpList() {
-        if (subpList == null) {
-            final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
-
-            final Set<Long> tpprIds = new HashSet<>();
-
-            tpprIds.add(Entidad.SUBPUERTO.getId());
-            subpList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(Entidad.SUBPUERTO.getId());
-        }
-
         return subpList;
     }
 

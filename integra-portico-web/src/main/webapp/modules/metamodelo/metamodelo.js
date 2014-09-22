@@ -831,7 +831,7 @@ metamodelo.controller("tpssEditController", function($scope, $http, $location, $
 });
 
 metamodelo.controller("tpssCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/tpss-create.action?enti.tpsr.id=" + $routeParams.tpsrId;
+    var url = "metamodelo/tpss-create.action?enti.tpsrId=" + $routeParams.tpsrId;
 
     $http.get(url).success(function(data) {
         $scope.enti = data.enti;

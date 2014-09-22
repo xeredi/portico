@@ -2,7 +2,6 @@ package xeredi.integra.model.comun.bo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.poi.ss.formula.functions.T;
 import org.mybatis.guice.XMLMyBatisModule;
 
 import com.google.inject.Guice;
@@ -50,15 +49,15 @@ public final class BOFactory {
         return INJECTOR;
     }
 
-    /**
-     * Gets the bo.
-     *
-     * @param type
-     *            the type
-     * @return the bo
-     */
-    public static T getBO(final Class<? extends T> type) {
-        return INJECTOR.getInstance(type);
-    }
+    // /**
+    // * Gets the bo.
+    // *
+    // * @param type
+    // * the type
+    // * @return the bo
+    // */
+    // public static V<? extends T> getBO(final Class<T> type) {
+    // return INJECTOR.getInstance(type);
+    // }
 
 }

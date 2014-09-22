@@ -10,7 +10,6 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.bo.BOFactory;
@@ -20,7 +19,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -48,6 +46,9 @@ public final class ServicioListadoAction extends ItemListadoAction {
     /** The subps. */
     private List<LabelValueVO> subpList;
 
+    /** The enti. */
+    private TipoServicioVO enti;
+
     /**
      * Instantiates a new servicio listado action.
      */
@@ -74,10 +75,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "srvc-filtro"),
-        @Action(value = "srvc-filtro-popup", results = { @Result(name = "success", location = "srvc-filtro.jsp") }),
-        @Action(value = "srvc-filtro-ftl-popup", results = { @Result(name = "success", type = "freemarker", location = "srvc-filtro.ftl") }) })
+    @Action(value = "srvc-filer")
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -88,29 +86,18 @@ public final class ServicioListadoAction extends ItemListadoAction {
     }
 
     /**
-     * Editar lupa.
-     *
-     * @return the string
-     */
-    @Action(value = "srvc-editar-lupa")
-    public String editarLupa() {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
-
-        return SUCCESS;
-    }
-
-    /**
      * Listado.
      *
      * @return the string
      */
-    @Actions({ @Action(value = "srvc-listado") })
+    @Actions({ @Action(value = "srvc-list") })
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
+
+        final ServicioBO srvcBO = new ServicioBO();
 
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
@@ -151,14 +138,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
                         getItemCriterio().getIdioma()));
             }
         }
-    }
 
-    /**
-     * Gets the subps.
-     *
-     * @return the subps
-     */
-    public List<LabelValueVO> getSubpList() {
         if (subpList == null) {
             subpList = new ArrayList<>();
 
@@ -170,7 +150,14 @@ public final class ServicioListadoAction extends ItemListadoAction {
             subpList.addAll(prmtBO.selectLabelValues(tpprIds, itemCriterio.getFechaVigencia(), getIdioma()).get(
                     Entidad.SUBPUERTO.getId()));
         }
+    }
 
+    /**
+     * Gets the subps.
+     *
+     * @return the subps
+     */
+    public List<LabelValueVO> getSubpList() {
         return subpList;
     }
 
@@ -199,6 +186,15 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     public PaginatedList<ServicioVO> getItemList() {
         return itemList;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoServicioVO getEnti() {
+        return enti;
     }
 
 }

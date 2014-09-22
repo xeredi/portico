@@ -1,9 +1,3 @@
-<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
-<ul>
-    <li ng-repeat="error in actionErrors">{{error}}</li>
-</ul>
-</alert>
-
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
         ng-model="item.id" /><input type="hidden" ng-model="item.prmtId" /><input type="hidden"
@@ -49,6 +43,12 @@
     </fieldset>
 
     <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+
+    <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+    <ul>
+        <li ng-repeat="error in actionErrors">{{error}}</li>
+    </ul>
+    </alert>
 
     <fieldset>
         <button data-ng-click="save()" class="btn btn-primary">

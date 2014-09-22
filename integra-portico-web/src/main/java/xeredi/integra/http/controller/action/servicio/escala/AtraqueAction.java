@@ -9,11 +9,9 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
-import xeredi.integra.model.servicio.bo.Servicio;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
@@ -68,7 +66,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -85,7 +83,7 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
         item.getItdtMap()
-        .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
@@ -95,7 +93,6 @@ public final class AtraqueAction extends ItemAction {
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        enti.setTpsr(TipoServicioProxy.select(enti.getTpsr().getId()));
 
         return SUCCESS;
     }
@@ -150,7 +147,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -165,7 +162,6 @@ public final class AtraqueAction extends ItemAction {
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        enti.setTpsr(TipoServicioProxy.select(enti.getTpsr().getId()));
 
         return SUCCESS;
     }
@@ -220,7 +216,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -235,7 +231,6 @@ public final class AtraqueAction extends ItemAction {
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        enti.setTpsr(TipoServicioProxy.select(enti.getTpsr().getId()));
 
         return SUCCESS;
     }
@@ -290,7 +285,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -315,7 +310,6 @@ public final class AtraqueAction extends ItemAction {
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        enti.setTpsr(TipoServicioProxy.select(enti.getTpsr().getId()));
 
         return SUCCESS;
     }
@@ -366,7 +360,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -380,7 +374,6 @@ public final class AtraqueAction extends ItemAction {
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        enti.setTpsr(TipoServicioProxy.select(enti.getTpsr().getId()));
 
         return SUCCESS;
     }
@@ -431,7 +424,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
-        final Servicio srvcBO = BOFactory.getInjector().getInstance(ServicioBO.class);
+        final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
@@ -448,7 +441,7 @@ public final class AtraqueAction extends ItemAction {
             item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
             item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
             item.getItdtMap()
-            .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
             item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
                     item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
             item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
@@ -461,7 +454,6 @@ public final class AtraqueAction extends ItemAction {
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        enti.setTpsr(TipoServicioProxy.select(enti.getTpsr().getId()));
 
         return SUCCESS;
     }

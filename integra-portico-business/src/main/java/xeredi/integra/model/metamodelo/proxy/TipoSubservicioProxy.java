@@ -79,8 +79,6 @@ public final class TipoSubservicioProxy {
         final List<TipoSubservicioVO> tpssList = tpssBO.selectList(new TipoSubservicioCriterioVO());
 
         for (final TipoSubservicioVO tpssVO : tpssList) {
-            tpssVO.setTpsr(TipoServicioProxy.select(tpssVO.getTpsr().getId()));
-
             if (tpssVO.getTpdtEstado() != null) {
                 tpssVO.setTpdtEstado(TipoDatoProxy.select(tpssVO.getTpdtEstado().getId()));
             }

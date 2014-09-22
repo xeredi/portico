@@ -66,19 +66,16 @@
     <logger name='xeredi'>
         <level value="DEBUG" />
 
-        <appender-ref ref="infoLog" />
         <appender-ref ref="debugLog" />
     </logger>
     <logger name='com.opensymphony.xwork2.interceptor'>
         <level value="INFO" />
 
         <appender-ref ref="infoLog" />
-        <appender-ref ref="debugLog" />
     </logger>
     <root>
         <level value="ERROR" />
 
-        <appender-ref ref="infoLog" />
-        <appender-ref ref="debugLog" />
+        <appender-ref ref="errorLog" />
     </root>
 </log4j:configuration>

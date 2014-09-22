@@ -29,73 +29,72 @@ public final class ItemDatoValidator {// srdtMap
         if (entiVO.getEntdMap() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
-            for (final EntidadTipoDatoVO entdVO : entiVO.getEntdMap().values()) {
-                final Long tpdtId = entdVO.getTpdt().getId();
+            for (final Long tpdtId : entiVO.getEntdList()) {
+                final EntidadTipoDatoVO entd = entiVO.getEntdMap().get(tpdtId);
                 final ItemDatoVO itdtVO = itdtMap.get(tpdtId.toString());
 
-                if (entdVO.getObligatorio() && itdtVO == null) {
-                    support.addActionError(support.getText(ErrorCode.E00001.name(),
-                            new String[] { entdVO.getEtiqueta() }));
+                if (entd.getObligatorio() && itdtVO == null) {
+                    support.addActionError(support.getText(ErrorCode.E00001.name(), new String[] { entd.getEtiqueta() }));
                 }
 
                 if (itdtVO != null) {
-                    itdtVO.setTpdtId(entdVO.getTpdt().getId());
-                    switch (entdVO.getTpdt().getTipoElemento()) {
+                    itdtVO.setTpdtId(entd.getTpdt().getId());
+                    switch (entd.getTpdt().getTipoElemento()) {
                     case BO:
-                        if (entdVO.getObligatorio() && itdtVO.getBooleano() == null) {
+                        if (entd.getObligatorio() && itdtVO.getBooleano() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
-                                    new String[] { entdVO.getEtiqueta() }));
+                                    new String[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case NE:
-                        if (entdVO.getObligatorio() && itdtVO.getCantidadEntera() == null) {
+                        if (entd.getObligatorio() && itdtVO.getCantidadEntera() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
-                                    new String[] { entdVO.getEtiqueta() }));
+                                    new String[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case ND:
-                        if (entdVO.getObligatorio() && itdtVO.getCantidadDecimal() == null) {
+                        if (entd.getObligatorio() && itdtVO.getCantidadDecimal() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
-                                    new String[] { entdVO.getEtiqueta() }));
+                                    new String[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case PR:
-                        if (entdVO.getObligatorio() && (itdtVO.getPrmt() == null || itdtVO.getPrmt().getId() == null)) {
+                        if (entd.getObligatorio() && (itdtVO.getPrmt() == null || itdtVO.getPrmt().getId() == null)) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
-                                    new String[] { entdVO.getEtiqueta() }));
+                                    new String[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case SR:
-                        if (entdVO.getObligatorio() && (itdtVO.getSrvc() == null || itdtVO.getSrvc().getId() == null)) {
+                        if (entd.getObligatorio() && (itdtVO.getSrvc() == null || itdtVO.getSrvc().getId() == null)) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
-                                    new String[] { entdVO.getEtiqueta() }));
+                                    new String[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case CR:
                     case TX:
-                        if (entdVO.getObligatorio() && (itdtVO.getCadena() == null || itdtVO.getCadena().isEmpty())) {
+                        if (entd.getObligatorio() && (itdtVO.getCadena() == null || itdtVO.getCadena().isEmpty())) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
-                                    new String[] { entdVO.getEtiqueta() }));
+                                    new String[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case FE:
                     case FH:
-                        if (entdVO.getObligatorio() && itdtVO.getFecha() == null) {
+                        if (entd.getObligatorio() && itdtVO.getFecha() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
-                                    new String[] { entdVO.getEtiqueta() }));
+                                    new String[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     default:
-                        throw new Error("Tipo de dato no soportado: " + entdVO.getTpdt().getTipoElemento()
+                        throw new Error("Tipo de dato no soportado: " + entd.getTpdt().getTipoElemento()
                                 + " en la entidad: " + entiVO.getNombre() + " y tipo de dato: "
-                                + entdVO.getTpdt().getNombre());
+                                + entd.getTpdt().getNombre());
                     }
                 }
             }

@@ -1,8 +1,8 @@
 var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "ngRoute", "util", "metamodelo",
-        "facturacion", "maestro"/*
-                                 * 'configuracion', 'servicio', 'proceso',
-                                 *
-                                 */]);
+        "facturacion", "maestro", "servicio"/*
+                                             * 'configuracion', 'proceso',
+                                             *
+                                             */]);
 
 app.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -121,17 +121,29 @@ app.config(function($translateProvider) {
         cnen_codigo : 'C\u00f3digo',
         cnen_nombre : 'Nombre',
 
+        srvc_grid : 'Servicio - Listado',
+        srvc_detail : 'Servicio - Detalle',
+        srvc_edit : 'Servicio - Edici\u00f3n',
+        srvc_create : 'Servicio - Alta',
+        srvc_duplicate : 'Servicio - Duplicado',
+
         srvc_servicio : 'Servicio',
-        srvc_finicio : 'F. Inicio',
+        srvc_fini : 'F. Inicio',
         srvc_ffin : 'F. Fin',
         srvc_freferencia : 'F. Referencia',
         srvc_estado : 'Estado',
-        srvc_subp_id : 'Subpuerto',
+        srvc_subp : 'Subpuerto',
         srvc_anno : 'A\u00f1o',
         srvc_numero : 'N\u00famero',
 
+        ssrv_grid : 'Subservicio - Listado',
+        ssrv_detail : 'Subservicio - Detalle',
+        ssrv_edit : 'Subservicio - Edici\u00f3n',
+        ssrv_create : 'Subservicio - Alta',
+        ssrv_duplicate : 'Subservicio - Duplicado',
+
         ssrv_srvc : 'Servicio',
-        ssrv_finicio : 'F. Inicio',
+        ssrv_fini : 'F. Inicio',
         ssrv_ffin : 'F. Fin',
         ssrv_numero : 'N\u00famero',
         ssrv_estado : 'Estado',

@@ -6,45 +6,57 @@
 <configuration>
     <properties resource="Configuration_env.properties" />
 
-	<settings>
-		<setting name="proxyFactory" value="CGLIB" />
-		<setting name="lazyLoadingEnabled" value="false" />
-		<setting name="aggressiveLazyLoading" value="false" />
-		<setting name="useColumnLabel" value="false"/>
-		<setting name="defaultExecutorType" value="REUSE"/>
-		<setting name="multipleResultSetsEnabled" value="false"/>
+    <settings>
+        <setting name="proxyFactory" value="CGLIB" />
+        <setting name="defaultExecutorType" value="BATCH" />
+        <setting name="lazyLoadingEnabled" value="false" />
+        <!--  <setting name="aggressiveLazyLoading" value="false" /> <setting
+            name="useColumnLabel" value="false"/> <setting name="multipleResultSetsEnabled" value="false"/> -->
         <setting name="logImpl" value="${db.logImpl}" />
-		        <!--<setting name="jdbcTypeForNull" value="NULL" /> <setting name="defaultExecutorType"
-			value="REUSE" /> <setting name="logImpl" value="${db.logImpl}" /> NO_LOGGING
-			SLF4J LOG4J <setting name="proxyFactory" value="JAVASSIST"/> CGLIB JAVASSIST -->
-	</settings>
+        <!--<setting name="jdbcTypeForNull" value="NULL" /> <setting name="defaultExecutorType" value="REUSE" /> <setting
+            name="logImpl" value="${db.logImpl}" /> NO_LOGGING SLF4J LOG4J <setting name="proxyFactory" value="JAVASSIST"/> CGLIB JAVASSIST -->
+    </settings>
 
-	<typeAliases>
-		<typeAlias type="xeredi.util.applicationobjects.LabelValueVO"
-			alias="LabelValueVO" />
+    <typeAliases>
+        <typeAlias type="xeredi.util.applicationobjects.LabelValueVO" alias="LabelValueVO" />
 
-		<package name="xeredi.integra.model" />
-	</typeAliases>
+        <package name="xeredi.integra.model" />
+    </typeAliases>
 
-	<typeHandlers>
-		<typeHandler handler="xeredi.util.mybatis.BooleanTypeHandler"
-			javaType="java.lang.Boolean" jdbcType="INTEGER" />
-	</typeHandlers>
+    <typeHandlers>
+        <typeHandler handler="xeredi.util.mybatis.BooleanTypeHandler" javaType="java.lang.Boolean" jdbcType="INTEGER" />
+    </typeHandlers>
 
-	<environments default="local">
-		<environment id="local">
-			<transactionManager type="JDBC" />
+    <environments default="local">
+        <environment id="local">
+            <transactionManager type="JDBC">
+                <property name="DataSource" value="DBCP" />
+                <property name="JDBC.Driver" value="${db.dataSource.driver}" />
+                <property name="JDBC.ConnectionURL" value="${db.dataSource.url}" />
+                <property name="JDBC.Username" value="${db.dataSource.username}" />
+                <property name="JDBC.Password" value="${db.dataSource.password}" />
+                <property name="JDBC.DefaultAutoCommit" value="false" />
 
-			<dataSource type="POOLED">
-				<property name="url" value="${db.dataSource.url}" />
-				<property name="driver" value="${db.dataSource.driver}" />
-				<property name="username" value="${db.dataSource.username}" />
-				<property name="password" value="${db.dataSource.password}" />
-			</dataSource>
-		</environment>
-	</environments>
+                <property name="Pool.MaximumActiveConnections" value="10" />
+                <property name="Pool.MaximumIdleConnections" value="5" />
+                <property name="Pool.MaximumWait" value="60000" />
 
-	<mappers>
-		<package name="xeredi.integra.model" />
-	</mappers>
+                <property name="Pool.ValidationQuery" value="select 1+1" />
+                <property name="Pool.LogAbandoned" value="false" />
+                <property name="Pool.RemoveAbandoned" value="false" />
+                <property name="Pool.RemoveAbandonedTimeout" value="50000" />
+            </transactionManager>
+
+            <dataSource type="POOLED">
+                <property name="url" value="${db.dataSource.url}" />
+                <property name="driver" value="${db.dataSource.driver}" />
+                <property name="username" value="${db.dataSource.username}" />
+                <property name="password" value="${db.dataSource.password}" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <package name="xeredi.integra.model" />
+    </mappers>
 </configuration>

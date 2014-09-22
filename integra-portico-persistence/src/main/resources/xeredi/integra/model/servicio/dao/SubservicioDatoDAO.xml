@@ -42,6 +42,18 @@
                 )
             ]]>
             </if>
+            <if test="srvc != null">
+                <if test="srvc.id != null">
+                <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_subservicio_ssrv
+                    WHERE ssrv_pk = ssdt_ssrv_pk
+                        AND ssrv_srvc_pk = #{srvc.id}
+                )
+                ]]>
+                </if>
+            </if>
 		</where>
 	</sql>
 

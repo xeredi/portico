@@ -202,7 +202,7 @@ public final class ExcelUtil {
             }
 
             if (tpsrVO.getTemporal()) {
-                setCellValue(row, j++, srvcVO.getFinicio());
+                setCellValue(row, j++, srvcVO.getFini());
                 setCellValue(row, j++, srvcVO.getFfin());
             }
 
@@ -279,7 +279,7 @@ public final class ExcelUtil {
             }
 
             if (tpssVO.getTemporal()) {
-                setCellValue(row, j++, ssrvVO.getFinicio());
+                setCellValue(row, j++, ssrvVO.getFini());
                 setCellValue(row, j++, ssrvVO.getFfin());
             }
 

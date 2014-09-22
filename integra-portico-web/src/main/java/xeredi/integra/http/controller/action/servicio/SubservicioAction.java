@@ -8,8 +8,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
@@ -80,10 +78,7 @@ public final class SubservicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({
-            @Action(value = "ssrv-detalle"),
-            @Action(value = "ssrv-detalle-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
+    @Action(value = "ssrv-detail")
     public String detalle() throws InstanceNotFoundException {
         final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
 
@@ -122,7 +117,7 @@ public final class SubservicioAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "ssrv-alta", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
+    @Action(value = "ssrv-create")
     public String alta() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
@@ -143,7 +138,7 @@ public final class SubservicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "ssrv-modificar", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
+    @Action(value = "ssrv-edit")
     public String modificar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -167,7 +162,7 @@ public final class SubservicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "ssrv-duplicar", results = { @Result(name = "success", location = "ssrv-edicion.jsp") })
+    @Action(value = "ssrv-duplicate")
     public String duplicar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.duplicate;
 
@@ -186,9 +181,7 @@ public final class SubservicioAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "ssrv-guardar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "ssrv-detalle", "item.id",
-                    "%{item.id}" }), @Result(name = "input", location = "ssrv-edicion.jsp") })
+    @Action(value = "ssrv-save")
     public String guardar() {
         enti = TipoSubservicioProxy.select(item.getEntiId());
 

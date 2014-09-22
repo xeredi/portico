@@ -574,7 +574,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 switch (calificadorDTM) {
                 case 132:
-                    escalaVO.setFinicio(getTokenDate(BermanKeyword.DTM_FechaHora, line, i, "ddMMyyyyHHmm"));
+                    escalaVO.setFini(getTokenDate(BermanKeyword.DTM_FechaHora, line, i, "ddMMyyyyHHmm"));
 
                     break;
                 case 133:
@@ -880,7 +880,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 switch (calificadorDT2) {
                 case 178:
-                    atraqueVO.setFinicio(fecha);
+                    atraqueVO.setFini(fecha);
 
                     break;
                 case 189:

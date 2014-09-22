@@ -103,8 +103,7 @@ public class TipoSubservicioBO implements TipoSubservicio {
     @Transactional
     public final void insert(final TipoSubservicioVO tpssVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpssVO);
-        Preconditions.checkNotNull(tpssVO.getTpsr());
-        Preconditions.checkNotNull(tpssVO.getTpsr().getId());
+        Preconditions.checkNotNull(tpssVO.getTpsrId());
 
         final Long id = entiDAO.nextSequence();
 

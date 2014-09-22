@@ -413,8 +413,8 @@ public final class DocbookMetamodelo {
                 writer.println("<row><entry>Codigo</entry><entry>" + entiVO.getCodigo() + "</entry></row>");
                 writer.println("<row><entry>Nombre</entry><entry>" + entiVO.getNombre() + "</entry></row>");
                 writer.println("<row><entry>Etiqueta</entry><entry>" + entiVO.getEtiqueta() + "</entry></row>");
-                writer.println("<row><entry>Tipo de Servicio</entry><entry>" + getLinkEntidad(entiVO.getTpsr())
-                        + "</entry></row>");
+                writer.println("<row><entry>Tipo de Servicio</entry><entry>"
+                        + getLinkEntidad(TipoServicioProxy.select(entiVO.getTpsrId())) + "</entry></row>");
                 writer.println("<row><entry>Temporal?</entry><entry>" + (entiVO.getTemporal() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("<row><entry>Facturable?</entry><entry>" + (entiVO.getFacturable() ? "S" : "N")
