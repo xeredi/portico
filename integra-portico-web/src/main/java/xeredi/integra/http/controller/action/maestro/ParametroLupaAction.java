@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -53,7 +51,7 @@ public final class ParametroLupaAction extends BaseAction {
         Preconditions.checkNotNull(itemLupaCriterio.getFechaVigencia());
         Preconditions.checkNotNull(itemLupaCriterio.getTextoBusqueda());
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final TipoParametroVO enti = TipoParametroProxy.select(itemLupaCriterio.getEntiId());
 
         if (enti.getI18n()) {

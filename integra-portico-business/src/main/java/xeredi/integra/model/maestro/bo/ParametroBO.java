@@ -13,7 +13,7 @@ import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
@@ -35,44 +35,44 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * Implementación del servicio de gestión de maestros de la aplicación.
  */
-@Singleton
-public class ParametroBO implements Parametro {
+public class ParametroBO {
 
     /** The prmt dao. */
-    @Inject
     ParametroDAO prmtDAO;
 
     /** The prdt dao. */
-    @Inject
     ParametroDatoDAO prdtDAO;
 
     /** The i18n dao. */
-    @Inject
     ParametroI18nDAO p18nDAO;
 
     /** The sprm dao. */
-    @Inject
     SubparametroDAO sprmDAO;
 
     /** The spdt dao. */
-    @Inject
     SubparametroDatoDAO spdtDAO;
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param prmt
+     *            the prmt
+     * @param tpprVO
+     *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final void insert(final ParametroVO prmt, final TipoParametroVO tpprVO,
             final Map<String, ParametroI18nVO> i18nMap) throws OverlapException {
         Preconditions.checkNotNull(prmt);
@@ -107,44 +107,65 @@ public class ParametroBO implements Parametro {
             }
         }
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (prmtDAO.exists(prmt)) {
-            prmt.setId(prmtDAO.selectId(prmt));
-        } else {
-            prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+        prmtDAO = session.getMapper(ParametroDAO.class);
+        prdtDAO = session.getMapper(ParametroDatoDAO.class);
+        p18nDAO = session.getMapper(ParametroI18nDAO.class);
 
-            prmtDAO.insert(prmt);
-        }
+        try {
+            final IgBO igBO = new IgBO();
 
-        prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            if (prmtDAO.exists(prmt)) {
+                prmt.setId(prmtDAO.selectId(prmt));
+            } else {
+                prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-        if (prmtDAO.existsOverlap(prmt)) {
-            throw new OverlapException(ParametroVO.class.getName(), prmt);
-        }
-
-        prmtDAO.insertVersion(prmt);
-
-        if (prmt.getItdtMap() != null) {
-            for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
-                itdtVO.setItemId(prmt.getPrvr().getId());
-                prdtDAO.insert(itdtVO);
+                prmtDAO.insert(prmt);
             }
-        }
 
-        if (tpprVO.getI18n()) {
-            for (final ParametroI18nVO i18nVO : i18nMap.values()) {
-                i18nVO.setPrvrId(prmt.getPrvr().getId());
-                p18nDAO.insert(i18nVO);
+            prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            if (prmtDAO.existsOverlap(prmt)) {
+                throw new OverlapException(ParametroVO.class.getName(), prmt);
             }
+
+            prmtDAO.insertVersion(prmt);
+
+            if (prmt.getItdtMap() != null) {
+                for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
+                    itdtVO.setItemId(prmt.getPrvr().getId());
+                    prdtDAO.insert(itdtVO);
+                }
+            }
+
+            if (tpprVO.getI18n()) {
+                for (final ParametroI18nVO i18nVO : i18nMap.values()) {
+                    i18nVO.setPrvrId(prmt.getPrvr().getId());
+                    p18nDAO.insert(i18nVO);
+                }
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Duplicate.
+     *
+     * @param prmt
+     *            the prmt
+     * @param tpprVO
+     *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public void duplicate(final ParametroVO prmt, final TipoParametroVO tpprVO,
             final Map<String, ParametroI18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         // TODO Implementar
@@ -184,133 +205,156 @@ public class ParametroBO implements Parametro {
             }
         }
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        // Busqueda del parametro a duplicar
-        final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+        prmtDAO = session.getMapper(ParametroDAO.class);
+        prdtDAO = session.getMapper(ParametroDatoDAO.class);
+        p18nDAO = session.getMapper(ParametroI18nDAO.class);
+        sprmDAO = session.getMapper(SubparametroDAO.class);
+        spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-        prmtCriterio.setPrvrId(prmt.getPrvr().getId());
+        try {
+            final IgBO igBO = new IgBO();
 
-        final ParametroVO prmtActual = prmtDAO.selectObject(prmtCriterio);
+            // Busqueda del parametro a duplicar
+            final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-        if (prmtActual == null) {
-            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
-        }
+            prmtCriterio.setPrvrId(prmt.getPrvr().getId());
 
-        // Alta del nuevo parametro
-        if (prmtDAO.exists(prmt)) {
-            prmt.setId(prmtDAO.selectId(prmt));
-        } else {
-            prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            final ParametroVO prmtActual = prmtDAO.selectObject(prmtCriterio);
 
-            prmtDAO.insert(prmt);
-        }
-
-        prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-        if (prmtDAO.existsOverlap(prmt)) {
-            throw new OverlapException(ParametroVO.class.getName(), prmt);
-        }
-
-        prmtDAO.insertVersion(prmt);
-
-        if (prmt.getItdtMap() != null) {
-            for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
-                itdtVO.setItemId(prmt.getPrvr().getId());
-
-                prdtDAO.insert(itdtVO);
+            if (prmtActual == null) {
+                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
             }
-        }
 
-        if (tpprVO.getI18n()) {
-            for (final ParametroI18nVO p18nVO : i18nMap.values()) {
-                p18nVO.setPrvrId(prmt.getPrvr().getId());
+            // Alta del nuevo parametro
+            if (prmtDAO.exists(prmt)) {
+                prmt.setId(prmtDAO.selectId(prmt));
+            } else {
+                prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-                p18nDAO.insert(p18nVO);
+                prmtDAO.insert(prmt);
             }
-        }
 
-        if (!prmtActual.getId().equals(prmt.getId())) {
-            // Duplicado de subparametros
+            prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-            if (tpprVO.getEntiHijasList() != null && !tpprVO.getEntiHijasList().isEmpty()) {
-                final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
-                final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+            if (prmtDAO.existsOverlap(prmt)) {
+                throw new OverlapException(ParametroVO.class.getName(), prmt);
+            }
 
-                prmtCriterioVO.setId(prmtActual.getId());
-                sprmCriterioVO.setPrmt(prmtCriterioVO);
-                sprmCriterioVO.setFechaVigencia(prmtActual.getPrvr().getFfin() == null ? Calendar.getInstance()
-                        .getTime() : prmtActual.getPrvr().getFfin());
+            prmtDAO.insertVersion(prmt);
 
-                final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
-                final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
-                final Set<Long> spvrIds = new HashSet<>();
+            if (prmt.getItdtMap() != null) {
+                for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
+                    itdtVO.setItemId(prmt.getPrvr().getId());
 
-                for (final SubparametroVO sprmVO : sprmList) {
-                    final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(sprmVO.getEntiId());
-
-                    if (tpspVO.getCmdDuplicado()) {
-                        sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
-                        spvrIds.add(sprmVO.getSpvr().getId());
-                    }
-                }
-
-                if (!spvrIds.isEmpty()) {
-                    sprmCriterioVO.setSpvrIds(spvrIds);
-
-                    final List<ItemDatoVO> spdtList = spdtDAO.selectList(sprmCriterioVO);
-
-                    for (final ItemDatoVO itdtVO : spdtList) {
-                        final SubparametroVO sprmVO = sprmMap.get(itdtVO.getItemId());
-
-                        if (sprmVO != null) {
-                            if (sprmVO.getItdtMap() == null) {
-                                sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
-                            }
-
-                            sprmVO.getItdtMap().put(itdtVO.getTpdtId(), itdtVO);
-                        }
-                    }
-
-                    for (final SubparametroVO sprmVO : sprmMap.values()) {
-                        sprmVO.setPrmtId(prmt.getId());
-                        sprmVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                        sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                        sprmVO.getSpvr().setFini(prmt.getPrvr().getFini());
-                        sprmVO.getSpvr().setFfin(prmt.getPrvr().getFfin());
-
-                        if (sprmVO.getItdtMap() != null) {
-                            for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
-                                itdtVO.setItemId(sprmVO.getSpvr().getId());
-                            }
-                        }
-                    }
-
-                    for (final SubparametroVO sprmVO : sprmMap.values()) {
-                        sprmDAO.insert(sprmVO);
-                    }
-
-                    for (final SubparametroVO sprmVO : sprmMap.values()) {
-                        sprmDAO.insertVersion(sprmVO);
-                    }
-
-                    for (final SubparametroVO sprmVO : sprmMap.values()) {
-                        if (sprmVO.getItdtMap() != null) {
-                            for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
-                                spdtDAO.insert(itdtVO);
-                            }
-                        }
-                    }
+                    prdtDAO.insert(itdtVO);
                 }
             }
+
+            if (tpprVO.getI18n()) {
+                for (final ParametroI18nVO p18nVO : i18nMap.values()) {
+                    p18nVO.setPrvrId(prmt.getPrvr().getId());
+
+                    p18nDAO.insert(p18nVO);
+                }
+            }
+
+            if (!prmtActual.getId().equals(prmt.getId())) {
+                // Duplicado de subparametros
+
+                if (tpprVO.getEntiHijasList() != null && !tpprVO.getEntiHijasList().isEmpty()) {
+                    final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+                    final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+
+                    prmtCriterioVO.setId(prmtActual.getId());
+                    sprmCriterioVO.setPrmt(prmtCriterioVO);
+                    sprmCriterioVO.setFechaVigencia(prmtActual.getPrvr().getFfin() == null ? Calendar.getInstance()
+                            .getTime() : prmtActual.getPrvr().getFfin());
+
+                    final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
+                    final Map<Long, SubparametroVO> sprmMap = new HashMap<>();
+                    final Set<Long> spvrIds = new HashSet<>();
+
+                    for (final SubparametroVO sprmVO : sprmList) {
+                        final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(sprmVO.getEntiId());
+
+                        if (tpspVO.getCmdDuplicado()) {
+                            sprmMap.put(sprmVO.getSpvr().getId(), sprmVO);
+                            spvrIds.add(sprmVO.getSpvr().getId());
+                        }
+                    }
+
+                    if (!spvrIds.isEmpty()) {
+                        sprmCriterioVO.setSpvrIds(spvrIds);
+
+                        final List<ItemDatoVO> spdtList = spdtDAO.selectList(sprmCriterioVO);
+
+                        for (final ItemDatoVO itdtVO : spdtList) {
+                            final SubparametroVO sprmVO = sprmMap.get(itdtVO.getItemId());
+
+                            if (sprmVO != null) {
+                                if (sprmVO.getItdtMap() == null) {
+                                    sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                                }
+
+                                sprmVO.getItdtMap().put(itdtVO.getTpdtId(), itdtVO);
+                            }
+                        }
+
+                        for (final SubparametroVO sprmVO : sprmMap.values()) {
+                            sprmVO.setPrmtId(prmt.getId());
+                            sprmVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                            sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                            sprmVO.getSpvr().setFini(prmt.getPrvr().getFini());
+                            sprmVO.getSpvr().setFfin(prmt.getPrvr().getFfin());
+
+                            if (sprmVO.getItdtMap() != null) {
+                                for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
+                                    itdtVO.setItemId(sprmVO.getSpvr().getId());
+                                }
+                            }
+                        }
+
+                        for (final SubparametroVO sprmVO : sprmMap.values()) {
+                            sprmDAO.insert(sprmVO);
+                        }
+
+                        for (final SubparametroVO sprmVO : sprmMap.values()) {
+                            sprmDAO.insertVersion(sprmVO);
+                        }
+
+                        for (final SubparametroVO sprmVO : sprmMap.values()) {
+                            if (sprmVO.getItdtMap() != null) {
+                                for (final ItemDatoVO itdtVO : sprmVO.getItdtMap().values()) {
+                                    spdtDAO.insert(itdtVO);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param prmt
+     *            the prmt
+     * @param tpprVO
+     *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final void update(final ParametroVO prmt, final TipoParametroVO tpprVO,
             final Map<String, ParametroI18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt);
@@ -347,305 +391,474 @@ public class ParametroBO implements Parametro {
             }
         }
 
-        if (prmtDAO.existsOverlap(prmt)) {
-            throw new OverlapException(ParametroVO.class.getName(), prmt);
-        }
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final int updated = prmtDAO.updateVersion(prmt);
+        prmtDAO = session.getMapper(ParametroDAO.class);
+        prdtDAO = session.getMapper(ParametroDatoDAO.class);
+        p18nDAO = session.getMapper(ParametroI18nDAO.class);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
-        }
-
-        if (prmt.getItdtMap() != null) {
-            for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
-                itdtVO.setItemId(prmt.getPrvr().getId());
-                prdtDAO.update(itdtVO);
+        try {
+            if (prmtDAO.existsOverlap(prmt)) {
+                throw new OverlapException(ParametroVO.class.getName(), prmt);
             }
-        }
 
-        if (i18nMap != null) {
-            for (final ParametroI18nVO i18nVO : i18nMap.values()) {
-                i18nVO.setPrvrId(prmt.getPrvr().getId());
-                p18nDAO.update(i18nVO);
+            final int updated = prmtDAO.updateVersion(prmt);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
             }
+
+            if (prmt.getItdtMap() != null) {
+                for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
+                    itdtVO.setItemId(prmt.getPrvr().getId());
+                    prdtDAO.update(itdtVO);
+                }
+            }
+
+            if (i18nMap != null) {
+                for (final ParametroI18nVO i18nVO : i18nMap.values()) {
+                    i18nVO.setPrvrId(prmt.getPrvr().getId());
+                    p18nDAO.update(i18nVO);
+                }
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param prmt
+     *            the prmt
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final void delete(final ParametroVO prmt) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(prmt.getPrvr());
         Preconditions.checkNotNull(prmt.getPrvr().getId());
 
-        prdtDAO.deleteVersion(prmt);
-        p18nDAO.deleteVersion(prmt);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final int updated = prmtDAO.deleteVersion(prmt);
+        prmtDAO = session.getMapper(ParametroDAO.class);
+        prdtDAO = session.getMapper(ParametroDatoDAO.class);
+        p18nDAO = session.getMapper(ParametroI18nDAO.class);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
+        try {
+            prdtDAO.deleteVersion(prmt);
+            p18nDAO.deleteVersion(prmt);
+
+            final int updated = prmtDAO.deleteVersion(prmt);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        fillDependencies(prmtList, prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+        prmtDAO = session.getMapper(ParametroDAO.class);
 
-        return prmtList;
+        try {
+            final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
+
+            fillDependencies(session, prmtList, prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+
+            return prmtList;
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public final PaginatedList<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final List<ParametroVO> prmtList = new ArrayList<>();
-        final int count = prmtDAO.count(prmtCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count > offset) {
-            prmtList.addAll(prmtDAO.selectList(prmtCriterioVO, new RowBounds(offset, limit)));
+        prmtDAO = session.getMapper(ParametroDAO.class);
 
-            // FIXME Ojo en la paginacion, puede traer una barbaridad de
-            // dependencias
-            fillDependencies(prmtList, prmtCriterioVO, true);
+        try {
+            final List<ParametroVO> prmtList = new ArrayList<>();
+            final int count = prmtDAO.count(prmtCriterioVO);
+
+            if (count > offset) {
+                prmtList.addAll(prmtDAO.selectList(prmtCriterioVO, new RowBounds(offset, limit)));
+
+                // FIXME Ojo en la paginacion, puede traer una barbaridad de
+                // dependencias
+                fillDependencies(session, prmtList, prmtCriterioVO, true);
+            }
+
+            return new PaginatedList<>(prmtList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<>(prmtList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select map.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
      */
-    @Override
-    @Transactional
     public final Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        fillDependencies(prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+        prmtDAO = session.getMapper(ParametroDAO.class);
 
-        return prmtMap;
+        try {
+            final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
+
+            fillDependencies(session, prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+
+            return prmtMap;
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select map by codigo.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
      */
-    @Override
-    @Transactional
     public final Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        fillDependencies(prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+        prmtDAO = session.getMapper(ParametroDAO.class);
 
-        return prmtMap;
+        try {
+            final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
+
+            fillDependencies(session, prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+
+            return prmtMap;
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select map codigo id.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
      */
-    @Override
-    @Transactional
     public final Map<String, Long> selectMapCodigoId(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
-        final Map<String, Long> map = new HashMap<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        for (final ParametroVO prmtVO : prmtList) {
-            map.put(prmtVO.getParametro(), prmtVO.getId());
+        prmtDAO = session.getMapper(ParametroDAO.class);
+
+        try {
+            final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
+            final Map<String, Long> map = new HashMap<>();
+
+            for (final ParametroVO prmtVO : prmtList) {
+                map.put(prmtVO.getParametro(), prmtVO.getId());
+            }
+
+            return map;
+        } finally {
+            session.close();
         }
-
-        return map;
     }
 
     /**
-     * {@inheritDoc}
+     * Select map id codigo.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
      */
-    @Override
-    @Transactional
     public final Map<Long, String> selectMapIdCodigo(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
-        final Map<Long, String> map = new HashMap<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        for (final ParametroVO prmtVO : prmtList) {
-            map.put(prmtVO.getId(), prmtVO.getParametro());
+        prmtDAO = session.getMapper(ParametroDAO.class);
+
+        try {
+            final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
+            final Map<Long, String> map = new HashMap<>();
+
+            for (final ParametroVO prmtVO : prmtList) {
+                map.put(prmtVO.getId(), prmtVO.getParametro());
+            }
+
+            return map;
+        } finally {
+            session.close();
         }
-
-        return map;
     }
 
     /**
-     * {@inheritDoc}
+     * Select label values.
+     *
+     * @param tpprIds
+     *            the tppr ids
+     * @param fechaReferencia
+     *            the fecha referencia
+     * @param idioma
+     *            the idioma
+     * @return the map
      */
-    @Override
-    @Transactional
     public final Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
             final String idioma) {
         Preconditions.checkNotNull(tpprIds);
         Preconditions.checkNotNull(fechaReferencia);
         Preconditions.checkNotNull(idioma);
 
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        prmtCriterioVO.setEntiIds(tpprIds);
-        prmtCriterioVO.setIdioma(idioma);
-        prmtCriterioVO.setFechaVigencia(fechaReferencia);
+        prmtDAO = session.getMapper(ParametroDAO.class);
 
-        final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
-        final Map<Long, List<LabelValueVO>> map = new HashMap<>();
+        try {
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-        for (final ParametroVO prmtVO : prmtList) {
-            if (!map.containsKey(prmtVO.getEntiId())) {
-                map.put(prmtVO.getEntiId(), new ArrayList<LabelValueVO>());
+            prmtCriterioVO.setEntiIds(tpprIds);
+            prmtCriterioVO.setIdioma(idioma);
+            prmtCriterioVO.setFechaVigencia(fechaReferencia);
+
+            final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
+            final Map<Long, List<LabelValueVO>> map = new HashMap<>();
+
+            for (final ParametroVO prmtVO : prmtList) {
+                if (!map.containsKey(prmtVO.getEntiId())) {
+                    map.put(prmtVO.getEntiId(), new ArrayList<LabelValueVO>());
+                }
+
+                String label = prmtVO.getParametro();
+
+                if (prmtVO.getI18n() != null && prmtVO.getI18n().getTexto() != null) {
+                    label += " - " + prmtVO.getI18n().getTexto();
+                }
+
+                map.get(prmtVO.getEntiId()).add(new LabelValueVO(label, prmtVO.getId()));
             }
 
-            String label = prmtVO.getParametro();
-
-            if (prmtVO.getI18n() != null && prmtVO.getI18n().getTexto() != null) {
-                label += " - " + prmtVO.getI18n().getTexto();
-            }
-
-            map.get(prmtVO.getEntiId()).add(new LabelValueVO(label, prmtVO.getId()));
+            return map;
+        } finally {
+            session.close();
         }
-
-        return map;
     }
 
     /**
-     * {@inheritDoc}
+     * Select object.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (prmtVO == null) {
-            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+        prmtDAO = session.getMapper(ParametroDAO.class);
+
+        try {
+            final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
+
+            if (prmtVO == null) {
+                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+            }
+
+            fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
+
+            return prmtVO;
+        } finally {
+            session.close();
         }
-
-        fillDependencies(Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
-
-        return prmtVO;
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param prmtId
+     *            the prmt id
+     * @param idioma
+     *            the idioma
+     * @param fechaVigencia
+     *            the fecha vigencia
+     * @return the parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final ParametroVO select(final Long prmtId, final String idioma, final Date fechaVigencia)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmtId);
 
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        prmtCriterioVO.setId(prmtId);
-        prmtCriterioVO.setIdioma(idioma);
-        prmtCriterioVO.setFechaVigencia(fechaVigencia);
+        prmtDAO = session.getMapper(ParametroDAO.class);
 
-        final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
+        try {
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-        if (prmtVO == null) {
-            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+            prmtCriterioVO.setId(prmtId);
+            prmtCriterioVO.setIdioma(idioma);
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+
+            final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
+
+            if (prmtVO == null) {
+                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+            }
+
+            fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
+
+            return prmtVO;
+        } finally {
+            session.close();
         }
-
-        fillDependencies(Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
-
-        return prmtVO;
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param prvrId
+     *            the prvr id
+     * @param idioma
+     *            the idioma
+     * @return the parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public ParametroVO select(final Long prvrId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prvrId);
 
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-        final Set<Long> prvrIds = new HashSet<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        prvrIds.add(prvrId);
+        prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtCriterioVO.setPrvrIds(prvrIds);
-        prmtCriterioVO.setIdioma(idioma);
+        try {
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+            final Set<Long> prvrIds = new HashSet<>();
 
-        final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
+            prvrIds.add(prvrId);
 
-        if (prmtVO == null) {
-            throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+            prmtCriterioVO.setPrvrIds(prvrIds);
+            prmtCriterioVO.setIdioma(idioma);
+
+            final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
+
+            if (prmtVO == null) {
+                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+            }
+
+            fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
+
+            return prmtVO;
+        } finally {
+            session.close();
         }
-
-        fillDependencies(Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
-
-        return prmtVO;
     }
 
     /**
-     * {@inheritDoc}
+     * Select lupa list.
+     *
+     * @param prmtLupaCriterioVO
+     *            the prmt lupa criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO) {
         Preconditions.checkNotNull(prmtLupaCriterioVO);
 
-        prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
-                GlobalNames.LUPA_LIMIT_DEFAULT));
+        prmtDAO = session.getMapper(ParametroDAO.class);
+
+        try {
+            prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
+
+            return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
+                    GlobalNames.LUPA_LIMIT_DEFAULT));
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select i18n map.
+     *
+     * @param prvrId
+     *            the prvr id
+     * @return the map
      */
-    @Override
-    @Transactional
     public final Map<String, ParametroI18nVO> selectI18nMap(final Long prvrId) {
         Preconditions.checkNotNull(prvrId);
 
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-        final Set<Long> prvrIds = new HashSet<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        prvrIds.add(prvrId);
-        prmtCriterioVO.setPrvrIds(prvrIds);
+        p18nDAO = session.getMapper(ParametroI18nDAO.class);
 
-        final List<ParametroI18nVO> p18nList = p18nDAO.selectList(prmtCriterioVO);
-        final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
+        try {
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+            final Set<Long> prvrIds = new HashSet<>();
 
-        for (final ParametroI18nVO p18nVO : p18nList) {
-            p18nMap.put(p18nVO.getIdioma(), p18nVO);
+            prvrIds.add(prvrId);
+            prmtCriterioVO.setPrvrIds(prvrIds);
+
+            final List<ParametroI18nVO> p18nList = p18nDAO.selectList(prmtCriterioVO);
+            final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
+
+            for (final ParametroI18nVO p18nVO : p18nList) {
+                p18nMap.put(p18nVO.getIdioma(), p18nVO);
+            }
+
+            return p18nMap;
+        } finally {
+            session.close();
         }
-
-        return p18nMap;
     }
 
     /**
      * Rellenado de los datos asociados a una lista de parametros. Búsqueda en parámetro dato.
      *
+     * @param session
+     *            the session
      * @param prmtList
      *            Colleccion de parámetros de los que se desea obtener sus datos asociados.
      * @param prmtCriterioVO
@@ -654,10 +867,12 @@ public class ParametroBO implements Parametro {
      * @param useIds
      *            the use ids
      */
-    private void fillDependencies(final Collection<ParametroVO> prmtList, final ParametroCriterioVO prmtCriterioVO,
-            final boolean useIds) {
+    private void fillDependencies(final SqlSession session, final Collection<ParametroVO> prmtList,
+            final ParametroCriterioVO prmtCriterioVO, final boolean useIds) {
         Preconditions.checkNotNull(prmtList);
         Preconditions.checkNotNull(prmtCriterioVO);
+
+        prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
         if (!prmtList.isEmpty()) {
             if (useIds) {

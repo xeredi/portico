@@ -9,8 +9,6 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.util.Entidad;
@@ -27,7 +25,7 @@ public final class ParametroBOTest {
      */
     @Test
     public static void testSelect() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO criterioVO = new ParametroCriterioVO();
         final Set<Long> tpprIds = new HashSet<>();
 
@@ -49,7 +47,7 @@ public final class ParametroBOTest {
      */
     @Test
     public static void testSelectMap() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
         final Set<Long> tpprIds = new HashSet<>(Arrays.asList(new Long[] { Entidad.PAIS.getId() }));
 

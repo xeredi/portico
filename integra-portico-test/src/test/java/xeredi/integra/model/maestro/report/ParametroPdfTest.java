@@ -16,11 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.Subparametro;
-import xeredi.integra.model.maestro.report.ParametroPdf;
+import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -58,7 +55,7 @@ public final class ParametroPdfTest {
         final String locale = "es_ES";
 
         final ParametroPdf prmtPdf = new ParametroPdf(new Locale(language, country));
-        final Parametro prmt = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
 
         for (final Long tpprId : tpprIds) {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -79,7 +76,7 @@ public final class ParametroPdfTest {
                 }
             }
 
-            final List<ParametroVO> prmtList = prmt.selectList(prmtCriterioVO);
+            final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
 
             LOG.info("Impresion de Parametros");
 
@@ -88,7 +85,7 @@ public final class ParametroPdfTest {
 
                 if (tpprVO.getEntiHijasList() != null) {
                     for (final Long entiId : tpprVO.getEntiHijasList()) {
-                        final Subparametro sprm = BOFactory.getInjector().getInstance(Subparametro.class);
+                        final SubparametroBO sprmBO = new SubparametroBO();
                         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
                         sprmCriterioVO.setFechaVigencia(prmtCriterioVO.getFechaVigencia());
@@ -99,14 +96,14 @@ public final class ParametroPdfTest {
 
                         sprmCriterioVO.setPrmt(prmtCriterioVO);
 
-                        sprmMap.put(entiId, sprm.selectList(sprmCriterioVO));
+                        sprmMap.put(entiId, sprmBO.selectList(sprmCriterioVO));
                     }
                 }
 
                 final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
 
                 if (tpprVO.getI18n()) {
-                    p18nMap.putAll(prmt.selectI18nMap(prmtVO.getPrvr().getId()));
+                    p18nMap.putAll(prmtBO.selectI18nMap(prmtVO.getPrvr().getId()));
                 }
 
                 try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprVO.getId() + "_"

@@ -15,16 +15,13 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -97,7 +94,7 @@ public final class ServicioAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final ServicioBO srvcBO = new ServicioBO();
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         accion = ACCION_EDICION.edit;
         item = srvcBO.select(item.getId(), getIdioma());
@@ -299,7 +296,7 @@ public final class ServicioAction extends ItemAction {
      */
     private void loadSubpList() {
         if (subpList == null) {
-            final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+            final ParametroBO prmtBO = new ParametroBO();
 
             final Set<Long> tpprIds = new HashSet<>();
 

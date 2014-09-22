@@ -16,7 +16,6 @@ import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames;
@@ -69,7 +68,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      * @return the string
      */
     @Actions({ @Action(value = "pepr-filtro"),
-            @Action(value = "pepr-filtro-popup", results = { @Result(name = "success", location = "pepr-filtro.jsp") }) })
+        @Action(value = "pepr-filtro-popup", results = { @Result(name = "success", location = "pepr-filtro.jsp") }) })
     public String filtro() {
         return SUCCESS;
     }
@@ -80,7 +79,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      * @return the string
      */
     @Actions({ @Action(value = "pepr-listado"),
-            @Action(value = "pepr-listado-json", results = { @Result(name = "success", type = "json") }) })
+        @Action(value = "pepr-listado-json", results = { @Result(name = "success", type = "json") }) })
     public String listado() {
         if (hasErrors()) {
             return INPUT;
@@ -147,7 +146,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      * @return the autps
      */
     public List<LabelValueVO> getAutps() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final Set<Long> tpprIds = new HashSet<>();
 
         tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());

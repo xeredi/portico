@@ -16,10 +16,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -80,7 +77,7 @@ public final class ParametroPdfAction extends BaseAction {
             fechaVigencia = Calendar.getInstance().getTime();
         }
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
 
         item = prmtBO.select(item.getId(), getIdioma(), fechaVigencia);
@@ -89,7 +86,7 @@ public final class ParametroPdfAction extends BaseAction {
         final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
 
         if (enti.getEntiHijasList() != null) {
-            final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+            final SubparametroBO sprmBO = new SubparametroBO();
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setId(item.getId());
@@ -143,7 +140,7 @@ public final class ParametroPdfAction extends BaseAction {
      *            the new fecha vigencia
      */
     public void setFechaVigencia(final Date value) {
-        this.fechaVigencia = value;
+        fechaVigencia = value;
     }
 
     /**

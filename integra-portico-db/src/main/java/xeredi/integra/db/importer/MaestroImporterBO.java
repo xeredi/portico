@@ -28,12 +28,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -189,7 +186,7 @@ public final class MaestroImporterBO {
      */
     private void importTipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final TipoParametroVO tpprVO = TipoParametroProxy.select(entidad.getId());
 
         if (tpprVO == null) {
@@ -304,7 +301,7 @@ public final class MaestroImporterBO {
      */
     private void importSubtipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException {
-        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroBO sprmBO = new SubparametroBO();
         final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(entidad.getId());
         final TipoParametroVO tpprPadreVO = TipoParametroProxy.select(tpspVO.getTpprId());
 

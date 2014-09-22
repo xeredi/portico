@@ -10,11 +10,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
@@ -61,7 +59,7 @@ public final class SubservicioXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);

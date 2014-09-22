@@ -8,12 +8,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.escala.AtraqueBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -65,7 +63,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
@@ -146,7 +144,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
@@ -215,7 +213,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
@@ -284,7 +282,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
@@ -359,7 +357,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
@@ -423,7 +421,7 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final ServicioBO srvcBO = new ServicioBO();
         final AtraqueBO atraBO = new AtraqueBO();
 

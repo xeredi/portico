@@ -10,9 +10,7 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemVO;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -85,7 +83,7 @@ public abstract class ItemAction extends BaseAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+                final ParametroBO prmtBO = new ParametroBO();
 
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
             }

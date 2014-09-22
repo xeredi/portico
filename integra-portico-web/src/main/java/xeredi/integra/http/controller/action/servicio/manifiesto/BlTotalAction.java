@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.Bl;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
@@ -55,7 +54,7 @@ public final class BlTotalAction extends BaseAction {
         Preconditions.checkNotNull(item.getSrvc());
         Preconditions.checkNotNull(item.getSrvc().getId());
 
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final Bl mablBO = BOFactory.getInjector().getInstance(BlBO.class);
 
         item = ssrvBO.select(item.getId(), getIdioma());

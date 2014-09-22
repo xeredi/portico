@@ -8,10 +8,8 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
-import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -93,7 +91,7 @@ public final class SubparametroAction extends ItemAction {
 
         accion = ACCION_EDICION.edit;
 
-        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroBO sprmBO = new SubparametroBO();
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
         sprmCriterioVO.setSpvrId(item.getSpvr().getId());
@@ -123,7 +121,7 @@ public final class SubparametroAction extends ItemAction {
 
         accion = ACCION_EDICION.duplicate;
 
-        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroBO sprmBO = new SubparametroBO();
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
         sprmCriterioVO.setSpvrId(item.getSpvr().getId());
@@ -148,7 +146,7 @@ public final class SubparametroAction extends ItemAction {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
 
-        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroBO sprmBO = new SubparametroBO();
 
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
@@ -224,7 +222,7 @@ public final class SubparametroAction extends ItemAction {
             throw new Error("Identificador de version del subparametro no especificado");
         }
 
-        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroBO sprmBO = new SubparametroBO();
 
         try {
             sprmBO.delete(item);
@@ -248,7 +246,7 @@ public final class SubparametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getSpvr());
         Preconditions.checkNotNull(item.getSpvr().getId());
 
-        final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+        final SubparametroBO sprmBO = new SubparametroBO();
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
         sprmCriterioVO.setSpvrId(item.getSpvr().getId());

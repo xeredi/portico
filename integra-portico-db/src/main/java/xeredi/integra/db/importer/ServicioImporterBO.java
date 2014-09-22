@@ -30,9 +30,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -45,7 +43,6 @@ import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -138,9 +135,9 @@ public final class ServicioImporterBO {
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
             DuplicateInstanceException {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
-        final Subservicio ssrvBO = BOFactory.getInjector().getInstance(SubservicioBO.class);
+        final SubservicioBO ssrvBO = new SubservicioBO();
         final EntidadVO entiVO = EntidadProxy.select(entidad.getId());
 
         if (entiVO == null) {

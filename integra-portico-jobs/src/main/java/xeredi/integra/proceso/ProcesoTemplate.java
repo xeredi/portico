@@ -12,7 +12,6 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -103,7 +102,7 @@ public abstract class ProcesoTemplate {
             LOG.info("Busqueda de Maestros");
         }
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
 
         for (final Entidad entidad : codigoMaestroMap.keySet()) {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -128,7 +127,7 @@ public abstract class ProcesoTemplate {
             LOG.info("Busqueda de Organizaciones");
         }
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());

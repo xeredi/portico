@@ -12,8 +12,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -132,7 +130,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+                final ParametroBO prmtBO = new ParametroBO();
 
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
                         getItemCriterio().getIdioma()));
@@ -142,7 +140,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
         if (subpList == null) {
             subpList = new ArrayList<>();
 
-            final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+            final ParametroBO prmtBO = new ParametroBO();
             final Set<Long> tpprIds = new HashSet<>();
 
             tpprIds.add(Entidad.SUBPUERTO.getId());

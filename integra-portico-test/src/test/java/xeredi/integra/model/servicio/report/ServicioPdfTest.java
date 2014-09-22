@@ -16,13 +16,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.Subservicio;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -85,7 +83,7 @@ public final class ServicioPdfTest {
 
                 if (tpsrVO.getEntiHijasList() != null) {
                     for (final Long entiId : tpsrVO.getEntiHijasList()) {
-                        final Subservicio ssrv = BOFactory.getInjector().getInstance(SubservicioBO.class);
+                        final SubservicioBO ssrvBO = new SubservicioBO();
                         final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
                         ssrvCriterioVO.setFechaVigencia(srvcCriterioVO.getFechaVigencia());
@@ -96,7 +94,7 @@ public final class ServicioPdfTest {
 
                         ssrvCriterioVO.setSrvc(srvcCriterioVO);
 
-                        ssrvMap.put(entiId, ssrv.selectList(ssrvCriterioVO));
+                        ssrvMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO));
                     }
                 }
 

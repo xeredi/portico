@@ -17,7 +17,6 @@ import xeredi.integra.model.estadistica.bo.Estadistica;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -127,7 +126,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+                final ParametroBO prmtBO = new ParametroBO();
 
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
                         getItemCriterio().getIdioma()));
@@ -141,7 +140,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      * @return the autps
      */
     public List<LabelValueVO> getAutpList() {
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final Set<Long> tpprIds = new HashSet<>();
 
         tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());

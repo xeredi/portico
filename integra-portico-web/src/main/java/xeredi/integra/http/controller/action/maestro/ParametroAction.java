@@ -13,12 +13,9 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.Subparametro;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
@@ -113,7 +110,7 @@ public final class ParametroAction extends ItemAction {
 
         accion = ACCION_EDICION.edit;
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         try {
@@ -148,7 +145,7 @@ public final class ParametroAction extends ItemAction {
 
         accion = ACCION_EDICION.duplicate;
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setPrvrId(item.getPrvr().getId());
@@ -181,7 +178,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getPrvr());
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
 
         enti = TipoParametroProxy.select(item.getEntiId());
 
@@ -270,7 +267,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getPrvr());
         Preconditions.checkNotNull(item.getPrvr().getId());
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
 
         try {
             prmtBO.delete(item);
@@ -292,7 +289,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkArgument(item.getId() != null && fechaVigencia != null || item.getPrvr() != null
                 && item.getPrvr().getId() != null);
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setId(item.getId());
@@ -312,7 +309,7 @@ public final class ParametroAction extends ItemAction {
             }
 
             if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-                final Subparametro sprmBO = BOFactory.getInjector().getInstance(SubparametroBO.class);
+                final SubparametroBO sprmBO = new SubparametroBO();
 
                 entiHijasList = new ArrayList<>();
                 itemHijosMap = new HashMap<>();

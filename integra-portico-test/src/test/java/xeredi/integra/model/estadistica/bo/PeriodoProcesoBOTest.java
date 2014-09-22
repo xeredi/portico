@@ -7,9 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.maestro.bo.Parametro;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -40,7 +38,7 @@ public final class PeriodoProcesoBOTest {
     public void testAgregacion() throws InstanceNotFoundException, DuplicateInstanceException, IOException {
         LOG.info("Start test");
 
-        final Parametro prmtBO = BOFactory.getInjector().getInstance(ParametroBO.class);
+        final ParametroBO prmtBO = new ParametroBO();
         final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
 
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
