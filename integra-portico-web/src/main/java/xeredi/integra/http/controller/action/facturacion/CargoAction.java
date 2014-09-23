@@ -10,12 +10,9 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
-import xeredi.integra.model.facturacion.bo.Cargo;
 import xeredi.integra.model.facturacion.bo.CargoBO;
-import xeredi.integra.model.facturacion.bo.Regla;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoTipo;
@@ -70,7 +67,7 @@ public final class CargoAction extends BaseAction {
         Preconditions.checkArgument(crgo.getId() != null && fechaVigencia != null || crgo.getCrgv() != null
                 && crgo.getCrgv().getId() != null);
 
-        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+        final CargoBO crgoBO = new CargoBO();
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setId(crgo.getId());
@@ -83,7 +80,7 @@ public final class CargoAction extends BaseAction {
         crgo = crgoBO.select(crgoCriterioVO);
 
         if (crgo != null) {
-            final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+            final ReglaBO rglaBO = new ReglaBO();
             final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
             rglaCriterioVO.setCrgvId(crgo.getCrgv().getId());
@@ -122,7 +119,7 @@ public final class CargoAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+        final CargoBO crgoBO = new CargoBO();
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setCrgvId(crgo.getCrgv().getId());
@@ -178,7 +175,7 @@ public final class CargoAction extends BaseAction {
             return SUCCESS;
         }
 
-        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+        final CargoBO crgoBO = new CargoBO();
 
         switch (accion) {
         case create:
@@ -217,7 +214,7 @@ public final class CargoAction extends BaseAction {
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());
 
-        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+        final CargoBO crgoBO = new CargoBO();
 
         try {
             crgoBO.delete(crgo);

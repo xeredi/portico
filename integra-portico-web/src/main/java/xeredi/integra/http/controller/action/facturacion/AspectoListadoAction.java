@@ -4,8 +4,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Aspecto;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
@@ -62,7 +60,7 @@ public final class AspectoListadoAction extends BaseAction {
     public String list() {
         Preconditions.checkNotNull(aspcCriterio);
 
-        final Aspecto aspcBO = BOFactory.getInjector().getInstance(AspectoBO.class);
+        final AspectoBO aspcBO = new AspectoBO();
 
         aspcList = aspcBO.selectList(aspcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 

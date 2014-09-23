@@ -3,8 +3,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoServicio;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
@@ -51,7 +49,7 @@ public final class TipoServicioListadoAction extends BaseAction {
      */
     @Action("tpsr-list")
     public String list() {
-        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
+        final TipoServicioBO tpsrBO = new TipoServicioBO();
 
         if (entiCriterio.getCodigo() != null) {
             entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());

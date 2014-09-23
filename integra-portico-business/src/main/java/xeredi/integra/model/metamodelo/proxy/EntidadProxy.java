@@ -8,8 +8,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -78,7 +76,7 @@ public final class EntidadProxy {
     private static void load() {
         LOG.info("Carga de Entidades");
 
-        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
+        final EntidadBO entiBO = new EntidadBO();
         final Map<Long, TipoDatoVO> tpdtMap = TipoDatoProxy.selectMap();
 
         ENTIDAD_MAP.putAll(entiBO.selectMap(tpdtMap));

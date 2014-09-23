@@ -2,7 +2,8 @@ package xeredi.integra.model.metamodelo.bo;
 
 import java.util.List;
 
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO;
@@ -12,31 +13,30 @@ import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadEntidadAdminBO.
  */
-@Singleton
-public class EntidadEntidadBO implements EntidadEntidad {
+public class EntidadEntidadBO {
 
     /** The enti dao. */
-    @Inject
     EntidadDAO entiDAO;
 
     /** The enen dao. */
-    @Inject
     EntidadEntidadDAO enenDAO;
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param enenVO
+     *            the enen vo
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
-    @Override
-    @Transactional
     public final void insert(final EntidadEntidadVO enenVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(enenVO);
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
@@ -44,32 +44,46 @@ public class EntidadEntidadBO implements EntidadEntidad {
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
         Preconditions.checkNotNull(enenVO.getOrden());
 
-        final EntidadVO entiPadreVO = entiDAO.select(enenVO.getEntiPadreId());
-        final EntidadVO entiHijaVO = entiDAO.select(enenVO.getEntiHija().getId());
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (entiPadreVO.getTipo() == TipoEntidad.P
-                && (entiHijaVO.getTipo() == TipoEntidad.T || entiHijaVO.getTipo() == TipoEntidad.S)) {
-            throw new Error("Una entidad de tipo maestro no puede ser padre de entidades asociadas a servicios: "
-                    + enenVO);
-        }
-        if (entiPadreVO.getTipo() == TipoEntidad.S && entiHijaVO.getTipo() == TipoEntidad.T) {
-            throw new Error(
-                    "Una entidad de tipo subservicio no puede ser padre de entidades asociadas a tipos de servicio: "
-                            + enenVO);
-        }
+        entiDAO = session.getMapper(EntidadDAO.class);
+        enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
-        if (enenDAO.exists(enenVO)) {
-            throw new DuplicateInstanceException(EntidadEntidadVO.class.getName(), enenVO);
-        }
+        try {
+            final EntidadVO entiPadreVO = entiDAO.select(enenVO.getEntiPadreId());
+            final EntidadVO entiHijaVO = entiDAO.select(enenVO.getEntiHija().getId());
 
-        enenDAO.insert(enenVO);
+            if (entiPadreVO.getTipo() == TipoEntidad.P
+                    && (entiHijaVO.getTipo() == TipoEntidad.T || entiHijaVO.getTipo() == TipoEntidad.S)) {
+                throw new Error("Una entidad de tipo maestro no puede ser padre de entidades asociadas a servicios: "
+                        + enenVO);
+            }
+            if (entiPadreVO.getTipo() == TipoEntidad.S && entiHijaVO.getTipo() == TipoEntidad.T) {
+                throw new Error(
+                        "Una entidad de tipo subservicio no puede ser padre de entidades asociadas a tipos de servicio: "
+                                + enenVO);
+            }
+
+            if (enenDAO.exists(enenVO)) {
+                throw new DuplicateInstanceException(EntidadEntidadVO.class.getName(), enenVO);
+            }
+
+            enenDAO.insert(enenVO);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param enenVO
+     *            the enen vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final void update(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenVO);
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
@@ -77,52 +91,95 @@ public class EntidadEntidadBO implements EntidadEntidad {
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
         Preconditions.checkNotNull(enenVO.getOrden());
 
-        final int updated = enenDAO.update(enenVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
+        enenDAO = session.getMapper(EntidadEntidadDAO.class);
+
+        try {
+            final int updated = enenDAO.update(enenVO);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param enenVO
+     *            the enen vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final void delete(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenVO);
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
         Preconditions.checkNotNull(enenVO.getEntiHija());
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
 
-        final int updated = enenDAO.delete(enenVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
+        enenDAO = session.getMapper(EntidadEntidadDAO.class);
+
+        try {
+            final int updated = enenDAO.delete(enenVO);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param enenCriterioVO
+     *            the enen criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<EntidadEntidadVO> selectList(final EntidadEntidadCriterioVO enenCriterioVO) {
         Preconditions.checkNotNull(enenCriterioVO);
 
-        return enenDAO.selectList(enenCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        enenDAO = session.getMapper(EntidadEntidadDAO.class);
+
+        try {
+            return enenDAO.selectList(enenCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select object.
+     *
+     * @param enenCriterioVO
+     *            the enen criterio vo
+     * @return the entidad entidad vo
      */
-    @Override
-    @Transactional
     public final EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO) {
         Preconditions.checkNotNull(enenCriterioVO);
         Preconditions.checkNotNull(enenCriterioVO.getEntiPadreId());
         Preconditions.checkNotNull(enenCriterioVO.getEntiHijaId());
 
-        return enenDAO.selectObject(enenCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        enenDAO = session.getMapper(EntidadEntidadDAO.class);
+
+        try {
+            return enenDAO.selectObject(enenCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 }

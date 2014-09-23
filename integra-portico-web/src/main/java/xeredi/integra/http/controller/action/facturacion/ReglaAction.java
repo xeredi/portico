@@ -10,14 +10,10 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
-import xeredi.integra.model.facturacion.bo.Cargo;
 import xeredi.integra.model.facturacion.bo.CargoBO;
-import xeredi.integra.model.facturacion.bo.Regla;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
-import xeredi.integra.model.facturacion.bo.ReglaIncompatible;
 import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
@@ -27,9 +23,7 @@ import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaTipo;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
-import xeredi.integra.model.metamodelo.bo.TipoServicio;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
-import xeredi.integra.model.metamodelo.bo.TipoSubservicio;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
@@ -84,7 +78,7 @@ public final class ReglaAction extends BaseAction {
         Preconditions.checkArgument(rgla.getId() != null && fechaVigencia != null || rgla.getRglv() != null
                 && rgla.getRglv().getId() != null);
 
-        final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+        final ReglaBO rglaBO = new ReglaBO();
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
         rglaCriterioVO.setId(rgla.getId());
@@ -97,7 +91,7 @@ public final class ReglaAction extends BaseAction {
         try {
             rgla = rglaBO.select(rglaCriterioVO);
 
-            final ReglaIncompatible rginBO = BOFactory.getInjector().getInstance(ReglaIncompatibleBO.class);
+            final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
             final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
 
             rginCriterioVO.setRgla1Id(rgla.getId());
@@ -124,7 +118,7 @@ public final class ReglaAction extends BaseAction {
 
         accion = ACCION_EDICION.create;
 
-        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+        final CargoBO crgoBO = new CargoBO();
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setCrgvId(rgla.getCrgo().getCrgv().getId());
@@ -155,7 +149,7 @@ public final class ReglaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+        final ReglaBO rglaBO = new ReglaBO();
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
         rglaCriterioVO.setRglvId(rgla.getRglv().getId());
@@ -176,7 +170,7 @@ public final class ReglaAction extends BaseAction {
      * Busqueda de entidades Facturables para el cargo al que va a pertenecer la regla.
      */
     private void loadEntiFacturables() {
-        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
+        final TipoServicioBO tpsrBO = new TipoServicioBO();
         final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
 
         tpsrCriterioVO.setId(rgla.getCrgo().getTpsr().getId());
@@ -184,7 +178,7 @@ public final class ReglaAction extends BaseAction {
 
         entiFacturableList.addAll(tpsrBO.selectList(tpsrCriterioVO));
 
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
 
         tpssCriterioVO.setTpsrId(rgla.getCrgo().getTpsr().getId());
@@ -385,7 +379,7 @@ public final class ReglaAction extends BaseAction {
             return SUCCESS;
         }
 
-        final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+        final ReglaBO rglaBO = new ReglaBO();
 
         switch (accion) {
         case create:
@@ -422,7 +416,7 @@ public final class ReglaAction extends BaseAction {
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
-        final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+        final ReglaBO rglaBO = new ReglaBO();
 
         try {
             rglaBO.delete(rgla);

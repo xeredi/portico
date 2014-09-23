@@ -8,8 +8,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoDato;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
@@ -72,7 +70,7 @@ public final class TipoDatoProxy {
     private static void load() {
         LOG.info("Carga de tipos de Dato");
 
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
 
         TIPO_DATO_MAP.putAll(tpdtBO.selectMap(new TipoDatoCriterioVO()));
         LABEL_VALUE_LIST.addAll(tpdtBO.selectLabelValues(new TipoDatoCriterioVO()));

@@ -4,9 +4,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.TipoSubparametro;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -62,7 +60,7 @@ public final class TipoSubparametroAction extends BaseAction {
             throw new Error("Identificador de tipo de subparametro no especificado");
         }
 
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
         enti = tpspBO.select(enti.getId());
 
@@ -117,7 +115,7 @@ public final class TipoSubparametroAction extends BaseAction {
             return SUCCESS;
         }
 
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
@@ -149,7 +147,7 @@ public final class TipoSubparametroAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
         try {
             tpspBO.delete(enti.getId());
@@ -171,7 +169,7 @@ public final class TipoSubparametroAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
         enti = tpspBO.select(enti.getId());
 

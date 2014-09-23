@@ -1,81 +1,128 @@
 package xeredi.integra.model.metamodelo.bo;
 
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CodigoReferenciaAdminBO.
  */
-@Singleton
-public class CodigoReferenciaBO implements CodigoReferencia {
+public class CodigoReferenciaBO {
 
     /** The cdrf dao. */
-    @Inject
     CodigoReferenciaDAO cdrfDAO;
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param cdrfVO
+     *            the cdrf vo
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
-    @Override
-    @Transactional
     public final void insert(final CodigoReferenciaVO cdrfVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(cdrfVO);
 
-        if (cdrfDAO.exists(cdrfVO)) {
-            throw new DuplicateInstanceException(CodigoReferenciaVO.class.getName(), cdrfVO);
-        }
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        cdrfDAO.insert(cdrfVO);
+        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+
+        try {
+            if (cdrfDAO.exists(cdrfVO)) {
+                throw new DuplicateInstanceException(CodigoReferenciaVO.class.getName(), cdrfVO);
+            }
+
+            cdrfDAO.insert(cdrfVO);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param cdrfVO
+     *            the cdrf vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
-    public void update(CodigoReferenciaVO cdrfVO) throws InstanceNotFoundException {
+    public void update(final CodigoReferenciaVO cdrfVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrfVO);
 
-        final int updated = cdrfDAO.update(cdrfVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
+        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+
+        try {
+            final int updated = cdrfDAO.update(cdrfVO);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param cdrfVO
+     *            the cdrf vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final void delete(final CodigoReferenciaVO cdrfVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrfVO);
 
-        final int deleted = cdrfDAO.delete(cdrfVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (deleted == 0) {
-            throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
+        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+
+        try {
+            final int deleted = cdrfDAO.delete(cdrfVO);
+
+            if (deleted == 0) {
+                throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Select object.
+     *
+     * @param cdrfCriterioVO
+     *            the cdrf criterio vo
+     * @return the codigo referencia vo
      */
-    @Override
-    @Transactional
-    public CodigoReferenciaVO selectObject(CodigoReferenciaCriterioVO cdrfCriterioVO) {
+    public CodigoReferenciaVO selectObject(final CodigoReferenciaCriterioVO cdrfCriterioVO) {
         Preconditions.checkNotNull(cdrfCriterioVO);
 
-        return cdrfDAO.selectObject(cdrfCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+
+        try {
+            return cdrfDAO.selectObject(cdrfCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 }

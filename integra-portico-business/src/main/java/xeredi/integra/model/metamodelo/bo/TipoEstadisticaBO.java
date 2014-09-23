@@ -3,10 +3,10 @@ package xeredi.integra.model.metamodelo.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.TipoEstadisticaDAO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
@@ -15,139 +15,218 @@ import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoEstadisticaBO.
  */
-@Singleton
-public class TipoEstadisticaBO implements TipoEstadistica {
+public class TipoEstadisticaBO {
 
     /** The tpes dao. */
-    @Inject
     TipoEstadisticaDAO tpesDAO;
 
     /** The enti dao. */
-    @Inject
     EntidadDAO entiDAO;
 
     /**
-     * {@inheritDoc}
+     * Select label values.
+     *
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<LabelValueVO> selectLabelValues() {
-        return tpesDAO.selectLabelValues(new TipoEstadisticaCriterioVO());
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+
+        try {
+            return tpesDAO.selectLabelValues(new TipoEstadisticaCriterioVO());
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param tpesCriterioVO
+     *            the tpes criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterioVO) {
         Preconditions.checkNotNull(tpesCriterioVO);
 
-        return tpesDAO.selectList(tpesCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+
+        try {
+            return tpesDAO.selectList(tpesCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param tpesCriterioVO
+     *            the tpes criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public final PaginatedList<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterioVO,
             final int offset, final int limit) {
         Preconditions.checkNotNull(tpesCriterioVO);
 
-        final int count = tpesDAO.count(tpesCriterioVO);
-        final List<TipoEstadisticaVO> list = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count > offset) {
-            list.addAll(tpesDAO.selectList(tpesCriterioVO, new RowBounds(offset, limit)));
+        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+
+        try {
+            final int count = tpesDAO.count(tpesCriterioVO);
+            final List<TipoEstadisticaVO> list = new ArrayList<>();
+
+            if (count > offset) {
+                list.addAll(tpesDAO.selectList(tpesCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<>(list, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<>(list, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @return the tipo estadistica vo
      */
-    @Override
-    @Transactional
     public final TipoEstadisticaVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
-        final TipoEstadisticaVO entiVO = tpesDAO.select(id);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (entiVO == null) {
-            throw new Error("Tipo de estadistica no encontrado: " + id);
+        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+
+        try {
+            final TipoEstadisticaVO entiVO = tpesDAO.select(id);
+
+            if (entiVO == null) {
+                throw new Error("Tipo de estadistica no encontrado: " + id);
+            }
+
+            final EntidadBO entiBO = new EntidadBO();
+
+            entiBO.fillDependencies(entiVO);
+
+            return entiVO;
+        } finally {
+            session.close();
         }
-
-        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
-
-        entiBO.fillDependencies(entiVO);
-
-        return entiVO;
     }
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param tpesVO
+     *            the tpes vo
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
-    @Override
-    @Transactional
     public final void insert(final TipoEstadisticaVO tpesVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpesVO);
 
-        final Long id = entiDAO.nextSequence();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        tpesVO.setId(id);
-        tpesVO.setTipo(TipoEntidad.E);
+        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+        entiDAO = session.getMapper(EntidadDAO.class);
 
-        if (entiDAO.exists(tpesVO)) {
-            throw new DuplicateInstanceException(TipoEstadisticaVO.class.getName(), tpesVO);
+        try {
+            final Long id = entiDAO.nextSequence();
+
+            tpesVO.setId(id);
+            tpesVO.setTipo(TipoEntidad.E);
+
+            if (entiDAO.exists(tpesVO)) {
+                throw new DuplicateInstanceException(TipoEstadisticaVO.class.getName(), tpesVO);
+            }
+
+            entiDAO.insert(tpesVO);
+            tpesDAO.insert(tpesVO);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        entiDAO.insert(tpesVO);
-        tpesDAO.insert(tpesVO);
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param tpesVO
+     *            the tpes vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final void update(final TipoEstadisticaVO tpesVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpesVO);
         Preconditions.checkNotNull(tpesVO.getId());
 
-        final int updated = entiDAO.update(tpesVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(TipoEstadisticaVO.class.getName(), tpesVO);
+        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+        entiDAO = session.getMapper(EntidadDAO.class);
+
+        try {
+            final int updated = entiDAO.update(tpesVO);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(TipoEstadisticaVO.class.getName(), tpesVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param tpesId
+     *            the tpes id
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final void delete(final Long tpesId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpesId);
 
-        final int updated = tpesDAO.delete(tpesId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(TipoEstadisticaVO.class.getName(), tpesId);
+        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+        entiDAO = session.getMapper(EntidadDAO.class);
+
+        try {
+            final int updated = tpesDAO.delete(tpesId);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(TipoEstadisticaVO.class.getName(), tpesId);
+            }
+
+            entiDAO.delete(tpesId);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        entiDAO.delete(tpesId);
     }
-
 }

@@ -3,8 +3,9 @@ package xeredi.integra.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
@@ -13,137 +14,211 @@ import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaBO.
  */
-@Singleton
-public class ReglaBO implements Regla {
+public class ReglaBO {
 
     /** The rgla dao. */
-    @Inject
     ReglaDAO rglaDAO;
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param rglaCriterioVO
+     *            the rgla criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public PaginatedList<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO, final int offset, final int limit) {
         Preconditions.checkNotNull(rglaCriterioVO);
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final int count = rglaDAO.count(rglaCriterioVO);
-        final List<ReglaVO> rglaList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count >= offset) {
-            rglaList.addAll(rglaDAO.selectList(rglaCriterioVO, new RowBounds(offset, limit)));
+        rglaDAO = session.getMapper(ReglaDAO.class);
+
+        try {
+            final int count = rglaDAO.count(rglaCriterioVO);
+            final List<ReglaVO> rglaList = new ArrayList<>();
+
+            if (count >= offset) {
+                rglaList.addAll(rglaDAO.selectList(rglaCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<ReglaVO>(rglaList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<ReglaVO>(rglaList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param rglaCriterioVO
+     *            the rgla criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO) {
         Preconditions.checkNotNull(rglaCriterioVO);
 
-        return rglaDAO.selectList(rglaCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        rglaDAO = session.getMapper(ReglaDAO.class);
+
+        try {
+            return rglaDAO.selectList(rglaCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param rgla
+     *            the rgla
+     * @throws OverlapException
+     *             the overlap exception
      */
-    @Override
-    @Transactional
     public void insert(final ReglaVO rgla) throws OverlapException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (rglaDAO.exists(rgla)) {
-            rgla.setId(rglaDAO.selectId(rgla));
+        rglaDAO = session.getMapper(ReglaDAO.class);
 
-            if (rglaDAO.existsOverlap(rgla)) {
-                throw new OverlapException(ReglaVO.class.getName(), rgla);
+        try {
+            final IgBO igBO = new IgBO();
+
+            if (rglaDAO.exists(rgla)) {
+                rgla.setId(rglaDAO.selectId(rgla));
+
+                if (rglaDAO.existsOverlap(rgla)) {
+                    throw new OverlapException(ReglaVO.class.getName(), rgla);
+                }
+            } else {
+                rgla.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                rglaDAO.insert(rgla);
             }
-        } else {
-            rgla.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-            rglaDAO.insert(rgla);
+            rgla.getRglv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            rglaDAO.insertVersion(rgla);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        rgla.getRglv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-        rglaDAO.insertVersion(rgla);
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param rgla
+     *            the rgla
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    @Override
-    @Transactional
     public void update(final ReglaVO rgla) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
-        if (rglaDAO.existsOverlap(rgla)) {
-            throw new OverlapException(ReglaVO.class.getName(), rgla);
-        }
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final int updated = rglaDAO.updateVersion(rgla);
+        rglaDAO = session.getMapper(ReglaDAO.class);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(ReglaVO.class.getName(), rgla);
+        try {
+            if (rglaDAO.existsOverlap(rgla)) {
+                throw new OverlapException(ReglaVO.class.getName(), rgla);
+            }
+
+            final int updated = rglaDAO.updateVersion(rgla);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ReglaVO.class.getName(), rgla);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param rgla
+     *            the rgla
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public void delete(final ReglaVO rgla) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
-        final int updated = rglaDAO.deleteVersion(rgla);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(ReglaVO.class.getName(), rgla);
+        rglaDAO = session.getMapper(ReglaDAO.class);
+
+        try {
+            final int updated = rglaDAO.deleteVersion(rgla);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ReglaVO.class.getName(), rgla);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param rglaCriterioVO
+     *            the rgla criterio vo
+     * @return the regla vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public ReglaVO select(final ReglaCriterioVO rglaCriterioVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rglaCriterioVO);
         Preconditions.checkArgument(rglaCriterioVO.getRglvId() != null || rglaCriterioVO.getId() != null
                 && rglaCriterioVO.getFechaVigencia() != null);
 
-        final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (rgla == null) {
-            throw new InstanceNotFoundException(ReglaVO.class.getName(), rglaCriterioVO);
+        rglaDAO = session.getMapper(ReglaDAO.class);
+
+        try {
+            final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
+
+            if (rgla == null) {
+                throw new InstanceNotFoundException(ReglaVO.class.getName(), rglaCriterioVO);
+            }
+
+            return rgla;
+        } finally {
+            session.close();
         }
-
-        return rgla;
     }
 
 }

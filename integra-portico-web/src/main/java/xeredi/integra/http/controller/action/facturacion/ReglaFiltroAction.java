@@ -6,14 +6,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
-import com.google.common.base.Preconditions;
-
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Regla;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -49,9 +47,9 @@ public final class ReglaFiltroAction extends BaseAction {
     public String filtro() {
         Preconditions.checkNotNull(rglaCriterio);
 
-        final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+        final ReglaBO rglaBO = new ReglaBO();
 
-        this.rglaList = rglaBO.selectList(rglaCriterio);
+        rglaList = rglaBO.selectList(rglaCriterio);
 
         return SUCCESS;
     }
@@ -73,8 +71,8 @@ public final class ReglaFiltroAction extends BaseAction {
      * @param value
      *            the rgla criterio
      */
-    public void setRglaCriterio(ReglaCriterioVO value) {
-        this.rglaCriterio = value;
+    public void setRglaCriterio(final ReglaCriterioVO value) {
+        rglaCriterio = value;
     }
 
     /**

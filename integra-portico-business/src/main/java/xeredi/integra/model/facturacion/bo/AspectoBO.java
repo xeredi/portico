@@ -3,8 +3,9 @@ package xeredi.integra.model.facturacion.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
@@ -14,61 +15,85 @@ import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoBO.
  */
-@Singleton
-public class AspectoBO implements Aspecto {
+public class AspectoBO {
 
     /** The aspc dao. */
-    @Inject
     AspectoDAO aspcDAO;
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param aspcCriterioVO
+     *            the aspc criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public PaginatedList<AspectoVO> selectList(final AspectoCriterioVO aspcCriterioVO, final int offset, final int limit) {
         Preconditions.checkNotNull(aspcCriterioVO);
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final int count = aspcDAO.count(aspcCriterioVO);
-        final List<AspectoVO> aspcList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count >= offset) {
-            aspcList.addAll(aspcDAO.selectList(aspcCriterioVO, new RowBounds(offset, limit)));
+        aspcDAO = session.getMapper(AspectoDAO.class);
+
+        try {
+            final int count = aspcDAO.count(aspcCriterioVO);
+            final List<AspectoVO> aspcList = new ArrayList<>();
+
+            if (count >= offset) {
+                aspcList.addAll(aspcDAO.selectList(aspcCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<AspectoVO>(aspcList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<AspectoVO>(aspcList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param aspcCriterioVO
+     *            the aspc criterio vo
+     * @return the aspecto vo
      */
-    @Override
-    @Transactional
     public AspectoVO select(final AspectoCriterioVO aspcCriterioVO) {
         Preconditions.checkNotNull(aspcCriterioVO);
         Preconditions.checkArgument(aspcCriterioVO.getAspvId() != null || aspcCriterioVO.getId() != null
                 && aspcCriterioVO.getFechaVigencia() != null);
 
-        return aspcDAO.selectObject(aspcCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        aspcDAO = session.getMapper(AspectoDAO.class);
+
+        try {
+            return aspcDAO.selectObject(aspcCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param aspc
+     *            the aspc
+     * @throws OverlapException
+     *             the overlap exception
      */
-    @Override
-    @Transactional
     public void insert(final AspectoVO aspc) throws OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
@@ -76,66 +101,104 @@ public class AspectoBO implements Aspecto {
         Preconditions.checkNotNull(aspc.getTpsr());
         Preconditions.checkNotNull(aspc.getTpsr().getId());
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (aspcDAO.exists(aspc)) {
-            aspc.setId(aspcDAO.selectId(aspc));
+        aspcDAO = session.getMapper(AspectoDAO.class);
 
-            if (aspcDAO.existsOverlap(aspc)) {
-                throw new OverlapException(AspectoVO.class.getName(), aspc);
+        try {
+            final IgBO igBO = new IgBO();
+
+            if (aspcDAO.exists(aspc)) {
+                aspc.setId(aspcDAO.selectId(aspc));
+
+                if (aspcDAO.existsOverlap(aspc)) {
+                    throw new OverlapException(AspectoVO.class.getName(), aspc);
+                }
+            } else {
+                aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                aspcDAO.insert(aspc);
             }
-        } else {
-            aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-            aspcDAO.insert(aspc);
+            aspc.getAspv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            aspcDAO.insertVersion(aspc);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        aspc.getAspv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-        aspcDAO.insertVersion(aspc);
     }
 
     /**
-     * {@inheritDoc}
+     * Duplicate.
+     *
+     * @param aspc
+     *            the aspc
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
-    @Override
-    @Transactional
     public void duplicate(final AspectoVO aspc) throws DuplicateInstanceException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
 
-        if (aspcDAO.exists(aspc)) {
-            throw new DuplicateInstanceException(AspectoVO.class.getName(), aspc);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        aspcDAO = session.getMapper(AspectoDAO.class);
+
+        try {
+            if (aspcDAO.exists(aspc)) {
+                throw new DuplicateInstanceException(AspectoVO.class.getName(), aspc);
+            }
+
+            final IgBO igBO = new IgBO();
+
+            aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            aspc.getAspv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            aspcDAO.insert(aspc);
+            aspcDAO.insertVersion(aspc);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        final IgBO igBO = new IgBO();
-
-        aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        aspc.getAspv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-        aspcDAO.insert(aspc);
-        aspcDAO.insertVersion(aspc);
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param aspc
+     *            the aspc
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    @Override
-    @Transactional
     public void update(final AspectoVO aspc) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getId());
         Preconditions.checkNotNull(aspc.getAspv().getId());
 
-        if (aspcDAO.existsOverlap(aspc)) {
-            throw new OverlapException(AspectoVO.class.getName(), aspc);
-        }
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final int updated = aspcDAO.updateVersion(aspc);
+        aspcDAO = session.getMapper(AspectoDAO.class);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(AspectoVO.class.getName(), aspc);
+        try {
+            if (aspcDAO.existsOverlap(aspc)) {
+                throw new OverlapException(AspectoVO.class.getName(), aspc);
+            }
+
+            final int updated = aspcDAO.updateVersion(aspc);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(AspectoVO.class.getName(), aspc);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 

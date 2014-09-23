@@ -6,11 +6,8 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.EntidadGrupoDato;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
-import xeredi.integra.model.metamodelo.bo.EntidadTipoDato;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -73,7 +70,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());
 
@@ -132,7 +129,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
             return SUCCESS;
         }
 
-        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
         if (accion == ACCION_EDICION.create) {
             try {
@@ -159,7 +156,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(entd.getTpdt());
         Preconditions.checkNotNull(entd.getTpdt().getId());
 
-        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
         entdBO.delete(entd);
 
@@ -178,7 +175,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(entd.getTpdt());
         Preconditions.checkNotNull(entd.getTpdt().getId());
 
-        final EntidadTipoDato entdBO = BOFactory.getInjector().getInstance(EntidadTipoDatoBO.class);
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());
 
@@ -192,7 +189,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @return the engds
      */
     public List<LabelValueVO> getEngds() {
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
         return engdBO.selectLabelValues(entd.getEntiId());
     }

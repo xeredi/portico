@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.facturacion.report.ValoracionPdf;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
@@ -42,7 +41,7 @@ public final class ValoracionTest {
             final Long vlrlId = 2156047L;
             final Long vlrdId = 2156048L;
 
-            final Valoracion vlrcBO = BOFactory.getInjector().getInstance(ValoracionBO.class);
+            final ValoracionBO vlrcBO = new ValoracionBO();
 
             final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
             final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();

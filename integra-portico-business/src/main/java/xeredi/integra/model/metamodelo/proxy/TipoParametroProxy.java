@@ -8,8 +8,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoParametro;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -77,7 +75,7 @@ public final class TipoParametroProxy {
     private static void load() {
         LOG.info("Carga de tipos de parametro");
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
+        final TipoParametroBO tpprBO = new TipoParametroBO();
         final List<TipoParametroVO> tpprList = tpprBO.selectList(new TipoParametroCriterioVO());
 
         for (final TipoParametroVO tpprVO : tpprList) {

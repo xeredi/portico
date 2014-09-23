@@ -5,13 +5,9 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
-import xeredi.integra.model.metamodelo.bo.TipoParametro;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
-import xeredi.integra.model.metamodelo.bo.TipoSubparametro;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -84,8 +80,8 @@ public final class TipoParametroAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
-        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
+        final TipoParametroBO tpprBO = new TipoParametroBO();
+        final EntidadBO entiBO = new EntidadBO();
 
         enti = tpprBO.select(enti.getId());
 
@@ -153,7 +149,7 @@ public final class TipoParametroAction extends BaseAction {
             return SUCCESS;
         }
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
+        final TipoParametroBO tpprBO = new TipoParametroBO();
 
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
@@ -185,7 +181,7 @@ public final class TipoParametroAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
+        final TipoParametroBO tpprBO = new TipoParametroBO();
 
         try {
             tpprBO.delete(enti.getId());
@@ -207,8 +203,8 @@ public final class TipoParametroAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
-        final TipoSubparametro tpspBO = BOFactory.getInjector().getInstance(TipoSubparametroBO.class);
+        final TipoParametroBO tpprBO = new TipoParametroBO();
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
         enti = tpprBO.select(enti.getId());
 

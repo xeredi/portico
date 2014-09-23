@@ -2,7 +2,8 @@ package xeredi.integra.model.facturacion.bo;
 
 import java.util.List;
 
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
@@ -11,27 +12,22 @@ import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaIncompatibleBO.
  */
-@Singleton
-public class ReglaIncompatibleBO implements ReglaIncompatible {
+public class ReglaIncompatibleBO {
 
     /** The rgin dao. */
-    @Inject
     ReglaIncompatibleDAO rginDAO;
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    @Transactional
     public void insert(final ReglaIncompatibleVO rgin) throws OverlapException {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgla1Id());
@@ -40,90 +36,150 @@ public class ReglaIncompatibleBO implements ReglaIncompatible {
         Preconditions.checkNotNull(rgin.getRgiv());
         Preconditions.checkNotNull(rgin.getRgiv().getFini());
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (rginDAO.exists(rgin)) {
-            rgin.setId(rginDAO.selectId(rgin));
+        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
-            if (rginDAO.existsOverlap(rgin)) {
-                throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
+        try {
+            final IgBO igBO = new IgBO();
+
+            if (rginDAO.exists(rgin)) {
+                rgin.setId(rginDAO.selectId(rgin));
+
+                if (rginDAO.existsOverlap(rgin)) {
+                    throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
+                }
+            } else {
+                rgin.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+                rginDAO.insert(rgin);
             }
-        } else {
-            rgin.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
 
-            rginDAO.insert(rgin);
+            rgin.getRgiv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            rginDAO.insertVersion(rgin);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        rgin.getRgiv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-
-        rginDAO.insertVersion(rgin);
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param rgin
+     *            the rgin
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
-    @Override
-    @Transactional
     public void update(final ReglaIncompatibleVO rgin) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgiv());
         Preconditions.checkNotNull(rgin.getRgiv().getId());
         Preconditions.checkNotNull(rgin.getRgiv().getFini());
 
-        if (rginDAO.existsOverlap(rgin)) {
-            throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
-        }
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final int updated = rginDAO.updateVersion(rgin);
+        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rgin);
+        try {
+            if (rginDAO.existsOverlap(rgin)) {
+                throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
+            }
+
+            final int updated = rginDAO.updateVersion(rgin);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rgin);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param rgin
+     *            the rgin
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public void delete(final ReglaIncompatibleVO rgin) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgiv());
         Preconditions.checkNotNull(rgin.getRgiv().getId());
 
-        final int updated = rginDAO.deleteVersion(rgin);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rgin);
+        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
+
+        try {
+            final int updated = rginDAO.deleteVersion(rgin);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rgin);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param rginCriterio
+     *            the rgin criterio
+     * @return the regla incompatible vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public ReglaIncompatibleVO select(final ReglaIncompatibleCriterioVO rginCriterio) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rginCriterio);
 
-        final ReglaIncompatibleVO rgin = rginDAO.selectObject(rginCriterio);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (rgin == null) {
-            throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rginCriterio);
+        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
+
+        try {
+            final ReglaIncompatibleVO rgin = rginDAO.selectObject(rginCriterio);
+
+            if (rgin == null) {
+                throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rginCriterio);
+            }
+
+            return rgin;
+        } finally {
+            session.close();
         }
-
-        return rgin;
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param rginCriterio
+     *            the rgin criterio
+     * @return the list
      */
-    @Override
-    @Transactional
     public List<ReglaIncompatibleVO> selectList(final ReglaIncompatibleCriterioVO rginCriterio) {
         Preconditions.checkNotNull(rginCriterio);
 
-        return rginDAO.selectList(rginCriterio);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
+
+        try {
+            return rginDAO.selectList(rginCriterio);
+        } finally {
+            session.close();
+        }
     }
 
 }

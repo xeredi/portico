@@ -13,7 +13,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
@@ -59,188 +59,204 @@ import xeredi.integra.model.util.grammar.FormulaLexer;
 import xeredi.integra.model.util.grammar.FormulaParser;
 import xeredi.integra.model.util.grammar.PathLexer;
 import xeredi.integra.model.util.grammar.PathParser;
+import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionBO.
  */
-@Singleton
-public class ValoradorBO implements Valorador {
+public class ValoradorBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
 
     /** The srvc dao. */
-    @Inject
     ServicioDAO srvcDAO;
 
     /** The crgo dao. */
-    @Inject
     CargoDAO crgoDAO;
 
     /** The prbt dao. */
-    @Inject
     ProcesoDAO prbtDAO;
 
     /** The rgla dao. */
-    @Inject
     ReglaDAO rglaDAO;
 
     /** The vlrt dao. */
-    @Inject
     ValoracionTemporalDAO vlrtDAO;
 
     /** The aspc dao. */
-    @Inject
     AspectoDAO aspcDAO;
 
     /** The vlra dao. */
-    @Inject
     ValoracionAgregadaDAO vlraDAO;
 
     /** The vlrc dao. */
-    @Inject
     ValoracionDAO vlrcDAO;
 
     /** The vlrl dao. */
-    @Inject
     ValoracionLineaDAO vlrlDAO;
 
     /** The vlrd dao. */
-    @Inject
     ValoracionDetalleDAO vlrdDAO;
 
     /** The vlri dao. */
-    @Inject
     ValoracionImpuestoDAO vlriDAO;
 
     /** The contexto dao. */
-    @Inject
     ValoradorContextoDAO contextoDAO;
 
     /** The srcr dao. */
-    @Inject
     ServicioCargoDAO srcrDAO;
 
     /** The vlrg dao. */
-    @Inject
     ValoracionCargoDAO vlrgDAO;
 
     /**
-     * {@inheritDoc}
+     * Valorar servicio.
+     *
+     * @param srvcId
+     *            the srvc id
+     * @param crgoIds
+     *            the crgo ids
+     * @param fechaLiquidacion
+     *            the fecha liquidacion
+     * @param prbtId
+     *            the prbt id
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion,
             final Long prbtId) {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
                 + ", prbtId: " + prbtId);
 
-        Preconditions.checkNotNull(srvcId);
-        Preconditions.checkNotNull(crgoIds);
-        Preconditions.checkNotNull(fechaLiquidacion);
-        Preconditions.checkNotNull(prbtId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
-        final ProcesoVO prbt = prbtDAO.select(prbtId);
-        final ServicioVO srvc = srvcDAO.select(srvcId);
+        srvcDAO = session.getMapper(ServicioDAO.class);
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+        crgoDAO = session.getMapper(CargoDAO.class);
+        contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+        aspcDAO = session.getMapper(AspectoDAO.class);
 
-        if (prbt == null) {
-            throw new Error("Proceso Batch no encontrado: " + prbt);
-        }
-        if (srvc == null) {
-            throw new Error("Servicio no encontrado: " + srvc);
-        }
+        try {
+            Preconditions.checkNotNull(srvcId);
+            Preconditions.checkNotNull(crgoIds);
+            Preconditions.checkNotNull(fechaLiquidacion);
+            Preconditions.checkNotNull(prbtId);
 
-        contextoVO.setFliquidacion(fechaLiquidacion);
-        contextoVO.setPrbt(prbt);
-        contextoVO.setSrvc(srvc);
-        contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
+            final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
+            final ProcesoVO prbt = prbtDAO.select(prbtId);
+            final ServicioVO srvc = srvcDAO.select(srvcId);
 
-        for (final Long crgoId : crgoIds) {
-            // Obtencion de los cargos, y los cargos dependientes
-            final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
-
-            crgoCriterioVO.setId(crgoId);
-            crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
-            crgoCriterioVO.setSoloPrincipales(true);
-
-            final CargoVO crgo = crgoDAO.selectObject(crgoCriterioVO);
-
-            if (crgo == null) {
-                throw new Error("No se encuentra el cargo: " + crgoCriterioVO);
+            if (prbt == null) {
+                throw new Error("Proceso Batch no encontrado: " + prbt);
+            }
+            if (srvc == null) {
+                throw new Error("Servicio no encontrado: " + srvc);
             }
 
-            LOG.info("Cargo principal: " + crgo.getCodigo());
+            contextoVO.setFliquidacion(fechaLiquidacion);
+            contextoVO.setPrbt(prbt);
+            contextoVO.setSrvc(srvc);
+            contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
 
-            final List<CargoVO> crgoList = new ArrayList<>();
+            for (final Long crgoId : crgoIds) {
+                // Obtencion de los cargos, y los cargos dependientes
+                final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
-            crgoList.add(crgo);
+                crgoCriterioVO.setId(crgoId);
+                crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
+                crgoCriterioVO.setSoloPrincipales(true);
 
-            final CargoCriterioVO crgoDepCriterioVO = new CargoCriterioVO();
+                final CargoVO crgo = crgoDAO.selectObject(crgoCriterioVO);
 
-            crgoDepCriterioVO.setPadreId(crgoId);
-            crgoDepCriterioVO.setFechaVigencia(fechaLiquidacion);
-            crgoDepCriterioVO.setSoloDependientes(true);
+                if (crgo == null) {
+                    throw new Error("No se encuentra el cargo: " + crgoCriterioVO);
+                }
 
-            contextoVO.setCrgo(crgo);
+                LOG.info("Cargo principal: " + crgo.getCodigo());
 
-            final Date fref = contextoDAO.selectFref(contextoVO);
+                final List<CargoVO> crgoList = new ArrayList<>();
 
-            if (fref == null) {
-                throw new Error("No se encuentra fecha de referencia para el contexto: " + contextoVO);
+                crgoList.add(crgo);
+
+                final CargoCriterioVO crgoDepCriterioVO = new CargoCriterioVO();
+
+                crgoDepCriterioVO.setPadreId(crgoId);
+                crgoDepCriterioVO.setFechaVigencia(fechaLiquidacion);
+                crgoDepCriterioVO.setSoloDependientes(true);
+
+                contextoVO.setCrgo(crgo);
+
+                final Date fref = contextoDAO.selectFref(contextoVO);
+
+                if (fref == null) {
+                    throw new Error("No se encuentra fecha de referencia para el contexto: " + contextoVO);
+                }
+
+                contextoVO.setFref(fref);
+
+                LOG.info("fref: " + fref);
+
+                crgoList.addAll(crgoDAO.selectList(crgoDepCriterioVO));
+
+                for (final CargoVO crgoServicio : crgoList) {
+                    contextoVO.setCrgo(crgoServicio);
+                    valorarCargoServicio(session, contextoVO);
+                }
+
+                final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+
+                aspcCriterioVO.setFechaVigencia(fref);
+                aspcCriterioVO.setSrvcId(srvcId);
+
+                final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
+
+                if (aspcList.isEmpty()) {
+                    throw new Error("No se encuentran aspectos para: " + aspcCriterioVO);
+                }
+
+                for (final AspectoVO aspc : aspcList) {
+                    contextoVO.setAspc(aspc);
+
+                    aplicarAspecto(session, contextoVO);
+                }
+
+                if (vlrtDAO.existsPendiente(contextoVO)) {
+                    throw new Error("No se ha podido aplicar aspecto a todos los elementos del servicio valorado: "
+                            + contextoVO);
+                }
+
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Fin Valoracion");
+                }
             }
 
-            contextoVO.setFref(fref);
-
-            LOG.info("fref: " + fref);
-
-            crgoList.addAll(crgoDAO.selectList(crgoDepCriterioVO));
-
-            for (final CargoVO crgoServicio : crgoList) {
-                contextoVO.setCrgo(crgoServicio);
-                valorarCargoServicio(contextoVO);
-            }
-
-            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
-
-            aspcCriterioVO.setFechaVigencia(fref);
-            aspcCriterioVO.setSrvcId(srvcId);
-
-            final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
-
-            if (aspcList.isEmpty()) {
-                throw new Error("No se encuentran aspectos para: " + aspcCriterioVO);
-            }
-
-            for (final AspectoVO aspc : aspcList) {
-                contextoVO.setAspc(aspc);
-
-                aplicarAspecto(contextoVO);
-            }
-
-            if (vlrtDAO.existsPendiente(contextoVO)) {
-                throw new Error("No se ha podido aplicar aspecto a todos los elementos del servicio valorado: "
-                        + contextoVO);
-            }
-
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Fin Valoracion");
-            }
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
      * Aplicar aspecto.
      *
+     * @param session
+     *            the session
      * @param contextoVO
      *            the contexto vo
      */
-    private void aplicarAspecto(final ValoradorContextoVO contextoVO) {
+    private void aplicarAspecto(final SqlSession session, final ValoradorContextoVO contextoVO) {
+        vlraDAO = session.getMapper(ValoracionAgregadaDAO.class);
+        vlrcDAO = session.getMapper(ValoracionDAO.class);
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+        vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
+        srcrDAO = session.getMapper(ServicioCargoDAO.class);
+
         final IgBO igBO = new IgBO();
 
         generateSql(contextoVO.getAspc());
@@ -321,10 +337,16 @@ public class ValoradorBO implements Valorador {
     /**
      * Valorar cargo servicio.
      *
+     * @param session
+     *            the session
      * @param contextoVO
      *            the contexto vo
      */
-    private void valorarCargoServicio(final ValoradorContextoVO contextoVO) {
+    private void valorarCargoServicio(final SqlSession session, final ValoradorContextoVO contextoVO) {
+        contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+        rglaDAO = session.getMapper(ReglaDAO.class);
+        vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
+
         LOG.info("Cargo: " + contextoVO.getCrgo().getCodigo());
 
         if (LOG.isDebugEnabled()) {

@@ -11,11 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Factura;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
 import xeredi.integra.model.facturacion.bo.FacturaImpresionVO;
-import xeredi.integra.model.facturacion.report.FacturaPdf;
 import xeredi.integra.model.util.GlobalNames;
 
 // TODO: Auto-generated Javadoc
@@ -40,13 +37,13 @@ public final class FacturaPdfTest {
 
                 final Set<Long> fctrIds = new HashSet<>();
                 final FacturaPdf facturaPdf = new FacturaPdf(GlobalNames.DEFAULT_LOCALE);
-                final Factura factura = BOFactory.getInjector().getInstance(FacturaBO.class);
+                final FacturaBO fctrBO = new FacturaBO();
 
                 fctrIds.add(id);
 
                 LOG.info("Busqueda de Facturas");
 
-                final List<FacturaImpresionVO> list = factura.selectImprimir(fctrIds);
+                final List<FacturaImpresionVO> list = fctrBO.selectImprimir(fctrIds);
 
                 LOG.info("Impresion");
 

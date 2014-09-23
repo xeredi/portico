@@ -8,8 +8,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoEstadistica;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -80,7 +78,7 @@ public final class TipoEstadisticaProxy {
     private static void load() {
         LOG.info("Carga de tipos de servicio");
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
         final List<TipoEstadisticaVO> tpesList = tpesBO.selectList(new TipoEstadisticaCriterioVO());
 
         for (final TipoEstadisticaVO tpesVO : tpesList) {

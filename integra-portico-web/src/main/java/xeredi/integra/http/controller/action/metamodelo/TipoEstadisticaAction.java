@@ -3,9 +3,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.TipoEstadistica;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -63,7 +61,7 @@ public final class TipoEstadisticaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
         enti = tpesBO.select(enti.getId());
 
@@ -96,7 +94,7 @@ public final class TipoEstadisticaAction extends BaseAction {
             return SUCCESS;
         }
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
@@ -128,7 +126,7 @@ public final class TipoEstadisticaAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
         try {
             tpesBO.delete(enti.getId());
@@ -150,7 +148,7 @@ public final class TipoEstadisticaAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoEstadistica tpesBO = BOFactory.getInjector().getInstance(TipoEstadisticaBO.class);
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
         enti = tpesBO.select(enti.getId());
 

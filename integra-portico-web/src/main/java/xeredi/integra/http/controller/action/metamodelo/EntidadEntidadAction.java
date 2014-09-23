@@ -3,9 +3,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.EntidadEntidad;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
@@ -59,7 +57,7 @@ public final class EntidadEntidadAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
         final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
         enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
@@ -98,7 +96,7 @@ public final class EntidadEntidadAction extends BaseAction {
             return SUCCESS;
         }
 
-        final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
 
         if (accion == ACCION_EDICION.create) {
             try {
@@ -129,7 +127,7 @@ public final class EntidadEntidadAction extends BaseAction {
         Preconditions.checkNotNull(enen.getEntiHija());
         Preconditions.checkNotNull(enen.getEntiHija().getId());
 
-        final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
 
         try {
             enenBO.delete(enen);
@@ -154,7 +152,7 @@ public final class EntidadEntidadAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final EntidadEntidad enenBO = BOFactory.getInjector().getInstance(EntidadEntidadBO.class);
+        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
         final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
         enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());

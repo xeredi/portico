@@ -3,9 +3,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.EntidadGrupoDato;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -63,7 +61,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     public String edit() {
         accion = ACCION_EDICION.edit;
 
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());
@@ -81,7 +79,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-save")
     public String save() throws InstanceNotFoundException {
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
         PropertyValidator.validateRequired(this, "engd.entiId", engd.getEntiId());
         PropertyValidator.validateRequired(this, "engd.numero", engd.getNumero());
@@ -115,7 +113,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-detail")
     public String detail() {
-        final EntidadGrupoDato engdBO = BOFactory.getInjector().getInstance(EntidadGrupoDatoBO.class);
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());

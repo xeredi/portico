@@ -8,10 +8,8 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
-import xeredi.integra.model.facturacion.bo.Aspecto;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
@@ -61,7 +59,7 @@ public final class AspectoAction extends BaseAction {
         Preconditions.checkArgument(aspc.getId() != null && fechaVigencia != null || aspc.getAspv() != null
                 && aspc.getAspv().getId() != null);
 
-        final Aspecto aspcBO = BOFactory.getInjector().getInstance(AspectoBO.class);
+        final AspectoBO aspcBO = new AspectoBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setId(aspc.getId());
@@ -105,7 +103,7 @@ public final class AspectoAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final Aspecto aspcBO = BOFactory.getInjector().getInstance(AspectoBO.class);
+        final AspectoBO aspcBO = new AspectoBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setAspvId(aspc.getAspv().getId());
@@ -128,7 +126,7 @@ public final class AspectoAction extends BaseAction {
 
         accion = ACCION_EDICION.duplicate;
 
-        final Aspecto aspcBO = BOFactory.getInjector().getInstance(AspectoBO.class);
+        final AspectoBO aspcBO = new AspectoBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setAspvId(aspc.getAspv().getId());
@@ -275,7 +273,7 @@ public final class AspectoAction extends BaseAction {
             return SUCCESS;
         }
 
-        final Aspecto aspcBO = BOFactory.getInjector().getInstance(AspectoBO.class);
+        final AspectoBO aspcBO = new AspectoBO();
 
         switch (accion) {
         case create:

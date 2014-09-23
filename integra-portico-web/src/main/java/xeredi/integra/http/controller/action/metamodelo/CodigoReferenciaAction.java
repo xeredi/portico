@@ -4,9 +4,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.CodigoReferencia;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
@@ -69,7 +67,7 @@ public final class CodigoReferenciaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
         final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
 
         cdrfCriterioVO.setTpdtId(cdrf.getTpdtId());
@@ -109,7 +107,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         }
 
         if (!hasErrors()) {
-            final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
             if (accion == ACCION_EDICION.create) {
                 try {
@@ -140,7 +138,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf.getTpdtId());
         Preconditions.checkNotNull(cdrf.getValor());
 
-        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
         try {
             cdrfBO.delete(cdrf);
@@ -164,7 +162,7 @@ public final class CodigoReferenciaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final CodigoReferencia cdrfBO = BOFactory.getInjector().getInstance(CodigoReferenciaBO.class);
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
         final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
 
         cdrfCriterioVO.setTpdtId(cdrf.getTpdtId());

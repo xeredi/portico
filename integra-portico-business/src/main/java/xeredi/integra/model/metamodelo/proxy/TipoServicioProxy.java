@@ -8,8 +8,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoServicio;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -80,7 +78,7 @@ public final class TipoServicioProxy {
     private static void load() {
         LOG.info("Carga de tipos de servicio");
 
-        final TipoServicio tpsrBO = BOFactory.getInjector().getInstance(TipoServicioBO.class);
+        final TipoServicioBO tpsrBO = new TipoServicioBO();
         final List<TipoServicioVO> tpsrList = tpsrBO.selectList(new TipoServicioCriterioVO());
 
         for (final TipoServicioVO tpsrVO : tpsrList) {

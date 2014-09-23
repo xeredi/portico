@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoDato;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -34,7 +32,7 @@ public final class TipoDatoListadoLVAction extends BaseAction {
      */
     @Action("tpdt-lv-list")
     public String list() {
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
 
         lvList.addAll(tpdtBO.selectLabelValues(tpdtCriterio));
 

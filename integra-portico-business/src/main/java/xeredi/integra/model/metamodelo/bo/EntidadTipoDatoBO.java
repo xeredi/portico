@@ -1,6 +1,7 @@
 package xeredi.integra.model.metamodelo.bo;
 
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
@@ -8,104 +9,148 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.util.exception.DuplicateInstanceException;
+import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadTipoDatoAdminBO.
  */
-@Singleton
-public class EntidadTipoDatoBO implements EntidadTipoDato {
+public class EntidadTipoDatoBO {
 
     /** The enti dao. */
-    @Inject
     EntidadDAO entiDAO;
 
     /** The entd dao. */
-    @Inject
     EntidadTipoDatoDAO entdDAO;
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param entdVO
+     *            the entd vo
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
-    @Override
-    @Transactional
     public final void insert(final EntidadTipoDatoVO entdVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(entdVO);
         Preconditions.checkNotNull(entdVO.getEntiId());
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
-        if (entdDAO.exists(entdVO)) {
-            throw new DuplicateInstanceException(EntidadTipoDatoVO.class.getName(), entdVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        entiDAO = session.getMapper(EntidadDAO.class);
+        entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
+
+        try {
+            if (entdDAO.exists(entdVO)) {
+                throw new DuplicateInstanceException(EntidadTipoDatoVO.class.getName(), entdVO);
+            }
+
+            final EntidadVO entiVO = entiDAO.select(entdVO.getEntiId());
+            // FIXME Acabar
+
+            entdDAO.insert(entdVO);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        final EntidadVO entiVO = entiDAO.select(entdVO.getEntiId());
-        // FIXME Acabar
-
-        entdDAO.insert(entdVO);
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param entdVO
+     *            the entd vo
      */
-    @Override
-    @Transactional
     public final void update(final EntidadTipoDatoVO entdVO) {
         Preconditions.checkNotNull(entdVO);
         Preconditions.checkNotNull(entdVO.getEntiId());
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
-        final int updated = entdDAO.update(entdVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (updated == 0) {
-            throw new Error("Dato de entidad no encontrado: " + entdVO);
+        entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
+
+        try {
+            final int updated = entdDAO.update(entdVO);
+
+            if (updated == 0) {
+                throw new Error("Dato de entidad no encontrado: " + entdVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param entdVO
+     *            the entd vo
      */
-    @Override
-    @Transactional
     public final void delete(final EntidadTipoDatoVO entdVO) {
         Preconditions.checkNotNull(entdVO);
         Preconditions.checkNotNull(entdVO.getEntiId());
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
-        final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        entdCriterioVO.setEntiId(entdVO.getEntiId());
-        entdCriterioVO.setTpdtId(entdVO.getTpdt().getId());
+        entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
-        entdDAO.deleteCriterio(entdCriterioVO);
+        try {
+            final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
+
+            entdCriterioVO.setEntiId(entdVO.getEntiId());
+            entdCriterioVO.setTpdtId(entdVO.getTpdt().getId());
+
+            entdDAO.deleteCriterio(entdCriterioVO);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param entiId
+     *            the enti id
+     * @param tpdtId
+     *            the tpdt id
+     * @return the entidad tipo dato vo
      */
-    @Override
-    @Transactional
     public final EntidadTipoDatoVO select(final Long entiId, final Long tpdtId) {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(tpdtId);
 
-        final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        entdCriterioVO.setEntiId(entiId);
-        entdCriterioVO.setTpdtId(tpdtId);
+        entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
-        final EntidadTipoDatoVO entdVO = entdDAO.selectObject(entdCriterioVO);
+        try {
+            final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
 
-        if (entdVO == null) {
-            throw new Error("Dato de entidad no encontrado: " + entdCriterioVO);
+            entdCriterioVO.setEntiId(entiId);
+            entdCriterioVO.setTpdtId(tpdtId);
+
+            final EntidadTipoDatoVO entdVO = entdDAO.selectObject(entdCriterioVO);
+
+            if (entdVO == null) {
+                throw new Error("Dato de entidad no encontrado: " + entdCriterioVO);
+            }
+
+            return entdVO;
+        } finally {
+            session.close();
         }
-
-        return entdVO;
     }
 }

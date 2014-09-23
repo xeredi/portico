@@ -9,8 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoradorBOTest.
@@ -28,7 +26,7 @@ public final class ValoradorTest {
         LOG.info("Start test");
 
         try {
-            final Valorador valorador = BOFactory.getInjector().getInstance(ValoradorBO.class);
+            final ValoradorBO valorador = new ValoradorBO();
             final Set<Long> crgoIds = new HashSet<>();
 
             // Manifiesto

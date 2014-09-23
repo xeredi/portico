@@ -9,12 +9,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
-import xeredi.integra.model.facturacion.bo.Regla;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
-import xeredi.integra.model.facturacion.bo.ReglaIncompatible;
 import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
@@ -68,7 +65,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         Preconditions.checkNotNull(rgin.getRgiv());
         Preconditions.checkNotNull(rgin.getRgiv().getId());
 
-        final ReglaIncompatible rginBO = BOFactory.getInjector().getInstance(ReglaIncompatibleBO.class);
+        final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
 
         rginCriterioVO.setRgivId(rgin.getRgiv().getId());
@@ -102,7 +99,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         rgin.getRgiv().setFini(Calendar.getInstance().getTime());
 
         {
-            final Regla rglaBO = BOFactory.getInjector().getInstance(ReglaBO.class);
+            final ReglaBO rglaBO = new ReglaBO();
             final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
             rglaCriterioVO.setCrgoId(rgin.getRgla2().getCrgo().getId());
@@ -125,7 +122,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final ReglaIncompatible rginBO = BOFactory.getInjector().getInstance(ReglaIncompatibleBO.class);
+        final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
 
         rginCriterioVO.setRgivId(rgin.getRgiv().getId());
@@ -171,7 +168,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
             return SUCCESS;
         }
 
-        final ReglaIncompatible rginBO = BOFactory.getInjector().getInstance(ReglaIncompatibleBO.class);
+        final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
 
         switch (accion) {
         case create:
@@ -208,7 +205,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgiv().getId());
 
-        final ReglaIncompatible rginBO = BOFactory.getInjector().getInstance(ReglaIncompatibleBO.class);
+        final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
 
         try {
             rginBO.delete(rgin);

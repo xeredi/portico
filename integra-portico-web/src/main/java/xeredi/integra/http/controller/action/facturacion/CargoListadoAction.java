@@ -6,8 +6,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Cargo;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
@@ -64,7 +62,7 @@ public final class CargoListadoAction extends BaseAction {
     public String listado() {
         Preconditions.checkNotNull(crgoCriterio);
 
-        final Cargo crgoBO = BOFactory.getInjector().getInstance(CargoBO.class);
+        final CargoBO crgoBO = new CargoBO();
 
         if (hasErrors()) {
             return INPUT;

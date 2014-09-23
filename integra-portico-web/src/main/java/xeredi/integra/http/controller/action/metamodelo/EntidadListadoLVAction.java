@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -34,7 +32,7 @@ public final class EntidadListadoLVAction extends BaseAction {
      */
     @Action("enti-lv-list")
     public String list() {
-        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
+        final EntidadBO entiBO = new EntidadBO();
 
         lvList.addAll(entiBO.selectLabelValues(entiCriterio));
 

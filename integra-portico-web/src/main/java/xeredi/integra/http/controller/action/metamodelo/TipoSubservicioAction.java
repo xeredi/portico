@@ -6,11 +6,8 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.exception.ErrorCode;
-import xeredi.integra.model.metamodelo.bo.Entidad;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
-import xeredi.integra.model.metamodelo.bo.TipoSubservicio;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -70,7 +67,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
         enti = tpssBO.select(enti.getId());
 
@@ -122,7 +119,7 @@ public final class TipoSubservicioAction extends BaseAction {
             return SUCCESS;
         }
 
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
         if (accion == ACCION_EDICION.create) {
             enti.setCodigo(enti.getCodigo().toUpperCase());
@@ -154,7 +151,7 @@ public final class TipoSubservicioAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
+        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
         try {
             tpssBO.delete(enti.getId());
@@ -176,8 +173,8 @@ public final class TipoSubservicioAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoSubservicio tpssBO = BOFactory.getInjector().getInstance(TipoSubservicioBO.class);
-        final Entidad entiBO = BOFactory.getInjector().getInstance(EntidadBO.class);
+        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+        final EntidadBO entiBO = new EntidadBO();
 
         enti = tpssBO.select(enti.getId());
 

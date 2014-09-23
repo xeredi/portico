@@ -3,8 +3,6 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoDato;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
@@ -52,7 +50,7 @@ public final class TipoDatoListadoAction extends BaseAction {
      */
     @Action("tpdt-list")
     public String list() {
-        final TipoDato tpdtBO = BOFactory.getInjector().getInstance(TipoDatoBO.class);
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
 
         tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 

@@ -4,8 +4,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.metamodelo.bo.TipoParametro;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
@@ -56,7 +54,7 @@ public final class TipoParametroListadoAction extends BaseAction {
             entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
         }
 
-        final TipoParametro tpprBO = BOFactory.getInjector().getInstance(TipoParametroBO.class);
+        final TipoParametroBO tpprBO = new TipoParametroBO();
 
         // Traemos solo los maestros
         entiCriterio.setTipo(TipoEntidad.P);

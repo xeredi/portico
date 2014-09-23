@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
 import xeredi.integra.model.metamodelo.dao.TipoDatoDAO;
@@ -20,178 +21,267 @@ import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoAdminBO.
  */
-@Singleton
-public class TipoDatoBO implements TipoDato {
+public class TipoDatoBO {
 
     /** The tpdt dao. */
-    @Inject
     TipoDatoDAO tpdtDAO;
 
     /** The cdrf dao. */
-    @Inject
     CodigoReferenciaDAO cdrfDAO;
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @return the tipo dato vo
      */
-    @Override
-    @Transactional
     public final TipoDatoVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
-        final TipoDatoVO tpdtVO = tpdtDAO.select(id);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (tpdtVO == null) {
-            throw new Error("Tipo de dato no encontrado: " + id);
-        }
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-        // Si el tipo de dato es un codigo de referencia, se buscan los
-        // valores posibles
-        if (tpdtVO.getTipoElemento() == TipoElemento.CR) {
-            final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
+        try {
+            final TipoDatoVO tpdtVO = tpdtDAO.select(id);
 
-            cdrfCriterioVO.setTpdtIds(new HashSet<>(Arrays.asList(new Long[] { tpdtVO.getId() })));
-
-            final List<CodigoReferenciaVO> cdrfList = cdrfDAO.selectList(cdrfCriterioVO);
-            final Set<String> cdrfCodeSet = new HashSet<>();
-
-            for (final CodigoReferenciaVO cdrfVO : cdrfList) {
-                cdrfCodeSet.add(cdrfVO.getValor());
+            if (tpdtVO == null) {
+                throw new Error("Tipo de dato no encontrado: " + id);
             }
 
-            tpdtVO.setCdrfList(cdrfList);
-            tpdtVO.setCdrfCodeSet(cdrfCodeSet);
-        }
+            // Si el tipo de dato es un codigo de referencia, se buscan los
+            // valores posibles
+            if (tpdtVO.getTipoElemento() == TipoElemento.CR) {
+                final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
 
-        return tpdtVO;
+                cdrfCriterioVO.setTpdtIds(new HashSet<>(Arrays.asList(new Long[] { tpdtVO.getId() })));
+
+                final List<CodigoReferenciaVO> cdrfList = cdrfDAO.selectList(cdrfCriterioVO);
+                final Set<String> cdrfCodeSet = new HashSet<>();
+
+                for (final CodigoReferenciaVO cdrfVO : cdrfList) {
+                    cdrfCodeSet.add(cdrfVO.getValor());
+                }
+
+                tpdtVO.setCdrfList(cdrfList);
+                tpdtVO.setCdrfCodeSet(cdrfCodeSet);
+            }
+
+            return tpdtVO;
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param tpdtVO
+     *            the tpdt vo
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
-    @Override
-    @Transactional
     public final void insert(final TipoDatoVO tpdtVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpdtVO);
 
-        if (tpdtDAO.exists(tpdtVO)) {
-            throw new DuplicateInstanceException(TipoDatoVO.class.getName(), tpdtVO);
-        }
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        tpdtVO.setId(tpdtDAO.nextSequence());
-        tpdtDAO.insert(tpdtVO);
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+
+        try {
+            if (tpdtDAO.exists(tpdtVO)) {
+                throw new DuplicateInstanceException(TipoDatoVO.class.getName(), tpdtVO);
+            }
+
+            tpdtVO.setId(tpdtDAO.nextSequence());
+            tpdtDAO.insert(tpdtVO);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param tpdtVO
+     *            the tpdt vo
      */
-    @Override
-    @Transactional
     public final void update(final TipoDatoVO tpdtVO) {
         Preconditions.checkNotNull(tpdtVO);
         Preconditions.checkNotNull(tpdtVO.getId());
 
-        tpdtDAO.update(tpdtVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+
+        try {
+            tpdtDAO.update(tpdtVO);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param tpdtVO
+     *            the tpdt vo
      */
-    @Override
-    @Transactional
     public void delete(final TipoDatoVO tpdtVO) {
         Preconditions.checkNotNull(tpdtVO);
         Preconditions.checkNotNull(tpdtVO.getId());
 
-        tpdtDAO.delete(tpdtVO.getId());
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+
+        try {
+            tpdtDAO.delete(tpdtVO.getId());
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param tpdtCriterioVO
+     *            the tpdt criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
-        return tpdtDAO.selectList(tpdtCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+
+        try {
+            return tpdtDAO.selectList(tpdtCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param tpdtCriterioVO
+     *            the tpdt criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public final PaginatedList<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
-        final int count = tpdtDAO.count(tpdtCriterioVO);
-        final List<TipoDatoVO> tpdtList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count > offset) {
-            tpdtList.addAll(tpdtDAO.selectList(tpdtCriterioVO, new RowBounds(offset, limit)));
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+
+        try {
+            final int count = tpdtDAO.count(tpdtCriterioVO);
+            final List<TipoDatoVO> tpdtList = new ArrayList<>();
+
+            if (count > offset) {
+                tpdtList.addAll(tpdtDAO.selectList(tpdtCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<>(tpdtList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<>(tpdtList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select label values.
+     *
+     * @param tpdtCriterioVO
+     *            the tpdt criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<LabelValueVO> selectLabelValues(final TipoDatoCriterioVO tpdtCriterioVO) {
-        return tpdtDAO.selectLabelValues(tpdtCriterioVO);
+        Preconditions.checkNotNull(tpdtCriterioVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+
+        try {
+            return tpdtDAO.selectLabelValues(tpdtCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select map.
+     *
+     * @param tpdtCriterioVO
+     *            the tpdt criterio vo
+     * @return the map
      */
-    @Override
-    @Transactional
     public final Map<Long, TipoDatoVO> selectMap(final TipoDatoCriterioVO tpdtCriterioVO) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
-        final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterioVO);
-        final List<CodigoReferenciaVO> cdrfList = cdrfDAO.selectList(new CodigoReferenciaCriterioVO());
-        final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        for (final CodigoReferenciaVO cdrfVO : cdrfList) {
-            if (!cdrfMap.containsKey(cdrfVO.getTpdtId())) {
-                cdrfMap.put(cdrfVO.getTpdtId(), new ArrayList<CodigoReferenciaVO>());
-            }
+        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            cdrfMap.get(cdrfVO.getTpdtId()).add(cdrfVO);
-        }
+        try {
+            final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterioVO);
+            final List<CodigoReferenciaVO> cdrfList = cdrfDAO.selectList(new CodigoReferenciaCriterioVO());
+            final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
 
-        for (final TipoDatoVO tpdtVO : tpdtMap.values()) {
-            if (cdrfMap.containsKey(tpdtVO.getId())) {
-                tpdtVO.setCdrfList(cdrfMap.get(tpdtVO.getId()));
-
-                final Set<String> cdrfCodeSet = new HashSet<>();
-
-                for (final CodigoReferenciaVO cdrfVO : cdrfMap.get(tpdtVO.getId())) {
-                    cdrfCodeSet.add(cdrfVO.getValor());
+            for (final CodigoReferenciaVO cdrfVO : cdrfList) {
+                if (!cdrfMap.containsKey(cdrfVO.getTpdtId())) {
+                    cdrfMap.put(cdrfVO.getTpdtId(), new ArrayList<CodigoReferenciaVO>());
                 }
 
-                tpdtVO.setCdrfCodeSet(cdrfCodeSet);
+                cdrfMap.get(cdrfVO.getTpdtId()).add(cdrfVO);
             }
 
-            tpdtMap.put(tpdtVO.getId(), tpdtVO);
-        }
+            for (final TipoDatoVO tpdtVO : tpdtMap.values()) {
+                if (cdrfMap.containsKey(tpdtVO.getId())) {
+                    tpdtVO.setCdrfList(cdrfMap.get(tpdtVO.getId()));
 
-        return tpdtMap;
+                    final Set<String> cdrfCodeSet = new HashSet<>();
+
+                    for (final CodigoReferenciaVO cdrfVO : cdrfMap.get(tpdtVO.getId())) {
+                        cdrfCodeSet.add(cdrfVO.getValor());
+                    }
+
+                    tpdtVO.setCdrfCodeSet(cdrfCodeSet);
+                }
+
+                tpdtMap.put(tpdtVO.getId(), tpdtVO);
+            }
+
+            return tpdtMap;
+        } finally {
+            session.close();
+        }
     }
 
 }

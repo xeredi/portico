@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
@@ -35,56 +35,47 @@ import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionBO.
  */
-@Singleton
-public class ValoracionBO implements Valoracion {
+public class ValoracionBO {
 
     /** The vlrc dao. */
-    @Inject
     ValoracionDAO vlrcDAO;
 
     /** The vlrl dao. */
-    @Inject
     ValoracionLineaDAO vlrlDAO;
 
     /** The vlrd dao. */
-    @Inject
     ValoracionDetalleDAO vlrdDAO;
 
     /** The vlri dao. */
-    @Inject
     ValoracionImpuestoDAO vlriDAO;
 
     /** The vlrg dao. */
-    @Inject
     ValoracionCargoDAO vlrgDAO;
 
     /** The srcr dao. */
-    @Inject
     ServicioCargoDAO srcrDAO;
 
     /** The rgla dao. */
-    @Inject
     ReglaDAO rglaDAO;
 
     /** The ssrv dao. */
-    @Inject
     SubservicioDAO ssrvDAO;
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param id
+     *            the id
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public void delete(final Long id) {
         Preconditions.checkNotNull(id);
 
@@ -95,179 +86,289 @@ public class ValoracionBO implements Valoracion {
     }
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param ids
+     *            the ids
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public void delete(final Set<Long> ids) {
         Preconditions.checkNotNull(ids);
         Preconditions.checkArgument(!ids.isEmpty());
 
-        final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-        final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
-        final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
-        final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        srcrCriterioVO.setVlrcIds(ids);
-        vlrcCriterioVO.setIds(ids);
-        vlrlCriterioVO.setVlrc(vlrcCriterioVO);
-        vlrdCriterioVO.setVlrl(vlrlCriterioVO);
+        srcrDAO = session.getMapper(ServicioCargoDAO.class);
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+        vlrcDAO = session.getMapper(ValoracionDAO.class);
 
-        srcrDAO.deleteValoracion(srcrCriterioVO);
+        try {
+            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+            final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+            final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
+            final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
 
-        vlrdDAO.delete(vlrdCriterioVO);
-        vlrlDAO.delete(vlrlCriterioVO);
-        vlriDAO.delete(vlrcCriterioVO);
-        vlrgDAO.delete(vlrcCriterioVO);
-        vlrcDAO.delete(vlrcCriterioVO);
+            srcrCriterioVO.setVlrcIds(ids);
+            vlrcCriterioVO.setIds(ids);
+            vlrlCriterioVO.setVlrc(vlrcCriterioVO);
+            vlrdCriterioVO.setVlrl(vlrlCriterioVO);
+
+            srcrDAO.deleteValoracion(srcrCriterioVO);
+
+            vlrdDAO.delete(vlrdCriterioVO);
+            vlrlDAO.delete(vlrlCriterioVO);
+            vlriDAO.delete(vlrcCriterioVO);
+            vlrgDAO.delete(vlrcCriterioVO);
+            vlrcDAO.delete(vlrcCriterioVO);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param id
+     *            the id
+     * @return the valoracion vo
      */
-    @Override
     public ValoracionVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
-        final ValoracionVO vlrc = vlrcDAO.select(id);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        return vlrc;
+        vlrcDAO = session.getMapper(ValoracionDAO.class);
+
+        try {
+            final ValoracionVO vlrc = vlrcDAO.select(id);
+
+            return vlrc;
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
     public PaginatedList<ValoracionVO> selectList(final ValoracionCriterioVO vlrcCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(vlrcCriterioVO);
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final int count = vlrcDAO.count(vlrcCriterioVO);
-        final List<ValoracionVO> vlrcList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count >= offset) {
-            vlrcList.addAll(vlrcDAO.selectList(vlrcCriterioVO, new RowBounds(offset, limit)));
+        vlrcDAO = session.getMapper(ValoracionDAO.class);
+
+        try {
+            final int count = vlrcDAO.count(vlrcCriterioVO);
+            final List<ValoracionVO> vlrcList = new ArrayList<>();
+
+            if (count >= offset) {
+                vlrcList.addAll(vlrcDAO.selectList(vlrcCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<ValoracionVO>(vlrcList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<ValoracionVO>(vlrcList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select imprimir.
+     *
+     * @param ids
+     *            the ids
+     * @return the list
      */
-    @Override
     public List<ValoracionImpresionVO> selectImprimir(final Set<Long> ids) {
         Preconditions.checkNotNull(ids);
         Preconditions.checkArgument(!ids.isEmpty());
 
-        final List<ValoracionImpresionVO> list = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        for (final Long vlrcId : ids) {
-            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-            final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+        vlrcDAO = session.getMapper(ValoracionDAO.class);
+        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
-            vlrcCriterioVO.setId(vlrcId);
-            vlrlCriterioVO.setVlrc(vlrcCriterioVO);
+        try {
+            final List<ValoracionImpresionVO> list = new ArrayList<>();
 
-            final ValoracionVO vlrc = vlrcDAO.select(vlrcId);
+            for (final Long vlrcId : ids) {
+                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+                final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
 
-            if (vlrc != null) {
-                final List<ValoracionCargoVO> vlrgList = vlrgDAO.selectList(vlrcCriterioVO);
-                final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectList(vlrcCriterioVO);
-                final List<ValoracionLineaVO> vlrlList = vlrlDAO.selectList(vlrlCriterioVO);
+                vlrcCriterioVO.setId(vlrcId);
+                vlrlCriterioVO.setVlrc(vlrcCriterioVO);
 
-                list.add(new ValoracionImpresionVO(vlrc, vlrgList, vlriList, vlrlList));
+                final ValoracionVO vlrc = vlrcDAO.select(vlrcId);
+
+                if (vlrc != null) {
+                    final List<ValoracionCargoVO> vlrgList = vlrgDAO.selectList(vlrcCriterioVO);
+                    final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectList(vlrcCriterioVO);
+                    final List<ValoracionLineaVO> vlrlList = vlrlDAO.selectList(vlrlCriterioVO);
+
+                    list.add(new ValoracionImpresionVO(vlrc, vlrgList, vlriList, vlrlList));
+                }
             }
-        }
 
-        return list;
+            return list;
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select vlri list.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public List<ValoracionImpuestoVO> selectVlriList(final ValoracionCriterioVO vlrcCriterioVO) {
         Preconditions.checkNotNull(vlrcCriterioVO);
 
-        return vlriDAO.selectList(vlrcCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+
+        try {
+            return vlriDAO.selectList(vlrcCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select vlrg list.
+     *
+     * @param vlrcCriterioVO
+     *            the vlrc criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public List<ValoracionCargoVO> selectVlrgList(final ValoracionCriterioVO vlrcCriterioVO) {
         Preconditions.checkNotNull(vlrcCriterioVO);
 
-        return vlrgDAO.selectList(vlrcCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+
+        try {
+            return vlrgDAO.selectList(vlrcCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select vlrl.
+     *
+     * @param vlrlId
+     *            the vlrl id
+     * @return the valoracion linea vo
      */
-    @Override
-    @Transactional
     public ValoracionLineaVO selectVlrl(final Long vlrlId) {
         Preconditions.checkNotNull(vlrlId);
 
-        return vlrlDAO.select(vlrlId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+
+        try {
+            return vlrlDAO.select(vlrlId);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Exists vlrl hija.
+     *
+     * @param vlrlId
+     *            the vlrl id
+     * @return true, if successful
      */
-    @Override
-    @Transactional
     public boolean existsVlrlHija(final Long vlrlId) {
         Preconditions.checkNotNull(vlrlId);
 
-        return vlrlDAO.existsDependencia(vlrlId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+
+        try {
+            return vlrlDAO.existsDependencia(vlrlId);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Delete vlrl.
+     *
+     * @param vlrlId
+     *            the vlrl id
      */
-    @Override
-    @Transactional
     public void deleteVlrl(final Long vlrlId) {
         Preconditions.checkNotNull(vlrlId);
 
-        if (vlrlDAO.existsDependencia(vlrlId)) {
-            throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
-        }
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final ValoracionLineaVO vlrl = vlrlDAO.select(vlrlId);
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
 
-        if (vlrl != null) {
-            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-            final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
-            final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
-
-            vlrcCriterioVO.setId(vlrl.getVlrcId());
-
-            vlrlCriterioVO.setId(vlrlId);
-            vlrlCriterioVO.setVlrc(vlrcCriterioVO);
-
-            vlrdCriterioVO.setVlrl(vlrlCriterioVO);
-
-            vlrdDAO.delete(vlrdCriterioVO);
-            vlrlDAO.delete(vlrlCriterioVO);
-
-            // Recalcular cargos e importes de IVA
-            vlrgDAO.delete(vlrcCriterioVO);
-            vlrgDAO.insertGenerate(vlrcCriterioVO);
-            vlriDAO.delete(vlrcCriterioVO);
-
-            final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
-
-            for (final ValoracionImpuestoVO vlri : vlriList) {
-                vlriDAO.insert(vlri);
+        try {
+            if (vlrlDAO.existsDependencia(vlrlId)) {
+                throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
             }
+
+            final ValoracionLineaVO vlrl = vlrlDAO.select(vlrlId);
+
+            if (vlrl != null) {
+                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+                final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+                final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
+
+                vlrcCriterioVO.setId(vlrl.getVlrcId());
+
+                vlrlCriterioVO.setId(vlrlId);
+                vlrlCriterioVO.setVlrc(vlrcCriterioVO);
+
+                vlrdCriterioVO.setVlrl(vlrlCriterioVO);
+
+                vlrdDAO.delete(vlrdCriterioVO);
+                vlrlDAO.delete(vlrlCriterioVO);
+
+                // Recalcular cargos e importes de IVA
+                vlrgDAO.delete(vlrcCriterioVO);
+                vlrgDAO.insertGenerate(vlrcCriterioVO);
+                vlriDAO.delete(vlrcCriterioVO);
+
+                final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
+
+                for (final ValoracionImpuestoVO vlri : vlriList) {
+                    vlriDAO.insert(vlri);
+                }
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
@@ -293,8 +394,6 @@ public class ValoracionBO implements Valoracion {
      * @param vlrd
      *            Datos de un detalle de valoracion.
      */
-    @Override
-    @Transactional
     public void insertVlrl(final ValoracionLineaVO vlrl, final ValoracionDetalleVO vlrd) {
         Preconditions.checkNotNull(vlrl);
         Preconditions.checkNotNull(vlrl.getVlrcId());
@@ -307,133 +406,195 @@ public class ValoracionBO implements Valoracion {
         Preconditions.checkNotNull(vlrd.getImporte());
         Preconditions.checkNotNull(vlrd.getImporteBase());
 
-        // Validacion de datos
-        final ValoracionVO vlrc = vlrcDAO.select(vlrl.getVlrcId());
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (vlrc == null) {
-            throw new Error("Valoracion no encontrada: " + vlrl.getVlrcId());
-        }
+        vlrcDAO = session.getMapper(ValoracionDAO.class);
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+        rglaDAO = session.getMapper(ReglaDAO.class);
+        ssrvDAO = session.getMapper(SubservicioDAO.class);
 
-        if (!vlrlDAO.isRglaValida(vlrl)) {
-            throw new Error("Regla no valida para el aspecto de la valoracion");
-        }
+        try {
+            // Validacion de datos
+            final ValoracionVO vlrc = vlrcDAO.select(vlrl.getVlrcId());
 
-        final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
+            if (vlrc == null) {
+                throw new Error("Valoracion no encontrada: " + vlrl.getVlrcId());
+            }
 
-        rglaCriterioVO.setId(vlrl.getRgla().getId());
-        rglaCriterioVO.setFechaVigencia(vlrc.getFref());
+            if (!vlrlDAO.isRglaValida(vlrl)) {
+                throw new Error("Regla no valida para el aspecto de la valoracion");
+            }
 
-        final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
+            final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
-        if (rgla == null) {
-            throw new Error("Regla no encontrada: " + vlrl.getRgla());
-        }
+            rglaCriterioVO.setId(vlrl.getRgla().getId());
+            rglaCriterioVO.setFechaVigencia(vlrc.getFref());
 
-        if (rgla.getRglv().getTipo() != ReglaTipo.T) {
-            Preconditions.checkNotNull(vlrl.getPadreId());
-        }
+            final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
 
-        final AspectoVO aspc = vlrc.getAspc();
-        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+            if (rgla == null) {
+                throw new Error("Regla no encontrada: " + vlrl.getRgla());
+            }
 
-        ssrvCriterioVO.setFechaVigencia(vlrc.getFref());
+            if (rgla.getRglv().getTipo() != ReglaTipo.T) {
+                Preconditions.checkNotNull(vlrl.getPadreId());
+            }
 
-        if (rgla.getRglv().getEnti().getTipo() == TipoEntidad.S) {
-            if (aspc.getAspv().isAgrupaDetalles()) {
-                Preconditions.checkNotNull(vlrd.getSsrv());
-                Preconditions.checkNotNull(vlrd.getSsrv().getId());
+            final AspectoVO aspc = vlrc.getAspc();
+            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
-                ssrvCriterioVO.setId(vlrd.getSsrv().getId());
+            ssrvCriterioVO.setFechaVigencia(vlrc.getFref());
 
-                final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
+            if (rgla.getRglv().getEnti().getTipo() == TipoEntidad.S) {
+                if (aspc.getAspv().isAgrupaDetalles()) {
+                    Preconditions.checkNotNull(vlrd.getSsrv());
+                    Preconditions.checkNotNull(vlrd.getSsrv().getId());
 
-                if (ssrv.getEntiId() != rgla.getRglv().getEnti().getId()) {
-                    throw new Error("Subservicio no valido para la regla");
-                }
-            } else {
-                Preconditions.checkNotNull(vlrl.getSsrv());
-                Preconditions.checkNotNull(vlrl.getSsrv().getId());
+                    ssrvCriterioVO.setId(vlrd.getSsrv().getId());
 
-                ssrvCriterioVO.setId(vlrl.getSsrv().getId());
+                    final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
 
-                final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
+                    if (ssrv.getEntiId() != rgla.getRglv().getEnti().getId()) {
+                        throw new Error("Subservicio no valido para la regla");
+                    }
+                } else {
+                    Preconditions.checkNotNull(vlrl.getSsrv());
+                    Preconditions.checkNotNull(vlrl.getSsrv().getId());
 
-                if (ssrv.getEntiId() != rgla.getRglv().getEnti().getId()) {
-                    throw new Error("Subservicio no valido para la regla");
+                    ssrvCriterioVO.setId(vlrl.getSsrv().getId());
+
+                    final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
+
+                    if (ssrv.getEntiId() != rgla.getRglv().getEnti().getId()) {
+                        throw new Error("Subservicio no valido para la regla");
+                    }
                 }
             }
+
+            // Grabacion de datos
+            final IgBO igBO = new IgBO();
+
+            vlrl.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vlrd.setVlrlId(vlrl.getId());
+            vlrd.setVlrcId(vlrl.getVlrcId());
+
+            vlrlDAO.insert(vlrl);
+            vlrdDAO.insert(vlrd);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        // Grabacion de datos
-        final IgBO igBO = new IgBO();
-
-        vlrl.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        vlrd.setVlrlId(vlrl.getId());
-        vlrd.setVlrcId(vlrl.getVlrcId());
-
-        vlrlDAO.insert(vlrl);
-        vlrdDAO.insert(vlrd);
     }
 
     /**
-     * {@inheritDoc}
+     * Select vlrl list.
+     *
+     * @param vlrlCriterioVO
+     *            the vlrl criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public List<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO) {
         Preconditions.checkNotNull(vlrlCriterioVO);
 
-        return vlrlDAO.selectList(vlrlCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+
+        try {
+            return vlrlDAO.selectList(vlrlCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select vlrl list.
+     *
+     * @param vlrlCriterioVO
+     *            the vlrl criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public PaginatedList<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO,
             final int offset, final int limit) {
         Preconditions.checkNotNull(vlrlCriterioVO);
 
-        final int count = vlrlDAO.count(vlrlCriterioVO);
-        final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count >= offset) {
-            vlrlList.addAll(vlrlDAO.selectList(vlrlCriterioVO, new RowBounds(offset, limit)));
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+
+        try {
+            final int count = vlrlDAO.count(vlrlCriterioVO);
+            final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
+
+            if (count >= offset) {
+                vlrlList.addAll(vlrlDAO.selectList(vlrlCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select vlrd.
+     *
+     * @param vlrdId
+     *            the vlrd id
+     * @return the valoracion detalle vo
      */
-    @Override
-    @Transactional
     public ValoracionDetalleVO selectVlrd(final Long vlrdId) {
         Preconditions.checkNotNull(vlrdId);
 
-        return vlrdDAO.select(vlrdId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+
+        try {
+            return vlrdDAO.select(vlrdId);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select vlrd list.
+     *
+     * @param vlrdCriterioVO
+     *            the vlrd criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public PaginatedList<ValoracionDetalleVO> selectVlrdList(final ValoracionDetalleCriterioVO vlrdCriterioVO,
             final int offset, final int limit) {
         Preconditions.checkNotNull(vlrdCriterioVO);
 
-        final int count = vlrdDAO.count(vlrdCriterioVO);
-        final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count >= offset) {
-            vlrdList.addAll(vlrdDAO.selectList(vlrdCriterioVO, new RowBounds(offset, limit)));
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+
+        try {
+            final int count = vlrdDAO.count(vlrdCriterioVO);
+            final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
+
+            if (count >= offset) {
+                vlrdList.addAll(vlrdDAO.selectList(vlrdCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<ValoracionDetalleVO>(vlrdList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<ValoracionDetalleVO>(vlrdList, offset, limit, count);
     }
 
 }

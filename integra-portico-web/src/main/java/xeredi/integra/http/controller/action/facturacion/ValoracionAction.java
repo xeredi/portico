@@ -7,8 +7,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.facturacion.bo.Valoracion;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
@@ -55,7 +53,7 @@ public final class ValoracionAction extends BaseAction {
         Preconditions.checkNotNull(vlrc);
         Preconditions.checkNotNull(vlrc.getId());
 
-        final Valoracion vlrcBO = BOFactory.getInjector().getInstance(ValoracionBO.class);
+        final ValoracionBO vlrcBO = new ValoracionBO();
         final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
 
         if (hasErrors()) {
