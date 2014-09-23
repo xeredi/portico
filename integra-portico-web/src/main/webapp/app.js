@@ -96,7 +96,7 @@ app.config(function($translateProvider) {
         modal_filtro : 'Filtro',
         limit : 'Max. Resultados',
 
-        maestro_main : 'Maestro - Inicio',
+        maestro_main : 'Maestros - Inicio',
 
         prmt_grid : 'Maestro - Listado',
         prmt_detail : 'Maestro - Detalle',
@@ -120,6 +120,8 @@ app.config(function($translateProvider) {
 
         cnen_codigo : 'C\u00f3digo',
         cnen_nombre : 'Nombre',
+
+        servicio_main : 'Servicios - Inicio',
 
         srvc_grid : 'Servicio - Listado',
         srvc_detail : 'Servicio - Detalle',

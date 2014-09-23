@@ -202,6 +202,7 @@ public final class ServicioAction extends ItemAction {
      */
     @Action(value = "srvc-save")
     public String guardar() {
+        Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 

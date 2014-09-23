@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
@@ -21,7 +24,6 @@ import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
-import xeredi.util.struts.PropertyValidator;
 
 import com.google.common.base.Preconditions;
 
@@ -114,15 +116,22 @@ public final class SubservicioAction extends ItemAction {
      * Alta.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action(value = "ssrv-create")
-    public String alta() {
+    public String alta() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
         enti = TipoSubservicioProxy.select(item.getEntiId());
-        item = new SubservicioVO();
+
+        if (item.getSrvc() != null && item.getSrvc().getId() != null) {
+            final ServicioBO srvcBO = new ServicioBO();
+
+            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
+        }
 
         loadLabelValuesMap();
 
@@ -181,32 +190,71 @@ public final class SubservicioAction extends ItemAction {
      */
     @Action(value = "ssrv-save")
     public String guardar() {
+        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getEntiId());
+
         enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            PropertyValidator.validateRequired(this, "item.numero", item.getNumero());
+            if (item.getSrvc() == null || item.getSrvc().getId() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("ssrv_srvc") }));
+            }
+            if (item.getNumero() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("ssrv_numero") }));
+            }
+        } else {
+            Preconditions.checkNotNull(item.getId());
+            Preconditions.checkNotNull(item.getSrvc());
+            Preconditions.checkNotNull(item.getSrvc().getId());
+            Preconditions.checkNotNull(item.getNumero());
+        }
+
+        if (enti.getTpdtEstado() != null) {
+            if (GenericValidator.isBlankOrNull(item.getEstado())) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("ssrv_estado") }));
+            }
+        }
+
+        if (enti.getTemporal()) {
+            if (item.getFini() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("ssrv_fini") }));
+            }
+            if (item.getFfin() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("ssrv_ffin") }));
+            }
         }
 
         ItemDatoValidator.validate(this, enti, item);
 
         if (hasErrors()) {
-            return INPUT;
+            return SUCCESS;
         }
 
         final SubservicioBO ssrvBO = new SubservicioBO();
 
-        if (accion == ACCION_EDICION.create) {
+        switch (accion) {
+        case create:
             try {
                 ssrvBO.insert(item, null);
             } catch (final DuplicateInstanceException ex) {
-                addActionError("error.ssrv.duplicado");
+                addActionError(getText(ErrorCode.E00005.name(), new String[] { enti.getNombre() }));
             }
-        } else {
+
+            break;
+        case edit:
             try {
                 ssrvBO.update(item);
             } catch (final InstanceNotFoundException ex) {
-                addActionError("error.ssrv.noencontrado");
+                addActionError(getText(ErrorCode.E00008.name(), new String[] { enti.getNombre(),
+                    item.getId().toString() }));
             }
+
+            break;
+        case duplicate:
+            throw new Error("No implementado");
+        default:
+            throw new Error("Accion no valida: " + accion);
         }
 
         if (hasErrors()) {

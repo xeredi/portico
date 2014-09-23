@@ -253,9 +253,15 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "ssrvGridController"
     })
 
-    .when("/servicio/ssrv/create/:entiId/:ssrvId", {
+    .when("/servicio/ssrv/create/:entiId/:srvcId", {
         title : 'ssrv_create',
-        templateUrl : "modules/entidad/subservicio/ssrv-edit.html",
+        templateUrl : "modules/entidad/servicio/ssrv-edit.html",
+        controller : "ssrvCreateController"
+    })
+
+    .when("/servicio/ssrv/create/:entiId", {
+        title : 'ssrv_create',
+        templateUrl : "modules/entidad/servicio/ssrv-edit.html",
         controller : "ssrvCreateController"
     })
 
@@ -355,7 +361,11 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
 });
 
 module.controller("ssrvCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/ssrv-create.action?item.entiId=" + $routeParams.entiId + "&item.ssrvId=" + $routeParams.ssrvId;
+    var url = "servicio/ssrv-create.action?item.entiId=" + $routeParams.entiId;
+
+    if ($routeParams.srvcId) {
+        url += "&item.srvc.id=" + $routeParams.srvcId;
+    }
 
     $http.get(url).success(function(data) {
         $scope.item = data.item;

@@ -1,3 +1,4 @@
+<!--
 <div>
     <div ng-repeat="tpsr in tpsrList" class="panel panel-default col-md-4">
         <div class="panel-heading">
@@ -12,3 +13,14 @@
         </ul>
     </div>
 </div>
+ -->
+
+<ul class="media-list">
+    <li ng-repeat="tpsr in tpsrList" class="media"><a class="col-md-3 pull-left"
+        href="#/servicio/srvc/grid/{{tpsr.value}}"><strong>{{tpsr.label | uppercase}}</strong></a>
+        <div class="media-body">
+            <div class="col-md-4" ng-repeat="tpss in tpssMap[tpsr.value]" class="list-group-item">
+                <a href="#/servicio/ssrv/grid/{{tpss.value}}">{{tpss.label | uppercase}}</a>
+            </div>
+        </div></li>
+</ul>
