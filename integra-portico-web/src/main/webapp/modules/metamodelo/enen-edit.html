@@ -1,9 +1,3 @@
-<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
-<ul>
-    <li ng-repeat="error in actionErrors">{{error}}</li>
-</ul>
-</alert>
-
 <form name="editForm" novalidate role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enen.entiPadreId" /> <input type="hidden"
         ng-model="enti.tipo" />
@@ -22,6 +16,12 @@
                     class="form-control input-sm" />
             </div>
         </div>
+
+        <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+        <ul>
+            <li ng-repeat="error in actionErrors">{{error}}</li>
+        </ul>
+        </alert>
 
         <button data-ng-click="submit(editForm)" class="btn btn-default">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}

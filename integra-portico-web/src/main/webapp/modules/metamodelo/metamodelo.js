@@ -8,36 +8,43 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/tpdt/grid", {
+        title : 'tpdt_grid',
         templateUrl : "modules/metamodelo/tpdt-grid.html",
         controller : "tpdtGridController"
     })
 
     .when("/metamodelo/tpdt/create", {
+        title : 'tpdt_create',
         templateUrl : "modules/metamodelo/tpdt-edit.html",
         controller : "tpdtCreateController"
     })
 
     .when("/metamodelo/tpdt/detail/:tpdtId", {
+        title : 'tpdt_detail',
         templateUrl : "modules/metamodelo/tpdt-detail.html",
         controller : "tpdtDetailController"
     })
 
     .when("/metamodelo/tpdt/edit/:tpdtId", {
+        title : 'tpdt_edit',
         templateUrl : "modules/metamodelo/tpdt-edit.html",
         controller : "tpdtEditController"
     })
 
     .when("/metamodelo/cdrf/detail/:tpdtId/:valor", {
+        title : 'cdrf_detail',
         templateUrl : "modules/metamodelo/cdrf-detail.html",
         controller : "cdrfDetailController"
     })
 
     .when("/metamodelo/cdrf/edit/:tpdtId/:valor", {
+        title : 'cdrf_edit',
         templateUrl : "modules/metamodelo/cdrf-edit.html",
         controller : "cdrfEditController"
     })
 
     .when("/metamodelo/cdrf/create/:tpdtId", {
+        title : 'cdrf_create',
         templateUrl : "modules/metamodelo/cdrf-edit.html",
         controller : "cdrfCreateController"
     })
@@ -299,36 +306,43 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/tppr/grid", {
+        title : 'tppr_grid',
         templateUrl : "modules/metamodelo/tppr-grid.html",
         controller : "tpprGridController"
     })
 
     .when("/metamodelo/tppr/detail/:entiId", {
+        title : 'tppr_detail',
         templateUrl : "modules/metamodelo/tppr-detail.html",
         controller : "tpprDetailController"
     })
 
     .when("/metamodelo/tppr/edit/:entiId", {
+        title : 'tppr_edit',
         templateUrl : "modules/metamodelo/tppr-edit.html",
         controller : "tpprEditController"
     })
 
     .when("/metamodelo/tppr/create", {
+        title : 'tppr_create',
         templateUrl : "modules/metamodelo/tppr-edit.html",
         controller : "tpprCreateController"
     })
 
     .when("/metamodelo/tpsp/detail/:entiId", {
+        title : 'tpsp_detail',
         templateUrl : "modules/metamodelo/tpsp-detail.html",
         controller : "tpspDetailController"
     })
 
     .when("/metamodelo/tpsp/edit/:entiId", {
+        title : 'tpsp_edit',
         templateUrl : "modules/metamodelo/tpsp-edit.html",
         controller : "tpspEditController"
     })
 
     .when("/metamodelo/tpsp/create/:tpprId", {
+        title : 'tpsp_create',
         templateUrl : "modules/metamodelo/tpsp-edit.html",
         controller : "tpspCreateController"
     })
@@ -585,36 +599,43 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/tpsr/grid", {
+        title : 'tpsr_grid',
         templateUrl : "modules/metamodelo/tpsr-grid.html",
         controller : "tpsrGridController"
     })
 
     .when("/metamodelo/tpsr/detail/:entiId", {
+        title : 'tpsr_detail',
         templateUrl : "modules/metamodelo/tpsr-detail.html",
         controller : "tpsrDetailController"
     })
 
     .when("/metamodelo/tpsr/edit/:entiId", {
+        title : 'tpsr_edit',
         templateUrl : "modules/metamodelo/tpsr-edit.html",
         controller : "tpsrEditController"
     })
 
     .when("/metamodelo/tpsr/create", {
+        title : 'tpsr_create',
         templateUrl : "modules/metamodelo/tpsr-edit.html",
         controller : "tpsrCreateController"
     })
 
     .when("/metamodelo/tpss/detail/:entiId", {
+        title : 'tpss_detail',
         templateUrl : "modules/metamodelo/tpss-detail.html",
         controller : "tpssDetailController"
     })
 
     .when("/metamodelo/tpss/edit/:entiId", {
+        title : 'tpss_edit',
         templateUrl : "modules/metamodelo/tpss-edit.html",
         controller : "tpssEditController"
     })
 
     .when("/metamodelo/tpss/create/:tpsrId", {
+        title : 'tpss_create',
         templateUrl : "modules/metamodelo/tpss-edit.html",
         controller : "tpssCreateController"
     })
@@ -872,21 +893,25 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/tpes/grid", {
+        title : 'tpes_grid',
         templateUrl : "modules/metamodelo/tpes-grid.html",
         controller : "tpesGridController"
     })
 
     .when("/metamodelo/tpes/detail/:entiId", {
+        title : 'tpes_detail',
         templateUrl : "modules/metamodelo/tpes-detail.html",
         controller : "tpesDetailController"
     })
 
     .when("/metamodelo/tpes/edit/:entiId", {
+        title : 'tpes_edit',
         templateUrl : "modules/metamodelo/tpes-edit.html",
         controller : "tpesEditController"
     })
 
     .when("/metamodelo/tpes/create", {
+        title : 'tpes_create',
         templateUrl : "modules/metamodelo/tpes-edit.html",
         controller : "tpesCreateController"
     })
@@ -1033,16 +1058,19 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
+        title : 'entd_detail',
         templateUrl : "modules/metamodelo/entd-detail.html",
         controller : "entdDetailController"
     })
 
     .when("/metamodelo/entd/edit/:entiId/:tpdtId", {
+        title : 'entd_edit',
         templateUrl : "modules/metamodelo/entd-edit.html",
         controller : "entdEditController"
     })
 
     .when("/metamodelo/entd/create/:entiId", {
+        title : 'entd_create',
         templateUrl : "modules/metamodelo/entd-edit.html",
         controller : "entdCreateController"
     })
@@ -1144,6 +1172,117 @@ metamodelo.controller("entdCreateController", function($scope, $http, $location,
     }
 });
 
+// ------------------- ACCION DE ENTIDAD --------------------
+// ------------------- ACCION DE ENTIDAD --------------------
+// ------------------- ACCION DE ENTIDAD --------------------
+
+metamodelo.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
+
+    .when("/metamodelo/enac/detail/:entiId/:path", {
+        title : 'enac_detail',
+        templateUrl : "modules/metamodelo/enac-detail.html",
+        controller : "enacDetailController"
+    })
+
+    .when("/metamodelo/enac/edit/:entiId/:path", {
+        title : 'enac_edit',
+        templateUrl : "modules/metamodelo/enac-edit.html",
+        controller : "enacEditController"
+    })
+
+    .when("/metamodelo/enac/create/:entiId", {
+        title : 'enac_create',
+        templateUrl : "modules/metamodelo/enac-edit.html",
+        controller : "enacCreateController"
+    })
+} ]);
+
+metamodelo.controller("enacDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/enac-detail.action?enac.entiId=" + $routeParams.entiId + "&enac.path=" + $routeParams.path;
+
+    $http.get(url).success(function(data) {
+        $scope.enac = data.enac;
+    });
+
+    $scope.edit = function() {
+        $location.path("/metamodelo/enac/edit/" + $scope.enac.entiId + "/" + $scope.enac.path).replace();
+    }
+
+    $scope.remove = function() {
+        bootbox.confirm("Are you sure?", function(result) {
+            if (result) {
+                var url = "metamodelo/enac-remove.action?enac.entiId=" + $scope.enac.entiId + "&enac.path="
+                        + $scope.enac.path;
+
+                $http.get(url).success(function(data) {
+                    if (data.actionErrors.length == 0) {
+                        window.history.back();
+                    } else {
+                        $scope.actionErrors = data.actionErrors;
+                    }
+                });
+            }
+        });
+    }
+});
+
+metamodelo.controller("enacEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/enac-edit.action?enac.entiId=" + $routeParams.entiId + "&enac.path=" + $routeParams.path;
+
+    $http.get(url).success(function(data) {
+        $scope.enac = data.enac;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "metamodelo/enac-save.action";
+
+        $http.post(url, {
+            enac : $scope.enac,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/enac/detail/" + data.enac.entiId + "/" + data.enac.path).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/metamodelo/enac/detail/" + $scope.enac.entiId + "/" + $scope.enac.path).replace();
+    }
+});
+
+metamodelo.controller("enacCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "metamodelo/enac-create.action?enac.entiId=" + $routeParams.entiId;
+
+    $http.get(url).success(function(data) {
+        $scope.enac = data.enac;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "metamodelo/enac-save.action";
+
+        $http.post(url, {
+            enac : $scope.enac,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/metamodelo/enac/detail/" + data.enac.entiId + "/" + data.enac.path).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
+});
+
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
@@ -1152,6 +1291,7 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/enen/create/:entipId", {
+        title : 'enen_create',
         templateUrl : "modules/metamodelo/enen-edit.html",
         controller : "enenCreateController"
     });

@@ -13,7 +13,7 @@ public interface EntidadAccionDAO {
 
     /**
      * Exists.
-     * 
+     *
      * @param enacVO
      *            the enac vo
      * @return true, if successful
@@ -22,7 +22,7 @@ public interface EntidadAccionDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param enacVO
      *            the enac vo
      */
@@ -30,7 +30,7 @@ public interface EntidadAccionDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param enacVO
      *            the enac vo
      * @return the int
@@ -39,7 +39,7 @@ public interface EntidadAccionDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param enacVO
      *            the enac vo
      * @return the int
@@ -47,8 +47,17 @@ public interface EntidadAccionDAO {
     int delete(final EntidadAccionVO enacVO);
 
     /**
+     * Delete criterio.
+     *
+     * @param enacCriterioVO
+     *            the enac criterio vo
+     * @return the int
+     */
+    int deleteCriterio(final EntidadAccionCriterioVO enacCriterioVO);
+
+    /**
      * Select.
-     * 
+     *
      * @param enacCriterioVO
      *            the enac criterio vo
      * @return the entidad accion vo
@@ -57,7 +66,7 @@ public interface EntidadAccionDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param enacCriterioVO
      *            the enac criterio vo
      * @return the list
@@ -66,7 +75,7 @@ public interface EntidadAccionDAO {
 
     /**
      * Select all.
-     * 
+     *
      * @return the list
      */
     List<EntidadAccionVO> selectAll();
