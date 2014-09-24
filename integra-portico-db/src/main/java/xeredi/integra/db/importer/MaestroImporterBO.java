@@ -233,6 +233,7 @@ public final class MaestroImporterBO {
                 // Creacion del parametro
                 final ParametroVO prmtVO = new ParametroVO();
 
+                prmtVO.setEntiId(tpprVO.getId());
                 prmtVO.setParametro(parametro);
                 prmtVO.getPrvr().setFini(fechaInicio);
                 prmtVO.getPrvr().setFfin(fechaFin);
@@ -344,6 +345,7 @@ public final class MaestroImporterBO {
                 prmtAsociadoVO.setId(prmtAsociadoId);
                 sprmVO.setPrmtId(prmtId);
                 sprmVO.setPrmtAsociado(prmtAsociadoVO);
+                sprmVO.setEntiId(tpspVO.getId());
 
                 if (tpspVO.getTempExp()) {
                     sprmVO.getSpvr().setFini(rs.getDate(i++));

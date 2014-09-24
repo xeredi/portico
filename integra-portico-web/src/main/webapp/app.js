@@ -33,7 +33,7 @@ app.config(function($translateProvider) {
         fmt_datetime : 'dd/MM/yyyy HH:mm',
 
         TipoElemento_BO : "Booleano",
-        TipoElemento_CR : "Cod. Referencia",
+        TipoElemento_CR : "C\u00f3d. Referencia",
         TipoElemento_FE : "Fecha",
         TipoElemento_FH : "Fecha/Hora",
         TipoElemento_ND : "N\u00famero Decimal",
@@ -79,22 +79,22 @@ app.config(function($translateProvider) {
         boton_imprimir : 'Imprimir',
 
         menu_tpsrs : 'Servicios',
-        menu_peprs : 'Estadisticas',
+        menu_peprs : 'Estad\u00edsticas',
         menu_tpprs : 'Maestros',
         menu_prbts : 'Procesos',
         menu_fctrmain : 'Facturaci\u00f3n',
         menu_metamodelo_tpsrs : 'Tipos de Servicio',
-        menu_metamodelo_tpess : 'Tipos de Estadistica',
+        menu_metamodelo_tpess : 'Tipos de Estad\u00edstica',
         menu_metamodelo_tpprs : 'Tipos de Maestro',
         menu_metamodelo_tpdts : 'Tipos de Dato',
-        menu_confs : 'Configuracion',
+        menu_confs : 'Configuraci\u00f3n',
         menu_vlrcs : 'Valoraciones',
         menu_fctrs : 'Facturas',
         menu_crgos : 'Cargos',
         menu_aspcs : 'Aspectos',
 
         modal_filtro : 'Filtro',
-        limit : 'Max. Resultados',
+        limit : 'M\u00e1x. Resultados',
 
         maestro_main : 'Maestros - Inicio',
 
@@ -104,10 +104,10 @@ app.config(function($translateProvider) {
         prmt_create : 'Maestro - Nuevo',
         prmt_edit : 'Maestro - Edici\u00f3n',
 
-        prmt_parametro : 'Codigo',
+        prmt_parametro : 'C\u00f3digo',
         prmt_fini : 'F. Inicio',
         prmt_ffin : 'F. Fin',
-        prmt_i18n_texto : 'Descripcion',
+        prmt_i18n_texto : 'Descripci\u00f3n',
         prmt_fechaVigencia : 'Fec. Vigencia',
 
         sprm_detail : 'Submaestro - Detalle',
@@ -163,7 +163,7 @@ app.config(function($translateProvider) {
         vlrc_importe : 'Importe',
         vlrc_impuesto : 'IVA',
         vlrc_falta : 'F. Alta',
-        vlrc_fliq : 'F. Liquidacion',
+        vlrc_fliq : 'F. Liquidaci\u00f3n',
         vlrc_fini : 'F. Inicio',
         vlrc_ffin : 'F. Fin',
         vlrc_sujPasivo : 'Es Suj. Pasivo?',
@@ -325,7 +325,6 @@ app.config(function($translateProvider) {
 
         enen_entih : "Entidad Hija",
         enen_orden : "Orden",
-
     });
 
     $translateProvider.preferredLanguage('es');

@@ -98,7 +98,7 @@ public class ParametroBO {
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
-                if (!prmt.getItdtMap().containsKey(String.valueOf(tpdtId))) {
+                if (!prmt.getItdtMap().containsKey(tpdtId)) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);

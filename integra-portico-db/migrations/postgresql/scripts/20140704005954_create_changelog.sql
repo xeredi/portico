@@ -9,14 +9,11 @@
 -- Be sure that ID and DESCRIPTION fields exist in
 -- BigInteger and String compatible fields respectively.
 
-CREATE SCHEMA portico
-/
+CREATE SCHEMA portico;
 
-GRANT USAGE ON SCHEMA portico TO portico
-/
+GRANT USAGE ON SCHEMA portico TO portico;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA portico TO portico
-/
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA portico TO portico;
 
 
 
@@ -26,18 +23,15 @@ ID NUMERIC(20,0) NOT NULL,
 APPLIED_AT VARCHAR(25) NOT NULL,
 DESCRIPTION VARCHAR(255) NOT NULL
 )
-/
+;
 
 ALTER TABLE portico.tbl_changelog_chng
 ADD CONSTRAINT pk_chng
-PRIMARY KEY (id)
-/
+PRIMARY KEY (id);
 
 -- //@UNDO
 
-DROP TABLE portico.tbl_changelog_chng
-/
+DROP TABLE portico.tbl_changelog_chng;
 
 
-DROP SCHEMA portico
-/
+DROP SCHEMA portico;

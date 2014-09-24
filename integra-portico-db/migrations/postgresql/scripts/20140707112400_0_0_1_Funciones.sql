@@ -17,13 +17,11 @@ BEGIN
 	return id;
 END;
 $$ LANGUAGE plpgsql
-\
+;
 
-GRANT EXECUTE ON FUNCTION portico.getEntidad(varchar) TO portico
-\
+GRANT EXECUTE ON FUNCTION portico.getEntidad(varchar) TO portico;
 
-COMMENT ON FUNCTION portico.getEntidad(varchar) IS 'A partir de un codigo de entidad, se localiza su identificador asociado'
-\
+COMMENT ON FUNCTION portico.getEntidad(varchar) IS 'A partir de un codigo de entidad, se localiza su identificador asociado';
 
 
 
@@ -41,13 +39,11 @@ BEGIN
 	return id;
 END;
 $$ LANGUAGE plpgsql
-\
+;
 
-GRANT EXECUTE ON FUNCTION portico.getTipoDato(varchar) TO portico
-\
+GRANT EXECUTE ON FUNCTION portico.getTipoDato(varchar) TO portico;
 
-COMMENT ON FUNCTION portico.getTipoDato(varchar) IS 'A partir de un codigo de tipo de dato, se localiza su identificador asociado'
-\
+COMMENT ON FUNCTION portico.getTipoDato(varchar) IS 'A partir de un codigo de tipo de dato, se localiza su identificador asociado';
 
 
 
@@ -56,13 +52,11 @@ BEGIN
      RETURN NOW();
 END;
 $$ LANGUAGE plpgsql
-\
+;
 
-GRANT EXECUTE ON FUNCTION portico.getSysDatetime() TO portico
-\
+GRANT EXECUTE ON FUNCTION portico.getSysDatetime() TO portico;
 
-COMMENT ON FUNCTION portico.getSysDatetime() IS 'Obtencion de la Fecha-Hora del Sistema'
-\
+COMMENT ON FUNCTION portico.getSysDatetime() IS 'Obtencion de la Fecha-Hora del Sistema';
 
 
 CREATE FUNCTION portico.concat(vc1 varchar, vc2 varchar) RETURNS varchar IMMUTABLE AS $$
@@ -70,28 +64,19 @@ BEGIN
      RETURN vc1 || vc2;
 END;
 $$ LANGUAGE plpgsql
-\
+;
 
-GRANT EXECUTE ON FUNCTION portico.concat(varchar, varchar) TO portico
-\
+GRANT EXECUTE ON FUNCTION portico.concat(varchar, varchar) TO portico;
 
-COMMENT ON FUNCTION portico.concat(varchar, varchar) IS 'Concatenacion de Elementos'
-\
+COMMENT ON FUNCTION portico.concat(varchar, varchar) IS 'Concatenacion de Elementos';
 
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP FUNCTION portico.concat(varchar, varchar)
-\
-
-DROP FUNCTION portico.getSysDatetime()
-\
-
-DROP FUNCTION portico.getTipoDato(varchar)
-\
-
-DROP FUNCTION portico.getEntidad(varchar)
-\
+DROP FUNCTION portico.concat(varchar, varchar);
+DROP FUNCTION portico.getSysDatetime();
+DROP FUNCTION portico.getTipoDato(varchar);
+DROP FUNCTION portico.getEntidad(varchar);
 
 

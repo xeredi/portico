@@ -70,24 +70,26 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="item in itemHijosMap[entiHija.id].list">
-                <td><a href="#/maestro/sprm/detail/{{item.spvr.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{item.prmtAsociado.etiqueta}}</td>
+            <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list">
+                <td><a href="#/maestro/sprm/detail/{{itemHijo.spvr.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td>{{itemHijo.prmtAsociado.etiqueta}}</td>
 
                 <!-- ng-if="entiHija.tempExp" -->
-                <td>{{item.spvr.fini | date:('fmt_date' | translate)}}</td>
+                <td>{{itemHijo.spvr.fini | date:('fmt_date' | translate)}}</td>
                 <!-- ng-if="entiHija.tempExp" -->
-                <td>{{item.spvr.ffin | date:('fmt_date' | translate)}}</td>
+                <td>{{itemHijo.spvr.ffin | date:('fmt_date' | translate)}}</td>
 
                 <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch
                     on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
-                        ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i></span> <span
-                    ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadEntera | number:2}} </span> <span
-                    ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}} </span> <span
-                    ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
-                    <span ng-switch-when="PR" title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span>
-                    <span ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span
-                    ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}} </span></td>
+                        ng-if="itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
+                    ng-switch-when="ND">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:2}} </span> <span
+                    ng-switch-when="NE">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:0}} </span> <span
+                    ng-switch-when="CR">{{itemHijo.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{itemHijo.itdtMap[tpdtId].cadena}}</span>
+                    <span ng-switch-when="PR" title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}">{{itemHijo.itdtMap[tpdtId].prmt.parametro}}</span>
+                    <span ng-switch-when="FE">{{itemHijo.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span>
+                    <span ng-switch-when="FH">{{itemHijo.itdtMap[tpdtId].fecha | date:('fmt_datetime' |
+                        translate)}} </span></td>
             </tr>
         </tbody>
     </table>
