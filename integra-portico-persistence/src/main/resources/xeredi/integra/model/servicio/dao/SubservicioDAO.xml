@@ -168,4 +168,17 @@
             ssrv_pk = #{id}
         ]]>
     </update>
+
+    <select id="selectLupaList" parameterType="SubservicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
+        <![CDATA[
+        SELECT
+            ssrv_pk
+            , ssrv_numero
+        FROM tbl_subservicio_ssrv
+        WHERE
+        	ssrv_tpss_pk = #{entiId}
+        	AND ssrv_srvc_pk = #{srvcId}
+        	AND ssrv_numero >= #{numero}
+        ]]>
+    </select>
 </mapper>

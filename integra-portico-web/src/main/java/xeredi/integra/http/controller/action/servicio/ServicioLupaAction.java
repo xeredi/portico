@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.ParentPackage;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
 
 import com.google.common.base.Preconditions;
 
@@ -18,17 +16,13 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ServicioLupaAction.
  */
-@ParentPackage("json-default")
 public final class ServicioLupaAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1371351782684147321L;
 
-    /** The Constant ROWS. */
-    private static final int ROWS = 5;
-
     /** The srvcs. */
-    private List<LabelValueVO> itemList;
+    private List<ServicioVO> itemList;
 
     /** The srvc lupa criterio. */
     private ServicioLupaCriterioVO itemLupaCriterio;
@@ -46,7 +40,7 @@ public final class ServicioLupaAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "srvc-lupa", results = { @Result(name = "success", type = "json") })
+    @Action("srvc-lupa")
     public String lupa() {
         Preconditions.checkNotNull(itemLupaCriterio);
         Preconditions.checkNotNull(itemLupaCriterio.getEntiId());
@@ -65,7 +59,7 @@ public final class ServicioLupaAction extends BaseAction {
 
         final ServicioBO srvcBO = new ServicioBO();
 
-        itemList = srvcBO.selectLupaList(itemLupaCriterio, ROWS);
+        itemList = srvcBO.selectLupaList(itemLupaCriterio);
 
         return SUCCESS;
     }
@@ -96,7 +90,7 @@ public final class ServicioLupaAction extends BaseAction {
      *
      * @return the item list
      */
-    public List<LabelValueVO> getItemList() {
+    public List<ServicioVO> getItemList() {
         return itemList;
     }
 

@@ -134,7 +134,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-            DuplicateInstanceException {
+    DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
@@ -187,6 +187,7 @@ public final class ServicioImporterBO {
                     final TipoServicioVO tpsrVO = TipoServicioProxy.select(entiVO.getId());
 
                     srvcVO = new ServicioVO();
+                    srvcVO.setEntiId(tpsrVO.getId());
 
                     servId = rs.getLong(i++);
                     final Date fechaCreacion = rs.getDate(i++);
@@ -289,7 +290,7 @@ public final class ServicioImporterBO {
                             LOG.trace(srvcVO);
                         }
 
-                        srvcBO.insert(srvcVO, null);
+                        srvcBO.insert(srvcVO, tpsrVO, null);
                         entiMap.get(entiVO.getId()).put(servId, srvcVO.getId());
                     } catch (final DuplicateInstanceException ex) {
                         LOG.info(entiVO.getNombre() + " Duplicado: " + srvcVO.getEtiqueta());
@@ -304,6 +305,7 @@ public final class ServicioImporterBO {
 
                     srvcVO.setId(entiMap.get(tpssVO.getTpsrId()).get(servId));
                     ssrvVO.setSrvc(srvcVO);
+                    ssrvVO.setEntiId(tpssVO.getId());
 
                     final Long subservId = rs.getLong(i++);
 
@@ -394,7 +396,7 @@ public final class ServicioImporterBO {
                                     LOG.trace(ssrvVO);
                                 }
 
-                                ssrvBO.insert(ssrvVO, padreIds);
+                                ssrvBO.insert(ssrvVO, tpssVO, padreIds);
                                 entiMap.get(entiVO.getId()).put(subservId, ssrvVO.getId());
                             } catch (final DuplicateInstanceException ex) {
                                 LOG.info(entiVO.getNombre() + " Duplicado: " + ssrvVO);

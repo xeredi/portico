@@ -1,13 +1,20 @@
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
-        ng-model="item.id" />
+        ng-model="item.id" /><input type="hidden" ng-model="item.srvc.id" />
 
     <fieldset>
         <legend>{{enti.nombre | uppercase}}</legend>
 
         <div class="row">
             <div class="col-md-2 form-group">
-                <label>{{"ssrv_srvc" | translate}}</label> <!-- TODO Lupa servicio -->
+                <label>{{"ssrv_srvc" | translate}}</label>
+                <div ng-if="!item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
+                    <input type="text" ng-model="item.srvc"
+                        typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.tpsrId, $viewValue)"
+                        typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                        ng-show="loading" class="glyphicon glyphicon-refresh"></i> $ {{item.srvc.id}} $
+                    {{item.srvc.etiqueta}}
+                </div>
                 <p ng-if="item.srvc.id" class="form-control-static">{{item.srvc.etiqueta}}</p>
             </div>
             <div class="col-md-1 form-group">
@@ -42,6 +49,17 @@
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.ffin" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </p>
+            </div>
+
+            <div ng-if="item.srvc.id" ng-repeat="entiPadre in entiPadresList" class="col-md-2 form-group">
+                <label>{{entiPadre.nombre}}</label>
+                <div class="input-group-sm" ng-controller="ssrvLupaCtrl">
+                    <input type="text" ng-model="itemPadresMap[entiPadre.id]"
+                        typeahead="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, item.srvc.id, $viewValue)"
+                        typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                        ng-show="loading" class="glyphicon glyphicon-refresh"></i> $ {{itemPadresMap[entiPadre.id].id}} $
+                    {{itemPadresMap[entiPadre.id].etiqueta}}
+                </div>
             </div>
         </div>
     </fieldset>

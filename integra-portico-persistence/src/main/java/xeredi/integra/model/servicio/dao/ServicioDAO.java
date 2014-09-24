@@ -7,7 +7,6 @@ import org.apache.ibatis.session.RowBounds;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -97,6 +96,6 @@ public interface ServicioDAO {
      *            the bounds
      * @return the list
      */
-    List<LabelValueVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final RowBounds bounds);
+    List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final RowBounds bounds);
 
 }

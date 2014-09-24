@@ -50,6 +50,12 @@ public final class SubservicioAction extends ItemAction {
     /** The ssrv map. */
     private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
 
+    /** The enti padres list. */
+    private List<TipoSubservicioVO> entiPadresList;
+
+    /** The item padres map. */
+    private Map<Long, SubservicioVO> itemPadresMap;
+
     /** The fecha vigencia. */
     private final Date fechaVigencia;
 
@@ -131,6 +137,16 @@ public final class SubservicioAction extends ItemAction {
             final ServicioBO srvcBO = new ServicioBO();
 
             item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
+        }
+
+        if (enti.getEntiPadresList() != null) {
+            entiPadresList = new ArrayList<>();
+
+            for (final Long entiId : enti.getEntiPadresList()) {
+                if (!entiId.equals(enti.getTpsrId())) {
+                    entiPadresList.add(TipoSubservicioProxy.select(entiId));
+                }
+            }
         }
 
         loadLabelValuesMap();
@@ -236,7 +252,7 @@ public final class SubservicioAction extends ItemAction {
         switch (accion) {
         case create:
             try {
-                ssrvBO.insert(item, null);
+                ssrvBO.insert(item, enti, null);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(ErrorCode.E00005.name(), new String[] { enti.getNombre() }));
             }
@@ -247,7 +263,7 @@ public final class SubservicioAction extends ItemAction {
                 ssrvBO.update(item);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(ErrorCode.E00008.name(), new String[] { enti.getNombre(),
-                    item.getId().toString() }));
+                        item.getId().toString() }));
             }
 
             break;
@@ -316,6 +332,34 @@ public final class SubservicioAction extends ItemAction {
      */
     public final Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {
         return itemHijosMap;
+    }
+
+    /**
+     * Gets the item padres map.
+     *
+     * @return the item padres map
+     */
+    public Map<Long, SubservicioVO> getItemPadresMap() {
+        return itemPadresMap;
+    }
+
+    /**
+     * Sets the item padres map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setItemPadresMap(final Map<Long, SubservicioVO> value) {
+        itemPadresMap = value;
+    }
+
+    /**
+     * Gets the enti padres list.
+     *
+     * @return the enti padres list
+     */
+    public List<TipoSubservicioVO> getEntiPadresList() {
+        return entiPadresList;
     }
 
 }

@@ -57,7 +57,7 @@ public class SubparametroBO {
         // Validar que los datos del subparametro son correctos
         if (tpspVO.getEntdList() != null && !tpspVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpspVO.getEntdList()) {
-                if (!sprm.getItdtMap().containsKey(tpdtId)) {
+                if (!sprm.getItdtMap().containsKey(tpdtId) && !sprm.getItdtMap().containsKey(tpdtId.toString())) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
                     itdt.setTpdtId(tpdtId);

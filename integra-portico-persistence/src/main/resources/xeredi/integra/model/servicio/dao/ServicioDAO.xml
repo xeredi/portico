@@ -132,16 +132,13 @@
         WHERE srvc_pk = #{value}
     </select>
 
-    <select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultType="LabelValueVO">
+    <select id="selectLupaList" parameterType="ServicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         select
-            srvc_pk AS value
-            , CONCAT(
-                CONCAT(
-                    CONCAT(prmt_parametro, '/')
-                    , CONCAT(srvc_anno, '/')
-                ), srvc_numero
-            ) AS label
+            srvc_pk
+            , prmt_parametro AS srvc_subp
+            , srvc_anno
+            , srvc_numero
         from tbl_servicio_srvc
             JOIN tbl_parametro_prmt ON
                 prmt_pk = srvc_subp_pk

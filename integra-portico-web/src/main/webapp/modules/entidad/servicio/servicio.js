@@ -370,6 +370,7 @@ module.controller("ssrvCreateController", function($scope, $http, $location, $ro
     $http.get(url).success(function(data) {
         $scope.item = data.item;
         $scope.enti = data.enti;
+        $scope.entiPadresList = data.entiPadresList;
         $scope.labelValuesMap = data.labelValuesMap;
         $scope.accion = data.accion;
     });
@@ -452,4 +453,15 @@ module.controller("ssrvDuplicateController", function($scope, $http, $location, 
     $scope.cancel = function() {
         window.history.back();
     }
+});
+
+module.controller('ssrvLupaCtrl', function($http, $scope) {
+    $scope.getLabelValues = function(entiId, srvcId, numero) {
+        return $http.get(
+                'servicio/ssrv-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.srvcId=" + srvcId
+                        + "&itemLupaCriterio.numero=" + numero + "&itemLupaCriterio.fechaVigencia=11/12/2014").then(
+                function(res) {
+                    return res.data.itemList;
+                });
+    };
 });

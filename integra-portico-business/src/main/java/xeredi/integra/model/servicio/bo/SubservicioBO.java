@@ -9,14 +9,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.GlobalNames;
@@ -148,16 +151,41 @@ public class SubservicioBO {
     }
 
     /**
+     * Select lupa list.
+     *
+     * @param ssrvLupaCriterioVO
+     *            the ssrv lupa criterio vo
+     * @return the list
+     */
+    public final List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterioVO) {
+        Preconditions.checkNotNull(ssrvLupaCriterioVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        ssrvDAO = session.getMapper(SubservicioDAO.class);
+
+        try {
+            return ssrvDAO.selectLupaList(ssrvLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
+                    GlobalNames.LUPA_LIMIT_DEFAULT));
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
      * Insert.
      *
      * @param ssrvVO
      *            the ssrv vo
+     * @param tpssVO
+     *            the tpss vo
      * @param ssrvPadreIds
      *            the ssrv padre ids
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final SubservicioVO ssrvVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+    public void insert(final SubservicioVO ssrvVO, final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds)
+            throws DuplicateInstanceException {
         Preconditions.checkNotNull(ssrvVO);
         Preconditions.checkNotNull(ssrvPadreIds);
 
@@ -168,6 +196,17 @@ public class SubservicioBO {
         ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
 
         try {
+            if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
+                for (final Long tpdtId : tpssVO.getEntdList()) {
+                    if (!ssrvVO.getItdtMap().containsKey(tpdtId) && !ssrvVO.getItdtMap().containsKey(tpdtId.toString())) {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(tpdtId);
+                        ssrvVO.getItdtMap().put(tpdtId, itdt);
+                    }
+                }
+            }
+
             final IgBO igBO = new IgBO();
 
             if (ssrvDAO.exists(ssrvVO)) {
@@ -253,6 +292,8 @@ public class SubservicioBO {
     /**
      * Fill dependencies.
      *
+     * @param session
+     *            the session
      * @param ssrvList
      *            the ssrv list
      * @param ssrvCriterioVO

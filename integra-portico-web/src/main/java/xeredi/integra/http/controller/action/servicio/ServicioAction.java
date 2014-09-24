@@ -253,7 +253,7 @@ public final class ServicioAction extends ItemAction {
         switch (accion) {
         case create:
             try {
-                srvcBO.insert(item, null);
+                srvcBO.insert(item, enti, null);
             } catch (final DuplicateInstanceException ex) {
                 throw new Error(ex);
             }

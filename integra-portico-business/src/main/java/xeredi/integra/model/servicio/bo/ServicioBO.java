@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
 import xeredi.integra.model.servicio.dao.ServicioSecuenciaDAO;
@@ -29,7 +30,6 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -168,11 +168,9 @@ public class ServicioBO {
      *
      * @param srvcLupaCriterioVO
      *            the srvc lupa criterio vo
-     * @param limit
-     *            the limit
      * @return the list
      */
-    public final List<LabelValueVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit) {
+    public final List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO) {
         Preconditions.checkNotNull(srvcLupaCriterioVO);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
@@ -180,7 +178,8 @@ public class ServicioBO {
         srvcDAO = session.getMapper(ServicioDAO.class);
 
         try {
-            return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(0, limit));
+            return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
+                    GlobalNames.LUPA_LIMIT_DEFAULT));
         } finally {
             session.close();
         }
@@ -191,12 +190,14 @@ public class ServicioBO {
      *
      * @param srvcVO
      *            the srvc vo
+     * @param tpsrVO
+     *            the tpsr vo
      * @param ssrvList
      *            the ssrv list
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final ServicioVO srvcVO, final List<SubservicioVO> ssrvList)
+    public final void insert(final ServicioVO srvcVO, final TipoServicioVO tpsrVO, final List<SubservicioVO> ssrvList)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(srvcVO);
         // Preconditions.checkNotNull(ssrvList);
@@ -211,6 +212,17 @@ public class ServicioBO {
         srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
 
         try {
+            if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
+                for (final Long tpdtId : tpsrVO.getEntdList()) {
+                    if (!srvcVO.getItdtMap().containsKey(tpdtId) && !srvcVO.getItdtMap().containsKey(tpdtId.toString())) {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(tpdtId);
+                        srvcVO.getItdtMap().put(tpdtId, itdt);
+                    }
+                }
+            }
+
             final IgBO igBO = new IgBO();
 
             srscDAO.incrementarSecuencia(srvcVO);
@@ -423,6 +435,8 @@ public class ServicioBO {
     /**
      * Fill dependencies.
      *
+     * @param session
+     *            the session
      * @param srvcList
      *            the srvc list
      * @param srvcCriterioVO

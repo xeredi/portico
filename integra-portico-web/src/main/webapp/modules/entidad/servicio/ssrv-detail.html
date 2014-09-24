@@ -16,7 +16,9 @@
     <div class="row">
         <div class="col-md-2 form-group">
             <label>{{'ssrv_srvc' | translate}}</label>
-            <p class="form-control-static">{{item.srvc.etiqueta}}</p>
+            <p class="form-control-static">
+                <a href="#/servicio/srvc/detail/{{item.srvc.id}}">{{item.srvc.etiqueta}}</a>
+            </p>
         </div>
 
         <div ng-if="enti.tpdtEstado" class="col-md-2 form-group">

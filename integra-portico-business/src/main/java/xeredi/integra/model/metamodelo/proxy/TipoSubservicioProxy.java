@@ -62,7 +62,7 @@ public final class TipoSubservicioProxy {
         Preconditions.checkNotNull(id);
 
         if (!TIPO_SUBSERVICIO_MAP.containsKey(id)) {
-            throw new Error("Tipo de servicio no encontrado: " + id);
+            throw new Error("Tipo de subservicio no encontrado: " + id);
         }
 
         return TIPO_SUBSERVICIO_MAP.get(id);
