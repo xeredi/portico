@@ -16,7 +16,7 @@
         <div class="col-md-2 form-group">
             <label>{{'rgla_crgo' | translate}}</label>
             <p class="form-control-static">
-                <a href="#/facturacion/crgo/detail/{{rgla.crgo.id}}/{{rgla.rglv.fini}}">{{rgla.crgo.etiqueta}}</a>
+                <a href="#/facturacion/crgo/detail/{{rgla.crgo.id}}/{{fechaVigencia}}">{{rgla.crgo.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -192,7 +192,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="rgin in rginList">
-                        <td><a href="#/facturacion/rgin/detail/{{rgin.rgiv.id}}"><i
+                        <td><a href="#/facturacion/rgin/detail/{{rgin.id}}/{{fechaVigencia}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td>{{rgin.rgla2.codigo}}</td>
                         <td>{{rgin.rgla2.tipo}}</td>

@@ -47,6 +47,15 @@ public final class CargoAction extends BaseAction {
     private Date fechaVigencia;
 
     /**
+     * Instantiates a new cargo action.
+     */
+    public CargoAction() {
+        super();
+
+        fechaVigencia = Calendar.getInstance().getTime();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

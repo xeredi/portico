@@ -208,6 +208,12 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "rginDetailController"
     })
 
+    .when("/facturacion/rgin/detail/:rginId/:fechaVigencia", {
+        title : 'rgin_detail',
+        templateUrl : "modules/facturacion/rgin-detail.html",
+        controller : "rginDetailController"
+    })
+
     .when("/facturacion/rgin/edit/:rgivId", {
         title : 'rgin_edit',
         templateUrl : "modules/facturacion/rgin-edit.html",
@@ -321,6 +327,7 @@ module.controller("crgoDetailController", function($scope, $http, $location, $ro
     $http.get(url).success(function(data) {
         $scope.crgo = data.crgo;
         $scope.rglaList = data.rglaList;
+        $scope.fechaVigencia = data.fechaVigencia;
     });
 
     $scope.edit = function() {
@@ -384,6 +391,7 @@ module.controller("rglaDetailController", function($scope, $http, $location, $ro
     $http.get(url).success(function(data) {
         $scope.rgla = data.rgla;
         $scope.rginList = data.rginList;
+        $scope.fechaVigencia = data.fechaVigencia;
     });
 
     $scope.edit = function() {
@@ -466,10 +474,17 @@ module.controller("rglaCreateController", function($scope, $http, $location, $ro
 });
 
 module.controller("rginDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "facturacion/rgin-detail.action?rgin.rgiv.id=" + $routeParams.rgivId;
+    var url = "facturacion/rgin-detail.action";
+
+    if ($routeParams.fechaVigencia) {
+        url += "?rgin.id=" + $routeParams.rginId + "&fechaVigencia=" + $routeParams.fechaVigencia;
+    } else {
+        url += "?rgin.rgiv.id=" + $routeParams.rgivId;
+    }
 
     $http.get(url).success(function(data) {
         $scope.rgin = data.rgin;
+        $scope.fechaVigencia = data.fechaVigencia;
     });
 
     $scope.edit = function() {
@@ -692,6 +707,7 @@ module.controller("aspcDetailController", function($scope, $http, $location, $ro
     $http.get(url).success(function(data) {
         $scope.urlInclude = 'modules/facturacion/aspc-detail.html';
         $scope.aspc = data.aspc;
+        $scope.fechaVigencia = data.fechaVigencia;
     });
 
     $scope.edit = function() {

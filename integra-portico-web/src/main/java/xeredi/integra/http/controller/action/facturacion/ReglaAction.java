@@ -58,6 +58,15 @@ public final class ReglaAction extends BaseAction {
     private final List<EntidadVO> entiFacturableList = new ArrayList<>();
 
     /**
+     * Instantiates a new regla action.
+     */
+    public ReglaAction() {
+        super();
+
+        fechaVigencia = Calendar.getInstance().getTime();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

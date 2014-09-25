@@ -17,7 +17,9 @@
     <div class="row">
         <div class="col-md-2 form-group">
             <label>{{'aspc_tpsr' | translate}}</label>
-            <p class="form-control-static">{{aspc.tpsr.nombre}}</p>
+            <p class="form-control-static">
+                <a href="#/metamodelo/tpsr/detail/{{aspc.tpsr.id}}">{{aspc.tpsr.nombre}}</a>
+            </p>
         </div>
         <div class="col-md-1 form-group">
             <label>{{'aspc_codigo' | translate}}</label>

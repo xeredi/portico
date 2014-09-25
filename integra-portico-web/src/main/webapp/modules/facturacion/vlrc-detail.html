@@ -113,7 +113,7 @@
 
                 <tbody>
                     <tr ng-repeat="vlri in vlriList">
-                        <td>{{vlri.impuesto.etiqueta}}</td>
+                        <td><a href="#/maestro/prmt/detail/{{vlri.impuesto.id}}/{{vlrc.fref}}">{{vlri.impuesto.etiqueta}}</a></td>
                         <td class="number">{{vlri.porcentaje | number:2}}</td>
                         <td class="number">{{vlri.importeBase | number:2}}</td>
                         <td class="number">{{vlri.importeImpuesto | number:2}}</td>

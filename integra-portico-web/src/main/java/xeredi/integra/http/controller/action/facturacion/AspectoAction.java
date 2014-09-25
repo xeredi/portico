@@ -39,6 +39,15 @@ public final class AspectoAction extends BaseAction {
     private Date fechaVigencia;
 
     /**
+     * Instantiates a new aspecto action.
+     */
+    public AspectoAction() {
+        super();
+
+        fechaVigencia = Calendar.getInstance().getTime();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

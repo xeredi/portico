@@ -87,7 +87,7 @@
                 <tr ng-repeat="rgla in rglaList">
                     <td><a ng-if="fechaVigencia" href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a><a ng-if="!fechaVigencia"
-                        href="#/facturacion/rgla/detail/{{rgla.rglv.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                        href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{rgla.codigo}}</td>
                     <td>{{rgla.rglv.tipo}}</td>
                     <td>{{rgla.rglv.enti.nombre}}</td>

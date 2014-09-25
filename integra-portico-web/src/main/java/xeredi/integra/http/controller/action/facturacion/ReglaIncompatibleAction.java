@@ -45,6 +45,15 @@ public final class ReglaIncompatibleAction extends BaseAction {
     private Date fechaVigencia;
 
     /**
+     * Instantiates a new regla incompatible action.
+     */
+    public ReglaIncompatibleAction() {
+        super();
+
+        fechaVigencia = Calendar.getInstance().getTime();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -62,13 +71,18 @@ public final class ReglaIncompatibleAction extends BaseAction {
     @Action("rgin-detail")
     public String detail() {
         Preconditions.checkNotNull(rgin);
-        Preconditions.checkNotNull(rgin.getRgiv());
-        Preconditions.checkNotNull(rgin.getRgiv().getId());
+        Preconditions.checkArgument(rgin.getId() != null && fechaVigencia != null || rgin.getRgiv() != null
+                && rgin.getRgiv().getId() != null);
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
 
-        rginCriterioVO.setRgivId(rgin.getRgiv().getId());
+        rginCriterioVO.setId(rgin.getId());
+        rginCriterioVO.setFechaVigencia(fechaVigencia);
+
+        if (rgin.getRgiv() != null) {
+            rginCriterioVO.setRgivId(rgin.getRgiv().getId());
+        }
 
         try {
             rgin = rginBO.select(rginCriterioVO);
