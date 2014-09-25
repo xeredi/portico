@@ -40,8 +40,8 @@
         </div>
     </div>
 
-    <pagination total-items="itemList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
-        max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+    <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="currentPage"
+        ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{itemList.count}} resultado(s)</span>
