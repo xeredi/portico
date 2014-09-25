@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -57,7 +56,7 @@ public final class ParametroAction extends ItemAction {
     private Map<String, ParametroI18nVO> p18nMap;
 
     /** The fecha vigencia. */
-    private final Date fechaVigencia;
+    private Date fechaVigencia;
 
     /**
      * Instantiates a new parametro action.
@@ -65,7 +64,7 @@ public final class ParametroAction extends ItemAction {
     public ParametroAction() {
         super();
 
-        fechaVigencia = Calendar.getInstance().getTime();
+        fechaVigencia = new Date();
     }
 
     /**
@@ -302,6 +301,9 @@ public final class ParametroAction extends ItemAction {
 
         try {
             item = prmtBO.selectObject(prmtCriterioVO);
+
+            item.setFref(fechaVigencia);
+
             enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
@@ -388,6 +390,16 @@ public final class ParametroAction extends ItemAction {
     @Override
     public Date getFechaVigencia() {
         return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
     /**

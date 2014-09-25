@@ -16,7 +16,7 @@
                     ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}</span> <span
                     ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
                 <span ng-switch-when="PR"> <a
-                    href="#/maestro/prmt/detail/{{item.itdtMap[tpdtId].prmt.id}}/{{fechaVigencia}}">{{item.itdtMap[tpdtId].prmt.etiqueta}}</a></span>
+                    href="#/maestro/prmt/detail/{{item.itdtMap[tpdtId].prmt.id}}/{{item.fref}}">{{item.itdtMap[tpdtId].prmt.etiqueta}}</a></span>
                 <span ng-switch-when="SR"> <a href="#/servicio/srvc/detail/{{item.itdtMap[tpdtId].srvc.id}}">{{item.itdtMap[tpdtId].srvc.etiqueta}}</a></span>
             </p>
         </div>

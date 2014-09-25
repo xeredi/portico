@@ -10,6 +10,7 @@
         <result column="ssrv_fini" property="fini" />
         <result column="ssrv_ffin" property="ffin" />
         <result column="ssrv_estado" property="estado" />
+        <result column="srvc_fref" property="fref" />
 
         <association property="srvc" javaType="ServicioVO">
             <result column="ssrv_srvc_pk" property="id" />
@@ -25,26 +26,10 @@
 
     <sql id="SelectPrefix">
     <![CDATA[
-    WITH ssrvs AS (
-    	SELECT ssrv_pk, ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado
-    	FROM tbl_subservicio_ssrv
-    ]]>
-        <include refid="SelectWhere" />
-        <![CDATA[
-       	ORDER BY ssrv_srvc_pk
-        ]]>
-        <if test="offset != null">
-            OFFSET #{offset}
-        </if>
-        <if test="limit != null">
-            LIMIT #{limit}
-        </if>
-    <![CDATA[
-    )
-    SELECT ssrv_pk, ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
+    SELECT ssrv_pk, ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero, srvc_fref
     	, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
-    FROM ssrvs
-    	JOIN tbl_servicio_srvc ON
+    FROM tbl_subservicio_ssrv
+    	INNER JOIN tbl_servicio_srvc ON
     		srvc_pk = ssrv_srvc_pk
     ]]>
     </sql>
@@ -133,10 +118,12 @@
 
     <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
     </select>
 
     <select id="selectObject" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
     </select>
 
     <select id="exists" parameterType="SubservicioVO" resultType="boolean">

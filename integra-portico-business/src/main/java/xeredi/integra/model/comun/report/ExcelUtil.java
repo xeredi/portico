@@ -195,7 +195,7 @@ public final class ExcelUtil {
             setCellValue(row, j++, srvcVO.getAnno());
             setCellValue(row, j++, srvcVO.getNumero());
             setCellValue(row, j++, srvcVO.getFalta());
-            setCellValue(row, j++, srvcVO.getFreferencia());
+            setCellValue(row, j++, srvcVO.getFref());
 
             if (tpsrVO.getTpdtEstado() != null) {
                 setCellValue(row, j++, srvcVO.getEstado());

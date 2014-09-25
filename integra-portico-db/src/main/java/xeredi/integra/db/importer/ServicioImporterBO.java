@@ -134,7 +134,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-    DuplicateInstanceException {
+            DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
@@ -232,7 +232,7 @@ public final class ServicioImporterBO {
                     srvcVO.setNumero(numero);
                     srvcVO.setFalta(fechaCreacion);
                     srvcVO.setFbaja(fechaBaja);
-                    srvcVO.setFreferencia(fechaReferencia);
+                    srvcVO.setFref(fechaReferencia);
 
                     if (tpsrVO.getTemporal()) {
                         Date fechaInicio = null;

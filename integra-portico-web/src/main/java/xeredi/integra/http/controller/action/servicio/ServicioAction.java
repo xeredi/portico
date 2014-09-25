@@ -134,7 +134,7 @@ public final class ServicioAction extends ItemAction {
         enti = TipoServicioProxy.select(item.getEntiId());
 
         if (!enti.getTemporal()) {
-            item.setFreferencia(Calendar.getInstance().getTime());
+            item.setFref(Calendar.getInstance().getTime());
         }
 
         item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
@@ -236,8 +236,8 @@ public final class ServicioAction extends ItemAction {
                 addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_ffin") }));
             }
         } else {
-            if (item.getFreferencia() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_freferencia") }));
+            if (item.getFref() == null) {
+                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_fref") }));
             }
         }
 

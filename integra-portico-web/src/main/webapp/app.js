@@ -132,7 +132,7 @@ app.config(function($translateProvider) {
         srvc_servicio : "Servicio",
         srvc_fini : "F. Inicio",
         srvc_ffin : "F. Fin",
-        srvc_freferencia : "F. Referencia",
+        srvc_fref : "F. Referencia",
         srvc_estado : "Estado",
         srvc_subp : "Subpuerto",
         srvc_anno : "A\u00f1o",

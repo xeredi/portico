@@ -81,7 +81,7 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
         item.getItdtMap()
-                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+        .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
@@ -439,7 +439,7 @@ public final class AtraqueAction extends ItemAction {
             item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
             item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
             item.getItdtMap()
-                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+            .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
             item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
                     item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
             item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
@@ -509,8 +509,7 @@ public final class AtraqueAction extends ItemAction {
      */
     @Override
     public Date getFechaVigencia() {
-        return item == null || item.getSrvc() == null ? Calendar.getInstance().getTime() : item.getSrvc()
-                .getFreferencia();
+        return item == null || item.getSrvc() == null ? Calendar.getInstance().getTime() : item.getSrvc().getFref();
     }
 
 }

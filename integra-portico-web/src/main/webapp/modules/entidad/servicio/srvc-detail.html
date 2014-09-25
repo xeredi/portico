@@ -34,6 +34,11 @@
             <p class="form-control-static">{{item.estado}}</p>
         </div>
 
+        <div ng-if="!enti.temporal" class="col-md-2 form-group">
+            <label>{{'srvc_fref' | translate}}</label>
+            <p class="form-control-static">{{item.fref | date:('fmt_date' | translate)}}</p>
+        </div>
+
         <div ng-if="enti.temporal" class="col-md-2 form-group">
             <label>{{'srvc_fini' | translate}}</label>
             <p class="form-control-static">{{item.fini | date:('fmt_date' | translate)}}</p>
@@ -59,45 +64,49 @@
     </div>
 
     <pagination total-items="itemHijosMap[entiHija.id].count" items-per-page="itemHijosMap[entiHija.id].limit"
-        ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;"
-        next-text="&rsaquo;"></pagination>
+        ng-model="currentSubpage[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination-sm" max-size="1"
+        previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" />
+    <div class="table-responsive">
+        <span class="label label-default">{{itemHijosMap[entiHija.id].count}} resultado(s)</span>
 
-                <th>{{'ssrv_numero' | translate}}</th>
-                <th ng-if="entiHija.tpdtEstado">{{'ssrv_estado' | translate}}</th>
-                <th ng-if="entiHija.temporal" class="date">{{'ssrv_fini' | translate}}</th>
-                <th ng-if="entiHija.temporal" class="date">{{'ssrv_ffin' | translate}}</th>
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" />
 
-                <th ng-repeat="tpdtId in entiHija.entdGridList">{{entiHija.entdMap[tpdtId].etiqueta}}</th>
-            </tr>
-        </thead>
+                    <th>{{'ssrv_numero' | translate}}</th>
+                    <th ng-if="entiHija.tpdtEstado">{{'ssrv_estado' | translate}}</th>
+                    <th ng-if="entiHija.temporal" class="date">{{'ssrv_fini' | translate}}</th>
+                    <th ng-if="entiHija.temporal" class="date">{{'ssrv_ffin' | translate}}</th>
 
-        <tbody>
-            <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list">
-                <td><a href="#/servicio/ssrv/detail/{{itemHijo.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <th ng-repeat="tpdtId in entiHija.entdGridList">{{entiHija.entdMap[tpdtId].etiqueta}}</th>
+                </tr>
+            </thead>
 
-                <td>{{itemHijo.numero}}</td>
-                <td ng-if="entiHija.tpdtEstado">{{itemHijo.estado}}</td>
-                <td ng-if="entiHija.temporal">{{itemHijo.fini | date:('fmt_date' | translate)}}</td>
-                <td ng-if="entiHija.temporal">{{itemHijo.ffin | date:('fmt_date' | translate)}}</td>
+            <tbody>
+                <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list">
+                    <td><a href="#/servicio/ssrv/detail/{{itemHijo.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
 
-                <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch
-                    on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
-                        ng-if="itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
-                        ng-if="!itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
-                    ng-switch-when="ND">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:2}} </span> <span
-                    ng-switch-when="NE">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:0}} </span> <span
-                    ng-switch-when="CR">{{itemHijo.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{itemHijo.itdtMap[tpdtId].cadena}}</span>
-                    <span ng-switch-when="PR" title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}">{{itemHijo.itdtMap[tpdtId].prmt.parametro}}</span>
-                    <span ng-switch-when="FE">{{itemHijo.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span>
-                    <span ng-switch-when="FH">{{itemHijo.itdtMap[tpdtId].fecha | date:('fmt_datetime' |
-                        translate)}} </span></td>
-            </tr>
-        </tbody>
-    </table>
+                    <td>{{itemHijo.numero}}</td>
+                    <td ng-if="entiHija.tpdtEstado">{{itemHijo.estado}}</td>
+                    <td ng-if="entiHija.temporal">{{itemHijo.fini | date:('fmt_date' | translate)}}</td>
+                    <td ng-if="entiHija.temporal">{{itemHijo.ffin | date:('fmt_date' | translate)}}</td>
+
+                    <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch
+                        on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                            ng-if="itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
+                            ng-if="!itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
+                        ng-switch-when="ND">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:2}} </span> <span
+                        ng-switch-when="NE">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:0}} </span> <span
+                        ng-switch-when="CR">{{itemHijo.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{itemHijo.itdtMap[tpdtId].cadena}}</span>
+                        <span ng-switch-when="PR" title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}">{{itemHijo.itdtMap[tpdtId].prmt.parametro}}</span>
+                        <span ng-switch-when="FE">{{itemHijo.itdtMap[tpdtId].fecha | date:('fmt_date' |
+                            translate)}}</span> <span ng-switch-when="FH">{{itemHijo.itdtMap[tpdtId].fecha |
+                            date:('fmt_datetime' | translate)}} </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </fieldset>
 </tab></tabset>

@@ -69,14 +69,7 @@ public class SubservicioBO {
             final List<SubservicioVO> ssrvList = new ArrayList<>();
 
             if (count > offset) {
-                ssrvCriterioVO.setOffset(offset);
-                ssrvCriterioVO.setLimit(limit);
-
-                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterioVO));
-
-                ssrvCriterioVO.setOffset(null);
-                ssrvCriterioVO.setLimit(null);
-
+                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterioVO, new RowBounds(offset, limit)));
                 fillDependencies(session, ssrvList, ssrvCriterioVO);
             }
 

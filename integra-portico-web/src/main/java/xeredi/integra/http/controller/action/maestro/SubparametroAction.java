@@ -36,13 +36,14 @@ public final class SubparametroAction extends ItemAction {
     private TipoSubparametroVO enti;
 
     /** The fecha vigencia. */
-    private final Date fechaVigencia;
+    private Date fechaVigencia;
 
     /**
      * Instantiates a new subparametro action.
      */
     public SubparametroAction() {
         super();
+
         fechaVigencia = Calendar.getInstance().getTime();
     }
 
@@ -243,16 +244,24 @@ public final class SubparametroAction extends ItemAction {
     @Action("sprm-detail")
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getSpvr());
-        Preconditions.checkNotNull(item.getSpvr().getId());
+        Preconditions.checkArgument(item.getId() != null && fechaVigencia != null || item.getSpvr() != null
+                && item.getSpvr().getId() != null);
 
         final SubparametroBO sprmBO = new SubparametroBO();
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setSpvrId(item.getSpvr().getId());
+        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setFechaVigencia(fechaVigencia);
         sprmCriterioVO.setIdioma(getIdioma());
 
+        if (item.getSpvr() != null) {
+            sprmCriterioVO.setSpvrId(item.getSpvr().getId());
+        }
+
         item = sprmBO.selectObject(sprmCriterioVO);
+
+        item.setFref(fechaVigencia);
+
         enti = TipoSubparametroProxy.select(item.getEntiId());
 
         return SUCCESS;
@@ -266,6 +275,16 @@ public final class SubparametroAction extends ItemAction {
     @Override
     public Date getFechaVigencia() {
         return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
     /**

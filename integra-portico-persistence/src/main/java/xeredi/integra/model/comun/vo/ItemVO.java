@@ -1,5 +1,6 @@
 package xeredi.integra.model.comun.vo;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,9 @@ public abstract class ItemVO implements ItemEntidad {
 
     /** The enti id. */
     private Long entiId;
+
+    /** The fref. */
+    private Date fref;
 
     /** The itdt map. */
     private Map<Long, ItemDatoVO> itdtMap;
@@ -84,6 +88,25 @@ public abstract class ItemVO implements ItemEntidad {
      */
     public final void setItdtMap(final Map<Long, ItemDatoVO> value) {
         itdtMap = value;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public final Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public final void setFref(final Date value) {
+        fref = value;
     }
 
 }

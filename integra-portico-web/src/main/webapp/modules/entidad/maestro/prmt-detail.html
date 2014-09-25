@@ -71,12 +71,10 @@
 
         <tbody>
             <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list">
-                <td><a href="#/maestro/sprm/detail/{{itemHijo.spvr.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a href="#/maestro/sprm/detail/{{itemHijo.id}}/{{item.fref}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{itemHijo.prmtAsociado.etiqueta}}</td>
 
-                <!-- ng-if="entiHija.tempExp" -->
                 <td>{{itemHijo.spvr.fini | date:('fmt_date' | translate)}}</td>
-                <!-- ng-if="entiHija.tempExp" -->
                 <td>{{itemHijo.spvr.ffin | date:('fmt_date' | translate)}}</td>
 
                 <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch

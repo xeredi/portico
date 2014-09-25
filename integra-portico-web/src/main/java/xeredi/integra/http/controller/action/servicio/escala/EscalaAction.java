@@ -102,7 +102,7 @@ public final class EscalaAction extends ItemAction {
      */
     @Override
     public Date getFechaVigencia() {
-        return item == null ? Calendar.getInstance().getTime() : item.getFreferencia();
+        return item == null ? Calendar.getInstance().getTime() : item.getFref();
     }
 
     /**

@@ -32,9 +32,6 @@ public final class ServicioVO extends ItemVO {
     /** The fbaja. */
     private Date fbaja;
 
-    /** The freferencia. */
-    private Date freferencia;
-
     /** The finicio. */
     private Date fini;
 
@@ -43,34 +40,6 @@ public final class ServicioVO extends ItemVO {
 
     /** The estado. */
     private String estado;
-
-    // /**
-    // * Instancia un nuevo {@link ServicioVO} con todos sus datos asociados.
-    // *
-    // * @param tpsrVO
-    // * Tipo de Servicio del que se quiere instanciar un servicio.
-    // * @return Servicio creado.
-    // */
-    // public static ServicioVO newInstance(final TipoServicioVO tpsrVO) {
-    // final ServicioVO srvcVO = new ServicioVO();
-    //
-    // srvcVO.setEntiId(tpsrVO.getId());
-    //
-    // if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
-    // final HashMap<String, ItemDatoVO> itdtMap = new HashMap<>();
-    //
-    // for (final Long tpdtId : tpsrVO.getEntdList()) {
-    // final ItemDatoVO itdtVO = new ItemDatoVO();
-    //
-    // itdtVO.setTpdtId(tpdtId);
-    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-    // }
-    //
-    // srvcVO.setItdtMap(itdtMap);
-    // }
-    //
-    // return srvcVO;
-    // }
 
     /**
      * Instantiates a new servicio vo.
@@ -205,25 +174,6 @@ public final class ServicioVO extends ItemVO {
      */
     public void setFbaja(final Date value) {
         fbaja = value;
-    }
-
-    /**
-     * Gets the freferencia.
-     *
-     * @return the freferencia
-     */
-    public Date getFreferencia() {
-        return freferencia;
-    }
-
-    /**
-     * Sets the freferencia.
-     *
-     * @param value
-     *            the new freferencia
-     */
-    public void setFreferencia(final Date value) {
-        freferencia = value;
     }
 
     /**

@@ -117,6 +117,12 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
         $scope.fechaVigencia = data.fechaVigencia;
         $scope.entiHijasList = data.entiHijasList;
         $scope.itemHijosMap = data.itemHijosMap;
+
+        $scope.currentSubpage = {};
+
+        for (var key in $scope.itemHijosMap) {
+            $scope.currentSubpage[key] = $scope.itemHijosMap[key].page;
+        }
     });
 
     $scope.edit = function() {
@@ -135,6 +141,15 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
                 }
             });
         }
+    }
+
+    $scope.pageChanged = function(entiId) {
+        var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + entiId + "&page=" + $scope.currentSubpage[entiId]
+                + "&itemCriterio.srvc.id=" + $scope.item.id;
+
+        $http.get(url).success(function(data) {
+            $scope.itemHijosMap[entiId] = data.itemList;
+        });
     }
 
     $scope.srvcAction = function(accName) {
@@ -419,7 +434,6 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             });
         }
     }
-
 
     $scope.ssrvAction = function(accName) {
         switch (accName) {
