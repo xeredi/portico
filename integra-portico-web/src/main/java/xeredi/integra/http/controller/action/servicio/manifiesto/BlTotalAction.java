@@ -2,12 +2,9 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
-import xeredi.integra.model.servicio.bo.manifiesto.Bl;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
@@ -47,7 +44,7 @@ public final class BlTotalAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "mabl-totales-popup", results = { @Result(name = "success", location = "manifiesto/mabl-totales.jsp") })
+    @Action("mabl-totales")
     public String totales() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -55,7 +52,7 @@ public final class BlTotalAction extends BaseAction {
         Preconditions.checkNotNull(item.getSrvc().getId());
 
         final SubservicioBO ssrvBO = new SubservicioBO();
-        final Bl mablBO = BOFactory.getInjector().getInstance(BlBO.class);
+        final BlBO mablBO = new BlBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
         resumen = mablBO.selectResumen(item.getSrvc().getId(), item.getId());

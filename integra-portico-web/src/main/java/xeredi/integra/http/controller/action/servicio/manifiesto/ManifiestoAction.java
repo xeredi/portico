@@ -2,12 +2,10 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
+import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
-import xeredi.integra.model.servicio.bo.manifiesto.Manifiesto;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -40,16 +38,16 @@ public final class ManifiestoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "mani-bloquear-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("mani-bloquear")
     public String bloquear() throws InstanceNotFoundException {
-        final Manifiesto maniBO = BOFactory.getInjector().getInstance(ManifiestoBO.class);
+        final ManifiestoBO maniBO = new ManifiestoBO();
 
         try {
             maniBO.bloquear(item.getId());
 
             addActionMessage(getText("srvc.bloquear.success"));
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("srvc.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -62,16 +60,16 @@ public final class ManifiestoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "mani-completar-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("mani-completar")
     public String completar() throws InstanceNotFoundException {
-        final Manifiesto maniBO = BOFactory.getInjector().getInstance(ManifiestoBO.class);
+        final ManifiestoBO maniBO = new ManifiestoBO();
 
         try {
             maniBO.completar(item.getId());
 
             addActionMessage(getText("srvc.completar.success"));
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("srvc.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -84,16 +82,16 @@ public final class ManifiestoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "mani-iniciar-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("mani-iniciar")
     public String iniciar() throws InstanceNotFoundException {
-        final Manifiesto maniBO = BOFactory.getInjector().getInstance(ManifiestoBO.class);
+        final ManifiestoBO maniBO = new ManifiestoBO();
 
         try {
             maniBO.iniciar(item.getId());
 
             addActionMessage(getText("srvc.iniciar.success"));
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("srvc.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -106,16 +104,16 @@ public final class ManifiestoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "mani-anular-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("mani-anular")
     public String anular() throws InstanceNotFoundException {
-        final Manifiesto maniBO = BOFactory.getInjector().getInstance(ManifiestoBO.class);
+        final ManifiestoBO maniBO = new ManifiestoBO();
 
         try {
             maniBO.anular(item.getId());
 
             addActionMessage(getText("srvc.anular.success"));
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("srvc.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;

@@ -2,12 +2,9 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.manifiesto.Manifiesto;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
@@ -45,10 +42,10 @@ public final class ManifiestoTotalAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "mani-totales-popup", results = { @Result(name = "success", location = "manifiesto/mani-totales.jsp") })
+    @Action("mani-totales")
     public String totales() throws InstanceNotFoundException {
         final ServicioBO srvcBO = new ServicioBO();
-        final Manifiesto maniBO = BOFactory.getInjector().getInstance(ManifiestoBO.class);
+        final ManifiestoBO maniBO = new ManifiestoBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
         resumen = maniBO.selectResumen(item.getId());

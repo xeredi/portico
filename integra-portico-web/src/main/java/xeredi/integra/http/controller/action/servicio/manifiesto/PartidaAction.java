@@ -2,12 +2,9 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
-import xeredi.integra.model.servicio.bo.manifiesto.Partida;
 import xeredi.integra.model.servicio.bo.manifiesto.PartidaBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -42,12 +39,12 @@ public final class PartidaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "part-bloquear-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("part-bloquear")
     public String bloquear() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Partida partBO = BOFactory.getInjector().getInstance(PartidaBO.class);
+        final PartidaBO partBO = new PartidaBO();
 
         try {
             partBO.bloquear(item.getId());
@@ -67,12 +64,12 @@ public final class PartidaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "part-iniciar-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("part-iniciar")
     public String iniciar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Partida partBO = BOFactory.getInjector().getInstance(PartidaBO.class);
+        final PartidaBO partBO = new PartidaBO();
 
         try {
             partBO.iniciar(item.getId());
@@ -92,12 +89,12 @@ public final class PartidaAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "part-anular-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("part-anular")
     public String anular() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Partida partBO = BOFactory.getInjector().getInstance(PartidaBO.class);
+        final PartidaBO partBO = new PartidaBO();
 
         try {
             partBO.anular(item.getId());

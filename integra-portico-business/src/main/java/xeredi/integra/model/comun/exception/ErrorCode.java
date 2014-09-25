@@ -35,5 +35,16 @@ public enum ErrorCode {
     /** Error de solape de rangos de vigencia de una entidad. Se pasa como argumento el nombre de la entidad. */
     E00009,
 
+    /**
+     * Error de servicio en estado inválido para realizar una acción. Se pasa como argumento el estado del servicio.
+     */
+    E00010,
+
+    /**
+     * Error de subservicio en estado inválido para realizar una acción. Se pasa como argumento el estado del
+     * subservicio.
+     */
+    E00011,
+
     ;
 }

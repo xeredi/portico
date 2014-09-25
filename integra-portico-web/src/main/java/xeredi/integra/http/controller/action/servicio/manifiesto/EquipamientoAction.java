@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
@@ -35,12 +34,12 @@ public final class EquipamientoAction extends BaseAction {
     // Acciones web
     /**
      * Bloquear.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "equi-bloquear-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("equi-bloquear")
     public String bloquear() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -60,12 +59,12 @@ public final class EquipamientoAction extends BaseAction {
 
     /**
      * Iniciar.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "equi-iniciar-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("equi-iniciar")
     public String iniciar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -85,12 +84,12 @@ public final class EquipamientoAction extends BaseAction {
 
     /**
      * Anular.
-     * 
+     *
      * @return the string
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "equi-anular-popup", results = { @Result(location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action("equi-anular")
     public String anular() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -111,7 +110,7 @@ public final class EquipamientoAction extends BaseAction {
     // get / set
     /**
      * Gets the item.
-     * 
+     *
      * @return the item
      */
     public final SubservicioVO getItem() {
@@ -120,7 +119,7 @@ public final class EquipamientoAction extends BaseAction {
 
     /**
      * Sets the item.
-     * 
+     *
      * @param value
      *            the new item
      */

@@ -136,6 +136,67 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
             });
         }
     }
+
+    $scope.srvcAction = function(accName) {
+        switch (accName) {
+        // ----------- MANIFIESTO ------------------
+        // ----------- MANIFIESTO ------------------
+        // ----------- MANIFIESTO ------------------
+
+        case "mani-bloquear":
+            var url = "servicio/manifiesto/mani-bloquear.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "mani-completar":
+            var url = "servicio/manifiesto/mani-completar.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "mani-iniciar":
+            var url = "servicio/manifiesto/mani-iniciar.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "mani-anular":
+            var url = "servicio/manifiesto/mani-anular.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        default:
+            alert(accName);
+
+            break;
+        }
+    }
 });
 
 module.controller("srvcCreateController", function($scope, $http, $location, $route, $routeParams) {
@@ -356,6 +417,68 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
                     $scope.actionErrors = data.actionErrors;
                 }
             });
+        }
+    }
+
+
+    $scope.ssrvAction = function(accName) {
+        switch (accName) {
+        // ----------- BL ------------------
+        // ----------- BL ------------------
+        // ----------- BL ------------------
+
+        case "mabl-bloquear":
+            var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "mabl-completar":
+            var url = "servicio/manifiesto/mabl-completar.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "mabl-iniciar":
+            var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "mabl-anular":
+            var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        default:
+            alert(accName);
+
+            break;
         }
     }
 });
