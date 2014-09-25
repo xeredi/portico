@@ -33,17 +33,11 @@ public final class ValoradorTest {
             crgoIds.add(60001L);
             crgoIds.add(60002L);
 
-            valorador.valorarServicio(1259547L, crgoIds, Calendar.getInstance().getTime(), 1237001L);
-            valorador.valorarServicio(1259572L, crgoIds, Calendar.getInstance().getTime(), 1237001L);
-            valorador.valorarServicio(1259571L, crgoIds, Calendar.getInstance().getTime(), 1237001L);
-            valorador.valorarServicio(1259570L, crgoIds, Calendar.getInstance().getTime(), 1237001L);
-            valorador.valorarServicio(1259546L, crgoIds, Calendar.getInstance().getTime(), 1237001L);
-
-            // valorador.valorarServicio(1687962L, crgoIds, Calendar.getInstance().getTime(), 1644001L);
-            // valorador.valorarServicio(1655906L, crgoIds, Calendar.getInstance().getTime(), 1644001L);
-            // valorador.valorarServicio(1687896L, crgoIds, Calendar.getInstance().getTime(), 1644001L);
-            // valorador.valorarServicio(1671952L, crgoIds, Calendar.getInstance().getTime(), 1644001L);
-            // valorador.valorarServicio(1687979L, crgoIds, Calendar.getInstance().getTime(), 1644001L);
+            valorador.valorarServicio(1825942L, crgoIds, Calendar.getInstance().getTime(), 1844001L);
+            valorador.valorarServicio(1841379L, crgoIds, Calendar.getInstance().getTime(), 1844001L);
+            valorador.valorarServicio(1825941L, crgoIds, Calendar.getInstance().getTime(), 1844001L);
+            valorador.valorarServicio(1825943L, crgoIds, Calendar.getInstance().getTime(), 1844001L);
+            valorador.valorarServicio(1825863L, crgoIds, Calendar.getInstance().getTime(), 1844001L);
 
             // Escala
             // crgoIds.add(60003L);

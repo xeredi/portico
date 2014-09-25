@@ -74,7 +74,8 @@
                             | date:('fmt_date' | translate)}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha
                             | date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
                         ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
-                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span></td>
+                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span><span
+                        ng-switch-when="SR" title="{{item.itdtMap[tpdtId].srvc.etiqueta}}">{{item.itdtMap[tpdtId].srvc.etiqueta}}</span></td>
                 </tr>
             </tbody>
         </table>

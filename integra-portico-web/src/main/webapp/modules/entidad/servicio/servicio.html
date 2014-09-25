@@ -1,20 +1,3 @@
-<!--
-<div>
-    <div ng-repeat="tpsr in tpsrList" class="panel panel-default col-md-4">
-        <div class="panel-heading">
-            <a href="#/servicio/srvc/grid/{{tpsr.value}}">{{tpsr.label}}</a>
-        </div>
-        <ul ng-if="tpssMap[tpsr.value]" class="list-group">
-            <li ng-repeat="tpss in tpssMap[tpsr.value]" class="list-group-item"><a
-                href="#/servicio/ssrv/grid/{{tpss.value}}">{{tpss.label}}</a></li>
-        </ul>
-        <ul ng-if="!tpssMap[tpsr.value]" class="list-group">
-            <li class="list-group-item">&nbsp;</li>
-        </ul>
-    </div>
-</div>
- -->
-
 <ul class="media-list">
     <li ng-repeat="tpsr in tpsrList" class="media"><a class="col-md-3 pull-left"
         href="#/servicio/srvc/grid/{{tpsr.value}}"><strong>{{tpsr.label | uppercase}}</strong></a>
