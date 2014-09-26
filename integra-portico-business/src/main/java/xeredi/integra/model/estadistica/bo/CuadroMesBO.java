@@ -6,47 +6,54 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
+import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CuadroMesBO.
  */
-@Singleton
-public class CuadroMesBO implements CuadroMes {
+public class CuadroMesBO {
 
     /** The cdms dao. */
-    @Inject
     CuadroMesDAO cdmsDAO;
 
     /**
-     * {@inheritDoc}
+     * Select map.
+     *
+     * @param peprId
+     *            the pepr id
+     * @return the map
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final Map<String, List<CuadroMesVO>> selectMap(final Long peprId) {
         Preconditions.checkNotNull(peprId);
 
-        final List<CuadroMesVO> cdmsList = cdmsDAO.selectList(peprId);
-        final Map<String, List<CuadroMesVO>> cdmsMap = new HashMap<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        for (final CuadroMesVO cdmsVO : cdmsList) {
-            final String cocuKey = cdmsVO.getCocu().getParametro();
+        cdmsDAO = session.getMapper(CuadroMesDAO.class);
 
-            if (!cdmsMap.containsKey(cocuKey)) {
-                cdmsMap.put(cocuKey, new ArrayList<CuadroMesVO>());
+        try {
+            final List<CuadroMesVO> cdmsList = cdmsDAO.selectList(peprId);
+            final Map<String, List<CuadroMesVO>> cdmsMap = new HashMap<>();
+
+            for (final CuadroMesVO cdmsVO : cdmsList) {
+                final String cocuKey = cdmsVO.getCocu().getParametro();
+
+                if (!cdmsMap.containsKey(cocuKey)) {
+                    cdmsMap.put(cocuKey, new ArrayList<CuadroMesVO>());
+                }
+
+                cdmsMap.get(cocuKey).add(cdmsVO);
             }
 
-            cdmsMap.get(cocuKey).add(cdmsVO);
+            return cdmsMap;
+        } finally {
+            session.close();
         }
-
-        return cdmsMap;
     }
 }

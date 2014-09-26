@@ -18,7 +18,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
-import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -48,130 +47,185 @@ import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoBO.
  */
-@Singleton
-public class PeriodoProcesoBO implements PeriodoProceso {
+public class PeriodoProcesoBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(PeriodoProcesoBO.class);
 
-    /** The session. */
-    @Inject
-    SqlSession session;
-
     /** The pepr dao. */
-    @Inject
     PeriodoProcesoDAO peprDAO;
 
     /** The esdt dao. */
-    @Inject
     EstadisticaDatoDAO esdtDAO;
 
     /** The estd dao. */
-    @Inject
     EstadisticaDAO estdDAO;
 
     /** The cdms dao. */
-    @Inject
     CuadroMesDAO cdmsDAO;
 
     /** The esex dao. */
-    @Inject
     EstadisticaExportDAO esexDAO;
 
     /** The esag dao. */
-    @Inject
     EstadisticaAgregadoDAO esagDAO;
 
     /**
-     * {@inheritDoc}
+     * Exists.
+     *
+     * @param peprVO
+     *            the pepr vo
+     * @return true, if successful
      */
-    @Override
-    @Transactional
     public final boolean exists(final PeriodoProcesoVO peprVO) {
         Preconditions.checkNotNull(peprVO);
 
-        return peprDAO.exists(peprVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+
+        try {
+            return peprDAO.exists(peprVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param peprId
+     *            the pepr id
+     * @return the periodo proceso vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final PeriodoProcesoVO select(final Long peprId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(peprId);
 
-        final PeriodoProcesoVO peprVO = peprDAO.select(peprId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (peprVO == null) {
-            throw new InstanceNotFoundException(PeriodoProcesoVO.class.getName(), peprId);
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+
+        try {
+            final PeriodoProcesoVO peprVO = peprDAO.select(peprId);
+
+            if (peprVO == null) {
+                throw new InstanceNotFoundException(PeriodoProcesoVO.class.getName(), peprId);
+            }
+
+            return peprVO;
+        } finally {
+            session.close();
         }
-
-        return peprVO;
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param peprCriterioVO
+     *            the pepr criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional
     public final List<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO) {
         Preconditions.checkNotNull(peprCriterioVO);
 
-        return peprDAO.selectList(peprCriterioVO);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+
+        try {
+            return peprDAO.selectList(peprCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param peprCriterioVO
+     *            the pepr criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public final PaginatedList<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO,
             final int offset, final int limit) {
         Preconditions.checkNotNull(peprCriterioVO);
 
-        final int count = peprDAO.selectCount(peprCriterioVO);
-        final List<PeriodoProcesoVO> peprList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (count > offset) {
-            peprList.addAll(peprDAO.selectList(peprCriterioVO));
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+
+        try {
+            final int count = peprDAO.selectCount(peprCriterioVO);
+            final List<PeriodoProcesoVO> peprList = new ArrayList<>();
+
+            if (count > offset) {
+                peprList.addAll(peprDAO.selectList(peprCriterioVO));
+            }
+
+            return new PaginatedList<>(peprList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<>(peprList, offset, limit, count);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
-    public final void delete(final Long peprId) {
-        Preconditions.checkNotNull(peprId);
-
-        cdmsDAO.delete(peprId);
-        esdtDAO.delete(peprId);
-        estdDAO.delete(peprId);
-        peprDAO.delete(peprId);
     }
 
     /**
      * Delete.
      *
+     * @param peprId
+     *            the pepr id
+     */
+    public final void delete(final Long peprId) {
+        Preconditions.checkNotNull(peprId);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+        cdmsDAO = session.getMapper(CuadroMesDAO.class);
+        estdDAO = session.getMapper(EstadisticaDAO.class);
+        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+
+        try {
+            cdmsDAO.delete(peprId);
+            esdtDAO.delete(peprId);
+            estdDAO.delete(peprId);
+            peprDAO.delete(peprId);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Delete.
+     *
+     * @param session
+     *            the session
      * @param peprVO
      *            the pepr vo
      */
-    private final void delete(final PeriodoProcesoVO peprVO) {
+    private final void delete(final SqlSession session, final PeriodoProcesoVO peprVO) {
         final PeriodoProcesoCriterioVO peprCriterioVO = new PeriodoProcesoCriterioVO();
+
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+        cdmsDAO = session.getMapper(CuadroMesDAO.class);
+        estdDAO = session.getMapper(EstadisticaDAO.class);
+        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
         peprCriterioVO.setAnio(peprVO.getAnio());
         peprCriterioVO.setMes(peprVO.getMes());
@@ -190,153 +244,196 @@ public class PeriodoProcesoBO implements PeriodoProceso {
     }
 
     /**
-     * {@inheritDoc}
+     * Cargar archivo.
+     *
+     * @param peprVO
+     *            the pepr vo
+     * @param autpMap
+     *            the autp map
+     * @param estdList
+     *            the estd list
+     * @param removeIfExists
+     *            the remove if exists
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final void cargarArchivo(final PeriodoProcesoVO peprVO, final Map<String, ParametroVO> autpMap,
             final List<EstadisticaVO> estdList, final boolean removeIfExists) throws DuplicateInstanceException {
         Preconditions.checkNotNull(peprVO);
         Preconditions.checkNotNull(autpMap);
         Preconditions.checkNotNull(estdList);
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        final Date falta = Calendar.getInstance().getTime();
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+        cdmsDAO = session.getMapper(CuadroMesDAO.class);
+        estdDAO = session.getMapper(EstadisticaDAO.class);
+        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
-        // Si el periodo proceso ya existe
-        if (peprDAO.exists(peprVO)) {
-            if (removeIfExists) {
-                delete(peprVO);
-            } else {
-                throw new DuplicateInstanceException(PeriodoProcesoVO.class.getName(), peprVO);
+        try {
+            final IgBO igBO = new IgBO();
+
+            final Date falta = Calendar.getInstance().getTime();
+
+            // Si el periodo proceso ya existe
+            if (peprDAO.exists(peprVO)) {
+                if (removeIfExists) {
+                    delete(session, peprVO);
+                } else {
+                    throw new DuplicateInstanceException(PeriodoProcesoVO.class.getName(), peprVO);
+                }
             }
-        }
 
-        peprVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        peprVO.setFalta(falta);
+            peprVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            peprVO.setFalta(falta);
 
-        peprDAO.insert(peprVO);
+            peprDAO.insert(peprVO);
 
-        for (final EstadisticaVO estdVO : estdList) {
-            estdVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            estdVO.setPepr(peprVO);
+            for (final EstadisticaVO estdVO : estdList) {
+                estdVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                estdVO.setPepr(peprVO);
 
-            estdDAO.insert(estdVO);
-        }
-
-        for (final EstadisticaVO estdVO : estdList) {
-            for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
-                // FIXME Validamos si los datos pasados son correctos??
-                itdtVO.setItemId(estdVO.getId());
-
-                esdtDAO.insert(itdtVO);
+                estdDAO.insert(estdVO);
             }
-        }
 
-        generarCuadroMensual(peprVO.getId(), removeIfExists);
+            for (final EstadisticaVO estdVO : estdList) {
+                for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
+                    // FIXME Validamos si los datos pasados son correctos??
+                    itdtVO.setItemId(estdVO.getId());
+
+                    esdtDAO.insert(itdtVO);
+                }
+            }
+
+            generarCuadroMensual(session, peprVO.getId(), removeIfExists);
+
+            session.commit();
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Agregar servicios.
+     *
+     * @param peprVO
+     *            the pepr vo
+     * @param removeIfExists
+     *            the remove if exists
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final void agregarServicios(final PeriodoProcesoVO peprVO, final boolean removeIfExists)
             throws DuplicateInstanceException, IOException {
         Preconditions.checkNotNull(peprVO);
         Preconditions.checkNotNull(peprVO.getAnio());
         Preconditions.checkNotNull(peprVO.getMes());
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        // Si el periodo proceso ya existe
-        if (peprDAO.exists(peprVO)) {
-            if (removeIfExists) {
-                delete(peprVO);
-            } else {
-                throw new DuplicateInstanceException(PeriodoProcesoVO.class.getName(), peprVO);
+        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+        cdmsDAO = session.getMapper(CuadroMesDAO.class);
+        estdDAO = session.getMapper(EstadisticaDAO.class);
+        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+        esagDAO = session.getMapper(EstadisticaAgregadoDAO.class);
+
+        try {
+            final IgBO igBO = new IgBO();
+
+            // Si el periodo proceso ya existe
+            if (peprDAO.exists(peprVO)) {
+                if (removeIfExists) {
+                    delete(session, peprVO);
+                } else {
+                    throw new DuplicateInstanceException(PeriodoProcesoVO.class.getName(), peprVO);
+                }
             }
+
+            final Map<Long, List<EstadisticaVO>> estdMap = new HashMap<>();
+
+            peprVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            peprVO.setFalta(Calendar.getInstance().getTime());
+            peprDAO.insert(peprVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Busqueda de datos agregados");
+            }
+            final EstadisticaAgregadoCriterioVO esagCriterioVO = new EstadisticaAgregadoCriterioVO();
+
+            final Calendar finicio = Calendar.getInstance();
+            finicio.setTimeInMillis(0);
+            finicio.set(Calendar.YEAR, peprVO.getAnio());
+            finicio.set(Calendar.MONTH, peprVO.getMes() - 1);
+            finicio.set(Calendar.DAY_OF_MONTH, 1);
+
+            final Calendar ffin = Calendar.getInstance();
+            ffin.setTimeInMillis(0);
+            ffin.set(Calendar.YEAR, peprVO.getAnio());
+            ffin.set(Calendar.MONTH, peprVO.getMes());
+            ffin.set(Calendar.DAY_OF_MONTH, 1);
+
+            esagCriterioVO.setFinicio(finicio.getTime());
+            esagCriterioVO.setFfin(ffin.getTime());
+
+            estdMap.put(
+                    Entidad.ACTIVIDAD_PESQUERA.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.ACTIVIDAD_PESQUERA.getId(),
+                            esagDAO.selectActividadPesquera(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.AVITUALLAMIENTO.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
+                            esagDAO.selectAvituallamiento(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.AGREGACION_SUPERFICIE.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
+                            esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.AGREGACION_ESCALA.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
+                            esagDAO.selectAgregacionEscala(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
+                            esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
+                            esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.MOVIMIENTO_MERCANCIA.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA.getId(),
+                            esagDAO.selectMovimientoMercancia(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
+                    obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
+                            esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Grabacion de Datos Agregados");
+            }
+
+            for (final Long tpesId : estdMap.keySet()) {
+                insertEstadisticaAgregadoList(session, peprVO, tpesId, estdMap.get(tpesId));
+            }
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Cuadro Mensual");
+            }
+
+            generarCuadroMensual(session, peprVO.getId(), removeIfExists);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Generacion de archivo de OPPE");
+            }
+
+            // generarArchivo(peprVO);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        final Map<Long, List<EstadisticaVO>> estdMap = new HashMap<>();
-
-        peprVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        peprVO.setFalta(Calendar.getInstance().getTime());
-        peprDAO.insert(peprVO);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Busqueda de datos agregados");
-        }
-        final EstadisticaAgregadoCriterioVO esagCriterioVO = new EstadisticaAgregadoCriterioVO();
-
-        final Calendar finicio = Calendar.getInstance();
-        finicio.setTimeInMillis(0);
-        finicio.set(Calendar.YEAR, peprVO.getAnio());
-        finicio.set(Calendar.MONTH, peprVO.getMes() - 1);
-        finicio.set(Calendar.DAY_OF_MONTH, 1);
-
-        final Calendar ffin = Calendar.getInstance();
-        ffin.setTimeInMillis(0);
-        ffin.set(Calendar.YEAR, peprVO.getAnio());
-        ffin.set(Calendar.MONTH, peprVO.getMes());
-        ffin.set(Calendar.DAY_OF_MONTH, 1);
-
-        esagCriterioVO.setFinicio(finicio.getTime());
-        esagCriterioVO.setFfin(ffin.getTime());
-
-        estdMap.put(
-                Entidad.ACTIVIDAD_PESQUERA.getId(),
-                obtenerEstadisticas(peprVO, Entidad.ACTIVIDAD_PESQUERA.getId(),
-                        esagDAO.selectActividadPesquera(esagCriterioVO)));
-        estdMap.put(
-                Entidad.AVITUALLAMIENTO.getId(),
-                obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
-                        esagDAO.selectAvituallamiento(esagCriterioVO)));
-        estdMap.put(
-                Entidad.AGREGACION_SUPERFICIE.getId(),
-                obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
-                        esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
-        estdMap.put(
-                Entidad.AGREGACION_ESCALA.getId(),
-                obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
-                        esagDAO.selectAgregacionEscala(esagCriterioVO)));
-        estdMap.put(
-                Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
-                obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
-                        esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
-        estdMap.put(
-                Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
-                obtenerEstadisticas(peprVO, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
-                        esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
-        estdMap.put(
-                Entidad.MOVIMIENTO_MERCANCIA.getId(),
-                obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA.getId(),
-                        esagDAO.selectMovimientoMercancia(esagCriterioVO)));
-        estdMap.put(
-                Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
-                obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
-                        esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Grabacion de Datos Agregados");
-        }
-
-        for (final Long tpesId : estdMap.keySet()) {
-            insertEstadisticaAgregadoList(peprVO, tpesId, estdMap.get(tpesId));
-        }
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Cuadro Mensual");
-        }
-
-        generarCuadroMensual(peprVO.getId(), removeIfExists);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Generacion de archivo de OPPE");
-        }
-
-        // generarArchivo(peprVO);
     }
 
     /**
@@ -363,7 +460,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
             autpVO.setId(esagVO.getSubpId());
 
             estdVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            estdVO.setAutp(autpVO);
+            estdVO.setSubp(autpVO);
             estdVO.setPepr(peprVO);
 
             if (tpesVO.getEntdMap() != null) {
@@ -454,14 +551,18 @@ public class PeriodoProcesoBO implements PeriodoProceso {
     /**
      * Generar archivo.
      *
+     * @param session
+     *            the session
      * @param peprVO
      *            the pepr vo
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private final void generarArchivo(final PeriodoProcesoVO peprVO) throws IOException {
+    private final void generarArchivo(final SqlSession session, final PeriodoProcesoVO peprVO) throws IOException {
         Preconditions.checkNotNull(peprVO);
         Preconditions.checkNotNull(peprVO.getId());
+
+        esexDAO = session.getMapper(EstadisticaExportDAO.class);
 
         final String fileName = peprVO.getAutp().getParametro()
                 + StringUtils.leftPad(peprVO.getAnio().toString(), 4, '0')
@@ -691,6 +792,8 @@ public class PeriodoProcesoBO implements PeriodoProceso {
     /**
      * Insert estadistica agregado list.
      *
+     * @param session
+     *            the session
      * @param peprVO
      *            the pepr vo
      * @param tpesId
@@ -698,11 +801,14 @@ public class PeriodoProcesoBO implements PeriodoProceso {
      * @param estdList
      *            the estd list
      */
-    private final void insertEstadisticaAgregadoList(final PeriodoProcesoVO peprVO, final Long tpesId,
-            final List<EstadisticaVO> estdList) {
+    private final void insertEstadisticaAgregadoList(final SqlSession session, final PeriodoProcesoVO peprVO,
+            final Long tpesId, final List<EstadisticaVO> estdList) {
         Preconditions.checkNotNull(peprVO);
         Preconditions.checkNotNull(tpesId);
         Preconditions.checkNotNull(estdList);
+
+        estdDAO = session.getMapper(EstadisticaDAO.class);
+        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
         for (final EstadisticaVO estdVO : estdList) {
             estdDAO.insert(estdVO);
@@ -722,6 +828,8 @@ public class PeriodoProcesoBO implements PeriodoProceso {
     /**
      * Generar cuadro mensual.
      *
+     * @param session
+     *            the session
      * @param peprId
      *            the pepr id
      * @param sobreescribir
@@ -729,7 +837,7 @@ public class PeriodoProcesoBO implements PeriodoProceso {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    private final void generarCuadroMensual(final Long peprId, final boolean sobreescribir)
+    private final void generarCuadroMensual(final SqlSession session, final Long peprId, final boolean sobreescribir)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(peprId);
 

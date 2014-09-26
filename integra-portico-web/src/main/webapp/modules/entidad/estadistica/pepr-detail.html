@@ -1,0 +1,38 @@
+<fieldset>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label>{{'pepr_autp' | translate}}</label>
+            <p class="form-control-static">{{pepr.autp.parametro}}</p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'pepr_anio' | translate}}</label>
+            <p class="form-control-static">{{pepr.anio}}</p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'pepr_mes' | translate}}</label>
+            <p class="form-control-static">{{pepr.mes}}</p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label>{{'pepr_cdmsGenerado' | translate}}</label>
+            <p class="form-control-static">
+                <i ng-if="item.cdmsGenerado" class="glyphicon glyphicon-ok"></i><i ng-if="!item.cdmsGenerado"
+                    class="glyphicon glyphicon-remove"></i>
+            </p>
+        </div>
+    </div>
+</fieldset>
+
+<ul class="list-group">
+    <li class="list-group-item"><strong><a href="#/estadistica/cdms/detail/{{pepr.id}}">{{'pepr_cdms'
+                | translate | uppercase}}</a></strong></li>
+    <li ng-repeat="enti in tpesList" class="list-group-item"><strong><a
+            href="#/estadistica/estd/grid/{{enti.value}}/{{pepr.id}}">{{enti.label | uppercase}}</strong></a></li>
+</ul>

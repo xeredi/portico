@@ -8,12 +8,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.estadistica.bo.Estadistica;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
@@ -36,6 +32,8 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3980612360200744744L;
+
+    private TipoEstadisticaVO enti;
 
     /** The estds. */
     private PaginatedList<EstadisticaVO> itemList;
@@ -68,8 +66,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "estd-filtro"),
-        @Action(value = "estd-filtro-popup", results = { @Result(name = "success", location = "estd-filtro.jsp") }) })
+    @Action("estd-filter")
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -84,12 +81,14 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Action(value = "estd-listado")
+    @Action("estd-list")
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Estadistica estdBO = BOFactory.getInjector().getInstance(EstadisticaBO.class);
+        enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
+
+        final EstadisticaBO estdBO = new EstadisticaBO();
 
         itemCriterio.setSoloDatosGrid(true);
 
@@ -174,6 +173,10 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<EstadisticaVO> getItemList() {
         return itemList;
+    }
+
+    public TipoEstadisticaVO getEnti() {
+        return enti;
     }
 
 }

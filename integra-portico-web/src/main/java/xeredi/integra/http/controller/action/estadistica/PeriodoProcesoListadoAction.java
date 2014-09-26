@@ -7,12 +7,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
@@ -67,8 +63,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "pepr-filtro"),
-        @Action(value = "pepr-filtro-popup", results = { @Result(name = "success", location = "pepr-filtro.jsp") }) })
+    @Action("pepr-filter")
     public String filtro() {
         return SUCCESS;
     }
@@ -78,14 +73,13 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "pepr-listado"),
-        @Action(value = "pepr-listado-json", results = { @Result(name = "success", type = "json") }) })
+    @Action("pepr-list")
     public String listado() {
         if (hasErrors()) {
             return INPUT;
         }
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
         peprList = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 

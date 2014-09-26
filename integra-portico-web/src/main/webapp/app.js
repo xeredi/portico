@@ -1,8 +1,9 @@
 var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "ngRoute", "util", "metamodelo",
-        "facturacion", "maestro", "servicio"/*
-                                             * 'configuracion', 'proceso',
-                                             *
-                                             */]);
+        "facturacion", "maestro", "servicio", "estadistica"/*
+                                                             * 'configuracion',
+                                                             * 'proceso',
+                                                             *
+                                                             */]);
 
 app.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -149,6 +150,39 @@ app.config(function($translateProvider) {
         ssrv_ffin : "F. Fin",
         ssrv_numero : "N\u00famero",
         ssrv_estado : "Estado",
+
+        pepr_grid : "Per\u00edodo de Proceso - Listado",
+        pepr_detail : "Per\u00edodo de Proceso - Detalle",
+
+        pepr_autp : 'Aut. P.',
+        pepr_anio : 'A\u00f1o',
+        pepr_mes : 'Mes',
+        pepr_cdmsGenerado : 'Cuad. Mensual Generado?',
+        pepr_cdms : "Cuadro Mensual",
+
+        cdms_detail : "Cuadro Mensual - Detalle",
+        cdms_numero : "N\u00ba",
+        cdms_tm : "Tm",
+        cdms_teus : "TEUS",
+        cdms_embarcado : "Embarcado",
+        cdms_desembarcado : "Desembarcado",
+        cdms_transito : "Tr\u00e1nsito",
+        cdms_transbordo : "Transbordo",
+        cdms_GL : "GRANELES LIQUIDOS",
+        cdms_GLPETR : "CRUDOS DE PETROLEO",
+        cdms_GLGASN : "GAS NATURAL",
+        cdms_GLPREF : "PRODUCTOS PETROLIFEROS REFINADOS",
+        cdms_GLOTRO : "OTROS GRANELES LIQUIDOS",
+        cdms_GS : "GRANELES SOLIDOS",
+        cdms_GSIESP : "POR INSTALACION ESPECIAL",
+        cdms_GSNIES : "SIN INSTALACION ESPECIAL",
+        cdms_MG : "MERCANCIA GENERAL",
+
+        estd_grid : "Dato Estad\u00edstico - Listado",
+        estd_detail : "Dato Estad\u00edstico - Detalle",
+
+        estd_pepr : 'Per\u00edodo de Proceso',
+        estd_subp : 'Puerto',
 
         vlrc_grid : "Valoraci\u00f3n - Listado",
         vlrc_detail : "Valoraci\u00f3n - Detalle",

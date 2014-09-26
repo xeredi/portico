@@ -8,7 +8,7 @@
 
     <settings>
         <setting name="proxyFactory" value="CGLIB" />
-        <setting name="defaultExecutorType" value="BATCH" />
+        <setting name="defaultExecutorType" value="REUSE" />
         <setting name="lazyLoadingEnabled" value="false" />
         <!--  <setting name="aggressiveLazyLoading" value="false" /> <setting
             name="useColumnLabel" value="false"/> <setting name="multipleResultSetsEnabled" value="false"/> -->

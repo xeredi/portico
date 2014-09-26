@@ -10,9 +10,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.report.ExcelUtil;
-import xeredi.integra.model.estadistica.bo.Estadistica;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
@@ -61,7 +59,7 @@ public final class EstadisticaXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final Estadistica estdBO = BOFactory.getInjector().getInstance(EstadisticaBO.class);
+        final EstadisticaBO estdBO = new EstadisticaBO();
 
         enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);

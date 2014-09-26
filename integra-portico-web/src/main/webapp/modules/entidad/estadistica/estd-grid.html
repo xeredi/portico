@@ -1,0 +1,47 @@
+<fieldset>
+    <legend>{{enti.nombre | uppercase}}</legend>
+
+    <div ng-if="!showFilter" class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button data-ng-click="filter()" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+            </button>
+        </div>
+    </div>
+
+    <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="currentPage"
+        ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+
+    <div class="table-responsive">
+        <span class="label label-default">{{itemList.count}} resultado(s)</span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap">{{'estd_pepr' | translate}}</th>
+                    <th class="codigo" nowrap="nowrap">{{'estd_subp' | translate}}</th>
+                    <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in itemList.list">
+                    <td><a href="#/estadistica/estd/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{item.pepr.etiqueta}}</td>
+                    <td>{{item.subp.parametro}}</td>
+                    <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
+                        nowrap="nowrap"><span ng-switch-when="BO"><i
+                            ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
+                            ng-if="!item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
+                        ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal |
+                            number:2}}</span> <span ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera
+                            | number:0}}</span> <span ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha
+                            | date:('fmt_date' | translate)}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha
+                            | date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
+                        ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
+                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

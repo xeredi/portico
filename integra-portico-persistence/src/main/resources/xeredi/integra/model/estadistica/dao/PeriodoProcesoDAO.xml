@@ -24,9 +24,15 @@
         pepr.pepr_pk, pepr.pepr_anio, pepr.pepr_mes, pepr.pepr_trimestre, pepr.pepr_freferencia, pepr.pepr_falta
         , pepr.pepr_autp_pk, autp.prmt_parametro
         , (
-            SELECT 1
-            FROM tbl_cuadro_mes_cdms
-            WHERE cdms_pepr_pk = pepr_pk
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM tbl_cuadro_mes_cdms
+                    WHERE cdms_pepr_pk = pepr_pk
+                )
+                THEN 1
+                ELSE 0
+            END
         ) AS pepr_cdms_generado
     FROM tbl_periodo_proceso_pepr pepr
         JOIN tbl_parametro_prmt autp ON

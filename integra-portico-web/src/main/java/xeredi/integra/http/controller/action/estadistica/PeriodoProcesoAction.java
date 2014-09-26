@@ -4,17 +4,16 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.struts.PropertyValidator;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -49,7 +48,7 @@ public final class PeriodoProcesoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "pepr-preparar-carga", results = { @Result(name = "success", location = "pepr-preparar-carga.jsp") })
+    @Action("pepr-preparar-carga")
     public String prepararCarga() {
         return SUCCESS;
     }
@@ -59,9 +58,7 @@ public final class PeriodoProcesoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "pepr-cargar", results = {
-            @Result(name = "success", type = "redirectAction", params = { "actionName", "pepr-listado" }),
-            @Result(name = "input", location = "pepr-preparar-carga.jsp") })
+    @Action("pepr-cargar")
     public String cargar() {
         PropertyValidator.validateRequired(this, "pepr.anio", pepr.getAnio());
         PropertyValidator.validateRequired(this, "pepr.mes", pepr.getMes());
@@ -79,14 +76,12 @@ public final class PeriodoProcesoAction extends BaseAction {
      *
      * @return the string
      */
-    @Action(value = "pepr-borrar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "pepr-listado" }) })
+    @Action("pepr-remove")
     public String borrar() {
-        if (pepr.getId() == null) {
-            throw new Error("No se ha especificado un periodo de proceso");
-        }
+        Preconditions.checkNotNull(pepr);
+        Preconditions.checkNotNull(pepr.getId());
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
         peprBO.delete(pepr.getId());
 
@@ -102,13 +97,12 @@ public final class PeriodoProcesoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "pepr-detalle")
+    @Action("pepr-detail")
     public String detalle() throws InstanceNotFoundException {
-        if (pepr.getId() == null) {
-            throw new Error("No se ha especificado un periodo de proceso");
-        }
+        Preconditions.checkNotNull(pepr);
+        Preconditions.checkNotNull(pepr.getId());
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
         pepr = peprBO.select(pepr.getId());
 
@@ -122,11 +116,10 @@ public final class PeriodoProcesoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "pepr-exportar")
+    @Action("pepr-export")
     public String exportar() throws InstanceNotFoundException {
-        if (pepr.getId() == null) {
-            throw new Error("No se ha especificado un periodo de proceso");
-        }
+        Preconditions.checkNotNull(pepr);
+        Preconditions.checkNotNull(pepr.getId());
 
         throw new Error("No implementado");
     }
@@ -138,7 +131,7 @@ public final class PeriodoProcesoAction extends BaseAction {
      *
      * @return the tpess
      */
-    public List<LabelValueVO> getTpess() {
+    public List<LabelValueVO> getTpesList() {
         return TipoEstadisticaProxy.selectLabelValues();
     }
 

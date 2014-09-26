@@ -3,71 +3,73 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.estadistica.dao.EstadisticaDAO">
-	<resultMap type="EstadisticaVO" id="ResultMap">
-		<id column="estd_pk" property="id" />
-		<result column="estd_tpes_pk" property="entiId" />
+    <resultMap type="EstadisticaVO" id="ResultMap">
+        <id column="estd_pk" property="id" />
+        <result column="estd_tpes_pk" property="entiId" />
+        <result column="pepr_freferencia" property="fref" />
 
-		<association property="autp" javaType="ParametroVO">
-			<result column="estd_autp_pk" property="id" />
-			<result column="estd_autp" property="parametro" />
-		</association>
+        <association property="subp" javaType="ParametroVO">
+            <result column="estd_subp_pk" property="id" />
+            <result column="estd_subp" property="parametro" />
+        </association>
 
-		<association property="pepr" javaType="PeriodoProcesoVO">
-			<result column="estd_pepr_pk" property="id" />
-			<result column="pepr_anio" property="anio" />
-			<result column="pepr_mes" property="mes" />
+        <association property="pepr" javaType="PeriodoProcesoVO">
+            <result column="estd_pepr_pk" property="id" />
+            <result column="pepr_anio" property="anio" />
+            <result column="pepr_mes" property="mes" />
+            <result column="pepr_freferencia" property="freferencia" />
 
-			<association property="autp" javaType="ParametroVO">
-				<result column="pepr_autp_pk" property="id" />
-				<result column="pepr_autp" property="parametro" />
-			</association>
-		</association>
-	</resultMap>
+            <association property="autp" javaType="ParametroVO">
+                <result column="pepr_autp_pk" property="id" />
+                <result column="pepr_autp" property="parametro" />
+            </association>
+        </association>
+    </resultMap>
 
-	<sql id="SelectPrefix">
+    <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        estd.estd_pk, estd.estd_tpes_pk, estd.estd_pepr_pk, estd.estd_autp_pk
+        estd.estd_pk, estd.estd_tpes_pk, estd.estd_pepr_pk, estd.estd_subp_pk
         , (SELECT prmt.prmt_parametro FROM tbl_parametro_prmt prmt
-            WHERE prmt.prmt_pk = estd.estd_autp_pk) AS estd_autp
-		, pepr.pepr_autp_pk, pepr.pepr_anio, pepr.pepr_mes
+            WHERE prmt.prmt_pk = estd.estd_subp_pk) AS estd_subp
+		, pepr.pepr_autp_pk, pepr.pepr_anio, pepr.pepr_mes, pepr.pepr_freferencia
         , (SELECT prmt.prmt_parametro FROM tbl_parametro_prmt prmt
             WHERE prmt.prmt_pk = pepr.pepr_autp_pk) AS pepr_autp
     FROM tbl_estadistica_estd estd
     	INNER JOIN tbl_periodo_proceso_pepr pepr ON
     		pepr_pk = estd_pepr_pk
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectCountPrefix">
+    <sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
         COUNT(1)
     FROM tbl_estadistica_estd estd
     ]]>
-	</sql>
+    </sql>
 
-	<sql id="SelectWhere">
-		<where>
-			<if test="id != null">
-				AND estd.estd_pk = #{id}
-			</if>
-			<if test="entiId != null">
-				AND estd.estd_tpes_pk = #{entiId}
-			</if>
-			<if test="pepr != null">
-				<if test="pepr.id != null">
-					AND estd.estd_pepr_pk = #{pepr.id}
-				</if>
-				<if test="pepr.autpId != null">
-					AND estd.estd_autp_pk = #{pepr.autpId}
-				</if>
-			</if>
-			<if test="itdtMap != null and !itdtMap.empty">
-				<foreach collection="itdtMap" index="key" item="itdt">
-					<!-- FIXME ojo, faltan las fechas -->
-					<if
-						test="itdt.prmtId != null or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
+    <sql id="SelectWhere">
+        <where>
+            <if test="id != null">
+                AND estd.estd_pk = #{id}
+            </if>
+            <if test="entiId != null">
+                AND estd.estd_tpes_pk = #{entiId}
+            </if>
+            <if test="pepr != null">
+                <if test="pepr.id != null">
+                    AND estd.estd_pepr_pk = #{pepr.id}
+                </if>
+                <if test="pepr.autpId != null">
+                    AND estd.estd_subp_pk = #{pepr.autpId}
+                </if>
+            </if>
+            <if test="itdtMap != null and !itdtMap.empty">
+                <foreach collection="itdtMap" index="key" item="itdt">
+                    <!-- FIXME ojo, faltan las fechas -->
+                    <if
+                        test="itdt.prmtId != null or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
                             <![CDATA[
                             AND EXISTS (
                                 SELECT 1
@@ -76,51 +78,51 @@
                                     esdt_estd_pk = estd_pk
                                     AND esdt_tpdt_pk = #{key}
                             ]]>
-						<if test="itdt.prmtId != null">
-							AND esdt_prmt_pk = #{itdt.prmtId}
-						</if>
-						<if test="itdt.cantidadEntera != null">
-							AND esdt_nentero = #{itdt.cantidadEntera}
-						</if>
-						<if test="itdt.cantidadDecimal != null">
-							AND esdt_ndecimal = #{itdt.cantidadDecimal}
-						</if>
-						<if test="itdt.cadena != null and !itdt.cadena.empty">
-							AND esdt_cadena LIKE #{itdt.cadena}
-						</if>
-						)
-					</if>
-				</foreach>
-			</if>
-		</where>
-	</sql>
+                        <if test="itdt.prmtId != null">
+                            AND esdt_prmt_pk = #{itdt.prmtId}
+                        </if>
+                        <if test="itdt.cantidadEntera != null">
+                            AND esdt_nentero = #{itdt.cantidadEntera}
+                        </if>
+                        <if test="itdt.cantidadDecimal != null">
+                            AND esdt_ndecimal = #{itdt.cantidadDecimal}
+                        </if>
+                        <if test="itdt.cadena != null and !itdt.cadena.empty">
+                            AND esdt_cadena LIKE #{itdt.cadena}
+                        </if>
+                        )
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
 
-	<select id="selectCount" parameterType="EstadisticaCriterioVO" resultType="Integer">
-		<include refid="SelectCountPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="selectCount" parameterType="EstadisticaCriterioVO" resultType="Integer">
+        <include refid="SelectCountPrefix" />
+        <include refid="SelectWhere" />
+    </select>
 
-	<select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
 
-	<select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-	</select>
+    <select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
 
-	<insert id="insert" parameterType="EstadisticaVO">
+    <insert id="insert" parameterType="EstadisticaVO">
         <![CDATA[
-        INSERT INTO tbl_estadistica_estd (estd_pk, estd_tpes_pk, estd_pepr_pk, estd_autp_pk)
-        VALUES (#{id}, #{entiId}, #{pepr.id}, #{autp.id})
+        INSERT INTO tbl_estadistica_estd (estd_pk, estd_tpes_pk, estd_pepr_pk, estd_subp_pk)
+        VALUES (#{id}, #{entiId}, #{pepr.id}, #{subp.id})
         ]]>
-	</insert>
+    </insert>
 
-	<delete id="delete" parameterType="Long">
+    <delete id="delete" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_estadistica_estd
         WHERE estd_pepr_pk = #{value}
         ]]>
-	</delete>
+    </delete>
 </mapper>

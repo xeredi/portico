@@ -4,12 +4,8 @@ import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.estadistica.bo.Estadistica;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
@@ -50,14 +46,13 @@ public final class EstadisticaAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({
-        @Action(value = "estd-detalle"),
-        @Action(value = "estd-detalle-popup", results = { @Result(name = "success", location = "estd-detalle.jsp") }) })
+
+    @Action("estd-detail")
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final Estadistica estdBO = BOFactory.getInjector().getInstance(EstadisticaBO.class);
+        final EstadisticaBO estdBO = new EstadisticaBO();
         final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
 
         estdCriterioVO.setId(item.getId());
@@ -76,8 +71,7 @@ public final class EstadisticaAction extends ItemAction {
      */
     @Override
     public Date getFechaVigencia() {
-        // FIXME Implementar
-        return null;
+        return item.getPepr().getFreferencia();
     }
 
     /**
@@ -91,7 +85,8 @@ public final class EstadisticaAction extends ItemAction {
     /**
      * Sets the item.
      *
-     * @param item the new item
+     * @param item
+     *            the new item
      */
     public final void setItem(final EstadisticaVO item) {
         this.item = item;

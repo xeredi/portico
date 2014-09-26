@@ -7,10 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.estadistica.bo.CuadroMes;
 import xeredi.integra.model.estadistica.bo.CuadroMesBO;
-import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
@@ -47,14 +44,14 @@ public final class CuadroMesAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "cdms-detalle")
+    @Action("cdms-detail")
     public String detalle() throws InstanceNotFoundException {
         if (pepr == null || pepr.getId() == null) {
             throw new Error("Periodo de Proceso nulo");
         }
 
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
-        final CuadroMes cdmsBO = BOFactory.getInjector().getInstance(CuadroMesBO.class);
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+        final CuadroMesBO cdmsBO = new CuadroMesBO();
 
         pepr = peprBO.select(pepr.getId());
         cdmsMap = cdmsBO.selectMap(pepr.getId());

@@ -14,7 +14,7 @@ public final class EstadisticaVO extends ItemVO {
     private PeriodoProcesoVO pepr;
 
     /** The autp. */
-    private ParametroVO autp;
+    private ParametroVO subp;
 
     /**
      * Instantiates a new estadistica vo.
@@ -23,7 +23,7 @@ public final class EstadisticaVO extends ItemVO {
         super();
 
         pepr = new PeriodoProcesoVO();
-        autp = new ParametroVO();
+        subp = new ParametroVO();
     }
 
     /**
@@ -33,34 +33,6 @@ public final class EstadisticaVO extends ItemVO {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
-
-    // /**
-    // * New instance.
-    // *
-    // * @param tpesVO
-    // * the tpes vo
-    // * @return the estadistica vo
-    // */
-    // public static EstadisticaVO newInstance(final TipoEstadisticaVO tpesVO) {
-    // final EstadisticaVO estdVO = new EstadisticaVO();
-    //
-    // estdVO.setEntiId(tpesVO.getId());
-    //
-    // if (tpesVO.getEntdList() != null && !tpesVO.getEntdList().isEmpty()) {
-    // final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
-    //
-    // for (final Long tpdtId : tpesVO.getEntdList()) {
-    // final ItemDatoVO itdtVO = new ItemDatoVO();
-    //
-    // itdtVO.setTpdtId(tpdtId);
-    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-    // }
-    //
-    // estdVO.setItdtMap(itdtMap);
-    // }
-    //
-    // return estdVO;
-    // }
 
     /**
      * {@inheritDoc}
@@ -72,22 +44,22 @@ public final class EstadisticaVO extends ItemVO {
     }
 
     /**
-     * Gets the autp.
+     * Gets the subp.
      *
-     * @return the autp
+     * @return the subp
      */
-    public ParametroVO getAutp() {
-        return autp;
+    public ParametroVO getSubp() {
+        return subp;
     }
 
     /**
-     * Sets the autp.
+     * Sets the subp.
      *
      * @param value
-     *            the new autp
+     *            the new subp
      */
-    public void setAutp(final ParametroVO value) {
-        autp = value;
+    public void setSubp(final ParametroVO value) {
+        subp = value;
     }
 
     /**

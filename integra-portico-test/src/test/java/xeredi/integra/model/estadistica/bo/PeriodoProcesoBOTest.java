@@ -6,7 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -39,7 +38,7 @@ public final class PeriodoProcesoBOTest {
         LOG.info("Start test");
 
         final ParametroBO prmtBO = new ParametroBO();
-        final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 

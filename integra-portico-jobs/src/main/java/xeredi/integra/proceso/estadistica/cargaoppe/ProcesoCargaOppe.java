@@ -16,11 +16,9 @@ import java.util.Map;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileKeyword;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileType;
-import xeredi.integra.model.estadistica.bo.PeriodoProceso;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
@@ -136,7 +134,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
         if (prbtVO.getPrmnList().isEmpty()) {
             LOG.info("Guardar Datos");
-            final PeriodoProceso peprBO = BOFactory.getInjector().getInstance(PeriodoProcesoBO.class);
+
+            final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
             try {
                 peprBO.cargarArchivo(peprVO, autpMap, estaList, sobreescribir);
@@ -221,6 +220,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
                     final EstadisticaVO estd = new EstadisticaVO();
 
+                    estd.setEntiId(tpesVO.getId());
+
                     {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
@@ -249,7 +250,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                         estd.getItdtMap().put(itdt.getTpdtId(), itdt);
                     }
 
-                    estd.setAutp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                    estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
                     estaList.add(estd);
                 }
@@ -268,20 +269,37 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 final String line = lines.get(i);
 
                 if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
-                    final EstadisticaVO estaVO = new EstadisticaVO();
+                    final EstadisticaVO estd = new EstadisticaVO();
 
-                    String tipoSuministro = getTokenString(EstadisticaFileKeyword.EAV_TipoSuministro, line, i);
+                    estd.setEntiId(tpesVO.getId());
 
-                    tipoSuministro = getTipoSuministroNormalizado(tipoSuministro);
+                    {
+                        String tipoSuministro = getTokenString(EstadisticaFileKeyword.EAV_TipoSuministro, line, i);
+                        tipoSuministro = getTipoSuministroNormalizado(tipoSuministro);
 
-                    final ParametroVO tipoSuministroPrmt = maestroMap.get(Entidad.TIPO_SUMINISTRO).get(tipoSuministro);
+                        final ParametroVO tipoSuministroPrmt = maestroMap.get(Entidad.TIPO_SUMINISTRO).get(
+                                tipoSuministro);
 
-                    estaVO.getItdtMap().get(TipoDato.TIPO_SUM.getId()).setPrmt(tipoSuministroPrmt);
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                    .setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAV_Toneladas, line, i));
-                    estaVO.setAutp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                        final ItemDatoVO itdt = new ItemDatoVO();
 
-                    estaList.add(estaVO);
+                        itdt.setTpdtId(TipoDato.TIPO_SUM.getId());
+                        itdt.setPrmt(tipoSuministroPrmt);
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_01.getId());
+                        itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAV_Toneladas, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+
+                    estaList.add(estd);
                 }
             }
         } catch (final IOException ex) {
@@ -298,37 +316,80 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 final String line = lines.get(i);
 
                 if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
-                    final EstadisticaVO estaVO = new EstadisticaVO();
+                    final EstadisticaVO estd = new EstadisticaVO();
 
-                    // FIXME Conversion de Tipo de Buque
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_BUQUE.getId())
-                    .setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAE_TipoBuque, line, i, Entidad.TIPO_BUQUE));
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_NAV.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EAE_TipoNavEntrada, line, i,
-                                    Entidad.TIPO_NAVEGACION));
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_NAV_2.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EAE_TipoNavSalida, line, i,
-                                    Entidad.TIPO_NAVEGACION));
-                    estaVO.getItdtMap().get(TipoDato.PAIS.getId())
-                    .setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAE_Bandera, line, i, Entidad.PAIS));
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_ACT.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EAE_TipoActividad, line, i,
-                                    Entidad.TIPO_ACTIVIDAD));
+                    estd.setEntiId(tpesVO.getId());
 
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                    .setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAE_NumEscalas, line, i));
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_02.getId())
-                    .setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAE_NumGTs, line, i));
-                    estaVO.setAutp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                    {
+                        // FIXME Conversion de Tipo de Buque
+                        final ItemDatoVO itdt = new ItemDatoVO();
 
-                    estaList.add(estaVO);
+                        itdt.setTpdtId(TipoDato.TIPO_BUQUE.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAE_TipoBuque, line, i, Entidad.TIPO_BUQUE));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.TIPO_NAV.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAE_TipoNavEntrada, line, i,
+                                Entidad.TIPO_NAVEGACION));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.TIPO_NAV_2.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAE_TipoNavSalida, line, i,
+                                Entidad.TIPO_NAVEGACION));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.PAIS.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAE_Bandera, line, i, Entidad.PAIS));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.TIPO_ACT.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EAE_TipoActividad, line, i,
+                                Entidad.TIPO_ACTIVIDAD));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_01.getId());
+                        itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAE_NumEscalas, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_02.getId());
+                        itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EAE_NumGTs, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+
+                    estaList.add(estd);
                 }
             }
         } catch (final IOException ex) {
@@ -345,67 +406,143 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 final String line = lines.get(i);
 
                 if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
-                    final EstadisticaVO estaVO = new EstadisticaVO();
+                    final EstadisticaVO estd = new EstadisticaVO();
 
-                    estaVO.setAutp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                    estd.setEntiId(tpesVO.getId());
 
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_OP_BL.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EMM_TipoOperacion, line, i,
-                                    Entidad.TIPO_OPERACION_BL));
-                    estaVO.getItdtMap().get(TipoDato.UNLOCODE_3.getId())
-                    .setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMM_UnloOrigen, line, i, Entidad.UNLOCODE));
-                    estaVO.getItdtMap()
-                    .get(TipoDato.UNLOCODE_4.getId())
-                    .setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMM_UnloDestino, line, i, Entidad.UNLOCODE));
-                    estaVO.getItdtMap()
-                    .get(TipoDato.ALIN.getId())
-                    .setPrmt(
-                            getMaestro(Entidad.ALINEACION,
-                                    "***" + getTokenString(EstadisticaFileKeyword.EMM_Alineacion, line, i),
-                                    line, i));
-                    estaVO.getItdtMap().get(TipoDato.MERCANCIA.getId())
-                    .setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMM_Mercancia, line, i, Entidad.MERCANCIA));
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_NAV.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EMM_TipoNavegacion, line, i,
-                                    Entidad.TIPO_NAVEGACION));
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
 
-                    estaVO.getItdtMap()
-                    .get(TipoDato.BOOLEANO_01.getId())
-                    .setCantidadEntera(
-                            !getTokenString(EstadisticaFileKeyword.EMM_Roro, line, i).equals("N") ? 1L : 0L);
+                        itdt.setTpdtId(TipoDato.TIPO_OP_BL.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMM_TipoOperacion, line, i,
+                                Entidad.TIPO_OPERACION_BL));
 
-                    String uc = getTokenString(EstadisticaFileKeyword.EMM_UnidadCarga, line, i);
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
 
-                    uc = getUCNormalizada(uc);
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
 
-                    final ParametroVO ucPrmt = maestroMap.get(Entidad.UNIDAD_CARGA).get(uc);
+                        itdt.setTpdtId(TipoDato.UNLOCODE_3.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMM_UnloOrigen, line, i, Entidad.UNLOCODE));
 
-                    estaVO.getItdtMap().get(TipoDato.UNIDAD_CARGA.getId()).setPrmt(ucPrmt);
-                    estaVO.getItdtMap()
-                    .get(TipoDato.INST_ESP.getId())
-                    .setPrmt(
-                            getMaestro(
-                                    Entidad.INSTALACION_ESPECIAL,
-                                    "**************"
-                                            + getTokenString(EstadisticaFileKeyword.EMM_InstEspecial, line, i),
-                                            line, i));
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
 
-                    estaVO.getItdtMap()
-                    .get(TipoDato.TIPO_TRANSPORTE.getId())
-                    .setCadena(
-                            getTokenCR(EstadisticaFileKeyword.EMM_TipoTransporte, line, i,
-                                    TipoDato.TIPO_TRANSPORTE));
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
 
-                    estaVO.getItdtMap().get(TipoDato.DECIMAL_01.getId())
-                    .setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EMM_Toneladas, line, i));
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                    .setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EMM_Unidades, line, i));
-                    estaVO.getItdtMap().get(TipoDato.DECIMAL_02.getId())
-                    .setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EMM_Teus, line, i));
+                        itdt.setTpdtId(TipoDato.UNLOCODE_4.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMM_UnloDestino, line, i, Entidad.UNLOCODE));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ALIN.getId());
+                        itdt.setPrmt(getMaestro(Entidad.ALINEACION,
+                                "***" + getTokenString(EstadisticaFileKeyword.EMM_Alineacion, line, i), line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.MERCANCIA.getId());
+                        itdt.setPrmt(getMaestro(Entidad.MERCANCIA,
+                                getTokenString(EstadisticaFileKeyword.EMM_Mercancia, line, i), line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.TIPO_NAV.getId());
+                        itdt.setPrmt(getMaestro(Entidad.TIPO_NAVEGACION,
+                                getTokenString(EstadisticaFileKeyword.EMM_TipoNavegacion, line, i), line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.BOOLEANO_01.getId());
+                        itdt.setCantidadEntera(!getTokenString(EstadisticaFileKeyword.EMM_Roro, line, i).equals("N") ? 1L
+                                : 0L);
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+
+                        String uc = getTokenString(EstadisticaFileKeyword.EMM_UnidadCarga, line, i);
+
+                        uc = getUCNormalizada(uc);
+
+                        final ParametroVO ucPrmt = maestroMap.get(Entidad.UNIDAD_CARGA).get(uc);
+
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.UNIDAD_CARGA.getId());
+                        itdt.setPrmt(ucPrmt);
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.INST_ESP.getId());
+                        itdt.setPrmt(getMaestro(Entidad.INSTALACION_ESPECIAL,
+                                "**************" + getTokenString(EstadisticaFileKeyword.EMM_InstEspecial, line, i),
+                                line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.TIPO_TRANSPORTE.getId());
+                        itdt.setCadena(getTokenCR(EstadisticaFileKeyword.EMM_TipoTransporte, line, i,
+                                TipoDato.TIPO_TRANSPORTE));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.DECIMAL_01.getId());
+                        itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EMM_Toneladas, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_01.getId());
+                        itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EMM_Unidades, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.DECIMAL_02.getId());
+                        itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EMM_Teus, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
                     // FIXME Acabar
                     ParametroVO unloCargaDescargaVO = null;
@@ -420,19 +557,49 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
                     if (unloCargaDescargaVO != null) {
                         final String tipoOperacion = getTokenString(EstadisticaFileKeyword.EMM_TipoOperacion, line, i);
-                        final ParametroVO autpUnlo = estaVO.getAutp().getItdtMap().get(TipoDato.UNLOCODE.getId())
+                        final ParametroVO autpUnlo = estd.getSubp().getItdtMap().get(TipoDato.UNLOCODE.getId())
                                 .getPrmt();
 
                         if ("TE".equals(tipoOperacion) || tipoOperacion.startsWith("E")) {
-                            estaVO.getItdtMap().get(TipoDato.UNLOCODE.getId()).setPrmt(autpUnlo);
-                            estaVO.getItdtMap().get(TipoDato.UNLOCODE_2.getId()).setPrmt(unloCargaDescargaVO);
+                            {
+                                final ItemDatoVO itdt = new ItemDatoVO();
+
+                                itdt.setTpdtId(TipoDato.UNLOCODE.getId());
+                                itdt.setPrmt(autpUnlo);
+
+                                estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                            }
+
+                            {
+                                final ItemDatoVO itdt = new ItemDatoVO();
+
+                                itdt.setTpdtId(TipoDato.UNLOCODE_2.getId());
+                                itdt.setPrmt(unloCargaDescargaVO);
+
+                                estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                            }
                         } else {
-                            estaVO.getItdtMap().get(TipoDato.UNLOCODE.getId()).setPrmt(unloCargaDescargaVO);
-                            estaVO.getItdtMap().get(TipoDato.UNLOCODE_2.getId()).setPrmt(autpUnlo);
+                            {
+                                final ItemDatoVO itdt = new ItemDatoVO();
+
+                                itdt.setTpdtId(TipoDato.UNLOCODE.getId());
+                                itdt.setPrmt(unloCargaDescargaVO);
+
+                                estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                            }
+
+                            {
+                                final ItemDatoVO itdt = new ItemDatoVO();
+
+                                itdt.setTpdtId(TipoDato.UNLOCODE_2.getId());
+                                itdt.setPrmt(autpUnlo);
+
+                                estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                            }
                         }
                     }
 
-                    estaList.add(estaVO);
+                    estaList.add(estd);
                 }
             }
         } catch (final IOException ex) {
@@ -449,83 +616,168 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 final String line = lines.get(i);
 
                 if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
-                    final EstadisticaVO estaVO = new EstadisticaVO();
+                    final EstadisticaVO estd = new EstadisticaVO();
 
-                    estaVO.getItdtMap()
-                    .get(TipoDato.UNLOCODE.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EME_UnloCargaDescarga, line, i,
-                                    Entidad.UNLOCODE));
-                    estaVO.getItdtMap()
-                    .get(TipoDato.UNIDAD_CARGA.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EME_UnidadCarga, line, i,
-                                    Entidad.UNIDAD_CARGA));
+                    estd.setEntiId(tpesVO.getId());
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.UNLOCODE.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EME_UnloCargaDescarga, line, i,
+                                Entidad.UNLOCODE));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.UNIDAD_CARGA.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EME_UnidadCarga, line, i,
+                                Entidad.UNIDAD_CARGA));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
 
                     if (isSigma) {
-                        estaVO.getItdtMap()
-                        .get(TipoDato.GRUPO_NST.getId())
-                        .setPrmt(
-                                getTokenMaestro(EstadisticaFileKeyword.EME_GrupoNST, line, i, Entidad.GRUPO_NST));
-                        estaVO.getItdtMap()
-                        .get(TipoDato.MERCANCIA.getId())
-                        .setPrmt(
-                                getTokenMaestroGeneric(EstadisticaFileKeyword.EME_Mercancia, line, i,
-                                        Entidad.MERCANCIA));
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.GRUPO_NST.getId());
+                            itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EME_GrupoNST, line, i,
+                                    Entidad.GRUPO_NST));
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
+
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.MERCANCIA.getId());
+                            itdt.setPrmt(getTokenMaestroGeneric(EstadisticaFileKeyword.EME_Mercancia, line, i,
+                                    Entidad.MERCANCIA));
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
                     } else {
                         final ParametroVO mercanciaVO = getTokenMaestro(EstadisticaFileKeyword.EME_Mercancia, line, i,
                                 Entidad.MERCANCIA);
 
                         if (mercanciaVO != null) {
-                            estaVO.getItdtMap().get(TipoDato.MERCANCIA.getId()).setPrmt(mercanciaVO);
-                            estaVO.getItdtMap().get(TipoDato.GRUPO_NST.getId())
-                            .setPrmt(mercanciaVO.getItdtMap().get(TipoDato.GRUPO_NST.getId()).getPrmt());
+                            {
+                                final ItemDatoVO itdt = new ItemDatoVO();
+
+                                itdt.setTpdtId(TipoDato.MERCANCIA.getId());
+                                itdt.setPrmt(mercanciaVO);
+
+                                estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                            }
+
+                            {
+                                final ItemDatoVO itdt = new ItemDatoVO();
+
+                                itdt.setTpdtId(TipoDato.GRUPO_NST.getId());
+                                itdt.setPrmt(mercanciaVO.getItdtMap().get(TipoDato.GRUPO_NST.getId()).getPrmt());
+
+                                estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                            }
                         }
                     }
 
-                    estaVO.getItdtMap()
-                    .get(TipoDato.REG_TBUQUE_EEE.getId())
-                    .setPrmt(
-                            getTokenMaestro(EstadisticaFileKeyword.EME_RegistroBuqueEEE, line, i,
-                                    Entidad.REGISTRO_TIPO_BUQUE_EEE));
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
 
-                    estaVO.getItdtMap()
-                    .get(TipoDato.DIREC_MERC.getId())
-                    .setCadena(
-                            getDireccionMercanciaNormalizada(getTokenString(
-                                    EstadisticaFileKeyword.EME_DireccionTransporte, line, i)));
+                        itdt.setTpdtId(TipoDato.REG_TBUQUE_EEE.getId());
+                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EME_RegistroBuqueEEE, line, i,
+                                Entidad.REGISTRO_TIPO_BUQUE_EEE));
 
-                    estaVO.getItdtMap().get(TipoDato.DECIMAL_01.getId())
-                    .setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_Toneladas, line, i));
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                    .setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_Pasajeros, line, i));
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_02.getId())
-                    .setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_UCLlenas, line, i));
-                    estaVO.getItdtMap().get(TipoDato.ENTERO_03.getId())
-                    .setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_UCVacias, line, i));
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.DIREC_MERC.getId());
+                        itdt.setCadena(getDireccionMercanciaNormalizada(getTokenString(
+                                EstadisticaFileKeyword.EME_DireccionTransporte, line, i)));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.DECIMAL_01.getId());
+                        itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_Toneladas, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_01.getId());
+                        itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_Pasajeros, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_02.getId());
+                        itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_UCLlenas, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
+
+                    {
+                        final ItemDatoVO itdt = new ItemDatoVO();
+
+                        itdt.setTpdtId(TipoDato.ENTERO_03.getId());
+                        itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_UCVacias, line, i));
+
+                        estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                    }
 
                     if (line.length() > EstadisticaFileKeyword.EME_Roro.getOffset()) {
-                        estaVO.getItdtMap()
-                        .get(TipoDato.BOOLEANO_01.getId())
-                        .setCantidadEntera(
-                                !getTokenString(EstadisticaFileKeyword.EME_Roro, line, i).equals("N") ? 1L : 0L);
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.BOOLEANO_01.getId());
+                            itdt.setCantidadEntera(!getTokenString(EstadisticaFileKeyword.EME_Roro, line, i)
+                                    .equals("N") ? 1L : 0L);
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
                     }
 
                     if (isSigma) {
-                        estaVO.getItdtMap()
-                        .get(TipoDato.ENTERO_04.getId())
-                        .setCantidadDecimal(
-                                getTokenDouble(EstadisticaFileKeyword.EME_PasajerosCrucero, line, i));
-                        estaVO.getItdtMap()
-                        .get(TipoDato.ENTERO_05.getId())
-                        .setCantidadDecimal(
-                                getTokenDouble(EstadisticaFileKeyword.EME_PasajerosInicioFinLinea, line, i));
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.ENTERO_04.getId());
+                            itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_PasajerosCrucero, line, i));
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
+
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.ENTERO_05.getId());
+                            itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_PasajerosInicioFinLinea,
+                                    line, i));
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
                     }
                     // FIXME Acabar
 
-                    estaVO.setAutp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+                    estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
-                    estaList.add(estaVO);
+                    estaList.add(estd);
                 }
             }
         } catch (final IOException ex) {

@@ -1,0 +1,40 @@
+<fieldset>
+    <legend>{{'pepr_grid' | translate | uppercase}}</legend>
+
+    <div ng-if="!showFilter" class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button data-ng-click="filter()" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+            </button>
+        </div>
+    </div>
+
+    <pagination total-items="peprList.count" items-per-page="peprList.limit" ng-model="currentPage"
+        ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+
+    <div class="table-responsive">
+        <span class="label label-default">{{peprList.count}} resultado(s)</span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap">{{'pepr_autp' | translate}}</th>
+                    <th>{{'pepr_anio' | translate}}</th>
+                    <th>{{'pepr_mes' | translate}}</th>
+                    <th>{{'pepr_cdmsGenerado' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in peprList.list">
+                    <td><a href="#/estadistica/pepr/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{item.autp.parametro}}</td>
+                    <td>{{item.anio}}</td>
+                    <td>{{item.mes}}</td>
+                    <td><i ng-if="item.cdmsGenerado" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!item.cdmsGenerado" class="glyphicon glyphicon-remove"></i></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

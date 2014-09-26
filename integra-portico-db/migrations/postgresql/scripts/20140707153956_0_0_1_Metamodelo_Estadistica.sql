@@ -2,6 +2,7 @@
 -- Migration SQL that makes the change goes here.
 
 -- Actividad Pesquera
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23000, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23000, 45095, 1, 1, 1, 4, 1, 1, 1, NULL, 'T. Captura');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -18,7 +19,9 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (23000, 45065, 1, 3, 1, 4, 0, 1, 1, NULL, 'Zona');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23000, 45035, 1, 3, 2, 4, 0, 1, 1, NULL, 'Vendedor');
+
 -- Agregacion de Escala
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23001, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23001, 45000, 1, 1, 1, 4, 1, 1, 1, NULL, 'T. Activ.');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -45,7 +48,9 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (23001, 45245, 1, 4, 1, 4, 0, 1, 1, NULL, 'Acuerdo');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23001, 45035, 1, 4, 2, 4, 0, 1, 1, NULL, 'Consignatario');
+
 -- Agregacion de Superficie
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23002, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23002, 45260, 1, 1, 1, 4, 1, 1, 1, NULL, 'Zona Depósito');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -60,12 +65,16 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (23002, 41000, 1, 2, 3, 2, 0, 1, 1, NULL, 'Ro-Ro');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23002, 41060, 1, 2, 4, 2, 1, 1, 0, NULL, 'Unidades');
+
 -- Avituallamiento
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23003, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23003, 45275, 1, 1, 1, 4, 1, 1, 1, NULL, 'T. Suministro');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23003, 41060, 1, 1, 2, 2, 1, 1, 1, NULL, 'Toneladas');
+
 -- Buque Fondeo atraque
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23004, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23004, 45380, 1, 1, 1, 4, 1, 1, 1, NULL, 'T. Atraque');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -86,7 +95,9 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (23004, 41063, 1, 3, 4, 2, 1, 1, 0, NULL, 'GTs');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23004, 41064, 1, 3, 5, 2, 1, 1, 0, NULL, 'GTs-Días');
+
 -- Movimiento Mercancia
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23005, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23005, 45285, 1, 1, 1, 4, 1, 1, 1, NULL, 'T. Operación BL');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -131,7 +142,9 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (23005, 45305, 1, 7, 3, 4, 0, 1, 1, NULL, 'Terminal');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23005, 41020, 1, 8, 1, 4, 0, 1, 1, NULL, 'T. Equipamiento');
+
 -- Movimiento de Mercancia EEE
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23006, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23006, 45055, 1, 1, 1, 4, 1, 1, 1, NULL, 'Puerto Carga-Descarga');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -158,7 +171,9 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd
 VALUES (23006, 41063, 1, 4, 5, 2, 1, 1, 1, NULL, 'U.C. Llenas');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23006, 41064, 1, 4, 6, 2, 1, 1, 1, NULL, 'U.C. Vacias');
+
 -- Movimiento Tipo Buque EEE
+INSERT INTO portico.tbl_entidad_grupo_dato_engd (engd_enti_pk, engd_orden, engd_etiqueta) VALUES (23007, 1, 'General');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
 VALUES (23007, 45020, 1, 1, 1, 4, 1, 1, 1, NULL, 'T. Buque EEE');
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta)
@@ -190,3 +205,14 @@ DELETE FROM portico.tbl_entidad_tipo_dato_entd WHERE entd_enti_pk IN (
 	, 23007
 );
 
+DELETE FROM portico.tbl_entidad_grupo_dato_engd WHERE engd_enti_pk IN (
+	23000
+	, 23001
+	, 23002
+	, 23003
+	, 23004
+	, 23005
+	, 23006
+	, 23007
+)
+;

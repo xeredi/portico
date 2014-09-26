@@ -338,7 +338,7 @@ public final class ExcelUtil {
             int j = 0;
 
             setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
-            setCellValue(row, j++, estdVO.getAutp().getEtiqueta());
+            setCellValue(row, j++, estdVO.getSubp().getEtiqueta());
 
             for (final Long tpdtId : tpesVO.getEntdList()) {
                 final EntidadTipoDatoVO entdVO = tpesVO.getEntdMap().get(tpdtId);
