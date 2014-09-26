@@ -16,7 +16,9 @@
         </div>
         <div class="col-md-2 form-group">
             <label>{{'vlrd_ssrv' | translate}}</label>
-            <p class="form-control-static">{{vlrd.ssrv.numero}}</p>
+            <p class="form-control-static">
+                <a ng-if="vlrd.ssrv.id" href="#/servicio/ssrv/detail/{{vlrd.ssrv.id}}">{{vlrd.ssrv.numero}}</a>
+            </p>
         </div>
         <div class="col-md-2 form-group">
             <label>{{'vlrd_fini' | translate}}</label>

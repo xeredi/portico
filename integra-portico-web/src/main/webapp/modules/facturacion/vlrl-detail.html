@@ -33,15 +33,17 @@
                 <a href="#/maestro/prmt/detail/{{vlrl.impuesto.id}}/{{vlrl.fref}}">{{vlrl.impuesto.etiqueta}}</a>
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div ng-if="vlrl.ssrv.id" class="col-md-1 form-group">
             <label>{{'vlrl_ssrv' | translate}}</label>
-            <p class="form-control-static">{{vlrl.ssrv.numero}}</p>
+            <p class="form-control-static">
+                <a href="#/servicio/ssrv/detail/{{vlrl.ssrv.id}}">{{vlrl.ssrv.numero}}</a>
+            </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div ng-if="vlrl.fini" class="col-md-1 form-group">
             <label>{{'vlrl_fini' | translate}}</label>
             <p class="form-control-static">{{vlrl.fini | date:('fmt_datetime' | translate)}}</p>
         </div>
-        <div class="col-md-1 form-group">
+        <div ng-if="vlrl.ffin" class="col-md-1 form-group">
             <label>{{'vlrl_ffin' | translate}}</label>
             <p class="form-control-static">{{vlrl.ffin | date:('fmt_datetime' | translate)}}</p>
         </div>
@@ -114,9 +116,9 @@
                         <th>{{'vlrd_valorBase' | translate}}</th>
                         <th>{{'vlrd_importeBase' | translate}}</th>
                         <th>{{'vlrd_importe' | translate}}</th>
+                        <th>{{'vlrd_ssrv' | translate}}</th>
                         <th>{{'vlrd_fini' | translate}}</th>
                         <th>{{'vlrd_ffin' | translate}}</th>
-                        <th>{{'vlrd_ssrv' | translate}}</th>
                         <th ng-if="vlrl.rgla.rglv.pathInfo1">Info 1: {{vlrl.rgla.rglv.etiqInfo1}}</th>
                         <th ng-if="vlrl.rgla.rglv.pathInfo2">Info 2: {{vlrl.rgla.rglv.etiqInfo2}}</th>
                         <th ng-if="vlrl.rgla.rglv.pathInfo3">Info 3: {{vlrl.rgla.rglv.etiqInfo3}}</th>
@@ -139,9 +141,9 @@
                         <td class="number">{{vlrd.valorBase | number:4}}</td>
                         <td class="number">{{vlrd.importeBase | number:2}}</td>
                         <td class="number">{{vlrd.importe | number:2}}</td>
+                        <td>{{vlrd.ssrv.numero}}</td>
                         <td>{{vlrd.fini | date:('fmt_datetime' | translate)}}</td>
                         <td>{{vlrd.ffin | date:('fmt_datetime' | translate)}}</td>
-                        <td>{{vlrd.ssrv.numero}}</td>
                         <td ng-if="vlrl.rgla.rglv.pathInfo1">{{vlrd.info1}}</td>
                         <td ng-if="vlrl.rgla.rglv.pathInfo2">{{vlrd.info2}}</td>
                         <td ng-if="vlrl.rgla.rglv.pathInfo3">{{vlrd.info3}}</td>
