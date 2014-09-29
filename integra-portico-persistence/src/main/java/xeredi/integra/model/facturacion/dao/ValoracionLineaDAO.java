@@ -22,6 +22,15 @@ public interface ValoracionLineaDAO {
     void insert(final ValoracionLineaVO vlrlVO);
 
     /**
+     * Update.
+     *
+     * @param vlrlVO
+     *            the vlrl vo
+     * @return the int
+     */
+    int update(final ValoracionLineaVO vlrlVO);
+
+    /**
      * Delete.
      *
      * @param vlrlCriterioVO

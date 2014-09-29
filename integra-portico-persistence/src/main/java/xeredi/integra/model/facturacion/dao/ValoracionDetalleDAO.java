@@ -22,6 +22,24 @@ public interface ValoracionDetalleDAO {
     void insert(final ValoracionDetalleVO vlrdVO);
 
     /**
+     * Update.
+     *
+     * @param vlrdVO
+     *            the vlrd vo
+     * @return the int
+     */
+    int update(final ValoracionDetalleVO vlrdVO);
+
+    /**
+     * Delete.
+     *
+     * @param vlrdVO
+     *            the vlrd vo
+     * @return the int
+     */
+    int delete(final ValoracionDetalleVO vlrdVO);
+
+    /**
      * Delete.
      *
      * @param vlrdCriterioVO

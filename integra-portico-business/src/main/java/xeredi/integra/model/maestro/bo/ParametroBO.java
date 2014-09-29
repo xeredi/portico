@@ -382,7 +382,7 @@ public class ParametroBO {
         }
 
         // Validar que los datos del parametro son correctos
-        if (!tpprVO.getEntdList().isEmpty()) {
+        if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final Long tpdtId : tpprVO.getEntdList()) {
                 if (!prmt.getItdtMap().containsKey(tpdtId.toString())) {
                     throw new Error("No se ha pasado informacion del dato "

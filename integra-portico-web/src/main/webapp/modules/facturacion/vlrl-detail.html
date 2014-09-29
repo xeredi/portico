@@ -3,12 +3,23 @@
 <fieldset>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ui-sref="vlrls.edicion({vlrlId:vlrl.id})"><i class="glyphicon glyphicon-edit"></i>
-                {{'boton_editar' | translate}}</a>
+            <button data-ng-click="edit()" class="btn btn-default">
+                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            </button>
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            </button>
         </div>
     </div>
 
     <div class="row">
+        <div class="col-md-2 form-group">
+            <label>{{'rgla_enti' | translate}}</label>
+            <p class="form-control-static">
+                <a ng-if="vlrl.rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{vlrl.rgla.rglv.enti.id}}">{{vlrl.rgla.rglv.enti.nombre}}</a>
+                <a ng-if="vlrl.rgla.rglv.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{vlrl.rgla.rglv.enti.id}}">{{vlrl.rgla.rglv.enti.nombre}}</a>
+            </p>
+        </div>
         <div class="col-md-1 form-group">
             <label>{{'vlrl_rgla' | translate}}</label>
             <p class="form-control-static">
@@ -17,7 +28,7 @@
         </div>
         <div class="col-md-1 form-group">
             <label>{{'vlrl_rgla_tipo' | translate}}</label>
-            <p class="form-control-static">{{vlrl.rgla.tipo}}</p>
+            <p class="form-control-static">{{vlrl.rgla.rglv.tipo}}</p>
         </div>
         <div class="col-md-1 form-group">
             <label>{{'vlrl_importeBase' | translate}}</label>

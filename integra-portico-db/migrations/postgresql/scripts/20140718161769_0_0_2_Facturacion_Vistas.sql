@@ -149,6 +149,8 @@ CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 				WHERE vlrc_pk = vlrl_vlrc_pk
 					AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
 			)
+		INNER JOIN portico.tbl_entidad_enti ON
+			enti_pk = rglv_enti_pk
 		LEFT JOIN portico.tbl_subservicio_ssrv ON
 			ssrv_pk = vlrl_ssrv_pk
 ;

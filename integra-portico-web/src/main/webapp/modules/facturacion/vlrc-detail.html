@@ -131,7 +131,7 @@
         <div class="col-md-12 form-group">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
-                    <a class="btn btn-default" ui-sref="vlrls.alta({vlrcId:vlrc.id})"><i
+                    <a class="btn btn-default" href="#/facturacion/vlrl/create/{{vlrc.id}}"><i
                         class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                         <td><a href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td>{{vlrl.rgla.codigo}}</td>
-                        <td>{{vlrl.rgla.tipo}}</td>
+                        <td>{{vlrl.rgla.rglv.tipo}}</td>
                         <td class="number">{{vlrl.importeBase | number:2}}</td>
                         <td class="number">{{vlrl.importe | number:2}}</td>
                         <td>{{vlrl.impuesto.etiqueta}}</td>

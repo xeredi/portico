@@ -9,6 +9,7 @@ module.controller("datepickerController", function($scope) {
     };
 
     $scope.dateOptions = {
-        startingDay : 1
+        startingDay : 1,
+        showWeeks : false
     };
 });

@@ -46,6 +46,12 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "vlrcEditController"
     })
 
+    .when("/facturacion/vlrl/create/:vlrcId", {
+        title : 'vlrl_create',
+        templateUrl : "modules/facturacion/vlrl-edit.html",
+        controller : "vlrlCreateController"
+    })
+
     .when("/facturacion/vlrl/detail/:vlrlId", {
         title : 'vlrl_detail',
         templateUrl : "modules/facturacion/vlrl-detail.html",
@@ -87,9 +93,16 @@ module.controller("vlrcFilterController", function($scope, $http, $location) {
 });
 
 module.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
-    // console.log(JSON.stringify($routeParams.vlrcCriterio));
+    console.log(JSON.stringify($routeParams));
 
-    $scope.vlrcCriterio = $routeParams.vlrcCriterio;
+    $scope.vlrcCriterio = {};
+
+    if ($routeParams.srvcId) {
+        $scope.vlrcCriterio.srvcId = $routeParams.srvcId;
+    }
+
+    console.log(JSON.stringify($scope.vlrcCriterio));
+
     $scope.page = $routeParams.page;
 
     var url = "facturacion/vlrc-list.action";
@@ -101,6 +114,34 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
     }).success(function(data) {
         $scope.vlrcList = data.vlrcList;
     });
+});
+
+module.controller("vlrlCreateController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/vlrl-create.action?vlrl.vlrcId=" + $routeParams.vlrcId;
+
+    $http.get(url).success(function(data) {
+        $scope.vlrl = data.vlrl;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "facturacion/vlrl-save.action";
+
+        $http.post(url, {
+            vlrl : $scope.vlrl,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
 });
 
 module.controller("vlrcDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -131,6 +172,52 @@ module.controller("vlrlDetailController", function($scope, $http, $location, $ro
     $http.get(urlVlrdList).success(function(data) {
         $scope.vlrdList = data.vlrdList;
     });
+
+    $scope.edit = function() {
+        $location.path("/facturacion/vlrl/edit/" + $scope.vlrl.id).replace();
+    }
+
+    $scope.remove = function() {
+        if (confirm("Are you sure?")) {
+            var url = "facturacion/vlrl-remove.action?vlrl.id=" + $scope.vlrl.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+        }
+    }
+});
+
+module.controller("vlrlEditController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "facturacion/vlrl-edit.action?vlrl.id=" + $routeParams.vlrlId;
+
+    $http.get(url).success(function(data) {
+        $scope.vlrl = data.vlrl;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "facturacion/vlrl-save.action";
+
+        $http.post(url, {
+            vlrl : $scope.vlrl,
+            accion : $scope.accion
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        $location.path("/facturacion/vlrl/detail/" + $scope.vlrl.id).replace();
+    }
 });
 
 module.controller("vlrdDetailController", function($scope, $http, $location, $route, $routeParams) {

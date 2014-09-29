@@ -1,20 +1,6 @@
 body {
-	background-color: white;
+/*	background-color: #e8dd9b;*/
 	font-family: Verdana, sans-serif;
-}
-
-.number {
-	text-align: right;
-}
-
-#body-content {
-	margin-top: 60px;
-	margin-left: 10px;
-	margin-right: 20px;
-}
-
-.navbar-right {
-	padding-right: 30px;
 }
 
 label, legend, li, .btn, .form-control, .input-group-sm>.form-control, .form-control-static,
@@ -39,8 +25,30 @@ legend {
 	font-weight: normal;
 }
 
+.number {
+	text-align: right;
+}
+
+#body-content {
+	margin-top: 60px;
+	margin-left: 10px;
+	margin-right: 20px;
+}
+
+.navbar-right {
+	padding-right: 30px;
+}
+
 .form-control, .input-group-sm>.form-control {
 	padding: 5px;
+}
+
+.input-group-addon {
+	padding: 0px;
+}
+
+.dropdown-menu {
+	padding: 0px;
 }
 
 fieldset {

@@ -35,6 +35,7 @@ import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -317,56 +318,54 @@ public class ValoracionBO {
     }
 
     /**
-     * Delete vlrl.
+     * Select vlrl list.
      *
-     * @param vlrlId
-     *            the vlrl id
+     * @param vlrlCriterioVO
+     *            the vlrl criterio vo
+     * @return the list
      */
-    public void deleteVlrl(final Long vlrlId) {
-        Preconditions.checkNotNull(vlrlId);
+    public List<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO) {
+        Preconditions.checkNotNull(vlrlCriterioVO);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
 
         try {
-            if (vlrlDAO.existsDependencia(vlrlId)) {
-                throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
+            return vlrlDAO.selectList(vlrlCriterioVO);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Select vlrl list.
+     *
+     * @param vlrlCriterioVO
+     *            the vlrl criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
+     */
+    public PaginatedList<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO,
+            final int offset, final int limit) {
+        Preconditions.checkNotNull(vlrlCriterioVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+
+        try {
+            final int count = vlrlDAO.count(vlrlCriterioVO);
+            final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
+
+            if (count >= offset) {
+                vlrlList.addAll(vlrlDAO.selectList(vlrlCriterioVO, new RowBounds(offset, limit)));
             }
 
-            final ValoracionLineaVO vlrl = vlrlDAO.select(vlrlId);
-
-            if (vlrl != null) {
-                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-                final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
-                final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
-
-                vlrcCriterioVO.setId(vlrl.getVlrcId());
-
-                vlrlCriterioVO.setId(vlrlId);
-                vlrlCriterioVO.setVlrc(vlrcCriterioVO);
-
-                vlrdCriterioVO.setVlrl(vlrlCriterioVO);
-
-                vlrdDAO.delete(vlrdCriterioVO);
-                vlrlDAO.delete(vlrlCriterioVO);
-
-                // Recalcular cargos e importes de IVA
-                vlrgDAO.delete(vlrcCriterioVO);
-                vlrgDAO.insertGenerate(vlrcCriterioVO);
-                vlriDAO.delete(vlrcCriterioVO);
-
-                final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
-
-                for (final ValoracionImpuestoVO vlri : vlriList) {
-                    vlriDAO.insert(vlri);
-                }
-            }
-
-            session.commit();
+            return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
         } finally {
             session.close();
         }
@@ -483,6 +482,8 @@ public class ValoracionBO {
             vlrlDAO.insert(vlrl);
             vlrdDAO.insert(vlrd);
 
+            recalcularVlrc(session, vlrl.getVlrcId());
+
             session.commit();
         } finally {
             session.close();
@@ -490,54 +491,76 @@ public class ValoracionBO {
     }
 
     /**
-     * Select vlrl list.
+     * Update vlrl.
      *
-     * @param vlrlCriterioVO
-     *            the vlrl criterio vo
-     * @return the list
+     * @param vlrl
+     *            the vlrl
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public List<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO) {
-        Preconditions.checkNotNull(vlrlCriterioVO);
+    public void updateVlrl(final ValoracionLineaVO vlrl) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrl);
+        Preconditions.checkNotNull(vlrl.getId());
+        Preconditions.checkNotNull(vlrl.getVlrcId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
         try {
-            return vlrlDAO.selectList(vlrlCriterioVO);
+            final int updated = vlrlDAO.update(vlrl);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ValoracionLineaVO.class.getName(), vlrl.getId());
+            }
+
+            session.commit();
         } finally {
             session.close();
         }
     }
 
     /**
-     * Select vlrl list.
+     * Delete vlrl.
      *
-     * @param vlrlCriterioVO
-     *            the vlrl criterio vo
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
+     * @param vlrlId
+     *            the vlrl id
      */
-    public PaginatedList<ValoracionLineaVO> selectVlrlList(final ValoracionLineaCriterioVO vlrlCriterioVO,
-            final int offset, final int limit) {
-        Preconditions.checkNotNull(vlrlCriterioVO);
+    public void deleteVlrl(final Long vlrlId) {
+        Preconditions.checkNotNull(vlrlId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
         try {
-            final int count = vlrlDAO.count(vlrlCriterioVO);
-            final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
-
-            if (count >= offset) {
-                vlrlList.addAll(vlrlDAO.selectList(vlrlCriterioVO, new RowBounds(offset, limit)));
+            if (vlrlDAO.existsDependencia(vlrlId)) {
+                throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
             }
 
-            return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
+            final ValoracionLineaVO vlrl = vlrlDAO.select(vlrlId);
+
+            if (vlrl != null) {
+                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+                final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+                final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
+
+                vlrcCriterioVO.setId(vlrl.getVlrcId());
+
+                vlrlCriterioVO.setId(vlrlId);
+                vlrlCriterioVO.setVlrc(vlrcCriterioVO);
+
+                vlrdCriterioVO.setVlrl(vlrlCriterioVO);
+
+                vlrdDAO.delete(vlrdCriterioVO);
+                vlrlDAO.delete(vlrlCriterioVO);
+
+                // Recalcular cargos e importes de IVA
+                recalcularVlrc(session, vlrl.getVlrcId());
+            }
+
+            session.commit();
         } finally {
             session.close();
         }
@@ -594,6 +617,157 @@ public class ValoracionBO {
             return new PaginatedList<ValoracionDetalleVO>(vlrdList, offset, limit, count);
         } finally {
             session.close();
+        }
+    }
+
+    /**
+     * Insert vlrd.
+     *
+     * @param vlrd
+     *            the vlrd
+     */
+    public void insertVlrd(final ValoracionDetalleVO vlrd) {
+        Preconditions.checkNotNull(vlrd);
+        Preconditions.checkNotNull(vlrd.getVlrlId());
+        Preconditions.checkNotNull(vlrd.getVlrcId());
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+
+        try {
+            final ValoracionLineaVO vlrl = vlrlDAO.select(vlrd.getVlrlId());
+
+            if (vlrl == null) {
+                throw new Error("Linea asociada no encontrada: " + vlrd.getVlrlId());
+            }
+
+            if (!vlrl.getVlrcId().equals(vlrd.getVlrcId())) {
+                throw new Error("Valoracion mismatch: " + vlrd.getVlrcId() + ", " + vlrl.getVlrcId());
+            }
+
+            final IgBO igBO = new IgBO();
+
+            vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+
+            vlrdDAO.insert(vlrd);
+
+            recalcularVlrc(session, vlrd.getVlrcId());
+
+            session.commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Update vlrd.
+     *
+     * @param vlrd
+     *            the vlrd
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void updateVlrd(final ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrd);
+        Preconditions.checkNotNull(vlrd.getId());
+        Preconditions.checkNotNull(vlrd.getVlrlId());
+        Preconditions.checkNotNull(vlrd.getVlrcId());
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+
+        try {
+            final int updated = vlrdDAO.update(vlrd);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ValoracionDetalleVO.class.getName(), vlrd.getId());
+            }
+
+            recalcularVlrc(session, vlrd.getVlrcId());
+
+            session.commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Delete vlrd.
+     *
+     * @param vlrd
+     *            the vlrd
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public void deleteVlrd(final ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(vlrd);
+        Preconditions.checkNotNull(vlrd.getId());
+        Preconditions.checkNotNull(vlrd.getVlrlId());
+        Preconditions.checkNotNull(vlrd.getVlrcId());
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+
+        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+
+        try {
+            final int updated = vlrdDAO.delete(vlrd);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(ValoracionDetalleVO.class.getName(), vlrd.getId());
+            }
+
+            final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();
+            final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
+
+            vlrlCriterioVO.setId(vlrd.getVlrlId());
+            vlrdCriterioVO.setVlrl(vlrlCriterioVO);
+
+            final int count = vlrdDAO.count(vlrdCriterioVO);
+
+            if (count == 0) {
+                vlrlDAO.delete(vlrlCriterioVO);
+            }
+
+            recalcularVlrc(session, vlrd.getVlrcId());
+
+            session.commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Recalcular.
+     *
+     * @param session
+     *            the session
+     * @param vlrcId
+     *            the vlrc id
+     */
+    private void recalcularVlrc(final SqlSession session, final Long vlrcId) {
+        Preconditions.checkNotNull(vlrcId);
+
+        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+
+        // Recalcular cargos e importes de IVA
+
+        final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+
+        vlrcCriterioVO.setId(vlrcId);
+
+        vlrgDAO.delete(vlrcCriterioVO);
+        vlrgDAO.insertGenerate(vlrcCriterioVO);
+        vlriDAO.delete(vlrcCriterioVO);
+
+        final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
+
+        for (final ValoracionImpuestoVO vlri : vlriList) {
+            vlriDAO.insert(vlri);
         }
     }
 

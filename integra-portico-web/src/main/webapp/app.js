@@ -78,6 +78,8 @@ app.config(function($translateProvider) {
         boton_volver : "Volver",
         boton_filtro : "Filtro",
         boton_imprimir : "Imprimir",
+        boton_valorar : "Valorar",
+        boton_valoraciones : "Valoraciones",
 
         menu_tpsrs : "Servicios",
         menu_peprs : "Estad\u00edsticas",
@@ -214,6 +216,7 @@ app.config(function($translateProvider) {
         vlrc_vlri_importe_impuesto : "Importe IVA",
 
         vlrl_detail : "L\u00ednea de Valoraci\u00f3n - Detalle",
+        vlrl_create : "L\u00ednea de Valoraci\u00f3n - Alta",
         vlrl_edit : "L\u00ednea de Valoraci\u00f3n - Edici\u00f3n",
 
         vlrl : "Linea de Valoraci\u00f3n",
@@ -228,6 +231,7 @@ app.config(function($translateProvider) {
         vlrl_ssrv : "Subservicio",
 
         vlrd_detail : "Detalle de Valoraci\u00f3n - Detalle",
+        vlrd_create : "Detalle de Valoraci\u00f3n - Alta",
         vlrd_edit : "Detalle de Valoraci\u00f3n - Edici\u00f3n",
 
         vlrd : "Detalle de Valoraci\u00f3n",

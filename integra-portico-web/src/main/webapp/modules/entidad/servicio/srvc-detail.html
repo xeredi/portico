@@ -18,6 +18,11 @@
             </button>
         </div>
         <div class="btn-group">
+            <a class="btn btn-default" href="#/facturacion/vlrc/valorar/{{item.id}}"> {{'boton_valorar' |
+                translate}}</a> <a class="btn btn-default" href="#/facturacion/vlrc/grid/?srvcId={{item.id}}">
+                {{'boton_valoraciones' | translate}}</a>
+        </div>
+        <div ng-if="enti.facturable" class="btn-group">
             <button ng-repeat="enac in enti.enacList" ng-click="srvcAction(enac.path)" class="btn btn-default">
                 {{enac.etiqueta}}</button>
         </div>
