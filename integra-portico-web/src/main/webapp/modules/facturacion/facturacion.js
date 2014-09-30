@@ -23,15 +23,11 @@ module.controller("facturacionController", function($scope, $http, $location) {
 module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
-    .when("/facturacion/vlrc", {
-        templateUrl : "modules/facturacion/vlrc-filter.html",
-        controller : "vlrcFilterController"
-    })
-
     .when("/facturacion/vlrc/grid", {
         title : 'vlrc_grid',
         templateUrl : "modules/facturacion/vlrc-grid.html",
-        controller : "vlrcGridController"
+        controller : "vlrcGridController",
+        reloadOnSearch : false
     })
 
     .when("/facturacion/vlrc/detail/:vlrcId", {
@@ -77,43 +73,52 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("vlrcFilterController", function($scope, $http, $location) {
-    $scope.submit = function() {
-        // console.log(JSON.stringify($scope.vlrcCriterio));
+module.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
+    $scope.vlrcCriterio = $routeParams.vlrcCriterio;
 
-        $location.path("/facturacion/vlrc/grid").search({
-            vlrcCriterio : $scope.vlrcCriterio,
-            page : $scope.page
+    $scope.search = function() {
+        console.log("search: " + JSON.stringify($scope.vlrcCriterio));
+
+        search($scope.vlrcCriterio, 1);
+    }
+
+    $scope.pageChanged = function() {
+        search($scope.itemCriterio, $scope.page, $scope.limit);
+    }
+
+    function search(vlrcCriterio, page) {
+        var url = "facturacion/vlrc-list.action";
+
+        $http.post(url, {
+            vlrcCriterio : vlrcCriterio,
+            page : page
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.vlrcList = data.vlrcList;
+                $scope.page = data.vlrcList.page;
+
+                var map = {};
+
+                if (data.vlrcCriterio.pagador) {
+                    map["vlrcCriterio.pagador.id"] = data.vlrcCriterio.pagador.id;
+                }
+                if (data.vlrcCriterio.aspcId) {
+                    map["vlrcCriterio.aspcId"] = data.vlrcCriterio.aspcId;
+                }
+                if (data.vlrcCriterio.srvcId) {
+                    map["vlrcCriterio.srvcId"] = data.vlrcCriterio.srvcId;
+                }
+
+                map["page"] = data.vlrcList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
         });
     }
 
-    $scope.page = 1;
-    $scope.limit = 20;
-    $scope.vlrcCriterio = {};
-});
-
-module.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
-    console.log(JSON.stringify($routeParams));
-
-    $scope.vlrcCriterio = {};
-
-    if ($routeParams.srvcId) {
-        $scope.vlrcCriterio.srvcId = $routeParams.srvcId;
-    }
-
-    console.log(JSON.stringify($scope.vlrcCriterio));
-
-    $scope.page = $routeParams.page;
-
-    var url = "facturacion/vlrc-list.action";
-
-    $http.post(url, {
-        vlrcCriterio : $routeParams.vlrcCriterio,
-        limit : $scope.limit,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.vlrcList = data.vlrcList;
-    });
+    search($scope.vlrcCriterio, $routeParams.page ? $routeParams.page : 1);
 });
 
 module.controller("vlrlCreateController", function($scope, $http, $location, $route, $routeParams) {

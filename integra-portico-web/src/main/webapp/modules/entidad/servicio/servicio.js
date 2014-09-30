@@ -33,7 +33,8 @@ module.config([ "$routeProvider", function($routeProvider) {
     .when("/servicio/srvc/grid/:entiId", {
         title : 'srvc_grid',
         templateUrl : "modules/entidad/servicio/srvc-grid.html",
-        controller : "srvcGridController"
+        controller : "srvcGridController",
+        reloadOnSearch : false
     })
 
     .when("/servicio/srvc/create/:entiId", {
@@ -62,35 +63,36 @@ module.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 module.controller("srvcGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
     $scope.itemCriterio = {};
     $scope.itemCriterio.entiId = $routeParams.entiId;
 
-    var url = "servicio/srvc-list.action";
+    function search(itemCriterio, page, limit) {
+        var url = "servicio/srvc-list.action";
 
-    $http.post(url, {
-        itemCriterio : $scope.itemCriterio,
-        limit : $scope.limit,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.itemList = data.itemList;
-        $scope.enti = data.enti;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.itemList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            itemCriterio : itemCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.itemList.page;
+                $scope.itemList = data.itemList;
+                $scope.enti = data.enti;
+
+                var map = {};
+
+                map["page"] = data.itemList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.itemCriterio, $scope.page, $scope.limit);
     }
 
     $scope.filter = function() {
@@ -98,12 +100,14 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
     }
 
     $scope.search = function() {
-        $location.path("/servicio/srvc/grid/" + $scope.itemCriterio.entiId).replace();
+        search($scope.itemCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("srvcDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -120,7 +124,7 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
 
         $scope.currentSubpage = {};
 
-        for (var key in $scope.itemHijosMap) {
+        for ( var key in $scope.itemHijosMap) {
             $scope.currentSubpage[key] = $scope.itemHijosMap[key].page;
         }
     });
@@ -326,7 +330,8 @@ module.config([ "$routeProvider", function($routeProvider) {
     .when("/servicio/ssrv/grid/:entiId", {
         title : 'ssrv_grid',
         templateUrl : "modules/entidad/servicio/ssrv-grid.html",
-        controller : "ssrvGridController"
+        controller : "ssrvGridController",
+        reloadOnSearch : false
     })
 
     .when("/servicio/ssrv/create/:entiId/:srvcId", {
@@ -361,35 +366,36 @@ module.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 module.controller("ssrvGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
     $scope.itemCriterio = {};
     $scope.itemCriterio.entiId = $routeParams.entiId;
 
-    var url = "servicio/ssrv-list.action";
+    function search(itemCriterio, page, limit) {
+        var url = "servicio/ssrv-list.action";
 
-    $http.post(url, {
-        itemCriterio : $scope.itemCriterio,
-        limit : $scope.limit,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.itemList = data.itemList;
-        $scope.enti = data.enti;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.itemList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            itemCriterio : itemCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.itemList.page;
+                $scope.itemList = data.itemList;
+                $scope.enti = data.enti;
+
+                var map = {};
+
+                map["page"] = data.itemList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.itemCriterio, $scope.page, $scope.limit);
     }
 
     $scope.filter = function() {
@@ -397,12 +403,14 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
     }
 
     $scope.search = function() {
-        $location.path("/servicio/ssrv/grid/" + $scope.itemCriterio.entiId).replace();
+        search($scope.itemCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("ssrvDetailController", function($scope, $http, $location, $route, $routeParams) {

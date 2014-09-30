@@ -20,7 +20,9 @@
             </div>
             <div class="col-md-2 form-group">
                 <label> {{"entd_tpdt_nombre" | translate}} </label>
-                <p class="form-control-static">{{entd.tpdt.nombre}}</p>
+                <p class="form-control-static">
+                    <a href="#/metamodelo/tpdt/detail/{{entd.tpdt.id}}">{{entd.tpdt.nombre}}</a>
+                </p>
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_tpdt_tipoElemento" | translate}} </label>
