@@ -88,7 +88,7 @@ public final class ServicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "srvc-detail")
+    @Action("srvc-detail")
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -96,7 +96,6 @@ public final class ServicioAction extends ItemAction {
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
 
-        accion = ACCION_EDICION.edit;
         item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
         entiHijasList = new ArrayList<>();
@@ -125,7 +124,7 @@ public final class ServicioAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "srvc-create")
+    @Action("srvc-create")
     public String alta() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
@@ -177,7 +176,7 @@ public final class ServicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "srvc-duplicate")
+    @Action("srvc-duplicate")
     public String duplicar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -200,7 +199,7 @@ public final class ServicioAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "srvc-save")
+    @Action("srvc-save")
     public String guardar() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
@@ -281,7 +280,7 @@ public final class ServicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "srvc-remove")
+    @Action("srvc-remove")
     public String borrar() throws InstanceNotFoundException {
         enti = TipoServicioProxy.select(item.getEntiId());
 

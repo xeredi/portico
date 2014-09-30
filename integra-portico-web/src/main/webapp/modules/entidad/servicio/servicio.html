@@ -1,9 +1,11 @@
-<ul class="media-list">
-    <li ng-repeat="tpsr in tpsrList" class="media"><a class="col-md-3 pull-left"
-        href="#/servicio/srvc/grid/{{tpsr.value}}"><strong>{{tpsr.label | uppercase}}</strong></a>
-        <div class="media-body">
-            <div class="col-md-4" ng-repeat="tpss in tpssMap[tpsr.value]" class="list-group-item">
-                <a href="#/servicio/ssrv/grid/{{tpss.value}}">{{tpss.label | uppercase}}</a>
-            </div>
-        </div></li>
-</ul>
+<div>
+    <div class="row" ng-repeat="tpsr in tpsrList">
+        <div class="col-md-3">
+            <a href="#/servicio/srvc/grid/{{tpsr.value}}" class="list-group-item">{{tpsr.label | uppercase}}</a>
+        </div>
+        <div class="list-group col-md-9">
+            <a href="#/servicio/ssrv/grid/{{tpss.value}}" class="col-md-4 list-group-item"
+                ng-repeat="tpss in tpssMap[tpsr.value]" class="list-group-item">{{tpss.label | uppercase}}</a>
+        </div>
+    </div>
+</div>
