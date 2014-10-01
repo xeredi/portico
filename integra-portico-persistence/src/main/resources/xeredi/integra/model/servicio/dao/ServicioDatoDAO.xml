@@ -116,8 +116,8 @@
                 <if test="entiId != null">
                     AND srvc_tpsr_pk = #{entiId}
                 </if>
-                <if test="subpId != null">
-                    AND srvc_subp_pk = #{subpId}
+                <if test="subp != null and subp.id != null">
+                    AND srvc_subp_pk = #{subp.id}
                 </if>
                 <if test="anno != null and !anno.empty">
                     AND srvc_anno = #{anno}
@@ -131,18 +131,18 @@
                 <if test="itdtMap != null and !itdtMap.empty">
                     <foreach collection="itdtMap" item="itdt">
                         <if
-                            test="itdt.prmtId != null or itdt.srvcId != null or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
+                            test="(itdt.prmt != null and itdt.prmt.id != null) or (itdt.srvc != null and itdt.srvc.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
                         <![CDATA[
                             AND EXISTS (
                                 SELECT 1 FROM tbl_servicio_dato_srdt
                                 WHERE srdt_srvc_pk = srvc_pk
                                     AND srdt_tpdt_pk = #{itdt.tpdtId}
                         ]]>
-                            <if test="itdt.prmtId != null">
-                                AND srdt_prmt_pk = #{itdt.prmtId}
+                            <if test="itdt.prmt != null and itdt.prmt.id != null">
+                                AND srdt_prmt_pk = #{itdt.prmt.id}
                             </if>
-                            <if test="itdt.srvcId != null">
-                                AND srdt_srvc_dep_pk = #{itdt.srvcId}
+                            <if test="itdt.srvc != null and itdt.srvc.id != null">
+                                AND srdt_srvc_dep_pk = #{itdt.srvc.id}
                             </if>
                             <if test="itdt.cantidadEntera != null">
                                 AND srdt_nentero = #{itdt.cantidadEntera}

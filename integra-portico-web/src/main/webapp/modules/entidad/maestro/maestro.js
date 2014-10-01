@@ -106,6 +106,16 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
     }
 
     $scope.filter = function() {
+        var url = "maestro/prmt-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.labelValuesMap = data.labelValuesMap;
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+
         $scope.showFilter = true;
     }
 

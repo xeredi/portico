@@ -3,6 +3,7 @@ package xeredi.integra.model.servicio.vo;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -11,7 +12,7 @@ import xeredi.integra.model.comun.vo.ItemCriterioVO;
 public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /** The subp id. */
-    private Long subpId;
+    private ParametroVO subp;
 
     /** The anno. */
     private String anno;
@@ -31,22 +32,22 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
     }
 
     /**
-     * Gets the subp id.
+     * Gets the subp.
      *
-     * @return the subp id
+     * @return the subp
      */
-    public Long getSubpId() {
-        return subpId;
+    public ParametroVO getSubp() {
+        return subp;
     }
 
     /**
-     * Sets the subp id.
+     * Sets the subp.
      *
      * @param value
-     *            the new subp id
+     *            the new subp
      */
-    public void setSubpId(final Long value) {
-        subpId = value;
+    public void setSubp(final ParametroVO value) {
+        subp = value;
     }
 
     /**

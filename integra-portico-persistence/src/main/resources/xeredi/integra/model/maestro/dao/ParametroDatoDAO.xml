@@ -94,7 +94,7 @@
             <foreach collection="itdtMap" index="key" item="itdt">
                 <!-- FIXME ojo, faltan las fechas -->
                 <if
-                    test="itdt.prmt != null or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
+                    test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
                     <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -104,7 +104,7 @@
                                 AND prdt_tpdt_pk = #{itdt.tpdtId}
                     ]]>
 
-                    <if test="itdt.prmt != null">
+                    <if test="itdt.prmt != null and itdt.prmt.id != null">
                         AND prdt_prmt_pk = #{itdt.prmt.id}
                     </if>
                     <if test="itdt.cantidadEntera != null">

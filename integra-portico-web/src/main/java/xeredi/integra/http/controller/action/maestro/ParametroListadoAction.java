@@ -39,18 +39,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
     private TipoParametroVO enti;
 
     /**
-     * Instantiates a new parametro listado action.
-     */
-    public ParametroListadoAction() {
-        super();
-
-        itemCriterio = new ParametroCriterioVO();
-
-        itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        itemCriterio.setIdioma(getIdioma());
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -69,7 +57,11 @@ public final class ParametroListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
+        itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
 

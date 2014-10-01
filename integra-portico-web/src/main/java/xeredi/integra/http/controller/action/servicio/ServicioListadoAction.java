@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -59,12 +60,16 @@ public final class ServicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Action("srvc-filer")
+    @Action("srvc-filter")
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         itemCriterio.setIdioma(getIdioma());
+
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         loadLabelValuesMap();
 
@@ -80,6 +85,10 @@ public final class ServicioListadoAction extends ItemListadoAction {
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         enti = TipoServicioProxy.select(itemCriterio.getEntiId());
 

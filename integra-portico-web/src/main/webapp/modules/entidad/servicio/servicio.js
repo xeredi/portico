@@ -78,6 +78,7 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
             if (data.actionErrors.length == 0) {
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
+                $scope.itemCriterio = data.itemCriterio;
                 $scope.enti = data.enti;
 
                 var map = {};
@@ -85,6 +86,8 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
                 map["page"] = data.itemList.page;
 
                 $location.search(map).replace();
+
+                $scope.showFilter = false;
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -96,6 +99,17 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
     }
 
     $scope.filter = function() {
+        var url = "servicio/srvc-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.labelValuesMap = data.labelValuesMap;
+                $scope.subpList = data.subpList;
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+
         $scope.showFilter = true;
     }
 

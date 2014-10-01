@@ -1,83 +1,98 @@
-<fieldset ng-if="showFilter">
-    <div class="row">
-        <!--
-        <div class="col-md-1 form-group">
-            <label>{{"srvc_etiqueta" | translate}}</label> <input type="text" ng-model="itemCriterio.parametro"
-                class="form-control input-sm" />
-        </div>
-        <div class="col-md-1 form-group">
-            <label>{{'prmt_fechaVigencia' | translate}}</label>
-            <p class="input-group" ng-controller="datepickerController">
-                <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                    datepicker-options="dateOptions" is-open="opened" ng-model="itemCriterio.fechaVigencia"
-                    ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
-                    class="glyphicon glyphicon-calendar"></i></span>
-            </p>
-        </div>
- -->
-    </div>
-
-    <div class="btn-group">
-        <button data-ng-click="search()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
-        </button>
-        <button data-ng-click="cancelSearch()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
-        </button>
-    </div>
-</fieldset>
 
 <fieldset>
     <legend>{{enti.nombre | uppercase}}</legend>
 
-    <div ng-if="!showFilter" class="btn-toolbar" role="toolbar">
+    <div ng-if="showFilter">
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label>{{"srvc_subp" | translate}}</label> <select ng-model="itemCriterio.subp.id"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="labelValue in subpList" value="{{labelValue.value}}"
+                        ng-selected="labelValue.value == itemCriterio.subp.id">{{labelValue.label}}</option>
+                </select>
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"srvc_anno" | translate}}</label> <input type="text" ng-model="itemCriterio.anno"
+                    class="form-control input-sm" />
+            </div>
+            <div class="col-md-1 form-group">
+                <label>{{"srvc_numero" | translate}}</label> <input type="text" ng-model="itemCriterio.numero"
+                    class="form-control input-sm" />
+            </div>
+
+            <div ng-if="enti.tpdtEstado" class="col-md-1 form-group">
+                <label>{{'srvc_estado' | translate}}</label> <select ng-model="itemCriterio.estado"
+                    class="form-control input-sm">
+                    <option value="" />
+                    <option ng-repeat="cdrf in enti.tpdtEstado.cdrfList" value="{{cdrf.valor}}"
+                        ng-selected="cdrf.valor == itemCriterio.estado">{{cdrf.valor}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+
         <div class="btn-group">
-            <a class="btn btn-default" href="#/servicio/srvc/create/{{enti.id}}"><i class="glyphicon glyphicon-file"></i>
-                {{'boton_alta' | translate}}</a>
-            <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
             </button>
         </div>
     </div>
 
-    <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
-        ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+    <div ng-hide="showFilter">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" href="#/servicio/srvc/create/{{enti.id}}"><i
+                    class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+                <button data-ng-click="filter()" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+                </button>
+            </div>
+        </div>
 
-    <div class="table-responsive">
-        <span class="label label-default">{{itemList.count}} resultado(s)</span>
+        <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
+            ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap">{{'srvc_servicio' | translate}}</th>
-                    <th ng-if="enti.tpdtEstado">{{'srvc_estado' | translate}}</th>
-                    <th ng-if="enti.temporal">{{'srvc_fini' | translate}}</th>
-                    <th ng-if="enti.temporal">{{'srvc_ffin' | translate}}</th>
-                    <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in itemList.list">
-                    <td><a href="#/servicio/srvc/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{item.etiqueta}}</td>
-                    <td ng-if="enti.tpdtEstado">{{item.estado}}</td>
-                    <td ng-if="enti.temporal">{{item.fini | date:('fmt_date' | translate)}}</td>
-                    <td ng-if="enti.temporal">{{item.ffin | date:('fmt_date' | translate)}}</td>
-                    <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
-                        nowrap="nowrap"><span ng-switch-when="BO"><i
-                            ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
-                        ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal |
-                            number:2}}</span> <span ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera
-                            | number:0}}</span> <span ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha
-                            | date:('fmt_date' | translate)}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha
-                            | date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
-                        ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
-                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span><span
-                        ng-switch-when="SR" title="{{item.itdtMap[tpdtId].srvc.etiqueta}}">{{item.itdtMap[tpdtId].srvc.etiqueta}}</span></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <span class="label label-default">{{itemList.count}} resultado(s)</span>
+
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th class="buttonLinks" nowrap="nowrap" />
+                        <th class="codigo" nowrap="nowrap">{{'srvc_servicio' | translate}}</th>
+                        <th ng-if="enti.tpdtEstado">{{'srvc_estado' | translate}}</th>
+                        <th ng-if="enti.temporal">{{'srvc_fini' | translate}}</th>
+                        <th ng-if="enti.temporal">{{'srvc_ffin' | translate}}</th>
+                        <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in itemList.list">
+                        <td><a href="#/servicio/srvc/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                        <td>{{item.etiqueta}}</td>
+                        <td ng-if="enti.tpdtEstado">{{item.estado}}</td>
+                        <td ng-if="enti.temporal">{{item.fini | date:('fmt_date' | translate)}}</td>
+                        <td ng-if="enti.temporal">{{item.ffin | date:('fmt_date' | translate)}}</td>
+                        <td ng-repeat="tpdtId in enti.entdGridList" ng-switch
+                            on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                                ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
+                            ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal |
+                                number:2}}</span> <span ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera
+                                | number:0}}</span> <span ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha
+                                | date:('fmt_date' | translate)}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha
+                                | date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
+                            ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
+                            title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span><span
+                            ng-switch-when="SR" title="{{item.itdtMap[tpdtId].srvc.etiqueta}}">{{item.itdtMap[tpdtId].srvc.etiqueta}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </fieldset>
