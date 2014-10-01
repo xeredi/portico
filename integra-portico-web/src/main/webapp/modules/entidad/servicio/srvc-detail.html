@@ -29,27 +29,27 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 form-group">
+        <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label>{{'srvc_servicio' | translate}}</label>
             <p class="form-control-static">{{item.etiqueta}}</p>
         </div>
 
-        <div ng-if="enti.tpdtEstado" class="col-md-2 form-group">
+        <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label>{{'srvc_estado' | translate}}</label>
             <p class="form-control-static">{{item.estado}}</p>
         </div>
 
-        <div ng-if="!enti.temporal" class="col-md-2 form-group">
+        <div ng-if="!enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label>{{'srvc_fref' | translate}}</label>
             <p class="form-control-static">{{item.fref | date:('fmt_date' | translate)}}</p>
         </div>
 
-        <div ng-if="enti.temporal" class="col-md-2 form-group">
+        <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label>{{'srvc_fini' | translate}}</label>
             <p class="form-control-static">{{item.fini | date:('fmt_date' | translate)}}</p>
         </div>
 
-        <div ng-if="enti.temporal" class="col-md-2 form-group">
+        <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label>{{'srvc_ffin' | translate}}</label>
             <p class="form-control-static">{{item.ffin | date:('fmt_date' | translate)}}</p>
         </div>

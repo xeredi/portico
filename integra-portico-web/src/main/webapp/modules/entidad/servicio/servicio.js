@@ -397,13 +397,17 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
             if (data.actionErrors.length == 0) {
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
+                $scope.itemCriterio = data.itemCriterio;
                 $scope.enti = data.enti;
+                $scope.limit = data.limit;
 
                 var map = {};
 
                 map["page"] = data.itemList.page;
 
                 $location.search(map).replace();
+
+                $scope.showFilter = false;
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -415,6 +419,17 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
     }
 
     $scope.filter = function() {
+        var url = "servicio/ssrv-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.labelValuesMap = data.labelValuesMap;
+                $scope.limits = data.limits;
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+
         $scope.showFilter = true;
     }
 

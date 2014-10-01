@@ -4,7 +4,7 @@
 
     <div ng-if="showFilter">
         <div class="row">
-            <div class="col-md-2 form-group">
+            <div class="col-sm-3 col-md-2 form-group">
                 <label>{{"srvc_subp" | translate}}</label> <select ng-model="itemCriterio.subp.id"
                     class="form-control input-sm">
                     <option value="" />
@@ -12,16 +12,16 @@
                         ng-selected="labelValue.value == itemCriterio.subp.id">{{labelValue.label}}</option>
                 </select>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-1 col-md-1 form-group">
                 <label>{{"srvc_anno" | translate}}</label> <input type="text" ng-model="itemCriterio.anno"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-1 col-md-1 form-group">
                 <label>{{"srvc_numero" | translate}}</label> <input type="text" ng-model="itemCriterio.numero"
                     class="form-control input-sm" />
             </div>
 
-            <div ng-if="enti.tpdtEstado" class="col-md-1 form-group">
+            <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
                 <label>{{'srvc_estado' | translate}}</label> <select ng-model="itemCriterio.estado"
                     class="form-control input-sm">
                     <option value="" />

@@ -79,15 +79,15 @@
             <if test="itdtMap != null and !itdtMap.empty">
                 <foreach collection="itdtMap" item="itdt">
                     <if
-                        test="itdt.prmtId != null or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
+                        test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
                         <![CDATA[
                         AND EXISTS (
                             SELECT 1 FROM tbl_subservicio_dato_ssdt
                             WHERE ssdt_ssrv_pk = ssrv_pk
                                 AND ssdt_tpdt_pk = #{itdt.tpdtId}
                         ]]>
-                        <if test="itdt.prmtId != null">
-                            AND ssdt_prmt_pk = #{itdt.prmtId}
+                        <if test="itdt.prmt != null and itdt.prmt.id != null">
+                            AND ssdt_prmt_pk = #{itdt.prmt.id}
                         </if>
                         <if test="itdt.cantidadEntera != null">
                             AND ssdt_nentero = #{itdt.cantidadEntera}

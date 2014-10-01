@@ -6,7 +6,7 @@
         <legend>{{enti.nombre | uppercase}}</legend>
 
         <div class="row">
-            <div class="col-md-2 form-group">
+            <div class="col-sm-3 col-md-2 form-group">
                 <label>{{"srvc_subp" | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
                     class="form-control input-sm">
                     <option value="" />
@@ -15,18 +15,18 @@
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.subp.etiqueta}}</p>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-1 col-md-1 form-group">
                 <label>{{"srvc_anno" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
                     ng-model="item.anno" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.anno}}</p>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-1 col-md-1 form-group">
                 <label>{{"srvc_numero" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
                     ng-model="item.numero" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.numero}}</p>
             </div>
 
-            <div ng-if="enti.tpdtEstado" class="col-md-1 form-group">
+            <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label>{{'srvc_estado' | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
                     class="form-control input-sm">
                     <option value="" />

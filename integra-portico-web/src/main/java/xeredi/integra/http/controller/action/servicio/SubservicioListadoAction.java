@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.servicio;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,6 +58,10 @@ public final class SubservicioListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
@@ -73,6 +78,10 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
 
