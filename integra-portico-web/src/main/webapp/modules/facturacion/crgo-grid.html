@@ -49,8 +49,8 @@
         </div>
     </div>
 
-    <pagination total-items="crgoList.count" items-per-page="crgoList.limit" ng-model="currentPage"
-        ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+    <pagination total-items="crgoList.count" items-per-page="crgoList.limit" ng-model="page" ng-change="pageChanged()"
+        class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{crgoList.count}} resultado(s)</span>
@@ -80,8 +80,10 @@
                     <td>{{crgo.crgv.codigoNormalizado}}</td>
                     <td>{{crgo.crgv.tipo}}</td>
                     <td>{{crgo.tpsr.nombre}}</td>
-                    <td>{{'fmt_' + crgo.crgv.principal | translate}}</td>
-                    <td>{{'fmt_' + crgo.crgv.temporal | translate}}</td>
+                    <td><i ng-if="crgo.crgv.principal" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!crgo.crgv.principal" class="glyphicon glyphicon-remove"></i></td>
+                    <td><i ng-if="crgo.crgv.temporal" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!crgo.crgv.temporal" class="glyphicon glyphicon-remove"></i></td>
                     <td>{{crgo.crgv.fini | date:('fmt_date' | translate)}}</td>
                     <td>{{crgo.crgv.ffin | date:('fmt_date' | translate)}}</td>
                 </tr>

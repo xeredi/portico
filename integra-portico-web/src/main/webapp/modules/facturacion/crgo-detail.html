@@ -33,11 +33,17 @@
         </div>
         <div class="col-md-1 form-group">
             <label>{{'crgo_principal' | translate}}</label>
-            <p class="form-control-static">{{'fmt_' + crgo.crgv.principal | translate}}</p>
+            <p class="form-control-static">
+                <i ng-if="crgo.crgv.principal" class="glyphicon glyphicon-ok"></i><i ng-if="!crgo.crgv.principal"
+                    class="glyphicon glyphicon-remove"></i>
+            </p>
         </div>
         <div class="col-md-1 form-group">
             <label>{{'crgo_temporal' | translate}}</label>
-            <p class="form-control-static">{{'fmt_' + crgo.crgv.temporal | translate}}</p>
+            <p class="form-control-static">
+                <i ng-if="crgo.crgv.temporal" class="glyphicon glyphicon-ok"></i><i ng-if="!crgo.crgv.temporal"
+                    class="glyphicon glyphicon-remove"></i>
+            </p>
         </div>
     </div>
 
@@ -87,7 +93,8 @@
                 <tr ng-repeat="rgla in rglaList">
                     <td><a ng-if="fechaVigencia" href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a><a ng-if="!fechaVigencia"
-                        href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                        href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{rgla.codigo}}</td>
                     <td>{{rgla.rglv.tipo}}</td>
                     <td>{{rgla.rglv.enti.nombre}}</td>

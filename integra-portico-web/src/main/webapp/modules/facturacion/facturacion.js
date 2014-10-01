@@ -74,28 +74,20 @@ module.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 module.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.vlrcCriterio = $routeParams.vlrcCriterio;
+    $scope.showFilter = false;
+    $scope.vlrcCriterio = {};
 
-    $scope.search = function() {
-        console.log("search: " + JSON.stringify($scope.vlrcCriterio));
-
-        search($scope.vlrcCriterio, 1);
-    }
-
-    $scope.pageChanged = function() {
-        search($scope.itemCriterio, $scope.page, $scope.limit);
-    }
-
-    function search(vlrcCriterio, page) {
+    function search(vlrcCriterio, page, limit) {
         var url = "facturacion/vlrc-list.action";
 
         $http.post(url, {
             vlrcCriterio : vlrcCriterio,
-            page : page
+            page : page,
+            limit : limit
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $scope.vlrcList = data.vlrcList;
                 $scope.page = data.vlrcList.page;
+                $scope.vlrcList = data.vlrcList;
 
                 var map = {};
 
@@ -118,7 +110,23 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
         });
     }
 
-    search($scope.vlrcCriterio, $routeParams.page ? $routeParams.page : 1);
+    $scope.pageChanged = function() {
+        search($scope.vlrcCriterio, $scope.page, $scope.limit);
+    }
+
+    $scope.filter = function() {
+        $scope.showFilter = true;
+    }
+
+    $scope.search = function() {
+        search($scope.vlrcCriterio, 1, $scope.limit);
+    }
+
+    $scope.cancelSearch = function() {
+        $scope.showFilter = false;
+    }
+
+    search($scope.vlrcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("vlrlCreateController", function($scope, $http, $location, $route, $routeParams) {
@@ -243,7 +251,8 @@ module.config([ "$routeProvider", function($routeProvider) {
     .when("/facturacion/crgo/grid", {
         title : 'crgo_grid',
         templateUrl : "modules/facturacion/crgo-grid.html",
-        controller : "crgoGridController"
+        controller : "crgoGridController",
+        reloadOnSearch : false
     })
 
     .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
@@ -320,33 +329,34 @@ module.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 module.controller("crgoGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
-    $scope.crgoCriterio = $routeParams.crgoCriterio;
+    $scope.crgoCriterio = {};
 
-    var url = "facturacion/crgo-list.action";
+    function search(crgoCriterio, page, limit) {
+        var url = "facturacion/crgo-list.action";
 
-    $http.get(url, {
-        crgoCriterio : $scope.crgoCriterio,
-        limit : $scope.limit,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.crgoList = data.crgoList;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.crgoList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            crgoCriterio : crgoCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.crgoList.page;
+                $scope.crgoList = data.crgoList;
+
+                var map = {};
+
+                map["page"] = data.crgoList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.crgoCriterio, $scope.page, $scope.limit);
     }
 
     $scope.filter = function() {
@@ -360,15 +370,14 @@ module.controller("crgoGridController", function($scope, $http, $location, $rout
     }
 
     $scope.search = function() {
-        $location.path("/facturacion/crgo/grid").search({
-            crgoCriterio : {},
-            page : 1
-        }).replace();
+        search($scope.crgoCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.crgoCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("crgoCreateController", function($scope, $http, $location, $route, $routeParams) {
@@ -666,7 +675,8 @@ module.config([ "$routeProvider", function($routeProvider) {
     .when("/facturacion/aspc/grid", {
         title : 'aspc_grid',
         templateUrl : "modules/facturacion/aspc-grid.html",
-        controller : "aspcGridController"
+        controller : "aspcGridController",
+        reloadOnSearch : false
     })
 
     .when("/facturacion/aspc/create", {
@@ -701,33 +711,34 @@ module.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 module.controller("aspcGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
-    $scope.aspcCriterio = $routeParams.aspcCriterio;
+    $scope.aspcCriterio = {};
 
-    var url = "facturacion/aspc-list.action";
+    function search(aspcCriterio, page, limit) {
+        var url = "facturacion/aspc-list.action";
 
-    $http.get(url, {
-        aspcCriterio : $scope.aspcCriterio,
-        limit : $scope.limit,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.aspcList = data.aspcList;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.aspcList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            aspcCriterio : aspcCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.aspcList.page;
+                $scope.aspcList = data.aspcList;
+
+                var map = {};
+
+                map["page"] = data.aspcList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.aspcCriterio, $scope.page, $scope.limit);
     }
 
     $scope.filter = function() {
@@ -741,15 +752,14 @@ module.controller("aspcGridController", function($scope, $http, $location, $rout
     }
 
     $scope.search = function() {
-        $location.path("/metamodelo/aspc/grid").search({
-            aspcCriterio : {},
-            page : 1
-        }).replace();
+        search($scope.aspcCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.aspcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("aspcCreateController", function($scope, $http, $location, $route, $routeParams) {
