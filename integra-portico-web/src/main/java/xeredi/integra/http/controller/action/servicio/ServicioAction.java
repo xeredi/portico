@@ -98,22 +98,25 @@ public final class ServicioAction extends ItemAction {
 
         item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
-        entiHijasList = new ArrayList<>();
-        itemHijosMap = new HashMap<>();
 
-        for (final Long entiId : enti.getEntiHijasList()) {
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+        if (enti.getEntiHijasList() != null) {
+            entiHijasList = new ArrayList<>();
+            itemHijosMap = new HashMap<>();
 
-            srvcCriterioVO.setId(item.getId());
+            for (final Long entiId : enti.getEntiHijasList()) {
+                final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+                final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-            ssrvCriterioVO.setEntiId(entiId);
-            ssrvCriterioVO.setIdioma(getIdioma());
+                srvcCriterioVO.setId(item.getId());
 
-            itemHijosMap.put(entiId,
-                    ssrvBO.selectList(ssrvCriterioVO, PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-            entiHijasList.add(TipoSubservicioProxy.select(entiId));
+                ssrvCriterioVO.setSrvc(srvcCriterioVO);
+                ssrvCriterioVO.setEntiId(entiId);
+                ssrvCriterioVO.setIdioma(getIdioma());
+
+                itemHijosMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO,
+                        PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
+                entiHijasList.add(TipoSubservicioProxy.select(entiId));
+            }
         }
 
         return SUCCESS;

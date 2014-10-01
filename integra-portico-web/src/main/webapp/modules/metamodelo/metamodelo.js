@@ -10,7 +10,8 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     .when("/metamodelo/tpdt/grid", {
         title : 'tpdt_grid',
         templateUrl : "modules/metamodelo/tpdt-grid.html",
-        controller : "tpdtGridController"
+        controller : "tpdtGridController",
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tpdt/create", {
@@ -51,54 +52,49 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 metamodelo.controller("tpdtGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
-    $scope.tpdtCriterio = $routeParams.tpdtCriterio;
+    $scope.tpdtCriterio = {};
 
-    var url = "metamodelo/tpdt-list.action";
+    function search(tpdtCriterio, page, limit) {
+        var url = "metamodelo/tpdt-list.action";
 
-    $http.post(url, {
-        tpdtCriterio : $scope.tpdtCriterio,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.tpdtList = data.tpdtList;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.tpdtList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            tpdtCriterio : tpdtCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.tpdtList.page;
+                $scope.tpdtList = data.tpdtList;
+
+                var map = {};
+
+                map["page"] = data.tpdtList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.tpdtCriterio, $scope.page, $scope.limit);
     }
-    /*
-     * $scope.pageChanged = function() { if (loaded) {
-     * $location.path("/metamodelo/tpdt/grid/" + $scope.currentPage).replace(); } }
-     */
+
     $scope.filter = function() {
         $scope.showFilter = true;
     }
 
     $scope.search = function() {
-        $location.path("/metamodelo/tpdt/grid").search({
-            tpdtCriterio : {
-                codigo : $scope.tpdtCriterio.codigo,
-                nombre : $scope.tpdtCriterio.nombre
-            },
-            page : 1
-        }).replace();
+        search($scope.tpdtCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.tpdtCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 metamodelo.controller("tpdtCreateController", function($scope, $http, $location, $route, $routeParams) {
@@ -308,7 +304,8 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     .when("/metamodelo/tppr/grid", {
         title : 'tppr_grid',
         templateUrl : "modules/metamodelo/tppr-grid.html",
-        controller : "tpprGridController"
+        controller : "tpprGridController",
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tppr/detail/:entiId", {
@@ -349,32 +346,34 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 metamodelo.controller("tpprGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
-    $scope.entiCriterio = $routeParams.entiCriterio;
+    $scope.entiCriterio = {};
 
-    var url = "metamodelo/tppr-list.action";
+    function search(entiCriterio, page, limit) {
+        var url = "metamodelo/tppr-list.action";
 
-    $http.post(url, {
-        entiCriterio : $scope.entiCriterio,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.entiList = data.entiList;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.entiList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            entiCriterio : entiCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.entiList.page;
+                $scope.entiList = data.entiList;
+
+                var map = {};
+
+                map["page"] = data.entiList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.entiCriterio, $scope.page, $scope.limit);
     }
 
     $scope.filter = function() {
@@ -382,18 +381,14 @@ metamodelo.controller("tpprGridController", function($scope, $http, $location, $
     }
 
     $scope.search = function() {
-        $location.path("/metamodelo/tppr/grid").search({
-            tpdtCriterio : {
-                codigo : $scope.entiCriterio.codigo,
-                nombre : $scope.entiCriterio.nombre
-            },
-            page : 1
-        }).replace();
+        search($scope.entiCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.entiCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 metamodelo.controller("tpprDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -601,7 +596,8 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     .when("/metamodelo/tpsr/grid", {
         title : 'tpsr_grid',
         templateUrl : "modules/metamodelo/tpsr-grid.html",
-        controller : "tpsrGridController"
+        controller : "tpsrGridController",
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tpsr/detail/:entiId", {
@@ -642,32 +638,34 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 metamodelo.controller("tpsrGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
-    $scope.entiCriterio = $routeParams.entiCriterio;
+    $scope.entiCriterio = {};
 
-    var url = "metamodelo/tpsr-list.action";
+    function search(entiCriterio, page, limit) {
+        var url = "metamodelo/tpsr-list.action";
 
-    $http.post(url, {
-        entiCriterio : $scope.entiCriterio,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.entiList = data.entiList;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.entiList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            entiCriterio : entiCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.entiList.page;
+                $scope.entiList = data.entiList;
+
+                var map = {};
+
+                map["page"] = data.entiList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.entiCriterio, $scope.page, $scope.limit);
     }
 
     $scope.filter = function() {
@@ -675,18 +673,14 @@ metamodelo.controller("tpsrGridController", function($scope, $http, $location, $
     }
 
     $scope.search = function() {
-        $location.path("/metamodelo/tpsr/grid").search({
-            tpdtCriterio : {
-                codigo : $scope.entiCriterio.codigo,
-                nombre : $scope.entiCriterio.nombre
-            },
-            page : 1
-        }).replace();
+        search($scope.entiCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.entiCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 metamodelo.controller("tpsrDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -895,7 +889,8 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
     .when("/metamodelo/tpes/grid", {
         title : 'tpes_grid',
         templateUrl : "modules/metamodelo/tpes-grid.html",
-        controller : "tpesGridController"
+        controller : "tpesGridController",
+        reloadOnSearch : false
     })
 
     .when("/metamodelo/tpes/detail/:entiId", {
@@ -918,32 +913,34 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 metamodelo.controller("tpesGridController", function($scope, $http, $location, $route, $routeParams) {
-    loaded = false;
-
     $scope.showFilter = false;
-    $scope.page = $routeParams.page ? $routeParams.page : 1;
-    $scope.limit = 20;
-    $scope.entiCriterio = $routeParams.entiCriterio;
+    $scope.entiCriterio = {};
 
-    var url = "metamodelo/tpes-list.action";
+    function search(entiCriterio, page, limit) {
+        var url = "metamodelo/tpes-list.action";
 
-    $http.post(url, {
-        entiCriterio : $scope.entiCriterio,
-        page : $scope.page
-    }).success(function(data) {
-        $scope.entiList = data.entiList;
-        $scope.page = data.page;
-        $scope.currentPage = data.page;
-        $scope.limit = data.entiList.limit;
-        loaded = true;
-    });
+        $http.post(url, {
+            entiCriterio : entiCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.entiList.page;
+                $scope.entiList = data.entiList;
+
+                var map = {};
+
+                map["page"] = data.entiList.page;
+
+                $location.search(map).replace();
+            } else {
+                $scope.actionErrors = data.actionErrors;
+            }
+        });
+    }
 
     $scope.pageChanged = function() {
-        if (loaded) {
-            $location.search({
-                page : $scope.currentPage
-            }).replace();
-        }
+        search($scope.entiCriterio, $scope.page, $scope.limit);
     }
 
     $scope.filter = function() {
@@ -951,18 +948,14 @@ metamodelo.controller("tpesGridController", function($scope, $http, $location, $
     }
 
     $scope.search = function() {
-        $location.path("/metamodelo/tpes/grid").search({
-            entiCriterio : {
-                codigo : $scope.entiCriterio.codigo,
-                nombre : $scope.entiCriterio.nombre
-            },
-            page : 1
-        }).replace();
+        search($scope.entiCriterio, 1, $scope.limit);
     }
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
     }
+
+    search($scope.entiCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 metamodelo.controller("tpesDetailController", function($scope, $http, $location, $route, $routeParams) {
