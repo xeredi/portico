@@ -75,6 +75,8 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
     function search(itemCriterio, page, limit) {
         var url = "maestro/prmt-list.action";
 
+        $scope.limit = limit;
+
         $http.post(url, {
             itemCriterio : itemCriterio,
             page : page,
@@ -101,6 +103,7 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
 
     $scope.pageChanged = function() {
         console.log("pageChanged: " + $scope.page);
+        console.log("limit: " + $scope.limit);
 
         search($scope.itemCriterio, $scope.page, $scope.limit);
     }
@@ -111,6 +114,7 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
         $http.get(url).success(function(data) {
             if (data.actionErrors.length == 0) {
                 $scope.labelValuesMap = data.labelValuesMap;
+                $scope.limits = data.limits;
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -127,7 +131,7 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
         $scope.showFilter = false;
     }
 
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 10);
 });
 
 module.controller("prmtDetailController", function($scope, $http, $location, $route, $routeParams) {

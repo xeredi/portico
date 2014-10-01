@@ -56,7 +56,7 @@ public class GlobalNames {
     public static final int ROWS_PER_PAGE_DEFAULT = 20;
 
     /** The Constant VALID_ROWS_PER_PAGE. */
-    public static final int[] VALID_ROWS_PER_PAGE = new int[] { 20, 50, 100, 200, 500 };
+    public static final int[] VALID_ROWS_PER_PAGE = new int[] { 10, 20, 50, 100, 200, 500 };
 
     /** The Constant MESSAGES. */
     public static final String MESSAGES = "messages";

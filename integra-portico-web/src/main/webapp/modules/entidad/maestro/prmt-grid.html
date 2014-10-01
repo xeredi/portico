@@ -3,11 +3,11 @@
 
     <div ng-if="showFilter">
         <div class="row">
-            <div class="col-md-1 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label>{{"prmt_parametro" | translate}}</label> <input type="text" ng-model="itemCriterio.parametro"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label>{{'prmt_fechaVigencia' | translate}}</label>
                 <p class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
@@ -15,6 +15,12 @@
                         ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
                 </p>
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
+                <label>{{'limit' | translate}}</label> <select ng-model="limit" class="form-control input-sm">
+                    <option ng-repeat="limitValue in limits" class="pull-right" value="{{limitValue}}"
+                        ng-selected="limitValue == limit">{{limitValue}}</option>
+                </select>
             </div>
         </div>
 

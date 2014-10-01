@@ -1,7 +1,7 @@
 
 <div class="row">
     <div ng-repeat="tpdtId in enti.entdList" ng-if="enti.entdMap[tpdtId].filtrable"
-        class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
+        class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
         <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
 
         <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">

@@ -3,7 +3,7 @@
 
     <div class="row">
         <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
-            class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
+            class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
             <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
             <p ng-if="!item.itdtMap[tpdtId].filled" class="form-control-static">&nbsp;</p>
             <p ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"

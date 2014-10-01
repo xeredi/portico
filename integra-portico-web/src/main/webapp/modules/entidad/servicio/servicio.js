@@ -80,6 +80,7 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
                 $scope.itemList = data.itemList;
                 $scope.itemCriterio = data.itemCriterio;
                 $scope.enti = data.enti;
+                $scope.limit = data.limit;
 
                 var map = {};
 
@@ -105,6 +106,7 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
             if (data.actionErrors.length == 0) {
                 $scope.labelValuesMap = data.labelValuesMap;
                 $scope.subpList = data.subpList;
+                $scope.limits = data.limits;
             } else {
                 $scope.actionErrors = data.actionErrors;
             }

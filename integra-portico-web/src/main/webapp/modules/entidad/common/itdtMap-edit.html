@@ -3,7 +3,7 @@
 
     <div class="row">
         <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
-            class="col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
+            class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
             <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
 
             <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
@@ -73,7 +73,8 @@
                     <input type="text" ng-model="item.itdtMap[tpdtId].srvc"
                         typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
                         typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
-                        ng-show="loading" class="glyphicon glyphicon-refresh"></i> <!--$ {{item.itdtMap[tpdtId].srvc.id}} $
+                        ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                    <!--$ {{item.itdtMap[tpdtId].srvc.id}} $
                     {{item.itdtMap[tpdtId].srvc.etiqueta}}-->
                 </div>
 
