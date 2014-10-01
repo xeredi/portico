@@ -38,39 +38,6 @@ public final class ParametroVO extends ItemVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    // /**
-    // * New instance.
-    // *
-    // * @param tpprVO
-    // * the tppr vo
-    // * @return the parametro vo
-    // */
-    // public static ParametroVO newInstance(final TipoParametroVO tpprVO) {
-    // final ParametroVO prmtVO = new ParametroVO();
-    //
-    // prmtVO.setEntiId(tpprVO.getId());
-    // prmtVO.setPrvr(new ParametroVersionVO());
-    //
-    // if (tpprVO.getI18n()) {
-    // prmtVO.setI18n(new ParametroI18nVO());
-    // }
-    //
-    // if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-    // final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
-    //
-    // for (final Long tpdtId : tpprVO.getEntdList()) {
-    // final ItemDatoVO itdtVO = new ItemDatoVO();
-    //
-    // itdtVO.setTpdtId(tpdtId);
-    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-    // }
-    //
-    // prmtVO.setItdtMap(itdtMap);
-    // }
-    //
-    // return prmtVO;
-    // }
-
     /**
      * Gets the etiqueta string buffer.
      *
@@ -99,7 +66,7 @@ public final class ParametroVO extends ItemVO {
     public String getEtiqueta() {
         final StringBuffer buffer = getEtiquetaStringBuffer();
 
-        return buffer.length() == 0 ? null : StringEscapeUtils.escapeHtml4(buffer.toString());
+        return buffer.length() == 0 ? null : buffer.toString()/* StringEscapeUtils.escapeHtml4(buffer.toString()) */;
     }
 
     /**

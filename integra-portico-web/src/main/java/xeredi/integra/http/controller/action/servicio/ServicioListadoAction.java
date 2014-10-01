@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -48,18 +46,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
     private TipoServicioVO enti;
 
     /**
-     * Instantiates a new servicio listado action.
-     */
-    public ServicioListadoAction() {
-        super();
-
-        itemCriterio = new ServicioCriterioVO();
-
-        itemCriterio.setIdioma(getIdioma());
-        itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -73,10 +59,12 @@ public final class ServicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Action(value = "srvc-filer")
+    @Action("srvc-filer")
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+
+        itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
 
@@ -88,7 +76,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "srvc-list") })
+    @Action("srvc-list")
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -100,6 +88,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
         itemCriterio.setSoloDatosGrid(true);
+        itemCriterio.setIdioma(getIdioma());
 
         itemList = srvcBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
@@ -112,6 +101,11 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * Load label values map.
      */
     protected final void loadLabelValuesMap() {
+        Preconditions.checkNotNull(itemCriterio);
+        Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
+        Preconditions.checkNotNull(itemCriterio.getIdioma());
+        Preconditions.checkNotNull(itemCriterio.getEntiId());
+
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 

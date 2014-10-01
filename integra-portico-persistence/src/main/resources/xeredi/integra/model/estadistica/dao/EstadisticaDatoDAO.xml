@@ -11,74 +11,69 @@
         <result column="esdt_cadena" property="cadena" />
 
         <association property="prmt" javaType="ParametroVO">
-            <result column="esdt_prmt_pk" property="id" />
-            <result column="esdt_prmt" property="parametro" />
+            <result column="prmt_pk" property="id" />
+            <result column="prmt_parametro" property="parametro" />
 
             <association property="i18n" javaType="ParametroI18nVO">
-                <result column="p18n_idioma" property="idioma" />
                 <result column="p18n_texto" property="texto" />
             </association>
         </association>
     </resultMap>
 
     <sql id="SelectPrefix">
-    <![CDATA[
-    SELECT
-        esdt.esdt_estd_pk, esdt.esdt_tpdt_pk, esdt.esdt_nentero, esdt.esdt_ndecimal, esdt.esdt_cadena
-        , esdt.esdt_prmt_pk
-        , (
-        	SELECT prmt.prmt_parametro
-        	FROM tbl_parametro_prmt prmt
-        	WHERE prmt.prmt_pk = esdt.esdt_prmt_pk
-        ) AS esdt_prmt
-    ]]>
+        SELECT *
         <if test="idioma != null">
         <![CDATA[
-            , #{idioma} AS p18n_idioma
-        	, (
-        		SELECT p18n_texto
-        		FROM tbl_parametro_i18n_p18n
-        		WHERE
-        			EXISTS (
-        				SELECT 1
-        				FROM tbl_parametro_version_prvr
-        				WHERE prvr_pk = p18n_prvr_pk
-        					AND EXISTS (
-        						SELECT 1
-        						FROM tbl_periodo_proceso_pepr
-        						WHERE
-        							EXISTS (
-        								select 1
-        								from tbl_estadistica_estd
-        								WHERE estd_pepr_pk = pepr_pk
-        									AND estd_pk = esdt_estd_pk
-        							)
-        							AND pepr_freferencia BETWEEN prvr_fini AND COALESCE(prvr_ffin, pepr_freferencia)
-        					)
-        					AND prvr_prmt_pk = esdt_prmt_pk
-        			)
-                    AND p18n_idioma = #{idioma}
-                    AND esdt_prmt_pk IS NOT NULL
-        	) AS p18n_texto
+            , (
+                CASE
+                    WHEN tppr_es_i18n = 1
+                    THEN (
+                        SELECT p18n_texto
+                        FROM tbl_parametro_i18n_p18n
+                        WHERE
+                            p18n_prvr_pk = ANY (
+                                SELECT prvr_pk
+                                FROM tbl_parametro_version_prvr
+                                WHERE
+                                    prvr_prmt_pk = esdt_prmt_pk
+                                    AND esdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, esdt_fref)
+                            )
+                            AND p18n_idioma = 'es_ES'
+                    )
+
+                    WHEN tppr_tpdt_pk IS NOT NULL
+                    THEN (
+                        SELECT prdt_cadena
+                        FROM tbl_parametro_dato_prdt
+                        WHERE
+                            prdt_prvr_pk = ANY (
+                                SELECT prvr_pk
+                                FROM tbl_parametro_version_prvr
+                                WHERE
+                                    prvr_prmt_pk = esdt_prmt_pk
+                                    AND esdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, esdt_fref)
+                            )
+                            AND esdt_tpdt_pk = tppr_tpdt_pk
+                    )
+                END
+            ) AS p18n_texto
         ]]>
         </if>
-    <![CDATA[
-    FROM tbl_estadistica_dato_esdt esdt
-    ]]>
+        FROM vw_estadistica_dato_esdt
     </sql>
 
     <sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
         COUNT(1)
-    FROM tbl_estadistica_dato_esdt esdt
+    FROM tbl_estadistica_dato_esdt
     ]]>
     </sql>
 
     <sql id="SelectWhere">
         <where>
             <if test="ids != null">
-                AND esdt.esdt_estd_pk IN
+                AND esdt_estd_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
                 </foreach>
             </if>

@@ -33,6 +33,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3980612360200744744L;
 
+    /** The enti. */
     private TipoEstadisticaVO enti;
 
     /** The estds. */
@@ -40,17 +41,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
     /** The estd criterio form. */
     private EstadisticaCriterioVO itemCriterio;
-
-    /**
-     * Instantiates a new estadistica listado action.
-     */
-    public EstadisticaListadoAction() {
-        super();
-
-        itemCriterio = new EstadisticaCriterioVO();
-        itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        itemCriterio.setIdioma(getIdioma());
-    }
 
     /**
      * {@inheritDoc}
@@ -70,6 +60,8 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+
+        itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
 
@@ -91,6 +83,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         final EstadisticaBO estdBO = new EstadisticaBO();
 
         itemCriterio.setSoloDatosGrid(true);
+        itemCriterio.setIdioma(getIdioma());
 
         if (hasErrors()) {
             return INPUT;
@@ -107,6 +100,11 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      * Load label values map.
      */
     protected final void loadLabelValuesMap() {
+        Preconditions.checkNotNull(itemCriterio);
+        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(itemCriterio.getIdioma());
+        Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
+
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
@@ -175,6 +173,11 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         return itemList;
     }
 
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
     public TipoEstadisticaVO getEnti() {
         return enti;
     }

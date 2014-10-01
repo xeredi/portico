@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.servicio;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,18 +39,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     private TipoSubservicioVO enti;
 
     /**
-     * Instantiates a new subservicio listado action.
-     */
-    public SubservicioListadoAction() {
-        super();
-
-        itemCriterio = new SubservicioCriterioVO();
-
-        itemCriterio.setIdioma(getIdioma());
-        itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -65,10 +52,12 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Action(value = "ssrv-filter")
+    @Action("ssrv-filter")
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+
+        itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
 
@@ -80,7 +69,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      *
      * @return the string
      */
-    @Action(value = "ssrv-list")
+    @Action("ssrv-list")
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
@@ -92,6 +81,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
         itemCriterio.setSoloDatosGrid(true);
+        itemCriterio.setIdioma(getIdioma());
 
         itemList = ssrvBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
@@ -104,6 +94,11 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      * Load label values map.
      */
     protected final void loadLabelValuesMap() {
+        Preconditions.checkNotNull(itemCriterio);
+        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
+        Preconditions.checkNotNull(itemCriterio.getIdioma());
+
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
