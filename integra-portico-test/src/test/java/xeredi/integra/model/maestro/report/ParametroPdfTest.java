@@ -63,7 +63,6 @@ public final class ParametroPdfTest {
             prmtCriterioVO.setEntiId(tpprId);
             prmtCriterioVO.setIdioma(locale);
             prmtCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
-            prmtCriterioVO.setLimit(50);
 
             LOG.info("Busqueda de Parametros");
 

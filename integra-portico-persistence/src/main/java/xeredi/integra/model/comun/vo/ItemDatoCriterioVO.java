@@ -5,6 +5,9 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadDatoCriterioVO.
@@ -54,16 +57,10 @@ public final class ItemDatoCriterioVO {
     private String cadena;
 
     /** The prmt id. */
-    private Long prmtId;
-
-    /** The prmt etiqueta. */
-    private String prmtEtiqueta;
+    private ParametroVO prmt;
 
     /** The srvc id. */
-    private Long srvcId;
-
-    /** The srvc etiqueta. */
-    private String srvcEtiqueta;
+    private ServicioVO srvc;
 
     /**
      * {@inheritDoc}
@@ -342,25 +339,6 @@ public final class ItemDatoCriterioVO {
     }
 
     /**
-     * Gets the prmt id.
-     *
-     * @return the prmt id
-     */
-    public Long getPrmtId() {
-        return prmtId;
-    }
-
-    /**
-     * Sets the prmt id.
-     *
-     * @param value
-     *            the new prmt id
-     */
-    public void setPrmtId(final Long value) {
-        prmtId = value;
-    }
-
-    /**
      * Gets the cadenas.
      *
      * @return the cadenas
@@ -380,60 +358,41 @@ public final class ItemDatoCriterioVO {
     }
 
     /**
-     * Gets the srvc id.
+     * Gets the prmt.
      *
-     * @return the srvc id
+     * @return the prmt
      */
-    public Long getSrvcId() {
-        return srvcId;
+    public ParametroVO getPrmt() {
+        return prmt;
     }
 
     /**
-     * Sets the srvc id.
+     * Sets the prmt.
      *
      * @param value
-     *            the new srvc id
+     *            the new prmt
      */
-    public void setSrvcId(final Long value) {
-        srvcId = value;
+    public void setPrmt(final ParametroVO value) {
+        prmt = value;
     }
 
     /**
-     * Gets the prmt etiqueta.
+     * Gets the srvc.
      *
-     * @return the prmt etiqueta
+     * @return the srvc
      */
-    public String getPrmtEtiqueta() {
-        return prmtEtiqueta;
+    public ServicioVO getSrvc() {
+        return srvc;
     }
 
     /**
-     * Sets the prmt etiqueta.
-     *
-     * @param value
-     *            the new prmt etiqueta
-     */
-    public void setPrmtEtiqueta(final String value) {
-        prmtEtiqueta = value;
-    }
-
-    /**
-     * Gets the srvc etiqueta.
-     *
-     * @return the srvc etiqueta
-     */
-    public String getSrvcEtiqueta() {
-        return srvcEtiqueta;
-    }
-
-    /**
-     * Sets the srvc etiqueta.
+     * Sets the srvc.
      *
      * @param value
-     *            the new srvc etiqueta
+     *            the new srvc
      */
-    public void setSrvcEtiqueta(final String value) {
-        srvcEtiqueta = value;
+    public void setSrvc(final ServicioVO value) {
+        srvc = value;
     }
 
 }

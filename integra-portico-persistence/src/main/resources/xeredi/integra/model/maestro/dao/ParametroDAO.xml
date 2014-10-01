@@ -124,17 +124,17 @@
                 <foreach collection="itdtMap" index="key" item="itdt">
                     <!-- FIXME ojo, faltan las fechas -->
                     <if
-                        test="itdt.prmtId != null or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
-                            <![CDATA[
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_parametro_dato_prdt
-                                WHERE
-                                    prdt_prvr_pk = prvr_pk
-                                    AND prdt_tpdt_pk = #{itdt.tpdtId}
-                            ]]>
-                        <if test="itdt.prmtId != null">
-                            AND prdt_prmt_pk = #{itdt.prmtId}
+                        test="itdt.prmt != null or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
+                        <![CDATA[
+                        AND EXISTS (
+                            SELECT 1
+                            FROM tbl_parametro_dato_prdt
+                            WHERE
+                                prdt_prvr_pk = prvr_pk
+                                AND prdt_tpdt_pk = #{itdt.tpdtId}
+                        ]]>
+                        <if test="itdt.prmt != null">
+                            AND prdt_prmt_pk = #{itdt.prmt.id}
                         </if>
                         <if test="itdt.cantidadEntera != null">
                             AND prdt_nentero = #{itdt.cantidadEntera}

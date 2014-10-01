@@ -83,6 +83,7 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
             if (data.actionErrors.length == 0) {
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
+                $scope.itemCriterio = data.itemCriterio;
                 $scope.enti = data.enti;
 
                 var map = {};
@@ -90,6 +91,8 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
                 map["page"] = data.itemList.page;
 
                 $location.search(map).replace();
+
+                $scope.showFilter = false;
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -97,6 +100,8 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
     }
 
     $scope.pageChanged = function() {
+        console.log("pageChanged: " + $scope.page);
+
         search($scope.itemCriterio, $scope.page, $scope.limit);
     }
 

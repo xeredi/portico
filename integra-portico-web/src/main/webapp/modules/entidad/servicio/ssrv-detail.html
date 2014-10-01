@@ -18,11 +18,15 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 col-lg-1 form-group">
             <label>{{'ssrv_srvc' | translate}}</label>
             <p class="form-control-static">
                 <a href="#/servicio/srvc/detail/{{item.srvc.id}}">{{item.srvc.etiqueta}}</a>
             </p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label>{{'ssrv_numero' | translate}}</label>
+            <p class="form-control-static">{{item.numero}}</p>
         </div>
 
         <div ng-if="enti.tpdtEstado" class="col-md-2 form-group">
@@ -30,12 +34,12 @@
             <p class="form-control-static">{{item.estado}}</p>
         </div>
 
-        <div ng-if="enti.temporal" class="col-md-2 form-group">
+        <div ng-if="enti.temporal" class="col-md-2 col-lg-1 form-group">
             <label>{{'ssrv_fini' | translate}}</label>
             <p class="form-control-static">{{item.fini | date:('fmt_date' | translate)}}</p>
         </div>
 
-        <div ng-if="enti.temporal" class="col-md-2 form-group">
+        <div ng-if="enti.temporal" class="col-md-2 col-lg-1 form-group">
             <label>{{'ssrv_ffin' | translate}}</label>
             <p class="form-control-static">{{item.ffin | date:('fmt_date' | translate)}}</p>
         </div>

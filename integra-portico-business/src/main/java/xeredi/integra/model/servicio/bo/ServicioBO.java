@@ -155,7 +155,7 @@ public class ServicioBO {
         try {
             final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
 
-            fillDependencies(session, srvcList, srvcCriterioVO, srvcCriterioVO.getLimit() != null);
+            fillDependencies(session, srvcList, srvcCriterioVO, false);
 
             return srvcList;
         } finally {

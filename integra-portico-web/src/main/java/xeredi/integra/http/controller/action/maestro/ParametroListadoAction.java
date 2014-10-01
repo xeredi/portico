@@ -9,7 +9,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
-import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -72,19 +71,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
-        // Inicializar el filtro - Necesario para AngularJS
-        if (itemCriterio.getItdtMap() == null) {
-            itemCriterio.setItdtMap(new HashMap<String, ItemDatoCriterioVO>());
-        }
-
-        if (enti.getEntdMap() != null) {
-            for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
-                if (entdVO.getFiltrable() && !itemCriterio.getItdtMap().containsKey(entdVO.getTpdt().getId())) {
-                    itemCriterio.getItdtMap().put(entdVO.getTpdt().getId().toString(), new ItemDatoCriterioVO());
-                }
-            }
-        }
-
         loadLabelValuesMap();
 
         return SUCCESS;
@@ -103,6 +89,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
         }
+
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());
 

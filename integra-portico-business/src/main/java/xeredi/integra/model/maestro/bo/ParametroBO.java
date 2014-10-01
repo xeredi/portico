@@ -480,7 +480,7 @@ public class ParametroBO {
         try {
             final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
 
-            fillDependencies(session, prmtList, prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+            fillDependencies(session, prmtList, prmtCriterioVO, false);
 
             return prmtList;
         } finally {
@@ -542,7 +542,7 @@ public class ParametroBO {
         try {
             final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
 
-            fillDependencies(session, prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+            fillDependencies(session, prmtMap.values(), prmtCriterioVO, false);
 
             return prmtMap;
         } finally {
@@ -567,7 +567,7 @@ public class ParametroBO {
         try {
             final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
 
-            fillDependencies(session, prmtMap.values(), prmtCriterioVO, prmtCriterioVO.getLimit() != null);
+            fillDependencies(session, prmtMap.values(), prmtCriterioVO, false);
 
             return prmtMap;
         } finally {

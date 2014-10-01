@@ -61,7 +61,6 @@ public final class ServicioPdfTest {
             srvcCriterioVO.setEntiId(tpsrId);
             srvcCriterioVO.setIdioma(locale);
             srvcCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
-            srvcCriterioVO.setLimit(50);
 
             LOG.info("Busqueda de Servicios");
 

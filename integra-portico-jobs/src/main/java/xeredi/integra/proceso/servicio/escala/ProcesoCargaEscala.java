@@ -1026,9 +1026,9 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
         final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
 
         itdtCriterioVO.setTpdtId(TipoDato.UNLOCODE.getId());
-        itdtCriterioVO.setPrmtId(unlocodeVO.getId());
+        itdtCriterioVO.setPrmt(unlocodeVO);
 
-        prmtCriterioVO.getItdtMap().put(String.valueOf(TipoDato.UNLOCODE.getId()), itdtCriterioVO);
+        prmtCriterioVO.getItdtMap().put(TipoDato.UNLOCODE.getId(), itdtCriterioVO);
 
         try {
             return prmtBO.selectObject(prmtCriterioVO);

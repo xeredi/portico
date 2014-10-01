@@ -138,7 +138,7 @@ public abstract class ProcesoTemplate {
         itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
         itdtCriterioVO.setCadenas(nifSet);
 
-        prmtCriterioVO.getItdtMap().put(String.valueOf(TipoDato.CADENA_02.getId()), itdtCriterioVO);
+        prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
 
         final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
 

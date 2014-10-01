@@ -94,65 +94,56 @@
             <foreach collection="itdtMap" index="key" item="itdt">
                 <!-- FIXME ojo, faltan las fechas -->
                 <if
-                    test="itdt.prmtId != null or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
-                        <![CDATA[
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_parametro_dato_prdt
-                            WHERE
-                                    prdt_prvr_pk = prvr_pk
-                                    AND prdt_tpdt_pk = #{itdt.tpdtId}
-                        ]]>
-                    <if test="itdt.prmtId != null">
+                    test="itdt.prmt != null or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
                     <![CDATA[
-                                    AND prdt_prmt_pk = #{itdt.prmtId}
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_parametro_dato_prdt
+                        WHERE
+                                prdt_prvr_pk = prvr_pk
+                                AND prdt_tpdt_pk = #{itdt.tpdtId}
                     ]]>
+
+                    <if test="itdt.prmt != null">
+                        AND prdt_prmt_pk = #{itdt.prmt.id}
                     </if>
                     <if test="itdt.cantidadEntera != null">
-                    <![CDATA[
-                                    AND prdt_nentero = #{itdt.cantidadEntera}
-                    ]]>
+                        AND prdt_nentero = #{itdt.cantidadEntera}
                     </if>
                     <if test="itdt.cantidadDecimal != null">
-                    <![CDATA[
-                                    AND prdt_ndecimal = #{itdt.cantidadDecimal}
-                    ]]>
+                        AND prdt_ndecimal = #{itdt.cantidadDecimal}
                     </if>
                     <if test="itdt.cadena != null and !itdt.cadena.empty">
-                    <![CDATA[
-                                    AND prdt_cadena LIKE #{itdt.cadena}
-                    ]]>
+                        AND prdt_cadena LIKE #{itdt.cadena}
                     </if>
                     <if test="itdt.cadenas != null and !itdt.cadenas.empty">
-                    <![CDATA[
-                                    AND prdt_cadena IN
-                    ]]>
-                        <foreach collection="itdt.cadenas" item="cadena" open="(" close=")"
-                            separator=",">#{cadena}
+                        AND prdt_cadena IN
+                        <foreach collection="itdt.cadenas" item="cadena" open="(" close=")" separator=",">#{cadena}
                         </foreach>
                     </if>
+
                     <![CDATA[
-                        )
+                    )
                     ]]>
                 </if>
             </foreach>
         </if>
 
         <![CDATA[
-           				AND EXISTS (
-        					SELECT 1
-        					FROM tbl_parametro_prmt
-        					WHERE prmt_pk = prvr_prmt_pk
+       				AND EXISTS (
+    					SELECT 1
+    					FROM tbl_parametro_prmt
+    					WHERE prmt_pk = prvr_prmt_pk
         ]]>
         <if test="id != null">
         <![CDATA[
-                                AND prmt_pk = #{id}
+                            AND prmt_pk = #{id}
         ]]>
         </if>
 
         <if test="ids != null and !ids.empty">
         <![CDATA[
-                                AND prmt_pk IN
+                            AND prmt_pk IN
         ]]>
             <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
             </foreach>
@@ -160,7 +151,7 @@
 
         <if test="entiId != null">
         <![CDATA[
-                                AND prmt_tppr_pk = #{entiId}
+                            AND prmt_tppr_pk = #{entiId}
         ]]>
         </if>
 

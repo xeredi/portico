@@ -1,25 +1,19 @@
 package xeredi.integra.model.comun.vo;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.util.pagination.Criterio;
-import xeredi.util.pagination.PaginableCriterio;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemCriterioVO.
  */
-public abstract class ItemCriterioVO implements Criterio, PaginableCriterio {
-    /** The offset. */
-    private Integer offset;
-
-    /** The limit. */
-    private Integer limit;
-
+public abstract class ItemCriterioVO implements Criterio {
     /** The idioma. */
     private String idioma;
 
@@ -45,7 +39,16 @@ public abstract class ItemCriterioVO implements Criterio, PaginableCriterio {
     private Set<Long> entiIds;
 
     /** The itdt map. */
-    private Map<String, ItemDatoCriterioVO> itdtMap;
+    private Map<Long, ItemDatoCriterioVO> itdtMap;
+
+    /**
+     * Instantiates a new item criterio vo.
+     */
+    public ItemCriterioVO() {
+        super();
+
+        itdtMap = new HashMap<>();
+    }
 
     /**
      * {@inheritDoc}
@@ -53,38 +56,6 @@ public abstract class ItemCriterioVO implements Criterio, PaginableCriterio {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Integer getOffset() {
-        return offset;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void setOffset(final Integer value) {
-        offset = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void setLimit(final Integer value) {
-        limit = value;
     }
 
     /**
@@ -225,7 +196,7 @@ public abstract class ItemCriterioVO implements Criterio, PaginableCriterio {
      *
      * @return the itdt map
      */
-    public final Map<String, ItemDatoCriterioVO> getItdtMap() {
+    public final Map<Long, ItemDatoCriterioVO> getItdtMap() {
         return itdtMap;
     }
 
@@ -235,12 +206,16 @@ public abstract class ItemCriterioVO implements Criterio, PaginableCriterio {
      * @param value
      *            the value
      */
-    public final void setItdtMap(final Map<String, ItemDatoCriterioVO> value) {
+    public final void setItdtMap(final Map<Long, ItemDatoCriterioVO> value) {
         itdtMap = value;
 
         if (itdtMap != null) {
-            for (final String key : itdtMap.keySet()) {
-                itdtMap.get(key).setTpdtId(Long.valueOf(key));
+            for (final Object key : itdtMap.keySet()) {
+                if (key instanceof Long) {
+                    itdtMap.get(key).setTpdtId((Long) key);
+                } else {
+                    itdtMap.get(key).setTpdtId(Long.valueOf(key.toString()));
+                }
             }
         }
     }
