@@ -22,21 +22,21 @@
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'rgin_fini' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="rgin.rgiv.fini"
                         ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'rgin_ffin' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="rgin.rgiv.ffin"
                         ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
         </div>
 

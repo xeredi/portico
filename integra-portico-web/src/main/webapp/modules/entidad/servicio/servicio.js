@@ -528,6 +528,88 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             });
 
             break;
+
+        // ----------- EQUIPAMIENTO ------------------
+        // ----------- EQUIPAMIENTO ------------------
+        // ----------- EQUIPAMIENTO ------------------
+
+        case "equi-bloquear":
+            var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "equi-iniciar":
+            var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "equi-anular":
+            var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+
+        // ----------- PARTIDA ------------------
+        // ----------- PARTIDA ------------------
+        // ----------- PARTIDA ------------------
+
+        case "part-bloquear":
+            var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "part-iniciar":
+            var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
+        case "part-anular":
+            var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
+
+            $http.get(url).success(function(data) {
+                if (data.actionErrors.length == 0) {
+                    $route.reload();
+                } else {
+                    $scope.actionErrors = data.actionErrors;
+                }
+            });
+
+            break;
         default:
             alert(accName);
 

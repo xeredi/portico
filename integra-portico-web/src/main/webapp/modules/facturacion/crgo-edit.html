@@ -58,21 +58,21 @@
         <div class="row">
             <div class="col-md-1 form-group">
                 <label>{{'crgo_fini' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.fini"
                         ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'crgo_ffin' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.ffin"
                         ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
             <div class="col-md-3 form-group">
                 <label>{{"crgo_descripcion" | translate}}</label> <input type="text" ng-model="crgo.crgv.descripcion"

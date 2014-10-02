@@ -31,21 +31,21 @@
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'aspc_fini' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.fini" />
                     <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'aspc_ffin' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.ffin" />
                     <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{"aspc_prioridad" | translate}}</label> <input type="text" ng-model="aspc.aspv.prioridad"

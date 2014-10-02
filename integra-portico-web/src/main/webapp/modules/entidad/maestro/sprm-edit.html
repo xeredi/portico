@@ -23,21 +23,21 @@
             <!-- ng-if="enti.tempExp" -->
             <div class="col-md-1 form-group">
                 <label>{{'prmt_fini' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.spvr.fini" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
 
             <!-- ng-if="enti.tempExp" -->
             <div class="col-md-1 form-group">
                 <label>{{'prmt_ffin' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.spvr.ffin" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
         </div>
     </fieldset>

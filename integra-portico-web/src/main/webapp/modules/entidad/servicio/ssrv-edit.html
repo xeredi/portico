@@ -35,20 +35,20 @@
 
             <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label>{{'ssrv_fini' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.fini" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
 
             <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label>{{'ssrv_ffin' | translate}}</label>
-                <p class="input-group" ng-controller="datepickerController">
+                <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.ffin" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                </p>
+                </div>
             </div>
 
             <div ng-if="item.srvc.id" ng-repeat="entiPadre in entiPadresList" class="col-md-2 form-group">
