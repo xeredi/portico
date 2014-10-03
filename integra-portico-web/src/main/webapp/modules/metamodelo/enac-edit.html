@@ -3,7 +3,7 @@
         ng-model="enac.path" />
 
     <fieldset>
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-2 form-group">
                 <label>{{"enac_path" | translate}}</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enac.etiqueta" class="form-control input-sm" />
@@ -24,13 +24,15 @@
             <li ng-repeat="error in actionErrors">{{error}}</li>
         </ul>
         </alert>
+    </fieldset>
 
+    <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
         </button>
-    </fieldset>
+    </div>
 </form>
 

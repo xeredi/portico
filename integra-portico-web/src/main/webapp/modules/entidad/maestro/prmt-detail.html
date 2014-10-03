@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label>{{'prmt_parametro' | translate}}</label>
             <p class="form-control-static">{{item.parametro}}</p>
@@ -33,7 +33,7 @@
     </div>
 
     <div ng-if="enti.i18n">
-        <div ng-repeat="availableLanguage in availableLanguages" class="row">
+        <div ng-repeat="availableLanguage in availableLanguages" class="row-fluid">
             <div class="col-sm-10 col-md-10 col-lg-8 form-group">
                 <label>Texto {{availableLanguage}}</label>
                 <p class="form-control-static">{{p18nMap[availableLanguage].texto}}</p>

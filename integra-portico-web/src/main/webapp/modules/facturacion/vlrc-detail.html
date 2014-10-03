@@ -4,7 +4,7 @@
 <fieldset>
     <legend>{{'Datos Generales' | uppercase}}</legend>
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-2 form-group">
             <label>{{'vlrc_id' | translate}}</label>
             <p class="form-control-static">{{vlrc.id}}</p>
@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-3 form-group">
             <label>{{'vlrc_pagador' | translate}}</label>
             <p class="form-control-static">
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row-fluid">
         <div ng-if="vlrc.aspc.aspv.cetiqInfo1" class="col-md-4 form-group">
             <label>{{vlrc.aspc.aspv.cetiqInfo1}}</label>
             <p class="form-control-static">{{vlrc.info1}}</p>
@@ -90,7 +90,7 @@
 
 <fieldset>
     <legend>{{'Cargos Aplicados' | uppercase}}</legend>
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-4 form-group">
             <ul>
                 <li ng-repeat="vlrg in vlrgList"><a href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrc.fref}}">{{vlrg.crgo.etiqueta}}</a></li>
@@ -101,7 +101,7 @@
 
 <fieldset>
     <legend>{{'Desglose de IVA' | uppercase}}</legend>
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-4 form-group">
             <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
@@ -127,7 +127,7 @@
 </fieldset>
 </tab> <tab heading="{{'vlrls' | translate | uppercase}}">
 <fieldset>
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-12 form-group">
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">

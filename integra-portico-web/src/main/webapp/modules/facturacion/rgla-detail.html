@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-2 form-group">
             <label>{{'rgla_crgo' | translate}}</label>
             <p class="form-control-static">
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-6 form-group">
             <label>{{'rgla_condicion' | translate}}</label>
             <p class="form-control-static">{{rgla.rglv.condicion}}</p>
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div ng-if="rgla.rglv.tipo == 'T'" class="row">
+    <div ng-if="rgla.rglv.tipo == 'T'" class="row-fluid">
         <div class="col-md-6 form-group">
             <label>{{'rgla_pathImpuesto' | translate}}</label>
             <p class="form-control-static">{{rgla.rglv.pathImpuesto}}</p>
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div ng-if="rgla.rglv.tipo == 'T'" class="row">
+    <div ng-if="rgla.rglv.tipo == 'T'" class="row-fluid">
         <div class="col-md-6 form-group">
             <label>{{'rgla_pathEsSujPasivo' | translate}}</label>
             <p class="form-control-static">{{rgla.rglv.pathEsSujPasivo}}</p>
@@ -88,7 +88,7 @@
 
 <fieldset ng-if="rgla.rglv.tipo == 'T'">
     <legend>{{'Datos Variables' | uppercase}}</legend>
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-9 form-group">
             <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
@@ -177,7 +177,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-9 form-group">
             <table ng-if="rginList" class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>

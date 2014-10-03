@@ -11,14 +11,14 @@
     <fieldset>
         <legend>{{"vlrl" | translate | uppercase}}</legend>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-1 form-group">
                 <label>{{'vlrl_rgla' | translate}}</label>
                 <p class="form-control-static">
                     <a href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}">{{vlrl.rgla.codigo}}</a>
                 </p>
             </div>
-<!--
+            <!--
             <div class="col-md-1 form-group">
                 <label>{{"crgo_codigo" | translate}}</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="crgo.codigo" class="form-control input-sm" />
@@ -55,8 +55,8 @@
  -->
         </div>
 
-<!--
-        <div class="row">
+        <!--
+        <div class="row-fluid">
             <div class="col-md-1 form-group">
                 <label>{{'crgo_fini' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
@@ -81,12 +81,15 @@
             </div>
         </div>
 -->
+    </fieldset>
+
+    <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
         </button>
-    </fieldset>
+    </div>
 </form>
 

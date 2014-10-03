@@ -4,7 +4,7 @@
 <div ng-if="showFilter">
     <form>
         <fieldset>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                     <label>{{"prmt_parametro" | translate}}</label> <input type="text" ng-model="itemCriterio.parametro"
                         class="form-control input-sm" />
@@ -27,16 +27,16 @@
             </div>
 
             <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
-
-            <div class="btn-group">
-                <button data-ng-click="search()" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
-                </button>
-                <button data-ng-click="cancelSearch()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
-                </button>
-            </div>
         </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            </button>
+        </div>
     </form>
 </div>
 

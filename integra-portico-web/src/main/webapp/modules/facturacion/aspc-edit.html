@@ -11,7 +11,7 @@
     <fieldset>
         <legend>{{'Aspecto' | uppercase}}</legend>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-3 form-group">
                 <label>{{"aspc_tpsr" | translate}}</label> <select ng-if="accion == 'create'" ng-model="aspc.tpsr.id"
                     class="form-control input-sm">
@@ -33,18 +33,16 @@
                 <label>{{'aspc_fini' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.fini" />
-                    <span class="input-group-addon" ng-click="open($event)"><i
-                        class="glyphicon glyphicon-calendar"></i></span>
+                        datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.fini" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
             <div class="col-md-1 form-group">
                 <label>{{'aspc_ffin' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.ffin" />
-                    <span class="input-group-addon" ng-click="open($event)"><i
-                        class="glyphicon glyphicon-calendar"></i></span>
+                        datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.ffin" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
             <div class="col-md-1 form-group">
@@ -57,7 +55,7 @@
     <fieldset>
         <legend>{{'Elementos de Cabecera' | uppercase}}</legend>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-12 form-group">
                 <table class="table-condensed table-hover table-nonfluid">
                     <thead>
@@ -136,12 +134,12 @@
         </div>
     </fieldset>
 
-    <div class="row">
+    <div class="row-fluid">
         <div class="col-md-6 form-group">
             <fieldset>
                 <legend>{{'Elementos Cuantitativos de Linea' | uppercase}}</legend>
 
-                <div class="row">
+                <div class="row-fluid">
                     <div class="col-md-12 form-group">
                         <table class="table-condensed table-hover table-nonfluid">
                             <thead>
@@ -211,7 +209,7 @@
             <fieldset>
                 <legend>{{'Elementos Informativos de Linea' | uppercase}}</legend>
 
-                <div class="row">
+                <div class="row-fluid">
                     <div class="col-md-12 form-group">
                         <table class="table-condensed table-hover table-nonfluid">
                             <thead>
@@ -278,12 +276,12 @@
         </div>
     </div>
 
-    <fieldset>
+    <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
         </button>
-    </fieldset>
+    </div>
 </form>

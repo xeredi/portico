@@ -11,7 +11,7 @@
     <fieldset>
         <legend>{{'Regla' | uppercase}}</legend>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-2 form-group">
                 <label>{{"rgla_crgo" | translate}}</label>
                 <p class="form-control-static">{{rgla.crgo.etiqueta}}</p>
@@ -40,8 +40,8 @@
                 <label>{{'rgla_fini' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="rgla.rglv.fini"
-                        ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
+                        datepicker-options="dateOptions" is-open="opened" ng-model="rgla.rglv.fini" ng-required="true" />
+                    <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                 <label>{{'rgla_ffin' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="rgla.rglv.ffin"
-                        ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
+                        datepicker-options="dateOptions" is-open="opened" ng-model="rgla.rglv.ffin" ng-required="true" />
+                    <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-6 form-group">
                 <label>{{"rgla_condicion" | translate}}</label>
                 <textarea class="form-control input-sm" rows="7" ng-model="rgla.rglv.condicion">{{rgla.rglv.condicion}}</textarea>
@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div ng-if="rgla.rglv.tipo == 'T'" class="row">
+        <div ng-if="rgla.rglv.tipo == 'T'" class="row-fluid">
             <div class="col-md-6 form-group">
                 <label>{{"rgla_pathImpuesto" | translate}}</label> <input type="text" ng-model="rgla.rglv.pathImpuesto"
                     class="form-control input-sm" />
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div ng-if="rgla.rglv.tipo == 'T'" class="row">
+        <div ng-if="rgla.rglv.tipo == 'T'" class="row-fluid">
             <div class="col-md-6 form-group">
                 <label>{{"rgla_pathEsSujPasivo" | translate}}</label> <input type="text"
                     ng-model="rgla.rglv.pathEsSujPasivo" class="form-control input-sm" />
@@ -101,7 +101,7 @@
     <fieldset ng-if="rgla.rglv.tipo == 'T'">
         <legend>{{'Elementos Informativos' | uppercase}}</legend>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-12 form-group">
                 <table class="table-condensed table-hover table-nonfluid">
                     <thead>
@@ -151,7 +151,7 @@
     <fieldset ng-if="rgla.rglv.tipo == 'T'">
         <legend>{{'Elementos Cuantitativos' | uppercase}}</legend>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-11 form-group">
                 <table class="table-condensed table-hover table-nonfluid">
                     <thead>
@@ -199,13 +199,13 @@
         </div>
     </fieldset>
 
-    <fieldset>
+    <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
         </button>
-    </fieldset>
+    </div>
 </form>
 

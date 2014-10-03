@@ -3,7 +3,7 @@
         ng-model="enti.tipo" />
 
     <fieldset>
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-md-3 form-group">
                 <label>{{"enen_entih" | translate}}</label> <select ng-model="enen.entiHijaId"
                     class="form-control input-sm">
@@ -22,10 +22,12 @@
             <li ng-repeat="error in actionErrors">{{error}}</li>
         </ul>
         </alert>
+    </fieldset>
 
+    <div class="btn-group">
         <button data-ng-click="submit(editForm)" class="btn btn-default">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
         </button>
-    </fieldset>
+    </div>
 </form>
 

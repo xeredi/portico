@@ -5,13 +5,11 @@
     <fieldset>
         <legend>{{enti.nombre | uppercase}}</legend>
 
-        <div class="row">
+        <div class="row-fluid">
             <div class="col-sm-3 col-md-2 form-group">
                 <label>{{"srvc_subp" | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
-                    class="form-control input-sm">
+                    ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in subpList" value="{{labelValue.value}}"
-                        ng-selected="labelValue.value == item.subp.id">{{labelValue.label}}</option>
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.subp.etiqueta}}</p>
             </div>
@@ -28,10 +26,9 @@
 
             <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label>{{'srvc_estado' | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
+                    ng-options="cdrf.valor as cdrf.valor for cdrf in enti.tpdtEstado.cdrfList"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="cdrf in enti.tpdtEstado.cdrfList" value="{{cdrf.valor}}"
-                        ng-selected="cdrf.valor == item.estado">{{cdrf.valor}}</option>
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.estado}}</p>
             </div>
@@ -73,12 +70,12 @@
     </ul>
     </alert>
 
-    <fieldset>
+    <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
         </button>
-    </fieldset>
+    </div>
 </form>

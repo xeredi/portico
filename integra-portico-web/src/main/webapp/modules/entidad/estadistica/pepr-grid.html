@@ -1,37 +1,41 @@
 <legend>{{'pepr_grid' | translate | uppercase}}</legend>
 
 <div ng-if="showFilter">
-    <div class="btn-toolbar" role="toolbar">
-        <form>
-            <fieldset>
-                <div class="row">
-                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                        <label>{{'pepr_autp' | translate}}</label> <select ng-model="peprCriterio.autpId"
-                            ng-options="autp.id as autp.etiqueta for autp in autpList" class="form-control input-sm">
-                            <option value="" />
-                        </select>
-                    </div>
-                    <div class="col-sm-2 col-md-1 form-group">
-                        <label>{{'pepr_anio' | translate}}</label> <input type="text" ng-model="peprCriterio.anio"
-                            class="form-control input-sm" />
-                    </div>
-                    <div class="col-sm-2 col-md-1 form-group">
-                        <label>{{'pepr_mes' | translate}}</label> <input type="text" ng-model="peprCriterio.mes"
-                            class="form-control input-sm" />
-                    </div>
+    <form>
+        <fieldset>
+            <div class="row-fluid">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label>{{'pepr_autp' | translate}}</label> <select ng-model="peprCriterio.autpId"
+                        ng-options="autp.id as autp.etiqueta for autp in autpList" class="form-control input-sm">
+                        <option value="" />
+                    </select>
                 </div>
+                <div class="col-sm-2 col-md-1 form-group">
+                    <label>{{'pepr_anio' | translate}}</label> <input type="text" ng-model="peprCriterio.anio"
+                        class="form-control input-sm" />
+                </div>
+                <div class="col-sm-2 col-md-1 form-group">
+                    <label>{{'pepr_mes' | translate}}</label> <input type="text" ng-model="peprCriterio.mes"
+                        class="form-control input-sm" />
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
+                    <label>{{'limit' | translate}}</label> <select ng-model="limit" class="form-control input-sm">
+                        <option ng-repeat="limitValue in limits" class="pull-right" value="{{limitValue}}"
+                            ng-selected="limitValue == limit">{{limitValue}}</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
 
-                <div class="btn-group">
-                    <button data-ng-click="search()" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
-                    </button>
-                    <button data-ng-click="cancelSearch()" class="btn btn-default">
-                        <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
-                    </button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
+        <div class="btn-group">
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            </button>
+        </div>
+    </form>
 </div>
 
 

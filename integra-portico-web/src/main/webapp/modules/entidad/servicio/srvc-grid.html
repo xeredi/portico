@@ -3,13 +3,11 @@
 <div ng-if="showFilter">
     <form>
         <fieldset>
-            <div class="row">
+            <div class="row-fluid">
                 <div class="col-sm-3 col-md-2 form-group">
                     <label>{{"srvc_subp" | translate}}</label> <select ng-model="itemCriterio.subp.id"
-                        class="form-control input-sm">
+                        ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
                         <option value="" />
-                        <option ng-repeat="labelValue in subpList" value="{{labelValue.value}}"
-                            ng-selected="labelValue.value == itemCriterio.subp.id">{{labelValue.label}}</option>
                     </select>
                 </div>
                 <div class="col-sm-1 col-md-1 form-group">
@@ -23,10 +21,9 @@
 
                 <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
                     <label>{{'srvc_estado' | translate}}</label> <select ng-model="itemCriterio.estado"
+                        ng-options="cdrf.valor as cdrf.valor for cdrf in enti.tpdtEstado.cdrfList"
                         class="form-control input-sm">
                         <option value="" />
-                        <option ng-repeat="cdrf in enti.tpdtEstado.cdrfList" value="{{cdrf.valor}}"
-                            ng-selected="cdrf.valor == itemCriterio.estado">{{cdrf.valor}}</option>
                     </select>
                 </div>
 
@@ -39,16 +36,16 @@
             </div>
 
             <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
-
-            <div class="btn-group">
-                <button data-ng-click="search()" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
-                </button>
-                <button data-ng-click="cancelSearch()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
-                </button>
-            </div>
         </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            </button>
+        </div>
     </form>
 </div>
 
