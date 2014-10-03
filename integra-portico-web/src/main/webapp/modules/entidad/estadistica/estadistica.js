@@ -133,6 +133,8 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
@@ -142,8 +144,8 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
                 map["page"] = data.itemList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }

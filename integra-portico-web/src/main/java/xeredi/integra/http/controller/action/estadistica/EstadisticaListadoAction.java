@@ -58,6 +58,10 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
@@ -76,6 +80,10 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         final EstadisticaBO estdBO = new EstadisticaBO();
+
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());

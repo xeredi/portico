@@ -69,17 +69,17 @@
                 <foreach collection="itdtMap" index="key" item="itdt">
                     <!-- FIXME ojo, faltan las fechas -->
                     <if
-                        test="itdt.prmtId != null or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
+                        test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
                             <![CDATA[
                             AND EXISTS (
                                 SELECT 1
                                 FROM tbl_estadistica_dato_esdt
                                 WHERE
                                     esdt_estd_pk = estd_pk
-                                    AND esdt_tpdt_pk = #{key}
+                                    AND esdt_tpdt_pk = #{itdt.tpdtId}
                             ]]>
-                        <if test="itdt.prmtId != null">
-                            AND esdt_prmt_pk = #{itdt.prmtId}
+                        <if test="itdt.prmt != null and itdt.prmt.id != null">
+                            AND esdt_prmt_pk = #{itdt.prmt.id}
                         </if>
                         <if test="itdt.cantidadEntera != null">
                             AND esdt_nentero = #{itdt.cantidadEntera}
