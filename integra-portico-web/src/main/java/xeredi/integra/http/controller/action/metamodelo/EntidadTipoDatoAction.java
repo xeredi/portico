@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.validator.GenericValidator;
@@ -9,7 +10,9 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -30,6 +33,12 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /** The entd form. */
     private EntidadTipoDatoVO entd;
+
+    /** The engd list. */
+    private final List<LabelValueVO> engdList = new ArrayList<>();
+
+    /** The tpdt list. */
+    private final List<LabelValueVO> tpdtList = new ArrayList<>();
 
     /**
      * Instantiates a new entidad tipo dato action.
@@ -53,6 +62,8 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         accion = ACCION_EDICION.create;
 
+        loadLabelValues();
+
         return SUCCESS;
     }
 
@@ -73,6 +84,8 @@ public final class EntidadTipoDatoAction extends BaseAction {
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());
+
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -182,16 +195,37 @@ public final class EntidadTipoDatoAction extends BaseAction {
         return SUCCESS;
     }
 
-    // get/set
     /**
-     * Gets the engds.
-     *
-     * @return the engds
+     * Load label values.
      */
-    public List<LabelValueVO> getEngds() {
+    private void loadLabelValues() {
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        return engdBO.selectLabelValues(entd.getEntiId());
+        engdList.addAll(engdBO.selectLabelValues(entd.getEntiId()));
+
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
+
+        tpdtList.addAll(tpdtBO.selectLabelValues(new TipoDatoCriterioVO()));
+    }
+
+    // get/set
+
+    /**
+     * Gets the engd list.
+     *
+     * @return the engd list
+     */
+    public List<LabelValueVO> getEngdList() {
+        return engdList;
+    }
+
+    /**
+     * Gets the tpdt list.
+     *
+     * @return the tpdt list
+     */
+    public List<LabelValueVO> getTpdtList() {
+        return tpdtList;
     }
 
     /**

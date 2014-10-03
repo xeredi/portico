@@ -55,6 +55,10 @@ public final class EntidadTipoDatoVO {
      * @return the span lg
      */
     public Integer getSpanLg() {
+        if (span == null) {
+            return null;
+        }
+
         return span > 2 && span < 12 ? span * 3 / 4 : span;
     }
 
@@ -64,6 +68,10 @@ public final class EntidadTipoDatoVO {
      * @return the span sm
      */
     public Integer getSpanSm() {
+        if (span == null) {
+            return null;
+        }
+
         if (span < 4) {
             return span + 1;
         }

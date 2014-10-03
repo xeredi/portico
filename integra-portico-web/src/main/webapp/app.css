@@ -73,11 +73,11 @@ table a, .table a {
 }
 
 form {
-	background-color: #4e5d6c;
+/*	background-color: #4e5d6c;*/
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 fieldset {

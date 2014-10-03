@@ -4,17 +4,17 @@
 
     <fieldset>
         <div class="row-fluid">
+            <div class="col-md-2 form-group">
+                <label>{{"entd_tpdt_nombre" | translate}}</label> <select ng-if="accion == 'create'"
+                    ng-model="entd.tpdt.id" ng-options="labelValue.value as labelValue.label for labelValue in tpdtList"
+                    class="form-control input-sm">
+                    <option value="" />
+                </select>
+                <p ng-if="accion != 'create'" class="form-control-static">{{entd.tpdt.nombre}}</p>
+            </div>
             <div class="col-md-3 form-group">
                 <label>{{"entd_etiqueta" | translate}}</label> <input type="text" ng-model="entd.etiqueta"
                     class="form-control input-sm" />
-            </div>
-            <div class="col-md-2 form-group">
-                <label>{{"entd_tpdt_nombre" | translate}}</label> <select ng-if="accion == 'create'"
-                    ng-model="entd.tpdt.id" class="form-control input-sm">
-                    <option value="" />
-                    <option ng-repeat="labelValue in tpdtList" value="{{labelValue.value}}">{{labelValue.label}}</option>
-                </select>
-                <p ng-if="accion != 'create'" class="form-control-static">{{entd.tpdt.nombre}}</p>
             </div>
         </div>
 
@@ -33,10 +33,6 @@
             </div>
             <div class="col-md-1 form-group">
                 <label> {{"entd_span" | translate}} </label> <input type="text" ng-model="entd.span"
-                    class="form-control input-sm" />
-            </div>
-            <div class="col-md-1 form-group">
-                <label> {{"entd_spanLg" | translate}} </label> <input type="text" ng-model="entd.spanLg"
                     class="form-control input-sm" />
             </div>
             <div class="col-md-1 form-group">

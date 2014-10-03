@@ -1107,6 +1107,8 @@ metamodelo.controller("entdEditController",
             $http.get(url).success(function(data) {
                 $scope.entd = data.entd;
                 $scope.accion = data.accion;
+                $scope.tpdtList = data.tpdtList;
+                $scope.engdList = data.engdList;
             });
 
             $scope.save = function() {
@@ -1136,13 +1138,9 @@ metamodelo.controller("entdCreateController", function($scope, $http, $location,
 
     $http.get(url).success(function(data) {
         $scope.entd = data.entd;
+        $scope.tpdtList = data.tpdtList;
+        $scope.engdList = data.engdList;
         $scope.accion = data.accion;
-    });
-
-    var urlTpdt = "metamodelo/tpdt-lv-list.action";
-
-    $http.get(urlTpdt).success(function(data) {
-        $scope.tpdtList = data.lvList;
     });
 
     $scope.save = function() {
