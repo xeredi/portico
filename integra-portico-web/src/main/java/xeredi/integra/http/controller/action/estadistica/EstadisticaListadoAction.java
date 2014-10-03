@@ -14,12 +14,12 @@ import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.Entidad;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -131,7 +131,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      *
      * @return the autps
      */
-    public List<LabelValueVO> getAutpList() {
+    public List<ParametroVO> getAutpList() {
         final ParametroBO prmtBO = new ParametroBO();
         final Set<Long> tpprIds = new HashSet<>();
 

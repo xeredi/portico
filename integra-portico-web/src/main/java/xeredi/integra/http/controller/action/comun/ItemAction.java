@@ -12,12 +12,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,7 +35,7 @@ public abstract class ItemAction extends BaseAction {
     protected ACCION_EDICION accion;
 
     /** The label values map. */
-    protected Map<Long, List<LabelValueVO>> labelValuesMap;
+    protected Map<Long, List<ParametroVO>> labelValuesMap;
 
     /**
      * {@inheritDoc}
@@ -59,7 +59,7 @@ public abstract class ItemAction extends BaseAction {
      *
      * @return the label values map
      */
-    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+    public final Map<Long, List<ParametroVO>> getLabelValuesMap() {
         return labelValuesMap;
     }
 

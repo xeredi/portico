@@ -16,6 +16,7 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
@@ -26,7 +27,6 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
@@ -49,7 +49,7 @@ public final class ServicioAction extends ItemAction {
     private final Date fechaVigencia;
 
     /** The subps. */
-    private List<LabelValueVO> subpList;
+    private List<ParametroVO> subpList;
 
     /** The ssrv map. */
     private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
@@ -306,7 +306,7 @@ public final class ServicioAction extends ItemAction {
      *
      * @return the subps
      */
-    public List<LabelValueVO> getSubpList() {
+    public List<ParametroVO> getSubpList() {
         return subpList;
     }
 

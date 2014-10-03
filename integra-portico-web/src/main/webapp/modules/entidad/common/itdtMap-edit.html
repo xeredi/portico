@@ -43,10 +43,10 @@
  -->
                 </div>
                 <select ng-switch-when="CR" ng-model="item.itdtMap[tpdtId].cadena"
-                    ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm">
+                    ng-required="item.itdtMap[tpdtId].obligatorio"
+                    ng-options="cdrf.valor as cdrf.valor for cdrf in enti.entdMap[tpdtId].tpdt.cdrfList"
+                    class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}"
-                        ng-selected="cdrf.valor == item.itdtMap[tpdtId].cadena">{{cdrf.valor}}</option>
                 </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
                     ng-model="item.itdtMap[tpdtId].cadena" ng-required="item.itdtMap[tpdtId].obligatorio"
                     class="form-control input-sm" />
@@ -54,11 +54,10 @@
                     ng-model="item.itdtMap[tpdtId].cadena" ng-required="item.itdtMap[tpdtId].obligatorio"
                     class="form-control input-sm">{{item.itdtMap[tpdtId].cadena}}</textarea>
                 <select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
-                    ng-model="item.itdtMap[tpdtId].prmt.id" ng-required="item.itdtMap[tpdtId].obligatorio"
+                    ng-model="item.itdtMap[tpdtId].prmt" ng-required="item.itdtMap[tpdtId].obligatorio"
+                    ng-options="prmt.etiqueta for prmt in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id] track by prmt.id"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
-                        value="{{labelValue.value}}" ng-selected="labelValue.value == item.itdtMap[tpdtId].prmt.id">{{labelValue.label}}</option>
                 </select>
                 <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm"
                     ng-controller="prmtsLupaCtrl">

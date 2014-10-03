@@ -219,7 +219,7 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
 
         $http.get(url).success(function(data) {
             $scope.enti = data.enti;
-            $scope.availabeLanguages = data.availabeLanguages;
+            $scope.availableLanguages = data.availableLanguages;
         });
     }
 
@@ -264,7 +264,7 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
 
         $http.get(url).success(function(data) {
             $scope.enti = data.enti;
-            $scope.availabeLanguages = data.availabeLanguages;
+            $scope.availableLanguages = data.availableLanguages;
         });
     }
 
@@ -309,7 +309,7 @@ module.controller("prmtDuplicateController", function($scope, $http, $location, 
 
         $http.get(url).success(function(data) {
             $scope.enti = data.enti;
-            $scope.availabeLanguages = data.availabeLanguages;
+            $scope.availableLanguages = data.availableLanguages;
         });
     }
 

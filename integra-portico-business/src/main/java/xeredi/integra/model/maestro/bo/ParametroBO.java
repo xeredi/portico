@@ -33,7 +33,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames;
-import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -642,7 +641,7 @@ public class ParametroBO {
      *            the idioma
      * @return the map
      */
-    public final Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
+    public final Map<Long, List<ParametroVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
             final String idioma) {
         Preconditions.checkNotNull(tpprIds);
         Preconditions.checkNotNull(fechaReferencia);
@@ -660,20 +659,14 @@ public class ParametroBO {
             prmtCriterioVO.setFechaVigencia(fechaReferencia);
 
             final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
-            final Map<Long, List<LabelValueVO>> map = new HashMap<>();
+            final Map<Long, List<ParametroVO>> map = new HashMap<>();
 
             for (final ParametroVO prmtVO : prmtList) {
                 if (!map.containsKey(prmtVO.getEntiId())) {
-                    map.put(prmtVO.getEntiId(), new ArrayList<LabelValueVO>());
+                    map.put(prmtVO.getEntiId(), new ArrayList<ParametroVO>());
                 }
 
-                String label = prmtVO.getParametro();
-
-                if (prmtVO.getI18n() != null && prmtVO.getI18n().getTexto() != null) {
-                    label += " - " + prmtVO.getI18n().getTexto();
-                }
-
-                map.get(prmtVO.getEntiId()).add(new LabelValueVO(label, prmtVO.getId()));
+                map.get(prmtVO.getEntiId()).add(prmtVO);
             }
 
             return map;
