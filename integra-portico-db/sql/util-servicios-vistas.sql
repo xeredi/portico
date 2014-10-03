@@ -6,7 +6,17 @@ WHERE srdt_srvc_pk = 1819001
 ;
 
 
-
+SELECT * 
+FROM 
+	tbl_estadistica_estd
+	INNER JOIN tbl_periodo_proceso_pepr ON
+		pepr_pk = estd_pepr_pk
+	INNER JOIN tbl_parametro_prmt ON
+		prmt_pk = estd_subp_pk
+	LEFT JOIN tbl_parametro_version_prvr ON
+		prvr_prmt_pk = prmt_pk
+		AND pepr_freferencia BETWEEN prvr_fini AND COALESCE(prvr_ffin, pepr_freferencia)
+LIMIT 100;
 
 
 
@@ -24,7 +34,7 @@ SELECT *
 						FROM tbl_parametro_version_prvr
 						WHERE 
 							prvr_prmt_pk = esdt_prmt_pk
-							AND srdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srdt_fref)
+							AND esdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, esdt_fref)
 					)
 					AND p18n_idioma = 'es_ES'
 			)
@@ -38,15 +48,15 @@ SELECT *
 						SELECT prvr_pk
 						FROM tbl_parametro_version_prvr
 						WHERE 
-							prvr_prmt_pk = srdt_prmt_pk
-							AND srdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srdt_fref)
+							prvr_prmt_pk = esdt_prmt_pk
+							AND esdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, esdt_fref)
 					)
-					AND prdt_tpdt_pk = tppr_tpdt_pk
+					AND esdt_tpdt_pk = tppr_tpdt_pk
 			)
 		END
 	) AS p18n_texto
 FROM vw_estadistica_dato_esdt
-WHERE srdt_srvc_pk = 1819001
+WHERE esdt_estd_pk = 1919026
 ;
 
 

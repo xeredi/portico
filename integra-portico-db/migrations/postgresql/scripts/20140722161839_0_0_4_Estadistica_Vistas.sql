@@ -2,6 +2,20 @@
 -- Migration SQL that makes the change goes here.
 
 
+CREATE VIEW portico.vw_estadistica_estd AS
+	SELECT *
+	FROM
+		portico.tbl_estadistica_estd
+		INNER JOIN portico.tbl_periodo_proceso_pepr ON
+			pepr_pk = estd_pepr_pk
+		INNER JOIN portico.tbl_parametro_prmt ON
+			prmt_pk = estd_subp_pk
+;
+
+GRANT SELECT ON portico.vw_estadistica_estd TO portico
+;
+
+
 
 CREATE VIEW portico.vw_estadistica_dato_esdt AS
 	SELECT *
@@ -40,4 +54,5 @@ GRANT SELECT ON portico.vw_estadistica_dato_esdt TO portico
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DROP VIEW portico.vw_estadistica_estd;
 DROP VIEW portico.vw_estadistica_dato_esdt;

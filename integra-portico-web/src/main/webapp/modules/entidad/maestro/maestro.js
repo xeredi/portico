@@ -451,7 +451,8 @@ module.controller("sprmCreateController", function($scope, $http, $location, $ro
     }
 
     function findItem() {
-        var url = "maestro/sprm-create.action?item.entiId=" + $routeParams.entiId + "&item.prmtId=" + $routeParams.prmtId;
+        var url = "maestro/sprm-create.action?item.entiId=" + $routeParams.entiId + "&item.prmtId="
+                + $routeParams.prmtId;
 
         $http.get(url).success(function(data) {
             $scope.item = data.item;

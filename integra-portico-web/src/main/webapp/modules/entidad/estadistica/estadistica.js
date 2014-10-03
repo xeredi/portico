@@ -22,7 +22,7 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "cdmsDetailController"
     })
 
-    .when("/estadistica/estd/grid/:entiId/:peprId", {
+    .when("/estadistica/estd/grid/:entiId/:peprId/:autpId", {
         title : 'estd_grid',
         templateUrl : "modules/entidad/estadistica/estd-grid.html",
         controller : "estdGridController",
@@ -48,6 +48,8 @@ module.controller("peprGridController", function($scope, $http, $location, $rout
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.peprList.page;
                 $scope.peprList = data.peprList;
@@ -57,8 +59,8 @@ module.controller("peprGridController", function($scope, $http, $location, $rout
                 map["page"] = data.peprList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }
@@ -68,6 +70,17 @@ module.controller("peprGridController", function($scope, $http, $location, $rout
     }
 
     $scope.filter = function() {
+        var url = "estadistica/pepr-filter.action";
+
+        $http.get(url).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $scope.autpList = data.autpList;
+                $scope.limits = data.limits;
+            }
+        });
+
         $scope.showFilter = true;
     }
 
@@ -124,6 +137,7 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
     $scope.itemCriterio.entiId = $routeParams.entiId;
     $scope.itemCriterio.pepr = {};
     $scope.itemCriterio.pepr.id = $routeParams.peprId;
+    $scope.itemCriterio.pepr.autpId = $routeParams.autpId;
 
     function search(itemCriterio, page, limit) {
         var url = "estadistica/estd-list.action";
@@ -155,6 +169,19 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
     }
 
     $scope.filter = function() {
+        var url = "estadistica/estd-filter.action?itemCriterio.entiId=" + $routeParams.entiId
+                + "&itemCriterio.pepr.id=" + $routeParams.peprId + "&itemCriterio.pepr.autpId=" + $routeParams.autpId;
+
+        $http.get(url).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $scope.labelValuesMap = data.labelValuesMap;
+                $scope.subpList = data.subpList;
+                $scope.limits = data.limits;
+            }
+        });
+
         $scope.showFilter = true;
     }
 

@@ -5,6 +5,15 @@
     <div class="btn-toolbar" role="toolbar">
         <form>
             <fieldset>
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label>{{'estd_subp' | translate}}</label> <select ng-model="itemCriterio.subpId"
+                            ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
+                            <option value="" />
+                        </select>
+                    </div>
+                </div>
+
                 <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
 
                 <div class="btn-group">
@@ -49,7 +58,7 @@
                     <td><a href="#/estadistica/estd/detail/{{enti.id}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.pepr.etiqueta}}</td>
-                    <td>{{item.subp.parametro}}</td>
+                    <td>{{item.subp.etiqueta}}</td>
                     <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
                         nowrap="nowrap"><span ng-switch-when="BO"><i
                             ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i

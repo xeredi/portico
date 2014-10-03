@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.estadistica;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,16 +11,19 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.util.Entidad;
+import xeredi.integra.model.util.TipoDato;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -39,6 +43,9 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     /** The estd criterio form. */
     private EstadisticaCriterioVO itemCriterio;
 
+    /** The subp list. */
+    private final List<ParametroVO> subpList = new ArrayList<>();
+
     /**
      * {@inheritDoc}
      */
@@ -57,6 +64,9 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     public String filtro() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(itemCriterio.getPepr());
+        Preconditions.checkNotNull(itemCriterio.getPepr().getId());
+        Preconditions.checkNotNull(itemCriterio.getPepr().getAutpId());
 
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
@@ -78,6 +88,9 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(itemCriterio.getPepr());
+        Preconditions.checkNotNull(itemCriterio.getPepr().getId());
+        Preconditions.checkNotNull(itemCriterio.getPepr().getAutpId());
 
         final EstadisticaBO estdBO = new EstadisticaBO();
 
@@ -105,12 +118,15 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     protected final void loadLabelValuesMap() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(itemCriterio.getPepr());
+        Preconditions.checkNotNull(itemCriterio.getPepr().getId());
+        Preconditions.checkNotNull(itemCriterio.getPepr().getAutpId());
         Preconditions.checkNotNull(itemCriterio.getIdioma());
         Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
 
-        if (labelValuesMap == null) {
-            labelValuesMap = new HashMap<>();
+        final ParametroBO prmtBO = new ParametroBO();
 
+        {
             final TipoEstadisticaVO enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
 
             // Carga de los labelValues (Si los hay)
@@ -126,27 +142,29 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = new ParametroBO();
-
+                labelValuesMap = new HashMap<>();
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
                         getItemCriterio().getIdioma()));
             }
         }
-    }
 
-    /**
-     * Gets the autps.
-     *
-     * @return the autps
-     */
-    public List<ParametroVO> getAutpList() {
-        final ParametroBO prmtBO = new ParametroBO();
-        final Set<Long> tpprIds = new HashSet<>();
+        {
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+            final ItemDatoCriterioVO itdt = new ItemDatoCriterioVO();
+            final ParametroVO autp = new ParametroVO();
 
-        tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
+            autp.setId(itemCriterio.getPepr().getAutpId());
 
-        return prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getIdioma()).get(
-                Entidad.AUTORIDAD_PORTUARIA.getId());
+            itdt.setTpdtId(TipoDato.AUT_PORT.getId());
+            itdt.setPrmt(autp);
+
+            prmtCriterioVO.setEntiId(Entidad.AUTORIDAD_PORTUARIA.getId());
+            prmtCriterioVO.getItdtMap().put(itdt.getTpdtId(), itdt);
+            prmtCriterioVO.setIdioma(itemCriterio.getIdioma());
+            prmtCriterioVO.setFechaVigencia(itemCriterio.getFechaVigencia());
+
+            subpList.addAll(prmtBO.selectList(prmtCriterioVO));
+        }
     }
 
     /**
@@ -174,6 +192,15 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<EstadisticaVO> getItemList() {
         return itemList;
+    }
+
+    /**
+     * Gets the subp list.
+     *
+     * @return the subp list
+     */
+    public List<ParametroVO> getSubpList() {
+        return subpList;
     }
 
 }

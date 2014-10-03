@@ -44,10 +44,6 @@
                 ng-options="cdrf.valor as cdrf.valor for cdrf in enti.entdMap[tpdtId].tpdt.cdrfList"
                 class="form-control input-sm">
                 <option value="" />
-<!--
-                <option ng-repeat="cdrf in enti.entdMap[tpdtId].tpdt.cdrfList" value="{{cdrf.valor}}"
-                    ng-selected="cdrf.valor == itemCriterio.itdtMap[tpdtId].cadena">{{cdrf.valor}}</option>
- -->
             </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
                 ng-model="itemCriterio.itdtMap[tpdtId].cadena" class="form-control input-sm" />
             <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"

@@ -18,6 +18,8 @@ import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoListadoAction.
@@ -38,6 +40,9 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
 
     /** The pepr criterio form. */
     private PeriodoProcesoCriterioVO peprCriterio;
+
+    /** The subps. */
+    private List<ParametroVO> autpList;
 
     /**
      * Instantiates a new periodo proceso listado action.
@@ -65,6 +70,8 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      */
     @Action("pepr-filter")
     public String filtro() {
+        loadLabelValuesMap();
+
         return SUCCESS;
     }
 
@@ -84,6 +91,24 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
         peprList = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
         return SUCCESS;
+    }
+
+    /**
+     * Load label values map.
+     */
+    protected final void loadLabelValuesMap() {
+        Preconditions.checkNotNull(peprCriterio);
+
+        final ParametroBO prmtBO = new ParametroBO();
+
+        {
+            final Set<Long> tpprIds = new HashSet<>();
+
+            tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
+
+            autpList = prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getIdioma()).get(
+                    Entidad.AUTORIDAD_PORTUARIA.getId());
+        }
     }
 
     // get / set
@@ -135,18 +160,12 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
     }
 
     /**
-     * Gets the autps.
+     * Gets the autp list.
      *
-     * @return the autps
+     * @return the autp list
      */
-    public List<ParametroVO> getAutps() {
-        final ParametroBO prmtBO = new ParametroBO();
-        final Set<Long> tpprIds = new HashSet<>();
-
-        tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
-
-        return prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getIdioma()).get(
-                Entidad.AUTORIDAD_PORTUARIA.getId());
+    public List<ParametroVO> getAutpList() {
+        return autpList;
     }
 
 }

@@ -13,6 +13,9 @@ public final class EstadisticaCriterioVO extends ItemCriterioVO {
     /** The pepr id. */
     private PeriodoProcesoCriterioVO pepr;
 
+    /** The subp id. */
+    private Long subpId;
+
     /**
      * {@inheritDoc}
      */
@@ -38,5 +41,24 @@ public final class EstadisticaCriterioVO extends ItemCriterioVO {
      */
     public void setPepr(final PeriodoProcesoCriterioVO value) {
         pepr = value;
+    }
+
+    /**
+     * Gets the subp id.
+     *
+     * @return the subp id
+     */
+    public Long getSubpId() {
+        return subpId;
+    }
+
+    /**
+     * Sets the subp id.
+     *
+     * @param value
+     *            the new subp id
+     */
+    public void setSubpId(final Long value) {
+        subpId = value;
     }
 }

@@ -13,7 +13,7 @@
         <result column="pepr_cdms_generado" property="cdmsGenerado" />
 
         <association property="autp" javaType="ParametroVO">
-            <id column="prmt_pk" property="id" />
+            <id column="pepr_autp_pk" property="id" />
             <result column="prmt_parametro" property="parametro" />
         </association>
     </resultMap>

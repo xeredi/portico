@@ -9,8 +9,12 @@
         <result column="pepr_freferencia" property="fref" />
 
         <association property="subp" javaType="ParametroVO">
-            <result column="estd_subp_pk" property="id" />
-            <result column="estd_subp" property="parametro" />
+            <result column="prmt_pk" property="id" />
+            <result column="prmt_parametro" property="parametro" />
+
+            <association property="i18n" javaType="ParametroI18nVO">
+                <result column="p18n_texto" property="texto" />
+            </association>
         </association>
 
         <association property="pepr" javaType="PeriodoProcesoVO">
@@ -27,43 +31,58 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-    <![CDATA[
-    SELECT
-        estd.estd_pk, estd.estd_tpes_pk, estd.estd_pepr_pk, estd.estd_subp_pk
-        , (SELECT prmt.prmt_parametro FROM tbl_parametro_prmt prmt
-            WHERE prmt.prmt_pk = estd.estd_subp_pk) AS estd_subp
-		, pepr.pepr_autp_pk, pepr.pepr_anio, pepr.pepr_mes, pepr.pepr_freferencia
-        , (SELECT prmt.prmt_parametro FROM tbl_parametro_prmt prmt
-            WHERE prmt.prmt_pk = pepr.pepr_autp_pk) AS pepr_autp
-    FROM tbl_estadistica_estd estd
-    	INNER JOIN tbl_periodo_proceso_pepr pepr ON
-    		pepr_pk = estd_pepr_pk
-    ]]>
+        <![CDATA[
+        SELECT *
+            , (SELECT prmt_parametro FROM tbl_parametro_prmt
+                WHERE prmt_pk = pepr_autp_pk) AS pepr_autp
+        ]]>
+        <if test="idioma != null">
+        <![CDATA[
+        	, (
+        		SELECT p18n_texto
+        		FROM tbl_parametro_i18n_p18n
+        		WHERE
+        			p18n_prvr_pk = ANY (
+        				SELECT prvr_pk
+        				FROM tbl_parametro_version_prvr
+        				WHERE
+        					prvr_prmt_pk = estd_subp_pk
+        					AND pepr_freferencia BETWEEN prvr_fini AND COALESCE(prvr_ffin, pepr_freferencia)
+        			)
+        			AND p18n_idioma = #{idioma}
+            ) AS p18n_texto
+        ]]>
+        </if>
+        FROM vw_estadistica_estd
     </sql>
 
     <sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
         COUNT(1)
-    FROM tbl_estadistica_estd estd
+    FROM
+        vw_estadistica_estd
     ]]>
     </sql>
 
     <sql id="SelectWhere">
         <where>
             <if test="id != null">
-                AND estd.estd_pk = #{id}
+                AND estd_pk = #{id}
             </if>
             <if test="entiId != null">
-                AND estd.estd_tpes_pk = #{entiId}
+                AND estd_tpes_pk = #{entiId}
             </if>
             <if test="pepr != null">
                 <if test="pepr.id != null">
-                    AND estd.estd_pepr_pk = #{pepr.id}
+                    AND estd_pepr_pk = #{pepr.id}
                 </if>
                 <if test="pepr.autpId != null">
-                    AND estd.estd_subp_pk = #{pepr.autpId}
+                    AND pepr_autp_pk = #{pepr.autpId}
                 </if>
+            </if>
+            <if test="subpId != null">
+                AND estd_subp_pk = #{subpId}
             </if>
             <if test="itdtMap != null and !itdtMap.empty">
                 <foreach collection="itdtMap" index="key" item="itdt">
