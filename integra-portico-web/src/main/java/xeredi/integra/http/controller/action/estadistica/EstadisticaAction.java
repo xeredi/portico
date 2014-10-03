@@ -9,8 +9,6 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
-import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
@@ -26,9 +24,6 @@ public final class EstadisticaAction extends ItemAction {
 
     /** The estd. */
     private EstadisticaVO item;
-
-    /** The tpes. */
-    private TipoEstadisticaVO enti;
 
     /**
      * {@inheritDoc}
@@ -59,7 +54,6 @@ public final class EstadisticaAction extends ItemAction {
         estdCriterioVO.setIdioma(getIdioma());
 
         item = estdBO.selectObject(estdCriterioVO);
-        enti = TipoEstadisticaProxy.select(item.getEntiId());
 
         return SUCCESS;
     }
@@ -90,14 +84,6 @@ public final class EstadisticaAction extends ItemAction {
      */
     public final void setItem(final EstadisticaVO item) {
         this.item = item;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final TipoEstadisticaVO getEnti() {
-        return enti;
     }
 
 }

@@ -33,9 +33,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3980612360200744744L;
 
-    /** The enti. */
-    private TipoEstadisticaVO enti;
-
     /** The estds. */
     private PaginatedList<EstadisticaVO> itemList;
 
@@ -77,8 +74,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
-
-        enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
 
         final EstadisticaBO estdBO = new EstadisticaBO();
 
@@ -171,15 +166,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<EstadisticaVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public TipoEstadisticaVO getEnti() {
-        return enti;
     }
 
 }

@@ -29,7 +29,7 @@ module.config([ "$routeProvider", function($routeProvider) {
         reloadOnSearch : false
     })
 
-    .when("/estadistica/estd/detail/:itemId", {
+    .when("/estadistica/estd/detail/:entiId/:itemId", {
         title : 'estd_detail',
         templateUrl : "modules/entidad/estadistica/estd-detail.html",
         controller : "estdDetailController"
@@ -136,7 +136,6 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
             if (data.actionErrors.length == 0) {
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
-                $scope.enti = data.enti;
 
                 var map = {};
 
@@ -165,15 +164,36 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
         $scope.showFilter = false;
     }
 
+    function findEnti() {
+        var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+        });
+    }
+
+    findEnti();
     search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("estdDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "estadistica/estd-detail.action?item.id=" + $routeParams.itemId;
+    function findEnti() {
+        var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
 
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.item = data.item;
-        $scope.fechaVigencia = data.fechaVigencia;
-    });
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+        });
+    }
+
+    function findItem() {
+        var url = "estadistica/estd-detail.action?item.id=" + $routeParams.itemId;
+
+        $http.get(url).success(function(data) {
+            $scope.item = data.item;
+            $scope.fechaVigencia = data.fechaVigencia;
+        });
+    }
+
+    findEnti();
+    findItem();
 });

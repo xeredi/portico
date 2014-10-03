@@ -8,8 +8,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
@@ -30,9 +28,6 @@ public final class EscalaAction extends ItemAction {
 
     /** The item. */
     private ServicioVO item;
-
-    /** The enti. */
-    private TipoServicioVO enti;
 
     /** The notificado. */
     private boolean notificado;
@@ -63,7 +58,6 @@ public final class EscalaAction extends ItemAction {
         final EscalaBO escaBO = new EscalaBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
 
         notificado = item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
                 && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
@@ -103,14 +97,6 @@ public final class EscalaAction extends ItemAction {
     @Override
     public Date getFechaVigencia() {
         return item == null ? Calendar.getInstance().getTime() : item.getFref();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TipoServicioVO getEnti() {
-        return enti;
     }
 
     /**

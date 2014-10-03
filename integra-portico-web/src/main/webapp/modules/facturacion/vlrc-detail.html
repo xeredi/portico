@@ -12,7 +12,7 @@
         <div class="col-md-2 form-group">
             <label>{{'vlrc_srvc' | translate}}</label>
             <p class="form-control-static">
-                <a href="#/servicio/srvc/detail/{{vlrc.srvc.id}}">{{vlrc.srvc.etiqueta}}</a>
+                <a href="#/servicio/srvc/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}">{{vlrc.srvc.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-3 form-group">
@@ -39,7 +39,7 @@
         <div class="col-md-3 form-group">
             <label>{{'vlrc_pagador' | translate}}</label>
             <p class="form-control-static">
-                <a href="#/maestro/prmt/detail/{{vlrc.pagador.id}}/{{vlrc.fref}}">{{vlrc.pagador.etiqueta}}</a>
+                <a href="#/maestro/prmt/detail/{{vlrc.pagador.entiId}}/{{vlrc.pagador.id}}/{{vlrc.fref}}">{{vlrc.pagador.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-2 form-group">

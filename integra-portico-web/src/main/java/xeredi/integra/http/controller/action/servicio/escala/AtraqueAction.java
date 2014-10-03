@@ -30,9 +30,6 @@ public final class AtraqueAction extends ItemAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6685825766813769667L;
 
-    /** The enti. */
-    private TipoSubservicioVO enti;
-
     /** The item. */
     private SubservicioVO item;
 
@@ -81,7 +78,7 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
         item.getItdtMap()
-        .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
@@ -89,8 +86,6 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
 
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-
-        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         return SUCCESS;
     }
@@ -159,8 +154,6 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-
         return SUCCESS;
     }
 
@@ -227,8 +220,6 @@ public final class AtraqueAction extends ItemAction {
 
         item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-
-        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         return SUCCESS;
     }
@@ -307,8 +298,6 @@ public final class AtraqueAction extends ItemAction {
 
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-
         return SUCCESS;
     }
 
@@ -370,8 +359,6 @@ public final class AtraqueAction extends ItemAction {
         }
 
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-
-        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         return SUCCESS;
     }
@@ -439,7 +426,7 @@ public final class AtraqueAction extends ItemAction {
             item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
             item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
             item.getItdtMap()
-            .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
             item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
                     item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
             item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
@@ -450,8 +437,6 @@ public final class AtraqueAction extends ItemAction {
 
         item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
         item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-
-        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         return SUCCESS;
     }
@@ -494,14 +479,6 @@ public final class AtraqueAction extends ItemAction {
      */
     public void setItem(final SubservicioVO value) {
         item = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TipoSubservicioVO getEnti() {
-        return enti;
     }
 
     /**

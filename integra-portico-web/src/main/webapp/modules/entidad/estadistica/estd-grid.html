@@ -9,8 +9,8 @@
         </div>
     </div>
 
-    <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
-        ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+    <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page" ng-change="pageChanged()"
+        class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{itemList.count}} resultado(s)</span>
@@ -26,7 +26,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in itemList.list">
-                    <td><a href="#/estadistica/estd/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a href="#/estadistica/estd/detail/{{enti.id}}/{{item.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.pepr.etiqueta}}</td>
                     <td>{{item.subp.parametro}}</td>
                     <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
