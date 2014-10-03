@@ -43,9 +43,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
     /** The subps. */
     private List<LabelValueVO> subpList;
 
-    /** The enti. */
-    private TipoServicioVO enti;
-
     /**
      * {@inheritDoc}
      */
@@ -89,8 +86,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
         }
-
-        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
 
         final ServicioBO srvcBO = new ServicioBO();
 
@@ -187,15 +182,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     public PaginatedList<ServicioVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public TipoServicioVO getEnti() {
-        return enti;
     }
 
 }

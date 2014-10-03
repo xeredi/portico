@@ -80,7 +80,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in itemList.list">
-                        <td><a href="#/servicio/srvc/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                        <td><a href="#/servicio/srvc/detail/{{enti.id}}/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                         <td>{{item.etiqueta}}</td>
                         <td ng-if="enti.tpdtEstado">{{item.estado}}</td>
                         <td ng-if="enti.temporal">{{item.fini | date:('fmt_date' | translate)}}</td>

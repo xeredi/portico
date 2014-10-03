@@ -1,9 +1,7 @@
 package xeredi.integra.http.controller.action.servicio;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -41,17 +39,8 @@ public final class SubservicioAction extends ItemAction {
     /** The srvc form. */
     private SubservicioVO item;
 
-    /** The tpsr. */
-    private TipoSubservicioVO enti;
-
-    /** The tpss list. */
-    private List<TipoSubservicioVO> entiHijasList;
-
     /** The ssrv map. */
     private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
-
-    /** The enti padres list. */
-    private List<TipoSubservicioVO> entiPadresList;
 
     /** The item padres map. */
     private Map<Long, SubservicioVO> itemPadresMap;
@@ -84,15 +73,15 @@ public final class SubservicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "ssrv-detail")
+    @Action("ssrv-detail")
     public String detalle() throws InstanceNotFoundException {
         final SubservicioBO ssrvBO = new SubservicioBO();
 
         accion = ACCION_EDICION.edit;
         item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-        entiHijasList = new ArrayList<>();
         itemHijosMap = new HashMap<>();
+
+        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (enti.getEntiHijasList() != null) {
             for (final Long entiId : enti.getEntiHijasList()) {
@@ -108,7 +97,6 @@ public final class SubservicioAction extends ItemAction {
 
                 itemHijosMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO,
                         PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-                entiHijasList.add(TipoSubservicioProxy.select(entiId));
             }
         }
 
@@ -125,13 +113,14 @@ public final class SubservicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "ssrv-create")
+    @Action("ssrv-create")
     public String alta() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (item.getSrvc() != null && item.getSrvc().getId() != null) {
             final ServicioBO srvcBO = new ServicioBO();
@@ -139,17 +128,7 @@ public final class SubservicioAction extends ItemAction {
             item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
         }
 
-        if (enti.getEntiPadresList() != null) {
-            entiPadresList = new ArrayList<>();
-
-            for (final Long entiId : enti.getEntiPadresList()) {
-                if (!entiId.equals(enti.getTpsrId())) {
-                    entiPadresList.add(TipoSubservicioProxy.select(entiId));
-                }
-            }
-        }
-
-        loadLabelValuesMap();
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -161,7 +140,7 @@ public final class SubservicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "ssrv-edit")
+    @Action("ssrv-edit")
     public String modificar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -171,9 +150,10 @@ public final class SubservicioAction extends ItemAction {
         final SubservicioBO ssrvBO = new SubservicioBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
 
-        loadLabelValuesMap();
+        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -185,16 +165,17 @@ public final class SubservicioAction extends ItemAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "ssrv-duplicate")
+    @Action("ssrv-duplicate")
     public String duplicar() throws InstanceNotFoundException {
         accion = ACCION_EDICION.duplicate;
 
         final SubservicioBO ssrvBO = new SubservicioBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
 
-        loadLabelValuesMap();
+        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -204,13 +185,13 @@ public final class SubservicioAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "ssrv-save")
+    @Action("ssrv-save")
     public String guardar() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
             if (item.getSrvc() == null || item.getSrvc().getId() == null) {
@@ -263,7 +244,7 @@ public final class SubservicioAction extends ItemAction {
                 ssrvBO.update(item);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(ErrorCode.E00008.name(), new String[] { enti.getNombre(),
-                        item.getId().toString() }));
+                    item.getId().toString() }));
             }
 
             break;
@@ -309,23 +290,6 @@ public final class SubservicioAction extends ItemAction {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final TipoSubservicioVO getEnti() {
-        return enti;
-    }
-
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public final List<TipoSubservicioVO> getEntiHijasList() {
-        return entiHijasList;
-    }
-
-    /**
      * Gets the item hijos map.
      *
      * @return the item hijos map
@@ -351,15 +315,6 @@ public final class SubservicioAction extends ItemAction {
      */
     public void setItemPadresMap(final Map<Long, SubservicioVO> value) {
         itemPadresMap = value;
-    }
-
-    /**
-     * Gets the enti padres list.
-     *
-     * @return the enti padres list
-     */
-    public List<TipoSubservicioVO> getEntiPadresList() {
-        return entiPadresList;
     }
 
 }

@@ -35,9 +35,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
     /** The criterio vo. */
     private ParametroCriterioVO itemCriterio;
 
-    /** The enti. */
-    private TipoParametroVO enti;
-
     /**
      * {@inheritDoc}
      */
@@ -84,8 +81,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());
-
-        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
         final ParametroBO prmtBO = new ParametroBO();
 
@@ -151,15 +146,6 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<ParametroVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public TipoParametroVO getEnti() {
-        return enti;
     }
 
 }

@@ -103,7 +103,7 @@ public final class BlAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action("mabl-anular-popup")
+    @Action("mabl-anular")
     public String anular() throws InstanceNotFoundException {
         final BlBO mablBO = new BlBO();
 

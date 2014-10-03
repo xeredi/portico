@@ -1,9 +1,7 @@
 package xeredi.integra.http.controller.action.maestro;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -22,9 +20,7 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.pagination.PaginatedList;
@@ -42,12 +38,6 @@ public final class ParametroAction extends ItemAction {
 
     /** The prmt . */
     private ParametroVO item;
-
-    /** The tppr. */
-    private TipoParametroVO enti;
-
-    /** The tpst list. */
-    private List<TipoSubparametroVO> entiHijasList;
 
     /** The sprm map. */
     private Map<Long, PaginatedList<SubparametroVO>> itemHijosMap;
@@ -87,11 +77,11 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
-
-        enti = TipoParametroProxy.select(item.getEntiId());
         p18nMap = new HashMap<>();
 
-        loadLabelValuesMap();
+        final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
+
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -117,13 +107,14 @@ public final class ParametroAction extends ItemAction {
             prmtCriterioVO.setIdioma(getIdioma());
 
             item = prmtBO.selectObject(prmtCriterioVO);
-            enti = TipoParametroProxy.select(item.getEntiId());
+
+            final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
 
-            loadLabelValuesMap();
+            loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
         }
@@ -152,13 +143,14 @@ public final class ParametroAction extends ItemAction {
 
         try {
             item = prmtBO.selectObject(prmtCriterioVO);
-            enti = TipoParametroProxy.select(item.getEntiId());
+
+            final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
 
-            loadLabelValuesMap();
+            loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
         }
@@ -179,7 +171,7 @@ public final class ParametroAction extends ItemAction {
 
         final ParametroBO prmtBO = new ParametroBO();
 
-        enti = TipoParametroProxy.select(item.getEntiId());
+        final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
@@ -304,7 +296,7 @@ public final class ParametroAction extends ItemAction {
 
             item.setFref(fechaVigencia);
 
-            enti = TipoParametroProxy.select(item.getEntiId());
+            final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
@@ -313,7 +305,6 @@ public final class ParametroAction extends ItemAction {
             if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
                 final SubparametroBO sprmBO = new SubparametroBO();
 
-                entiHijasList = new ArrayList<>();
                 itemHijosMap = new HashMap<>();
 
                 for (final Long tpspId : enti.getEntiHijasList()) {
@@ -325,7 +316,6 @@ public final class ParametroAction extends ItemAction {
                     sprmCriterioVO.setFechaVigencia(fechaVigencia);
                     sprmCriterioVO.setIdioma(getIdioma());
 
-                    entiHijasList.add(TipoSubparametroProxy.select(tpspId));
                     itemHijosMap.put(tpspId, sprmBO.selectList(sprmCriterioVO,
                             PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
                 }
@@ -338,14 +328,6 @@ public final class ParametroAction extends ItemAction {
     }
 
     // get / set
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TipoParametroVO getEnti() {
-        return enti;
-    }
 
     /**
      * {@inheritDoc}
@@ -400,15 +382,6 @@ public final class ParametroAction extends ItemAction {
      */
     public void setFechaVigencia(final Date value) {
         fechaVigencia = value;
-    }
-
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public final List<TipoSubparametroVO> getEntiHijasList() {
-        return entiHijasList;
     }
 
     /**

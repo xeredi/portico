@@ -36,9 +36,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     /** The srvc criterio form. */
     private SubservicioCriterioVO itemCriterio;
 
-    /** The enti. */
-    private TipoSubservicioVO enti;
-
     /**
      * {@inheritDoc}
      */
@@ -82,8 +79,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
         }
-
-        enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
 
         final SubservicioBO ssrvBO = new SubservicioBO();
 
@@ -159,15 +154,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
      */
     public PaginatedList<SubservicioVO> getItemList() {
         return itemList;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public TipoSubservicioVO getEnti() {
-        return enti;
     }
 
 }

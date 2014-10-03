@@ -32,9 +32,6 @@ public final class SubparametroAction extends ItemAction {
     /** The item. */
     private SubparametroVO item;
 
-    /** The enti. */
-    private TipoSubparametroVO enti;
-
     /** The fecha vigencia. */
     private Date fechaVigencia;
 
@@ -69,10 +66,11 @@ public final class SubparametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getPrmtId());
 
         accion = ACCION_EDICION.create;
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+
+        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
         // item = SubparametroVO.newInstance(enti);
 
-        loadLabelValuesMap();
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -100,9 +98,9 @@ public final class SubparametroAction extends ItemAction {
         sprmCriterioVO.setIdioma(getIdioma());
 
         item = sprmBO.selectObject(sprmCriterioVO);
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
 
-        loadLabelValuesMap();
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -130,9 +128,9 @@ public final class SubparametroAction extends ItemAction {
         sprmCriterioVO.setIdioma(getIdioma());
 
         item = sprmBO.selectObject(sprmCriterioVO);
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
 
-        loadLabelValuesMap();
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -149,7 +147,7 @@ public final class SubparametroAction extends ItemAction {
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
@@ -262,8 +260,6 @@ public final class SubparametroAction extends ItemAction {
 
         item.setFref(fechaVigencia);
 
-        enti = TipoSubparametroProxy.select(item.getEntiId());
-
         return SUCCESS;
     }
 
@@ -285,14 +281,6 @@ public final class SubparametroAction extends ItemAction {
      */
     public void setFechaVigencia(final Date value) {
         fechaVigencia = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TipoSubparametroVO getEnti() {
-        return enti;
     }
 
     /**

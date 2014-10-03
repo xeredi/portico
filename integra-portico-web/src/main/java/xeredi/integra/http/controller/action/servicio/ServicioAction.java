@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.servicio;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,9 +17,7 @@ import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
@@ -48,17 +45,11 @@ public final class ServicioAction extends ItemAction {
     /** The srvc form. */
     private ServicioVO item;
 
-    /** The tpsr. */
-    private TipoServicioVO enti;
-
     /** The fecha vigencia. */
     private final Date fechaVigencia;
 
     /** The subps. */
     private List<LabelValueVO> subpList;
-
-    /** The tpss list. */
-    private List<TipoSubservicioVO> entiHijasList;
 
     /** The ssrv map. */
     private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
@@ -97,10 +88,10 @@ public final class ServicioAction extends ItemAction {
         final SubservicioBO ssrvBO = new SubservicioBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
+
+        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
 
         if (enti.getEntiHijasList() != null) {
-            entiHijasList = new ArrayList<>();
             itemHijosMap = new HashMap<>();
 
             for (final Long entiId : enti.getEntiHijasList()) {
@@ -115,7 +106,6 @@ public final class ServicioAction extends ItemAction {
 
                 itemHijosMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO,
                         PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-                entiHijasList.add(TipoSubservicioProxy.select(entiId));
             }
         }
 
@@ -133,7 +123,8 @@ public final class ServicioAction extends ItemAction {
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
-        enti = TipoServicioProxy.select(item.getEntiId());
+
+        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
 
         if (!enti.getTemporal()) {
             item.setFref(Calendar.getInstance().getTime());
@@ -141,7 +132,7 @@ public final class ServicioAction extends ItemAction {
 
         item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
-        loadLabelValuesMap();
+        loadLabelValuesMap(enti);
         loadSubpList();
 
         return SUCCESS;
@@ -164,9 +155,10 @@ public final class ServicioAction extends ItemAction {
         final ServicioBO srvcBO = new ServicioBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
 
-        loadLabelValuesMap();
+        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
+
+        loadLabelValuesMap(enti);
         loadSubpList();
 
         return SUCCESS;
@@ -189,9 +181,10 @@ public final class ServicioAction extends ItemAction {
         final ServicioBO srvcBO = new ServicioBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
 
-        loadLabelValuesMap();
+        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
+
+        loadLabelValuesMap(enti);
         loadSubpList();
 
         return SUCCESS;
@@ -208,7 +201,7 @@ public final class ServicioAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
-        enti = TipoServicioProxy.select(item.getEntiId());
+        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
             if (item.getSubp() == null || item.getSubp().getId() == null) {
@@ -285,8 +278,6 @@ public final class ServicioAction extends ItemAction {
      */
     @Action("srvc-remove")
     public String borrar() throws InstanceNotFoundException {
-        enti = TipoServicioProxy.select(item.getEntiId());
-
         final ServicioBO srvcBO = new ServicioBO();
 
         srvcBO.delete(item.getId());
@@ -341,25 +332,8 @@ public final class ServicioAction extends ItemAction {
      * {@inheritDoc}
      */
     @Override
-    public TipoServicioVO getEnti() {
-        return enti;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Date getFechaVigencia() {
         return fechaVigencia;
-    }
-
-    /**
-     * Gets the enti hijas list.
-     *
-     * @return the enti hijas list
-     */
-    public List<TipoSubservicioVO> getEntiHijasList() {
-        return entiHijasList;
     }
 
     /**

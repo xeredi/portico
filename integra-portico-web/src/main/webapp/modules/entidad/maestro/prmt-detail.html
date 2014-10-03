@@ -5,7 +5,7 @@
             <button data-ng-click="edit()" class="btn btn-default">
                 <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
             </button>
-            <a class="btn btn-default" href="#/maestro/prmt/duplicate/{{item.prvr.id}}"><i
+            <a class="btn btn-default" href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.prvr.id}}"><i
                 class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
             <button data-ng-click="remove()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
@@ -44,7 +44,7 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in entiHijasList" heading="{{entiHija.nombre | uppercase}}" active="tab.active"
+</tab> <tab ng-repeat="entiHija in subentiList" heading="{{entiHija.nombre | uppercase}}" active="tab.active"
     disabled="tab.disabled">
 <fieldset>
     <div class="btn-toolbar" role="toolbar">
@@ -71,7 +71,8 @@
 
         <tbody>
             <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list">
-                <td><a href="#/maestro/sprm/detail/{{itemHijo.id}}/{{item.fref}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a href="#/maestro/sprm/detail/{{entiHija.id}}/{{itemHijo.id}}/{{item.fref}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{itemHijo.prmtAsociado.etiqueta}}</td>
 
                 <td>{{itemHijo.spvr.fini | date:('fmt_date' | translate)}}</td>

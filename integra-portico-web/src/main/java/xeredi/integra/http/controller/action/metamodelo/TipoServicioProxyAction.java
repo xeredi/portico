@@ -6,59 +6,58 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
-import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
-import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 
 import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class TipoParametroProxyAction.
+ * The Class TipoServicioProxyAction.
  */
-public final class TipoParametroProxyAction extends BaseAction {
+public final class TipoServicioProxyAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -756347154813875782L;
+    private static final long serialVersionUID = -8493685261172580773L;
 
     /** The tppr. */
-    private TipoParametroVO enti;
+    private TipoServicioVO enti;
 
     /** The include dependencies. */
     private boolean includeDependencies;
 
     /** The tpsp list. */
-    private final List<TipoSubparametroVO> subentiList = new ArrayList<>();
+    private final List<TipoSubservicioVO> subentiList = new ArrayList<>();
 
     /**
      * Detalle.
      *
      * @return the string
      */
-    @Action("tppr-proxy-detail")
+    @Action("tpsr-proxy-detail")
     public String detalle() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        enti = TipoParametroProxy.select(enti.getId());
+        enti = TipoServicioProxy.select(enti.getId());
 
         if (includeDependencies && enti.getEntiHijasList() != null) {
             for (final Long tpspId : enti.getEntiHijasList()) {
-                subentiList.add(TipoSubparametroProxy.select(tpspId));
+                subentiList.add(TipoSubservicioProxy.select(tpspId));
             }
         }
 
         return SUCCESS;
     }
 
-    // get / set
     /**
      * Gets the enti.
      *
      * @return the enti
      */
-    public TipoParametroVO getEnti() {
+    public TipoServicioVO getEnti() {
         return enti;
     }
 
@@ -66,19 +65,10 @@ public final class TipoParametroProxyAction extends BaseAction {
      * Sets the enti.
      *
      * @param value
-     *            the enti
+     *            the new enti
      */
-    public void setEnti(final TipoParametroVO value) {
+    public void setEnti(final TipoServicioVO value) {
         enti = value;
-    }
-
-    /**
-     * Gets the subenti list.
-     *
-     * @return the subenti list
-     */
-    public List<TipoSubparametroVO> getSubentiList() {
-        return subentiList;
     }
 
     /**
@@ -98,6 +88,15 @@ public final class TipoParametroProxyAction extends BaseAction {
      */
     public void setIncludeDependencies(final boolean value) {
         includeDependencies = value;
+    }
+
+    /**
+     * Gets the subenti list.
+     *
+     * @return the subenti list
+     */
+    public List<TipoSubservicioVO> getSubentiList() {
+        return subentiList;
     }
 
 }

@@ -43,19 +43,19 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "srvcCreateController"
     })
 
-    .when("/servicio/srvc/detail/:srvcId", {
+    .when("/servicio/srvc/detail/:entiId/:srvcId", {
         title : 'srvc_detail',
         templateUrl : "modules/entidad/servicio/srvc-detail.html",
         controller : "srvcDetailController"
     })
 
-    .when("/servicio/srvc/edit/:srvcId", {
+    .when("/servicio/srvc/edit/:entiId/:srvcId", {
         title : 'srvc_edit',
         templateUrl : "modules/entidad/servicio/srvc-edit.html",
         controller : "srvcEditController"
     })
 
-    .when("/servicio/srvc/duplicate/:srvcId", {
+    .when("/servicio/srvc/duplicate/:entiId/:srvcId", {
         title : 'srvc_duplicate',
         templateUrl : "modules/entidad/servicio/srvc-edit.html",
         controller : "srvcDuplicateController"
@@ -79,7 +79,6 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
                 $scope.itemCriterio = data.itemCriterio;
-                $scope.enti = data.enti;
                 $scope.limit = data.limit;
 
                 var map = {};
@@ -123,30 +122,21 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
         $scope.showFilter = false;
     }
 
+    function findEnti() {
+        var url = "metamodelo/tpsr-proxy-detail.action?enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+        });
+    }
+
+    findEnti();
     search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("srvcDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/srvc-detail.action";
-
-    url += "?item.id=" + $routeParams.srvcId;
-
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.item = data.item;
-        $scope.fechaVigencia = data.fechaVigencia;
-        $scope.entiHijasList = data.entiHijasList;
-        $scope.itemHijosMap = data.itemHijosMap;
-
-        $scope.currentSubpage = {};
-
-        for ( var key in $scope.itemHijosMap) {
-            $scope.currentSubpage[key] = $scope.itemHijosMap[key].page;
-        }
-    });
-
     $scope.edit = function() {
-        $location.path("/servicio/srvc/edit/" + $scope.item.id).replace();
+        $location.path("/servicio/srvc/edit/" + $scope.item.entiId + "/" + $scope.item.id).replace();
     }
 
     $scope.remove = function() {
@@ -182,10 +172,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mani-bloquear.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -194,10 +184,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mani-completar.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -206,10 +196,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mani-iniciar.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -218,10 +208,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mani-anular.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -232,19 +222,39 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
             break;
         }
     }
+
+    function findItem() {
+        var url = "servicio/srvc-detail.action";
+
+        url += "?item.id=" + $routeParams.srvcId;
+
+        $http.get(url).success(function(data) {
+            $scope.item = data.item;
+            $scope.fechaVigencia = data.fechaVigencia;
+            $scope.itemHijosMap = data.itemHijosMap;
+
+            $scope.currentSubpage = {};
+
+            for ( var key in $scope.itemHijosMap) {
+                $scope.currentSubpage[key] = $scope.itemHijosMap[key].page;
+            }
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpsr-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+            $scope.subentiList = data.subentiList;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller("srvcCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/srvc-create.action?item.entiId=" + $routeParams.entiId;
-
-    $http.get(url).success(function(data) {
-        $scope.accion = data.accion;
-        $scope.item = data.item;
-        $scope.enti = data.enti;
-        $scope.labelValuesMap = data.labelValuesMap;
-        $scope.subpList = data.subpList;
-    });
-
     $scope.save = function() {
         var url = "servicio/srvc-save.action";
 
@@ -252,10 +262,10 @@ module.controller("srvcCreateController", function($scope, $http, $location, $ro
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
-                $location.path("/servicio/srvc/detail/" + data.item.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+                $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
             }
         });
     }
@@ -263,18 +273,32 @@ module.controller("srvcCreateController", function($scope, $http, $location, $ro
     $scope.cancel = function() {
         window.history.back();
     }
+
+    function findItem() {
+        var url = "servicio/srvc-create.action?item.entiId=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.accion = data.accion;
+            $scope.item = data.item;
+            $scope.labelValuesMap = data.labelValuesMap;
+            $scope.subpList = data.subpList;
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpsr-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+            $scope.subentiList = data.subentiList;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller("srvcEditController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/srvc-edit.action?item.id=" + $routeParams.srvcId;
-
-    $http.get(url).success(function(data) {
-        $scope.accion = data.accion;
-        $scope.item = data.item;
-        $scope.enti = data.enti;
-        $scope.labelValuesMap = data.labelValuesMap;
-    });
-
     $scope.save = function() {
         var url = "servicio/srvc-save.action";
 
@@ -283,7 +307,7 @@ module.controller("srvcEditController", function($scope, $http, $location, $rout
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/servicio/srvc/detail/" + data.item.id).replace();
+                $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -291,21 +315,33 @@ module.controller("srvcEditController", function($scope, $http, $location, $rout
     }
 
     $scope.cancel = function() {
-        $location.path("/servicio/srvc/detail/" + $scope.item.id).replace();
+        $location.path("/servicio/srvc/detail/" + $scope.item.entiId + "/" + $scope.item.id).replace();
     }
+
+    function findItem() {
+        var url = "servicio/srvc-edit.action?item.id=" + $routeParams.srvcId;
+
+        $http.get(url).success(function(data) {
+            $scope.accion = data.accion;
+            $scope.item = data.item;
+            $scope.labelValuesMap = data.labelValuesMap;
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpsr-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+            $scope.subentiList = data.subentiList;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller("srvcDuplicateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/srvc-duplicate.action?item.id=" + $routeParams.srvcId;
-
-    $http.get(url).success(function(data) {
-        $scope.accion = data.accion;
-        $scope.item = data.item;
-        $scope.enti = data.enti;
-        $scope.labelValuesMap = data.labelValuesMap;
-        $scope.subpList = data.subpList;
-    });
-
     $scope.save = function() {
         var url = "servicio/srvc-save.action";
 
@@ -314,7 +350,7 @@ module.controller("srvcDuplicateController", function($scope, $http, $location, 
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/servicio/srvc/detail/" + data.item.id).replace();
+                $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -324,6 +360,29 @@ module.controller("srvcDuplicateController", function($scope, $http, $location, 
     $scope.cancel = function() {
         window.history.back();
     }
+
+    function findItem() {
+        var url = "servicio/srvc-duplicate.action?item.id=" + $routeParams.srvcId;
+
+        $http.get(url).success(function(data) {
+            $scope.accion = data.accion;
+            $scope.item = data.item;
+            $scope.labelValuesMap = data.labelValuesMap;
+            $scope.subpList = data.subpList;
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpsr-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+            $scope.subentiList = data.subentiList;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller('srvcLupaCtrl', function($http, $scope) {
@@ -362,19 +421,19 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "ssrvCreateController"
     })
 
-    .when("/servicio/ssrv/detail/:ssrvId", {
+    .when("/servicio/ssrv/detail/:entiId/:ssrvId", {
         title : 'ssrv_detail',
         templateUrl : "modules/entidad/servicio/ssrv-detail.html",
         controller : "ssrvDetailController"
     })
 
-    .when("/servicio/ssrv/edit/:ssrvId", {
+    .when("/servicio/ssrv/edit/:entiId/:ssrvId", {
         title : 'ssrv_edit',
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
         controller : "ssrvEditController"
     })
 
-    .when("/servicio/ssrv/duplicate/:ssrvId", {
+    .when("/servicio/ssrv/duplicate/:entiId/:ssrvId", {
         title : 'ssrv_duplicate',
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
         controller : "ssrvDuplicateController"
@@ -398,7 +457,6 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
                 $scope.itemCriterio = data.itemCriterio;
-                $scope.enti = data.enti;
                 $scope.limit = data.limit;
 
                 var map = {};
@@ -441,23 +499,21 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
         $scope.showFilter = false;
     }
 
+    function findEnti() {
+        var url = "metamodelo/tpss-proxy-detail.action?enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+        });
+    }
+
+    findEnti();
     search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
 module.controller("ssrvDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/ssrv-detail.action";
-
-    url += "?item.id=" + $routeParams.ssrvId;
-
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.item = data.item;
-        $scope.entiHijasList = data.entiHijasList;
-        $scope.itemHijosMap = data.itemHijosMap;
-    });
-
     $scope.edit = function() {
-        $location.path("/servicio/ssrv/edit/" + $scope.item.id).replace();
+        $location.path("/servicio/ssrv/edit/" + $scope.item.entiId + "/" + $scope.item.id).replace();
     }
 
     $scope.remove = function() {
@@ -484,10 +540,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -496,10 +552,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-completar.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -508,10 +564,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -520,10 +576,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -537,10 +593,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -549,10 +605,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -561,10 +617,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -578,10 +634,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -590,10 +646,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -602,10 +658,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
-                    $route.reload();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
+                    findItem();
                 }
             });
 
@@ -616,23 +672,32 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             break;
         }
     }
+
+    function findItem() {
+        var url = "servicio/ssrv-detail.action";
+
+        url += "?item.id=" + $routeParams.ssrvId;
+
+        $http.get(url).success(function(data) {
+            $scope.item = data.item;
+            $scope.itemHijosMap = data.itemHijosMap;
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpss-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+            $scope.subentiList = data.subentiList;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller("ssrvCreateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/ssrv-create.action?item.entiId=" + $routeParams.entiId;
-
-    if ($routeParams.srvcId) {
-        url += "&item.srvc.id=" + $routeParams.srvcId;
-    }
-
-    $http.get(url).success(function(data) {
-        $scope.item = data.item;
-        $scope.enti = data.enti;
-        $scope.entiPadresList = data.entiPadresList;
-        $scope.labelValuesMap = data.labelValuesMap;
-        $scope.accion = data.accion;
-    });
-
     $scope.save = function() {
         var url = "servicio/ssrv-save.action";
 
@@ -651,18 +716,35 @@ module.controller("ssrvCreateController", function($scope, $http, $location, $ro
     $scope.cancel = function() {
         window.history.back();
     }
+
+    function findItem() {
+        var url = "servicio/ssrv-create.action?item.entiId=" + $routeParams.entiId;
+
+        if ($routeParams.srvcId) {
+            url += "&item.srvc.id=" + $routeParams.srvcId;
+        }
+
+        $http.get(url).success(function(data) {
+            $scope.item = data.item;
+            $scope.labelValuesMap = data.labelValuesMap;
+            $scope.accion = data.accion;
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpss-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+            $scope.superentiList = data.superentiList;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller("ssrvEditController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/ssrv-edit.action?item.id=" + $routeParams.ssrvId;
-
-    $http.get(url).success(function(data) {
-        $scope.item = data.item;
-        $scope.enti = data.enti;
-        $scope.labelValuesMap = data.labelValuesMap;
-        $scope.accion = data.accion;
-    });
-
     $scope.save = function() {
         var url = "servicio/ssrv-save.action";
 
@@ -671,7 +753,7 @@ module.controller("ssrvEditController", function($scope, $http, $location, $rout
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/servicio/ssrv/detail/" + data.item.id).replace();
+                $location.path("/servicio/ssrv/detail/" + data.item.entiId + "/" + data.item.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -679,20 +761,32 @@ module.controller("ssrvEditController", function($scope, $http, $location, $rout
     }
 
     $scope.cancel = function() {
-        $location.path("/servicio/ssrv/detail/" + $scope.item.id).replace();
+        $location.path("/servicio/ssrv/detail/" + $scope.item.entiId + "/" + $scope.item.id).replace();
     }
+
+    function findItem() {
+        var url = "servicio/ssrv-edit.action?item.id=" + $routeParams.ssrvId;
+
+        $http.get(url).success(function(data) {
+            $scope.item = data.item;
+            $scope.labelValuesMap = data.labelValuesMap;
+            $scope.accion = data.accion;
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpss-proxy-detail.action?enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller("ssrvDuplicateController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "servicio/ssrv-duplicate.action?item.id=" + $routeParams.ssrvId;
-
-    $http.get(url).success(function(data) {
-        $scope.item = data.item;
-        $scope.enti = data.enti;
-        $scope.labelValuesMap = data.labelValuesMap;
-        $scope.accion = data.accion;
-    });
-
     $scope.save = function() {
         var url = "servicio/ssrv-save.action";
 
@@ -701,7 +795,7 @@ module.controller("ssrvDuplicateController", function($scope, $http, $location, 
             accion : $scope.accion
         }).success(function(data) {
             if (data.actionErrors.length == 0) {
-                $location.path("/servicio/ssrv/detail/" + data.item.id).replace();
+                $location.path("/servicio/ssrv/detail/" + data.item.entiId + "/" + data.item.id).replace();
             } else {
                 $scope.actionErrors = data.actionErrors;
             }
@@ -711,6 +805,27 @@ module.controller("ssrvDuplicateController", function($scope, $http, $location, 
     $scope.cancel = function() {
         window.history.back();
     }
+
+    function findItem() {
+        var url = "servicio/ssrv-duplicate.action?item.id=" + $routeParams.ssrvId;
+
+        $http.get(url).success(function(data) {
+            $scope.item = data.item;
+            $scope.labelValuesMap = data.labelValuesMap;
+            $scope.accion = data.accion;
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tpss-proxy-detail.action?enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+        });
+    }
+
+    findEnti();
+    findItem();
 });
 
 module.controller('ssrvLupaCtrl', function($http, $scope) {

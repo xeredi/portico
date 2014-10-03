@@ -65,16 +65,19 @@ public abstract class ItemAction extends BaseAction {
 
     /**
      * Load label values map.
+     *
+     * @param enti
+     *            the enti
      */
-    protected final void loadLabelValuesMap() {
+    protected final void loadLabelValuesMap(final EntidadVO enti) {
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
 
-            if (getEnti().getEntdMap() != null) {
-                for (final EntidadTipoDatoVO entdVO : getEnti().getEntdMap().values()) {
+            if (enti.getEntdMap() != null) {
+                for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
                     if (entdVO.getTpdt().getTpht() != TipoHtml.F && entdVO.getTpdt().getEnti() != null
                             && entdVO.getTpdt().getEnti().getId() != null) {
                         tpprIds.add(entdVO.getTpdt().getEnti().getId());
@@ -108,13 +111,6 @@ public abstract class ItemAction extends BaseAction {
     public final void setAccion(final ACCION_EDICION value) {
         accion = value;
     }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public abstract EntidadVO getEnti();
 
     /**
      * Gets the item.
