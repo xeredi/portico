@@ -1,28 +1,36 @@
-<fieldset ng-if="showFilter">
-    <div class="row-fluid">
-        <div class="col-md-1 form-group">
-            <label>{{"tppr_codigo" | translate}}</label> <input type="text" ng-model="entiCriterio.codigo"
-                class="form-control input-sm" maxlength="4" />
-        </div>
-        <div class="col-md-5 form-group">
-            <label>{{"tppr_nombre" | translate}}</label> <input type="text" ng-model="entiCriterio.nombre"
-                class="form-control input-sm" maxlength="50" />
-        </div>
-    </div>
+<div ng-if="showFilter">
+    <form>
+        <fieldset>
+            <div class="row-fluid">
+                <div class="col-md-1 form-group">
+                    <label>{{"tppr_codigo" | translate}}</label> <input type="text" ng-model="entiCriterio.codigo"
+                        class="form-control input-sm" />
+                </div>
+                <div class="col-md-5 form-group">
+                    <label>{{"tppr_nombre" | translate}}</label> <input type="text" ng-model="entiCriterio.nombre"
+                        class="form-control input-sm" maxlength="50" />
+                </div>
+            </div>
+        </fieldset>
 
-    <div class="btn-group">
-        <button data-ng-click="search()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
-        </button>
-        <button data-ng-click="cancelSearch()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
-        </button>
-    </div>
-</fieldset>
-
-<fieldset>
-    <div ng-if="!showFilter" class="btn-toolbar" role="toolbar">
         <div class="btn-group">
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            </button>
+        </div>
+    </form>
+</div>
+
+<div ng-hide="showFilter">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <pagination total-items="entiList.count" items-per-page="entiList.limit" ng-model="page"
+                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+
             <a class="btn btn-default" href="#/metamodelo/tppr/create"><i class="glyphicon glyphicon-file"></i>
                 {{'boton_alta' | translate}}</a>
             <button data-ng-click="filter()" class="btn btn-default">
@@ -30,9 +38,6 @@
             </button>
         </div>
     </div>
-
-    <pagination total-items="entiList.count" items-per-page="entiList.limit" ng-model="page" ng-change="pageChanged()"
-        class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{entiList.count}} resultado(s)</span>
@@ -75,4 +80,4 @@
             </tbody>
         </table>
     </div>
-</fieldset>
+</div>

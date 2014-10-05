@@ -41,15 +41,16 @@
 
 <div ng-hide="showFilter">
     <div class="btn-toolbar" role="toolbar">
+        <pagination total-items="peprList.count" items-per-page="peprList.limit" ng-model="currentPage"
+            ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+
         <div class="btn-group">
             <button data-ng-click="filter()" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
             </button>
         </div>
     </div>
-
-    <pagination total-items="peprList.count" items-per-page="peprList.limit" ng-model="currentPage"
-        ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{peprList.count}} resultado(s)</span>

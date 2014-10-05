@@ -4,7 +4,7 @@
 
     <fieldset>
         <div class="row-fluid">
-            <div class="col-md-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label>{{"entd_tpdt_nombre" | translate}}</label> <select ng-if="accion == 'create'"
                     ng-model="entd.tpdt.id" ng-options="labelValue.value as labelValue.label for labelValue in tpdtList"
                     class="form-control input-sm">
@@ -12,30 +12,30 @@
                 </select>
                 <p ng-if="accion != 'create'" class="form-control-static">{{entd.tpdt.nombre}}</p>
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label>{{"entd_etiqueta" | translate}}</label> <input type="text" ng-model="entd.etiqueta"
                     class="form-control input-sm" />
             </div>
         </div>
 
         <div class="row-fluid">
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label> {{"entd_grupo" | translate}} </label> <input type="text" ng-model="entd.grupo"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label> {{"entd_fila" | translate}} </label> <input type="text" ng-model="entd.fila"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label> {{"entd_orden" | translate}} </label> <input type="text" ng-model="entd.orden"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label> {{"entd_span" | translate}} </label> <input type="text" ng-model="entd.span"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label> {{"entd_obligatorio" | translate}} </label> <select ng-model="entd.obligatorio"
                     class="form-control input-sm">
                     <option value="" />
@@ -43,7 +43,7 @@
                     <option value="false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label> {{"entd_gridable" | translate}} </label> <select ng-model="entd.gridable"
                     class="form-control input-sm">
                     <option value="" />
@@ -51,7 +51,7 @@
                     <option value="false">{{'fmt_false' | translate}}</option>
                 </select>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label> {{"entd_filtrable" | translate}} </label> <select ng-model="entd.filtrable"
                     class="form-control input-sm">
                     <option value="" />

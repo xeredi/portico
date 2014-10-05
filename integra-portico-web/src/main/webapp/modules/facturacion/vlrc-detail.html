@@ -115,7 +115,8 @@
 
                 <tbody>
                     <tr ng-repeat="vlri in vlriList">
-                        <td><a href="#/maestro/prmt/detail/{{vlri.impuesto.id}}/{{vlrc.fref}}">{{vlri.impuesto.etiqueta}}</a></td>
+                        <td><a
+                            href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlrc.fref}}">{{vlri.impuesto.etiqueta}}</a></td>
                         <td class="number">{{vlri.porcentaje | number:2}}</td>
                         <td class="number">{{vlri.importeBase | number:2}}</td>
                         <td class="number">{{vlri.importeImpuesto | number:2}}</td>
@@ -170,7 +171,7 @@
                     <tr ng-repeat="vlrl in vlrlList.list">
                         <td><a href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
-                        <td>{{vlrl.rgla.codigo}}</td>
+                        <td nowrap="nowrap">{{vlrl.rgla.codigo}}</td>
                         <td>{{vlrl.rgla.rglv.tipo}}</td>
                         <td class="number">{{vlrl.importeBase | number:2}}</td>
                         <td class="number">{{vlrl.importe | number:2}}</td>

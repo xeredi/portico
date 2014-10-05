@@ -41,15 +41,6 @@ label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 	padding: 0px;
 }
 
-table {
-	margin-bottom: 15px;
-	margin-top: 10px;
-}
-
-.tab-content {
-	padding-top: 10px;
-}
-
 .pagination {
 	margin: 5px;
 }
@@ -58,9 +49,24 @@ table {
 	cursor: pointer;
 }
 
+.pagination {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+table {
+	margin-bottom: 15px;
+}
+
 table a, .table a {
 	color: #DF691A;
 	text-decoration: none;
+}
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th,
+	.table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td,
+	.table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
+	padding: 4px;
 }
 
 .tab-pane {
@@ -69,11 +75,16 @@ table a, .table a {
 }
 
 .tab-content {
+/*	padding-top: 10px;*/
+}
+
+.btn-toolbar {
 	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 form {
-/*	background-color: #4e5d6c;*/
+	/*	background-color: #4e5d6c;*/
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 0px;
@@ -87,6 +98,7 @@ fieldset {
 legend {
 	font-size: 12px;
 	font-weight: bold;
+	padding-top: 10px;
 	margin-bottom: 5px;
 }
 

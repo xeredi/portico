@@ -1,18 +1,18 @@
 <tabset type="pills"> <tab heading="{{enti.nombre | uppercase}}">
-<fieldset>
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
-            </button>
-            <a class="btn btn-default" href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.prvr.id}}"><i
-                class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
-            <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
-            </button>
-        </div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button data-ng-click="edit()" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+        </button>
+        <a class="btn btn-default" href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.prvr.id}}"><i
+            class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
+        <button data-ng-click="remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+        </button>
     </div>
+</div>
 
+<fieldset>
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label>{{'prmt_parametro' | translate}}</label>
@@ -46,14 +46,14 @@
 
 </tab> <tab ng-repeat="entiHija in subentiList" heading="{{entiHija.nombre | uppercase}}" active="tab.active"
     disabled="tab.disabled">
-<fieldset>
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <a class="btn btn-default" href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i
-                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
-        </div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i
+            class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
     </div>
+</div>
 
+<fieldset>
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>

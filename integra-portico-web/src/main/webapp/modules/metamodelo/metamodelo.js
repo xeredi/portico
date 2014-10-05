@@ -63,6 +63,8 @@ metamodelo.controller("tpdtGridController", function($scope, $http, $location, $
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.tpdtList.page;
                 $scope.tpdtList = data.tpdtList;
@@ -72,8 +74,8 @@ metamodelo.controller("tpdtGridController", function($scope, $http, $location, $
                 map["page"] = data.tpdtList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }
@@ -126,10 +128,10 @@ metamodelo.controller("tpdtCreateController", function($scope, $http, $location,
             tpdt : $scope.tpdt,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpdt/detail/" + data.tpdt.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -156,10 +158,10 @@ metamodelo.controller("tpdtDetailController", function($scope, $http, $location,
                 var url = "metamodelo/tpdt-remove.action?tpdt.id=" + $scope.tpdt.id;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -196,10 +198,10 @@ metamodelo.controller("tpdtEditController", function($scope, $http, $location, $
             tpdt : $scope.tpdt,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpdt/detail/" + data.tpdt.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -224,10 +226,10 @@ metamodelo.controller("cdrfCreateController", function($scope, $http, $location,
             cdrf : $scope.cdrf,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/cdrf/detail/" + data.cdrf.tpdtId + "/" + data.cdrf.valor).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -255,10 +257,10 @@ metamodelo.controller("cdrfDetailController", function($scope, $http, $location,
                         + $scope.cdrf.valor;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -281,10 +283,10 @@ metamodelo.controller("cdrfEditController", function($scope, $http, $location, $
             cdrf : $scope.cdrf,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/cdrf/detail/" + data.cdrf.tpdtId + "/" + data.cdrf.valor).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -357,6 +359,8 @@ metamodelo.controller("tpprGridController", function($scope, $http, $location, $
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.entiList.page;
                 $scope.entiList = data.entiList;
@@ -366,8 +370,8 @@ metamodelo.controller("tpprGridController", function($scope, $http, $location, $
                 map["page"] = data.entiList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }
@@ -409,10 +413,10 @@ metamodelo.controller("tpprDetailController", function($scope, $http, $location,
                 var url = "metamodelo/tppr-remove.action?enti.id=" + $scope.enti.id;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -442,10 +446,10 @@ metamodelo.controller("tpprEditController", function($scope, $http, $location, $
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tppr/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -477,10 +481,10 @@ metamodelo.controller("tpprCreateController", function($scope, $http, $location,
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tppr/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -507,10 +511,10 @@ metamodelo.controller("tpspDetailController", function($scope, $http, $location,
                 var url = "metamodelo/tpsp-remove.action?enti.id=" + $scope.enti.id;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -539,10 +543,10 @@ metamodelo.controller("tpspEditController", function($scope, $http, $location, $
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpsp/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -573,10 +577,10 @@ metamodelo.controller("tpspCreateController", function($scope, $http, $location,
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpsp/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -649,6 +653,8 @@ metamodelo.controller("tpsrGridController", function($scope, $http, $location, $
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.entiList.page;
                 $scope.entiList = data.entiList;
@@ -658,8 +664,8 @@ metamodelo.controller("tpsrGridController", function($scope, $http, $location, $
                 map["page"] = data.entiList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }
@@ -702,10 +708,10 @@ metamodelo.controller("tpsrDetailController", function($scope, $http, $location,
                 var url = "metamodelo/tpsr-remove.action?enti.id=" + $scope.enti.id;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -734,10 +740,10 @@ metamodelo.controller("tpsrEditController", function($scope, $http, $location, $
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpsr/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -768,10 +774,10 @@ metamodelo.controller("tpsrCreateController", function($scope, $http, $location,
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpsr/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -800,10 +806,10 @@ metamodelo.controller("tpssDetailController", function($scope, $http, $location,
                 var url = "metamodelo/tpss-remove.action?enti.id=" + $scope.enti.id;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -832,10 +838,10 @@ metamodelo.controller("tpssEditController", function($scope, $http, $location, $
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpss/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -866,10 +872,10 @@ metamodelo.controller("tpssCreateController", function($scope, $http, $location,
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpss/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -924,6 +930,8 @@ metamodelo.controller("tpesGridController", function($scope, $http, $location, $
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.entiList.page;
                 $scope.entiList = data.entiList;
@@ -933,8 +941,8 @@ metamodelo.controller("tpesGridController", function($scope, $http, $location, $
                 map["page"] = data.entiList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }
@@ -976,10 +984,10 @@ metamodelo.controller("tpesDetailController", function($scope, $http, $location,
                 var url = "metamodelo/tpes-remove.action?enti.id=" + $scope.enti.id;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -1002,10 +1010,10 @@ metamodelo.controller("tpesEditController", function($scope, $http, $location, $
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpes/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -1030,10 +1038,10 @@ metamodelo.controller("tpesCreateController", function($scope, $http, $location,
             enti : $scope.enti,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpes/detail/" + data.enti.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -1088,10 +1096,10 @@ metamodelo.controller("entdDetailController", function($scope, $http, $location,
                         + $scope.entd.tpdt.id;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -1119,11 +1127,11 @@ metamodelo.controller("entdEditController",
                     accion : $scope.accion
                 }).success(
                         function(data) {
+                            $scope.actionErrors = data.actionErrors;
+
                             if (data.actionErrors.length == 0) {
                                 $location.path("/metamodelo/entd/detail/" + data.entd.entiId + "/" + data.entd.tpdt.id)
                                         .replace();
-                            } else {
-                                $scope.actionErrors = data.actionErrors;
                             }
                         });
             }
@@ -1150,10 +1158,10 @@ metamodelo.controller("entdCreateController", function($scope, $http, $location,
             entd : $scope.entd,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/entd/detail/" + data.entd.entiId + "/" + data.entd.tpdt.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -1207,10 +1215,10 @@ metamodelo.controller("enacDetailController", function($scope, $http, $location,
                         + $scope.enac.path;
 
                 $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
                     if (data.actionErrors.length == 0) {
                         window.history.back();
-                    } else {
-                        $scope.actionErrors = data.actionErrors;
                     }
                 });
             }
@@ -1233,10 +1241,10 @@ metamodelo.controller("enacEditController", function($scope, $http, $location, $
             enac : $scope.enac,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/enac/detail/" + data.enac.entiId + "/" + data.enac.path).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -1261,10 +1269,10 @@ metamodelo.controller("enacCreateController", function($scope, $http, $location,
             enac : $scope.enac,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/enac/detail/" + data.enac.entiId + "/" + data.enac.path).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }

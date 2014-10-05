@@ -43,6 +43,10 @@
 <div ng-hide="showFilter">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
+            <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
+                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+
             <a class="btn btn-default" href="#/maestro/prmt/create/{{enti.id}}"><i class="glyphicon glyphicon-file"></i>
                 {{'boton_alta' | translate}}</a>
             <button data-ng-click="filter()" class="btn btn-default">
@@ -51,12 +55,9 @@
         </div>
     </div>
 
-    <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page" ng-change="pageChanged()"
-        class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{itemList.count}} resultado(s)</span>
-
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>

@@ -35,15 +35,16 @@
 
 <div ng-hide="showFilter">
     <div class="btn-toolbar" role="toolbar">
+        <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
+            ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+
         <div class="btn-group">
             <button data-ng-click="filter()" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
             </button>
         </div>
     </div>
-
-    <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page" ng-change="pageChanged()"
-        class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{itemList.count}} resultado(s)</span>
@@ -61,8 +62,8 @@
                 <tr ng-repeat="item in itemList.list">
                     <td><a href="#/estadistica/estd/detail/{{enti.id}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{item.pepr.etiqueta}}</td>
-                    <td>{{item.subp.etiqueta}}</td>
+                    <td nowrap="nowrap">{{item.pepr.etiqueta}}</td>
+                    <td nowrap="nowrap">{{item.subp.etiqueta}}</td>
                     <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
                         nowrap="nowrap"><span ng-switch-when="BO"><i
                             ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i

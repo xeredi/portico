@@ -14,63 +14,63 @@
     </div>
 
     <div class="row-fluid">
-        <div class="col-md-2 form-group">
+        <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label> {{"enti_codigo" | translate}} </label>
             <p class="form-control-static">{{enti.codigo}}</p>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label> {{"enti_nombre" | translate}} </label>
             <p class="form-control-static">{{enti.nombre}}</p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label> {{"enti_tipo" | translate}} </label>
             <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
         </div>
     </div>
     <div class="row-fluid">
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label> {{"enti_cmd_alta" | translate}} </label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdAlta"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label> {{"enti_cmd_baja" | translate}} </label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdBaja"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label> {{"enti_cmd_edicion" | translate}} </label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdEdicion"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label> {{"enti_cmd_duplicado" | translate}} </label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdDuplicado"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label> {{"enti_temporal" | translate}} </label>
             <p class="form-control-static">
                 <i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.temporal"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label> {{"enti_facturable" | translate}} </label>
             <p class="form-control-static">
                 <i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.facturable"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label> {{"enti_tpdt_estado" | translate}} </label>
             <p class="form-control-static">
                 <a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a>
