@@ -1,4 +1,10 @@
+<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<ul>
+    <li ng-repeat="error in actionErrors">{{error}}</li>
+</ul>
+</alert>
 
+<tabset type="pills"> <tab heading="{{enti.nombre | uppercase}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
@@ -13,8 +19,6 @@
 </div>
 
 <fieldset>
-    <legend>{{enti.nombre | uppercase}}</legend>
-
     <div class="row-fluid">
         <div class="col-sm-4 col-md-2 col-md-2 form-group">
             <label>{{enti.tpprAsociado.nombre}}</label>
@@ -32,3 +36,4 @@
 </fieldset>
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+</tab></tabset>

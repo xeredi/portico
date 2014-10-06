@@ -6,7 +6,7 @@ body {
 	font-family: Verdana, sans-serif;
 }
 
-label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
+p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 	.form-control-static, .bootstrap-datetimepicker-widget,
 	.table-condensed, .dropdown-menu, .list-group, .nav-tabs,
 	.tt-dropdown-menu, .typeahead, .pagination-sm>li>a {
@@ -16,6 +16,13 @@ label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 .brand {
 	font-size: 15px;
 	font-weight: normal;
+}
+
+.bg-primary {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 .nav-tabs {

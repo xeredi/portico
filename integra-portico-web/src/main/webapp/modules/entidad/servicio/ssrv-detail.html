@@ -5,24 +5,24 @@
 </alert>
 
 <tabset type="pills"> <tab heading="{{enti.nombre | uppercase}}">
-<fieldset>
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
-            </button>
-            <a class="btn btn-default" href="#/servicio/ssrv/duplicate/{{enti.id}}/{{item.id}}"><i
-                class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
-            <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
-            </button>
-        </div>
-        <div class="btn-group">
-            <button ng-repeat="enac in enti.enacList" ng-click="ssrvAction(enac.path)" class="btn btn-default">
-                {{enac.etiqueta}}</button>
-        </div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button data-ng-click="edit()" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+        </button>
+        <a class="btn btn-default" href="#/servicio/ssrv/duplicate/{{enti.id}}/{{item.id}}"><i
+            class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
+        <button data-ng-click="remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+        </button>
     </div>
+    <div class="btn-group">
+        <button ng-repeat="enac in enti.enacList" ng-click="ssrvAction(enac.path)" class="btn btn-default">
+            {{enac.etiqueta}}</button>
+    </div>
+</div>
 
+<fieldset>
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label>{{'ssrv_srvc' | translate}}</label>
