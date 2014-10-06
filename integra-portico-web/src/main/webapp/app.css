@@ -1,3 +1,7 @@
+#body-content {
+	margin-top: 50px;
+}
+
 body {
 	font-family: Verdana, sans-serif;
 }
@@ -23,12 +27,6 @@ label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 	text-align: right;
 }
 
-#body-content {
-	margin-top: 50px;
-/*	margin-left: 10px;
-	margin-right: 10px;*/
-}
-
 .navbar-right {
 	padding-right: 30px;
 }
@@ -39,10 +37,6 @@ label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 
 .dropdown-menu {
 	padding: 0px;
-}
-
-.pagination {
-	margin: 5px;
 }
 
 .nav, .pagination, .carousel, .panel-title a, .input-group-addon {
@@ -75,7 +69,6 @@ table a, .table a {
 }
 
 form {
-	/*	background-color: #4e5d6c;*/
 	padding-top: 0px;
 	padding-bottom: 10px;
 	padding-left: 0px;

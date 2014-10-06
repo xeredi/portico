@@ -62,9 +62,11 @@
     disabled="tab.disabled">
 <fieldset>
     <div class="btn-toolbar" role="toolbar">
-        <pagination total-items="itemHijosMap[entiHija.id].count" items-per-page="itemHijosMap[entiHija.id].limit"
-            ng-model="currentSubpage[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination" max-size="1"
-            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+        <div class="btn-group">
+            <pagination total-items="itemHijosMap[entiHija.id].count" items-per-page="itemHijosMap[entiHija.id].limit"
+                ng-model="currentSubpage[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination"
+                max-size="1" previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+        </div>
 
         <div class="btn-group">
             <a class="btn btn-default" href="#/servicio/ssrv/create/{{entiHija.id}}/{{item.id}}"><i

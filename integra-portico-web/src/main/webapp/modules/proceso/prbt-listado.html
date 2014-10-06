@@ -1,9 +1,13 @@
-<div class="btn-group">
-    <button class="btn btn-default" ng-click="filter()">Filter</button>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="prbtList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
+            max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default" ng-click="filter()">Filter</button>
+    </div>
 </div>
 
-<pagination total-items="prbtList.count" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm"
-    max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 <span>{{prbtList.count}} resultado(s)</span>
 
 <div class="table-responsive">

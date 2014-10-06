@@ -35,6 +35,11 @@
 <fieldset>
     <div ng-if="!showFilter" class="btn-toolbar" role="toolbar">
         <div class="btn-group">
+            <pagination total-items="aspcList.count" items-per-page="aspcList.limit" ng-model="page"
+                ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;"
+                next-text="&rsaquo;"></pagination>
+        </div>
+        <div class="btn-group">
             <a class="btn btn-default" href="#/facturacion/aspc/create"><i class="glyphicon glyphicon-file"></i>
                 {{'boton_alta' | translate}}</a>
             <button data-ng-click="filter()" class="btn btn-default">
@@ -42,9 +47,6 @@
             </button>
         </div>
     </div>
-
-    <pagination total-items="aspcList.count" items-per-page="aspcList.limit" ng-model="page" ng-change="pageChanged()"
-        class="pagination-sm" max-size="1" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
 
     <div class="table-responsive">
         <span class="label label-default">{{aspcList.count}} resultado(s)</span>

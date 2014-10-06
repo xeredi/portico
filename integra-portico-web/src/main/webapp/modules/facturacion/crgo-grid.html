@@ -42,7 +42,8 @@
             <pagination total-items="crgoList.count" items-per-page="crgoList.limit" ng-model="page"
                 ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
                 next-text="&rsaquo;&rsaquo;"></pagination>
-
+        </div>
+        <div class="btn-group">
             <a class="btn btn-default" href="#/facturacion/crgo/create"><i class="glyphicon glyphicon-file"></i>
                 {{'boton_alta' | translate}}</a>
             <button data-ng-click="filter()" class="btn btn-default">
