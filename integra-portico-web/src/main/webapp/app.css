@@ -25,8 +25,8 @@ label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 
 #body-content {
 	margin-top: 50px;
-	margin-left: 10px;
-	margin-right: 10px;
+/*	margin-left: 10px;
+	margin-right: 10px;*/
 }
 
 .navbar-right {
@@ -69,15 +69,6 @@ table a, .table a {
 	padding: 4px;
 }
 
-.tab-pane {
-	padding-left: 5px;
-	padding-right: 5px;
-}
-
-.tab-content {
-/*	padding-top: 10px;*/
-}
-
 .btn-toolbar {
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -85,7 +76,7 @@ table a, .table a {
 
 form {
 	/*	background-color: #4e5d6c;*/
-	padding-top: 10px;
+	padding-top: 0px;
 	padding-bottom: 10px;
 	padding-left: 0px;
 	padding-right: 0px;
@@ -98,7 +89,7 @@ fieldset {
 legend {
 	font-size: 12px;
 	font-weight: bold;
-	padding-top: 10px;
+	padding-top: 5px;
 	margin-bottom: 5px;
 }
 

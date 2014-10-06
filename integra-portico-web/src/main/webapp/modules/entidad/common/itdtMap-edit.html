@@ -2,7 +2,7 @@
     <legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
 
     <div class="row-fluid">
-        <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
+        <div ng-repeat="tpdtId in ::enti.engdEntdMap[engdId]"
             class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
             <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
 

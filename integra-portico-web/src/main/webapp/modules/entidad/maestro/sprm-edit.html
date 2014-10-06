@@ -7,7 +7,7 @@
         <legend>{{enti.nombre | uppercase}}</legend>
 
         <div class="row-fluid">
-            <div class="col-md-2 form-group">
+            <div class="col-sm-4 col-md-2 col-md-2 form-group">
                 <label>{{enti.tpprAsociado.nombre}}</label>
                 <div ng-if="accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="item.prmtAsociado"
@@ -20,8 +20,7 @@
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.prmtAsociado.etiqueta}}</p>
             </div>
 
-            <!-- ng-if="enti.tempExp" -->
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-2 col-md-1 form-group">
                 <label>{{'prmt_fini' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
@@ -30,8 +29,7 @@
                 </div>
             </div>
 
-            <!-- ng-if="enti.tempExp" -->
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-2 col-md-1 form-group">
                 <label>{{'prmt_ffin' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"

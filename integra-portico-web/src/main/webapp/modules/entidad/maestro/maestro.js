@@ -139,7 +139,7 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
     }
 
     findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 10);
+    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
 });
 
 module.controller("prmtDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -167,7 +167,7 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
         $http.get(url).success(function(data) {
             $scope.enti = data.enti;
             $scope.subentiList = data.subentiList;
-            $scope.availabeLanguages = data.availabeLanguages;
+            $scope.availableLanguages = data.availableLanguages;
         });
     }
 
