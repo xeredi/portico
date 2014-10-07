@@ -13,3 +13,18 @@ module.controller("datepickerController", function($scope) {
         showWeeks : false
     };
 });
+
+module.controller("timepickerController", function($scope) {
+    $scope.open = function($event) {
+        // alert("Open");
+
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
+    };
+
+    $scope.timepickerConfig = {
+        showMeridian : false
+    };
+});

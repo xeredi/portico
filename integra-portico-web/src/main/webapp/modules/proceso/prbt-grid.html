@@ -3,20 +3,46 @@
     <form>
         <fieldset>
             <div class="row-fluid">
-                <!--
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label>{{'estd_subp' | translate}}</label> <select ng-model="itemCriterio.subpId"
-                        ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
+                    <label>{{'prbt_modulo' | translate}}</label> <select ng-model="prbtCriterio.modulo"
+                        ng-options="valor for valor in procesoModulos" class="form-control input-sm">
                         <option value="" />
                     </select>
                 </div>
-                <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label>{{'limit' | translate}}</label> <select ng-model="limit" class="form-control input-sm">
-                        <option ng-repeat="limitValue in limits" class="pull-right" value="{{limitValue}}"
-                            ng-selected="limitValue == limit">{{limitValue}}</option>
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label>{{'prbt_tipo' | translate}}</label> <select ng-model="prbtCriterio.tipo"
+                        ng-options="valor for valor in procesoTipos" class="form-control input-sm">
+                        <option value="" />
                     </select>
                 </div>
- -->
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label>{{'prbt_estado' | translate}}</label> <select ng-model="prbtCriterio.estado"
+                        ng-options="valor for valor in procesoEstados" class="form-control input-sm">
+                        <option value="" />
+                    </select>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label>{{'prbt_falta' | translate}}</label>
+                    <div class="dropdown">
+                        <div class="input-group" ng-controller="datepickerController">
+                            <input type="text" class="form-control input-sm"
+                                datepicker-popup="{{'fmt_date' | translate}}" datepicker-options="dateOptions"
+                                is-open="opened" ng-model="prbtCriterio.faltaMin" /> <span class="input-group-addon"
+                                ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                        <div class="input-group" ng-controller="timepickerController">
+                            <timepicker ng-model="prbtCriterio.faltaMin" show-meridian="false" ng-change="changed()"></timepicker>
+                        </div>
+                        <div class="input-group" ng-controller="datepickerController">
+                            <input type="text" class="form-control input-sm"
+                                datepicker-popup="{{'fmt_date' | translate}}" datepicker-options="dateOptions"
+                                is-open="opened" ng-model="prbtCriterio.faltaMax" /> <span class="input-group-addon"
+                                ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </fieldset>
 
@@ -68,9 +94,9 @@
             <tbody>
                 <tr ng-repeat="prbt in prbtList.list">
                     <td><a href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{prbt.modulo}}</td>
-                    <td>{{prbt.tipo}}</td>
-                    <td>{{prbt.estado}}</td>
+                    <td title="{{'ProcesoModulo_' + prbt.modulo | translate}}">{{prbt.modulo}}</td>
+                    <td title="{{'ProcesoTipo_' + prbt.tipo | translate}}">{{prbt.tipo}}</td>
+                    <td title="{{'ProcesoEstado_' + prbt.estado | translate}}">{{prbt.estado}}</td>
                     <td>{{prbt.falta | date:('fmt_datetime' | translate)}}</td>
                     <td>{{prbt.finicio | date:('fmt_datetime' | translate)}}</td>
                     <td>{{prbt.ffin | date:('fmt_datetime' | translate)}}</td>

@@ -31,7 +31,17 @@ app.config(function($translateProvider) {
         fmt_calendar_date : "yyyy-MM-dd",
         fmt_datetime : "dd/MM/yyyy HH:mm",
 
-        Modulo_E : "Estad\u00edstica",
+        ProcesoModulo_E : "Estad\u00edstica",
+        ProcesoModulo_S : "Servicio",
+
+        ProcesoTipo_EST_CARGA : "Carga de Estad\u00edsticas",
+        ProcesoTipo_PES_CARGA : "Carga de Pesca",
+        ProcesoTipo_MAN_CARGA : "Carga EDI de Manifiestos",
+        ProcesoTipo_ESC_CARGA : "Carga EDI de Escalas",
+
+        ProcesoEstado_C : "En Cola",
+        ProcesoEstado_E : "En Ejecuci\u00f3n",
+        ProcesoEstado_F : "Finalizado",
 
         TipoElemento_BO : "Booleano",
         TipoElemento_CR : "C\u00f3d. Referencia",

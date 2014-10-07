@@ -63,7 +63,9 @@ module.controller("prbtGridController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.labelValuesMap = data.labelValuesMap;
+                $scope.procesoModulos = data.procesoModulos;
+                $scope.procesoTipos = data.procesoTipos;
+                $scope.procesoEstados = data.procesoEstados;
                 $scope.limits = data.limits;
             }
         });

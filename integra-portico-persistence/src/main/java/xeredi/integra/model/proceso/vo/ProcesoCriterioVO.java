@@ -1,5 +1,7 @@
 package xeredi.integra.model.proceso.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.util.pagination.Criterio;
@@ -18,6 +20,12 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /** The estado. */
     private ProcesoEstado estado;
+
+    /** The falta min. */
+    private Date faltaMin;
+
+    /** The falta max. */
+    private Date faltaMax;
 
     /**
      * {@inheritDoc}
@@ -82,6 +90,44 @@ public final class ProcesoCriterioVO implements Criterio {
      */
     public void setEstado(final ProcesoEstado value) {
         estado = value;
+    }
+
+    /**
+     * Gets the falta min.
+     *
+     * @return the falta min
+     */
+    public Date getFaltaMin() {
+        return faltaMin;
+    }
+
+    /**
+     * Sets the falta min.
+     *
+     * @param value
+     *            the new falta min
+     */
+    public void setFaltaMin(final Date value) {
+        faltaMin = value;
+    }
+
+    /**
+     * Gets the falta max.
+     *
+     * @return the falta max
+     */
+    public Date getFaltaMax() {
+        return faltaMax;
+    }
+
+    /**
+     * Sets the falta max.
+     *
+     * @param value
+     *            the new falta max
+     */
+    public void setFaltaMax(final Date value) {
+        faltaMax = value;
     }
 
 }
