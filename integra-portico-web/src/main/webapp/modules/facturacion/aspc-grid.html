@@ -1,43 +1,47 @@
-<fieldset ng-if="showFilter">
-    <div class="row-fluid">
-        <div class="col-md-1 form-group">
-            <label>{{"aspc_codigo" | translate}}</label> <input type="text" ng-model="aspcCriterio.codigo"
-                class="form-control input-sm" />
-        </div>
-        <div class="col-md-3 form-group">
-            <label>{{"aspc_tpsr" | translate}}</label> <select ng-model="aspcCriterio.tpsrId"
-                class="form-control input-sm">
-                <option value="" />
-                <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}">{{labelValue.label}}</option>
-            </select>
-        </div>
-        <div class="col-md-1 form-group">
-            <label>{{'crgo_fechaVigencia' | translate}}</label>
-            <div class="input-group" ng-controller="datepickerController">
-                <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                    datepicker-options="dateOptions" is-open="opened" ng-model="aspcCriterio.fechaVigencia"
-                    ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
-                    class="glyphicon glyphicon-calendar"></i></span>
+<div ng-if="showFilter">
+    <form>
+        <fieldset>
+            <div class="row-fluid">
+                <div class="col-md-1 form-group">
+                    <label>{{"aspc_codigo" | translate}}</label> <input type="text" ng-model="aspcCriterio.codigo"
+                        class="form-control input-sm" />
+                </div>
+                <div class="col-md-3 form-group">
+                    <label>{{"aspc_tpsr" | translate}}</label> <select ng-model="aspcCriterio.tpsrId"
+                        ng-options="labelValue.value as labelValue.label for labelValue in entiList"
+                        class="form-control input-sm">
+                        <option value="" />
+                    </select>
+                </div>
+                <div class="col-md-1 form-group">
+                    <label>{{'crgo_fechaVigencia' | translate}}</label>
+                    <div class="input-group" ng-controller="datepickerController">
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                            datepicker-options="dateOptions" is-open="opened" ng-model="aspcCriterio.fechaVigencia" />
+                        <span class="input-group-addon" ng-click="open($event)"><i
+                            class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
             </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            </button>
         </div>
-    </div>
+    </form>
+</div>
 
-    <div class="btn-group">
-        <button data-ng-click="search()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
-        </button>
-        <button data-ng-click="cancelSearch()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
-        </button>
-    </div>
-</fieldset>
-
-<fieldset>
-    <div ng-if="!showFilter" class="btn-toolbar" role="toolbar">
+<div ng-hide="showFilter">
+    <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <pagination total-items="aspcList.count" items-per-page="aspcList.limit" ng-model="page"
-                ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;"
-                next-text="&rsaquo;"></pagination>
+                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
         </div>
         <div class="btn-group">
             <a class="btn btn-default" href="#/facturacion/aspc/create"><i class="glyphicon glyphicon-file"></i>
@@ -78,4 +82,4 @@
             </tbody>
         </table>
     </div>
-</fieldset>
+</div>

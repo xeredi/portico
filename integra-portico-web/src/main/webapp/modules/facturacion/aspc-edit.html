@@ -1,3 +1,5 @@
+<p class="bg-primary">{{'Aspecto' | uppercase}}</p>
+
 <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
 <ul>
     <li ng-repeat="error in actionErrors">{{error}}</li>
@@ -9,27 +11,25 @@
         ng-model="aspc.aspv.id" />
 
     <fieldset>
-        <legend>{{'Aspecto' | uppercase}}</legend>
-
         <div class="row-fluid">
-            <div class="col-md-3 form-group">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label>{{"aspc_tpsr" | translate}}</label> <select ng-if="accion == 'create'" ng-model="aspc.tpsr.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in entiTpsrList"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in entiTpsrList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
                 <p ng-if="accion != 'create'" class="form-control-static">{{aspc.tpsr.nombre}}</p>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label>{{"aspc_codigo" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
                     ng-model="aspc.codigo" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{aspc.codigo}}</p>
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
                 <label>{{"aspc_descripcion" | translate}}</label> <input type="text" ng-model="aspc.aspv.descripcion"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label>{{'aspc_fini' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
@@ -37,7 +37,7 @@
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label>{{'aspc_ffin' | translate}}</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
@@ -45,34 +45,172 @@
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label>{{"aspc_prioridad" | translate}}</label> <input type="text" ng-model="aspc.aspv.prioridad"
                     class="form-control input-sm" />
             </div>
         </div>
-    </fieldset>
 
-    <fieldset>
-        <legend>{{'Elementos de Cabecera' | uppercase}}</legend>
+        <div class="table-responsive">
+            <legend>{{'Elementos de Cabecera' | uppercase}}</legend>
 
-        <div class="row-fluid">
-            <div class="col-md-12 form-group">
+            <table class="table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th class="col-sm-1" />
+                        <th class="col-sm-4 col-md-3 col-lg-2">{{'aspc_cetiqInfo' | translate}}</th>
+                        <th class="col-sm-6 col-md-7 col-lg-8">{{'aspc_cpathInfo' | translate}}</th>
+                        <th class="col-sm-1">{{'aspc_cgrpInfo' | translate}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>info1</td>
+                        <td><input type="text" ng-model="aspc.aspv.cetiqInfo1" class="form-control input-sm" /></td>
+                        <td><input type="text" ng-model="aspc.aspv.cpathInfo1" class="form-control input-sm" /></td>
+                        <td><select ng-model="aspc.aspv.cgrpInfo1" class="form-control input-sm">
+                                <option />
+                                <option value="true">{{"fmt_true" | translate}}</option>
+                                <option value="false">{{"fmt_false" | translate}}</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info2</td>
+                        <td><input type="text" ng-model="aspc.aspv.cetiqInfo2" class="form-control input-sm" /></td>
+                        <td><input type="text" ng-model="aspc.aspv.cpathInfo2" class="form-control input-sm" /></td>
+                        <td><select ng-model="aspc.aspv.cgrpInfo2" class="form-control input-sm">
+                                <option />
+                                <option value="true">{{"fmt_true" | translate}}</option>
+                                <option value="false">{{"fmt_false" | translate}}</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info3</td>
+                        <td><input type="text" ng-model="aspc.aspv.cetiqInfo3" class="form-control input-sm" /></td>
+                        <td><input type="text" ng-model="aspc.aspv.cpathInfo3" class="form-control input-sm" /></td>
+                        <td><select ng-model="aspc.aspv.cgrpInfo3" class="form-control input-sm">
+                                <option />
+                                <option value="true">{{"fmt_true" | translate}}</option>
+                                <option value="false">{{"fmt_false" | translate}}</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info4</td>
+                        <td><input type="text" ng-model="aspc.aspv.cetiqInfo4" class="form-control input-sm" /></td>
+                        <td><input type="text" ng-model="aspc.aspv.cpathInfo4" class="form-control input-sm" /></td>
+                        <td><select ng-model="aspc.aspv.cgrpInfo4" class="form-control input-sm">
+                                <option />
+                                <option value="true">{{"fmt_true" | translate}}</option>
+                                <option value="false">{{"fmt_false" | translate}}</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info5</td>
+                        <td><input type="text" ng-model="aspc.aspv.cetiqInfo5" class="form-control input-sm" /></td>
+                        <td><input type="text" ng-model="aspc.aspv.cpathInfo5" class="form-control input-sm" /></td>
+                        <td><select ng-model="aspc.aspv.cgrpInfo5" class="form-control input-sm">
+                                <option />
+                                <option value="true">{{"fmt_true" | translate}}</option>
+                                <option value="false">{{"fmt_false" | translate}}</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>info6</td>
+                        <td><input type="text" ng-model="aspc.aspv.cetiqInfo6" class="form-control input-sm" /></td>
+                        <td><input type="text" ng-model="aspc.aspv.cpathInfo6" class="form-control input-sm" /></td>
+                        <td><select ng-model="aspc.aspv.cgrpInfo6" class="form-control input-sm">
+                                <option />
+                                <option value="true">{{"fmt_true" | translate}}</option>
+                                <option value="false">{{"fmt_false" | translate}}</option>
+                        </select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+            <div class="table-responsive">
+                <legend>{{'Elementos Cuantitativos de Linea' | uppercase}}</legend>
+
                 <table class="table-condensed table-hover table-nonfluid">
                     <thead>
                         <tr>
-                            <th class="col-md-1" />
-                            <th class="col-md-2">{{'aspc_cetiqInfo' | translate}}</th>
-                            <th class="col-md-8">{{'aspc_cpathInfo' | translate}}</th>
-                            <th class="col-md-1">{{'aspc_cgrpInfo' | translate}}</th>
+                            <th />
+                            <th>{{'aspc_lsumCuant' | translate}}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>cuant1</td>
+                            <td><select ng-model="aspc.aspv.lsumCuant1" class="form-control input-sm">
+                                    <option />
+                                    <option value="true">{{"fmt_true" | translate}}</option>
+                                    <option value="false">{{"fmt_false" | translate}}</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant2</td>
+                            <td><select ng-model="aspc.aspv.lsumCuant2" class="form-control input-sm">
+                                    <option />
+                                    <option value="true">{{"fmt_true" | translate}}</option>
+                                    <option value="false">{{"fmt_false" | translate}}</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant3</td>
+                            <td><select ng-model="aspc.aspv.lsumCuant3" class="form-control input-sm">
+                                    <option />
+                                    <option value="true">{{"fmt_true" | translate}}</option>
+                                    <option value="false">{{"fmt_false" | translate}}</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant4</td>
+                            <td><select ng-model="aspc.aspv.lsumCuant4" class="form-control input-sm">
+                                    <option />
+                                    <option value="true">{{"fmt_true" | translate}}</option>
+                                    <option value="false">{{"fmt_false" | translate}}</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant5</td>
+                            <td><select ng-model="aspc.aspv.lsumCuant5" class="form-control input-sm">
+                                    <option />
+                                    <option value="true">{{"fmt_true" | translate}}</option>
+                                    <option value="false">{{"fmt_false" | translate}}</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>cuant6</td>
+                            <td><select ng-model="aspc.aspv.lsumCuant6" class="form-control input-sm">
+                                    <option />
+                                    <option value="true">{{"fmt_true" | translate}}</option>
+                                    <option value="false">{{"fmt_false" | translate}}</option>
+                            </select></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+            <div class="table-responsive">
+                <legend>{{'Elementos Informativos de Linea' | uppercase}}</legend>
+
+                <table class="table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th>{{'aspc_lgrpInfo' | translate}}</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
                             <td>info1</td>
-                            <td><input type="text" ng-model="aspc.aspv.cetiqInfo1" class="form-control input-sm" /></td>
-                            <td><input type="text" ng-model="aspc.aspv.cpathInfo1" class="form-control input-sm" /></td>
-                            <td><select ng-model="aspc.aspv.cgrpInfo1" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo1" class="form-control input-sm">
                                     <option />
                                     <option value="true">{{"fmt_true" | translate}}</option>
                                     <option value="false">{{"fmt_false" | translate}}</option>
@@ -80,9 +218,7 @@
                         </tr>
                         <tr>
                             <td>info2</td>
-                            <td><input type="text" ng-model="aspc.aspv.cetiqInfo2" class="form-control input-sm" /></td>
-                            <td><input type="text" ng-model="aspc.aspv.cpathInfo2" class="form-control input-sm" /></td>
-                            <td><select ng-model="aspc.aspv.cgrpInfo2" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo2" class="form-control input-sm">
                                     <option />
                                     <option value="true">{{"fmt_true" | translate}}</option>
                                     <option value="false">{{"fmt_false" | translate}}</option>
@@ -90,9 +226,7 @@
                         </tr>
                         <tr>
                             <td>info3</td>
-                            <td><input type="text" ng-model="aspc.aspv.cetiqInfo3" class="form-control input-sm" /></td>
-                            <td><input type="text" ng-model="aspc.aspv.cpathInfo3" class="form-control input-sm" /></td>
-                            <td><select ng-model="aspc.aspv.cgrpInfo3" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo3" class="form-control input-sm">
                                     <option />
                                     <option value="true">{{"fmt_true" | translate}}</option>
                                     <option value="false">{{"fmt_false" | translate}}</option>
@@ -100,9 +234,7 @@
                         </tr>
                         <tr>
                             <td>info4</td>
-                            <td><input type="text" ng-model="aspc.aspv.cetiqInfo4" class="form-control input-sm" /></td>
-                            <td><input type="text" ng-model="aspc.aspv.cpathInfo4" class="form-control input-sm" /></td>
-                            <td><select ng-model="aspc.aspv.cgrpInfo4" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo4" class="form-control input-sm">
                                     <option />
                                     <option value="true">{{"fmt_true" | translate}}</option>
                                     <option value="false">{{"fmt_false" | translate}}</option>
@@ -110,9 +242,7 @@
                         </tr>
                         <tr>
                             <td>info5</td>
-                            <td><input type="text" ng-model="aspc.aspv.cetiqInfo5" class="form-control input-sm" /></td>
-                            <td><input type="text" ng-model="aspc.aspv.cpathInfo5" class="form-control input-sm" /></td>
-                            <td><select ng-model="aspc.aspv.cgrpInfo5" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo5" class="form-control input-sm">
                                     <option />
                                     <option value="true">{{"fmt_true" | translate}}</option>
                                     <option value="false">{{"fmt_false" | translate}}</option>
@@ -120,9 +250,7 @@
                         </tr>
                         <tr>
                             <td>info6</td>
-                            <td><input type="text" ng-model="aspc.aspv.cetiqInfo6" class="form-control input-sm" /></td>
-                            <td><input type="text" ng-model="aspc.aspv.cpathInfo6" class="form-control input-sm" /></td>
-                            <td><select ng-model="aspc.aspv.cgrpInfo6" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo6" class="form-control input-sm">
                                     <option />
                                     <option value="true">{{"fmt_true" | translate}}</option>
                                     <option value="false">{{"fmt_false" | translate}}</option>
@@ -133,148 +261,6 @@
             </div>
         </div>
     </fieldset>
-
-    <div class="row-fluid">
-        <div class="col-md-6 form-group">
-            <fieldset>
-                <legend>{{'Elementos Cuantitativos de Linea' | uppercase}}</legend>
-
-                <div class="row-fluid">
-                    <div class="col-md-12 form-group">
-                        <table class="table-condensed table-hover table-nonfluid">
-                            <thead>
-                                <tr>
-                                    <th />
-                                    <th>{{'aspc_lsumCuant' | translate}}</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td>cuant1</td>
-                                    <td><select ng-model="aspc.aspv.lsumCuant1" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>cuant2</td>
-                                    <td><select ng-model="aspc.aspv.lsumCuant2" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>cuant3</td>
-                                    <td><select ng-model="aspc.aspv.lsumCuant3" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>cuant4</td>
-                                    <td><select ng-model="aspc.aspv.lsumCuant4" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>cuant5</td>
-                                    <td><select ng-model="aspc.aspv.lsumCuant5" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>cuant6</td>
-                                    <td><select ng-model="aspc.aspv.lsumCuant6" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-
-        <div class="col-md-6 form-group">
-            <fieldset>
-                <legend>{{'Elementos Informativos de Linea' | uppercase}}</legend>
-
-                <div class="row-fluid">
-                    <div class="col-md-12 form-group">
-                        <table class="table-condensed table-hover table-nonfluid">
-                            <thead>
-                                <tr>
-                                    <th />
-                                    <th>{{'aspc_lgrpInfo' | translate}}</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td>info1</td>
-                                    <td><select ng-model="aspc.aspv.lgrpInfo1" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>info2</td>
-                                    <td><select ng-model="aspc.aspv.lgrpInfo2" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>info3</td>
-                                    <td><select ng-model="aspc.aspv.lgrpInfo3" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>info4</td>
-                                    <td><select ng-model="aspc.aspv.lgrpInfo4" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>info5</td>
-                                    <td><select ng-model="aspc.aspv.lgrpInfo5" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>info6</td>
-                                    <td><select ng-model="aspc.aspv.lgrpInfo6" class="form-control input-sm">
-                                            <option />
-                                            <option value="true">{{"fmt_true" | translate}}</option>
-                                            <option value="false">{{"fmt_false" | translate}}</option>
-                                    </select></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-    </div>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

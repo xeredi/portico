@@ -1,43 +1,43 @@
-<fieldset>
-    <legend>{{'Aspecto' | uppercase}}</legend>
+<p class="bg-primary">{{'Aspecto' | uppercase}}</p>
 
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
-            </button>
-            <a class="btn btn-default" href="#/facturacion/aspc/duplicate/{{aspc.aspv.id}}"><i
-                class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
-            <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
-            </button>
-        </div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button data-ng-click="edit()" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+        </button>
+        <a class="btn btn-default" href="#/facturacion/aspc/duplicate/{{aspc.aspv.id}}"><i
+            class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
+        <button data-ng-click="remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+        </button>
     </div>
+</div>
 
+<fieldset>
     <div class="row-fluid">
-        <div class="col-md-2 form-group">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label>{{'aspc_tpsr' | translate}}</label>
             <p class="form-control-static">
                 <a href="#/metamodelo/tpsr/detail/{{aspc.tpsr.id}}">{{aspc.tpsr.nombre}}</a>
             </p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label>{{'aspc_codigo' | translate}}</label>
             <p class="form-control-static">{{aspc.codigo}}</p>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
             <label>{{'aspc_descripcion' | translate}}</label>
             <p class="form-control-static">{{aspc.aspv.descripcion}}</p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label>{{'aspc_fini' | translate}}</label>
             <p class="form-control-static">{{aspc.aspv.fini | date:('fmt_date' | translate)}}</p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label>{{'aspc_ffin' | translate}}</label>
             <p class="form-control-static">{{aspc.aspv.ffin | date:('fmt_date' | translate)}}</p>
         </div>
-        <div class="col-md-1 form-group">
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label>{{'aspc_prioridad' | translate}}</label>
             <p class="form-control-static">{{aspc.aspv.prioridad}}</p>
         </div>
@@ -47,168 +47,162 @@
 <fieldset>
     <legend>{{'Elementos de Cabecera' | uppercase}}</legend>
 
-    <div class="row-fluid">
-        <div class="col-md-12 form-group">
-            <table class="table-bordered table-condensed table-hover table-nonfluid">
-                <thead>
-                    <tr>
-                        <th />
-                        <th>{{'aspc_cetiqInfo' | translate}}</th>
-                        <th>{{'aspc_cpathInfo' | translate}}</th>
-                        <th>{{'aspc_cgrpInfo' | translate}}</th>
-                    </tr>
-                </thead>
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th />
+                    <th>{{'aspc_cetiqInfo' | translate}}</th>
+                    <th>{{'aspc_cpathInfo' | translate}}</th>
+                    <th>{{'aspc_cgrpInfo' | translate}}</th>
+                </tr>
+            </thead>
 
-                <tbody>
-                    <tr ng-if="aspc.aspv.cetiqInfo1">
-                        <td>info1</td>
-                        <td>{{aspc.aspv.cetiqInfo1}}</td>
-                        <td>{{aspc.aspv.cpathInfo1}}</td>
-                        <td><i ng-if="aspc.aspv.cgrpInfo1" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!aspc.aspv.cgrpInfo1" class="glyphicon glyphicon-remove"></i></td>
-                    </tr>
-                    <tr ng-if="aspc.aspv.cetiqInfo2">
-                        <td>info2</td>
-                        <td>{{aspc.aspv.cetiqInfo2}}</td>
-                        <td>{{aspc.aspv.cpathInfo2}}</td>
-                        <td><i ng-if="aspc.aspv.cgrpInfo2" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!aspc.aspv.cgrpInfo2" class="glyphicon glyphicon-remove"></i></td>
-                    </tr>
-                    <tr ng-if="aspc.aspv.cetiqInfo3">
-                        <td>info3</td>
-                        <td>{{aspc.aspv.cetiqInfo3}}</td>
-                        <td>{{aspc.aspv.cpathInfo3}}</td>
-                        <td><i ng-if="aspc.aspv.cgrpInfo3" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!aspc.aspv.cgrpInfo3" class="glyphicon glyphicon-remove"></i></td>
-                    </tr>
-                    <tr ng-if="aspc.aspv.cetiqInfo4">
-                        <td>info4</td>
-                        <td>{{aspc.aspv.cetiqInfo4}}</td>
-                        <td>{{aspc.aspv.cpathInfo4}}</td>
-                        <td><i ng-if="aspc.aspv.cgrpInfo4" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!aspc.aspv.cgrpInfo4" class="glyphicon glyphicon-remove"></i></td>
-                    </tr>
-                    <tr ng-if="aspc.aspv.cetiqInfo5">
-                        <td>info5</td>
-                        <td>{{aspc.aspv.cetiqInfo5}}</td>
-                        <td>{{aspc.aspv.cpathInfo5}}</td>
-                        <td><i ng-if="aspc.aspv.cgrpInfo5" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!aspc.aspv.cgrpInfo5" class="glyphicon glyphicon-remove"></i></td>
-                    </tr>
-                    <tr ng-if="aspc.aspv.cetiqInfo6">
-                        <td>info6</td>
-                        <td>{{aspc.aspv.cetiqInfo6}}</td>
-                        <td>{{aspc.aspv.cpathInfo6}}</td>
-                        <td><i ng-if="aspc.aspv.cgrpInfo6" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!aspc.aspv.cgrpInfo6" class="glyphicon glyphicon-remove"></i></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <tbody>
+                <tr ng-if="aspc.aspv.cetiqInfo1">
+                    <td>info1</td>
+                    <td>{{aspc.aspv.cetiqInfo1}}</td>
+                    <td>{{aspc.aspv.cpathInfo1}}</td>
+                    <td><i ng-if="aspc.aspv.cgrpInfo1" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!aspc.aspv.cgrpInfo1" class="glyphicon glyphicon-remove"></i></td>
+                </tr>
+                <tr ng-if="aspc.aspv.cetiqInfo2">
+                    <td>info2</td>
+                    <td>{{aspc.aspv.cetiqInfo2}}</td>
+                    <td>{{aspc.aspv.cpathInfo2}}</td>
+                    <td><i ng-if="aspc.aspv.cgrpInfo2" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!aspc.aspv.cgrpInfo2" class="glyphicon glyphicon-remove"></i></td>
+                </tr>
+                <tr ng-if="aspc.aspv.cetiqInfo3">
+                    <td>info3</td>
+                    <td>{{aspc.aspv.cetiqInfo3}}</td>
+                    <td>{{aspc.aspv.cpathInfo3}}</td>
+                    <td><i ng-if="aspc.aspv.cgrpInfo3" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!aspc.aspv.cgrpInfo3" class="glyphicon glyphicon-remove"></i></td>
+                </tr>
+                <tr ng-if="aspc.aspv.cetiqInfo4">
+                    <td>info4</td>
+                    <td>{{aspc.aspv.cetiqInfo4}}</td>
+                    <td>{{aspc.aspv.cpathInfo4}}</td>
+                    <td><i ng-if="aspc.aspv.cgrpInfo4" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!aspc.aspv.cgrpInfo4" class="glyphicon glyphicon-remove"></i></td>
+                </tr>
+                <tr ng-if="aspc.aspv.cetiqInfo5">
+                    <td>info5</td>
+                    <td>{{aspc.aspv.cetiqInfo5}}</td>
+                    <td>{{aspc.aspv.cpathInfo5}}</td>
+                    <td><i ng-if="aspc.aspv.cgrpInfo5" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!aspc.aspv.cgrpInfo5" class="glyphicon glyphicon-remove"></i></td>
+                </tr>
+                <tr ng-if="aspc.aspv.cetiqInfo6">
+                    <td>info6</td>
+                    <td>{{aspc.aspv.cetiqInfo6}}</td>
+                    <td>{{aspc.aspv.cpathInfo6}}</td>
+                    <td><i ng-if="aspc.aspv.cgrpInfo6" class="glyphicon glyphicon-ok"></i><i
+                        ng-if="!aspc.aspv.cgrpInfo6" class="glyphicon glyphicon-remove"></i></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </fieldset>
 
 <div class="row-fluid">
-    <div class="col-md-6 form-group">
+    <div class="col-sm-6 col-md-4 col-lg-3 form-group">
         <fieldset>
             <legend>{{'Elementos Cuantitativos de Linea' | uppercase}}</legend>
 
-            <div class="row-fluid">
-                <div class="col-md-12 form-group">
-                    <table class="table-bordered table-condensed table-hover table-nonfluid">
-                        <thead>
-                            <tr>
-                                <th />
-                                <th>{{'aspc_lsumCuant' | translate}}</th>
-                            </tr>
-                        </thead>
+            <div class="table-responsive">
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th>{{'aspc_lsumCuant' | translate}}</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            <tr>
-                                <td>cuant1</td>
-                                <td><i ng-if="aspc.aspv.lsumCuant1" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lsumCuant1" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>cuant2</td>
-                                <td><i ng-if="aspc.aspv.lsumCuant2" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lsumCuant2" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>cuant3</td>
-                                <td><i ng-if="aspc.aspv.lsumCuant3" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lsumCuant3" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>cuant4</td>
-                                <td><i ng-if="aspc.aspv.lsumCuant4" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lsumCuant4" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>cuant5</td>
-                                <td><i ng-if="aspc.aspv.lsumCuant5" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lsumCuant5" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>cuant6</td>
-                                <td><i ng-if="aspc.aspv.lsumCuant6" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lsumCuant6" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <tbody>
+                        <tr>
+                            <td>cuant1</td>
+                            <td><i ng-if="aspc.aspv.lsumCuant1" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lsumCuant1" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>cuant2</td>
+                            <td><i ng-if="aspc.aspv.lsumCuant2" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lsumCuant2" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>cuant3</td>
+                            <td><i ng-if="aspc.aspv.lsumCuant3" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lsumCuant3" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>cuant4</td>
+                            <td><i ng-if="aspc.aspv.lsumCuant4" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lsumCuant4" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>cuant5</td>
+                            <td><i ng-if="aspc.aspv.lsumCuant5" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lsumCuant5" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>cuant6</td>
+                            <td><i ng-if="aspc.aspv.lsumCuant6" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lsumCuant6" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </fieldset>
     </div>
 
-    <div class="col-md-6 form-group">
+    <div class="col-sm-6 col-md-4 col-lg-3 form-group">
         <fieldset>
             <legend>{{'Elementos Informativos de Linea' | uppercase}}</legend>
 
-            <div class="row-fluid">
-                <div class="col-md-12 form-group">
-                    <table class="table-bordered table-condensed table-hover table-nonfluid">
-                        <thead>
-                            <tr>
-                                <th />
-                                <th>{{'aspc_lgrpInfo' | translate}}</th>
-                            </tr>
-                        </thead>
+            <div class="table-responsive">
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th>{{'aspc_lgrpInfo' | translate}}</th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            <tr>
-                                <td>info1</td>
-                                <td><i ng-if="aspc.aspv.lgrpInfo1" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lgrpInfo1" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>info2</td>
-                                <td><i ng-if="aspc.aspv.lgrpInfo2" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lgrpInfo2" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>info3</td>
-                                <td><i ng-if="aspc.aspv.lgrpInfo3" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lgrpInfo3" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>info4</td>
-                                <td><i ng-if="aspc.aspv.lgrpInfo4" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lgrpInfo4" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>info5</td>
-                                <td><i ng-if="aspc.aspv.lgrpInfo5" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lgrpInfo5" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                            <tr>
-                                <td>info6</td>
-                                <td><i ng-if="aspc.aspv.lgrpInfo6" class="glyphicon glyphicon-ok"></i><i
-                                    ng-if="!aspc.aspv.lgrpInfo6" class="glyphicon glyphicon-remove"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <tbody>
+                        <tr>
+                            <td>info1</td>
+                            <td><i ng-if="aspc.aspv.lgrpInfo1" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lgrpInfo1" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>info2</td>
+                            <td><i ng-if="aspc.aspv.lgrpInfo2" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lgrpInfo2" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>info3</td>
+                            <td><i ng-if="aspc.aspv.lgrpInfo3" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lgrpInfo3" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>info4</td>
+                            <td><i ng-if="aspc.aspv.lgrpInfo4" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lgrpInfo4" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>info5</td>
+                            <td><i ng-if="aspc.aspv.lgrpInfo5" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lgrpInfo5" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                        <tr>
+                            <td>info6</td>
+                            <td><i ng-if="aspc.aspv.lgrpInfo6" class="glyphicon glyphicon-ok"></i><i
+                                ng-if="!aspc.aspv.lgrpInfo6" class="glyphicon glyphicon-remove"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </fieldset>
     </div>

@@ -85,6 +85,8 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.vlrcList.page;
                 $scope.vlrcList = data.vlrcList;
@@ -104,8 +106,8 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
                 map["page"] = data.vlrcList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }
@@ -144,10 +146,10 @@ module.controller("vlrlCreateController", function($scope, $http, $location, $ro
             vlrl : $scope.vlrl,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -195,10 +197,10 @@ module.controller("vlrlDetailController", function($scope, $http, $location, $ro
             var url = "facturacion/vlrl-remove.action?vlrl.id=" + $scope.vlrl.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -220,10 +222,10 @@ module.controller("vlrlEditController", function($scope, $http, $location, $rout
             vlrl : $scope.vlrl,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -340,6 +342,8 @@ module.controller("crgoGridController", function($scope, $http, $location, $rout
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.crgoList.page;
                 $scope.crgoList = data.crgoList;
@@ -349,8 +353,6 @@ module.controller("crgoGridController", function($scope, $http, $location, $rout
                 map["page"] = data.crgoList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -402,10 +404,10 @@ module.controller("crgoCreateController", function($scope, $http, $location, $ro
             crgo : $scope.crgo,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/crgo/detail/" + data.crgo.crgv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -440,10 +442,10 @@ module.controller("crgoDetailController", function($scope, $http, $location, $ro
             var url = "facturacion/crgo-remove.action?crgo.crgv.id=" + $scope.crgo.crgv.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -466,10 +468,10 @@ module.controller("crgoEditController", function($scope, $http, $location, $rout
             crgo : $scope.crgo,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/crgo/detail/" + data.crgo.crgv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -504,10 +506,10 @@ module.controller("rglaDetailController", function($scope, $http, $location, $ro
             var url = "facturacion/rgla-remove.action?rgla.rglv.id=" + $scope.rgla.rglv.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -531,10 +533,10 @@ module.controller("rglaEditController", function($scope, $http, $location, $rout
             rgla : $scope.rgla,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -561,10 +563,10 @@ module.controller("rglaCreateController", function($scope, $http, $location, $ro
             rgla : $scope.rgla,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -597,10 +599,10 @@ module.controller("rginDetailController", function($scope, $http, $location, $ro
             var url = "facturacion/rgin-remove.action?rgin.rgiv.id=" + $scope.rgin.rgiv.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -622,10 +624,10 @@ module.controller("rginEditController", function($scope, $http, $location, $rout
             rgin : $scope.rgin,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -652,10 +654,10 @@ module.controller("rginCreateController", function($scope, $http, $location, $ro
             rgin : $scope.rgin,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -722,17 +724,20 @@ module.controller("aspcGridController", function($scope, $http, $location, $rout
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.aspcList.page;
                 $scope.aspcList = data.aspcList;
+                $scope.aspcCriterio = data.aspcCriterio;
 
                 var map = {};
 
                 map["page"] = data.aspcList.page;
 
                 $location.search(map).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+
+                $scope.showFilter = false;
             }
         });
     }
@@ -783,10 +788,10 @@ module.controller("aspcCreateController", function($scope, $http, $location, $ro
             aspc : $scope.aspc,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -821,10 +826,10 @@ module.controller("aspcDetailController", function($scope, $http, $location, $ro
             var url = "facturacion/aspc-remove.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -846,10 +851,10 @@ module.controller("aspcEditController", function($scope, $http, $location, $rout
             aspc : $scope.aspc,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -874,10 +879,10 @@ module.controller("aspcDuplicateController", function($scope, $http, $location, 
             aspc : $scope.aspc,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }

@@ -14,6 +14,8 @@ module.controller("datepickerController", function($scope) {
     };
 });
 
+// http://adamalbrecht.github.io/ngQuickDate/
+// https://github.com/adamalbrecht/ngQuickDate
 module.controller("timepickerController", function($scope) {
     $scope.open = function($event) {
         // alert("Open");
