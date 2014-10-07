@@ -67,14 +67,16 @@ public final class TipoDatoProxy {
     /**
      * Load.
      */
-    private static void load() {
-        LOG.info("Carga de tipos de Dato");
+    private static synchronized void load() {
+        if (TIPO_DATO_MAP.isEmpty()) {
+            LOG.info("Carga de tipos de Dato");
 
-        final TipoDatoBO tpdtBO = new TipoDatoBO();
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        TIPO_DATO_MAP.putAll(tpdtBO.selectMap(new TipoDatoCriterioVO()));
-        LABEL_VALUE_LIST.addAll(tpdtBO.selectLabelValues(new TipoDatoCriterioVO()));
+            TIPO_DATO_MAP.putAll(tpdtBO.selectMap(new TipoDatoCriterioVO()));
+            LABEL_VALUE_LIST.addAll(tpdtBO.selectLabelValues(new TipoDatoCriterioVO()));
 
-        LOG.info("Carga de tipos de Dato OK");
+            LOG.info("Carga de tipos de Dato OK");
+        }
     }
 }

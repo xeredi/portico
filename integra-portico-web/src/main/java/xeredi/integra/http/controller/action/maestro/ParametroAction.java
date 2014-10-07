@@ -102,6 +102,10 @@ public final class ParametroAction extends ItemAction {
         final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
+        if (fechaVigencia != null) {
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+        }
+
         try {
             prmtCriterioVO.setPrvrId(item.getPrvr().getId());
             prmtCriterioVO.setIdioma(getIdioma());
@@ -140,6 +144,10 @@ public final class ParametroAction extends ItemAction {
 
         prmtCriterioVO.setPrvrId(item.getPrvr().getId());
         prmtCriterioVO.setIdioma(getIdioma());
+
+        if (fechaVigencia != null) {
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+        }
 
         try {
             item = prmtBO.selectObject(prmtCriterioVO);

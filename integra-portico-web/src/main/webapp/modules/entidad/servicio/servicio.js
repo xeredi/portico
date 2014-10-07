@@ -60,6 +60,12 @@ module.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/entidad/servicio/srvc-edit.html",
         controller : "srvcDuplicateController"
     })
+
+    .when("/servicio/srvc/maniTotales/:srvcId", {
+        title : 'mani_totales',
+        templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
+        controller : "maniTotalesController"
+    })
 } ]);
 
 module.controller("srvcGridController", function($scope, $http, $location, $route, $routeParams) {
@@ -144,10 +150,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
             var url = "servicio/srvc-remove.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -214,6 +220,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
                     findItem();
                 }
             });
+
+            break;
+        case "mani-totales":
+            $location.path("/servicio/srvc/maniTotales/" + $scope.item.id);
 
             break;
         default:
@@ -395,6 +405,15 @@ module.controller('srvcLupaCtrl', function($http, $scope) {
     };
 });
 
+module.controller("maniTotalesController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "servicio/manifiesto/mani-totales.action?item.id=" + $routeParams.srvcId;
+
+    $http.get(url).success(function(data) {
+        $scope.item = data.item;
+        $scope.resumen = data.resumen;
+    });
+});
+
 // ----------- SUBSERVICIOS ------------------
 // ----------- SUBSERVICIOS ------------------
 // ----------- SUBSERVICIOS ------------------
@@ -437,6 +456,12 @@ module.config([ "$routeProvider", function($routeProvider) {
         title : 'ssrv_duplicate',
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
         controller : "ssrvDuplicateController"
+    })
+
+    .when("/servicio/ssrv/mablTotales/:srvcId/:ssrvId", {
+        title : 'mabl_totales',
+        templateUrl : "modules/entidad/servicio/manifiesto/mabl-totales.html",
+        controller : "mablTotalesController"
     })
 } ]);
 
@@ -584,6 +609,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
             });
 
             break;
+        case "mabl-totales":
+            $location.path("/servicio/ssrv/mablTotales/" + $scope.item.srvc.id + "/" + $scope.item.id);
+
+            break;
 
         // ----------- EQUIPAMIENTO ------------------
         // ----------- EQUIPAMIENTO ------------------
@@ -705,10 +734,10 @@ module.controller("ssrvCreateController", function($scope, $http, $location, $ro
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/servicio/ssrv/detail/" + data.item.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -837,4 +866,14 @@ module.controller('ssrvLupaCtrl', function($http, $scope) {
                     return res.data.itemList;
                 });
     };
+});
+
+module.controller("mablTotalesController", function($scope, $http, $location, $route, $routeParams) {
+    var url = "servicio/manifiesto/mabl-totales.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+            + $routeParams.srvcId;
+
+    $http.get(url).success(function(data) {
+        $scope.item = data.item;
+        $scope.resumen = data.resumen;
+    });
 });

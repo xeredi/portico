@@ -13,20 +13,33 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        prmn.prmn_prbt_pk
-        , prmn.prmn_nivel
-        , prmn.prmn_codigo
-        , prmn.prmn_mensaje
+        prmn_prbt_pk
+        , prmn_nivel
+        , prmn_codigo
+        , prmn_mensaje
     FROM
         tbl_proceso_mensaje_prmn prmn
     ]]>
     </sql>
 
+    <sql id="SelectWhere">
+        <where>
+            prmn_prbt_pk = #{value}
+        </where>
+    </sql>
+
     <select id="selectList" parameterType="Long" resultMap="ResultMap">
         <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="count" parameterType="Long" resultType="Integer">
         <![CDATA[
-        WHERE prmn.prmn_prbt_pk = #{value}
+        SELECT COUNT(1)
+        FROM
+            tbl_proceso_mensaje_prmn prmn
         ]]>
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="ProcesoMensajeVO">

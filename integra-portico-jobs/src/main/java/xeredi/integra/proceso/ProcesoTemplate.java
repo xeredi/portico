@@ -10,13 +10,11 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.proceso.bo.OperacionNoPermitidaException;
-import xeredi.integra.model.proceso.bo.Proceso;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
@@ -61,7 +59,7 @@ public abstract class ProcesoTemplate {
             LOG.info("Inicio del proceso batch");
         }
 
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
+        final ProcesoBO prbtBO = new ProcesoBO();
 
         do {
             prbtVO = prbtBO.proteger(getProcesoModulo(), getProcesoTipo());

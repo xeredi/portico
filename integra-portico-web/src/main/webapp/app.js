@@ -1,9 +1,7 @@
 var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "ngRoute", "util", "metamodelo",
-        "facturacion", "maestro", "servicio", "estadistica"/*
-                                                             * 'configuracion',
-                                                             * 'proceso',
-                                                             *
-                                                             */]);
+        "facturacion", "maestro", "servicio", "estadistica", "proceso"/*
+                                                                         * 'configuracion',
+                                                                         */]);
 
 app.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -32,6 +30,8 @@ app.config(function($translateProvider) {
         fmt_date : "dd/MM/yyyy",
         fmt_calendar_date : "yyyy-MM-dd",
         fmt_datetime : "dd/MM/yyyy HH:mm",
+
+        Modulo_E : "Estad\u00edstica",
 
         TipoElemento_BO : "Booleano",
         TipoElemento_CR : "C\u00f3d. Referencia",
@@ -416,6 +416,48 @@ app.config(function($translateProvider) {
 
         enen_entih : "Entidad Hija",
         enen_orden : "Orden",
+
+        prbt_grid : "Proceso Batch - Listado",
+        prbt_detail : "Proceso Batch - Detalle",
+        prbt_modulo : "M\u00f3dulo",
+        prbt_tipo : "Tipo",
+        prbt_estado : "Estado",
+        prbt_falta : "Fec. Alta",
+        prbt_finicio : "Fec. Inicio",
+        prbt_ffin : "Fec. Fin",
+        prbt_duracion : "Duraci\u00f3n (ms)",
+        prbt_erroresCnt : "Errores (n\u00ba)",
+        prbt_alertasCnt : "Alertas (n\u00ba)",
+        prbt_mensajesCnt : "Mensajes (n\u00ba)",
+
+        prpm_nombre : "Nombre",
+        prpm_valor : "Valor",
+
+        prmn_nivel : "Nivel",
+        prmn_codigo : "C\u00f3digo",
+        prmn_mensaje : "Mensaje",
+
+        mani_totales : "Totales Manifiesto",
+        mabl_totales : "Totales BL",
+        mani_resumen_mercancias : "Mercanc\u00edas",
+        mani_resumen_pasajeros : "Pasajeros",
+        mani_resumen_numBlsMercancia : "N\u00ba BLs",
+        mani_resumen_numBlsPasajeros : "N\u00ba BLs",
+        mani_resumen_numContenedores20 : "Contenedores 20",
+        mani_resumen_numContenedores20Llenos : "Llenos",
+        mani_resumen_numContenedores20Vacios : "Vac\u00edos",
+        mani_resumen_numContenedores40 : "Contenedores 40",
+        mani_resumen_numContenedores40Llenos : "Llenos",
+        mani_resumen_numContenedores40Vacios : "Vac\u00edos",
+        mani_resumen_numEquipamientos : "Equipamientos",
+        mani_resumen_numEquipamientosLlenos : "Llenos",
+        mani_resumen_numEquipamientosVacios : "Vac\u00edos",
+        mani_resumen_numPartidasMercancia : "N\u00ba Partidas",
+        mani_resumen_pesoPartidasMercancia : "Peso Total (Kg)",
+        mani_resumen_numPartidasPasajeros : "N\u00ba Partidas",
+        mani_resumen_numPasajeros : "N\u00ba Pasajeros",
+        mani_resumen_numCruceristas : "N\u00ba Cruceristas",
+        mani_resumen_numVehiculos : "N\u00ba Veh\u00edculos",
     });
 
     $translateProvider.preferredLanguage("es");

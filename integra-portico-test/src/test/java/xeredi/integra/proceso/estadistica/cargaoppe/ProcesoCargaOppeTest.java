@@ -4,8 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.proceso.bo.Proceso;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
@@ -27,7 +25,7 @@ public final class ProcesoCargaOppeTest {
         try {
 
             final ProcesoCargaOppe cargaOppe = new ProcesoCargaOppe();
-            final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
+            final ProcesoBO prbtBO = new ProcesoBO();
             final ProcesoVO prbtVO = new ProcesoVO();
 
             prbtVO.setModulo(cargaOppe.getProcesoModulo());

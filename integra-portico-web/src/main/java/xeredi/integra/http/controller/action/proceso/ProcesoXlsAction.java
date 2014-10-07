@@ -10,9 +10,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.comun.report.ExcelUtil;
-import xeredi.integra.model.proceso.bo.Proceso;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 
@@ -51,7 +49,7 @@ public final class ProcesoXlsAction extends BaseAction {
     @Action(value = "prbt-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "application/xls", "inputName", "stream", "contentDisposition", "filename=PROCESOS.xls" }) })
     public String xlsExport() throws IOException {
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
+        final ProcesoBO prbtBO = new ProcesoBO();
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ExcelUtil excelUtil = new ExcelUtil(getLocale());

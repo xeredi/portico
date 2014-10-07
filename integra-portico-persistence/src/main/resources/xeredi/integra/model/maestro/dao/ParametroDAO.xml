@@ -5,7 +5,6 @@
 <mapper namespace="xeredi.integra.model.maestro.dao.ParametroDAO">
     <resultMap type="ParametroVO" id="ResultMap">
         <id column="prvr_pk" />
-        <id column="prmt_pk" />
 
         <result column="prmt_pk" property="id" />
         <result column="prmt_parametro" property="parametro" />
@@ -24,9 +23,7 @@
 
     <sql id="SelectPrefix">
     <![CDATA[
-    SELECT
-        prmt.*
-        , prvr.*
+    SELECT *
     ]]>
         <if test="idioma != null">
         <![CDATA[
@@ -41,7 +38,8 @@
                         AND tppr_es_i18n = 1
                         AND p18n_idioma = 'es_ES'
                 )
-                ELSE (
+                WHEN tppr_tpdt_pk IS NOT NULL
+                THEN (
                     SELECT prdt_cadena
                     FROM tbl_parametro_dato_prdt
                     WHERE
@@ -54,11 +52,7 @@
         </if>
     <![CDATA[
     FROM
-        tbl_parametro_prmt prmt
-        JOIN tbl_parametro_version_prvr prvr ON
-            prvr_prmt_pk = prmt_pk
-        JOIN tbl_tipo_parametro_tppr tppr ON
-            tppr_pk = prmt_tppr_pk
+        vw_parametro_prmt
     ]]>
     </sql>
 
@@ -66,9 +60,7 @@
     <![CDATA[
     SELECT
         COUNT(1)
-    FROM tbl_parametro_prmt prmt
-        JOIN tbl_parametro_version_prvr prvr ON
-            prvr.prvr_prmt_pk = prmt.prmt_pk
+    FROM vw_parametro_prmt
     ]]>
     </sql>
 
@@ -99,7 +91,7 @@
             </if>
 
             <if test="parametros != null and !parametros.empty">
-                AND prmt.prmt_parametro IN
+                AND prmt_parametro IN
                 <foreach collection="parametros" item="item" open="(" close=")" separator=",">#{item}
                 </foreach>
             </if>
@@ -115,9 +107,7 @@
             </if>
 
             <if test="fechaVigencia != null">
-		            <![CDATA[
-		            AND #{fechaVigencia} BETWEEN prvr_fini AND coalesce(prvr_ffin, #{fechaVigencia})
-		            ]]>
+                AND #{fechaVigencia} BETWEEN prvr_fini AND coalesce(prvr_ffin, #{fechaVigencia})
             </if>
 
             <if test="itdtMap != null and !itdtMap.empty">
@@ -166,7 +156,7 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
 
-        ORDER BY prmt.prmt_tppr_pk, prmt.prmt_parametro
+        ORDER BY prmt_tppr_pk, prmt_parametro
     </select>
 
     <select id="selectMap" parameterType="ParametroCriterioVO" resultMap="ResultMap">
@@ -208,17 +198,13 @@
                 END
             ) AS p18n_texto
         FROM
-            tbl_parametro_prmt
-            INNER JOIN tbl_parametro_version_prvr ON
-                prvr_prmt_pk = prmt_pk
-                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-            INNER JOIN tbl_tipo_parametro_tppr ON
-                tppr_pk = prmt_tppr_pk
+            vw_parametro_prmt
         WHERE
             prmt_tppr_pk = #{entiId}
             AND (
                 prmt_parametro LIKE #{textoBusqueda}
             )
+            AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
         ]]>
     </select>
 
@@ -245,9 +231,7 @@
     <![CDATA[
         SELECT COUNT(1)
         FROM
-            tbl_parametro_prmt
-            INNER JOIN tbl_parametro_version_prvr ON
-                prvr_prmt_pk = prmt_pk
+            vw_parametro_prmt
         WHERE
             prmt_pk = #{id}
             AND (

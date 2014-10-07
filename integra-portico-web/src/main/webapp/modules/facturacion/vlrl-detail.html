@@ -1,17 +1,17 @@
 
 <tabset type="pills"> <tab heading="{{'vlrl' | translate | uppercase}}">
-<fieldset>
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
-            </button>
-            <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
-            </button>
-        </div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button data-ng-click="edit()" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+        </button>
+        <button data-ng-click="remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+        </button>
     </div>
+</div>
 
+<fieldset>
     <div class="row-fluid">
         <div class="col-md-2 form-group">
             <label>{{'rgla_enti' | translate}}</label>
@@ -115,62 +115,64 @@
     </div>
 </fieldset>
 </tab> <tab heading="{{'vlrds' | translate | uppercase}}">
-<fieldset>
-    <div class="row-fluid">
-        <div class="col-md-12 form-group">
-            <span class="label label-default">{{vlrdList.count}} resultado(s)</span>
-
-            <table class="table-bordered table-condensed table-hover table-nonfluid">
-                <thead>
-                    <tr>
-                        <th />
-                        <th>{{'vlrd_valorBase' | translate}}</th>
-                        <th>{{'vlrd_importeBase' | translate}}</th>
-                        <th>{{'vlrd_importe' | translate}}</th>
-                        <th>{{'vlrd_ssrv' | translate}}</th>
-                        <th>{{'vlrd_fini' | translate}}</th>
-                        <th>{{'vlrd_ffin' | translate}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathInfo1">Info 1: {{vlrl.rgla.rglv.etiqInfo1}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathInfo2">Info 2: {{vlrl.rgla.rglv.etiqInfo2}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathInfo3">Info 3: {{vlrl.rgla.rglv.etiqInfo3}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathInfo4">Info 4: {{vlrl.rgla.rglv.etiqInfo4}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathInfo5">Info 5: {{vlrl.rgla.rglv.etiqInfo5}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathInfo6">Info 6: {{vlrl.rgla.rglv.etiqInfo6}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathCuant1">Cuant 1: {{vlrl.rgla.rglv.etiqCuant1}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathCuant2">Cuant 2: {{vlrl.rgla.rglv.etiqCuant2}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathCuant3">Cuant 3: {{vlrl.rgla.rglv.etiqCuant3}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathCuant4">Cuant 4: {{vlrl.rgla.rglv.etiqCuant4}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathCuant5">Cuant 5: {{vlrl.rgla.rglv.etiqCuant5}}</th>
-                        <th ng-if="vlrl.rgla.rglv.pathCuant6">Cuant 6: {{vlrl.rgla.rglv.etiqCuant6}}</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="vlrd in vlrdList.list">
-                        <td><a href="#/facturacion/vlrd/detail/{{vlrd.id}}"><i
-                                class="glyphicon glyphicon-search"></i></a></td>
-                        <td class="number">{{vlrd.valorBase | number:4}}</td>
-                        <td class="number">{{vlrd.importeBase | number:2}}</td>
-                        <td class="number">{{vlrd.importe | number:2}}</td>
-                        <td>{{vlrd.ssrv.numero}}</td>
-                        <td>{{vlrd.fini | date:('fmt_datetime' | translate)}}</td>
-                        <td>{{vlrd.ffin | date:('fmt_datetime' | translate)}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathInfo1">{{vlrd.info1}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathInfo2">{{vlrd.info2}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathInfo3">{{vlrd.info3}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathInfo4">{{vlrd.info4}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathInfo5">{{vlrd.info5}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathInfo6">{{vlrd.info6}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathCuant1" class="number">{{vlrd.cuant1 | number:2}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathCuant2" class="number">{{vlrd.cuant2 | number:2}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathCuant3" class="number">{{vlrd.cuant3 | number:2}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathCuant4" class="number">{{vlrd.cuant4 | number:2}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathCuant5" class="number">{{vlrd.cuant5 | number:2}}</td>
-                        <td ng-if="vlrl.rgla.rglv.pathCuant6" class="number">{{vlrd.cuant6 | number:2}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" href="#/facturacion/vlrd/create/{{vlrl.id}}"><i class="glyphicon glyphicon-file"></i>
+            {{'boton_alta' | translate}}</a>
     </div>
-</fieldset>
+</div>
+
+<div class="table-responsive">
+    <span class="label label-default">{{vlrdList.count}} resultado(s)</span>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th />
+                <th>{{'vlrd_valorBase' | translate}}</th>
+                <th>{{'vlrd_importeBase' | translate}}</th>
+                <th>{{'vlrd_importe' | translate}}</th>
+                <th>{{'vlrd_ssrv' | translate}}</th>
+                <th>{{'vlrd_fini' | translate}}</th>
+                <th>{{'vlrd_ffin' | translate}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathInfo1">Info 1: {{vlrl.rgla.rglv.etiqInfo1}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathInfo2">Info 2: {{vlrl.rgla.rglv.etiqInfo2}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathInfo3">Info 3: {{vlrl.rgla.rglv.etiqInfo3}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathInfo4">Info 4: {{vlrl.rgla.rglv.etiqInfo4}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathInfo5">Info 5: {{vlrl.rgla.rglv.etiqInfo5}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathInfo6">Info 6: {{vlrl.rgla.rglv.etiqInfo6}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathCuant1">Cuant 1: {{vlrl.rgla.rglv.etiqCuant1}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathCuant2">Cuant 2: {{vlrl.rgla.rglv.etiqCuant2}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathCuant3">Cuant 3: {{vlrl.rgla.rglv.etiqCuant3}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathCuant4">Cuant 4: {{vlrl.rgla.rglv.etiqCuant4}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathCuant5">Cuant 5: {{vlrl.rgla.rglv.etiqCuant5}}</th>
+                <th ng-if="vlrl.rgla.rglv.pathCuant6">Cuant 6: {{vlrl.rgla.rglv.etiqCuant6}}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="vlrd in vlrdList.list">
+                <td><a href="#/facturacion/vlrd/detail/{{vlrd.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td class="number">{{vlrd.valorBase | number:4}}</td>
+                <td class="number">{{vlrd.importeBase | number:2}}</td>
+                <td class="number">{{vlrd.importe | number:2}}</td>
+                <td>{{vlrd.ssrv.numero}}</td>
+                <td>{{vlrd.fini | date:('fmt_datetime' | translate)}}</td>
+                <td>{{vlrd.ffin | date:('fmt_datetime' | translate)}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo1">{{vlrd.info1}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo2">{{vlrd.info2}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo3">{{vlrd.info3}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo4">{{vlrd.info4}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo5">{{vlrd.info5}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo6">{{vlrd.info6}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant1" class="number">{{vlrd.cuant1 | number:2}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant2" class="number">{{vlrd.cuant2 | number:2}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant3" class="number">{{vlrd.cuant3 | number:2}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant4" class="number">{{vlrd.cuant4 | number:2}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant5" class="number">{{vlrd.cuant5 | number:2}}</td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant6" class="number">{{vlrd.cuant6 | number:2}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </tab></tabset>

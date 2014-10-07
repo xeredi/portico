@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.mybatis.guice.transactional.Transactional;
+import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.proceso.dao.ProcesoArchivoDAO;
@@ -26,251 +26,390 @@ import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
+import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoBO.
  */
-@Singleton
-public class ProcesoBO implements Proceso {
+public class ProcesoBO {
 
     /** The prbt dao. */
-    @Inject
     ProcesoDAO prbtDAO;
 
     /** The prpm dao. */
-    @Inject
     ProcesoParametroDAO prpmDAO;
 
     /** The prar dao. */
-    @Inject
     ProcesoArchivoDAO prarDAO;
 
     /** The prit dao. */
-    @Inject
     ProcesoItemDAO pritDAO;
 
     /** The prmn dao. */
-    @Inject
     ProcesoMensajeDAO prmnDAO;
 
     /**
-     * {@inheritDoc}
+     * Crear.
+     *
+     * @param prbtVO
+     *            the prbt vo
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final void crear(final ProcesoVO prbtVO) {
         Preconditions.checkNotNull(prbtVO);
 
-        final IgBO igBO = new IgBO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        prbtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-        prbtDAO.insert(prbtVO);
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+        pritDAO = session.getMapper(ProcesoItemDAO.class);
+        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        for (final String prpmNombre : prbtVO.getPrpmMap().keySet()) {
-            final ProcesoParametroVO prpmVO = new ProcesoParametroVO();
+        try {
+            final IgBO igBO = new IgBO();
 
-            prpmVO.setPrbtId(prbtVO.getId());
-            prpmVO.setNombre(prpmNombre);
-            prpmVO.setValor(prbtVO.getPrpmMap().get(prpmNombre));
+            prbtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            prbtDAO.insert(prbtVO);
 
-            prpmDAO.insert(prpmVO);
-        }
+            for (final String prpmNombre : prbtVO.getPrpmMap().keySet()) {
+                final ProcesoParametroVO prpmVO = new ProcesoParametroVO();
 
-        for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
-            prarVO.setPrbtId(prbtVO.getId());
-            prarVO.setSentido(ArchivoSentido.E);
+                prpmVO.setPrbtId(prbtVO.getId());
+                prpmVO.setNombre(prpmNombre);
+                prpmVO.setValor(prbtVO.getPrpmMap().get(prpmNombre));
 
-            prarDAO.insert(prarVO);
-        }
+                prpmDAO.insert(prpmVO);
+            }
 
-        for (final ProcesoItemVO pritVO : prbtVO.getPritEntradaList()) {
-            pritVO.setPrbtId(prbtVO.getId());
-            pritVO.setSentido(ItemSentido.E);
+            for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
+                prarVO.setPrbtId(prbtVO.getId());
+                prarVO.setSentido(ArchivoSentido.E);
 
-            pritDAO.insert(pritVO);
+                prarDAO.insert(prarVO);
+            }
+
+            for (final ProcesoItemVO pritVO : prbtVO.getPritEntradaList()) {
+                pritVO.setPrbtId(prbtVO.getId());
+                pritVO.setSentido(ItemSentido.E);
+
+                pritDAO.insert(pritVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Proteger.
+     *
+     * @param modulo
+     *            the modulo
+     * @param tipo
+     *            the tipo
+     * @return the proceso vo
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public ProcesoVO proteger(final ProcesoModulo modulo, final ProcesoTipo tipo) {
         Preconditions.checkNotNull(modulo);
         Preconditions.checkNotNull(tipo);
 
-        final ProcesoCriterioVO prbtCriterioVO = new ProcesoCriterioVO();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        prbtCriterioVO.setEstado(ProcesoEstado.C);
-        prbtCriterioVO.setModulo(modulo);
-        prbtCriterioVO.setTipo(tipo);
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+        pritDAO = session.getMapper(ProcesoItemDAO.class);
+        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, 1));
+        try {
+            final ProcesoCriterioVO prbtCriterioVO = new ProcesoCriterioVO();
 
-        if (!prbtList.isEmpty()) {
-            final ProcesoVO prbtVO = prbtList.get(0);
+            prbtCriterioVO.setEstado(ProcesoEstado.C);
+            prbtCriterioVO.setModulo(modulo);
+            prbtCriterioVO.setTipo(tipo);
 
-            prbtDAO.updateIniciar(prbtVO.getId());
+            final List<ProcesoVO> prbtList = prbtDAO.selectList(prbtCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
+                    1));
 
-            prbtVO.getPrarEntradaList().addAll(prarDAO.selectList(prbtVO.getId()));
-            prbtVO.getPritEntradaList().addAll(pritDAO.selectList(prbtVO.getId()));
+            if (!prbtList.isEmpty()) {
+                final ProcesoVO prbtVO = prbtList.get(0);
 
-            final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtVO.getId());
+                prbtDAO.updateIniciar(prbtVO.getId());
 
-            for (final ProcesoParametroVO prpmVO : prpmList) {
-                prbtVO.getPrpmMap().put(prpmVO.getNombre(), prpmVO.getValor());
+                prbtVO.getPrarEntradaList().addAll(prarDAO.selectList(prbtVO.getId()));
+                prbtVO.getPritEntradaList().addAll(pritDAO.selectList(prbtVO.getId()));
+
+                final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtVO.getId());
+
+                for (final ProcesoParametroVO prpmVO : prpmList) {
+                    prbtVO.getPrpmMap().put(prpmVO.getNombre(), prpmVO.getValor());
+                }
+
+                session.commit();
+
+                return prbtVO;
             }
-
-            return prbtVO;
+        } finally {
+            session.close();
         }
 
         return null;
     }
 
     /**
-     * {@inheritDoc}
+     * Finalizar.
+     *
+     * @param prbtVO
+     *            the prbt vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final void finalizar(final ProcesoVO prbtVO) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbtVO);
 
-        final ProcesoVO prbtActualVO = prbtDAO.select(prbtVO.getId());
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (prbtActualVO == null) {
-            throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtVO.getId());
-        }
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+        pritDAO = session.getMapper(ProcesoItemDAO.class);
+        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        if (prbtActualVO.getEstado() != ProcesoEstado.E) {
-            throw new OperacionNoPermitidaException(ProcesoVO.class.getName(), prbtVO.getId());
-        }
+        try {
+            final ProcesoVO prbtActualVO = prbtDAO.select(prbtVO.getId());
 
-        prbtDAO.updateFinalizar(prbtVO.getId());
+            if (prbtActualVO == null) {
+                throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtVO.getId());
+            }
 
-        for (final ProcesoArchivoVO prarVO : prbtVO.getPrarSalidaList()) {
-            prarVO.setPrbtId(prbtVO.getId());
-            prarVO.setSentido(ArchivoSentido.S);
+            if (prbtActualVO.getEstado() != ProcesoEstado.E) {
+                throw new OperacionNoPermitidaException(ProcesoVO.class.getName(), prbtVO.getId());
+            }
 
-            prarDAO.insert(prarVO);
-        }
+            prbtDAO.updateFinalizar(prbtVO.getId());
 
-        for (final ProcesoItemVO pritVO : prbtVO.getPritSalidaList()) {
-            pritVO.setPrbtId(prbtVO.getId());
-            pritVO.setSentido(ItemSentido.S);
+            for (final ProcesoArchivoVO prarVO : prbtVO.getPrarSalidaList()) {
+                prarVO.setPrbtId(prbtVO.getId());
+                prarVO.setSentido(ArchivoSentido.S);
 
-            pritDAO.insert(pritVO);
-        }
+                prarDAO.insert(prarVO);
+            }
 
-        for (final ProcesoMensajeVO prmnVO : prbtVO.getPrmnList()) {
-            prmnVO.setPrbtId(prbtVO.getId());
+            for (final ProcesoItemVO pritVO : prbtVO.getPritSalidaList()) {
+                pritVO.setPrbtId(prbtVO.getId());
+                pritVO.setSentido(ItemSentido.S);
 
-            prmnDAO.insert(prmnVO);
+                pritDAO.insert(pritVO);
+            }
+
+            for (final ProcesoMensajeVO prmnVO : prbtVO.getPrmnList()) {
+                prmnVO.setPrbtId(prbtVO.getId());
+
+                prmnDAO.insert(prmnVO);
+            }
+
+            session.commit();
+        } finally {
+            session.close();
         }
     }
 
     /**
-     * {@inheritDoc}
+     * Cancelar.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final void cancelar(final Long prbtId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbtId);
 
-        final ProcesoVO prbtVO = prbtDAO.select(prbtId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        if (prbtVO == null) {
-            throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtId);
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+        pritDAO = session.getMapper(ProcesoItemDAO.class);
+        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
+
+        try {
+            final ProcesoVO prbtVO = prbtDAO.select(prbtId);
+
+            if (prbtVO == null) {
+                throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtId);
+            }
+
+            if (prbtVO.getEstado() == ProcesoEstado.E) {
+                throw new OperacionNoPermitidaException(ProcesoVO.class.getName(), prbtVO);
+            }
+
+            prarDAO.delete(prbtId);
+            pritDAO.delete(prbtId);
+            prmnDAO.delete(prbtId);
+            prpmDAO.delete(prbtId);
+
+            prbtDAO.delete(prbtId);
+
+            session.commit();
+        } finally {
+            session.close();
         }
-
-        if (prbtVO.getEstado() == ProcesoEstado.E) {
-            throw new OperacionNoPermitidaException(ProcesoVO.class.getName(), prbtVO);
-        }
-
-        prarDAO.delete(prbtId);
-        pritDAO.delete(prbtId);
-        prmnDAO.delete(prbtId);
-        prpmDAO.delete(prbtId);
-
-        prbtDAO.delete(prbtId);
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param prbtCriterioVO
+     *            the prbt criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
      */
-    @Override
-    @Transactional
     public final PaginatedList<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(prbtCriterioVO);
 
-        final int count = prbtDAO.selectCount(prbtCriterioVO);
-        final List<ProcesoVO> prbtList = new ArrayList<>();
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
-        if (count > offset) {
-            prbtList.addAll(prbtDAO.selectList(prbtCriterioVO, new RowBounds(offset, limit)));
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+
+        try {
+            final int count = prbtDAO.selectCount(prbtCriterioVO);
+            final List<ProcesoVO> prbtList = new ArrayList<>();
+
+            if (count > offset) {
+                prbtList.addAll(prbtDAO.selectList(prbtCriterioVO, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<>(prbtList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return new PaginatedList<>(prbtList, offset, limit, count);
     }
 
     /**
-     * {@inheritDoc}
+     * Select list.
+     *
+     * @param prbtCriterioVO
+     *            the prbt criterio vo
+     * @return the list
      */
-    @Override
-    @Transactional(executorType = ExecutorType.BATCH)
     public final List<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO) {
-        return prbtDAO.selectList(prbtCriterioVO);
+        Preconditions.checkNotNull(prbtCriterioVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+
+        try {
+            return prbtDAO.selectList(prbtCriterioVO);
+        } finally {
+            session.close();
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Select.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @return the proceso vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    @Transactional
     public final ProcesoVO select(final Long prbtId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prbtId);
 
-        final ProcesoVO prbtVO = prbtDAO.select(prbtId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
-        if (prbtVO == null) {
-            throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtId);
-        }
+        prbtDAO = session.getMapper(ProcesoDAO.class);
+        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+        pritDAO = session.getMapper(ProcesoItemDAO.class);
+        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        final List<ProcesoArchivoVO> prarList = prarDAO.selectList(prbtId);
+        try {
+            final ProcesoVO prbtVO = prbtDAO.select(prbtId);
 
-        for (final ProcesoArchivoVO prarVO : prarList) {
-            if (prarVO.getSentido() == ArchivoSentido.E) {
-                prbtVO.getPrarEntradaList().add(prarVO);
-            } else {
-                prbtVO.getPrarSalidaList().add(prarVO);
+            if (prbtVO == null) {
+                throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtId);
             }
-        }
 
-        final List<ProcesoItemVO> pritList = pritDAO.selectList(prbtId);
+            final List<ProcesoArchivoVO> prarList = prarDAO.selectList(prbtId);
 
-        for (final ProcesoItemVO pritVO : pritList) {
-            if (pritVO.getSentido() == ItemSentido.E) {
-                prbtVO.getPritEntradaList().add(pritVO);
-            } else {
-                prbtVO.getPritSalidaList().add(pritVO);
+            for (final ProcesoArchivoVO prarVO : prarList) {
+                if (prarVO.getSentido() == ArchivoSentido.E) {
+                    prbtVO.getPrarEntradaList().add(prarVO);
+                } else {
+                    prbtVO.getPrarSalidaList().add(prarVO);
+                }
             }
+
+            final List<ProcesoItemVO> pritList = pritDAO.selectList(prbtId);
+
+            for (final ProcesoItemVO pritVO : pritList) {
+                if (pritVO.getSentido() == ItemSentido.E) {
+                    prbtVO.getPritEntradaList().add(pritVO);
+                } else {
+                    prbtVO.getPritSalidaList().add(pritVO);
+                }
+            }
+
+            prbtVO.getPrmnList().addAll(prmnDAO.selectList(prbtId));
+
+            final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtId);
+
+            for (final ProcesoParametroVO prpmVO : prpmList) {
+                prbtVO.getPrpmMap().put(prpmVO.getNombre(), prpmVO.getValor());
+            }
+
+            return prbtVO;
+        } finally {
+            session.close();
         }
+    }
 
-        prbtVO.getPrmnList().addAll(prmnDAO.selectList(prbtId));
+    /**
+     * Select prmn list.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
+     */
+    public PaginatedList<ProcesoMensajeVO> selectPrmnList(final Long prbtId, final int offset, final int limit) {
+        Preconditions.checkNotNull(prbtId);
 
-        final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtId);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
-        for (final ProcesoParametroVO prpmVO : prpmList) {
-            prbtVO.getPrpmMap().put(prpmVO.getNombre(), prpmVO.getValor());
+        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+
+        try {
+            final List<ProcesoMensajeVO> prmnList = new ArrayList<>();
+            final int count = prmnDAO.count(prbtId);
+
+            if (count >= offset) {
+                prmnList.addAll(prmnDAO.selectList(prbtId, new RowBounds(offset, limit)));
+            }
+
+            return new PaginatedList<ProcesoMensajeVO>(prmnList, offset, limit, count);
+        } finally {
+            session.close();
         }
-
-        return prbtVO;
     }
 }

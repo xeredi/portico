@@ -42,28 +42,28 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "prmtCreateController"
     })
 
+    .when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
+        title : 'prmt_detail',
+        templateUrl : "modules/entidad/maestro/prmt-detail.html",
+        controller : "prmtDetailController"
+    })
+
     .when("/maestro/prmt/detail/:entiId/:prvrId", {
         title : 'prmt_detail',
         templateUrl : "modules/entidad/maestro/prmt-detail.html",
         controller : "prmtDetailController"
     })
 
-    .when("/maestro/prmt/edit/:entiId/:prvrId", {
+    .when("/maestro/prmt/edit/:entiId/:prvrId/:fechaVigencia", {
         title : 'prmt_edit',
         templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "prmtEditController"
     })
 
-    .when("/maestro/prmt/duplicate/:entiId/:prvrId", {
+    .when("/maestro/prmt/duplicate/:entiId/:prvrId/:fechaVigencia", {
         title : 'prmt_duplicate',
         templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "prmtDuplicateController"
-    })
-
-    .when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
-        title : 'prmt_detail',
-        templateUrl : "modules/entidad/maestro/prmt-detail.html",
-        controller : "prmtDetailController"
     })
 } ]);
 
@@ -144,7 +144,8 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
 
 module.controller("prmtDetailController", function($scope, $http, $location, $route, $routeParams) {
     $scope.edit = function() {
-        $location.path("/maestro/prmt/edit/" + $scope.item.entiId + "/" + $scope.item.prvr.id).replace();
+        $location.path("/maestro/prmt/edit/" + $scope.item.entiId + "/" + $scope.item.prvr.id + "/" + $scope.item.fref)
+                .replace();
     }
 
     $scope.remove = function() {
@@ -247,10 +248,10 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
             p18nMap : $scope.p18nMap,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.prvr.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -269,7 +270,8 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
     }
 
     function findItem() {
-        var url = "maestro/prmt-edit.action?item.prvr.id=" + $routeParams.prvrId;
+        var url = "maestro/prmt-edit.action?item.prvr.id=" + $routeParams.prvrId + "&fechaVigencia="
+                + $routeParams.fechaVigencia;
 
         $http.get(url).success(function(data) {
             $scope.item = data.item;
@@ -292,10 +294,10 @@ module.controller("prmtDuplicateController", function($scope, $http, $location, 
             p18nMap : $scope.p18nMap,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.prvr.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -314,7 +316,8 @@ module.controller("prmtDuplicateController", function($scope, $http, $location, 
     }
 
     function findItem() {
-        var url = "maestro/prmt-duplicate.action?item.prvr.id=" + $routeParams.prvrId;
+        var url = "maestro/prmt-duplicate.action?item.prvr.id=" + $routeParams.prvrId + "&fechaVigencia="
+                + $routeParams.fechaVigencia;
 
         $http.get(url).success(function(data) {
             $scope.item = data.item;

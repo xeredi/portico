@@ -72,20 +72,22 @@ public final class TipoParametroProxy {
     /**
      * Load.
      */
-    private static void load() {
-        LOG.info("Carga de tipos de parametro");
+    private static synchronized void load() {
+        if (TIPO_PARAMETRO_MAP.isEmpty()) {
+            LOG.info("Carga de tipos de parametro");
 
-        final TipoParametroBO tpprBO = new TipoParametroBO();
-        final List<TipoParametroVO> tpprList = tpprBO.selectList(new TipoParametroCriterioVO());
+            final TipoParametroBO tpprBO = new TipoParametroBO();
+            final List<TipoParametroVO> tpprList = tpprBO.selectList(new TipoParametroCriterioVO());
 
-        for (final TipoParametroVO tpprVO : tpprList) {
-            TIPO_PARAMETRO_MAP.put(tpprVO.getId(), tpprVO);
+            for (final TipoParametroVO tpprVO : tpprList) {
+                TIPO_PARAMETRO_MAP.put(tpprVO.getId(), tpprVO);
+            }
+
+            EntidadProxy.loadDependencies(TIPO_PARAMETRO_MAP);
+
+            LABEL_VALUE_LIST.addAll(tpprBO.selectLabelValues());
+
+            LOG.info("Carga de tipos de parametro OK");
         }
-
-        EntidadProxy.loadDependencies(TIPO_PARAMETRO_MAP);
-
-        LABEL_VALUE_LIST.addAll(tpprBO.selectLabelValues());
-
-        LOG.info("Carga de tipos de parametro OK");
     }
 }

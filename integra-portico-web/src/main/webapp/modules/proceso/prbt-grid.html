@@ -1,0 +1,85 @@
+
+<div ng-if="showFilter">
+    <form>
+        <fieldset>
+            <div class="row-fluid">
+                <!--
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label>{{'estd_subp' | translate}}</label> <select ng-model="itemCriterio.subpId"
+                        ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
+                        <option value="" />
+                    </select>
+                </div>
+                <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
+                    <label>{{'limit' | translate}}</label> <select ng-model="limit" class="form-control input-sm">
+                        <option ng-repeat="limitValue in limits" class="pull-right" value="{{limitValue}}"
+                            ng-selected="limitValue == limit">{{limitValue}}</option>
+                    </select>
+                </div>
+ -->
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            </button>
+        </div>
+    </form>
+</div>
+
+<div ng-hide="showFilter">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <pagination total-items="prbtList.count" items-per-page="prbtList.limit" ng-model="page"
+                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+        </div>
+
+        <div class="btn-group">
+            <button data-ng-click="filter()" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <span class="label label-default">{{prbtList.count}} resultado(s)</span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th nowrap="nowrap">{{'prbt_modulo' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_tipo' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_estado' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_falta' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_finicio' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_ffin' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_duracion' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_erroresCnt' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_alertasCnt' | translate}}</th>
+                    <th nowrap="nowrap">{{'prbt_mensajesCnt' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="prbt in prbtList.list">
+                    <td><a href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td>{{prbt.modulo}}</td>
+                    <td>{{prbt.tipo}}</td>
+                    <td>{{prbt.estado}}</td>
+                    <td>{{prbt.falta | date:('fmt_datetime' | translate)}}</td>
+                    <td>{{prbt.finicio | date:('fmt_datetime' | translate)}}</td>
+                    <td>{{prbt.ffin | date:('fmt_datetime' | translate)}}</td>
+                    <td class="number">{{prbt.duracion | number:0}}</td>
+                    <td class="number">{{prbt.erroresCnt | number:0}}</td>
+                    <td class="number">{{prbt.alertasCnt | number:0}}</td>
+                    <td class="number">{{prbt.mensajesCnt | number:0}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

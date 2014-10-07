@@ -1,0 +1,51 @@
+<div class="row-fluid">
+    <div class="col-sm-6 col-md-5 col-lg-4 panel panel-default">
+        <div class="panel-heading">{{'mani_resumen_mercancias' | translate}}</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">{{'mani_resumen_numBlsMercancia' | translate}}<span class="badge">{{resumen.numBlsMercancia
+                        | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numPartidasMercancia' | translate}}<span class="badge">{{resumen.numPartidasMercancia
+                        | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_pesoPartidasMercancia' | translate}}<span class="badge">{{resumen.pesoPartidasMercancia
+                        | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numContenedores20' | translate}}<span class="badge">{{resumen.numContenedores20Llenos
+                        + resumen.numContenedores20Vacios | number:0}}</span></li>
+                <li class="list-group-item"><span class="badge">{{resumen.numContenedores20Llenos |
+                        number:0}}</span>{{'mani_resumen_numContenedores20Llenos' | translate}}</li>
+                <li class="list-group-item"><span class="badge">{{resumen.numContenedores20Vacios |
+                        number:0}}</span>{{'mani_resumen_numContenedores20Vacios' | translate}}</li>
+                <li class="list-group-item"><span class="badge">{{resumen.numContenedores40Llenos +
+                        resumen.numContenedores40Vacios | number:0}}</span>{{'mani_resumen_numContenedores40' | translate}}</li>
+                <li class="list-group-item"><span class="badge">{{resumen.numContenedores40Llenos |
+                        number:0}}</span>{{'mani_resumen_numContenedores40Llenos' | translate}}</li>
+                <li class="list-group-item">{{'mani_resumen_numContenedores40Vacios' | translate}}<span
+                    class="badge">{{resumen.numContenedores40Vacios | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numEquipamientos' | translate}}<span class="badge">{{resumen.numEquipamientosLlenos
+                        + resumen.numEquipamientosVacios | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numEquipamientosLlenos' | translate}}<span
+                    class="badge">{{resumen.numEquipamientosLlenos | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numEquipamientosVacios' | translate}}<span
+                    class="badge">{{resumen.numEquipamientosVacios | number:0}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-5 col-lg-4 panel panel-default">
+        <div class="panel-heading">{{'mani_resumen_pasajeros' | translate}}</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">{{'mani_resumen_numBlsPasajeros' | translate}}<span class="badge">{{resumen.numBlsPasajeros
+                        | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numPartidasPasajeros' | translate}}<span class="badge">{{resumen.numPartidasPasajeros
+                        | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numPasajeros' | translate}}<span class="badge">{{resumen.numPasajeros
+                        | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numCruceristas' | translate}}<span class="badge">{{resumen.numCruceristas
+                        | number:0}}</span></li>
+                <li class="list-group-item">{{'mani_resumen_numVehiculos' | translate}}<span class="badge">{{resumen.numVehiculos
+                        | number:0}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>

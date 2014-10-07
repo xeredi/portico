@@ -2,12 +2,8 @@ package xeredi.integra.http.controller.action.proceso;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
-import xeredi.integra.model.proceso.bo.Proceso;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoEstado;
@@ -61,12 +57,9 @@ public final class ProcesoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({
-        @Action(value = "prbt-listado"),
-        @Action(value = "prbt-listado-json", results = { @Result(name = "success", type = "json", params = {
-                "excludeNullProperties", "true" }) }) })
+    @Action("prbt-list")
     public String listado() {
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
+        final ProcesoBO prbtBO = new ProcesoBO();
 
         prbtList = prbtBO.selectList(prbtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
@@ -78,8 +71,7 @@ public final class ProcesoListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "prbt-filtro"),
-        @Action(value = "prbt-filtro-popup", results = { @Result(name = "success", location = "prbt-filtro.jsp") }) })
+    @Action("prbt-filter")
     public String filtro() {
         return SUCCESS;
     }

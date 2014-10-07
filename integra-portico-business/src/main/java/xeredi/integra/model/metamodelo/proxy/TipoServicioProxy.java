@@ -75,25 +75,27 @@ public final class TipoServicioProxy {
     /**
      * Load.
      */
-    private static void load() {
-        LOG.info("Carga de tipos de servicio");
+    private static synchronized void load() {
+        if (TIPO_SERVICIO_MAP.isEmpty()) {
+            LOG.info("Carga de tipos de servicio");
 
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-        final List<TipoServicioVO> tpsrList = tpsrBO.selectList(new TipoServicioCriterioVO());
+            final TipoServicioBO tpsrBO = new TipoServicioBO();
+            final List<TipoServicioVO> tpsrList = tpsrBO.selectList(new TipoServicioCriterioVO());
 
-        for (final TipoServicioVO tpsrVO : tpsrList) {
-            if (tpsrVO.getTpdtEstado() != null) {
-                tpsrVO.setTpdtEstado(TipoDatoProxy.select(tpsrVO.getTpdtEstado().getId()));
+            for (final TipoServicioVO tpsrVO : tpsrList) {
+                if (tpsrVO.getTpdtEstado() != null) {
+                    tpsrVO.setTpdtEstado(TipoDatoProxy.select(tpsrVO.getTpdtEstado().getId()));
+                }
+
+                TIPO_SERVICIO_MAP.put(tpsrVO.getId(), tpsrVO);
             }
 
-            TIPO_SERVICIO_MAP.put(tpsrVO.getId(), tpsrVO);
+            EntidadProxy.loadDependencies(TIPO_SERVICIO_MAP);
+
+            LABEL_VALUE_LIST.addAll(tpsrBO.selectLabelValues());
+
+            LOG.info("Carga de tipos de servicio OK");
         }
-
-        EntidadProxy.loadDependencies(TIPO_SERVICIO_MAP);
-
-        LABEL_VALUE_LIST.addAll(tpsrBO.selectLabelValues());
-
-        LOG.info("Carga de tipos de servicio OK");
     }
 
 }

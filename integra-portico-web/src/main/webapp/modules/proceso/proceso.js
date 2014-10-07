@@ -1,99 +1,104 @@
-(function() {
-    var app = angular.module("proceso", []);
+var module = angular.module("proceso", [ "ngRoute" ]);
 
-    app.config([ '$routeProvider', function($routeProvider) {
-        $routeProvider.when('/proceso/prbt/:id', {
-            templateUrl : 'modules/proceso/prbt-detalle.html',
-            controller : 'ProcesoDetailController'
-        });
-    } ]);
+module.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
 
-    app.controller('ProcesoListController', function($scope, $http, $route, $routeParams, $modal) {
-        $scope.loadData = function() {
-            if ($scope.prbtCriteria == undefined) {
-                $scope.prbtCriteria = {};
+    .when("/proceso/prbt/grid", {
+        title : 'prbt_grid',
+        templateUrl : "modules/proceso/prbt-grid.html",
+        controller : "prbtGridController",
+        reloadOnSearch : false
+    })
+
+    .when("/proceso/prbt/detail/:prbtId", {
+        title : 'prbt_detail',
+        templateUrl : "modules/proceso/prbt-detail.html",
+        controller : "prbtDetailController"
+    })
+} ]);
+
+module.controller("prbtGridController", function($scope, $http, $location, $route, $routeParams) {
+    $scope.showFilter = false;
+    $scope.prbtCriterio = {};
+
+    function search(prbtCriterio, page, limit) {
+        var url = "proceso/prbt-list.action";
+
+        $scope.limit = limit;
+
+        $http.post(url, {
+            prbtCriterio : prbtCriterio,
+            page : page,
+            limit : limit
+        }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.prbtList.page;
+                $scope.prbtList = data.prbtList;
+                $scope.prbtCriterio = data.prbtCriterio;
+
+                var map = {};
+
+                map["page"] = data.prbtList.page;
+
+                $location.search(map).replace();
+
+                $scope.showFilter = false;
             }
+        });
+    }
 
-            var url = 'proceso/prbt-listado-json.action';
+    $scope.pageChanged = function() {
+        console.log("pageChanged: " + $scope.page);
+        console.log("limit: " + $scope.limit);
 
-            $http.post(url, {
-                prbtCriteria : $scope.prbtCriteria
-            }).success(function(response) {
-                $scope.prbtList = response.prbtList;
-            });
-        }
+        search($scope.prbtCriterio, $scope.page, $scope.limit);
+    }
 
-        $scope.filter = function() {
-            console.log('Filter');
+    $scope.filter = function() {
+        var url = "proceso/prbt-filter.action";
 
-            var modalInstance = $modal.open({
-                templateUrl : 'modules/catalog/prbt-filter.html',
-                controller : 'ModalInstanceCtrl',
-                resolve : {
-                    prbtCriteria : function() {
-                        return $scope.prbtCriteria;
-                    }
-                }
-            });
+        $http.get(url).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
 
-            modalInstance.result.then(function(prbtCriteria) {
-                $scope.prbtCriteria = prbtCriteria;
-                $scope.loadData();
-            }, function() {
-                console.log('Modal dismissed at: ' + new Date());
-            });
-        };
-
-        $scope.loadData();
-    });
-
-    app.controller('ModalInstanceCtrl', function($scope, $modalInstance, prbtCriteria) {
-        console.log('Modal Instance: ' + prbtCriteria);
-
-        $scope.prbtCriteria = prbtCriteria;
-
-        $scope.ok = function() {
-            $modalInstance.close($scope.prbtCriteria);
-        }
-
-        $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        }
-    });
-
-    app.controller('ProcesoDetailController', function($scope, $http, $route, $routeParams) {
-        var url = 'proceso/prbt-detalle-json.action?prbt.id=' + $routeParams.id;
-
-        $http.get(url).success(function(response) {
-            $scope.prbt = response.prbt;
+            if (data.actionErrors.length == 0) {
+                $scope.labelValuesMap = data.labelValuesMap;
+                $scope.limits = data.limits;
+            }
         });
 
-        $scope.cancelar = function() {
-            alert('Cancelar: ' + $scope.prbt.id);
-        }
-    });
+        $scope.showFilter = true;
+    }
 
-    /*
-     * app.controller('TrademarkInsertController', function($scope, $http,
-     * $route, $routeParams, $location) { $scope.save = function() {
-     * $http.post('catalog/trademark-insert.action', { trdm : $scope.trdm,
-     * vndrId : $routeParams.vndrId }).success(function(data) { var url =
-     * '/trademark-detail/' + data.vndrId + '/' + data.trdm.id;
-     *
-     * $location.path(url); }); }; });
-     *
-     * app.controller('TrademarkUpdateController', function($scope, $http,
-     * $route, $routeParams) { $scope.save = function() {
-     * $http.post('catalog/trademark-update.action', { trdm : $scope.trdm,
-     * vndrId : $routeParams.vndrId }).success(function(data) { var url =
-     * '/trademark-detail/' + data.vndrId + '/' + data.trdm.id;
-     *
-     * $location.path(url); }); };
-     *
-     * var url = 'catalog/trademark-detail.action?vndrId=' + $routeParams.vndrId +
-     * "&trdm.id=" + $routeParams.id;
-     *
-     * $http.get(url).success(function(response) { $scope.trdm = response.trdm;
-     * }); });
-     */
-})();
+    $scope.search = function() {
+        search($scope.prbtCriterio, 1, $scope.limit);
+    }
+
+    $scope.cancelSearch = function() {
+        $scope.showFilter = false;
+    }
+
+    search($scope.prbtCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
+});
+
+module.controller("prbtDetailController", function($scope, $http, $location, $route, $routeParams) {
+    function findItem() {
+        {
+            var url = "proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId;
+
+            $http.get(url).success(function(data) {
+                $scope.prbt = data.prbt;
+            });
+        }
+        {
+            var url = "proceso/prmn-list.action?prbtId=" + $routeParams.prbtId;
+
+            $http.get(url).success(function(data) {
+                $scope.prmnList = data.prmnList;
+            });
+        }
+    }
+
+    findItem();
+});

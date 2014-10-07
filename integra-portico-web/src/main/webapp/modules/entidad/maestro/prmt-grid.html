@@ -73,7 +73,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in itemList.list">
-                    <td><a href="#/maestro/prmt/detail/{{enti.id}}/{{item.prvr.id}}"><i
+                    <td><a href="#/maestro/prmt/detail/{{enti.id}}/{{item.id}}/{{itemCriterio.fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.parametro}}</td>
                     <td ng-if="enti.i18n">{{item.i18n.texto}}</td>

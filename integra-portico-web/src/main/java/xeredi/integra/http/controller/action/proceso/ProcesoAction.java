@@ -2,13 +2,9 @@ package xeredi.integra.http.controller.action.proceso;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.BOFactory;
 import xeredi.integra.model.proceso.bo.OperacionNoPermitidaException;
-import xeredi.integra.model.proceso.bo.Proceso;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -42,12 +38,9 @@ public final class ProcesoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Actions({
-            @Action(value = "prbt-detalle"),
-            @Action(value = "prbt-detalle-json", results = { @Result(name = "success", type = "json", params = {
-                    "excludeNullProperties", "true", "ignoreHierarchy", "false" }) }) })
+    @Action("prbt-detail")
     public String detalle() throws InstanceNotFoundException {
-        final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
+        final ProcesoBO prbtBO = new ProcesoBO();
 
         prbt = prbtBO.select(prbt.getId());
 
@@ -61,15 +54,14 @@ public final class ProcesoAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "prbt-cancelar", results = { @Result(name = "success", type = "redirectAction", params = {
-            "actionName", "prbt-listado" }) })
+    @Action("prbt-cancel")
     public String borrar() throws InstanceNotFoundException {
         if (prbt.getId() == null) {
             throw new Error("No se ha especificado un proceso");
         }
 
         try {
-            final Proceso prbtBO = BOFactory.getInjector().getInstance(ProcesoBO.class);
+            final ProcesoBO prbtBO = new ProcesoBO();
 
             prbtBO.cancelar(prbt.getId());
             addActionMessage("Proceso cancelado correctamente");
