@@ -1,8 +1,8 @@
 <div>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/configuracion/cnen/create"><i
-                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+            <a class="btn btn-default" href="#/configuracion/cnen/create"><i class="glyphicon glyphicon-file"></i> <span
+                translate>boton_alta</span></a>
         </div>
     </div>
 
@@ -10,15 +10,14 @@
         <thead>
             <tr>
                 <th class="buttonLinks" />
-                <th class="codigo">{{'cnen_codigo' | translate}}</th>
-                <th>{{'cnen_nombre' | translate}}</th>
+                <th class="codigo" translate>cnen_codigo</th>
+                <th translate>cnen_nombre</th>
             </tr>
         </thead>
 
         <tbody>
             <tr ng-repeat="cnen in cnens">
-                <td><a href="#/configuracion/cnen/edit/{{cnen.id}}"><i
-                        class="glyphicon glyphicon-edit"></i></a></td>
+                <td><a href="#/configuracion/cnen/edit/{{cnen.id}}"><i class="glyphicon glyphicon-edit"></i></a></td>
                 <td><a href="#/configuracion/cnens/{{cnen.id}}"><b>{{cnen.codigo}}</b></a></td>
                 <td>{{cnen.nombre}}</td>
             </tr>

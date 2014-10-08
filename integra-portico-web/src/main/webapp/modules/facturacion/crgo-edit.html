@@ -1,3 +1,5 @@
+<p class="bg-primary">{{'Cargo' | uppercase}}</p>
+
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
     <li ng-repeat="error in actionErrors">{{error}}</li>
@@ -9,8 +11,6 @@
         ng-model="crgo.crgv.id" />
 
     <fieldset>
-        <legend>{{'Cargo' | uppercase}}</legend>
-
         <div class="row-fluid">
             <div class="col-md-3 form-group">
                 <label translate>crgo_tpsr</label> <select ng-if="accion == 'create'" ng-model="crgo.tpsr.id"

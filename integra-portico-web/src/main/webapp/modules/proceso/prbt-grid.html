@@ -97,9 +97,9 @@
                     <td title="{{'ProcesoModulo_' + prbt.modulo | translate}}">{{prbt.modulo}}</td>
                     <td title="{{'ProcesoTipo_' + prbt.tipo | translate}}">{{prbt.tipo}}</td>
                     <td title="{{'ProcesoEstado_' + prbt.estado | translate}}">{{prbt.estado}}</td>
-                    <td>{{prbt.falta | date:('fmt_datetime' | translate)}}</td>
-                    <td>{{prbt.finicio | date:('fmt_datetime' | translate)}}</td>
-                    <td>{{prbt.ffin | date:('fmt_datetime' | translate)}}</td>
+                    <td>{{prbt.falta | date:'medium'}}</td>
+                    <td>{{prbt.finicio | date:'medium'}}</td>
+                    <td>{{prbt.ffin | date:'medium'}}</td>
                     <td class="number">{{prbt.duracion | number:0}}</td>
                     <td class="number">{{prbt.erroresCnt | number:0}}</td>
                     <td class="number">{{prbt.alertasCnt | number:0}}</td>

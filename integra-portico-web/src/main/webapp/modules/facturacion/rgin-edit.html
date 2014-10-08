@@ -1,3 +1,5 @@
+<p class="bg-primary">{{'Incompatibilidad' | uppercase}}</p>
+
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
     <li ng-repeat="error in actionErrors">{{error}}</li>
@@ -9,8 +11,6 @@
         ng-model="rgin.rgiv.id" />
 
     <fieldset>
-        <legend>{{'Incompatibilidad' | uppercase}}</legend>
-
         <div class="row-fluid">
             <div class="col-md-2 form-group">
                 <label translate>rgin_rgla2</label> <select ng-if="accion == 'create'" ng-model="rgin.rgla2.id"

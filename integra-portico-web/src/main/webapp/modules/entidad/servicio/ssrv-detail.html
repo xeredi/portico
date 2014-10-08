@@ -42,12 +42,12 @@
 
         <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>ssrv_fini</label>
-            <p class="form-control-static">{{item.fini | date:('fmt_date' | translate)}}</p>
+            <p class="form-control-static">{{item.fini | date}}</p>
         </div>
 
         <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>ssrv_ffin</label>
-            <p class="form-control-static">{{item.ffin | date:('fmt_date' | translate)}}</p>
+            <p class="form-control-static">{{item.ffin | date}}</p>
         </div>
     </div>
 </fieldset>
@@ -85,8 +85,8 @@
 
                 <td>{{itemHijo.numero}}</td>
                 <td ng-if="entiHija.tpdtEstado">{{itemHijo.estado}}</td>
-                <td ng-if="entiHija.temporal">{{itemHijo.fini | date:('fmt_date' | translate)}}</td>
-                <td ng-if="entiHija.temporal">{{itemHijo.ffin | date:('fmt_date' | translate)}}</td>
+                <td ng-if="entiHija.temporal">{{itemHijo.fini | date}}</td>
+                <td ng-if="entiHija.temporal">{{itemHijo.ffin | date}}</td>
 
                 <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch
                     on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
@@ -96,9 +96,8 @@
                     ng-switch-when="NE">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:0}} </span> <span
                     ng-switch-when="CR">{{itemHijo.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{itemHijo.itdtMap[tpdtId].cadena}}</span>
                     <span ng-switch-when="PR" title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}">{{itemHijo.itdtMap[tpdtId].prmt.parametro}}</span>
-                    <span ng-switch-when="FE">{{itemHijo.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span>
-                    <span ng-switch-when="FH">{{itemHijo.itdtMap[tpdtId].fecha | date:('fmt_datetime' |
-                        translate)}} </span></td>
+                    <span ng-switch-when="FE">{{itemHijo.itdtMap[tpdtId].fecha | date}}</span> <span ng-switch-when="FH">{{itemHijo.itdtMap[tpdtId].fecha
+                        | date:'short'}} </span></td>
             </tr>
         </tbody>
     </table>

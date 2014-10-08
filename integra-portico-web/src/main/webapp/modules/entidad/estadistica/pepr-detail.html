@@ -31,7 +31,7 @@
 </fieldset>
 
 <div class="list-group">
-    <a href="#/estadistica/cdms/detail/{{pepr.id}}" class="list-group-item">{{'pepr_cdms' | translate | uppercase}}</a>
-    <a href="#/estadistica/estd/grid/{{enti.value}}/{{pepr.id}}/{{pepr.autp.id}}" class="list-group-item"
+    <a href="#/estadistica/cdms/detail/{{pepr.id}}" class="list-group-item" translate>pepr_cdms</a> <a
+        href="#/estadistica/estd/grid/{{enti.value}}/{{pepr.id}}/{{pepr.autp.id}}" class="list-group-item"
         ng-repeat="enti in tpesList">{{enti.label | uppercase}}</a>
 </div>

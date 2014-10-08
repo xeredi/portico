@@ -1,6 +1,6 @@
-<fieldset>
-    <legend>{{'Regla' | uppercase}}</legend>
+<p class="bg-primary">{{'Regla' | uppercase}}</p>
 
+<fieldset>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button data-ng-click="edit()" class="btn btn-default">
@@ -36,11 +36,11 @@
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgla_fini</label>
-            <p class="form-control-static">{{rgla.rglv.fini | date:('fmt_date' | translate)}}</p>
+            <p class="form-control-static">{{rgla.rglv.fini | date}}</p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgla_ffin</label>
-            <p class="form-control-static">{{rgla.rglv.ffin | date:('fmt_date' | translate)}}</p>
+            <p class="form-control-static">{{rgla.rglv.ffin | date}}</p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgla_orden</label>
@@ -197,8 +197,8 @@
                         <td>{{rgin.rgla2.codigo}}</td>
                         <td>{{rgin.rgla2.tipo}}</td>
                         <td>{{rgin.rgla2.enti.nombre}}</td>
-                        <td>{{rgin.rgiv.fini | date:('fmt_date' | translate)}}</td>
-                        <td>{{rgin.rgiv.ffin | date:('fmt_date' | translate)}}</td>
+                        <td>{{rgin.rgiv.fini | date}}</td>
+                        <td>{{rgin.rgiv.ffin | date}}</td>
                     </tr>
                 </tbody>
             </table>

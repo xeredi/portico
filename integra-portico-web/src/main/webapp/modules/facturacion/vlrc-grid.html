@@ -72,10 +72,11 @@
                     <td>{{item.pagador.etiqueta}}</td>
                     <td class="number">{{item.importe | number:2}}</td>
                     <td class="number">{{item.impuesto | number:2}}</td>
-                    <td>{{item.fliq | date:('fmt_datetime' | translate)}}</td>
-                    <td>{{item.fini | date:('fmt_datetime' | translate)}}</td>
-                    <td>{{item.ffin | date:('fmt_datetime' | translate)}}</td>
-                    <td>{{'fmt_' + item.sujPasivo | translate}}</td>
+                    <td>{{item.fliq | date:'short'}}</td>
+                    <td>{{item.fini | date:'short'}}</td>
+                    <td>{{item.ffin | date:'short'}}</td>
+                    <td><i ng-if="item.sujPasivo" class="glyphicon glyphicon-ok"></i><i ng-if="!item.sujPasivo"
+                        class="glyphicon glyphicon-remove"></i></td>
                     <td>{{item.codExencion}}</td>
                 </tr>
             </tbody>

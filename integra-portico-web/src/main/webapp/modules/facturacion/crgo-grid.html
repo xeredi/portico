@@ -88,8 +88,8 @@
                         ng-if="!crgo.crgv.principal" class="glyphicon glyphicon-remove"></i></td>
                     <td><i ng-if="crgo.crgv.temporal" class="glyphicon glyphicon-ok"></i><i
                         ng-if="!crgo.crgv.temporal" class="glyphicon glyphicon-remove"></i></td>
-                    <td>{{crgo.crgv.fini | date:('fmt_date' | translate)}}</td>
-                    <td>{{crgo.crgv.ffin | date:('fmt_date' | translate)}}</td>
+                    <td>{{crgo.crgv.fini | date}}</td>
+                    <td>{{crgo.crgv.ffin | date}}</td>
                 </tr>
             </tbody>
         </table>

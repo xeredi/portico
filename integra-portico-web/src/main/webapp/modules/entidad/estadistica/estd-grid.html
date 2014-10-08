@@ -72,8 +72,8 @@
                         ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal |
                             number:2}}</span> <span ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera
                             | number:0}}</span> <span ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha
-                            | date:('fmt_date' | translate)}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha
-                            | date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
+                            | date}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha |
+                            date:('fmt_datetime' | translate)}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
                         ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
                         title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span></td>
                 </tr>

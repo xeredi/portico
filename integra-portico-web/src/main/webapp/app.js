@@ -172,7 +172,7 @@ app.config(function($translateProvider) {
         pepr_anio : 'A\u00f1o',
         pepr_mes : 'Mes',
         pepr_cdmsGenerado : 'Cuad. Mensual Generado?',
-        pepr_cdms : "Cuadro Mensual",
+        pepr_cdms : "CUADRO MENSUAL",
 
         cdms_detail : "Cuadro Mensual - Detalle",
         cdms_numero : "N\u00ba",

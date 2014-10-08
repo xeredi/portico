@@ -52,11 +52,11 @@
         </div>
         <div ng-if="vlrl.fini" class="col-md-1 form-group">
             <label translate>vlrl_fini</label>
-            <p class="form-control-static">{{vlrl.fini | date:('fmt_datetime' | translate)}}</p>
+            <p class="form-control-static">{{vlrl.fini | date:'short'}}</p>
         </div>
         <div ng-if="vlrl.ffin" class="col-md-1 form-group">
             <label translate>vlrl_ffin</label>
-            <p class="form-control-static">{{vlrl.ffin | date:('fmt_datetime' | translate)}}</p>
+            <p class="form-control-static">{{vlrl.ffin | date:'short'}}</p>
         </div>
     </div>
 
@@ -157,8 +157,8 @@
                 <td class="number">{{vlrd.importeBase | number:2}}</td>
                 <td class="number">{{vlrd.importe | number:2}}</td>
                 <td>{{vlrd.ssrv.numero}}</td>
-                <td>{{vlrd.fini | date:('fmt_datetime' | translate)}}</td>
-                <td>{{vlrd.ffin | date:('fmt_datetime' | translate)}}</td>
+                <td>{{vlrd.fini | date:'short'}}</td>
+                <td>{{vlrd.ffin | date:'short'}}</td>
                 <td ng-if="vlrl.rgla.rglv.pathInfo1">{{vlrd.info1}}</td>
                 <td ng-if="vlrl.rgla.rglv.pathInfo2">{{vlrd.info2}}</td>
                 <td ng-if="vlrl.rgla.rglv.pathInfo3">{{vlrd.info3}}</td>

@@ -29,8 +29,6 @@ import com.google.common.base.Preconditions;
 /**
  * The Class SubservicioAction.
  */
-// @ParentPackage("json-default")
-// @Result(name="success", type="json")
 public final class SubservicioAction extends ItemAction {
 
     /** The Constant serialVersionUID. */
@@ -244,7 +242,7 @@ public final class SubservicioAction extends ItemAction {
                 ssrvBO.update(item);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(ErrorCode.E00008.name(), new String[] { enti.getNombre(),
-                    item.getId().toString() }));
+                        item.getId().toString() }));
             }
 
             break;

@@ -245,15 +245,8 @@ public class SubservicioBO {
         ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
         try {
-            for (final Long tpdtId : ssrvVO.getItdtMap().keySet()) {
-                final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
-
-                itdtVO.setItemId(ssrvVO.getId());
-                itdtVO.setTpdtId(Long.valueOf(tpdtId));
-
-                if (ssdtDAO.update(itdtVO) == 0) {
-                    throw new Error("Error modificando un subservicio de dato no existente: " + itdtVO);
-                }
+            for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
+                ssdtDAO.update(itdtVO);
             }
 
             session.commit();

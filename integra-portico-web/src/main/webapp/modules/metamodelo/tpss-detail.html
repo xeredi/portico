@@ -1,18 +1,17 @@
+<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button data-ng-click="edit()" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
+        </button>
+        <button data-ng-click="remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+        </button>
+    </div>
+</div>
 
 <fieldset>
-    <legend>{{enti.nombre | uppercase}}</legend>
-
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
-            </button>
-            <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
-            </button>
-        </div>
-    </div>
-
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label translate>enti_codigo</label>

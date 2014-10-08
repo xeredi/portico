@@ -12,8 +12,8 @@
                     ng-if="!item.itdtMap[tpdtId].booleano" class="glyphicon glyphicon-remove"></i></span> <span
                     ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}</span> <span
                     ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</span> <span
-                    ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date:('fmt_date' | translate)}}</span> <span
-                    ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}</span> <span
+                    ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date: 'dd/MM/yyyy'}}</span> <span
+                    ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date: 'dd/MM/yyyy HH:mm'}}</span> <span
                     ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
                 <span ng-switch-when="PR"> <a
                     href="#/maestro/prmt/detail/{{enti.entdMap[tpdtId].tpdt.enti.id}}/{{item.itdtMap[tpdtId].prmt.id}}/{{item.fref}}">{{item.itdtMap[tpdtId].prmt.etiqueta}}</a></span>

@@ -1,6 +1,6 @@
-<fieldset>
-    <legend>{{'Cargo' | uppercase}}</legend>
+<p class="bg-primary">{{'Cargo' | uppercase}}</p>
 
+<fieldset>
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button data-ng-click="edit()" class="btn btn-default">
@@ -50,11 +50,11 @@
     <div class="row-fluid">
         <div class="col-md-1 form-group">
             <label translate>crgo_fini</label>
-            <p class="form-control-static">{{crgo.crgv.fini | date:('fmt_date' | translate)}}</p>
+            <p class="form-control-static">{{crgo.crgv.fini | date}}</p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_ffin</label>
-            <p class="form-control-static">{{crgo.crgv.ffin | date:('fmt_date' | translate)}}</p>
+            <p class="form-control-static">{{crgo.crgv.ffin | date}}</p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>crgo_descripcion</label>
@@ -98,8 +98,8 @@
                     <td>{{rgla.codigo}}</td>
                     <td>{{rgla.rglv.tipo}}</td>
                     <td>{{rgla.rglv.enti.nombre}}</td>
-                    <td>{{rgla.rglv.fini | date:('fmt_date' | translate)}}</td>
-                    <td>{{rgla.rglv.ffin | date:('fmt_date' | translate)}}</td>
+                    <td>{{rgla.rglv.fini | date}}</td>
+                    <td>{{rgla.rglv.ffin | date}}</td>
                     <td class="number">{{rgla.rglv.orden}}</td>
                     <td class="number">{{rgla.rglv.importeBase | number:4}}</td>
                     <td>{{rgla.rglv.formula}}</td>
