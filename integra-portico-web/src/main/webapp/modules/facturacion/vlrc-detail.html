@@ -52,19 +52,19 @@
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_falta</label>
-            <p class="form-control-static">&nbsp;{{vlrc.falta | date:('fmt_datetime' | translate)}}</p>
+            <p class="form-control-static">&nbsp;{{vlrc.falta | date:'short'}}</p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_fliq</label>
-            <p class="form-control-static">&nbsp;{{vlrc.fliq | date:('fmt_datetime' | translate)}}</p>
+            <p class="form-control-static">&nbsp;{{vlrc.fliq | date:'short'}}</p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_fini</label>
-            <p class="form-control-static">&nbsp;{{vlrc.fini | date:('fmt_datetime' | translate)}}</p>
+            <p class="form-control-static">&nbsp;{{vlrc.fini | date:'short'}}</p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_ffin</label>
-            <p class="form-control-static">&nbsp;{{vlrc.ffin | date:('fmt_datetime' | translate)}}</p>
+            <p class="form-control-static">&nbsp;{{vlrc.ffin | date:'short'}}</p>
         </div>
     </div>
 
@@ -181,8 +181,8 @@
                 <td class="number">{{vlrl.importeBase | number:2}}</td>
                 <td class="number">{{vlrl.importe | number:2}}</td>
                 <td>{{vlrl.impuesto.etiqueta}}</td>
-                <td>{{vlrl.fini | date:('fmt_datetime' | translate)}}</td>
-                <td>{{vlrl.ffin | date:('fmt_datetime' | translate)}}</td>
+                <td>{{vlrl.fini | date:'short'}}</td>
+                <td>{{vlrl.ffin | date:'short'}}</td>
 
                 <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo1"><span
                     ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.rglv.etiqInfo1}}: {{vlrl.info1}}</span></td>
