@@ -4,27 +4,27 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+                <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
             </button>
             <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
             </button>
         </div>
     </div>
 
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label>{{'rgin_rgla2' | translate}}</label>
+            <label translate>rgin_rgla2</label>
             <p class="form-control-static">
                 <a href="#/facturacion/rgla/detail/{{rgin.rgla2.id}}/{{fechaVigencia}}">{{rgin.rgla2.codigo}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgin_fini' | translate}}</label>
+            <label translate>rgin_fini</label>
             <p class="form-control-static">{{rgin.rgiv.fini | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgin_ffin' | translate}}</label>
+            <label translate>rgin_ffin</label>
             <p class="form-control-static">{{rgin.rgiv.ffin | date:('fmt_date' | translate)}}</p>
         </div>
     </div>

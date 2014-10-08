@@ -23,6 +23,7 @@ p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 	padding-bottom: 10px;
 	padding-left: 15px;
 	padding-right: 15px;
+	margin-bottom: 5px;
 }
 
 .nav-tabs {
@@ -40,6 +41,11 @@ p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 
 .form-control, .input-group-sm>.form-control {
 	padding: 5px;
+}
+
+.form-control-static {
+	padding-top: 7px;
+	padding-bottom: 7px;
 }
 
 .dropdown-menu {
@@ -100,7 +106,8 @@ legend {
 }
 
 .form-control-static {
-/*	padding-top: 4px;*/
+	/*	padding-top: 4px;*/
+
 }
 
 .input-group-addon {

@@ -3,10 +3,10 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
         </button>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
     </div>
 </div>
@@ -14,56 +14,56 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label>{{'vlrc_id' | translate}}</label>
+            <label translate>vlrc_id</label>
             <p class="form-control-static">{{vlrc.id}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrc_srvc' | translate}}</label>
+            <label translate>vlrc_srvc</label>
             <p class="form-control-static">
                 <a href="#/servicio/srvc/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}">{{vlrc.srvc.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-3 form-group">
-            <label>{{'vlrc_aspc' | translate}}</label>
+            <label translate>vlrc_aspc</label>
             <p class="form-control-static">
                 <a href="#/facturacion/aspc/detail/{{vlrc.aspc.id}}/{{vlrc.fref}}">{{vlrc.aspc.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrc_importe' | translate}}</label>
+            <label translate>vlrc_importe</label>
             <p class="form-control-static">{{vlrc.importe | number:2}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrc_impuesto' | translate}}</label>
+            <label translate>vlrc_impuesto</label>
             <p class="form-control-static">{{vlrc.impuesto | number:2}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrc_codExencion' | translate}}</label>
+            <label translate>vlrc_codExencion</label>
             <p class="form-control-static">{{vlrc.codExencion}}</p>
         </div>
     </div>
 
     <div class="row-fluid">
         <div class="col-md-3 form-group">
-            <label>{{'vlrc_pagador' | translate}}</label>
+            <label translate>vlrc_pagador</label>
             <p class="form-control-static">
                 <a href="#/maestro/prmt/detail/{{vlrc.pagador.entiId}}/{{vlrc.pagador.id}}/{{vlrc.fref}}">{{vlrc.pagador.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrc_falta' | translate}}</label>
+            <label translate>vlrc_falta</label>
             <p class="form-control-static">&nbsp;{{vlrc.falta | date:('fmt_datetime' | translate)}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrc_fliq' | translate}}</label>
+            <label translate>vlrc_fliq</label>
             <p class="form-control-static">&nbsp;{{vlrc.fliq | date:('fmt_datetime' | translate)}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrc_fini' | translate}}</label>
+            <label translate>vlrc_fini</label>
             <p class="form-control-static">&nbsp;{{vlrc.fini | date:('fmt_datetime' | translate)}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrc_ffin' | translate}}</label>
+            <label translate>vlrc_ffin</label>
             <p class="form-control-static">&nbsp;{{vlrc.ffin | date:('fmt_datetime' | translate)}}</p>
         </div>
     </div>
@@ -114,10 +114,10 @@
             <table class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
-                        <th>{{'vlrc_vlri_impuesto' | translate}}</th>
-                        <th>{{'vlrc_vlri_porcentaje' | translate}}</th>
-                        <th>{{'vlrc_vlri_importe_base' | translate}}</th>
-                        <th>{{'vlrc_vlri_importe_impuesto' | translate}}</th>
+                        <th translate>vlrc_vlri_impuesto</th>
+                        <th translate>vlrc_vlri_porcentaje</th>
+                        <th translate>vlrc_vlri_importe_base</th>
+                        <th translate>vlrc_vlri_importe_impuesto</th>
                     </tr>
                 </thead>
 
@@ -138,7 +138,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" href="#/facturacion/vlrl/create/{{vlrc.id}}"><i class="glyphicon glyphicon-file"></i>
-            {{'boton_alta' | translate}}</a>
+            <span translate>boton_alta</span> </a>
     </div>
 </div>
 
@@ -149,13 +149,13 @@
         <thead>
             <tr>
                 <th />
-                <th>{{'vlrl_rgla' | translate}}</th>
-                <th>{{'vlrl_rgla_tipo' | translate}}</th>
-                <th>{{'vlrl_importeBase' | translate}}</th>
-                <th>{{'vlrl_importe' | translate}}</th>
-                <th>{{'vlrl_impuesto' | translate}}</th>
-                <th>{{'vlrl_fini' | translate}}</th>
-                <th>{{'vlrl_ffin' | translate}}</th>
+                <th translate>vlrl_rgla</th>
+                <th translate>vlrl_rgla_tipo</th>
+                <th translate>vlrl_importeBase</th>
+                <th translate>vlrl_importe</th>
+                <th translate>vlrl_impuesto</th>
+                <th translate>vlrl_fini</th>
+                <th translate>vlrl_ffin</th>
 
                 <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo1">Info 1</th>
                 <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo2">Info 2</th>

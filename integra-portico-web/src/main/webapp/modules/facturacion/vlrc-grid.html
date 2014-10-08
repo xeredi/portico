@@ -4,33 +4,31 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label>{{"vlrc_id" | translate}}</label> <input type="text" ng-model="vlrcCriterio.id"
+            <label translate>vlrc_id</label> <input type="text" ng-model="vlrcCriterio.id" class="form-control input-sm" />
+        </div>
+        <div class="col-md-2 form-group">
+            <label translate>vlrc_srvc</label> <input type="text" ng-model="vlrcCriterio.srvcId"
                 class="form-control input-sm" />
         </div>
         <div class="col-md-2 form-group">
-            <label>{{"vlrc_srvc" | translate}}</label> <input type="text" ng-model="vlrcCriterio.srvcId"
-                class="form-control input-sm" />
-        </div>
-        <div class="col-md-2 form-group">
-            <label>{{"vlrc_aspc" | translate}}</label> <input type="text" ng-model="vlrcCriterio.aspcId"
+            <label translate>vlrc_aspc</label> <input type="text" ng-model="vlrcCriterio.aspcId"
                 class="form-control input-sm" />
         </div>
         <div class="col-md-3 form-group">
-            <label>{{"vlrc_pagador" | translate}}</label>
+            <label translate>vlrc_pagador</label>
             <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
                 <input type="text" ng-model="vlrcCriterio.pagador"
                     typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
                     typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
                     ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-                <!-- -->
-                $ {{vlrcCriterio.pagador.id}} $ {{vlrcCriterio.pagador.etiqueta}}
+                <!-- $ {{vlrcCriterio.pagador.id}} $ {{vlrcCriterio.pagador.etiqueta}} -->
             </div>
         </div>
     </div>
 
     <div class="btn-group">
         <button data-ng-click="search()" class="btn btn-default">
-            <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+            <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
         </button>
     </div>
 </fieldset>
@@ -45,24 +43,23 @@
     </div>
 
     <div class="table-responsive">
-
         <span class="label label-default">{{vlrcList.count}} resultado(s)</span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
                     <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap">{{'vlrc_id' | translate}}</th>
-                    <th class="codigo" nowrap="nowrap">{{'vlrc_srvc' | translate}}</th>
-                    <th>{{'vlrc_aspc' | translate}}</th>
-                    <th>{{'vlrc_pagador' | translate}}</th>
-                    <th>{{'vlrc_importe' | translate}}</th>
-                    <th>{{'vlrc_impuesto' | translate}}</th>
-                    <th>{{'vlrc_fliq' | translate}}</th>
-                    <th>{{'vlrc_fini' | translate}}</th>
-                    <th>{{'vlrc_ffin' | translate}}</th>
-                    <th>{{'vlrc_sujPasivo' | translate}}</th>
-                    <th>{{'vlrc_codExencion' | translate}}</th>
+                    <th class="codigo" nowrap="nowrap" translate>vlrc_id</th>
+                    <th class="codigo" nowrap="nowrap" translate>vlrc_srvc</th>
+                    <th translate>vlrc_aspc</th>
+                    <th translate>vlrc_pagador</th>
+                    <th translate>vlrc_importe</th>
+                    <th translate>vlrc_impuesto</th>
+                    <th translate>vlrc_fliq</th>
+                    <th translate>vlrc_fini</th>
+                    <th translate>vlrc_ffin</th>
+                    <th translate>vlrc_sujPasivo</th>
+                    <th translate>vlrc_codExencion</th>
                 </tr>
             </thead>
 

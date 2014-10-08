@@ -4,83 +4,83 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+                <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
             </button>
             <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
             </button>
         </div>
     </div>
 
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label>{{'rgla_crgo' | translate}}</label>
+            <label translate>rgla_crgo</label>
             <p class="form-control-static">
                 <a href="#/facturacion/crgo/detail/{{rgla.crgo.id}}/{{fechaVigencia}}">{{rgla.crgo.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_codigo' | translate}}</label>
+            <label translate>rgla_codigo</label>
             <p class="form-control-static">{{rgla.codigo}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_tipo' | translate}}</label>
+            <label translate>rgla_tipo</label>
             <p class="form-control-static">{{rgla.rglv.tipo}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'rgla_enti' | translate}}</label>
+            <label translate>rgla_enti</label>
             <p class="form-control-static">
                 <a ng-if="rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
                 <a ng-if="rgla.rglv.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_fini' | translate}}</label>
+            <label translate>rgla_fini</label>
             <p class="form-control-static">{{rgla.rglv.fini | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_ffin' | translate}}</label>
+            <label translate>rgla_ffin</label>
             <p class="form-control-static">{{rgla.rglv.ffin | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'rgla_orden' | translate}}</label>
+            <label translate>rgla_orden</label>
             <p class="form-control-static">{{rgla.rglv.orden}}</p>
         </div>
         <div ng-if="rgla.tipo == 'T'" class="col-md-1 form-group">
-            <label>{{'rgla_importeBase' | translate}}</label>
+            <label translate>rgla_importeBase</label>
             <p class="form-control-static">{{rgla.rglv.importeBase | number:4}}</p>
         </div>
     </div>
 
     <div class="row-fluid">
         <div class="col-md-6 form-group">
-            <label>{{'rgla_condicion' | translate}}</label>
+            <label translate>rgla_condicion</label>
             <p class="form-control-static">{{rgla.rglv.condicion}}</p>
         </div>
         <div class="col-md-6 form-group">
-            <label>{{'rgla_formula' | translate}}</label>
+            <label translate>rgla_formula</label>
             <p class="form-control-static">{{rgla.rglv.formula}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.rglv.tipo == 'T'" class="row-fluid">
         <div class="col-md-6 form-group">
-            <label>{{'rgla_pathImpuesto' | translate}}</label>
+            <label translate>rgla_pathImpuesto</label>
             <p class="form-control-static">{{rgla.rglv.pathImpuesto}}</p>
         </div>
         <div class="col-md-6 form-group">
-            <label>{{'rgla_pathPagador' | translate}}</label>
+            <label translate>rgla_pathPagador</label>
             <p class="form-control-static">{{rgla.rglv.pathPagador}}</p>
         </div>
     </div>
 
     <div ng-if="rgla.rglv.tipo == 'T'" class="row-fluid">
         <div class="col-md-6 form-group">
-            <label>{{'rgla_pathEsSujPasivo' | translate}}</label>
+            <label translate>rgla_pathEsSujPasivo</label>
             <p class="form-control-static">{{rgla.rglv.pathEsSujPasivo}}</p>
         </div>
         <div class="col-md-6 form-group">
-            <label>{{'rgla_pathCodExen' | translate}}</label>
+            <label translate>rgla_pathCodExen</label>
             <p class="form-control-static">{{rgla.rglv.pathCodExen}}</p>
         </div>
     </div>
@@ -173,7 +173,7 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" href="#/facturacion/rgin/create/{{rgla.crgo.id}}/{{rgla.id}}"><i
-                class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+                class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
         </div>
     </div>
 
@@ -183,11 +183,11 @@
                 <thead>
                     <tr>
                         <th />
-                        <th>{{'rgla_codigo' | translate}}</th>
-                        <th>{{'rgla_tipo' | translate}}</th>
-                        <th>{{'rgla_enti' | translate}}</th>
-                        <th>{{'rgin_fini' | translate}}</th>
-                        <th>{{'rgin_ffin' | translate}}</th>
+                        <th translate>rgla_codigo</th>
+                        <th translate>rgla_tipo</th>
+                        <th translate>rgla_enti</th>
+                        <th translate>rgin_fini</th>
+                        <th translate>rgin_ffin</th>
                     </tr>
                 </thead>
                 <tbody>

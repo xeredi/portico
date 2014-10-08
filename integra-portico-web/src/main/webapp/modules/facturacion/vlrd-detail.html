@@ -2,10 +2,10 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
         </button>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
     </div>
 </div>
@@ -13,29 +13,29 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-md-1 form-group">
-            <label>{{'vlrd_valorBase' | translate}}</label>
+            <label translate>vlrd_valorBase</label>
             <p class="form-control-static">{{vlrd.valorBase | number:4}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrd_importeBase' | translate}}</label>
+            <label translate>vlrd_importeBase</label>
             <p class="form-control-static">{{vlrd.importeBase | number:2}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrd_importe' | translate}}</label>
+            <label translate>vlrd_importe</label>
             <p class="form-control-static">{{vlrd.importe | number:2}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrd_ssrv' | translate}}</label>
+            <label translate>vlrd_ssrv</label>
             <p class="form-control-static">
                 <a ng-if="vlrd.ssrv.id" href="#/servicio/ssrv/detail/{{vlrd.ssrv.entiId}}/{{vlrd.ssrv.id}}">{{vlrd.ssrv.numero}}</a>
             </p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrd_fini' | translate}}</label>
+            <label translate>vlrd_fini</label>
             <p class="form-control-static">{{vlrd.fini | date:('fmt_datetime' | translate)}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrd_ffin' | translate}}</label>
+            <label translate>vlrd_ffin</label>
             <p class="form-control-static">{{vlrd.ffin | date:('fmt_datetime' | translate)}}</p>
         </div>
     </div>

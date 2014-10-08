@@ -1,11 +1,11 @@
+<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
         ng-model="item.id" /><input type="hidden" ng-model="item.prmtId" /><input type="hidden"
         ng-model="item.spvr.id" />
 
     <fieldset>
-        <legend>{{enti.nombre | uppercase}}</legend>
-
         <div class="row-fluid">
             <div class="col-sm-4 col-md-2 col-md-2 form-group">
                 <label>{{enti.tpprAsociado.nombre}}</label>

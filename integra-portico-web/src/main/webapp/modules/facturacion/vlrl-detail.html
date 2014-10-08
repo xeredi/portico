@@ -3,10 +3,10 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
         </button>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
     </div>
 </div>
@@ -14,48 +14,48 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label>{{'rgla_enti' | translate}}</label>
+            <label translate>rgla_enti</label>
             <p class="form-control-static">
                 <a ng-if="vlrl.rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{vlrl.rgla.rglv.enti.id}}">{{vlrl.rgla.rglv.enti.nombre}}</a>
                 <a ng-if="vlrl.rgla.rglv.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{vlrl.rgla.rglv.enti.id}}">{{vlrl.rgla.rglv.enti.nombre}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrl_rgla' | translate}}</label>
+            <label translate>vlrl_rgla</label>
             <p class="form-control-static">
                 <a href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}">{{vlrl.rgla.codigo}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrl_rgla_tipo' | translate}}</label>
+            <label translate>vlrl_rgla_tipo</label>
             <p class="form-control-static">{{vlrl.rgla.rglv.tipo}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrl_importeBase' | translate}}</label>
+            <label translate>vlrl_importeBase</label>
             <p class="form-control-static">{{vlrl.importeBase | number:2}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label>{{'vlrl_importe' | translate}}</label>
+            <label translate>vlrl_importe</label>
             <p class="form-control-static">{{vlrl.importe | number:2}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label>{{'vlrl_impuesto' | translate}}</label>
+            <label translate>vlrl_impuesto</label>
             <p class="form-control-static">
                 <a href="#/maestro/prmt/detail/{{vlrl.impuesto.entiId}}/{{vlrl.impuesto.id}}/{{vlrl.fref}}">{{vlrl.impuesto.etiqueta}}</a>
             </p>
         </div>
         <div ng-if="vlrl.ssrv.id" class="col-md-1 form-group">
-            <label>{{'vlrl_ssrv' | translate}}</label>
+            <label translate>vlrl_ssrv</label>
             <p class="form-control-static">
                 <a href="#/servicio/ssrv/detail/{{vlrl.ssrv.entiId}}/{{vlrl.ssrv.id}}">{{vlrl.ssrv.numero}}</a>
             </p>
         </div>
         <div ng-if="vlrl.fini" class="col-md-1 form-group">
-            <label>{{'vlrl_fini' | translate}}</label>
+            <label translate>vlrl_fini</label>
             <p class="form-control-static">{{vlrl.fini | date:('fmt_datetime' | translate)}}</p>
         </div>
         <div ng-if="vlrl.ffin" class="col-md-1 form-group">
-            <label>{{'vlrl_ffin' | translate}}</label>
+            <label translate>vlrl_ffin</label>
             <p class="form-control-static">{{vlrl.ffin | date:('fmt_datetime' | translate)}}</p>
         </div>
     </div>
@@ -118,7 +118,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" href="#/facturacion/vlrd/create/{{vlrl.id}}"><i class="glyphicon glyphicon-file"></i>
-            {{'boton_alta' | translate}}</a>
+            <span translate>boton_alta</span> </a>
     </div>
 </div>
 
@@ -129,12 +129,12 @@
         <thead>
             <tr>
                 <th />
-                <th>{{'vlrd_valorBase' | translate}}</th>
-                <th>{{'vlrd_importeBase' | translate}}</th>
-                <th>{{'vlrd_importe' | translate}}</th>
-                <th>{{'vlrd_ssrv' | translate}}</th>
-                <th>{{'vlrd_fini' | translate}}</th>
-                <th>{{'vlrd_ffin' | translate}}</th>
+                <th translate>vlrd_valorBase</th>
+                <th translate>vlrd_importeBase</th>
+                <th translate>vlrd_importe</th>
+                <th translate>vlrd_ssrv</th>
+                <th translate>vlrd_fini</th>
+                <th translate>vlrd_ffin</th>
                 <th ng-if="vlrl.rgla.rglv.pathInfo1">Info 1: {{vlrl.rgla.rglv.etiqInfo1}}</th>
                 <th ng-if="vlrl.rgla.rglv.pathInfo2">Info 2: {{vlrl.rgla.rglv.etiqInfo2}}</th>
                 <th ng-if="vlrl.rgla.rglv.pathInfo3">Info 3: {{vlrl.rgla.rglv.etiqInfo3}}</th>
