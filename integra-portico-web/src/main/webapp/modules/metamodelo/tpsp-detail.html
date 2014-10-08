@@ -5,29 +5,29 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button data-ng-click="edit()" class="btn btn-default">
-                <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+                <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
             </button>
             <button data-ng-click="remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
             </button>
         </div>
     </div>
 
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label> {{"enti_codigo" | translate}} </label>
+            <label translate>enti_codigo</label>
             <p class="form-control-static">{{enti.codigo}}</p>
         </div>
         <div class="col-md-3 form-group">
-            <label> {{"enti_nombre" | translate}} </label>
+            <label translate>enti_nombre</label>
             <p class="form-control-static">{{enti.nombre}}</p>
         </div>
         <div class="col-md-1 form-group">
-            <label> {{"enti_tipo" | translate}} </label>
+            <label translate>enti_tipo</label>
             <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
         </div>
         <div class="col-md-3 form-group">
-            <label> {{"enti_tpprAsociado" | translate}} </label>
+            <label translate>enti_tpprAsociado</label>
             <p class="form-control-static">
                 <a href="#/metamodelo/tppr/detail/{{enti.tpprAsociado.id}}">{{enti.tpprAsociado.nombre}}</a>
             </p>
@@ -35,42 +35,42 @@
     </div>
     <div class="row-fluid">
         <div class="col-md-1 form-group">
-            <label> {{"enti_cmd_alta" | translate}} </label>
+            <label translate>enti_cmd_alta</label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdAlta"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label> {{"enti_cmd_baja" | translate}} </label>
+            <label translate>enti_cmd_baja</label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdBaja"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label> {{"enti_cmd_edicion" | translate}} </label>
+            <label translate>enti_cmd_edicion</label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdEdicion"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label> {{"enti_cmd_duplicado" | translate}} </label>
+            <label translate>enti_cmd_duplicado</label>
             <p class="form-control-static">
                 <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdDuplicado"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
-            <label> {{"enti_i18n" | translate}} </label>
+            <label translate>enti_i18n</label>
             <p class="form-control-static">
                 <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.i18n"
                     class="glyphicon glyphicon-remove"></i>
             </p>
         </div>
         <div class="col-md-2 form-group">
-            <label> {{"enti_tempExp" | translate}} </label>
+            <label translate>enti_tempExp</label>
             <p class="form-control-static">
                 <i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.tempExp"
                     class="glyphicon glyphicon-remove"></i>

@@ -5,35 +5,35 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <button data-ng-click="edit()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+                    <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
                 </button>
                 <button data-ng-click="remove()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+                    <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
                 </button>
             </div>
         </div>
 
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label> {{"entd_tpdt_nombre" | translate}} </label>
+                <label translate>entd_tpdt_nombre</label>
                 <p class="form-control-static">
                     <a href="#/metamodelo/tpdt/detail/{{entd.tpdt.id}}">{{entd.tpdt.nombre}}</a>
                 </p>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label> {{"entd_etiqueta" | translate}} </label>
+                <label translate>entd_etiqueta</label>
                 <p class="form-control-static">{{entd.etiqueta}}</p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                <label> {{"entd_tpdt_tipoElemento" | translate}} </label>
+                <label translate>entd_tpdt_tipoElemento</label>
                 <p class="form-control-static">{{entd.tpdt.tipoElemento}}</p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                <label> {{"entd_tpdt_tpht" | translate}} </label>
+                <label translate>entd_tpdt_tpht</label>
                 <p class="form-control-static">{{entd.tpdt.tpht}}</p>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label> {{"entd_tpdt_enti" | translate}} </label>
+                <label translate>entd_tpdt_enti</label>
                 <p class="form-control-static">
                     <span ng-if="entd.tpdt.enti"> <a ng-if="entd.tpdt.enti.tipo == 'P'"
                         href="#/metamodelo/tppr/detail/{{entd.tpdt.enti.id}}">{{entd.tpdt.enti.etiqueta}}</a><a
@@ -43,41 +43,41 @@
         </div>
         <div class="row-fluid">
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_grupo" | translate}} </label>
+                <label translate>entd_grupo</label>
                 <p class="form-control-static">{{entd.grupo}}</p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_fila" | translate}} </label>
+                <label translate>entd_fila</label>
                 <p class="form-control-static">{{entd.fila}}</p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_orden" | translate}} </label>
+                <label translate>entd_orden</label>
                 <p class="form-control-static">{{entd.orden}}</p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_span" | translate}} </label>
+                <label translate>entd_span</label>
                 <p class="form-control-static">{{entd.span}}</p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_spanLg" | translate}} </label>
+                <label translate>entd_spanLg</label>
                 <p class="form-control-static">{{entd.spanLg}}</p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_obligatorio" | translate}} </label>
+                <label translate>entd_obligatorio</label>
                 <p class="form-control-static">
                     <i ng-if="entd.obligatorio" class="glyphicon glyphicon-ok"></i><i ng-if="!entd.obligatorio"
                         class="glyphicon glyphicon-remove"></i>
                 </p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_gridable" | translate}} </label>
+                <label translate>entd_gridable</label>
                 <p class="form-control-static">
                     <i ng-if="entd.gridable" class="glyphicon glyphicon-ok"></i><i ng-if="!entd.gridable"
                         class="glyphicon glyphicon-remove"></i>
                 </p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label> {{"entd_filtrable" | translate}} </label>
+                <label translate>entd_filtrable</label>
                 <p class="form-control-static">
                     <i ng-if="entd.filtrable" class="glyphicon glyphicon-ok"></i><i ng-if="!entd.filtrable"
                         class="glyphicon glyphicon-remove"></i>

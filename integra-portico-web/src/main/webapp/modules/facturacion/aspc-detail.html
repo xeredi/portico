@@ -3,12 +3,12 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
         </button>
         <a class="btn btn-default" href="#/facturacion/aspc/duplicate/{{aspc.aspv.id}}"><i
-            class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
+            class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
     </div>
 </div>
@@ -16,29 +16,29 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-            <label>{{'aspc_tpsr' | translate}}</label>
+            <label translate>aspc_tpsr</label>
             <p class="form-control-static">
                 <a href="#/metamodelo/tpsr/detail/{{aspc.tpsr.id}}">{{aspc.tpsr.nombre}}</a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label>{{'aspc_codigo' | translate}}</label>
+            <label translate>aspc_codigo</label>
             <p class="form-control-static">{{aspc.codigo}}</p>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-            <label>{{'aspc_descripcion' | translate}}</label>
+            <label translate>aspc_descripcion</label>
             <p class="form-control-static">{{aspc.aspv.descripcion}}</p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label>{{'aspc_fini' | translate}}</label>
+            <label translate>aspc_fini</label>
             <p class="form-control-static">{{aspc.aspv.fini | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label>{{'aspc_ffin' | translate}}</label>
+            <label translate>aspc_ffin</label>
             <p class="form-control-static">{{aspc.aspv.ffin | date:('fmt_date' | translate)}}</p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label>{{'aspc_prioridad' | translate}}</label>
+            <label translate>aspc_prioridad</label>
             <p class="form-control-static">{{aspc.aspv.prioridad}}</p>
         </div>
     </div>
@@ -52,9 +52,9 @@
             <thead>
                 <tr>
                     <th />
-                    <th>{{'aspc_cetiqInfo' | translate}}</th>
-                    <th>{{'aspc_cpathInfo' | translate}}</th>
-                    <th>{{'aspc_cgrpInfo' | translate}}</th>
+                    <th translate>aspc_cetiqInfo</th>
+                    <th translate>aspc_cpathInfo</th>
+                    <th translate>aspc_cgrpInfo</th>
                 </tr>
             </thead>
 
@@ -116,7 +116,7 @@
                     <thead>
                         <tr>
                             <th />
-                            <th>{{'aspc_lsumCuant' | translate}}</th>
+                            <th translate>aspc_lsumCuant</th>
                         </tr>
                     </thead>
 
@@ -166,7 +166,7 @@
                     <thead>
                         <tr>
                             <th />
-                            <th>{{'aspc_lgrpInfo' | translate}}</th>
+                            <th translate>aspc_lgrpInfo</th>
                         </tr>
                     </thead>
 

@@ -8,24 +8,20 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label>{{"prmt_parametro" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
+                <label translate>prmt_parametro</label> <input ng-if="accion != 'edit'" type="text"
                     ng-model="item.parametro" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.parametro}}</p>
             </div>
-
-            <!-- ng-if="enti.tempExp" -->
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label>{{'prmt_fini' | translate}}</label>
+                <label translate>prmt_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.fini" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
-
-            <!-- ng-if="enti.tempExp" -->
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label>{{'prmt_ffin' | translate}}</label>
+                <label translate>prmt_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.ffin" /> <span
@@ -46,7 +42,7 @@
 
     <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
 
-    <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+    <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
     <ul>
         <li ng-repeat="error in actionErrors">{{error}}</li>
     </ul>
@@ -54,10 +50,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
         </button>
     </div>
 </form>

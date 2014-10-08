@@ -2,9 +2,10 @@
 <table class="table-bordered table-condensed table-hover table-nonfluid">
     <thead>
         <tr>
-            <th colspan="13">RESUMEN MENSUAL DE TRAFICO PORTUARIO ({{'pepr_autp' | translate}}:
-                {{pepr.autp.parametro}} - {{'pepr_anio' | translate}}: {{pepr.anio}} - {{'pepr_mes' | translate}}:
-                {{pepr.mes}})</th>
+            <th colspan="13">RESUMEN MENSUAL DE TRAFICO PORTUARIO (<span translate>pepr_autp</span>:
+                {{::pepr.autp.parametro}} - <span translate>pepr_anio</span>: {{::pepr.anio}} - <span translate>pepr_mes</span>:
+                {{::pepr.mes}})
+            </th>
         </tr>
         <tr>
             <th colspan="4" rowspan="3" />
@@ -13,103 +14,103 @@
             <th colspan="1" rowspan="3">TRANSB. (Tm.)</th>
         </tr>
         <tr>
-            <th colspan="1" rowspan="2">{{'cdms_embarcado' | translate}}</th>
-            <th colspan="1" rowspan="2">{{'cdms_desembarcado' | translate}}</th>
-            <th colspan="2">{{'cdms_transito' | translate}}</th>
-            <th colspan="1" rowspan="2">{{'cdms_embarcado' | translate}}</th>
-            <th colspan="1" rowspan="2">{{'cdms_desembarcado' | translate}}</th>
-            <th colspan="2">{{'cdms_transito' | translate}}</th>
+            <th colspan="1" rowspan="2" translate>cdms_embarcado</th>
+            <th colspan="1" rowspan="2" translate>cdms_desembarcado</th>
+            <th colspan="2" translate>cdms_transito</th>
+            <th colspan="1" rowspan="2" translate>cdms_embarcado</th>
+            <th colspan="1" rowspan="2" translate>cdms_desembarcado</th>
+            <th colspan="2" translate>cdms_transito</th>
         </tr>
         <tr>
-            <th colspan="1">{{'cdms_embarcado' | translate}}</th>
-            <th colspan="1">{{'cdms_desembarcado' | translate}}</th>
-            <th colspan="1">{{'cdms_embarcado' | translate}}</th>
-            <th colspan="1">{{'cdms_desembarcado' | translate}}</th>
+            <th colspan="1" translate>cdms_embarcado</th>
+            <th colspan="1" translate>cdms_desembarcado</th>
+            <th colspan="1" translate>cdms_embarcado</th>
+            <th colspan="1" translate>cdms_desembarcado</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th colspan="1" rowspan="4">{{'cdms_GL' | translate}}</th>
-            <th colspan="3">{{'cdms_GLPETR' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['GLPETR']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" rowspan="4" translate>cdms_GL</th>
+            <th colspan="3" translate>cdms_GLPETR</th>
+            <td ng-repeat="cdms in cdmsMap['GLPETR']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="3">{{'cdms_GLGASN' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['GLGASN']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="3" translate>cdms_GLGASN</th>
+            <td ng-repeat="cdms in cdmsMap['GLGASN']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="3">{{'cdms_GLPREF' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['GLPREF']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="3" translate>cdms_GLPREF</th>
+            <td ng-repeat="cdms in cdmsMap['GLPREF']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="3">{{'cdms_GLOTRO' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['GLOTRO']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="3" translate>cdms_GLOTRO</th>
+            <td ng-repeat="cdms in cdmsMap['GLOTRO']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
 
         <tr>
-            <th colspan="1" rowspan="2">{{'cdms_GS' | translate}}</th>
-            <th colspan="3">{{'cdms_GSIESP' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['GSIESP']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" rowspan="2" translate>cdms_GS</th>
+            <th colspan="3" translate>cdms_GSIESP</th>
+            <td ng-repeat="cdms in cdmsMap['GSIESP']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="3">{{'cdms_GSNIES' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['GSNIES']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="3" translate>cdms_GSNIES</th>
+            <td ng-repeat="cdms in cdmsMap['GSNIES']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="4">{{'cdms_MG' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['MG']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="4" translate>cdms_MG</th>
+            <td ng-repeat="cdms in cdmsMap['MG']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="4">{{'cdms_PASAJE' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['PASAJE']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="4" translate>cdms_PASAJE</th>
+            <td ng-repeat="cdms in cdmsMap['PASAJE']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="4">{{'cdms_PASCRU' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['PASCRU']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="4" translate>cdms_PASCRU</th>
+            <td ng-repeat="cdms in cdmsMap['PASCRU']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="4">{{'cdms_VET2' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['VET2']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="4" translate>cdms_VET2</th>
+            <td ng-repeat="cdms in cdmsMap['VET2']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
             <th colspan="1" rowspan="5">CONTENEDORES</th>
             <th colspan="1" rowspan="4">&ge; 20 pies</th>
-            <th colspan="1" rowspan="2">{{'cdms_ca' | translate}}</th>
-            <th colspan="1">{{'cdms_numero' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['CNUMCA']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" rowspan="2" translate>cdms_ca</th>
+            <th colspan="1" translate>cdms_numero</th>
+            <td ng-repeat="cdms in cdmsMap['CNUMCA']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="1">{{'cdms_tm' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['CTONCA']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" translate>cdms_tm</th>
+            <td ng-repeat="cdms in cdmsMap['CTONCA']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="1" rowspan="2">{{'cdms_va' | translate}}</th>
-            <th colspan="1">{{'cdms_numero' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['CNUMVA']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" rowspan="2" translate>cdms_va</th>
+            <th colspan="1" translate>cdms_numero</th>
+            <td ng-repeat="cdms in cdmsMap['CNUMVA']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="1">{{'cdms_tm' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['CTONVA']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" translate>cdms_tm</th>
+            <td ng-repeat="cdms in cdmsMap['CTONVA']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="2">{{'cdms_CTEUS' | translate}}</th>
-            <th colspan="1">{{'cdms_numero' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['CTEUS']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="2" translate>cdms_CTEUS</th>
+            <th colspan="1" translate>cdms_numero</th>
+            <td ng-repeat="cdms in cdmsMap['CTEUS']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="2" rowspan="3">{{'cdms_RR' | translate}}</th>
-            <th colspan="1" rowspan="2">{{'cdms_RRC' | translate}}</th>
-            <th colspan="1">{{'cdms_teus' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['RRTEUS']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="2" rowspan="3" translate>cdms_RR</th>
+            <th colspan="1" rowspan="2" translate>cdms_RRC</th>
+            <th colspan="1" translate>cdms_teus</th>
+            <td ng-repeat="cdms in cdmsMap['RRTEUS']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="1">{{'cdms_tm' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['RRTONC']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" translate>cdms_tm</th>
+            <td ng-repeat="cdms in cdmsMap['RRTONC']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="1">{{'cdms_RRO' | translate}}</th>
-            <th colspan="1">{{'cdms_tm' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['RRTONO']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="1" translate>cdms_RRO</th>
+            <th colspan="1" translate>cdms_tm</th>
+            <td ng-repeat="cdms in cdmsMap['RRTONO']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
     </tbody>
 </table>
@@ -118,28 +119,28 @@
     <tbody>
         <tr>
             <th colspan="4" />
-            <th colspan="1">{{'cdms_embarcado' | translate}}</th>
-            <th colspan="1">{{'cdms_desembarcado' | translate}}</th>
-            <th colspan="1">{{'cdms_transito' | translate}}</th>
-            <th colspan="1">{{'cdms_transbordo' | translate}}</th>
+            <th colspan="1" translate>cdms_embarcado</th>
+            <th colspan="1" translate>cdms_desembarcado</th>
+            <th colspan="1" translate>cdms_transito</th>
+            <th colspan="1" translate>cdms_transbordo</th>
         </tr>
         <tr>
-            <th colspan="4">{{'cdms_TRALOC' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['TRALOC']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="4" translate>cdms_TRALOC</th>
+            <td ng-repeat="cdms in cdmsMap['TRALOC']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="4">{{'cdms_PESCAF' | translate}}</th>
+            <th colspan="4" translate>cdms_PESCAF</th>
             <td />
-            <td ng-repeat="cdms in cdmsMap['PESCAF']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <td ng-repeat="cdms in cdmsMap['PESCAF']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="2" rowspan="2">{{'cdms_AV' | translate}}</th>
-            <th colspan="2">{{'cdms_AVPPET' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['AVPPET']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="2" rowspan="2" translate>cdms_AV</th>
+            <th colspan="2" translate>cdms_AVPPET</th>
+            <td ng-repeat="cdms in cdmsMap['AVPPET']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
-            <th colspan="2">{{'cdms_AVOTRO' | translate}}</th>
-            <td ng-repeat="cdms in cdmsMap['AVOTRO']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <th colspan="2" translate>cdms_AVOTRO</th>
+            <td ng-repeat="cdms in cdmsMap['AVOTRO']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
     </tbody>
 </table>
@@ -154,12 +155,12 @@
         </tr>
         <tr>
             <th colspan="4">BUQUES ENTRADOS (Nº)</th>
-            <td ng-repeat="cdms in cdmsMap['BUQUNI']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
-            <td ng-repeat="cdms in cdmsMap['CRUBUQ']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <td ng-repeat="cdms in cdmsMap['BUQUNI']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
+            <td ng-repeat="cdms in cdmsMap['CRUBUQ']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
         <tr>
             <th colspan="4">UDS. ARQUEO (GT)</th>
-            <td ng-repeat="cdms in cdmsMap['BUQGT']"><span class="pull-right">{{cdms.cantidad | number:0}}</span></td>
+            <td ng-repeat="cdms in cdmsMap['BUQGT']"><span class="pull-right">{{::cdms.cantidad | number:0}}</span></td>
         </tr>
     </tbody>
 </table>

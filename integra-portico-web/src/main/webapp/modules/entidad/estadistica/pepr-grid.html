@@ -5,21 +5,21 @@
         <fieldset>
             <div class="row-fluid">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label>{{'pepr_autp' | translate}}</label> <select ng-model="peprCriterio.autpId"
+                    <label translate>pepr_autp</label> <select ng-model="peprCriterio.autpId"
                         ng-options="autp.id as autp.etiqueta for autp in autpList" class="form-control input-sm">
                         <option value="" />
                     </select>
                 </div>
                 <div class="col-sm-2 col-md-1 form-group">
-                    <label>{{'pepr_anio' | translate}}</label> <input type="text" ng-model="peprCriterio.anio"
+                    <label translate>pepr_anio</label> <input type="text" ng-model="peprCriterio.anio"
                         class="form-control input-sm" />
                 </div>
                 <div class="col-sm-2 col-md-1 form-group">
-                    <label>{{'pepr_mes' | translate}}</label> <input type="text" ng-model="peprCriterio.mes"
+                    <label translate>pepr_mes</label> <input type="text" ng-model="peprCriterio.mes"
                         class="form-control input-sm" />
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label>{{'limit' | translate}}</label> <select ng-model="limit" class="form-control input-sm">
+                    <label translate>limit</label> <select ng-model="limit" class="form-control input-sm">
                         <option ng-repeat="limitValue in limits" class="pull-right" value="{{limitValue}}"
                             ng-selected="limitValue == limit">{{limitValue}}</option>
                     </select>
@@ -29,10 +29,10 @@
 
         <div class="btn-group">
             <button data-ng-click="search()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
             </button>
             <button data-ng-click="cancelSearch()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
             </button>
         </div>
     </form>
@@ -49,7 +49,7 @@
 
         <div class="btn-group">
             <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
             </button>
         </div>
     </div>
@@ -61,10 +61,10 @@
             <thead>
                 <tr>
                     <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap">{{'pepr_autp' | translate}}</th>
-                    <th>{{'pepr_anio' | translate}}</th>
-                    <th>{{'pepr_mes' | translate}}</th>
-                    <th>{{'pepr_cdmsGenerado' | translate}}</th>
+                    <th class="codigo" nowrap="nowrap" translate>pepr_autp</th>
+                    <th translate>pepr_anio</th>
+                    <th translate>pepr_mes</th>
+                    <th translate>pepr_cdmsGenerado</th>
                 </tr>
             </thead>
             <tbody>

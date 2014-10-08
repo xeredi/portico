@@ -1,4 +1,4 @@
-<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+<alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
     <li ng-repeat="error in actionErrors">{{error}}</li>
 </ul>
@@ -8,12 +8,12 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> {{'boton_editar' | translate}}
+            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
         </button>
         <a class="btn btn-default" href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.prvr.id}}/{{item.fref}}"><i
-            class="glyphicon glyphicon-tags"></i> {{'boton_duplicar' | translate}}</a>
+            class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
     </div>
 </div>
@@ -21,19 +21,19 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-            <label>{{'prmt_parametro' | translate}}</label>
+            <label translate>prmt_parametro</label>
             <p class="form-control-static">{{item.parametro}}</p>
         </div>
 
         <!-- ng-if="enti.tempExp" -->
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-            <label>{{'prmt_fini' | translate}}</label>
+            <label translate>prmt_fini</label>
             <p class="form-control-static">{{item.prvr.fini | date:('fmt_date' | translate)}}</p>
         </div>
 
         <!-- ng-if="enti.tempExp" -->
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-            <label>{{'prmt_ffin' | translate}}</label>
+            <label translate>prmt_ffin</label>
             <p class="form-control-static">{{item.prvr.ffin | date:('fmt_date' | translate)}}</p>
         </div>
     </div>
@@ -55,7 +55,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i
-            class="glyphicon glyphicon-file"></i> {{'boton_alta' | translate}}</a>
+            class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
     </div>
 </div>
 
@@ -66,10 +66,8 @@
                 <th class="buttonLinks" />
                 <th>{{entiHija.tpprAsociado.nombre}}</th>
 
-                <!-- ng-if="entiHija.tempExp" -->
-                <th class="date">{{'sprm_fini' | translate}}</th>
-                <!-- ng-if="entiHija.tempExp" -->
-                <th class="date">{{'sprm_ffin' | translate}}</th>
+                <th class="date" translate>sprm_fini</th>
+                <th class="date" translate>sprm_ffin</th>
 
                 <th ng-repeat="tpdtId in entiHija.entdGridList">{{enti.entdMap[tpdtId].etiqueta}}</th>
             </tr>

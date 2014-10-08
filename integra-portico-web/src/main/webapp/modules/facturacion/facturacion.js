@@ -347,12 +347,15 @@ module.controller("crgoGridController", function($scope, $http, $location, $rout
             if (data.actionErrors.length == 0) {
                 $scope.page = data.crgoList.page;
                 $scope.crgoList = data.crgoList;
+                $scope.crgoCriterio = data.crgoCriterio;
 
                 var map = {};
 
                 map["page"] = data.crgoList.page;
 
                 $location.search(map).replace();
+
+                $scope.showFilter = false;
             }
         });
     }

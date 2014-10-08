@@ -7,25 +7,25 @@
 
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 form-group">
-                <label>{{"srvc_subp" | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
+                <label translate>srvc_subp</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
                     ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
                     <option value="" />
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.subp.etiqueta}}</p>
             </div>
             <div class="col-sm-1 col-md-1 form-group">
-                <label>{{"srvc_anno" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
-                    ng-model="item.anno" class="form-control input-sm" />
+                <label translate>srvc_anno</label> <input ng-if="accion != 'edit'" type="text" ng-model="item.anno"
+                    class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.anno}}</p>
             </div>
             <div class="col-sm-1 col-md-1 form-group">
-                <label>{{"srvc_numero" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
-                    ng-model="item.numero" class="form-control input-sm" />
+                <label translate>srvc_numero</label> <input ng-if="accion != 'edit'" type="text" ng-model="item.numero"
+                    class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.numero}}</p>
             </div>
 
             <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group">
-                <label>{{'srvc_estado' | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
+                <label translate>srvc_estado</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
                     ng-options="cdrf.valor as cdrf.valor for cdrf in enti.tpdtEstado.cdrfList"
                     class="form-control input-sm">
                     <option value="" />
@@ -33,8 +33,8 @@
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.estado}}</p>
             </div>
 
-            <div ng-if="!enti.temporal" class="col-md-1 form-group">
-                <label>{{'srvc_fref' | translate}}</label>
+            <div ng-if="!enti.temporal" class="col-sm-2 col-md-1 form-group">
+                <label translate>srvc_fref</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.fref" /> <span
@@ -42,8 +42,8 @@
                 </div>
             </div>
 
-            <div ng-if="enti.temporal" class="col-md-1 form-group">
-                <label>{{'srvc_fini' | translate}}</label>
+            <div ng-if="enti.temporal" class="col-sm-2 col-md-1 form-group">
+                <label translate>srvc_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.fini" /> <span
@@ -51,8 +51,8 @@
                 </div>
             </div>
 
-            <div ng-if="enti.temporal" class="col-md-1 form-group">
-                <label>{{'srvc_ffin' | translate}}</label>
+            <div ng-if="enti.temporal" class="col-sm-2 col-md-1 form-group">
+                <label translate>srvc_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.ffin" /> <span
@@ -64,7 +64,7 @@
 
     <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
 
-    <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+    <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
     <ul>
         <li ng-repeat="error in actionErrors">{{error}}</li>
     </ul>
@@ -72,10 +72,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
         </button>
     </div>
 </form>

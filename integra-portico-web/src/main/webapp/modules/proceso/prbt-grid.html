@@ -4,19 +4,19 @@
         <fieldset>
             <div class="row-fluid">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label>{{'prbt_modulo' | translate}}</label> <select ng-model="prbtCriterio.modulo"
+                    <label translate>prbt_modulo</label> <select ng-model="prbtCriterio.modulo"
                         ng-options="valor for valor in procesoModulos" class="form-control input-sm">
                         <option value="" />
                     </select>
                 </div>
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label>{{'prbt_tipo' | translate}}</label> <select ng-model="prbtCriterio.tipo"
+                    <label translate>prbt_tipo</label> <select ng-model="prbtCriterio.tipo"
                         ng-options="valor for valor in procesoTipos" class="form-control input-sm">
                         <option value="" />
                     </select>
                 </div>
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label>{{'prbt_estado' | translate}}</label> <select ng-model="prbtCriterio.estado"
+                    <label translate>prbt_estado</label> <select ng-model="prbtCriterio.estado"
                         ng-options="valor for valor in procesoEstados" class="form-control input-sm">
                         <option value="" />
                     </select>
@@ -24,7 +24,7 @@
             </div>
             <div class="row-fluid">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label>{{'prbt_falta' | translate}}</label>
+                    <label translate>prbt_falta</label>
                     <div class="dropdown">
                         <div class="input-group" ng-controller="datepickerController">
                             <input type="text" class="form-control input-sm"
@@ -48,10 +48,10 @@
 
         <div class="btn-group">
             <button data-ng-click="search()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
             </button>
             <button data-ng-click="cancelSearch()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
             </button>
         </div>
     </form>
@@ -67,7 +67,7 @@
 
         <div class="btn-group">
             <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
             </button>
         </div>
     </div>
@@ -79,16 +79,16 @@
             <thead>
                 <tr>
                     <th class="buttonLinks" nowrap="nowrap" />
-                    <th nowrap="nowrap">{{'prbt_modulo' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_tipo' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_estado' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_falta' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_finicio' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_ffin' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_duracion' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_erroresCnt' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_alertasCnt' | translate}}</th>
-                    <th nowrap="nowrap">{{'prbt_mensajesCnt' | translate}}</th>
+                    <th nowrap="nowrap" translate>prbt_modulo</th>
+                    <th nowrap="nowrap" translate>prbt_tipo</th>
+                    <th nowrap="nowrap" translate>prbt_estado</th>
+                    <th nowrap="nowrap" translate>prbt_falta</th>
+                    <th nowrap="nowrap" translate>prbt_finicio</th>
+                    <th nowrap="nowrap" translate>prbt_ffin</th>
+                    <th nowrap="nowrap" translate>prbt_duracion</th>
+                    <th nowrap="nowrap" translate>prbt_erroresCnt</th>
+                    <th nowrap="nowrap" translate>prbt_alertasCnt</th>
+                    <th nowrap="nowrap" translate>prbt_mensajesCnt</th>
                 </tr>
             </thead>
             <tbody>

@@ -4,45 +4,46 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-md-2 form-group">
-                <label>{{"tpdt_codigo" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                <label translate>tpdt_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="tpdt.codigo" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{tpdt.codigo}}</p>
             </div>
             <div class="col-md-3 form-group">
-                <label>{{"tpdt_nombre" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                <label translate>tpdt_nombre</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="tpdt.nombre" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{tpdt.nombre}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{"tpdt_tpht" | translate}}</label> <select ng-model="tpdt.tpht" class="form-control input-sm">
+                <label translate>tpdt_tpht</label> <select ng-model="tpdt.tpht"
+                    ng-options="cdrf as ('TipoHtml_' + cdrf | translate) for cdrf in tphts"
+                    class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tphts" value="{{cdrf}}">{{cdrf}} - {{"TipoHtml_" + cdrf |
-                        translate}}</option>
                 </select>
             </div>
             <div class="col-md-2 form-group">
-                <label>{{"tpdt_tipoElemento" | translate}}</label> <select ng-model="tpdt.tipoElemento"
-                    class="form-control input-sm">
+                <label translate>tpdt_tipoElemento</label> <select
+                    ng-options="cdrf as ('TipoElemento_' + cdrf | translate) for cdrf in tiposElemento"
+                    ng-model="tpdt.tipoElemento" class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tiposElemento" value="{{cdrf}}">{{cdrf}} - {{"TipoElemento_" +
-                        cdrf | translate}}</option>
                 </select>
             </div>
             <div class="col-md-3 form-group" ng-if="tpdt.tipoElemento == 'PR'">
-                <label>{{"tpdt_enti" | translate}}</label> <select ng-model="tpdt.enti.id" class="form-control input-sm">
+                <label translate>tpdt_enti</label> <select ng-model="tpdt.enti.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in entiTpprList"
+                    class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in entiTpprList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
             </div>
             <div class="col-md-3 form-group" ng-if="tpdt.tipoElemento == 'SR'">
-                <label>{{"tpdt_enti" | translate}}</label> <select ng-model="entd.tpdt.id" class="form-control input-sm">
+                <label translate>tpdt_enti</label> <select ng-model="entd.tpdt.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in entiTpsrList"
+                    class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in entiTpsrList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
             </div>
         </div>
 
-        <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+        <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
         <ul>
             <li ng-repeat="error in actionErrors">{{error}}</li>
         </ul>
@@ -51,10 +52,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
         </button>
     </div>
 </form>

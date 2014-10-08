@@ -5,22 +5,22 @@
         <fieldset>
             <div class="row-fluid">
                 <div class="col-sm-3 col-md-2 form-group">
-                    <label>{{"srvc_subp" | translate}}</label> <select ng-model="itemCriterio.subp.id"
+                    <label translate>srvc_subp</label> <select ng-model="itemCriterio.subp.id"
                         ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
                         <option value="" />
                     </select>
                 </div>
                 <div class="col-sm-1 col-md-1 form-group">
-                    <label>{{"srvc_anno" | translate}}</label> <input type="text" ng-model="itemCriterio.anno"
+                    <label translate>srvc_anno</label> <input type="text" ng-model="itemCriterio.anno"
                         class="form-control input-sm" />
                 </div>
                 <div class="col-sm-1 col-md-1 form-group">
-                    <label>{{"srvc_numero" | translate}}</label> <input type="text" ng-model="itemCriterio.numero"
+                    <label translate>srvc_numero</label> <input type="text" ng-model="itemCriterio.numero"
                         class="form-control input-sm" />
                 </div>
 
                 <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
-                    <label>{{'srvc_estado' | translate}}</label> <select ng-model="itemCriterio.estado"
+                    <label translate>srvc_estado</label> <select ng-model="itemCriterio.estado"
                         ng-options="cdrf.valor as cdrf.valor for cdrf in enti.tpdtEstado.cdrfList"
                         class="form-control input-sm">
                         <option value="" />
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label>{{'limit' | translate}}</label> <select ng-model="limit" class="form-control input-sm">
+                    <label translate>limit</label> <select ng-model="limit" class="form-control input-sm">
                         <option ng-repeat="limitValue in limits" class="pull-right" value="{{limitValue}}"
                             ng-selected="limitValue == limit">{{limitValue}}</option>
                     </select>
@@ -40,10 +40,10 @@
 
         <div class="btn-group">
             <button data-ng-click="search()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i> {{'boton_buscar' | translate}}
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
             </button>
             <button data-ng-click="cancelSearch()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
             </button>
         </div>
     </form>
@@ -59,9 +59,9 @@
 
         <div class="btn-group">
             <a class="btn btn-default" href="#/servicio/srvc/create/{{enti.id}}"><i class="glyphicon glyphicon-file"></i>
-                {{'boton_alta' | translate}}</a>
+                <span translate>boton_alta</span> </a>
             <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> {{'boton_filtro' | translate}}
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
             </button>
         </div>
     </div>
@@ -73,10 +73,10 @@
             <thead>
                 <tr>
                     <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap">{{'srvc_servicio' | translate}}</th>
-                    <th ng-if="enti.tpdtEstado">{{'srvc_estado' | translate}}</th>
-                    <th ng-if="enti.temporal">{{'srvc_fini' | translate}}</th>
-                    <th ng-if="enti.temporal">{{'srvc_ffin' | translate}}</th>
+                    <th class="codigo" nowrap="nowrap" translate>srvc_servicio</th>
+                    <th ng-if="enti.tpdtEstado" translate>srvc_estado</th>
+                    <th ng-if="enti.temporal" translate>srvc_fini</th>
+                    <th ng-if="enti.temporal" translate>srvc_ffin</th>
                     <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
                 </tr>
             </thead>

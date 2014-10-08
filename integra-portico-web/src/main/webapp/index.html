@@ -8,48 +8,43 @@
 <link rel='stylesheet' href="static/bootstrap-theme/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="app.css" />
 
-<title>{{'app_nombre' | translate}} - {{title | translate}}</title>
+<title translate>app_nombre - {{title}}</title>
 </head>
 <body>
     <!--
  -->
     <header class="navbar navbar-default navbar-fixed-top">
-        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-
         <nav class="collapse navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
-                <li><a href="index.html" class="brand">{{'app_nombre' | translate}} - {{title | translate}}</a></li>
+                <li><a href="index.html" class="brand"><span translate>app_nombre</span> - <span translate>{{title}}</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Menu</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li role="presentation" class="dropdown-header">GestiÃ³n</li>
-                        <li><a href="#/servicio">{{'menu_tpsrs' | translate}}</a></li>
-                        <li><a href="#/estadistica/pepr/grid">{{'menu_peprs' | translate}}</a></li>
-                        <li><a href="#/maestro">{{'menu_tpprs' | translate}}</a></li>
+                        <li role="presentation" class="dropdown-header">Gestion</li>
+                        <li><a href="#/servicio" translate>menu_tpsrs</a></li>
+                        <li><a href="#/estadistica/pepr/grid" translate>menu_peprs</a></li>
+                        <li><a href="#/maestro" translate>menu_tpprs</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">FacturaciÃ³n</li>
-                        <li><a href="#/facturacion">{{'menu_fctrmain' | translate}}</a></li>
+                        <li role="presentation" class="dropdown-header">Facturacion</li>
+                        <li><a href="#/facturacion" translate>menu_fctrmain</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">AdministraciÃ³n</li>
-                        <li><a href="#/proceso/prbt/grid">{{'menu_prbts' | translate}}</a></li>
+                        <li role="presentation" class="dropdown-header">Administracion</li>
+                        <li><a href="#/proceso/prbt/grid" translate>menu_prbts</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">ParametrizaciÃ³n</li>
-                        <li><a href="#/metamodelo/tpsr/grid">{{'menu_metamodelo_tpsrs' | translate}}</a></li>
-                        <li><a href="#/metamodelo/tpes/grid">{{'menu_metamodelo_tpess' | translate}}</a></li>
-                        <li><a href="#/metamodelo/tppr/grid">{{'menu_metamodelo_tpprs' | translate}}</a></li>
-                        <li><a href="#/metamodelo/tpdt/grid">{{'menu_metamodelo_tpdts' | translate}}</a></li>
-                        <li><a href="#/configuracion/confs">{{'menu_confs' | translate}}</a></li>
+                        <li role="presentation" class="dropdown-header">Parametrizacion</li>
+                        <li><a href="#/metamodelo/tpsr/grid" translate>menu_metamodelo_tpsrs</a></li>
+                        <li><a href="#/metamodelo/tpes/grid" translate>menu_metamodelo_tpess</a></li>
+                        <li><a href="#/metamodelo/tppr/grid" translate>menu_metamodelo_tpprs</a></li>
+                        <li><a href="#/metamodelo/tpdt/grid" translate>menu_metamodelo_tpdts</a></li>
+                        <li><a href="#/configuracion/confs" translate>menu_confs</a></li>
                     </ul></li>
             </ul>
         </nav>
     </header>
 
     <div id="body-content" class="container-fluid">
-        <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+        <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
         <ul>
             <li ng-repeat="error in actionErrors">{{error}}</li>
         </ul>

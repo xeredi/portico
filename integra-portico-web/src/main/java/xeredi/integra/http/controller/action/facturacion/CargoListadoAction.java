@@ -64,10 +64,6 @@ public final class CargoListadoAction extends BaseAction {
 
         final CargoBO crgoBO = new CargoBO();
 
-        if (hasErrors()) {
-            return INPUT;
-        }
-
         crgoList = crgoBO.selectList(crgoCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
         return SUCCESS;

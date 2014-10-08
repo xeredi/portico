@@ -7,7 +7,7 @@
 
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                <label>{{"ssrv_srvc" | translate}}</label>
+                <label translate>ssrv_srvc</label>
                 <div ng-if="!item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
                     <input type="text" ng-model="item.srvc"
                         typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.tpsrId, $viewValue)"
@@ -18,13 +18,13 @@
                 <p ng-if="item.srvc.id" class="form-control-static">{{item.srvc.etiqueta}}</p>
             </div>
             <div class="col-sm-1 col-md-1 form-group">
-                <label>{{"ssrv_numero" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
+                <label translate>ssrv_numero</label> <input ng-if="accion != 'edit'" type="text"
                     ng-model="item.numero" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.numero}}</p>
             </div>
 
             <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
-                <label>{{'ssrv_estado' | translate}}</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
+                <label translate>ssrv_estado</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
                     ng-options="cdrf.valor as cdrf.valor for cdrf in enti.tpdtEstado.cdrfList"
                     class="form-control input-sm">
                     <option value="" />
@@ -33,7 +33,7 @@
             </div>
 
             <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label>{{'ssrv_fini' | translate}}</label>
+                <label translate>ssrv_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.fini" /> <span
@@ -42,7 +42,7 @@
             </div>
 
             <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label>{{'ssrv_ffin' | translate}}</label>
+                <label translate>ssrv_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.ffin" /> <span
@@ -65,7 +65,7 @@
 
     <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
 
-    <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+    <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
     <ul>
         <li ng-repeat="error in actionErrors">{{error}}</li>
     </ul>
@@ -73,10 +73,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
         </button>
     </div>
 </form>

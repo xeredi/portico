@@ -44,6 +44,10 @@
                 <foreach collection="ids" open="(" close=")" separator="," item="value">#{value}</foreach>
             </if>
 
+            <if test="tpsrId != null">
+                AND crgo_tpsr_pk = #{tpsrId}
+            </if>
+
             <if test="crgvId != null">
                 AND crgv_pk = #{crgvId}
             </if>

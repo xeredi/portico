@@ -26,6 +26,8 @@ app.config(function($translateProvider) {
         errors : "Errores",
         fmt_true : "Si",
         fmt_false : "No",
+        fmt_1 : "Si",
+        fmt_0 : "No",
         fmt_integer : "#,###,###,##0",
         fmt_date : "dd/MM/yyyy",
         fmt_calendar_date : "yyyy-MM-dd",

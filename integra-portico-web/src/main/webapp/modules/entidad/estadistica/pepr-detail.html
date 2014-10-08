@@ -1,7 +1,7 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_borrar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
     </div>
 </div>
@@ -9,19 +9,19 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
-            <label>{{'pepr_autp' | translate}}</label>
+            <label translate>pepr_autp</label>
             <p class="form-control-static">{{pepr.autp.parametro}}</p>
         </div>
         <div class="col-sm-2 col-md-1 col-md-1 form-group">
-            <label>{{'pepr_anio' | translate}}</label>
+            <label translate>pepr_anio</label>
             <p class="form-control-static">{{pepr.anio}}</p>
         </div>
         <div class="col-sm-2 col-md-1 col-md-1 form-group">
-            <label>{{'pepr_mes' | translate}}</label>
+            <label translate>pepr_mes</label>
             <p class="form-control-static">{{pepr.mes}}</p>
         </div>
         <div class="col-sm-3 col-md-2 col-md-1 form-group">
-            <label>{{'pepr_cdmsGenerado' | translate}}</label>
+            <label translate>pepr_cdmsGenerado</label>
             <p class="form-control-static">
                 <i ng-if="item.cdmsGenerado" class="glyphicon glyphicon-ok"></i><i ng-if="!item.cdmsGenerado"
                     class="glyphicon glyphicon-remove"></i>

@@ -5,12 +5,12 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-md-2 form-group">
-                <label>{{"enti_codigo" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                <label translate>enti_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enti.codigo" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{enti.codigo}}</p>
             </div>
             <div class="col-md-3 form-group">
-                <label>{{"enti_nombre" | translate}}</label> <input ng-if="accion == 'create'" type="text"
+                <label translate>enti_nombre</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enti.nombre" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{enti.nombre}}</p>
             </div>
@@ -18,63 +18,57 @@
 
         <div class="row-fluid">
             <div class="col-md-1 form-group">
-                <label>{{"enti_cmd_alta" | translate}}</label> <select ng-model="enti.cmdAlta"
+                <label translate>enti_cmd_alta</label> <select ng-model="enti.cmdAlta"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"enti_cmd_baja" | translate}}</label> <select ng-model="enti.cmdBaja"
+                <label translate>enti_cmd_baja</label> <select ng-model="enti.cmdBaja"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"enti_cmd_edicion" | translate}}</label> <select ng-model="enti.cmdEdicion"
+                <label translate>enti_cmd_edicion</label> <select ng-model="enti.cmdEdicion"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"enti_cmd_duplicado" | translate}}</label> <select ng-model="enti.cmdDuplicado"
+                <label translate>enti_cmd_duplicado</label> <select ng-model="enti.cmdDuplicado"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"enti_temporal" | translate}}</label> <select ng-model="enti.temporal"
+                <label translate>enti_temporal</label> <select ng-model="enti.temporal"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"enti_facturable" | translate}}</label> <select ng-model="enti.facturable"
+                <label translate>enti_facturable</label> <select ng-model="enti.facturable"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-3 form-group">
-                <label>{{"enti_tpdt_estado" | translate}}</label> <select ng-model="enti.tpdtEstado.id"
+                <label translate>enti_tpdt_estado</label> <select ng-model="enti.tpdtEstado.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in tpdtEstadoList"
                     class="form-control input-sm">
                     <option value="" />
-                    <option ng-repeat="labelValue in tpdtEstadoList" value="{{labelValue.value}}">{{labelValue.label}}</option>
                 </select>
             </div>
         </div>
 
-        <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+        <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
         <ul>
             <li ng-repeat="error in actionErrors">{{error}}</li>
         </ul>
@@ -83,10 +77,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
         </button>
     </div>
 </form>

@@ -1,11 +1,5 @@
 <p class="bg-primary">{{'Aspecto' | uppercase}}</p>
 
-<alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
-<ul>
-    <li ng-repeat="error in actionErrors">{{error}}</li>
-</ul>
-</alert>
-
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="aspc.id" /><input type="hidden"
         ng-model="aspc.aspv.id" />
@@ -13,7 +7,7 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label>{{"aspc_tpsr" | translate}}</label> <select ng-if="accion == 'create'" ng-model="aspc.tpsr.id"
+                <label translate>aspc_tpsr</label> <select ng-if="accion == 'create'" ng-model="aspc.tpsr.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in entiTpsrList"
                     class="form-control input-sm">
                     <option value="" />
@@ -21,16 +15,16 @@
                 <p ng-if="accion != 'create'" class="form-control-static">{{aspc.tpsr.nombre}}</p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label>{{"aspc_codigo" | translate}}</label> <input ng-if="accion != 'edit'" type="text"
-                    ng-model="aspc.codigo" class="form-control input-sm" />
+                <label translate>aspc_codigo</label> <input ng-if="accion != 'edit'" type="text" ng-model="aspc.codigo"
+                    class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{aspc.codigo}}</p>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-                <label>{{"aspc_descripcion" | translate}}</label> <input type="text" ng-model="aspc.aspv.descripcion"
+                <label translate>aspc_descripcion</label> <input type="text" ng-model="aspc.aspv.descripcion"
                     class="form-control input-sm" />
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label>{{'aspc_fini' | translate}}</label>
+                <label translate>aspc_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.fini" /> <span
@@ -38,7 +32,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label>{{'aspc_ffin' | translate}}</label>
+                <label translate>aspc_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="aspc.aspv.ffin" /> <span
@@ -46,7 +40,7 @@
                 </div>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label>{{"aspc_prioridad" | translate}}</label> <input type="text" ng-model="aspc.aspv.prioridad"
+                <label translate>aspc_prioridad</label> <input type="text" ng-model="aspc.aspv.prioridad"
                     class="form-control input-sm" />
             </div>
         </div>
@@ -58,9 +52,9 @@
                 <thead>
                     <tr>
                         <th class="col-sm-1" />
-                        <th class="col-sm-4 col-md-3 col-lg-2">{{'aspc_cetiqInfo' | translate}}</th>
-                        <th class="col-sm-6 col-md-7 col-lg-8">{{'aspc_cpathInfo' | translate}}</th>
-                        <th class="col-sm-1">{{'aspc_cgrpInfo' | translate}}</th>
+                        <th class="col-sm-4 col-md-3 col-lg-2" translate>aspc_cetiqInfo</th>
+                        <th class="col-sm-6 col-md-7 col-lg-8" translate>aspc_cpathInfo</th>
+                        <th class="col-sm-1" translate>aspc_cgrpInfo</th>
                     </tr>
                 </thead>
 
@@ -69,60 +63,60 @@
                         <td>info1</td>
                         <td><input type="text" ng-model="aspc.aspv.cetiqInfo1" class="form-control input-sm" /></td>
                         <td><input type="text" ng-model="aspc.aspv.cpathInfo1" class="form-control input-sm" /></td>
-                        <td><select ng-model="aspc.aspv.cgrpInfo1" class="form-control input-sm">
+                        <td><select ng-model="aspc.aspv.cgrpInfo1"
+                            ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                            class="form-control input-sm">
                                 <option />
-                                <option value="true">{{"fmt_true" | translate}}</option>
-                                <option value="false">{{"fmt_false" | translate}}</option>
                         </select></td>
                     </tr>
                     <tr>
                         <td>info2</td>
                         <td><input type="text" ng-model="aspc.aspv.cetiqInfo2" class="form-control input-sm" /></td>
                         <td><input type="text" ng-model="aspc.aspv.cpathInfo2" class="form-control input-sm" /></td>
-                        <td><select ng-model="aspc.aspv.cgrpInfo2" class="form-control input-sm">
+                        <td><select ng-model="aspc.aspv.cgrpInfo2"
+                            ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                            class="form-control input-sm">
                                 <option />
-                                <option value="true">{{"fmt_true" | translate}}</option>
-                                <option value="false">{{"fmt_false" | translate}}</option>
                         </select></td>
                     </tr>
                     <tr>
                         <td>info3</td>
                         <td><input type="text" ng-model="aspc.aspv.cetiqInfo3" class="form-control input-sm" /></td>
                         <td><input type="text" ng-model="aspc.aspv.cpathInfo3" class="form-control input-sm" /></td>
-                        <td><select ng-model="aspc.aspv.cgrpInfo3" class="form-control input-sm">
+                        <td><select ng-model="aspc.aspv.cgrpInfo3"
+                            ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                            class="form-control input-sm">
                                 <option />
-                                <option value="true">{{"fmt_true" | translate}}</option>
-                                <option value="false">{{"fmt_false" | translate}}</option>
                         </select></td>
                     </tr>
                     <tr>
                         <td>info4</td>
                         <td><input type="text" ng-model="aspc.aspv.cetiqInfo4" class="form-control input-sm" /></td>
                         <td><input type="text" ng-model="aspc.aspv.cpathInfo4" class="form-control input-sm" /></td>
-                        <td><select ng-model="aspc.aspv.cgrpInfo4" class="form-control input-sm">
+                        <td><select ng-model="aspc.aspv.cgrpInfo4"
+                            ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                            class="form-control input-sm">
                                 <option />
-                                <option value="true">{{"fmt_true" | translate}}</option>
-                                <option value="false">{{"fmt_false" | translate}}</option>
                         </select></td>
                     </tr>
                     <tr>
                         <td>info5</td>
                         <td><input type="text" ng-model="aspc.aspv.cetiqInfo5" class="form-control input-sm" /></td>
                         <td><input type="text" ng-model="aspc.aspv.cpathInfo5" class="form-control input-sm" /></td>
-                        <td><select ng-model="aspc.aspv.cgrpInfo5" class="form-control input-sm">
+                        <td><select ng-model="aspc.aspv.cgrpInfo5"
+                            ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                            class="form-control input-sm">
                                 <option />
-                                <option value="true">{{"fmt_true" | translate}}</option>
-                                <option value="false">{{"fmt_false" | translate}}</option>
                         </select></td>
                     </tr>
                     <tr>
                         <td>info6</td>
                         <td><input type="text" ng-model="aspc.aspv.cetiqInfo6" class="form-control input-sm" /></td>
                         <td><input type="text" ng-model="aspc.aspv.cpathInfo6" class="form-control input-sm" /></td>
-                        <td><select ng-model="aspc.aspv.cgrpInfo6" class="form-control input-sm">
+                        <td><select ng-model="aspc.aspv.cgrpInfo6"
+                            ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                            class="form-control input-sm">
                                 <option />
-                                <option value="true">{{"fmt_true" | translate}}</option>
-                                <option value="false">{{"fmt_false" | translate}}</option>
                         </select></td>
                     </tr>
                 </tbody>
@@ -137,57 +131,57 @@
                     <thead>
                         <tr>
                             <th />
-                            <th>{{'aspc_lsumCuant' | translate}}</th>
+                            <th translate>aspc_lsumCuant</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
                             <td>cuant1</td>
-                            <td><select ng-model="aspc.aspv.lsumCuant1" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lsumCuant1"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>cuant2</td>
-                            <td><select ng-model="aspc.aspv.lsumCuant2" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lsumCuant2"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>cuant3</td>
-                            <td><select ng-model="aspc.aspv.lsumCuant3" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lsumCuant3"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>cuant4</td>
-                            <td><select ng-model="aspc.aspv.lsumCuant4" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lsumCuant4"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>cuant5</td>
-                            <td><select ng-model="aspc.aspv.lsumCuant5" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lsumCuant5"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>cuant6</td>
-                            <td><select ng-model="aspc.aspv.lsumCuant6" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lsumCuant6"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                     </tbody>
@@ -203,57 +197,57 @@
                     <thead>
                         <tr>
                             <th />
-                            <th>{{'aspc_lgrpInfo' | translate}}</th>
+                            <th translate>aspc_lgrpInfo</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
                             <td>info1</td>
-                            <td><select ng-model="aspc.aspv.lgrpInfo1" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo1"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>info2</td>
-                            <td><select ng-model="aspc.aspv.lgrpInfo2" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo2"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>info3</td>
-                            <td><select ng-model="aspc.aspv.lgrpInfo3" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo3"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>info4</td>
-                            <td><select ng-model="aspc.aspv.lgrpInfo4" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo4"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>info5</td>
-                            <td><select ng-model="aspc.aspv.lgrpInfo5" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo5"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                         <tr>
                             <td>info6</td>
-                            <td><select ng-model="aspc.aspv.lgrpInfo6" class="form-control input-sm">
+                            <td><select ng-model="aspc.aspv.lgrpInfo6"
+                                ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
+                                class="form-control input-sm">
                                     <option />
-                                    <option value="true">{{"fmt_true" | translate}}</option>
-                                    <option value="false">{{"fmt_false" | translate}}</option>
                             </select></td>
                         </tr>
                     </tbody>
@@ -262,12 +256,18 @@
         </div>
     </fieldset>
 
+    <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors">{{error}}</li>
+    </ul>
+    </alert>
+
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
         </button>
     </div>
 </form>

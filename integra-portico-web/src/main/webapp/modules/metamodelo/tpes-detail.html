@@ -5,39 +5,23 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" href="#/metamodelo/tpes/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
-                {{'boton_editar' | translate}}</a>
+                <span translate>boton_editar</span></a>
         </div>
     </div>
 
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label> {{"enti_codigo" | translate}} </label>
+            <label translate>enti_codigo</label>
             <p class="form-control-static">{{enti.codigo}}</p>
         </div>
         <div class="col-md-3 form-group">
-            <label> {{"enti_nombre" | translate}} </label>
+            <label translate>enti_nombre</label>
             <p class="form-control-static">{{enti.nombre}}</p>
         </div>
         <div class="col-md-2 form-group">
-            <label> {{"enti_tipo" | translate}} </label>
+            <label translate>enti_tipo</label>
             <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
         </div>
-    </div>
-    <div class="row-fluid">
-        <!--
-            <div class="col-md-1 form-group">
-                <label> {{"enti_i18n" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
-            <div class="col-md-2 form-group">
-                <label> {{"enti_tempExp" | translate}} </label>
-                <p class="form-control-static">
-                    <i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i>
-                </p>
-            </div>
- -->
     </div>
 </fieldset>
 

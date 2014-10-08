@@ -4,17 +4,17 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-md-3 form-group">
-                <label>{{"cdrf_valor" | translate}}</label> <input ng-if="accion == 'create'" type="text"
-                    ng-model="cdrf.valor" class="form-control input-sm" />
+                <label translate>cdrf_valor</label> <input ng-if="accion == 'create'" type="text" ng-model="cdrf.valor"
+                    class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static">{{cdrf.valor}}</p>
             </div>
             <div class="col-md-1 form-group">
-                <label>{{"cdrf_orden" | translate}}</label> <input type="text" ng-model="cdrf.orden"
+                <label translate>cdrf_orden</label> <input type="text" ng-model="cdrf.orden"
                     class="form-control input-sm" />
             </div>
         </div>
 
-        <alert ng-if="actionErrors" type="danger"> <span>{{'errors' | translate}}:</span>
+        <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
         <ul>
             <li ng-repeat="error in actionErrors">{{error}}</li>
         </ul>
@@ -23,10 +23,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> {{'boton_guardar' | translate}}
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> {{'boton_cancelar' | translate}}
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
         </button>
     </div>
 </form>
