@@ -46,6 +46,7 @@ p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 .form-control-static {
 	padding-top: 7px;
 	padding-bottom: 7px;
+	min-height: 29px;
 }
 
 .dropdown-menu {

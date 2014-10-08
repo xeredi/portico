@@ -9,7 +9,7 @@
             <div class="col-sm-3 col-md-2 form-group">
                 <label translate>srvc_subp</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
                     ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
-                    <option value="" />
+                    <option />
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.subp.etiqueta}}</p>
             </div>
@@ -28,7 +28,7 @@
                 <label translate>srvc_estado</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
                     ng-options="cdrf.valor as cdrf.valor for cdrf in enti.tpdtEstado.cdrfList"
                     class="form-control input-sm">
-                    <option value="" />
+                    <option />
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.estado}}</p>
             </div>

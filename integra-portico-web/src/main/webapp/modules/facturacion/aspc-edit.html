@@ -10,7 +10,7 @@
                 <label translate>aspc_tpsr</label> <select ng-if="accion == 'create'" ng-model="aspc.tpsr.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in entiTpsrList"
                     class="form-control input-sm">
-                    <option value="" />
+                    <option />
                 </select>
                 <p ng-if="accion != 'create'" class="form-control-static">{{aspc.tpsr.nombre}}</p>
             </div>

@@ -27,7 +27,7 @@
                 <label translate>ssrv_estado</label> <select ng-if="accion != 'edit'" ng-model="item.estado"
                     ng-options="cdrf.valor as cdrf.valor for cdrf in enti.tpdtEstado.cdrfList"
                     class="form-control input-sm">
-                    <option value="" />
+                    <option />
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static">{{item.estado}}</p>
             </div>

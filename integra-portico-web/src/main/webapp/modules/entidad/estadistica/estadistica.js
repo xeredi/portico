@@ -142,6 +142,8 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
     function search(itemCriterio, page, limit) {
         var url = "estadistica/estd-list.action";
 
+        $scope.limit = limit;
+
         $http.post(url, {
             itemCriterio : itemCriterio,
             page : page,
@@ -202,7 +204,7 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
     }
 
     findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
 });
 
 module.controller("estdDetailController", function($scope, $http, $location, $route, $routeParams) {

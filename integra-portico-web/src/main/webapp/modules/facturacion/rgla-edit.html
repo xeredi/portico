@@ -22,16 +22,16 @@
                 <p ng-if="accion != 'create'" class="form-control-static">{{rgla.codigo}}</p>
             </div>
             <div class="col-md-2 form-group">
-                <label translate>rgla_tipo</label> <select ng-model="rgla.rglv.tipo" class="form-control input-sm">
-                    <option value="" />
-                    <option ng-repeat="cdrf in tipos" value="{{cdrf}}">{{cdrf}} - {{'ReglaTipo_' + cdrf |
-                        translate}}</option>
+                <label translate>rgla_tipo</label> <select ng-model="rgla.rglv.tipo"
+                    ng-options="cdrf as (cdrf + ' - ' + ('ReglaTipo_' + cdrf | translate)) for cdrf in tipos"
+                    class="form-control input-sm">
+                    <option />
                 </select>
             </div>
             <div class="col-md-2 form-group">
-                <label translate>rgla_enti</label> <select ng-model="rgla.rglv.enti.id" class="form-control input-sm">
-                    <option value="" />
-                    <option ng-repeat="enti in entiFacturableList" value="{{enti.id}}">{{enti.nombre}}</option>
+                <label translate>rgla_enti</label> <select ng-model="rgla.rglv.enti.id"
+                    ng-options="enti.id as enti.nombre for enti in entiFacturableList" class="form-control input-sm">
+                    <option />
                 </select>
             </div>
             <div class="col-md-1 form-group">

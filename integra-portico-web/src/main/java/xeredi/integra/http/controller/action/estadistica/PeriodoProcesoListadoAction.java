@@ -168,4 +168,13 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
         return autpList;
     }
 
+    /**
+     * Gets the limits.
+     *
+     * @return the limits
+     */
+    public int[] getLimits() {
+        return GlobalNames.VALID_ROWS_PER_PAGE;
+    }
+
 }

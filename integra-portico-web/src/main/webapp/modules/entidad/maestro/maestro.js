@@ -14,7 +14,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("maestroController", function($scope, $http, $location) {
+module.controller("maestroController", function($scope, $http) {
     var url = "maestro/tppr-list.action";
 
     $http.get(url).success(function(data) {
@@ -67,7 +67,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("prmtGridController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("prmtGridController", function($scope, $http, $location, $routeParams) {
     $scope.showFilter = false;
     $scope.itemCriterio = {};
     $scope.itemCriterio.entiId = $routeParams.entiId;
@@ -142,7 +142,7 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
     search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
 });
 
-module.controller("prmtDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
     $scope.edit = function() {
         $location.path("/maestro/prmt/edit/" + $scope.item.entiId + "/" + $scope.item.prvr.id + "/" + $scope.item.fref)
                 .replace();
@@ -194,7 +194,7 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
     findItem();
 });
 
-module.controller("prmtCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("prmtCreateController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 
@@ -239,7 +239,7 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
     findItem();
 });
 
-module.controller("prmtEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("prmtEditController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 

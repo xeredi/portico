@@ -7,7 +7,7 @@
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                     <label translate>pepr_autp</label> <select ng-model="peprCriterio.autpId"
                         ng-options="autp.id as autp.etiqueta for autp in autpList" class="form-control input-sm">
-                        <option value="" />
+                        <option />
                     </select>
                 </div>
                 <div class="col-sm-2 col-md-1 form-group">
@@ -19,9 +19,9 @@
                         class="form-control input-sm" />
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>limit</label> <select ng-model="limit" class="form-control input-sm">
-                        <option ng-repeat="limitValue in limits" class="pull-right" value="{{limitValue}}"
-                            ng-selected="limitValue == limit">{{limitValue}}</option>
+                    <label translate>limit</label> <select ng-model="limit"
+                        ng-options="limitValue for limitValue in limits" class="form-control input-sm">
+                        <option />
                     </select>
                 </div>
             </div>

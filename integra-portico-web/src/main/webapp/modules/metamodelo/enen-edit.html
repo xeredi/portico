@@ -5,9 +5,10 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-md-3 form-group">
-                <label translate>enen_entih</label> <select ng-model="enen.entiHijaId" class="form-control input-sm">
-                    <option value="" />
-                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}">{{labelValue.label}}</option>
+                <label translate>enen_entih</label> <select ng-model="enen.entiHijaId"
+                    ng-options="labelValue.value as labelValue.label for labelValue in entiList"
+                    class="form-control input-sm">
+                    <option />
                 </select>
             </div>
             <div class="col-md-1 form-group">

@@ -5,10 +5,9 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-md-2 form-group">
-            <label translate>vlrl_rgla</label> <select ng-if="!vlrl.rgla.id" name="vlrl.rgla.id"
-                class="form-control">
+            <label translate>vlrl_rgla</label> <select ng-if="!vlrl.rgla.id" ng-model="vlrl.rgla.id"
+                ng-options="rgla.id as rgla.codigo for rgla in rglaList" class="form-control">
                 <option />
-                <option ng-repeat="rgla in rglaList" value="{{rgla.id}}">{{rgla.codigo}}</option>
             </select>
 
             <p ng-if="vlrl.rgla.id" class="form-control-static">

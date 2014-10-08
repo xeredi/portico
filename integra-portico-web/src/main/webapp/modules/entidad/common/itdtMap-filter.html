@@ -8,7 +8,7 @@
                 <select ng-switch-when="BO" ng-model="itemCriterio.itdtMap[tpdtId].cantidadEntera"
                     ng-options="item as ('fmt_' + item | translate) for item in [1 , 0]"
                     class="form-control input-sm">
-                    <option value="" />
+                    <option />
                 </select> <input ng-switch-when="ND" type="text" ng-model="itemCriterio.itdtMap[tpdtId].cantidadDecimal"
                     class="form-control input-sm number" /> <input ng-switch-when="NE" type="text"
                     ng-model="itemCriterio.itdtMap[tpdtId].cantidadEntera" ng-pattern="/^\d+$/"
@@ -42,7 +42,7 @@
                 <select ng-switch-when="CR" ng-model="itemCriterio.itdtMap[tpdtId].cadena"
                     ng-options="cdrf.valor as cdrf.valor for cdrf in enti.entdMap[tpdtId].tpdt.cdrfList"
                     class="form-control input-sm">
-                    <option value="" />
+                    <option />
                 </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
                     ng-model="itemCriterio.itdtMap[tpdtId].cadena" class="form-control input-sm" />
                 <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
@@ -51,7 +51,7 @@
                     ng-model="itemCriterio.itdtMap[tpdtId].prmt"
                     ng-options="prmt.etiqueta for prmt in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id] track by prmt.id"
                     class="form-control input-sm">
-                    <option value="" />
+                    <option />
                 </select>
                 <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm"
                     ng-controller="prmtsLupaCtrl">

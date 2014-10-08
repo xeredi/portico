@@ -14,9 +14,9 @@
         <div class="row-fluid">
             <div class="col-md-3 form-group">
                 <label translate>crgo_tpsr</label> <select ng-if="accion == 'create'" ng-model="crgo.tpsr.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in entiList"
                     class="form-control input-sm">
-                    <option value="" />
-                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}">{{labelValue.label}}</option>
+                    <option />
                 </select>
                 <p ng-if="accion != 'create'" class="form-control-static">{{crgo.tpsr.nombre}}</p>
             </div>
@@ -30,26 +30,24 @@
                     ng-model="crgo.crgv.codigoNormalizado" class="form-control input-sm" />
             </div>
             <div class="col-md-1 form-group">
-                <label translate>crgo_tipo</label> <select ng-model="crgo.crgv.tipo" class="form-control input-sm">
+                <label translate>crgo_tipo</label> <select ng-model="crgo.crgv.tipo"
+                    ng-options="cdrf as (cdrf + ' - ' + ('CargoTipo_' + cdrf | translate)) for cdrf in tipos"
+                    class="form-control input-sm">
                     <option />
-                    <option ng-repeat="cdrf in tipos" value="{{cdrf}}">{{cdrf}} - {{"CargoTipo_" + cdrf |
-                        translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>crgo_principal</label> <select ng-model="crgo.crgv.principal"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>crgo_temporal</label> <select ng-model="crgo.crgv.temporal"
+                    ng-options="item as ('fmt_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
-                    <option value="true">{{"fmt_true" | translate}}</option>
-                    <option value="false">{{"fmt_false" | translate}}</option>
                 </select>
             </div>
         </div>

@@ -16,9 +16,9 @@
             </div>
             <div class="col-md-3 form-group">
                 <label translate>enti_tpprAsociado</label> <select ng-model="enti.tpprAsociado.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in entiList"
                     class="form-control input-sm">
-                    <option value="" />
-                    <option ng-repeat="labelValue in entiList" value="{{labelValue.value}}">{{labelValue.label}}</option>
+                    <option />
                 </select>
             </div>
         </div>
