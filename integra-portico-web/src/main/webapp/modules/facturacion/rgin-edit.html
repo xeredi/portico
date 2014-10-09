@@ -1,8 +1,8 @@
-<p class="bg-primary">{{'Incompatibilidad' | uppercase}}</p>
+<p class="bg-primary" ng-bind="'Incompatibilidad' | uppercase"></p>
 
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors track by $index">{{error}}</li>
+    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
@@ -17,7 +17,7 @@
                     ng-options="rgla.id as rgla.codigo for rgla in rgla2List" class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion != 'create'" class="form-control-static">{{rgin.rgla2.codigo}}</p>
+                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="rgin.rgla2.codigo"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgin_fini</label>

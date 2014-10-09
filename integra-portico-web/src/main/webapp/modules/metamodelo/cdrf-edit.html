@@ -6,7 +6,7 @@
             <div class="col-md-3 form-group">
                 <label translate>cdrf_valor</label> <input ng-if="accion == 'create'" type="text" ng-model="cdrf.valor"
                     class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static">{{cdrf.valor}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="cdrf.valor"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>cdrf_orden</label> <input type="text" ng-model="cdrf.orden"
@@ -16,7 +16,7 @@
 
         <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
         <ul>
-            <li ng-repeat="error in actionErrors track by $index">{{error}}</li>
+            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
         </ul>
         </alert>
     </fieldset>

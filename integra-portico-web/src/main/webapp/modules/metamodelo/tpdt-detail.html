@@ -1,4 +1,4 @@
-<p class="bg-primary">{{tpdt.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="tpdt.nombre | uppercase"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -15,11 +15,11 @@
     <div class="row-fluid">
         <div class="col-md-2 form-group">
             <label translate>tpdt_codigo</label>
-            <p class="form-control-static">{{tpdt.codigo}}</p>
+            <p class="form-control-static" ng-bind="tpdt.codigo"></p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>tpdt_nombre</label>
-            <p class="form-control-static">{{tpdt.nombre}}</p>
+            <p class="form-control-static" ng-bind="tpdt.nombre"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>tpdt_tpht</label>
@@ -33,18 +33,21 @@
         <div ng-if="tpdt.enti" class="col-md-3 form-group">
             <label translate>tpdt_enti</label>
             <p class="form-control-static">
-                <a ng-if="tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
-                    ng-if="tpdt.enti.tipo == 'S'" ng-href="#/metamodelo/tpss/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
-                    ng-if="tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
-                    ng-if="tpdt.enti.tipo == 'B'" ng-href="#/metamodelo/tpsp/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a>
-                <a ng-if="tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a>
+                <a ng-if="tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{tpdt.enti.id}}"
+                    ng-bind="tpdt.enti.nombre"></a><a ng-if="tpdt.enti.tipo == 'S'"
+                    ng-href="#/metamodelo/tpss/detail/{{tpdt.enti.id}}" ng-bind="tpdt.enti.nombre"></a><a
+                    ng-if="tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{tpdt.enti.id}}"
+                    ng-bind="tpdt.enti.nombre"></a><a ng-if="tpdt.enti.tipo == 'B'"
+                    ng-href="#/metamodelo/tpsp/detail/{{tpdt.enti.id}}" ng-bind="tpdt.enti.nombre"></a> <a
+                    ng-if="tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{tpdt.enti.id}}"
+                    ng-bind="tpdt.enti.nombre"></a>
             </p>
         </div>
     </div>
 </fieldset>
 
 <fieldset ng-if="tpdt.tipoElemento == 'CR'">
-    <legend>{{"Valores de Codigo de Referencia" | uppercase}}</legend>
+    <legend ng-bind="'Valores de Codigo de Referencia' | uppercase"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -65,8 +68,8 @@
             <tr ng-repeat="cdrf in tpdt.cdrfList track by $index">
                 <td><a ng-href="#/metamodelo/cdrf/detail/{{tpdt.id}}/{{cdrf.valor}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{cdrf.valor}}</td>
-                <td class="number">{{cdrf.orden}}</td>
+                <td ng-bind="cdrf.valor"></td>
+                <td class="number" ng-bind="cdrf.orden"></td>
             </tr>
         </tbody>
     </table>

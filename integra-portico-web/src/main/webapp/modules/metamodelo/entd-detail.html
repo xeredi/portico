@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <fieldset>
-        <legend>{{enti.nombre | uppercase}}</legend>
+        <legend ng-bind="enti.nombre | uppercase"></legend>
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
@@ -22,45 +22,45 @@
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label translate>entd_etiqueta</label>
-                <p class="form-control-static">{{entd.etiqueta}}</p>
+                <p class="form-control-static" ng-bind="entd.etiqueta"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label translate>entd_tpdt_tipoElemento</label>
-                <p class="form-control-static">{{entd.tpdt.tipoElemento}}</p>
+                <p class="form-control-static" ng-bind="entd.tpdt.tipoElemento"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label translate>entd_tpdt_tpht</label>
-                <p class="form-control-static">{{entd.tpdt.tpht}}</p>
+                <p class="form-control-static" ng-bind="entd.tpdt.tpht"></p>
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label translate>entd_tpdt_enti</label>
                 <p class="form-control-static">
                     <span ng-if="entd.tpdt.enti"> <a ng-if="entd.tpdt.enti.tipo == 'P'"
-                        ng-href="#/metamodelo/tppr/detail/{{entd.tpdt.enti.id}}">{{entd.tpdt.enti.etiqueta}}</a><a
-                        ng-if="entd.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{entd.tpdt.enti.id}}">{{entd.tpdt.enti.etiqueta}}</a></span>
+                        ng-href="#/metamodelo/tppr/detail/{{entd.tpdt.enti.id}}" ng-bind="entd.tpdt.enti.etiqueta"></a><a
+                        ng-if="entd.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{entd.tpdt.enti.id}}" ng-bind="entd.tpdt.enti.etiqueta"></a></span>
                 </p>
             </div>
         </div>
         <div class="row-fluid">
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>entd_grupo</label>
-                <p class="form-control-static">{{entd.grupo}}</p>
+                <p class="form-control-static" ng-bind="entd.grupo"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>entd_fila</label>
-                <p class="form-control-static">{{entd.fila}}</p>
+                <p class="form-control-static" ng-bind="entd.fila"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>entd_orden</label>
-                <p class="form-control-static">{{entd.orden}}</p>
+                <p class="form-control-static" ng-bind="entd.orden"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>entd_span</label>
-                <p class="form-control-static">{{entd.span}}</p>
+                <p class="form-control-static" ng-bind="entd.span"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>entd_spanLg</label>
-                <p class="form-control-static">{{entd.spanLg}}</p>
+                <p class="form-control-static" ng-bind="entd.spanLg"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>entd_obligatorio</label>

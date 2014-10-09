@@ -1,5 +1,5 @@
 <fieldset>
-    <legend>{{"Datos" | uppercase}}</legend>
+    <legend ng-bind=""Datos" | uppercase"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -31,19 +31,21 @@
             <tr ng-repeat="entd in enti.entdList track by $index">
                 <td><a ng-href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{enti.entdMap[entd].grupo}}</td>
-                <td>{{enti.entdMap[entd].fila}}</td>
-                <td>{{enti.entdMap[entd].orden}}</td>
-                <td>{{enti.entdMap[entd].span}}</td>
-                <td>{{enti.entdMap[entd].spanLg}}</td>
-                <td nowrap="nowrap">{{enti.entdMap[entd].etiqueta}}</td>
+                <td ng-bind="enti.entdMap[entd].grupo"></td>
+                <td ng-bind="enti.entdMap[entd].fila"></td>
+                <td ng-bind="enti.entdMap[entd].orden"></td>
+                <td ng-bind="enti.entdMap[entd].span"></td>
+                <td ng-bind="enti.entdMap[entd].spanLg"></td>
+                <td nowrap="nowrap" ng-bind="enti.entdMap[entd].etiqueta"></td>
                 <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].obligatorio ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].gridable ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].filtrable ? 'ok' : 'remove'}}"></i></td>
-                <td nowrap="nowrap">{{enti.entdMap[entd].tpdt.nombre}}</td>
-                <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}">{{enti.entdMap[entd].tpdt.tipoElemento}}</td>
-                <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}">{{enti.entdMap[entd].tpdt.tpht}}</td>
-                <td nowrap="nowrap">{{enti.entdMap[entd].tpdt.enti.etiqueta}}</span>
+                <td nowrap="nowrap" ng-bind="enti.entdMap[entd].tpdt.nombre"></td>
+                <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}"
+                    ng-bind="enti.entdMap[entd].tpdt.tipoElemento"></td>
+                <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}"
+                    ng-bind="enti.entdMap[entd].tpdt.tpht"></td>
+                <td nowrap="nowrap" ng-bind="enti.entdMap[entd].tpdt.enti.etiqueta"></span>
                 </td>
             </tr>
         </tbody>

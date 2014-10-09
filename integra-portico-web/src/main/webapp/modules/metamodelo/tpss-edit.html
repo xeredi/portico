@@ -7,12 +7,12 @@
             <div class="col-md-2 form-group">
                 <label translate>enti_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enti.codigo" class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static">{{enti.codigo}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="enti.codigo"></p>
             </div>
             <div class="col-md-3 form-group">
                 <label translate>enti_nombre</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enti.nombre" class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static">{{enti.nombre}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="enti.nombre"></p>
             </div>
         </div>
 
@@ -70,7 +70,7 @@
 
         <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
         <ul>
-            <li ng-repeat="error in actionErrors track by $index">{{error}}</li>
+            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
         </ul>
         </alert>
     </fieldset>

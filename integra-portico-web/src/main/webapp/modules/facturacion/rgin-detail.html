@@ -1,5 +1,5 @@
 <fieldset>
-    <legend>{{'Incompatibilidad' | uppercase}}</legend>
+    <legend ng-bind="'Incompatibilidad' | uppercase"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -16,16 +16,16 @@
         <div class="col-md-2 form-group">
             <label translate>rgin_rgla2</label>
             <p class="form-control-static">
-                <a ng-href="#/facturacion/rgla/detail/{{rgin.rgla2.id}}/{{fechaVigencia}}">{{rgin.rgla2.codigo}}</a>
+                <a ng-href="#/facturacion/rgla/detail/{{rgin.rgla2.id}}/{{fechaVigencia}}" ng-bind="rgin.rgla2.codigo"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgin_fini</label>
-            <p class="form-control-static">{{rgin.rgiv.fini | date}}</p>
+            <p class="form-control-static" ng-bind="rgin.rgiv.fini | date"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgin_ffin</label>
-            <p class="form-control-static">{{rgin.rgiv.ffin | date}}</p>
+            <p class="form-control-static" ng-bind="rgin.rgiv.ffin | date"></p>
         </div>
     </div>
 </fieldset>

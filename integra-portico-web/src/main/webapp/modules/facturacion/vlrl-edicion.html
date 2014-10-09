@@ -1,6 +1,6 @@
 
-<input type="hidden" name="vlrl.id" value="{{vlrl.id}}" />
-<input type="hidden" name="vlrl.vlrcId" value="{{vlrl.vlrcId}}" />
+<input type="hidden" ng-model="vlrl.id" />
+<input type="hidden" ng-model="vlrl.vlrcId" />
 
 <fieldset>
     <div class="row-fluid">
@@ -11,7 +11,7 @@
             </select>
 
             <p ng-if="vlrl.rgla.id" class="form-control-static">
-                <a ui-sref="rglas.detalle({rglaId:vlrl.rgla.id})">{{vlrl.rgla.codigo}}</a>
+                <a ui-sref="rglas.detalle({rglaId:vlrl.rgla.id})" ng-bind="vlrl.rgla.codigo"></a>
             </p>
         </div>
     </div>

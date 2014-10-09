@@ -73,7 +73,7 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default">{{prbtList.count}} resultado(s)</span>
+        <span class="label label-default"><span ng-bind="prbtList.count"></span> resultado(s)</span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -94,16 +94,16 @@
             <tbody>
                 <tr ng-repeat="prbt in prbtList.list track by $index">
                     <td><a ng-href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td title="{{'ProcesoModulo_' + prbt.modulo | translate}}">{{prbt.modulo}}</td>
-                    <td title="{{'ProcesoTipo_' + prbt.tipo | translate}}">{{prbt.tipo}}</td>
-                    <td title="{{'ProcesoEstado_' + prbt.estado | translate}}">{{prbt.estado}}</td>
-                    <td>{{prbt.falta | date:'medium'}}</td>
-                    <td>{{prbt.finicio | date:'medium'}}</td>
-                    <td>{{prbt.ffin | date:'medium'}}</td>
-                    <td class="number">{{prbt.duracion | number:0}}</td>
-                    <td class="number">{{prbt.erroresCnt | number:0}}</td>
-                    <td class="number">{{prbt.alertasCnt | number:0}}</td>
-                    <td class="number">{{prbt.mensajesCnt | number:0}}</td>
+                    <td title="{{'ProcesoModulo_' + prbt.modulo | translate}}" ng-bind="prbt.modulo"></td>
+                    <td title="{{'ProcesoTipo_' + prbt.tipo | translate}}" ng-bind="prbt.tipo"></td>
+                    <td title="{{'ProcesoEstado_' + prbt.estado | translate}}" ng-bind="prbt.estado"></td>
+                    <td ng-bind="prbt.falta | date:'medium'"></td>
+                    <td ng-bind="prbt.finicio | date:'medium'"></td>
+                    <td ng-bind="prbt.ffin | date:'medium'"></td>
+                    <td class="number" ng-bind="prbt.duracion | number:0"></td>
+                    <td class="number" ng-bind="prbt.erroresCnt | number:0"></td>
+                    <td class="number" ng-bind="prbt.alertasCnt | number:0"></td>
+                    <td class="number" ng-bind="prbt.mensajesCnt | number:0"></td>
                 </tr>
             </tbody>
         </table>

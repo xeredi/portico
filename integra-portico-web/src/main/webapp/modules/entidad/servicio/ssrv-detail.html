@@ -27,7 +27,7 @@
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label translate>ssrv_srvc</label>
             <p class="form-control-static">
-                <a ng-href="#/servicio/srvc/detail/{{enti.tpsrId}}/{{item.srvc.id}}">{{item.srvc.etiqueta}}</a>
+                <a ng-href="#/servicio/srvc/detail/{{enti.tpsrId}}/{{item.srvc.id}}" ng-bind="item.srvc.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-1 col-md-1 form-group">

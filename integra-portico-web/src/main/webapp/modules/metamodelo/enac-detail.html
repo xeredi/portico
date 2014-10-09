@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <fieldset>
-        <legend>{{enac.nombre | uppercase}}</legend>
+        <legend ng-bind="enac.nombre | uppercase"></legend>
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
@@ -16,15 +16,15 @@
         <div class="row-fluid">
             <div class="col-md-2 form-group">
                 <label translate>enac_path</label>
-                <p class="form-control-static">{{enac.path}}</p>
+                <p class="form-control-static" ng-bind="enac.path"></p>
             </div>
             <div class="col-md-3 form-group">
                 <label translate>enac_etiqueta</label>
-                <p class="form-control-static">{{enac.etiqueta}}</p>
+                <p class="form-control-static" ng-bind="enac.etiqueta"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>enac_orden</label>
-                <p class="form-control-static">{{enac.orden}}</p>
+                <p class="form-control-static" ng-bind="enac.orden"></p>
             </div>
         </div>
     </fieldset>

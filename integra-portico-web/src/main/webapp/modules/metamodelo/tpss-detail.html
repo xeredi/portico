@@ -1,4 +1,4 @@
-<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -15,20 +15,20 @@
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label translate>enti_codigo</label>
-            <p class="form-control-static">{{enti.codigo}}</p>
+            <p class="form-control-static" ng-bind="enti.codigo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_nombre</label>
-            <p class="form-control-static">{{enti.nombre}}</p>
+            <p class="form-control-static" ng-bind="enti.nombre"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>enti_tipo</label>
-            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
+            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}" ng-bind="enti.tipo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpsr</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}">{{enti.tpsr.etiqueta}}</a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}" ng-bind="enti.tpsr.etiqueta"></a>
             </p>
         </div>
     </div>
@@ -72,7 +72,8 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpdt_estado</label>
             <p class="form-control-static">
-                <a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a>
+                <a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}"
+                    ng-bind="enti.tpdtEstado.nombre"></a>
             </p>
         </div>
     </div>
@@ -82,7 +83,7 @@
 <div ng-include="'modules/metamodelo/common/enac-grid.html'"></div>
 
 <fieldset>
-    <legend>{{"Entidades Hijas" | uppercase}}</legend>
+    <legend ng-bind="'Entidades Hijas' | uppercase"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -106,8 +107,8 @@
         <tbody>
             <tr ng-repeat="entiHija in entiHijasList track by $index">
                 <td><a ng-href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{entiHija.codigo}}</td>
-                <td>{{entiHija.nombre}}</td>
+                <td ng-bind="entiHija.codigo"></td>
+                <td ng-bind="entiHija.nombre"></td>
                 <td><i class="glyphicon glyphicon-{{entiHija.cmdAlta ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{entiHija.cmdBaja ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{entiHija.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
@@ -118,7 +119,7 @@
 </fieldset>
 
 <fieldset>
-    <legend>{{"Entidades Padres" | uppercase}}</legend>
+    <legend ng-bind="'Entidades Padres' | uppercase"></legend>
     <table ng-if="entiPadresList" class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
@@ -136,16 +137,12 @@
                 <td><a ng-if="entiPadre.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
                     ng-href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{entiPadre.codigo}}</td>
-                <td>{{entiPadre.nombre}}</td>
-                <td><i ng-if="entiPadre.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!entiPadre.cmdAlta"
-                    class="glyphicon glyphicon-remove"></i></td>
-                <td><i ng-if="entiPadre.cmdBaja" class="glyphicon glyphicon-ok"></i><i ng-if="!entiPadre.cmdBaja"
-                    class="glyphicon glyphicon-remove"></i></td>
-                <td><i ng-if="entiPadre.cmdEdicion" class="glyphicon glyphicon-ok"></i><i
-                    ng-if="!entiPadre.cmdEdicion" class="glyphicon glyphicon-remove"></i></td>
-                <td><i ng-if="entiPadre.cmdDuplicado" class="glyphicon glyphicon-ok"></i><i
-                    ng-if="!entiPadre.cmdDuplicado" class="glyphicon glyphicon-remove"></i></td>
+                <td ng-bind="entiPadre.codigo"></td>
+                <td ng-bind="entiPadre.nombre"></td>
+                <td><i class="glyphicon glyphicon-{{entiPadre.cmdAlta ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entiPadre.cmdBaja ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entiPadre.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entiPadre.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
             </tr>
         </tbody>
     </table>

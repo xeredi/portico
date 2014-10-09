@@ -21,7 +21,6 @@
                     typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
                     typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
                     ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-                <!-- $ {{vlrcCriterio.pagador.id}} $ {{vlrcCriterio.pagador.etiqueta}} -->
             </div>
         </div>
     </div>
@@ -65,18 +64,19 @@
 
             <tbody>
                 <tr ng-repeat="item in vlrcList.list track by $index">
-                    <td><a ng-href="#/facturacion/vlrc/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{item.id}}</td>
-                    <td>{{item.srvc.etiqueta}}</td>
-                    <td>{{item.aspc.etiqueta}}</td>
-                    <td>{{item.pagador.etiqueta}}</td>
-                    <td class="number">{{item.importe | number:2}}</td>
-                    <td class="number">{{item.impuesto | number:2}}</td>
-                    <td>{{item.fliq | date:'short'}}</td>
-                    <td>{{item.fini | date:'short'}}</td>
-                    <td>{{item.ffin | date:'short'}}</td>
+                    <td><a ng-href="#/facturacion/vlrc/detail/{{item.id}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="item.id"></td>
+                    <td ng-bind="item.srvc.etiqueta"></td>
+                    <td ng-bind="item.aspc.etiqueta"></td>
+                    <td ng-bind="item.pagador.etiqueta"></td>
+                    <td class="number" ng-bind="item.importe | number:2"></td>
+                    <td class="number" ng-bind="item.impuesto | number:2"></td>
+                    <td ng-bind="item.fliq | date:'short'"></td>
+                    <td ng-bind="item.fini | date:'short'"></td>
+                    <td ng-bind="item.ffin | date:'short'"></td>
                     <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
-                    <td>{{item.codExencion}}</td>
+                    <td ng-bind="item.codExencion"></td>
                 </tr>
             </tbody>
         </table>

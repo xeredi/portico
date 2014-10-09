@@ -59,16 +59,18 @@
             <tbody>
                 <tr ng-repeat="tpdt in tpdtList.list track by $index">
                     <td><a ng-href="#/metamodelo/tpdt/detail/{{tpdt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{tpdt.codigo}}</td>
-                    <td>{{tpdt.nombre}}</td>
-                    <td>{{tpdt.tpht}}</td>
-                    <td>{{tpdt.tipoElemento}}</td>
-                    <td><a ng-if="tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
-                        ng-if="tpdt.enti.tipo == 'S'" ng-href="#/metamodelo/tpss/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
-                        ng-if="tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a><a
-                        ng-if="tpdt.enti.tipo == 'B'" ng-href="#/metamodelo/tpsp/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a>
-                        <a ng-if="tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{tpdt.enti.id}}">{{tpdt.enti.nombre}}</a>
-                    </td>
+                    <td ng-bind="tpdt.codigo"></td>
+                    <td ng-bind="tpdt.nombre"></td>
+                    <td ng-bind="tpdt.tpht"></td>
+                    <td ng-bind="tpdt.tipoElemento"></td>
+                    <td><a ng-if="tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{tpdt.enti.id}}"
+                        ng-bind="tpdt.enti.nombre"></a><a ng-if="tpdt.enti.tipo == 'S'"
+                        ng-href="#/metamodelo/tpss/detail/{{tpdt.enti.id}}" ng-bind="tpdt.enti.nombre"></a><a
+                        ng-if="tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{tpdt.enti.id}}"
+                        ng-bind="tpdt.enti.nombre"></a><a ng-if="tpdt.enti.tipo == 'B'"
+                        ng-href="#/metamodelo/tpsp/detail/{{tpdt.enti.id}}" ng-bind="tpdt.enti.nombre"></a> <a
+                        ng-if="tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{tpdt.enti.id}}"
+                        ng-bind="tpdt.enti.nombre"></a></td>
                 </tr>
             </tbody>
         </table>

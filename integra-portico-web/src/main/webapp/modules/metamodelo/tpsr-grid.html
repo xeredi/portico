@@ -42,7 +42,7 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default">{{entiList.count}} resultado(s)</span>
+        <span class="label label-default"><span ng-bind="entiList.count"></span> resultado(s)</span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -63,15 +63,16 @@
             <tbody>
                 <tr ng-repeat="enti in entiList.list track by $index">
                     <td><a ng-href="#/metamodelo/tpsr/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{enti.codigo}}</td>
-                    <td>{{enti.nombre}}</td>
+                    <td ng-bind="enti.codigo"></td>
+                    <td ng-bind="enti.nombre"></td>
                     <td><i class="glyphicon glyphicon-{{enti.cmdAlta ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.cmdBaja ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.temporal ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.facturable ? 'ok' : 'remove'}}"></i></td>
-                    <td><a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a></td>
+                    <td><a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}"
+                        ng-bind="enti.tpdtEstado.nombre"></a></td>
                 </tr>
             </tbody>
         </table>

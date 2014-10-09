@@ -1,8 +1,8 @@
-<p class="bg-primary">{{'Regla' | uppercase}}</p>
+<p class="bg-primary" ng-bind="'Regla' | uppercase"></p>
 
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors track by $index">{{error}}</li>
+    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
@@ -14,12 +14,12 @@
         <div class="row-fluid">
             <div class="col-md-2 form-group">
                 <label translate>rgla_crgo</label>
-                <p class="form-control-static">{{rgla.crgo.etiqueta}}</p>
+                <p class="form-control-static" ng-bind="rgla.crgo.etiqueta"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgla_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="rgla.codigo" class="form-control input-sm" />
-                <p ng-if="accion != 'create'" class="form-control-static">{{rgla.codigo}}</p>
+                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="rgla.codigo"></p>
             </div>
             <div class="col-md-2 form-group">
                 <label translate>rgla_tipo</label> <select ng-model="rgla.rglv.tipo"
@@ -65,11 +65,11 @@
         <div class="row-fluid">
             <div class="col-md-6 form-group">
                 <label translate>rgla_condicion</label>
-                <textarea class="form-control input-sm" rows="7" ng-model="rgla.rglv.condicion">{{rgla.rglv.condicion}}</textarea>
+                <textarea class="form-control input-sm" rows="7" ng-model="rgla.rglv.condicion" ng-bind="rgla.rglv.condicion"></textarea>
             </div>
             <div class="col-md-6 form-group">
                 <label translate>rgla_formula</label>
-                <textarea class="form-control input-sm" rows="7" ng-model="rgla.rglv.formula">{{rgla.rglv.formula}}</textarea>
+                <textarea class="form-control input-sm" rows="7" ng-model="rgla.rglv.formula" ng-bind="rgla.rglv.formula"></textarea>
             </div>
         </div>
 
@@ -97,7 +97,7 @@
     </fieldset>
 
     <fieldset ng-if="rgla.rglv.tipo == 'T'">
-        <legend>{{'Elementos Informativos' | uppercase}}</legend>
+        <legend ng-bind="'Elementos Informativos' | uppercase"></legend>
 
         <div class="row-fluid">
             <div class="col-md-12 form-group">
@@ -147,7 +147,7 @@
     </fieldset>
 
     <fieldset ng-if="rgla.rglv.tipo == 'T'">
-        <legend>{{'Elementos Cuantitativos' | uppercase}}</legend>
+        <legend ng-bind="'Elementos Cuantitativos' | uppercase"></legend>
 
         <div class="row-fluid">
             <div class="col-md-11 form-group">

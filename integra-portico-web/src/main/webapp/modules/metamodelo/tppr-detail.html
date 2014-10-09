@@ -1,4 +1,4 @@
-<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -15,15 +15,15 @@
     <div class="row-fluid">
         <div class="col-md-2 form-group">
             <label translate>enti_codigo</label>
-            <p class="form-control-static">{{enti.codigo}}</p>
+            <p class="form-control-static" ng-bind="enti.codigo"></p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>enti_nombre</label>
-            <p class="form-control-static">{{enti.nombre}}</p>
+            <p class="form-control-static" ng-bind="enti.nombre"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>enti_tipo</label>
-            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
+            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}" ng-bind="enti.tipo"></p>
         </div>
     </div>
     <div class="row-fluid">
@@ -66,7 +66,7 @@
         <div class="col-md-3 form-group">
             <label translate>enti_tpdt_nombre</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}">{{enti.tpdtNombre.nombre}}</a>
+                <a ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}" ng-bind="enti.tpdtNombre.nombre"></a>
             </p>
         </div>
     </div>
@@ -76,7 +76,7 @@
 <div ng-include="'modules/metamodelo/common/enac-grid.html'"></div>
 
 <fieldset>
-    <legend>{{"Subentidades" | uppercase}}</legend>
+    <legend ng-bind="'Subentidades' | uppercase"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -101,13 +101,13 @@
         <tbody>
             <tr ng-repeat="subenti in subentiList track by $index">
                 <td><a ng-href="#/metamodelo/tpsp/detail/{{subenti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{subenti.codigo}}</td>
-                <td>{{subenti.nombre}}</td>
+                <td ng-bind="subenti.codigo"></td>
+                <td ng-bind="subenti.nombre"></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdAlta ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdBaja ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
-                <td><a ng-if="subenti.tpprAsociado" ng-href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}">{{subenti.tpprAsociado.etiqueta}}</a></td>
+                <td><a ng-if="subenti.tpprAsociado" ng-href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}" ng-bind="subenti.tpprAsociado.etiqueta"></a></td>
             </tr>
         </tbody>
     </table>

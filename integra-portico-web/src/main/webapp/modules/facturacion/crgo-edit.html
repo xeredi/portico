@@ -18,7 +18,7 @@
                     class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion != 'create'" class="form-control-static">{{crgo.tpsr.nombre}}</p>
+                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="crgo.tpsr.nombre"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>crgo_codigo</label> <input ng-if="accion == 'create'" type="text"

@@ -1,4 +1,4 @@
-<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -15,20 +15,20 @@
     <div class="row-fluid">
         <div class="col-md-2 form-group">
             <label translate>enti_codigo</label>
-            <p class="form-control-static">{{enti.codigo}}</p>
+            <p class="form-control-static" ng-bind="enti.codigo"></p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>enti_nombre</label>
-            <p class="form-control-static">{{enti.nombre}}</p>
+            <p class="form-control-static" ng-bind="enti.nombre"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>enti_tipo</label>
-            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}">{{enti.tipo}}</p>
+            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}" ng-bind="enti.tipo"></p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>enti_tpprAsociado</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tppr/detail/{{enti.tpprAsociado.id}}">{{enti.tpprAsociado.nombre}}</a>
+                <a ng-href="#/metamodelo/tppr/detail/{{enti.tpprAsociado.id}}" ng-bind="enti.tpprAsociado.nombre"></a>
             </p>
         </div>
     </div>

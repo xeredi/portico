@@ -1,5 +1,5 @@
 <fieldset>
-    <legend>{{"Acciones" | uppercase}}</legend>
+    <legend ng-bind=""Acciones" | uppercase"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -21,9 +21,9 @@
             <tr ng-repeat="enac in enti.enacList track by $index">
                 <td><a ng-href="#/metamodelo/enac/detail/{{enac.entiId}}/{{enac.path}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{enac.path}}</td>
-                <td>{{enac.etiqueta}}</td>
-                <td>{{enac.orden}}</td>
+                <td ng-bind="enac.path"></td>
+                <td ng-bind="enac.etiqueta"></td>
+                <td ng-bind="enac.orden"></td>
             </tr>
         </tbody>
     </table>

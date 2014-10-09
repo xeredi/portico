@@ -1,6 +1,6 @@
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors track by $index">{{error}}</li>
+    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
@@ -9,13 +9,13 @@
         ng-model="vlrl.id" />
 
     <fieldset>
-        <legend>{{"vlrl" | translate | uppercase}}</legend>
+        <legend ng-bind="'vlrl' | translate | uppercase"></legend>
 
         <div class="row-fluid">
             <div class="col-md-1 form-group">
                 <label translate>vlrl_rgla</label>
                 <p class="form-control-static">
-                    <a ng-href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}">{{vlrl.rgla.codigo}}</a>
+                    <a ng-href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}" ng-bind="vlrl.rgla.codigo"></a>
                 </p>
             </div>
         </div>
