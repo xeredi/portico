@@ -10,7 +10,7 @@
         <button data-ng-click="edit()" class="btn btn-default">
             <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
         </button>
-        <a class="btn btn-default" href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.prvr.id}}/{{item.fref}}"><i
+        <a class="btn btn-default" ng-href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.prvr.id}}/{{item.fref}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
@@ -52,7 +52,7 @@
     disabled="tab.disabled">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i
+        <a class="btn btn-default" ng-href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i
             class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
     </div>
 </div>
@@ -73,7 +73,7 @@
 
         <tbody>
             <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list track by $index">
-                <td><a href="#/maestro/sprm/detail/{{entiHija.id}}/{{itemHijo.id}}/{{item.fref}}"><i
+                <td><a ng-href="#/maestro/sprm/detail/{{entiHija.id}}/{{itemHijo.id}}/{{item.fref}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="itemHijo.prmtAsociado.etiqueta"></td>
 

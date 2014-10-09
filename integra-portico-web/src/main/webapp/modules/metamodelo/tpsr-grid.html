@@ -33,7 +33,7 @@
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-default" href="#/metamodelo/tpsr/create"><i class="glyphicon glyphicon-file"></i><span
+            <a class="btn btn-default" ng-href="#/metamodelo/tpsr/create"><i class="glyphicon glyphicon-file"></i><span
                 translate>boton_alta</span> </a>
             <button data-ng-click="filter()" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i><span translate>boton_filtro</span>
@@ -62,7 +62,7 @@
 
             <tbody>
                 <tr ng-repeat="enti in entiList.list track by $index">
-                    <td><a href="#/metamodelo/tpsr/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a ng-href="#/metamodelo/tpsr/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{enti.codigo}}</td>
                     <td>{{enti.nombre}}</td>
                     <td><i class="glyphicon glyphicon-{{enti.cmdAlta ? 'ok' : 'remove'}}"></i></td>
@@ -71,7 +71,7 @@
                     <td><i class="glyphicon glyphicon-{{enti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.temporal ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.facturable ? 'ok' : 'remove'}}"></i></td>
-                    <td><a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a></td>
+                    <td><a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a></td>
                 </tr>
             </tbody>
         </table>

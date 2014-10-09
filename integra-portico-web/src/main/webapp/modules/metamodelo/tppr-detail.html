@@ -66,7 +66,7 @@
         <div class="col-md-3 form-group">
             <label translate>enti_tpdt_nombre</label>
             <p class="form-control-static">
-                <a href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}">{{enti.tpdtNombre.nombre}}</a>
+                <a ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}">{{enti.tpdtNombre.nombre}}</a>
             </p>
         </div>
     </div>
@@ -80,7 +80,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/metamodelo/tpsp/create/{{enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/tpsp/create/{{enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
         </div>
     </div>
@@ -100,14 +100,14 @@
         </thead>
         <tbody>
             <tr ng-repeat="subenti in subentiList track by $index">
-                <td><a href="#/metamodelo/tpsp/detail/{{subenti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/metamodelo/tpsp/detail/{{subenti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{subenti.codigo}}</td>
                 <td>{{subenti.nombre}}</td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdAlta ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdBaja ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
-                <td><a ng-if="subenti.tpprAsociado" href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}">{{subenti.tpprAsociado.etiqueta}}</a></td>
+                <td><a ng-if="subenti.tpprAsociado" ng-href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}">{{subenti.tpprAsociado.etiqueta}}</a></td>
             </tr>
         </tbody>
     </table>

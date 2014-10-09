@@ -93,7 +93,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="prbt in prbtList.list track by $index">
-                    <td><a href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a ng-href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td title="{{'ProcesoModulo_' + prbt.modulo | translate}}">{{prbt.modulo}}</td>
                     <td title="{{'ProcesoTipo_' + prbt.tipo | translate}}">{{prbt.tipo}}</td>
                     <td title="{{'ProcesoEstado_' + prbt.estado | translate}}">{{prbt.estado}}</td>

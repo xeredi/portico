@@ -16,15 +16,15 @@
         <div class="col-md-2 form-group">
             <label translate>rgla_enti</label>
             <p class="form-control-static">
-                <a ng-if="vlrl.rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{vlrl.rgla.rglv.enti.id}}"
+                <a ng-if="vlrl.rgla.rglv.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vlrl.rgla.rglv.enti.id}}"
                     ng-bind="vlrl.rgla.rglv.enti.nombre"></a> <a ng-if="vlrl.rgla.rglv.enti.tipo == 'S'"
-                    href="#/metamodelo/tpss/detail/{{vlrl.rgla.rglv.enti.id}}" ng-bind="vlrl.rgla.rglv.enti.nombre"></a>
+                    ng-href="#/metamodelo/tpss/detail/{{vlrl.rgla.rglv.enti.id}}" ng-bind="vlrl.rgla.rglv.enti.nombre"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>vlrl_rgla</label>
             <p class="form-control-static">
-                <a href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}" ng-bind="vlrl.rgla.codigo"></a>
+                <a ng-href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}" ng-bind="vlrl.rgla.codigo"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -42,14 +42,14 @@
         <div class="col-md-2 form-group">
             <label translate>vlrl_impuesto</label>
             <p class="form-control-static">
-                <a href="#/maestro/prmt/detail/{{vlrl.impuesto.entiId}}/{{vlrl.impuesto.id}}/{{vlrl.fref}}"
+                <a ng-href="#/maestro/prmt/detail/{{vlrl.impuesto.entiId}}/{{vlrl.impuesto.id}}/{{vlrl.fref}}"
                     ng-bind="vlrl.impuesto.etiqueta"></a>
             </p>
         </div>
         <div ng-if="vlrl.ssrv.id" class="col-md-1 form-group">
             <label translate>vlrl_ssrv</label>
             <p class="form-control-static">
-                <a href="#/servicio/ssrv/detail/{{vlrl.ssrv.entiId}}/{{vlrl.ssrv.id}}" ng-bind="vlrl.ssrv.numero"></a>
+                <a ng-href="#/servicio/ssrv/detail/{{vlrl.ssrv.entiId}}/{{vlrl.ssrv.id}}" ng-bind="vlrl.ssrv.numero"></a>
             </p>
         </div>
         <div ng-if="vlrl.fini" class="col-md-1 form-group">
@@ -119,7 +119,7 @@
 </tab> <tab heading="{{'vlrds' | translate | uppercase}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" href="#/facturacion/vlrd/create/{{vlrl.id}}"><i class="glyphicon glyphicon-file"></i>
+        <a class="btn btn-default" ng-href="#/facturacion/vlrd/create/{{vlrl.id}}"><i class="glyphicon glyphicon-file"></i>
             <span translate>boton_alta</span> </a>
     </div>
 </div>
@@ -154,7 +154,7 @@
 
         <tbody>
             <tr ng-repeat="vlrd in vlrdList.list track by $index">
-                <td><a href="#/facturacion/vlrd/detail/{{vlrd.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/facturacion/vlrd/detail/{{vlrd.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td class="number" ng-bind="vlrd.valorBase | number:4"></td>
                 <td class="number" ng-bind="vlrd.importeBase | number:2"></td>
                 <td class="number" ng-bind="vlrd.importe | number:2"></td>

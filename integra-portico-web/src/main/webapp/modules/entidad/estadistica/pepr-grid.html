@@ -69,7 +69,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="item in peprList.list track by $index">
-                    <td><a href="#/estadistica/pepr/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a ng-href="#/estadistica/pepr/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="item.autp.parametro"></td>
                     <td ng-bind="item.anio"></td>
                     <td ng-bind="item.mes"></td>

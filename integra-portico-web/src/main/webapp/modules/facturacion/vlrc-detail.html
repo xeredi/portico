@@ -20,13 +20,13 @@
         <div class="col-md-2 form-group">
             <label translate>vlrc_srvc</label>
             <p class="form-control-static">
-                <a href="#/servicio/srvc/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}" ng-bind="vlrc.srvc.etiqueta"></a>
+                <a ng-href="#/servicio/srvc/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}" ng-bind="vlrc.srvc.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>vlrc_aspc</label>
             <p class="form-control-static">
-                <a href="#/facturacion/aspc/detail/{{vlrc.aspc.id}}/{{vlrc.fref}}" ng-bind="vlrc.aspc.etiqueta"></a>
+                <a ng-href="#/facturacion/aspc/detail/{{vlrc.aspc.id}}/{{vlrc.fref}}" ng-bind="vlrc.aspc.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -47,7 +47,7 @@
         <div class="col-md-3 form-group">
             <label translate>vlrc_pagador</label>
             <p class="form-control-static">
-                <a href="#/maestro/prmt/detail/{{vlrc.pagador.entiId}}/{{vlrc.pagador.id}}/{{vlrc.fref}}"
+                <a ng-href="#/maestro/prmt/detail/{{vlrc.pagador.entiId}}/{{vlrc.pagador.id}}/{{vlrc.fref}}"
                     ng-bind="vlrc.pagador.etiqueta"></a>
             </p>
         </div>
@@ -103,7 +103,7 @@
         <div class="col-md-4 form-group">
             <ul>
                 <li ng-repeat="vlrg in vlrgList track by $index"><a
-                    href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrc.fref}}" ng-bind="vlrg.crgo.etiqueta"></a></li>
+                    ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrc.fref}}" ng-bind="vlrg.crgo.etiqueta"></a></li>
             </ul>
         </div>
     </div>
@@ -126,7 +126,7 @@
                 <tbody>
                     <tr ng-repeat="vlri in vlriList track by $index">
                         <td><a
-                            href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlrc.fref}}" ng-bind="vlri.impuesto.etiqueta"></a></td>
+                            ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlrc.fref}}" ng-bind="vlri.impuesto.etiqueta"></a></td>
                         <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
                         <td class="number" ng-bind="vlri.importeBase | number:2"></td>
                         <td class="number" ng-bind="vlri.importeImpuesto | number:2"></td>
@@ -139,7 +139,7 @@
 </tab> <tab heading="{{'vlrls' | translate | uppercase}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" href="#/facturacion/vlrl/create/{{vlrc.id}}"><i class="glyphicon glyphicon-file"></i>
+        <a class="btn btn-default" ng-href="#/facturacion/vlrl/create/{{vlrc.id}}"><i class="glyphicon glyphicon-file"></i>
             <span translate>boton_alta</span> </a>
     </div>
 </div>
@@ -177,7 +177,7 @@
 
         <tbody>
             <tr ng-repeat="vlrl in vlrlList.list track by $index">
-                <td><a href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
                 <td ng-bind="vlrl.rgla.rglv.tipo"></td>
                 <td class="number" ng-bind="vlrl.importeBase | number:2"></td>

@@ -28,7 +28,7 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpsr</label>
             <p class="form-control-static">
-                <a href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}">{{enti.tpsr.etiqueta}}</a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}">{{enti.tpsr.etiqueta}}</a>
             </p>
         </div>
     </div>
@@ -72,7 +72,7 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpdt_estado</label>
             <p class="form-control-static">
-                <a ng-if="enti.tpdtEstado" href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a>
+                <a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}">{{enti.tpdtEstado.nombre}}</a>
             </p>
         </div>
     </div>
@@ -86,7 +86,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/metamodelo/enen/create/{{enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/enen/create/{{enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
         </div>
     </div>
@@ -105,7 +105,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="entiHija in entiHijasList track by $index">
-                <td><a href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td><a ng-href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{entiHija.codigo}}</td>
                 <td>{{entiHija.nombre}}</td>
                 <td><i class="glyphicon glyphicon-{{entiHija.cmdAlta ? 'ok' : 'remove'}}"></i></td>
@@ -133,9 +133,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="entiPadre in entiPadresList track by $index">
-                <td><a ng-if="entiPadre.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
+                <td><a ng-if="entiPadre.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
-                    href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    ng-href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{entiPadre.codigo}}</td>
                 <td>{{entiPadre.nombre}}</td>
                 <td><i ng-if="entiPadre.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!entiPadre.cmdAlta"

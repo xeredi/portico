@@ -16,7 +16,7 @@
         <div class="col-md-2 form-group">
             <label translate>rgla_crgo</label>
             <p class="form-control-static">
-                <a href="#/facturacion/crgo/detail/{{rgla.crgo.id}}/{{fechaVigencia}}">{{rgla.crgo.etiqueta}}</a>
+                <a ng-href="#/facturacion/crgo/detail/{{rgla.crgo.id}}/{{fechaVigencia}}">{{rgla.crgo.etiqueta}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -30,8 +30,8 @@
         <div class="col-md-2 form-group">
             <label translate>rgla_enti</label>
             <p class="form-control-static">
-                <a ng-if="rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
-                <a ng-if="rgla.rglv.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
+                <a ng-if="rgla.rglv.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
+                <a ng-if="rgla.rglv.enti.tipo == 'S'" ng-href="#/metamodelo/tpss/detail/{{rgla.rglv.enti.id}}">{{rgla.rglv.enti.nombre}}</a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -172,7 +172,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/facturacion/rgin/create/{{rgla.crgo.id}}/{{rgla.id}}"><i
+            <a class="btn btn-default" ng-href="#/facturacion/rgin/create/{{rgla.crgo.id}}/{{rgla.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
         </div>
     </div>
@@ -192,7 +192,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="rgin in rginList track by $index">
-                        <td><a href="#/facturacion/rgin/detail/{{rgin.id}}/{{fechaVigencia}}"><i
+                        <td><a ng-href="#/facturacion/rgin/detail/{{rgin.id}}/{{fechaVigencia}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td>{{rgin.rgla2.codigo}}</td>
                         <td>{{rgin.rgla2.tipo}}</td>

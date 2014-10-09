@@ -65,7 +65,7 @@
 
             <tbody>
                 <tr ng-repeat="item in vlrcList.list track by $index">
-                    <td><a href="#/facturacion/vlrc/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td><a ng-href="#/facturacion/vlrc/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.id}}</td>
                     <td>{{item.srvc.etiqueta}}</td>
                     <td>{{item.aspc.etiqueta}}</td>

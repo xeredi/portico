@@ -3,7 +3,7 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" href="#/metamodelo/entd/create/{{enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/entd/create/{{enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
         </div>
     </div>
@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="entd in enti.entdList track by $index">
-                <td><a href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
+                <td><a ng-href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{enti.entdMap[entd].grupo}}</td>
                 <td>{{enti.entdMap[entd].fila}}</td>
