@@ -15,31 +15,31 @@
     <div class="row-fluid">
         <div class="col-md-2 form-group">
             <label translate>vlrc_id</label>
-            <p class="form-control-static">{{vlrc.id}}</p>
+            <p class="form-control-static" ng-bind="vlrc.id"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_srvc</label>
             <p class="form-control-static">
-                <a href="#/servicio/srvc/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}">{{vlrc.srvc.etiqueta}}</a>
+                <a href="#/servicio/srvc/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}" ng-bind="vlrc.srvc.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>vlrc_aspc</label>
             <p class="form-control-static">
-                <a href="#/facturacion/aspc/detail/{{vlrc.aspc.id}}/{{vlrc.fref}}">{{vlrc.aspc.etiqueta}}</a>
+                <a href="#/facturacion/aspc/detail/{{vlrc.aspc.id}}/{{vlrc.fref}}" ng-bind="vlrc.aspc.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>vlrc_importe</label>
-            <p class="form-control-static">{{vlrc.importe | number:2}}</p>
+            <p class="form-control-static" ng-bind="vlrc.importe | number:2"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>vlrc_impuesto</label>
-            <p class="form-control-static">{{vlrc.impuesto | number:2}}</p>
+            <p class="form-control-static" ng-bind="vlrc.impuesto | number:2"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_codExencion</label>
-            <p class="form-control-static">{{vlrc.codExencion}}</p>
+            <p class="form-control-static" ng-bind="vlrc.codExencion"></p>
         </div>
     </div>
 
@@ -47,68 +47,70 @@
         <div class="col-md-3 form-group">
             <label translate>vlrc_pagador</label>
             <p class="form-control-static">
-                <a href="#/maestro/prmt/detail/{{vlrc.pagador.entiId}}/{{vlrc.pagador.id}}/{{vlrc.fref}}">{{vlrc.pagador.etiqueta}}</a>
+                <a href="#/maestro/prmt/detail/{{vlrc.pagador.entiId}}/{{vlrc.pagador.id}}/{{vlrc.fref}}"
+                    ng-bind="vlrc.pagador.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_falta</label>
-            <p class="form-control-static">&nbsp;{{vlrc.falta | date:'short'}}</p>
+            <p class="form-control-static" ng-bind="vlrc.falta | date:'short'"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_fliq</label>
-            <p class="form-control-static">&nbsp;{{vlrc.fliq | date:'short'}}</p>
+            <p class="form-control-static" ng-bind="vlrc.fliq | date:'short'"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_fini</label>
-            <p class="form-control-static">&nbsp;{{vlrc.fini | date:'short'}}</p>
+            <p class="form-control-static" ng-bind="vlrc.fini | date:'short'"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_ffin</label>
-            <p class="form-control-static">&nbsp;{{vlrc.ffin | date:'short'}}</p>
+            <p class="form-control-static" ng-bind="vlrc.ffin | date:'short'"></p>
         </div>
     </div>
 
     <div class="row-fluid">
         <div ng-if="vlrc.aspc.aspv.cetiqInfo1" class="col-md-4 form-group">
-            <label>{{vlrc.aspc.aspv.cetiqInfo1}}</label>
-            <p class="form-control-static">{{vlrc.info1}}</p>
+            <label ng-bind="vlrc.aspc.aspv.cetiqInfo1"></label>
+            <p class="form-control-static" ng-bind="vlrc.info1"></p>
         </div>
         <div ng-if="vlrc.aspc.aspv.cetiqInfo2" class="col-md-4 form-group">
-            <label>{{vlrc.aspc.aspv.cetiqInfo2}}</label>
-            <p class="form-control-static">{{vlrc.info2}}</p>
+            <label ng-bind="vlrc.aspc.aspv.cetiqInfo2"></label>
+            <p class="form-control-static" ng-bind="vlrc.info2"></p>
         </div>
         <div ng-if="vlrc.aspc.aspv.cetiqInfo3" class="col-md-4 form-group">
-            <label>{{vlrc.aspc.aspv.cetiqInfo3}}</label>
-            <p class="form-control-static">{{vlrc.info3}}</p>
+            <label ng-bind="vlrc.aspc.aspv.cetiqInfo3"></label>
+            <p class="form-control-static" ng-bind="vlrc.info3"></p>
         </div>
         <div ng-if="vlrc.aspc.aspv.cetiqInfo4" class="col-md-4 form-group">
-            <label>{{vlrc.aspc.aspv.cetiqInfo4}}</label>
-            <p class="form-control-static">{{vlrc.info4}}</p>
+            <label ng-bind="vlrc.aspc.aspv.cetiqInfo4"></label>
+            <p class="form-control-static" ng-bind="vlrc.info4"></p>
         </div>
         <div ng-if="vlrc.aspc.aspv.cetiqInfo5" class="col-md-4 form-group">
-            <label>{{vlrc.aspc.aspv.cetiqInfo5}}</label>
-            <p class="form-control-static">{{vlrc.info5}}</p>
+            <label ng-bind="vlrc.aspc.aspv.cetiqInfo5"></label>
+            <p class="form-control-static" ng-bind="vlrc.info5"></p>
         </div>
         <div ng-if="vlrc.aspc.aspv.cetiqInfo6" class="col-md-4 form-group">
-            <label>{{vlrc.aspc.aspv.cetiqInfo6}}</label>
-            <p class="form-control-static">{{vlrc.info6}}</p>
+            <label ng-bind="vlrc.aspc.aspv.cetiqInfo6"></label>
+            <p class="form-control-static" ng-bind="vlrc.info6"></p>
         </div>
     </div>
 </fieldset>
 
 <fieldset>
-    <legend>{{'Cargos Aplicados' | uppercase}}</legend>
+    <legend ng-bind="'Cargos Aplicados' | uppercase"></legend>
     <div class="row-fluid">
         <div class="col-md-4 form-group">
             <ul>
-                <li ng-repeat="vlrg in vlrgList"><a href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrc.fref}}">{{vlrg.crgo.etiqueta}}</a></li>
+                <li ng-repeat="vlrg in vlrgList track by $index"><a
+                    href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrc.fref}}" ng-bind="vlrg.crgo.etiqueta"></a></li>
             </ul>
         </div>
     </div>
 </fieldset>
 
 <fieldset>
-    <legend>{{'Desglose de IVA' | uppercase}}</legend>
+    <legend ng-bind="'Desglose de IVA' | uppercase"></legend>
     <div class="row-fluid">
         <div class="col-md-4 form-group">
             <table class="table-bordered table-condensed table-hover table-nonfluid">
@@ -122,12 +124,12 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="vlri in vlriList">
+                    <tr ng-repeat="vlri in vlriList track by $index">
                         <td><a
-                            href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlrc.fref}}">{{vlri.impuesto.etiqueta}}</a></td>
-                        <td class="number">{{vlri.porcentaje | number:2}}</td>
-                        <td class="number">{{vlri.importeBase | number:2}}</td>
-                        <td class="number">{{vlri.importeImpuesto | number:2}}</td>
+                            href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlrc.fref}}" ng-bind="vlri.impuesto.etiqueta"></a></td>
+                        <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
+                        <td class="number" ng-bind="vlri.importeBase | number:2"></td>
+                        <td class="number" ng-bind="vlri.importeImpuesto | number:2"></td>
                     </tr>
                 </tbody>
             </table>
@@ -174,15 +176,15 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="vlrl in vlrlList.list">
+            <tr ng-repeat="vlrl in vlrlList.list track by $index">
                 <td><a href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap">{{vlrl.rgla.codigo}}</td>
-                <td>{{vlrl.rgla.rglv.tipo}}</td>
-                <td class="number">{{vlrl.importeBase | number:2}}</td>
-                <td class="number">{{vlrl.importe | number:2}}</td>
-                <td>{{vlrl.impuesto.etiqueta}}</td>
-                <td>{{vlrl.fini | date:'short'}}</td>
-                <td>{{vlrl.ffin | date:'short'}}</td>
+                <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
+                <td ng-bind="vlrl.rgla.rglv.tipo"></td>
+                <td class="number" ng-bind="vlrl.importeBase | number:2"></td>
+                <td class="number" ng-bind="vlrl.importe | number:2"></td>
+                <td ng-bind="vlrl.impuesto.etiqueta"></td>
+                <td ng-bind="vlrl.fini | date:'short'"></td>
+                <td ng-bind="vlrl.ffin | date:'short'"></td>
 
                 <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo1"><span
                     ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.rglv.etiqInfo1}}: {{vlrl.info1}}</span></td>

@@ -36,43 +36,37 @@
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmd_alta</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdAlta"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdAlta ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmd_baja</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdBaja"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdBaja ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmd_edicion</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdEdicion"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmd_duplicado</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdDuplicado"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_temporal</label>
             <p class="form-control-static">
-                <i ng-if="enti.temporal" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.temporal"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.temporal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_facturable</label>
             <p class="form-control-static">
-                <i ng-if="enti.facturable" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.facturable"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.facturable ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
@@ -110,18 +104,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entiHija in entiHijasList">
+            <tr ng-repeat="entiHija in entiHijasList track by $index">
                 <td><a href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td>{{entiHija.codigo}}</td>
                 <td>{{entiHija.nombre}}</td>
-                <td><i ng-if="entiHija.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!entiHija.cmdAlta"
-                    class="glyphicon glyphicon-remove"></i></td>
-                <td><i ng-if="entiHija.cmdBaja" class="glyphicon glyphicon-ok"></i><i ng-if="!entiHija.cmdBaja"
-                    class="glyphicon glyphicon-remove"></i></td>
-                <td><i ng-if="entiHija.cmdEdicion" class="glyphicon glyphicon-ok"></i><i
-                    ng-if="!entiHija.cmdEdicion" class="glyphicon glyphicon-remove"></i></td>
-                <td><i ng-if="entiHija.cmdDuplicado" class="glyphicon glyphicon-ok"></i><i
-                    ng-if="!entiHija.cmdDuplicado" class="glyphicon glyphicon-remove"></i></td>
+                <td><i class="glyphicon glyphicon-{{entiHija.cmdAlta ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entiHija.cmdBaja ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entiHija.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entiHija.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
             </tr>
         </tbody>
     </table>
@@ -142,7 +132,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entiPadre in entiPadresList">
+            <tr ng-repeat="entiPadre in entiPadresList track by $index">
                 <td><a ng-if="entiPadre.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
                     href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>

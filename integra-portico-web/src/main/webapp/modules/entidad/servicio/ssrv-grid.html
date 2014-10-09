@@ -1,4 +1,4 @@
-<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
 <div ng-if="showFilter">
     <form>
@@ -11,8 +11,6 @@
                             typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.tpsrId, $viewValue)"
                             typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
                             ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-                        <!--$ {{itemCriterio.itdtMap[tpdtId].srvc.id}} $
-                    {{itemCriterio.itdtMap[tpdtId].srvc.etiqueta}}-->
                     </div>
                 </div>
 
@@ -79,29 +77,30 @@
                     <th ng-if="enti.tpdtEstado" translate>ssrv_estado</th>
                     <th ng-if="enti.temporal" translate>ssrv_fini</th>
                     <th ng-if="enti.temporal" translate>ssrv_ffin</th>
-                    <th ng-repeat="tpdtId in enti.entdGridList" nowrap="nowrap">{{enti.entdMap[tpdtId].etiqueta}}</th>
+                    <th ng-repeat="tpdtId in enti.entdGridList track by $index" nowrap="nowrap"
+                        ng-bind="enti.entdMap[tpdtId].etiqueta"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in itemList.list">
+                <tr ng-repeat="item in itemList.list track by $index">
                     <td><a href="#/servicio/ssrv/detail/{{enti.id}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{item.srvc.etiqueta}}</td>
-                    <td>{{item.numero}}</td>
-                    <td ng-if="enti.tpdtEstado">{{item.estado}}</td>
-                    <td ng-if="enti.temporal">{{item.fini | date}}</td>
-                    <td ng-if="enti.temporal">{{item.ffin | date}}</td>
-                    <td ng-repeat="tpdtId in enti.entdGridList" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
-                        nowrap="nowrap"><span ng-switch-when="BO"><i
-                            ng-if="item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
-                            ng-if="!item.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
-                        ng-switch-when="ND" class="pull-right">{{item.itdtMap[tpdtId].cantidadDecimal |
-                            number:2}}</span> <span ng-switch-when="NE" class="pull-right">{{item.itdtMap[tpdtId].cantidadEntera
-                            | number:0}}</span> <span ng-switch-when="FE" class="pull-right">{{item.itdtMap[tpdtId].fecha
-                            | date}}</span> <span ng-switch-when="FH" class="pull-right">{{item.itdtMap[tpdtId].fecha |
-                            date:'short'}}</span> <span ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span><span
-                        ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span><span ng-switch-when="PR"
-                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}">{{item.itdtMap[tpdtId].prmt.parametro}}</span></td>
+                    <td ng-bind="item.srvc.etiqueta"></td>
+                    <td ng-bind="item.numero"></td>
+                    <td ng-if="enti.tpdtEstado" ng-bind="item.estado"></td>
+                    <td ng-if="enti.temporal" ng-bind="item.fini | date"></td>
+                    <td ng-if="enti.temporal" ng-bind="item.ffin | date"></td>
+                    <td ng-repeat="tpdtId in enti.entdGridList track by $index" ng-switch
+                        on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                            class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
+                        ng-switch-when="ND" class="pull-right" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span>
+                        <span ng-switch-when="NE" class="pull-right"
+                        ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
+                        class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
+                        class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span
+                        ng-switch-when="CR" ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="TX"
+                        ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="PR"
+                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
                 </tr>
             </tbody>
         </table>

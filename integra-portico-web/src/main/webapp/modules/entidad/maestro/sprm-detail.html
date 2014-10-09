@@ -2,7 +2,7 @@
 
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors">{{error}}</li>
+    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
@@ -22,16 +22,16 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-4 col-md-2 col-md-2 form-group">
-            <label>{{enti.tpprAsociado.nombre}}</label>
-            <p class="form-control-static">{{item.prmtAsociado.etiqueta}}</p>
+            <label ng-bind="enti.tpprAsociado.nombre"></label>
+            <p class="form-control-static" ng-bind="item.prmtAsociado.etiqueta"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>sprm_fini</label>
-            <p class="form-control-static">{{item.spvr.fini | date}}</p>
+            <p class="form-control-static" ng-bind="item.spvr.fini | date"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>sprm_ffin</label>
-            <p class="form-control-static">{{item.spvr.ffin | date}}</p>
+            <p class="form-control-static" ng-bind="item.spvr.ffin | date"></p>
         </div>
     </div>
 </fieldset>

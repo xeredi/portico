@@ -76,20 +76,18 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="crgo in crgoList.list">
+                <tr ng-repeat="crgo in crgoList.list track by $index">
                     <td><a href="#/facturacion/crgo/detail/{{crgo.crgv.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{crgo.codigo}}</td>
-                    <td>{{crgo.crgv.descripcion}}</td>
-                    <td>{{crgo.crgv.codigoNormalizado}}</td>
-                    <td>{{crgo.crgv.tipo}}</td>
-                    <td>{{crgo.tpsr.nombre}}</td>
-                    <td><i ng-if="crgo.crgv.principal" class="glyphicon glyphicon-ok"></i><i
-                        ng-if="!crgo.crgv.principal" class="glyphicon glyphicon-remove"></i></td>
-                    <td><i ng-if="crgo.crgv.temporal" class="glyphicon glyphicon-ok"></i><i
-                        ng-if="!crgo.crgv.temporal" class="glyphicon glyphicon-remove"></i></td>
-                    <td>{{crgo.crgv.fini | date}}</td>
-                    <td>{{crgo.crgv.ffin | date}}</td>
+                    <td ng-bind="crgo.codigo"></td>
+                    <td ng-bind="crgo.crgv.descripcion"></td>
+                    <td ng-bind="crgo.crgv.codigoNormalizado"></td>
+                    <td ng-bind="crgo.crgv.tipo"></td>
+                    <td ng-bind="crgo.tpsr.nombre"></td>
+                    <td><i class="glyphicon glyphicon-{{crgo.crgv.principal ? 'ok' : 'remove'}}"></i></td>
+                    <td><i class="glyphicon glyphicon-{{crgo.crgv.temporal ? 'ok' : 'remove'}}"></i></td>
+                    <td ng-bind="crgo.crgv.fini | date"></td>
+                    <td ng-bind="crgo.crgv.ffin | date"></td>
                 </tr>
             </tbody>
         </table>

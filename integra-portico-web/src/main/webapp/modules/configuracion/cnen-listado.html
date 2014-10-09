@@ -16,10 +16,10 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="cnen in cnens">
+            <tr ng-repeat="cnen in cnens track by $index">
                 <td><a href="#/configuracion/cnen/edit/{{cnen.id}}"><i class="glyphicon glyphicon-edit"></i></a></td>
                 <td><a href="#/configuracion/cnens/{{cnen.id}}"><b>{{cnen.codigo}}</b></a></td>
-                <td>{{cnen.nombre}}</td>
+                <td ng-bind="cnen.nombre"></td>
             </tr>
         </tbody>
     </table>

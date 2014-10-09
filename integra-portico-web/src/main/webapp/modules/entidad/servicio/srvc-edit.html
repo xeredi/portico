@@ -1,4 +1,4 @@
-<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
@@ -11,17 +11,17 @@
                     ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion == 'edit'" class="form-control-static">{{item.subp.etiqueta}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.subp.etiqueta"></p>
             </div>
             <div class="col-sm-1 col-md-1 form-group">
                 <label translate>srvc_anno</label> <input ng-if="accion != 'edit'" type="text" ng-model="item.anno"
                     class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static">{{item.anno}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.anno"></p>
             </div>
             <div class="col-sm-1 col-md-1 form-group">
                 <label translate>srvc_numero</label> <input ng-if="accion != 'edit'" type="text" ng-model="item.numero"
                     class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static">{{item.numero}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.numero"></p>
             </div>
 
             <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-1 form-group">
@@ -30,7 +30,7 @@
                     class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion == 'edit'" class="form-control-static">{{item.estado}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.estado"></p>
             </div>
 
             <div ng-if="!enti.temporal" class="col-sm-2 col-md-1 form-group">
@@ -66,7 +66,7 @@
 
     <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
     <ul>
-        <li ng-repeat="error in actionErrors">{{error}}</li>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
     </ul>
     </alert>
 

@@ -1,24 +1,25 @@
-<fieldset ng-repeat="engdId in enti.engdList">
-    <legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
+<fieldset ng-repeat="engdId in enti.engdList track by $index">
+    <legend ng-if="enti.engdList.length > 1" ng-bind="enti.engdMap[engdId].etiqueta"></legend>
 
     <div class="row-fluid">
-        <div ng-repeat="tpdtId in enti.engdEntdMap[engdId]"
+        <div ng-repeat="tpdtId in enti.engdEntdMap[engdId] track by $index"
             class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
-            <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
+            <label ng-bind="enti.entdMap[tpdtId].etiqueta"></label>
             <p ng-if="!item.itdtMap[tpdtId].filled" class="form-control-static">&nbsp;</p>
             <p ng-if="item.itdtMap[tpdtId].filled" ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento"
                 class="form-control-static">
-                <span ng-switch-when="BO"><i ng-if="item.itdtMap[tpdtId].booleano" class="glyphicon glyphicon-ok"></i><i
-                    ng-if="!item.itdtMap[tpdtId].booleano" class="glyphicon glyphicon-remove"></i></span> <span
-                    ng-switch-when="ND">{{item.itdtMap[tpdtId].cantidadDecimal | number:2}}</span> <span
-                    ng-switch-when="NE">{{item.itdtMap[tpdtId].cantidadEntera | number:0}}</span> <span
-                    ng-switch-when="FE">{{item.itdtMap[tpdtId].fecha | date: 'dd/MM/yyyy'}}</span> <span
-                    ng-switch-when="FH">{{item.itdtMap[tpdtId].fecha | date: 'dd/MM/yyyy HH:mm'}}</span> <span
-                    ng-switch-when="CR">{{item.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{item.itdtMap[tpdtId].cadena}}</span>
-                <span ng-switch-when="PR"> <a
-                    href="#/maestro/prmt/detail/{{enti.entdMap[tpdtId].tpdt.enti.id}}/{{item.itdtMap[tpdtId].prmt.id}}/{{item.fref}}">{{item.itdtMap[tpdtId].prmt.etiqueta}}</a></span>
-                <span ng-switch-when="SR"> <a
-                    href="#/servicio/srvc/detail/{{enti.entdMap[tpdtId].tpdt.enti.id}}/{{item.itdtMap[tpdtId].srvc.id}}">{{item.itdtMap[tpdtId].srvc.etiqueta}}</a></span>
+                <span ng-switch-when="BO"><i
+                    class="glyphicon glyphicon-{{item.itdtMap[tpdtId].booleano ? 'ok' : 'remove'}}"></i></span> <span
+                    ng-switch-when="ND" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span> <span
+                    ng-switch-when="NE" ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
+                    ng-switch-when="FE" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
+                    ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span ng-switch-when="CR"
+                    ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
+                    ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR"> <a
+                    ng-href="#/maestro/prmt/detail/{{enti.entdMap[tpdtId].tpdt.enti.id}}/{{item.itdtMap[tpdtId].prmt.id}}/{{item.fref}}"
+                    ng-bind="item.itdtMap[tpdtId].prmt.etiqueta"></a></span> <span ng-switch-when="SR"> <a
+                    ng-href="#/servicio/srvc/detail/{{enti.entdMap[tpdtId].tpdt.enti.id}}/{{item.itdtMap[tpdtId].srvc.id}}"
+                    ng-bind="item.itdtMap[tpdtId].srvc.etiqueta"></a></span>
             </p>
         </div>
     </div>

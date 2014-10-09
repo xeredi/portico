@@ -57,7 +57,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="tpdt in tpdtList.list">
+                <tr ng-repeat="tpdt in tpdtList.list track by $index">
                     <td><a href="#/metamodelo/tpdt/detail/{{tpdt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{tpdt.codigo}}</td>
                     <td>{{tpdt.nombre}}</td>

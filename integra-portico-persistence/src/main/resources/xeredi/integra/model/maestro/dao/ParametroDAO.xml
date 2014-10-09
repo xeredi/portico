@@ -5,6 +5,7 @@
 <mapper namespace="xeredi.integra.model.maestro.dao.ParametroDAO">
     <resultMap type="ParametroVO" id="ResultMap">
         <id column="prvr_pk" />
+        <id column="prmt_pk" />
 
         <result column="prmt_pk" property="id" />
         <result column="prmt_parametro" property="parametro" />

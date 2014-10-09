@@ -1,4 +1,4 @@
-<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
@@ -12,15 +12,14 @@
                     <input type="text" ng-model="item.srvc"
                         typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.tpsrId, $viewValue)"
                         typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
-                        ng-show="loading" class="glyphicon glyphicon-refresh"></i> $ {{item.srvc.id}} $
-                    {{item.srvc.etiqueta}}
+                        ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>
-                <p ng-if="item.srvc.id" class="form-control-static">{{item.srvc.etiqueta}}</p>
+                <p ng-if="item.srvc.id" class="form-control-static" ng-bind="item.srvc.etiqueta"></p>
             </div>
             <div class="col-sm-1 col-md-1 form-group">
-                <label translate>ssrv_numero</label> <input ng-if="accion != 'edit'" type="text"
-                    ng-model="item.numero" class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static">{{item.numero}}</p>
+                <label translate>ssrv_numero</label> <input ng-if="accion != 'edit'" type="text" ng-model="item.numero"
+                    class="form-control input-sm" />
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.numero"></p>
             </div>
 
             <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
@@ -29,7 +28,7 @@
                     class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion == 'edit'" class="form-control-static">{{item.estado}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.estado"></p>
             </div>
 
             <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
@@ -50,14 +49,13 @@
                 </div>
             </div>
 
-            <div ng-if="item.srvc.id" ng-repeat="entiPadre in superentiList" class="col-md-2 form-group">
-                <label>{{entiPadre.nombre}}</label>
+            <div ng-if="item.srvc.id" ng-repeat="entiPadre in superentiList track by $index" class="col-md-2 form-group">
+                <label ng-bind="entiPadre.nombre"></label>
                 <div class="input-group-sm" ng-controller="ssrvLupaCtrl">
                     <input type="text" ng-model="itemPadresMap[entiPadre.id]"
                         typeahead="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, item.srvc.id, $viewValue)"
                         typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
-                        ng-show="loading" class="glyphicon glyphicon-refresh"></i> $ {{itemPadresMap[entiPadre.id].id}}
-                    $ {{itemPadresMap[entiPadre.id].etiqueta}}
+                        ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>
             </div>
         </div>
@@ -67,7 +65,7 @@
 
     <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
     <ul>
-        <li ng-repeat="error in actionErrors">{{error}}</li>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
     </ul>
     </alert>
 

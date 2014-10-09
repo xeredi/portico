@@ -191,7 +191,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="rgin in rginList">
+                    <tr ng-repeat="rgin in rginList track by $index">
                         <td><a href="#/facturacion/rgin/detail/{{rgin.id}}/{{fechaVigencia}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td>{{rgin.rgla2.codigo}}</td>

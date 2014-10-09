@@ -1,6 +1,6 @@
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors">{{error}}</li>
+    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
@@ -22,33 +22,33 @@
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>prmt_parametro</label>
-            <p class="form-control-static">{{item.parametro}}</p>
+            <p class="form-control-static" ng-bind="item.parametro"></p>
         </div>
 
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>prmt_fini</label>
-            <p class="form-control-static">{{item.prvr.fini | date}}</p>
+            <p class="form-control-static" ng-bind="item.prvr.fini | date"></p>
         </div>
 
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>prmt_ffin</label>
-            <p class="form-control-static">{{item.prvr.ffin | date}}</p>
+            <p class="form-control-static" ng-bind="item.prvr.ffin | date"></p>
         </div>
     </div>
 </fieldset>
 
 <fieldset ng-if="enti.i18n">
-    <div ng-repeat="availableLanguage in availableLanguages" class="row-fluid">
+    <div ng-repeat="availableLanguage in availableLanguages track by $index" class="row-fluid">
         <div class="col-sm-10 col-md-10 col-lg-8 form-group">
             <label>Texto {{availableLanguage}}</label>
-            <p class="form-control-static">{{p18nMap[availableLanguage].texto}}</p>
+            <p class="form-control-static" ng-bind="p18nMap[availableLanguage].texto"></p>
         </div>
     </div>
 </fieldset>
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in subentiList" heading="{{entiHija.nombre | uppercase}}" active="tab.active"
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}" active="tab.active"
     disabled="tab.disabled">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -62,34 +62,34 @@
         <thead>
             <tr>
                 <th class="buttonLinks" />
-                <th>{{entiHija.tpprAsociado.nombre}}</th>
+                <th ng-bind="entiHija.tpprAsociado.nombre"></th>
 
                 <th class="date" translate>sprm_fini</th>
                 <th class="date" translate>sprm_ffin</th>
 
-                <th ng-repeat="tpdtId in entiHija.entdGridList">{{enti.entdMap[tpdtId].etiqueta}}</th>
+                <th ng-repeat="tpdtId in entiHija.entdGridList track by $index" ng-bind="entiHija.entdMap[tpdtId].etiqueta"></th>
             </tr>
         </thead>
 
         <tbody>
-            <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list">
+            <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list track by $index">
                 <td><a href="#/maestro/sprm/detail/{{entiHija.id}}/{{itemHijo.id}}/{{item.fref}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td>{{itemHijo.prmtAsociado.etiqueta}}</td>
+                <td ng-bind="itemHijo.prmtAsociado.etiqueta"></td>
 
-                <td>{{itemHijo.spvr.fini | date}}</td>
-                <td>{{itemHijo.spvr.ffin | date}}</td>
+                <td ng-bind="itemHijo.spvr.fini | date"></td>
+                <td ng-bind="itemHijo.spvr.ffin | date"></td>
 
-                <td ng-repeat="tpdtId in entiHija.entdGridList" ng-switch
+                <td ng-repeat="tpdtId in entiHija.entdGridList track by $index" ng-switch
                     on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
-                        ng-if="itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-ok"></i><i
-                        ng-if="!itemHijo.itdtMap[tpdtId].cantidadEntera" class="glyphicon glyphicon-remove"></i></span> <span
-                    ng-switch-when="ND">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:2}} </span> <span
-                    ng-switch-when="NE">{{itemHijo.itdtMap[tpdtId].cantidadEntera | number:0}} </span> <span
-                    ng-switch-when="CR">{{itemHijo.itdtMap[tpdtId].cadena}}</span> <span ng-switch-when="TX">{{itemHijo.itdtMap[tpdtId].cadena}}</span>
-                    <span ng-switch-when="PR" title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}">{{itemHijo.itdtMap[tpdtId].prmt.parametro}}</span>
-                    <span ng-switch-when="FE">{{itemHijo.itdtMap[tpdtId].fecha | date}}</span> <span ng-switch-when="FH">{{itemHijo.itdtMap[tpdtId].fecha
-                        | date:'short'}} </span></td>
+                        class="glyphicon glyphicon-{{itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
+                    ng-switch-when="ND" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:2"></span> <span
+                    ng-switch-when="NE" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
+                    ng-switch-when="CR" ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
+                    ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR"
+                    title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="itemHijo.itdtMap[tpdtId].prmt.parametro"></span>
+                    <span ng-switch-when="FE" ng-bind="itemHijo.itdtMap[tpdtId].fecha | date"></span> <span
+                    ng-switch-when="FH" ng-bind="itemHijo.itdtMap[tpdtId].fecha | date:'short'"></span></td>
             </tr>
         </tbody>
     </table>

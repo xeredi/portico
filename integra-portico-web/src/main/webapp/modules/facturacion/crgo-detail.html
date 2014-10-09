@@ -1,4 +1,4 @@
-<p class="bg-primary">{{'Cargo' | uppercase}}</p>
+<p class="bg-primary" ng-bind="'Cargo' | uppercase"></p>
 
 <fieldset>
     <div class="btn-toolbar" role="toolbar">
@@ -16,33 +16,31 @@
         <div class="col-md-2 form-group">
             <label translate>crgo_tpsr</label>
             <p class="form-control-static">
-                <a href="#/metamodelo/tpsr/detail/{{crgo.tpsr.id}}">{{crgo.tpsr.nombre}}</a>
+                <a href="#/metamodelo/tpsr/detail/{{crgo.tpsr.id}}" ng-bind="crgo.tpsr.nombre"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_codigo</label>
-            <p class="form-control-static">{{crgo.codigo}}</p>
+            <p class="form-control-static" ng-bind="crgo.codigo"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>crgo_codigoNormalizado</label>
-            <p class="form-control-static">{{crgo.crgv.codigoNormalizado}}</p>
+            <p class="form-control-static" ng-bind="crgo.crgv.codigoNormalizado"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_tipo</label>
-            <p class="form-control-static">{{crgo.crgv.tipo}}</p>
+            <p class="form-control-static" ng-bind="crgo.crgv.tipo"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_principal</label>
             <p class="form-control-static">
-                <i ng-if="crgo.crgv.principal" class="glyphicon glyphicon-ok"></i><i ng-if="!crgo.crgv.principal"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{crgo.crgv.principal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_temporal</label>
             <p class="form-control-static">
-                <i ng-if="crgo.crgv.temporal" class="glyphicon glyphicon-ok"></i><i ng-if="!crgo.crgv.temporal"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{crgo.crgv.temporal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
     </div>
@@ -50,21 +48,21 @@
     <div class="row-fluid">
         <div class="col-md-1 form-group">
             <label translate>crgo_fini</label>
-            <p class="form-control-static">{{crgo.crgv.fini | date}}</p>
+            <p class="form-control-static" ng-bind="crgo.crgv.fini | date"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_ffin</label>
-            <p class="form-control-static">{{crgo.crgv.ffin | date}}</p>
+            <p class="form-control-static" ng-bind="crgo.crgv.ffin | date"></p>
         </div>
         <div class="col-md-3 form-group">
             <label translate>crgo_descripcion</label>
-            <p class="form-control-static">{{crgo.crgv.descripcion}}</p>
+            <p class="form-control-static" ng-bind="crgo.crgv.descripcion"></p>
         </div>
     </div>
 </fieldset>
 
 <fieldset>
-    <legend>{{'Reglas' | uppercase}}</legend>
+    <legend ng-bind="'Reglas' | uppercase"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -90,19 +88,19 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="rgla in rglaList">
+                <tr ng-repeat="rgla in rglaList track by $index">
                     <td><a ng-if="fechaVigencia" href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a><a ng-if="!fechaVigencia"
                         href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{rgla.codigo}}</td>
-                    <td>{{rgla.rglv.tipo}}</td>
-                    <td>{{rgla.rglv.enti.nombre}}</td>
-                    <td>{{rgla.rglv.fini | date}}</td>
-                    <td>{{rgla.rglv.ffin | date}}</td>
-                    <td class="number">{{rgla.rglv.orden}}</td>
-                    <td class="number">{{rgla.rglv.importeBase | number:4}}</td>
-                    <td>{{rgla.rglv.formula}}</td>
+                    <td ng-bind="rgla.codigo"></td>
+                    <td ng-bind="rgla.rglv.tipo"></td>
+                    <td ng-bind="rgla.rglv.enti.nombre"></td>
+                    <td ng-bind="rgla.rglv.fini | date"></td>
+                    <td ng-bind="rgla.rglv.ffin | date"></td>
+                    <td class="number" ng-bind="rgla.rglv.orden"></td>
+                    <td class="number" ng-bind="rgla.rglv.importeBase | number:4"></td>
+                    <td ng-bind="rgla.rglv.formula"></td>
                 </tr>
             </tbody>
         </table>

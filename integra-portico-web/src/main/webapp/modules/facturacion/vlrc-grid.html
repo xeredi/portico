@@ -64,7 +64,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="item in vlrcList.list">
+                <tr ng-repeat="item in vlrcList.list track by $index">
                     <td><a href="#/facturacion/vlrc/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{item.id}}</td>
                     <td>{{item.srvc.etiqueta}}</td>
@@ -75,8 +75,7 @@
                     <td>{{item.fliq | date:'short'}}</td>
                     <td>{{item.fini | date:'short'}}</td>
                     <td>{{item.ffin | date:'short'}}</td>
-                    <td><i ng-if="item.sujPasivo" class="glyphicon glyphicon-ok"></i><i ng-if="!item.sujPasivo"
-                        class="glyphicon glyphicon-remove"></i></td>
+                    <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
                     <td>{{item.codExencion}}</td>
                 </tr>
             </tbody>

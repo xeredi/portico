@@ -1,4 +1,4 @@
-<p class="bg-primary">{{'Aspecto' | uppercase}}</p>
+<p class="bg-primary" ng-bind="'Aspecto' | uppercase"></p>
 
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="aspc.id" /><input type="hidden"
@@ -12,12 +12,12 @@
                     class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion != 'create'" class="form-control-static">{{aspc.tpsr.nombre}}</p>
+                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="aspc.tpsr.nombre"></p>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>aspc_codigo</label> <input ng-if="accion != 'edit'" type="text" ng-model="aspc.codigo"
                     class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static">{{aspc.codigo}}</p>
+                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="aspc.codigo"></p>
             </div>
             <div class="col-sm-6 col-md-4 col-lg-3 form-group">
                 <label translate>aspc_descripcion</label> <input type="text" ng-model="aspc.aspv.descripcion"
@@ -46,7 +46,7 @@
         </div>
 
         <div class="table-responsive">
-            <legend>{{'Elementos de Cabecera' | uppercase}}</legend>
+            <legend ng-bind="'Elementos de Cabecera' | uppercase"></legend>
 
             <table class="table-condensed table-hover table-nonfluid">
                 <thead>
@@ -125,7 +125,7 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3 form-group">
             <div class="table-responsive">
-                <legend>{{'Elementos Cuantitativos de Linea' | uppercase}}</legend>
+                <legend ng-bind="'Elementos Cuantitativos de Linea' | uppercase"></legend>
 
                 <table class="table-condensed table-hover table-nonfluid">
                     <thead>
@@ -191,7 +191,7 @@
 
         <div class="col-sm-6 col-md-4 col-lg-3 form-group">
             <div class="table-responsive">
-                <legend>{{'Elementos Informativos de Linea' | uppercase}}</legend>
+                <legend ng-bind="'Elementos Informativos de Linea' | uppercase"></legend>
 
                 <table class="table-condensed table-hover table-nonfluid">
                     <thead>
@@ -258,7 +258,7 @@
 
     <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
     <ul>
-        <li ng-repeat="error in actionErrors">{{error}}</li>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
     </ul>
     </alert>
 

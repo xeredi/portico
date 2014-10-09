@@ -54,7 +54,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="enti in entiList.list">
+                <tr ng-repeat="enti in entiList.list track by $index">
                     <td><a href="#/metamodelo/tpes/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td>{{enti.codigo}}</td>
                     <td>{{enti.nombre}}</td>

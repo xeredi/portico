@@ -1,10 +1,10 @@
-<fieldset ng-repeat="engdId in enti.engdList">
-    <legend ng-if="enti.engdList.length > 1">{{enti.engdMap[engdId].etiqueta}}</legend>
+<fieldset ng-repeat="engdId in enti.engdList track by $index">
+    <legend ng-if="enti.engdList.length > 1" ng-bind="enti.engdMap[engdId].etiqueta"></legend>
 
     <div class="row-fluid">
-        <div ng-repeat="tpdtId in ::enti.engdEntdMap[engdId]"
+        <div ng-repeat="tpdtId in enti.engdEntdMap[engdId] track by $index"
             class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
-            <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
+            <label ng-bind="enti.entdMap[tpdtId].etiqueta"></label>
 
             <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
                 <select ng-switch-when="BO" ng-model="item.itdtMap[tpdtId].cantidadEntera"
@@ -25,21 +25,6 @@
                 </div>
                 <div ng-switch-when="FH" class="dropdown">
                     Falta el reloj!!!
-                    <!--
-                    <a class="dropdown-toggle" id="datepicker_{{tpdtId}}" role="button" data-toggle="dropdown"
-                        data-target="#" href="#">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="item.itdtMap[tpdtId].fecha"
-                                value="{{item.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}"
-                                ng-required="item.itdtMap[tpdtId].obligatorio"><span class="input-group-addon"><i
-                                class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="item.itdtMap[tpdtId].fecha"
-                            data-datetimepicker-config="{ dropdownSelector: '#datepicker_tpdtId', startView:'day' }" />
-                    </ul>
- -->
                 </div>
                 <select ng-switch-when="CR" ng-model="item.itdtMap[tpdtId].cadena"
                     ng-required="item.itdtMap[tpdtId].obligatorio"
@@ -51,7 +36,7 @@
                     class="form-control input-sm" />
                 <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
                     ng-model="item.itdtMap[tpdtId].cadena" ng-required="item.itdtMap[tpdtId].obligatorio"
-                    class="form-control input-sm">{{item.itdtMap[tpdtId].cadena}}</textarea>
+                    class="form-control input-sm" ng-bind="item.itdtMap[tpdtId].cadena"></textarea>
                 <select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
                     ng-model="item.itdtMap[tpdtId].prmt" ng-required="item.itdtMap[tpdtId].obligatorio"
                     ng-options="prmt.etiqueta for prmt in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id] track by prmt.id"
@@ -64,16 +49,12 @@
                         typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
                         typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
                         ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-                    <!-- $ {{item.itdtMap[tpdtId].prmt.id}} $
-                        {{item.itdtMap[tpdtId].prmt.etiqueta}}-->
                 </div>
                 <div ng-switch-when="SR" class="input-group-sm" ng-controller="srvcLupaCtrl">
                     <input type="text" ng-model="item.itdtMap[tpdtId].srvc"
                         typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
                         typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
                         ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-                    <!--$ {{item.itdtMap[tpdtId].srvc.id}} $
-                    {{item.itdtMap[tpdtId].srvc.etiqueta}}-->
                 </div>
 
             </div>

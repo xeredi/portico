@@ -1,8 +1,8 @@
-<p class="bg-primary">{{'Cargo' | uppercase}}</p>
+<p class="bg-primary" ng-bind="'Cargo' | uppercase"></p>
 
 <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors">{{error}}</li>
+    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
@@ -23,7 +23,7 @@
             <div class="col-md-1 form-group">
                 <label translate>crgo_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="crgo.codigo" class="form-control input-sm" />
-                <p ng-if="accion != 'create'" class="form-control-static">{{crgo.codigo}}</p>
+                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="crgo.codigo"></p>
             </div>
             <div class="col-md-2 form-group">
                 <label translate>crgo_codigoNormalizado</label> <input type="text"

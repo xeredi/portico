@@ -68,7 +68,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="(key, value) in prbt.prpmMap">
+                <tr ng-repeat="(key, value) in prbt.prpmMap track by $index">
                     <td>{{key}}</td>
                     <td>{{value}}</td>
                 </tr>
@@ -86,7 +86,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prar in prbt.prarEntradaList">
+                <tr ng-repeat="prar in prbt.prarEntradaList track by $index">
                     <td>{{prar.nombre}}</td>
                 </tr>
             </tbody>
@@ -103,7 +103,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prar in prbt.prarSalidaList">
+                <tr ng-repeat="prar in prbt.prarSalidaList track by $index">
                     <td>{{prar.nombre}}</td>
                 </tr>
             </tbody>
@@ -120,7 +120,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prit in prbt.pritEntradaList">
+                <tr ng-repeat="prit in prbt.pritEntradaList track by $index">
                     <td>{{prit.itemId}}</td>
                 </tr>
             </tbody>
@@ -137,7 +137,7 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prit in prbt.pritSalidaList">
+                <tr ng-repeat="prit in prbt.pritSalidaList track by $index">
                     <td>{{prit.itemId}}</td>
                 </tr>
             </tbody>
@@ -162,7 +162,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="prmn in prmnList.list">
+            <tr ng-repeat="prmn in prmnList.list track by $index">
                 <td>{{prmn.nivel}}</td>
                 <td>{{prmn.codigo}}</td>
                 <td>{{prmn.mensaje}}</td>

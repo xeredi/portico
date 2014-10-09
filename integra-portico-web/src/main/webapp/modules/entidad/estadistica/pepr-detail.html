@@ -10,21 +10,20 @@
     <div class="row-fluid">
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>pepr_autp</label>
-            <p class="form-control-static">{{pepr.autp.parametro}}</p>
+            <p class="form-control-static" ng-bind="pepr.autp.parametro"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-md-1 form-group">
             <label translate>pepr_anio</label>
-            <p class="form-control-static">{{pepr.anio}}</p>
+            <p class="form-control-static" ng-bind="pepr.anio"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-md-1 form-group">
             <label translate>pepr_mes</label>
-            <p class="form-control-static">{{pepr.mes}}</p>
+            <p class="form-control-static" ng-bind="pepr.mes"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-md-1 form-group">
             <label translate>pepr_cdmsGenerado</label>
             <p class="form-control-static">
-                <i ng-if="item.cdmsGenerado" class="glyphicon glyphicon-ok"></i><i ng-if="!item.cdmsGenerado"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{pepr.cdmsGenerado ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
     </div>
@@ -33,5 +32,5 @@
 <div class="list-group">
     <a href="#/estadistica/cdms/detail/{{pepr.id}}" class="list-group-item" translate>pepr_cdms</a> <a
         href="#/estadistica/estd/grid/{{enti.value}}/{{pepr.id}}/{{pepr.autp.id}}" class="list-group-item"
-        ng-repeat="enti in tpesList">{{enti.label | uppercase}}</a>
+        ng-repeat="enti in tpesList track by $index" ng-bind="enti.label | uppercase"></a>
 </div>

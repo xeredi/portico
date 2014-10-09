@@ -1,8 +1,8 @@
 <fieldset>
     <div class="row-fluid">
-        <div ng-repeat="tpdtId in enti.entdList" ng-if="enti.entdMap[tpdtId].filtrable"
+        <div ng-repeat="tpdtId in enti.entdList track by $index" ng-if="enti.entdMap[tpdtId].filtrable"
             class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
-            <label>{{enti.entdMap[tpdtId].etiqueta}}</label>
+            <label ng-bind="enti.entdMap[tpdtId].etiqueta"></label>
 
             <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
                 <select ng-switch-when="BO" ng-model="itemCriterio.itdtMap[tpdtId].cantidadEntera"
@@ -46,7 +46,7 @@
                 </select> <input ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
                     ng-model="itemCriterio.itdtMap[tpdtId].cadena" class="form-control input-sm" />
                 <textarea ng-switch-when="TX" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
-                    ng-model="itemCriterio.itdtMap[tpdtId].cadena" class="form-control input-sm">{{itemCriterio.itdtMap[tpdtId].cadena}}</textarea>
+                    ng-model="itemCriterio.itdtMap[tpdtId].cadena" class="form-control input-sm" ng-bind="itemCriterio.itdtMap[tpdtId].cadena"></textarea>
                 <select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
                     ng-model="itemCriterio.itdtMap[tpdtId].prmt"
                     ng-options="prmt.etiqueta for prmt in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id] track by prmt.id"

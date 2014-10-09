@@ -1,4 +1,4 @@
-<p class="bg-primary">{{'pepr_grid' | translate | uppercase}}</p>
+<p class="bg-primary" ng-bind="'pepr_grid' | translate | uppercase"></p>
 
 <div ng-if="showFilter">
     <form>
@@ -68,13 +68,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in peprList.list">
+                <tr ng-repeat="item in peprList.list track by $index">
                     <td><a href="#/estadistica/pepr/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{item.autp.parametro}}</td>
-                    <td>{{item.anio}}</td>
-                    <td>{{item.mes}}</td>
-                    <td><i ng-if="item.cdmsGenerado" class="glyphicon glyphicon-ok"></i><i
-                        ng-if="!item.cdmsGenerado" class="glyphicon glyphicon-remove"></i></td>
+                    <td ng-bind="item.autp.parametro"></td>
+                    <td ng-bind="item.anio"></td>
+                    <td ng-bind="item.mes"></td>
+                    <td><i class="glyphicon glyphicon-{{item.cdmsGenerado ? 'ok' : 'remove'}}"></i></td>
                 </tr>
             </tbody>
         </table>

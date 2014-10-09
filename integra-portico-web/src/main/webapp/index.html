@@ -46,7 +46,7 @@
     <div id="body-content" class="container-fluid">
         <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
         <ul>
-            <li ng-repeat="error in actionErrors">{{error}}</li>
+            <li ng-repeat="error in actionErrors track by $index">{{error}}</li>
         </ul>
         </alert>
 

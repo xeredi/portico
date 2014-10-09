@@ -36,43 +36,37 @@
         <div class="col-md-1 form-group">
             <label translate>enti_cmd_alta</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdAlta" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdAlta"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdAlta ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>enti_cmd_baja</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdBaja" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdBaja"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdBaja ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>enti_cmd_edicion</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdEdicion" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdEdicion"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>enti_cmd_duplicado</label>
             <p class="form-control-static">
-                <i ng-if="enti.cmdDuplicado" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.cmdDuplicado"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>enti_i18n</label>
             <p class="form-control-static">
-                <i ng-if="enti.i18n" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.i18n"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.i18n ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>enti_tempExp</label>
             <p class="form-control-static">
-                <i ng-if="enti.tempExp" class="glyphicon glyphicon-ok"></i><i ng-if="!enti.tempExp"
-                    class="glyphicon glyphicon-remove"></i>
+                <i class="glyphicon glyphicon-{{enti.tempExp ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
     </div>

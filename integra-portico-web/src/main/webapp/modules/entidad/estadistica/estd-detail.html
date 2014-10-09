@@ -1,14 +1,14 @@
-<p class="bg-primary">{{enti.nombre | uppercase}}</p>
+<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>estd_pepr</label>
-            <p class="form-control-static">{{item.pepr.etiqueta}}</p>
+            <p class="form-control-static" ng-bind="item.pepr.etiqueta"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>estd_subp</label>
-            <p class="form-control-static">{{item.subp.etiqueta}}</p>
+            <p class="form-control-static" ng-bind="item.subp.etiqueta"></p>
         </div>
     </div>
 </fieldset>

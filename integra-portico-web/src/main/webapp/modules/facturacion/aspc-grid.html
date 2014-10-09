@@ -69,15 +69,15 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="aspc in aspcList.list">
+                <tr ng-repeat="aspc in aspcList.list track by $index">
                     <td><a href="#/facturacion/aspc/detail/{{aspc.aspv.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td>{{aspc.codigo}}</td>
-                    <td>{{aspc.aspv.descripcion}}</td>
-                    <td>{{aspc.tpsr.nombre}}</td>
-                    <td>{{aspc.aspv.fini | date}}</td>
-                    <td>{{aspc.aspv.ffin | date}}</td>
-                    <td class="number">{{aspc.aspv.prioridad}}</td>
+                    <td ng-bind="aspc.codigo"></td>
+                    <td ng-bind="aspc.aspv.descripcion"></td>
+                    <td ng-bind="aspc.tpsr.nombre"></td>
+                    <td ng-bind="aspc.aspv.fini | date"></td>
+                    <td ng-bind="aspc.aspv.ffin | date"></td>
+                    <td class="number" ng-bind="aspc.aspv.prioridad"></td>
                 </tr>
             </tbody>
         </table>

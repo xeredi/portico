@@ -16,101 +16,103 @@
         <div class="col-md-2 form-group">
             <label translate>rgla_enti</label>
             <p class="form-control-static">
-                <a ng-if="vlrl.rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{vlrl.rgla.rglv.enti.id}}">{{vlrl.rgla.rglv.enti.nombre}}</a>
-                <a ng-if="vlrl.rgla.rglv.enti.tipo == 'S'" href="#/metamodelo/tpss/detail/{{vlrl.rgla.rglv.enti.id}}">{{vlrl.rgla.rglv.enti.nombre}}</a>
+                <a ng-if="vlrl.rgla.rglv.enti.tipo == 'T'" href="#/metamodelo/tpsr/detail/{{vlrl.rgla.rglv.enti.id}}"
+                    ng-bind="vlrl.rgla.rglv.enti.nombre"></a> <a ng-if="vlrl.rgla.rglv.enti.tipo == 'S'"
+                    href="#/metamodelo/tpss/detail/{{vlrl.rgla.rglv.enti.id}}" ng-bind="vlrl.rgla.rglv.enti.nombre"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>vlrl_rgla</label>
             <p class="form-control-static">
-                <a href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}">{{vlrl.rgla.codigo}}</a>
+                <a href="#/facturacion/rgla/detail/{{vlrl.rgla.id}}/{{vlrl.fref}}" ng-bind="vlrl.rgla.codigo"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>vlrl_rgla_tipo</label>
-            <p class="form-control-static">{{vlrl.rgla.rglv.tipo}}</p>
+            <p class="form-control-static" ng-bind="vlrl.rgla.rglv.tipo"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>vlrl_importeBase</label>
-            <p class="form-control-static">{{vlrl.importeBase | number:2}}</p>
+            <p class="form-control-static" ng-bind="vlrl.importeBase | number:2"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>vlrl_importe</label>
-            <p class="form-control-static">{{vlrl.importe | number:2}}</p>
+            <p class="form-control-static" ng-bind="vlrl.importe | number:2"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrl_impuesto</label>
             <p class="form-control-static">
-                <a href="#/maestro/prmt/detail/{{vlrl.impuesto.entiId}}/{{vlrl.impuesto.id}}/{{vlrl.fref}}">{{vlrl.impuesto.etiqueta}}</a>
+                <a href="#/maestro/prmt/detail/{{vlrl.impuesto.entiId}}/{{vlrl.impuesto.id}}/{{vlrl.fref}}"
+                    ng-bind="vlrl.impuesto.etiqueta"></a>
             </p>
         </div>
         <div ng-if="vlrl.ssrv.id" class="col-md-1 form-group">
             <label translate>vlrl_ssrv</label>
             <p class="form-control-static">
-                <a href="#/servicio/ssrv/detail/{{vlrl.ssrv.entiId}}/{{vlrl.ssrv.id}}">{{vlrl.ssrv.numero}}</a>
+                <a href="#/servicio/ssrv/detail/{{vlrl.ssrv.entiId}}/{{vlrl.ssrv.id}}" ng-bind="vlrl.ssrv.numero"></a>
             </p>
         </div>
         <div ng-if="vlrl.fini" class="col-md-1 form-group">
             <label translate>vlrl_fini</label>
-            <p class="form-control-static">{{vlrl.fini | date:'short'}}</p>
+            <p class="form-control-static" ng-bind="vlrl.fini | date:'short'"></p>
         </div>
         <div ng-if="vlrl.ffin" class="col-md-1 form-group">
             <label translate>vlrl_ffin</label>
-            <p class="form-control-static">{{vlrl.ffin | date:'short'}}</p>
+            <p class="form-control-static" ng-bind="vlrl.ffin | date:'short'"></p>
         </div>
     </div>
 
     <div class="row-fluid">
         <div ng-if="vlrl.rgla.rglv.pathInfo1" class="col-md-4 form-group">
-            <label>{{vlrl.rgla.rglv.etiqInfo1}}</label>
-            <p class="form-control-static">{{vlrl.info1}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqInfo1"></label>
+            <p class="form-control-static" ng-bind="vlrl.info1"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathInfo2" class="col-md-4 form-group">
-            <label>{{vlrl.rgla.rglv.etiqInfo2}}</label>
-            <p class="form-control-static">{{vlrl.info2}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqInfo2"></label>
+            <p class="form-control-static" ng-bind="vlrl.info2"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathInfo3" class="col-md-4 form-group">
-            <label>{{vlrl.rgla.rglv.etiqInfo3}}</label>
-            <p class="form-control-static">{{vlrl.info3}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqInfo3"></label>
+            <p class="form-control-static" ng-bind="vlrl.info3"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathInfo4" class="col-md-4 form-group">
-            <label>{{vlrl.rgla.rglv.etiqInfo4}}</label>
-            <p class="form-control-static">{{vlrl.info4}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqInfo4"></label>
+            <p class="form-control-static" ng-bind="vlrl.info4"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathInfo5" class="col-md-4 form-group">
-            <label>{{vlrl.rgla.rglv.etiqInfo5}}</label>
-            <p class="form-control-static">{{vlrl.info5}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqInfo5"></label>
+            <p class="form-control-static" ng-bind="vlrl.info5"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathInfo6" class="col-md-4 form-group">
-            <label>{{vlrl.rgla.rglv.etiqInfo6}}</label>
-            <p class="form-control-static">{{vlrl.info6}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqInfo6"></label>
+            <p class="form-control-static" ng-bind="vlrl.info6"></p>
         </div>
     </div>
 
     <div class="row-fluid">
         <div ng-if="vlrl.rgla.rglv.pathCuant1" class="col-md-2 form-group">
-            <label>{{vlrl.rgla.rglv.etiqCuant1}}</label>
-            <p class="form-control-static">{{vlrl.cuant1}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqCuant1"></label>
+            <p class="form-control-static" ng-bind="vlrl.cuant1"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathCuant2" class="col-md-2 form-group">
-            <label>{{vlrl.rgla.rglv.etiqCuant2}}</label>
-            <p class="form-control-static">{{vlrl.cuant2}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqCuant2"></label>
+            <p class="form-control-static" ng-bind="vlrl.cuant2"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathCuant3" class="col-md-2 form-group">
-            <label>{{vlrl.rgla.rglv.etiqCuant3}}</label>
-            <p class="form-control-static">{{vlrl.cuant3}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqCuant3"></label>
+            <p class="form-control-static" ng-bind="vlrl.cuant3"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathCuant4" class="col-md-2 form-group">
-            <label>{{vlrl.rgla.rglv.etiqCuant4}}</label>
-            <p class="form-control-static">{{vlrl.cuant4}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqCuant4"></label>
+            <p class="form-control-static" ng-bind="vlrl.cuant4"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathCuant5" class="col-md-2 form-group">
-            <label>{{vlrl.rgla.rglv.etiqCuant5}}</label>
-            <p class="form-control-static">{{vlrl.cuant5}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqCuant5"></label>
+            <p class="form-control-static" ng-bind="vlrl.cuant5"></p>
         </div>
         <div ng-if="vlrl.rgla.rglv.pathCuant6" class="col-md-2 form-group">
-            <label>{{vlrl.rgla.rglv.etiqCuant6}}</label>
-            <p class="form-control-static">{{vlrl.cuant6}}</p>
+            <label ng-bind="vlrl.rgla.rglv.etiqCuant6"></label>
+            <p class="form-control-static" ng-bind="vlrl.cuant6"></p>
         </div>
     </div>
 </fieldset>
@@ -151,26 +153,26 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="vlrd in vlrdList.list">
+            <tr ng-repeat="vlrd in vlrdList.list track by $index">
                 <td><a href="#/facturacion/vlrd/detail/{{vlrd.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td class="number">{{vlrd.valorBase | number:4}}</td>
-                <td class="number">{{vlrd.importeBase | number:2}}</td>
-                <td class="number">{{vlrd.importe | number:2}}</td>
-                <td>{{vlrd.ssrv.numero}}</td>
-                <td>{{vlrd.fini | date:'short'}}</td>
-                <td>{{vlrd.ffin | date:'short'}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathInfo1">{{vlrd.info1}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathInfo2">{{vlrd.info2}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathInfo3">{{vlrd.info3}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathInfo4">{{vlrd.info4}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathInfo5">{{vlrd.info5}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathInfo6">{{vlrd.info6}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathCuant1" class="number">{{vlrd.cuant1 | number:2}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathCuant2" class="number">{{vlrd.cuant2 | number:2}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathCuant3" class="number">{{vlrd.cuant3 | number:2}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathCuant4" class="number">{{vlrd.cuant4 | number:2}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathCuant5" class="number">{{vlrd.cuant5 | number:2}}</td>
-                <td ng-if="vlrl.rgla.rglv.pathCuant6" class="number">{{vlrd.cuant6 | number:2}}</td>
+                <td class="number" ng-bind="vlrd.valorBase | number:4"></td>
+                <td class="number" ng-bind="vlrd.importeBase | number:2"></td>
+                <td class="number" ng-bind="vlrd.importe | number:2"></td>
+                <td ng-bind="vlrd.ssrv.numero"></td>
+                <td ng-bind="vlrd.fini | date:'short'"></td>
+                <td ng-bind="vlrd.ffin | date:'short'"></td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo1" ng-bind="vlrd.info1"></td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo2" ng-bind="vlrd.info2"></td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo3" ng-bind="vlrd.info3"></td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo4" ng-bind="vlrd.info4"></td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo5" ng-bind="vlrd.info5"></td>
+                <td ng-if="vlrl.rgla.rglv.pathInfo6" ng-bind="vlrd.info6"></td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant1" class="number" ng-bind="vlrd.cuant1 | number:2"></td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant2" class="number" ng-bind="vlrd.cuant2 | number:2"></td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant3" class="number" ng-bind="vlrd.cuant3 | number:2"></td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant4" class="number" ng-bind="vlrd.cuant4 | number:2"></td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant5" class="number" ng-bind="vlrd.cuant5 | number:2"></td>
+                <td ng-if="vlrl.rgla.rglv.pathCuant6" class="number" ng-bind="vlrd.cuant6 | number:2"></td>
             </tr>
         </tbody>
     </table>
