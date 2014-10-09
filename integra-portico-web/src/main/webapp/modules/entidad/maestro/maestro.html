@@ -3,7 +3,8 @@
         <fieldset>
             <div class="row-fluid">
                 <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-                    <input type="text" ng-model="tpprSearch" maxlength="30" class="form-control input-sm" />
+                    <input type="text" ng-model="tpprSearch" name="tpprSearch" maxlength="30"
+                        class="form-control input-sm" />
                 </div>
             </div>
         </fieldset>
@@ -11,6 +12,7 @@
 
     <div class="list-group">
         <a ng-href="#/maestro/prmt/grid/{{tppr.value}}" class="list-group-item col-sm-6 col-md-4 col-lg-3"
-            ng-repeat="tppr in tpprList track by $index | filter:tpprSearch" ng-bind="tppr.label | uppercase"></a>
+            ng-repeat="tppr in tpprList track by $index" ng-show="([tppr] | filter:tpprSearch).length > 0"
+            ng-bind="tppr.label | uppercase"></a>
     </div>
 </div>
