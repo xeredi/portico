@@ -91,15 +91,15 @@ public final class ExcelUtil {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString("prmt.parametro"));
+        setCellValue(rowhead, i++, bundle.getString("prmt_parametro"));
 
         if (tpprVO.getI18n()) {
-            setCellValue(rowhead, i++, bundle.getString("p18n.texto"));
+            setCellValue(rowhead, i++, bundle.getString("p18n_texto"));
         }
 
         if (tpprVO.getTempExp()) {
-            setCellValue(rowhead, i++, bundle.getString("prmt.finicio"));
-            setCellValue(rowhead, i++, bundle.getString("prmt.ffin"));
+            setCellValue(rowhead, i++, bundle.getString("prmt_fini"));
+            setCellValue(rowhead, i++, bundle.getString("prmt_ffin"));
         }
 
         for (final Long tpdtId : tpprVO.getEntdList()) {
@@ -164,20 +164,20 @@ public final class ExcelUtil {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString("tpsr"));
-        setCellValue(rowhead, i++, bundle.getString("srvc.subp"));
-        setCellValue(rowhead, i++, bundle.getString("srvc.anno"));
-        setCellValue(rowhead, i++, bundle.getString("srvc.numero"));
-        setCellValue(rowhead, i++, bundle.getString("srvc.falta"));
-        setCellValue(rowhead, i++, bundle.getString("srvc.freferencia"));
+        setCellValue(rowhead, i++, bundle.getString("srvc_tpsr"));
+        setCellValue(rowhead, i++, bundle.getString("srvc_subp"));
+        setCellValue(rowhead, i++, bundle.getString("srvc_anno"));
+        setCellValue(rowhead, i++, bundle.getString("srvc_numero"));
+        setCellValue(rowhead, i++, bundle.getString("srvc_falta"));
+        setCellValue(rowhead, i++, bundle.getString("srvc_fref"));
 
         if (tpsrVO.getTpdtEstado() != null) {
-            setCellValue(rowhead, i++, bundle.getString("srvc.estado"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_estado"));
         }
 
         if (tpsrVO.getTemporal()) {
-            setCellValue(rowhead, i++, bundle.getString("srvc.finicio"));
-            setCellValue(rowhead, i++, bundle.getString("srvc.ffin"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_fini"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_ffin"));
         }
 
         for (final Long tpdtId : tpsrVO.getEntdList()) {
@@ -247,17 +247,17 @@ public final class ExcelUtil {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString("tpss"));
-        setCellValue(rowhead, i++, bundle.getString("ssrv.srvc"));
-        setCellValue(rowhead, i++, bundle.getString("ssrv.numero"));
+        setCellValue(rowhead, i++, bundle.getString("ssrv_tpss"));
+        setCellValue(rowhead, i++, bundle.getString("ssrv_srvc"));
+        setCellValue(rowhead, i++, bundle.getString("ssrv_numero"));
 
         if (tpssVO.getTpdtEstado() != null) {
-            setCellValue(rowhead, i++, bundle.getString("ssrv.estado"));
+            setCellValue(rowhead, i++, bundle.getString("ssrv_estado"));
         }
 
         if (tpssVO.getTemporal()) {
-            setCellValue(rowhead, i++, bundle.getString("ssrv.finicio"));
-            setCellValue(rowhead, i++, bundle.getString("ssrv.ffin"));
+            setCellValue(rowhead, i++, bundle.getString("ssrv_fini"));
+            setCellValue(rowhead, i++, bundle.getString("ssrv_ffin"));
         }
 
         for (final Long tpdtId : tpssVO.getEntdList()) {
@@ -324,8 +324,9 @@ public final class ExcelUtil {
         final HSSFRow rowhead = sheet.createRow(rownum++);
         int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString("estd.pepr"));
-        setCellValue(rowhead, i++, bundle.getString("estd.autp"));
+        setCellValue(rowhead, i++, bundle.getString("estd_tpes"));
+        setCellValue(rowhead, i++, bundle.getString("estd_pepr"));
+        setCellValue(rowhead, i++, bundle.getString("estd_subp"));
 
         for (final Long tpdtId : tpesVO.getEntdList()) {
             setCellValue(rowhead, i++, tpesVO.getEntdMap().get(tpdtId).getEtiqueta());
@@ -337,6 +338,7 @@ public final class ExcelUtil {
 
             int j = 0;
 
+            setCellValue(row, j++, tpesVO.getNombre());
             setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
             setCellValue(row, j++, estdVO.getSubp().getEtiqueta());
 

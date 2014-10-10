@@ -67,7 +67,7 @@ public final class ParametroPdfAction extends BaseAction {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    @Action(value = "prmt-imprimir", results = { @Result(name = "success", type = "stream", params = { "contentType",
+    @Action(value = "prmt-print", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "${type}", "inputName", "stream", "contentDisposition", "filename=${filename}" }) })
     public String imprimir() throws IOException, DRException, InstanceNotFoundException {
         Preconditions.checkNotNull(item);

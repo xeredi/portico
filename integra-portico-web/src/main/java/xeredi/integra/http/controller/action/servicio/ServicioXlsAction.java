@@ -63,6 +63,7 @@ public final class ServicioXlsAction extends BaseAction {
 
         enti = TipoServicioProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
+        itemCriterio.setIdioma(getIdioma());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ExcelUtil excelUtil = new ExcelUtil(getLocale());

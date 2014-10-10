@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -63,6 +64,11 @@ public final class ParametroXlsAction extends BaseAction {
 
         enti = TipoParametroProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);
+        itemCriterio.setIdioma(getIdioma());
+
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ExcelUtil excelUtil = new ExcelUtil(getLocale());
