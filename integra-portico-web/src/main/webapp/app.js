@@ -287,6 +287,10 @@ app.config(function($translateProvider) {
         aspc_lsumCuant : "Elem. Sumarizable?",
         aspc_lgrpInfo : "Elem. de Agrupaci\u00f3n?",
 
+        ascr_crgo : "Cargo",
+        ascr_fini : "F. Inicio",
+        ascr_ffin : "F. Fin",
+
         crgo_grid : "Cargo - Listado",
         crgo_detail : "Cargo - Detalle",
         crgo_create : "Cargo - Nuevo",

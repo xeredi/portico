@@ -1,0 +1,30 @@
+<p class="bg-primary" ng-bind="'Cargo de Aspecto' | uppercase"></p>
+
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/facturacion/ascr/edit/{{ascr.ascv.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
+        <button data-ng-click="remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+        </button>
+    </div>
+</div>
+
+<fieldset>
+    <div class="row-fluid">
+        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+            <label translate>ascr_crgo</label>
+            <p class="form-control-static">
+                <a ng-href="#/facturacion/crgo/detail/{{ascr.crgo.id}}/{{fechaVigencia}}" ng-bind="ascr.crgo.etiqueta"></a>
+            </p>
+        </div>
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <label translate>ascr_fini</label>
+            <p class="form-control-static" ng-bind="ascr.ascv.fini | date"></p>
+        </div>
+        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+            <label translate>ascr_ffin</label>
+            <p class="form-control-static" ng-bind="ascr.ascv.ffin | date"></p>
+        </div>
+    </div>
+</fieldset>

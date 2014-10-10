@@ -2,9 +2,8 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
-        </button>
+        <a class="btn btn-default" ng-href="#/facturacion/aspc/edit/{{aspc.aspv.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
         <a class="btn btn-default" ng-href="#/facturacion/aspc/duplicate/{{aspc.aspv.id}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
@@ -100,7 +99,7 @@
     </div>
 </fieldset>
 
-<div class="row-fluid">
+<fieldset>
     <div class="col-sm-6 col-md-4 col-lg-3 form-group">
         <fieldset>
             <legend ng-bind="'Elementos Cuantitativos de Linea' | uppercase"></legend>
@@ -188,4 +187,38 @@
             </div>
         </fieldset>
     </div>
-</div>
+</fieldset>
+
+<fieldset>
+    <legend>CARGOS ASOCIADOS</legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/facturacion/ascr/create/{{aspc.id}}/{{fechaVigencia}}"><i
+                class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th />
+                    <th translate>ascr_crgo</th>
+                    <th translate>ascr_fini</th>
+                    <th translate>ascr_ffin</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="ascr in ascrList track by $index">
+                    <td><a ng-href="#/facturacion/ascr/detail/{{ascr.id}}/{{fechaVigencia}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="ascr.crgo.etiqueta"></td>
+                    <td ng-bind="ascr.ascv.fini | date"></td>
+                    <td ng-bind="ascr.ascv.ffin | date"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

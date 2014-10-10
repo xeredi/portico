@@ -70,6 +70,23 @@ GRANT SELECT ON portico.vw_aspecto_aspc TO portico
 
 
 
+CREATE VIEW portico.vw_aspecto_cargo_ascr AS
+	SELECT *
+	FROM
+		portico.tbl_aspecto_cargo_ascr
+		INNER JOIN portico.tbl_aspecto_cargo_version_ascv ON
+			ascv_ascr_pk = ascr_pk
+		INNER JOIN portico.tbl_cargo_crgo ON
+			crgo_pk = ascr_crgo_pk
+		INNER JOIN portico.tbl_cargo_version_crgv ON
+			crgv_crgo_pk = ascr_crgo_pk
+;
+
+GRANT SELECT ON portico.vw_aspecto_cargo_ascr TO portico
+;
+
+
+
 CREATE VIEW portico.vw_valoracion_vlrc AS
 	SELECT *
 		, (
@@ -383,6 +400,8 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DROP VIEW portico.vw_aspecto_cargo_ascr
+;
 DROP VIEW portico.vw_aspecto_aspc
 ;
 DROP VIEW portico.vw_cargo_crgo

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,6 +42,15 @@ public interface CargoDAO {
      * @return the list
      */
     List<CargoVO> selectList(final CargoCriterioVO criterioVO, final RowBounds bounds);
+
+    /**
+     * Select label value list.
+     *
+     * @param criterioVO
+     *            the criterio vo
+     * @return the list
+     */
+    List<LabelValueVO> selectLabelValueList(final CargoCriterioVO criterioVO);
 
     /**
      * Count.

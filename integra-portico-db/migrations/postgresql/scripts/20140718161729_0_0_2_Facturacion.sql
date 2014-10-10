@@ -294,19 +294,41 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_version_aspv TO port
 -- tbl_aspecto_cargo_ascr
 CREATE TABLE portico.tbl_aspecto_cargo_ascr
 (
-	ascr_aspv_pk BIGINT NOT NULL
+	ascr_pk BIGINT NOT NULL
+	, ascr_aspc_pk BIGINT NOT NULL
 	, ascr_crgo_pk BIGINT NOT NULL
 
-	, CONSTRAINT pk_ascr PRIMARY KEY (ascr_aspv_pk, ascr_crgo_pk)
+	, CONSTRAINT pk_ascr PRIMARY KEY (ascr_pk)
+	, CONSTRAINT uq_ascr UNIQUE (ascr_aspc_pk, ascr_crgo_pk)
 
-	, CONSTRAINT fk_ascr_aspv_pk FOREIGN KEY (ascr_aspv_pk)
-		REFERENCES portico.tbl_aspecto_version_aspv (aspv_pk)
+	, CONSTRAINT fk_ascr_aspc_pk FOREIGN KEY (ascr_aspc_pk)
+		REFERENCES portico.tbl_aspecto_aspc (aspc_pk)
 	, CONSTRAINT fk_ascr_crgo_pk FOREIGN KEY (ascr_crgo_pk)
 		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
 )
 ;
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_cargo_ascr TO portico;
+
+
+
+CREATE TABLE portico.tbl_aspecto_cargo_version_ascv
+(
+	ascv_pk BIGINT NOT NULL
+	, ascv_ascr_pk BIGINT NOT NULL
+	, ascv_fini TIMESTAMP NOT NULL
+	, ascv_ffin TIMESTAMP
+
+	, CONSTRAINT pk_ascv PRIMARY KEY (ascv_pk)
+
+	, CONSTRAINT fk_ascv_ascr_pk FOREIGN KEY (ascv_ascr_pk)
+		REFERENCES portico.tbl_aspecto_cargo_ascr (ascr_pk)
+)
+;
+
+CREATE INDEX ix_ascv_ascr_pk ON portico.tbl_aspecto_cargo_version_ascv (ascv_ascr_pk);
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_aspecto_cargo_version_ascv TO portico;
 
 
 
@@ -835,6 +857,7 @@ DROP TABLE portico.tbl_valoracion_imp_vlri;
 DROP TABLE portico.tbl_valoracion_cargo_vlrg;
 DROP TABLE portico.tbl_valoracion_vlrc;
 DROP TABLE portico.tbl_factura_serie_fcsr;
+DROP TABLE portico.tbl_aspecto_cargo_version_ascv;
 DROP TABLE portico.tbl_aspecto_cargo_ascr;
 DROP TABLE portico.tbl_aspecto_version_aspv;
 DROP TABLE portico.tbl_aspecto_aspc;

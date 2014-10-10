@@ -231,7 +231,8 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk) VALUES
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, 1, NULL, NULL, NULL, NULL, NULL
 	);
-		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65001, 60001);
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_pk, ascr_aspc_pk, ascr_crgo_pk) VALUES (66001, 61001, 60001);
+			INSERT INTO portico.tbl_aspecto_cargo_version_ascv (ascv_pk, ascv_ascr_pk, ascv_fini, ascv_ffin) VALUES (67001, 66001, '2013-01-01', NULL);
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk) VALUES (61002, 'B3', 21002);
 	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_descripcion, aspv_prioridad
 		, aspv_cpath_info1, aspv_cpath_info2, aspv_cpath_info3, aspv_cpath_info4, aspv_cpath_info5, aspv_cpath_info6
@@ -246,7 +247,8 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk) VALUES
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, 1, NULL, NULL, NULL, NULL, NULL
 	);
-		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65002, 60002);
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_pk, ascr_aspc_pk, ascr_crgo_pk) VALUES (66002, 61002, 60001);
+			INSERT INTO portico.tbl_aspecto_cargo_version_ascv (ascv_pk, ascv_ascr_pk, ascv_fini, ascv_ffin) VALUES (67002, 66002, '2013-01-01', NULL);
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk) VALUES (61003, 'B1', 21003);
 	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_descripcion, aspv_prioridad
 		, aspv_cpath_info1, aspv_cpath_info2, aspv_cpath_info3, aspv_cpath_info4, aspv_cpath_info5, aspv_cpath_info6
@@ -261,8 +263,10 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk) VALUES
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
 	);
-		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65003, 60003);
-		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65003, 60004);
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_pk, ascr_aspc_pk, ascr_crgo_pk) VALUES (66003, 61003, 60003);
+			INSERT INTO portico.tbl_aspecto_cargo_version_ascv (ascv_pk, ascv_ascr_pk, ascv_fini, ascv_ffin) VALUES (67003, 66003, '2013-01-01', NULL);
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_pk, ascr_aspc_pk, ascr_crgo_pk) VALUES (66004, 61003, 60004);
+			INSERT INTO portico.tbl_aspecto_cargo_version_ascv (ascv_pk, ascv_ascr_pk, ascv_fini, ascv_ffin) VALUES (67004, 66004, '2013-01-01', NULL);
 INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk) VALUES (61004, 'TR', 21003);
 	INSERT INTO portico.tbl_aspecto_version_aspv (aspv_pk, aspv_aspc_pk, aspv_fini, aspv_ffin, aspv_descripcion, aspv_prioridad
 		, aspv_cpath_info1, aspv_cpath_info2, aspv_cpath_info3, aspv_cpath_info4, aspv_cpath_info5, aspv_cpath_info6
@@ -277,7 +281,8 @@ INSERT INTO portico.tbl_aspecto_aspc (aspc_pk, aspc_codigo, aspc_tpsr_pk) VALUES
 		, NULL, NULL, NULL, NULL, NULL, NULL
 		, NULL, NULL, NULL, NULL, NULL, NULL
 	);
-		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_aspv_pk, ascr_crgo_pk) VALUES (65004, 60005);
+		INSERT INTO portico.tbl_aspecto_cargo_ascr (ascr_pk, ascr_aspc_pk, ascr_crgo_pk) VALUES (66005, 61004, 60005);
+			INSERT INTO portico.tbl_aspecto_cargo_version_ascv (ascv_pk, ascv_ascr_pk, ascv_fini, ascv_ffin) VALUES (67005, 66005, '2013-01-01', NULL);
 
 
 
@@ -321,22 +326,36 @@ WHERE fcsr_pk IN (
 	, 68003
 );
 
+DELETE FROM portico.tbl_aspecto_cargo_version_ascv
+WHERE EXISTS (
+	SELECT 1 FROM  portico.tbl_aspecto_cargo_ascr
+	WHERE
+		ascr_pk = ascv_ascr_pk
+		AND EXISTS (
+			SELECT 1
+			FROM portico.tbl_aspecto_aspc
+			WHERE aspc_pk = ascr_aspc_pk
+				AND aspc_pk IN (
+							  61000
+							, 61001
+							, 61002
+							, 61003
+							, 61004
+				)
+		)
+);
+
 DELETE FROM portico.tbl_aspecto_cargo_ascr
 WHERE EXISTS (
 		SELECT 1
-		FROM portico.tbl_aspecto_version_aspv
-		WHERE aspv_pk = ascr_aspv_pk
-			AND EXISTS (
-				SELECT 1 FROM portico.tbl_aspecto_aspc
-				WHERE
-					aspc_pk = aspv_aspc_pk
-					AND aspc_pk IN (
+		FROM portico.tbl_aspecto_aspc
+		WHERE aspc_pk = ascr_aspc_pk
+			AND aspc_pk IN (
 						  61000
 						, 61001
 						, 61002
 						, 61003
 						, 61004
-					)
 			)
 );
 

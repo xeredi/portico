@@ -2,9 +2,8 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
-        </button>
+        <a class="btn btn-default" ng-href="#/metamodelo/tppr/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
+            <span translate>boton_editar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
@@ -107,7 +106,8 @@
                 <td><i class="glyphicon glyphicon-{{subenti.cmdBaja ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
-                <td><a ng-if="subenti.tpprAsociado" ng-href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}" ng-bind="subenti.tpprAsociado.etiqueta"></a></td>
+                <td><a ng-if="subenti.tpprAsociado" ng-href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}"
+                    ng-bind="subenti.tpprAsociado.etiqueta"></a></td>
             </tr>
         </tbody>
     </table>

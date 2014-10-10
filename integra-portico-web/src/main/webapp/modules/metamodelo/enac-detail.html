@@ -1,18 +1,17 @@
+<p class="bg-primary" ng-bind="enac.etiqueta | uppercase"></p>
+
 <div class="table-responsive">
-    <fieldset>
-        <legend ng-bind="enac.nombre | uppercase"></legend>
-
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <button data-ng-click="edit()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
-                </button>
-                <button data-ng-click="remove()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
-                </button>
-            </div>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/metamodelo/enac/edit/{{enac.entiId}}/{{enac.path}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            </button>
         </div>
+    </div>
 
+    <fieldset>
         <div class="row-fluid">
             <div class="col-md-2 form-group">
                 <label translate>enac_path</label>

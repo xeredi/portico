@@ -29,6 +29,14 @@
     ]]>
     </sql>
 
+    <sql id="SelectLabelValuePrefix">
+    <![CDATA[
+        SELECT crgo_pk AS value
+            , portico.CONCAT(portico.CONCAT(crgo_codigo, ' - '), crgv_descripcion) AS label
+        FROM vw_cargo_crgo
+    ]]>
+    </sql>
+
     <sql id="SelectWhere">
         <where>
             <if test="fechaVigencia != null">
@@ -163,6 +171,12 @@
 
     <select id="selectList" parameterType="CargoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY crgo_tpsr_pk, crgo_codigo
+    </select>
+
+    <select id="selectLabelValueList" parameterType="CargoCriterioVO" resultType="LabelValueVO">
+        <include refid="SelectLabelValuePrefix" />
         <include refid="SelectWhere" />
         ORDER BY crgo_tpsr_pk, crgo_codigo
     </select>

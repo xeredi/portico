@@ -2,6 +2,7 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.validator.GenericValidator;
@@ -11,6 +12,9 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
+import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
+import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
+import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
@@ -34,6 +38,9 @@ public final class AspectoAction extends BaseAction {
 
     /** The aspc. */
     private AspectoVO aspc;
+
+    /** The ascr list. */
+    private List<AspectoCargoVO> ascrList;
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
@@ -79,6 +86,16 @@ public final class AspectoAction extends BaseAction {
         }
 
         aspc = aspcBO.select(aspcCriterioVO);
+
+        if (aspc != null && fechaVigencia != null) {
+            final AspectoCargoBO ascrBO = new AspectoCargoBO();
+            final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
+
+            ascrCriterioVO.setAspcId(aspc.getId());
+            ascrCriterioVO.setFechaVigencia(fechaVigencia);
+
+            ascrList = ascrBO.selectList(ascrCriterioVO);
+        }
 
         return SUCCESS;
     }
@@ -376,6 +393,15 @@ public final class AspectoAction extends BaseAction {
      */
     public void setAccion(final ACCION_EDICION value) {
         accion = value;
+    }
+
+    /**
+     * Gets the ascr list.
+     *
+     * @return the ascr list
+     */
+    public List<AspectoCargoVO> getAscrList() {
+        return ascrList;
     }
 
 }

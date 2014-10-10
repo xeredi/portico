@@ -2,9 +2,8 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
-        </button>
+        <a class="btn btn-default" ng-href="#/metamodelo/tpss/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
+            <span translate>boton_editar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>

@@ -13,6 +13,7 @@ import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -42,7 +43,7 @@ public class CargoBO {
     public PaginatedList<CargoVO> selectList(final CargoCriterioVO crgoCriterioVO, final int offset, final int limit) {
         Preconditions.checkNotNull(crgoCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         crgoDAO = session.getMapper(CargoDAO.class);
 
@@ -55,6 +56,27 @@ public class CargoBO {
             }
 
             return new PaginatedList<CargoVO>(crgoList, offset, limit, count);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Select label value list.
+     *
+     * @param crgoCriterioVO
+     *            the crgo criterio vo
+     * @return the list
+     */
+    public List<LabelValueVO> selectLabelValueList(final CargoCriterioVO crgoCriterioVO) {
+        Preconditions.checkNotNull(crgoCriterioVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+
+        crgoDAO = session.getMapper(CargoDAO.class);
+
+        try {
+            return crgoDAO.selectLabelValueList(crgoCriterioVO);
         } finally {
             session.close();
         }

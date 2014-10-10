@@ -131,7 +131,7 @@
         				SELECT 1
         				FROM tbl_aspecto_version_aspv
         				WHERE
-        					aspv_pk = ascr_aspv_pk
+        					aspv_aspc_pk = ascr_aspc_pk
         					AND #{fechaFacturacion} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{fechaFacturacion})
         					AND aspv_aspc_pk = #{aspc.id}
         			)
@@ -168,7 +168,7 @@
         </if>
     </select>
 
-    <select id="selectId" parameterType="CargoVO" resultType="Long">
+    <select id="selectId" parameterType="AspectoVO" resultType="Long">
     <![CDATA[
         SELECT aspc_pk
         FROM tbl_aspecto_aspc
@@ -206,7 +206,7 @@
     ]]>
     </insert>
 
-    <insert id="updateVersion" parameterType="AspectoVO">
+    <update id="updateVersion" parameterType="AspectoVO">
     <![CDATA[
         UPDATE tbl_aspecto_version_aspv SET
             aspv_fini = #{aspv.fini}, aspv_ffin = #{aspv.ffin}, aspv_prioridad = #{aspv.prioridad}, aspv_descripcion = #{aspv.descripcion}
@@ -225,5 +225,5 @@
             , aspv_lgrp_info5 = #{aspv.lgrpInfo5, jdbcType=INTEGER, javaType=Boolean}, aspv_lgrp_info6 = #{aspv.lgrpInfo6, jdbcType=INTEGER, javaType=Boolean}
         WHERE aspv_pk = #{aspv.id}
     ]]>
-    </insert>
+    </update>
 </mapper>

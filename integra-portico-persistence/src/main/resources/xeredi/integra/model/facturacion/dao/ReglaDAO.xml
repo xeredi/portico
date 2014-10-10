@@ -143,7 +143,7 @@
             						SELECT 1
             						FROM tbl_aspecto_cargo_ascr
             						WHERE
-            							ascr_aspv_pk = aspv_pk
+            							ascr_aspc_pk = aspv_aspc_pk
             							AND ascr_crgo_pk = rgla_crgo_pk
             					)
             			)

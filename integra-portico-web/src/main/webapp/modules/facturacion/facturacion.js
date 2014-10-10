@@ -670,9 +670,9 @@ module.controller("rginCreateController", function($scope, $http, $location, $ro
     }
 });
 
-// ----------- ASPECTO ------------------
-// ----------- ASPECTO ------------------
-// ----------- ASPECTO ------------------
+// ----------- ASPECTO y ASPECTO CARGO ------------------
+// ----------- ASPECTO y ASPECTO CARGO ------------------
+// ----------- ASPECTO y ASPECTO CARGO ------------------
 
 module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -712,6 +712,24 @@ module.config([ "$routeProvider", function($routeProvider) {
         title : 'aspc_detail',
         templateUrl : "modules/facturacion/aspc-detail.html",
         controller : "aspcDetailController"
+    })
+
+    .when("/facturacion/ascr/create/:aspcId/:fechaVigencia", {
+        title : 'ascr_create',
+        templateUrl : "modules/facturacion/ascr-edit.html",
+        controller : "ascrCreateController"
+    })
+
+    .when("/facturacion/ascr/detail/:ascrId/:fechaVigencia", {
+        title : 'ascr_detail',
+        templateUrl : "modules/facturacion/ascr-detail.html",
+        controller : "ascrDetailController"
+    })
+
+    .when("/facturacion/ascr/edit/:ascvId", {
+        title : 'ascr_edit',
+        templateUrl : "modules/facturacion/ascr-edit.html",
+        controller : "ascrEditController"
     })
 } ]);
 
@@ -817,12 +835,9 @@ module.controller("aspcDetailController", function($scope, $http, $location, $ro
     $http.get(url).success(function(data) {
         $scope.urlInclude = 'modules/facturacion/aspc-detail.html';
         $scope.aspc = data.aspc;
+        $scope.ascrList = data.ascrList;
         $scope.fechaVigencia = data.fechaVigencia;
     });
-
-    $scope.edit = function() {
-        $location.path("/facturacion/aspc/edit/" + $scope.aspc.aspv.id).replace();
-    }
 
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
@@ -857,13 +872,13 @@ module.controller("aspcEditController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
+                window.history.back();
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/facturacion/aspc/detail/" + $scope.aspc.aspv.id).replace();
+        window.history.back();
     }
 });
 
@@ -886,6 +901,90 @@ module.controller("aspcDuplicateController", function($scope, $http, $location, 
 
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
+});
+
+module.controller("ascrCreateController", function($scope, $http, $location, $routeParams) {
+    var url = "facturacion/ascr-create.action?ascr.aspcId=" + $routeParams.aspcId + "&fechaVigencia="
+            + $routeParams.fechaVigencia;
+
+    $http.get(url).success(function(data) {
+        $scope.ascr = data.ascr;
+        $scope.crgoList = data.crgoList;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "facturacion/ascr-save.action";
+
+        $http.post(url, {
+            ascr : $scope.ascr,
+            accion : $scope.accion
+        }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/ascr/detail/" + data.ascr.id + "/" + data.ascr.ascv.fini).replace();
+            }
+        });
+    }
+
+    $scope.cancel = function() {
+        window.history.back();
+    }
+});
+
+module.controller("ascrDetailController", function($scope, $http, $routeParams) {
+    $scope.fechaVigencia = $routeParams.fechaVigencia;
+
+    var url = "facturacion/ascr-detail.action?ascr.id=" + $routeParams.ascrId + "&fechaVigencia="
+            + $routeParams.fechaVigencia;
+
+    $http.get(url).success(function(data) {
+        $scope.ascr = data.ascr;
+        $scope.fechaVigencia = data.fechaVigencia;
+    });
+
+    $scope.remove = function() {
+        if (confirm("Are you sure?")) {
+            var url = "facturacion/ascr-remove.action?ascr.ascv.id=" + $scope.ascr.ascv.id;
+
+            $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                }
+            });
+        }
+    }
+});
+
+module.controller("ascrEditController", function($scope, $http, $routeParams) {
+    var url = "facturacion/ascr-edit.action?ascr.ascv.id=" + $routeParams.ascvId;
+
+    $http.get(url).success(function(data) {
+        $scope.ascr = data.ascr;
+        $scope.accion = data.accion;
+    });
+
+    $scope.save = function() {
+        var url = "facturacion/ascr-save.action";
+
+        $http.post(url, {
+            ascr : $scope.ascr,
+            accion : $scope.accion
+        }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                window.history.back();
             }
         });
     }

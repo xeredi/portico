@@ -1,0 +1,50 @@
+<p class="bg-primary" ng-bind="'Cargo de Aspecto' | uppercase"></p>
+
+<form role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="ascr.aspc.id" /><input type="hidden"
+        ng-model="ascr.id" /><input type="hidden" ng-model="ascr.ascv.id" />
+
+    <fieldset>
+        <div class="row-fluid">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                <label translate>ascr_crgo</label> <select ng-if="accion == 'create'" ng-model="ascr.crgo.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in crgoList"
+                    class="form-control input-sm">
+                    <option />
+                </select>
+                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="ascr.crgo.etiqueta"></p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                <label translate>aspc_fini</label>
+                <div class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="ascr.ascv.fini" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                <label translate>aspc_ffin</label>
+                <div class="input-group" ng-controller="datepickerController">
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                        datepicker-options="dateOptions" is-open="opened" ng-model="ascr.ascv.ffin" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
+
+    <div class="btn-group">
+        <button data-ng-click="save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
+        </button>
+        <button data-ng-click="cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
+        </button>
+    </div>
+</form>
