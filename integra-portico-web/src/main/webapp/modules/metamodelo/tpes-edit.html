@@ -4,24 +4,24 @@
 
     <fieldset>
         <div class="row-fluid">
-            <div class="col-md-2 form-group">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate>enti_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enti.codigo" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="enti.codigo"></p>
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label translate>enti_nombre</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enti.nombre" class="form-control input-sm" />
                 <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="enti.nombre"></p>
             </div>
         </div>
-
-        <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-        <ul>
-            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-        </ul>
-        </alert>
     </fieldset>
+
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

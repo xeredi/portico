@@ -5,8 +5,8 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>entd_tpdt_nombre</label> <select ng-if="accion == 'create'"
-                    ng-model="entd.tpdt.id" ng-options="labelValue.value as labelValue.label for labelValue in tpdtList"
+                <label translate>entd_tpdt_nombre</label> <select ng-if="accion == 'create'" ng-model="entd.tpdt.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in tpdtList"
                     class="form-control input-sm">
                     <option />
                 </select>
@@ -55,13 +55,13 @@
                 </select>
             </div>
         </div>
-
-        <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-        <ul>
-            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-        </ul>
-        </alert>
     </fieldset>
+
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

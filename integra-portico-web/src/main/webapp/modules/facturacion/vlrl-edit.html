@@ -1,4 +1,4 @@
-<alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
+<alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
 <ul>
     <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>

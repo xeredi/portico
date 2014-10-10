@@ -4,27 +4,27 @@
 
     <fieldset>
         <div class="row-fluid">
-            <div class="col-md-2 form-group">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label translate>enac_path</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enac.etiqueta" class="form-control input-sm" />
                 <p ng-if="accion != 'create'" class="form-control-static" ng-bind="enac.path"></p>
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label translate>enac_etiqueta</label> <input type="text" ng-model="enac.etiqueta"
                     class="form-control input-sm" />
             </div>
-            <div class="col-md-1 form-group">
+            <div class="col-sm-1 col-md-1 col-lg-1 form-group">
                 <label translate>enac_orden</label> <input type="text" ng-model="enac.orden"
                     class="form-control input-sm" />
             </div>
         </div>
-
-        <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
-        <ul>
-            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-        </ul>
-        </alert>
     </fieldset>
+
+    <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

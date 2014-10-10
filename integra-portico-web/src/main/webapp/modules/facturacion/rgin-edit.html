@@ -1,11 +1,5 @@
 <p class="bg-primary" ng-bind="'Incompatibilidad' | uppercase"></p>
 
-<alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
-<ul>
-    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-</ul>
-</alert>
-
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="rgin.id" /><input type="hidden"
         ng-model="rgin.rgiv.id" />
@@ -32,13 +26,19 @@
                 <label translate>rgin_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="rgin.rgiv.ffin" ng-required="true" />
+                        datepicker-options="dateOptions" is-open="opened" ng-model="rgin.rgiv.ffin" />
                     <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
         </div>
     </fieldset>
+
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

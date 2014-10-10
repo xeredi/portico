@@ -188,10 +188,6 @@ module.controller("vlrlDetailController", function($scope, $http, $location, $ro
         $scope.vlrdList = data.vlrdList;
     });
 
-    $scope.edit = function() {
-        $location.path("/facturacion/vlrl/edit/" + $scope.vlrl.id).replace();
-    }
-
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "facturacion/vlrl-remove.action?vlrl.id=" + $scope.vlrl.id;
@@ -225,13 +221,15 @@ module.controller("vlrlEditController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/facturacion/vlrl/detail/" + $scope.vlrl.id).replace();
+        window.history.back();
     }
 });
 
@@ -436,10 +434,6 @@ module.controller("crgoDetailController", function($scope, $http, $location, $ro
         $scope.fechaVigencia = data.fechaVigencia;
     });
 
-    $scope.edit = function() {
-        $location.path("/facturacion/crgo/edit/" + $scope.crgo.crgv.id).replace();
-    }
-
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "facturacion/crgo-remove.action?crgo.crgv.id=" + $scope.crgo.crgv.id;
@@ -474,13 +468,15 @@ module.controller("crgoEditController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/crgo/detail/" + data.crgo.crgv.id).replace();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/facturacion/crgo/detail/" + $scope.crgo.crgv.id).replace();
+        window.history.back();
     }
 });
 
@@ -499,10 +495,6 @@ module.controller("rglaDetailController", function($scope, $http, $location, $ro
         $scope.rginList = data.rginList;
         $scope.fechaVigencia = data.fechaVigencia;
     });
-
-    $scope.edit = function() {
-        $location.path("/facturacion/rgla/edit/" + $scope.rgla.rglv.id).replace();
-    }
 
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
@@ -539,13 +531,15 @@ module.controller("rglaEditController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/facturacion/rgla/detail/" + $scope.rgla.rglv.id).replace();
+        window.history.back();
     }
 });
 
@@ -593,10 +587,6 @@ module.controller("rginDetailController", function($scope, $http, $location, $ro
         $scope.fechaVigencia = data.fechaVigencia;
     });
 
-    $scope.edit = function() {
-        $location.path("/facturacion/rgin/edit/" + $scope.rgin.rgiv.id).replace();
-    }
-
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "facturacion/rgin-remove.action?rgin.rgiv.id=" + $scope.rgin.rgiv.id;
@@ -630,13 +620,15 @@ module.controller("rginEditController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/facturacion/rgin/detail/" + $scope.rgin.rgiv.id).replace();
+        window.history.back();
     }
 });
 
@@ -872,7 +864,9 @@ module.controller("aspcEditController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -984,7 +978,9 @@ module.controller("ascrEditController", function($scope, $http, $routeParams) {
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
