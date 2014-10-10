@@ -81,6 +81,8 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
@@ -94,8 +96,6 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
                 $location.search(map).replace();
 
                 $scope.showFilter = false;
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -108,12 +108,12 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
         var url = "servicio/srvc-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
 
         $http.get(url).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.labelValuesMap = data.labelValuesMap;
                 $scope.subpList = data.subpList;
                 $scope.limits = data.limits;
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
 
@@ -141,10 +141,6 @@ module.controller("srvcGridController", function($scope, $http, $location, $rout
 });
 
 module.controller("srvcDetailController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.edit = function() {
-        $location.path("/servicio/srvc/edit/" + $scope.item.entiId + "/" + $scope.item.id).replace();
-    }
-
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "servicio/srvc-remove.action?item.id=" + $scope.item.id;
@@ -316,16 +312,18 @@ module.controller("srvcEditController", function($scope, $http, $location, $rout
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
-                $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/servicio/srvc/detail/" + $scope.item.entiId + "/" + $scope.item.id).replace();
+        window.history.back();
     }
 
     function findItem() {
@@ -359,10 +357,10 @@ module.controller("srvcDuplicateController", function($scope, $http, $location, 
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -478,6 +476,8 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
             page : page,
             limit : limit
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.page = data.itemList.page;
                 $scope.itemList = data.itemList;
@@ -491,8 +491,6 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
                 $location.search(map).replace();
 
                 $scope.showFilter = false;
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -505,11 +503,11 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
         var url = "servicio/ssrv-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
 
         $http.get(url).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $scope.labelValuesMap = data.labelValuesMap;
                 $scope.limits = data.limits;
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
 
@@ -537,19 +535,15 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
 });
 
 module.controller("ssrvDetailController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.edit = function() {
-        $location.path("/servicio/ssrv/edit/" + $scope.item.entiId + "/" + $scope.item.id).replace();
-    }
-
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "servicio/ssrv-remove.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -781,16 +775,18 @@ module.controller("ssrvEditController", function($scope, $http, $location, $rout
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
-                $location.path("/servicio/ssrv/detail/" + data.item.entiId + "/" + data.item.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/servicio/ssrv/detail/" + $scope.item.entiId + "/" + $scope.item.id).replace();
+        window.history.back();
     }
 
     function findItem() {
@@ -823,10 +819,10 @@ module.controller("ssrvDuplicateController", function($scope, $http, $location, 
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/servicio/ssrv/detail/" + data.item.entiId + "/" + data.item.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }

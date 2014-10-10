@@ -143,11 +143,6 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
 });
 
 module.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
-    $scope.edit = function() {
-        $location.path("/maestro/prmt/edit/" + $scope.item.entiId + "/" + $scope.item.prvr.id + "/" + $scope.item.fref)
-                .replace();
-    }
-
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "maestro/prmt-remove.action?item.prvr.id=" + $scope.item.prvr.id;
@@ -251,13 +246,15 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $location.path("/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.prvr.id).replace();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/maestro/prmt/detail/" + $scope.item.entiId + "/" + $scope.item.prvr.id).replace();
+        window.history.back();
     }
 
     function findEnti() {
@@ -380,19 +377,15 @@ module.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 module.controller("sprmDetailController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.edit = function() {
-        $location.path("/maestro/sprm/edit/" + $scope.item.entiId + "/" + $scope.item.spvr.id).replace();
-    }
-
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "maestro/sprm-remove.action?item.spvr.id=" + $scope.item.spvr.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
@@ -433,10 +426,10 @@ module.controller("sprmCreateController", function($scope, $http, $location, $ro
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.spvr.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }
@@ -476,16 +469,18 @@ module.controller("sprmEditController", function($scope, $http, $location, $rout
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
-                $location.path("/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.spvr.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
 
     $scope.cancel = function() {
-        $location.path("/maestro/sprm/detail/" + $scope.item.entiId + "/" + $scope.item.spvr.id).replace();
+        window.history.back();
     }
 
     function findEnti() {
@@ -518,10 +513,10 @@ module.controller("sprmDuplicateController", function($scope, $http, $location, 
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
             if (data.actionErrors.length == 0) {
                 $location.path("/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.spvr.id).replace();
-            } else {
-                $scope.actionErrors = data.actionErrors;
             }
         });
     }

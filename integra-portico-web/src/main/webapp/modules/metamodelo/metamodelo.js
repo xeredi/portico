@@ -197,7 +197,9 @@ metamodelo.controller("tpdtEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -278,7 +280,9 @@ metamodelo.controller("cdrfEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -437,7 +441,9 @@ metamodelo.controller("tpprEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -478,7 +484,9 @@ metamodelo.controller("tpprCreateController", function($scope, $http, $location,
     }
 
     $scope.cancel = function() {
-        window.history.back();
+        setTimeout(function() {
+            window.history.back();
+        }, 0);
     }
 });
 
@@ -530,7 +538,9 @@ metamodelo.controller("tpspEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -723,7 +733,9 @@ metamodelo.controller("tpsrEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -817,7 +829,9 @@ metamodelo.controller("tpssEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -985,7 +999,9 @@ metamodelo.controller("tpesEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }
@@ -1097,7 +1113,9 @@ metamodelo.controller("entdEditController",
                     $scope.actionErrors = data.actionErrors;
 
                     if (data.actionErrors.length == 0) {
-                        window.history.back();
+                        setTimeout(function() {
+                            window.history.back();
+                        }, 0);
                     }
                 });
             }
@@ -1206,7 +1224,9 @@ metamodelo.controller("enacEditController", function($scope, $http, $location, $
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                window.history.back();
+                setTimeout(function() {
+                    window.history.back();
+                }, 0);
             }
         });
     }

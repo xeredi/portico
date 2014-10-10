@@ -1,6 +1,6 @@
 <p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
-<alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
+<alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
 <ul>
     <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 </ul>
@@ -8,9 +8,8 @@
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
-        </button>
+        <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{enti.id}}/{{item.spvr.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
         <a class="btn btn-default" ng-href="#/maestro/sprm/duplicate/{{enti.id}}/{{item.spvr.id}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">

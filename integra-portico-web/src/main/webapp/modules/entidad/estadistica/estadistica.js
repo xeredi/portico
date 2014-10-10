@@ -110,10 +110,10 @@ module.controller("peprDetailController", function($scope, $http, $location, $ro
             var url = "estadistica/pepr-remove.action?pepr.id=" + $scope.pepr.id;
 
             $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
                 if (data.actionErrors.length == 0) {
                     window.history.back();
-                } else {
-                    $scope.actionErrors = data.actionErrors;
                 }
             });
         }
