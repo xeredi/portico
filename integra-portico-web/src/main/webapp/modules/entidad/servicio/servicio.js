@@ -75,10 +75,10 @@ module.controller("srvcGridController",
             $scope.itemCriterio.entiId = $routeParams.entiId;
             $scope.pageInfo = {};
 
-            alert(JSON.stringify($routeParams.itemCriterio));
-            alert(JSON.stringify($routeParams.page));
-            alert(JSON.stringify($routeParams.limit));
-            alert(JSON.stringify($routeParams.entiId));
+//            alert(JSON.stringify($routeParams.itemCriterio));
+//            alert(JSON.stringify($routeParams.page));
+//            alert(JSON.stringify($routeParams.limit));
+//            alert(JSON.stringify($routeParams.entiId));
 
             function search(itemCriterio, page, limit) {
                 var url = "servicio/srvc-list.action?page=" + page + "&limit=" + limit;
