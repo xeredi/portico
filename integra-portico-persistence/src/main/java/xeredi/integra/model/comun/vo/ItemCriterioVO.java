@@ -59,6 +59,94 @@ public abstract class ItemCriterioVO implements Criterio {
     }
 
     /**
+     * Fill url map.
+     *
+     * @param map
+     *            the map
+     */
+    protected void fillUrlMap(final Map<String, Object> map) {
+        if (fechaVigencia != null) {
+            map.put("itemCriterio.fechaVigencia", fechaVigencia);
+        }
+        if (idioma != null) {
+            map.put("itemCriterio.idioma", idioma);
+        }
+
+        map.put("itemCriterio.soloDatosGrid", soloDatosGrid);
+
+        if (etiqueta != null) {
+            map.put("itemCriterio.etiqueta", etiqueta);
+        }
+        if (id != null) {
+            map.put("itemCriterio.id", id);
+        }
+        if (ids != null) {
+            map.put("itemCriterio.ids", ids);
+        }
+        if (entiId != null) {
+            map.put("itemCriterio.entiId", entiId);
+        }
+        if (entiIds != null) {
+            map.put("itemCriterio.entiIds", entiIds);
+        }
+
+        if (itdtMap != null) {
+            for (final ItemDatoCriterioVO itdt : itdtMap.values()) {
+                final String prefix = "itemCriterio.itdtMap(" + itdt.getTpdtId() + ")";
+
+                if (itdt.getBooleano() != null) {
+                    map.put(prefix + ".booleano", itdt.getBooleano());
+                }
+                if (itdt.getCadena() != null) {
+                    map.put(prefix + ".cadena", itdt.getCadena());
+                }
+                if (itdt.getCadenas() != null) {
+                    map.put(prefix + ".cadenas", itdt.getCadenas());
+                }
+                if (itdt.getCantidadDecimal() != null) {
+                    map.put(prefix + ".cantidadDecimal", itdt.getCantidadDecimal());
+                }
+                if (itdt.getCantidadDecimalMax() != null) {
+                    map.put(prefix + ".cantidadDecimalMax", itdt.getCantidadDecimalMax());
+                }
+                if (itdt.getCantidadDecimalMin() != null) {
+                    map.put(prefix + ".cantidadDecimalMin", itdt.getCantidadDecimalMin());
+                }
+                if (itdt.getCantidadEntera() != null) {
+                    map.put(prefix + ".cantidadEntera", itdt.getCantidadEntera());
+                }
+                if (itdt.getCantidadEnteraMax() != null) {
+                    map.put(prefix + ".cantidadEnteraMax", itdt.getCantidadEnteraMax());
+                }
+                if (itdt.getCantidadEnteraMin() != null) {
+                    map.put(prefix + ".cantidadEnteraMin", itdt.getCantidadEnteraMin());
+                }
+                if (itdt.getFecha() != null) {
+                    map.put(prefix + ".fecha", itdt.getFecha());
+                }
+                if (itdt.getFechaMax() != null) {
+                    map.put(prefix + ".fechaMax", itdt.getFechaMax());
+                }
+                if (itdt.getFechaMin() != null) {
+                    map.put(prefix + ".fechaMin", itdt.getFechaMin());
+                }
+                if (itdt.getItemId() != null) {
+                    map.put(prefix + ".itemId", itdt.getItemId());
+                }
+                if (itdt.getItemIds() != null) {
+                    map.put(prefix + ".itemIds", itdt.getItemIds());
+                }
+                if (itdt.getPrmt() != null && itdt.getPrmt().getId() != null) {
+                    map.put(prefix + ".prmt.id", itdt.getPrmt().getId());
+                }
+                if (itdt.getSrvc() != null && itdt.getSrvc().getId() != null) {
+                    map.put(prefix + ".srvc.id", itdt.getSrvc().getId());
+                }
+            }
+        }
+    }
+
+    /**
      * Gets the idioma.
      *
      * @return the idioma

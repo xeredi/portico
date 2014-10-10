@@ -68,77 +68,115 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("srvcGridController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.showFilter = false;
-    $scope.itemCriterio = {};
-    $scope.itemCriterio.entiId = $routeParams.entiId;
+module.controller("srvcGridController",
+        function($scope, $http, $location, $routeParams) {
+            $scope.showFilter = false;
+            $scope.itemCriterio = $routeParams.itemCriterio ? $routeParams.itemCriterio : {};
+            $scope.itemCriterio.entiId = $routeParams.entiId;
+            $scope.pageInfo = {};
 
-    function search(itemCriterio, page, limit) {
-        var url = "servicio/srvc-list.action";
+            alert(JSON.stringify($routeParams.itemCriterio));
+            alert(JSON.stringify($routeParams.page));
+            alert(JSON.stringify($routeParams.limit));
+            alert(JSON.stringify($routeParams.entiId));
 
-        $http.post(url, {
-            itemCriterio : itemCriterio,
-            page : page,
-            limit : limit
-        }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            function search(itemCriterio, page, limit) {
+                var url = "servicio/srvc-list.action?page=" + page + "&limit=" + limit;
 
-            if (data.actionErrors.length == 0) {
-                $scope.page = data.itemList.page;
-                $scope.itemList = data.itemList;
-                $scope.itemCriterio = data.itemCriterio;
-                $scope.limit = data.limit;
+                // $http.get('/api.php', { params: $scope.user });
 
-                var map = {};
+                // $http.get(url, {
+                // params : itemCriterio
+                // }).success(function(data) {
+                // $scope.actionErrors = data.actionErrors;
+                //
+                // if (data.actionErrors.length == 0) {
+                // $scope.page = data.itemList.page;
+                // $scope.itemList = data.itemList;
+                // $scope.itemCriterio = data.itemCriterio;
+                // $scope.pageInfo.limit = data.limit;
+                //
+                // var map = {};
+                //
+                // map["page"] = data.itemList.page;
+                // map["limit"] = data.limit;
+                // // map["itemCriterio"] = data.itemCriterio;
+                //
+                // $location.search(map).replace();
+                //
+                // $scope.showFilter = false;
+                // }
+                // });
 
-                map["page"] = data.itemList.page;
+                $http.post(url, {
+                    itemCriterio : itemCriterio,
+                    page : page,
+                    limit : limit
+                }).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
 
-                $location.search(map).replace();
+                    if (data.actionErrors.length == 0) {
+                        $scope.page = data.itemList.page;
+                        $scope.itemList = data.itemList;
+                        $scope.itemCriterio = data.itemCriterio;
+                        $scope.pageInfo.limit = data.limit;
 
+                        var map = {};
+
+                        map["page"] = data.itemList.page;
+                        map["limit"] = data.limit;
+
+                        for ( var key in data.itemCriterio.urlMap) {
+                            map[key] = data.itemCriterio.urlMap[key];
+                        }
+
+                        $location.search(map).replace();
+
+                        $scope.showFilter = false;
+                    }
+                });
+            }
+
+            $scope.pageChanged = function() {
+                search($scope.itemCriterio, $scope.page, $scope.pageInfo.limit);
+            }
+
+            $scope.filter = function() {
+                var url = "servicio/srvc-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
+
+                $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
+                    if (data.actionErrors.length == 0) {
+                        $scope.labelValuesMap = data.labelValuesMap;
+                        $scope.subpList = data.subpList;
+                        $scope.limits = data.limits;
+                    }
+                });
+
+                $scope.showFilter = true;
+            }
+
+            $scope.search = function() {
+                search($scope.itemCriterio, 1, $scope.pageInfo.limit);
+            }
+
+            $scope.cancelSearch = function() {
                 $scope.showFilter = false;
             }
-        });
-    }
 
-    $scope.pageChanged = function() {
-        search($scope.itemCriterio, $scope.page, $scope.limit);
-    }
+            function findEnti() {
+                var url = "metamodelo/tpsr-proxy-detail.action?enti.id=" + $routeParams.entiId;
 
-    $scope.filter = function() {
-        var url = "servicio/srvc-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $scope.labelValuesMap = data.labelValuesMap;
-                $scope.subpList = data.subpList;
-                $scope.limits = data.limits;
+                $http.get(url).success(function(data) {
+                    $scope.enti = data.enti;
+                });
             }
+
+            findEnti();
+            search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1,
+                    $routeParams.limit ? $routeParams.limit : 20);
         });
-
-        $scope.showFilter = true;
-    }
-
-    $scope.search = function() {
-        search($scope.itemCriterio, 1, $scope.limit);
-    }
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tpsr-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
-
-    findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
-});
 
 module.controller("srvcDetailController", function($scope, $http, $location, $route, $routeParams) {
     $scope.remove = function() {

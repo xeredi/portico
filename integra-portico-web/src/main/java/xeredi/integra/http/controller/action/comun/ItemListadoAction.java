@@ -30,7 +30,7 @@ public abstract class ItemListadoAction extends BaseAction {
     private int page = PaginatedList.FIRST_PAGE;
 
     /** The limit. */
-    private Integer limit = GlobalNames.ROWS_PER_PAGE_DEFAULT;
+    private int limit = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /**
      * {@inheritDoc}
@@ -89,7 +89,7 @@ public abstract class ItemListadoAction extends BaseAction {
      *
      * @return the limit
      */
-    public final Integer getLimit() {
+    public final int getLimit() {
         return limit;
     }
 
@@ -99,7 +99,7 @@ public abstract class ItemListadoAction extends BaseAction {
      * @param value
      *            the new limit
      */
-    public final void setLimit(final Integer value) {
+    public final void setLimit(final int value) {
         limit = value;
     }
 

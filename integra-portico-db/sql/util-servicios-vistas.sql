@@ -1,13 +1,14 @@
-﻿SELECT * FROM vw_servicio_srvc;
+
+SELECT * FROM vw_servicio_srvc;
 SELECT * FROM vw_subservicio_ssrv;
-SELECT * 
+SELECT *
 FROM vw_servicio_dato_srdt
 WHERE srdt_srvc_pk = 1819001
 ;
 
 
-SELECT * 
-FROM 
+SELECT *
+FROM
 	tbl_estadistica_estd
 	INNER JOIN tbl_periodo_proceso_pepr ON
 		pepr_pk = estd_pepr_pk
@@ -21,18 +22,18 @@ LIMIT 100;
 
 
 
-SELECT * 
+SELECT *
 	, (
-		CASE 
+		CASE
 			WHEN tppr_es_i18n = 1
 			THEN (
 				SELECT p18n_texto
 				FROM tbl_parametro_i18n_p18n
-				WHERE 
+				WHERE
 					p18n_prvr_pk = ANY (
 						SELECT prvr_pk
 						FROM tbl_parametro_version_prvr
-						WHERE 
+						WHERE
 							prvr_prmt_pk = esdt_prmt_pk
 							AND esdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, esdt_fref)
 					)
@@ -43,11 +44,11 @@ SELECT *
 			THEN (
 				SELECT prdt_cadena
 				FROM tbl_parametro_dato_prdt
-				WHERE 
+				WHERE
 					prdt_prvr_pk = ANY (
 						SELECT prvr_pk
 						FROM tbl_parametro_version_prvr
-						WHERE 
+						WHERE
 							prvr_prmt_pk = esdt_prmt_pk
 							AND esdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, esdt_fref)
 					)
