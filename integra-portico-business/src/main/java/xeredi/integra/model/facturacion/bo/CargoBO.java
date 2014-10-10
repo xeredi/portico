@@ -11,6 +11,7 @@ import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
+import xeredi.integra.model.facturacion.vo.CargoLupaCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -56,6 +57,29 @@ public class CargoBO {
             }
 
             return new PaginatedList<CargoVO>(crgoList, offset, limit, count);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Select lupa list.
+     *
+     * @param crgoCriterioVO
+     *            the crgo criterio vo
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    public List<CargoVO> selectLupaList(final CargoLupaCriterioVO crgoCriterioVO, final int limit) {
+        Preconditions.checkNotNull(crgoCriterioVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+
+        crgoDAO = session.getMapper(CargoDAO.class);
+
+        try {
+            return crgoDAO.selectLupaList(crgoCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         } finally {
             session.close();
         }

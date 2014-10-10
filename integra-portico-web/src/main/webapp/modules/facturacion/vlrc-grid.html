@@ -1,43 +1,78 @@
-
-<input type="hidden" ng-model="page" />
-
-<fieldset>
-    <div class="row-fluid">
-        <div class="col-md-2 form-group">
-            <label translate>vlrc_id</label> <input type="text" ng-model="vlrcCriterio.id" class="form-control input-sm" />
-        </div>
-        <div class="col-md-2 form-group">
-            <label translate>vlrc_srvc</label> <input type="text" ng-model="vlrcCriterio.srvcId"
-                class="form-control input-sm" />
-        </div>
-        <div class="col-md-2 form-group">
-            <label translate>vlrc_aspc</label> <input type="text" ng-model="vlrcCriterio.aspcId"
-                class="form-control input-sm" />
-        </div>
-        <div class="col-md-3 form-group">
-            <label translate>vlrc_pagador</label>
-            <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
-                <input type="text" ng-model="vlrcCriterio.pagador"
-                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
-                    typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
-                    ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+<div ng-if="showFilter">
+    <form>
+        <fieldset>
+            <div class="row-fluid">
+                <div class="col-md-2 form-group">
+                    <label translate>vlrc_id</label> <input type="text" ng-model="vlrcCriterio.id"
+                        class="form-control input-sm" />
+                </div>
+                <div class="col-sm-3 col-md-2 form-group">
+                    <label translate>srvc_tpsr</label> <select ng-model="vlrcCriterio.tpsrId"
+                        ng-options="item.value as item.label for item in tpsrList" class="form-control input-sm">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-md-2 form-group" ng-if="vlrcCriterio.tpsrId">
+                    <label translate>vlrc_srvc</label>
+                    <div class="input-group-sm" ng-controller="srvcLupaCtrl">
+                        <input type="text" ng-model="vlrcCriterio.srvc"
+                            typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vlrcCriterio.tpsrId, $viewValue)"
+                            typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                    </div>
+                </div>
+                <div class="col-md-2 form-group" ng-if="vlrcCriterio.tpsrId">
+                    <label translate>vlrc_aspc</label>
+                    <div class="input-group-sm" ng-controller="aspcLupaCtrl">
+                        <input type="text" ng-model="vlrcCriterio.aspc"
+                            typeahead="aspc as aspc.etiqueta for aspc in getLabelValues(vlrcCriterio.tpsrId, $viewValue)"
+                            typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                    </div>
+                </div>
+                <div class="col-md-2 form-group" ng-if="vlrcCriterio.tpsrId">
+                    <label translate>vlrc_crgo</label>
+                    <div class="input-group-sm" ng-controller="crgoLupaCtrl">
+                        <input type="text" ng-model="vlrcCriterio.crgo"
+                            typeahead="crgo as crgo.etiqueta for crgo in getLabelValues(vlrcCriterio.tpsrId, $viewValue)"
+                            typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label translate>vlrc_pagador</label>
+                    <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
+                        <input type="text" ng-model="vlrcCriterio.pagador"
+                            typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
+                            typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                    </div>
+                </div>
             </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button data-ng-click="search()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
+            </button>
+            <button data-ng-click="cancelSearch()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
+            </button>
         </div>
-    </div>
+    </form>
+</div>
 
-    <div class="btn-group">
-        <button data-ng-click="search()" class="btn btn-default">
-            <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
-        </button>
-    </div>
-</fieldset>
-
-<fieldset>
+<div ng-hide="showFilter">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <pagination total-items="vlrcList.count" items-per-page="vlrcList.limit" ng-model="page"
-                ng-change="pageChanged()" class="pagination-sm" max-size="1" previous-text="&lsaquo;"
-                next-text="&rsaquo;"></pagination>
+                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+        </div>
+        <div class="btn-group">
+            <button data-ng-click="filter()" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
+            </button>
         </div>
     </div>
 
@@ -81,4 +116,4 @@
             </tbody>
         </table>
     </div>
-</fieldset>
+</div>

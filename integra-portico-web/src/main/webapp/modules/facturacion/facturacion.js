@@ -75,7 +75,33 @@ module.config([ "$routeProvider", function($routeProvider) {
 
 module.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
     $scope.showFilter = false;
-    $scope.vlrcCriterio = {};
+
+    $scope.pageChanged = function() {
+        search($scope.vlrcCriterio, $scope.page, $scope.limit);
+    }
+
+    $scope.filter = function() {
+        var url = "facturacion/vlrc-filter.action";
+
+        $http.get(url).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $scope.tpsrList = data.tpsrList;
+                $scope.limits = data.limits;
+            }
+        });
+
+        $scope.showFilter = true;
+    }
+
+    $scope.search = function() {
+        search($scope.vlrcCriterio, 1, $scope.limit);
+    }
+
+    $scope.cancelSearch = function() {
+        $scope.showFilter = false;
+    }
 
     function search(vlrcCriterio, page, limit) {
         var url = "facturacion/vlrc-list.action";
@@ -90,18 +116,10 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
             if (data.actionErrors.length == 0) {
                 $scope.page = data.vlrcList.page;
                 $scope.vlrcList = data.vlrcList;
+                $scope.vlrcCriterio = data.vlrcCriterio;
+                $scope.limit = data.limit;
 
                 var map = {};
-
-                if (data.vlrcCriterio.pagador) {
-                    map["vlrcCriterio.pagador.id"] = data.vlrcCriterio.pagador.id;
-                }
-                if (data.vlrcCriterio.aspcId) {
-                    map["vlrcCriterio.aspcId"] = data.vlrcCriterio.aspcId;
-                }
-                if (data.vlrcCriterio.srvcId) {
-                    map["vlrcCriterio.srvcId"] = data.vlrcCriterio.srvcId;
-                }
 
                 map["page"] = data.vlrcList.page;
 
@@ -110,22 +128,6 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
                 $scope.showFilter = false;
             }
         });
-    }
-
-    $scope.pageChanged = function() {
-        search($scope.vlrcCriterio, $scope.page, $scope.limit);
-    }
-
-    $scope.filter = function() {
-        $scope.showFilter = true;
-    }
-
-    $scope.search = function() {
-        search($scope.vlrcCriterio, 1, $scope.limit);
-    }
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
     }
 
     search($scope.vlrcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
@@ -478,6 +480,16 @@ module.controller("crgoEditController", function($scope, $http, $location, $rout
     $scope.cancel = function() {
         window.history.back();
     }
+});
+
+module.controller('crgoLupaCtrl', function($http, $scope) {
+    $scope.getLabelValues = function(tpsrId, textoBusqueda) {
+        return $http.get(
+                'facturacion/crgo-lupa.action?crgoCriterio.tpsrId=' + tpsrId + "&crgoCriterio.textoBusqueda="
+                        + textoBusqueda + "&crgoCriterio.fechaVigencia=11/12/2014").then(function(res) {
+            return res.data.crgoList;
+        });
+    };
 });
 
 module.controller("rglaDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -902,6 +914,16 @@ module.controller("aspcDuplicateController", function($scope, $http, $location, 
     $scope.cancel = function() {
         window.history.back();
     }
+});
+
+module.controller('aspcLupaCtrl', function($http, $scope) {
+    $scope.getLabelValues = function(tpsrId, textoBusqueda) {
+        return $http.get(
+                'facturacion/aspc-lupa.action?aspcCriterio.tpsrId=' + tpsrId + "&aspcCriterio.textoBusqueda="
+                        + textoBusqueda + "&aspcCriterio.fechaVigencia=11/12/2014").then(function(res) {
+            return res.data.aspcList;
+        });
+    };
 });
 
 module.controller("ascrCreateController", function($scope, $http, $location, $routeParams) {

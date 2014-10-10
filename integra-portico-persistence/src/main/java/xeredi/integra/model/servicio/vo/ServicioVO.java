@@ -74,6 +74,10 @@ public final class ServicioVO extends ItemVO {
      */
     @Override
     public String getEtiqueta() {
+        if ((subp == null || subp.getId() == null) && anno == null && numero == null) {
+            return null;
+        }
+
         final StringBuffer buffer = new StringBuffer();
 
         buffer.append(subp == null ? "-" : subp.getParametro()).append('/').append(anno).append('/').append(numero);

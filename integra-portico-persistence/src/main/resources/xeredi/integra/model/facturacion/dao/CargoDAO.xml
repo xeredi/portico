@@ -5,6 +5,8 @@
 <mapper namespace="xeredi.integra.model.facturacion.dao.CargoDAO">
     <resultMap type="CargoVO" id="ResultMap">
         <id column="crgv_pk" />
+        <id column="crgo_pk" />
+
         <result column="crgo_pk" property="id" />
         <result column="crgo_codigo" property="codigo" />
 
@@ -184,6 +186,20 @@
     <select id="selectObject" parameterType="CargoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectLupaList" parameterType="CargoLupaCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT crgo_pk, crgo_codigo, crgv_descripcion
+        FROM vw_cargo_crgo
+        WHERE
+            crgo_tpsr_pk = #{tpsrId}
+            AND (
+                crgo_codigo LIKE #{textoBusqueda}
+            )
+            AND #{fechaVigencia} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fechaVigencia})
+        ORDER BY crgo_tpsr_pk, crgo_codigo
+    ]]>
     </select>
 
     <insert id="insert" parameterType="CargoVO">

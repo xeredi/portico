@@ -5,6 +5,7 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -18,14 +19,20 @@ public final class ValoracionCriterioVO {
     /** The ids. */
     private Set<Long> ids;
 
-    /** The aspc id. */
-    private Long aspcId;
+    /** The tpsr id. */
+    private Long tpsrId;
 
     /** The srvc id. */
-    private Long srvcId;
+    private ServicioVO srvc;
 
     /** The pagador id. */
     private ParametroVO pagador;
+
+    /** The aspc. */
+    private AspectoVO aspc;
+
+    /** The crgo. */
+    private CargoVO crgo;
 
     /**
      * {@inheritDoc}
@@ -74,41 +81,22 @@ public final class ValoracionCriterioVO {
     }
 
     /**
-     * Gets the aspc id.
+     * Gets the srvc.
      *
-     * @return the aspc id
+     * @return the srvc
      */
-    public Long getAspcId() {
-        return aspcId;
+    public ServicioVO getSrvc() {
+        return srvc;
     }
 
     /**
-     * Sets the aspc id.
+     * Sets the srvc.
      *
      * @param value
-     *            the new aspc id
+     *            the new srvc
      */
-    public void setAspcId(final Long value) {
-        aspcId = value;
-    }
-
-    /**
-     * Gets the srvc id.
-     *
-     * @return the srvc id
-     */
-    public Long getSrvcId() {
-        return srvcId;
-    }
-
-    /**
-     * Sets the srvc id.
-     *
-     * @param value
-     *            the new srvc id
-     */
-    public void setSrvcId(final Long value) {
-        srvcId = value;
+    public void setSrvc(final ServicioVO value) {
+        srvc = value;
     }
 
     /**
@@ -128,6 +116,63 @@ public final class ValoracionCriterioVO {
      */
     public void setPagador(final ParametroVO value) {
         pagador = value;
+    }
+
+    /**
+     * Gets the tpsr id.
+     *
+     * @return the tpsr id
+     */
+    public Long getTpsrId() {
+        return tpsrId;
+    }
+
+    /**
+     * Sets the tpsr id.
+     *
+     * @param value
+     *            the new tpsr id
+     */
+    public void setTpsrId(final Long value) {
+        tpsrId = value;
+    }
+
+    /**
+     * Gets the aspc.
+     *
+     * @return the aspc
+     */
+    public AspectoVO getAspc() {
+        return aspc;
+    }
+
+    /**
+     * Sets the aspc.
+     *
+     * @param value
+     *            the new aspc
+     */
+    public void setAspc(final AspectoVO value) {
+        aspc = value;
+    }
+
+    /**
+     * Gets the crgo.
+     *
+     * @return the crgo
+     */
+    public CargoVO getCrgo() {
+        return crgo;
+    }
+
+    /**
+     * Sets the crgo.
+     *
+     * @param value
+     *            the new crgo
+     */
+    public void setCrgo(final CargoVO value) {
+        crgo = value;
     }
 
 }

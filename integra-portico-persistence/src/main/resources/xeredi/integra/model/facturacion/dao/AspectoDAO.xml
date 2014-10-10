@@ -5,6 +5,8 @@
 <mapper namespace="xeredi.integra.model.facturacion.dao.AspectoDAO">
     <resultMap type="AspectoVO" id="ResultMap">
         <id column="aspv_pk" />
+        <id column="aspc_pk" />
+
         <result column="aspc_pk" property="id" />
         <result column="aspc_codigo" property="codigo" />
 
@@ -102,6 +104,20 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
         ORDER BY aspc_tpsr_pk, aspv_prioridad
+    </select>
+
+    <select id="selectLupaList" parameterType="AspectoLupaCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+        SELECT aspc_pk, aspc_codigo, aspv_descripcion
+        FROM vw_aspecto_aspc
+        WHERE
+            aspc_tpsr_pk = #{tpsrId}
+            AND (
+                aspc_codigo LIKE #{textoBusqueda}
+            )
+            AND #{fechaVigencia} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{fechaVigencia})
+        ORDER BY aspc_tpsr_pk, aspc_codigo
+    ]]>
     </select>
 
     <select id="selectObject" parameterType="AspectoCriterioVO" resultMap="ResultMap">

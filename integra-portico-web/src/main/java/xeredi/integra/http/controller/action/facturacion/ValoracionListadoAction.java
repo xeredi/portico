@@ -1,5 +1,8 @@
 package xeredi.integra.http.controller.action.facturacion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
@@ -8,7 +11,9 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -33,6 +38,9 @@ public final class ValoracionListadoAction extends BaseAction {
 
     /** The limit. */
     private int limit = GlobalNames.ROWS_PER_PAGE_DEFAULT;
+
+    /** The tpsr list. */
+    private final List<LabelValueVO> tpsrList = new ArrayList<>();
 
     /**
      * The Constructor.
@@ -80,6 +88,8 @@ public final class ValoracionListadoAction extends BaseAction {
      */
     @Actions({ @Action("vlrc-filter") })
     public String editarFiltro() {
+        tpsrList.addAll(TipoServicioProxy.selectLabelValues());
+
         return SUCCESS;
     }
 
@@ -149,6 +159,15 @@ public final class ValoracionListadoAction extends BaseAction {
      */
     public PaginatedList<ValoracionVO> getVlrcList() {
         return vlrcList;
+    }
+
+    /**
+     * Gets the tpsr list.
+     *
+     * @return the tpsr list
+     */
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
     }
 
 }

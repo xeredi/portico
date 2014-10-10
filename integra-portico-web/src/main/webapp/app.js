@@ -145,6 +145,7 @@ app.config(function($translateProvider) {
         srvc_duplicate : "Servicio - Duplicado",
 
         srvc_servicio : "Servicio",
+        srvc_tpsr : "T. Servicio",
         srvc_fini : "F. Inicio",
         srvc_ffin : "F. Fin",
         srvc_fref : "F. Referencia",

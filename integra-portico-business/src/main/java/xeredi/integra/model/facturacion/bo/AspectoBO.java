@@ -11,6 +11,7 @@ import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
+import xeredi.integra.model.facturacion.vo.AspectoLupaCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -45,7 +46,7 @@ public class AspectoBO {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         aspcDAO = session.getMapper(AspectoDAO.class);
 
@@ -58,6 +59,30 @@ public class AspectoBO {
             }
 
             return new PaginatedList<AspectoVO>(aspcList, offset, limit, count);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Select lupa list.
+     *
+     * @param aspcCriterioVO
+     *            the aspc criterio vo
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    public List<AspectoVO> selectLupaList(final AspectoLupaCriterioVO aspcCriterioVO, final int limit) {
+        Preconditions.checkNotNull(aspcCriterioVO);
+        Preconditions.checkArgument(limit > 0);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+
+        aspcDAO = session.getMapper(AspectoDAO.class);
+
+        try {
+            return aspcDAO.selectLupaList(aspcCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         } finally {
             session.close();
         }
