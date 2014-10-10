@@ -80,6 +80,31 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
         search($scope.vlrcCriterio, $scope.page, $scope.limit);
     }
 
+    $scope.tpsrChanged = function() {
+        if ($scope.vlrcCriterio.srvc) {
+            $scope.vlrcCriterio.srvc = null;
+        }
+        if ($scope.vlrcCriterio.aspcId) {
+            $scope.vlrcCriterio.aspcId = null;
+        }
+        if ($scope.vlrcCriterio.crgoId) {
+            $scope.vlrcCriterio.crgoId = null;
+        }
+
+        if ($scope.vlrcCriterio.tpsrId) {
+            var url = "facturacion/vlrc-reload-filter.action?vlrcCriterio.tpsrId=" + $scope.vlrcCriterio.tpsrId;
+
+            $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
+                if (data.actionErrors.length == 0) {
+                    $scope.crgoList = data.crgoList;
+                    $scope.aspcList = data.aspcList;
+                }
+            });
+        }
+    }
+
     $scope.filter = function() {
         var url = "facturacion/vlrc-filter.action";
 
@@ -480,16 +505,6 @@ module.controller("crgoEditController", function($scope, $http, $location, $rout
     $scope.cancel = function() {
         window.history.back();
     }
-});
-
-module.controller('crgoLupaCtrl', function($http, $scope) {
-    $scope.getLabelValues = function(tpsrId, textoBusqueda) {
-        return $http.get(
-                'facturacion/crgo-lupa.action?crgoCriterio.tpsrId=' + tpsrId + "&crgoCriterio.textoBusqueda="
-                        + textoBusqueda + "&crgoCriterio.fechaVigencia=11/12/2014").then(function(res) {
-            return res.data.crgoList;
-        });
-    };
 });
 
 module.controller("rglaDetailController", function($scope, $http, $location, $route, $routeParams) {
@@ -914,16 +929,6 @@ module.controller("aspcDuplicateController", function($scope, $http, $location, 
     $scope.cancel = function() {
         window.history.back();
     }
-});
-
-module.controller('aspcLupaCtrl', function($http, $scope) {
-    $scope.getLabelValues = function(tpsrId, textoBusqueda) {
-        return $http.get(
-                'facturacion/aspc-lupa.action?aspcCriterio.tpsrId=' + tpsrId + "&aspcCriterio.textoBusqueda="
-                        + textoBusqueda + "&aspcCriterio.fechaVigencia=11/12/2014").then(function(res) {
-            return res.data.aspcList;
-        });
-    };
 });
 
 module.controller("ascrCreateController", function($scope, $http, $location, $routeParams) {

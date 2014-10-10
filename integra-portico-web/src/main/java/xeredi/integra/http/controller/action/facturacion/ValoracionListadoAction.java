@@ -1,14 +1,19 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.facturacion.bo.AspectoBO;
+import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
+import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
+import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
@@ -36,11 +41,19 @@ public final class ValoracionListadoAction extends BaseAction {
     /** The page. */
     private int page = 1;
 
+    private final Date fechaVigencia = Calendar.getInstance().getTime();
+
     /** The limit. */
     private int limit = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The tpsr list. */
     private final List<LabelValueVO> tpsrList = new ArrayList<>();
+
+    /** The crgo list. */
+    private final List<LabelValueVO> crgoList = new ArrayList<>();
+
+    /** The aspc list. */
+    private final List<LabelValueVO> aspcList = new ArrayList<>();
 
     /**
      * The Constructor.
@@ -66,7 +79,7 @@ public final class ValoracionListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("vlrc-list") })
+    @Action("vlrc-list")
     public String listado() {
         Preconditions.checkNotNull(vlrcCriterio);
 
@@ -86,9 +99,42 @@ public final class ValoracionListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("vlrc-filter") })
+    @Action("vlrc-filter")
     public String editarFiltro() {
         tpsrList.addAll(TipoServicioProxy.selectLabelValues());
+
+        return SUCCESS;
+    }
+
+    /**
+     * Reload filtro.
+     *
+     * @return the string
+     */
+    @Action("vlrc-reload-filter")
+    public String reloadFiltro() {
+        Preconditions.checkNotNull(vlrcCriterio);
+        Preconditions.checkNotNull(vlrcCriterio.getTpsrId());
+
+        {
+            final CargoBO crgoBO = new CargoBO();
+            final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+
+            crgoCriterioVO.setTpsrId(vlrcCriterio.getTpsrId());
+            crgoCriterioVO.setFechaVigencia(fechaVigencia);
+
+            crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
+        }
+
+        {
+            final AspectoBO aspcBO = new AspectoBO();
+            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+
+            aspcCriterioVO.setTpsrId(vlrcCriterio.getTpsrId());
+            aspcCriterioVO.setFechaVigencia(fechaVigencia);
+
+            aspcList.addAll(aspcBO.selectLabelValueList(aspcCriterioVO));
+        }
 
         return SUCCESS;
     }
@@ -168,6 +214,24 @@ public final class ValoracionListadoAction extends BaseAction {
      */
     public List<LabelValueVO> getTpsrList() {
         return tpsrList;
+    }
+
+    /**
+     * Gets the crgo list.
+     *
+     * @return the crgo list
+     */
+    public List<LabelValueVO> getCrgoList() {
+        return crgoList;
+    }
+
+    /**
+     * Gets the aspc list.
+     *
+     * @return the aspc list
+     */
+    public List<LabelValueVO> getAspcList() {
+        return aspcList;
     }
 
 }

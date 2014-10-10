@@ -11,9 +11,9 @@ import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
-import xeredi.integra.model.facturacion.vo.AspectoLupaCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -65,24 +65,27 @@ public class AspectoBO {
     }
 
     /**
-     * Select lupa list.
+     * Select label value list.
      *
      * @param aspcCriterioVO
      *            the aspc criterio vo
-     * @param limit
-     *            the limit
      * @return the list
      */
-    public List<AspectoVO> selectLupaList(final AspectoLupaCriterioVO aspcCriterioVO, final int limit) {
+    public List<LabelValueVO> selectLabelValueList(final AspectoCriterioVO aspcCriterioVO) {
         Preconditions.checkNotNull(aspcCriterioVO);
-        Preconditions.checkArgument(limit > 0);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         aspcDAO = session.getMapper(AspectoDAO.class);
 
         try {
-            return aspcDAO.selectLupaList(aspcCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final AspectoVO aspc : aspcDAO.selectList(aspcCriterioVO)) {
+                list.add(new LabelValueVO(aspc.getEtiqueta(), aspc.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

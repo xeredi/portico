@@ -5,9 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
-import xeredi.integra.model.facturacion.vo.CargoLupaCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,17 +32,6 @@ public interface CargoDAO {
     List<CargoVO> selectList(final CargoCriterioVO criterioVO);
 
     /**
-     * Select lupa list.
-     *
-     * @param criterioVO
-     *            the criterio vo
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<CargoVO> selectLupaList(final CargoLupaCriterioVO criterioVO, final RowBounds bounds);
-
-    /**
      * Select list.
      *
      * @param criterioVO
@@ -54,15 +41,6 @@ public interface CargoDAO {
      * @return the list
      */
     List<CargoVO> selectList(final CargoCriterioVO criterioVO, final RowBounds bounds);
-
-    /**
-     * Select label value list.
-     *
-     * @param criterioVO
-     *            the criterio vo
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValueList(final CargoCriterioVO criterioVO);
 
     /**
      * Count.

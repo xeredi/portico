@@ -29,10 +29,10 @@ public final class ValoracionCriterioVO {
     private ParametroVO pagador;
 
     /** The aspc. */
-    private AspectoVO aspc;
+    private Long aspcId;
 
     /** The crgo. */
-    private CargoVO crgo;
+    private Long crgoId;
 
     /**
      * {@inheritDoc}
@@ -138,41 +138,41 @@ public final class ValoracionCriterioVO {
     }
 
     /**
-     * Gets the aspc.
+     * Gets the aspc id.
      *
-     * @return the aspc
+     * @return the aspc id
      */
-    public AspectoVO getAspc() {
-        return aspc;
+    public Long getAspcId() {
+        return aspcId;
     }
 
     /**
-     * Sets the aspc.
+     * Sets the aspc id.
      *
      * @param value
-     *            the new aspc
+     *            the new aspc id
      */
-    public void setAspc(final AspectoVO value) {
-        aspc = value;
+    public void setAspcId(final Long value) {
+        aspcId = value;
     }
 
     /**
-     * Gets the crgo.
+     * Gets the crgo id.
      *
-     * @return the crgo
+     * @return the crgo id
      */
-    public CargoVO getCrgo() {
-        return crgo;
+    public Long getCrgoId() {
+        return crgoId;
     }
 
     /**
-     * Sets the crgo.
+     * Sets the crgo id.
      *
      * @param value
-     *            the new crgo
+     *            the new crgo id
      */
-    public void setCrgo(final CargoVO value) {
-        crgo = value;
+    public void setCrgoId(final Long value) {
+        crgoId = value;
     }
 
 }

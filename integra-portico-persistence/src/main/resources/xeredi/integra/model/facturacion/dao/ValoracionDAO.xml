@@ -79,20 +79,20 @@
             <if test="tpsrId != null">
                 AND srvc_tpsr_pk = #{tpsrId}
             </if>
-            <if test="aspc != null and aspc.id != null">
-                AND vlrc_aspc_pk = #{aspc.id}
+            <if test="aspcId != null">
+                AND vlrc_aspc_pk = #{aspcId}
             </if>
             <if test="pagador != null and pagador.id != null">
                 AND vlrc_pagador_prmt_pk = #{pagador.id}
             </if>
-            <if test="crgo != null and crgo.id != null">
+            <if test="crgoId != null">
             <![CDATA[
                 AND EXISTS (
                     SELECT 1
                     FROM tbl_valoracion_cargo_vlrg
                     WHERE
                         vlrg_vlrc_pk = vlrc_pk
-                        AND vlrg_crgo_pk = #{crgo.id}
+                        AND vlrg_crgo_pk = #{crgoId}
                 )
             ]]>
             </if>

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
-import xeredi.integra.model.facturacion.vo.AspectoLupaCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.FacturadorContextoVO;
 
@@ -34,17 +33,6 @@ public interface AspectoDAO {
      * @return the list
      */
     List<AspectoVO> selectList(final AspectoCriterioVO criterioVO, final RowBounds bounds);
-
-    /**
-     * Select lupa list.
-     *
-     * @param criterioVO
-     *            the criterio vo
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<AspectoVO> selectLupaList(final AspectoLupaCriterioVO criterioVO, final RowBounds bounds);
 
     /**
      * Count.

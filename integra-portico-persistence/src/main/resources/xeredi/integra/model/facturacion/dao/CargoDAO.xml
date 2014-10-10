@@ -31,14 +31,6 @@
     ]]>
     </sql>
 
-    <sql id="SelectLabelValuePrefix">
-    <![CDATA[
-        SELECT crgo_pk AS value
-            , portico.CONCAT(portico.CONCAT(crgo_codigo, ' - '), crgv_descripcion) AS label
-        FROM vw_cargo_crgo
-    ]]>
-    </sql>
-
     <sql id="SelectWhere">
         <where>
             <if test="fechaVigencia != null">
@@ -177,29 +169,9 @@
         ORDER BY crgo_tpsr_pk, crgo_codigo
     </select>
 
-    <select id="selectLabelValueList" parameterType="CargoCriterioVO" resultType="LabelValueVO">
-        <include refid="SelectLabelValuePrefix" />
-        <include refid="SelectWhere" />
-        ORDER BY crgo_tpsr_pk, crgo_codigo
-    </select>
-
     <select id="selectObject" parameterType="CargoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-    </select>
-
-    <select id="selectLupaList" parameterType="CargoLupaCriterioVO" resultMap="ResultMap">
-    <![CDATA[
-        SELECT crgo_pk, crgo_codigo, crgv_descripcion
-        FROM vw_cargo_crgo
-        WHERE
-            crgo_tpsr_pk = #{tpsrId}
-            AND (
-                crgo_codigo LIKE #{textoBusqueda}
-            )
-            AND #{fechaVigencia} BETWEEN crgv_fini AND COALESCE(crgv_ffin, #{fechaVigencia})
-        ORDER BY crgo_tpsr_pk, crgo_codigo
-    ]]>
     </select>
 
     <insert id="insert" parameterType="CargoVO">

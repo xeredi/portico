@@ -106,20 +106,6 @@
         ORDER BY aspc_tpsr_pk, aspv_prioridad
     </select>
 
-    <select id="selectLupaList" parameterType="AspectoLupaCriterioVO" resultMap="ResultMap">
-    <![CDATA[
-        SELECT aspc_pk, aspc_codigo, aspv_descripcion
-        FROM vw_aspecto_aspc
-        WHERE
-            aspc_tpsr_pk = #{tpsrId}
-            AND (
-                aspc_codigo LIKE #{textoBusqueda}
-            )
-            AND #{fechaVigencia} BETWEEN aspv_fini AND COALESCE(aspv_ffin, #{fechaVigencia})
-        ORDER BY aspc_tpsr_pk, aspc_codigo
-    ]]>
-    </select>
-
     <select id="selectObject" parameterType="AspectoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />

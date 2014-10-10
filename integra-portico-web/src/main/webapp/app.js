@@ -241,6 +241,7 @@ app.config(function($translateProvider) {
         vlrc_vlri_porcentaje : "%",
         vlrc_vlri_importe_base : "Importe Base",
         vlrc_vlri_importe_impuesto : "Importe IVA",
+        vlrc_crgo : "Cargo",
 
         vlrl_detail : "L\u00ednea de Valoraci\u00f3n - Detalle",
         vlrl_create : "L\u00ednea de Valoraci\u00f3n - Alta",

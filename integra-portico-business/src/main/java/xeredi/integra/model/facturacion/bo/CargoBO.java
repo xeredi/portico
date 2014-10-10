@@ -11,7 +11,6 @@ import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
-import xeredi.integra.model.facturacion.vo.CargoLupaCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -63,29 +62,6 @@ public class CargoBO {
     }
 
     /**
-     * Select lupa list.
-     *
-     * @param crgoCriterioVO
-     *            the crgo criterio vo
-     * @param limit
-     *            the limit
-     * @return the list
-     */
-    public List<CargoVO> selectLupaList(final CargoLupaCriterioVO crgoCriterioVO, final int limit) {
-        Preconditions.checkNotNull(crgoCriterioVO);
-
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        crgoDAO = session.getMapper(CargoDAO.class);
-
-        try {
-            return crgoDAO.selectLupaList(crgoCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
-        } finally {
-            session.close();
-        }
-    }
-
-    /**
      * Select label value list.
      *
      * @param crgoCriterioVO
@@ -100,7 +76,13 @@ public class CargoBO {
         crgoDAO = session.getMapper(CargoDAO.class);
 
         try {
-            return crgoDAO.selectLabelValueList(crgoCriterioVO);
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final CargoVO crgo : crgoDAO.selectList(crgoCriterioVO)) {
+                list.add(new LabelValueVO(crgo.getEtiqueta(), crgo.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

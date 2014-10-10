@@ -8,7 +8,8 @@
                 </div>
                 <div class="col-sm-3 col-md-2 form-group">
                     <label translate>srvc_tpsr</label> <select ng-model="vlrcCriterio.tpsrId"
-                        ng-options="item.value as item.label for item in tpsrList" class="form-control input-sm">
+                        ng-options="item.value as item.label for item in tpsrList" ng-change="tpsrChanged()"
+                        class="form-control input-sm">
                         <option />
                     </select>
                 </div>
@@ -22,22 +23,16 @@
                     </div>
                 </div>
                 <div class="col-md-2 form-group" ng-if="vlrcCriterio.tpsrId">
-                    <label translate>vlrc_aspc</label>
-                    <div class="input-group-sm" ng-controller="aspcLupaCtrl">
-                        <input type="text" ng-model="vlrcCriterio.aspc"
-                            typeahead="aspc as aspc.etiqueta for aspc in getLabelValues(vlrcCriterio.tpsrId, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
-                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-                    </div>
+                    <label translate>vlrc_aspc</label> <select ng-model="vlrcCriterio.aspcId"
+                        ng-options="item.value as item.label for item in aspcList" class="form-control input-sm">
+                        <option />
+                    </select>
                 </div>
                 <div class="col-md-2 form-group" ng-if="vlrcCriterio.tpsrId">
-                    <label translate>vlrc_crgo</label>
-                    <div class="input-group-sm" ng-controller="crgoLupaCtrl">
-                        <input type="text" ng-model="vlrcCriterio.crgo"
-                            typeahead="crgo as crgo.etiqueta for crgo in getLabelValues(vlrcCriterio.tpsrId, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
-                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-                    </div>
+                    <label translate>vlrc_crgo</label> <select ng-model="vlrcCriterio.crgoId"
+                        ng-options="item.value as item.label for item in crgoList" class="form-control input-sm">
+                        <option />
+                    </select>
                 </div>
                 <div class="col-md-3 form-group">
                     <label translate>vlrc_pagador</label>
