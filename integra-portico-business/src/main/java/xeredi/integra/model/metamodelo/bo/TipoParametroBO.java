@@ -38,7 +38,7 @@ public class TipoParametroBO {
      * @return the list
      */
     public final List<LabelValueVO> selectLabelValues() {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         tpprDAO = session.getMapper(TipoParametroDAO.class);
 
@@ -65,7 +65,7 @@ public class TipoParametroBO {
     public final List<TipoParametroVO> selectList(final TipoParametroCriterioVO tpprCriterioVO) {
         Preconditions.checkNotNull(tpprCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         tpprDAO = session.getMapper(TipoParametroDAO.class);
 
@@ -91,7 +91,7 @@ public class TipoParametroBO {
             final int offset, final int limit) {
         Preconditions.checkNotNull(tpprCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         tpprDAO = session.getMapper(TipoParametroDAO.class);
 
@@ -119,7 +119,7 @@ public class TipoParametroBO {
     public final TipoParametroVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         tpprDAO = session.getMapper(TipoParametroDAO.class);
 

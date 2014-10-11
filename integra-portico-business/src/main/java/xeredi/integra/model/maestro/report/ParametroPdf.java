@@ -77,14 +77,12 @@ public final class ParametroPdf extends BasePdf {
         List<PdfCell> rowCells = new ArrayList<>();
         int accWidth = 0;
 
-        rowCells.add(new PdfCell(tpprVO.getNombre(), prmtVO.getEtiqueta(), 4, TipoElemento.TX));
+        rowCells.add(new PdfCell(tpprVO.getNombre(), prmtVO.getEtiqueta(), 8, TipoElemento.TX));
 
-        if (tpprVO.getTempExp()) {
-            rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFini()), 4,
-                    TipoElemento.FE));
-            rowCells.add(new PdfCell("F. Fin", prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
-                    .format(prmtVO.getPrvr().getFfin()), 4, TipoElemento.FE));
-        }
+        rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFini()), 2,
+                TipoElemento.FE));
+        rowCells.add(new PdfCell("F. Fin", prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
+                .format(prmtVO.getPrvr().getFfin()), 2, TipoElemento.FE));
 
         listCells.add(rowCells);
 
@@ -180,14 +178,12 @@ public final class ParametroPdf extends BasePdf {
         report.addColumn(DynamicReports.col.column(entiVO.getTpprAsociado().getNombre(),
                 entiVO.getTpprAsociado().getNombre(), DynamicReports.type.stringType()).setWidth(4));
 
-        if (entiVO.getTempExp()) {
-            columns.add("finicio");
-            columns.add("ffin");
+        columns.add("finicio");
+        columns.add("ffin");
 
-            report.addColumn(DynamicReports.col.column("F. Inicio", "finicio", DynamicReports.type.stringType())
-                    .setWidth(2));
-            report.addColumn(DynamicReports.col.column("F. Fin", "ffin", DynamicReports.type.stringType()).setWidth(2));
-        }
+        report.addColumn(DynamicReports.col.column("F. Inicio", "finicio", DynamicReports.type.stringType())
+                .setWidth(2));
+        report.addColumn(DynamicReports.col.column("F. Fin", "ffin", DynamicReports.type.stringType()).setWidth(2));
 
         if (entiVO.getEntdList() != null) {
             for (final Long tpdtId : entiVO.getEntdList()) {
@@ -208,12 +204,10 @@ public final class ParametroPdf extends BasePdf {
 
             objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
 
-            if (entiVO.getTempExp()) {
-                objects[i++] = itemVO.getSpvr().getFini() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO
-                        .getSpvr().getFini());
-                objects[i++] = itemVO.getSpvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO
-                        .getSpvr().getFfin());
-            }
+            objects[i++] = itemVO.getSpvr().getFini() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO.getSpvr()
+                    .getFini());
+            objects[i++] = itemVO.getSpvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT.format(itemVO.getSpvr()
+                    .getFfin());
 
             if (entiVO.getEntdList() != null) {
                 for (final Long tpdtId : entiVO.getEntdList()) {

@@ -10,8 +10,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
+import xeredi.integra.model.proceso.report.ProcesoXls;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -52,7 +52,7 @@ public final class ProcesoXlsAction extends BaseAction {
         final ProcesoBO prbtBO = new ProcesoBO();
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            final ExcelUtil excelUtil = new ExcelUtil(getLocale());
+            final ProcesoXls excelUtil = new ProcesoXls(getLocale());
 
             excelUtil.generarProcesos(prbtBO.selectList(itemCriterio), baos);
 

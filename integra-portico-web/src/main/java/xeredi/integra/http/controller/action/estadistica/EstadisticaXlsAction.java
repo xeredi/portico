@@ -10,8 +10,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
+import xeredi.integra.model.estadistica.report.EstadisticaXls;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -66,7 +66,7 @@ public final class EstadisticaXlsAction extends BaseAction {
         itemCriterio.setIdioma(getIdioma());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            final ExcelUtil excelUtil = new ExcelUtil(getLocale());
+            final EstadisticaXls excelUtil = new EstadisticaXls(getLocale());
 
             excelUtil.generarEstadisticas(estdBO.selectList(itemCriterio), enti, baos);
 

@@ -10,10 +10,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
+import xeredi.integra.model.servicio.report.SubservicioXls;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
 import com.google.common.base.Preconditions;
@@ -66,7 +66,7 @@ public final class SubservicioXlsAction extends BaseAction {
         itemCriterio.setIdioma(getIdioma());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            final ExcelUtil excelUtil = new ExcelUtil(getLocale());
+            final SubservicioXls excelUtil = new SubservicioXls(getLocale());
 
             excelUtil.generarSubservicios(ssrvBO.selectList(itemCriterio), enti, baos);
 

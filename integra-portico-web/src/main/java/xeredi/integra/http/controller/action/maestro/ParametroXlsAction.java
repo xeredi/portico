@@ -11,8 +11,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.report.ExcelUtil;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.report.ParametroXls;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -71,7 +71,7 @@ public final class ParametroXlsAction extends BaseAction {
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            final ExcelUtil excelUtil = new ExcelUtil(getLocale());
+            final ParametroXls excelUtil = new ParametroXls(getLocale());
 
             excelUtil.generarMaestros(prmtBO.selectList(itemCriterio), enti, baos);
 
