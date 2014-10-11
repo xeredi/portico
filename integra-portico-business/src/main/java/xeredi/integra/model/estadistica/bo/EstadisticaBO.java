@@ -50,7 +50,7 @@ public class EstadisticaBO {
             final int limit) {
         Preconditions.checkNotNull(estdCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         estdDAO = session.getMapper(EstadisticaDAO.class);
 
@@ -61,7 +61,7 @@ public class EstadisticaBO {
             if (count > offset) {
                 estdList.addAll(estdDAO.selectList(estdCriterioVO, new RowBounds(offset, limit)));
 
-                fillDependencies(session, estdList, estdCriterioVO);
+                fillDependencies(session, estdList, estdCriterioVO, true);
             }
 
             return new PaginatedList<>(estdList, offset, limit, count);
@@ -80,14 +80,14 @@ public class EstadisticaBO {
     public final List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO) {
         Preconditions.checkNotNull(estdCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         estdDAO = session.getMapper(EstadisticaDAO.class);
 
         try {
             final List<EstadisticaVO> estdList = estdDAO.selectList(estdCriterioVO);
 
-            fillDependencies(session, estdList, estdCriterioVO);
+            fillDependencies(session, estdList, estdCriterioVO, false);
 
             return estdList;
         } finally {
@@ -108,7 +108,7 @@ public class EstadisticaBO {
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(estdCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         estdDAO = session.getMapper(EstadisticaDAO.class);
 
@@ -121,7 +121,7 @@ public class EstadisticaBO {
 
             final List<EstadisticaVO> estdList = Arrays.asList(new EstadisticaVO[] { estdVO });
 
-            fillDependencies(session, estdList, estdCriterioVO);
+            fillDependencies(session, estdList, estdCriterioVO, true);
 
             return estdList.get(0);
         } finally {
@@ -140,20 +140,22 @@ public class EstadisticaBO {
      *            the estd criterio vo
      */
     private final void fillDependencies(final SqlSession session, final List<EstadisticaVO> estdList,
-            final EstadisticaCriterioVO estdCriterioVO) {
+            final EstadisticaCriterioVO estdCriterioVO, final boolean useIds) {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(estdCriterioVO);
 
         esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
         if (!estdList.isEmpty()) {
-            final Set<Long> ids = new HashSet<>();
+            if (useIds) {
+                final Set<Long> ids = new HashSet<>();
 
-            for (final EstadisticaVO estdVO : estdList) {
-                ids.add(estdVO.getId());
+                for (final EstadisticaVO estdVO : estdList) {
+                    ids.add(estdVO.getId());
+                }
+
+                estdCriterioVO.setIds(ids);
             }
-
-            estdCriterioVO.setIds(ids);
 
             final Map<Long, Map<Long, ItemDatoVO>> itdtMap = new HashMap<>();
 
@@ -169,7 +171,9 @@ public class EstadisticaBO {
                 estdVO.setItdtMap(itdtMap.get(estdVO.getId()));
             }
 
-            estdCriterioVO.setIds(null);
+            if (useIds) {
+                estdCriterioVO.setIds(null);
+            }
         }
     }
 }

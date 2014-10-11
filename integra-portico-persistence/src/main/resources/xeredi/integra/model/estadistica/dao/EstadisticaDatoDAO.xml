@@ -21,7 +21,7 @@
         </association>
     </resultMap>
 
-    <sql id="SelectPrefix">
+    <select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
         SELECT *
         <if test="idioma != null">
         <![CDATA[
@@ -61,49 +61,44 @@
         ]]>
         </if>
         FROM vw_estadistica_dato_esdt
-    </sql>
 
-    <sql id="SelectCountPrefix">
-    <![CDATA[
-    SELECT
-        COUNT(1)
-    FROM tbl_estadistica_dato_esdt
-    ]]>
-    </sql>
-
-    <sql id="SelectWhere">
         <where>
-            <if test="ids != null">
-                AND esdt_estd_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
+            <![CDATA[
+                EXISTS (
+                    SELECT 1
+                    FROM vw_estadistica_estd
+                    WHERE
+                        estd_pk = esdt_estd_pk
+            ]]>
+
+            <include refid="xeredi.integra.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
+
+            <![CDATA[
+                )
+            ]]>
+
+            <if test="id != null">
+                AND esdt_estd_pk = #{id}
             </if>
-            <if test="entiId != null">
+
+            <if test="ids != null and !ids.empty">
+                AND esdt_estd_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
+            </if>
+
+            <if test="soloDatosGrid">
             <![CDATA[
                 AND EXISTS (
-                    SELECT 1 FROM tbl_estadistica_estd
-                    WHERE estd_pk = esdt_estd_pk
-                        AND estd_tpes_pk = #{entiId}
+                    SELECT 1
+                    FROM tbl_entidad_tipo_dato_entd
+                    WHERE
+                        entd_tpdt_pk = esdt_tpdt_pk
+                        AND entd_enti_pk = #{entiId}
+                        AND entd_gridable = 1
                 )
             ]]>
             </if>
-            <if test="pepr != null">
-                <if test="pepr.id != null">
-	            <![CDATA[
-	                AND EXISTS (
-	                    SELECT 1 FROM tbl_estadistica_estd
-	                    WHERE estd_pk = esdt_estd_pk
-	                        AND estd_pepr_pk = #{pepr.id}
-	                )
-	            ]]>
-                </if>
-            </if>
         </where>
-    </sql>
-
-    <select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="ItemDatoVO">

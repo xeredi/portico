@@ -66,69 +66,73 @@
     </sql>
 
     <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND estd_pk = #{id}
+        <if test="id != null">
+            AND estd_pk = #{id}
+        </if>
+        <if test="entiId != null">
+            AND estd_tpes_pk = #{entiId}
+        </if>
+        <if test="pepr != null">
+            <if test="pepr.id != null">
+                AND estd_pepr_pk = #{pepr.id}
             </if>
-            <if test="entiId != null">
-                AND estd_tpes_pk = #{entiId}
+            <if test="pepr.autpId != null">
+                AND pepr_autp_pk = #{pepr.autpId}
             </if>
-            <if test="pepr != null">
-                <if test="pepr.id != null">
-                    AND estd_pepr_pk = #{pepr.id}
-                </if>
-                <if test="pepr.autpId != null">
-                    AND pepr_autp_pk = #{pepr.autpId}
-                </if>
-            </if>
-            <if test="subpId != null">
-                AND estd_subp_pk = #{subpId}
-            </if>
-            <if test="itdtMap != null and !itdtMap.empty">
-                <foreach collection="itdtMap" index="key" item="itdt">
-                    <!-- FIXME ojo, faltan las fechas -->
-                    <if
-                        test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
-                            <![CDATA[
-                            AND EXISTS (
-                                SELECT 1
-                                FROM tbl_estadistica_dato_esdt
-                                WHERE
-                                    esdt_estd_pk = estd_pk
-                                    AND esdt_tpdt_pk = #{itdt.tpdtId}
-                            ]]>
-                        <if test="itdt.prmt != null and itdt.prmt.id != null">
-                            AND esdt_prmt_pk = #{itdt.prmt.id}
-                        </if>
-                        <if test="itdt.cantidadEntera != null">
-                            AND esdt_nentero = #{itdt.cantidadEntera}
-                        </if>
-                        <if test="itdt.cantidadDecimal != null">
-                            AND esdt_ndecimal = #{itdt.cantidadDecimal}
-                        </if>
-                        <if test="itdt.cadena != null and !itdt.cadena.empty">
-                            AND esdt_cadena LIKE #{itdt.cadena}
-                        </if>
-                        )
+        </if>
+        <if test="subpId != null">
+            AND estd_subp_pk = #{subpId}
+        </if>
+        <if test="itdtMap != null and !itdtMap.empty">
+            <foreach collection="itdtMap" index="key" item="itdt">
+                <!-- FIXME ojo, faltan las fechas -->
+                <if
+                    test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
+                    <![CDATA[
+                    AND EXISTS (
+                        SELECT 1
+                        FROM tbl_estadistica_dato_esdt
+                        WHERE
+                            esdt_estd_pk = estd_pk
+                            AND esdt_tpdt_pk = #{itdt.tpdtId}
+                    ]]>
+                    <if test="itdt.prmt != null and itdt.prmt.id != null">
+                        AND esdt_prmt_pk = #{itdt.prmt.id}
                     </if>
-                </foreach>
-            </if>
-        </where>
+                    <if test="itdt.cantidadEntera != null">
+                        AND esdt_nentero = #{itdt.cantidadEntera}
+                    </if>
+                    <if test="itdt.cantidadDecimal != null">
+                        AND esdt_ndecimal = #{itdt.cantidadDecimal}
+                    </if>
+                    <if test="itdt.cadena != null and !itdt.cadena.empty">
+                        AND esdt_cadena LIKE #{itdt.cadena}
+                    </if>
+                    )
+                </if>
+            </foreach>
+        </if>
     </sql>
 
     <select id="selectCount" parameterType="EstadisticaCriterioVO" resultType="Integer">
         <include refid="SelectCountPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <insert id="insert" parameterType="EstadisticaVO">

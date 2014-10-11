@@ -79,7 +79,7 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcId);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         srvcDAO = session.getMapper(ServicioDAO.class);
 
@@ -118,7 +118,7 @@ public class ServicioBO {
             final int limit) {
         Preconditions.checkNotNull(srvcCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         srvcDAO = session.getMapper(ServicioDAO.class);
 
@@ -148,7 +148,7 @@ public class ServicioBO {
     public final List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO) {
         Preconditions.checkNotNull(srvcCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         srvcDAO = session.getMapper(ServicioDAO.class);
 
@@ -173,7 +173,7 @@ public class ServicioBO {
     public final List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO) {
         Preconditions.checkNotNull(srvcLupaCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         srvcDAO = session.getMapper(ServicioDAO.class);
 
