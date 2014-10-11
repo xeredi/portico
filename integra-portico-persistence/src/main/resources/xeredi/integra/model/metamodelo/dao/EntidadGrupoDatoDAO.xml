@@ -45,18 +45,6 @@
         <include refid="SelectWhere" />
     </select>
 
-    <select id="selectLabelValues" parameterType="EntidadGrupoDatoCriterioVO" resultType="LabelValueVO">
-        <![CDATA[
-        SELECT
-            engd_orden AS value
-            , engd_etiqueta AS label
-        FROM
-            tbl_entidad_grupo_dato_engd
-        ]]>
-        <include refid="SelectWhere" />
-        ORDER BY engd_enti_pk, engd_etiqueta
-    </select>
-
     <select id="exists" parameterType="EntidadGrupoDatoVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)

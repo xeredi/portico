@@ -6,7 +6,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,7 +15,7 @@ public interface TipoParametroDAO {
 
     /**
      * Select all.
-     * 
+     *
      * @param tpprCriterioVO
      *            the tppr criterio vo
      * @return the list
@@ -25,7 +24,7 @@ public interface TipoParametroDAO {
 
     /**
      * Select all.
-     * 
+     *
      * @param tpprCriterioVO
      *            the tppr criterio vo
      * @param bounds
@@ -35,17 +34,8 @@ public interface TipoParametroDAO {
     List<TipoParametroVO> selectList(final TipoParametroCriterioVO tpprCriterioVO, final RowBounds bounds);
 
     /**
-     * Select label values.
-     * 
-     * @param tpprCriterioVO
-     *            the tppr criterio vo
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValues(final TipoParametroCriterioVO tpprCriterioVO);
-
-    /**
      * Select.
-     * 
+     *
      * @param tpprId
      *            the tppr id
      * @return the tipo parametro vo
@@ -54,7 +44,7 @@ public interface TipoParametroDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param tpprCriterioVO
      *            the tppr criterio vo
      * @return the int
@@ -63,7 +53,7 @@ public interface TipoParametroDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param tpprVO
      *            the tppr vo
      */
@@ -71,7 +61,7 @@ public interface TipoParametroDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param tpprVO
      *            the tppr vo
      * @return the int
@@ -80,7 +70,7 @@ public interface TipoParametroDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param tpprId
      *            the tppr id
      * @return the int

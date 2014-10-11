@@ -21,7 +21,11 @@
             <result column="crgv_descripcion" property="descripcion" />
         </association>
 
-        <association property="tpsr" resultMap="xeredi.integra.model.metamodelo.dao.TipoServicioDAO.ResultMap" />
+        <association property="tpsr" javaType="TipoServicioVO">
+            <result column="crgo_tpsr_pk" property="id" />
+            <result column="enti_codigo" property="codigo" />
+            <result column="enti_nombre" property="nombre" />
+        </association>
     </resultMap>
 
     <sql id="SelectPrefix">

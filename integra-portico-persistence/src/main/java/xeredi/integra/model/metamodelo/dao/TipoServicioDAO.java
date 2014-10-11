@@ -6,7 +6,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,7 +15,7 @@ public interface TipoServicioDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpsrCriterioVO
      *            the tpsr criterio vo
      * @return the list
@@ -25,7 +24,7 @@ public interface TipoServicioDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpsrCriterioVO
      *            the tpsr criterio vo
      * @param bounds
@@ -35,17 +34,8 @@ public interface TipoServicioDAO {
     List<TipoServicioVO> selectList(final TipoServicioCriterioVO tpsrCriterioVO, final RowBounds bounds);
 
     /**
-     * Select label values.
-     * 
-     * @param tpsrCriterioVO
-     *            the tpsr criterio vo
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValues(final TipoServicioCriterioVO tpsrCriterioVO);
-
-    /**
      * Select.
-     * 
+     *
      * @param tpsrId
      *            the tpsr id
      * @return the tipo servicio vo
@@ -54,7 +44,7 @@ public interface TipoServicioDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param tpsrCriterioVO
      *            the tpsr criterio vo
      * @return the int
@@ -63,7 +53,7 @@ public interface TipoServicioDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param tpsrVO
      *            the tpsr vo
      */
@@ -71,7 +61,7 @@ public interface TipoServicioDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param tpsrVO
      *            the tpsr vo
      * @return the int
@@ -80,7 +70,7 @@ public interface TipoServicioDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param tpsrId
      *            the tpsr id
      * @return the int

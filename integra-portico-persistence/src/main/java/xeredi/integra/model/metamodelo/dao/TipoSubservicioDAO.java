@@ -6,7 +6,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,7 +15,7 @@ public interface TipoSubservicioDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param tpssVO
      *            the tpss vo
      */
@@ -24,7 +23,7 @@ public interface TipoSubservicioDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param tpssVO
      *            the tpss vo
      * @return the int
@@ -33,7 +32,7 @@ public interface TipoSubservicioDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param tpssId
      *            the tpss id
      * @return the int
@@ -42,7 +41,7 @@ public interface TipoSubservicioDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param tpssCriterioVO
      *            the tpss criterio vo
      * @return the int
@@ -51,7 +50,7 @@ public interface TipoSubservicioDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpssCriterioVO
      *            the tpss criterio vo
      * @return the list
@@ -60,7 +59,7 @@ public interface TipoSubservicioDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpssCriterioVO
      *            the tpss criterio vo
      * @param bounds
@@ -70,17 +69,8 @@ public interface TipoSubservicioDAO {
     List<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO, final RowBounds bounds);
 
     /**
-     * Select label values.
-     * 
-     * @param tpssCriterioVO
-     *            the tpss criterio vo
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValues(final TipoSubservicioCriterioVO tpssCriterioVO);
-
-    /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo subservicio vo

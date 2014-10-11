@@ -25,10 +25,10 @@ import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
@@ -55,7 +55,7 @@ public final class ReglaAction extends BaseAction {
     private Date fechaVigencia;
 
     /** The enti facturable list. */
-    private final List<EntidadVO> entiFacturableList = new ArrayList<>();
+    private final List<LabelValueVO> entiFacturableList = new ArrayList<>();
 
     /**
      * Instantiates a new regla action.
@@ -185,7 +185,7 @@ public final class ReglaAction extends BaseAction {
         tpsrCriterioVO.setId(rgla.getCrgo().getTpsr().getId());
         tpsrCriterioVO.setFacturable(Boolean.TRUE);
 
-        entiFacturableList.addAll(tpsrBO.selectList(tpsrCriterioVO));
+        entiFacturableList.addAll(tpsrBO.selectLabelValues(tpsrCriterioVO));
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
@@ -193,7 +193,7 @@ public final class ReglaAction extends BaseAction {
         tpssCriterioVO.setTpsrId(rgla.getCrgo().getTpsr().getId());
         tpssCriterioVO.setFacturable(Boolean.TRUE);
 
-        entiFacturableList.addAll(tpssBO.selectList(tpssCriterioVO));
+        entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
     }
 
     /**
@@ -509,7 +509,7 @@ public final class ReglaAction extends BaseAction {
      *
      * @return the enti facturable list
      */
-    public List<EntidadVO> getEntiFacturableList() {
+    public List<LabelValueVO> getEntiFacturableList() {
         return entiFacturableList;
     }
 

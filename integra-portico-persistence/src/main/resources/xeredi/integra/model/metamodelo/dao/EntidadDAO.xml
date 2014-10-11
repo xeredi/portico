@@ -107,18 +107,6 @@
         </where>
     </select>
 
-    <select id="selectLabelValues" parameterType="EntidadCriterioVO" resultType="LabelValueVO">
-        <![CDATA[
-        SELECT
-            enti_pk AS value
-            , enti_nombre AS label
-        FROM
-            tbl_entidad_enti
-        ]]>
-        <include refid="SelectWhere" />
-        ORDER BY enti_nombre
-    </select>
-
     <select id="exists" parameterType="EntidadVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)

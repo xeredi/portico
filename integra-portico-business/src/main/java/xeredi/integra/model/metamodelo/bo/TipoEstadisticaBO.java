@@ -43,7 +43,13 @@ public class TipoEstadisticaBO {
         tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
         try {
-            return tpesDAO.selectLabelValues(new TipoEstadisticaCriterioVO());
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final TipoEstadisticaVO tpes : tpesDAO.selectList(new TipoEstadisticaCriterioVO())) {
+                list.add(new LabelValueVO(tpes.getNombre(), tpes.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

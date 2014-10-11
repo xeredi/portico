@@ -35,15 +35,23 @@ public class TipoSubservicioBO {
     /**
      * Select label values.
      *
+     * @param criterioVO
+     *            the criterio vo
      * @return the list
      */
-    public final List<LabelValueVO> selectLabelValues() {
+    public final List<LabelValueVO> selectLabelValues(final TipoSubservicioCriterioVO criterioVO) {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         tpssDAO = session.getMapper(TipoSubservicioDAO.class);
 
         try {
-            return tpssDAO.selectLabelValues(new TipoSubservicioCriterioVO());
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final TipoSubservicioVO tpss : tpssDAO.selectList(criterioVO)) {
+                list.add(new LabelValueVO(tpss.getNombre(), tpss.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

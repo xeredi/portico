@@ -78,22 +78,6 @@
         </where>
     </select>
 
-    <select id="selectLabelValues" parameterType="TipoServicioCriterioVO" resultType="LabelValueVO">
-        <![CDATA[
-        SELECT
-            enti.enti_pk AS value
-            , enti.enti_nombre AS label
-        FROM
-            tbl_tipo_servicio_tpsr tpsr
-            INNER JOIN tbl_entidad_enti enti ON
-                enti.enti_pk = tpsr.tpsr_pk
-        ]]>
-        <include refid="SelectWhere" />
-        <![CDATA[
-        ORDER BY enti.enti_nombre
-        ]]>
-    </select>
-
     <insert id="insert" parameterType="TipoServicioVO">
         <![CDATA[
         INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk)

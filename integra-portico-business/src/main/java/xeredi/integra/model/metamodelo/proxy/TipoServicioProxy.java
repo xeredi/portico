@@ -92,7 +92,7 @@ public final class TipoServicioProxy {
 
             EntidadProxy.loadDependencies(TIPO_SERVICIO_MAP);
 
-            LABEL_VALUE_LIST.addAll(tpsrBO.selectLabelValues());
+            LABEL_VALUE_LIST.addAll(tpsrBO.selectLabelValues(new TipoServicioCriterioVO()));
 
             LOG.info("Carga de tipos de servicio OK");
         }

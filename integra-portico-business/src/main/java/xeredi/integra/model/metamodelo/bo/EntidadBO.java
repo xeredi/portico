@@ -216,7 +216,13 @@ public class EntidadBO {
         entiDAO = session.getMapper(EntidadDAO.class);
 
         try {
-            return entiDAO.selectLabelValues(entiCriterioVO);
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final EntidadVO enti : entiDAO.selectList(entiCriterioVO)) {
+                list.add(new LabelValueVO(enti.getNombre(), enti.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

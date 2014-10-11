@@ -4,7 +4,6 @@ import java.util.List;
 
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,7 +13,7 @@ public interface EntidadGrupoDatoDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param engdVO
      *            the engd vo
      */
@@ -22,7 +21,7 @@ public interface EntidadGrupoDatoDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param engdVO
      *            the engd vo
      * @return the int
@@ -31,7 +30,7 @@ public interface EntidadGrupoDatoDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param engdCriterioVO
      *            the engd criterio vo
      * @return the int
@@ -40,7 +39,7 @@ public interface EntidadGrupoDatoDAO {
 
     /**
      * Exists.
-     * 
+     *
      * @param engdVO
      *            the engd vo
      * @return true, if successful
@@ -49,7 +48,7 @@ public interface EntidadGrupoDatoDAO {
 
     /**
      * Select criterio.
-     * 
+     *
      * @param engdCriterioVO
      *            the engd criterio vo
      * @return the entidad grupo dato vo
@@ -58,7 +57,7 @@ public interface EntidadGrupoDatoDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param engdCriterioVO
      *            the engd criterio vo
      * @return the list
@@ -66,17 +65,8 @@ public interface EntidadGrupoDatoDAO {
     List<EntidadGrupoDatoVO> selectList(final EntidadGrupoDatoCriterioVO engdCriterioVO);
 
     /**
-     * Select label values.
-     * 
-     * @param engdCriterioVO
-     *            the engd criterio vo
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValues(final EntidadGrupoDatoCriterioVO engdCriterioVO);
-
-    /**
      * Select all.
-     * 
+     *
      * @return the list
      */
     List<EntidadGrupoDatoVO> selectAll();

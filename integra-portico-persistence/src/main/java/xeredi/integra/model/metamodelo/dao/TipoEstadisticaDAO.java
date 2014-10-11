@@ -6,7 +6,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,15 +32,6 @@ public interface TipoEstadisticaDAO {
      * @return the list
      */
     List<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterioVO, final RowBounds bounds);
-
-    /**
-     * Select label values.
-     *
-     * @param tpesCriterioVO
-     *            the tpes criterio vo
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValues(final TipoEstadisticaCriterioVO tpesCriterioVO);
 
     /**
      * Select.

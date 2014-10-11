@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-2 form-group">
                 <label translate>rgla_enti</label> <select ng-model="rgla.rglv.enti.id"
-                    ng-options="enti.id as enti.nombre for enti in entiFacturableList" class="form-control input-sm">
+                    ng-options="item.value as item.label for item in entiFacturableList" class="form-control input-sm">
                     <option />
                 </select>
             </div>

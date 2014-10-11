@@ -228,7 +228,13 @@ public class TipoDatoBO {
         tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
         try {
-            return tpdtDAO.selectLabelValues(tpdtCriterioVO);
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final TipoDatoVO tpdt : tpdtDAO.selectList(tpdtCriterioVO)) {
+                list.add(new LabelValueVO(tpdt.getNombre(), tpdt.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

@@ -87,7 +87,7 @@ public final class TipoSubservicioProxy {
 
             EntidadProxy.loadDependencies(TIPO_SUBSERVICIO_MAP);
 
-            LABEL_VALUE_LIST.addAll(tpssBO.selectLabelValues());
+            LABEL_VALUE_LIST.addAll(tpssBO.selectLabelValues(new TipoSubservicioCriterioVO()));
 
             LOG.info("Carga de tipos de subservicio OK");
         }

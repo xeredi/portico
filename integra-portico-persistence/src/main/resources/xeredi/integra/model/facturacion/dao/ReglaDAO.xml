@@ -50,7 +50,11 @@
             <result column="rglv_etiq_cuant5" property="etiqCuant5" />
             <result column="rglv_etiq_cuant6" property="etiqCuant6" />
 
-            <association property="enti" resultMap="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap" />
+            <association property="enti" javaType="EntidadVO">
+                <result column="rglv_enti_pk" property="id" />
+                <result column="enti_codigo" property="codigo" />
+                <result column="enti_nombre" property="nombre" />
+            </association>
         </association>
 
         <association property="crgo" resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />

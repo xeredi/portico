@@ -1,5 +1,6 @@
 package xeredi.integra.model.metamodelo.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -133,7 +134,7 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(numero);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
@@ -167,7 +168,7 @@ public class EntidadGrupoDatoBO {
     public final List<EntidadGrupoDatoVO> selectList(final Long entiId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(entiId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
@@ -192,7 +193,7 @@ public class EntidadGrupoDatoBO {
     public final List<LabelValueVO> selectLabelValues(final Long entiId) {
         Preconditions.checkNotNull(entiId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
@@ -201,7 +202,13 @@ public class EntidadGrupoDatoBO {
 
             engdCriterioVO.setEntiId(entiId);
 
-            return engdDAO.selectLabelValues(engdCriterioVO);
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final EntidadGrupoDatoVO engd : engdDAO.selectList(engdCriterioVO)) {
+                list.add(new LabelValueVO(engd.getEtiqueta(), engd.getNumero()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

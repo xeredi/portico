@@ -82,18 +82,6 @@
         <include refid="SelectWhere" />
     </select>
 
-    <select id="selectLabelValues" parameterType="TipoDatoCriterioVO" resultType="LabelValueVO">
-        <![CDATA[
-        SELECT
-            tpdt.tpdt_pk AS value
-            , tpdt.tpdt_nombre AS label
-        FROM
-            tbl_tipo_dato_tpdt tpdt
-        ]]>
-        <include refid="SelectWhere" />
-        ORDER BY tpdt.tpdt_nombre
-    </select>
-
     <select id="count" parameterType="TipoDatoCriterioVO" resultType="Integer">
         <![CDATA[
         SELECT

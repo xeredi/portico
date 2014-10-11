@@ -6,7 +6,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,7 +15,7 @@ public interface TipoSubparametroDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param tpspVO
      *            the tpsp vo
      */
@@ -24,7 +23,7 @@ public interface TipoSubparametroDAO {
 
     /**
      * Update.
-     * 
+     *
      * @param tpspVO
      *            the tpsp vo
      * @return the int
@@ -33,7 +32,7 @@ public interface TipoSubparametroDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param tpspId
      *            the tpsp id
      * @return the int
@@ -42,7 +41,7 @@ public interface TipoSubparametroDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param tpspCriterioVO
      *            the tpsp criterio vo
      * @return the int
@@ -51,7 +50,7 @@ public interface TipoSubparametroDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpspCriterioVO
      *            the tpsp criterio vo
      * @return the list
@@ -60,7 +59,7 @@ public interface TipoSubparametroDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param tpspCriterioVO
      *            the tpsp criterio vo
      * @param bounds
@@ -70,17 +69,8 @@ public interface TipoSubparametroDAO {
     List<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterioVO, final RowBounds bounds);
 
     /**
-     * Select label values.
-     * 
-     * @param tpspCriterioVO
-     *            the tpsp criterio vo
-     * @return the list
-     */
-    List<LabelValueVO> selectLabelValues(final TipoSubparametroCriterioVO tpspCriterioVO);
-
-    /**
      * Select.
-     * 
+     *
      * @param id
      *            the id
      * @return the tipo subparametro vo

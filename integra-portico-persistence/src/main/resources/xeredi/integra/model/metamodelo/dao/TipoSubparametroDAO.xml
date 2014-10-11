@@ -86,23 +86,6 @@
         </where>
     </select>
 
-    <select id="selectLabelValues" parameterType="TipoSubparametroCriterioVO"
-        resultType="LabelValueVO">
-        <![CDATA[
-        SELECT
-            enti.enti_pk AS value
-            , enti.enti_nombre AS label
-        FROM
-            tbl_tipo_subparametro_tpsp tpsp
-            INNER JOIN tbl_entidad_enti enti ON
-                enti.enti_pk = tpsp.tpsp_pk
-        ]]>
-        <include refid="SelectWhere" />
-        <![CDATA[
-        ORDER BY enti.enti_nombre
-        ]]>
-    </select>
-
     <insert id="insert" parameterType="TipoSubparametroVO">
     <![CDATA[
         INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp)

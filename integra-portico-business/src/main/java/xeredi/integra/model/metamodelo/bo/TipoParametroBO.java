@@ -43,7 +43,13 @@ public class TipoParametroBO {
         tpprDAO = session.getMapper(TipoParametroDAO.class);
 
         try {
-            return tpprDAO.selectLabelValues(new TipoParametroCriterioVO());
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final TipoParametroVO tppr : tpprDAO.selectList(new TipoParametroCriterioVO())) {
+                list.add(new LabelValueVO(tppr.getNombre(), tppr.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }

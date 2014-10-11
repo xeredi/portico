@@ -64,23 +64,6 @@
 		</where>
 	</select>
 
-	<select id="selectLabelValues" parameterType="TipoEstadisticaCriterioVO"
-		resultType="LabelValueVO">
-        <![CDATA[
-        SELECT
-            enti.enti_pk AS value
-            , enti.enti_nombre AS label
-        FROM
-            tbl_tipo_estadistica_tpes tpes
-            INNER JOIN tbl_entidad_enti enti ON
-                enti.enti_pk = tpes.tpes_pk
-        ]]>
-		<include refid="SelectWhere" />
-        <![CDATA[
-        ORDER BY enti.enti_nombre
-        ]]>
-	</select>
-
 	<insert id="insert" parameterType="TipoEstadisticaVO">
         <![CDATA[
         INSERT INTO tbl_tipo_estadistica_tpes(tpes_pk)
