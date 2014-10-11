@@ -119,9 +119,8 @@ public class EntidadBO {
 
         try {
             final Map<Long, EntidadVO> entiMap = entiDAO.selectMap(new EntidadCriterioVO());
-            final List<EntidadEntidadVO> enenList = enenDAO.selectList(new EntidadEntidadCriterioVO());
 
-            for (final EntidadEntidadVO enenVO : enenList) {
+            for (final EntidadEntidadVO enenVO : enenDAO.selectList(new EntidadEntidadCriterioVO())) {
                 final EntidadVO entiPadreVO = entiMap.get(enenVO.getEntiPadreId());
                 final EntidadVO entiHijaVO = entiMap.get(enenVO.getEntiHija().getId());
 
@@ -136,9 +135,7 @@ public class EntidadBO {
                 entiHijaVO.getEntiPadresList().add(entiPadreVO.getId());
             }
 
-            final List<EntidadGrupoDatoVO> engdList = engdDAO.selectAll();
-
-            for (final EntidadGrupoDatoVO engdVO : engdList) {
+            for (final EntidadGrupoDatoVO engdVO : engdDAO.selectAll()) {
                 final EntidadVO entiVO = entiMap.get(engdVO.getEntiId());
 
                 if (entiVO.getEngdList() == null) {
@@ -149,9 +146,7 @@ public class EntidadBO {
                 entiVO.getEngdMap().put(engdVO.getNumero(), engdVO);
             }
 
-            final List<EntidadTipoDatoVO> entdList = entdDAO.selectAll();
-
-            for (final EntidadTipoDatoVO entdVO : entdList) {
+            for (final EntidadTipoDatoVO entdVO : entdDAO.selectAll()) {
                 final EntidadVO entiVO = entiMap.get(entdVO.getEntiId());
 
                 entdVO.setTpdt(tpdtMap.get(entdVO.getTpdt().getId()));
@@ -184,9 +179,7 @@ public class EntidadBO {
                 }
             }
 
-            final List<EntidadAccionVO> enacList = enacDAO.selectAll();
-
-            for (final EntidadAccionVO enacVO : enacList) {
+            for (final EntidadAccionVO enacVO : enacDAO.selectAll()) {
                 final EntidadVO entiVO = entiMap.get(enacVO.getEntiId());
 
                 if (entiVO.getEnacList() == null) {

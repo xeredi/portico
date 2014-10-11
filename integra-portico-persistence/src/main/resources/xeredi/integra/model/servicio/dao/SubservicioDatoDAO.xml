@@ -64,44 +64,46 @@
     </sql>
 
     <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND ssdt_ssrv_pk = #{id}
-            </if>
-            <if test="ids != null and !ids.empty">
-                AND ssdt_ssrv_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
-            </if>
-            <if test="soloDatosGrid">
-            <![CDATA[
-                AND EXISTS (
+        <![CDATA[
+                EXISTS (
                     SELECT 1
-                    FROM tbl_entidad_tipo_dato_entd
+                    FROM vw_subservicio_ssrv
                     WHERE
-                        entd_tpdt_pk = ssdt_tpdt_pk
-                        AND entd_enti_pk = #{entiId}
-                        AND entd_gridable = 1
-                )
-            ]]>
-            </if>
-            <if test="srvc != null">
-                <if test="srvc.id != null">
-                <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-                    FROM tbl_subservicio_ssrv
-                    WHERE ssrv_pk = ssdt_ssrv_pk
-                        AND ssrv_srvc_pk = #{srvc.id}
-                )
-                ]]>
-                </if>
-            </if>
-        </where>
+                        ssrv_pk = ssdt_ssrv_pk
+        ]]>
+        <include refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
+        <![CDATA[
+            )
+        ]]>
+
+        <if test="id != null">
+            AND ssdt_ssrv_pk = #{id}
+        </if>
+
+        <if test="ids != null and !ids.empty">
+            AND ssdt_ssrv_pk IN
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
+        </if>
+
+        <if test="soloDatosGrid">
+        <![CDATA[
+            AND EXISTS (
+                SELECT 1
+                FROM tbl_entidad_tipo_dato_entd
+                WHERE
+                    entd_tpdt_pk = ssdt_tpdt_pk
+                    AND entd_enti_pk = #{entiId}
+                    AND entd_gridable = 1
+            )
+        ]]>
+        </if>
     </sql>
 
     <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <insert id="insert" parameterType="ItemDatoVO">

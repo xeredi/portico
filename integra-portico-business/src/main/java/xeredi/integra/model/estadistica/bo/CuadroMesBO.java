@@ -38,10 +38,9 @@ public class CuadroMesBO {
         cdmsDAO = session.getMapper(CuadroMesDAO.class);
 
         try {
-            final List<CuadroMesVO> cdmsList = cdmsDAO.selectList(peprId);
             final Map<String, List<CuadroMesVO>> cdmsMap = new HashMap<>();
 
-            for (final CuadroMesVO cdmsVO : cdmsList) {
+            for (final CuadroMesVO cdmsVO : cdmsDAO.selectList(peprId)) {
                 final String cocuKey = cdmsVO.getCocu().getParametro();
 
                 if (!cdmsMap.containsKey(cocuKey)) {

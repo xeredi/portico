@@ -7,8 +7,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
@@ -24,7 +24,7 @@ public abstract class ItemListadoAction extends BaseAction {
     protected static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The label values map. */
-    protected Map<Long, List<ParametroVO>> labelValuesMap;
+    protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
     /** The page. */
     private int page = PaginatedList.FIRST_PAGE;
@@ -54,7 +54,7 @@ public abstract class ItemListadoAction extends BaseAction {
      *
      * @return the label values map
      */
-    public final Map<Long, List<ParametroVO>> getLabelValuesMap() {
+    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
         return labelValuesMap;
     }
 

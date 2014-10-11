@@ -33,6 +33,7 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -589,10 +590,9 @@ public class ParametroBO {
         prmtDAO = session.getMapper(ParametroDAO.class);
 
         try {
-            final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
             final Map<String, Long> map = new HashMap<>();
 
-            for (final ParametroVO prmtVO : prmtList) {
+            for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
                 map.put(prmtVO.getParametro(), prmtVO.getId());
             }
 
@@ -617,10 +617,9 @@ public class ParametroBO {
         prmtDAO = session.getMapper(ParametroDAO.class);
 
         try {
-            final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
             final Map<Long, String> map = new HashMap<>();
 
-            for (final ParametroVO prmtVO : prmtList) {
+            for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
                 map.put(prmtVO.getId(), prmtVO.getParametro());
             }
 
@@ -641,13 +640,13 @@ public class ParametroBO {
      *            the idioma
      * @return the map
      */
-    public final Map<Long, List<ParametroVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
+    public final Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
             final String idioma) {
         Preconditions.checkNotNull(tpprIds);
         Preconditions.checkNotNull(fechaReferencia);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         prmtDAO = session.getMapper(ParametroDAO.class);
 
@@ -658,18 +657,44 @@ public class ParametroBO {
             prmtCriterioVO.setIdioma(idioma);
             prmtCriterioVO.setFechaVigencia(fechaReferencia);
 
-            final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
-            final Map<Long, List<ParametroVO>> map = new HashMap<>();
+            final Map<Long, List<LabelValueVO>> map = new HashMap<>();
 
-            for (final ParametroVO prmtVO : prmtList) {
+            for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
                 if (!map.containsKey(prmtVO.getEntiId())) {
-                    map.put(prmtVO.getEntiId(), new ArrayList<ParametroVO>());
+                    map.put(prmtVO.getEntiId(), new ArrayList<LabelValueVO>());
                 }
 
-                map.get(prmtVO.getEntiId()).add(prmtVO);
+                map.get(prmtVO.getEntiId()).add(new LabelValueVO(prmtVO.getEtiqueta(), prmtVO.getId()));
             }
 
             return map;
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Select label values.
+     *
+     * @param criterioVO
+     *            the criterio vo
+     * @return the list
+     */
+    public final List<LabelValueVO> selectLabelValues(final ParametroCriterioVO criterioVO) {
+        Preconditions.checkNotNull(criterioVO);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+
+        prmtDAO = session.getMapper(ParametroDAO.class);
+
+        try {
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final ParametroVO prmtVO : prmtDAO.selectList(criterioVO)) {
+                list.add(new LabelValueVO(prmtVO.getEtiqueta(), prmtVO.getId()));
+            }
+
+            return list;
         } finally {
             session.close();
         }
@@ -834,10 +859,9 @@ public class ParametroBO {
             prvrIds.add(prvrId);
             prmtCriterioVO.setPrvrIds(prvrIds);
 
-            final List<ParametroI18nVO> p18nList = p18nDAO.selectList(prmtCriterioVO);
             final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
 
-            for (final ParametroI18nVO p18nVO : p18nList) {
+            for (final ParametroI18nVO p18nVO : p18nDAO.selectList(prmtCriterioVO)) {
                 p18nMap.put(p18nVO.getIdioma(), p18nVO);
             }
 
@@ -878,10 +902,9 @@ public class ParametroBO {
                 prmtCriterioVO.setPrvrIds(prvrIds);
             }
 
-            final List<ItemDatoVO> itdtList = prdtDAO.selectList(prmtCriterioVO);
             final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
 
-            for (final ItemDatoVO itdtVO : itdtList) {
+            for (final ItemDatoVO itdtVO : prdtDAO.selectList(prmtCriterioVO)) {
                 if (!map.containsKey(itdtVO.getItemId())) {
                     map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }

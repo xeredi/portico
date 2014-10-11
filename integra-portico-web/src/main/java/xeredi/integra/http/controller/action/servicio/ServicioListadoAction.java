@@ -12,7 +12,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
@@ -21,6 +20,7 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.Entidad;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -41,7 +41,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
     private ServicioCriterioVO itemCriterio;
 
     /** The subps. */
-    private List<ParametroVO> subpList;
+    private List<LabelValueVO> subpList;
 
     /**
      * {@inheritDoc}
@@ -153,7 +153,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
      *
      * @return the subps
      */
-    public List<ParametroVO> getSubpList() {
+    public List<LabelValueVO> getSubpList() {
         return subpList;
     }
 

@@ -155,10 +155,9 @@ public class EstadisticaBO {
 
             estdCriterioVO.setIds(ids);
 
-            final List<ItemDatoVO> itdtList = esdtDAO.selectList(estdCriterioVO);
             final Map<Long, Map<Long, ItemDatoVO>> itdtMap = new HashMap<>();
 
-            for (final ItemDatoVO itdtVO : itdtList) {
+            for (final ItemDatoVO itdtVO : esdtDAO.selectList(estdCriterioVO)) {
                 if (!itdtMap.containsKey(itdtVO.getItemId())) {
                     itdtMap.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }

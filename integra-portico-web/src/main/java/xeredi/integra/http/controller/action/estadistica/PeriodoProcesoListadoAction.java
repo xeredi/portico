@@ -13,9 +13,9 @@ import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -42,7 +42,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
     private PeriodoProcesoCriterioVO peprCriterio;
 
     /** The subps. */
-    private List<ParametroVO> autpList;
+    private List<LabelValueVO> autpList;
 
     /**
      * Instantiates a new periodo proceso listado action.
@@ -164,7 +164,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      *
      * @return the autp list
      */
-    public List<ParametroVO> getAutpList() {
+    public List<LabelValueVO> getAutpList() {
         return autpList;
     }
 

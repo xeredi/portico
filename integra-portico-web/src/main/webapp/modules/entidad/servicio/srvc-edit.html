@@ -8,7 +8,7 @@
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 form-group">
                 <label translate>srvc_subp</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
-                    ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
+                    ng-options="labelValue.value as labelValue.label for labelValue in subpList" class="form-control input-sm">
                     <option />
                 </select>
                 <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.subp.etiqueta"></p>

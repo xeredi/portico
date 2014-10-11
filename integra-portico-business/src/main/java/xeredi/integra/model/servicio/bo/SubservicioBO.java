@@ -70,7 +70,7 @@ public class SubservicioBO {
 
             if (count > offset) {
                 ssrvList.addAll(ssrvDAO.selectList(ssrvCriterioVO, new RowBounds(offset, limit)));
-                fillDependencies(session, ssrvList, ssrvCriterioVO);
+                fillDependencies(session, ssrvList, ssrvCriterioVO, true);
             }
 
             return new PaginatedList<>(ssrvList, offset, limit, count);
@@ -96,7 +96,7 @@ public class SubservicioBO {
         try {
             final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
 
-            fillDependencies(session, ssrvList, ssrvCriterioVO);
+            fillDependencies(session, ssrvList, ssrvCriterioVO, false);
 
             return ssrvList;
         } finally {
@@ -135,7 +135,7 @@ public class SubservicioBO {
                 throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
             }
 
-            fillDependencies(session, Arrays.asList(new SubservicioVO[] { ssrvVO }), ssrvCriterioVO);
+            fillDependencies(session, Arrays.asList(new SubservicioVO[] { ssrvVO }), ssrvCriterioVO, true);
 
             return ssrvVO;
         } finally {
@@ -286,7 +286,7 @@ public class SubservicioBO {
      *            the ssrv criterio vo
      */
     private void fillDependencies(final SqlSession session, final List<SubservicioVO> ssrvList,
-            final SubservicioCriterioVO ssrvCriterioVO) {
+            final SubservicioCriterioVO ssrvCriterioVO, final boolean useIds) {
         Preconditions.checkNotNull(ssrvList);
         Preconditions.checkNotNull(ssrvCriterioVO);
 
@@ -294,21 +294,19 @@ public class SubservicioBO {
 
         // Datos asociados
         if (!ssrvList.isEmpty()) {
-            final Set<Long> ssrvIds = new HashSet<>();
+            if (useIds) {
+                final Set<Long> ssrvIds = new HashSet<>();
 
-            for (final SubservicioVO ssrvVO : ssrvList) {
-                ssrvIds.add(ssrvVO.getId());
+                for (final SubservicioVO ssrvVO : ssrvList) {
+                    ssrvIds.add(ssrvVO.getId());
+                }
+
+                ssrvCriterioVO.setIds(ssrvIds);
             }
-
-            ssrvCriterioVO.setIds(ssrvIds);
-
-            final List<ItemDatoVO> ssdtList = ssdtDAO.selectList(ssrvCriterioVO);
-
-            ssrvCriterioVO.setIds(null);
 
             final Map<Long, Map<Long, ItemDatoVO>> itdtMap = new HashMap<>();
 
-            for (final ItemDatoVO itdtVO : ssdtList) {
+            for (final ItemDatoVO itdtVO : ssdtDAO.selectList(ssrvCriterioVO)) {
                 if (!itdtMap.containsKey(itdtVO.getItemId())) {
                     itdtMap.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }
@@ -318,6 +316,10 @@ public class SubservicioBO {
 
             for (final SubservicioVO ssrvVO : ssrvList) {
                 ssrvVO.setItdtMap(itdtMap.get(ssrvVO.getId()));
+            }
+
+            if (useIds) {
+                ssrvCriterioVO.setIds(null);
             }
         }
     }

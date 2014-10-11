@@ -1,5 +1,6 @@
 package xeredi.integra.model.maestro.bo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -275,12 +276,11 @@ public class SubparametroBO {
         sprmDAO = session.getMapper(SubparametroDAO.class);
 
         try {
-            List<SubparametroVO> sprmList = null;
-
+            final List<SubparametroVO> sprmList = new ArrayList<>();
             final int count = sprmDAO.selectCount(sprmCriterioVO);
 
             if (count > offset) {
-                sprmList = sprmDAO.selectList(sprmCriterioVO, new RowBounds(offset, limit));
+                sprmList.addAll(sprmDAO.selectList(sprmCriterioVO, new RowBounds(offset, limit)));
 
                 // FIXME Ojo en la paginacion, puede traer una barbaridad de
                 // dependencias
@@ -378,10 +378,9 @@ public class SubparametroBO {
 
             sprmCriterioVO.setSpvrIds(spvrIds);
 
-            final List<ItemDatoVO> itdtList = spdtDAO.selectList(sprmCriterioVO);
             final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
 
-            for (final ItemDatoVO itdtVO : itdtList) {
+            for (final ItemDatoVO itdtVO : spdtDAO.selectList(sprmCriterioVO)) {
                 if (!map.containsKey(itdtVO.getItemId())) {
                     map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }

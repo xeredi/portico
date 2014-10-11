@@ -42,62 +42,60 @@
     </sql>
 
     <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND srvc.srvc_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND srvc.srvc_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
+        <if test="id != null">
+            AND srvc_pk = #{id}
+        </if>
+        <if test="ids != null">
+            AND srvc_pk IN
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-            <if test="entiId != null">
-                AND srvc.srvc_tpsr_pk = #{entiId}
-            </if>
-            <if test="subp != null and subp.id != null">
-                AND srvc.srvc_subp_pk = #{subp.id}
-            </if>
-            <if test="anno != null and !anno.empty">
-                AND srvc.srvc_anno = #{anno}
-            </if>
-            <if test="numero != null and !numero.empty">
-                AND srvc.srvc_numero = #{numero}
-            </if>
-            <if test="estado != null and !estado.empty">
-                AND srvc.srvc_estado = #{estado}
-            </if>
-            <if test="itdtMap != null and !itdtMap.empty">
-                <foreach collection="itdtMap" item="itdt">
-                    <if
-                        test="(itdt.prmt != null and itdt.prmt.id != null) or (itdt.srvc != null and itdt.srvc.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
+        <if test="entiId != null">
+            AND srvc_tpsr_pk = #{entiId}
+        </if>
+        <if test="subp != null and subp.id != null">
+            AND srvc_subp_pk = #{subp.id}
+        </if>
+        <if test="anno != null and !anno.empty">
+            AND srvc_anno = #{anno}
+        </if>
+        <if test="numero != null and !numero.empty">
+            AND srvc_numero = #{numero}
+        </if>
+        <if test="estado != null and !estado.empty">
+            AND srvc_estado = #{estado}
+        </if>
+        <if test="itdtMap != null and !itdtMap.empty">
+            <foreach collection="itdtMap" item="itdt">
+                <if
+                    test="(itdt.prmt != null and itdt.prmt.id != null) or (itdt.srvc != null and itdt.srvc.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
                         <![CDATA[
                         AND EXISTS (
                             SELECT 1 FROM tbl_servicio_dato_srdt
                             WHERE srdt_srvc_pk = srvc_pk
                                 AND srdt_tpdt_pk = #{itdt.tpdtId}
                         ]]>
-                        <if test="itdt.prmt != null and itdt.prmt.id != null">
-                            AND srdt_prmt_pk = #{itdt.prmt.id}
-                        </if>
-                        <if test="itdt.srvc != null and itdt.srvc.id != null">
-                            AND srdt_srvc_dep_pk = #{itdt.srvc.id}
-                        </if>
-                        <if test="itdt.cantidadEntera != null">
-                            AND srdt_nentero = #{itdt.cantidadEntera}
-                        </if>
-                        <if test="itdt.cantidadDecimal != null">
-                            AND srdt_ndecimal = #{itdt.cantidadDecimal}
-                        </if>
-                        <if test="itdt.cadena != null and !itdt.cadena.empty">
-                            AND srdt_cadena LIKE #{itdt.cadena}
-                        </if>
-                        <!-- FIXME Faltan las fechas -->
-                        )
+                    <if test="itdt.prmt != null and itdt.prmt.id != null">
+                        AND srdt_prmt_pk = #{itdt.prmt.id}
                     </if>
-                </foreach>
-            </if>
-        </where>
+                    <if test="itdt.srvc != null and itdt.srvc.id != null">
+                        AND srdt_srvc_dep_pk = #{itdt.srvc.id}
+                    </if>
+                    <if test="itdt.cantidadEntera != null">
+                        AND srdt_nentero = #{itdt.cantidadEntera}
+                    </if>
+                    <if test="itdt.cantidadDecimal != null">
+                        AND srdt_ndecimal = #{itdt.cantidadDecimal}
+                    </if>
+                    <if test="itdt.cadena != null and !itdt.cadena.empty">
+                        AND srdt_cadena LIKE #{itdt.cadena}
+                    </if>
+                    <!-- FIXME Faltan las fechas -->
+                    )
+                </if>
+            </foreach>
+        </if>
     </sql>
 
     <select id="exists" parameterType="ServicioVO" resultType="boolean">
@@ -113,18 +111,24 @@
 
     <select id="selectCount" parameterType="ServicioCriterioVO" resultType="Integer">
         <include refid="SelectCountPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-        ORDER BY srvc.srvc_falta DESC
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+        ORDER BY srvc_falta DESC
     </select>
 
     <select id="selectObject" parameterType="ServicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="select" parameterType="Long" resultMap="ResultMap">

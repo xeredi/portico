@@ -257,10 +257,9 @@ public class TipoDatoBO {
 
         try {
             final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterioVO);
-            final List<CodigoReferenciaVO> cdrfList = cdrfDAO.selectList(new CodigoReferenciaCriterioVO());
             final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
 
-            for (final CodigoReferenciaVO cdrfVO : cdrfList) {
+            for (final CodigoReferenciaVO cdrfVO : cdrfDAO.selectList(new CodigoReferenciaCriterioVO())) {
                 if (!cdrfMap.containsKey(cdrfVO.getTpdtId())) {
                     cdrfMap.put(cdrfVO.getTpdtId(), new ArrayList<CodigoReferenciaVO>());
                 }

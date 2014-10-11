@@ -38,8 +38,8 @@
                     ng-model="item.itdtMap[tpdtId].cadena" ng-required="item.itdtMap[tpdtId].obligatorio"
                     class="form-control input-sm" ng-bind="item.itdtMap[tpdtId].cadena"></textarea>
                 <select ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'S'"
-                    ng-model="item.itdtMap[tpdtId].prmt" ng-required="item.itdtMap[tpdtId].obligatorio"
-                    ng-options="prmt.etiqueta for prmt in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id] track by prmt.id"
+                    ng-model="item.itdtMap[tpdtId].prmt.id" ng-required="item.itdtMap[tpdtId].obligatorio"
+                    ng-options="labelValue.value as labelValue.label for labelValue in labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
                     class="form-control input-sm">
                     <option />
                 </select>

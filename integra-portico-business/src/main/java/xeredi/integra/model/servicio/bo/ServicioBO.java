@@ -462,10 +462,9 @@ public class ServicioBO {
                 srvcCriterioVO.setIds(srvcIds);
             }
 
-            final List<ItemDatoVO> itdtList = srdtDAO.selectList(srvcCriterioVO);
             final Map<Long, Map<Long, ItemDatoVO>> map = new HashMap<>();
 
-            for (final ItemDatoVO itdtVO : itdtList) {
+            for (final ItemDatoVO itdtVO : srdtDAO.selectList(srvcCriterioVO)) {
                 if (!map.containsKey(itdtVO.getItemId())) {
                     map.put(itdtVO.getItemId(), new HashMap<Long, ItemDatoVO>());
                 }
