@@ -67,80 +67,83 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("prmtGridController", function($scope, $http, $location, $routeParams) {
-    $scope.showFilter = false;
-    $scope.itemCriterio = {};
-    $scope.itemCriterio.entiId = $routeParams.entiId;
+module.controller("prmtGridController",
+        function($scope, $http, $location, $routeParams) {
+            $scope.showFilter = false;
+            $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+            $scope.itemCriterio.entiId = $routeParams.entiId;
+            $scope.pageInfo = {};
 
-    function search(itemCriterio, page, limit) {
-        var url = "maestro/prmt-list.action";
+            function search(itemCriterio, page, limit) {
+                var url = "maestro/prmt-list.action";
 
-        $scope.limit = limit;
+                $scope.limit = limit;
 
-        $http.post(url, {
-            itemCriterio : itemCriterio,
-            page : page,
-            limit : limit
-        }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+                $http.post(url, {
+                    itemCriterio : itemCriterio,
+                    page : page,
+                    limit : limit
+                }).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
 
-            if (data.actionErrors.length == 0) {
-                $scope.page = data.itemList.page;
-                $scope.itemList = data.itemList;
-                $scope.itemCriterio = data.itemCriterio;
+                    if (data.actionErrors.length == 0) {
+                        $scope.page = data.itemList.page;
+                        $scope.itemList = data.itemList;
+                        $scope.itemCriterio = data.itemCriterio;
+                        $scope.pageInfo.limit = data.limit;
 
-                var map = {};
+                        var map = {};
 
-                map["page"] = data.itemList.page;
+                        map["page"] = data.itemList.page;
+                        map["limit"] = data.limit;
+                        map["itemCriterio"] = JSON.stringify(data.itemCriterio);
 
-                $location.search(map).replace();
+                        $location.search(map).replace();
 
+                        $scope.showFilter = false;
+                    }
+                });
+            }
+
+            $scope.pageChanged = function() {
+                search($scope.itemCriterio, $scope.page, $scope.pageInfo.limit);
+            }
+
+            $scope.filter = function() {
+                var url = "maestro/prmt-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
+
+                $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
+                    if (data.actionErrors.length == 0) {
+                        $scope.labelValuesMap = data.labelValuesMap;
+                        $scope.limits = data.limits;
+                    }
+                });
+
+                $scope.showFilter = true;
+            }
+
+            $scope.search = function() {
+                search($scope.itemCriterio, 1, $scope.pageInfo.limit);
+            }
+
+            $scope.cancelSearch = function() {
                 $scope.showFilter = false;
             }
-        });
-    }
 
-    $scope.pageChanged = function() {
-        console.log("pageChanged: " + $scope.page);
-        console.log("limit: " + $scope.limit);
+            function findEnti() {
+                var url = "metamodelo/tppr-proxy-detail.action?enti.id=" + $routeParams.entiId;
 
-        search($scope.itemCriterio, $scope.page, $scope.limit);
-    }
-
-    $scope.filter = function() {
-        var url = "maestro/prmt-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $scope.labelValuesMap = data.labelValuesMap;
-                $scope.limits = data.limits;
+                $http.get(url).success(function(data) {
+                    $scope.enti = data.enti;
+                });
             }
+
+            findEnti();
+            search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1,
+                    $routeParams.limit ? $routeParams.limit : 20);
         });
-
-        $scope.showFilter = true;
-    }
-
-    $scope.search = function() {
-        search($scope.itemCriterio, 1, $scope.limit);
-    }
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tppr-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
-
-    findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
-});
 
 module.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
     $scope.remove = function() {

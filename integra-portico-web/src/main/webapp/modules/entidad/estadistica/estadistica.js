@@ -131,81 +131,87 @@ module.controller("cdmsDetailController", function($scope, $http, $location, $ro
     });
 });
 
-module.controller("estdGridController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.showFilter = false;
-    $scope.itemCriterio = {};
-    $scope.itemCriterio.entiId = $routeParams.entiId;
-    $scope.itemCriterio.pepr = {};
-    $scope.itemCriterio.pepr.id = $routeParams.peprId;
-    $scope.itemCriterio.pepr.autpId = $routeParams.autpId;
+module.controller("estdGridController",
+        function($scope, $http, $location, $routeParams) {
+            $scope.showFilter = false;
+            $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+            $scope.itemCriterio.entiId = $routeParams.entiId;
+            $scope.itemCriterio.pepr = {};
+            $scope.itemCriterio.pepr.id = $routeParams.peprId;
+            $scope.itemCriterio.pepr.autpId = $routeParams.autpId;
+            $scope.pageInfo = {};
 
-    function search(itemCriterio, page, limit) {
-        var url = "estadistica/estd-list.action";
+            function search(itemCriterio, page, limit) {
+                var url = "estadistica/estd-list.action?page=" + page + "&limit=" + limit;
 
-        $scope.limit = limit;
+                $http.post(url, {
+                    itemCriterio : itemCriterio,
+                    page : page,
+                    limit : limit
+                }).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
 
-        $http.post(url, {
-            itemCriterio : itemCriterio,
-            page : page,
-            limit : limit
-        }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+                    if (data.actionErrors.length == 0) {
+                        $scope.page = data.itemList.page;
+                        $scope.itemList = data.itemList;
+                        $scope.itemCriterio = data.itemCriterio;
+                        $scope.pageInfo.limit = data.limit;
 
-            if (data.actionErrors.length == 0) {
-                $scope.page = data.itemList.page;
-                $scope.itemList = data.itemList;
+                        var map = {};
 
-                var map = {};
+                        map["page"] = data.itemList.page;
+                        map["limit"] = data.limit;
+                        map["itemCriterio"] = JSON.stringify(data.itemCriterio);
 
-                map["page"] = data.itemList.page;
+                        $location.search(map).replace();
 
-                $location.search(map).replace();
+                        $scope.showFilter = false;
+                    }
+                });
+            }
 
+            $scope.pageChanged = function() {
+                search($scope.itemCriterio, $scope.page, $scope.pageInfo.limit);
+            }
+
+            $scope.filter = function() {
+                var url = "estadistica/estd-filter.action?itemCriterio.entiId=" + $routeParams.entiId
+                        + "&itemCriterio.pepr.id=" + $routeParams.peprId + "&itemCriterio.pepr.autpId="
+                        + $routeParams.autpId;
+
+                $http.get(url).success(function(data) {
+                    $scope.actionErrors = data.actionErrors;
+
+                    if (data.actionErrors.length == 0) {
+                        $scope.labelValuesMap = data.labelValuesMap;
+                        $scope.subpList = data.subpList;
+                        $scope.limits = data.limits;
+                    }
+                });
+
+                $scope.showFilter = true;
+            }
+
+            $scope.search = function() {
+                search($scope.itemCriterio, 1, $scope.pageInfo.limit);
+            }
+
+            $scope.cancelSearch = function() {
                 $scope.showFilter = false;
             }
-        });
-    }
 
-    $scope.pageChanged = function() {
-        search($scope.itemCriterio, $scope.page, $scope.limit);
-    }
+            function findEnti() {
+                var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
 
-    $scope.filter = function() {
-        var url = "estadistica/estd-filter.action?itemCriterio.entiId=" + $routeParams.entiId
-                + "&itemCriterio.pepr.id=" + $routeParams.peprId + "&itemCriterio.pepr.autpId=" + $routeParams.autpId;
-
-        $http.get(url).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $scope.labelValuesMap = data.labelValuesMap;
-                $scope.subpList = data.subpList;
-                $scope.limits = data.limits;
+                $http.get(url).success(function(data) {
+                    $scope.enti = data.enti;
+                });
             }
+
+            findEnti();
+            search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1,
+                    $routeParams.limit ? $routeParams.limit : 20);
         });
-
-        $scope.showFilter = true;
-    }
-
-    $scope.search = function() {
-        search($scope.itemCriterio, 1, $scope.limit);
-    }
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
-
-    findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
-});
 
 module.controller("estdDetailController", function($scope, $http, $location, $route, $routeParams) {
     function findEnti() {

@@ -1,8 +1,5 @@
 package xeredi.integra.model.servicio.vo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
@@ -34,31 +31,31 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    /**
-     * Gets the url map.
-     *
-     * @return the url map
-     */
-    public Map<String, Object> getUrlMap() {
-        final Map<String, Object> map = new HashMap<>();
-
-        fillUrlMap(map);
-
-        if (subp != null && subp.getId() != null) {
-            map.put("itemCriterio.subp.id", subp.getId());
-        }
-        if (anno != null) {
-            map.put("itemCriterio.anno", anno);
-        }
-        if (numero != null) {
-            map.put("itemCriterio.numero", numero);
-        }
-        if (estado != null) {
-            map.put("itemCriterio.estado", estado);
-        }
-
-        return map;
-    }
+    // /**
+    // * Gets the url map.
+    // *
+    // * @return the url map
+    // */
+    // public Map<String, Object> getUrlMap() {
+    // final Map<String, Object> map = new HashMap<>();
+    //
+    // fillUrlMap(map);
+    //
+    // if (subp != null && subp.getId() != null) {
+    // map.put("itemCriterio.subp.id", subp.getId());
+    // }
+    // if (anno != null) {
+    // map.put("itemCriterio.anno", anno);
+    // }
+    // if (numero != null) {
+    // map.put("itemCriterio.numero", numero);
+    // }
+    // if (estado != null) {
+    // map.put("itemCriterio.estado", estado);
+    // }
+    //
+    // return map;
+    // }
 
     /**
      * Gets the subp.

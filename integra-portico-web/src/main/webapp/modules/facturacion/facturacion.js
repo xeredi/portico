@@ -147,6 +147,7 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
                 var map = {};
 
                 map["page"] = data.vlrcList.page;
+                map["vlrcCriterio"] = data.vlrcCriterio;
 
                 $location.search(map).replace();
 
