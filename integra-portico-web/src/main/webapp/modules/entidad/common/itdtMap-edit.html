@@ -23,9 +23,7 @@
                             class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div>
-                <div ng-switch-when="FH" class="dropdown">
-                    Falta el reloj!!!
-                </div>
+                <div ng-switch-when="FH" class="dropdown">Falta el reloj!!!</div>
                 <select ng-switch-when="CR" ng-model="item.itdtMap[tpdtId].cadena"
                     ng-required="item.itdtMap[tpdtId].obligatorio"
                     ng-options="cdrf.valor as cdrf.valor for cdrf in enti.entdMap[tpdtId].tpdt.cdrfList"
@@ -46,7 +44,7 @@
                 <div ng-switch-when="PR" ng-if="enti.entdMap[tpdtId].tpdt.tpht == 'F'" class="input-group-sm"
                     ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="item.itdtMap[tpdtId].prmt"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, item.fref)"
                         typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
                         ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>

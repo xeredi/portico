@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,16 +46,11 @@ public final class ParametroAction extends ItemAction {
     /** The p18n map. */
     private Map<String, ParametroI18nVO> p18nMap;
 
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
-
     /**
      * Instantiates a new parametro action.
      */
     public ParametroAction() {
         super();
-
-        fechaVigencia = new Date();
     }
 
     /**
@@ -78,6 +74,7 @@ public final class ParametroAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
         p18nMap = new HashMap<>();
+        item.setFref(Calendar.getInstance().getTime());
 
         final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
@@ -94,23 +91,22 @@ public final class ParametroAction extends ItemAction {
     @Action("prmt-edit")
     public String edit() {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getPrvr());
-        Preconditions.checkNotNull(item.getPrvr().getId());
+        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getFref());
 
         accion = ACCION_EDICION.edit;
 
         final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-        if (fechaVigencia != null) {
-            prmtCriterioVO.setFechaVigencia(fechaVigencia);
-        }
+        prmtCriterioVO.setId(item.getId());
+        prmtCriterioVO.setFechaVigencia(item.getFref());
+        prmtCriterioVO.setIdioma(getIdioma());
 
         try {
-            prmtCriterioVO.setPrvrId(item.getPrvr().getId());
-            prmtCriterioVO.setIdioma(getIdioma());
-
             item = prmtBO.selectObject(prmtCriterioVO);
+
+            item.setFref(prmtCriterioVO.getFechaVigencia());
 
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
@@ -134,23 +130,22 @@ public final class ParametroAction extends ItemAction {
     @Action("prmt-duplicate")
     public String duplicate() {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getPrvr());
-        Preconditions.checkNotNull(item.getPrvr().getId());
+        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getFref());
 
         accion = ACCION_EDICION.duplicate;
 
         final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-        prmtCriterioVO.setPrvrId(item.getPrvr().getId());
+        prmtCriterioVO.setId(item.getId());
+        prmtCriterioVO.setFechaVigencia(item.getFref());
         prmtCriterioVO.setIdioma(getIdioma());
-
-        if (fechaVigencia != null) {
-            prmtCriterioVO.setFechaVigencia(fechaVigencia);
-        }
 
         try {
             item = prmtBO.selectObject(prmtCriterioVO);
+
+            item.setFref(prmtCriterioVO.getFechaVigencia());
 
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
@@ -285,24 +280,20 @@ public final class ParametroAction extends ItemAction {
     @Action("prmt-detail")
     public String detail() {
         Preconditions.checkNotNull(item);
-        Preconditions.checkArgument(item.getId() != null && fechaVigencia != null || item.getPrvr() != null
-                && item.getPrvr().getId() != null);
+        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getFref());
 
         final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setId(item.getId());
-        prmtCriterioVO.setFechaVigencia(fechaVigencia);
+        prmtCriterioVO.setFechaVigencia(item.getFref());
         prmtCriterioVO.setIdioma(getIdioma());
-
-        if (item.getPrvr() != null) {
-            prmtCriterioVO.setPrvrId(item.getPrvr().getId());
-        }
 
         try {
             item = prmtBO.selectObject(prmtCriterioVO);
 
-            item.setFref(fechaVigencia);
+            item.setFref(prmtCriterioVO.getFechaVigencia());
 
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
@@ -321,7 +312,7 @@ public final class ParametroAction extends ItemAction {
                     sprmCriterioVO.setEntiId(tpspId);
                     sprmCriterioVO.setPrmt(new ParametroCriterioVO());
                     sprmCriterioVO.getPrmt().setId(item.getId());
-                    sprmCriterioVO.setFechaVigencia(fechaVigencia);
+                    sprmCriterioVO.setFechaVigencia(item.getFref());
                     sprmCriterioVO.setIdioma(getIdioma());
 
                     itemHijosMap.put(tpspId, sprmBO.selectList(sprmCriterioVO,
@@ -343,6 +334,14 @@ public final class ParametroAction extends ItemAction {
     @Override
     public final ParametroVO getItem() {
         return item;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getFechaVigencia() {
+        return item == null ? Calendar.getInstance().getTime() : item.getFref();
     }
 
     /**
@@ -372,24 +371,6 @@ public final class ParametroAction extends ItemAction {
      */
     public void setP18nMap(final Map<String, ParametroI18nVO> value) {
         p18nMap = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

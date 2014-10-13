@@ -7,9 +7,9 @@
 <tabset type="pills"> <tab heading="{{enti.nombre | uppercase}}" select="tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/maestro/prmt/edit/{{enti.id}}/{{item.prvr.id}}/{{item.fref}}"><i
+        <a class="btn btn-default" ng-href="#/maestro/prmt/edit/{{enti.id}}/{{item.id}}/{{item.fref}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a> <a class="btn btn-default"
-            ng-href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.prvr.id}}/{{item.fref}}"><i
+            ng-href="#/maestro/prmt/duplicate/{{enti.id}}/{{item.id}}/{{item.fref}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
@@ -59,7 +59,7 @@
     active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i
+        <a class="btn btn-default" ng-href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}/{{item.fref}}"><i
             class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
     </div>
 </div>

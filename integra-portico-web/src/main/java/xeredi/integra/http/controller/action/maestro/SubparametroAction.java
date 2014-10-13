@@ -32,16 +32,11 @@ public final class SubparametroAction extends ItemAction {
     /** The item. */
     private SubparametroVO item;
 
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
-
     /**
      * Instantiates a new subparametro action.
      */
     public SubparametroAction() {
         super();
-
-        fechaVigencia = Calendar.getInstance().getTime();
     }
 
     /**
@@ -68,7 +63,6 @@ public final class SubparametroAction extends ItemAction {
         accion = ACCION_EDICION.create;
 
         final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
-        // item = SubparametroVO.newInstance(enti);
 
         loadLabelValuesMap(enti);
 
@@ -85,16 +79,16 @@ public final class SubparametroAction extends ItemAction {
     @Action("sprm-edit")
     public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getSpvr());
-        Preconditions.checkNotNull(item.getSpvr().getId());
+        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getFref());
 
         accion = ACCION_EDICION.edit;
 
         final SubparametroBO sprmBO = new SubparametroBO();
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setSpvrId(item.getSpvr().getId());
-        sprmCriterioVO.setFechaVigencia(fechaVigencia);
+        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setFechaVigencia(item.getFref());
         sprmCriterioVO.setIdioma(getIdioma());
 
         item = sprmBO.selectObject(sprmCriterioVO);
@@ -115,19 +109,22 @@ public final class SubparametroAction extends ItemAction {
     @Action("sprm-duplicate")
     public String duplicate() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getSpvr());
-        Preconditions.checkNotNull(item.getSpvr().getId());
+        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getFref());
 
         accion = ACCION_EDICION.duplicate;
 
         final SubparametroBO sprmBO = new SubparametroBO();
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setSpvrId(item.getSpvr().getId());
-        sprmCriterioVO.setFechaVigencia(fechaVigencia);
+        sprmCriterioVO.setId(item.getId());
+        sprmCriterioVO.setFechaVigencia(item.getFref());
         sprmCriterioVO.setIdioma(getIdioma());
 
         item = sprmBO.selectObject(sprmCriterioVO);
+
+        item.setFref(sprmCriterioVO.getFechaVigencia());
+
         final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
@@ -242,14 +239,14 @@ public final class SubparametroAction extends ItemAction {
     @Action("sprm-detail")
     public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
-        Preconditions.checkArgument(item.getId() != null && fechaVigencia != null || item.getSpvr() != null
-                && item.getSpvr().getId() != null);
+        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getFref());
 
         final SubparametroBO sprmBO = new SubparametroBO();
         final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
         sprmCriterioVO.setId(item.getId());
-        sprmCriterioVO.setFechaVigencia(fechaVigencia);
+        sprmCriterioVO.setFechaVigencia(item.getFref());
         sprmCriterioVO.setIdioma(getIdioma());
 
         if (item.getSpvr() != null) {
@@ -258,7 +255,7 @@ public final class SubparametroAction extends ItemAction {
 
         item = sprmBO.selectObject(sprmCriterioVO);
 
-        item.setFref(fechaVigencia);
+        item.setFref(sprmCriterioVO.getFechaVigencia());
 
         return SUCCESS;
     }
@@ -270,17 +267,7 @@ public final class SubparametroAction extends ItemAction {
      */
     @Override
     public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
+        return item == null ? Calendar.getInstance().getTime() : item.getFref();
     }
 
     /**
