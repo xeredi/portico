@@ -4,7 +4,7 @@
 </ul>
 </alert>
 
-<tabset type="pills"> <tab heading="{{enti.nombre | uppercase}}">
+<tabset type="pills"> <tab heading="{{enti.nombre | uppercase}}" select="tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/maestro/prmt/edit/{{enti.id}}/{{item.prvr.id}}/{{item.fref}}"><i
@@ -19,6 +19,9 @@
     <div class="btn-group">
         <a class="btn btn-default" ng-href="maestro/prmt-print.action?item.id={{item.id}}"><i
             class="glyphicon glyphicon-print"></i> <span translate>boton_imprimir</span> </a>
+        <button data-ng-click="print()" class="btn btn-default">
+            <i class="glyphicon glyphicon-print"></i> <span translate>boton_imprimir</span>
+        </button>
     </div>
 </div>
 
@@ -52,8 +55,8 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}" active="tab.active"
-    disabled="tab.disabled">
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}"
+    active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}"><i

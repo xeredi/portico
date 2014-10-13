@@ -45,13 +45,15 @@ module.config([ "$routeProvider", function($routeProvider) {
     .when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
         title : 'prmt_detail',
         templateUrl : "modules/entidad/maestro/prmt-detail.html",
-        controller : "prmtDetailController"
+        controller : "prmtDetailController",
+        reloadOnSearch : false
     })
 
     .when("/maestro/prmt/detail/:entiId/:prvrId", {
         title : 'prmt_detail',
         templateUrl : "modules/entidad/maestro/prmt-detail.html",
-        controller : "prmtDetailController"
+        controller : "prmtDetailController",
+        reloadOnSearch : false
     })
 
     .when("/maestro/prmt/edit/:entiId/:prvrId/:fechaVigencia", {
@@ -146,6 +148,8 @@ module.controller("prmtGridController",
         });
 
 module.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
+    var tabSelected = $routeParams.tabSelected;
+
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "maestro/prmt-remove.action?item.prvr.id=" + $scope.item.prvr.id;
@@ -160,6 +164,22 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
         }
     }
 
+    $scope.print = function() {
+        $http.get('maestro/prmt-print.action?item.id=' + $scope.item.id, null, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ], {
+                type : 'application/pdf'
+            });
+            var fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+        });
+    }
+
+    $scope.tabSelected = function(tabNo) {
+        $location.search("tabSelected", tabNo).replace();
+    }
+
     function findEnti() {
         var url = "metamodelo/tppr-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
 
@@ -167,6 +187,10 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
             $scope.enti = data.enti;
             $scope.subentiList = data.subentiList;
             $scope.availableLanguages = data.availableLanguages;
+
+            if (tabSelected) {
+                $scope.subentiList[tabSelected].active = true;
+            }
         });
     }
 

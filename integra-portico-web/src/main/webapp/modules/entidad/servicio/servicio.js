@@ -46,7 +46,8 @@ module.config([ "$routeProvider", function($routeProvider) {
     .when("/servicio/srvc/detail/:entiId/:srvcId", {
         title : 'srvc_detail',
         templateUrl : "modules/entidad/servicio/srvc-detail.html",
-        controller : "srvcDetailController"
+        controller : "srvcDetailController",
+        reloadOnSearch : false
     })
 
     .when("/servicio/srvc/edit/:entiId/:srvcId", {
@@ -146,6 +147,8 @@ module.controller("srvcGridController",
         });
 
 module.controller("srvcDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var tabSelected = $routeParams.tabSelected;
+
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "servicio/srvc-remove.action?item.id=" + $scope.item.id;
@@ -234,6 +237,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
         }
     }
 
+    $scope.tabSelected = function(tabNo) {
+        $location.search("tabSelected", tabNo).replace();
+    }
+
     function findItem() {
         var url = "servicio/srvc-detail.action";
 
@@ -258,6 +265,10 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
         $http.get(url).success(function(data) {
             $scope.enti = data.enti;
             $scope.subentiList = data.subentiList;
+
+            if (tabSelected) {
+                $scope.subentiList[tabSelected].active = true;
+            }
         });
     }
 
@@ -446,7 +457,8 @@ module.config([ "$routeProvider", function($routeProvider) {
     .when("/servicio/ssrv/detail/:entiId/:ssrvId", {
         title : 'ssrv_detail',
         templateUrl : "modules/entidad/servicio/ssrv-detail.html",
-        controller : "ssrvDetailController"
+        controller : "ssrvDetailController",
+        reloadOnSearch : false
     })
 
     .when("/servicio/ssrv/edit/:entiId/:ssrvId", {
@@ -545,6 +557,8 @@ module.controller("ssrvGridController",
         });
 
 module.controller("ssrvDetailController", function($scope, $http, $location, $route, $routeParams) {
+    var tabSelected = $routeParams.tabSelected;
+
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "servicio/ssrv-remove.action?item.id=" + $scope.item.id;
@@ -706,6 +720,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
         }
     }
 
+    $scope.tabSelected = function(tabNo) {
+        $location.search("tabSelected", tabNo).replace();
+    }
+
     function findItem() {
         var url = "servicio/ssrv-detail.action";
 
@@ -723,6 +741,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
         $http.get(url).success(function(data) {
             $scope.enti = data.enti;
             $scope.subentiList = data.subentiList;
+
+            if (tabSelected) {
+                $scope.subentiList[tabSelected].active = true;
+            }
         });
     }
 

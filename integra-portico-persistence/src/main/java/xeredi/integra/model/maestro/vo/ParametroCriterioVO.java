@@ -1,7 +1,5 @@
 package xeredi.integra.model.maestro.vo;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -32,32 +30,6 @@ public final class ParametroCriterioVO extends ItemCriterioVO {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the url map.
-     *
-     * @return the url map
-     */
-    public Map<String, Object> getUrlMap() {
-        final Map<String, Object> map = new HashMap<>();
-
-        fillUrlMap(map);
-
-        if (prvrId != null) {
-            map.put("itemCriterio.prvrId", prvrId);
-        }
-        if (prvrIds != null) {
-            map.put("itemCriterio.prvrIds", prvrIds);
-        }
-        if (parametro != null) {
-            map.put("itemCriterio.parametro", parametro);
-        }
-        if (parametros != null) {
-            map.put("itemCriterio.parametros", parametros);
-        }
-
-        return map;
     }
 
     /**
