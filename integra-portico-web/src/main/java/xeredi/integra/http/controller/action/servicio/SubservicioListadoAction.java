@@ -55,10 +55,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
         itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
@@ -75,10 +71,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
-
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        }
 
         final SubservicioBO ssrvBO = new SubservicioBO();
 
@@ -100,7 +92,6 @@ public final class SubservicioListadoAction extends ItemListadoAction {
     protected final void loadLabelValuesMap() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
-        Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
         Preconditions.checkNotNull(itemCriterio.getIdioma());
 
         if (labelValuesMap == null) {
@@ -123,7 +114,7 @@ public final class SubservicioListadoAction extends ItemListadoAction {
             if (!tpprIds.isEmpty()) {
                 final ParametroBO prmtBO = new ParametroBO();
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(),
                         getItemCriterio().getIdioma()));
             }
         }

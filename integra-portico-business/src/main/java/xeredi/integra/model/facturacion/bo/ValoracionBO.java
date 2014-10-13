@@ -443,7 +443,7 @@ public class ValoracionBO {
             final AspectoVO aspc = vlrc.getAspc();
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
-            ssrvCriterioVO.setFechaVigencia(vlrc.getFref());
+            // ssrvCriterioVO.setFechaVigencia(vlrc.getFref());
 
             if (rgla.getRglv().getEnti().getTipo() == TipoEntidad.S) {
                 if (aspc.getAspv().isAgrupaDetalles()) {

@@ -8,9 +8,9 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/srvc/edit/{{enti.id}}/{{item.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span> </a>
-        <a class="btn btn-default" ng-href="#/servicio/srvc/duplicate/{{enti.id}}/{{item.id}}"><i
-            class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span> </a>
+            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span> </a> <a class="btn btn-default"
+            ng-href="#/servicio/srvc/duplicate/{{enti.id}}/{{item.id}}"><i class="glyphicon glyphicon-tags"></i> <span
+            translate>boton_duplicar</span> </a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
@@ -56,12 +56,12 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}" active="entiHija.active"
-    disabled="entiHija.disabled" select="tabSelected($index)">
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}"
+    active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <pagination total-items="itemHijosMap[entiHija.id].count" items-per-page="itemHijosMap[entiHija.id].limit"
-            ng-model="currentSubpage[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination" max-size="1"
+            ng-model="pageMap[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination" max-size="1"
             previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
 

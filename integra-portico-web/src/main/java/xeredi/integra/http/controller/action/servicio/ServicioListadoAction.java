@@ -64,10 +64,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
 
         itemCriterio.setIdioma(getIdioma());
 
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
         loadLabelValuesMap();
 
         return SUCCESS;
@@ -82,10 +78,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
     public String listado() {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
-
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        }
 
         final ServicioBO srvcBO = new ServicioBO();
 
@@ -106,7 +98,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     protected final void loadLabelValuesMap() {
         Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
         Preconditions.checkNotNull(itemCriterio.getIdioma());
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
@@ -130,7 +121,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
             if (!tpprIds.isEmpty()) {
                 final ParametroBO prmtBO = new ParametroBO();
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(),
                         getItemCriterio().getIdioma()));
             }
         }
@@ -143,7 +134,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
 
             tpprIds.add(Entidad.SUBPUERTO.getId());
 
-            subpList.addAll(prmtBO.selectLabelValues(tpprIds, itemCriterio.getFechaVigencia(), getIdioma()).get(
+            subpList.addAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getIdioma()).get(
                     Entidad.SUBPUERTO.getId()));
         }
     }

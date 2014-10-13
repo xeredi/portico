@@ -148,6 +148,57 @@ module.controller("srvcGridController",
 
 module.controller("srvcDetailController", function($scope, $http, $location, $route, $routeParams) {
     var tabSelected = $routeParams.tabSelected;
+    var srvcId = $routeParams.srvcId;
+    var entiId = $routeParams.entiId;
+
+    $scope.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
+
+    function findItem() {
+        $http.get("metamodelo/tpsr-proxy-detail.action?includeDependencies=true&enti.id=" + entiId).success(
+                function(data) {
+                    $scope.enti = data.enti;
+                    $scope.subentiList = data.subentiList;
+
+                    if (tabSelected) {
+                        $scope.subentiList[tabSelected].active = true;
+                    }
+
+                    $http.get("servicio/srvc-detail.action?item.id=" + srvcId).success(function(data) {
+                        $scope.item = data.item;
+                        $scope.fechaVigencia = data.fechaVigencia;
+                    });
+
+                    $scope.itemHijosMap = {};
+
+                    for (i = 0; i < $scope.subentiList.length; i++) {
+                        var subenti = $scope.subentiList[i];
+                        var pageNo = $scope.pageMap && $scope.pageMap[subenti.id] ? $scope.pageMap[subenti.id] : 1;
+
+                        console.log(subenti.id);
+
+                        $http.get(
+                                "servicio/ssrv-list.action?itemCriterio.entiId=" + subenti.id + "&page=" + pageNo
+                                        + "&itemCriterio.srvc.id=" + $routeParams.srvcId).success(function(data) {
+                            $scope.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
+                            $scope.pageMap[data.itemCriterio.entiId] = pageNo;
+                        });
+                    }
+                });
+    }
+
+    $scope.pageChanged = function(entiId) {
+        var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + entiId + "&page=" + $scope.pageMap[entiId]
+                + "&itemCriterio.srvc.id=" + srvcId;
+
+        $http.get(url).success(function(data) {
+            $scope.itemHijosMap[entiId] = data.itemList;
+            $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
+        });
+    }
+
+    $scope.tabSelected = function(tabNo) {
+        $location.search("tabSelected", tabNo).replace();
+    }
 
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
@@ -161,15 +212,6 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
                 }
             });
         }
-    }
-
-    $scope.pageChanged = function(entiId) {
-        var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + entiId + "&page=" + $scope.currentSubpage[entiId]
-                + "&itemCriterio.srvc.id=" + $scope.item.id;
-
-        $http.get(url).success(function(data) {
-            $scope.itemHijosMap[entiId] = data.itemList;
-        });
     }
 
     $scope.srvcAction = function(accName) {
@@ -237,42 +279,6 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
         }
     }
 
-    $scope.tabSelected = function(tabNo) {
-        $location.search("tabSelected", tabNo).replace();
-    }
-
-    function findItem() {
-        var url = "servicio/srvc-detail.action";
-
-        url += "?item.id=" + $routeParams.srvcId;
-
-        $http.get(url).success(function(data) {
-            $scope.item = data.item;
-            $scope.fechaVigencia = data.fechaVigencia;
-            $scope.itemHijosMap = data.itemHijosMap;
-
-            $scope.currentSubpage = {};
-
-            for ( var key in $scope.itemHijosMap) {
-                $scope.currentSubpage[key] = $scope.itemHijosMap[key].page;
-            }
-        });
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tpsr-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-            $scope.subentiList = data.subentiList;
-
-            if (tabSelected) {
-                $scope.subentiList[tabSelected].active = true;
-            }
-        });
-    }
-
-    findEnti();
     findItem();
 });
 

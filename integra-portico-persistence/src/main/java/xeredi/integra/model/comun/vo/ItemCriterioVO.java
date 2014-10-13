@@ -1,6 +1,5 @@
 package xeredi.integra.model.comun.vo;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -16,9 +15,6 @@ import xeredi.util.pagination.Criterio;
 public abstract class ItemCriterioVO implements Criterio {
     /** The idioma. */
     private String idioma;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /** The solo gridables. */
     private boolean soloDatosGrid;
@@ -75,25 +71,6 @@ public abstract class ItemCriterioVO implements Criterio {
      */
     public final void setIdioma(final String value) {
         idioma = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public final Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public final void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

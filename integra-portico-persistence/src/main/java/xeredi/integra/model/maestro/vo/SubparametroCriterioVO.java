@@ -1,5 +1,6 @@
 package xeredi.integra.model.maestro.vo;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,6 +13,9 @@ import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
  * The Class SubparametroCriterioVO.
  */
 public final class SubparametroCriterioVO extends ItemCriterioVO {
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
 
     /** The spvr id. */
     private Long spvrId;
@@ -129,6 +133,25 @@ public final class SubparametroCriterioVO extends ItemCriterioVO {
      */
     public void setSpvrId(final Long value) {
         spvrId = value;
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
 }

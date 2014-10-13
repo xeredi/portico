@@ -68,10 +68,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio.getPepr().getId());
         Preconditions.checkNotNull(itemCriterio.getPepr().getAutpId());
 
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        }
-
         itemCriterio.setIdioma(getIdioma());
 
         loadLabelValuesMap();
@@ -93,10 +89,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio.getPepr().getAutpId());
 
         final EstadisticaBO estdBO = new EstadisticaBO();
-
-        if (itemCriterio.getFechaVigencia() == null) {
-            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
-        }
 
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());
@@ -122,7 +114,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio.getPepr().getId());
         Preconditions.checkNotNull(itemCriterio.getPepr().getAutpId());
         Preconditions.checkNotNull(itemCriterio.getIdioma());
-        Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
 
         final ParametroBO prmtBO = new ParametroBO();
 
@@ -143,7 +134,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
             if (!tpprIds.isEmpty()) {
                 labelValuesMap = new HashMap<>();
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
+                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(),
                         getItemCriterio().getIdioma()));
             }
         }
@@ -161,7 +152,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
             prmtCriterioVO.setEntiId(Entidad.AUTORIDAD_PORTUARIA.getId());
             prmtCriterioVO.getItdtMap().put(itdt.getTpdtId(), itdt);
             prmtCriterioVO.setIdioma(itemCriterio.getIdioma());
-            prmtCriterioVO.setFechaVigencia(itemCriterio.getFechaVigencia());
+            prmtCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
 
             subpList.addAll(prmtBO.selectList(prmtCriterioVO));
         }

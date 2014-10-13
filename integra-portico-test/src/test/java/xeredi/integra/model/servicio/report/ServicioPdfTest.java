@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -60,7 +59,7 @@ public final class ServicioPdfTest {
 
             srvcCriterioVO.setEntiId(tpsrId);
             srvcCriterioVO.setIdioma(locale);
-            srvcCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
+            // srvcCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
 
             LOG.info("Busqueda de Servicios");
 
@@ -85,7 +84,7 @@ public final class ServicioPdfTest {
                         final SubservicioBO ssrvBO = new SubservicioBO();
                         final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
-                        ssrvCriterioVO.setFechaVigencia(srvcCriterioVO.getFechaVigencia());
+                        // ssrvCriterioVO.setFechaVigencia(srvcCriterioVO.getFechaVigencia());
                         ssrvCriterioVO.setIdioma(srvcCriterioVO.getIdioma());
                         ssrvCriterioVO.setEntiId(entiId);
 
