@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,13 +14,10 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
-import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
-import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
 
@@ -36,9 +32,6 @@ public final class SubservicioAction extends ItemAction {
 
     /** The srvc form. */
     private SubservicioVO item;
-
-    /** The ssrv map. */
-    private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
 
     /** The item padres map. */
     private Map<Long, SubservicioVO> itemPadresMap;
@@ -77,29 +70,6 @@ public final class SubservicioAction extends ItemAction {
 
         accion = ACCION_EDICION.edit;
         item = ssrvBO.select(item.getId(), getIdioma());
-        itemHijosMap = new HashMap<>();
-
-        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
-
-        if (enti.getEntiHijasList() != null) {
-            for (final Long entiId : enti.getEntiHijasList()) {
-                final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-                final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-                srvcCriterioVO.setId(item.getSrvc().getId());
-
-                ssrvCriterioVO.setSrvc(srvcCriterioVO);
-                ssrvCriterioVO.setPadreId(item.getId());
-                ssrvCriterioVO.setEntiId(entiId);
-                ssrvCriterioVO.setIdioma(getIdioma());
-
-                itemHijosMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO,
-                        PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-            }
-        }
-
-        LOG.info("Fin de la accion");
-        // LOG.info(this);
 
         return SUCCESS;
     }
@@ -285,15 +255,6 @@ public final class SubservicioAction extends ItemAction {
      */
     public final void setItem(final SubservicioVO value) {
         item = value;
-    }
-
-    /**
-     * Gets the item hijos map.
-     *
-     * @return the item hijos map
-     */
-    public final Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {
-        return itemHijosMap;
     }
 
     /**

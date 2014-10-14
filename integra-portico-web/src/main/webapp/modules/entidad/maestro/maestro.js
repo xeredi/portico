@@ -143,6 +143,7 @@ module.controller("prmtGridController",
         });
 
 module.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
+    var path = $location.path();
     var tabSelected = $routeParams.tabSelected;
     var itemId = $routeParams.itemId;
     var entiId = $routeParams.entiId;
@@ -199,7 +200,9 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.tabSelected = function(tabNo) {
-        $location.search("tabSelected", tabNo).replace();
+        if (path == $location.path()) {
+            $location.search("tabSelected", tabNo).replace();
+        }
     }
 
     $scope.remove = function() {
@@ -280,8 +283,6 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
 });
 
 module.controller("prmtEditController", function($scope, $http, $location, $routeParams) {
-    $location.search("tabSelected", null).replace();
-
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 
@@ -330,8 +331,6 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
 });
 
 module.controller("prmtDuplicateController", function($scope, $http, $location, $route, $routeParams) {
-    $location.search("tabSelected", null).replace();
-
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 

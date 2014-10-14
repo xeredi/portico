@@ -146,7 +146,8 @@ module.controller("srvcGridController",
                     $routeParams.limit ? $routeParams.limit : 20);
         });
 
-module.controller("srvcDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("srvcDetailController", function($scope, $http, $location, $routeParams) {
+    var path = $location.path();
     var tabSelected = $routeParams.tabSelected;
     var srvcId = $routeParams.srvcId;
     var entiId = $routeParams.entiId;
@@ -197,13 +198,13 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
     }
 
     $scope.pageChanged = function(subentiId) {
-        console.log("pageChanged: " + subentiId + ", " + $scope.pageMap[entiId]);
-
         findSublist(subentiId, $scope.pageMap[subentiId]);
     }
 
     $scope.tabSelected = function(tabNo) {
-        $location.search("tabSelected", tabNo).replace();
+        if (path == $location.path()) {
+            $location.search("tabSelected", tabNo).replace();
+        }
     }
 
     $scope.remove = function() {
@@ -288,7 +289,7 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
     findItem();
 });
 
-module.controller("srvcCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("srvcCreateController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "servicio/srvc-save.action";
 
@@ -332,7 +333,7 @@ module.controller("srvcCreateController", function($scope, $http, $location, $ro
     findItem();
 });
 
-module.controller("srvcEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("srvcEditController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "servicio/srvc-save.action";
 
@@ -377,7 +378,7 @@ module.controller("srvcEditController", function($scope, $http, $location, $rout
     findItem();
 });
 
-module.controller("srvcDuplicateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("srvcDuplicateController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "servicio/srvc-save.action";
 
@@ -431,7 +432,7 @@ module.controller('srvcLupaCtrl', function($http, $scope) {
     };
 });
 
-module.controller("maniTotalesController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("maniTotalesController", function($scope, $http, $location, $routeParams) {
     var url = "servicio/manifiesto/mani-totales.action?item.id=" + $routeParams.srvcId;
 
     $http.get(url).success(function(data) {
@@ -568,8 +569,63 @@ module.controller("ssrvGridController",
                     $routeParams.limit ? $routeParams.limit : 20);
         });
 
-module.controller("ssrvDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("ssrvDetailController", function($scope, $http, $location, $routeParams) {
+    var path = $location.path();
     var tabSelected = $routeParams.tabSelected;
+    var ssrvId = $routeParams.ssrvId;
+    var entiId = $routeParams.entiId;
+    var pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
+
+    $scope.pageMap = {};
+
+    function findItem() {
+        $http.get("metamodelo/tpss-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId)
+                .success(function(data) {
+                    $scope.enti = data.enti;
+                    $scope.subentiList = data.subentiList;
+
+                    if (tabSelected) {
+                        $scope.subentiList[tabSelected].active = true;
+                    }
+
+                    $http.get("servicio/ssrv-detail.action?item.id=" + $routeParams.ssrvId).success(function(data) {
+                        $scope.item = data.item;
+                    });
+
+                    $scope.itemHijosMap = {};
+
+                    for (i = 0; i < $scope.subentiList.length; i++) {
+                        var subenti = $scope.subentiList[i];
+
+                        findSublist(subenti.id, pageMap[subenti.id] ? pageMap[subenti.id] : 1);
+                    }
+                });
+    }
+
+    function findSublist(subentiId, page) {
+        var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + subentiId + "&page=" + page
+                + "&itemCriterio.padreId=" + ssrvId;
+
+        $http.get(url).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $scope.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
+                $scope.pageMap[data.itemCriterio.entiId] = data.itemList.page;
+                $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
+            }
+        });
+    }
+
+    $scope.pageChanged = function(subentiId) {
+        findSublist(subentiId, $scope.pageMap[subentiId]);
+    }
+
+    $scope.tabSelected = function(tabNo) {
+        if (path == $location.path()) {
+            $location.search("tabSelected", tabNo).replace();
+        }
+    }
 
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
@@ -732,39 +788,10 @@ module.controller("ssrvDetailController", function($scope, $http, $location, $ro
         }
     }
 
-    $scope.tabSelected = function(tabNo) {
-        $location.search("tabSelected", tabNo).replace();
-    }
-
-    function findItem() {
-        var url = "servicio/ssrv-detail.action";
-
-        url += "?item.id=" + $routeParams.ssrvId;
-
-        $http.get(url).success(function(data) {
-            $scope.item = data.item;
-            $scope.itemHijosMap = data.itemHijosMap;
-        });
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tpss-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-            $scope.subentiList = data.subentiList;
-
-            if (tabSelected) {
-                $scope.subentiList[tabSelected].active = true;
-            }
-        });
-    }
-
-    findEnti();
     findItem();
 });
 
-module.controller("ssrvCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("ssrvCreateController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "servicio/ssrv-save.action";
 
@@ -811,7 +838,7 @@ module.controller("ssrvCreateController", function($scope, $http, $location, $ro
     findItem();
 });
 
-module.controller("ssrvEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("ssrvEditController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "servicio/ssrv-save.action";
 
@@ -855,7 +882,7 @@ module.controller("ssrvEditController", function($scope, $http, $location, $rout
     findItem();
 });
 
-module.controller("ssrvDuplicateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("ssrvDuplicateController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "servicio/ssrv-save.action";
 
@@ -908,7 +935,7 @@ module.controller('ssrvLupaCtrl', function($http, $scope) {
     };
 });
 
-module.controller("mablTotalesController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("mablTotalesController", function($scope, $http, $location, $routeParams) {
     var url = "servicio/manifiesto/mabl-totales.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
             + $routeParams.srvcId;
 

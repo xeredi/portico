@@ -8,9 +8,9 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/ssrv/edit/{{enti.id}}/{{item.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
-        <a class="btn btn-default" ng-href="#/servicio/ssrv/duplicate/{{enti.id}}/{{item.id}}"><i
-            class="glyphicon glyphicon-tags"></i> <span translate>boton_duplicar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a> <a class="btn btn-default"
+            ng-href="#/servicio/ssrv/duplicate/{{enti.id}}/{{item.id}}"><i class="glyphicon glyphicon-tags"></i> <span
+            translate>boton_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
         </button>
@@ -53,50 +53,61 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}" active="entiHija.active"
-    disabled="entiHija.disabled" select="tabSelected($index)">
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}"
+    active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="itemHijosMap[entiHija.id].count" items-per-page="itemHijosMap[entiHija.id].limit"
+            ng-model="pageMap[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination" max-size="1"
+            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
+
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/ssrv/create/{{entiHija.id}}/{{item.srvc.id}}"><i
             class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
     </div>
 </div>
 
-<table class="table-bordered table-condensed table-hover table-nonfluid">
-    <thead>
-        <tr>
-            <th class="buttonLinks" />
+<div class="table-responsive">
+    <span class="label label-default">{{itemHijosMap[entiHija.id].count}} resultado(s)</span>
 
-            <th translate>ssrv_numero</th>
-            <th ng-if="entiHija.tpdtEstado" translate>ssrv_estado</th>
-            <th ng-if="entiHija.temporal" class="date" translate>ssrv_fini</th>
-            <th ng-if="entiHija.temporal" class="date" translate>ssrv_ffin</th>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" />
 
-            <th ng-repeat="tpdtId in entiHija.entdGridList track by $index" ng-bind="entiHija.entdMap[tpdtId].etiqueta"></th>
-        </tr>
-    </thead>
+                <th translate>ssrv_numero</th>
+                <th ng-if="entiHija.tpdtEstado" translate>ssrv_estado</th>
+                <th ng-if="entiHija.temporal" class="date" translate>ssrv_fini</th>
+                <th ng-if="entiHija.temporal" class="date" translate>ssrv_ffin</th>
 
-    <tbody>
-        <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list track by $index">
-            <td><a ng-href="#/servicio/ssrv/detail/{{entiHija.id}}/{{itemHijo.id}}"><i
-                    class="glyphicon glyphicon-search"></i></a></td>
+                <th ng-repeat="tpdtId in entiHija.entdGridList track by $index"
+                    ng-bind="entiHija.entdMap[tpdtId].etiqueta"></th>
+            </tr>
+        </thead>
 
-            <td ng-bind="itemHijo.numero"></td>
-            <td ng-if="entiHija.tpdtEstado" ng-bind="itemHijo.estado"></td>
-            <td ng-if="entiHija.temporal" ng-bind="itemHijo.fini | date"></td>
-            <td ng-if="entiHija.temporal" ng-bind="itemHijo.ffin | date"></td>
+        <tbody>
+            <tr ng-repeat="itemHijo in itemHijosMap[entiHija.id].list track by $index">
+                <td><a ng-href="#/servicio/ssrv/detail/{{entiHija.id}}/{{itemHijo.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
 
-            <td ng-repeat="tpdtId in entiHija.entdGridList track by $index" ng-switch
-                on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
-                    class="glyphicon glyphicon-{{itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
-                ng-switch-when="ND" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:2"></span> <span
-                ng-switch-when="NE" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
-                ng-switch-when="CR" ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
-                ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR"
-                title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="itemHijo.itdtMap[tpdtId].prmt.parametro"></span>
-                <span ng-switch-when="FE" ng-bind="itemHijo.itdtMap[tpdtId].fecha | date"></span> <span
-                ng-switch-when="FH" ng-bind="itemHijo.itdtMap[tpdtId].fecha | date:'short'"></span></td>
-        </tr>
-    </tbody>
-</table>
+                <td ng-bind="itemHijo.numero"></td>
+                <td ng-if="entiHija.tpdtEstado" ng-bind="itemHijo.estado"></td>
+                <td ng-if="entiHija.temporal" ng-bind="itemHijo.fini | date"></td>
+                <td ng-if="entiHija.temporal" ng-bind="itemHijo.ffin | date"></td>
+
+                <td ng-repeat="tpdtId in entiHija.entdGridList track by $index" ng-switch
+                    on="entiHija.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                        class="glyphicon glyphicon-{{itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
+                    ng-switch-when="ND" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:2"></span> <span
+                    ng-switch-when="NE" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
+                    ng-switch-when="CR" ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
+                    ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR"
+                    title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="itemHijo.itdtMap[tpdtId].prmt.parametro"></span>
+                    <span ng-switch-when="FE" ng-bind="itemHijo.itdtMap[tpdtId].fecha | date"></span> <span
+                    ng-switch-when="FH" ng-bind="itemHijo.itdtMap[tpdtId].fecha | date:'short'"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </tab></tabset>
