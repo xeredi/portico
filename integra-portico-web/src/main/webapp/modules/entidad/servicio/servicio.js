@@ -150,8 +150,9 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
     var tabSelected = $routeParams.tabSelected;
     var srvcId = $routeParams.srvcId;
     var entiId = $routeParams.entiId;
+    var pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
-    $scope.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
+    $scope.pageMap = {};
 
     function findItem() {
         $http.get("metamodelo/tpsr-proxy-detail.action?includeDependencies=true&enti.id=" + entiId).success(
@@ -172,28 +173,33 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
 
                     for (i = 0; i < $scope.subentiList.length; i++) {
                         var subenti = $scope.subentiList[i];
-                        var pageNo = $scope.pageMap && $scope.pageMap[subenti.id] ? $scope.pageMap[subenti.id] : 1;
 
-                        console.log(subenti.id);
+                        console.log("getList: " + subenti.id + ", " + pageMap[subenti.id] ? pageMap[subenti.id] : 1);
 
-                        $http.get(
-                                "servicio/ssrv-list.action?itemCriterio.entiId=" + subenti.id + "&page=" + pageNo
-                                        + "&itemCriterio.srvc.id=" + $routeParams.srvcId).success(function(data) {
-                            $scope.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
-                            $scope.pageMap[data.itemCriterio.entiId] = pageNo;
-                        });
+                        findSublist(subenti.id, pageMap[subenti.id] ? pageMap[subenti.id] : 1);
                     }
                 });
     }
 
-    $scope.pageChanged = function(entiId) {
-        var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + entiId + "&page=" + $scope.pageMap[entiId]
+    function findSublist(subentiId, page) {
+        var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + subentiId + "&page=" + page
                 + "&itemCriterio.srvc.id=" + srvcId;
 
         $http.get(url).success(function(data) {
-            $scope.itemHijosMap[entiId] = data.itemList;
-            $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $scope.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
+                $scope.pageMap[data.itemCriterio.entiId] = data.itemList.page;
+                $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
+            }
         });
+    }
+
+    $scope.pageChanged = function(subentiId) {
+        console.log("pageChanged: " + subentiId + ", " + $scope.pageMap[entiId]);
+
+        findSublist(subentiId, $scope.pageMap[subentiId]);
     }
 
     $scope.tabSelected = function(tabNo) {

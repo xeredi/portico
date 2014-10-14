@@ -59,6 +59,12 @@
     active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
+        <pagination total-items="itemHijosMap[entiHija.id].count" items-per-page="itemHijosMap[entiHija.id].limit"
+            ng-model="pageMap[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination" max-size="1"
+            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
+
+    <div class="btn-group">
         <a class="btn btn-default" ng-href="#/maestro/sprm/create/{{entiHija.id}}/{{item.id}}/{{item.fref}}"><i
             class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
     </div>

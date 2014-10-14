@@ -14,17 +14,13 @@ import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
-import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
 
@@ -39,9 +35,6 @@ public final class ParametroAction extends ItemAction {
 
     /** The prmt . */
     private ParametroVO item;
-
-    /** The sprm map. */
-    private Map<Long, PaginatedList<SubparametroVO>> itemHijosMap;
 
     /** The p18n map. */
     private Map<String, ParametroI18nVO> p18nMap;
@@ -300,25 +293,6 @@ public final class ParametroAction extends ItemAction {
             if (enti.getI18n()) {
                 p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
-
-            if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-                final SubparametroBO sprmBO = new SubparametroBO();
-
-                itemHijosMap = new HashMap<>();
-
-                for (final Long tpspId : enti.getEntiHijasList()) {
-                    final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
-
-                    sprmCriterioVO.setEntiId(tpspId);
-                    sprmCriterioVO.setPrmt(new ParametroCriterioVO());
-                    sprmCriterioVO.getPrmt().setId(item.getId());
-                    sprmCriterioVO.setFechaVigencia(item.getFref());
-                    sprmCriterioVO.setIdioma(getIdioma());
-
-                    itemHijosMap.put(tpspId, sprmBO.selectList(sprmCriterioVO,
-                            PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-                }
-            }
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(prmtCriterioVO) }));
         }
@@ -371,14 +345,5 @@ public final class ParametroAction extends ItemAction {
      */
     public void setP18nMap(final Map<String, ParametroI18nVO> value) {
         p18nMap = value;
-    }
-
-    /**
-     * Gets the item hijos map.
-     *
-     * @return the item hijos map
-     */
-    public final Map<Long, PaginatedList<SubparametroVO>> getItemHijosMap() {
-        return itemHijosMap;
     }
 }

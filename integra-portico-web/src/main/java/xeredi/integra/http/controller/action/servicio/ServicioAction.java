@@ -2,10 +2,8 @@ package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,17 +17,12 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.SubservicioBO;
-import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
-import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
 
@@ -50,9 +43,6 @@ public final class ServicioAction extends ItemAction {
 
     /** The subps. */
     private List<LabelValueVO> subpList;
-
-    /** The ssrv map. */
-    private Map<Long, PaginatedList<SubservicioVO>> itemHijosMap;
 
     /**
      * Instantiates a new servicio action.
@@ -85,29 +75,8 @@ public final class ServicioAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
 
         final ServicioBO srvcBO = new ServicioBO();
-        final SubservicioBO ssrvBO = new SubservicioBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
-
-        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
-
-        if (enti.getEntiHijasList() != null) {
-            itemHijosMap = new HashMap<>();
-
-            for (final Long entiId : enti.getEntiHijasList()) {
-                final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-                final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-
-                srvcCriterioVO.setId(item.getId());
-
-                ssrvCriterioVO.setSrvc(srvcCriterioVO);
-                ssrvCriterioVO.setEntiId(entiId);
-                ssrvCriterioVO.setIdioma(getIdioma());
-
-                itemHijosMap.put(entiId, ssrvBO.selectList(ssrvCriterioVO,
-                        PaginatedList.getOffset(PaginatedList.FIRST_PAGE, ROWS), ROWS));
-            }
-        }
 
         return SUCCESS;
     }
@@ -334,15 +303,6 @@ public final class ServicioAction extends ItemAction {
     @Override
     public Date getFechaVigencia() {
         return fechaVigencia;
-    }
-
-    /**
-     * Gets the item hijos map.
-     *
-     * @return the item hijos map
-     */
-    public Map<Long, PaginatedList<SubservicioVO>> getItemHijosMap() {
-        return itemHijosMap;
     }
 
 }

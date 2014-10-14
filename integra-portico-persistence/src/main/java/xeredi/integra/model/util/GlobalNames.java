@@ -53,7 +53,7 @@ public class GlobalNames {
             Arrays.asList(new String[] { DEFAULT_LANGUAGE }));
 
     /** The Constant ROWS_PER_PAGE_DEFAULT. */
-    public static final int ROWS_PER_PAGE_DEFAULT = 5;
+    public static final int ROWS_PER_PAGE_DEFAULT = 3;
 
     /** The Constant VALID_ROWS_PER_PAGE. */
     public static final int[] VALID_ROWS_PER_PAGE = new int[] { 10, 20, 50, 100, 200, 500 };
