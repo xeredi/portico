@@ -73,7 +73,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("vlrcGridController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("vlrcGridController", function($scope, $http, $location, $routeParams) {
     $scope.showFilter = false;
 
     $scope.pageChanged = function() {
@@ -159,7 +159,7 @@ module.controller("vlrcGridController", function($scope, $http, $location, $rout
     search($scope.vlrcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
-module.controller("vlrlCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("vlrlCreateController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/vlrl-create.action?vlrl.vlrcId=" + $routeParams.vlrcId;
 
     $http.get(url).success(function(data) {
@@ -187,7 +187,7 @@ module.controller("vlrlCreateController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("vlrcDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("vlrcDetailController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/vlrc-detail.action?vlrc.id=" + $routeParams.vlrcId;
 
     $http.get(url).success(function(data) {
@@ -203,7 +203,7 @@ module.controller("vlrcDetailController", function($scope, $http, $location, $ro
     });
 });
 
-module.controller("vlrlDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("vlrlDetailController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/vlrl-detail.action?vlrl.id=" + $routeParams.vlrlId;
 
     $http.get(url).success(function(data) {
@@ -231,7 +231,7 @@ module.controller("vlrlDetailController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("vlrlEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("vlrlEditController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/vlrl-edit.action?vlrl.id=" + $routeParams.vlrlId;
 
     $http.get(url).success(function(data) {
@@ -261,7 +261,7 @@ module.controller("vlrlEditController", function($scope, $http, $location, $rout
     }
 });
 
-module.controller("vlrdDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("vlrdDetailController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/vlrd-detail.action?vlrd.id=" + $routeParams.vlrdId;
 
     $http.get(url).success(function(data) {
@@ -356,7 +356,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("crgoGridController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("crgoGridController", function($scope, $http, $location, $routeParams) {
     $scope.showFilter = false;
     $scope.crgoCriterio = {};
 
@@ -411,7 +411,7 @@ module.controller("crgoGridController", function($scope, $http, $location, $rout
     search($scope.crgoCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
-module.controller("crgoCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("crgoCreateController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/crgo-create.action";
 
     $http.get(url).success(function(data) {
@@ -446,7 +446,7 @@ module.controller("crgoCreateController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("crgoDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("crgoDetailController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/crgo-detail.action";
 
     if ($routeParams.fechaVigencia) {
@@ -477,7 +477,7 @@ module.controller("crgoDetailController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("crgoEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("crgoEditController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/crgo-edit.action?crgo.crgv.id=" + $routeParams.crgvId;
 
     $http.get(url).success(function(data) {
@@ -508,7 +508,7 @@ module.controller("crgoEditController", function($scope, $http, $location, $rout
     }
 });
 
-module.controller("rglaDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("rglaDetailController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/rgla-detail.action";
 
     if ($routeParams.fechaVigencia) {
@@ -539,7 +539,7 @@ module.controller("rglaDetailController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("rglaEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("rglaEditController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/rgla-edit.action?rgla.rglv.id=" + $routeParams.rglvId;
 
     $http.get(url).success(function(data) {
@@ -571,7 +571,7 @@ module.controller("rglaEditController", function($scope, $http, $location, $rout
     }
 });
 
-module.controller("rglaCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("rglaCreateController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/rgla-create.action?rgla.crgo.crgv.id=" + $routeParams.crgvId;
 
     $http.get(url).success(function(data) {
@@ -601,7 +601,7 @@ module.controller("rglaCreateController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("rginDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("rginDetailController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/rgin-detail.action";
 
     if ($routeParams.fechaVigencia) {
@@ -630,7 +630,7 @@ module.controller("rginDetailController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("rginEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("rginEditController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/rgin-edit.action?rgin.rgiv.id=" + $routeParams.rgivId;
 
     $http.get(url).success(function(data) {
@@ -660,7 +660,7 @@ module.controller("rginEditController", function($scope, $http, $location, $rout
     }
 });
 
-module.controller("rginCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("rginCreateController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/rgin-create.action?rgin.rgla1Id=" + $routeParams.rglaId + "&rgin.rgla2.crgo.id="
             + $routeParams.crgoId;
 
@@ -753,8 +753,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("aspcGridController", function($scope, $http, $location, $route, $routeParams) {
-    $scope.showFilter = false;
+module.controller("aspcGridController", function($scope, $http, $location, $routeParams, $modal) {
     $scope.aspcCriterio = {};
 
     function search(aspcCriterio, page, limit) {
@@ -777,8 +776,6 @@ module.controller("aspcGridController", function($scope, $http, $location, $rout
                 map["page"] = data.aspcList.page;
 
                 $location.search(map).replace();
-
-                $scope.showFilter = false;
             }
         });
     }
@@ -787,28 +784,45 @@ module.controller("aspcGridController", function($scope, $http, $location, $rout
         search($scope.aspcCriterio, $scope.page, $scope.limit);
     }
 
-    $scope.filter = function() {
-        $scope.showFilter = true;
-
-        var urlEntiList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
-
-        $http.get(urlEntiList).success(function(data) {
-            $scope.entiList = data.lvList;
+    $scope.filterModal = function(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'aspc-filter-content.html',
+            controller : 'ModalInstanceCtrl',
+            size : size,
+            resolve : {
+                aspcCriterio : function() {
+                    return $scope.aspcCriterio;
+                }
+            }
         });
-    }
 
-    $scope.search = function() {
-        search($scope.aspcCriterio, 1, $scope.limit);
-    }
+        modalInstance.result.then(function(aspcCriterio) {
+            $scope.aspcCriterio = aspcCriterio;
 
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
+            search($scope.aspcCriterio, 1, $scope.limit);
+        });
+    };
 
     search($scope.aspcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
-module.controller("aspcCreateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller('ModalInstanceCtrl', function($scope, $http, $modalInstance, aspcCriterio) {
+    $scope.aspcCriterio = aspcCriterio;
+
+    $scope.ok = function() {
+        $modalInstance.close($scope.aspcCriterio);
+    };
+
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(function(data) {
+        $scope.entiList = data.lvList;
+    });
+});
+
+module.controller("aspcCreateController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/aspc-create.action";
 
     $http.get(url).success(function(data) {
@@ -842,7 +856,7 @@ module.controller("aspcCreateController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("aspcDetailController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("aspcDetailController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/aspc-detail.action";
 
     if ($routeParams.fechaVigencia) {
@@ -874,7 +888,7 @@ module.controller("aspcDetailController", function($scope, $http, $location, $ro
     }
 });
 
-module.controller("aspcEditController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("aspcEditController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/aspc-edit.action?aspc.aspv.id=" + $routeParams.aspvId;
 
     $http.get(url).success(function(data) {
@@ -904,7 +918,7 @@ module.controller("aspcEditController", function($scope, $http, $location, $rout
     }
 });
 
-module.controller("aspcDuplicateController", function($scope, $http, $location, $route, $routeParams) {
+module.controller("aspcDuplicateController", function($scope, $http, $location, $routeParams) {
     var url = "facturacion/aspc-duplicate.action?aspc.aspv.id=" + $routeParams.aspvId;
 
     $http.get(url).success(function(data) {

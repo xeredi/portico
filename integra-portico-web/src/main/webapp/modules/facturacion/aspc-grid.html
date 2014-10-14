@@ -1,85 +1,51 @@
-<div ng-if="showFilter">
-    <form>
-        <fieldset>
-            <div class="row-fluid">
-                <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                    <label translate>aspc_codigo</label> <input type="text" ng-model="aspcCriterio.codigo"
-                        class="form-control input-sm" />
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label translate>aspc_tpsr</label> <select ng-model="aspcCriterio.tpsrId"
-                        ng-options="labelValue.value as labelValue.label for labelValue in entiList"
-                        class="form-control input-sm">
-                        <option />
-                    </select>
-                </div>
-                <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                    <label translate>crgo_fechaVigencia</label>
-                    <div class="input-group" ng-controller="datepickerController">
-                        <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
-                            datepicker-options="dateOptions" is-open="opened" ng-model="aspcCriterio.fechaVigencia" />
-                        <span class="input-group-addon" ng-click="open($event)"><i
-                            class="glyphicon glyphicon-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="aspcList.count" items-per-page="aspcList.limit" ng-model="page"
+            ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/facturacion/aspc/create"><i class="glyphicon glyphicon-file"></i><span
+            translate>boton_alta</span> </a>
+        <button class="btn btn-default" data-ng-click="filterModal('lg')">
+            <i class="glyphicon glyphicon-search"></i><span translate>boton_filtro</span>
+        </button>
 
-        <div class="btn-group">
-            <button data-ng-click="search()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i><span translate>boton_buscar</span>
-            </button>
-            <button data-ng-click="cancelSearch()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i><span translate>boton_cancelar</span>
-            </button>
-        </div>
-    </form>
+        <script type="text/ng-template" id="aspc-filter-content.html">
+        	<div ng-include="'modules/facturacion/aspc-filter-content.html'"></div>
+    		</script>
+
+        <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+    </div>
 </div>
 
-<div ng-hide="showFilter">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <pagination total-items="aspcList.count" items-per-page="aspcList.limit" ng-model="page"
-                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-                next-text="&rsaquo;&rsaquo;"></pagination>
-        </div>
-        <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/facturacion/aspc/create"><i class="glyphicon glyphicon-file"></i><span
-                translate>boton_alta</span> </a>
-            <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i><span translate>boton_filtro</span>
-            </button>
-        </div>
-    </div>
+<div class="table-responsive">
+    <span class="label label-default">{{aspcList.count}} resultado(s)</span>
 
-    <div class="table-responsive">
-        <span class="label label-default">{{aspcList.count}} resultado(s)</span>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap" translate>aspc_codigo</th>
+                <th translate>aspc_descripcion</th>
+                <th translate>aspc_tpsr</th>
+                <th translate>aspc_fini</th>
+                <th translate>aspc_ffin</th>
+                <th translate>aspc_prioridad</th>
+            </tr>
+        </thead>
 
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap" translate>aspc_codigo</th>
-                    <th translate>aspc_descripcion</th>
-                    <th translate>aspc_tpsr</th>
-                    <th translate>aspc_fini</th>
-                    <th translate>aspc_ffin</th>
-                    <th translate>aspc_prioridad</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="aspc in aspcList.list track by $index">
-                    <td><a ng-href="#/facturacion/aspc/detail/{{aspc.aspv.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="aspc.codigo"></td>
-                    <td ng-bind="aspc.aspv.descripcion"></td>
-                    <td ng-bind="aspc.tpsr.nombre"></td>
-                    <td ng-bind="aspc.aspv.fini | date"></td>
-                    <td ng-bind="aspc.aspv.ffin | date"></td>
-                    <td class="number" ng-bind="aspc.aspv.prioridad"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <tbody>
+            <tr ng-repeat="aspc in aspcList.list track by $index">
+                <td><a ng-href="#/facturacion/aspc/detail/{{aspc.aspv.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="aspc.codigo"></td>
+                <td ng-bind="aspc.aspv.descripcion"></td>
+                <td ng-bind="aspc.tpsr.nombre"></td>
+                <td ng-bind="aspc.aspv.fini | date"></td>
+                <td ng-bind="aspc.aspv.ffin | date"></td>
+                <td class="number" ng-bind="aspc.aspv.prioridad"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>

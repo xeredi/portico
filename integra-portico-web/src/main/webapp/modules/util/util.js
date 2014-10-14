@@ -12,6 +12,12 @@ module.controller("datepickerController", function($scope) {
         startingDay : 1,
         showWeeks : false
     };
+
+    $scope.datepickerConfig = {
+        format : "dd/MM/yyyy"
+    }
+
+    $scope.format = "dd/MM/yyyy";
 });
 
 // http://adamalbrecht.github.io/ngQuickDate/

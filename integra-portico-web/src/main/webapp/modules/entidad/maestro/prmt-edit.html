@@ -15,7 +15,7 @@
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate>prmt_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.fini" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
@@ -23,7 +23,7 @@
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate>prmt_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.ffin" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>

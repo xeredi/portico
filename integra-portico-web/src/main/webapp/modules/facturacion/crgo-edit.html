@@ -56,7 +56,7 @@
             <div class="col-md-1 form-group">
                 <label translate>crgo_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.fini" ng-required="true" />
                     <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
@@ -65,7 +65,7 @@
             <div class="col-md-1 form-group">
                 <label translate>crgo_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{'fmt_date' | translate}}"
+                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
                         datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.ffin" ng-required="true" />
                     <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>

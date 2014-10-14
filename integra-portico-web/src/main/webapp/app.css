@@ -13,6 +13,14 @@ p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 	font-size: 11px;
 }
 
+.modal.custom, .modal-dialog {
+	width: 90%;
+}
+
+.modal-footer {
+	text-align: left;
+}
+
 .brand {
 	font-size: 15px;
 	font-weight: normal;
@@ -56,6 +64,10 @@ p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 
 .nav, .pagination, .carousel, .panel-title a, .input-group-addon {
 	cursor: pointer;
+}
+
+.pagination>li.disabled>a.ng-binding {
+	cursor: default;
 }
 
 .pagination {

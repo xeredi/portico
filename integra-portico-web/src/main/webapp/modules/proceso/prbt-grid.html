@@ -28,7 +28,7 @@
                     <div class="dropdown">
                         <div class="input-group" ng-controller="datepickerController">
                             <input type="text" class="form-control input-sm"
-                                datepicker-popup="{{'fmt_date' | translate}}" datepicker-options="dateOptions"
+                                datepicker-popup="{{format}}" datepicker-options="dateOptions"
                                 is-open="opened" ng-model="prbtCriterio.faltaMin" /> <span class="input-group-addon"
                                 ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="input-group" ng-controller="datepickerController">
                             <input type="text" class="form-control input-sm"
-                                datepicker-popup="{{'fmt_date' | translate}}" datepicker-options="dateOptions"
+                                datepicker-popup="{{format}}" datepicker-options="dateOptions"
                                 is-open="opened" ng-model="prbtCriterio.faltaMax" /> <span class="input-group-addon"
                                 ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
