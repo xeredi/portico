@@ -90,6 +90,14 @@ form {
 	padding-right: 0px;
 }
 
+.glyphicon-search, .glyphicon-search, .glyphicon-ok, .glyphicon-remove,
+	.glyphicon-tags {
+	padding-right: 5px;
+	padding-left: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
 fieldset {
 	padding-top: 10px;
 }
