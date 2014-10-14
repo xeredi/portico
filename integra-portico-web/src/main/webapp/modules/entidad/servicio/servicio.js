@@ -119,6 +119,7 @@ module.controller("srvcGridController",
                         $scope.labelValuesMap = data.labelValuesMap;
                         $scope.subpList = data.subpList;
                         $scope.limits = data.limits;
+                        $scope.fechaVigencia = data.fechaVigencia;
                     }
                 });
 
@@ -542,6 +543,7 @@ module.controller("ssrvGridController",
                     if (data.actionErrors.length == 0) {
                         $scope.labelValuesMap = data.labelValuesMap;
                         $scope.limits = data.limits;
+                        $scope.fechaVigencia = data.fechaVigencia;
                     }
                 });
 

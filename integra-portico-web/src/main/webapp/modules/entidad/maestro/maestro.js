@@ -115,6 +115,7 @@ module.controller("prmtGridController",
                         $scope.labelValuesMap = data.labelValuesMap;
                         $scope.itemCriterio = data.itemCriterio;
                         $scope.limits = data.limits;
+                        $scope.fechaVigencia = data.fechaVigencia;
                     }
                 });
 

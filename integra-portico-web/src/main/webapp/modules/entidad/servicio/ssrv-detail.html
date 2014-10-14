@@ -57,9 +57,10 @@
     active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <pagination total-items="itemHijosMap[entiHija.id].count" items-per-page="itemHijosMap[entiHija.id].limit"
-            ng-model="pageMap[entiHija.id]" ng-change="pageChanged(entiHija.id)" class="pagination" max-size="1"
-            previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+        <pagination ng-show="itemHijosMap[entiHija.id].count > 0" total-items="itemHijosMap[entiHija.id].count"
+            items-per-page="itemHijosMap[entiHija.id].limit" ng-model="pageMap[entiHija.id]"
+            ng-change="pageChanged(entiHija.id)" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
 
     <div class="btn-group">

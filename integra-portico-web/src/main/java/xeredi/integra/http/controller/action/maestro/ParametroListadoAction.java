@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -127,6 +128,15 @@ public final class ParametroListadoAction extends ItemListadoAction {
     @Override
     public final ParametroCriterioVO getItemCriterio() {
         return itemCriterio;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getFechaVigencia() {
+        return itemCriterio == null || itemCriterio.getFechaVigencia() == null ? Calendar.getInstance().getTime()
+                : itemCriterio.getFechaVigencia();
     }
 
     /**

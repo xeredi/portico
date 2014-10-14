@@ -186,6 +186,7 @@ module.controller("estdGridController",
                         $scope.labelValuesMap = data.labelValuesMap;
                         $scope.subpList = data.subpList;
                         $scope.limits = data.limits;
+                        $scope.fechaVigencia = data.fechaVigencia;
                     }
                 });
 

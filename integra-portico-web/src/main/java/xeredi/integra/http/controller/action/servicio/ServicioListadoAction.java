@@ -2,6 +2,7 @@ package xeredi.integra.http.controller.action.servicio;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -154,6 +155,14 @@ public final class ServicioListadoAction extends ItemListadoAction {
     @Override
     public ServicioCriterioVO getItemCriterio() {
         return itemCriterio;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Date getFechaVigencia() {
+        return Calendar.getInstance().getTime();
     }
 
     /**
