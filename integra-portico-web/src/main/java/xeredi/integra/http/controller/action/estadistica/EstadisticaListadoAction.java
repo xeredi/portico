@@ -151,6 +151,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
             itdt.setPrmt(autp);
 
             prmtCriterioVO.setEntiId(Entidad.AUTORIDAD_PORTUARIA.getId());
+            prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
             prmtCriterioVO.getItdtMap().put(itdt.getTpdtId(), itdt);
             prmtCriterioVO.setIdioma(itemCriterio.getIdioma());
             prmtCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());

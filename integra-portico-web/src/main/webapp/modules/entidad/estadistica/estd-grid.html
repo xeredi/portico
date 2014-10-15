@@ -1,89 +1,60 @@
 <p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
-<div ng-if="showFilter">
-    <form>
-        <fieldset>
-            <div class="row-fluid">
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label translate>estd_subp</label> <select ng-model="itemCriterio.subpId"
-                        ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
-                        <option />
-                    </select>
-                </div>
-                <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>limit</label> <select ng-model="pageInfo.limit"
-                        ng-options="limitValue for limitValue in limits" class="form-control input-sm">
-                        <option />
-                    </select>
-                </div>
-            </div>
-        </fieldset>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
+            ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
 
-        <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+    <div class="btn-group">
+        <button data-ng-click="filter('lg')" class="btn btn-default">
+            <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
+        </button>
 
-        <div class="btn-group">
-            <button data-ng-click="search()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
-            </button>
-            <button data-ng-click="cancelSearch()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
-            </button>
-        </div>
-    </form>
+        <script type="text/ng-template" id="estd-filter-content.html">
+            <div ng-include="'modules/entidad/estadistica/estd-filter-content.html'"></div>
+            </script>
+    </div>
+
+    <div class="btn-group">
+        <a class="btn btn-default"
+            ng-href="estadistica/estd-xls-export.action?itemCriterio.entiId={{enti.id}}&itemCriterio.pepr.id={{itemCriterio.pepr.id}}"><i
+            class="glyphicon glyphicon-download-alt"></i> <span translate>boton_exportar</span> </a>
+    </div>
 </div>
 
-<div ng-hide="showFilter">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
-                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-                next-text="&rsaquo;&rsaquo;"></pagination>
-        </div>
+<div class="table-responsive">
+    <span class="label label-default">{{itemList.count}} resultado(s)</span>
 
-        <div class="btn-group">
-            <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
-            </button>
-        </div>
-
-        <div class="btn-group">
-            <a class="btn btn-default" ng-href="estadistica/estd-xls-export.action?itemCriterio.entiId={{enti.id}}&itemCriterio.pepr.id={{itemCriterio.pepr.id}}"><i
-                class="glyphicon glyphicon-download-alt"></i> <span translate>boton_exportar</span> </a>
-        </div>
-    </div>
-
-    <div class="table-responsive">
-        <span class="label label-default">{{itemList.count}} resultado(s)</span>
-
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap" translate>estd_pepr</th>
-                    <th class="codigo" nowrap="nowrap" translate>estd_subp</th>
-                    <th ng-repeat="tpdtId in enti.entdGridList track by $index" nowrap="nowrap"
-                        ng-bind="enti.entdMap[tpdtId].etiqueta"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in itemList.list track by $index">
-                    <td><a ng-href="#/estadistica/estd/detail/{{enti.id}}/{{item.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td nowrap="nowrap" ng-bind="item.pepr.etiqueta"></td>
-                    <td nowrap="nowrap" ng-bind="item.subp.etiqueta"></td>
-                    <td ng-repeat="tpdtId in enti.entdGridList track by $index" ng-switch
-                        on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
-                            class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
-                        ng-switch-when="ND" class="pull-right" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span>
-                        <span ng-switch-when="NE" class="pull-right"
-                        ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
-                        class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
-                        class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span
-                        ng-switch-when="CR" ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="TX"
-                        ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="PR"
-                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap" translate>estd_pepr</th>
+                <th class="codigo" nowrap="nowrap" translate>estd_subp</th>
+                <th ng-repeat="tpdtId in enti.entdGridList track by $index" nowrap="nowrap"
+                    ng-bind="enti.entdMap[tpdtId].etiqueta"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in itemList.list track by $index">
+                <td><a ng-href="#/estadistica/estd/detail/{{enti.id}}/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" ng-bind="item.pepr.etiqueta"></td>
+                <td nowrap="nowrap" ng-bind="item.subp.etiqueta"></td>
+                <td ng-repeat="tpdtId in enti.entdGridList track by $index" ng-switch
+                    on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                        class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
+                    ng-switch-when="ND" class="pull-right" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span>
+                    <span ng-switch-when="NE" class="pull-right"
+                    ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
+                    class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
+                    class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span
+                    ng-switch-when="CR" ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="TX"
+                    ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="PR"
+                    title="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
