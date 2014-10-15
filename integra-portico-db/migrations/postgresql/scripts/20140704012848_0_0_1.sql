@@ -319,26 +319,47 @@ COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_enti_pk IS 'Entidad asociada a
 
 
 
--- tbl_codigo_referencia_cdrf
-CREATE TABLE portico.tbl_codigo_referencia_cdrf
+-- tbl_codigo_ref_cdrf
+CREATE TABLE portico.tbl_codigo_ref_cdrf
 (
-	cdrf_tpdt_pk BIGINT NOT NULL
+	cdrf_pk BIGINT NOT NULL
+	, cdrf_tpdt_pk BIGINT NOT NULL
 	, cdrf_valor VARCHAR(10) NOT NULL
 	, cdrf_orden int NOT NULL
 
-	, CONSTRAINT pk_cdrf PRIMARY KEY (cdrf_tpdt_pk, cdrf_valor)
+	, CONSTRAINT pk_cdrf PRIMARY KEY (cdrf_pk)
+	, CONSTRAINT uq_cdrf UNIQUE (cdrf_tpdt_pk, cdrf_valor)
 
 	, CONSTRAINT fk_cdrf_tpdt_pk FOREIGN KEY (cdrf_tpdt_pk)
 		REFERENCES portico.tbl_tipo_dato_tpdt (tpdt_pk)
 )
 ;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_codigo_referencia_cdrf TO portico;
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_codigo_ref_cdrf TO portico;
 
-COMMENT ON TABLE portico.tbl_codigo_referencia_cdrf IS 'Tipos de dato de la aplicacion';
-COMMENT ON COLUMN portico.tbl_codigo_referencia_cdrf.cdrf_tpdt_pk IS 'Identificador de Tipo de Dato';
-COMMENT ON COLUMN portico.tbl_codigo_referencia_cdrf.cdrf_valor IS 'Valor del Codigo de Referencia';
-COMMENT ON COLUMN portico.tbl_codigo_referencia_cdrf.cdrf_orden IS 'Orden de Visualiazacion del Codigo de Referencia dentro de un Tipo de Dato';
+COMMENT ON TABLE portico.tbl_codigo_ref_cdrf IS 'Codigos de referencia de la aplicacion';
+COMMENT ON COLUMN portico.tbl_codigo_ref_cdrf.cdrf_pk IS 'Identificador de Codigo de Referencia';
+COMMENT ON COLUMN portico.tbl_codigo_ref_cdrf.cdrf_tpdt_pk IS 'Identificador de Tipo de Dato';
+COMMENT ON COLUMN portico.tbl_codigo_ref_cdrf.cdrf_valor IS 'Valor del Codigo de Referencia';
+COMMENT ON COLUMN portico.tbl_codigo_ref_cdrf.cdrf_orden IS 'Orden de Visualiazacion del Codigo de Referencia dentro de un Tipo de Dato';
+
+
+
+-- tbl_codigo_ref_i18n_cdri
+CREATE TABLE portico.tbl_codigo_ref_i18n_cdri
+(
+	cdri_cdrf_pk BIGINT NOT NULL
+	, cdri_idioma VARCHAR(5) NOT NULL 
+	, cdri_texto VARCHAR(100) NOT NULL
+
+	, CONSTRAINT pk_cdri PRIMARY KEY (cdri_cdrf_pk, cdri_idioma)
+
+	, CONSTRAINT fk_cdri_cdrf_pk FOREIGN KEY (cdri_cdrf_pk)
+		REFERENCES portico.tbl_codigo_ref_cdrf (cdrf_pk)
+)
+;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_codigo_ref_i18n_cdri TO portico;
 
 
 
@@ -1322,7 +1343,8 @@ DROP TABLE portico.tbl_tipo_parametro_tppr;
 DROP TABLE portico.tbl_entidad_tipo_dato_entd;
 DROP TABLE portico.tbl_entidad_grupo_dato_engd;
 DROP TABLE portico.tbl_entidad_accion_enac;
-DROP TABLE portico.tbl_codigo_referencia_cdrf;
+DROP TABLE portico.tbl_codigo_ref_i18n_cdri;
+DROP TABLE portico.tbl_codigo_ref_cdrf;
 DROP TABLE portico.tbl_tipo_dato_tpdt;
 DROP TABLE portico.tbl_entidad_entidad_enen;
 DROP TABLE portico.tbl_entidad_enti;

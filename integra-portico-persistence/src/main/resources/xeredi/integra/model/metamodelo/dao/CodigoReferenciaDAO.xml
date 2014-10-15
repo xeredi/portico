@@ -4,6 +4,7 @@
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO">
     <resultMap type="CodigoReferenciaVO" id="ResultMap">
+        <id column="cdrf_pk" property="id" />
         <result column="cdrf_tpdt_pk" property="tpdtId" />
         <result column="cdrf_valor" property="valor" />
         <result column="cdrf_orden" property="orden" />
@@ -12,8 +13,8 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        cdrf_tpdt_pk, cdrf_valor, cdrf_orden
-    FROM tbl_codigo_referencia_cdrf
+        cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden
+    FROM tbl_codigo_ref_cdrf
     ]]>
     </sql>
 
@@ -46,33 +47,38 @@
         <include refid="SelectWhere" />
     </select>
 
+    <select id="select" parameterType="Long" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        WHERE cdrf_pk = #{value}
+    </select>
+
     <select id="exists" parameterType="CodigoReferenciaVO" resultType="boolean">
     <![CDATA[
     	SELECT COUNT(1)
-    	FROM tbl_codigo_referencia_cdrf
+    	FROM tbl_codigo_ref_cdrf
     	WHERE cdrf_tpdt_pk = #{tpdtId} AND cdrf_valor = #{valor}
     ]]>
     </select>
 
     <insert id="insert" parameterType="CodigoReferenciaVO">
     <![CDATA[
-    	INSERT INTO tbl_codigo_referencia_cdrf (cdrf_tpdt_pk, cdrf_valor, cdrf_orden)
-    	VALUES (#{tpdtId}, #{valor}, #{orden})
+    	INSERT INTO tbl_codigo_ref_cdrf (cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden)
+    	VALUES (#{id}, #{tpdtId}, #{valor}, #{orden})
     ]]>
     </insert>
 
     <update id="update" parameterType="CodigoReferenciaVO">
     <![CDATA[
-    	UPDATE tbl_codigo_referencia_cdrf SET
+    	UPDATE tbl_codigo_ref_cdrf SET
     		cdrf_orden = #{orden}
-    	WHERE cdrf_tpdt_pk = #{tpdtId} AND cdrf_valor = #{valor}
+    	WHERE cdrf_pk = #{id}
     ]]>
     </update>
 
-    <delete id="delete" parameterType="CodigoReferenciaVO">
+    <delete id="delete" parameterType="Long">
     <![CDATA[
-    	DELETE FROM tbl_codigo_referencia_cdrf
-    	WHERE cdrf_tpdt_pk = #{tpdtId} AND cdrf_valor = #{valor}
+    	DELETE FROM tbl_codigo_ref_cdrf
+    	WHERE cdrf_pk = #{value}
     ]]>
     </delete>
 </mapper>

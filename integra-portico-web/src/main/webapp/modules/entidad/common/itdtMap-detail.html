@@ -13,11 +13,13 @@
                     ng-switch-when="ND" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span> <span
                     ng-switch-when="NE" ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
                     ng-switch-when="FE" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
-                    ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span ng-switch-when="CR"
-                    ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
-                    ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR"> <a
+                    ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span ng-switch-when="CR">{{("cdrf_"
+                    + enti.entdMap[tpdtId].tpdt.codigo + "_" + item.itdtMap[tpdtId].cadena) | translate}}</span> <span
+                    ng-switch-when="TX" ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR">
+                    <a
                     ng-href="#/maestro/prmt/detail/{{enti.entdMap[tpdtId].tpdt.enti.id}}/{{item.itdtMap[tpdtId].prmt.id}}/{{item.fref}}"
-                    ng-bind="item.itdtMap[tpdtId].prmt.etiqueta"></a></span> <span ng-switch-when="SR"> <a
+                    ng-bind="item.itdtMap[tpdtId].prmt.etiqueta"></a>
+                </span> <span ng-switch-when="SR"> <a
                     ng-href="#/servicio/srvc/detail/{{enti.entdMap[tpdtId].tpdt.enti.id}}/{{item.itdtMap[tpdtId].srvc.id}}"
                     ng-bind="item.itdtMap[tpdtId].srvc.etiqueta"></a></span>
             </p>

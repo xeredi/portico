@@ -102,7 +102,8 @@
                         class="glyphicon glyphicon-{{itemHijo.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
                     ng-switch-when="ND" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:2"></span> <span
                     ng-switch-when="NE" ng-bind="itemHijo.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span
-                    ng-switch-when="CR" ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
+                    ng-switch-when="CR">{{("cdrf_" + enti.entdMap[tpdtId].tpdt.codigo + "_" +
+                        item.itdtMap[tpdtId].cadena) | translate}}</span> <span ng-switch-when="TX"
                     ng-bind="itemHijo.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="PR"
                     title="{{itemHijo.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="itemHijo.itdtMap[tpdtId].prmt.parametro"></span>
                     <span ng-switch-when="FE" ng-bind="itemHijo.itdtMap[tpdtId].fecha | date"></span> <span

@@ -1,5 +1,6 @@
 <form name="editForm" novalidate role="form">
-    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="cdrf.tpdtId" />
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="cdrf.id" /><input type="hidden"
+        ng-model="cdrf.tpdtId" />
 
     <fieldset>
         <div class="row-fluid">
@@ -13,13 +14,22 @@
                     class="form-control input-sm" />
             </div>
         </div>
-
-        <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-        <ul>
-            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-        </ul>
-        </alert>
     </fieldset>
+
+    <fieldset>
+        <div ng-repeat="availableLanguage in availableLanguages track by $index" class="row-fluid">
+            <div class="col-sm-10 col-md-10 col-lg-8 form-group">
+                <label>Texto {{availableLanguage}}</label> <input type="text"
+                    ng-model="cdriMap[availableLanguage].texto" maxlength="350" class="form-control input-sm" />
+            </div>
+        </div>
+    </fieldset>
+
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

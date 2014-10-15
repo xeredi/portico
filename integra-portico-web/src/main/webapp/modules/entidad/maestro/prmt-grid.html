@@ -55,7 +55,8 @@
                     ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
                     class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
                     class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span
-                    ng-switch-when="CR" ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
+                    ng-switch-when="CR">{{("cdrf_" + enti.entdMap[tpdtId].tpdt.codigo + "_" +
+                        item.itdtMap[tpdtId].cadena) | translate}}</span> <span ng-switch-when="TX"
                     ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="PR"
                     title="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
             </tr>

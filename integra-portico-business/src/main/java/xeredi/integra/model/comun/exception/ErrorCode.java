@@ -11,7 +11,7 @@ public enum ErrorCode {
     /** Campo obligatorio. Se pasa como argumento la etiqueta del campo. */
     E00001,
 
-    /** Titulo obligatorio un maestro con i18n. Se pasa como argumento el idioma. */
+    /** Texto obligatorio para un idioma. Se pasa como argumento el idioma. */
     E00002,
 
     /** Fecha de inicio de vigencia de un maestro obligatoria. Sin argumentos. */
@@ -44,7 +44,5 @@ public enum ErrorCode {
      * Error de subservicio en estado inválido para realizar una acción. Se pasa como argumento el estado del
      * subservicio.
      */
-    E00011,
-
-    ;
+    E00011, ;
 }

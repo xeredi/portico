@@ -32,13 +32,13 @@ metamodelo.config([ "$routeProvider", function($routeProvider) {
         controller : "tpdtEditController"
     })
 
-    .when("/metamodelo/cdrf/detail/:tpdtId/:valor", {
+    .when("/metamodelo/cdrf/detail/:cdrfId", {
         title : 'cdrf_detail',
         templateUrl : "modules/metamodelo/cdrf-detail.html",
         controller : "cdrfDetailController"
     })
 
-    .when("/metamodelo/cdrf/edit/:tpdtId/:valor", {
+    .when("/metamodelo/cdrf/edit/:cdrfId", {
         title : 'cdrf_edit',
         templateUrl : "modules/metamodelo/cdrf-edit.html",
         controller : "cdrfEditController"
@@ -214,6 +214,8 @@ metamodelo.controller("cdrfCreateController", function($scope, $http, $location,
 
     $http.get(url).success(function(data) {
         $scope.cdrf = data.cdrf;
+        $scope.cdriMap = data.cdriMap;
+        $scope.availableLanguages = data.availableLanguages;
         $scope.accion = data.accion;
     });
 
@@ -222,12 +224,13 @@ metamodelo.controller("cdrfCreateController", function($scope, $http, $location,
 
         $http.post(url, {
             cdrf : $scope.cdrf,
+            cdriMap : $scope.cdriMap,
             accion : $scope.accion
         }).success(function(data) {
             $scope.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/cdrf/detail/" + data.cdrf.tpdtId + "/" + data.cdrf.valor).replace();
+                $location.path("/metamodelo/cdrf/detail/" + data.cdrf.id).replace();
             }
         });
     }
@@ -238,35 +241,36 @@ metamodelo.controller("cdrfCreateController", function($scope, $http, $location,
 });
 
 metamodelo.controller("cdrfDetailController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/cdrf-detail.action?cdrf.tpdtId=" + $routeParams.tpdtId + "&cdrf.valor=" + $routeParams.valor;
+    var url = "metamodelo/cdrf-detail.action?cdrf.id=" + $routeParams.cdrfId;
 
     $http.get(url).success(function(data) {
         $scope.cdrf = data.cdrf;
+        $scope.cdriMap = data.cdriMap;
+        $scope.availableLanguages = data.availableLanguages;
     });
 
     $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "metamodelo/cdrf-remove.action?cdrf.tpdtId=" + $scope.cdrf.tpdtId + "&cdrf.valor="
-                        + $scope.cdrf.valor;
+        if (confirm("Are you sure?")) {
+            var url = "metamodelo/cdrf-remove.action?cdrf.id=" + $scope.cdrf.id;
 
-                $http.get(url).success(function(data) {
-                    $scope.actionErrors = data.actionErrors;
+            $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
 
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    }
-                });
-            }
-        });
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                }
+            });
+        }
     }
 });
 
 metamodelo.controller("cdrfEditController", function($scope, $http, $location, $route, $routeParams) {
-    var url = "metamodelo/cdrf-edit.action?cdrf.tpdtId=" + $routeParams.tpdtId + "&cdrf.valor=" + $routeParams.valor;
+    var url = "metamodelo/cdrf-edit.action?cdrf.id=" + $routeParams.cdrfId;
 
     $http.get(url).success(function(data) {
         $scope.cdrf = data.cdrf;
+        $scope.cdriMap = data.cdriMap;
+        $scope.availableLanguages = data.availableLanguages;
         $scope.accion = data.accion;
     });
 
@@ -275,6 +279,7 @@ metamodelo.controller("cdrfEditController", function($scope, $http, $location, $
 
         $http.post(url, {
             cdrf : $scope.cdrf,
+            cdriMap : $scope.cdriMap,
             accion : $scope.accion
         }).success(function(data) {
             $scope.actionErrors = data.actionErrors;

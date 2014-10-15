@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class CodigoReferenciaVO {
 
+    /** The id. */
+    private Long id;
+
     /** The dominio id. */
     private Long tpdtId;
 
@@ -26,8 +29,27 @@ public final class CodigoReferenciaVO {
     }
 
     /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
+    }
+
+    /**
      * Gets the valor.
-     * 
+     *
      * @return the valor
      */
     public String getValor() {
@@ -36,7 +58,7 @@ public final class CodigoReferenciaVO {
 
     /**
      * Sets the valor.
-     * 
+     *
      * @param value
      *            the new valor
      */
@@ -46,7 +68,7 @@ public final class CodigoReferenciaVO {
 
     /**
      * Gets the tpdt id.
-     * 
+     *
      * @return the tpdt id
      */
     public Long getTpdtId() {
@@ -55,7 +77,7 @@ public final class CodigoReferenciaVO {
 
     /**
      * Sets the tpdt id.
-     * 
+     *
      * @param value
      *            the new tpdt id
      */
@@ -65,7 +87,7 @@ public final class CodigoReferenciaVO {
 
     /**
      * Gets the orden.
-     * 
+     *
      * @return the orden
      */
     public Integer getOrden() {
@@ -74,7 +96,7 @@ public final class CodigoReferenciaVO {
 
     /**
      * Sets the orden.
-     * 
+     *
      * @param value
      *            the new orden
      */
