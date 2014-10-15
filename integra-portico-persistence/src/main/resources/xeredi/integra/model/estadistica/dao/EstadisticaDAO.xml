@@ -53,7 +53,20 @@
             ) AS p18n_texto
         ]]>
         </if>
+        <include refid="SelectPrefixSpecific" />
         FROM vw_estadistica_estd
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="postgres">
+        , NULL AS rownumVar
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="sqlserver">
+        , NULL AS rownumVar
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="oracle">
+        , ROWNUM AS rownumVar
     </sql>
 
     <sql id="SelectCountPrefix">
@@ -126,6 +139,33 @@
         <where>
             <include refid="SelectWhere" />
         </where>
+    </select>
+
+    <select id="selectPaginatedList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap" databaseId="postgres">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+    </select>
+
+    <select id="selectPaginatedList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+    </select>
+
+    <select id="selectPaginatedList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap" databaseId="oracle">
+        SELECT * FROM (
+        <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
+        <![CDATA[
+        ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
+        ]]>
     </select>
 
     <select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">

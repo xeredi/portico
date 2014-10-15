@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -59,8 +58,10 @@ public class EstadisticaBO {
             final List<EstadisticaVO> estdList = new ArrayList<>();
 
             if (count > offset) {
-                estdList.addAll(estdDAO.selectList(estdCriterioVO, new RowBounds(offset, limit)));
+                estdCriterioVO.setOffset(offset);
+                estdCriterioVO.setLimit(limit);
 
+                estdList.addAll(estdDAO.selectPaginatedList(estdCriterioVO));
                 fillDependencies(session, estdList, estdCriterioVO, true);
             }
 

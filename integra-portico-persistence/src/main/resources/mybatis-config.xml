@@ -7,14 +7,8 @@
     <properties resource="Configuration_env.properties" />
 
     <settings>
-        <setting name="proxyFactory" value="CGLIB" />
-        <setting name="defaultExecutorType" value="REUSE" />
-        <setting name="lazyLoadingEnabled" value="false" />
-        <!--  <setting name="aggressiveLazyLoading" value="false" /> <setting
-            name="useColumnLabel" value="false"/> <setting name="multipleResultSetsEnabled" value="false"/> -->
         <setting name="logImpl" value="${db.logImpl}" />
-        <!--<setting name="jdbcTypeForNull" value="NULL" /> <setting name="defaultExecutorType" value="REUSE" /> <setting
-            name="logImpl" value="${db.logImpl}" /> NO_LOGGING SLF4J LOG4J <setting name="proxyFactory" value="JAVASSIST"/> CGLIB JAVASSIST -->
+        <setting name="proxyFactory" value="JAVASSIST"/>
     </settings>
 
     <typeAliases>
@@ -55,6 +49,12 @@
             </dataSource>
         </environment>
     </environments>
+
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="SQL Server" value="sqlserver" />
+        <property name="Oracle" value="oracle" />
+        <property name="PostgreSQL" value="postgres" />
+    </databaseIdProvider>
 
     <mappers>
         <package name="xeredi.integra.model" />

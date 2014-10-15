@@ -2,8 +2,6 @@ package xeredi.integra.model.estadistica.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
-
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 
@@ -35,20 +33,18 @@ public interface EstadisticaDAO {
      *
      * @param estdCriterioVO
      *            the estd criterio vo
-     * @param bounds
-     *            the bounds
      * @return the list
      */
-    List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO, final RowBounds bounds);
+    List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
-     * Select list.
+     * Select paginated list.
      *
      * @param estdCriterioVO
      *            the estd criterio vo
      * @return the list
      */
-    List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO);
+    List<EstadisticaVO> selectPaginatedList(final EstadisticaCriterioVO estdCriterioVO);
 
     /**
      * Select object.

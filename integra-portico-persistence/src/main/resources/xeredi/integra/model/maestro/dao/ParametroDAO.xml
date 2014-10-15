@@ -23,9 +23,7 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-    <![CDATA[
-    SELECT *
-    ]]>
+        SELECT *
         <if test="idioma != null">
         <![CDATA[
         , (
@@ -51,10 +49,20 @@
         ) AS p18n_texto
         ]]>
         </if>
-    <![CDATA[
-    FROM
-        vw_parametro_prmt
-    ]]>
+        <include refid="SelectPrefixSpecific" />
+        FROM vw_parametro_prmt
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="postgres">
+        , NULL AS rownumVar
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="sqlserver">
+        , NULL AS rownumVar
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="oracle">
+        , ROWNUM AS rownumVar
     </sql>
 
     <sql id="SelectCountPrefix">
@@ -158,6 +166,30 @@
         <include refid="SelectWhere" />
 
         ORDER BY prmt_tppr_pk, prmt_parametro
+    </select>
+
+    <select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="postgres">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY prmt_tppr_pk, prmt_parametro
+        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+    </select>
+
+    <select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY prmt_tppr_pk, prmt_parametro
+        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+    </select>
+
+    <select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="oracle">
+        SELECT * FROM (
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        <![CDATA[
+        ORDER BY prmt_tppr_pk, prmt_parametro
+        ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
+        ]]>
     </select>
 
     <select id="selectMap" parameterType="ParametroCriterioVO" resultMap="ResultMap">

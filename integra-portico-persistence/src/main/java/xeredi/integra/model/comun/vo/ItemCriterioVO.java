@@ -18,6 +18,9 @@ public abstract class ItemCriterioVO implements Criterio {
     /** The limit. */
     private Integer limit;
 
+    /** The offset. */
+    private Integer offset;
+
     /** The solo gridables. */
     private boolean soloDatosGrid;
 
@@ -235,6 +238,25 @@ public abstract class ItemCriterioVO implements Criterio {
      */
     public final void setLimit(final Integer value) {
         limit = value;
+    }
+
+    /**
+     * Gets the offset.
+     *
+     * @return the offset
+     */
+    public Integer getOffset() {
+        return offset;
+    }
+
+    /**
+     * Sets the offset.
+     *
+     * @param value
+     *            the new offset
+     */
+    public void setOffset(final Integer value) {
+        offset = value;
     }
 
 }

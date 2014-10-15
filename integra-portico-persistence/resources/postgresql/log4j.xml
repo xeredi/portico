@@ -31,7 +31,7 @@
             <param name="ConversionPattern" value="%-5p %d [%l]%n\t%m%n" />
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
-            <param name="LevelMin" value="DEBUG" />
+            <param name="LevelMin" value="TRACE" />
         </filter>
     </appender>
 
@@ -64,7 +64,7 @@
     </logger>
  -->
     <logger name='xeredi'>
-        <level value="DEBUG" />
+        <level value="TRACE" />
 
         <appender-ref ref="debugLog" />
     </logger>

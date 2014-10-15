@@ -35,7 +35,6 @@ import com.google.common.base.Preconditions;
  * The Class SubservicioBO.
  */
 public class SubservicioBO {
-
     /** The ssrv dao. */
     SubservicioDAO ssrvDAO;
 
@@ -69,7 +68,10 @@ public class SubservicioBO {
             final List<SubservicioVO> ssrvList = new ArrayList<>();
 
             if (count > offset) {
-                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterioVO, new RowBounds(offset, limit)));
+                ssrvCriterioVO.setOffset(offset);
+                ssrvCriterioVO.setLimit(limit);
+
+                ssrvList.addAll(ssrvDAO.selectPaginatedList(ssrvCriterioVO));
                 fillDependencies(session, ssrvList, ssrvCriterioVO, true);
             }
 

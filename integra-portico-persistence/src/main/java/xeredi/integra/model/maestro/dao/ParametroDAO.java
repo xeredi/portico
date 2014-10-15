@@ -91,20 +91,18 @@ public interface ParametroDAO {
      *
      * @param prmtCriterioVO
      *            the prmt criterio vo
-     * @param bounds
-     *            the bounds
      * @return the list
      */
-    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO, final RowBounds bounds);
+    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO);
 
     /**
-     * Select list.
+     * Select paginated list.
      *
      * @param prmtCriterioVO
      *            the prmt criterio vo
      * @return the list
      */
-    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO);
+    List<ParametroVO> selectPaginatedList(final ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select map.

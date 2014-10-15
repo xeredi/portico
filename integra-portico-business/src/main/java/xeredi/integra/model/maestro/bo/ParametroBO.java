@@ -512,10 +512,10 @@ public class ParametroBO {
             final int count = prmtDAO.count(prmtCriterioVO);
 
             if (count > offset) {
-                prmtList.addAll(prmtDAO.selectList(prmtCriterioVO, new RowBounds(offset, limit)));
+                prmtCriterioVO.setOffset(offset);
+                prmtCriterioVO.setLimit(limit);
 
-                // FIXME Ojo en la paginacion, puede traer una barbaridad de
-                // dependencias
+                prmtList.addAll(prmtDAO.selectPaginatedList(prmtCriterioVO));
                 fillDependencies(session, prmtList, prmtCriterioVO, true);
             }
 

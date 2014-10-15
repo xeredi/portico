@@ -72,20 +72,18 @@ public interface SubservicioDAO {
      *
      * @param ssrvCriterioVO
      *            the ssrv criterio vo
-     * @param bounds
-     *            the bounds
      * @return the list
      */
-    List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO, final RowBounds bounds);
+    List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO);
 
     /**
-     * Select list.
+     * Select paginated list.
      *
      * @param ssrvCriterioVO
      *            the ssrv criterio vo
      * @return the list
      */
-    List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO);
+    List<SubservicioVO> selectPaginatedList(final SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Select lupa list.

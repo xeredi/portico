@@ -12,11 +12,11 @@
         <result column="ssdt_cadena" property="cadena" />
 
         <association property="prmt" javaType="ParametroVO">
-            <result column="prmt_pk" property="id" />
+            <id column="prmt_pk" property="id" />
             <result column="prmt_parametro" property="parametro" />
 
             <association property="i18n" javaType="ParametroI18nVO">
-                <result column="p18n_texto" property="texto" />
+                <id column="p18n_texto" property="texto" />
             </association>
         </association>
     </resultMap>
