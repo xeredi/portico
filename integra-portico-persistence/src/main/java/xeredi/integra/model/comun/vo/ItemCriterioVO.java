@@ -1,6 +1,5 @@
 package xeredi.integra.model.comun.vo;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +14,9 @@ import xeredi.util.pagination.Criterio;
 public abstract class ItemCriterioVO implements Criterio {
     /** The idioma. */
     private String idioma;
+
+    /** The limit. */
+    private Integer limit;
 
     /** The solo gridables. */
     private boolean soloDatosGrid;
@@ -43,7 +45,7 @@ public abstract class ItemCriterioVO implements Criterio {
     public ItemCriterioVO() {
         super();
 
-        itdtMap = new HashMap<>();
+        // itdtMap = new HashMap<>();
     }
 
     /**
@@ -214,6 +216,25 @@ public abstract class ItemCriterioVO implements Criterio {
      */
     public final void setEtiqueta(final String value) {
         etiqueta = value;
+    }
+
+    /**
+     * Gets the limit.
+     *
+     * @return the limit
+     */
+    public final Integer getLimit() {
+        return limit;
+    }
+
+    /**
+     * Sets the limit.
+     *
+     * @param value
+     *            the new limit
+     */
+    public final void setLimit(final Integer value) {
+        limit = value;
     }
 
 }

@@ -1,102 +1,65 @@
 <p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
 
-<div ng-if="showFilter">
-    <form>
-        <fieldset>
-            <div class="row-fluid">
-                <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                    <label translate>prmt_parametro</label> <input type="text" ng-model="itemCriterio.parametro"
-                        class="form-control input-sm" />
-                </div>
-                <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                    <label translate>prmt_fechaVigencia</label>
-                    <div class="input-group" ng-controller="datepickerController">
-                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                            datepicker-options="dateOptions" is-open="opened" ng-model="itemCriterio.fechaVigencia"
-                            ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
-                            class="glyphicon glyphicon-calendar"></i></span>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>limit</label> <select ng-model="pageInfo.limit"
-                        ng-options="limitValue for limitValue in limits" class="form-control input-sm">
-                        <option />
-                    </select>
-                </div>
-            </div>
-        </fieldset>
-
-        <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
-
-        <div class="btn-group">
-            <button data-ng-click="search()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
-            </button>
-            <button data-ng-click="cancelSearch()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
-            </button>
-        </div>
-    </form>
-</div>
-
-<div ng-hide="showFilter">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
-                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-                next-text="&rsaquo;&rsaquo;"></pagination>
-        </div>
-
-        <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/maestro/prmt/create/{{enti.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span> </a>
-            <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
-            </button>
-        </div>
-
-        <div class="btn-group">
-            <a class="btn btn-default" ng-href="maestro/prmt-xls-export.action?itemCriterio.entiId={{enti.id}}"><i
-                class="glyphicon glyphicon-download-alt"></i> <span translate>boton_exportar</span> </a>
-        </div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="itemList.count" items-per-page="itemList.limit" ng-model="page"
+            ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
 
-    <div class="table-responsive">
-        <span class="label label-default">{{itemList.count}} resultado(s)</span>
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
-                    <th ng-if="enti.i18n" translate>prmt_i18n_texto</th>
-                    <th translate>prmt_fini</th>
-                    <th translate>prmt_ffin</th>
-                    <th ng-repeat="tpdtId in enti.entdGridList track by $index" nowrap="nowrap"
-                        ng-bind="enti.entdMap[tpdtId].etiqueta" />
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in itemList.list track by $index">
-                    <td><a ng-href="#/maestro/prmt/detail/{{enti.id}}/{{item.id}}/{{itemCriterio.fechaVigencia}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="item.parametro"></td>
-                    <td ng-if="enti.i18n" ng-bind="item.i18n.texto"></td>
-                    <td ng-bind="item.prvr.fini | date"></td>
-                    <td ng-bind="item.prvr.ffin | date"></td>
-                    <td ng-repeat="tpdtId in enti.entdGridList track by $index" ng-switch
-                        on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
-                            class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
-                        ng-switch-when="ND" class="pull-right" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span>
-                        <span ng-switch-when="NE" class="pull-right"
-                        ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
-                        class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
-                        class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span
-                        ng-switch-when="CR" ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
-                        ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="PR"
-                        title="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/maestro/prmt/create/{{enti.id}}"><i class="glyphicon glyphicon-file"></i>
+            <span translate>boton_alta</span> </a>
+        <button data-ng-click="filter('lg')" class="btn btn-default">
+            <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
+        </button>
+
+        <script type="text/ng-template" id="prmt-filter-content.html">
+            <div ng-include="'modules/entidad/maestro/prmt-filter-content.html'"></div>
+            </script>
+    </div>
+
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="maestro/prmt-xls-export.action?itemCriterio.entiId={{enti.id}}"><i
+            class="glyphicon glyphicon-download-alt"></i> <span translate>boton_exportar</span> </a>
     </div>
 </div>
-<fieldset></fieldset>
+
+<div class="table-responsive">
+    <span class="label label-default">{{itemList.count}} resultado(s)</span>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
+                <th ng-if="enti.i18n" translate>prmt_i18n_texto</th>
+                <th translate>prmt_fini</th>
+                <th translate>prmt_ffin</th>
+                <th ng-repeat="tpdtId in enti.entdGridList track by $index" nowrap="nowrap"
+                    ng-bind="enti.entdMap[tpdtId].etiqueta" />
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in itemList.list track by $index">
+                <td><a ng-href="#/maestro/prmt/detail/{{enti.id}}/{{item.id}}/{{itemCriterio.fechaVigencia}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="item.parametro"></td>
+                <td ng-if="enti.i18n" ng-bind="item.i18n.texto"></td>
+                <td ng-bind="item.prvr.fini | date"></td>
+                <td ng-bind="item.prvr.ffin | date"></td>
+                <td ng-repeat="tpdtId in enti.entdGridList track by $index" ng-switch
+                    on="enti.entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                        class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
+                    ng-switch-when="ND" class="pull-right" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span>
+                    <span ng-switch-when="NE" class="pull-right"
+                    ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
+                    class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date"></span> <span ng-switch-when="FH"
+                    class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span
+                    ng-switch-when="CR" ng-bind="item.itdtMap[tpdtId].cadena"></span> <span ng-switch-when="TX"
+                    ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="PR"
+                    title="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

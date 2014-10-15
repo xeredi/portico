@@ -784,10 +784,10 @@ module.controller("aspcGridController", function($scope, $http, $location, $rout
         search($scope.aspcCriterio, $scope.page, $scope.limit);
     }
 
-    $scope.filterModal = function(size) {
+    $scope.filter = function(size) {
         var modalInstance = $modal.open({
             templateUrl : 'aspc-filter-content.html',
-            controller : 'ModalInstanceCtrl',
+            controller : 'aspcFilterController',
             size : size,
             resolve : {
                 aspcCriterio : function() {
@@ -806,7 +806,7 @@ module.controller("aspcGridController", function($scope, $http, $location, $rout
     search($scope.aspcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
 });
 
-module.controller('ModalInstanceCtrl', function($scope, $http, $modalInstance, aspcCriterio) {
+module.controller('aspcFilterController', function($scope, $http, $modalInstance, aspcCriterio) {
     $scope.aspcCriterio = aspcCriterio;
 
     $scope.ok = function() {

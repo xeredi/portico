@@ -118,8 +118,9 @@ app.config(function($translateProvider) {
         menu_crgos : "Cargos",
         menu_aspcs : "Aspectos",
 
-        modal_filtro : "Filtro",
+        filter_title : "FILTRO",
         limit : "M\u00e1x. Resultados",
+        pagination_results : "{{count}} Resultado(s)",
 
         maestro_main : "Maestros - Inicio",
 

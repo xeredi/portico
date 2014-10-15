@@ -63,85 +63,97 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 } ]);
 
-module.controller("prmtGridController",
-        function($scope, $http, $location, $routeParams) {
-            $scope.showFilter = false;
-            $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
-            $scope.itemCriterio.entiId = $routeParams.entiId;
-            $scope.pageInfo = {};
+module.controller("prmtGridController", function($scope, $http, $location, $routeParams, $modal) {
+    $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+    $scope.itemCriterio.entiId = $routeParams.entiId;
 
-            function search(itemCriterio, page, limit) {
-                var url = "maestro/prmt-list.action";
+    function search(itemCriterio, page) {
+        $http.post("maestro/prmt-list.action", {
+            itemCriterio : itemCriterio,
+            page : page,
+            limit : itemCriterio.limit
+        }).success(function(data) {
+            $scope.actionErrors = data.actionErrors;
 
-                $scope.limit = limit;
+            if (data.actionErrors.length == 0) {
+                $scope.page = data.itemList.page;
+                $scope.itemList = data.itemList;
+                $scope.itemCriterio = data.itemCriterio;
 
-                $http.post(url, {
-                    itemCriterio : itemCriterio,
-                    page : page,
-                    limit : limit
-                }).success(function(data) {
-                    $scope.actionErrors = data.actionErrors;
+                var map = {};
 
-                    if (data.actionErrors.length == 0) {
-                        $scope.page = data.itemList.page;
-                        $scope.itemList = data.itemList;
-                        $scope.itemCriterio = data.itemCriterio;
-                        $scope.pageInfo.limit = data.limit;
+                map["page"] = data.itemList.page;
+                map["itemCriterio"] = JSON.stringify(data.itemCriterio);
 
-                        var map = {};
-
-                        map["page"] = data.itemList.page;
-                        map["limit"] = data.limit;
-                        map["itemCriterio"] = JSON.stringify(data.itemCriterio);
-
-                        $location.search(map).replace();
-
-                        $scope.showFilter = false;
-                    }
-                });
+                $location.search(map).replace();
             }
-
-            $scope.pageChanged = function() {
-                search($scope.itemCriterio, $scope.page, $scope.pageInfo.limit);
-            }
-
-            $scope.filter = function() {
-                var url = "maestro/prmt-filter.action?itemCriterio.entiId=" + $routeParams.entiId;
-
-                $http.get(url).success(function(data) {
-                    $scope.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        $scope.labelValuesMap = data.labelValuesMap;
-                        $scope.itemCriterio = data.itemCriterio;
-                        $scope.limits = data.limits;
-                        $scope.fechaVigencia = data.fechaVigencia;
-                    }
-                });
-
-                $scope.showFilter = true;
-            }
-
-            $scope.search = function() {
-                search($scope.itemCriterio, 1, $scope.pageInfo.limit);
-            }
-
-            $scope.cancelSearch = function() {
-                $scope.showFilter = false;
-            }
-
-            function findEnti() {
-                var url = "metamodelo/tppr-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-                $http.get(url).success(function(data) {
-                    $scope.enti = data.enti;
-                });
-            }
-
-            findEnti();
-            search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1,
-                    $routeParams.limit ? $routeParams.limit : 20);
         });
+    }
+
+    $scope.pageChanged = function() {
+        search($scope.itemCriterio, $scope.page);
+    }
+
+    $scope.filter = function(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'prmt-filter-content.html',
+            controller : 'prmtFilterController',
+            size : size,
+            resolve : {
+                itemCriterio : function() {
+                    return $scope.itemCriterio;
+                },
+                enti : function() {
+                    return $scope.enti;
+                }
+            }
+        });
+
+        modalInstance.result.then(function(itemCriterio) {
+            console.log("prmtGridController: " + JSON.stringify(itemCriterio));
+
+            $scope.itemCriterio = itemCriterio;
+
+            search($scope.itemCriterio, 1);
+        });
+    }
+
+    function findEnti() {
+        var url = "metamodelo/tppr-proxy-detail.action?enti.id=" + $routeParams.entiId;
+
+        $http.get(url).success(function(data) {
+            $scope.enti = data.enti;
+        });
+    }
+
+    findEnti();
+    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1);
+});
+
+module.controller("prmtFilterController", function($scope, $http, $modalInstance, enti, itemCriterio) {
+    console.log("prmtFilterController: " + JSON.stringify(itemCriterio));
+
+    $scope.itemCriterio = itemCriterio;
+    $scope.enti = enti;
+
+    $scope.ok = function() {
+        $modalInstance.close($scope.itemCriterio);
+    };
+
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $http.get("maestro/prmt-filter.action?itemCriterio.entiId=" + itemCriterio.entiId).success(function(data) {
+        $scope.actionErrors = data.actionErrors;
+
+        if (data.actionErrors.length == 0) {
+            $scope.labelValuesMap = data.labelValuesMap;
+            $scope.limits = data.limits;
+            $scope.fechaVigencia = data.fechaVigencia;
+        }
+    });
+});
 
 module.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
     var path = $location.path();
