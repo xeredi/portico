@@ -127,8 +127,10 @@ public class ServicioBO {
             final List<ServicioVO> srvcList = new ArrayList<>();
 
             if (count > offset) {
-                srvcList.addAll(srvcDAO.selectList(srvcCriterioVO, new RowBounds(offset, limit)));
+                srvcCriterioVO.setOffset(offset);
+                srvcCriterioVO.setLimit(limit);
 
+                srvcList.addAll(srvcDAO.selectPaginatedList(srvcCriterioVO));
                 fillDependencies(session, srvcList, srvcCriterioVO, true);
             }
 

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
@@ -280,10 +279,10 @@ public class SubparametroBO {
             final int count = sprmDAO.selectCount(sprmCriterioVO);
 
             if (count > offset) {
-                sprmList.addAll(sprmDAO.selectList(sprmCriterioVO, new RowBounds(offset, limit)));
+                sprmCriterioVO.setOffset(offset);
+                sprmCriterioVO.setLimit(limit);
 
-                // FIXME Ojo en la paginacion, puede traer una barbaridad de
-                // dependencias
+                sprmList.addAll(sprmDAO.selectPaginatedList(sprmCriterioVO));
                 fillDependencies(session, sprmList, sprmCriterioVO);
             }
 

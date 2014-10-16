@@ -12,7 +12,7 @@
                 <div ng-if="accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="item.prmtAsociado"
                         typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(enti.tpprAsociado.id, $viewValue, item.fref)"
-                        typeahead-loading="loading" typeahead-wait-ms="500" class="form-control input-sm"> <i
+                        typeahead-loading="loading" typeahead-wait-ms="250" class="form-control input-sm"> <i
                         ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>
                 <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.prmtAsociado.etiqueta"></p>

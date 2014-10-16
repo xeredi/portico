@@ -5,6 +5,8 @@
 <mapper namespace="xeredi.integra.model.maestro.dao.SubparametroDAO">
     <resultMap type="SubparametroVO" id="ResultMap">
         <id column="spvr_pk" />
+        <id column="sprm_pk" />
+
         <result column="sprm_pk" property="id" />
         <result column="sprm_tpsp_pk" property="entiId" />
         <result column="sprm_prmt_pk" property="prmtId" />
@@ -71,6 +73,7 @@
         	END) as prmt_texto
         ]]>
         </if>
+        <include refid="SelectPrefixSpecific" />
         <![CDATA[
         FROM (
             SELECT
@@ -107,6 +110,18 @@
         ]]>
     </sql>
 
+    <sql id="SelectPrefixSpecific" databaseId="postgres">
+        , NULL AS rownumVar
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="sqlserver">
+        , NULL AS rownumVar
+    </sql>
+
+    <sql id="SelectPrefixSpecific" databaseId="oracle">
+        , ROWNUM AS rownumVar
+    </sql>
+
     <sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
@@ -126,6 +141,30 @@
         <include refid="SelectPrefix" />
 
         ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
+    </select>
+
+    <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="postgres">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
+        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+    </select>
+
+    <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
+        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+    </select>
+
+    <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="oracle">
+        SELECT * FROM (
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        <![CDATA[
+        ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
+        ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
+        ]]>
     </select>
 
     <select id="selectObject" parameterType="SubparametroCriterioVO" resultMap="ResultMap">

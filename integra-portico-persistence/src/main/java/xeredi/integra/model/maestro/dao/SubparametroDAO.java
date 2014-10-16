@@ -2,8 +2,6 @@ package xeredi.integra.model.maestro.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
-
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 
@@ -93,15 +91,13 @@ public interface SubparametroDAO {
     List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO);
 
     /**
-     * Select list.
+     * Select paginated list.
      *
      * @param sprmCriterioVO
      *            the sprm criterio vo
-     * @param bounds
-     *            the bounds
      * @return the list
      */
-    List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO, final RowBounds bounds);
+    List<SubparametroVO> selectPaginatedList(final SubparametroCriterioVO sprmCriterioVO);
 
     /**
      * Select object.

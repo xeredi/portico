@@ -54,20 +54,18 @@ public interface ServicioDAO {
      *
      * @param srvcCriterioVO
      *            the srvc criterio vo
-     * @param bounds
-     *            the bounds
      * @return the list
      */
-    List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO, final RowBounds bounds);
+    List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO);
 
     /**
-     * Select list.
+     * Select paginated list.
      *
      * @param srvcCriterioVO
      *            the srvc criterio vo
      * @return the list
      */
-    List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO);
+    List<ServicioVO> selectPaginatedList(final ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select object.
