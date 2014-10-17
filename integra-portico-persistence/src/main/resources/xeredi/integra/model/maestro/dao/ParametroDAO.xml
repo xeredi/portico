@@ -196,7 +196,7 @@
         </where>
         <![CDATA[
         ORDER BY prmt_tppr_pk, prmt_parametro
-        ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
+        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
         ]]>
     </select>
 

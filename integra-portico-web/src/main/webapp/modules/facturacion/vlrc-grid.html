@@ -18,8 +18,9 @@
                     <div class="input-group-sm" ng-controller="srvcLupaCtrl">
                         <input type="text" ng-model="vlrcCriterio.srvc"
                             typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vlrcCriterio.tpsrId, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="250" class="form-control input-sm"> <i
-                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                            typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+                            class="form-control input-sm"> <i ng-show="loading"
+                            class="glyphicon glyphicon-refresh"></i>
                     </div>
                 </div>
                 <div class="col-sm-3 col-md-2 form-group" ng-show="vlrcCriterio.tpsrId">
@@ -39,8 +40,9 @@
                     <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
                         <input type="text" ng-model="vlrcCriterio.pagador"
                             typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="250" class="form-control input-sm"> <i
-                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                            typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+                            class="form-control input-sm"> <i ng-show="loading"
+                            class="glyphicon glyphicon-refresh"></i>
                     </div>
                 </div>
             </div>
@@ -72,7 +74,8 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default">{{vlrcList.count}} resultado(s)</span>
+        <span class="label label-default" translate="pagination_results"
+            translate-value-count="{{vlrcList.count | number:0}}"></span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>

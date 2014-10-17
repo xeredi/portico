@@ -118,13 +118,14 @@
 </tab> <tab heading="{{'vlrds' | translate | uppercase}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/vlrd/create/{{vlrl.id}}"><i class="glyphicon glyphicon-file"></i>
-            <span translate>boton_alta</span> </a>
+        <a class="btn btn-default" ng-href="#/facturacion/vlrd/create/{{vlrl.id}}"><i
+            class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span> </a>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default">{{vlrdList.count}} resultado(s)</span>
+    <span class="label label-default" translate="pagination_results"
+        translate-value-count="{{vlrdList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>

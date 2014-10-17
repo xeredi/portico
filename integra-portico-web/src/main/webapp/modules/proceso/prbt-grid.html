@@ -27,19 +27,19 @@
                     <label translate>prbt_falta</label>
                     <div class="dropdown">
                         <div class="input-group" ng-controller="datepickerController">
-                            <input type="text" class="form-control input-sm"
-                                datepicker-popup="{{format}}" datepicker-options="dateOptions"
-                                is-open="opened" ng-model="prbtCriterio.faltaMin" /> <span class="input-group-addon"
-                                ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+                                datepicker-options="dateOptions" is-open="opened" ng-model="prbtCriterio.faltaMin" /> <span
+                                class="input-group-addon" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                         <div class="input-group" ng-controller="timepickerController">
                             <timepicker ng-model="prbtCriterio.faltaMin" show-meridian="false" ng-change="changed()"></timepicker>
                         </div>
                         <div class="input-group" ng-controller="datepickerController">
-                            <input type="text" class="form-control input-sm"
-                                datepicker-popup="{{format}}" datepicker-options="dateOptions"
-                                is-open="opened" ng-model="prbtCriterio.faltaMax" /> <span class="input-group-addon"
-                                ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                            <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+                                datepicker-options="dateOptions" is-open="opened" ng-model="prbtCriterio.faltaMax" /> <span
+                                class="input-group-addon" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,8 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default"><span ng-bind="prbtList.count"></span> resultado(s)</span>
+        <span class="label label-default" translate="pagination_results"
+            translate-value-count="{{prbtList.count | number:0}}"></span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>

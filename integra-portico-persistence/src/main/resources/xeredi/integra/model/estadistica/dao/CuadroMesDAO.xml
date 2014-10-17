@@ -51,11 +51,8 @@
     <select id="exists" parameterType="Long" resultType="boolean">
     <![CDATA[
         SELECT COUNT(1)
-        WHERE EXISTS (
-            SELECT 1
-            FROM tbl_cuadro_mes_cdms
-            WHERE cdms_pepr_pk = #{value}
-        )
+        FROM tbl_cuadro_mes_cdms
+        WHERE cdms_pepr_pk = #{value}
     ]]>
     </select>
 
@@ -97,7 +94,7 @@
     ]]>
     </sql>
     <!-- PESCA -->
-    <insert id="CM_PESCAF" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_PESCAF" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
             SELECT COALESCE(SUM(esdt_nentero), 0) / 1000 AS value
@@ -117,7 +114,7 @@
     </insert>
 
     <!-- AVITUALLAMIENTO -->
-    <insert id="CM_AVPPET" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_AVPPET" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
@@ -152,7 +149,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_AVOTRO" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_AVOTRO" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
@@ -191,7 +188,7 @@
     </insert>
 
     <!-- AGREGACION ESCALAS -->
-    <insert id="CM_BUQUNI_BUQGT_ES" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_BUQUNI_BUQGT_ES" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
@@ -242,7 +239,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_BUQUNI_BUQGT_ZZ" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_BUQUNI_BUQGT_ZZ" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
@@ -293,7 +290,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_CRUBUQ" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_CRUBUQ" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
@@ -328,7 +325,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_GLPETR_GLGASN_GLPREF_GLOTRO" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
@@ -392,7 +389,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_GSIESP_GSNIES" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_GSIESP_GSNIES" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
@@ -485,7 +482,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_MG_PASAJE_VET2" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_MG_PASAJE_VET2" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(COALESCE(esdt_ndecimal, esdt_nentero)), 0) AS value
@@ -566,7 +563,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_PASCRU" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_PASCRU" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
@@ -660,7 +657,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_CNUMCA" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_CNUMCA" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_nentero), 0) AS value
@@ -740,7 +737,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_CTONCA" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_CTONCA" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
@@ -826,7 +823,7 @@
  -->
     </insert>
 
-    <insert id="CM_CNUMVA_CTONVA_CTEUS" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_CNUMVA_CTONVA_CTEUS" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(COALESCE(esdt_nentero, esdt_ndecimal)), 0) AS value
@@ -906,7 +903,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_RRTEUS_RRTONC" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_RRTEUS_RRTONC" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
@@ -981,7 +978,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_RRTONO" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_RRTONO" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
@@ -1069,7 +1066,7 @@
         <include refid="InsertSuffix" />
     </insert>
 
-    <insert id="CM_TRALOC" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_TRALOC" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT COALESCE(SUM(esdt_ndecimal), 0) AS value
@@ -1115,7 +1112,7 @@
     </insert>
 
     <!-- CONSULTAS RESUMEN DE CUADRO MES -->
-    <insert id="CM_MCONV" parameterType="CuadroMesParametroVO">
+    <insert id="insert_CM_MCONV" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
         SELECT cdms_cantidad

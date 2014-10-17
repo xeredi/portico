@@ -10,8 +10,9 @@
                     <div class="input-group-sm" ng-controller="srvcLupaCtrl">
                         <input type="text" ng-model="itemCriterio.srvc"
                             typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.tpsrId, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="250" class="form-control input-sm"> <i
-                            ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                            typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+                            class="form-control input-sm"> <i ng-show="loading"
+                            class="glyphicon glyphicon-refresh"></i>
                     </div>
                 </div>
                 <div class="col-sm-1 col-md-1 form-group">

@@ -112,6 +112,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         final int mes = Integer.parseInt(prbtVO.getPrpmMap().get(MES_PARAM));
         final boolean sobreescribir = Boolean.parseBoolean(prbtVO.getPrpmMap().get(SOBREESCRIBIR_PARAM));
 
+        LOG.info("Carga estadisticas: " + autp + ", " + anio + ", " + mes);
+
         autpVO = new ParametroVO();
         autpVO.setParametro(autp);
 
@@ -150,6 +152,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             LOG.error("Errores en la carga");
             LOG.info(prbtVO.getPrmnList());
         }
+
+        LOG.info("Fin Proceso");
     }
 
     /**

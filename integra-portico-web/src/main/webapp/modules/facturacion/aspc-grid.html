@@ -18,7 +18,8 @@
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default">{{aspcList.count}} resultado(s)</span>
+    <span class="label label-default" translate="pagination_results"
+        translate-value-count="{{aspcList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>

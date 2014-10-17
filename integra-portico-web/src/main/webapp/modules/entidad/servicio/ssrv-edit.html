@@ -11,8 +11,8 @@
                 <div ng-if="!item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
                     <input type="text" ng-model="item.srvc"
                         typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(enti.tpsrId, $viewValue)"
-                        typeahead-loading="loading" typeahead-wait-ms="250" class="form-control input-sm"> <i
-                        ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                        typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+                        class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>
                 <p ng-if="item.srvc.id" class="form-control-static" ng-bind="item.srvc.etiqueta"></p>
             </div>
@@ -54,8 +54,8 @@
                 <div class="input-group-sm" ng-controller="ssrvLupaCtrl">
                     <input type="text" ng-model="itemPadresMap[entiPadre.id]"
                         typeahead="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, item.srvc.id, $viewValue)"
-                        typeahead-loading="loading" typeahead-wait-ms="250" class="form-control input-sm"> <i
-                        ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+                        typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+                        class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>
             </div>
         </div>

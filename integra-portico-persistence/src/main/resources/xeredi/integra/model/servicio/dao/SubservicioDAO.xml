@@ -25,10 +25,10 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-        SELECT *
+        SELECT ssrv.*
         , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
         <include refid="SelectPrefixSpecific" />
-        FROM vw_subservicio_ssrv
+        FROM vw_subservicio_ssrv ssrv
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="postgres">
@@ -40,7 +40,7 @@
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , ROWNUM AS rownumVar
+        , row_number() over (order by ssrv_srvc_pk, ssrv_numero) rownumVar
     </sql>
 
     <sql id="SelectWhere">
@@ -56,7 +56,7 @@
         <if test="id != null">
             AND ssrv_pk = #{id}
         </if>
-        <if test="ids != null">
+        <if test="ids != null and !ids.empty">
             AND ssrv_pk IN
             <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
             </foreach>
@@ -89,10 +89,10 @@
                 <if
                     test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
                         <![CDATA[
-                        AND EXISTS (
-                            SELECT 1 FROM tbl_subservicio_dato_ssdt
-                            WHERE ssdt_ssrv_pk = ssrv_pk
-                                AND ssdt_tpdt_pk = #{itdt.tpdtId}
+                    	AND ssrv_pk = ANY (
+                    		SELECT ssdt_ssrv_pk
+                            FROM tbl_subservicio_dato_ssdt
+                            WHERE ssdt_tpdt_pk = #{itdt.tpdtId}
                         ]]>
                     <if test="itdt.prmt != null and itdt.prmt.id != null">
                         AND ssdt_prmt_pk = #{itdt.prmt.id}
@@ -130,6 +130,7 @@
         <where>
             <include refid="SelectWhere" />
         </where>
+        ORDER BY ssrv_srvc_pk, ssrv_numero
     </select>
 
     <select id="selectPaginatedList" parameterType="SubservicioCriterioVO" resultMap="ResultMap" databaseId="postgres">
@@ -137,6 +138,7 @@
         <where>
             <include refid="SelectWhere" />
         </where>
+        ORDER BY ssrv_srvc_pk, ssrv_numero
         OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
     </select>
 
@@ -145,6 +147,7 @@
         <where>
             <include refid="SelectWhere" />
         </where>
+        ORDER BY ssrv_srvc_pk, ssrv_numero
         OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
     </select>
 
@@ -155,7 +158,8 @@
             <include refid="SelectWhere" />
         </where>
         <![CDATA[
-        ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
+        ORDER BY ssrv_srvc_pk, ssrv_numero
+        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
         ]]>
     </select>
 

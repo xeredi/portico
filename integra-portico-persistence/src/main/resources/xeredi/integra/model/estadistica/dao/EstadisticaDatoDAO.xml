@@ -22,7 +22,7 @@
     </resultMap>
 
     <select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
-        SELECT *
+        SELECT esdt.*
         <if test="idioma != null">
         <![CDATA[
             , (
@@ -60,9 +60,10 @@
             ) AS p18n_texto
         ]]>
         </if>
-        FROM vw_estadistica_dato_esdt
+        FROM vw_estadistica_dato_esdt esdt
 
         <where>
+            <if test="id == null and ids == null">
             <![CDATA[
                 EXISTS (
                     SELECT 1
@@ -71,17 +72,18 @@
                         estd_pk = esdt_estd_pk
             ]]>
 
-            <include refid="xeredi.integra.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
+                <include refid="xeredi.integra.model.estadistica.dao.EstadisticaDAO.SelectWhere" />
 
             <![CDATA[
                 )
             ]]>
+            </if>
 
             <if test="id != null">
                 AND esdt_estd_pk = #{id}
             </if>
 
-            <if test="ids != null and !ids.empty">
+            <if test="ids != null">
                 AND esdt_estd_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
             </if>

@@ -48,8 +48,8 @@
                 next-text="&rsaquo;&rsaquo;"></pagination>
         </div>
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/facturacion/crgo/create"><i class="glyphicon glyphicon-file"></i> <span
-                translate>boton_alta</span> </a>
+            <a class="btn btn-default" ng-href="#/facturacion/crgo/create"><i class="glyphicon glyphicon-file"></i>
+                <span translate>boton_alta</span> </a>
             <button data-ng-click="filter()" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
             </button>
@@ -57,7 +57,8 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default">{{crgoList.count}} resultado(s)</span>
+        <span class="label label-default" translate="pagination_results"
+            translate-value-count="{{crgoList.count | number:0}}"></span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>

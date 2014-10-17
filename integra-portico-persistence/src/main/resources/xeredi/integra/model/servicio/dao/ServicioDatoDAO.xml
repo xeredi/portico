@@ -37,7 +37,7 @@
     </resultMap>
 
     <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
-        SELECT *
+        SELECT srdt.*
         <if test="idioma != null">
         <![CDATA[
             , (
@@ -75,9 +75,10 @@
             ) AS p18n_texto
         ]]>
         </if>
-        FROM vw_servicio_dato_srdt
+        FROM vw_servicio_dato_srdt srdt
 
         <where>
+            <if test="id == null and ids == null">
             <![CDATA[
                 EXISTS (
                     SELECT 1
@@ -85,20 +86,19 @@
                     WHERE
                         srvc_pk = srdt_srvc_pk
             ]]>
-
             <include refid="xeredi.integra.model.servicio.dao.ServicioDAO.SelectWhere" />
-
             <![CDATA[
                 )
             ]]>
+            </if>
 
             <if test="id != null">
                 AND srdt_srvc_pk = #{id}
             </if>
-
-            <if test="ids != null and !ids.empty">
+            <if test="ids != null">
                 AND srdt_srvc_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+                </foreach>
             </if>
 
             <if test="soloDatosGrid">

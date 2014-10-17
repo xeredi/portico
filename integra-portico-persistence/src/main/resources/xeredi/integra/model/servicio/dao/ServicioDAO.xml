@@ -23,13 +23,12 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-		srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref
-		, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
+		srvc.*
 		, (SELECT prmt_parametro FROM tbl_parametro_prmt
 			WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
     ]]>
         <include refid="SelectPrefixSpecific" />
-        FROM vw_servicio_srvc
+        FROM vw_servicio_srvc srvc
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="postgres">
@@ -41,7 +40,7 @@
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , ROWNUM AS rownumVar
+        , row_number() over (order by srvc_falta DESC) rownumVar
     </sql>
 
     <sql id="SelectCountPrefix">
@@ -57,7 +56,7 @@
         <if test="id != null">
             AND srvc_pk = #{id}
         </if>
-        <if test="ids != null">
+        <if test="ids != null and !ids.empty">
             AND srvc_pk IN
             <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
             </foreach>
@@ -83,10 +82,10 @@
                 <if
                     test="(itdt.prmt != null and itdt.prmt.id != null) or (itdt.srvc != null and itdt.srvc.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
                         <![CDATA[
-                        AND EXISTS (
-                            SELECT 1 FROM tbl_servicio_dato_srdt
-                            WHERE srdt_srvc_pk = srvc_pk
-                                AND srdt_tpdt_pk = #{itdt.tpdtId}
+                        AND srvc_pk = ANY (
+                            SELECT srdt_srvc_pk
+                            FROM tbl_servicio_dato_srdt
+                            WHERE srdt_tpdt_pk = #{itdt.tpdtId}
                         ]]>
                     <if test="itdt.prmt != null and itdt.prmt.id != null">
                         AND srdt_prmt_pk = #{itdt.prmt.id}
@@ -162,7 +161,7 @@
         </where>
         <![CDATA[
         ORDER BY srvc_falta DESC
-        ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
+        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
         ]]>
     </select>
 

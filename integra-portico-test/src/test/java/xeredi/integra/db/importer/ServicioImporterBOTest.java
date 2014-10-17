@@ -14,20 +14,20 @@ public final class ServicioImporterBOTest {
     private static final Log LOG = LogFactory.getLog(ServicioImporterBOTest.class);
 
     /** The Constant NUM_ITERATIONS. */
-    private static final int NUM_ITERATIONS = 1;
+    private static final int NUM_ITERATIONS = 5;
 
     /**
      * Test.
      */
     @Test
     public void test() {
+        LOG.info("Start test");
+
         final ServicioImporterBO importer = new ServicioImporterBO();
 
-        for (int i = 0; i < NUM_ITERATIONS; i++) {
-            LOG.info("Iteration: " + i);
+        importer.importEntities(NUM_ITERATIONS);
 
-            importer.importEntities();
-        }
+        LOG.info("End test");
     }
 
 }

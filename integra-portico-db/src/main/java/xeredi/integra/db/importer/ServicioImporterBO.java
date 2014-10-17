@@ -84,6 +84,20 @@ public final class ServicioImporterBO {
 
     /**
      * Import entities.
+     *
+     * @param numIterations
+     *            the num iterations
+     */
+    public void importEntities(final int numIterations) {
+        for (int i = 0; i < numIterations; i++) {
+            LOG.info("Iteration: " + i);
+
+            importEntities();
+        }
+    }
+
+    /**
+     * Import entities.
      */
     public void importEntities() {
         Connection con = null;
@@ -134,7 +148,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-            DuplicateInstanceException {
+    DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();

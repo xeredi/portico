@@ -22,7 +22,7 @@
     </resultMap>
 
     <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
-        SELECT *
+        SELECT ssdt.*
         <if test="idioma != null">
         <![CDATA[
             , (
@@ -60,9 +60,19 @@
             ) AS p18n_texto
         ]]>
         </if>
-        FROM vw_subservicio_dato_ssdt
+        FROM vw_subservicio_dato_ssdt ssdt
 
         <where>
+            <if test="id != null">
+                AND ssdt_ssrv_pk = #{id}
+            </if>
+
+            <if test="ids != null">
+                AND ssdt_ssrv_pk IN
+                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
+            </if>
+
+            <if test="id == null and ids == null">
             <![CDATA[
             EXISTS (
                 SELECT 1
@@ -71,19 +81,11 @@
                     ssrv_pk = ssdt_ssrv_pk
             ]]>
 
-            <include refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
+                <include refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
 
             <![CDATA[
             )
             ]]>
-
-            <if test="id != null">
-                AND ssdt_ssrv_pk = #{id}
-            </if>
-
-            <if test="ids != null and !ids.empty">
-                AND ssdt_ssrv_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
             </if>
 
             <if test="soloDatosGrid">

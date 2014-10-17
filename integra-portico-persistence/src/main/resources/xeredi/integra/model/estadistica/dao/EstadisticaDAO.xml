@@ -32,7 +32,7 @@
 
     <sql id="SelectPrefix">
         <![CDATA[
-        SELECT *
+        SELECT estd.*
             , (SELECT prmt_parametro FROM tbl_parametro_prmt
                 WHERE prmt_pk = pepr_autp_pk) AS pepr_autp
         ]]>
@@ -54,7 +54,7 @@
         ]]>
         </if>
         <include refid="SelectPrefixSpecific" />
-        FROM vw_estadistica_estd
+        FROM vw_estadistica_estd estd
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="postgres">
@@ -66,7 +66,7 @@
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , ROWNUM AS rownumVar
+        , row_number() over (ORDER BY estd_tpes_pk, estd_pk) rownumVar
     </sql>
 
     <sql id="SelectCountPrefix">
@@ -139,6 +139,7 @@
         <where>
             <include refid="SelectWhere" />
         </where>
+        ORDER BY estd_tpes_pk, estd_pk
     </select>
 
     <select id="selectPaginatedList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap" databaseId="postgres">
@@ -146,6 +147,7 @@
         <where>
             <include refid="SelectWhere" />
         </where>
+        ORDER BY estd_tpes_pk, estd_pk
         OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
     </select>
 
@@ -154,6 +156,7 @@
         <where>
             <include refid="SelectWhere" />
         </where>
+        ORDER BY estd_tpes_pk, estd_pk
         OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
     </select>
 
@@ -164,7 +167,8 @@
             <include refid="SelectWhere" />
         </where>
         <![CDATA[
-        ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
+        ORDER BY estd_tpes_pk, estd_pk
+        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
         ]]>
     </select>
 
