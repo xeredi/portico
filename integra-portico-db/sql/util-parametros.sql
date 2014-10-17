@@ -1,3 +1,8 @@
+DELETE FROM tbl_parametro_dato_prdt;
+DELETE FROM tbl_parametro_i18n_p18n;
+DELETE FROM tbl_parametro_version_prvr;
+DELETE FROM tbl_parametro_prmt;
+
 -- Rellenar dependencias de parametros
 SELECT prdt_prvr_pk , prdt_tpdt_pk , prdt_nentero , prdt_ndecimal , prdt_fecha , prdt_cadena , prdt_prmt_pk , prmt_parametro , prvr_pk
 	, (

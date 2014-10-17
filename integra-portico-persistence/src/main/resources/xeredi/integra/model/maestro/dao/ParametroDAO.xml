@@ -23,7 +23,7 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-        SELECT *
+        SELECT prmt.*
         <if test="idioma != null">
         <![CDATA[
         , (
@@ -50,7 +50,7 @@
         ]]>
         </if>
         <include refid="SelectPrefixSpecific" />
-        FROM vw_parametro_prmt
+        FROM vw_parametro_prmt prmt
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="postgres">
@@ -62,7 +62,7 @@
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , ROWNUM AS rownumVar
+        , row_number() over (order by prmt_tppr_pk, prmt_parametro) rownumVar
     </sql>
 
     <sql id="SelectCountPrefix">
@@ -74,56 +74,55 @@
     </sql>
 
     <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND prmt_pk = #{id}
-            </if>
+        <if test="id != null">
+            AND prmt_pk = #{id}
+        </if>
 
-            <if test="ids != null and !ids.empty">
-                AND prmt_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
+        <if test="ids != null and !ids.empty">
+            AND prmt_pk IN
+            <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-            <if test="entiId != null">
-                AND prmt_tppr_pk = #{entiId}
-            </if>
+        <if test="entiId != null">
+            AND prmt_tppr_pk = #{entiId}
+        </if>
 
-            <if test="entiIds != null and !entiIds.empty">
-                AND prmt_tppr_pk IN
-                <foreach collection="entiIds" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
+        <if test="entiIds != null and !entiIds.empty">
+            AND prmt_tppr_pk IN
+            <foreach collection="entiIds" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-            <if test="parametro != null and !parametro.empty">
-                AND prmt_parametro LIKE #{parametro}
-            </if>
+        <if test="parametro != null and !parametro.empty">
+            AND prmt_parametro LIKE #{parametro}
+        </if>
 
-            <if test="parametros != null and !parametros.empty">
-                AND prmt_parametro IN
-                <foreach collection="parametros" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
+        <if test="parametros != null and !parametros.empty">
+            AND prmt_parametro IN
+            <foreach collection="parametros" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-            <if test="prvrId != null">
-                AND prvr_pk = #{prvrId}
-            </if>
+        <if test="prvrId != null">
+            AND prvr_pk = #{prvrId}
+        </if>
 
-            <if test="prvrIds != null and !prvrIds.empty">
-                AND prvr_pk IN
-                <foreach collection="prvrIds" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
+        <if test="prvrIds != null and !prvrIds.empty">
+            AND prvr_pk IN
+            <foreach collection="prvrIds" item="item" open="(" close=")" separator=",">#{item}
+            </foreach>
+        </if>
 
-            <if test="fechaVigencia != null">
-                AND #{fechaVigencia} BETWEEN prvr_fini AND coalesce(prvr_ffin, #{fechaVigencia})
-            </if>
+        <if test="fechaVigencia != null">
+            AND #{fechaVigencia} BETWEEN prvr_fini AND coalesce(prvr_ffin, #{fechaVigencia})
+        </if>
 
-            <if test="itdtMap != null and !itdtMap.empty">
-                <foreach collection="itdtMap" index="key" item="itdt">
-                    <!-- FIXME ojo, faltan las fechas -->
-                    <if
-                        test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
+        <if test="itdtMap != null and !itdtMap.empty">
+            <foreach collection="itdtMap" index="key" item="itdt">
+                <!-- FIXME ojo, faltan las fechas -->
+                <if
+                    test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
                         <![CDATA[
                         AND EXISTS (
                             SELECT 1
@@ -132,52 +131,59 @@
                                 prdt_prvr_pk = prvr_pk
                                 AND prdt_tpdt_pk = #{itdt.tpdtId}
                         ]]>
-                        <if test="itdt.prmt != null and itdt.prmt.id != null">
-                            AND prdt_prmt_pk = #{itdt.prmt.id}
-                        </if>
-                        <if test="itdt.cantidadEntera != null">
-                            AND prdt_nentero = #{itdt.cantidadEntera}
-                        </if>
-                        <if test="itdt.cantidadDecimal != null">
-                            AND prdt_ndecimal = #{itdt.cantidadDecimal}
-                        </if>
-                        <if test="itdt.cadena != null and !itdt.cadena.empty">
-                            AND prdt_cadena LIKE #{itdt.cadena}
-                        </if>
-                        <if test="itdt.cadenas != null and !itdt.cadenas.empty">
-                            AND prdt_cadena IN
-                            <foreach collection="itdt.cadenas" item="cadena" open="(" close=")" separator=",">#{cadena}
-                            </foreach>
-                        </if>
-                        )
+                    <if test="itdt.prmt != null and itdt.prmt.id != null">
+                        AND prdt_prmt_pk = #{itdt.prmt.id}
                     </if>
-                </foreach>
-            </if>
-        </where>
+                    <if test="itdt.cantidadEntera != null">
+                        AND prdt_nentero = #{itdt.cantidadEntera}
+                    </if>
+                    <if test="itdt.cantidadDecimal != null">
+                        AND prdt_ndecimal = #{itdt.cantidadDecimal}
+                    </if>
+                    <if test="itdt.cadena != null and !itdt.cadena.empty">
+                        AND prdt_cadena LIKE #{itdt.cadena}
+                    </if>
+                    <if test="itdt.cadenas != null and !itdt.cadenas.empty">
+                        AND prdt_cadena IN
+                        <foreach collection="itdt.cadenas" item="cadena" open="(" close=")" separator=",">#{cadena}
+                        </foreach>
+                    </if>
+                    )
+                </if>
+            </foreach>
+        </if>
     </sql>
 
     <select id="count" parameterType="ParametroCriterioVO" resultType="Integer">
         <include refid="SelectCountPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectList" parameterType="ParametroCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
 
         ORDER BY prmt_tppr_pk, prmt_parametro
     </select>
 
     <select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="postgres">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
         ORDER BY prmt_tppr_pk, prmt_parametro
         OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
     </select>
 
     <select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
         ORDER BY prmt_tppr_pk, prmt_parametro
         OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
     </select>
@@ -185,7 +191,9 @@
     <select id="selectPaginatedList" parameterType="ParametroCriterioVO" resultMap="ResultMap" databaseId="oracle">
         SELECT * FROM (
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
         <![CDATA[
         ORDER BY prmt_tppr_pk, prmt_parametro
         ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
@@ -194,17 +202,23 @@
 
     <select id="selectMap" parameterType="ParametroCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectMapByCodigo" parameterType="ParametroCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectObject" parameterType="ParametroCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectLupaList" parameterType="ParametroLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
@@ -260,7 +274,7 @@
         ]]>
     </select>
 
-    <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
+    <select id="existsOverlap" parameterType="ParametroVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -269,7 +283,8 @@
             prmt_pk = #{id}
             AND (
                 #{prvr.fini} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{prvr.fini})
-                OR COALESCE(#{prvr.ffin}, portico.getSysdateTime()) BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin}, portico.getSysdateTime()))
+                OR COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN prvr_fini AND COALESCE(prvr_ffin, COALESCE(#{prvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
         <if test="prvr.id != null">

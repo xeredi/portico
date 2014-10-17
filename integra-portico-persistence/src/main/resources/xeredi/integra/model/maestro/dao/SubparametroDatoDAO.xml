@@ -23,77 +23,61 @@
 
     <sql id="SelectWhere">
         <where>
-            <if test="spvrIds != null">
-                AND spdt_spvr_pk IN
-                <foreach collection="spvrIds" item="item" open="("
-                    close=")" separator=",">#{item}</foreach>
-            </if>
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1 FROM vw_subparametro_sprm
+                    WHERE
+                        spvr_pk = spdt_spvr_pk
+            ]]>
+            <include refid="xeredi.integra.model.maestro.dao.SubparametroDAO.SelectWhere" />
+            <![CDATA[
+                )
+            ]]>
         </where>
     </sql>
 
     <sql id="SelectPrefix">
-    <![CDATA[
-        SELECT
-            spdt_spvr_pk , spdt_tpdt_pk , spdt_nentero , spdt_ndecimal , spdt_fecha , spdt_cadena , spdt_prmt_pk
-            , prmt_parametro
-        ]]>
-        <if test="fechaVigencia != null">
-        <![CDATA[
-            , prvr_pk
-        ]]>
-        </if>
+        SELECT spdt.*
         <if test="idioma != null and fechaVigencia != null">
         <![CDATA[
-            , (CASE
-                WHEN tppr_es_i18n = 1
-                THEN (
+            , (
+              CASE
+                WHEN tppr_es_i18n = 1 THEN (
                     SELECT p18n_texto
                     FROM tbl_parametro_i18n_p18n
-                    WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = #{idioma}
+                    WHERE
+                        p18n_prvr_pk = (
+                            SELECT prvr_pk
+                            FROM tbl_parametro_version_prvr
+                            WHERE
+                                prvr_prmt_pk = spdt_prmt_pk
+                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+                        )
+                        AND p18n_idioma = 'es_ES'
                 )
-
-                WHEN tppr_tpdt_pk IS NOT NULL
-                THEN (
+                WHEN tppr_tpdt_pk IS NOT NULL THEN (
                     SELECT prdt_cadena
                     FROM tbl_parametro_dato_prdt
-                    WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_pk
+                    WHERE
+                        prdt_prvr_pk = (
+                            SELECT prvr_pk
+                            FROM tbl_parametro_version_prvr
+                            WHERE
+                                prvr_prmt_pk = spdt_prmt_pk
+                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+                        )
+                        AND prdt_tpdt_pk = tppr_tpdt_pk
                 )
-
-                END
-            ) as prmt_texto
+              END
+            ) AS p18n_texto
         ]]>
         </if>
-        <![CDATA[
-        FROM (
-            SELECT spdt_spvr_pk , spdt_tpdt_pk , spdt_nentero , spdt_ndecimal , spdt_fecha , spdt_cadena , spdt_prmt_pk
-                , prmt_parametro
-                , tppr_es_i18n, tppr_tpdt_pk
-        ]]>
-        <if test="fechaVigencia != null">
-        <![CDATA[
-                , (SELECT prvr_pk FROM tbl_parametro_version_prvr
-                    WHERE prvr_prmt_pk = spdt_prmt_pk
-                        AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-                ) AS prvr_pk
-        ]]>
-        </if>
-        <![CDATA[
-            FROM
-                tbl_subparametro_dato_spdt spdt
-                LEFT JOIN tbl_parametro_prmt ON
-                    prmt_pk = spdt_prmt_pk
-                LEFT JOIN tbl_tipo_parametro_tppr ON
-                    tppr_pk = prmt_tppr_pk
-
-    ]]>
-        <include refid="SelectWhere" />
-    <![CDATA[
-        ) sql
-    ]]>
+        FROM vw_subparametro_dato_spdt spdt
     </sql>
 
     <select id="selectList" resultMap="ResultMap" parameterType="SubparametroCriterioVO">
-        <include refid="SelectPrefix"/>
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="ItemDatoVO">

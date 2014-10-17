@@ -23,115 +23,58 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-        SELECT *
+        SELECT prdt.*
         <if test="idioma != null and fechaVigencia != null">
         <![CDATA[
             , (
-                CASE
-                    WHEN tppr_es_i18n = 1
-                    THEN (
-                        SELECT p18n_texto
-                        FROM tbl_parametro_i18n_p18n
-                        WHERE
-                            p18n_prvr_pk = ANY (
-                                SELECT prvr_pk
-                                FROM tbl_parametro_version_prvr
-                                WHERE prvr_prmt_pk = prdt_prmt_pk
-                                    AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-                            )
-                            AND p18n_idioma = 'es_ES'
-                    )
-                    WHEN tppr_tpdt_pk IS NOT NULL
-                    THEN (
-                        SELECT prdt_cadena
-                        FROM tbl_parametro_dato_prdt
-                        WHERE
-                            prdt_prvr_pk = ANY (
-                                SELECT prvr_pk
-                                FROM tbl_parametro_version_prvr
-                                WHERE
-                                    prvr_prmt_pk = sql.prdt_prmt_pk
-                                    AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-                            )
-                            AND prdt_tpdt_pk = tppr_tpdt_pk
-                    )
-                END
+              CASE
+                WHEN tppr_es_i18n = 1 THEN (
+                    SELECT p18n_texto
+                    FROM tbl_parametro_i18n_p18n
+                    WHERE
+                        p18n_prvr_pk = (
+                            SELECT prvr_pk
+                            FROM tbl_parametro_version_prvr
+                            WHERE
+                                prvr_prmt_pk = prdt_prmt_pk
+                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+                        )
+                        AND p18n_idioma = 'es_ES'
+                )
+                WHEN tppr_tpdt_pk IS NOT NULL THEN (
+                    SELECT prdt_cadena
+                    FROM tbl_parametro_dato_prdt
+                    WHERE
+                        prdt_prvr_pk = (
+                            SELECT prvr_pk
+                            FROM tbl_parametro_version_prvr
+                            WHERE
+                                prvr_prmt_pk = prdt.prdt_prmt_pk
+                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+                        )
+                        AND prdt_tpdt_pk = tppr_tpdt_pk
+                )
+              END
             ) AS p18n_texto
         ]]>
         </if>
         FROM
-            vw_parametro_dato_prdt sql
+        vw_parametro_dato_prdt prdt
     </sql>
 
     <sql id="SelectWhere">
         <where>
-            <if test="prvrIds != null and !prvrIds.empty">
-                AND prdt_prvr_pk IN
-                <foreach collection="prvrIds" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
-
-        <![CDATA[
-            AND EXISTS (
-                SELECT 1
-                FROM tbl_parametro_version_prvr
-                WHERE prvr_pk = prdt_prvr_pk
-                    AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-        ]]>
-
-            <if test="itdtMap != null and !itdtMap.empty">
-                <foreach collection="itdtMap" index="key" item="itdt">
-                    <!-- FIXME ojo, faltan las fechas -->
-                    <if
-                        test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) or (itdt.cadenas != null and !itdt.cadenas.empty)">
-                    <![CDATA[
-                    AND EXISTS (
-                        SELECT 1
-                        FROM tbl_parametro_dato_prdt
-                        WHERE
-                                prdt_prvr_pk = prvr_pk
-                                AND prdt_tpdt_pk = #{itdt.tpdtId}
-                    ]]>
-
-                        <if test="itdt.prmt != null and itdt.prmt.id != null">
-                            AND prdt_prmt_pk = #{itdt.prmt.id}
-                        </if>
-                        <if test="itdt.cantidadEntera != null">
-                            AND prdt_nentero = #{itdt.cantidadEntera}
-                        </if>
-                        <if test="itdt.cantidadDecimal != null">
-                            AND prdt_ndecimal = #{itdt.cantidadDecimal}
-                        </if>
-                        <if test="itdt.cadena != null and !itdt.cadena.empty">
-                            AND prdt_cadena LIKE #{itdt.cadena}
-                        </if>
-                        <if test="itdt.cadenas != null and !itdt.cadenas.empty">
-                            AND prdt_cadena IN
-                            <foreach collection="itdt.cadenas" item="cadena" open="(" close=")" separator=",">#{cadena}
-                            </foreach>
-                        </if>
-                        )
-                    </if>
-                </foreach>
-            </if>
-            <if test="id != null or (ids != null and !ids.empty) or entiId != null or (entiIds != null and !entiIds.empty)">
-        <![CDATA[
-                    AND EXISTS (
-                        SELECT 1
-                        FROM tbl_parametro_prmt
-                        WHERE prmt_pk = prvr_prmt_pk
-        ]]>
-                <if test="id != null">
-                    AND prmt_pk = #{id}
-                </if>
-                <if test="ids != null and !ids.empty">
-                    AND prmt_pk IN
-                    <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                    </foreach>
-                </if>
-                <if test="entiId != null">
-                    AND prmt_tppr_pk = #{entiId}
-                    <if test="soloDatosGrid">
+            <![CDATA[
+              	AND EXISTS (
+                	SELECT 1 FROM vw_parametro_prmt
+                	WHERE
+                        prvr_pk = prdt_prvr_pk
+            ]]>
+            <include refid="xeredi.integra.model.maestro.dao.ParametroDAO.SelectWhere" />
+            <![CDATA[
+                )
+            ]]>
+            <if test="entiId != null and soloDatosGrid">
                 <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -142,16 +85,7 @@
                             AND entd_gridable = 1
                     )
                 ]]>
-                    </if>
-                </if>
-                <if test="entiIds != null and !entiIds.empty">
-                    AND prmt_tppr_pk IN
-                    <foreach collection="entiIds" item="item" open="(" close=")" separator=",">#{item}
-                    </foreach>
-                </if>
-                )
             </if>
-            )
         </where>
     </sql>
 

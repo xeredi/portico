@@ -27,87 +27,44 @@
         </association>
     </resultMap>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND sprm_pk = #{id}
-            </if>
-            <if test="spvrId != null">
-                AND spvr_pk = #{spvrId}
-            </if>
-            <if test="entiId != null">
-                AND sprm_tpsp_pk = #{entiId}
-            </if>
-            <if test="prmt != null">
-                <if test="prmt.id != null">
-                    AND sprm_prmt_pk = #{prmt.id}
-                </if>
-            </if>
-            <if test="fechaVigencia != null">
-                AND #{fechaVigencia} BETWEEN spvr_fini AND COALESCE(spvr_ffin,
-                #{fechaVigencia})
-            </if>
-        </where>
-    </sql>
-
     <sql id="SelectPrefix">
-    <![CDATA[
-        SELECT
-            sprm_pk, sprm_prmt_pk, sprm_prmt_dep_pk, sprm_tpsp_pk
-            , prmt_parametro
-            , spvr_pk, spvr_fini, spvr_ffin
-    ]]>
+        SELECT sprm.*
         <if test="fechaVigencia != null and idioma != null">
         <![CDATA[
-        	, (CASE
-        		WHEN tppr_es_i18n = 1
-        		THEN (
-        			SELECT p18n_texto FROM tbl_parametro_i18n_p18n
-        			WHERE p18n_prvr_pk = prvr_pk AND p18n_idioma = 'es_ES'
-        		)
-        		WHEN tppr_tpdt_pk IS NOT NULL
-        		THEN (
-        			SELECT prdt_cadena FROM tbl_parametro_dato_prdt
-        			WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = tppr_tpdt_pk
-        		)
-        	END) as prmt_texto
+            , (CASE
+                WHEN tppr_es_i18n = 1
+                THEN (
+                    SELECT p18n_texto
+                    FROM tbl_parametro_i18n_p18n
+                    WHERE
+                        p18n_prvr_pk = (
+                            SELECT prvr_pk
+                            FROM tbl_parametro_version_prvr
+                            WHERE
+                                prvr_prmt_pk = prmt_pk
+                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+                        )
+                        AND p18n_idioma = 'es_ES'
+                )
+                WHEN tppr_tpdt_pk IS NOT NULL
+                THEN (
+                    SELECT prdt_cadena
+                    FROM tbl_parametro_dato_prdt
+                    WHERE
+                        prdt_prvr_pk = (
+                            SELECT prvr_pk
+                            FROM tbl_parametro_version_prvr
+                            WHERE
+                                prvr_prmt_pk = prmt_pk
+                                AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+                        )
+                        AND prdt_tpdt_pk = tppr_tpdt_pk
+                )
+            END) as prmt_texto
         ]]>
         </if>
         <include refid="SelectPrefixSpecific" />
-        <![CDATA[
-        FROM (
-            SELECT
-            	sprm_pk
-            	, sprm_prmt_pk
-            	, sprm_prmt_dep_pk
-            	, sprm_tpsp_pk
-            	, prmt_parametro
-            	, tppr_pk, tppr_es_i18n, tppr_tpdt_pk
-        ]]>
-        <if test="fechaVigencia != null">
-        <![CDATA[
-            	, (SELECT prvr_pk FROM tbl_parametro_version_prvr
-        		    WHERE prvr_prmt_pk = sprm_prmt_dep_pk
-        			    AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
-        	    ) AS prvr_pk
-        ]]>
-        </if>
-        <![CDATA[
-            	, spvr_pk
-            	, spvr_fini
-            	, spvr_ffin
-            FROM tbl_subparametro_sprm sprm
-            	JOIN tbl_subparametro_version_spvr spvr ON
-            		spvr_sprm_pk = sprm_pk
-            	JOIN tbl_parametro_prmt ON
-        		prmt_pk = sprm_prmt_dep_pk
-        	JOIN tbl_tipo_parametro_tppr ON
-        		tppr_pk = prmt_tppr_pk
-        ]]>
-        <include refid="SelectWhere" />
-        <![CDATA[
-        ) sql
-        ]]>
+        FROM vw_subparametro_sprm sprm
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="postgres">
@@ -119,48 +76,77 @@
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , ROWNUM AS rownumVar
+        , row_number() over (order by sprm_prmt_pk, sprm_tpsp_pk,
+        prmt_parametro, spvr_fini DESC) rownumVar
     </sql>
 
-    <sql id="SelectCountPrefix">
-    <![CDATA[
-    SELECT
-        COUNT(1)
-    FROM tbl_subparametro_sprm sprm
-    	JOIN tbl_subparametro_version_spvr spvr ON
-    		spvr_sprm_pk = sprm_pk
-    ]]>
+    <sql id="SelectWhere">
+        <if test="id != null">
+            AND sprm_pk = #{id}
+        </if>
+        <if test="spvrId != null">
+            AND spvr_pk = #{spvrId}
+        </if>
+        <if test="spvrIds != null and !spvrIds.empty">
+            AND spvr_pk IN
+            <foreach collection="spvrIds" item="item" open="(" close=")" separator=",">#{item}</foreach>
+        </if>
+        <if test="entiId != null">
+            AND sprm_tpsp_pk = #{entiId}
+        </if>
+        <if test="prmt != null">
+            <if test="prmt.id != null">
+                AND sprm_prmt_pk = #{prmt.id}
+            </if>
+        </if>
+        <if test="fechaVigencia != null">
+            AND #{fechaVigencia} BETWEEN spvr_fini AND COALESCE(spvr_ffin,
+            #{fechaVigencia})
+        </if>
     </sql>
 
     <select id="selectCount" parameterType="SubparametroCriterioVO" resultType="Integer">
-        <include refid="SelectCountPrefix" />
-        <include refid="SelectWhere" />
+        SELECT COUNT(1) FROM vw_subparametro_sprm sprm
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="selectList" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
 
         ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
     </select>
 
     <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="postgres">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
         ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+        OFFSET ${offset} ROWS FETCH NEXT ${limit}
+        ROWS ONLY
     </select>
 
     <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
         ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
-        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
+        OFFSET ${offset} ROWS FETCH NEXT ${limit}
+        ROWS ONLY
     </select>
 
     <select id="selectPaginatedList" parameterType="SubparametroCriterioVO" resultMap="ResultMap" databaseId="oracle">
         SELECT * FROM (
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
         <![CDATA[
         ORDER BY sprm_prmt_pk, sprm_tpsp_pk, prmt_parametro, spvr_fini DESC
         ) WHERE rownumVar >= ${offset} AND rownumVar < (${offset} + ${limit})
@@ -169,7 +155,9 @@
 
     <select id="selectObject" parameterType="SubparametroCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+        <where>
+            <include refid="SelectWhere" />
+        </where>
     </select>
 
     <select id="exists" parameterType="SubparametroVO" resultType="Boolean">
@@ -182,7 +170,7 @@
         ]]>
     </select>
 
-    <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
+    <select id="existsOverlap" parameterType="SubparametroVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -193,7 +181,8 @@
             sprm_pk = #{id}
             AND (
                 #{spvr.fini} BETWEEN spvr_fini AND COALESCE(spvr_ffin, #{spvr.fini})
-                OR COALESCE(#{spvr.ffin}, portico.getSysdateTime()) BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{spvr.ffin}, portico.getSysdateTime()))
+                OR COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN spvr_fini AND COALESCE(spvr_ffin, COALESCE(#{spvr.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
         <if test="spvr.id != null">

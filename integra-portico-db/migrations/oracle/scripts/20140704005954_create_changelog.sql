@@ -13,16 +13,12 @@ CREATE TABLE ${changelog} (
 ID NUMBER(19) NOT NULL,
 APPLIED_AT VARCHAR2(25) NOT NULL,
 DESCRIPTION VARCHAR2(255) NOT NULL
-)
-/
+)\
 
 ALTER TABLE ${changelog}
 ADD CONSTRAINT PK_${changelog}
-PRIMARY KEY (id)
-/
+PRIMARY KEY (id)\
 
 -- //@UNDO
 
-DROP TABLE ${changelog}
-/
-
+DROP TABLE ${changelog}\
