@@ -32,6 +32,8 @@ CREATE VIEW vw_regla_rgla AS
 			enti_pk = rglv_enti_pk
 \
 
+CREATE OR REPLACE SYNONYM portico.vw_regla_rgla FOR vw_regla_rgla\
+
 GRANT SELECT ON vw_regla_rgla TO portico\
 
 
@@ -50,6 +52,8 @@ CREATE VIEW vw_regla_inc_rgin AS
 			enti_pk = rglv_enti_pk
 \
 
+CREATE OR REPLACE SYNONYM portico.vw_regla_inc_rgin FOR vw_regla_inc_rgin\
+
 GRANT SELECT ON vw_regla_inc_rgin TO portico\
 
 
@@ -63,6 +67,8 @@ CREATE VIEW vw_aspecto_aspc AS
 		JOIN tbl_entidad_enti ON
 			enti_pk = aspc_tpsr_pk
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_aspecto_aspc FOR vw_aspecto_aspc\
 
 GRANT SELECT ON vw_aspecto_aspc TO portico\
 
@@ -79,6 +85,8 @@ CREATE VIEW vw_aspecto_cargo_ascr AS
 		INNER JOIN tbl_cargo_version_crgv ON
 			crgv_crgo_pk = ascr_crgo_pk
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_aspecto_cargo_ascr FOR vw_aspecto_cargo_ascr\
 
 GRANT SELECT ON vw_aspecto_cargo_ascr TO portico\
 
@@ -116,6 +124,8 @@ CREATE VIEW vw_valoracion_vlrc AS
 		INNER JOIN tbl_entidad_enti enti ON
 			enti_pk = srvc_tpsr_pk
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_valoracion_vlrc FOR vw_valoracion_vlrc\
 
 GRANT SELECT ON vw_valoracion_vlrc TO portico
 \
@@ -169,6 +179,8 @@ CREATE VIEW vw_valoracion_lin_vlrl AS
 			ssrv_pk = vlrl_ssrv_pk
 \
 
+CREATE OR REPLACE SYNONYM portico.vw_valoracion_lin_vlrl FOR vw_valoracion_lin_vlrl\
+
 GRANT SELECT ON vw_valoracion_lin_vlrl TO portico\
 
 
@@ -184,6 +196,8 @@ CREATE VIEW vw_valoracion_det_vlrd AS
 		LEFT JOIN tbl_subservicio_ssrv ssrv ON
 			ssrv_pk = vlrd_ssrv_pk
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_valoracion_det_vlrd FOR vw_valoracion_det_vlrd\
 
 GRANT SELECT ON vw_valoracion_det_vlrd TO portico\
 
@@ -205,6 +219,8 @@ CREATE VIEW vw_valoracion_cargo_vlrg AS
 			)
 \
 
+CREATE OR REPLACE SYNONYM portico.vw_valoracion_cargo_vlrg FOR vw_valoracion_cargo_vlrg\
+
 GRANT SELECT ON vw_valoracion_cargo_vlrg TO portico\
 
 
@@ -224,6 +240,8 @@ CREATE VIEW vw_valoracion_imp_vlri AS
 					AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
 			)
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_valoracion_imp_vlri FOR vw_valoracion_imp_vlri\
 
 GRANT SELECT ON vw_valoracion_imp_vlri TO portico\
 
@@ -260,6 +278,8 @@ CREATE VIEW vw_factura_fctr AS
 			fcsr_pk = fctr_fcsr_pk
 \
 
+CREATE OR REPLACE SYNONYM portico.vw_factura_fctr FOR vw_factura_fctr\
+
 GRANT SELECT ON vw_factura_fctr TO portico\
 
 
@@ -281,6 +301,8 @@ CREATE VIEW vw_factura_cargo_fctc AS
 			)
 \
 
+CREATE OR REPLACE SYNONYM portico.vw_factura_cargo_fctc FOR vw_factura_cargo_fctc\
+
 GRANT SELECT ON vw_factura_cargo_fctc TO portico\
 
 
@@ -300,6 +322,8 @@ CREATE VIEW vw_factura_imp_fcti AS
 					AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
 			)
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_factura_imp_fcti FOR vw_factura_imp_fcti\
 
 GRANT SELECT ON vw_factura_imp_fcti TO portico\
 
@@ -322,6 +346,8 @@ CREATE VIEW vw_factura_srv_fcts AS
 		INNER JOIN tbl_servicio_srvc srvc ON
 			srvc_pk = fcts_srvc_pk
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_factura_srv_fcts FOR vw_factura_srv_fcts\
 
 GRANT SELECT ON vw_factura_srv_fcts TO portico\
 
@@ -366,6 +392,8 @@ CREATE VIEW vw_factura_lin_fctl AS
 			ssrv_pk = fctl_ssrv_pk
 \
 
+CREATE OR REPLACE SYNONYM portico.vw_factura_lin_fctl FOR vw_factura_lin_fctl\
+
 GRANT SELECT ON vw_factura_lin_fctl TO portico\
 
 
@@ -377,6 +405,8 @@ CREATE VIEW vw_factura_det_fctd AS
 		LEFT JOIN tbl_subservicio_ssrv ON
 			ssrv_pk = fctd_ssrv_pk
 \
+
+CREATE OR REPLACE SYNONYM portico.vw_factura_det_fctd FOR vw_factura_det_fctd\
 
 GRANT SELECT ON vw_factura_det_fctd TO portico\
 
