@@ -62,6 +62,10 @@
                 <i class="glyphicon glyphicon-{{enti.facturable ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
+        <div class="col-sm-3 col-md-2 form-group">
+            <label translate>enti_maxGrid</label>
+            <p class="form-control-static" ng-bind="enti.maxGrid | number:0"></p>
+        </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpdt_estado</label>
             <p class="form-control-static">
@@ -97,6 +101,7 @@
                 <th nowrap="nowrap" translate>enti_cmd_duplicado</th>
                 <th nowrap="nowrap" translate>enti_temporal</th>
                 <th nowrap="nowrap" translate>enti_facturable</th>
+                <th nowrap="nowrap" translate>enti_maxGrid</th>
                 <th nowrap="nowrap" translate>enti_tpdt_estado</th>
             </tr>
         </thead>
@@ -111,6 +116,7 @@
                 <td><i class="glyphicon glyphicon-{{subenti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.temporal ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.facturable ? 'ok' : 'remove'}}"></i></td>
+                <td class="number" ng-bind="subenti.maxGrid | number:0"></td>
                 <td><a ng-if="subenti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{subenti.tpdtEstado.id}}"
                     ng-bind="subenti.tpdtEstado.nombre"></a></td>
             </tr>
@@ -134,10 +140,6 @@
                 <th class="buttonLinks" nowrap="nowrap" />
                 <th translate>enti_codigo</th>
                 <th translate>enti_nombre</th>
-                <th translate>enti_cmd_alta</th>
-                <th translate>enti_cmd_baja</th>
-                <th translate>enti_cmd_edicion</th>
-                <th translate>enti_cmd_duplicado</th>
             </tr>
         </thead>
         <tbody>
@@ -145,10 +147,6 @@
                 <td><a ng-href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entiHija.codigo"></td>
                 <td ng-bind="entiHija.nombre"></td>
-                <td><i class="glyphicon glyphicon-{{entiHija.cmdAlta ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{entiHija.cmdBaja ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{entiHija.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{entiHija.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
             </tr>
         </tbody>
     </table>

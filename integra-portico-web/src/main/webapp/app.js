@@ -1,5 +1,5 @@
 var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "ngRoute", "util", "i18n",
-        'cdrf_i18n', "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso"/*
+        'cdrf_i18n', "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso"/*
                                                                                                      * 'configuracion',
                                                                                                      */]);
 

@@ -16,36 +16,36 @@
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enti.enti_pk, enti.enti_nombre, enti.enti_codigo, enti.enti_tipo
-            , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
-            , tpsr.tpsr_es_temporal, tpsr.tpsr_es_facturable
-            , tpsr.tpsr_tpdt_estado_pk, tpdt.tpdt_nombre
+            enti_pk, enti_nombre, enti_codigo, enti_tipo, enti_max_grid
+            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+            , tpsr_es_temporal, tpsr_es_facturable
+            , tpsr_tpdt_estado_pk, tpdt_nombre
         FROM
-            tbl_tipo_servicio_tpsr tpsr
-            INNER JOIN tbl_entidad_enti enti ON
-                enti.enti_pk = tpsr.tpsr_pk
-            LEFT JOIN tbl_tipo_dato_tpdt tpdt ON
-                tpdt.tpdt_pk = tpsr.tpsr_tpdt_estado_pk
+            tbl_tipo_servicio_tpsr
+            INNER JOIN tbl_entidad_enti ON
+                enti_pk = tpsr_pk
+            LEFT JOIN tbl_tipo_dato_tpdt ON
+                tpdt_pk = tpsr_tpdt_estado_pk
     ]]>
     </sql>
 
     <sql id="SelectWhere">
         <where>
             <if test="id != null">
-                AND enti.enti_pk = #{id}
+                AND enti_pk = #{id}
             </if>
             <if test="ids != null">
-                AND enti.enti_pk IN
+                AND enti_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
             </if>
             <if test="nombre != null and !nombre.empty">
-                AND enti.enti_nombre LIKE #{nombre}
+                AND enti_nombre LIKE #{nombre}
             </if>
             <if test="codigo != null and !codigo.empty">
-                AND enti.enti_codigo LIKE #{codigo}
+                AND enti_codigo LIKE #{codigo}
             </if>
             <if test="facturable != null">
-                AND tpsr.tpsr_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
+                AND tpsr_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
             </if>
         </where>
     </sql>
@@ -54,7 +54,7 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
         <![CDATA[
-        ORDER BY enti.enti_nombre, enti.enti_pk
+        ORDER BY enti_nombre, enti_pk
         ]]>
     </select>
 
@@ -62,9 +62,9 @@
         <![CDATA[
         SELECT COUNT(1)
         FROM
-            tbl_tipo_servicio_tpsr tpsr
-            INNER JOIN tbl_entidad_enti enti ON
-                enti.enti_pk = tpsr.tpsr_pk
+            tbl_tipo_servicio_tpsr
+            INNER JOIN tbl_entidad_enti ON
+                enti_pk = tpsr_pk
         ]]>
         <include refid="SelectWhere" />
     </select>
@@ -73,7 +73,7 @@
         <include refid="SelectPrefix" />
         <where>
         <![CDATA[
-        enti.enti_pk = #{value}
+        enti_pk = #{value}
         ]]>
         </where>
     </select>

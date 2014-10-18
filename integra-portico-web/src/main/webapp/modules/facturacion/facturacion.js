@@ -8,6 +8,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/facturacion", {
+        title : 'menu_facturacion',
         templateUrl : "modules/facturacion/facturacion.html",
         controller : "facturacionController"
     })

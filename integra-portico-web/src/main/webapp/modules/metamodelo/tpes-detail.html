@@ -24,6 +24,10 @@
             <label translate>enti_tipo</label>
             <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}" ng-bind="enti.tipo"></p>
         </div>
+        <div class="col-sm-3 col-md-2 form-group">
+            <label translate>enti_maxGrid</label>
+            <p class="form-control-static" ng-bind="enti.maxGrid | number:0"></p>
+        </div>
     </div>
 </fieldset>
 

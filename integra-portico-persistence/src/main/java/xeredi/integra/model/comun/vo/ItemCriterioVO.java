@@ -11,9 +11,16 @@ import xeredi.util.pagination.Criterio;
 /**
  * The Class ItemCriterioVO.
  */
+/**
+ * @author xeredi
+ *
+ */
 public abstract class ItemCriterioVO implements Criterio {
     /** The idioma. */
     private String idioma;
+
+    /** The max limit. */
+    private Integer maxLimit;
 
     /** The limit. */
     private Integer limit;
@@ -257,6 +264,25 @@ public abstract class ItemCriterioVO implements Criterio {
      */
     public void setOffset(final Integer value) {
         offset = value;
+    }
+
+    /**
+     * Gets the max limit.
+     *
+     * @return the max limit
+     */
+    public Integer getMaxLimit() {
+        return maxLimit;
+    }
+
+    /**
+     * Sets the max limit.
+     *
+     * @param value
+     *            the new max limit
+     */
+    public void setMaxLimit(final Integer value) {
+        maxLimit = value;
     }
 
 }

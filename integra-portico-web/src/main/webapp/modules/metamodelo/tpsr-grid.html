@@ -57,6 +57,7 @@
                     <th nowrap="nowrap" translate>enti_cmd_duplicado</th>
                     <th nowrap="nowrap" translate>enti_temporal</th>
                     <th nowrap="nowrap" translate>enti_facturable</th>
+                    <th nowrap="nowrap" translate>enti_maxGrid</th>
                     <th nowrap="nowrap" translate>enti_tpdt_estado</th>
                 </tr>
             </thead>
@@ -72,6 +73,7 @@
                     <td><i class="glyphicon glyphicon-{{enti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.temporal ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.facturable ? 'ok' : 'remove'}}"></i></td>
+                    <td class="number" ng-bind="enti.maxGrid | number:0"></td>
                     <td><a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}"
                         ng-bind="enti.tpdtEstado.nombre"></a></td>
                 </tr>

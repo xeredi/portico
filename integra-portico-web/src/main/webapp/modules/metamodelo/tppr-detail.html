@@ -62,6 +62,10 @@
                 <i class="glyphicon glyphicon-{{enti.tempExp ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
+        <div class="col-sm-3 col-md-2 form-group">
+            <label translate>enti_maxGrid</label>
+            <p class="form-control-static" ng-bind="enti.maxGrid | number:0"></p>
+        </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpdt_nombre</label>
             <p class="form-control-static">
@@ -94,6 +98,7 @@
                 <th translate>enti_cmd_baja</th>
                 <th translate>enti_cmd_edicion</th>
                 <th translate>enti_cmd_duplicado</th>
+                <th translate>enti_maxGrid</th>
                 <th translate>enti_tpprAsociado</th>
             </tr>
         </thead>
@@ -106,6 +111,7 @@
                 <td><i class="glyphicon glyphicon-{{subenti.cmdBaja ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdEdicion ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
+                <td class="number" ng-bind="subenti.maxGrid | number:0"></td>
                 <td><a ng-if="subenti.tpprAsociado" ng-href="#/metamodelo/tppr/detail/{{subenti.tpprAsociado.id}}"
                     ng-bind="subenti.tpprAsociado.etiqueta"></a></td>
             </tr>

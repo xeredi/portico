@@ -10,27 +10,27 @@
 	<sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enti.enti_pk, enti.enti_nombre, enti.enti_codigo, enti.enti_tipo
-            , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
+            enti_pk, enti_nombre, enti_codigo, enti_tipo, enti_max_grid
+            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
         FROM
-            tbl_tipo_estadistica_tpes tpes
-            INNER JOIN tbl_entidad_enti enti ON
-                enti.enti_pk = tpes.tpes_pk
+            tbl_tipo_estadistica_tpes
+            INNER JOIN tbl_entidad_enti ON
+                enti_pk = tpes_pk
     ]]>
 	</sql>
 
 	<sql id="SelectWhere">
 		<where>
 			<if test="ids != null">
-				AND enti.enti_pk IN
+				AND enti_pk IN
 				<foreach collection="ids" item="item" open="(" close=")"
 					separator=", ">#{item}</foreach>
 			</if>
 			<if test="nombre != null and !nombre.empty">
-				AND enti.enti_nombre LIKE #{nombre}
+				AND enti_nombre LIKE #{nombre}
 			</if>
 			<if test="codigo != null and !codigo.empty">
-				AND enti.enti_codigo LIKE #{codigo}
+				AND enti_codigo LIKE #{codigo}
 			</if>
 		</where>
 	</sql>
@@ -40,7 +40,7 @@
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
         <![CDATA[
-        ORDER BY enti.enti_nombre, enti.enti_pk
+        ORDER BY enti_nombre, enti_pk
         ]]>
 	</select>
 
@@ -48,9 +48,9 @@
         <![CDATA[
         SELECT COUNT(1)
         FROM
-            tbl_tipo_estadistica_tpes tpes
-            INNER JOIN tbl_entidad_enti enti ON
-                enti.enti_pk = tpes.tpes_pk
+            tbl_tipo_estadistica_tpes
+            INNER JOIN tbl_entidad_enti ON
+                enti_pk = tpes_pk
         ]]>
 		<include refid="SelectWhere" />
 	</select>
@@ -59,7 +59,7 @@
 		<include refid="SelectPrefix" />
 		<where>
         <![CDATA[
-        enti.enti_pk = #{value}
+        enti_pk = #{value}
         ]]>
 		</where>
 	</select>

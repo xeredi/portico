@@ -12,6 +12,7 @@
         <result column="enti_cmd_baja" property="cmdBaja" />
         <result column="enti_cmd_edicion" property="cmdEdicion" />
         <result column="enti_cmd_duplicado" property="cmdDuplicado" />
+        <result column="enti_max_grid" property="maxGrid" />
     </resultMap>
 
     <sql id="SelectPrefix">
@@ -19,6 +20,7 @@
         SELECT
             enti_pk, enti_nombre, enti_codigo, enti_tipo
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+            , enti_max_grid
         FROM
             tbl_entidad_enti
     ]]>
@@ -127,13 +129,15 @@
     <insert id="insert" parameterType="EntidadVO">
         <![CDATA[
         INSERT INTO tbl_entidad_enti(enti_pk, enti_nombre, enti_codigo, enti_tipo
-            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado)
+            , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
+            , enti_max_grid)
         VALUES (
         	#{id}, #{nombre}, #{codigo}, #{tipo}
             , #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
+            , #{maxGrid}
         )
         ]]>
     </insert>
@@ -145,6 +149,7 @@
             , enti_cmd_baja = #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_edicion = #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
             , enti_cmd_duplicado = #{cmdDuplicado, jdbcType=INTEGER, javaType=Boolean}
+            , enti_max_grid = #{maxGrid}
         WHERE enti_pk = #{id}
         ]]>
     </update>

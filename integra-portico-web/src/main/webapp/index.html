@@ -21,23 +21,15 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Menu</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li role="presentation" class="dropdown-header">Gestion</li>
-                        <li><a ng-href="#/servicio" translate>menu_tpsrs</a></li>
-                        <li><a ng-href="#/estadistica/pepr/grid" translate>menu_peprs</a></li>
-                        <li><a ng-href="#/maestro" translate>menu_tpprs</a></li>
+                        <li role="presentation" class="dropdown-header" translate="menu_gestion"></li>
+                        <li><a ng-href="#/servicio" translate="menu_tpsrs"></a></li>
+                        <li><a ng-href="#/estadistica/pepr/grid" translate="menu_peprs"></a></li>
+                        <li><a ng-href="#/maestro" translate="menu_tpprs"></a></li>
+                        <li><a ng-href="#/facturacion" translate="menu_fctrmain"></a></li>
+                        <li><a ng-href="#/proceso/prbt/grid" translate="menu_prbts"></a></li>
                         <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Facturacion</li>
-                        <li><a ng-href="#/facturacion" translate>menu_fctrmain</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Administracion</li>
-                        <li><a ng-href="#/proceso/prbt/grid" translate>menu_prbts</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li role="presentation" class="dropdown-header">Parametrizacion</li>
-                        <li><a ng-href="#/metamodelo/tpsr/grid" translate>menu_metamodelo_tpsrs</a></li>
-                        <li><a ng-href="#/metamodelo/tpes/grid" translate>menu_metamodelo_tpess</a></li>
-                        <li><a ng-href="#/metamodelo/tppr/grid" translate>menu_metamodelo_tpprs</a></li>
-                        <li><a ng-href="#/metamodelo/tpdt/grid" translate>menu_metamodelo_tpdts</a></li>
-                        <li><a ng-href="#/configuracion/confs" translate>menu_confs</a></li>
+                        <li role="presentation" class="dropdown-header" translate="menu_administracion"></li>
+                        <li><a ng-href="#/administracion" translate="menu_administracion"></a></li>
                     </ul></li>
             </ul>
         </nav>
@@ -63,6 +55,7 @@
     <script type="text/javascript" src="modules/util/util.js"></script>
     <script type="text/javascript" src="modules/i18n/messages.js"></script>
     <script type="text/javascript" src="modules/i18n/cdrf.js"></script>
+    <script type="text/javascript" src="modules/administracion/administracion.js"></script>
     <script type="text/javascript" src="modules/metamodelo/metamodelo.js"></script>
     <script type="text/javascript" src="modules/entidad/maestro/maestro.js"></script>
     <script type="text/javascript" src="modules/entidad/servicio/servicio.js"></script>

@@ -73,7 +73,7 @@ public final class EntidadProxy {
     /**
      * Load.
      */
-    private static void load() {
+    static void load() {
         LOG.info("Carga de Entidades");
 
         final EntidadBO entiBO = new EntidadBO();

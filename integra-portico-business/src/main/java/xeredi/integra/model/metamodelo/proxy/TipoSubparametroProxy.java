@@ -71,29 +71,27 @@ public final class TipoSubparametroProxy {
     /**
      * Load.
      */
-    private static synchronized void load() {
-        if (TIPO_SUBPARAMETRO_MAP.isEmpty()) {
-            LOG.info("Carga de tipos de subparametro");
+    static synchronized void load() {
+        LOG.info("Carga de tipos de subparametro");
 
-            final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
-            final List<TipoSubparametroVO> tpspList = tpspBO.selectList(new TipoSubparametroCriterioVO());
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+        final List<TipoSubparametroVO> tpspList = tpspBO.selectList(new TipoSubparametroCriterioVO());
 
-            for (final TipoSubparametroVO tpspVO : tpspList) {
-                // tpspVO.setTppr(TipoParametroProxy.select(tpspVO.getTppr().getId()));
+        for (final TipoSubparametroVO tpspVO : tpspList) {
+            // tpspVO.setTppr(TipoParametroProxy.select(tpspVO.getTppr().getId()));
 
-                if (tpspVO.getTpprAsociado() != null) {
-                    tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
-                }
-
-                TIPO_SUBPARAMETRO_MAP.put(tpspVO.getId(), tpspVO);
+            if (tpspVO.getTpprAsociado() != null) {
+                tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
             }
 
-            EntidadProxy.loadDependencies(TIPO_SUBPARAMETRO_MAP);
-
-            LABEL_VALUE_LIST.addAll(tpspBO.selectLabelValues());
-
-            LOG.info("Carga de tipos de subparametro OK");
+            TIPO_SUBPARAMETRO_MAP.put(tpspVO.getId(), tpspVO);
         }
+
+        EntidadProxy.loadDependencies(TIPO_SUBPARAMETRO_MAP);
+
+        LABEL_VALUE_LIST.addAll(tpspBO.selectLabelValues());
+
+        LOG.info("Carga de tipos de subparametro OK");
     }
 
 }

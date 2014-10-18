@@ -36,6 +36,9 @@ public class EntidadVO {
     /** The cmd duplicado. */
     private Boolean cmdDuplicado;
 
+    /** The max grid. */
+    private Integer maxGrid;
+
     /**
      * Lista de Grupos de Datos de la Entidad (Pestañas) ordenadas por orden de visualización.
      */
@@ -424,6 +427,25 @@ public class EntidadVO {
      */
     public final void setEntdGridList(final List<Long> value) {
         entdGridList = value;
+    }
+
+    /**
+     * Gets the max grid.
+     *
+     * @return the max grid
+     */
+    public Integer getMaxGrid() {
+        return maxGrid;
+    }
+
+    /**
+     * Sets the max grid.
+     *
+     * @param value
+     *            the new max grid
+     */
+    public void setMaxGrid(final Integer value) {
+        maxGrid = value;
     }
 
 }

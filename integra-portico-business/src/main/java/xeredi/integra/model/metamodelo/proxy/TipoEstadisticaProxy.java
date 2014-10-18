@@ -75,23 +75,21 @@ public final class TipoEstadisticaProxy {
     /**
      * Load.
      */
-    private static synchronized void load() {
-        if (TIPO_ESTADISTICA_MAP.isEmpty()) {
-            LOG.info("Carga de tipos de estadistica");
+    static synchronized void load() {
+        LOG.info("Carga de tipos de estadistica");
 
-            final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
-            final List<TipoEstadisticaVO> tpesList = tpesBO.selectList(new TipoEstadisticaCriterioVO());
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+        final List<TipoEstadisticaVO> tpesList = tpesBO.selectList(new TipoEstadisticaCriterioVO());
 
-            for (final TipoEstadisticaVO tpesVO : tpesList) {
-                TIPO_ESTADISTICA_MAP.put(tpesVO.getId(), tpesVO);
-            }
-
-            EntidadProxy.loadDependencies(TIPO_ESTADISTICA_MAP);
-
-            LABEL_VALUE_LIST.addAll(tpesBO.selectLabelValues());
-
-            LOG.info("Carga de tipos de estadistica OK");
+        for (final TipoEstadisticaVO tpesVO : tpesList) {
+            TIPO_ESTADISTICA_MAP.put(tpesVO.getId(), tpesVO);
         }
+
+        EntidadProxy.loadDependencies(TIPO_ESTADISTICA_MAP);
+
+        LABEL_VALUE_LIST.addAll(tpesBO.selectLabelValues());
+
+        LOG.info("Carga de tipos de estadistica OK");
     }
 
 }
