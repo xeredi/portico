@@ -113,6 +113,9 @@ public final class ServicioImporterBO {
                     configuration.getString("db.migration.dataSource.username"),
                     configuration.getString("db.migration.dataSource.password"));
 
+            entidadesList.clear();
+            entidadesSqlMap.clear();
+
             parseXml(entidadesList, entidadesSqlMap);
 
             entiMap = new HashMap<>();
@@ -148,7 +151,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-    DuplicateInstanceException {
+            DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();

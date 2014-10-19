@@ -16,10 +16,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -99,15 +99,15 @@ public final class ParametroPdfTest {
                     }
                 }
 
-                final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
+                final Map<String, I18nVO> i18nMap = new HashMap<>();
 
                 if (tpprVO.getI18n()) {
-                    p18nMap.putAll(prmtBO.selectI18nMap(prmtVO.getPrvr().getId()));
+                    i18nMap.putAll(prmtBO.selectI18nMap(prmtVO.getPrvr().getId()));
                 }
 
                 try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprVO.getId() + "_"
                         + prmtVO.getId() + ".pdf");) {
-                    prmtPdf.imprimir(prmtVO, tpprVO, entiHijasMap, sprmMap, p18nMap, stream);
+                    prmtPdf.imprimir(prmtVO, tpprVO, entiHijasMap, sprmMap, i18nMap, stream);
                 }
             }
         }

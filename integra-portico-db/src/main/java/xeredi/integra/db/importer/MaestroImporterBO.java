@@ -29,10 +29,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
-import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
@@ -248,31 +249,32 @@ public final class MaestroImporterBO {
                     }
                 }
 
-                final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
+                final Map<String, I18nVO> i18nMap = new HashMap<>();
 
                 if (tpprVO.getI18n()) {
-                    final ParametroI18nVO i18nVO = new ParametroI18nVO();
+                    final I18nVO i18nVO = new I18nVO();
                     final String texto = rs.getString(i++);
 
-                    i18nVO.setIdioma(idioma);
-                    i18nVO.setTexto(texto);
+                    i18nVO.setPrefix(I18nPrefix.prvr);
+                    i18nVO.setLanguage(idioma);
+                    i18nVO.setText(texto);
 
                     if (rs.wasNull()) {
                         LOG.warn("Texto i18n NULO para el parametro: " + prmtVO.getParametro() + " del maestro: "
                                 + tpprVO.getNombre());
 
-                        i18nVO.setTexto("Texto Generico");
+                        i18nVO.setText("Texto Generico");
 
                         // throw new Error("Texto i18n NULO para el parametro: "
                         // + prmtVO.getParametro() + " del maestro: "
                         // + tpprVO.getNombre());
                     }
 
-                    p18nMap.put(idioma, i18nVO);
+                    i18nMap.put(idioma, i18nVO);
                 }
 
                 try {
-                    prmtBO.insert(prmtVO, tpprVO, p18nMap);
+                    prmtBO.insert(prmtVO, tpprVO, i18nMap);
 
                     tpprPrmtMap.get(prmtVO.getEntiId()).put(prmtVO.getParametro(), prmtVO.getId());
                 } catch (final OverlapException ex) {

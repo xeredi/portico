@@ -82,7 +82,7 @@ public final class ParametroXls extends BaseXls {
             setCellValue(row, j++, prmtVO.getParametro());
 
             if (tpprVO.getI18n()) {
-                setCellValue(row, j++, prmtVO.getI18n().getTexto());
+                setCellValue(row, j++, prmtVO.getI18n().getText());
             }
 
             setCellValue(row, j++, prmtVO.getPrvr().getFini());

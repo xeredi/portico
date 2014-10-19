@@ -16,8 +16,8 @@ import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -63,7 +63,7 @@ public final class ParametroPdf extends BasePdf {
      */
     public void imprimir(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
             final Map<Long, TipoSubparametroVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
-            final Map<String, ParametroI18nVO> p18nMap, final OutputStream stream) throws DRException {
+            final Map<String, I18nVO> i18nMap, final OutputStream stream) throws DRException {
         Preconditions.checkNotNull(prmtVO);
         Preconditions.checkNotNull(tpprVO);
 
@@ -87,10 +87,10 @@ public final class ParametroPdf extends BasePdf {
         listCells.add(rowCells);
 
         if (tpprVO.getI18n()) {
-            for (final ParametroI18nVO p18nVO : p18nMap.values()) {
+            for (final I18nVO i18nVO : i18nMap.values()) {
                 rowCells = new ArrayList<>();
 
-                rowCells.add(new PdfCell(p18nVO.getIdioma(), p18nVO.getTexto(), 10, TipoElemento.TX));
+                rowCells.add(new PdfCell(i18nVO.getLanguage(), i18nVO.getText(), 10, TipoElemento.TX));
                 listCells.add(rowCells);
             }
         }

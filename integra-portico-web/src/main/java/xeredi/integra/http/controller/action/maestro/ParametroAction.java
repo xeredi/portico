@@ -13,9 +13,9 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -37,7 +37,7 @@ public final class ParametroAction extends ItemAction {
     private ParametroVO item;
 
     /** The p18n map. */
-    private Map<String, ParametroI18nVO> p18nMap;
+    private Map<String, I18nVO> i18nMap;
 
     /**
      * Instantiates a new parametro action.
@@ -66,7 +66,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
-        p18nMap = new HashMap<>();
+        i18nMap = new HashMap<>();
         item.setFref(Calendar.getInstance().getTime());
 
         final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
@@ -104,7 +104,7 @@ public final class ParametroAction extends ItemAction {
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
-                p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+                i18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
 
             loadLabelValuesMap(enti);
@@ -143,7 +143,7 @@ public final class ParametroAction extends ItemAction {
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
-                p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+                i18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
 
             loadLabelValuesMap(enti);
@@ -191,12 +191,12 @@ public final class ParametroAction extends ItemAction {
 
         if (enti.getI18n()) {
             for (final String idioma : getAvailableLanguages()) {
-                final ParametroI18nVO i18nVO = p18nMap.get(idioma);
+                final I18nVO i18nVO = i18nMap.get(idioma);
 
-                if (i18nVO == null || i18nVO.getTexto() == null || i18nVO.getTexto().isEmpty()) {
+                if (i18nVO == null || GenericValidator.isBlankOrNull(i18nVO.getText())) {
                     addActionError(getText(ErrorCode.E00002.name(), new String[] { idioma }));
                 } else {
-                    i18nVO.setIdioma(idioma);
+                    i18nVO.setLanguage(idioma);
                 }
             }
         }
@@ -212,15 +212,15 @@ public final class ParametroAction extends ItemAction {
         try {
             switch (accion) {
             case create:
-                prmtBO.insert(item, enti, p18nMap);
+                prmtBO.insert(item, enti, i18nMap);
 
                 break;
             case edit:
-                prmtBO.update(item, enti, p18nMap);
+                prmtBO.update(item, enti, i18nMap);
 
                 break;
             case duplicate:
-                prmtBO.duplicate(item, enti, p18nMap);
+                prmtBO.duplicate(item, enti, i18nMap);
 
                 break;
 
@@ -291,7 +291,7 @@ public final class ParametroAction extends ItemAction {
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
-                p18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+                i18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
             }
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(prmtCriterioVO) }));
@@ -329,21 +329,21 @@ public final class ParametroAction extends ItemAction {
     }
 
     /**
-     * Gets the p18n map.
+     * Gets the i18n map.
      *
-     * @return the p18n map
+     * @return the i18n map
      */
-    public Map<String, ParametroI18nVO> getP18nMap() {
-        return p18nMap;
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
     }
 
     /**
-     * Sets the p18n map.
+     * Sets the i18n map.
      *
      * @param value
      *            the value
      */
-    public void setP18nMap(final Map<String, ParametroI18nVO> value) {
-        p18nMap = value;
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 }

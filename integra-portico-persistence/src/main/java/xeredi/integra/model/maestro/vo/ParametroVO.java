@@ -3,6 +3,7 @@ package xeredi.integra.model.maestro.vo;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 
 // TODO: Auto-generated Javadoc
@@ -18,7 +19,7 @@ public final class ParametroVO extends ItemVO {
     private ParametroVersionVO prvr;
 
     /** Datos de i18n del parametro. */
-    private ParametroI18nVO i18n;
+    private I18nVO i18n;
 
     /**
      * Instantiates a new parametro vo.
@@ -27,7 +28,7 @@ public final class ParametroVO extends ItemVO {
         super();
 
         prvr = new ParametroVersionVO();
-        i18n = new ParametroI18nVO();
+        i18n = new I18nVO();
     }
 
     /**
@@ -50,8 +51,8 @@ public final class ParametroVO extends ItemVO {
             buffer.append(parametro);
         }
 
-        if (i18n != null && i18n.getTexto() != null) {
-            buffer.append(" - ").append(i18n.getTexto());
+        if (i18n != null && i18n.getText() != null) {
+            buffer.append(" - ").append(i18n.getText());
         }
 
         return buffer;
@@ -106,7 +107,7 @@ public final class ParametroVO extends ItemVO {
      *
      * @return the i18n
      */
-    public ParametroI18nVO getI18n() {
+    public I18nVO getI18n() {
         return i18n;
     }
 
@@ -116,7 +117,7 @@ public final class ParametroVO extends ItemVO {
      * @param value
      *            the new i18n
      */
-    public void setI18n(final ParametroI18nVO value) {
+    public void setI18n(final I18nVO value) {
         i18n = value;
     }
 

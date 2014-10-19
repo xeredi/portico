@@ -139,6 +139,8 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
     $scope.itemCriterio.pepr.autpId = $routeParams.autpId;
 
     function search(itemCriterio, page) {
+        $scope.loading = true;
+
         $http.post("estadistica/estd-list.action", {
             itemCriterio : itemCriterio,
             page : page,
@@ -158,6 +160,8 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
 
                 $location.search(map).replace();
             }
+
+            $scope.loading = false;
         });
     }
 

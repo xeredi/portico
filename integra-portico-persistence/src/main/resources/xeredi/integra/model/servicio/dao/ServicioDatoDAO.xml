@@ -19,8 +19,8 @@
                 <result column="prvr_pk" property="id" />
             </association>
 
-            <association property="i18n" javaType="ParametroI18nVO">
-                <result column="p18n_texto" property="texto" />
+            <association property="i18n" javaType="I18nVO">
+                <result column="p18n_texto" property="text" />
             </association>
         </association>
 
@@ -44,17 +44,18 @@
                 CASE
                     WHEN tppr_es_i18n = 1
                     THEN (
-                        SELECT p18n_texto
-                        FROM tbl_parametro_i18n_p18n
+                        SELECT i18n_text
+                        FROM tbl_i18n_i18n
                         WHERE
-                            p18n_prvr_pk = ANY (
+                            i18n_pref = 'prvr'
+                            AND i18n_ext_pk = (
                                 SELECT prvr_pk
                                 FROM tbl_parametro_version_prvr
                                 WHERE
                                     prvr_prmt_pk = srdt_prmt_pk
                                     AND srdt_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srdt_fref)
                             )
-                            AND p18n_idioma = 'es_ES'
+                            AND i18n_lang = #{idioma}
                     )
 
                     WHEN tppr_tpdt_pk IS NOT NULL

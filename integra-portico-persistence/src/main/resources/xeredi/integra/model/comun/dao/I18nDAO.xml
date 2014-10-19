@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.comun.dao.I18nDAO">
+    <resultMap type="I18nVO" id="ResultMap">
+        <result column="i18n_pref" property="prefix" />
+        <result column="i18n_ext_pk" property="externalId" />
+        <result column="i18n_lang" property="language" />
+        <result column="i18n_text" property="text" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        i18n_pref, i18n_ext_pk, i18n_lang, i18n_text
+    FROM tbl_i18n_i18n
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="prefix != null">
+                AND i18n_pref = #{prefix}
+            </if>
+            <if test="prefixSet != null">
+                AND i18n_pref IN
+                <foreach collection="prefixSet" item="item" open="(" close=")" separator=",">#{item}</foreach>
+            </if>
+            <if test="externalId != null">
+                AND i18n_ext_pk = #{externalId}
+            </if>
+            <if test="language != null">
+                AND i18n_lang = #{language}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectList" parameterType="I18nCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
+    </select>
+
+    <insert id="insert" parameterType="I18nVO">
+    <![CDATA[
+        INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text)
+        VALUES (#{prefix}, #{externalId}, #{language}, #{text})
+    ]]>
+    </insert>
+
+    <update id="update" parameterType="I18nVO">
+    <![CDATA[
+        UPDATE tbl_i18n_i18n SET
+            i18n_text = #{text}
+        WHERE
+            i18n_pref = #{prefix}
+            AND i18n_ext_pk = #{externalId}
+            AND i18n_lang = #{language}
+    ]]>
+    </update>
+
+    <delete id="deleteList" parameterType="I18nCriterioVO">
+        DELETE FROM tbl_i18n_i18n
+        <include refid="SelectWhere" />
+    </delete>
+</mapper>

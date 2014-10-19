@@ -75,6 +75,8 @@ module.controller("srvcGridController",
             $scope.itemCriterio.entiId = $routeParams.entiId;
 
             function search(itemCriterio, page) {
+                $scope.loading = true;
+
                 $http.post("servicio/srvc-list.action", {
                     itemCriterio : itemCriterio,
                     page : page,
@@ -94,6 +96,8 @@ module.controller("srvcGridController",
 
                         $location.search(map).replace();
                     }
+
+                    $scope.loading = false;
                 });
             }
 
@@ -516,6 +520,8 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
     $scope.itemCriterio.entiId = $routeParams.entiId;
 
     function search(itemCriterio, page) {
+        $scope.loading = true;
+
         $http.post("servicio/ssrv-list.action", {
             itemCriterio : itemCriterio,
             page : page,
@@ -535,6 +541,8 @@ module.controller("ssrvGridController", function($scope, $http, $location, $rout
 
                 $location.search(map).replace();
             }
+
+            $scope.loading = false;
         });
     }
 

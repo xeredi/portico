@@ -16,11 +16,11 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -106,16 +106,16 @@ public final class ParametroPdfAction extends BaseAction {
             }
         }
 
-        final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
+        final Map<String, I18nVO> i18nMap = new HashMap<>();
 
         if (enti.getI18n()) {
-            p18nMap.putAll(prmtBO.selectI18nMap(item.getPrvr().getId()));
+            i18nMap.putAll(prmtBO.selectI18nMap(item.getPrvr().getId()));
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             final ParametroPdf prmtPdf = new ParametroPdf(getLocale());
 
-            prmtPdf.imprimir(item, enti, entiHijasMap, itemHijosMap, p18nMap, baos);
+            prmtPdf.imprimir(item, enti, entiHijasMap, itemHijosMap, i18nMap, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
         }

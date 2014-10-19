@@ -16,15 +16,17 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.dao.I18nDAO;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.I18nCriterioVO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.dao.ParametroDAO;
 import xeredi.integra.model.maestro.dao.ParametroDatoDAO;
-import xeredi.integra.model.maestro.dao.ParametroI18nDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
-import xeredi.integra.model.maestro.vo.ParametroI18nVO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
@@ -53,7 +55,7 @@ public class ParametroBO {
     ParametroDatoDAO prdtDAO;
 
     /** The i18n dao. */
-    ParametroI18nDAO p18nDAO;
+    I18nDAO i18nDAO;
 
     /** The sprm dao. */
     SubparametroDAO sprmDAO;
@@ -73,8 +75,8 @@ public class ParametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public final void insert(final ParametroVO prmt, final TipoParametroVO tpprVO,
-            final Map<String, ParametroI18nVO> i18nMap) throws OverlapException {
+    public final void insert(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
+            throws OverlapException {
         Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(prmt.getParametro());
         Preconditions.checkNotNull(prmt.getPrvr());
@@ -111,7 +113,7 @@ public class ParametroBO {
 
         prmtDAO = session.getMapper(ParametroDAO.class);
         prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        p18nDAO = session.getMapper(ParametroI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
 
         try {
             final IgBO igBO = new IgBO();
@@ -140,9 +142,10 @@ public class ParametroBO {
             }
 
             if (tpprVO.getI18n()) {
-                for (final ParametroI18nVO i18nVO : i18nMap.values()) {
-                    i18nVO.setPrvrId(prmt.getPrvr().getId());
-                    p18nDAO.insert(i18nVO);
+                for (final I18nVO i18nVO : i18nMap.values()) {
+                    i18nVO.setPrefix(I18nPrefix.prvr);
+                    i18nVO.setExternalId(prmt.getPrvr().getId());
+                    i18nDAO.insert(i18nVO);
                 }
             }
 
@@ -166,8 +169,8 @@ public class ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void duplicate(final ParametroVO prmt, final TipoParametroVO tpprVO,
-            final Map<String, ParametroI18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
+    public void duplicate(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException {
         // TODO Implementar
         Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(prmt.getId());
@@ -209,7 +212,7 @@ public class ParametroBO {
 
         prmtDAO = session.getMapper(ParametroDAO.class);
         prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        p18nDAO = session.getMapper(ParametroI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
         sprmDAO = session.getMapper(SubparametroDAO.class);
         spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
@@ -253,10 +256,11 @@ public class ParametroBO {
             }
 
             if (tpprVO.getI18n()) {
-                for (final ParametroI18nVO p18nVO : i18nMap.values()) {
-                    p18nVO.setPrvrId(prmt.getPrvr().getId());
+                for (final I18nVO i18nVO : i18nMap.values()) {
+                    i18nVO.setPrefix(I18nPrefix.prvr);
+                    i18nVO.setExternalId(prmt.getPrvr().getId());
 
-                    p18nDAO.insert(p18nVO);
+                    i18nDAO.insert(i18nVO);
                 }
             }
 
@@ -355,8 +359,8 @@ public class ParametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final ParametroVO prmt, final TipoParametroVO tpprVO,
-            final Map<String, ParametroI18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
+    public final void update(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(tpprVO);
         Preconditions.checkNotNull(prmt.getPrvr());
@@ -395,7 +399,7 @@ public class ParametroBO {
 
         prmtDAO = session.getMapper(ParametroDAO.class);
         prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        p18nDAO = session.getMapper(ParametroI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
 
         try {
             if (prmtDAO.existsOverlap(prmt)) {
@@ -416,9 +420,10 @@ public class ParametroBO {
             }
 
             if (i18nMap != null) {
-                for (final ParametroI18nVO i18nVO : i18nMap.values()) {
-                    i18nVO.setPrvrId(prmt.getPrvr().getId());
-                    p18nDAO.update(i18nVO);
+                for (final I18nVO i18nVO : i18nMap.values()) {
+                    i18nVO.setPrefix(I18nPrefix.prvr);
+                    i18nVO.setExternalId(prmt.getPrvr().getId());
+                    i18nDAO.update(i18nVO);
                 }
             }
 
@@ -445,11 +450,17 @@ public class ParametroBO {
 
         prmtDAO = session.getMapper(ParametroDAO.class);
         prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        p18nDAO = session.getMapper(ParametroI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
 
         try {
             prdtDAO.deleteVersion(prmt);
-            p18nDAO.deleteVersion(prmt);
+
+            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
+
+            i18nCriterioVO.setPrefix(I18nPrefix.prvr);
+            i18nCriterioVO.setExternalId(prmt.getPrvr().getId());
+
+            i18nDAO.deleteList(i18nCriterioVO);
 
             final int updated = prmtDAO.deleteVersion(prmt);
 
@@ -845,27 +856,26 @@ public class ParametroBO {
      *            the prvr id
      * @return the map
      */
-    public final Map<String, ParametroI18nVO> selectI18nMap(final Long prvrId) {
+    public final Map<String, I18nVO> selectI18nMap(final Long prvrId) {
         Preconditions.checkNotNull(prvrId);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
-        p18nDAO = session.getMapper(ParametroI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
 
         try {
-            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-            final Set<Long> prvrIds = new HashSet<>();
+            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
 
-            prvrIds.add(prvrId);
-            prmtCriterioVO.setPrvrIds(prvrIds);
+            i18nCriterioVO.setPrefix(I18nPrefix.prvr);
+            i18nCriterioVO.setExternalId(prvrId);
 
-            final Map<String, ParametroI18nVO> p18nMap = new HashMap<>();
+            final Map<String, I18nVO> i18nMap = new HashMap<>();
 
-            for (final ParametroI18nVO p18nVO : p18nDAO.selectList(prmtCriterioVO)) {
-                p18nMap.put(p18nVO.getIdioma(), p18nVO);
+            for (final I18nVO i18nVO : i18nDAO.selectList(i18nCriterioVO)) {
+                i18nMap.put(i18nVO.getLanguage(), i18nVO);
             }
 
-            return p18nMap;
+            return i18nMap;
         } finally {
             session.close();
         }

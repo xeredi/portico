@@ -68,6 +68,8 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
     $scope.itemCriterio.entiId = $routeParams.entiId;
 
     function search(itemCriterio, page) {
+        $scope.loading = true;
+
         $http.post("maestro/prmt-list.action", {
             itemCriterio : itemCriterio,
             page : page,
@@ -87,6 +89,8 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
 
                 $location.search(map).replace();
             }
+
+            $scope.loading = false;
         });
     }
 
@@ -179,7 +183,7 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
                     $http.get("maestro/prmt-detail.action?item.id=" + itemId + "&item.fref=" + fechaVigencia).success(
                             function(data) {
                                 $scope.item = data.item;
-                                $scope.p18nMap = data.p18nMap;
+                                $scope.i18nMap = data.i18nMap;
                                 $scope.fechaVigencia = data.fechaVigencia;
                             });
 
@@ -253,7 +257,7 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
 
         $http.post(url, {
             item : $scope.item,
-            p18nMap : $scope.p18nMap,
+            i18nMap : $scope.i18nMap,
             accion : $scope.accion
         }).success(
                 function(data) {
@@ -285,7 +289,7 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
 
         $http.get(url).success(function(data) {
             $scope.item = data.item;
-            $scope.p18nMap = data.p18nMap;
+            $scope.i18nMap = data.i18nMap;
             $scope.labelValuesMap = data.labelValuesMap;
             $scope.accion = data.accion;
         });
@@ -301,7 +305,7 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
 
         $http.post(url, {
             item : $scope.item,
-            p18nMap : $scope.p18nMap,
+            i18nMap : $scope.i18nMap,
             accion : $scope.accion
         }).success(function(data) {
             $scope.actionErrors = data.actionErrors;
@@ -333,7 +337,7 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
 
         $http.get(url).success(function(data) {
             $scope.item = data.item;
-            $scope.p18nMap = data.p18nMap;
+            $scope.i18nMap = data.i18nMap;
             $scope.labelValuesMap = data.labelValuesMap;
             $scope.accion = data.accion;
         });
@@ -349,7 +353,7 @@ module.controller("prmtDuplicateController", function($scope, $http, $location, 
 
         $http.post(url, {
             item : $scope.item,
-            p18nMap : $scope.p18nMap,
+            i18nMap : $scope.i18nMap,
             accion : $scope.accion
         }).success(
                 function(data) {
@@ -382,7 +386,7 @@ module.controller("prmtDuplicateController", function($scope, $http, $location, 
 
         $http.get(url).success(function(data) {
             $scope.item = data.item;
-            $scope.p18nMap = data.p18nMap;
+            $scope.i18nMap = data.i18nMap;
             $scope.labelValuesMap = data.labelValuesMap;
             $scope.accion = data.accion;
         });
