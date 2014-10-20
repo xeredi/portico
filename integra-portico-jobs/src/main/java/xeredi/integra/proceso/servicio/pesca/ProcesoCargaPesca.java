@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
@@ -26,7 +27,6 @@ import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.proceso.ProcesoTemplate;
@@ -81,7 +81,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
-        final Configuration configuration = ConfigurationUtil.getConfiguration();
+        final Configuration configuration = ConfigurationProxy.getConfiguration();
 
         PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
         PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);
@@ -198,25 +198,25 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
             manifiestoPescaVO.setEstado(ESTADO_MANIFIESTO);
 
             manifiestoPescaVO.getItdtMap().get(TipoDato.BUQUE_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_Buque, line, i, Entidad.BUQUE_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_Buque, line, i, Entidad.BUQUE_PESCA));
             manifiestoPescaVO.getItdtMap().get(TipoDato.ORGA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_Vendedor, line, i, Entidad.ORGANIZACION));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_Vendedor, line, i, Entidad.ORGANIZACION));
             manifiestoPescaVO.getItdtMap().get(TipoDato.TIPO_OP_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_TipoOperacion, line, i, Entidad.TIPO_OPERACION_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_TipoOperacion, line, i, Entidad.TIPO_OPERACION_PESCA));
             manifiestoPescaVO.getItdtMap().get(TipoDato.ORGA_2.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_ClienteAdicional, line, i, Entidad.ORGANIZACION));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_ClienteAdicional, line, i, Entidad.ORGANIZACION));
             manifiestoPescaVO.getItdtMap().get(TipoDato.TIPO_MAN_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_Tipo, line, i, Entidad.TIPO_MANIFIESTO_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_Tipo, line, i, Entidad.TIPO_MANIFIESTO_PESCA));
             manifiestoPescaVO.getItdtMap().get(TipoDato.SUBT_MAN_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_Subtipo, line, i, Entidad.SUBTIPO_MANIFIESTO_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_Subtipo, line, i, Entidad.SUBTIPO_MANIFIESTO_PESCA));
             manifiestoPescaVO.getItdtMap().get(TipoDato.ARTE_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_Arte, line, i, Entidad.ARTE_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_Arte, line, i, Entidad.ARTE_PESCA));
             manifiestoPescaVO.getItdtMap().get(TipoDato.ZONA_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.MAN_Zona, line, i, Entidad.ZONA_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.MAN_Zona, line, i, Entidad.ZONA_PESCA));
             manifiestoPescaVO.getItdtMap().get(TipoDato.COD_EXEN.getId())
-                    .setCadena(getTokenCR(PescaKeyword.MAN_CodExencion, line, i, TipoDato.COD_EXEN));
+            .setCadena(getTokenCR(PescaKeyword.MAN_CodExencion, line, i, TipoDato.COD_EXEN));
             manifiestoPescaVO.getItdtMap().get(TipoDato.INDIC_VENTA.getId())
-                    .setCadena(getTokenCR(PescaKeyword.MAN_IndicadorVenta, line, i, TipoDato.INDIC_VENTA));
+            .setCadena(getTokenCR(PescaKeyword.MAN_IndicadorVenta, line, i, TipoDato.INDIC_VENTA));
             manifiestoPescaVO.getItdtMap().get(TipoDato.CADENA_02.getId()).setCadena(filename);
             manifiestoPescaVO.getItdtMap().get(TipoDato.TIPO_IVA.getId()).setPrmt(tipoIvaVO);
             manifiestoPescaVO.getItdtMap().get(TipoDato.BOOLEANO_01.getId()).setCantidadEntera(SUJ_PAS_SUST ? 1L : 0L);
@@ -227,17 +227,17 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
             importeTotal += getTokenDouble(PescaKeyword.PAR_Importe, line, i);
 
             ssrv.getItdtMap().get(TipoDato.COMPRADOR_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.PAR_Comprador, line, i, Entidad.COMPRADOR_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.PAR_Comprador, line, i, Entidad.COMPRADOR_PESCA));
             ssrv.getItdtMap().get(TipoDato.ESPECIE_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.PAR_Especie, line, i, Entidad.ESPECIE_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.PAR_Especie, line, i, Entidad.ESPECIE_PESCA));
             ssrv.getItdtMap().get(TipoDato.PRESENT_PESCA.getId())
-                    .setPrmt(getTokenMaestro(PescaKeyword.PAR_Presentacion, line, i, Entidad.PRESENTACION_PESCA));
+            .setPrmt(getTokenMaestro(PescaKeyword.PAR_Presentacion, line, i, Entidad.PRESENTACION_PESCA));
             ssrv.getItdtMap().get(TipoDato.DECIMAL_01.getId())
-                    .setCantidadDecimal(getTokenDouble(PescaKeyword.PAR_Cajas, line, i));
+            .setCantidadDecimal(getTokenDouble(PescaKeyword.PAR_Cajas, line, i));
             ssrv.getItdtMap().get(TipoDato.DECIMAL_02.getId())
-                    .setCantidadDecimal(getTokenDouble(PescaKeyword.PAR_Peso, line, i));
+            .setCantidadDecimal(getTokenDouble(PescaKeyword.PAR_Peso, line, i));
             ssrv.getItdtMap().get(TipoDato.DECIMAL_04.getId())
-                    .setCantidadDecimal(getTokenDouble(PescaKeyword.PAR_Importe, line, i));
+            .setCantidadDecimal(getTokenDouble(PescaKeyword.PAR_Importe, line, i));
 
             ssrv.setNumero(i + 1);
             partidaPescaList.add(ssrv);

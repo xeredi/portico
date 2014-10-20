@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -43,7 +44,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.util.exception.DuplicateInstanceException;
 
@@ -119,7 +119,7 @@ public final class MaestroImporterBO {
         LOG.info("Importacion de maestros");
 
         try {
-            final Configuration configuration = ConfigurationUtil.getConfiguration();
+            final Configuration configuration = ConfigurationProxy.getConfiguration();
 
             Class.forName(configuration.getString("db.migration.dataSource.driver"));
 

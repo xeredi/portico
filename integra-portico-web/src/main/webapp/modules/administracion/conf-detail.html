@@ -1,0 +1,33 @@
+<alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+<ul>
+    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+</ul>
+</alert>
+
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/administracion/conf/edit/{{conf.key}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
+    </div>
+</div>
+
+<fieldset>
+    <div class="row-fluid">
+        <div class="col-sm-3 col-md-2 col-lg-1 form-group">
+            <label translate>conf_valueType</label>
+            <p class="form-control-static" ng-bind="conf.valueType"></p>
+        </div>
+        <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+            <label translate>conf_key</label>
+            <p class="form-control-static" ng-bind="conf.key"></p>
+        </div>
+        <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+            <label translate>conf_defaultValue</label>
+            <p class="form-control-static" ng-bind="conf.defaultValue"></p>
+        </div>
+        <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+            <label translate>conf_value</label>
+            <p class="form-control-static" ng-bind="conf.value"></p>
+        </div>
+    </div>
+</fieldset>

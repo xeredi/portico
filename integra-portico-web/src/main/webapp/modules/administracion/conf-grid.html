@@ -1,0 +1,34 @@
+
+<form>
+    <fieldset>
+        <div class="row-fluid">
+            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                <input type="text" ng-model="confSearch" name="confSearch" maxlength="50" class="form-control input-sm" />
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<div class="table-responsive">
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap" translate>conf_key</th>
+                <th class="codigo" nowrap="nowrap" translate>conf_valueType</th>
+                <th class="codigo" nowrap="nowrap" translate>conf_defaultValue</th>
+                <th class="codigo" nowrap="nowrap" translate>conf_value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in confList track by $index" ng-show="([item] | filter:confSearch).length > 0">
+                <td><a ng-href="#/administracion/conf/detail/{{item.key}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" ng-bind="item.key"></td>
+                <td nowrap="nowrap" ng-bind="item.valueType"></td>
+                <td nowrap="nowrap" ng-bind="item.defaultValue"></td>
+                <td nowrap="nowrap" ng-bind="item.value"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

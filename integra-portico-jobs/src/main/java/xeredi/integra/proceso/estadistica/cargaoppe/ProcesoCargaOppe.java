@@ -16,6 +16,7 @@ import java.util.Map;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileKeyword;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileType;
@@ -30,7 +31,6 @@ import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
-import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.proceso.ProcesoTemplate;
@@ -100,7 +100,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
-        final Configuration configuration = ConfigurationUtil.getConfiguration();
+        final Configuration configuration = ConfigurationProxy.getConfiguration();
 
         PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
         PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);

@@ -74,7 +74,8 @@
 
 <div class="table-responsive">
     <span class="label label-default" translate="pagination_results"
-        translate-value-count="{{itemHijosMap[entiHija.id].count | number:0}}"></span>
+        translate-value-count="{{itemHijosMap[entiHija.id].count | number:0}}"></span><i ng-show="loading"
+        class="glyphicon glyphicon-time"></i>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>

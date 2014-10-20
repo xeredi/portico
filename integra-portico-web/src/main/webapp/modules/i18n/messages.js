@@ -76,6 +76,12 @@ module.config(function($translateProvider) {
         boton_valoraciones : "Valoraciones",
         boton_recargar : "Recargar",
 
+        conf_grid : "Configuración",
+        conf_key : "Parámetro",
+        conf_valueType : "Tipo",
+        conf_value : "Valor",
+        conf_defaultValue : "Valor por Defecto",
+
         menu_gestion : "Gesti\u00f3n",
         menu_administracion : "Administraci\u00f3n",
         menu_configuracion : "Configuraci\u00f3n",
@@ -95,6 +101,7 @@ module.config(function($translateProvider) {
         menu_fctrs : "Facturas",
         menu_crgos : "Cargos",
         menu_aspcs : "Aspectos",
+        menu_conf_grid : "Configuración",
 
         filter_title : "FILTRO",
         limit : "M\u00e1x. Resultados",

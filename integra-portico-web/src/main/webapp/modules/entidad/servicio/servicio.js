@@ -205,6 +205,8 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
     }
 
     function findSublist(subentiId, page) {
+        $scope.loading = true;
+
         var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + subentiId + "&page=" + page
                 + "&itemCriterio.srvc.id=" + srvcId;
 
@@ -216,6 +218,8 @@ module.controller("srvcDetailController", function($scope, $http, $location, $ro
                 $scope.pageMap[data.itemCriterio.entiId] = data.itemList.page;
                 $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
             }
+
+            $scope.loading = false;
         });
     }
 

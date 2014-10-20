@@ -1,0 +1,40 @@
+<form role="form">
+    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="conf.key" />
+
+    <fieldset>
+        <div class="row-fluid">
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group">
+                <label translate>conf_valueType</label>
+                <p class="form-control-static" ng-bind="conf.valueType"></p>
+            </div>
+            <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+                <label translate>conf_key</label>
+                <p class="form-control-static" ng-bind="conf.key"></p>
+            </div>
+            <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+                <label translate>conf_defaultValue</label>
+                <p class="form-control-static" ng-bind="conf.defaultValue"></p>
+            </div>
+            <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+                <label translate>conf_value</label> <input type="text" class="form-control input-sm"
+                    ng-model="conf.value" />
+            </div>
+        </div>
+    </fieldset>
+
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
+
+    <div class="btn-group">
+        <button data-ng-click="save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
+        </button>
+        <button data-ng-click="cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
+        </button>
+    </div>
+</form>
+

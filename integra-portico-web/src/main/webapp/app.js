@@ -1,7 +1,5 @@
 var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "ngRoute", "util", "i18n",
-        'cdrf_i18n', "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso"/*
-                                                                                                     * 'configuracion',
-                                                                                                     */]);
+        'cdrf_i18n', "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ]);
 
 app.config([ "$routeProvider", function($routeProvider) {
     $routeProvider

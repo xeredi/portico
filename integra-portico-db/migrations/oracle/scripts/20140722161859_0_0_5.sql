@@ -35,11 +35,58 @@ INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text)
 SELECT 'cdrf', cdri_cdrf_pk, cdri_idioma, cdri_texto
 FROM tbl_codigo_ref_i18n_cdri\
 
+-- Configuracion
+CREATE TABLE tbl_configuration_conf (
+	conf_key VARCHAR2(250) NOT NULL
+	, conf_value_type VARCHAR2(20) NOT NULL
+	, conf_default_value VARCHAR2(250) NOT NULL
+	, conf_value VARCHAR2(250)
 
+	, CONSTRAINT pk_conf PRIMARY KEY (conf_key)
+)\
 
+CREATE OR REPLACE SYNONYM portico.tbl_configuration_conf FOR tbl_configuration_conf\
 
+GRANT SELECT, UPDATE ON tbl_configuration_conf TO portico\
 
-
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'parametrizacion.app.mode', 'Boolean', 'true')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'estadistica.files.home', 'String', '${files.home}/estadistica')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'estadistica.files.oppe.home', 'String', '${estadistica.files.home}/oppe')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'estadistica.files.oppe.procesado.home', 'String', '${estadistica.files.oppe.home}/procesado')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'estadistica.files.oppe.erroneo.home', 'String', '${estadistica.files.oppe.home}/erroneo')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'servicio.files.home', 'String', '${files.home}/servicio')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'pesca.files.home', 'String', '${servicio.files.home}/pesca')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'pesca.files.entrada.home', 'String', '${pesca.files.home}/entrada')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'pesca.files.procesado.home', 'String', '${pesca.files.home}/procesado')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'pesca.files.erroneo.home', 'String', '${pesca.files.home}/erroneo')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'manifiesto.files.home', 'String', '${servicio.files.home}/manifiesto')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'manifiesto.files.entrada.home', 'String', '${manifiesto.files.home}/entrada')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'manifiesto.files.procesado.home', 'String', '${manifiesto.files.home}/procesado')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'manifiesto.files.erroneo.home', 'String', '${manifiesto.files.home}/erroneo')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'escala.files.home', 'String', '${servicio.files.home}/escala')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'escala.files.entrada.home', 'String', '${escala.files.home}/entrada')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'escala.files.procesado.home', 'String', '${escala.files.home}/procesado')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'escala.files.erroneo.home', 'String', '${escala.files.home}/erroneo')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'files.home', 'String', '/proyectos/deploy/files/portico')\
 
 
 
@@ -54,6 +101,9 @@ FROM tbl_codigo_ref_i18n_cdri\
 
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+-- Configuracion
+DROP TABLE tbl_configuration_conf\
 
 -- Tabla Unica para i18n
 DROP TABLE tbl_i18n_i18n\

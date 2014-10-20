@@ -30,6 +30,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -46,7 +47,6 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.util.exception.DuplicateInstanceException;
 
@@ -105,7 +105,7 @@ public final class ServicioImporterBO {
         try {
             LOG.info("Importacion de servicios");
 
-            final Configuration configuration = ConfigurationUtil.getConfiguration();
+            final Configuration configuration = ConfigurationProxy.getConfiguration();
 
             Class.forName(configuration.getString("db.migration.dataSource.driver"));
 
@@ -151,7 +151,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-            DuplicateInstanceException {
+    DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();

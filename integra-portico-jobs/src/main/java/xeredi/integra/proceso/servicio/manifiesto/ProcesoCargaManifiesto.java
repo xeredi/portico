@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
@@ -22,7 +23,6 @@ import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.ConfigurationUtil;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.proceso.ProcesoTemplate;
@@ -70,7 +70,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
-        final Configuration configuration = ConfigurationUtil.getConfiguration();
+        final Configuration configuration = ConfigurationProxy.getConfiguration();
 
         PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
         PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);
@@ -135,7 +135,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
             if (!ManifiestoSegmento.segmentoValido(segmento, segmentoSiguiente)) {
                 addError(MensajeCodigo.G_006,
                         "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:" + segmento.name()
-                        + ", segmentoSiguiente:" + segmentoSiguiente.name());
+                                + ", segmentoSiguiente:" + segmentoSiguiente.name());
             }
         }
     }
@@ -227,14 +227,14 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 addCodigoMaestro(
                         Entidad.MERCANCIAS_PELIGROSAS,
                         getTokenString(ManifiestoKeyword.DGS_NumeroONU, line, i)
-                        + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
+                                + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
 
                 break;
             case EQD:
                 addCodigoMaestro(
                         Entidad.TIPO_EQUIPAMIENTO,
                         getTokenString(ManifiestoKeyword.EQD_CodigoTipoEquipamiento, line, i)
-                        + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
+                                + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
 
                 break;
             case SEL:
@@ -281,13 +281,13 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 numeroEscala = getTokenInteger(ManifiestoKeyword.IFC_NumeroEscala, line, i);
 
                 manifiestoVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.IFC_NumeroEDI, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.IFC_NumeroEDI, line, i));
                 manifiestoVO
-                .getItdtMap()
-                .get(TipoDato.REC_ADU.getId())
-                .setPrmt(
-                        getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
-                                Entidad.RECINTO_ADUANERO));
+                        .getItdtMap()
+                        .get(TipoDato.REC_ADU.getId())
+                        .setPrmt(
+                                getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
+                                        Entidad.RECINTO_ADUANERO));
 
                 final String tipoManifiestoEDI = getTokenString(ManifiestoKeyword.IFC_TipoManifiesto, line, i);
                 final String tipoManifiesto = getTipoManifiesto(tipoManifiestoEDI);
@@ -299,25 +299,25 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 if ("9".equals(califPais)) {
                     manifiestoVO.getItdtMap().get(TipoDato.PAIS.getId())
-                    .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoPaisENS, line, i, Entidad.PAIS));
+                            .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoPaisENS, line, i, Entidad.PAIS));
                 }
 
                 manifiestoVO
-                .getItdtMap()
-                .get(TipoDato.BOOLEANO_03.getId())
-                .setCantidadEntera(
-                        "SI".equals(getTokenString(ManifiestoKeyword.IFC_RegimenSimplificado, line, i)) ? 1L
-                                : 0L);
+                        .getItdtMap()
+                        .get(TipoDato.BOOLEANO_03.getId())
+                        .setCantidadEntera(
+                                "SI".equals(getTokenString(ManifiestoKeyword.IFC_RegimenSimplificado, line, i)) ? 1L
+                                        : 0L);
 
                 manifiestoVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                .setCantidadEntera(getTokenLong(ManifiestoKeyword.IFC_NumeroTramos, line, i));
+                        .setCantidadEntera(getTokenLong(ManifiestoKeyword.IFC_NumeroTramos, line, i));
 
                 final String califConsignatarioBuque = getTokenString(ManifiestoKeyword.IFC_TipoConsignatarioBuque,
                         line, i);
 
                 if ("CV".equals(califConsignatarioBuque)) {
                     manifiestoVO.getItdtMap().get(TipoDato.ORGA_2.getId())
-                    .setPrmt(getTokenOrganizacion(ManifiestoKeyword.IFC_NIFConsignatarioBuque, line, i));
+                            .setPrmt(getTokenOrganizacion(ManifiestoKeyword.IFC_NIFConsignatarioBuque, line, i));
                 }
 
                 final String califConsignatarioMercancia = getTokenString(
@@ -330,39 +330,39 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 if ("TR".equals(califEstibador)) {
                     manifiestoVO.getItdtMap().get(TipoDato.ORGA.getId())
-                    .setPrmt(getTokenOrganizacion(ManifiestoKeyword.IFC_NIFEstibador, line, i));
+                            .setPrmt(getTokenOrganizacion(ManifiestoKeyword.IFC_NIFEstibador, line, i));
                 }
 
                 manifiestoVO.getItdtMap().get(TipoDato.FECHA_01.getId())
-                .setFecha(getTokenDate(ManifiestoKeyword.IFC_FechaUltimoEnvio, line, i, "ddMMyyHHmm"));
+                        .setFecha(getTokenDate(ManifiestoKeyword.IFC_FechaUltimoEnvio, line, i, "ddMMyyHHmm"));
                 manifiestoVO.getItdtMap().get(TipoDato.CADENA_02.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.IFC_NumeroViaje, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.IFC_NumeroViaje, line, i));
                 manifiestoVO
-                .getItdtMap()
-                .get(TipoDato.BOOLEANO_02.getId())
-                .setCantidadEntera(
-                        "ZRE".equals(getTokenString(ManifiestoKeyword.IFC_CalificadorServicioRegular, line, i)) ? 1L
-                                : 0L);
+                        .getItdtMap()
+                        .get(TipoDato.BOOLEANO_02.getId())
+                        .setCantidadEntera(
+                                "ZRE".equals(getTokenString(ManifiestoKeyword.IFC_CalificadorServicioRegular, line, i)) ? 1L
+                                        : 0L);
                 manifiestoVO.getItdtMap().get(TipoDato.CADENA_03.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.IFC_TransitoComunitarioSimplificado, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.IFC_TransitoComunitarioSimplificado, line, i));
                 manifiestoVO.getItdtMap().get(TipoDato.ALIN.getId())
-                .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoAlineacion, line, i, Entidad.ALINEACION));
+                        .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoAlineacion, line, i, Entidad.ALINEACION));
                 manifiestoVO.getItdtMap().get(TipoDato.TERMINAL.getId())
-                .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoTerminal, line, i, Entidad.TERMINAL));
+                        .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoTerminal, line, i, Entidad.TERMINAL));
                 manifiestoVO.getItdtMap().get(TipoDato.ACUERDO.getId())
-                .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoAcuerdo, line, i, Entidad.ACUERDO));
+                        .setPrmt(getTokenMaestro(ManifiestoKeyword.IFC_CodigoAcuerdo, line, i, Entidad.ACUERDO));
                 manifiestoVO
-                .getItdtMap()
-                .get(TipoDato.SERV_TRAF.getId())
-                .setPrmt(
-                        getTokenMaestro(ManifiestoKeyword.IFC_CodigoServicio, line, i, Entidad.SERVICIO_TRAFICO));
+                        .getItdtMap()
+                        .get(TipoDato.SERV_TRAF.getId())
+                        .setPrmt(
+                                getTokenMaestro(ManifiestoKeyword.IFC_CodigoServicio, line, i, Entidad.SERVICIO_TRAFICO));
 
                 break;
             case NAD:
                 manifiestoConsignatarioActualVO = new SubservicioVO();
 
                 manifiestoConsignatarioActualVO.getItdtMap().get(TipoDato.ORGA.getId())
-                .setPrmt(getTokenOrganizacion(ManifiestoKeyword.NAD_NIFConsignatarioMercancia, line, i));
+                        .setPrmt(getTokenOrganizacion(ManifiestoKeyword.NAD_NIFConsignatarioMercancia, line, i));
 
                 ssrvList.add(manifiestoConsignatarioActualVO);
 
@@ -373,9 +373,9 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 blActualVO.setNumero(getTokenInteger(ManifiestoKeyword.CNI_NumeroBL, line, i));
 
                 blActualVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.CNI_NombreBL, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.CNI_NombreBL, line, i));
                 blActualVO.getItdtMap().get(TipoDato.TIPO_BL.getId())
-                .setCadena(getTipoBl(getTokenString(ManifiestoKeyword.CNI_TipoBL, line, i)));
+                        .setCadena(getTipoBl(getTokenString(ManifiestoKeyword.CNI_TipoBL, line, i)));
 
                 String calificadorPuerto = null;
 
@@ -390,7 +390,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 setUnlocodeBl(blActualVO, getTokenString(ManifiestoKeyword.CNI_CalificadorPuerto_4, line, i),
                         getTokenMaestro(ManifiestoKeyword.CNI_CodigoUnlocode_4, line, i, Entidad.UNLOCODE));
                 blActualVO.getItdtMap().get(TipoDato.CADENA_02.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.CNI_DeclaracionSumariaTransito, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.CNI_DeclaracionSumariaTransito, line, i));
 
                 final ParametroVO modoTransporteEdiVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoModoTransporteEDI,
                         line, i, Entidad.MODO_TRANSPORTE_EDI);
@@ -398,65 +398,65 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 if (modoTransporteEdiVO != null) {
                     blActualVO.getItdtMap().get(TipoDato.MODO_TRANS_EDI.getId()).setPrmt(modoTransporteEdiVO);
                     blActualVO
-                    .getItdtMap()
-                    .get(TipoDato.TIPO_TRANSPORTE.getId())
-                    .setCadena(
-                            modoTransporteEdiVO.getItdtMap().get(TipoDato.TIPO_TRANSPORTE.getId()).getCadena());
+                            .getItdtMap()
+                            .get(TipoDato.TIPO_TRANSPORTE.getId())
+                            .setCadena(
+                                    modoTransporteEdiVO.getItdtMap().get(TipoDato.TIPO_TRANSPORTE.getId()).getCadena());
                 }
 
                 blActualVO.getItdtMap().get(TipoDato.CADENA_03.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.CNI_BuqueTransportePosterior, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.CNI_BuqueTransportePosterior, line, i));
                 blActualVO.getItdtMap().get(TipoDato.TIPO_DEST.getId())
-                .setCadena(getTokenCR(ManifiestoKeyword.CNI_TipoDestinoBl, line, i, TipoDato.TIPO_DEST));
+                        .setCadena(getTokenCR(ManifiestoKeyword.CNI_TipoDestinoBl, line, i, TipoDato.TIPO_DEST));
 
                 final ParametroVO alineacionBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoAlineacion, line, i,
                         Entidad.ALINEACION);
 
                 blActualVO
-                .getItdtMap()
-                .get(TipoDato.ALIN.getId())
-                .setPrmt(
-                        alineacionBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ALIN.getId()).getPrmt()
-                                : alineacionBlVO);
+                        .getItdtMap()
+                        .get(TipoDato.ALIN.getId())
+                        .setPrmt(
+                                alineacionBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ALIN.getId()).getPrmt()
+                                        : alineacionBlVO);
 
                 final ParametroVO terminalBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoTerminal, line, i,
                         Entidad.TERMINAL);
 
                 blActualVO
-                .getItdtMap()
-                .get(TipoDato.TERMINAL.getId())
-                .setPrmt(
-                        terminalBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.TERMINAL.getId())
-                                .getPrmt() : terminalBlVO);
+                        .getItdtMap()
+                        .get(TipoDato.TERMINAL.getId())
+                        .setPrmt(
+                                terminalBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.TERMINAL.getId())
+                                        .getPrmt() : terminalBlVO);
 
                 final ParametroVO acuerdoBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoAcuerdo, line, i,
                         Entidad.ACUERDO);
 
                 blActualVO
-                .getItdtMap()
-                .get(TipoDato.ACUERDO.getId())
-                .setPrmt(
-                        acuerdoBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ACUERDO.getId()).getPrmt()
-                                : acuerdoBlVO);
+                        .getItdtMap()
+                        .get(TipoDato.ACUERDO.getId())
+                        .setPrmt(
+                                acuerdoBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ACUERDO.getId()).getPrmt()
+                                        : acuerdoBlVO);
 
                 final ParametroVO servicioBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoServicio, line, i,
                         Entidad.SERVICIO_TRAFICO);
 
                 blActualVO
-                .getItdtMap()
-                .get(TipoDato.SERV_TRAF.getId())
-                .setPrmt(
-                        servicioBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.SERV_TRAF.getId())
-                                .getPrmt() : servicioBlVO);
+                        .getItdtMap()
+                        .get(TipoDato.SERV_TRAF.getId())
+                        .setPrmt(
+                                servicioBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.SERV_TRAF.getId())
+                                        .getPrmt() : servicioBlVO);
 
                 estibadorVO = getTokenOrganizacion(ManifiestoKeyword.CNI_NIFEstibador, line, i);
 
                 blActualVO
-                .getItdtMap()
-                .get(TipoDato.ORGA_2.getId())
-                .setPrmt(
-                        estibadorVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ORGA.getId()).getPrmt()
-                                : estibadorVO);
+                        .getItdtMap()
+                        .get(TipoDato.ORGA_2.getId())
+                        .setPrmt(
+                                estibadorVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ORGA.getId()).getPrmt()
+                                        : estibadorVO);
 
                 ssrvList.add(blActualVO);
 
@@ -480,37 +480,37 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 }
 
                 partidaActualVO.getItdtMap().get(TipoDato.TIPO_BULTO.getId())
-                .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoTipoBulto, line, i, Entidad.TIPO_BULTO));
+                        .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoTipoBulto, line, i, Entidad.TIPO_BULTO));
                 partidaActualVO.getItdtMap().get(TipoDato.MERCANCIA.getId())
-                .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoMercancia, line, i, Entidad.MERCANCIA));
+                        .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoMercancia, line, i, Entidad.MERCANCIA));
                 partidaActualVO
-                .getItdtMap()
-                .get(TipoDato.MARCA_VEHIC.getId())
-                .setPrmt(
-                        getTokenMaestro(ManifiestoKeyword.GID_CodigoMarcaVehiculo, line, i,
-                                Entidad.MARCA_VEHICULO));
+                        .getItdtMap()
+                        .get(TipoDato.MARCA_VEHIC.getId())
+                        .setPrmt(
+                                getTokenMaestro(ManifiestoKeyword.GID_CodigoMarcaVehiculo, line, i,
+                                        Entidad.MARCA_VEHICULO));
                 partidaActualVO.getItdtMap().get(TipoDato.ACUERDO.getId())
-                .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoAcuerdo, line, i, Entidad.ACUERDO));
+                        .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoAcuerdo, line, i, Entidad.ACUERDO));
                 partidaActualVO
-                .getItdtMap()
-                .get(TipoDato.INST_ESP.getId())
-                .setPrmt(
-                        getTokenMaestro(ManifiestoKeyword.GID_CodigoInstalacionEspecial, line, i,
-                                Entidad.INSTALACION_ESPECIAL));
+                        .getItdtMap()
+                        .get(TipoDato.INST_ESP.getId())
+                        .setPrmt(
+                                getTokenMaestro(ManifiestoKeyword.GID_CodigoInstalacionEspecial, line, i,
+                                        Entidad.INSTALACION_ESPECIAL));
                 partidaActualVO.getItdtMap().get(TipoDato.TERMINAL.getId())
-                .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoTerminal, line, i, Entidad.TERMINAL));
+                        .setPrmt(getTokenMaestro(ManifiestoKeyword.GID_CodigoTerminal, line, i, Entidad.TERMINAL));
 
                 partidaActualVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.GID_DeclaracionSumariaTransito, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.GID_DeclaracionSumariaTransito, line, i));
 
                 estibadorVO = getTokenOrganizacion(ManifiestoKeyword.GID_NifEstibador, line, i);
 
                 partidaActualVO
-                .getItdtMap()
-                .get(TipoDato.ORGA.getId())
-                .setPrmt(
-                        estibadorVO == null ? blActualVO.getItdtMap().get(TipoDato.ORGA_2.getId()).getPrmt()
-                                : estibadorVO);
+                        .getItdtMap()
+                        .get(TipoDato.ORGA.getId())
+                        .setPrmt(
+                                estibadorVO == null ? blActualVO.getItdtMap().get(TipoDato.ORGA_2.getId()).getPrmt()
+                                        : estibadorVO);
 
                 ssrvList.add(partidaActualVO);
 
@@ -519,13 +519,13 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 partidaImActualVO = new SubservicioVO();
 
                 partidaImActualVO
-                .getItdtMap()
-                .get(TipoDato.INST_MARC.getId())
-                .setPrmt(
-                        getTokenMaestro(ManifiestoKeyword.PCI_CodigoInstruccionMarcaje, line, i,
-                                Entidad.INSTRUCCION_MARCAJE));
+                        .getItdtMap()
+                        .get(TipoDato.INST_MARC.getId())
+                        .setPrmt(
+                                getTokenMaestro(ManifiestoKeyword.PCI_CodigoInstruccionMarcaje, line, i,
+                                        Entidad.INSTRUCCION_MARCAJE));
                 partidaImActualVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.PCI_Marca, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.PCI_Marca, line, i));
 
                 ssrvList.add(partidaImActualVO);
 
@@ -534,9 +534,9 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 partidaDocumentoActualVO = new SubservicioVO();
 
                 partidaDocumentoActualVO
-                .getItdtMap()
-                .get(TipoDato.SIT_ADU.getId())
-                .setCadena(getTokenCR(ManifiestoKeyword.GOR_CodigoSituacionAduanera, line, i, TipoDato.SIT_ADU));
+                        .getItdtMap()
+                        .get(TipoDato.SIT_ADU.getId())
+                        .setCadena(getTokenCR(ManifiestoKeyword.GOR_CodigoSituacionAduanera, line, i, TipoDato.SIT_ADU));
 
                 ssrvList.add(partidaDocumentoActualVO);
 
@@ -551,29 +551,29 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 }
 
                 partidaDocumentoActualVO
-                .getItdtMap()
-                .get(TipoDato.TIPO_DOC_AEAT.getId())
-                .setPrmt(
-                        getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
-                                Entidad.TIPO_DOCUMENTO_AEAT));
+                        .getItdtMap()
+                        .get(TipoDato.TIPO_DOC_AEAT.getId())
+                        .setPrmt(
+                                getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
+                                        Entidad.TIPO_DOCUMENTO_AEAT));
                 partidaDocumentoActualVO.getItdtMap().get(TipoDato.FECHA_01.getId())
-                .setFecha(getTokenDate(ManifiestoKeyword.DOC_FechaEmision, line, i, "ddMMyy"));
+                        .setFecha(getTokenDate(ManifiestoKeyword.DOC_FechaEmision, line, i, "ddMMyy"));
                 partidaDocumentoActualVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.DOC_NumeroDocumento, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.DOC_NumeroDocumento, line, i));
                 partidaDocumentoActualVO.getItdtMap().get(TipoDato.SIT_EMB.getId())
-                .setCadena(getTokenCR(ManifiestoKeyword.DOC_SituacionEmbarque, line, i, TipoDato.SIT_EMB));
+                        .setCadena(getTokenCR(ManifiestoKeyword.DOC_SituacionEmbarque, line, i, TipoDato.SIT_EMB));
 
                 break;
             case SGP:
                 partidaEquipamientoActualVO = new SubservicioVO();
 
                 partidaEquipamientoActualVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                .setCantidadEntera(getTokenLong(ManifiestoKeyword.SGP_NumeroBultos, line, i));
+                        .setCantidadEntera(getTokenLong(ManifiestoKeyword.SGP_NumeroBultos, line, i));
                 // FIXME Chapu para poder relacionar despues el
                 // Partida-Equipamiento con el Equipamiento.
                 // Guardo la matricula en el campo 'cadena'.
                 partidaEquipamientoActualVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.SGP_Matricula, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.SGP_Matricula, line, i));
 
                 ssrvList.add(partidaEquipamientoActualVO);
 
@@ -585,7 +585,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                         + getTokenString(ManifiestoKeyword.DGS_Clase, line, i);
 
                 partidaMmppActualVO.getItdtMap().get(TipoDato.MERC_PELIG.getId())
-                .setPrmt(getTokenMaestro(codigoMmpp, line, i, Entidad.MERCANCIAS_PELIGROSAS));
+                        .setPrmt(getTokenMaestro(codigoMmpp, line, i, Entidad.MERCANCIAS_PELIGROSAS));
 
                 ssrvList.add(partidaMmppActualVO);
 
@@ -599,18 +599,18 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
                 if (!"4".equals(indicadorLleno)) {
                     equipamientoActualVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                    .setCadena(getTokenString(ManifiestoKeyword.EQD_Matricula, line, i));
+                            .setCadena(getTokenString(ManifiestoKeyword.EQD_Matricula, line, i));
                 }
 
                 final String codigoTipoEquipamiento = getTokenString(ManifiestoKeyword.EQD_CodigoTipoEquipamiento,
                         line, i) + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i);
 
                 equipamientoActualVO.getItdtMap().get(TipoDato.TIPO_EQUI.getId())
-                .setPrmt(getTokenMaestro(codigoTipoEquipamiento, line, i, Entidad.TIPO_EQUIPAMIENTO));
+                        .setPrmt(getTokenMaestro(codigoTipoEquipamiento, line, i, Entidad.TIPO_EQUIPAMIENTO));
                 equipamientoActualVO.getItdtMap().get(TipoDato.ENTERO_02.getId())
-                .setCantidadEntera(getTokenLong(ManifiestoKeyword.EQD_TaraEquipamiento, line, i));
+                        .setCantidadEntera(getTokenLong(ManifiestoKeyword.EQD_TaraEquipamiento, line, i));
                 equipamientoActualVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                .setCantidadEntera(getTokenLong(ManifiestoKeyword.EQD_NumeroVacios, line, i));
+                        .setCantidadEntera(getTokenLong(ManifiestoKeyword.EQD_NumeroVacios, line, i));
 
                 ssrvList.add(equipamientoActualVO);
 
@@ -619,7 +619,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 precintoEquipamientoActualVO = new SubservicioVO();
 
                 precintoEquipamientoActualVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                .setCadena(getTokenString(ManifiestoKeyword.SEL_Precinto, line, i));
+                        .setCadena(getTokenString(ManifiestoKeyword.SEL_Precinto, line, i));
                 ssrvList.add(precintoEquipamientoActualVO);
 
                 break;
