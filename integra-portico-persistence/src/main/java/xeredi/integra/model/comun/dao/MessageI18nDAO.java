@@ -2,7 +2,7 @@ package xeredi.integra.model.comun.dao;
 
 import java.util.List;
 
-import xeredi.integra.model.comun.vo.MessageI18nBundle;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.comun.vo.MessageI18nCriterioVO;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 
@@ -26,7 +26,7 @@ public interface MessageI18nDAO {
      *            the bundle
      * @return the list
      */
-    List<String> selectKeyList(final MessageI18nBundle bundle);
+    List<String> selectKeyList(final MessageI18nBundlename bundle);
 
     /**
      * Select list.

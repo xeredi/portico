@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action.administracion;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.vo.MessageI18nBundle;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -15,7 +15,7 @@ public final class AdministracionAction extends BaseAction {
     private static final long serialVersionUID = -272356575394609490L;
 
     /** The bundle list. */
-    private MessageI18nBundle[] bundleList;
+    private MessageI18nBundlename[] bundleList;
 
     /**
      * Administracion.
@@ -24,7 +24,7 @@ public final class AdministracionAction extends BaseAction {
      */
     @Action("main")
     public String administracion() {
-        bundleList = MessageI18nBundle.values();
+        bundleList = MessageI18nBundlename.values();
 
         return SUCCESS;
     }
@@ -34,7 +34,7 @@ public final class AdministracionAction extends BaseAction {
      *
      * @return the bundle list
      */
-    public MessageI18nBundle[] getBundleList() {
+    public MessageI18nBundlename[] getBundleList() {
         return bundleList;
     }
 

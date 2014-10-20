@@ -172,7 +172,7 @@ public class ServicioBO {
      *            the srvc lupa criterio vo
      * @return the list
      */
-    public final List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO) {
+    public final List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(srvcLupaCriterioVO);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
@@ -180,8 +180,7 @@ public class ServicioBO {
         srvcDAO = session.getMapper(ServicioDAO.class);
 
         try {
-            return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
-                    GlobalNames.LUPA_LIMIT_DEFAULT));
+            return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         } finally {
             session.close();
         }

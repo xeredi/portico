@@ -18,6 +18,8 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.dao.I18nDAO;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nCriterioVO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -88,7 +90,8 @@ public class ParametroBO {
         }
 
         if (tpprVO.getI18n()) {
-            final Set<String> languages = GlobalNames.AVAILABLE_LANGUAGES;
+            final String[] languages = ConfigurationProxy.getConfiguration().getStringArray(
+                    ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language
@@ -184,7 +187,8 @@ public class ParametroBO {
         }
 
         if (tpprVO.getI18n()) {
-            final Set<String> languages = GlobalNames.AVAILABLE_LANGUAGES;
+            final String[] languages = ConfigurationProxy.getConfiguration().getStringArray(
+                    ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language
@@ -376,7 +380,8 @@ public class ParametroBO {
 
         // Validaciones
         if (tpprVO.getI18n()) {
-            final Set<String> languages = GlobalNames.AVAILABLE_LANGUAGES;
+            final String[] languages = ConfigurationProxy.getConfiguration().getStringArray(
+                    ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language
@@ -832,7 +837,7 @@ public class ParametroBO {
      *            the prmt lupa criterio vo
      * @return the list
      */
-    public final List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO) {
+    public final List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(prmtLupaCriterioVO);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
@@ -842,8 +847,7 @@ public class ParametroBO {
         try {
             prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
 
-            return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
-                    GlobalNames.LUPA_LIMIT_DEFAULT));
+            return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         } finally {
             session.close();
         }

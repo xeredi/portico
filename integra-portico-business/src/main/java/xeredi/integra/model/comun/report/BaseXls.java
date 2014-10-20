@@ -10,9 +10,11 @@ import java.util.ResourceBundle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.util.GlobalNames;
 
 import com.google.common.base.Preconditions;
 
@@ -46,9 +48,10 @@ public abstract class BaseXls {
         Preconditions.checkNotNull(alocale);
 
         locale = alocale;
-        bundle = ResourceBundle.getBundle(GlobalNames.MESSAGES, locale);
-        datetimeFormat = new SimpleDateFormat(bundle.getString(GlobalNames.DATETIME_FORMAT_KEY));
-        dateFormat = new SimpleDateFormat(bundle.getString(GlobalNames.DATE_FORMAT_KEY));
+
+        bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
+        datetimeFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.FORMAT_DATETIME.getKey()));
+        dateFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.FORMAT_DATE.getKey()));
     }
 
     /**
@@ -72,7 +75,7 @@ public abstract class BaseXls {
             switch (entdVO.getTpdt().getTipoElemento()) {
             case BO:
                 if (itdtVO.getBooleano() != null) {
-                    row.createCell(position).setCellValue(bundle.getString("boolean." + itdtVO.getBooleano()));
+                    row.createCell(position).setCellValue(bundle.getString("format_" + itdtVO.getBooleano()));
                 }
 
                 break;

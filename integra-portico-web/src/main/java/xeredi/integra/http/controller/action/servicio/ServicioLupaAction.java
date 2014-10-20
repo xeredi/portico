@@ -6,6 +6,8 @@ import java.util.StringTokenizer;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -20,6 +22,10 @@ public final class ServicioLupaAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1371351782684147321L;
+
+    /** The Constant ROWS. */
+    private static final int ROWS = ConfigurationProxy.getConfiguration()
+            .getInt(ConfigurationKey.FILTER_LIMIT.getKey());
 
     /** The srvcs. */
     private List<ServicioVO> itemList;
@@ -59,7 +65,7 @@ public final class ServicioLupaAction extends BaseAction {
 
         final ServicioBO srvcBO = new ServicioBO();
 
-        itemList = srvcBO.selectLupaList(itemLupaCriterio);
+        itemList = srvcBO.selectLupaList(itemLupaCriterio, ROWS);
 
         return SUCCESS;
     }

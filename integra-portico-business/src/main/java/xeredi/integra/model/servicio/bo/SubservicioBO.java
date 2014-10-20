@@ -152,7 +152,7 @@ public class SubservicioBO {
      *            the ssrv lupa criterio vo
      * @return the list
      */
-    public final List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterioVO) {
+    public final List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(ssrvLupaCriterioVO);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
@@ -160,8 +160,7 @@ public class SubservicioBO {
         ssrvDAO = session.getMapper(SubservicioDAO.class);
 
         try {
-            return ssrvDAO.selectLupaList(ssrvLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET,
-                    GlobalNames.LUPA_LIMIT_DEFAULT));
+            return ssrvDAO.selectLupaList(ssrvLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         } finally {
             session.close();
         }

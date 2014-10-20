@@ -4,7 +4,7 @@ import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.Map;
 
-import xeredi.integra.model.comun.vo.MessageI18nBundle;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,7 +13,7 @@ import xeredi.integra.model.comun.vo.MessageI18nBundle;
 public final class MessageI18nResourceBundle extends ListResourceBundle {
 
     /** The bundle. */
-    private final MessageI18nBundle bundle;
+    private final MessageI18nBundlename bundle;
 
     /** The locale. */
     private final Locale locale;
@@ -26,7 +26,7 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
      * @param locale
      *            the locale
      */
-    public MessageI18nResourceBundle(final MessageI18nBundle bundle, final Locale locale) {
+    public MessageI18nResourceBundle(final MessageI18nBundlename bundle, final Locale locale) {
         super();
         this.bundle = bundle;
         this.locale = locale;

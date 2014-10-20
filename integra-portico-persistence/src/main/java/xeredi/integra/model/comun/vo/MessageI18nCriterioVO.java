@@ -11,10 +11,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class MessageI18nCriterioVO {
 
     /** The bundle set. */
-    private Set<MessageI18nBundle> bundleSet;
+    private Set<MessageI18nBundlename> bundleSet;
 
     /** The bundle. */
-    private MessageI18nBundle bundle;
+    private MessageI18nBundlename bundle;
 
     /** The key. */
     private String key;
@@ -35,7 +35,7 @@ public final class MessageI18nCriterioVO {
      *
      * @return the bundle
      */
-    public MessageI18nBundle getBundle() {
+    public MessageI18nBundlename getBundle() {
         return bundle;
     }
 
@@ -45,7 +45,7 @@ public final class MessageI18nCriterioVO {
      * @param value
      *            the new bundle
      */
-    public void setBundle(final MessageI18nBundle value) {
+    public void setBundle(final MessageI18nBundlename value) {
         bundle = value;
     }
 
@@ -92,7 +92,7 @@ public final class MessageI18nCriterioVO {
      *
      * @return the bundle set
      */
-    public Set<MessageI18nBundle> getBundleSet() {
+    public Set<MessageI18nBundlename> getBundleSet() {
         return bundleSet;
     }
 
@@ -102,7 +102,7 @@ public final class MessageI18nCriterioVO {
      * @param value
      *            the new bundle set
      */
-    public void setBundleSet(final Set<MessageI18nBundle> value) {
+    public void setBundleSet(final Set<MessageI18nBundlename> value) {
         bundleSet = value;
     }
 

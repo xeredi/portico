@@ -9,7 +9,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.dao.MessageI18nDAO;
-import xeredi.integra.model.comun.vo.MessageI18nBundle;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.comun.vo.MessageI18nCriterioVO;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -44,7 +44,7 @@ public final class MessageI18nBO {
      *            the bundle
      * @return the list
      */
-    public List<String> selectKeyList(final MessageI18nBundle bundle) {
+    public List<String> selectKeyList(final MessageI18nBundlename bundle) {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
@@ -65,7 +65,7 @@ public final class MessageI18nBO {
      *            the locale
      * @return the map
      */
-    public Map<String, String> selectKeyValueMap(final MessageI18nBundle bundle, final Locale locale) {
+    public Map<String, String> selectKeyValueMap(final MessageI18nBundlename bundle, final Locale locale) {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
@@ -78,7 +78,7 @@ public final class MessageI18nBO {
             i18nCriterioVO.setLanguage(locale.getLanguage());
 
             for (final MessageI18nVO i18nVO : m18nDAO.selectList(i18nCriterioVO)) {
-                map.put(i18nVO.getLanguage(), i18nVO.getValue());
+                map.put(i18nVO.getKey(), i18nVO.getValue());
             }
 
             return map;
@@ -94,7 +94,7 @@ public final class MessageI18nBO {
      *            the bundle
      * @return the message i18n report vo
      */
-    public MessageI18nReportVO report(final MessageI18nBundle bundle) {
+    public MessageI18nReportVO report(final MessageI18nBundlename bundle) {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);

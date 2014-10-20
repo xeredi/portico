@@ -56,7 +56,7 @@
     ]]>
     </select>
 
-    <select id="selectKeyList" parameterType="MessageI18nBundle" resultType="String">
+    <select id="selectKeyList" parameterType="MessageI18nBundlename" resultType="String">
     <![CDATA[
         SELECT DISTINCT m18n_key
         FROM tbl_message_i18n_m18n

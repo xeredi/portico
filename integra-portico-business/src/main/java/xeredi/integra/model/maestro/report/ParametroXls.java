@@ -63,14 +63,16 @@ public final class ParametroXls extends BaseXls {
         setCellValue(rowhead, i++, bundle.getString("prmt_parametro"));
 
         if (tpprVO.getI18n()) {
-            setCellValue(rowhead, i++, bundle.getString("p18n_texto"));
+            setCellValue(rowhead, i++, bundle.getString("i18n_text"));
         }
 
         setCellValue(rowhead, i++, bundle.getString("prmt_fini"));
         setCellValue(rowhead, i++, bundle.getString("prmt_ffin"));
 
-        for (final Long tpdtId : tpprVO.getEntdList()) {
-            setCellValue(rowhead, i++, tpprVO.getEntdMap().get(tpdtId).getEtiqueta());
+        if (tpprVO.getEntdList() != null) {
+            for (final Long tpdtId : tpprVO.getEntdList()) {
+                setCellValue(rowhead, i++, tpprVO.getEntdMap().get(tpdtId).getEtiqueta());
+            }
         }
 
         // Filas XLS
@@ -88,13 +90,15 @@ public final class ParametroXls extends BaseXls {
             setCellValue(row, j++, prmtVO.getPrvr().getFini());
             setCellValue(row, j++, prmtVO.getPrvr().getFfin());
 
-            for (final Long tpdtId : tpprVO.getEntdList()) {
-                final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = prmtVO.getItdtMap().get(tpdtId);
+            if (tpprVO.getEntdList() != null) {
+                for (final Long tpdtId : tpprVO.getEntdList()) {
+                    final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(tpdtId);
+                    final ItemDatoVO itdtVO = prmtVO.getItdtMap().get(tpdtId);
 
-                setCellValue(row, j, entdVO, itdtVO);
+                    setCellValue(row, j, entdVO, itdtVO);
 
-                j++;
+                    j++;
+                }
             }
         }
 

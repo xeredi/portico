@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,7 +12,8 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
 
-import xeredi.integra.model.util.GlobalNames;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -61,7 +61,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
      * @return the idioma
      */
     public final String getIdioma() {
-        return GlobalNames.DEFAULT_LANGUAGE;
+        return ConfigurationProxy.getConfiguration().getString(ConfigurationKey.LANGUAGE_DEFAULT.getKey());
     }
 
     /**
@@ -69,8 +69,8 @@ public class BaseAction extends ActionSupport implements SessionAware {
      *
      * @return the available languages
      */
-    public final Set<String> getAvailableLanguages() {
-        return GlobalNames.AVAILABLE_LANGUAGES;
+    public final String[] getAvailableLanguages() {
+        return ConfigurationProxy.getConfiguration().getStringArray(ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
     }
 
     /**

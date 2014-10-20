@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class MessageI18nVO {
 
     /** The bundle. */
-    private MessageI18nBundle bundle;
+    private MessageI18nBundlename bundle;
 
     /** The key. */
     private String key;
@@ -33,7 +33,7 @@ public final class MessageI18nVO {
      *
      * @return the bundle
      */
-    public MessageI18nBundle getBundle() {
+    public MessageI18nBundlename getBundle() {
         return bundle;
     }
 
@@ -43,7 +43,7 @@ public final class MessageI18nVO {
      * @param value
      *            the new bundle
      */
-    public void setBundle(final MessageI18nBundle value) {
+    public void setBundle(final MessageI18nBundlename value) {
         bundle = value;
     }
 

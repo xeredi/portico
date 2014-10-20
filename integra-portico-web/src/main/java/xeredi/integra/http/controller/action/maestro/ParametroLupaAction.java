@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -23,7 +25,8 @@ public final class ParametroLupaAction extends BaseAction {
     private static final long serialVersionUID = 5446558166864475230L;
 
     /** The Constant ROWS. */
-    private static final int ROWS = 5;
+    private static final int ROWS = ConfigurationProxy.getConfiguration()
+            .getInt(ConfigurationKey.FILTER_LIMIT.getKey());
 
     /** The prmts. */
     private List<ParametroVO> itemList;
@@ -60,9 +63,7 @@ public final class ParametroLupaAction extends BaseAction {
             itemLupaCriterio.setTpdtNombreId(enti.getTpdtNombre().getId());
         }
 
-        itemLupaCriterio.setLimit(ROWS);
-
-        itemList = prmtBO.selectLupaList(itemLupaCriterio);
+        itemList = prmtBO.selectLupaList(itemLupaCriterio, ROWS);
 
         return SUCCESS;
     }

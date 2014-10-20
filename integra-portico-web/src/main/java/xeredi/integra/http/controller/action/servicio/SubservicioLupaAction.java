@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -19,6 +21,10 @@ public final class SubservicioLupaAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -979190040769739626L;
+
+    /** The Constant ROWS. */
+    private static final int ROWS = ConfigurationProxy.getConfiguration()
+            .getInt(ConfigurationKey.FILTER_LIMIT.getKey());
 
     /** The item list. */
     private List<SubservicioVO> itemList;
@@ -40,7 +46,7 @@ public final class SubservicioLupaAction extends BaseAction {
 
         final SubservicioBO ssrvBO = new SubservicioBO();
 
-        itemList = ssrvBO.selectLupaList(itemLupaCriterio);
+        itemList = ssrvBO.selectLupaList(itemLupaCriterio, ROWS);
 
         return SUCCESS;
     }

@@ -5,7 +5,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.MessageI18nBO;
 import xeredi.integra.model.comun.bo.MessageI18nReportVO;
-import xeredi.integra.model.comun.vo.MessageI18nBundle;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 
 import com.google.common.base.Preconditions;
 
@@ -19,7 +19,7 @@ public final class MessageI18nListAction extends BaseAction {
     private static final long serialVersionUID = 9186179634462884228L;
 
     /** The bundle. */
-    private MessageI18nBundle bundle;
+    private MessageI18nBundlename bundle;
 
     /** The report. */
     private MessageI18nReportVO report;
@@ -45,7 +45,7 @@ public final class MessageI18nListAction extends BaseAction {
      *
      * @return the bundle
      */
-    public MessageI18nBundle getBundle() {
+    public MessageI18nBundlename getBundle() {
         return bundle;
     }
 
@@ -55,7 +55,7 @@ public final class MessageI18nListAction extends BaseAction {
      * @param bundle
      *            the new bundle
      */
-    public void setBundle(final MessageI18nBundle bundle) {
+    public void setBundle(final MessageI18nBundlename bundle) {
         this.bundle = bundle;
     }
 

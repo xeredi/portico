@@ -4,7 +4,7 @@ package xeredi.integra.model.comun.vo;
 /**
  * The Enum MessageI18nBundle.
  */
-public enum MessageI18nBundle {
+public enum MessageI18nBundlename {
 
     /** The job. */
     job,

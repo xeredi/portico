@@ -35,6 +35,8 @@ INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text)
 SELECT 'cdrf', cdri_cdrf_pk, cdri_idioma, cdri_texto
 FROM tbl_codigo_ref_i18n_cdri\
 
+UPDATE tbl_i18n_i18n SET i18n_lang = 'es' WHERE i18n_lang = 'es_ES'\
+
 -- Configuracion
 CREATE TABLE tbl_configuration_conf (
 	conf_key VARCHAR2(250) NOT NULL
@@ -51,6 +53,8 @@ GRANT SELECT, UPDATE ON tbl_configuration_conf TO portico\
 
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'language.default', 'String', 'es')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'language.available', 'StringList', 'es, ca, en')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'parametrizacion.app.mode', 'Boolean', 'true')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
@@ -89,6 +93,8 @@ INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_valu
 	'escala.files.erroneo.home', 'String', '${escala.files.home}/erroneo')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'files.home', 'String', '/proyectos/deploy/files/portico')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'filter.limit', 'Long', '5')\
 
 -- Mensajes i18n
 CREATE TABLE tbl_message_i18n_m18n (
@@ -105,6 +111,12 @@ CREATE OR REPLACE SYNONYM portico.tbl_message_i18n_m18n FOR tbl_message_i18n_m18
 GRANT SELECT, INSERT, UPDATE ON tbl_message_i18n_m18n TO portico\
 
 
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'format_date', 'dd/MM/yyyy')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'format_datetime', 'dd/MM/yyyy HH:mm')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'format_true', 'Si')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'format_false', 'No')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'format_1', 'Si')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'format_0', 'No')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_buscar', 'Buscar')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_volver', 'Volver')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_aceptar', 'Aceptar')\
@@ -120,6 +132,12 @@ INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_val
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_recargar', 'Recargar')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_valorar', 'Valorar')\
 
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'format_date', 'dd/MM/yyyy')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'format_datetime', 'dd/MM/yyyy HH:mm')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'format_true', 'Si')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'format_false', 'No')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'format_1', 'Si')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'format_0', 'No')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00000', 'E00000 - Error no controlado: {0}')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00001', 'E00001 - Campo Obligatorio: {0}')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00002', 'E00002 - Campo Obligatorio: Descripción para el idioma {0}')\
@@ -132,6 +150,28 @@ INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_val
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00009', 'E00009 - Otro elemento se solapa con el período de vigencia')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00010', 'E00010 - Servicio en estado {0} inválido para ejecutar la acción')\
 INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00011', 'E00011 - Subservicio en estado {0} inválido para ejecutar la acción')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'i18n_text', 'Texto')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'prmt_parametro', 'Código')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'prmt_fini', 'F. Inicio')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'prmt_ffin', 'F. Fin')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_tpsr', 'T. Servicio')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_subp', 'Subpuerto')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_anno', 'Año')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_numero', 'Nº')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_fini', 'F. Inicio')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_ffin', 'F. Fin')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_falta', 'F. Alta')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_fref', 'F. Referencia')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'srvc_estado', 'Estado')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'ssrv_tpss', 'T. Subservicio')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'ssrv_srvc', 'Servicio')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'ssrv_estado', 'Estado')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'ssrv_numero', 'Nº')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'ssrv_fini', 'F. Inicio')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'ssrv_ffin', 'F. Fin')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'estd_tpes', 'Informe')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'estd_pepr', 'P. Proceso.')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'estd_subp', 'Subpuerto')\
 
 
 

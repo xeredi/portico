@@ -9,10 +9,11 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.GlobalNames;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,7 +34,8 @@ public final class ParametroBOTest {
 
         criterioVO.setEntiIds(tpprIds);
         criterioVO.setFechaVigencia(Calendar.getInstance().getTime());
-        criterioVO.setIdioma(GlobalNames.DEFAULT_LANGUAGE);
+        criterioVO.setIdioma(ConfigurationProxy.getConfiguration()
+                .getString(ConfigurationKey.LANGUAGE_DEFAULT.getKey()));
 
         final List<ParametroVO> list = prmtBO.selectList(criterioVO);
 
@@ -53,7 +55,8 @@ public final class ParametroBOTest {
 
         prmtCriterioVO.setEntiIds(tpprIds);
         prmtCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
-        prmtCriterioVO.setIdioma(GlobalNames.DEFAULT_LANGUAGE);
+        prmtCriterioVO.setIdioma(ConfigurationProxy.getConfiguration().getString(
+                ConfigurationKey.LANGUAGE_DEFAULT.getKey()));
 
         final Map<String, ParametroVO> prmtMap = prmtBO.selectMapByCodigo(prmtCriterioVO);
 

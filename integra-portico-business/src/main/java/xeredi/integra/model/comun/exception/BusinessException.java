@@ -9,7 +9,8 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.util.GlobalNames;
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 
 import com.google.common.base.Preconditions;
 
@@ -79,7 +80,7 @@ public final class BusinessException extends Exception {
     public List<String> toI18n(final Locale locale) {
         Preconditions.checkNotNull(locale);
 
-        final ResourceBundle bundle = ResourceBundle.getBundle(GlobalNames.MESSAGES, locale);
+        final ResourceBundle bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
         final List<String> messages = new ArrayList<>();
 
         Preconditions.checkNotNull(bundle);

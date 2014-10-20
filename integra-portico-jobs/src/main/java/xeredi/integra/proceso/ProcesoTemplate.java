@@ -10,6 +10,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -23,7 +25,6 @@ import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.util.exception.InstanceNotFoundException;
 
@@ -108,7 +109,8 @@ public abstract class ProcesoTemplate {
             prmtCriterioVO.setEntiId(entidad.getId());
             prmtCriterioVO.setParametros(codigoMaestroMap.get(entidad));
             prmtCriterioVO.setFechaVigencia(fechaVigencia);
-            prmtCriterioVO.setIdioma(GlobalNames.DEFAULT_LANGUAGE);
+            prmtCriterioVO.setIdioma(ConfigurationProxy.getConfiguration().getString(
+                    ConfigurationKey.LANGUAGE_DEFAULT.getKey()));
 
             maestroMap.put(entidad, prmtBO.selectMapByCodigo(prmtCriterioVO));
         }
