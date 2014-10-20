@@ -231,8 +231,6 @@ public final class ParametroAction extends ItemAction {
             default:
                 throw new Error("Accion no valida: " + accion);
             }
-
-            addActionMessage("Parametro guardado correctamente!!");
         } catch (final OverlapException ex) {
             addActionError(getText(ErrorCode.E00009.name(), new String[] { enti.getNombre() }));
         } catch (final InstanceNotFoundException ex) {

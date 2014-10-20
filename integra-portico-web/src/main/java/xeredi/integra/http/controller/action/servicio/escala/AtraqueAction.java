@@ -78,7 +78,7 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
         item.getItdtMap()
-        .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
@@ -117,8 +117,6 @@ public final class AtraqueAction extends ItemAction {
 
         try {
             atraBO.autorizar(item.getId(), item.getItdtMap());
-
-            addActionMessage(getText("ssrv.autorizar.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -184,8 +182,6 @@ public final class AtraqueAction extends ItemAction {
 
         try {
             atraBO.denegar(item.getId(), item.getItdtMap());
-
-            addActionMessage(getText("ssrv.denegar.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -251,8 +247,6 @@ public final class AtraqueAction extends ItemAction {
 
         try {
             atraBO.anular(item.getId(), item.getItdtMap());
-
-            addActionMessage(getText("ssrv.anular.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -323,8 +317,6 @@ public final class AtraqueAction extends ItemAction {
 
         try {
             atraBO.iniciar(item.getId(), item.getItdtMap());
-
-            addActionMessage(getText("ssrv.anular.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -385,8 +377,6 @@ public final class AtraqueAction extends ItemAction {
 
         try {
             atraBO.finalizar(item.getId(), item.getItdtMap());
-
-            addActionMessage(getText("ssrv.anular.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -426,7 +416,7 @@ public final class AtraqueAction extends ItemAction {
             item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
             item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
             item.getItdtMap()
-            .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
             item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
                     item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
             item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));

@@ -64,7 +64,6 @@ public final class ProcesoAction extends BaseAction {
             final ProcesoBO prbtBO = new ProcesoBO();
 
             prbtBO.cancelar(prbt.getId());
-            addActionMessage("Proceso cancelado correctamente");
         } catch (final OperacionNoPermitidaException ex) {
             addActionError("El proceso seleccionado no se puede cancelar");
         }

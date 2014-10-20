@@ -44,8 +44,6 @@ public final class ManifiestoAction extends BaseAction {
 
         try {
             maniBO.bloquear(item.getId());
-
-            addActionMessage(getText("srvc.bloquear.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }
@@ -66,8 +64,6 @@ public final class ManifiestoAction extends BaseAction {
 
         try {
             maniBO.completar(item.getId());
-
-            addActionMessage(getText("srvc.completar.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }
@@ -88,8 +84,6 @@ public final class ManifiestoAction extends BaseAction {
 
         try {
             maniBO.iniciar(item.getId());
-
-            addActionMessage(getText("srvc.iniciar.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }
@@ -110,8 +104,6 @@ public final class ManifiestoAction extends BaseAction {
 
         try {
             maniBO.anular(item.getId());
-
-            addActionMessage(getText("srvc.anular.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
         }

@@ -85,8 +85,6 @@ public final class PeriodoProcesoAction extends BaseAction {
 
         peprBO.delete(pepr.getId());
 
-        addActionMessage("Periodo de proceso borrado correctamente");
-
         return SUCCESS;
     }
 

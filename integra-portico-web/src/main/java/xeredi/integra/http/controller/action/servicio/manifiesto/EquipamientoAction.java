@@ -48,8 +48,6 @@ public final class EquipamientoAction extends BaseAction {
 
         try {
             equiBO.bloquear(item.getId());
-
-            addActionMessage(getText("ssrv.bloquear.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -73,8 +71,6 @@ public final class EquipamientoAction extends BaseAction {
 
         try {
             equiBO.iniciar(item.getId());
-
-            addActionMessage(getText("ssrv.iniciar.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -98,8 +94,6 @@ public final class EquipamientoAction extends BaseAction {
 
         try {
             equiBO.anular(item.getId());
-
-            addActionMessage(getText("ssrv.anular.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }

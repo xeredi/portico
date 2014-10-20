@@ -43,8 +43,6 @@ public final class BlAction extends BaseAction {
 
         try {
             mablBO.bloquear(item.getId());
-
-            addActionMessage(getText("ssrv.bloquear.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -65,8 +63,6 @@ public final class BlAction extends BaseAction {
 
         try {
             mablBO.completar(item.getId());
-
-            addActionMessage(getText("ssrv.completar.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -87,8 +83,6 @@ public final class BlAction extends BaseAction {
 
         try {
             mablBO.iniciar(item.getId());
-
-            addActionMessage(getText("ssrv.iniciar.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
@@ -109,8 +103,6 @@ public final class BlAction extends BaseAction {
 
         try {
             mablBO.anular(item.getId());
-
-            addActionMessage(getText("ssrv.anular.success"));
         } catch (final EstadoInvalidoException ex) {
             addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
         }
