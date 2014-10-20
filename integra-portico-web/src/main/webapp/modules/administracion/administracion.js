@@ -15,6 +15,13 @@ module.config([ "$routeProvider", function($routeProvider) {
 } ]);
 
 module.controller("administracionController", function($scope, $http, $location) {
+    $http.get("administracion/main.action").success(function(data) {
+        $scope.actionErrors = data.actionErrors;
+
+        if (data.actionErrors.length == 0) {
+            $scope.bundleList = data.bundleList;
+        }
+    });
 });
 
 // ----------------- METAMODELO --------------------------
@@ -111,3 +118,34 @@ module.controller("confEditController", function($scope, $http, $location, $rout
         window.history.back();
     }
 });
+
+//----------------- MESSAGEI18N --------------------------
+//----------------- MESSAGEI18N --------------------------
+//----------------- MESSAGEI18N --------------------------
+module.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
+
+    .when("/administracion/m18n/:bundle/grid", {
+        title : 'm18n_bundle_grid',
+        templateUrl : "modules/administracion/m18n-grid.html",
+        controller : "m18nGridController"
+    })
+
+    .when("/administracion/m18n/:bundle/detail/:key", {
+        title : 'm18n_bundle_detail',
+        templateUrl : "modules/administracion/m18n-detail.html",
+        controller : "m18nDetailController"
+    })
+} ]);
+
+module.controller("m18nGridController", function($scope, $http, $location, $routeParams) {
+    $http.get("administracion/messagei18n/m18n-grid.action?bundle=" + $routeParams.bundle).success(function(data) {
+        $scope.actionErrors = data.actionErrors;
+
+        if (data.actionErrors.length == 0) {
+            $scope.bundle = data.bundle;
+            $scope.report = data.report;
+        }
+    });
+});
+

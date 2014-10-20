@@ -50,6 +50,8 @@ CREATE OR REPLACE SYNONYM portico.tbl_configuration_conf FOR tbl_configuration_c
 GRANT SELECT, UPDATE ON tbl_configuration_conf TO portico\
 
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'language.default', 'String', 'es')\
+INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'parametrizacion.app.mode', 'Boolean', 'true')\
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'estadistica.files.home', 'String', '${files.home}/estadistica')\
@@ -88,12 +90,48 @@ INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_valu
 INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'files.home', 'String', '/proyectos/deploy/files/portico')\
 
+-- Mensajes i18n
+CREATE TABLE tbl_message_i18n_m18n (
+	m18n_bundle VARCHAR2(30) NOT NULL
+	, m18n_language VARCHAR2(5) NOT NULL
+	, m18n_key VARCHAR2(100) NOT NULL
+	, m18n_value VARCHAR2(250) NOT NULL
+
+	, CONSTRAINT pk_m18n PRIMARY KEY (m18n_bundle, m18n_language, m18n_key)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_message_i18n_m18n FOR tbl_message_i18n_m18n\
+
+GRANT SELECT, INSERT, UPDATE ON tbl_message_i18n_m18n TO portico\
 
 
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_buscar', 'Buscar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_volver', 'Volver')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_aceptar', 'Aceptar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_cancelar', 'Cancelar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_crear', 'Nuevo')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_editar', 'Editar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_guardar', 'Guardar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_borrar', 'Borrar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_duplicar', 'Duplicar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_filtrar', 'Filtro')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_exportar', 'Exportar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_imprimir', 'Imprimir')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_recargar', 'Recargar')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('web', 'es', 'btn_valorar', 'Valorar')\
 
-
-
-
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00000', 'E00000 - Error no controlado: {0}')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00001', 'E00001 - Campo Obligatorio: {0}')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00002', 'E00002 - Campo Obligatorio: Descripción para el idioma {0}')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00003', 'E00003 - Campo Obligatorio: F. Inicio')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00004', 'E00004 - Campo Obligatorio: Código')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00005', 'E00005 - {0} duplicado/a')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00006', 'E00006 - Error de período de Vigencia. F. Fin ha de ser posterior a F.Fin')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00007', 'E00007 - Parámetro con Identificador {0} no encontrado')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00008', 'E00008 - {0} con identificador {1} no encontrado/a')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00009', 'E00009 - Otro elemento se solapa con el período de vigencia')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00010', 'E00010 - Servicio en estado {0} inválido para ejecutar la acción')\
+INSERT INTO tbl_message_i18n_m18n(m18n_bundle, m18n_language, m18n_key, m18n_value) VALUES ('app', 'es', 'E00011', 'E00011 - Subservicio en estado {0} inválido para ejecutar la acción')\
 
 
 
@@ -101,6 +139,9 @@ INSERT INTO tbl_configuration_conf (conf_key, conf_value_type, conf_default_valu
 
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+-- Mensajes i18n
+DROP TABLE tbl_message_i18n_m18n\
 
 -- Configuracion
 DROP TABLE tbl_configuration_conf\

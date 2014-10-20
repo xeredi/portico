@@ -16,7 +16,9 @@
         <div class="panel-heading" translate="menu_configuracion"></div>
         <div class="panel-body">
             <div class="list-group">
-                <a class="list-group-item" ng-href="#/administracion/conf/grid" translate="menu_conf_grid"></a>
+                <a class="list-group-item" ng-href="#/administracion/conf/grid" translate="menu_conf_grid"></a> <a
+                    class="list-group-item" ng-repeat="bundle in bundleList"
+                    ng-href="#/administracion/m18n/{{bundle}}/grid">I18n {{bundle}}</a>
             </div>
         </div>
     </div>
