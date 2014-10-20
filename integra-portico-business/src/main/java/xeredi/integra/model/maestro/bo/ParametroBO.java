@@ -850,38 +850,6 @@ public class ParametroBO {
     }
 
     /**
-     * Select i18n map.
-     *
-     * @param prvrId
-     *            the prvr id
-     * @return the map
-     */
-    public final Map<String, I18nVO> selectI18nMap(final Long prvrId) {
-        Preconditions.checkNotNull(prvrId);
-
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
-
-        i18nDAO = session.getMapper(I18nDAO.class);
-
-        try {
-            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
-
-            i18nCriterioVO.setPrefix(I18nPrefix.prvr);
-            i18nCriterioVO.setExternalId(prvrId);
-
-            final Map<String, I18nVO> i18nMap = new HashMap<>();
-
-            for (final I18nVO i18nVO : i18nDAO.selectList(i18nCriterioVO)) {
-                i18nMap.put(i18nVO.getLanguage(), i18nVO);
-            }
-
-            return i18nMap;
-        } finally {
-            session.close();
-        }
-    }
-
-    /**
      * Rellenado de los datos asociados a una lista de parametros. Búsqueda en parámetro dato.
      *
      * @param session

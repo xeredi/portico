@@ -11,8 +11,10 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -90,6 +92,7 @@ public final class ParametroAction extends ItemAction {
         accion = ACCION_EDICION.edit;
 
         final ParametroBO prmtBO = new ParametroBO();
+        final I18nBO i18nBO = new I18nBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setId(item.getId());
@@ -104,7 +107,7 @@ public final class ParametroAction extends ItemAction {
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
-                i18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+                i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
             }
 
             loadLabelValuesMap(enti);
@@ -129,6 +132,7 @@ public final class ParametroAction extends ItemAction {
         accion = ACCION_EDICION.duplicate;
 
         final ParametroBO prmtBO = new ParametroBO();
+        final I18nBO i18nBO = new I18nBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setId(item.getId());
@@ -143,7 +147,7 @@ public final class ParametroAction extends ItemAction {
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
-                i18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+                i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
             }
 
             loadLabelValuesMap(enti);
@@ -277,6 +281,7 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getFref());
 
         final ParametroBO prmtBO = new ParametroBO();
+        final I18nBO i18nBO = new I18nBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setId(item.getId());
@@ -291,7 +296,7 @@ public final class ParametroAction extends ItemAction {
             final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
-                i18nMap = prmtBO.selectI18nMap(item.getPrvr().getId());
+                i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
             }
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(prmtCriterioVO) }));

@@ -13,6 +13,10 @@ p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
 	font-size: 11px;
 }
 
+label {
+	font-weight: bold;
+}
+
 .modal.custom, .modal-dialog {
 	width: 90%;
 }

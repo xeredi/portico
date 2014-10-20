@@ -1,18 +1,17 @@
 package xeredi.integra.model.metamodelo.bo;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.dao.I18nDAO;
+import xeredi.integra.model.comun.vo.I18nCriterioVO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
-import xeredi.integra.model.metamodelo.dao.CodigoReferenciaI18nDAO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
-import xeredi.integra.model.metamodelo.vo.CodigoReferenciaI18nCriterioVO;
-import xeredi.integra.model.metamodelo.vo.CodigoReferenciaI18nVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -31,25 +30,27 @@ public class CodigoReferenciaBO {
     CodigoReferenciaDAO cdrfDAO;
 
     /** The cdri dao. */
-    CodigoReferenciaI18nDAO cdriDAO;
+    I18nDAO i18nDAO;
 
     /**
      * Insert.
      *
      * @param cdrfVO
      *            the cdrf vo
+     * @param i18nMap
+     *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final CodigoReferenciaVO cdrfVO, final Map<String, CodigoReferenciaI18nVO> cdriMap)
+    public final void insert(final CodigoReferenciaVO cdrfVO, final Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(cdrfVO);
-        Preconditions.checkNotNull(cdriMap);
+        Preconditions.checkNotNull(i18nMap);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-        cdriDAO = session.getMapper(CodigoReferenciaI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
 
         try {
             final IgBO igBO = new IgBO();
@@ -61,12 +62,14 @@ public class CodigoReferenciaBO {
             cdrfVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
             cdrfDAO.insert(cdrfVO);
 
-            for (final String language : cdriMap.keySet()) {
-                final CodigoReferenciaI18nVO cdriVO = cdriMap.get(language);
+            for (final String language : i18nMap.keySet()) {
+                final I18nVO i18nVO = i18nMap.get(language);
 
-                cdriVO.setCdrfId(cdrfVO.getId());
-                cdriVO.setIdioma(language);
-                cdriDAO.insert(cdriVO);
+                i18nVO.setPrefix(I18nPrefix.cdrf);
+                i18nVO.setExternalId(cdrfVO.getId());
+                i18nVO.setLanguage(language);
+
+                i18nDAO.insert(i18nVO);
             }
 
             session.commit();
@@ -80,17 +83,20 @@ public class CodigoReferenciaBO {
      *
      * @param cdrfVO
      *            the cdrf vo
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final CodigoReferenciaVO cdrfVO, final Map<String, CodigoReferenciaI18nVO> cdriMap)
+    public void update(final CodigoReferenciaVO cdrfVO, final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrfVO);
+        Preconditions.checkNotNull(i18nMap);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-        cdriDAO = session.getMapper(CodigoReferenciaI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
 
         try {
             final int updated = cdrfDAO.update(cdrfVO);
@@ -99,11 +105,12 @@ public class CodigoReferenciaBO {
                 throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
             }
 
-            for (final String language : cdriMap.keySet()) {
-                final CodigoReferenciaI18nVO cdriVO = cdriMap.get(language);
+            for (final String language : i18nMap.keySet()) {
+                final I18nVO i18nVO = i18nMap.get(language);
 
-                cdriVO.setIdioma(language);
-                cdriDAO.update(cdriVO);
+                i18nVO.setPrefix(I18nPrefix.cdrf);
+                i18nVO.setLanguage(language);
+                i18nDAO.update(i18nVO);
             }
 
             session.commit();
@@ -127,14 +134,16 @@ public class CodigoReferenciaBO {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-        cdriDAO = session.getMapper(CodigoReferenciaI18nDAO.class);
+        i18nDAO = session.getMapper(I18nDAO.class);
 
         try {
 
-            final CodigoReferenciaI18nCriterioVO cdriCriterioVO = new CodigoReferenciaI18nCriterioVO();
+            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
 
-            cdriCriterioVO.setCdrfId(cdrfVO.getId());
-            cdriDAO.deleteList(cdriCriterioVO);
+            i18nCriterioVO.setPrefix(I18nPrefix.cdrf);
+            i18nCriterioVO.setExternalId(cdrfVO.getId());
+
+            i18nDAO.deleteList(i18nCriterioVO);
 
             final int deleted = cdrfDAO.delete(cdrfVO.getId());
 
@@ -169,6 +178,13 @@ public class CodigoReferenciaBO {
         }
     }
 
+    /**
+     * Select.
+     *
+     * @param cdrfId
+     *            the cdrf id
+     * @return the codigo referencia vo
+     */
     public CodigoReferenciaVO select(final Long cdrfId) {
         Preconditions.checkNotNull(cdrfId);
 
@@ -178,38 +194,6 @@ public class CodigoReferenciaBO {
 
         try {
             return cdrfDAO.select(cdrfId);
-        } finally {
-            session.close();
-        }
-    }
-
-    /**
-     * Select i18n map.
-     *
-     * @param cdrfId
-     *            the cdrf id
-     * @return the map
-     */
-    public Map<String, CodigoReferenciaI18nVO> selectI18nMap(final Long cdrfId) {
-        Preconditions.checkNotNull(cdrfId);
-
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        cdriDAO = session.getMapper(CodigoReferenciaI18nDAO.class);
-
-        try {
-            final CodigoReferenciaI18nCriterioVO criterioVO = new CodigoReferenciaI18nCriterioVO();
-
-            criterioVO.setCdrfId(cdrfId);
-
-            final List<CodigoReferenciaI18nVO> list = cdriDAO.selectList(criterioVO);
-            final Map<String, CodigoReferenciaI18nVO> map = new HashMap<>();
-
-            for (final CodigoReferenciaI18nVO vo : list) {
-                map.put(vo.getIdioma(), vo);
-            }
-
-            return map;
         } finally {
             session.close();
         }

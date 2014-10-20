@@ -214,7 +214,7 @@ metamodelo.controller("cdrfCreateController", function($scope, $http, $location,
 
     $http.get(url).success(function(data) {
         $scope.cdrf = data.cdrf;
-        $scope.cdriMap = data.cdriMap;
+        $scope.i18nMap = data.i18nMap;
         $scope.availableLanguages = data.availableLanguages;
         $scope.accion = data.accion;
     });
@@ -224,7 +224,7 @@ metamodelo.controller("cdrfCreateController", function($scope, $http, $location,
 
         $http.post(url, {
             cdrf : $scope.cdrf,
-            cdriMap : $scope.cdriMap,
+            i18nMap : $scope.i18nMap,
             accion : $scope.accion
         }).success(function(data) {
             $scope.actionErrors = data.actionErrors;
@@ -245,7 +245,7 @@ metamodelo.controller("cdrfDetailController", function($scope, $http, $location,
 
     $http.get(url).success(function(data) {
         $scope.cdrf = data.cdrf;
-        $scope.cdriMap = data.cdriMap;
+        $scope.i18nMap = data.i18nMap;
         $scope.availableLanguages = data.availableLanguages;
     });
 
@@ -269,7 +269,7 @@ metamodelo.controller("cdrfEditController", function($scope, $http, $location, $
 
     $http.get(url).success(function(data) {
         $scope.cdrf = data.cdrf;
-        $scope.cdriMap = data.cdriMap;
+        $scope.i18nMap = data.i18nMap;
         $scope.availableLanguages = data.availableLanguages;
         $scope.accion = data.accion;
     });
@@ -279,7 +279,7 @@ metamodelo.controller("cdrfEditController", function($scope, $http, $location, $
 
         $http.post(url, {
             cdrf : $scope.cdrf,
-            cdriMap : $scope.cdriMap,
+            i18nMap : $scope.i18nMap,
             accion : $scope.accion
         }).success(function(data) {
             $scope.actionErrors = data.actionErrors;

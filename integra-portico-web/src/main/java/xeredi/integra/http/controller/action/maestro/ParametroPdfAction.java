@@ -16,6 +16,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
@@ -78,6 +80,7 @@ public final class ParametroPdfAction extends BaseAction {
         }
 
         final ParametroBO prmtBO = new ParametroBO();
+        final I18nBO i18nBO = new I18nBO();
         final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
 
         item = prmtBO.select(item.getId(), getIdioma(), fechaVigencia);
@@ -109,7 +112,7 @@ public final class ParametroPdfAction extends BaseAction {
         final Map<String, I18nVO> i18nMap = new HashMap<>();
 
         if (enti.getI18n()) {
-            i18nMap.putAll(prmtBO.selectI18nMap(item.getPrvr().getId()));
+            i18nMap.putAll(i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId()));
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {

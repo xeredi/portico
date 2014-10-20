@@ -16,6 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
@@ -56,6 +58,7 @@ public final class ParametroPdfTest {
 
         final ParametroPdf prmtPdf = new ParametroPdf(new Locale(language, country));
         final ParametroBO prmtBO = new ParametroBO();
+        final I18nBO i18nBO = new I18nBO();
 
         for (final Long tpprId : tpprIds) {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -102,7 +105,7 @@ public final class ParametroPdfTest {
                 final Map<String, I18nVO> i18nMap = new HashMap<>();
 
                 if (tpprVO.getI18n()) {
-                    i18nMap.putAll(prmtBO.selectI18nMap(prmtVO.getPrvr().getId()));
+                    i18nMap.putAll(i18nBO.selectMap(I18nPrefix.prvr, prmtVO.getPrvr().getId()));
                 }
 
                 try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprVO.getId() + "_"

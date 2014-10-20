@@ -7,9 +7,11 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
-import xeredi.integra.model.metamodelo.vo.CodigoReferenciaI18nVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
@@ -33,7 +35,7 @@ public final class CodigoReferenciaAction extends BaseAction {
     private CodigoReferenciaVO cdrf;
 
     /** The cdri map. */
-    private Map<String, CodigoReferenciaI18nVO> cdriMap;
+    private Map<String, I18nVO> i18nMap;
 
     /**
      * Instantiates a new codigo referencia action.
@@ -56,7 +58,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf.getTpdtId());
 
         accion = ACCION_EDICION.create;
-        cdriMap = new HashMap<>();
+        i18nMap = new HashMap<>();
 
         return SUCCESS;
     }
@@ -74,6 +76,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final I18nBO i18nBO = new I18nBO();
 
         cdrf = cdrfBO.select(cdrf.getId());
 
@@ -81,7 +84,7 @@ public final class CodigoReferenciaAction extends BaseAction {
             addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("cdrf"), cdrf.getValor() }));
         }
 
-        cdriMap = cdrfBO.selectI18nMap(cdrf.getId());
+        i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
 
         return SUCCESS;
     }
@@ -96,7 +99,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
-        Preconditions.checkNotNull(cdriMap);
+        Preconditions.checkNotNull(i18nMap);
 
         // Validacion de datos
         if (accion == ACCION_EDICION.create) {
@@ -113,7 +116,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         }
 
         for (final String language : getAvailableLanguages()) {
-            if (!cdriMap.containsKey(language) || GenericValidator.isBlankOrNull(cdriMap.get(language).getTexto())) {
+            if (!i18nMap.containsKey(language) || GenericValidator.isBlankOrNull(i18nMap.get(language).getText())) {
                 addActionError(getText(ErrorCode.E00002.name(), new String[] { language }));
             }
         }
@@ -123,13 +126,13 @@ public final class CodigoReferenciaAction extends BaseAction {
 
             if (accion == ACCION_EDICION.create) {
                 try {
-                    cdrfBO.insert(cdrf, cdriMap);
+                    cdrfBO.insert(cdrf, i18nMap);
                 } catch (final DuplicateInstanceException ex) {
                     addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("cdrf") }));
                 }
             } else {
                 try {
-                    cdrfBO.update(cdrf, cdriMap);
+                    cdrfBO.update(cdrf, i18nMap);
                 } catch (final InstanceNotFoundException ex) {
                     addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("cdrf"), cdrf.getValor() }));
                 }
@@ -173,6 +176,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final I18nBO i18nBO = new I18nBO();
 
         cdrf = cdrfBO.select(cdrf.getId());
 
@@ -180,7 +184,7 @@ public final class CodigoReferenciaAction extends BaseAction {
             addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("cdrf"), cdrf.getValor() }));
         }
 
-        cdriMap = cdrfBO.selectI18nMap(cdrf.getId());
+        i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
 
         return SUCCESS;
     }
@@ -226,22 +230,22 @@ public final class CodigoReferenciaAction extends BaseAction {
     }
 
     /**
-     * Gets the cdri map.
+     * Gets the i18n map.
      *
-     * @return the cdri map
+     * @return the i18n map
      */
-    public Map<String, CodigoReferenciaI18nVO> getCdriMap() {
-        return cdriMap;
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
     }
 
     /**
-     * Sets the cdri map.
+     * Sets the i18n map.
      *
      * @param value
      *            the value
      */
-    public void setCdriMap(final Map<String, CodigoReferenciaI18nVO> value) {
-        cdriMap = value;
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 
 }
