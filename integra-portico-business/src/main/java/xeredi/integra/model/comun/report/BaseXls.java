@@ -74,8 +74,9 @@ public abstract class BaseXls {
         if (itdtVO != null) {
             switch (entdVO.getTpdt().getTipoElemento()) {
             case BO:
-                if (itdtVO.getBooleano() != null) {
-                    row.createCell(position).setCellValue(bundle.getString("format_" + itdtVO.getBooleano()));
+                if (itdtVO.getCantidadEntera() != null) {
+                    row.createCell(position).setCellValue(
+                            bundle.getString("format_" + (itdtVO.getCantidadEntera() > 0)));
                 }
 
                 break;

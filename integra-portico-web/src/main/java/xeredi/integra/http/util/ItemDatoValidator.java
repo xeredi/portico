@@ -41,7 +41,7 @@ public final class ItemDatoValidator {// srdtMap
                     itdtVO.setTpdtId(entd.getTpdt().getId());
                     switch (entd.getTpdt().getTipoElemento()) {
                     case BO:
-                        if (entd.getObligatorio() && itdtVO.getBooleano() == null) {
+                        if (entd.getObligatorio() && itdtVO.getCantidadEntera() == null) {
                             support.addActionError(support.getText(ErrorCode.E00001.name(),
                                     new String[] { entd.getEtiqueta() }));
                         }

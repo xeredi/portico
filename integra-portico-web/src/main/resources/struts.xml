@@ -3,12 +3,7 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-    <bean type="com.opensymphony.xwork2.TextProvider" name="messagesProvider" class="xeredi.integra.http.util.MessageI18nTextProvider"
-        scope="default" />
-
-    <constant name="struts.xworkTextProvider" value="messagesProvider" />
     <constant name="struts.devMode" value="false" />
-    <!-- constant name="struts.custom.i18n.resources" value="messages" /-->
     <constant name="struts.i18n.reload" value="false" />
     <constant name="struts.configuration.xml.reload" value="false" />
 
@@ -18,7 +13,9 @@
 
             <interceptor-stack name="porticoStack">
                 <interceptor-ref name="timer" />
+<!--
                 <interceptor-ref name="jsonPortico" />
+ -->
                 <interceptor-ref name="basicStack" />
             </interceptor-stack>
         </interceptors>

@@ -45,37 +45,6 @@ public final class ItemDatoVO {
     }
 
     /**
-     * Checks if is filled.
-     *
-     * @return true, if is filled
-     */
-    public boolean isFilled() {
-        return cantidadEntera != null || cantidadDecimal != null || fecha != null || prmt != null
-                && prmt.getId() != null || cadena != null && !cadena.isEmpty() || srvc != null && srvc.getId() != null;
-    }
-
-    /**
-     * Gets the booleano.
-     *
-     * @return the booleano
-     */
-    public Boolean getBooleano() {
-        return cantidadEntera == null ? null : 1 == cantidadEntera;
-    }
-
-    /**
-     * Sets the booleano.
-     *
-     * @param value
-     *            the new booleano
-     */
-    public void setBooleano(final Boolean value) {
-        if (value != null) {
-            cantidadEntera = Boolean.TRUE == value ? 1L : 0L;
-        }
-    }
-
-    /**
      * Gets the item id.
      *
      * @return the item id
