@@ -82,10 +82,11 @@
                 <if
                     test="(itdt.prmt != null and itdt.prmt.id != null) or (itdt.srvc != null and itdt.srvc.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
                         <![CDATA[
-                        AND srvc_pk = ANY (
-                            SELECT srdt_srvc_pk
+                        AND EXISTS (
+                            SELECT 1
                             FROM tbl_servicio_dato_srdt
-                            WHERE srdt_tpdt_pk = #{itdt.tpdtId}
+                            WHERE srdt_srvc_pk = srvc_pk
+                                AND srdt_tpdt_pk = #{itdt.tpdtId}
                         ]]>
                     <if test="itdt.prmt != null and itdt.prmt.id != null">
                         AND srdt_prmt_pk = #{itdt.prmt.id}
