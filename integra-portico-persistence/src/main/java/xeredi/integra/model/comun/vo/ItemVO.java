@@ -1,7 +1,6 @@
 package xeredi.integra.model.comun.vo;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 // TODO: Auto-generated Javadoc
@@ -27,8 +26,6 @@ public abstract class ItemVO implements ItemEntidad {
      */
     public ItemVO() {
         super();
-
-        itdtMap = new HashMap<Long, ItemDatoVO>();
     }
 
     /**

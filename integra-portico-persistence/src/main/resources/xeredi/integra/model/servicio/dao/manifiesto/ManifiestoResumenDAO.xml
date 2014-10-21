@@ -29,11 +29,12 @@
                 SELECT ssrv_pk
                 FROM tbl_subservicio_ssrv
                 WHERE
-                    ssrv_pk = ANY (
-			            SELECT ssdt_ssrv_pk
+                    EXISTS (
+                        SELECT 1
                         FROM tbl_subservicio_dato_ssdt
-                        WHERE ssdt_ssrv_pk = ssrv_pk
-                            AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_BL')
+                        WHERE
+                            ssdt_ssrv_pk = ssrv_pk
+                        	AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_BL')
                             AND ssdt_cadena IN ('M', 'V')
                     )
                     AND ssrv_tpss_pk = portico.getEntidad('BL')
@@ -50,10 +51,11 @@
                 SELECT ssrv.ssrv_pk
                 FROM tbl_subservicio_ssrv ssrv
                 WHERE
-                    ssrv_pk = ANY (
-			            SELECT ssdt_ssrv_pk
+                    EXISTS (
+                        SELECT 1
                         FROM tbl_subservicio_dato_ssdt
-                        WHERE ssdt_ssrv_pk = ssrv_pk
+                        WHERE
+                            ssdt_ssrv_pk = ssrv_pk
                             AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_BL')
                             AND ssdt_cadena IN ('P')
                     )
@@ -77,12 +79,11 @@
                     ) AS peso
                 FROM tbl_subservicio_ssrv ssrv
                 WHERE
-                    EXISTS (
-                        SELECT 1
+                    ssrv_pk = ANY (
+                        SELECT ssss_ssrvh_pk
                         FROM tbl_subserv_subserv_ssss
                         WHERE
                             ssss_ssrvp_pk = ANY (SELECT ssrv_pk FROM blsMerc)
-                            AND ssss_ssrvh_pk = ssrv_pk
                     )
                     AND ssrv_tpss_pk = portico.getEntidad('PARTIDA')
             )
@@ -92,11 +93,10 @@
                         SELECT prmt_parametro
                         FROM tbl_parametro_prmt
                         WHERE
-                            EXISTS (
+                            prmt_pk = (
                                 SELECT ssdt_prmt_pk
                                 FROM tbl_subservicio_dato_ssdt
                                 WHERE ssdt_ssrv_pk = ssrv_pk
-                                    AND ssdt_prmt_pk = prmt_pk
                                     AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_EQUI')
                             )
                     ) AS tequ
@@ -114,12 +114,11 @@
                     ) AS numVacios
                 FROM tbl_subservicio_ssrv ssrv
                 WHERE
-                    EXISTS (
-                        SELECT 1
+                    ssrv_pk = ANY (
+                        SELECT ssss_ssrvh_pk
                         FROM tbl_subserv_subserv_ssss
                         WHERE
                             ssss_ssrvp_pk = ANY (SELECT ssrv_pk FROM blsMerc)
-                            AND ssss_ssrvh_pk = ssrv_pk
                     )
                     AND ssrv_tpss_pk = portico.getEntidad('EQUIPAMIENTO')
             )
@@ -129,11 +128,10 @@
                         SELECT prmt_parametro
                         FROM tbl_parametro_prmt
                         WHERE
-                            EXISTS (
+                            prmt_pk = (
                                 SELECT ssdt_prmt_pk
                                 FROM tbl_subservicio_dato_ssdt
                                 WHERE ssdt_ssrv_pk = ssrv_pk
-                                    AND ssdt_prmt_pk = prmt_pk
                                     AND ssdt_tpdt_pk = portico.getTipoDato('MERCANCIA')
                             )
                     ) AS merc
@@ -145,12 +143,11 @@
                     ) AS numPasajeros
                 FROM tbl_subservicio_ssrv ssrv
                 WHERE
-                    EXISTS (
-                        SELECT 1
+                    ssrv_pk = ANY (
+                        SELECT ssss_ssrvh_pk
                         FROM tbl_subserv_subserv_ssss
                         WHERE
                             ssss_ssrvp_pk = ANY (SELECT ssrv_pk FROM blsPasa)
-                            AND ssss_ssrvh_pk = ssrv_pk
                     )
                     AND ssrv_tpss_pk = portico.getEntidad('PARTIDA')
             )
@@ -239,6 +236,8 @@
                     AND merc NOT IN ('0001' ,'0002')
                     AND merc NOT LIKE '%X' AND merc NOT LIKE '%C'
             ) AS numVehiculos
+        FROM tbl_servicio_srvc
+        WHERE srvc_pk = #{maniId}
         ]]>
     </select>
 </mapper>

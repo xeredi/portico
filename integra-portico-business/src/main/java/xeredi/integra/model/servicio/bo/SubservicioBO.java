@@ -313,6 +313,9 @@ public class SubservicioBO {
                 }
 
                 itdtMap.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
+
+                itdtVO.setItemId(null);
+                itdtVO.setTpdtId(null);
             }
 
             for (final SubservicioVO ssrvVO : ssrvList) {

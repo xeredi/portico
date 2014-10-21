@@ -166,6 +166,9 @@ public class EstadisticaBO {
                 }
 
                 itdtMap.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
+
+                itdtVO.setItemId(null);
+                itdtVO.setTpdtId(null);
             }
 
             for (final EstadisticaVO estdVO : estdList) {

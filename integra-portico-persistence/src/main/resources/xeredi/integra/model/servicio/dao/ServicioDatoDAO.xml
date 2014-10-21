@@ -14,14 +14,7 @@
         <association property="prmt" javaType="ParametroVO">
             <result column="prmt_pk" property="id" />
             <result column="prmt_parametro" property="parametro" />
-
-            <association property="prvr" javaType="ParametroVersionVO">
-                <result column="prvr_pk" property="id" />
-            </association>
-
-            <association property="i18n" javaType="I18nVO">
-                <result column="p18n_texto" property="text" />
-            </association>
+            <result column="p18n_texto" property="texto" />
         </association>
 
         <association property="srvc" javaType="ServicioVO">
@@ -30,7 +23,6 @@
             <result column="srvc_numero" property="numero" />
 
             <association property="subp" javaType="ParametroVO">
-                <result column="srvc_subp_pk" property="id" />
                 <result column="srvc_subp" property="parametro" />
             </association>
         </association>
@@ -87,7 +79,7 @@
                     WHERE
                         srvc_pk = srdt_srvc_pk
             ]]>
-            <include refid="xeredi.integra.model.servicio.dao.ServicioDAO.SelectWhere" />
+                <include refid="xeredi.integra.model.servicio.dao.ServicioDAO.SelectWhere" />
             <![CDATA[
                 )
             ]]>

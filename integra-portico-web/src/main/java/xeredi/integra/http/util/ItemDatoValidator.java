@@ -31,7 +31,7 @@ public final class ItemDatoValidator {// srdtMap
 
             for (final Long tpdtId : entiVO.getEntdList()) {
                 final EntidadTipoDatoVO entd = entiVO.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = itdtMap.get(tpdtId.toString());
+                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(tpdtId.toString());
 
                 if (entd.getObligatorio() && itdtVO == null) {
                     support.addActionError(support.getText(ErrorCode.E00001.name(), new String[] { entd.getEtiqueta() }));

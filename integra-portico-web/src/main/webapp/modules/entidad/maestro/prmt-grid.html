@@ -47,7 +47,7 @@
                 <td><a ng-href="#/maestro/prmt/detail/{{enti.id}}/{{item.id}}/{{itemCriterio.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.parametro"></td>
-                <td ng-if="enti.i18n" ng-bind="item.i18n.text"></td>
+                <td ng-if="enti.i18n" ng-bind="item.texto"></td>
                 <td ng-bind="item.prvr.fini | date"></td>
                 <td ng-bind="item.prvr.ffin | date"></td>
                 <td ng-repeat="tpdtId in enti.entdGridList track by $index" ng-switch

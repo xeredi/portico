@@ -14,10 +14,7 @@
         <association property="prmtAsociado" javaType="ParametroVO">
             <result column="sprm_prmt_dep_pk" property="id" />
             <result column="prmt_parametro" property="parametro" />
-
-            <association property="i18n" javaType="I18nVO">
-                <result column="prmt_texto" property="text" />
-            </association>
+            <result column="prmt_texto" property="texto" />
         </association>
 
         <association property="spvr" javaType="SubparametroVersionVO">

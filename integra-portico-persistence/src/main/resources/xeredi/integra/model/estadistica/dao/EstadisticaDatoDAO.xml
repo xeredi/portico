@@ -13,11 +13,7 @@
         <association property="prmt" javaType="ParametroVO">
             <result column="prmt_pk" property="id" />
             <result column="prmt_parametro" property="parametro" />
-            <result column="tppr_pk" property="entiId" />
-
-            <association property="i18n" javaType="I18nVO">
-                <result column="p18n_texto" property="text" />
-            </association>
+            <result column="p18n_texto" property="texto" />
         </association>
     </resultMap>
 

@@ -3,7 +3,6 @@ package xeredi.integra.model.maestro.vo;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 
 // TODO: Auto-generated Javadoc
@@ -18,8 +17,8 @@ public final class ParametroVO extends ItemVO {
     /** The prvr. */
     private ParametroVersionVO prvr;
 
-    /** Datos de i18n del parametro. */
-    private I18nVO i18n;
+    /** The texto. */
+    private String texto;
 
     /**
      * Instantiates a new parametro vo.
@@ -27,8 +26,7 @@ public final class ParametroVO extends ItemVO {
     public ParametroVO() {
         super();
 
-        prvr = new ParametroVersionVO();
-        i18n = new I18nVO();
+        // prvr = new ParametroVersionVO();
     }
 
     /**
@@ -51,8 +49,8 @@ public final class ParametroVO extends ItemVO {
             buffer.append(parametro);
         }
 
-        if (i18n != null && i18n.getText() != null) {
-            buffer.append(" - ").append(i18n.getText());
+        if (texto != null) {
+            buffer.append(" - ").append(texto);
         }
 
         return buffer;
@@ -82,6 +80,25 @@ public final class ParametroVO extends ItemVO {
     }
 
     /**
+     * Gets the texto.
+     *
+     * @return the texto
+     */
+    public String getTexto() {
+        return texto;
+    }
+
+    /**
+     * Sets the texto.
+     *
+     * @param value
+     *            the new texto
+     */
+    public void setTexto(final String value) {
+        texto = value;
+    }
+
+    /**
      * Gets the descripcion.
      *
      * @return the descripcion
@@ -100,25 +117,6 @@ public final class ParametroVO extends ItemVO {
         if (value != null) {
             parametro = value.trim().toUpperCase();
         }
-    }
-
-    /**
-     * Gets the i18n.
-     *
-     * @return the i18n
-     */
-    public I18nVO getI18n() {
-        return i18n;
-    }
-
-    /**
-     * Sets the i18n.
-     *
-     * @param value
-     *            the new i18n
-     */
-    public void setI18n(final I18nVO value) {
-        i18n = value;
     }
 
     /**

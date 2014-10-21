@@ -892,6 +892,9 @@ public class ParametroBO {
                 }
 
                 map.get(itdtVO.getItemId()).put(itdtVO.getTpdtId(), itdtVO);
+
+                itdtVO.setItemId(null);
+                itdtVO.setTpdtId(null);
             }
 
             for (final ParametroVO prmtVO : prmtList) {

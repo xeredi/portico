@@ -14,11 +14,7 @@
         <association property="prmt" javaType="ParametroVO">
             <result column="prdt_prmt_pk" property="id" />
             <result column="prmt_parametro" property="parametro" />
-            <result column="tppr_pk" property="entiId" />
-
-            <association property="i18n" javaType="I18nVO">
-                <result column="p18n_texto" property="text" />
-            </association>
+            <result column="p18n_texto" property="texto" />
         </association>
     </resultMap>
 
@@ -72,7 +68,7 @@
                 	WHERE
                         prvr_pk = prdt_prvr_pk
             ]]>
-            <include refid="xeredi.integra.model.maestro.dao.ParametroDAO.SelectWhere" />
+                <include refid="xeredi.integra.model.maestro.dao.ParametroDAO.SelectWhere" />
             <![CDATA[
                 )
             ]]>

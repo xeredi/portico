@@ -167,7 +167,6 @@ public final class ParametroAction extends ItemAction {
     public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
-        Preconditions.checkNotNull(item.getPrvr());
 
         final ParametroBO prmtBO = new ParametroBO();
 
@@ -181,11 +180,12 @@ public final class ParametroAction extends ItemAction {
         }
 
         if (accion != ACCION_EDICION.create) {
+            Preconditions.checkNotNull(item.getPrvr());
             Preconditions.checkNotNull(item.getId());
             Preconditions.checkNotNull(item.getPrvr().getId());
         }
 
-        if (item.getPrvr().getFini() == null) {
+        if (item.getPrvr() == null || item.getPrvr().getFini() == null) {
             addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_fini") }));
         } else {
             if (item.getPrvr().getFfin() != null && !item.getPrvr().getFini().before(item.getPrvr().getFfin())) {
