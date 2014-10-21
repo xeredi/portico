@@ -29,7 +29,14 @@
     </resultMap>
 
     <select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
-        SELECT srdt.*
+        SELECT srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_cadena
+            , prmt_pk, prmt_parametro
+            , srvc_pk, srvc_anno, srvc_numero
+            , (
+                SELECT prmt_parametro
+                FROM tbl_parametro_prmt
+                WHERE prmt_pk = srvc_subp_pk
+            ) AS srvc_subp
         <if test="idioma != null">
         <![CDATA[
             , (

@@ -9,13 +9,8 @@
 
     <package name="portico" extends="json-default">
         <interceptors>
-            <interceptor name="jsonPortico" class="xeredi.integra.http.controller.interceptor.json.IntegraJsonInterceptor" />
-
             <interceptor-stack name="porticoStack">
                 <interceptor-ref name="timer" />
-<!--
-                <interceptor-ref name="jsonPortico" />
- -->
                 <interceptor-ref name="basicStack" />
             </interceptor-stack>
         </interceptors>

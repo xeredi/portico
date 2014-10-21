@@ -18,15 +18,15 @@
             <result column="srvc_numero" property="numero" />
 
             <association property="subp" javaType="ParametroVO">
-                <id column="srvc_subp_pk" property="id" />
                 <result column="srvc_subp" property="parametro" />
             </association>
         </association>
     </resultMap>
 
     <sql id="SelectPrefix">
-        SELECT ssrv.*
-        , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+        SELECT ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref
+            , srvc_pk, srvc_anno, srvc_numero
+            , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
         <include refid="SelectPrefixSpecific" />
         FROM vw_subservicio_ssrv ssrv
     </sql>

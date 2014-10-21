@@ -19,7 +19,8 @@
     </resultMap>
 
     <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
-        SELECT ssdt.*
+        SELECT ssdt_ssrv_pk, ssdt_tpdt_pk, ssdt_nentero, ssdt_ndecimal, ssdt_fecha, ssdt_cadena
+            , prmt_pk, prmt_parametro
         <if test="idioma != null">
         <![CDATA[
             , (

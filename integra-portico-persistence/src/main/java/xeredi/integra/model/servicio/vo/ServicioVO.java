@@ -74,7 +74,7 @@ public final class ServicioVO extends ItemVO {
      */
     @Override
     public String getEtiqueta() {
-        if ((subp == null || subp.getId() == null) && anno == null && numero == null) {
+        if ((subp == null || subp.getParametro() == null) && anno == null && numero == null) {
             return null;
         }
 

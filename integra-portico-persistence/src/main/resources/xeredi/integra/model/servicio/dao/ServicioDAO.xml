@@ -23,7 +23,7 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-		srvc.*
+        srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
 		, (SELECT prmt_parametro FROM tbl_parametro_prmt
 			WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
     ]]>
