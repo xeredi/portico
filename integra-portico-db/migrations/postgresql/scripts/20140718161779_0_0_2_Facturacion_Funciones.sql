@@ -111,13 +111,13 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql
-;
+\
 
 GRANT EXECUTE ON FUNCTION portico.escalaEsAvituallamiento(INTEGER, TIMESTAMP with time zone) TO portico
-;
+\
 
 COMMENT ON FUNCTION portico.escalaEsAvituallamiento(INTEGER, TIMESTAMP with time zone) IS 'Indicar si la escala pasada como argumento es o no de avituallamiento'
-;
+\
 
 
 
@@ -169,13 +169,13 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql
-;
+\
 
 GRANT EXECUTE ON FUNCTION portico.escalaValorContador(INTEGER, TIMESTAMP with time zone, VARCHAR) TO portico
-;
+\
 
 COMMENT ON FUNCTION portico.escalaValorContador(INTEGER, TIMESTAMP with time zone, VARCHAR) IS 'Devolver el valor de un contador de una escala. Si no encuentra contador, devuelve 0'
-;
+\
 
 
 
@@ -231,13 +231,13 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql
-;
+\
 
 GRANT EXECUTE ON FUNCTION portico.escalaEsBuqueCertificado(INTEGER, TIMESTAMP with time zone, VARCHAR) TO portico
-;
+\
 
 COMMENT ON FUNCTION portico.escalaEsBuqueCertificado(INTEGER, TIMESTAMP with time zone, VARCHAR) IS 'Indicar si el buque de la escala pasada como argumento tiene un certificado vigente para la fecha fref'
-;
+\
 
 
 
@@ -292,13 +292,13 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql
-;
+\
 
 GRANT EXECUTE ON FUNCTION portico.escalaEsBuqueBaseEnPuerto(INTEGER, TIMESTAMP with time zone) TO portico
-;
+\
 
 COMMENT ON FUNCTION portico.escalaEsBuqueBaseEnPuerto(INTEGER, TIMESTAMP with time zone) IS 'Indicar si el buque de la escala pasada como argumento tiene o no base en el subpuerto del servicio'
-;
+\
 
 
 
@@ -354,13 +354,13 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql
-;
+\
 
 GRANT EXECUTE ON FUNCTION portico.escalaNumeroPuertosBuque(INTEGER, TIMESTAMP with time zone) TO portico
-;
+\
 
 COMMENT ON FUNCTION portico.escalaNumeroPuertosBuque(INTEGER, TIMESTAMP with time zone) IS 'Indicar si el buque de la escala pasada como argumento tiene o no base en el subpuerto del servicio'
-;
+\
 
 
 
@@ -405,13 +405,13 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql
-;
+\
 
 GRANT EXECUTE ON FUNCTION portico.atraqueUdsGt(INTEGER, TIMESTAMP with time zone) TO portico
-;
+\
 
 COMMENT ON FUNCTION portico.atraqueUdsGt(INTEGER, TIMESTAMP with time zone) IS 'Devuelve el numero de unidades de GT facturables para un atraque'
-;
+\
 
 
 
@@ -450,13 +450,13 @@ BEGIN
 	END IF;
 END;
 $$ LANGUAGE plpgsql
-;
+\
 
 GRANT EXECUTE ON FUNCTION portico.escalaUdsGt(INTEGER, TIMESTAMP with time zone) TO portico
-;
+\
 
 COMMENT ON FUNCTION portico.escalaUdsGt(INTEGER, TIMESTAMP with time zone) IS 'Devuelve el numero de unidades de GT facturables para una escala'
-;
+\
 
 
 
@@ -478,16 +478,16 @@ COMMENT ON FUNCTION portico.escalaUdsGt(INTEGER, TIMESTAMP with time zone) IS 'D
 
 
 DROP FUNCTION portico.escalaUdsGt(INTEGER, TIMESTAMP with time zone)
-;
+\
 DROP FUNCTION portico.atraqueUdsGt(INTEGER, TIMESTAMP with time zone)
-;
+\
 DROP FUNCTION portico.escalaNumeroPuertosBuque(INTEGER, TIMESTAMP with time zone)
-;
+\
 DROP FUNCTION portico.escalaEsBuqueBaseEnPuerto(INTEGER, TIMESTAMP with time zone)
-;
+\
 DROP FUNCTION portico.escalaEsBuqueCertificado(INTEGER, TIMESTAMP with time zone, VARCHAR)
-;
+\
 DROP FUNCTION portico.escalaValorContador(INTEGER, TIMESTAMP with time zone, VARCHAR)
-;
+\
 DROP FUNCTION portico.escalaEsAvituallamiento(INTEGER, TIMESTAMP with time zone)
-;
+\

@@ -10,10 +10,10 @@ CREATE VIEW portico.vw_estadistica_estd AS
 			pepr_pk = estd_pepr_pk
 		INNER JOIN portico.tbl_parametro_prmt ON
 			prmt_pk = estd_subp_pk
-;
+\
 
 GRANT SELECT ON portico.vw_estadistica_estd TO portico
-;
+\
 
 
 
@@ -34,10 +34,10 @@ CREATE VIEW portico.vw_estadistica_dato_esdt AS
 			prmt_pk = esdt_prmt_pk
 		LEFT JOIN portico.tbl_tipo_parametro_tppr ON
 			tppr_pk = prmt_tppr_pk
-;
+\
 
 GRANT SELECT ON portico.vw_estadistica_dato_esdt TO portico
-;
+\
 
 
 
@@ -54,5 +54,5 @@ GRANT SELECT ON portico.vw_estadistica_dato_esdt TO portico
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP VIEW portico.vw_estadistica_estd;
-DROP VIEW portico.vw_estadistica_dato_esdt;
+DROP VIEW portico.vw_estadistica_estd\
+DROP VIEW portico.vw_estadistica_dato_esdt\

@@ -30,13 +30,16 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.maestro.vo.ParametroVersionVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.maestro.vo.SubparametroVersionVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
@@ -234,12 +237,16 @@ public final class MaestroImporterBO {
                 // Creacion del parametro
                 final ParametroVO prmtVO = new ParametroVO();
 
+                prmtVO.setPrvr(new ParametroVersionVO());
+
                 prmtVO.setEntiId(tpprVO.getId());
                 prmtVO.setParametro(parametro);
                 prmtVO.getPrvr().setFini(fechaInicio);
                 prmtVO.getPrvr().setFfin(fechaFin);
 
                 if (tpprVO.getEntdList() != null) {
+                    prmtVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+
                     for (final Long entdId : tpprVO.getEntdList()) {
                         final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(entdId);
                         final Object value = rs.getObject(i++);
@@ -256,7 +263,8 @@ public final class MaestroImporterBO {
                     final String texto = rs.getString(i++);
 
                     i18nVO.setPrefix(I18nPrefix.prvr);
-                    i18nVO.setLanguage(idioma);
+                    i18nVO.setLanguage(ConfigurationProxy.getConfiguration().getString(
+                            ConfigurationKey.LANGUAGE_DEFAULT.getKey()));
                     i18nVO.setText(texto);
 
                     if (rs.wasNull()) {
@@ -264,13 +272,9 @@ public final class MaestroImporterBO {
                                 + tpprVO.getNombre());
 
                         i18nVO.setText("Texto Generico");
-
-                        // throw new Error("Texto i18n NULO para el parametro: "
-                        // + prmtVO.getParametro() + " del maestro: "
-                        // + tpprVO.getNombre());
                     }
 
-                    i18nMap.put(idioma, i18nVO);
+                    i18nMap.put(i18nVO.getLanguage(), i18nVO);
                 }
 
                 try {
@@ -349,6 +353,8 @@ public final class MaestroImporterBO {
                 sprmVO.setPrmtAsociado(prmtAsociadoVO);
                 sprmVO.setEntiId(tpspVO.getId());
 
+                sprmVO.setSpvr(new SubparametroVersionVO());
+
                 if (tpspVO.getTempExp()) {
                     sprmVO.getSpvr().setFini(rs.getDate(i++));
                     sprmVO.getSpvr().setFfin(rs.getDate(i++));
@@ -358,6 +364,8 @@ public final class MaestroImporterBO {
                 }
 
                 if (tpspVO.getEntdList() != null) {
+                    sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+
                     for (final Long entdId : tpspVO.getEntdList()) {
                         final EntidadTipoDatoVO entdVO = tpspVO.getEntdMap().get(entdId);
                         final Object value = rs.getObject(i++);

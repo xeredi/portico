@@ -26,7 +26,7 @@ public final class SubparametroVO extends ItemVO {
         super();
 
         // prmtAsociado = new ParametroVO();
-        spvr = new SubparametroVersionVO();
+        // spvr = new SubparametroVersionVO();
     }
 
     /**

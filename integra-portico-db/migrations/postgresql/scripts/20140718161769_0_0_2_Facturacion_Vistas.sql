@@ -12,10 +12,10 @@ CREATE VIEW portico.vw_cargo_crgo AS
 			crgv_crgo_pk = crgo_pk
 		INNER JOIN portico.tbl_entidad_enti ON
 			enti_pk = crgo_tpsr_pk
-;
+\
 
 GRANT SELECT ON portico.vw_cargo_crgo TO portico
-;
+\
 
 
 
@@ -29,10 +29,10 @@ CREATE VIEW portico.vw_regla_rgla AS
 			crgo_pk = rgla_crgo_pk
 		INNER JOIN portico.tbl_entidad_enti ON
 			enti_pk = rglv_enti_pk
-;
+\
 
 GRANT SELECT ON portico.vw_regla_rgla TO portico
-;
+\
 
 
 
@@ -48,10 +48,10 @@ CREATE VIEW portico.vw_regla_inc_rgin AS
 			rglv_rgla_pk = rgin_rgla2_pk
 		INNER JOIN portico.tbl_entidad_enti ON
 			enti_pk = rglv_enti_pk
-;
+\
 
 GRANT SELECT ON portico.vw_regla_inc_rgin TO portico
-;
+\
 
 
 
@@ -63,10 +63,10 @@ CREATE VIEW portico.vw_aspecto_aspc AS
 			aspv_aspc_pk = aspc_pk
 		JOIN portico.tbl_entidad_enti ON
 			enti_pk = aspc_tpsr_pk
-;
+\
 
 GRANT SELECT ON portico.vw_aspecto_aspc TO portico
-;
+\
 
 
 
@@ -80,10 +80,10 @@ CREATE VIEW portico.vw_aspecto_cargo_ascr AS
 			crgo_pk = ascr_crgo_pk
 		INNER JOIN portico.tbl_cargo_version_crgv ON
 			crgv_crgo_pk = ascr_crgo_pk
-;
+\
 
 GRANT SELECT ON portico.vw_aspecto_cargo_ascr TO portico
-;
+\
 
 
 
@@ -118,10 +118,10 @@ CREATE VIEW portico.vw_valoracion_vlrc AS
 			AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
 		INNER JOIN portico.tbl_entidad_enti ON
 			enti_pk = srvc_tpsr_pk
-;
+\
 
 GRANT SELECT ON portico.vw_valoracion_vlrc TO portico
-;
+\
 
 
 
@@ -170,10 +170,10 @@ CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 			enti_pk = rglv_enti_pk
 		LEFT JOIN portico.tbl_subservicio_ssrv ON
 			ssrv_pk = vlrl_ssrv_pk
-;
+\
 
 GRANT SELECT ON portico.vw_valoracion_lin_vlrl TO portico
-;
+\
 
 
 
@@ -187,10 +187,10 @@ CREATE VIEW portico.vw_valoracion_det_vlrd AS
 	FROM portico.tbl_valoracion_det_vlrd
 		LEFT JOIN portico.tbl_subservicio_ssrv ON
 			ssrv_pk = vlrd_ssrv_pk
-;
+\
 
 GRANT SELECT ON portico.vw_valoracion_det_vlrd TO portico
-;
+\
 
 
 
@@ -208,10 +208,10 @@ CREATE VIEW portico.vw_valoracion_cargo_vlrg AS
 					vlrc_pk = vlrg_vlrc_pk
 					AND vlrc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrc_fref)
 			)
-;
+\
 
 GRANT SELECT ON portico.vw_valoracion_cargo_vlrg TO portico
-;
+\
 
 
 
@@ -229,10 +229,10 @@ CREATE VIEW portico.vw_valoracion_imp_vlri AS
 					vlrc_pk = vlri_vlrc_pk
 					AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
 			)
-;
+\
 
 GRANT SELECT ON portico.vw_valoracion_imp_vlri TO portico
-;
+\
 
 
 
@@ -265,10 +265,10 @@ CREATE VIEW portico.vw_factura_fctr AS
 			AND fctr_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fctr_fref)
 		INNER JOIN portico.tbl_factura_serie_fcsr on
 			fcsr_pk = fctr_fcsr_pk
-;
+\
 
 GRANT SELECT ON portico.vw_factura_fctr TO portico
-;
+\
 
 
 
@@ -287,10 +287,10 @@ CREATE VIEW portico.vw_factura_cargo_fctc AS
 					fctr_pk = fctc_fctr_pk
 					AND fctr_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, fctr_fref)
 			)
-;
+\
 
 GRANT SELECT ON portico.vw_factura_cargo_fctc TO portico
-;
+\
 
 
 
@@ -308,10 +308,10 @@ CREATE VIEW portico.vw_factura_imp_fcti AS
 					fctr_pk = fcti_fctr_pk
 					AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
 			)
-;
+\
 
 GRANT SELECT ON portico.vw_factura_imp_fcti TO portico
-;
+\
 
 
 
@@ -331,10 +331,10 @@ CREATE VIEW portico.vw_factura_srv_fcts AS
 			AND fcts_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fcts_fref)
 		INNER JOIN portico.tbl_servicio_srvc ON
 			srvc_pk = fcts_srvc_pk
-;
+\
 
 GRANT SELECT ON portico.vw_factura_srv_fcts TO portico
-;
+\
 
 
 
@@ -375,10 +375,10 @@ CREATE VIEW portico.vw_factura_lin_fctl AS
 			)
 		LEFT JOIN portico.tbl_subservicio_ssrv ON
 			ssrv_pk = fctl_ssrv_pk
-;
+\
 
 GRANT SELECT ON portico.vw_factura_lin_fctl TO portico
-;
+\
 
 
 
@@ -388,10 +388,10 @@ CREATE VIEW portico.vw_factura_det_fctd AS
 		portico.tbl_factura_det_fctd
 		LEFT JOIN portico.tbl_subservicio_ssrv ON
 			ssrv_pk = fctd_ssrv_pk
-;
+\
 
 GRANT SELECT ON portico.vw_factura_det_fctd TO portico
-;
+\
 
 
 
@@ -401,34 +401,34 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 -- SQL to undo the change goes here.
 
 DROP VIEW portico.vw_aspecto_cargo_ascr
-;
+\
 DROP VIEW portico.vw_aspecto_aspc
-;
+\
 DROP VIEW portico.vw_cargo_crgo
-;
+\
 DROP VIEW portico.vw_regla_rgla
-;
+\
 DROP VIEW portico.vw_regla_inc_rgin
-;
+\
 DROP VIEW portico.vw_factura_det_fctd
-;
+\
 DROP VIEW portico.vw_factura_lin_fctl
-;
+\
 DROP VIEW portico.vw_factura_srv_fcts
-;
+\
 DROP VIEW portico.vw_factura_imp_fcti
-;
+\
 DROP VIEW portico.vw_factura_cargo_fctc
-;
+\
 DROP VIEW portico.vw_factura_fctr
-;
+\
 DROP VIEW portico.vw_valoracion_imp_vlri
-;
+\
 DROP VIEW portico.vw_valoracion_cargo_vlrg
-;
+\
 DROP VIEW portico.vw_valoracion_det_vlrd
-;
+\
 DROP VIEW portico.vw_valoracion_lin_vlrl
-;
+\
 DROP VIEW portico.vw_valoracion_vlrc
-;
+\

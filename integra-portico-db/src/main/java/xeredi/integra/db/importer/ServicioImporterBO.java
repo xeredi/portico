@@ -151,7 +151,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-    DuplicateInstanceException {
+            DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
@@ -282,13 +282,11 @@ public final class ServicioImporterBO {
                     }
 
                     if (tpsrVO.getEntdList() != null) {
+                        srvcVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+
                         for (final Long entdId : tpsrVO.getEntdList()) {
                             final EntidadTipoDatoVO entdVO = tpsrVO.getEntdMap().get(entdId);
                             final Object value = rs.getObject(i++);
-
-                            if (LOG.isTraceEnabled()) {
-                                LOG.trace("Guardar " + value + " en el dato " + entdVO.getTpdt().getNombre());
-                            }
 
                             if (rs.wasNull() && entdVO.getObligatorio()
                                     && entdVO.getTpdt().getTipoElemento() != TipoElemento.BO) {
@@ -303,10 +301,6 @@ public final class ServicioImporterBO {
                     }
 
                     try {
-                        if (LOG.isTraceEnabled()) {
-                            LOG.trace(srvcVO);
-                        }
-
                         srvcBO.insert(srvcVO, tpsrVO, null);
                         entiMap.get(entiVO.getId()).put(servId, srvcVO.getId());
                     } catch (final DuplicateInstanceException ex) {
@@ -387,13 +381,11 @@ public final class ServicioImporterBO {
                         }
 
                         if (tpssVO.getEntdList() != null) {
+                            ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+
                             for (final Long entdId : tpssVO.getEntdList()) {
                                 final EntidadTipoDatoVO entdVO = tpssVO.getEntdMap().get(entdId);
                                 final Object value = rs.getObject(i++);
-
-                                if (LOG.isTraceEnabled()) {
-                                    LOG.trace("Guardar " + value + " en el dato " + entdVO.getTpdt().getNombre());
-                                }
 
                                 if (rs.wasNull() && entdVO.getObligatorio()
                                         && entdVO.getTpdt().getTipoElemento() != TipoElemento.BO) {
@@ -409,10 +401,6 @@ public final class ServicioImporterBO {
 
                         if (!hasErrors) {
                             try {
-                                if (LOG.isTraceEnabled()) {
-                                    LOG.trace(ssrvVO);
-                                }
-
                                 ssrvBO.insert(ssrvVO, tpssVO, padreIds);
                                 entiMap.get(entiVO.getId()).put(subservId, ssrvVO.getId());
                             } catch (final DuplicateInstanceException ex) {
