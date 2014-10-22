@@ -3,10 +3,12 @@ package xeredi.integra.db.exporter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,7 +18,6 @@ import xeredi.integra.model.comun.bo.MessageI18nBO;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
-import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -43,21 +44,16 @@ public class I18nJs {
         final MessageI18nBO messageI18nBO = new MessageI18nBO();
 
         final List<String> messageI18nKeys = messageI18nBO.selectKeyList(MessageI18nBundlename.web);
+        final Set<I18nPrefix> i18nPrefixSet = new HashSet<>();
+
+        i18nPrefixSet.add(I18nPrefix.cdrf);
+        i18nPrefixSet.add(I18nPrefix.enti);
+        i18nPrefixSet.add(I18nPrefix.tpdt);
 
         for (final String language : languages) {
             final List<LabelValueVO> labelValues = new ArrayList<>();
 
-            for (final I18nVO i18n : i18nBO.selectList(I18nPrefix.cdrf, language)) {
-                labelValues.add(new LabelValueVO(i18n.getPrefix().name() + '_' + i18n.getExternalId(), i18n.getText()));
-            }
-
-            for (final I18nVO i18n : i18nBO.selectList(I18nPrefix.enti, language)) {
-                labelValues.add(new LabelValueVO(i18n.getPrefix().name() + '_' + i18n.getExternalId(), i18n.getText()));
-            }
-
-            for (final I18nVO i18n : i18nBO.selectList(I18nPrefix.tpdt, language)) {
-                labelValues.add(new LabelValueVO(i18n.getPrefix().name() + '_' + i18n.getExternalId(), i18n.getText()));
-            }
+            labelValues.addAll(i18nBO.selectLabelValueList(i18nPrefixSet, language));
 
             final Map<String, String> messageI18nMap = messageI18nBO.selectKeyValueMap(MessageI18nBundlename.web,
                     new Locale(language));

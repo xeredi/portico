@@ -34,7 +34,7 @@
 
         <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>srvc_estado</label>
-            <p class="form-control-static">{{(('cdrf_' + enti.tpdtEstado.codigo + '_' + item.estado) | translate)}}</p>
+            <p class="form-control-static" ng-bind="'cdrf_' + enti.tpdtEstado.id + '_' + item.estado | translate"></p>
         </div>
 
         <div ng-if="!enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">

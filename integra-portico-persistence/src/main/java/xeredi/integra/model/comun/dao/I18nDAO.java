@@ -4,6 +4,7 @@ import java.util.List;
 
 import xeredi.integra.model.comun.vo.I18nCriterioVO;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,5 +45,14 @@ public interface I18nDAO {
      * @return the list
      */
     List<I18nVO> selectList(final I18nCriterioVO criterioVO);
+
+    /**
+     * Select label value list.
+     *
+     * @param criterioVO
+     *            the criterio vo
+     * @return the list
+     */
+    List<LabelValueVO> selectLabelValueList(final I18nCriterioVO criterioVO);
 
 }

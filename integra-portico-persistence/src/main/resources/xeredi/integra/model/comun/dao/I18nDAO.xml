@@ -42,6 +42,36 @@
         ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
     </select>
 
+    <select id="selectLabelValueList" parameterType="I18nCriterioVO" resultType="LabelValueVO">
+    <![CDATA[
+        SELECT
+            i18n_text AS value
+            , portico.concatenate(
+                i18n_pref
+                , (
+                    CASE
+                        WHEN i18n_pref = 'cdrf' THEN (
+                            SELECT
+                                portico.concatenate(
+                                    '_'
+                                    , portico.concatenate(
+                                        portico.concatenate(cdrf_tpdt_pk, '_')
+                                        , cdrf_valor
+                                    )
+                                )
+                            FROM tbl_codigo_ref_cdrf
+                            WHERE cdrf_pk = i18n_ext_pk
+                        )
+                        ELSE portico.concatenate('_', i18n_ext_pk)
+                    END
+                )
+            ) AS label
+        FROM tbl_i18n_i18n
+    ]]>
+        <include refid="SelectWhere" />
+        ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
+    </select>
+
     <insert id="insert" parameterType="I18nVO">
     <![CDATA[
         INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text)

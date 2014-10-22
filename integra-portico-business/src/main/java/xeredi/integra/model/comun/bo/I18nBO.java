@@ -3,6 +3,7 @@ package xeredi.integra.model.comun.bo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -11,6 +12,7 @@ import xeredi.integra.model.comun.dao.I18nDAO;
 import xeredi.integra.model.comun.vo.I18nCriterioVO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -78,9 +80,37 @@ public final class I18nBO {
 
             i18nCriterioVO.setPrefix(prefix);
             i18nCriterioVO.setLanguage(language);
-            ;
 
             return i18nDAO.selectList(i18nCriterioVO);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Select label value list.
+     *
+     * @param prefixSet
+     *            the prefix set
+     * @param language
+     *            the language
+     * @return the list
+     */
+    public final List<LabelValueVO> selectLabelValueList(final Set<I18nPrefix> prefixSet, final String language) {
+        Preconditions.checkNotNull(prefixSet);
+        Preconditions.checkNotNull(language);
+
+        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+
+        final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
+
+        try {
+            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
+
+            i18nCriterioVO.setPrefixSet(prefixSet);
+            i18nCriterioVO.setLanguage(language);
+
+            return i18nDAO.selectLabelValueList(i18nCriterioVO);
         } finally {
             session.close();
         }
