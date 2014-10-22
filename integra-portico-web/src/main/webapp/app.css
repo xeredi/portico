@@ -17,6 +17,11 @@ label {
 	font-weight: bold;
 }
 
+.nav-pills>li, .modal-title, legend, .bg-primary {
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
 .modal.custom, .modal-dialog {
 	width: 90%;
 }
@@ -31,6 +36,7 @@ label {
 }
 
 .bg-primary {
+	font-size: 12px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 15px;

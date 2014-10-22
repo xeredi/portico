@@ -5,7 +5,7 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>entd_tpdt_nombre</label> <select ng-if="accion == 'create'" ng-model="entd.tpdt.id"
+                <label translate>entd_tpdt</label> <select ng-if="accion == 'create'" ng-model="entd.tpdt.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in tpdtList"
                     class="form-control input-sm">
                     <option />
@@ -65,10 +65,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
         </button>
     </div>
 </form>

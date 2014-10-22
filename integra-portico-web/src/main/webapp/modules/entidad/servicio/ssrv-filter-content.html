@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <p class="modal-title" translate="filter_title"></p>
+    <p class="modal-title" translate="filtro"></p>
 </div>
 <div class="modal-body">
     <form>
@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>limit</label> <select ng-model="itemCriterio.limit"
+                    <label translate>filtro_limit</label> <select ng-model="itemCriterio.limit"
                         ng-options="limitValue for limitValue in limits" class="form-control input-sm">
                         <option />
                     </select>
@@ -41,9 +41,9 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" data-ng-click="ok()">
-        <i class="glyphicon glyphicon-search"></i><span translate>boton_buscar</span>
+        <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
     </button>
     <button class="btn btn-default" data-ng-click="cancel()">
-        <i class="glyphicon glyphicon-remove"></i><span translate>boton_cancelar</span>
+        <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
     </button>
 </div>

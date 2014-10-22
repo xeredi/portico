@@ -1,11 +1,11 @@
-<p class="bg-primary" ng-bind="tpdt.nombre | uppercase"></p>
+<p class="bg-primary" ng-bind="tpdt.nombre"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/metamodelo/tpdt/edit/{{tpdt.id}}"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>boton_editar</span></a>
+            <span translate>btn_editar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
@@ -22,11 +22,11 @@
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>tpdt_tpht</label>
-            <p class="form-control-static">{{tpdt.tpht}} - {{'TipoHtml_' + tpdt.tpht | translate}}</p>
+            <p class="form-control-static">{{tpdt.tpht}} - {{'HtmlTipo_' + tpdt.tpht | translate}}</p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-            <label translate>tpdt_tipoElemento</label>
-            <p class="form-control-static">{{tpdt.tipoElemento}} - {{'TipoElemento_' + tpdt.tipoElemento |
+            <label translate>tpdt_tpel</label>
+            <p class="form-control-static">{{tpdt.tipoElemento}} - {{'ElementoTipo_' + tpdt.tipoElemento |
                 translate}}</p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
@@ -46,12 +46,12 @@
 </fieldset>
 
 <fieldset ng-if="tpdt.tipoElemento == 'CR'">
-    <legend ng-bind="'Valores de Codigo de Referencia' | uppercase"></legend>
+    <legend ng-bind="'Valores de Codigo de Referencia'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" ng-href="#/metamodelo/cdrf/create/{{tpdt.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
 

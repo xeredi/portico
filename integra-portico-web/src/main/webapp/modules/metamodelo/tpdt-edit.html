@@ -15,14 +15,14 @@
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate>tpdt_tpht</label> <select ng-model="tpdt.tpht"
-                    ng-options="cdrf as ('TipoHtml_' + cdrf | translate) for cdrf in tphts"
+                    ng-options="cdrf as ('HtmlTipo_' + cdrf | translate) for cdrf in tphts"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label translate>tpdt_tipoElemento</label> <select
-                    ng-options="cdrf as ('TipoElemento_' + cdrf | translate) for cdrf in tiposElemento"
+                <label translate>tpdt_tpel</label> <select
+                    ng-options="cdrf as ('ElementoTipo_' + cdrf | translate) for cdrf in tiposElemento"
                     ng-model="tpdt.tipoElemento" class="form-control input-sm">
                     <option />
                 </select>
@@ -52,10 +52,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
         </button>
     </div>
 </form>

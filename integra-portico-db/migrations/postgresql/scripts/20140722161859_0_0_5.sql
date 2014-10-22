@@ -93,6 +93,8 @@ INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_defa
 	'files.home', 'String', '/proyectos/deploy/files/portico')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
 	'filter.limit', 'Long', '5')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'webapp.install.path', 'String', '/proyectos/team/git/portico/integra-portico-web/src/main/webapp')\
 
 
 -- Mensajes i18n

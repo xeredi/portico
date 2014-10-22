@@ -1,10 +1,10 @@
 <fieldset>
-    <legend ng-bind="'Datos' | uppercase"></legend>
+    <legend ng-bind="'Datos'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" ng-href="#/metamodelo/entd/create/{{enti.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
 
@@ -21,10 +21,10 @@
                 <th translate>entd_obligatorio</th>
                 <th translate>entd_gridable</th>
                 <th translate>entd_filtrable</th>
-                <th translate>entd_tpdt_nombre</th>
-                <th translate>entd_tpdt_tipoElemento</th>
-                <th translate>entd_tpdt_tpht</th>
-                <th translate>entd_tpdt_enti</th>
+                <th translate>entd_tpdt</th>
+                <th translate>tpdt_tpel</th>
+                <th translate>tpdt_tpht</th>
+                <th translate>tpdt_enti</th>
             </tr>
         </thead>
         <tbody>
@@ -41,9 +41,9 @@
                 <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].gridable ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].filtrable ? 'ok' : 'remove'}}"></i></td>
                 <td nowrap="nowrap" ng-bind="enti.entdMap[entd].tpdt.nombre"></td>
-                <td title="{{'TipoElemento_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}"
+                <td title="{{'ElementoTipo_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}"
                     ng-bind="enti.entdMap[entd].tpdt.tipoElemento"></td>
-                <td title="{{'TipoHtml_' + enti.entdMap[entd].tpdt.tpht | translate}}"
+                <td title="{{'HtmlTipo_' + enti.entdMap[entd].tpdt.tpht | translate}}"
                     ng-bind="enti.entdMap[entd].tpdt.tpht"></td>
                 <td nowrap="nowrap" ng-bind="enti.entdMap[entd].tpdt.enti.etiqueta"></span>
                 </td>

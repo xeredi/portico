@@ -1,11 +1,11 @@
-<p class="bg-primary" ng-bind="'Cargo' | uppercase"></p>
+<p class="bg-primary" ng-bind="'Cargo'"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/facturacion/crgo/edit/{{crgo.crgv.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
@@ -61,12 +61,12 @@
 </fieldset>
 
 <fieldset>
-    <legend ng-bind="'Reglas' | uppercase"></legend>
+    <legend ng-bind="'Reglas'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" ng-href="#/facturacion/rgla/create/{{crgo.crgv.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
 

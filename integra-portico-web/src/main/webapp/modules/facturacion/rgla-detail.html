@@ -1,11 +1,11 @@
-<p class="bg-primary" ng-bind="'Regla' | uppercase"></p>
+<p class="bg-primary" ng-bind="'Regla'"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/facturacion/rgla/edit/{{rgla.rglv.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
@@ -87,7 +87,7 @@
 </fieldset>
 
 <fieldset ng-if="rgla.rglv.tipo == 'T'">
-    <legend>{{'Datos Variables' | uppercase}}</legend>
+    <legend>{{'Datos Variables'}}</legend>
     <div class="row-fluid">
         <div class="col-md-9 form-group">
             <table class="table-bordered table-condensed table-hover table-nonfluid">
@@ -168,12 +168,12 @@
 </fieldset>
 
 <fieldset>
-    <legend ng-bind="'Reglas Incompatibles' | uppercase"></legend>
+    <legend ng-bind="'Reglas Incompatibles'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" ng-href="#/facturacion/rgin/create/{{rgla.crgo.id}}/{{rgla.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
 

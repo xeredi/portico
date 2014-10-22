@@ -1,4 +1,4 @@
-<p class="bg-primary" ng-bind="'Regla' | uppercase"></p>
+<p class="bg-primary" ng-bind="'Regla'"></p>
 
 <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
 <ul>
@@ -97,7 +97,7 @@
     </fieldset>
 
     <fieldset ng-if="rgla.rglv.tipo == 'T'">
-        <legend ng-bind="'Elementos Informativos' | uppercase"></legend>
+        <legend ng-bind="'Elementos Informativos'"></legend>
 
         <div class="row-fluid">
             <div class="col-md-12 form-group">
@@ -147,7 +147,7 @@
     </fieldset>
 
     <fieldset ng-if="rgla.rglv.tipo == 'T'">
-        <legend ng-bind="'Elementos Cuantitativos' | uppercase"></legend>
+        <legend ng-bind="'Elementos Cuantitativos'"></legend>
 
         <div class="row-fluid">
             <div class="col-md-11 form-group">
@@ -199,10 +199,10 @@
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>boton_guardar</span>
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
         </button>
         <button data-ng-click="cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
         </button>
     </div>
 </form>

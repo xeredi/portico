@@ -6,9 +6,9 @@
     </div>
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/facturacion/aspc/create"><i class="glyphicon glyphicon-file"></i><span
-            translate>boton_alta</span> </a>
+            translate>btn_crear</span> </a>
         <button class="btn btn-default" data-ng-click="filter('lg')">
-            <i class="glyphicon glyphicon-search"></i><span translate>boton_filtro</span>
+            <i class="glyphicon glyphicon-search"></i><span translate>btn_filtrar</span>
         </button>
 
         <script type="text/ng-template" id="aspc-filter-content.html">
@@ -18,7 +18,7 @@
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="pagination_results"
+    <span class="label label-default" translate="grid_count"
         translate-value-count="{{aspcList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">

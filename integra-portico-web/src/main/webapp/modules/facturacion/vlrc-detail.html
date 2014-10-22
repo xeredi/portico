@@ -1,12 +1,12 @@
 
-<tabset type="pills"> <tab heading="{{'vlrc' | translate | uppercase}}">
+<tabset type="pills"> <tab heading="{{'vlrc' | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span>
+            <i class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span>
         </button>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
@@ -98,7 +98,7 @@
 </fieldset>
 
 <fieldset>
-    <legend ng-bind="'Cargos Aplicados' | uppercase"></legend>
+    <legend ng-bind="'Cargos Aplicados'"></legend>
     <div class="row-fluid">
         <div class="col-md-4 form-group">
             <ul>
@@ -110,7 +110,7 @@
 </fieldset>
 
 <fieldset>
-    <legend ng-bind="'Desglose de IVA' | uppercase"></legend>
+    <legend ng-bind="'Desglose de IVA'"></legend>
     <div class="row-fluid">
         <div class="col-md-4 form-group">
             <table class="table-bordered table-condensed table-hover table-nonfluid">
@@ -137,16 +137,16 @@
         </div>
     </div>
 </fieldset>
-</tab> <tab heading="{{'vlrls' | translate | uppercase}}">
+</tab> <tab heading="{{'vlrls' | translate}}">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/facturacion/vlrl/create/{{vlrc.id}}"><i
-            class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span> </a>
+            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span> </a>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="pagination_results"
+    <span class="label label-default" translate="grid_count"
         translate-value-count="{{vlrlList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">

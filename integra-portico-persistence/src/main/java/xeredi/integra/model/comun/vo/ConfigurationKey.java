@@ -12,7 +12,11 @@ public enum ConfigurationKey {
     /** The language available. */
     LANGUAGE_AVAILABLE("language.available"),
 
+    /** The filter limit. */
     FILTER_LIMIT("filter.limit"),
+
+    /** The webapp install path. */
+    WEBAPP_INSTALL_PATH("webapp.install.path"),
 
     ;
 

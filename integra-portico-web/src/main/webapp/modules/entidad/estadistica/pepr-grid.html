@@ -1,4 +1,4 @@
-<p class="bg-primary" ng-bind="'pepr_grid' | translate | uppercase"></p>
+<p class="bg-primary" ng-bind="'pepr_grid' | translate"></p>
 
 <div ng-if="showFilter">
     <form>
@@ -20,7 +20,7 @@
                         class="form-control input-sm" />
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>limit</label> <select ng-model="limit"
+                    <label translate>filtro_limit</label> <select ng-model="limit"
                         ng-options="limitValue for limitValue in limits" class="form-control input-sm">
                         <option />
                     </select>
@@ -30,10 +30,10 @@
 
         <div class="btn-group">
             <button data-ng-click="search()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i> <span translate>boton_buscar</span>
+                <i class="glyphicon glyphicon-search"></i> <span translate>btn_buscar</span>
             </button>
             <button data-ng-click="cancelSearch()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>boton_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
             </button>
         </div>
     </form>
@@ -50,13 +50,13 @@
 
         <div class="btn-group">
             <button data-ng-click="filter()" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
+                <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
             </button>
         </div>
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default" translate="pagination_results"
+        <span class="label label-default" translate="grid_count"
             translate-value-count="{{peprList.count | number:0}}"></span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">

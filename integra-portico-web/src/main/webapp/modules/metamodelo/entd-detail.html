@@ -1,11 +1,11 @@
-<p class="bg-primary" ng-bind="entd.etiqueta | uppercase"></p>
+<p class="bg-primary" ng-bind="entd.etiqueta"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/metamodelo/entd/edit/{{entd.entiId}}/{{entd.tpdt.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
@@ -13,7 +13,7 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-            <label translate>entd_tpdt_nombre</label>
+            <label translate>entd_tpdt</label>
             <p class="form-control-static">
                 <a ng-href="#/metamodelo/tpdt/detail/{{entd.tpdt.id}}">{{entd.tpdt.nombre}}</a>
             </p>
@@ -23,15 +23,15 @@
             <p class="form-control-static" ng-bind="entd.etiqueta"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-            <label translate>entd_tpdt_tipoElemento</label>
+            <label translate>tpdt_tpel</label>
             <p class="form-control-static" ng-bind="entd.tpdt.tipoElemento"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-            <label translate>entd_tpdt_tpht</label>
+            <label translate>tpdt_tpht</label>
             <p class="form-control-static" ng-bind="entd.tpdt.tpht"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-            <label translate>entd_tpdt_enti</label>
+            <label translate>tpdt_enti</label>
             <p class="form-control-static">
                 <span ng-if="entd.tpdt.enti"> <a ng-if="entd.tpdt.enti.tipo == 'P'"
                     ng-href="#/metamodelo/tppr/detail/{{entd.tpdt.enti.id}}" ng-bind="entd.tpdt.enti.etiqueta"></a><a

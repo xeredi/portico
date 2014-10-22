@@ -1,11 +1,11 @@
-<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
+<p class="bg-primary" ng-bind="enti.nombre"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/metamodelo/tpsp/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>boton_editar</span></a>
+            <span translate>btn_editar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
@@ -33,25 +33,25 @@
     </div>
     <div class="row-fluid">
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label translate>enti_cmd_alta</label>
+            <label translate>enti_cmdAlta</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{enti.cmdAlta ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label translate>enti_cmd_baja</label>
+            <label translate>enti_cmdBaja</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{enti.cmdBaja ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label translate>enti_cmd_edicion</label>
+            <label translate>enti_cmdEdicion</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label translate>enti_cmd_duplicado</label>
+            <label translate>enti_cmdDuplicado</label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
             </p>

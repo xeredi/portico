@@ -4,20 +4,20 @@
 </ul>
 </alert>
 
-<tabset type="pills"> <tab heading="{{enti.nombre | uppercase}}" select="tabSelected(null)">
+<tabset type="pills"> <tab heading="{{enti.nombre}}" select="tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/srvc/edit/{{enti.id}}/{{item.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>boton_editar</span> </a> <a class="btn btn-default"
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span> </a> <a class="btn btn-default"
             ng-href="#/servicio/srvc/duplicate/{{enti.id}}/{{item.id}}"><i class="glyphicon glyphicon-tags"></i> <span
-            translate>boton_duplicar</span> </a>
+            translate>btn_duplicar</span> </a>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>boton_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
     <div class="btn-group" ng-if="enti.facturable">
-        <a class="btn btn-default" ng-href="#/facturacion/vlrc/valorar/{{item.id}}"> <span translate>boton_valorar</span></a>
-        <a class="btn btn-default" ng-href="#/facturacion/vlrc/grid/?srvcId={{item.id}}"> <span translate>boton_valoraciones</span></a>
+        <a class="btn btn-default" ng-href="#/facturacion/vlrc/valorar/{{item.id}}"> <span translate>btn_valorar</span></a>
+        <a class="btn btn-default" ng-href="#/facturacion/vlrc/grid/?srvcId={{item.id}}"> <span translate>btn_valoraciones</span></a>
     </div>
     <div class="btn-group">
         <button ng-repeat="enac in enti.enacList track by $index" ng-click="srvcAction(enac.path)"
@@ -28,7 +28,7 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-            <label translate>srvc_servicio</label>
+            <label translate>srvc</label>
             <p class="form-control-static" ng-bind="item.etiqueta"></p>
         </div>
 
@@ -56,7 +56,7 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre | uppercase}}"
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre}}"
     active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -68,12 +68,12 @@
 
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/ssrv/create/{{entiHija.id}}/{{item.id}}"><i
-            class="glyphicon glyphicon-file"></i> <span translate>boton_alta</span></a>
+            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="pagination_results"
+    <span class="label label-default" translate="grid_count"
         translate-value-count="{{itemHijosMap[entiHija.id].count | number:0}}"></span><i ng-show="loading"
         class="glyphicon glyphicon-time"></i>
 

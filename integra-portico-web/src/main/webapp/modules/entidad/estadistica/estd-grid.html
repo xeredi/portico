@@ -1,4 +1,4 @@
-<p class="bg-primary" ng-bind="enti.nombre | uppercase"></p>
+<p class="bg-primary" ng-bind="enti.nombre"></p>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -9,7 +9,7 @@
 
     <div class="btn-group">
         <button data-ng-click="filter('lg')" class="btn btn-default">
-            <i class="glyphicon glyphicon-search"></i> <span translate>boton_filtro</span>
+            <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
         </button>
 
         <script type="text/ng-template" id="estd-filter-content.html">
@@ -20,12 +20,12 @@
     <div class="btn-group">
         <a class="btn btn-default"
             ng-href="estadistica/estd-xls-export.action?itemCriterio.entiId={{enti.id}}&itemCriterio.pepr.id={{itemCriterio.pepr.id}}"><i
-            class="glyphicon glyphicon-download-alt"></i> <span translate>boton_exportar</span> </a>
+            class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span> </a>
     </div>
 </div>
 
 <div class="table-responsive">
-    <span class="label label-default" translate="pagination_results"
+    <span class="label label-default" translate="grid_count"
         translate-value-count="{{itemList.count | number:0}}"></span><i ng-show="loading"
         class="glyphicon glyphicon-time"></i>
 
