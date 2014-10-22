@@ -71,10 +71,10 @@ public interface TipoSubparametroDAO {
     /**
      * Select.
      *
-     * @param id
-     *            the id
+     * @param entiCriterioVO
+     *            the enti criterio vo
      * @return the tipo subparametro vo
      */
-    TipoSubparametroVO select(final Long id);
+    TipoSubparametroVO selectObject(final TipoSubparametroCriterioVO entiCriterioVO);
 
 }

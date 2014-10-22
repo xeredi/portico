@@ -6,7 +6,7 @@
             class="col-sm-{{enti.entdMap[tpdtId].spanSm}} col-md-{{enti.entdMap[tpdtId].span}} col-lg-{{enti.entdMap[tpdtId].spanLg}} form-group">
             <label ng-bind="enti.entdMap[tpdtId].etiqueta"></label>
             <p ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento" class="form-control-static">
-                &nbsp;<span ng-switch-when="BO"><i
+                <span ng-switch-when="BO"><i
                     class="glyphicon glyphicon-{{item.itdtMap[tpdtId].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
                     ng-switch-when="ND" ng-bind="item.itdtMap[tpdtId].cantidadDecimal | number:2"></span> <span
                     ng-switch-when="NE" ng-bind="item.itdtMap[tpdtId].cantidadEntera | number:0"></span> <span

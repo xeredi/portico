@@ -36,11 +36,11 @@ public interface TipoServicioDAO {
     /**
      * Select.
      *
-     * @param tpsrId
-     *            the tpsr id
+     * @param entiCriterioVO
+     *            the enti criterio vo
      * @return the tipo servicio vo
      */
-    TipoServicioVO select(final Long tpsrId);
+    TipoServicioVO selectObject(final TipoServicioCriterioVO entiCriterioVO);
 
     /**
      * Count.

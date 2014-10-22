@@ -58,13 +58,13 @@ public interface TipoDatoDAO {
     boolean exists(final TipoDatoVO tpdtVO);
 
     /**
-     * Select.
+     * Select object.
      *
-     * @param id
-     *            the id
+     * @param tpdtCriterioVO
+     *            the tpdt criterio vo
      * @return the tipo dato vo
      */
-    TipoDatoVO select(final Long id);
+    TipoDatoVO selectObject(final TipoDatoCriterioVO tpdtCriterioVO);
 
     /**
      * Count.

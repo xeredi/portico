@@ -8,27 +8,40 @@
         <result column="tpsp_es_i18n" property="i18n" />
         <result column="tpsp_es_tmp_exp" property="tempExp" />
         <result column="tpsp_tppr_pk" property="tpprId" />
-<!--
-        <association property="tppr" javaType="TipoParametroVO">
-            <result column="tpsp_tppr_pk" property="id" />
-        </association>
- -->
+
         <association property="tpprAsociado" javaType="TipoParametroVO">
             <result column="tppr_asociado_pk" property="id" />
-            <result column="tppr_asociado_nombre" property="nombre" />
             <result column="tppr_asociado_codigo" property="codigo" />
+            <result column="tppr_asociado_nombre" property="nombre" />
         </association>
     </resultMap>
 
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enti.enti_pk, enti.enti_nombre, enti.enti_codigo, enti.enti_tipo, enti.enti_max_grid
+            enti.enti_pk, enti.enti_codigo, enti.enti_tipo, enti.enti_max_grid
             , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
             , tpsp.tpsp_es_i18n, tpsp.tpsp_es_tmp_exp, tpsp.tpsp_tppr_pk
             , entiAsociado.enti_pk AS tppr_asociado_pk
-            , entiAsociado.enti_nombre AS tppr_asociado_nombre
             , entiAsociado.enti_codigo AS tppr_asociado_codigo
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = enti.enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enti_nombre
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = entiAsociado.enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS tppr_asociado_nombre
+        ]]>
+        </if>
+    <![CDATA[
         FROM
             tbl_tipo_subparametro_tpsp tpsp
             INNER JOIN tbl_entidad_enti enti ON
@@ -40,6 +53,9 @@
 
     <sql id="SelectWhere">
         <where>
+            <if test="id != null">
+                AND enti.enti_pk = #{id}
+            </if>
             <if test="ids != null">
                 AND enti.enti_pk IN
                 <foreach collection="ids" item="item" open="(" close=")"
@@ -62,11 +78,11 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
         <![CDATA[
-        ORDER BY enti.enti_nombre, enti.enti_pk
+        ORDER BY enti.enti_codigo, enti.enti_pk
         ]]>
     </select>
 
-    <select id="count" resultType="int">
+    <select id="count" resultType="int" parameterType="TipoSubparametroCriterioVO">
         <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -77,13 +93,9 @@
         <include refid="SelectWhere" />
     </select>
 
-    <select id="select" resultMap="ResultMap" parameterType="Long">
+    <select id="selectObject" resultMap="ResultMap" parameterType="TipoSubparametroCriterioVO">
         <include refid="SelectPrefix" />
-        <where>
-        <![CDATA[
-        enti.enti_pk = #{value}
-        ]]>
-        </where>
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="TipoSubparametroVO">

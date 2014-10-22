@@ -64,7 +64,7 @@ public final class TipoDatoAction extends BaseAction {
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        tpdt = tpdtBO.select(tpdt.getId());
+        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
             addActionError(getText(ErrorCode.E00008.name(),
@@ -160,7 +160,7 @@ public final class TipoDatoAction extends BaseAction {
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        tpdt = tpdtBO.select(tpdt.getId());
+        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
             addActionError(getText(ErrorCode.E00008.name(),

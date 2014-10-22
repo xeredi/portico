@@ -121,15 +121,21 @@ public class TipoServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final TipoServicioVO select(final Long id) throws InstanceNotFoundException {
+    public final TipoServicioVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(idioma);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         tpsrDAO = session.getMapper(TipoServicioDAO.class);
 
         try {
-            final TipoServicioVO entiVO = tpsrDAO.select(id);
+            final TipoServicioCriterioVO entiCriterioVO = new TipoServicioCriterioVO();
+
+            entiCriterioVO.setId(id);
+            entiCriterioVO.setIdioma(idioma);
+
+            final TipoServicioVO entiVO = tpsrDAO.selectObject(entiCriterioVO);
 
             if (entiVO == null) {
                 throw new InstanceNotFoundException(TipoServicioVO.class.getName(), id);
@@ -137,7 +143,7 @@ public class TipoServicioBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO);
+            entiBO.fillDependencies(entiVO, idioma);
 
             return entiVO;
         } finally {

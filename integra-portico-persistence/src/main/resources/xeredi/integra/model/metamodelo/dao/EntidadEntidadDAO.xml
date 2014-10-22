@@ -14,7 +14,6 @@
             <result column="enen_entih_pk" property="id" />
             <result column="enti_codigo" property="codigo" />
             <result column="enti_tipo" property="tipo" />
-            <result column="enti_nombre" property="nombre" />
         </association>
     </resultMap>
 
@@ -22,7 +21,7 @@
     <![CDATA[
         SELECT
             enen_entip_pk, enen_entih_pk, enen_orden
-            , enti_codigo, enti_tipo, enti_nombre
+            , enti_codigo, enti_tipo
         FROM
             tbl_entidad_entidad_enen enen
             JOIN tbl_entidad_enti ON

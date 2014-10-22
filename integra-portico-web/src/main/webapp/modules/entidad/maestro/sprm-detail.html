@@ -1,4 +1,4 @@
-<p class="bg-primary" ng-bind="enti.nombre"></p>
+<p class="bg-primary" ng-bind="'enti_' + enti.id | translate"></p>
 
 <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
 <ul>

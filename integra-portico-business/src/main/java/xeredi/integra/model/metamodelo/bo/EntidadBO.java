@@ -24,7 +24,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -50,33 +49,6 @@ public class EntidadBO {
 
     /** The enen dao. */
     EntidadEntidadDAO enenDAO;
-
-    /**
-     * Select tipo entidad.
-     *
-     * @param id
-     *            the id
-     * @return the tipo entidad
-     */
-    public final TipoEntidad selectTipoEntidad(final Long id) {
-        Preconditions.checkNotNull(id);
-
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
-
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
-            final TipoEntidad tipoEntidad = entiDAO.selectTipoEntidad(id);
-
-            if (tipoEntidad == null) {
-                throw new Error("Entidad no encontrada: " + id);
-            }
-
-            return tipoEntidad;
-        } finally {
-            session.close();
-        }
-    }
 
     /**
      * Select list.
@@ -226,8 +198,10 @@ public class EntidadBO {
      *
      * @param entiVO
      *            the enti vo
+     * @param idioma
+     *            the idioma
      */
-    final void fillDependencies(final EntidadVO entiVO) {
+    final void fillDependencies(final EntidadVO entiVO, final String idioma) {
         Preconditions.checkNotNull(entiVO);
         Preconditions.checkNotNull(entiVO.getId());
 
@@ -263,6 +237,7 @@ public class EntidadBO {
             final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
 
             entdCriterioVO.setEntiId(entiVO.getId());
+            entdCriterioVO.setIdioma(idioma);
 
             final List<EntidadTipoDatoVO> entdList = entdDAO.selectList(entdCriterioVO);
 

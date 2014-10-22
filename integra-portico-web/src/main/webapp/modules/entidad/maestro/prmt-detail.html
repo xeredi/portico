@@ -4,7 +4,7 @@
 </ul>
 </alert>
 
-<tabset type="pills"> <tab heading="{{enti.nombre}}" select="tabSelected(null)">
+<tabset type="pills"> <tab heading="{{'enti_' + enti.id | translate}}" select="tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/maestro/prmt/edit/{{enti.id}}/{{item.id}}/{{item.fref}}"><i
@@ -55,8 +55,8 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre}}"
-    active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{'enti_' + entiHija.id | translate}}" active="entiHija.active"
+    disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <pagination ng-show="itemHijosMap[entiHija.id].count > 0" total-items="itemHijosMap[entiHija.id].count"

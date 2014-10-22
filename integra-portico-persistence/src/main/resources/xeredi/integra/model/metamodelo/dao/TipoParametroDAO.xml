@@ -3,13 +3,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoParametroDAO">
-    <resultMap type="TipoParametroVO" id="ResultMap"
-        extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+    <resultMap type="TipoParametroVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
         <result column="tppr_es_i18n" property="i18n" />
         <result column="tppr_es_tmp_exp" property="tempExp" />
 
         <association property="tpdtNombre" javaType="TipoDatoVO">
-            <result column="tppr_tpdt_pk" property="id" />
+            <result column="tpdt_pk" property="id" />
             <result column="tpdt_codigo" property="codigo" />
             <result column="tpdt_nombre" property="nombre" />
         </association>
@@ -18,10 +17,28 @@
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enti_pk, enti_nombre, enti_codigo, enti_tipo, enti_max_grid
+            enti_pk, enti_codigo, enti_tipo, enti_max_grid
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
-            , tppr_es_i18n, tppr_es_tmp_exp, tppr_tpdt_pk
-            , tpdt_codigo, tpdt_nombre
+            , tppr_es_i18n, tppr_es_tmp_exp
+            , tpdt_pk, tpdt_codigo
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enti_nombre
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'tpdt'
+                    AND i18n_ext_pk = tpdt_pk
+                    AND i18n_lang = #{idioma}
+            ) AS tpdt_nombre
+        ]]>
+        </if>
+    <![CDATA[
         FROM
             tbl_tipo_parametro_tppr
             INNER JOIN tbl_entidad_enti ON
@@ -33,6 +50,9 @@
 
     <sql id="SelectWhere">
         <where>
+            <if test="id != null">
+                AND enti_pk = #{id}
+            </if>
             <if test="ids != null">
                 AND enti_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
@@ -51,7 +71,7 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
 
-        ORDER BY enti_nombre, enti_pk
+        ORDER BY enti_codigo, enti_pk
     </select>
 
     <select id="count" resultType="int">
@@ -65,11 +85,9 @@
         <include refid="SelectWhere" />
     </select>
 
-    <select id="select" resultMap="ResultMap" parameterType="Long">
+    <select id="selectObject" resultMap="ResultMap" parameterType="TipoParametroCriterioVO">
         <include refid="SelectPrefix" />
-        <where>
-            enti_pk = #{value}
-        </where>
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="TipoParametroVO">

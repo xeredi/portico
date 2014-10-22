@@ -83,13 +83,14 @@ public final class TipoParametroAction extends BaseAction {
         final TipoParametroBO tpprBO = new TipoParametroBO();
         final EntidadBO entiBO = new EntidadBO();
 
-        enti = tpprBO.select(enti.getId());
+        enti = tpprBO.select(enti.getId(), getIdioma());
 
         EntidadCriterioVO entiCriterioVO = null;
 
         if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
             entiCriterioVO.setEntiHijaId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
 
             entiPadresList = entiBO.selectList(entiCriterioVO);
         }
@@ -97,6 +98,7 @@ public final class TipoParametroAction extends BaseAction {
         if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
             entiCriterioVO.setEntiPadreId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
 
             entiHijasList = entiBO.selectList(entiCriterioVO);
         }
@@ -206,13 +208,14 @@ public final class TipoParametroAction extends BaseAction {
         final TipoParametroBO tpprBO = new TipoParametroBO();
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-        enti = tpprBO.select(enti.getId());
+        enti = tpprBO.select(enti.getId(), getIdioma());
 
-        final TipoSubparametroCriterioVO tpspCriterioVO = new TipoSubparametroCriterioVO();
+        final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
-        tpspCriterioVO.setTpprId(enti.getId());
+        entiCriterioVO.setTpprId(enti.getId());
+        entiCriterioVO.setIdioma(getIdioma());
 
-        subentiList = tpspBO.selectList(tpspCriterioVO);
+        subentiList = tpspBO.selectList(entiCriterioVO);
 
         return SUCCESS;
     }

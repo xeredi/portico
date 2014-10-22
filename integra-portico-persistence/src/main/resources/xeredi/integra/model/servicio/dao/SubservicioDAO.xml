@@ -13,7 +13,7 @@
         <result column="srvc_fref" property="fref" />
 
         <association property="srvc" javaType="ServicioVO">
-            <id column="ssrv_srvc_pk" property="id" />
+            <id column="srvc_pk" property="id" />
             <result column="srvc_anno" property="anno" />
             <result column="srvc_numero" property="numero" />
 

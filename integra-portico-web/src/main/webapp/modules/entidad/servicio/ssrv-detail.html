@@ -4,7 +4,7 @@
 </ul>
 </alert>
 
-<tabset type="pills"> <tab heading="{{enti.nombre}}" select="tabSelected(null)">
+<tabset type="pills"> <tab heading="{{'enti_' + enti.id | translate}}" select="tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/ssrv/edit/{{enti.id}}/{{item.id}}"><i
@@ -53,7 +53,7 @@
 
 <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 
-</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{entiHija.nombre}}"
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{'enti_' + entiHija.id | translate}}"
     active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">

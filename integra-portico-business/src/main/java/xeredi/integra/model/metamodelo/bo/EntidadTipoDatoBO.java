@@ -7,7 +7,6 @@ import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -48,9 +47,6 @@ public class EntidadTipoDatoBO {
             if (entdDAO.exists(entdVO)) {
                 throw new DuplicateInstanceException(EntidadTipoDatoVO.class.getName(), entdVO);
             }
-
-            final EntidadVO entiVO = entiDAO.select(entdVO.getEntiId());
-            // FIXME Acabar
 
             entdDAO.insert(entdVO);
 
@@ -128,7 +124,7 @@ public class EntidadTipoDatoBO {
      *            the tpdt id
      * @return the entidad tipo dato vo
      */
-    public final EntidadTipoDatoVO select(final Long entiId, final Long tpdtId) {
+    public final EntidadTipoDatoVO select(final Long entiId, final Long tpdtId, final String idioma) {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(tpdtId);
 
@@ -141,6 +137,7 @@ public class EntidadTipoDatoBO {
 
             entdCriterioVO.setEntiId(entiId);
             entdCriterioVO.setTpdtId(tpdtId);
+            entdCriterioVO.setIdioma(idioma);
 
             final EntidadTipoDatoVO entdVO = entdDAO.selectObject(entdCriterioVO);
 

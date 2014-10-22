@@ -11,9 +11,9 @@
         <result column="tpdt_tipo_html" property="tpht" />
 
         <association property="enti" javaType="EntidadVO">
-            <id column="tpdt_enti_pk" property="id" />
-            <result column="enti_nombre" property="nombre" />
+            <id column="enti_pk" property="id" />
             <result column="enti_codigo" property="codigo" />
+            <result column="enti_nombre" property="nombre" />
             <result column="enti_tipo" property="tipo" />
         </association>
     </resultMap>
@@ -21,8 +21,26 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        tpdt.tpdt_pk, tpdt.tpdt_codigo, tpdt.tpdt_nombre, tpdt.tpdt_tipo_elemento, tpdt.tpdt_tipo_html
-        , tpdt.tpdt_enti_pk, enti.enti_codigo, enti.enti_nombre, enti.enti_tipo
+        tpdt_pk, tpdt_codigo, tpdt_tipo_elemento, tpdt_tipo_html
+        , enti_pk, enti_codigo, enti_tipo
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'tpdt'
+                    AND i18n_ext_pk = tpdt_pk
+                    AND i18n_lang = #{idioma}
+            ) AS tpdt_nombre
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enti_nombre
+        ]]>
+        </if>
+    <![CDATA[
     FROM
         tbl_tipo_dato_tpdt tpdt
         LEFT JOIN tbl_entidad_enti enti ON
@@ -32,6 +50,9 @@
 
     <sql id="SelectWhere">
         <where>
+            <if test="id != null">
+                AND tpdt.tpdt_pk = #{id}
+            </if>
             <if test="ids != null">
                 AND tpdt.tpdt_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
@@ -63,18 +84,16 @@
         </where>
     </sql>
 
-    <select id="select" parameterType="Long" resultMap="ResultMap">
+    <select id="selectObject" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <![CDATA[
-        WHERE tpdt.tpdt_pk = #{id}
-        ]]>
+        <include refid="SelectWhere" />
     </select>
 
     <select id="selectList" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
 
-        ORDER BY tpdt.tpdt_nombre
+        ORDER BY tpdt.tpdt_codigo
     </select>
 
     <select id="selectMap" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
@@ -102,7 +121,6 @@
         SELECT COUNT(1)
         FROM tbl_tipo_dato_tpdt tpdt
         WHERE tpdt.tpdt_codigo = #{codigo}
-            OR tpdt.tpdt_nombre = #{nombre}
         ]]>
     </select>
 

@@ -117,8 +117,7 @@
                 <td><i class="glyphicon glyphicon-{{subenti.temporal ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{subenti.facturable ? 'ok' : 'remove'}}"></i></td>
                 <td class="number" ng-bind="subenti.maxGrid | number:0"></td>
-                <td><a ng-if="subenti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{subenti.tpdtEstado.id}}"
-                    ng-bind="subenti.tpdtEstado.nombre"></a></td>
+                <td ng-bind="subenti.tpdtEstado.nombre"></td>
             </tr>
         </tbody>
     </table>

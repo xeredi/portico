@@ -58,6 +58,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
 
         // Traemos solo los tipos de estadistica
         entiCriterio.setTipo(TipoEntidad.E);
+        entiCriterio.setIdioma(getIdioma());
 
         entiList = tpesBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 

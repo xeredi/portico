@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class EntidadTipoDatoCriterioVO {
 
+    /** The idioma. */
+    private String idioma;
+
     /** The tppr id. */
     private Long entiId;
 
@@ -24,7 +27,7 @@ public final class EntidadTipoDatoCriterioVO {
 
     /**
      * Gets the tpdt id.
-     * 
+     *
      * @return the tpdt id
      */
     public Long getTpdtId() {
@@ -33,7 +36,7 @@ public final class EntidadTipoDatoCriterioVO {
 
     /**
      * Sets the tpdt id.
-     * 
+     *
      * @param value
      *            the new tpdt id
      */
@@ -43,7 +46,7 @@ public final class EntidadTipoDatoCriterioVO {
 
     /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -52,7 +55,7 @@ public final class EntidadTipoDatoCriterioVO {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -60,4 +63,22 @@ public final class EntidadTipoDatoCriterioVO {
         entiId = value;
     }
 
+    /**
+     * Gets the idioma.
+     *
+     * @return the idioma
+     */
+    public String getIdioma() {
+        return idioma;
+    }
+
+    /**
+     * Sets the idioma.
+     *
+     * @param value
+     *            the new idioma
+     */
+    public void setIdioma(final String value) {
+        idioma = value;
+    }
 }

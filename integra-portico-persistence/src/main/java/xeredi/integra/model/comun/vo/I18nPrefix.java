@@ -9,5 +9,9 @@ public enum I18nPrefix {
     /** The prvr. */
     prvr,
     /** The cdrf. */
-    cdrf;
+    cdrf,
+    /** The enti. */
+    enti,
+    /** The tpdt. */
+    tpdt, ;
 }

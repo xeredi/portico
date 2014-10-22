@@ -1,5 +1,5 @@
 
-<p class="bg-primary" ng-bind="enti.nombre"></p>
+<p class="bg-primary" ng-bind="'enti_' + enti.id | translate"></p>
 
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"

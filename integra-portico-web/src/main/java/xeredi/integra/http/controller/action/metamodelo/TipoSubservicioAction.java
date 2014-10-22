@@ -69,7 +69,7 @@ public final class TipoSubservicioAction extends BaseAction {
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
-        enti = tpssBO.select(enti.getId());
+        enti = tpssBO.select(enti.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -176,13 +176,14 @@ public final class TipoSubservicioAction extends BaseAction {
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final EntidadBO entiBO = new EntidadBO();
 
-        enti = tpssBO.select(enti.getId());
+        enti = tpssBO.select(enti.getId(), getIdioma());
 
         EntidadCriterioVO entiCriterioVO = null;
 
         if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
             entiCriterioVO.setEntiHijaId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
 
             entiPadresList = entiBO.selectList(entiCriterioVO);
         }
@@ -190,6 +191,7 @@ public final class TipoSubservicioAction extends BaseAction {
         if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
             entiCriterioVO = new EntidadCriterioVO();
             entiCriterioVO.setEntiPadreId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
 
             entiHijasList = entiBO.selectList(entiCriterioVO);
         }

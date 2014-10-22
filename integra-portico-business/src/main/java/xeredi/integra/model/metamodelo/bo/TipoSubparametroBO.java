@@ -116,15 +116,21 @@ public class TipoSubparametroBO {
      *            the id
      * @return the tipo subparametro vo
      */
-    public final TipoSubparametroVO select(final Long id) {
+    public final TipoSubparametroVO select(final Long id, final String idioma) {
         Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(idioma);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
         try {
-            final TipoSubparametroVO entiVO = tpspDAO.select(id);
+            final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
+
+            entiCriterioVO.setId(id);
+            entiCriterioVO.setIdioma(idioma);
+
+            final TipoSubparametroVO entiVO = tpspDAO.selectObject(entiCriterioVO);
 
             if (entiVO == null) {
                 throw new Error("Tipo de subparametro no encontrado: " + id);
@@ -132,7 +138,7 @@ public class TipoSubparametroBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO);
+            entiBO.fillDependencies(entiVO, idioma);
 
             return entiVO;
         } finally {

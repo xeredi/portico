@@ -18,6 +18,12 @@ public final class TipoDatoCriterioVO implements Criterio {
     /** The limit. */
     private Integer limit;
 
+    /** The idioma. */
+    private String idioma;
+
+    /** The id. */
+    private Long id;
+
     /** The ids. */
     private Set<Long> ids;
 
@@ -216,6 +222,44 @@ public final class TipoDatoCriterioVO implements Criterio {
      */
     public void setEntiRefId(final Long value) {
         entiRefId = value;
+    }
+
+    /**
+     * Gets the idioma.
+     *
+     * @return the idioma
+     */
+    public String getIdioma() {
+        return idioma;
+    }
+
+    /**
+     * Sets the idioma.
+     *
+     * @param value
+     *            the new idioma
+     */
+    public void setIdioma(final String value) {
+        idioma = value;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
 }

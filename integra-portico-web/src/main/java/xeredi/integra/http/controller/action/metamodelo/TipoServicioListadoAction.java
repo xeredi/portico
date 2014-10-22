@@ -57,6 +57,7 @@ public final class TipoServicioListadoAction extends BaseAction {
 
         // Traemos solo los tipos de servicio
         entiCriterio.setTipo(TipoEntidad.T);
+        entiCriterio.setIdioma(getIdioma());
 
         entiList = tpsrBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 

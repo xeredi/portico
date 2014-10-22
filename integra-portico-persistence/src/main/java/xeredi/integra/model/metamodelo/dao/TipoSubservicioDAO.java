@@ -71,9 +71,9 @@ public interface TipoSubservicioDAO {
     /**
      * Select.
      *
-     * @param id
-     *            the id
+     * @param entiCriterioVO
+     *            the enti criterio vo
      * @return the tipo subservicio vo
      */
-    TipoSubservicioVO select(final Long id);
+    TipoSubservicioVO selectObject(final TipoSubservicioCriterioVO entiCriterioVO);
 }

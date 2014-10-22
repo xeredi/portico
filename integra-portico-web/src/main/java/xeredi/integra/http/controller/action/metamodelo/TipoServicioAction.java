@@ -73,7 +73,7 @@ public final class TipoServicioAction extends BaseAction {
         final TipoServicioBO tpsrBO = new TipoServicioBO();
 
         try {
-            enti = tpsrBO.select(enti.getId());
+            enti = tpsrBO.select(enti.getId(), getIdioma());
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(ErrorCode.E00008.name(),
                     new String[] { getText("tpsr"), String.valueOf(enti.getId()) }));
@@ -181,12 +181,14 @@ public final class TipoServicioAction extends BaseAction {
         final EntidadBO entiBO = new EntidadBO();
 
         try {
-            enti = tpsrBO.select(enti.getId());
+            enti = tpsrBO.select(enti.getId(), getIdioma());
 
             TipoSubservicioCriterioVO tpssCriterioVO = null;
 
             tpssCriterioVO = new TipoSubservicioCriterioVO();
             tpssCriterioVO.setTpsrId(enti.getId());
+            tpssCriterioVO.setIdioma(getIdioma());
+
             subentiList.addAll(tpssBO.selectList(tpssCriterioVO));
 
             if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
@@ -194,6 +196,7 @@ public final class TipoServicioAction extends BaseAction {
 
                 entiCriterioVO = new EntidadCriterioVO();
                 entiCriterioVO.setEntiPadreId(enti.getId());
+                entiCriterioVO.setIdioma(getIdioma());
 
                 entiHijasList.addAll(entiBO.selectList(entiCriterioVO));
             }

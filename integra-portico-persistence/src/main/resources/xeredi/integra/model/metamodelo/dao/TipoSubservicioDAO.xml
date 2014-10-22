@@ -9,7 +9,7 @@
         <result column="tpss_tpsr_pk" property="tpsrId" />
 
         <association property="tpdtEstado" javaType="TipoDatoVO">
-            <result column="tpss_tpdt_estado_pk" property="id" />
+            <result column="tpdt_pk" property="id" />
             <result column="tpdt_nombre" property="nombre" />
         </association>
     </resultMap>
@@ -17,11 +17,28 @@
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enti.enti_pk, enti.enti_nombre, enti.enti_codigo, enti.enti_tipo, enti.enti_max_grid
+            enti.enti_pk, enti.enti_codigo, enti.enti_tipo, enti.enti_max_grid
             , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
             , tpss.tpss_es_temporal, tpss.tpss_es_facturable, tpss.tpss_tpsr_pk
-            , tpss.tpss_tpdt_estado_pk, tpdt.tpdt_nombre
-            , tpsr.enti_codigo AS tpsr_codigo, tpsr.enti_nombre AS tpsr_nombre
+            , tpdt_pk
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'tpdt'
+                    AND i18n_ext_pk = tpdt_pk
+                    AND i18n_lang = #{idioma}
+            ) AS tpdt_nombre
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = enti.enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enti_nombre
+        ]]>
+        </if>
+    <![CDATA[
         FROM
             tbl_tipo_subservicio_tpss tpss
             INNER JOIN tbl_entidad_enti enti ON
@@ -35,6 +52,9 @@
 
     <sql id="SelectWhere">
         <where>
+            <if test="id != null">
+                AND enti.enti_pk = #{id}
+            </if>
             <if test="ids != null">
                 AND enti.enti_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
@@ -57,9 +77,7 @@
     <select id="selectList" parameterType="TipoSubservicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        <![CDATA[
-        ORDER BY enti.enti_nombre, enti.enti_pk
-        ]]>
+        ORDER BY enti.enti_codigo, enti.enti_pk
     </select>
 
     <select id="count" resultType="int">
@@ -73,13 +91,9 @@
         <include refid="SelectWhere" />
     </select>
 
-    <select id="select" resultMap="ResultMap" parameterType="Long">
+    <select id="selectObject" resultMap="ResultMap" parameterType="TipoSubservicioCriterioVO">
         <include refid="SelectPrefix" />
-        <where>
-        <![CDATA[
-        enti.enti_pk = #{value}
-        ]]>
-        </where>
+        <include refid="SelectWhere" />
     </select>
 
     <insert id="insert" parameterType="TipoSubservicioVO">

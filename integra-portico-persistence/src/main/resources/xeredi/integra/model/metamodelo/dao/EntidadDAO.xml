@@ -5,8 +5,8 @@
 <mapper namespace="xeredi.integra.model.metamodelo.dao.EntidadDAO">
     <resultMap type="EntidadVO" id="ResultMap">
         <id column="enti_pk" property="id" />
-        <result column="enti_nombre" property="nombre" />
         <result column="enti_codigo" property="codigo" />
+        <result column="enti_nombre" property="nombre" />
         <result column="enti_tipo" property="tipo" />
         <result column="enti_cmd_alta" property="cmdAlta" />
         <result column="enti_cmd_baja" property="cmdBaja" />
@@ -18,9 +18,21 @@
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enti_pk, enti_nombre, enti_codigo, enti_tipo
+            enti_pk, enti_codigo, enti_tipo
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
             , enti_max_grid
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enti'
+                    AND i18n_ext_pk = enti_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enti_nombre
+        ]]>
+        </if>
+    <![CDATA[
         FROM
             tbl_entidad_enti
     ]]>
@@ -28,6 +40,10 @@
 
     <sql id="SelectWhere">
         <where>
+            <if test="id != null">
+                AND enti_pk = #{id}
+            </if>
+
             <if test="ids != null">
                 AND enti_pk IN
                 <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
@@ -76,21 +92,13 @@
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
         <![CDATA[
-        ORDER BY enti_nombre, enti_pk
+        ORDER BY enti_codigo, enti_pk
         ]]>
     </select>
 
     <select id="selectMap" parameterType="EntidadCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-    </select>
-
-    <select id="selectTipoEntidad" parameterType="Long" resultType="TipoEntidad">
-        <![CDATA[
-        SELECT enti_tipo
-        FROM tbl_entidad_enti
-        WHERE enti_pk = #{value}
-        ]]>
     </select>
 
     <select id="count" resultType="int">
@@ -102,11 +110,14 @@
         <include refid="SelectWhere" />
     </select>
 
+    <select id="selectObject" resultMap="ResultMap" parameterType="EntidadCriterioVO">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
     <select id="select" resultMap="ResultMap" parameterType="Long">
         <include refid="SelectPrefix" />
-        <where>
-            enti_pk = #{value}
-        </where>
+        WHERE enti_pk = #{value}
     </select>
 
     <select id="exists" parameterType="EntidadVO" resultType="boolean">
@@ -116,7 +127,6 @@
             tbl_entidad_enti
         WHERE
             enti_codigo = #{codigo}
-            OR enti_nombre = #{nombre}
         ]]>
     </select>
 

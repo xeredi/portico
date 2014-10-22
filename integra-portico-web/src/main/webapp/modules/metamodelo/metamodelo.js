@@ -9,7 +9,7 @@ angular
             $routeProvider
 
             .when("/metamodelo/tpdt/grid", {
-                title : 'tpdt_grid',
+                title : 'tpdtList',
                 templateUrl : "modules/metamodelo/tpdt-grid.html",
                 controller : "tpdtGridController",
                 reloadOnSearch : false
@@ -22,7 +22,7 @@ angular
             })
 
             .when("/metamodelo/tpdt/detail/:tpdtId", {
-                title : 'tpdt_detail',
+                title : 'tpdt',
                 templateUrl : "modules/metamodelo/tpdt-detail.html",
                 controller : "tpdtDetailController"
             })
@@ -34,7 +34,7 @@ angular
             })
 
             .when("/metamodelo/cdrf/detail/:cdrfId", {
-                title : 'cdrf_detail',
+                title : 'cdrf',
                 templateUrl : "modules/metamodelo/cdrf-detail.html",
                 controller : "cdrfDetailController"
             })
@@ -306,14 +306,14 @@ angular
             $routeProvider
 
             .when("/metamodelo/tppr/grid", {
-                title : 'tppr_grid',
+                title : 'tpprList',
                 templateUrl : "modules/metamodelo/tppr-grid.html",
                 controller : "tpprGridController",
                 reloadOnSearch : false
             })
 
             .when("/metamodelo/tppr/detail/:entiId", {
-                title : 'tppr_detail',
+                title : 'tppr',
                 templateUrl : "modules/metamodelo/tppr-detail.html",
                 controller : "tpprDetailController"
             })
@@ -331,7 +331,7 @@ angular
             })
 
             .when("/metamodelo/tpsp/detail/:entiId", {
-                title : 'tpsp_detail',
+                title : 'tpsp',
                 templateUrl : "modules/metamodelo/tpsp-detail.html",
                 controller : "tpspDetailController"
             })
@@ -602,14 +602,14 @@ angular
             $routeProvider
 
             .when("/metamodelo/tpsr/grid", {
-                title : 'tpsr_grid',
+                title : 'tpsrList',
                 templateUrl : "modules/metamodelo/tpsr-grid.html",
                 controller : "tpsrGridController",
                 reloadOnSearch : false
             })
 
             .when("/metamodelo/tpsr/detail/:entiId", {
-                title : 'tpsr_detail',
+                title : 'tpsr',
                 templateUrl : "modules/metamodelo/tpsr-detail.html",
                 controller : "tpsrDetailController"
             })
@@ -627,7 +627,7 @@ angular
             })
 
             .when("/metamodelo/tpss/detail/:entiId", {
-                title : 'tpss_detail',
+                title : 'tpss',
                 templateUrl : "modules/metamodelo/tpss-detail.html",
                 controller : "tpssDetailController"
             })
@@ -893,14 +893,14 @@ angular
             $routeProvider
 
             .when("/metamodelo/tpes/grid", {
-                title : 'tpes_grid',
+                title : 'tpesList',
                 templateUrl : "modules/metamodelo/tpes-grid.html",
                 controller : "tpesGridController",
                 reloadOnSearch : false
             })
 
             .when("/metamodelo/tpes/detail/:entiId", {
-                title : 'tpes_detail',
+                title : 'tpes',
                 templateUrl : "modules/metamodelo/tpes-detail.html",
                 controller : "tpesDetailController"
             })
@@ -1057,7 +1057,7 @@ angular
             $routeProvider
 
             .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
-                title : 'entd_detail',
+                title : 'entd',
                 templateUrl : "modules/metamodelo/entd-detail.html",
                 controller : "entdDetailController"
             })
@@ -1182,7 +1182,7 @@ angular
             $routeProvider
 
             .when("/metamodelo/enac/detail/:entiId/:path", {
-                title : 'enac_detail',
+                title : 'enac',
                 templateUrl : "modules/metamodelo/enac-detail.html",
                 controller : "enacDetailController"
             })

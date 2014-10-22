@@ -51,6 +51,14 @@ public class I18nJs {
                 labelValues.add(new LabelValueVO(i18n.getPrefix().name() + '_' + i18n.getExternalId(), i18n.getText()));
             }
 
+            for (final I18nVO i18n : i18nBO.selectList(I18nPrefix.enti, language)) {
+                labelValues.add(new LabelValueVO(i18n.getPrefix().name() + '_' + i18n.getExternalId(), i18n.getText()));
+            }
+
+            for (final I18nVO i18n : i18nBO.selectList(I18nPrefix.tpdt, language)) {
+                labelValues.add(new LabelValueVO(i18n.getPrefix().name() + '_' + i18n.getExternalId(), i18n.getText()));
+            }
+
             final Map<String, String> messageI18nMap = messageI18nBO.selectKeyValueMap(MessageI18nBundlename.web,
                     new Locale(language));
 

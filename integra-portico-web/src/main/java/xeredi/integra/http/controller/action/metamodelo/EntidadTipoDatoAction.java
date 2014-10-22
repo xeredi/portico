@@ -83,7 +83,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());
+        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
 
         loadLabelValues();
 
@@ -190,7 +190,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId());
+        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -204,8 +204,11 @@ public final class EntidadTipoDatoAction extends BaseAction {
         engdList.addAll(engdBO.selectLabelValues(entd.getEntiId()));
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
+        final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
 
-        tpdtList.addAll(tpdtBO.selectLabelValues(new TipoDatoCriterioVO()));
+        tpdtCriterioVO.setIdioma(getIdioma());
+
+        tpdtList.addAll(tpdtBO.selectLabelValues(tpdtCriterioVO));
     }
 
     // get/set

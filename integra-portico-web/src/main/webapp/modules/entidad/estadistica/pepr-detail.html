@@ -32,5 +32,5 @@
 <div class="list-group">
     <a ng-href="#/estadistica/cdms/detail/{{pepr.id}}" class="list-group-item">{{'cdms' | translate | uppercase}}</a> <a
         ng-href="#/estadistica/estd/grid/{{enti.value}}/{{pepr.id}}/{{pepr.autp.id}}" class="list-group-item"
-        ng-repeat="enti in tpesList track by $index" ng-bind="enti.label | uppercase"></a>
+        ng-repeat="enti in tpesList track by $index" ng-bind="'enti_' + enti.value | translate | uppercase"></a>
 </div>

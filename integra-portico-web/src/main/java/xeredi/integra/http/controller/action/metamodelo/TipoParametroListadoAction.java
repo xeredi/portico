@@ -58,6 +58,7 @@ public final class TipoParametroListadoAction extends BaseAction {
 
         // Traemos solo los maestros
         entiCriterio.setTipo(TipoEntidad.P);
+        entiCriterio.setIdioma(getIdioma());
 
         entiList = tpprBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 

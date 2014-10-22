@@ -34,6 +34,8 @@ public final class EntidadListadoLVAction extends BaseAction {
     public String list() {
         final EntidadBO entiBO = new EntidadBO();
 
+        entiCriterio.setIdioma(getIdioma());
+
         lvList.addAll(entiBO.selectLabelValues(entiCriterio));
 
         return SUCCESS;

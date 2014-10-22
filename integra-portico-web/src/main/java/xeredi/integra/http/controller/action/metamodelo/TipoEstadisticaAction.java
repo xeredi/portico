@@ -63,7 +63,7 @@ public final class TipoEstadisticaAction extends BaseAction {
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        enti = tpesBO.select(enti.getId());
+        enti = tpesBO.select(enti.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -150,7 +150,7 @@ public final class TipoEstadisticaAction extends BaseAction {
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        enti = tpesBO.select(enti.getId());
+        enti = tpesBO.select(enti.getId(), getIdioma());
 
         return SUCCESS;
     }

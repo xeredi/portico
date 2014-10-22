@@ -7,7 +7,6 @@ import xeredi.integra.model.metamodelo.dao.EntidadAccionDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -47,9 +46,6 @@ public final class EntidadAccionBO {
             if (enacDAO.exists(enacVO)) {
                 throw new DuplicateInstanceException(EntidadAccionVO.class.getName(), enacVO);
             }
-
-            final EntidadVO entiVO = entiDAO.select(enacVO.getEntiId());
-            // FIXME Acabar
 
             enacDAO.insert(enacVO);
 

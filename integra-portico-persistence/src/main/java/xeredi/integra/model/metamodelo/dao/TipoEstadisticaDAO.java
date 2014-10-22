@@ -36,11 +36,11 @@ public interface TipoEstadisticaDAO {
     /**
      * Select.
      *
-     * @param tpesId
-     *            the tpes id
+     * @param entiCriterioVO
+     *            the enti criterio vo
      * @return the tipo estadistica vo
      */
-    TipoEstadisticaVO select(final Long tpesId);
+    TipoEstadisticaVO selectObject(final TipoEstadisticaCriterioVO entiCriterioVO);
 
     /**
      * Count.

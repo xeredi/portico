@@ -62,7 +62,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-        enti = tpspBO.select(enti.getId());
+        enti = tpspBO.select(enti.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -171,7 +171,7 @@ public final class TipoSubparametroAction extends BaseAction {
 
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-        enti = tpspBO.select(enti.getId());
+        enti = tpspBO.select(enti.getId(), getIdioma());
 
         return SUCCESS;
     }

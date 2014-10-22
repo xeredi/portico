@@ -34,6 +34,8 @@ public final class TipoDatoListadoLVAction extends BaseAction {
     public String list() {
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
+        tpdtCriterio.setIdioma(getIdioma());
+
         lvList.addAll(tpdtBO.selectLabelValues(tpdtCriterio));
 
         return SUCCESS;

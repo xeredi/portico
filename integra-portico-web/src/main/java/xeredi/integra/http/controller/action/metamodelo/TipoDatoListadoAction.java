@@ -52,6 +52,8 @@ public final class TipoDatoListadoAction extends BaseAction {
     public String list() {
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
+        tpdtCriterio.setIdioma(getIdioma());
+
         tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
 
         return SUCCESS;

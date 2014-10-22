@@ -15,7 +15,7 @@
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>entd_tpdt</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpdt/detail/{{entd.tpdt.id}}">{{entd.tpdt.nombre}}</a>
+                <a ng-href="#/metamodelo/tpdt/detail/{{entd.tpdt.id}}" ng-bind="'tpdt_' + entd.tpdt.id | translate"></a>
             </p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
@@ -34,9 +34,10 @@
             <label translate>tpdt_enti</label>
             <p class="form-control-static">
                 <span ng-if="entd.tpdt.enti"> <a ng-if="entd.tpdt.enti.tipo == 'P'"
-                    ng-href="#/metamodelo/tppr/detail/{{entd.tpdt.enti.id}}" ng-bind="entd.tpdt.enti.etiqueta"></a><a
-                    ng-if="entd.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{entd.tpdt.enti.id}}"
-                    ng-bind="entd.tpdt.enti.etiqueta"></a></span>
+                    ng-href="#/metamodelo/tppr/detail/{{entd.tpdt.enti.id}}"
+                    ng-bind="'enti_' +  entd.tpdt.enti.id | translate"></a><a ng-if="entd.tpdt.enti.tipo == 'T'"
+                    ng-href="#/metamodelo/tpsr/detail/{{entd.tpdt.enti.id}}"
+                    ng-bind="'enti_' +  entd.tpdt.enti.id | translate"></a></span>
             </p>
         </div>
     </div>

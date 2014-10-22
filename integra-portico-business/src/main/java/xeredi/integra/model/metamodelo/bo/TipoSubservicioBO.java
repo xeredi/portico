@@ -116,17 +116,25 @@ public class TipoSubservicioBO {
      *
      * @param id
      *            the id
+     * @param idioma
+     *            the idioma
      * @return the tipo subservicio vo
      */
-    public final TipoSubservicioVO select(final Long id) {
+    public final TipoSubservicioVO select(final Long id, final String idioma) {
         Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(idioma);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         tpssDAO = session.getMapper(TipoSubservicioDAO.class);
 
         try {
-            final TipoSubservicioVO entiVO = tpssDAO.select(id);
+            final TipoSubservicioCriterioVO entiCriterioVO = new TipoSubservicioCriterioVO();
+
+            entiCriterioVO.setId(id);
+            entiCriterioVO.setIdioma(idioma);
+
+            final TipoSubservicioVO entiVO = tpssDAO.selectObject(entiCriterioVO);
 
             if (entiVO == null) {
                 throw new Error("Tipo de servicio no encontrado: " + id);
@@ -134,7 +142,7 @@ public class TipoSubservicioBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO);
+            entiBO.fillDependencies(entiVO, idioma);
 
             return entiVO;
         } finally {

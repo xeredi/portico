@@ -1,10 +1,12 @@
-<p class="bg-primary" ng-bind="enti.nombre"></p>
+<p class="bg-primary" ng-bind="'enti_' + enti.id | translate"></p>
 
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>estd_pepr</label>
-            <p class="form-control-static" ng-bind="item.pepr.etiqueta"></p>
+            <p class="form-control-static">
+                <a ng-href="#/estadistica/pepr/detail/{{item.pepr.id}}" ng-bind="item.pepr.etiqueta"></a>
+            </p>
         </div>
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>estd_subp</label>

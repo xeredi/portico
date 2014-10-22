@@ -45,8 +45,9 @@ public class TipoDatoBO {
      *            the id
      * @return the tipo dato vo
      */
-    public final TipoDatoVO select(final Long id) {
+    public final TipoDatoVO select(final Long id, final String idioma) {
         Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(idioma);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
@@ -54,7 +55,12 @@ public class TipoDatoBO {
         cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
         try {
-            final TipoDatoVO tpdtVO = tpdtDAO.select(id);
+            final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
+
+            tpdtCriterioVO.setId(id);
+            tpdtCriterioVO.setIdioma(idioma);
+
+            final TipoDatoVO tpdtVO = tpdtDAO.selectObject(tpdtCriterioVO);
 
             if (tpdtVO == null) {
                 throw new Error("Tipo de dato no encontrado: " + id);

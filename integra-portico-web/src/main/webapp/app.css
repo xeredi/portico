@@ -61,11 +61,13 @@ label {
 	padding: 5px;
 }
 
+.form-control-static:before {
+    content: "\00a0";
+}
+
 .form-control-static {
 	padding-top: 7px;
 	padding-bottom: 7px;
-	min-width: 5px;
-	/*min-height: 29px;*/
 }
 
 .dropdown-menu {

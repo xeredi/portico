@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.MapKey;
 
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
-import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -59,6 +58,15 @@ public interface EntidadDAO {
     /**
      * Select.
      *
+     * @param entiCriterioVO
+     *            the enti criterio vo
+     * @return the entidad vo
+     */
+    EntidadVO selectObject(final EntidadCriterioVO entiCriterioVO);
+
+    /**
+     * Select.
+     *
      * @param id
      *            the id
      * @return the entidad vo
@@ -83,13 +91,4 @@ public interface EntidadDAO {
      */
     @MapKey(value = "id")
     Map<Long, EntidadVO> selectMap(final EntidadCriterioVO entiCriterioVO);
-
-    /**
-     * Select tipo entidad.
-     *
-     * @param id
-     *            the id
-     * @return the tipo entidad
-     */
-    TipoEntidad selectTipoEntidad(final Long id);
 }

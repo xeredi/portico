@@ -114,17 +114,25 @@ public class TipoEstadisticaBO {
      *
      * @param id
      *            the id
+     * @param idioma
+     *            the idioma
      * @return the tipo estadistica vo
      */
-    public final TipoEstadisticaVO select(final Long id) {
+    public final TipoEstadisticaVO select(final Long id, final String idioma) {
         Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(idioma);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
         try {
-            final TipoEstadisticaVO entiVO = tpesDAO.select(id);
+            final TipoEstadisticaCriterioVO entiCriterioVO = new TipoEstadisticaCriterioVO();
+
+            entiCriterioVO.setId(id);
+            entiCriterioVO.setIdioma(idioma);
+
+            final TipoEstadisticaVO entiVO = tpesDAO.selectObject(entiCriterioVO);
 
             if (entiVO == null) {
                 throw new Error("Tipo de estadistica no encontrado: " + id);
@@ -132,7 +140,7 @@ public class TipoEstadisticaBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO);
+            entiBO.fillDependencies(entiVO, idioma);
 
             return entiVO;
         } finally {

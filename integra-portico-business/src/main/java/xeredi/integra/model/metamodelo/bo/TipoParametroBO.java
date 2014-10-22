@@ -116,15 +116,21 @@ public class TipoParametroBO {
      *            the id
      * @return the tipo parametro vo
      */
-    public final TipoParametroVO select(final Long id) {
+    public final TipoParametroVO select(final Long id, final String idioma) {
         Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(idioma);
 
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
 
         tpprDAO = session.getMapper(TipoParametroDAO.class);
 
         try {
-            final TipoParametroVO entiVO = tpprDAO.select(id);
+            final TipoParametroCriterioVO entiCriterioVO = new TipoParametroCriterioVO();
+
+            entiCriterioVO.setId(id);
+            entiCriterioVO.setIdioma(idioma);
+
+            final TipoParametroVO entiVO = tpprDAO.selectObject(entiCriterioVO);
 
             if (entiVO == null) {
                 throw new Error("Tipo de parametro no encontrado: " + id);
@@ -132,7 +138,7 @@ public class TipoParametroBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO);
+            entiBO.fillDependencies(entiVO, idioma);
 
             return entiVO;
         } finally {

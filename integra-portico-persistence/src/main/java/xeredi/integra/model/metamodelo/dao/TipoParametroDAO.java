@@ -36,11 +36,11 @@ public interface TipoParametroDAO {
     /**
      * Select.
      *
-     * @param tpprId
-     *            the tppr id
+     * @param entiCriterioVO
+     *            the enti criterio vo
      * @return the tipo parametro vo
      */
-    TipoParametroVO select(final Long tpprId);
+    TipoParametroVO selectObject(final TipoParametroCriterioVO entiCriterioVO);
 
     /**
      * Count.

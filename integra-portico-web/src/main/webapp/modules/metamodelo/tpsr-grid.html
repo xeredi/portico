@@ -42,8 +42,7 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default" translate="grid_count"
-            translate-value-count="{{entiList.count | number:0}}"></span>
+        <span class="label label-default" translate="grid_count" translate-value-count="{{entiList.count | number:0}}"></span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -74,8 +73,7 @@
                     <td><i class="glyphicon glyphicon-{{enti.temporal ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{enti.facturable ? 'ok' : 'remove'}}"></i></td>
                     <td class="number" ng-bind="enti.maxGrid | number:0"></td>
-                    <td><a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}"
-                        ng-bind="enti.tpdtEstado.nombre"></a></td>
+                    <td ng-bind="enti.tpdtEstado.nombre"></td>
                 </tr>
             </tbody>
         </table>

@@ -18,6 +18,9 @@ public class EntidadCriterioVO implements Criterio {
     /** The limit. */
     private Integer limit;
 
+    /** The idioma. */
+    private String idioma;
+
     /** The ids. */
     private Long id;
 
@@ -216,6 +219,25 @@ public class EntidadCriterioVO implements Criterio {
      */
     public final void setId(final Long value) {
         id = value;
+    }
+
+    /**
+     * Gets the idioma.
+     *
+     * @return the idioma
+     */
+    public String getIdioma() {
+        return idioma;
+    }
+
+    /**
+     * Sets the idioma.
+     *
+     * @param value
+     *            the new idioma
+     */
+    public void setIdioma(final String value) {
+        idioma = value;
     }
 
 }
