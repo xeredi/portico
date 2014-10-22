@@ -1,6 +1,6 @@
-var module = angular.module("proceso", [ "ngRoute" ]);
+angular.module("proceso", [ "ngRoute" ])
 
-module.config([ "$routeProvider", function($routeProvider) {
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/proceso/prbt/grid", {
@@ -15,9 +15,9 @@ module.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/proceso/prbt-detail.html",
         controller : "prbtDetailController"
     })
-} ]);
+} ])
 
-module.controller("prbtGridController", function($scope, $http, $location, $route, $routeParams) {
+.controller("prbtGridController", function($scope, $http, $location, $route, $routeParams) {
     $scope.showFilter = false;
     $scope.prbtCriterio = {};
 
@@ -82,9 +82,9 @@ module.controller("prbtGridController", function($scope, $http, $location, $rout
     }
 
     search($scope.prbtCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
-});
+})
 
-module.controller("prbtDetailController", function($scope, $http, $location, $route, $routeParams) {
+.controller("prbtDetailController", function($scope, $http, $location, $route, $routeParams) {
     function findItem() {
         {
             var url = "proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId;

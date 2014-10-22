@@ -1,6 +1,6 @@
-var module = angular.module("i18n", [ "pascalprecht.translate" ]);
+angular.module("i18n", [ "pascalprecht.translate" ])
 
-module.config(function($translateProvider) {
+.config(function($translateProvider) {
     $translateProvider.translations('es', {
         app_nombre : 'PORTICO',
         home : 'Inicio',

@@ -59,7 +59,7 @@ public abstract class BasePdf {
 
         switch (entdVO.getTpdt().getTipoElemento()) {
         case BO:
-            value = bundle.getString("boolean."
+            value = bundle.getString("format_"
                     + (itdtVO.getCantidadEntera() == null ? false : itdtVO.getCantidadEntera() == 1));
             break;
         case TX:

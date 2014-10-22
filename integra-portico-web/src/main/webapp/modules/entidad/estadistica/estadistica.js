@@ -1,42 +1,42 @@
-var module = angular.module("estadistica", [ "ngRoute" ]);
+angular.module("estadistica", [ "ngRoute" ])
 
-module.config([ "$routeProvider", function($routeProvider) {
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/estadistica/pepr/grid", {
-        title : 'pepr_grid',
+        title : 'peprList',
         templateUrl : "modules/entidad/estadistica/pepr-grid.html",
         controller : "peprGridController",
         reloadOnSearch : false
     })
 
     .when("/estadistica/pepr/detail/:peprId", {
-        title : 'pepr_detail',
+        title : 'pepr',
         templateUrl : "modules/entidad/estadistica/pepr-detail.html",
         controller : "peprDetailController"
     })
 
     .when("/estadistica/cdms/detail/:peprId", {
-        title : 'cdms_detail',
+        title : 'cdms',
         templateUrl : "modules/entidad/estadistica/cdms-detail.html",
         controller : "cdmsDetailController"
     })
 
     .when("/estadistica/estd/grid/:entiId/:peprId/:autpId", {
-        title : 'estd_grid',
+        title : 'estdList',
         templateUrl : "modules/entidad/estadistica/estd-grid.html",
         controller : "estdGridController",
         reloadOnSearch : false
     })
 
     .when("/estadistica/estd/detail/:entiId/:itemId", {
-        title : 'estd_detail',
+        title : 'estd',
         templateUrl : "modules/entidad/estadistica/estd-detail.html",
         controller : "estdDetailController"
     })
-} ]);
+} ])
 
-module.controller("peprGridController", function($scope, $http, $location, $route, $routeParams) {
+.controller("peprGridController", function($scope, $http, $location, $route, $routeParams) {
     $scope.showFilter = false;
     $scope.peprCriterio = {};
 
@@ -93,9 +93,9 @@ module.controller("peprGridController", function($scope, $http, $location, $rout
     }
 
     search($scope.peprCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
-});
+})
 
-module.controller("peprDetailController", function($scope, $http, $location, $route, $routeParams) {
+.controller("peprDetailController", function($scope, $http, $location, $route, $routeParams) {
     var url = "estadistica/pepr-detail.action";
 
     url += "?pepr.id=" + $routeParams.peprId;
@@ -118,9 +118,9 @@ module.controller("peprDetailController", function($scope, $http, $location, $ro
             });
         }
     }
-});
+})
 
-module.controller("cdmsDetailController", function($scope, $http, $location, $route, $routeParams) {
+.controller("cdmsDetailController", function($scope, $http, $location, $route, $routeParams) {
     var url = "estadistica/cdms-detail.action";
 
     url += "?pepr.id=" + $routeParams.peprId;
@@ -129,9 +129,9 @@ module.controller("cdmsDetailController", function($scope, $http, $location, $ro
         $scope.pepr = data.pepr;
         $scope.cdmsMap = data.cdmsMap;
     });
-});
+})
 
-module.controller("estdGridController", function($scope, $http, $location, $routeParams, $modal) {
+.controller("estdGridController", function($scope, $http, $location, $routeParams, $modal) {
     $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     $scope.itemCriterio.entiId = $routeParams.entiId;
     $scope.itemCriterio.pepr = {};
@@ -207,9 +207,9 @@ module.controller("estdGridController", function($scope, $http, $location, $rout
 
     findEnti();
     search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1);
-});
+})
 
-module.controller("estdFilterController", function($scope, $http, $modalInstance, enti, itemCriterio) {
+.controller("estdFilterController", function($scope, $http, $modalInstance, enti, itemCriterio) {
     console.log("estdFilterController: " + JSON.stringify(itemCriterio));
 
     $scope.itemCriterio = itemCriterio;
@@ -236,9 +236,9 @@ module.controller("estdFilterController", function($scope, $http, $modalInstance
                     $scope.fechaVigencia = data.fechaVigencia;
                 }
             });
-});
+})
 
-module.controller("estdDetailController", function($scope, $http, $location, $route, $routeParams) {
+.controller("estdDetailController", function($scope, $http, $location, $route, $routeParams) {
     function findEnti() {
         var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
 

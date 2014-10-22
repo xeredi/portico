@@ -1,6 +1,6 @@
-var module = angular.module("util", [ 'ui.bootstrap' ]);
+angular.module("util", [ 'ui.bootstrap' ])
 
-module.controller("datepickerController", function($scope) {
+.controller("datepickerController", function($scope) {
     $scope.open = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -18,11 +18,11 @@ module.controller("datepickerController", function($scope) {
     }
 
     $scope.format = "dd/MM/yyyy";
-});
+})
 
 // http://adamalbrecht.github.io/ngQuickDate/
 // https://github.com/adamalbrecht/ngQuickDate
-module.controller("timepickerController", function($scope) {
+.controller("timepickerController", function($scope) {
     $scope.open = function($event) {
         // alert("Open");
 

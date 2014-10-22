@@ -42,6 +42,8 @@ public class I18nJs {
         final I18nBO i18nBO = new I18nBO();
         final MessageI18nBO messageI18nBO = new MessageI18nBO();
 
+        final List<String> messageI18nKeys = messageI18nBO.selectKeyList(MessageI18nBundlename.web);
+
         for (final String language : languages) {
             final List<LabelValueVO> labelValues = new ArrayList<>();
 
@@ -52,8 +54,10 @@ public class I18nJs {
             final Map<String, String> messageI18nMap = messageI18nBO.selectKeyValueMap(MessageI18nBundlename.web,
                     new Locale(language));
 
-            for (final String key : messageI18nMap.keySet()) {
-                labelValues.add(new LabelValueVO(key, messageI18nMap.get(key)));
+            for (final String key : messageI18nKeys) {
+                if (messageI18nMap.containsKey(key)) {
+                    labelValues.add(new LabelValueVO(key, messageI18nMap.get(key)));
+                }
             }
 
             final Iterator<LabelValueVO> labelValueIterator = labelValues.iterator();
@@ -69,7 +73,7 @@ public class I18nJs {
                 }
             }
 
-            final String jsTemplate = "var module = angular.module('i18n', [ 'pascalprecht.translate' ]); module.config(function($translateProvider) { $translateProvider.translations('"
+            final String jsTemplate = "angular.module('i18n', [ 'pascalprecht.translate' ]).config(function($translateProvider) { $translateProvider.translations('"
                     + language
                     + "', {"
                     + i18nParams.toString()

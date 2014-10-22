@@ -9,19 +9,19 @@
 <fieldset>
     <div class="row-fluid">
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
-            <label translate>pepr_autp</label>
+            <label translate="pepr_autp"></label>
             <p class="form-control-static" ng-bind="pepr.autp.parametro"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-md-1 form-group">
-            <label translate>pepr_anio</label>
+            <label translate="pepr_anio"></label>
             <p class="form-control-static" ng-bind="pepr.anio"></p>
         </div>
         <div class="col-sm-2 col-md-1 col-md-1 form-group">
-            <label translate>pepr_mes</label>
+            <label translate="pepr_mes"></label>
             <p class="form-control-static" ng-bind="pepr.mes"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-md-1 form-group">
-            <label translate>pepr_cdmsGenerado</label>
+            <label translate="pepr_cdmsGenerado"></label>
             <p class="form-control-static">
                 <i class="glyphicon glyphicon-{{pepr.cdmsGenerado ? 'ok' : 'remove'}}"></i>
             </p>
@@ -30,7 +30,7 @@
 </fieldset>
 
 <div class="list-group">
-    <a ng-href="#/estadistica/cdms/detail/{{pepr.id}}" class="list-group-item" translate>pepr_cdms</a> <a
+    <a ng-href="#/estadistica/cdms/detail/{{pepr.id}}" class="list-group-item">{{'cdms' | translate | uppercase}}</a> <a
         ng-href="#/estadistica/estd/grid/{{enti.value}}/{{pepr.id}}/{{pepr.autp.id}}" class="list-group-item"
         ng-repeat="enti in tpesList track by $index" ng-bind="enti.label | uppercase"></a>
 </div>

@@ -8,7 +8,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/administracion", {
-        title : 'menu_administracion',
+        title : 'sec_administracion',
         templateUrl : "modules/administracion/administracion.html",
         controller : "administracionController"
     })

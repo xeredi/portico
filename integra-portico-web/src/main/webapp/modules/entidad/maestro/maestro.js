@@ -1,10 +1,10 @@
-var module = angular.module("maestro", [ "ngRoute" ]);
+angular.module("maestro", [ "ngRoute" ])
 
 // ----------------- MENU PRINCIPAL --------------------------
 // ----------------- MENU PRINCIPAL --------------------------
 // ----------------- MENU PRINCIPAL --------------------------
 
-module.config([ "$routeProvider", function($routeProvider) {
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/maestro", {
@@ -12,25 +12,25 @@ module.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/entidad/maestro/maestro.html",
         controller : "maestroController"
     })
-} ]);
+} ])
 
-module.controller("maestroController", function($scope, $http) {
+.controller("maestroController", function($scope, $http) {
     var url = "maestro/tppr-list.action";
 
     $http.get(url).success(function(data) {
         $scope.tpprList = data.tpprList;
     });
-});
+})
 
 // ----------- PARAMETROS ------------------
 // ----------- PARAMETROS ------------------
 // ----------- PARAMETROS ------------------
 
-module.config([ "$routeProvider", function($routeProvider) {
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/maestro/prmt/grid/:entiId", {
-        title : 'prmt_grid',
+        title : 'prmtList',
         templateUrl : "modules/entidad/maestro/prmt-grid.html",
         controller : "prmtGridController",
         reloadOnSearch : false
@@ -43,7 +43,7 @@ module.config([ "$routeProvider", function($routeProvider) {
     })
 
     .when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
-        title : 'prmt_detail',
+        title : 'prmt',
         templateUrl : "modules/entidad/maestro/prmt-detail.html",
         controller : "prmtDetailController",
         reloadOnSearch : false
@@ -61,9 +61,9 @@ module.config([ "$routeProvider", function($routeProvider) {
         controller : "prmtDuplicateController",
         reloadOnSearch : false
     })
-} ]);
+} ])
 
-module.controller("prmtGridController", function($scope, $http, $location, $routeParams, $modal) {
+.controller("prmtGridController", function($scope, $http, $location, $routeParams, $modal) {
     $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     $scope.itemCriterio.entiId = $routeParams.entiId;
 
@@ -132,9 +132,9 @@ module.controller("prmtGridController", function($scope, $http, $location, $rout
 
     findEnti();
     search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1);
-});
+})
 
-module.controller("prmtFilterController", function($scope, $http, $modalInstance, enti, itemCriterio) {
+.controller("prmtFilterController", function($scope, $http, $modalInstance, enti, itemCriterio) {
     console.log("prmtFilterController: " + JSON.stringify(itemCriterio));
 
     $scope.itemCriterio = itemCriterio;
@@ -157,9 +157,9 @@ module.controller("prmtFilterController", function($scope, $http, $modalInstance
             $scope.fechaVigencia = data.fechaVigencia;
         }
     });
-});
+})
 
-module.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
+.controller("prmtDetailController", function($scope, $http, $location, $routeParams) {
     var path = $location.path();
     var tabSelected = $routeParams.tabSelected;
     var itemId = $routeParams.itemId;
@@ -249,9 +249,9 @@ module.controller("prmtDetailController", function($scope, $http, $location, $ro
     }
 
     findItem();
-});
+})
 
-module.controller("prmtCreateController", function($scope, $http, $location, $routeParams) {
+.controller("prmtCreateController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 
@@ -297,9 +297,9 @@ module.controller("prmtCreateController", function($scope, $http, $location, $ro
 
     findEnti();
     findItem();
-});
+})
 
-module.controller("prmtEditController", function($scope, $http, $location, $routeParams) {
+.controller("prmtEditController", function($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 
@@ -345,9 +345,9 @@ module.controller("prmtEditController", function($scope, $http, $location, $rout
 
     findEnti();
     findItem();
-});
+})
 
-module.controller("prmtDuplicateController", function($scope, $http, $location, $route, $routeParams) {
+.controller("prmtDuplicateController", function($scope, $http, $location, $route, $routeParams) {
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 
@@ -394,9 +394,9 @@ module.controller("prmtDuplicateController", function($scope, $http, $location, 
 
     findEnti();
     findItem();
-});
+})
 
-module.controller('prmtsLupaCtrl', function($http, $scope) {
+.controller('prmtsLupaCtrl', function($http, $scope) {
     $scope.getLabelValues = function(entiId, textoBusqueda, fechaVigencia) {
         return $http.get(
                 'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.textoBusqueda="
@@ -404,13 +404,13 @@ module.controller('prmtsLupaCtrl', function($http, $scope) {
             return res.data.itemList;
         });
     };
-});
+})
 
 // ----------- SUBPARAMETROS ------------------
 // ----------- SUBPARAMETROS ------------------
 // ----------- SUBPARAMETROS ------------------
 
-module.config([ "$routeProvider", function($routeProvider) {
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/maestro/sprm/create/:entiId/:prmtId/:fechaVigencia", {
@@ -436,9 +436,9 @@ module.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/entidad/maestro/sprm-detail.html",
         controller : "sprmDetailController"
     })
-} ]);
+} ])
 
-module.controller("sprmDetailController", function($scope, $http, $routeParams) {
+.controller("sprmDetailController", function($scope, $http, $routeParams) {
     console.log("sprmDetailController: " + JSON.stringify($routeParams));
 
     $scope.remove = function() {
@@ -463,9 +463,9 @@ module.controller("sprmDetailController", function($scope, $http, $routeParams) 
             .success(function(data) {
                 $scope.item = data.item;
             });
-});
+})
 
-module.controller("sprmCreateController", function($scope, $http, $location, $route, $routeParams) {
+.controller("sprmCreateController", function($scope, $http, $location, $route, $routeParams) {
     $scope.save = function() {
         var url = "maestro/sprm-save.action";
 
@@ -509,9 +509,9 @@ module.controller("sprmCreateController", function($scope, $http, $location, $ro
 
     findEnti();
     findItem();
-});
+})
 
-module.controller("sprmEditController", function($scope, $http, $location, $route, $routeParams) {
+.controller("sprmEditController", function($scope, $http, $location, $route, $routeParams) {
     $scope.save = function() {
         var url = "maestro/sprm-save.action";
 
@@ -554,9 +554,9 @@ module.controller("sprmEditController", function($scope, $http, $location, $rout
 
     findEnti();
     findItem();
-});
+})
 
-module.controller("sprmDuplicateController", function($scope, $http, $location, $route, $routeParams) {
+.controller("sprmDuplicateController", function($scope, $http, $location, $route, $routeParams) {
     $scope.save = function() {
         var url = "maestro/sprm-save.action";
 

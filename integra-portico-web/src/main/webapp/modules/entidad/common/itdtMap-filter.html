@@ -6,7 +6,7 @@
 
             <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
                 <select ng-switch-when="BO" ng-model="itemCriterio.itdtMap[tpdtId].cantidadEntera"
-                    ng-options="item as ('fmt_' + item | translate) for item in [1 , 0]" class="form-control input-sm">
+                    ng-options="item as ('format_' + item | translate) for item in [1 , 0]" class="form-control input-sm">
                     <option />
                 </select> <input ng-switch-when="ND" type="text" ng-model="itemCriterio.itdtMap[tpdtId].cantidadDecimal"
                     class="form-control input-sm number" /> <input ng-switch-when="NE" type="text"

@@ -8,7 +8,7 @@
 
             <div ng-switch on="enti.entdMap[tpdtId].tpdt.tipoElemento">
                 <select ng-switch-when="BO" ng-model="item.itdtMap[tpdtId].cantidadEntera"
-                    ng-options="item as ('fmt_' + item | translate) for item in [1 , 0]"
+                    ng-options="item as ('format_' + item | translate) for item in [1 , 0]"
                     ng-required="item.itdtMap[tpdtId].obligatorio" class="form-control input-sm">
                     <option />
                 </select> <input ng-switch-when="ND" type="text" ng-model="item.itdtMap[tpdtId].cantidadDecimal"

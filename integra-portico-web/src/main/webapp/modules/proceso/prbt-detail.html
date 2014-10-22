@@ -1,9 +1,9 @@
 <div>
-    <tabset type="pills"> <tab heading="Proceso">
+    <tabset type="pills"> <tab heading="{{'prbt' | translate}}">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <button class="btn btn-default" ng-click="cancelar()">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
             </button>
         </div>
     </div>
@@ -11,59 +11,59 @@
     <fieldset>
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prbt_modulo</label>
+                <label translate="prbt_modulo"></label>
                 <p class="form-control-static" ng-bind="prbt.modulo"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prbt_tipo</label>
+                <label translate="prbt_tipo"></label>
                 <p class="form-control-static" ng-bind="prbt.tipo"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prbt_estado</label>
+                <label translate="prbt_estado"></label>
                 <p class="form-control-static" ng-bind="prbt.estado"></p>
             </div>
         </div>
         <div class="row-fluid">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prbt_falta</label>
+                <label translate="prbt_falta"></label>
                 <p class="form-control-static" ng-bind="prbt.falta | date:'medium'"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prbt_finicio</label>
+                <label translate="prbt_fini"></label>
                 <p class="form-control-static" ng-bind="prbt.finicio | date:'medium'"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prbt_ffin</label>
+                <label translate="prbt_ffin"></label>
                 <p class="form-control-static" ng-bind="prbt.ffin | date:'medium'"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label translate>prbt_duracion</label>
+                <label translate="prbt_duracion"></label>
                 <p class="form-control-static" ng-bind="prbt.duracion | number:0"></p>
             </div>
         </div>
         <div class="row-fluid">
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label translate>prbt_erroresCnt</label>
+                <label translate="prbt_erroresCnt"></label>
                 <p class="form-control-static" ng-bind="prbt.erroresCnt | number:0"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label translate>prbt_alertasCnt</label>
+                <label translate="prbt_alertasCnt"></label>
                 <p class="form-control-static" ng-bind="prbt.alertasCnt | number:0"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label translate>prbt_mensajesCnt</label>
+                <label translate="prbt_mensajesCnt"></label>
                 <p class="form-control-static" ng-bind="prbt.mensajesCnt | number:0"></p>
             </div>
         </div>
     </fieldset>
 
     <div class="table-responsive">
-        <legend>Parametros</legend>
+        <legend translate="prpmList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th translate>prpm_nombre</th>
-                    <th translate>prpm_valor</th>
+                    <th translate="prpm_nombre"></th>
+                    <th translate="prpm_valor"></th>
                 </tr>
             </thead>
 
@@ -75,13 +75,13 @@
             </tbody>
         </table>
     </div>
-    </tab> <tab ng-if="prbt.prarEntradaList.length || prbt.prarSalidaList.length" heading="Archivos">
+    </tab> <tab ng-if="prbt.prarEntradaList.length || prbt.prarSalidaList.length" heading="{{'prarList' | translate}}">
     <div ng-if="prbt.prarEntradaList.length" class="table-responsive">
-        <legend>Archivos Entrada</legend>
+        <legend translate="prarEntradaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th translate>prar_nombre</th>
+                    <th translate="prar_nombre"></th>
                 </tr>
             </thead>
 
@@ -94,11 +94,11 @@
     </div>
 
     <div ng-if="prbt.prarSalidaList.length" class="table-responsive">
-        <legend>Archivos Salida</legend>
+        <legend translate="prarSalidaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th translate>prar_nombre</th>
+                    <th translate="prar_nombre"></th>
                 </tr>
             </thead>
 
@@ -111,11 +111,11 @@
     </div>
     </tab> <tab ng-if="prbt.pritEntradaList.length || prbt.pritSalidaList.length" heading="Items">
     <div ng-if="prbt.pritEntradaList.length" class="table-responsive">
-        <legend>Items Entrada</legend>
+        <legend translate="pritEntradaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th translate>prit_nombre</th>
+                    <th translate="prit_nombre"></th>
                 </tr>
             </thead>
 
@@ -128,11 +128,11 @@
     </div>
 
     <div ng-if="prbt.pritSalidaList.length" class="table-responsive">
-        <legend>Items Salida</legend>
+        <legend translate="pritSalidaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
                 <tr>
-                    <th translate>prit_nombre</th>
+                    <th translate="prit_nombre"></th>
                 </tr>
             </thead>
 
@@ -143,7 +143,7 @@
             </tbody>
         </table>
     </div>
-    </tab> <tab heading="Mensajes" ng-if="prmnList.list">
+    </tab> <tab heading="{{'prmnList' | translate}}" ng-if="prmnList.list">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <pagination total-items="prmnList.count" items-per-page="prmnList.limit" ng-model="page"
@@ -155,9 +155,9 @@
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
-                <th translate>prmn_nivel</th>
-                <th translate>prmn_codigo</th>
-                <th translate>prmn_mensaje</th>
+                <th translate="prmn_nivel"></th>
+                <th translate="prmn_codigo"></th>
+                <th translate="prmn_mensaje"></th>
             </tr>
         </thead>
 
