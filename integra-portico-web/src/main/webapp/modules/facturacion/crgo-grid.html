@@ -1,7 +1,7 @@
 <div ng-if="showFilter">
     <form>
-        <fieldset>
-            <div class="row-fluid">
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-md-1 form-group">
                     <label translate>crgo_codigo</label> <input type="text" ng-model="crgoCriterio.codigo"
                         class="form-control input-sm" />
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-        </fieldset>
+        </div>
 
         <div class="btn-group">
             <button data-ng-click="search()" class="btn btn-primary">
@@ -57,8 +57,7 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default" translate="grid_count"
-            translate-value-count="{{crgoList.count | number:0}}"></span>
+        <span class="label label-default" translate="grid_count" translate-value-count="{{crgoList.count | number:0}}"></span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -84,7 +83,7 @@
                     <td ng-bind="crgo.crgv.descripcion"></td>
                     <td ng-bind="crgo.crgv.codigoNormalizado"></td>
                     <td ng-bind="crgo.crgv.tipo"></td>
-                    <td ng-bind="crgo.tpsr.nombre"></td>
+                    <td ng-bind="'enti_' + crgo.tpsr.id | translate"></td>
                     <td><i class="glyphicon glyphicon-{{crgo.crgv.principal ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{crgo.crgv.temporal ? 'ok' : 'remove'}}"></i></td>
                     <td ng-bind="crgo.crgv.fini | date"></td>

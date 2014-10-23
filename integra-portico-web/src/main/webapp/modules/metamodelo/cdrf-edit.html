@@ -2,8 +2,8 @@
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="cdrf.id" /><input type="hidden"
         ng-model="cdrf.tpdtId" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-md-3 form-group">
                 <label translate>cdrf_valor</label> <input ng-if="accion == 'create'" type="text" ng-model="cdrf.valor"
                     class="form-control input-sm" />
@@ -14,16 +14,14 @@
                     class="form-control input-sm" />
             </div>
         </div>
-    </fieldset>
 
-    <fieldset>
-        <div ng-repeat="availableLanguage in availableLanguages track by $index" class="row-fluid">
+        <div ng-repeat="availableLanguage in availableLanguages track by $index" class="row">
             <div class="col-sm-10 col-md-10 col-lg-8 form-group">
-                <label>Texto {{availableLanguage}}</label> <input type="text"
-                    ng-model="i18nMap[availableLanguage].text" maxlength="350" class="form-control input-sm" />
+                <label>Texto {{availableLanguage}}</label> <input type="text" ng-model="i18nMap[availableLanguage].text"
+                    maxlength="350" class="form-control input-sm" />
             </div>
         </div>
-    </fieldset>
+    </div>
 
     <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>

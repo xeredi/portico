@@ -1,10 +1,8 @@
-var module = angular.module("administracion", [ "ngRoute" ]);
+angular.module("administracion", [ "ngRoute" ])
 
 // ----------------- MENU PRINCIPAL --------------------------
-// ----------------- MENU PRINCIPAL --------------------------
-// ----------------- MENU PRINCIPAL --------------------------
 
-module.config([ "$routeProvider", function($routeProvider) {
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/administracion", {
@@ -12,22 +10,13 @@ module.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/administracion/administracion.html",
         controller : "administracionController"
     })
-} ]);
+} ])
 
-module.controller("administracionController", function($scope, $http, $location) {
-    $http.get("administracion/main.action").success(function(data) {
-        $scope.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            $scope.bundleList = data.bundleList;
-        }
-    });
-});
+.controller("administracionController", administracionController)
 
 // ----------------- METAMODELO --------------------------
-// ----------------- METAMODELO --------------------------
-// ----------------- METAMODELO --------------------------
-module.config([ "$routeProvider", function($routeProvider) {
+
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/administracion/metamodelo/reload", {
@@ -35,23 +24,13 @@ module.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/administracion/metamodelo-reload.html",
         controller : "metamodeloReloadController"
     })
-} ]);
+} ])
 
-module.controller("metamodeloReloadController", function($scope, $http, $location, $routeParams) {
-    $scope.reload = function() {
-        $http.get("administracion/metamodelo/reload.action").success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-            }
-        });
-    }
-});
+.controller("metamodeloReloadController", metamodeloReloadController)
 
 // ----------------- CONFIGURACION --------------------------
-// ----------------- CONFIGURACION --------------------------
-// ----------------- CONFIGURACION --------------------------
-module.config([ "$routeProvider", function($routeProvider) {
+
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/administracion/conf/grid", {
@@ -67,9 +46,56 @@ module.config([ "$routeProvider", function($routeProvider) {
         templateUrl : "modules/administracion/conf-edit.html",
         controller : "confEditController"
     })
-} ]);
+} ])
 
-module.controller("confGridController", function($scope, $http, $location, $routeParams) {
+.controller("confGridController", confGridController)
+
+.controller("confDetailController", confDetailController)
+
+.controller("confEditController", confEditController)
+
+// ----------------- MESSAGEI18N --------------------------
+
+.config([ "$routeProvider", function($routeProvider) {
+    $routeProvider
+
+    .when("/administracion/m18n/:bundle/grid", {
+        title : 'm18n_bundle_grid',
+        templateUrl : "modules/administracion/m18n-grid.html",
+        controller : "m18nGridController"
+    })
+
+    .when("/administracion/m18n/:bundle/detail/:key", {
+        title : 'm18n_bundle_detail',
+        templateUrl : "modules/administracion/m18n-detail.html",
+        controller : "m18nDetailController"
+    })
+} ])
+
+.controller("m18nGridController", m18nGridController);
+
+function administracionController($scope, $http, $location) {
+    $http.get("administracion/main.action").success(function(data) {
+        $scope.actionErrors = data.actionErrors;
+
+        if (data.actionErrors.length == 0) {
+            $scope.bundleList = data.bundleList;
+        }
+    });
+}
+
+function metamodeloReloadController($scope, $http, $location, $routeParams) {
+    $scope.reload = function() {
+        $http.get("administracion/metamodelo/reload.action").success(function(data) {
+            $scope.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+            }
+        });
+    }
+}
+
+function confGridController($scope, $http, $location, $routeParams) {
     $http.get("administracion/configuracion/conf-grid.action").success(function(data) {
         $scope.actionErrors = data.actionErrors;
 
@@ -77,9 +103,9 @@ module.controller("confGridController", function($scope, $http, $location, $rout
             $scope.confList = data.confList;
         }
     });
-});
+}
 
-module.controller("confDetailController", function($scope, $http, $location, $routeParams) {
+function confDetailController($scope, $http, $location, $routeParams) {
     $http.get("administracion/configuracion/conf-detail.action?conf.key=" + $routeParams.key).success(function(data) {
         $scope.actionErrors = data.actionErrors;
 
@@ -87,9 +113,9 @@ module.controller("confDetailController", function($scope, $http, $location, $ro
             $scope.conf = data.conf;
         }
     });
-});
+}
 
-module.controller("confEditController", function($scope, $http, $location, $routeParams) {
+function confEditController($scope, $http, $location, $routeParams) {
     $http.get("administracion/configuracion/conf-edit.action?conf.key=" + $routeParams.key).success(function(data) {
         $scope.actionErrors = data.actionErrors;
 
@@ -117,28 +143,9 @@ module.controller("confEditController", function($scope, $http, $location, $rout
     $scope.cancel = function() {
         window.history.back();
     }
-});
+}
 
-//----------------- MESSAGEI18N --------------------------
-//----------------- MESSAGEI18N --------------------------
-//----------------- MESSAGEI18N --------------------------
-module.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
-
-    .when("/administracion/m18n/:bundle/grid", {
-        title : 'm18n_bundle_grid',
-        templateUrl : "modules/administracion/m18n-grid.html",
-        controller : "m18nGridController"
-    })
-
-    .when("/administracion/m18n/:bundle/detail/:key", {
-        title : 'm18n_bundle_detail',
-        templateUrl : "modules/administracion/m18n-detail.html",
-        controller : "m18nDetailController"
-    })
-} ]);
-
-module.controller("m18nGridController", function($scope, $http, $location, $routeParams) {
+function m18nGridController($scope, $http, $location, $routeParams) {
     $http.get("administracion/messagei18n/m18n-grid.action?bundle=" + $routeParams.bundle).success(function(data) {
         $scope.actionErrors = data.actionErrors;
 
@@ -147,5 +154,4 @@ module.controller("m18nGridController", function($scope, $http, $location, $rout
             $scope.report = data.report;
         }
     });
-});
-
+}

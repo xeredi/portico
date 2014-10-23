@@ -2,8 +2,8 @@
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enti.id" /> <input type="hidden"
         ng-model="enti.tipo" /><input type="hidden" ng-model="enti.tpsr.id" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label translate>enti_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enti.codigo" class="form-control input-sm" />
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="row-fluid">
+        <div class="row">
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>enti_cmdAlta</label> <select ng-model="enti.cmdAlta"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
@@ -71,7 +71,7 @@
                 </select>
             </div>
         </div>
-    </fieldset>
+    </div>
 
     <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>

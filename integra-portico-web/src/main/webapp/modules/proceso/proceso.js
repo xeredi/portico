@@ -17,7 +17,11 @@ angular.module("proceso", [ "ngRoute" ])
     })
 } ])
 
-.controller("prbtGridController", function($scope, $http, $location, $route, $routeParams) {
+.controller("prbtGridController", prbtGridController)
+
+.controller("prbtDetailController", prbtDetailController);
+
+function prbtGridController($scope, $http, $location, $route, $routeParams) {
     $scope.showFilter = false;
     $scope.prbtCriterio = {};
 
@@ -82,9 +86,9 @@ angular.module("proceso", [ "ngRoute" ])
     }
 
     search($scope.prbtCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
-})
+}
 
-.controller("prbtDetailController", function($scope, $http, $location, $route, $routeParams) {
+function prbtDetailController($scope, $http, $location, $route, $routeParams) {
     function findItem() {
         {
             var url = "proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId;
@@ -103,4 +107,4 @@ angular.module("proceso", [ "ngRoute" ])
     }
 
     findItem();
-});
+}

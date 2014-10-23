@@ -2,8 +2,8 @@
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enen.entiPadreId" /> <input type="hidden"
         ng-model="enti.tipo" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-md-3 form-group">
                 <label translate>enen_entih</label> <select ng-model="enen.entiHijaId"
                     ng-options="labelValue.value as labelValue.label for labelValue in entiList"
@@ -16,13 +16,13 @@
                     class="form-control input-sm" />
             </div>
         </div>
+    </div>
 
-        <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
-        <ul>
-            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-        </ul>
-        </alert>
-    </fieldset>
+    <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="submit(editForm)" class="btn btn-default">

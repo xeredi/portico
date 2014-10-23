@@ -3,21 +3,21 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/facturacion/aspc/edit/{{aspc.aspv.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <a class="btn btn-default" ng-href="#/facturacion/aspc/duplicate/{{aspc.aspv.id}}"><i
-            class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
+            ng-href="#/facturacion/aspc/duplicate/{{aspc.aspv.id}}"><i class="glyphicon glyphicon-tags"></i> <span
+            translate>btn_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
 
-<fieldset>
-    <div class="row-fluid">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>aspc_tpsr</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{aspc.tpsr.id}}" ng-bind="aspc.tpsr.nombre"></a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{aspc.tpsr.id}}" ng-bind="'enti_' + aspc.tpsr.id | translate"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
@@ -41,7 +41,7 @@
             <p class="form-control-static" ng-bind="aspc.aspv.prioridad"></p>
         </div>
     </div>
-</fieldset>
+</div>
 
 <fieldset>
     <legend translate="aspc_cList"></legend>
@@ -99,95 +99,97 @@
     </div>
 </fieldset>
 
-<fieldset>
-    <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-        <fieldset>
-            <legend translate="aspc_lcList"></legend>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+            <fieldset>
+                <legend translate="aspc_lcList"></legend>
 
-            <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate>aspc_lsumCuant</th>
-                        </tr>
-                    </thead>
+                <div class="table-responsive">
+                    <table class="table-bordered table-condensed table-hover table-nonfluid">
+                        <thead>
+                            <tr>
+                                <th />
+                                <th translate>aspc_lsumCuant</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <tr>
-                            <td>cuant1</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant1 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant2</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant2 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant3</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant3 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant4</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant4 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant5</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant5 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>cuant6</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant6 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
+                        <tbody>
+                            <tr>
+                                <td>cuant1</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant1 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>cuant2</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant2 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>cuant3</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant3 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>cuant4</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant4 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>cuant5</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant5 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>cuant6</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lsumCuant6 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+            <fieldset>
+                <legend translate="aspc_liList"></legend>
+
+                <div class="table-responsive">
+                    <table class="table-bordered table-condensed table-hover table-nonfluid">
+                        <thead>
+                            <tr>
+                                <th />
+                                <th translate>aspc_lgrpInfo</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>info1</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo1 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>info2</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo2 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>info3</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo3 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>info4</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo4 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>info5</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo5 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                            <tr>
+                                <td>info6</td>
+                                <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo6 ? 'ok' : 'remove'}}"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
     </div>
-
-    <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-        <fieldset>
-            <legend translate="aspc_liList"></legend>
-
-            <div class="table-responsive">
-                <table class="table-bordered table-condensed table-hover table-nonfluid">
-                    <thead>
-                        <tr>
-                            <th />
-                            <th translate>aspc_lgrpInfo</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td>info1</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo1 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info2</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo2 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info3</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo3 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info4</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo4 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info5</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo5 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                        <tr>
-                            <td>info6</td>
-                            <td><i class="glyphicon glyphicon-{{aspc.aspv.lgrpInfo6 ? 'ok' : 'remove'}}"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-    </div>
-</fieldset>
+</div>
 
 <fieldset>
     <legend translate="aspc_ascrList"></legend>

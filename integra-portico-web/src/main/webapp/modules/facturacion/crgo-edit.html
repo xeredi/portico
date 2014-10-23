@@ -1,17 +1,11 @@
 <p class="bg-primary" ng-bind="'Cargo'"></p>
 
-<alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-<ul>
-    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-</ul>
-</alert>
-
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="crgo.id" /><input type="hidden"
         ng-model="crgo.crgv.id" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-md-3 form-group">
                 <label translate>crgo_tpsr</label> <select ng-if="accion == 'create'" ng-model="crgo.tpsr.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in entiList"
@@ -52,23 +46,21 @@
             </div>
         </div>
 
-        <div class="row-fluid">
+        <div class="row">
             <div class="col-md-1 form-group">
                 <label translate>crgo_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.fini" ng-required="true" />
-                    <span class="input-group-addon" ng-click="open($event)"><i
-                        class="glyphicon glyphicon-calendar"></i></span>
+                        datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.fini" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>crgo_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.ffin" ng-required="true" />
-                    <span class="input-group-addon" ng-click="open($event)"><i
-                        class="glyphicon glyphicon-calendar"></i></span>
+                        datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.ffin" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
             <div class="col-md-3 form-group">
@@ -76,7 +68,13 @@
                     class="form-control input-sm" />
             </div>
         </div>
-    </fieldset>
+    </div>
+
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

@@ -1,7 +1,7 @@
 <div ng-if="showFilter">
     <form>
-        <fieldset>
-            <div class="row-fluid">
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                     <label translate>pepr_autp</label> <select ng-model="peprCriterio.autpId"
                         ng-options="labelValue.value as labelValue.label for labelValue in autpList"
@@ -24,7 +24,7 @@
                     </select>
                 </div>
             </div>
-        </fieldset>
+        </div>
 
         <div class="btn-group">
             <button data-ng-click="search()" class="btn btn-primary">
@@ -54,8 +54,7 @@
     </div>
 
     <div class="table-responsive">
-        <span class="label label-default" translate="grid_count"
-            translate-value-count="{{peprList.count | number:0}}"></span>
+        <span class="label label-default" translate="grid_count" translate-value-count="{{peprList.count | number:0}}"></span>
 
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>

@@ -36,7 +36,19 @@ angular.module("estadistica", [ "ngRoute" ])
     })
 } ])
 
-.controller("peprGridController", function($scope, $http, $location, $route, $routeParams) {
+.controller("peprGridController", peprGridController)
+
+.controller("peprDetailController", peprDetailController)
+
+.controller("cdmsDetailController", cdmsDetailController)
+
+.controller("estdGridController", estdGridController)
+
+.controller("estdFilterController", estdFilterController)
+
+.controller("estdDetailController", estdDetailController);
+
+function peprGridController($scope, $http, $location, $route, $routeParams) {
     $scope.showFilter = false;
     $scope.peprCriterio = {};
 
@@ -93,9 +105,9 @@ angular.module("estadistica", [ "ngRoute" ])
     }
 
     search($scope.peprCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
-})
+}
 
-.controller("peprDetailController", function($scope, $http, $location, $route, $routeParams) {
+function peprDetailController($scope, $http, $location, $route, $routeParams) {
     var url = "estadistica/pepr-detail.action";
 
     url += "?pepr.id=" + $routeParams.peprId;
@@ -118,9 +130,9 @@ angular.module("estadistica", [ "ngRoute" ])
             });
         }
     }
-})
+}
 
-.controller("cdmsDetailController", function($scope, $http, $location, $route, $routeParams) {
+function cdmsDetailController($scope, $http, $location, $route, $routeParams) {
     var url = "estadistica/cdms-detail.action";
 
     url += "?pepr.id=" + $routeParams.peprId;
@@ -129,9 +141,9 @@ angular.module("estadistica", [ "ngRoute" ])
         $scope.pepr = data.pepr;
         $scope.cdmsMap = data.cdmsMap;
     });
-})
+}
 
-.controller("estdGridController", function($scope, $http, $location, $routeParams, $modal) {
+function estdGridController($scope, $http, $location, $routeParams, $modal) {
     $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     $scope.itemCriterio.entiId = $routeParams.entiId;
     $scope.itemCriterio.pepr = {};
@@ -207,9 +219,9 @@ angular.module("estadistica", [ "ngRoute" ])
 
     findEnti();
     search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1);
-})
+}
 
-.controller("estdFilterController", function($scope, $http, $modalInstance, enti, itemCriterio) {
+function estdFilterController($scope, $http, $modalInstance, enti, itemCriterio) {
     console.log("estdFilterController: " + JSON.stringify(itemCriterio));
 
     $scope.itemCriterio = itemCriterio;
@@ -236,9 +248,9 @@ angular.module("estadistica", [ "ngRoute" ])
                     $scope.fechaVigencia = data.fechaVigencia;
                 }
             });
-})
+}
 
-.controller("estdDetailController", function($scope, $http, $location, $route, $routeParams) {
+function estdDetailController($scope, $http, $location, $route, $routeParams) {
     function findEnti() {
         var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
 
@@ -258,4 +270,4 @@ angular.module("estadistica", [ "ngRoute" ])
 
     findEnti();
     findItem();
-});
+}

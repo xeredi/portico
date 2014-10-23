@@ -2,8 +2,8 @@
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="entd.entiId" /> <input type="hidden"
         ng-model="entd.tpdt.id" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate>entd_tpdt</label> <select ng-if="accion == 'create'" ng-model="entd.tpdt.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in tpdtList"
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="row-fluid">
+        <div class="row">
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
                 <label translate>entd_grupo</label> <input type="text" ng-model="entd.grupo"
                     class="form-control input-sm" />
@@ -55,7 +55,7 @@
                 </select>
             </div>
         </div>
-    </fieldset>
+    </div>
 
     <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>

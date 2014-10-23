@@ -2,8 +2,8 @@
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enac.entiId" /> <input type="hidden"
         ng-model="enac.path" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                 <label translate>enac_path</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="enac.etiqueta" class="form-control input-sm" />
@@ -18,7 +18,7 @@
                     class="form-control input-sm" />
             </div>
         </div>
-    </fieldset>
+    </div>
 
     <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
     <ul>
