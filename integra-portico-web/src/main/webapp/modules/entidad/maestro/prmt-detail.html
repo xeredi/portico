@@ -25,8 +25,8 @@
     </div>
 </div>
 
-<fieldset>
-    <div class="row-fluid">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>prmt_parametro</label>
             <p class="form-control-static" ng-bind="item.parametro"></p>
@@ -42,21 +42,21 @@
             <p class="form-control-static" ng-bind="item.prvr.ffin | date"></p>
         </div>
     </div>
-</fieldset>
 
-<fieldset ng-if="enti.i18n">
-    <div ng-repeat="availableLanguage in availableLanguages track by $index" class="row-fluid">
-        <div class="col-sm-10 col-md-10 col-lg-8 form-group">
+    <div ng-if="enti.i18n" class="row">
+        <div ng-repeat="availableLanguage in availableLanguages track by $index"
+            class="col-sm-10 col-md-10 col-lg-8 form-group">
             <label>Texto {{availableLanguage}}</label>
             <p class="form-control-static" ng-bind="i18nMap[availableLanguage].text"></p>
         </div>
     </div>
-</fieldset>
 
-<div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+    <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+</div>
 
-</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{'enti_' + entiHija.id | translate}}" active="entiHija.active"
-    disabled="entiHija.disabled" select="tabSelected($index)">
+
+</tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{'enti_' + entiHija.id | translate}}"
+    active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <pagination ng-show="itemHijosMap[entiHija.id].count > 0" total-items="itemHijosMap[entiHija.id].count"
@@ -79,7 +79,7 @@
         <thead>
             <tr>
                 <th class="buttonLinks" />
-                <th ng-bind="entiHija.tpprAsociado.nombre"></th>
+                <th ng-bind="'enti_' + entiHija.tpprAsociado.id | translate"></th>
 
                 <th class="date" translate>sprm_fini</th>
                 <th class="date" translate>sprm_ffin</th>

@@ -1,8 +1,8 @@
 <form role="form">
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="tpdt.id" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate>tpdt_codigo</label> <input ng-if="accion == 'create'" type="text"
                     ng-model="tpdt.codigo" class="form-control input-sm" />
@@ -42,13 +42,13 @@
                 </select>
             </div>
         </div>
+    </div>
 
-        <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-        <ul>
-            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-        </ul>
-        </alert>
-    </fieldset>
+    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <ul>
+        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    </ul>
+    </alert>
 
     <div class="btn-group">
         <button data-ng-click="save()" class="btn btn-primary">

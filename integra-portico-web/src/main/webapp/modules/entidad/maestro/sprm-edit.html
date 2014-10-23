@@ -5,10 +5,10 @@
         ng-model="item.id" /><input type="hidden" ng-model="item.prmtId" /><input type="hidden"
         ng-model="item.spvr.id" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-sm-4 col-md-2 col-md-2 form-group">
-                <label ng-bind="enti.tpprAsociado.nombre"></label>
+                <label ng-bind="'enti_' + enti.tpprAsociado.id | translate"></label>
                 <div ng-if="accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="item.prmtAsociado"
                         typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(enti.tpprAsociado.id, $viewValue, item.fref)"
@@ -36,9 +36,9 @@
                 </div>
             </div>
         </div>
-    </fieldset>
 
-    <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+        <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+    </div>
 
     <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>

@@ -1,7 +1,7 @@
 <p class="bg-primary" ng-bind="'enti_' + enti.id | translate"></p>
 
-<fieldset>
-    <div class="row-fluid">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>estd_pepr</label>
             <p class="form-control-static">
@@ -13,6 +13,6 @@
             <p class="form-control-static" ng-bind="item.subp.etiqueta"></p>
         </div>
     </div>
-</fieldset>
 
-<div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+    <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+</div>

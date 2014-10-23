@@ -4,8 +4,8 @@
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
         ng-model="item.id" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-sm-3 col-md-2 form-group">
                 <label translate>srvc_subp</label> <select ng-if="accion != 'edit'" ng-model="item.subp.id"
                     ng-options="labelValue.value as labelValue.label for labelValue in subpList"
@@ -61,9 +61,9 @@
                 </div>
             </div>
         </div>
-    </fieldset>
 
-    <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+        <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+    </div>
 
     <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>

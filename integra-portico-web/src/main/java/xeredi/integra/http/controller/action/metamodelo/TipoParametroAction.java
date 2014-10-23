@@ -1,11 +1,15 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
@@ -43,6 +47,9 @@ public final class TipoParametroAction extends BaseAction {
 
     /** The enti padres list. */
     private List<EntidadVO> entiPadresList;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /**
      * Instantiates a new tipo parametro action.
@@ -82,25 +89,30 @@ public final class TipoParametroAction extends BaseAction {
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
         final EntidadBO entiBO = new EntidadBO();
+        final I18nBO i18nBO = new I18nBO();
 
         enti = tpprBO.select(enti.getId(), getIdioma());
 
-        EntidadCriterioVO entiCriterioVO = null;
+        if (enti != null) {
+            i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
-        if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
-            entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiHijaId(enti.getId());
-            entiCriterioVO.setIdioma(getIdioma());
+            EntidadCriterioVO entiCriterioVO = null;
 
-            entiPadresList = entiBO.selectList(entiCriterioVO);
-        }
+            if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
+                entiCriterioVO = new EntidadCriterioVO();
+                entiCriterioVO.setEntiHijaId(enti.getId());
+                entiCriterioVO.setIdioma(getIdioma());
 
-        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-            entiCriterioVO = new EntidadCriterioVO();
-            entiCriterioVO.setEntiPadreId(enti.getId());
-            entiCriterioVO.setIdioma(getIdioma());
+                entiPadresList = entiBO.selectList(entiCriterioVO);
+            }
 
-            entiHijasList = entiBO.selectList(entiCriterioVO);
+            if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
+                entiCriterioVO = new EntidadCriterioVO();
+                entiCriterioVO.setEntiPadreId(enti.getId());
+                entiCriterioVO.setIdioma(getIdioma());
+
+                entiHijasList = entiBO.selectList(entiCriterioVO);
+            }
         }
 
         return SUCCESS;
@@ -207,15 +219,20 @@ public final class TipoParametroAction extends BaseAction {
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+        final I18nBO i18nBO = new I18nBO();
 
         enti = tpprBO.select(enti.getId(), getIdioma());
 
-        final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
+        if (enti != null) {
+            i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
-        entiCriterioVO.setTpprId(enti.getId());
-        entiCriterioVO.setIdioma(getIdioma());
+            final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
-        subentiList = tpspBO.selectList(entiCriterioVO);
+            entiCriterioVO.setTpprId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
+
+            subentiList = tpspBO.selectList(entiCriterioVO);
+        }
 
         return SUCCESS;
     }
@@ -284,6 +301,25 @@ public final class TipoParametroAction extends BaseAction {
      */
     public void setEnti(final TipoParametroVO value) {
         enti = value;
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 
 }

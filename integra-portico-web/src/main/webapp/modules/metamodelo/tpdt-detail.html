@@ -10,8 +10,8 @@
     </div>
 </div>
 
-<fieldset>
-    <div class="row-fluid">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>tpdt_codigo</label>
             <p class="form-control-static" ng-bind="tpdt.codigo"></p>
@@ -43,7 +43,7 @@
             </p>
         </div>
     </div>
-</fieldset>
+</div>
 
 <fieldset ng-if="tpdt.tipoElemento == 'CR'">
     <legend ng-bind="'Valores de Codigo de Referencia'"></legend>

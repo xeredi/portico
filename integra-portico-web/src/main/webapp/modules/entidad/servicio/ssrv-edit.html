@@ -4,8 +4,8 @@
     <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
         ng-model="item.id" /><input type="hidden" ng-model="item.srvc.id" />
 
-    <fieldset>
-        <div class="row-fluid">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label translate>ssrv_srvc</label>
                 <div ng-if="!item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
@@ -59,9 +59,9 @@
                 </div>
             </div>
         </div>
-    </fieldset>
 
-    <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+        <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+    </div>
 
     <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>

@@ -18,10 +18,10 @@
     </div>
 </div>
 
-<fieldset>
-    <div class="row-fluid">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-sm-4 col-md-2 col-md-2 form-group">
-            <label ng-bind="enti.tpprAsociado.nombre"></label>
+            <label ng-bind="'enti_' + enti.tpprAsociado.id | translate"></label>
             <p class="form-control-static">
                 <a ng-href="#/maestro/prmt/detail/{{enti.tpprAsociado.id}}/{{item.prmtAsociado.id}}/{{item.fref}}"
                     ng-bind="item.prmtAsociado.etiqueta"></a>
@@ -36,6 +36,6 @@
             <p class="form-control-static" ng-bind="item.spvr.ffin | date"></p>
         </div>
     </div>
-</fieldset>
 
-<div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+    <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+</div>

@@ -21,8 +21,8 @@
     </div>
 </div>
 
-<fieldset>
-    <div class="row-fluid">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label translate>ssrv_srvc</label>
             <p class="form-control-static">
@@ -49,9 +49,9 @@
             <p class="form-control-static" ng-bind="item.ffin | date"></p>
         </div>
     </div>
-</fieldset>
 
-<div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+    <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+</div>
 
 </tab> <tab ng-repeat="entiHija in subentiList track by $index" heading="{{'enti_' + entiHija.id | translate}}"
     active="entiHija.active" disabled="entiHija.disabled" select="tabSelected($index)">

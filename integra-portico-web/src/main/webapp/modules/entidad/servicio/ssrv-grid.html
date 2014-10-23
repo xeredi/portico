@@ -47,7 +47,7 @@
                 <td><a ng-href="#/servicio/ssrv/detail/{{enti.id}}/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.srvc.etiqueta"></td>
-                <td ng-bind="item.numero"></td>
+                <td ng-bind="item.numero" class="number"></td>
                 <td ng-if="enti.tpdtEstado" ng-bind="item.estado"></td>
                 <td ng-if="enti.temporal" ng-bind="item.fini | date"></td>
                 <td ng-if="enti.temporal" ng-bind="item.ffin | date"></td>

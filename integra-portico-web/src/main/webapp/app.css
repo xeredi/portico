@@ -21,6 +21,11 @@ label {
 	font-weight: bold;
 }
 
+.container-fluid {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .nav-pills>li, .modal-title, legend, .bg-primary {
 	text-transform: uppercase;
 	font-size: 12px;
@@ -40,7 +45,8 @@ label {
 }
 
 .bg-primary {
-	font-size: 12px; padding-top : 10px;
+	font-size: 12px;
+	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -124,10 +130,6 @@ form {
 	padding-left: 2px;
 	padding-top: 1px;
 	padding-bottom: 1px;
-}
-
-fieldset {
-	padding-top: 10px;
 }
 
 legend {

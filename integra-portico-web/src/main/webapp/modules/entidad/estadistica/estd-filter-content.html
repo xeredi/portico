@@ -3,8 +3,8 @@
 </div>
 <div class="modal-body">
     <form>
-        <fieldset>
-            <div class="row-fluid">
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
                     <label translate>estd_subp</label> <select ng-model="itemCriterio.subpId"
                         ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
@@ -18,9 +18,9 @@
                     </select>
                 </div>
             </div>
-        </fieldset>
 
-        <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+            <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+        </div>
     </form>
 </div>
 <div class="modal-footer">

@@ -403,6 +403,8 @@ angular
             $http.get(url).success(function(data) {
                 $scope.enti = data.enti;
                 $scope.subentiList = data.subentiList;
+                $scope.i18nMap = data.i18nMap;
+                $scope.availableLanguages = data.availableLanguages;
             });
 
             $scope.remove = function() {
@@ -430,6 +432,8 @@ angular
                     $http.get(url).success(function(data) {
                         $scope.enti = data.enti;
                         $scope.accion = data.accion;
+                        $scope.i18nMap = data.i18nMap;
+                        $scope.availableLanguages = data.availableLanguages;
                     });
 
                     var urlTpdtNombreList = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
