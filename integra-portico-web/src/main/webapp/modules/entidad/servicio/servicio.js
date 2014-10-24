@@ -1,10 +1,45 @@
 angular.module("servicio", [ "ngRoute" ])
 
-// ----------------- MENU PRINCIPAL --------------------------
-// ----------------- MENU PRINCIPAL --------------------------
-// ----------------- MENU PRINCIPAL --------------------------
+.config(config)
 
-.config([ "$routeProvider", function($routeProvider) {
+// ----------------- MENU PRINCIPAL --------------------------
+.controller("servicioController", servicioController)
+
+// ----------- SERVICIOS ------------------
+.controller("srvcGridController", srvcGridController)
+
+.controller("srvcFilterController", srvcFilterController)
+
+.controller("srvcDetailController", srvcDetailController)
+
+.controller("srvcCreateController", srvcCreateController)
+
+.controller("srvcEditController", srvcEditController)
+
+.controller("srvcDuplicateController", srvcDuplicateController)
+
+.controller('srvcLupaCtrl', srvcLupaCtrl)
+
+.controller("maniTotalesController", maniTotalesController)
+
+// ----------- SUBSERVICIOS ------------------
+.controller("ssrvGridController", ssrvGridController)
+
+.controller("ssrvFilterController", ssrvFilterController)
+
+.controller("ssrvDetailController", ssrvDetailController)
+
+.controller("ssrvCreateController", ssrvCreateController)
+
+.controller("ssrvEditController", ssrvEditController)
+
+.controller("ssrvDuplicateController", ssrvDuplicateController)
+
+.controller('ssrvLupaCtrl', ssrvLupaCtrl)
+
+.controller("mablTotalesController", mablTotalesController);
+
+function config($routeProvider) {
     $routeProvider
 
     .when("/servicio", {
@@ -12,16 +47,6 @@ angular.module("servicio", [ "ngRoute" ])
         templateUrl : "modules/entidad/servicio/servicio.html",
         controller : "servicioController"
     })
-} ])
-
-.controller("servicioController", servicioController)
-
-// ----------- SERVICIOS ------------------
-// ----------- SERVICIOS ------------------
-// ----------- SERVICIOS ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/servicio/srvc/grid/:entiId", {
         title : 'srvc_grid',
@@ -60,30 +85,6 @@ angular.module("servicio", [ "ngRoute" ])
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
         controller : "maniTotalesController"
     })
-} ])
-
-.controller("srvcGridController", srvcGridController)
-
-.controller("srvcFilterController", srvcFilterController)
-
-.controller("srvcDetailController", srvcDetailController)
-
-.controller("srvcCreateController", srvcCreateController)
-
-.controller("srvcEditController", srvcEditController)
-
-.controller("srvcDuplicateController", srvcDuplicateController)
-
-.controller('srvcLupaCtrl', srvcLupaCtrl)
-
-.controller("maniTotalesController", maniTotalesController)
-
-// ----------- SUBSERVICIOS ------------------
-// ----------- SUBSERVICIOS ------------------
-// ----------- SUBSERVICIOS ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/servicio/ssrv/grid/:entiId", {
         title : 'ssrv_grid',
@@ -128,23 +129,7 @@ angular.module("servicio", [ "ngRoute" ])
         templateUrl : "modules/entidad/servicio/manifiesto/mabl-totales.html",
         controller : "mablTotalesController"
     })
-} ])
-
-.controller("ssrvGridController", ssrvGridController)
-
-.controller("ssrvFilterController", ssrvFilterController)
-
-.controller("ssrvDetailController", ssrvDetailController)
-
-.controller("ssrvCreateController", ssrvCreateController)
-
-.controller("ssrvEditController", ssrvEditController)
-
-.controller("ssrvDuplicateController", ssrvDuplicateController)
-
-.controller('ssrvLupaCtrl', ssrvLupaCtrl)
-
-.controller("mablTotalesController", mablTotalesController);
+}
 
 function servicioController($scope, $http, $location) {
     var url = "servicio/tpsr-list.action";

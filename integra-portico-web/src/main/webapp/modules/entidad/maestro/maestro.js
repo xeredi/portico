@@ -1,32 +1,53 @@
 angular.module("maestro", [ "ngRoute" ])
 
-// ----------------- MENU PRINCIPAL --------------------------
-// ----------------- MENU PRINCIPAL --------------------------
-// ----------------- MENU PRINCIPAL --------------------------
+.config(config)
 
-.config([ "$routeProvider", function($routeProvider) {
+.factory('tpprService', tpprService)
+
+.factory('prmtService', prmtService)
+
+// ----------------- MENU PRINCIPAL --------------------------
+.controller("maestroController", maestroController)
+
+// ----------- PARAMETROS ------------------
+.controller("prmtGridController", prmtGridController)
+
+.controller("prmtFilterController", prmtFilterController)
+
+.controller("prmtDetailController", prmtDetailController)
+
+.controller("prmtCreateController", prmtCreateController)
+
+.controller("prmtEditController", prmtEditController)
+
+.controller("prmtDuplicateController", prmtDuplicateController)
+
+.controller('prmtsLupaCtrl', prmtsLupaCtrl)
+
+// ----------- SUBPARAMETROS ------------------
+.controller("sprmDetailController", sprmDetailController)
+
+.controller("sprmCreateController", sprmCreateController)
+
+.controller("sprmEditController", sprmEditController)
+
+.controller("sprmDuplicateController", sprmDuplicateController);
+
+function config($routeProvider) {
     $routeProvider
 
     .when("/maestro", {
         title : 'maestro_main',
         templateUrl : "modules/entidad/maestro/maestro.html",
-        controller : "maestroController"
+        controller : "maestroController",
+        controllerAs : 'vm'
     })
-} ])
-
-.controller("maestroController", maestroController)
-
-// ----------- PARAMETROS ------------------
-// ----------- PARAMETROS ------------------
-// ----------- PARAMETROS ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/maestro/prmt/grid/:entiId", {
         title : 'prmtList',
         templateUrl : "modules/entidad/maestro/prmt-grid.html",
         controller : "prmtGridController",
+        controllerAs : 'vm',
         reloadOnSearch : false
     })
 
@@ -55,28 +76,6 @@ angular.module("maestro", [ "ngRoute" ])
         controller : "prmtDuplicateController",
         reloadOnSearch : false
     })
-} ])
-
-.controller("prmtGridController", prmtGridController)
-
-.controller("prmtFilterController", prmtFilterController)
-
-.controller("prmtDetailController", prmtDetailController)
-
-.controller("prmtCreateController", prmtCreateController)
-
-.controller("prmtEditController", prmtEditController)
-
-.controller("prmtDuplicateController", prmtDuplicateController)
-
-.controller('prmtsLupaCtrl', prmtsLupaCtrl)
-
-// ----------- SUBPARAMETROS ------------------
-// ----------- SUBPARAMETROS ------------------
-// ----------- SUBPARAMETROS ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/maestro/sprm/create/:entiId/:prmtId/:fechaVigencia", {
         title : 'sprm_create',
@@ -101,42 +100,89 @@ angular.module("maestro", [ "ngRoute" ])
         templateUrl : "modules/entidad/maestro/sprm-detail.html",
         controller : "sprmDetailController"
     })
-} ])
-
-.controller("sprmDetailController", sprmDetailController)
-
-.controller("sprmCreateController", sprmCreateController)
-
-.controller("sprmEditController", sprmEditController)
-
-.controller("sprmDuplicateController", sprmDuplicateController);
-
-function maestroController($scope, $http) {
-    var url = "maestro/tppr-list.action";
-
-    $http.get(url).success(function(data) {
-        $scope.tpprList = data.tpprList;
-    });
 }
 
-function prmtGridController($rootScope, $scope, $http, $location, $routeParams, $modal) {
-    $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
-    $scope.itemCriterio.entiId = $routeParams.entiId;
+function tpprService($http) {
+    return {
+        getTpprList : getTpprList,
+        getTppr : getTppr
+    };
+
+    function getTpprList() {
+        return $http.get('maestro/tppr-list.action').then(getTpprListComplete);
+
+        function getTpprListComplete(response) {
+            return response.data.tpprList;
+        }
+    }
+
+    function getTppr(entiId) {
+        return $http.get('metamodelo/tppr-proxy-detail.action?enti.id=' + entiId).then(getTpprComplete);
+
+        function getTpprComplete(response) {
+            return response.data.enti;
+        }
+    }
+}
+
+function prmtService($http) {
+    return {
+        search : search
+    };
+
+    function search(entiId, itemCriterio, page, limit) {
+        return $http.post("maestro/prmt-list.action", {
+            entiId : entiId,
+            itemCriterio : itemCriterio,
+            page : page,
+            limit : itemCriterio.limit
+        }).then(searchComplete);
+
+        function searchComplete(response) {
+            return response.data;
+        }
+    }
+}
+
+function maestroController(tpprService) {
+    var vm = this;
+
+    vm.tpprList = [];
+
+    getTpprList();
+
+    function getTpprList() {
+        return tpprService.getTpprList().then(function(data) {
+            vm.tpprList = data;
+            return vm.tpprList;
+        });
+    }
+}
+
+function prmtGridController($http, $location, $routeParams, $modal, tpprService, prmtService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+    vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(itemCriterio, page) {
-        $scope.loading = true;
+        vm.loading = true;
 
         $http.post("maestro/prmt-list.action", {
+            entiId : itemCriterio.entiId,
             itemCriterio : itemCriterio,
             page : page,
             limit : itemCriterio.limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.itemList.page;
-                $scope.itemList = data.itemList;
-                $scope.itemCriterio = data.itemCriterio;
+                vm.page = data.itemList.page;
+                vm.itemList = data.itemList;
+                vm.itemCriterio = data.itemCriterio;
 
                 var map = {};
 
@@ -146,25 +192,25 @@ function prmtGridController($rootScope, $scope, $http, $location, $routeParams, 
                 $location.search(map).replace();
             }
 
-            $scope.loading = false;
+            vm.loading = false;
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.itemCriterio, $scope.page);
+    function pageChanged() {
+        search(vm.itemCriterio, vm.page);
     }
 
-    $scope.filter = function(size) {
+    function filter(size) {
         var modalInstance = $modal.open({
             templateUrl : 'prmt-filter-content.html',
             controller : 'prmtFilterController',
             size : size,
             resolve : {
                 itemCriterio : function() {
-                    return $scope.itemCriterio;
+                    return vm.itemCriterio;
                 },
                 enti : function() {
-                    return $scope.enti;
+                    return vm.enti;
                 }
             }
         });
@@ -172,23 +218,21 @@ function prmtGridController($rootScope, $scope, $http, $location, $routeParams, 
         modalInstance.result.then(function(itemCriterio) {
             console.log("prmtGridController: " + JSON.stringify(itemCriterio));
 
-            $scope.itemCriterio = itemCriterio;
+            vm.itemCriterio = itemCriterio;
 
-            search($scope.itemCriterio, 1);
+            search(vm.itemCriterio, 1);
         });
     }
 
     function findEnti() {
-        var url = "metamodelo/tppr-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-            $rootScope.title = "Maestro: " + data.enti.id;
+        return tpprService.getTppr($routeParams.entiId).then(function(data) {
+            vm.enti = data;
+            return vm.enti;
         });
     }
 
     findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1);
+    search(vm.itemCriterio, $routeParams.page ? $routeParams.page : 1);
 }
 
 function prmtFilterController($scope, $http, $modalInstance, enti, itemCriterio) {
@@ -404,7 +448,7 @@ function prmtEditController($scope, $http, $location, $routeParams) {
     findItem();
 }
 
-function prmtDuplicateController($scope, $http, $location, $route, $routeParams) {
+function prmtDuplicateController($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/prmt-save.action";
 
@@ -490,7 +534,7 @@ function sprmDetailController($scope, $http, $routeParams) {
             });
 }
 
-function sprmCreateController($scope, $http, $location, $route, $routeParams) {
+function sprmCreateController($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/sprm-save.action";
 
@@ -536,7 +580,7 @@ function sprmCreateController($scope, $http, $location, $route, $routeParams) {
     findItem();
 }
 
-function sprmEditController($scope, $http, $location, $route, $routeParams) {
+function sprmEditController($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/sprm-save.action";
 
@@ -581,7 +625,7 @@ function sprmEditController($scope, $http, $location, $route, $routeParams) {
     findItem();
 }
 
-function sprmDuplicateController($scope, $http, $location, $route, $routeParams) {
+function sprmDuplicateController($scope, $http, $location, $routeParams) {
     $scope.save = function() {
         var url = "maestro/sprm-save.action";
 

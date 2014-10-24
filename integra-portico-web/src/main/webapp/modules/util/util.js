@@ -1,6 +1,12 @@
 angular.module("util", [ 'ui.bootstrap' ])
 
-.controller("datepickerController", function($scope) {
+.factory("pagetitleService", pagetitleService)
+
+.controller("datepickerController", datepickerController)
+
+.controller("timepickerController", timepickerController);
+
+function datepickerController($scope) {
     $scope.open = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -18,11 +24,11 @@ angular.module("util", [ 'ui.bootstrap' ])
     }
 
     $scope.format = "dd/MM/yyyy";
-})
+}
 
 // http://adamalbrecht.github.io/ngQuickDate/
 // https://github.com/adamalbrecht/ngQuickDate
-.controller("timepickerController", function($scope) {
+function timepickerController($scope) {
     $scope.open = function($event) {
         // alert("Open");
 
@@ -35,4 +41,17 @@ angular.module("util", [ 'ui.bootstrap' ])
     $scope.timepickerConfig = {
         showMeridian : false
     };
-});
+}
+
+function pagetitleService($rootScope, $translate) {
+    var setTitle = function () {
+        alert('setTitle');
+    }
+
+    return function(titleKey) {
+        alert('setTitle 2');
+
+        $rootScope.title = titleKey;
+    }
+}
+

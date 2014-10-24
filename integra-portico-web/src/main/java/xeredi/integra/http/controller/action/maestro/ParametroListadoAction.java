@@ -34,7 +34,10 @@ public final class ParametroListadoAction extends ItemListadoAction {
     private PaginatedList<ParametroVO> itemList;
 
     /** The criterio vo. */
-    private ParametroCriterioVO itemCriterio;
+    private ParametroCriterioVO itemCriterio = new ParametroCriterioVO();
+
+    /** The enti id. */
+    private Long entiId;
 
     /**
      * {@inheritDoc}
@@ -52,8 +55,9 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-filter")
     public String filter() {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(entiId);
+
+        itemCriterio.setEntiId(entiId);
 
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
@@ -73,8 +77,9 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-list")
     public String list() {
-        Preconditions.checkNotNull(itemCriterio);
-        Preconditions.checkNotNull(itemCriterio.getEntiId());
+        Preconditions.checkNotNull(entiId);
+
+        itemCriterio.setEntiId(entiId);
 
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
@@ -156,6 +161,25 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     public final PaginatedList<ParametroVO> getItemList() {
         return itemList;
+    }
+
+    /**
+     * Gets the enti id.
+     *
+     * @return the enti id
+     */
+    public Long getEntiId() {
+        return entiId;
+    }
+
+    /**
+     * Sets the enti id.
+     *
+     * @param value
+     *            the new enti id
+     */
+    public void setEntiId(final Long value) {
+        entiId = value;
     }
 
 }

@@ -1,6 +1,20 @@
 angular.module("estadistica", [ "ngRoute" ])
 
-.config([ "$routeProvider", function($routeProvider) {
+.config(config)
+
+.controller("peprGridController", peprGridController)
+
+.controller("peprDetailController", peprDetailController)
+
+.controller("cdmsDetailController", cdmsDetailController)
+
+.controller("estdGridController", estdGridController)
+
+.controller("estdFilterController", estdFilterController)
+
+.controller("estdDetailController", estdDetailController);
+
+function config($routeProvider) {
     $routeProvider
 
     .when("/estadistica/pepr/grid", {
@@ -34,19 +48,7 @@ angular.module("estadistica", [ "ngRoute" ])
         templateUrl : "modules/entidad/estadistica/estd-detail.html",
         controller : "estdDetailController"
     })
-} ])
-
-.controller("peprGridController", peprGridController)
-
-.controller("peprDetailController", peprDetailController)
-
-.controller("cdmsDetailController", cdmsDetailController)
-
-.controller("estdGridController", estdGridController)
-
-.controller("estdFilterController", estdFilterController)
-
-.controller("estdDetailController", estdDetailController);
+}
 
 function peprGridController($scope, $http, $location, $route, $routeParams) {
     $scope.showFilter = false;

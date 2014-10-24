@@ -1,8 +1,64 @@
 angular.module("facturacion", [ "ngRoute" ])
 
-// ----------------- MENU PRINCIPAL --------------------------
+.config(config)
 
-.config([ "$routeProvider", function($routeProvider) {
+// ----------------- MENU PRINCIPAL --------------------------
+.controller("facturacionController", facturacionController)
+
+// ----------- VALORACION ------------------
+.controller("vlrcGridController", vlrcGridController)
+
+.controller("vlrlCreateController", vlrlCreateController)
+
+.controller("vlrcDetailController", vlrcDetailController)
+
+.controller("vlrlDetailController", vlrlDetailController)
+
+.controller("vlrlEditController", vlrlEditController)
+
+.controller("vlrdDetailController", vlrdDetailController)
+
+// ----------- CARGO y REGLA------------------
+.controller("crgoGridController", crgoGridController)
+
+.controller("crgoCreateController", crgoCreateController)
+
+.controller("crgoDetailController", crgoDetailController)
+
+.controller("crgoEditController", crgoEditController)
+
+.controller("rglaDetailController", rglaDetailController)
+
+.controller("rglaEditController", rglaEditController)
+
+.controller("rglaCreateController", rglaCreateController)
+
+.controller("rginDetailController", rginDetailController)
+
+.controller("rginEditController", rginEditController)
+
+.controller("rginCreateController", rginCreateController)
+
+// ----------- ASPECTO y ASPECTO CARGO ------------------
+.controller("aspcGridController", aspcGridController)
+
+.controller('aspcFilterController', aspcFilterController)
+
+.controller("aspcCreateController", aspcCreateController)
+
+.controller("aspcDetailController", aspcDetailController)
+
+.controller("aspcEditController", aspcEditController)
+
+.controller("aspcDuplicateController", aspcDuplicateController)
+
+.controller("ascrCreateController", ascrCreateController)
+
+.controller("ascrDetailController", ascrDetailController)
+
+.controller("ascrEditController", ascrEditController);
+
+function config($routeProvider) {
     $routeProvider
 
     .when("/facturacion", {
@@ -10,14 +66,6 @@ angular.module("facturacion", [ "ngRoute" ])
         templateUrl : "modules/facturacion/facturacion.html",
         controller : "facturacionController"
     })
-} ])
-
-.controller("facturacionController", facturacionController)
-
-// ----------- VALORACION ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/facturacion/vlrc/grid", {
         title : 'vlrc_grid',
@@ -67,24 +115,6 @@ angular.module("facturacion", [ "ngRoute" ])
         templateUrl : "modules/facturacion/vlrd-edit.html",
         controller : "vlrdEditController"
     })
-} ])
-
-.controller("vlrcGridController", vlrcGridController)
-
-.controller("vlrlCreateController", vlrlCreateController)
-
-.controller("vlrcDetailController", vlrcDetailController)
-
-.controller("vlrlDetailController", vlrlDetailController)
-
-.controller("vlrlEditController", vlrlEditController)
-
-.controller("vlrdDetailController", vlrdDetailController)
-
-// ----------- CARGO y REGLA------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/facturacion/crgo/grid", {
         title : 'crgo_grid',
@@ -164,32 +194,6 @@ angular.module("facturacion", [ "ngRoute" ])
         templateUrl : "modules/facturacion/rgin-edit.html",
         controller : "rginCreateController"
     })
-} ])
-
-.controller("crgoGridController", crgoGridController)
-
-.controller("crgoCreateController", crgoCreateController)
-
-.controller("crgoDetailController", crgoDetailController)
-
-.controller("crgoEditController", crgoEditController)
-
-.controller("rglaDetailController", rglaDetailController)
-
-.controller("rglaEditController", rglaEditController)
-
-.controller("rglaCreateController", rglaCreateController)
-
-.controller("rginDetailController", rginDetailController)
-
-.controller("rginEditController", rginEditController)
-
-.controller("rginCreateController", rginCreateController)
-
-// ----------- ASPECTO y ASPECTO CARGO ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/facturacion/aspc/grid", {
         title : 'aspc_grid',
@@ -245,25 +249,7 @@ angular.module("facturacion", [ "ngRoute" ])
         templateUrl : "modules/facturacion/ascr-edit.html",
         controller : "ascrEditController"
     })
-} ])
-
-.controller("aspcGridController", aspcGridController)
-
-.controller('aspcFilterController', aspcFilterController)
-
-.controller("aspcCreateController", aspcCreateController)
-
-.controller("aspcDetailController", aspcDetailController)
-
-.controller("aspcEditController", aspcEditController)
-
-.controller("aspcDuplicateController", aspcDuplicateController)
-
-.controller("ascrCreateController", ascrCreateController)
-
-.controller("ascrDetailController", ascrDetailController)
-
-.controller("ascrEditController", ascrEditController);
+}
 
 function facturacionController($scope, $http, $location) {
 }

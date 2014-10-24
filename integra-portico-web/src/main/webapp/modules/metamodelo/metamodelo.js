@@ -1,8 +1,79 @@
 angular.module("metamodelo", [ "ngRoute" ])
 
-// -------------------- TIPO DE DATO ------------------
+.config(config)
 
-.config([ "$routeProvider", function($routeProvider) {
+// -------------------- TIPO DE DATO ------------------
+.controller("tpdtGridController", tpdtGridController)
+
+.controller("tpdtCreateController", tpdtCreateController)
+
+.controller("tpdtDetailController", tpdtDetailController)
+
+.controller("tpdtEditController", tpdtEditController)
+
+.controller("cdrfCreateController", cdrfCreateController)
+
+.controller("cdrfDetailController", cdrfDetailController)
+
+.controller("cdrfEditController", cdrfEditController)
+
+// -------------------- MAESTRO ------------------
+.controller("tpprGridController", tpprGridController)
+
+.controller("tpprDetailController", tpprDetailController)
+
+.controller("tpprEditController", tpprEditController)
+
+.controller("tpprCreateController", tpprCreateController)
+
+.controller("tpspDetailController", tpspDetailController)
+
+.controller("tpspEditController", tpspEditController)
+
+.controller("tpspCreateController", tpspCreateController)
+
+// -------------------- TIPO DE SERVICIO ------------------
+.controller("tpsrGridController", tpsrGridController)
+
+.controller("tpsrDetailController", tpsrDetailController)
+
+.controller("tpsrEditController", tpsrEditController)
+
+.controller("tpsrCreateController", tpsrCreateController)
+
+.controller("tpssDetailController", tpssDetailController)
+
+.controller("tpssEditController", tpssEditController)
+
+.controller("tpssCreateController", tpssCreateController)
+
+// -------------------- ESTADISTICA ------------------
+.controller("tpesGridController", tpesGridController)
+
+.controller("tpesDetailController", tpesDetailController)
+
+.controller("tpesEditController", tpesEditController)
+
+.controller("tpesCreateController", tpesCreateController)
+
+// ------------------- DATO DE ENTIDAD --------------------
+.controller("entdDetailController", entdDetailController)
+
+.controller("entdEditController", entdEditController)
+
+.controller("entdCreateController", entdCreateController)
+
+// ------------------- ACCION DE ENTIDAD --------------------
+.controller("enacDetailController", enacDetailController)
+
+.controller("enacEditController", enacEditController)
+
+.controller("enacCreateController", enacCreateController)
+
+// ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
+.controller("enenCreateController", enenCreateController);
+
+function config($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/tpdt/grid", {
@@ -47,26 +118,6 @@ angular.module("metamodelo", [ "ngRoute" ])
         templateUrl : "modules/metamodelo/cdrf-edit.html",
         controller : "cdrfCreateController"
     })
-} ])
-
-.controller("tpdtGridController", tpdtGridController)
-
-.controller("tpdtCreateController", tpdtCreateController)
-
-.controller("tpdtDetailController", tpdtDetailController)
-
-.controller("tpdtEditController", tpdtEditController)
-
-.controller("cdrfCreateController", cdrfCreateController)
-
-.controller("cdrfDetailController", cdrfDetailController)
-
-.controller("cdrfEditController", cdrfEditController)
-
-// -------------------- MAESTRO ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/metamodelo/tppr/grid", {
         title : 'tpprList',
@@ -110,26 +161,6 @@ angular.module("metamodelo", [ "ngRoute" ])
         templateUrl : "modules/metamodelo/tpsp-edit.html",
         controller : "tpspCreateController"
     })
-} ])
-
-.controller("tpprGridController", tpprGridController)
-
-.controller("tpprDetailController", tpprDetailController)
-
-.controller("tpprEditController", tpprEditController)
-
-.controller("tpprCreateController", tpprCreateController)
-
-.controller("tpspDetailController", tpspDetailController)
-
-.controller("tpspEditController", tpspEditController)
-
-.controller("tpspCreateController", tpspCreateController)
-
-// -------------------- TIPO DE SERVICIO ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/metamodelo/tpsr/grid", {
         title : 'tpsrList',
@@ -173,26 +204,6 @@ angular.module("metamodelo", [ "ngRoute" ])
         templateUrl : "modules/metamodelo/tpss-edit.html",
         controller : "tpssCreateController"
     })
-} ])
-
-.controller("tpsrGridController", tpsrGridController)
-
-.controller("tpsrDetailController", tpsrDetailController)
-
-.controller("tpsrEditController", tpsrEditController)
-
-.controller("tpsrCreateController", tpsrCreateController)
-
-.controller("tpssDetailController", tpssDetailController)
-
-.controller("tpssEditController", tpssEditController)
-
-.controller("tpssCreateController", tpssCreateController)
-
-// -------------------- ESTADISTICA ------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/metamodelo/tpes/grid", {
         title : 'tpesList',
@@ -218,20 +229,6 @@ angular.module("metamodelo", [ "ngRoute" ])
         templateUrl : "modules/metamodelo/tpes-edit.html",
         controller : "tpesCreateController"
     })
-} ])
-
-.controller("tpesGridController", tpesGridController)
-
-.controller("tpesDetailController", tpesDetailController)
-
-.controller("tpesEditController", tpesEditController)
-
-.controller("tpesCreateController", tpesCreateController)
-
-// ------------------- DATO DE ENTIDAD --------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
         title : 'entd',
@@ -250,18 +247,6 @@ angular.module("metamodelo", [ "ngRoute" ])
         templateUrl : "modules/metamodelo/entd-edit.html",
         controller : "entdCreateController"
     })
-} ])
-
-.controller("entdDetailController", entdDetailController)
-
-.controller("entdEditController", entdEditController)
-
-.controller("entdCreateController", entdCreateController)
-
-// ------------------- ACCION DE ENTIDAD --------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/metamodelo/enac/detail/:entiId/:path", {
         title : 'enac',
@@ -280,28 +265,13 @@ angular.module("metamodelo", [ "ngRoute" ])
         templateUrl : "modules/metamodelo/enac-edit.html",
         controller : "enacCreateController"
     })
-} ])
-
-.controller("enacDetailController", enacDetailController)
-
-.controller("enacEditController", enacEditController)
-
-.controller("enacCreateController", enacCreateController)
-
-// ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
-
-.config([ "$routeProvider", function($routeProvider) {
-    $routeProvider
 
     .when("/metamodelo/enen/create/:entipId", {
         title : 'enen_create',
         templateUrl : "modules/metamodelo/enen-edit.html",
         controller : "enenCreateController"
     });
-
-} ])
-
-.controller("enenCreateController", enenCreateController);
+}
 
 function tpdtGridController($scope, $http, $location, $routeParams) {
     $scope.showFilter = false;
