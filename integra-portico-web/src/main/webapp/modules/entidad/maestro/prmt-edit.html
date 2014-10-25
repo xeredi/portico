@@ -1,22 +1,19 @@
-
-<p class="bg-primary" ng-bind="'enti_' + enti.id | translate"></p>
-
 <form role="form">
-    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="item.entiId" /><input type="hidden"
-        ng-model="item.id" /><input type="hidden" ng-model="item.prvr.id" />
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.item.entiId" /><input type="hidden"
+        ng-model="item.id" /><input type="hidden" ng-model="vm.item.prvr.id" />
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prmt_parametro</label> <input ng-if="accion != 'edit'" type="text"
-                    ng-model="item.parametro" class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="item.parametro"></p>
+                <label translate>prmt_parametro</label> <input ng-if="vm.accion != 'edit'" type="text"
+                    ng-model="vm.item.parametro" class="form-control input-sm" />
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.parametro"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate>prmt_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.fini" /> <span
+                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.prvr.fini" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
@@ -24,26 +21,26 @@
                 <label translate>prmt_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="item.prvr.ffin" /> <span
+                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.prvr.ffin" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
         </div>
 
-        <div ng-if="enti.i18n" class="row">
-            <div ng-repeat="availableLanguage in availableLanguages track by $index"
+        <div ng-if="vm.enti.i18n" class="row">
+            <div ng-repeat="availableLanguage in vm.availableLanguages track by $index"
                 class="col-sm-10 col-md-10 col-lg-8 form-group">
-                <label>Texto {{availableLanguage}}</label> <input type="text" ng-model="i18nMap[availableLanguage].text"
-                    maxlength="350" class="form-control input-sm" />
+                <label>Texto {{availableLanguage}}</label> <input type="text"
+                    ng-model="vm.i18nMap[availableLanguage].text" maxlength="350" class="form-control input-sm" />
             </div>
         </div>
 
         <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
     </div>
 
-    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>
-        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+        <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
     </ul>
     </alert>
 

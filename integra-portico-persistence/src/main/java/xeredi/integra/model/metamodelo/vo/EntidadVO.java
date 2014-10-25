@@ -1,7 +1,6 @@
 package xeredi.integra.model.metamodelo.vo;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -42,34 +41,13 @@ public class EntidadVO {
     /**
      * Lista de Grupos de Datos de la Entidad (Pestañas) ordenadas por orden de visualización.
      */
-    private List<Integer> engdList;
-
-    /**
-     * Map de Grupos de Datos de la Entidad (Pestañas), indexados por identificador de Grupo de Datos.
-     */
-    private Map<Integer, EntidadGrupoDatoVO> engdMap;
-
-    /**
-     * Map de datos asociados a cada una de las pestañas de la entidad. FIXME Implementar!!!
-     */
-    private Map<Integer, List<Long>> engdEntdMap;
+    private List<EntidadGrupoDatoVO> engdList;
 
     /**
      * {@link List} de Ids de tipos de dato asociados a una entidad, ordenados por grupo de dato, fila y orden dentro de
      * la fila.
      */
-    private List<Long> entdList;
-
-    /**
-     * {@link List} de Ids de tipos de dato asociados a una entidad que se muestran en grid, ordenados por grupo de
-     * dato, fila y orden dentro de la fila.
-     */
-    private List<Long> entdGridList;
-
-    /**
-     * {@link Map} de tipos de dato asociados a una entidad, indexados por el identificador de tipo de dato.
-     */
-    private Map<Long, EntidadTipoDatoVO> entdMap;
+    private List<EntidadTipoDatoVO> entdList;
 
     /** {@link List} de identificadores de entidades padre de la entidad. */
     private List<Long> entiPadresList;
@@ -183,82 +161,6 @@ public class EntidadVO {
     }
 
     /**
-     * Gets the engd list.
-     *
-     * @return the engd list
-     */
-    public List<Integer> getEngdList() {
-        return engdList;
-    }
-
-    /**
-     * Sets the engd list.
-     *
-     * @param value
-     *            the new engd list
-     */
-    public void setEngdList(final List<Integer> value) {
-        engdList = value;
-    }
-
-    /**
-     * Gets the engd map.
-     *
-     * @return the engd map
-     */
-    public Map<Integer, EntidadGrupoDatoVO> getEngdMap() {
-        return engdMap;
-    }
-
-    /**
-     * Sets the engd map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setEngdMap(final Map<Integer, EntidadGrupoDatoVO> value) {
-        engdMap = value;
-    }
-
-    /**
-     * Gets the entd list.
-     *
-     * @return the entd list
-     */
-    public List<Long> getEntdList() {
-        return entdList;
-    }
-
-    /**
-     * Sets the entd list.
-     *
-     * @param value
-     *            the new entd list
-     */
-    public void setEntdList(final List<Long> value) {
-        entdList = value;
-    }
-
-    /**
-     * Gets the entd map.
-     *
-     * @return the entd map
-     */
-    public Map<Long, EntidadTipoDatoVO> getEntdMap() {
-        return entdMap;
-    }
-
-    /**
-     * Sets the entd map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setEntdMap(final Map<Long, EntidadTipoDatoVO> value) {
-        entdMap = value;
-    }
-
-    /**
      * Gets the enti padres list.
      *
      * @return the enti padres list
@@ -313,25 +215,6 @@ public class EntidadVO {
      */
     public void setEnacList(final List<EntidadAccionVO> value) {
         enacList = value;
-    }
-
-    /**
-     * Gets the engd entd map.
-     *
-     * @return the engd entd map
-     */
-    public final Map<Integer, List<Long>> getEngdEntdMap() {
-        return engdEntdMap;
-    }
-
-    /**
-     * Sets the engd entd map.
-     *
-     * @param value
-     *            the value
-     */
-    public final void setEngdEntdMap(final Map<Integer, List<Long>> value) {
-        engdEntdMap = value;
     }
 
     /**
@@ -411,25 +294,6 @@ public class EntidadVO {
     }
 
     /**
-     * Gets the entd grid list.
-     *
-     * @return the entd grid list
-     */
-    public final List<Long> getEntdGridList() {
-        return entdGridList;
-    }
-
-    /**
-     * Sets the entd grid list.
-     *
-     * @param value
-     *            the new entd grid list
-     */
-    public final void setEntdGridList(final List<Long> value) {
-        entdGridList = value;
-    }
-
-    /**
      * Gets the max grid.
      *
      * @return the max grid
@@ -446,6 +310,44 @@ public class EntidadVO {
      */
     public void setMaxGrid(final Integer value) {
         maxGrid = value;
+    }
+
+    /**
+     * Gets the engd list.
+     *
+     * @return the engd list
+     */
+    public List<EntidadGrupoDatoVO> getEngdList() {
+        return engdList;
+    }
+
+    /**
+     * Sets the engd list.
+     *
+     * @param value
+     *            the new engd list
+     */
+    public void setEngdList(final List<EntidadGrupoDatoVO> value) {
+        engdList = value;
+    }
+
+    /**
+     * Gets the entd list.
+     *
+     * @return the entd list
+     */
+    public List<EntidadTipoDatoVO> getEntdList() {
+        return entdList;
+    }
+
+    /**
+     * Sets the entd list.
+     *
+     * @param value
+     *            the new entd list
+     */
+    public void setEntdList(final List<EntidadTipoDatoVO> value) {
+        entdList = value;
     }
 
 }

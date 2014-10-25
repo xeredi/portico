@@ -142,7 +142,18 @@ public final class FormulaSqlGenerator extends FormulaBaseVisitor {
 
                 if (pathElementCtx.data != null) {
                     final TipoDato tipoDato = TipoDato.valueOf(pathElementCtx.arg.getText());
-                    final EntidadTipoDatoVO entd = entiElem.getEntdMap().get(tipoDato.getId());
+
+                    EntidadTipoDatoVO entd = null;
+
+                    for (final EntidadTipoDatoVO vo : entiElem.getEntdList()) {
+                        if (vo.getTpdt().getId() == tipoDato.getId()) {
+                            entd = vo;
+                        }
+                    }
+
+                    if (entd == null) {
+                        throw new Error("Dato no encontrado: " + tipoDato);
+                    }
 
                     String field = "";
 

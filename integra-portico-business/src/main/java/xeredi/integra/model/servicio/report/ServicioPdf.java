@@ -16,6 +16,7 @@ import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -86,23 +87,24 @@ public final class ServicioPdf extends BasePdf {
         report.addTitle(getForm(listCells));
         listCells.clear();
 
-        for (final Integer engdId : tpsrVO.getEngdList()) {
+        for (final EntidadGrupoDatoVO engd : tpsrVO.getEngdList()) {
             rowCells = new ArrayList<>();
             accWidth = 0;
 
-            for (final Long tpdtId : tpsrVO.getEngdEntdMap().get(engdId)) {
-                final EntidadTipoDatoVO entdVO = tpsrVO.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = srvcVO.getItdtMap().get(tpdtId);
+            for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                if (entd.getGrupo() == engd.getNumero()) {
+                    final ItemDatoVO itdt = srvcVO.getItdtMap().get(entd.getTpdt().getId());
 
-                if (accWidth + entdVO.getSpan() > PdfConstants.MAX_SPAN) {
-                    listCells.add(rowCells);
-                    rowCells = new ArrayList<>();
-                    accWidth = 0;
+                    if (accWidth + entd.getSpan() > PdfConstants.MAX_SPAN) {
+                        listCells.add(rowCells);
+                        rowCells = new ArrayList<>();
+                        accWidth = 0;
+                    }
+
+                    rowCells.add(new PdfCell(entd.getEtiqueta(), getItdtValue(entd, itdt), entd.getSpan(), entd
+                            .getTpdt().getTipoElemento()));
+                    accWidth += entd.getSpan();
                 }
-
-                rowCells.add(new PdfCell(entdVO.getEtiqueta(), getItdtValue(entdVO, itdtVO), entdVO.getSpan(), entdVO
-                        .getTpdt().getTipoElemento()));
-                accWidth += entdVO.getSpan();
             }
 
             if (!rowCells.isEmpty()) {

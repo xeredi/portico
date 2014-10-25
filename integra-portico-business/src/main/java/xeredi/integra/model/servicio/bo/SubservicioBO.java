@@ -14,6 +14,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
@@ -191,7 +192,9 @@ public class SubservicioBO {
 
         try {
             if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
-                for (final Long tpdtId : tpssVO.getEntdList()) {
+                for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+                    final Long tpdtId = entd.getTpdt().getId();
+
                     if (!ssrvVO.getItdtMap().containsKey(tpdtId) && !ssrvVO.getItdtMap().containsKey(tpdtId.toString())) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 

@@ -1,7 +1,6 @@
 package xeredi.integra.model.metamodelo.bo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,11 +110,10 @@ public class EntidadBO {
                 final EntidadVO entiVO = entiMap.get(engdVO.getEntiId());
 
                 if (entiVO.getEngdList() == null) {
-                    entiVO.setEngdList(new ArrayList<Integer>());
-                    entiVO.setEngdMap(new HashMap<Integer, EntidadGrupoDatoVO>());
+                    entiVO.setEngdList(new ArrayList<EntidadGrupoDatoVO>());
                 }
-                entiVO.getEngdList().add(engdVO.getNumero());
-                entiVO.getEngdMap().put(engdVO.getNumero(), engdVO);
+                entiVO.getEngdList().add(engdVO);
+                engdVO.setEntiId(null);
             }
 
             for (final EntidadTipoDatoVO entdVO : entdDAO.selectAll()) {
@@ -124,31 +122,11 @@ public class EntidadBO {
                 entdVO.setTpdt(tpdtMap.get(entdVO.getTpdt().getId()));
 
                 if (entiVO.getEntdList() == null) {
-                    entiVO.setEntdList(new ArrayList<Long>());
-                    entiVO.setEntdGridList(new ArrayList<Long>());
-                    entiVO.setEntdMap(new HashMap<Long, EntidadTipoDatoVO>());
+                    entiVO.setEntdList(new ArrayList<EntidadTipoDatoVO>());
                 }
 
-                entiVO.getEntdList().add(entdVO.getTpdt().getId());
-                entiVO.getEntdMap().put(entdVO.getTpdt().getId(), entdVO);
-
-                if (entdVO.getGridable()) {
-                    entiVO.getEntdGridList().add(entdVO.getTpdt().getId());
-                }
-
-                if (entiVO.getEngdList() != null) {
-                    // if (entdVO.getGrupo() > 1) {
-                    if (entiVO.getEngdEntdMap() == null) {
-                        entiVO.setEngdEntdMap(new HashMap<Integer, List<Long>>());
-                    }
-
-                    if (!entiVO.getEngdEntdMap().containsKey(entdVO.getGrupo())) {
-                        entiVO.getEngdEntdMap().put(entdVO.getGrupo(), new ArrayList<Long>());
-                    }
-
-                    entiVO.getEngdEntdMap().get(entdVO.getGrupo()).add(entdVO.getTpdt().getId());
-                    // }
-                }
+                entiVO.getEntdList().add(entdVO);
+                entdVO.setEntiId(null);
             }
 
             for (final EntidadAccionVO enacVO : enacDAO.selectAll()) {
@@ -158,6 +136,7 @@ public class EntidadBO {
                     entiVO.setEnacList(new ArrayList<EntidadAccionVO>());
                 }
                 entiVO.getEnacList().add(enacVO);
+                enacVO.setEntiId(null);
             }
 
             return entiMap;
@@ -222,13 +201,11 @@ public class EntidadBO {
             final List<EntidadGrupoDatoVO> engdList = engdDAO.selectList(engdCriterioVO);
 
             if (!engdList.isEmpty()) {
-                entiVO.setEngdList(new ArrayList<Integer>());
-                entiVO.setEngdMap(new HashMap<Integer, EntidadGrupoDatoVO>());
+                entiVO.setEngdList(new ArrayList<EntidadGrupoDatoVO>());
 
                 for (final EntidadGrupoDatoVO engdVO : engdList) {
                     if (engdVO.getNumero() > 1) {
-                        entiVO.getEngdList().add(engdVO.getNumero());
-                        entiVO.getEngdMap().put(engdVO.getNumero(), engdVO);
+                        entiVO.getEngdList().add(engdVO);
                     }
                 }
             }
@@ -242,33 +219,10 @@ public class EntidadBO {
             final List<EntidadTipoDatoVO> entdList = entdDAO.selectList(entdCriterioVO);
 
             if (!entdList.isEmpty()) {
-                entiVO.setEntdMap(new HashMap<Long, EntidadTipoDatoVO>());
-                entiVO.setEntdList(new ArrayList<Long>());
-                entiVO.setEntdGridList(new ArrayList<Long>());
+                entiVO.setEntdList(new ArrayList<EntidadTipoDatoVO>());
 
                 for (final EntidadTipoDatoVO entdVO : entdList) {
-                    entiVO.getEntdMap().put(entdVO.getTpdt().getId(), entdVO);
-                    entiVO.getEntdList().add(entdVO.getTpdt().getId());
-
-                    if (entdVO.getGridable()) {
-                        entiVO.getEntdGridList().add(entdVO.getTpdt().getId());
-                    }
-                }
-
-                if (!engdList.isEmpty()) {
-                    final Map<Integer, List<Long>> engdEntdMap = new HashMap<>();
-
-                    for (final EntidadTipoDatoVO entdVO : entdList) {
-                        if (entdVO.getGrupo() > 1) {
-                            if (!engdEntdMap.containsKey(entdVO.getGrupo())) {
-                                engdEntdMap.put(entdVO.getGrupo(), new ArrayList<Long>());
-                            }
-
-                            engdEntdMap.get(entdVO.getGrupo()).add(entdVO.getTpdt().getId());
-                        }
-                    }
-
-                    entiVO.setEngdEntdMap(engdEntdMap);
+                    entiVO.getEntdList().add(entdVO);
                 }
             }
 

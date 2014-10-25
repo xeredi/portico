@@ -10,6 +10,8 @@ import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -29,6 +31,9 @@ public final class SubparametroListadoAction extends ItemListadoAction {
     /** The item criterio. */
     private SubparametroCriterioVO itemCriterio;
 
+    /** The enti. */
+    private TipoSubparametroVO enti;
+
     /**
      * {@inheritDoc}
      */
@@ -47,7 +52,12 @@ public final class SubparametroListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
         Preconditions.checkNotNull(itemCriterio.getPrmt().getId());
-        Preconditions.checkNotNull(itemCriterio.getFechaVigencia());
+
+        if (itemCriterio.getFechaVigencia() == null) {
+            itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
+        enti = TipoSubparametroProxy.select(itemCriterio.getEntiId());
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
@@ -95,6 +105,15 @@ public final class SubparametroListadoAction extends ItemListadoAction {
      */
     public PaginatedList<SubparametroVO> getItemList() {
         return itemList;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoSubparametroVO getEnti() {
+        return enti;
     }
 
 }

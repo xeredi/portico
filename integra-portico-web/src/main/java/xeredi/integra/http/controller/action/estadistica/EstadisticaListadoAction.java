@@ -124,8 +124,8 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
 
-            if (enti.getEntdMap() != null) {
-                for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+            if (enti.getEntdList() != null) {
+                for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
                     if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
                             && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
                         tpprIds.add(entdVO.getTpdt().getEnti().getId());

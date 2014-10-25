@@ -393,6 +393,16 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES (
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdrf_orden', 'Orden')\
 	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('cdrf_orden', 'web')\
 
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'page_item_grid', 'Listado')\
+	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('page_item_grid', 'web')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'page_item_detail', 'Detalle')\
+	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('page_item_detail', 'web')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'page_item_create', 'Nuevo')\
+	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('page_item_create', 'web')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'page_item_duplicate', 'Duplicado')\
+	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('page_item_duplicate', 'web')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'page_item_edit', 'Edición')\
+	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('page_item_edit', 'web')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'i18n_text', 'Texto')\
 	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('i18n_text', 'web')\
 	INSERT INTO tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('i18n_text', 'app')\

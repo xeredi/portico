@@ -247,12 +247,11 @@ public final class MaestroImporterBO {
                 if (tpprVO.getEntdList() != null) {
                     prmtVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                    for (final Long entdId : tpprVO.getEntdList()) {
-                        final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(entdId);
+                    for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
                         final Object value = rs.getObject(i++);
-                        final ItemDatoVO itdtVO = getItdt(value, entdVO, tpprVO.getNombre());
+                        final ItemDatoVO itdt = getItdt(value, entd, tpprVO.getNombre());
 
-                        prmtVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                        prmtVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
                     }
                 }
 
@@ -366,12 +365,11 @@ public final class MaestroImporterBO {
                 if (tpspVO.getEntdList() != null) {
                     sprmVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                    for (final Long entdId : tpspVO.getEntdList()) {
-                        final EntidadTipoDatoVO entdVO = tpspVO.getEntdMap().get(entdId);
+                    for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
                         final Object value = rs.getObject(i++);
-                        final ItemDatoVO itdtVO = getItdt(value, entdVO, tpspVO.getNombre());
+                        final ItemDatoVO itdt = getItdt(value, entd, tpspVO.getNombre());
 
-                        sprmVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                        sprmVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
                     }
                 }
 

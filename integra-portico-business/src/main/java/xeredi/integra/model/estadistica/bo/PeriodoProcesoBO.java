@@ -487,20 +487,20 @@ public class PeriodoProcesoBO {
             estdVO.setSubp(autpVO);
             estdVO.setPepr(peprVO);
 
-            if (tpesVO.getEntdMap() != null) {
-                for (final EntidadTipoDatoVO entdVO : tpesVO.getEntdMap().values()) {
-                    final Object value = esagVO.getEsdtMap().get(entdVO.getTpdt().getCodigo());
+            if (tpesVO.getEntdList() != null) {
+                for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
+                    final Object value = esagVO.getEsdtMap().get(entd.getTpdt().getCodigo());
                     final ItemDatoVO itdtVO = new ItemDatoVO();
 
-                    itdtVO.setTpdtId(entdVO.getTpdt().getId());
-                    estdVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                    itdtVO.setTpdtId(entd.getTpdt().getId());
+                    estdVO.getItdtMap().put(entd.getTpdt().getId(), itdtVO);
 
                     if (value == null) {
-                        if (entdVO.getTpdt().getTipoElemento() == TipoElemento.BO) {
+                        if (entd.getTpdt().getTipoElemento() == TipoElemento.BO) {
                             itdtVO.setCantidadEntera(0L);
                         }
                     } else {
-                        switch (entdVO.getTpdt().getTipoElemento()) {
+                        switch (entd.getTpdt().getTipoElemento()) {
                         case BO:
                         case NE:
                             if (value instanceof BigDecimal) {
@@ -560,7 +560,7 @@ public class PeriodoProcesoBO {
                             break;
 
                         default:
-                            throw new Error("TipoElemento no encontrado: " + entdVO.getTpdt().getTipoElemento());
+                            throw new Error("TipoElemento no encontrado: " + entd.getTpdt().getTipoElemento());
                         }
                     }
                 }

@@ -35,6 +35,8 @@ public final class ParametroAction extends ItemAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 477492673223023219L;
 
+    private TipoParametroVO enti;
+
     /** The prmt . */
     private ParametroVO item;
 
@@ -71,7 +73,7 @@ public final class ParametroAction extends ItemAction {
         i18nMap = new HashMap<>();
         item.setFref(Calendar.getInstance().getTime());
 
-        final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
+        enti = TipoParametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
 
@@ -87,7 +89,10 @@ public final class ParametroAction extends ItemAction {
     public String edit() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getFref());
+
+        if (item.getFref() == null) {
+            item.setFref(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.edit;
 
@@ -104,7 +109,7 @@ public final class ParametroAction extends ItemAction {
 
             item.setFref(prmtCriterioVO.getFechaVigencia());
 
-            final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
+            enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
                 i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
@@ -144,7 +149,7 @@ public final class ParametroAction extends ItemAction {
 
             item.setFref(prmtCriterioVO.getFechaVigencia());
 
-            final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
+            enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
                 i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
@@ -170,7 +175,7 @@ public final class ParametroAction extends ItemAction {
 
         final ParametroBO prmtBO = new ParametroBO();
 
-        final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
+        enti = TipoParametroProxy.select(item.getEntiId());
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
@@ -276,7 +281,10 @@ public final class ParametroAction extends ItemAction {
     public String detail() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getFref());
+
+        if (item.getFref() == null) {
+            item.setFref(Calendar.getInstance().getTime());
+        }
 
         final ParametroBO prmtBO = new ParametroBO();
         final I18nBO i18nBO = new I18nBO();
@@ -290,8 +298,7 @@ public final class ParametroAction extends ItemAction {
             item = prmtBO.selectObject(prmtCriterioVO);
 
             item.setFref(prmtCriterioVO.getFechaVigencia());
-
-            final TipoParametroVO enti = TipoParametroProxy.select(item.getEntiId());
+            enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
                 i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
@@ -348,5 +355,9 @@ public final class ParametroAction extends ItemAction {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    public TipoParametroVO getEnti() {
+        return enti;
     }
 }

@@ -37,7 +37,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
     private ParametroCriterioVO itemCriterio = new ParametroCriterioVO();
 
     /** The enti id. */
-    private Long entiId;
+    private TipoParametroVO enti;
 
     /**
      * {@inheritDoc}
@@ -55,15 +55,18 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-filter")
     public String filter() {
-        Preconditions.checkNotNull(entiId);
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
 
-        itemCriterio.setEntiId(entiId);
+        itemCriterio.setEntiId(enti.getId());
 
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
         itemCriterio.setIdioma(getIdioma());
+
+        enti = TipoParametroProxy.select(enti.getId());
 
         loadLabelValuesMap();
 
@@ -77,9 +80,10 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-list")
     public String list() {
-        Preconditions.checkNotNull(entiId);
+        Preconditions.checkNotNull(enti);
+        Preconditions.checkNotNull(enti.getId());
 
-        itemCriterio.setEntiId(entiId);
+        itemCriterio.setEntiId(enti.getId());
 
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
@@ -87,6 +91,8 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());
+
+        enti = TipoParametroProxy.select(enti.getId());
 
         final ParametroBO prmtBO = new ParametroBO();
 
@@ -107,8 +113,8 @@ public final class ParametroListadoAction extends ItemListadoAction {
             // Carga de los labelValues (Si los hay)
             final Set<Long> tpprIds = new HashSet<>();
 
-            if (enti.getEntdMap() != null) {
-                for (final EntidadTipoDatoVO entdVO : enti.getEntdMap().values()) {
+            if (enti.getEntdList() != null) {
+                for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
                     if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
                             && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
                         tpprIds.add(entdVO.getTpdt().getEnti().getId());
@@ -163,23 +169,12 @@ public final class ParametroListadoAction extends ItemListadoAction {
         return itemList;
     }
 
-    /**
-     * Gets the enti id.
-     *
-     * @return the enti id
-     */
-    public Long getEntiId() {
-        return entiId;
+    public TipoParametroVO getEnti() {
+        return enti;
     }
 
-    /**
-     * Sets the enti id.
-     *
-     * @param value
-     *            the new enti id
-     */
-    public void setEntiId(final Long value) {
-        entiId = value;
+    public void setEnti(final TipoParametroVO value) {
+        enti = value;
     }
 
 }

@@ -166,16 +166,16 @@ public final class ServicioImporterBO {
         }
 
         // Obtencion de los maestros asociados a la entidad
-        for (final EntidadTipoDatoVO entdVO : entiVO.getEntdMap().values()) {
-            if (entdVO.getTpdt().getEnti() != null && !tpprPrmtMap.containsKey(entdVO.getTpdt().getEnti().getId())) {
+        for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+            if (entd.getTpdt().getEnti() != null && !tpprPrmtMap.containsKey(entd.getTpdt().getEnti().getId())) {
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Busqueda de los parametros del maestro " + entdVO.getTpdt().getEnti().getNombre());
+                    LOG.debug("Busqueda de los parametros del maestro " + entd.getTpdt().getEnti().getNombre());
                 }
 
                 final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-                prmtCriterioVO.setEntiId(entdVO.getTpdt().getEnti().getId());
-                tpprPrmtMap.put(entdVO.getTpdt().getEnti().getId(), prmtBO.selectMapCodigoId(prmtCriterioVO));
+                prmtCriterioVO.setEntiId(entd.getTpdt().getEnti().getId());
+                tpprPrmtMap.put(entd.getTpdt().getEnti().getId(), prmtBO.selectMapCodigoId(prmtCriterioVO));
             }
         }
 
@@ -284,19 +284,18 @@ public final class ServicioImporterBO {
                     if (tpsrVO.getEntdList() != null) {
                         srvcVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                        for (final Long entdId : tpsrVO.getEntdList()) {
-                            final EntidadTipoDatoVO entdVO = tpsrVO.getEntdMap().get(entdId);
+                        for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
                             final Object value = rs.getObject(i++);
 
-                            if (rs.wasNull() && entdVO.getObligatorio()
-                                    && entdVO.getTpdt().getTipoElemento() != TipoElemento.BO) {
+                            if (rs.wasNull() && entd.getObligatorio()
+                                    && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
                                 throw new Error("Campo obligatorio no encontrado para el dato: "
-                                        + entdVO.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());
+                                        + entd.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());
                             }
 
-                            final ItemDatoVO itdtVO = getItemDato(entdVO, value);
+                            final ItemDatoVO itdtVO = getItemDato(entd, value);
 
-                            srvcVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                            srvcVO.getItdtMap().put(entd.getTpdt().getId(), itdtVO);
                         }
                     }
 
@@ -383,19 +382,18 @@ public final class ServicioImporterBO {
                         if (tpssVO.getEntdList() != null) {
                             ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
-                            for (final Long entdId : tpssVO.getEntdList()) {
-                                final EntidadTipoDatoVO entdVO = tpssVO.getEntdMap().get(entdId);
+                            for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
                                 final Object value = rs.getObject(i++);
 
-                                if (rs.wasNull() && entdVO.getObligatorio()
-                                        && entdVO.getTpdt().getTipoElemento() != TipoElemento.BO) {
+                                if (rs.wasNull() && entd.getObligatorio()
+                                        && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
                                     throw new Error("Campo obligatorio no encontrado para el dato: "
-                                            + entdVO.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());
+                                            + entd.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());
                                 }
 
-                                final ItemDatoVO itdtVO = getItemDato(entdVO, value);
+                                final ItemDatoVO itdt = getItemDato(entd, value);
 
-                                ssrvVO.getItdtMap().put(entdVO.getTpdt().getId(), itdtVO);
+                                ssrvVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
                             }
                         }
 

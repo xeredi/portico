@@ -34,6 +34,7 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames;
@@ -102,12 +103,13 @@ public class ParametroBO {
 
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-            for (final Long tpdtId : tpprVO.getEntdList()) {
-                if (!prmt.getItdtMap().containsKey(tpdtId) && !prmt.getItdtMap().containsKey(tpdtId.toString())) {
+            for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId())
+                        && !prmt.getItdtMap().containsKey(entd.getTpdt().getId().toString())) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
-                    itdt.setTpdtId(tpdtId);
-                    prmt.getItdtMap().put(tpdtId, itdt);
+                    itdt.setTpdtId(entd.getTpdt().getId());
+                    prmt.getItdtMap().put(entd.getTpdt().getId(), itdt);
                 }
             }
         }
@@ -199,7 +201,9 @@ public class ParametroBO {
 
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-            for (final Long tpdtId : tpprVO.getEntdList()) {
+            for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                final Long tpdtId = entd.getTpdt().getId();
+
                 if (!prmt.getItdtMap().containsKey(tpdtId.toString())) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
@@ -392,10 +396,10 @@ public class ParametroBO {
 
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
-            for (final Long tpdtId : tpprVO.getEntdList()) {
-                if (!prmt.getItdtMap().containsKey(tpdtId.toString())) {
-                    throw new Error("No se ha pasado informacion del dato "
-                            + tpprVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del parametro: " + prmt);
+            for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                if (!prmt.getItdtMap().containsKey(entd.getTpdt().getId().toString())) {
+                    throw new Error("No se ha pasado informacion del dato " + entd.getTpdt().getNombre()
+                            + " del parametro: " + prmt);
                 }
             }
         }

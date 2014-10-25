@@ -503,12 +503,10 @@ public final class DocbookMetamodelo {
             writer.println("<entry>Etiqueta</entry>");
             writer.println("</row></thead><tbody>");
 
-            for (final Integer engdId : entiVO.getEngdList()) {
-                final EntidadGrupoDatoVO engdVO = entiVO.getEngdMap().get(engdId);
-
+            for (final EntidadGrupoDatoVO engd : entiVO.getEngdList()) {
                 writer.println("<row>");
-                writer.println("<entry>" + engdVO.getNumero() + "</entry>");
-                writer.println("<entry>" + engdVO.getEtiqueta() + "</entry>");
+                writer.println("<entry>" + engd.getNumero() + "</entry>");
+                writer.println("<entry>" + engd.getEtiqueta() + "</entry>");
                 writer.println("</row>");
             }
 
@@ -550,26 +548,23 @@ public final class DocbookMetamodelo {
             writer.println("<entry>V. Defecto</entry>");
             writer.println("</row></thead><tbody>");
 
-            for (final Long tpdtId : entiVO.getEntdList()) {
-                final EntidadTipoDatoVO entdVO = entiVO.getEntdMap().get(tpdtId);
-
+            for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
                 writer.println("<row>");
-                writer.println("<entry>" + entdVO.getEtiqueta() + "</entry>");
-                writer.println("<entry>" + entdVO.getTpdt().getNombre() + "</entry>");
-                writer.println("<entry>" + entdVO.getTpdt().getTipoElemento() + "</entry>");
-                writer.println("<entry>" + entdVO.getTpdt().getTpht() + "</entry>");
+                writer.println("<entry>" + entd.getEtiqueta() + "</entry>");
+                writer.println("<entry>" + entd.getTpdt().getNombre() + "</entry>");
+                writer.println("<entry>" + entd.getTpdt().getTipoElemento() + "</entry>");
+                writer.println("<entry>" + entd.getTpdt().getTpht() + "</entry>");
                 writer.println("<entry>"
-                        + (entdVO.getTpdt().getEnti() == null ? "" : getLinkEntidad(entdVO.getTpdt().getEnti()))
+                        + (entd.getTpdt().getEnti() == null ? "" : getLinkEntidad(entd.getTpdt().getEnti()))
                         + "</entry>");
-                writer.println("<entry>" + (entdVO.getGrupo() == null ? "" : entdVO.getGrupo()) + "</entry>");
-                writer.println("<entry>" + entdVO.getFila() + "</entry>");
-                writer.println("<entry>" + entdVO.getOrden() + "</entry>");
-                writer.println("<entry>" + entdVO.getSpan() + "</entry>");
-                writer.println("<entry>" + (entdVO.getObligatorio() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entdVO.getGridable() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entdVO.getFiltrable() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entdVO.getValorDefecto() == null ? "" : entdVO.getValorDefecto())
-                        + "</entry>");
+                writer.println("<entry>" + (entd.getGrupo() == null ? "" : entd.getGrupo()) + "</entry>");
+                writer.println("<entry>" + entd.getFila() + "</entry>");
+                writer.println("<entry>" + entd.getOrden() + "</entry>");
+                writer.println("<entry>" + entd.getSpan() + "</entry>");
+                writer.println("<entry>" + (entd.getObligatorio() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entd.getGridable() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entd.getFiltrable() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entd.getValorDefecto() == null ? "" : entd.getValorDefecto()) + "</entry>");
                 writer.println("</row>");
             }
 

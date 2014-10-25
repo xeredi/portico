@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -51,8 +52,11 @@ public final class ParametroLupaAction extends BaseAction {
     public String lupa() {
         Preconditions.checkNotNull(itemLupaCriterio);
         Preconditions.checkNotNull(itemLupaCriterio.getEntiId());
-        Preconditions.checkNotNull(itemLupaCriterio.getFechaVigencia());
         Preconditions.checkNotNull(itemLupaCriterio.getTextoBusqueda());
+
+        if (itemLupaCriterio.getFechaVigencia() == null) {
+            itemLupaCriterio.setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         final ParametroBO prmtBO = new ParametroBO();
         final TipoParametroVO enti = TipoParametroProxy.select(itemLupaCriterio.getEntiId());

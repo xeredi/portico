@@ -6,21 +6,21 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                    <label translate>prmt_parametro</label> <input type="text" ng-model="itemCriterio.parametro"
+                    <label translate>prmt_parametro</label> <input type="text" ng-model="vm.itemCriterio.parametro"
                         class="form-control input-sm" />
                 </div>
                 <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                     <label translate>prmt_fechaVigencia</label>
                     <div class="input-group" ng-controller="datepickerController">
                         <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                            datepicker-options="dateOptions" is-open="opened" ng-model="itemCriterio.fechaVigencia"
+                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.itemCriterio.fechaVigencia"
                             ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
                             class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>filtro_limit</label> <select ng-model="itemCriterio.limit"
-                        ng-options="limitValue for limitValue in limits" class="form-control input-sm">
+                    <label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
+                        ng-options="limitValue for limitValue in vm.limits" class="form-control input-sm">
                         <option />
                     </select>
                 </div>
@@ -31,10 +31,10 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" data-ng-click="ok()">
+    <button class="btn btn-primary" data-ng-click="vm.ok()">
         <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
     </button>
-    <button class="btn btn-default" data-ng-click="cancel()">
+    <button class="btn btn-default" data-ng-click="vm.cancel()">
         <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
     </button>
 </div>

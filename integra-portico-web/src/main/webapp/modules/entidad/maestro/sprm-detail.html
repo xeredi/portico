@@ -1,16 +1,14 @@
-<p class="bg-primary" ng-bind="'enti_' + enti.id | translate"></p>
-
-<alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+<alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{enti.id}}/{{item.id}}/{{item.fref}}"><i
+        <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.item.fref}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
-            ng-href="#/maestro/sprm/duplicate/{{enti.id}}/{{item.id}}/{{item.fref}}"><i
+            ng-href="#/maestro/sprm/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.item.fref}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -21,19 +19,20 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-4 col-md-2 col-md-2 form-group">
-            <label ng-bind="'enti_' + enti.tpprAsociado.id | translate"></label>
+            <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
             <p class="form-control-static">
-                <a ng-href="#/maestro/prmt/detail/{{enti.tpprAsociado.id}}/{{item.prmtAsociado.id}}/{{item.fref}}"
-                    ng-bind="item.prmtAsociado.etiqueta"></a>
+                <a
+                    ng-href="#/maestro/prmt/detail/{{vm.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.item.fref}}"
+                    ng-bind="vm.item.prmtAsociado.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>sprm_fini</label>
-            <p class="form-control-static" ng-bind="item.spvr.fini | date"></p>
+            <p class="form-control-static" ng-bind="vm.item.spvr.fini | date"></p>
         </div>
         <div class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>sprm_ffin</label>
-            <p class="form-control-static" ng-bind="item.spvr.ffin | date"></p>
+            <p class="form-control-static" ng-bind="vm.item.spvr.ffin | date"></p>
         </div>
     </div>
 

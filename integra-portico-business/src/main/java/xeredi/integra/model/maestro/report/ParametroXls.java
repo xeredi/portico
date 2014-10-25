@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -23,6 +26,9 @@ import com.google.common.base.Preconditions;
  */
 public final class ParametroXls extends BaseXls {
 
+    /** The bundle. */
+    private final ResourceBundle bundle;
+
     /**
      * Instantiates a new parametro xls.
      *
@@ -31,6 +37,8 @@ public final class ParametroXls extends BaseXls {
      */
     public ParametroXls(final Locale locale) {
         super(locale);
+
+        bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
     }
 
     /**
@@ -52,7 +60,7 @@ public final class ParametroXls extends BaseXls {
         Preconditions.checkNotNull(stream);
 
         final HSSFWorkbook workbook = new HSSFWorkbook();
-        final HSSFSheet sheet = workbook.createSheet(tpprVO.getNombre());
+        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpprVO.getId()));
 
         // Cabecera XLS
         int rownum = 0;
@@ -70,8 +78,8 @@ public final class ParametroXls extends BaseXls {
         setCellValue(rowhead, i++, bundle.getString("prmt_ffin"));
 
         if (tpprVO.getEntdList() != null) {
-            for (final Long tpdtId : tpprVO.getEntdList()) {
-                setCellValue(rowhead, i++, tpprVO.getEntdMap().get(tpdtId).getEtiqueta());
+            for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                setCellValue(rowhead, i++, entd.getEtiqueta());
             }
         }
 
@@ -91,11 +99,10 @@ public final class ParametroXls extends BaseXls {
             setCellValue(row, j++, prmtVO.getPrvr().getFfin());
 
             if (tpprVO.getEntdList() != null) {
-                for (final Long tpdtId : tpprVO.getEntdList()) {
-                    final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(tpdtId);
-                    final ItemDatoVO itdtVO = prmtVO.getItdtMap().get(tpdtId);
+                for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                    final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
 
-                    setCellValue(row, j, entdVO, itdtVO);
+                    setCellValue(row, j, entd, itdt);
 
                     j++;
                 }

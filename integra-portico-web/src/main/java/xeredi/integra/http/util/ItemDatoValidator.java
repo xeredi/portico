@@ -26,12 +26,11 @@ public final class ItemDatoValidator {// srdtMap
      *            the item vo
      */
     public static void validate(final ActionSupport support, final EntidadVO entiVO, final ItemVO itemVO) {
-        if (entiVO.getEntdMap() != null) {
+        if (entiVO.getEntdList() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
-            for (final Long tpdtId : entiVO.getEntdList()) {
-                final EntidadTipoDatoVO entd = entiVO.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(tpdtId.toString());
+            for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+                final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId().toString());
 
                 if (entd.getObligatorio() && itdtVO == null) {
                     support.addActionError(support.getText(ErrorCode.E00001.name(), new String[] { entd.getEtiqueta() }));

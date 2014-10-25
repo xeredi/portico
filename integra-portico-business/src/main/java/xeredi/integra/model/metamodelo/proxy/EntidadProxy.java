@@ -97,14 +97,10 @@ public final class EntidadProxy {
         for (final EntidadVO entiVO : entiMap.values()) {
             if (ENTIDAD_MAP.containsKey(entiVO.getId())) {
                 entiVO.setEntdList(ENTIDAD_MAP.get(entiVO.getId()).getEntdList());
-                entiVO.setEntdGridList(ENTIDAD_MAP.get(entiVO.getId()).getEntdGridList());
-                entiVO.setEntdMap(ENTIDAD_MAP.get(entiVO.getId()).getEntdMap());
                 entiVO.setEntiHijasList(ENTIDAD_MAP.get(entiVO.getId()).getEntiHijasList());
                 entiVO.setEntiPadresList(ENTIDAD_MAP.get(entiVO.getId()).getEntiPadresList());
                 entiVO.setEnacList(ENTIDAD_MAP.get(entiVO.getId()).getEnacList());
                 entiVO.setEngdList(ENTIDAD_MAP.get(entiVO.getId()).getEngdList());
-                entiVO.setEngdMap(ENTIDAD_MAP.get(entiVO.getId()).getEngdMap());
-                entiVO.setEngdEntdMap(ENTIDAD_MAP.get(entiVO.getId()).getEngdEntdMap());
             }
         }
     }

@@ -64,8 +64,8 @@ public final class EstadisticaXls extends BaseXls {
         setCellValue(rowhead, i++, bundle.getString("estd_pepr"));
         setCellValue(rowhead, i++, bundle.getString("estd_subp"));
 
-        for (final Long tpdtId : tpesVO.getEntdList()) {
-            setCellValue(rowhead, i++, tpesVO.getEntdMap().get(tpdtId).getEtiqueta());
+        for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
+            setCellValue(rowhead, i++, entd.getEtiqueta());
         }
 
         // Filas XLS
@@ -78,11 +78,10 @@ public final class EstadisticaXls extends BaseXls {
             setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
             setCellValue(row, j++, estdVO.getSubp().getEtiqueta());
 
-            for (final Long tpdtId : tpesVO.getEntdList()) {
-                final EntidadTipoDatoVO entdVO = tpesVO.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = estdVO.getItdtMap().get(tpdtId);
+            for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
+                final ItemDatoVO itdtVO = estdVO.getItdtMap().get(entd.getTpdt().getId());
 
-                setCellValue(row, j, entdVO, itdtVO);
+                setCellValue(row, j, entd, itdtVO);
 
                 j++;
             }

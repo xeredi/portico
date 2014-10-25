@@ -16,6 +16,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
@@ -214,7 +215,9 @@ public class ServicioBO {
 
         try {
             if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
-                for (final Long tpdtId : tpsrVO.getEntdList()) {
+                for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                    final Long tpdtId = entd.getTpdt().getId();
+
                     if (!srvcVO.getItdtMap().containsKey(tpdtId) && !srvcVO.getItdtMap().containsKey(tpdtId.toString())) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 

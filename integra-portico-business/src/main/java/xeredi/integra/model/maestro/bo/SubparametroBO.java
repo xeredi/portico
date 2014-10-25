@@ -19,6 +19,7 @@ import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -56,7 +57,9 @@ public class SubparametroBO {
 
         // Validar que los datos del subparametro son correctos
         if (tpspVO.getEntdList() != null && !tpspVO.getEntdList().isEmpty()) {
-            for (final Long tpdtId : tpspVO.getEntdList()) {
+            for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
+                final Long tpdtId = entd.getTpdt().getId();
+
                 if (!sprm.getItdtMap().containsKey(tpdtId) && !sprm.getItdtMap().containsKey(tpdtId.toString())) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 
@@ -180,7 +183,9 @@ public class SubparametroBO {
 
         // Validar que los datos del parametro son correctos
         if (!tpspVO.getEntdList().isEmpty()) {
-            for (final Long tpdtId : tpspVO.getEntdList()) {
+            for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
+                final Long tpdtId = entd.getTpdt().getId();
+
                 if (!sprm.getItdtMap().containsKey(tpdtId.toString())) {
                     final ItemDatoVO itdt = new ItemDatoVO();
 

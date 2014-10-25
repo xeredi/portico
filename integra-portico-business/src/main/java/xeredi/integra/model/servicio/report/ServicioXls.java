@@ -77,8 +77,8 @@ public final class ServicioXls extends BaseXls {
             setCellValue(rowhead, i++, bundle.getString("srvc_ffin"));
         }
 
-        for (final Long tpdtId : tpsrVO.getEntdList()) {
-            setCellValue(rowhead, i++, tpsrVO.getEntdMap().get(tpdtId).getEtiqueta());
+        for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+            setCellValue(rowhead, i++, entd.getEtiqueta());
         }
 
         // Filas XLS
@@ -103,11 +103,10 @@ public final class ServicioXls extends BaseXls {
                 setCellValue(row, j++, srvcVO.getFfin());
             }
 
-            for (final Long tpdtId : tpsrVO.getEntdList()) {
-                final EntidadTipoDatoVO entdVO = tpsrVO.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = srvcVO.getItdtMap().get(tpdtId);
+            for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                final ItemDatoVO itdt = srvcVO.getItdtMap().get(entd.getTpdt().getId());
 
-                setCellValue(row, j, entdVO, itdtVO);
+                setCellValue(row, j, entd, itdt);
 
                 j++;
             }

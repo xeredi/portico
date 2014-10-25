@@ -29,6 +29,9 @@ public final class SubparametroAction extends ItemAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2326503947837608186L;
 
+    /** The enti. */
+    private TipoSubparametroVO enti;
+
     /** The item. */
     private SubparametroVO item;
 
@@ -62,7 +65,7 @@ public final class SubparametroAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
 
-        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
 
@@ -92,7 +95,7 @@ public final class SubparametroAction extends ItemAction {
         sprmCriterioVO.setIdioma(getIdioma());
 
         item = sprmBO.selectObject(sprmCriterioVO);
-        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
 
@@ -125,7 +128,7 @@ public final class SubparametroAction extends ItemAction {
 
         item.setFref(sprmCriterioVO.getFechaVigencia());
 
-        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
 
@@ -144,7 +147,7 @@ public final class SubparametroAction extends ItemAction {
 
         final SubparametroBO sprmBO = new SubparametroBO();
 
-        final TipoSubparametroVO enti = TipoSubparametroProxy.select(item.getEntiId());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
@@ -257,6 +260,8 @@ public final class SubparametroAction extends ItemAction {
 
         item.setFref(sprmCriterioVO.getFechaVigencia());
 
+        enti = TipoSubparametroProxy.select(item.getEntiId());
+
         return SUCCESS;
     }
 
@@ -286,6 +291,15 @@ public final class SubparametroAction extends ItemAction {
      */
     public void setItem(final SubparametroVO value) {
         item = value;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoSubparametroVO getEnti() {
+        return enti;
     }
 
 }

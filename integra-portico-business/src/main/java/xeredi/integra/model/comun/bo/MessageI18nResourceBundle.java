@@ -1,10 +1,16 @@
 package xeredi.integra.model.comun.bo;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
+import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.MessageI18nBundlename;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,17 +43,33 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
      */
     @Override
     protected Object[][] getContents() {
-        final MessageI18nBO i18nBO = new MessageI18nBO();
+        final List<Object[]> contentList = new ArrayList<>();
 
-        final Map<String, String> map = i18nBO.selectKeyValueMap(bundle, locale);
-        final Object[][] contents = new String[map.keySet().size()][2];
+        final MessageI18nBO messageI18nBO = new MessageI18nBO();
 
-        int i = 0;
+        final Map<String, String> map = messageI18nBO.selectKeyValueMap(bundle, locale);
+
         for (final String key : map.keySet()) {
-            contents[i][0] = key;
-            contents[i][1] = map.get(key);
+            contentList.add(new Object[] { key, map.get(key) });
+        }
 
-            i++;
+        final I18nBO i18nBO = new I18nBO();
+        final Set<I18nPrefix> prefixSet = new HashSet<>();
+
+        prefixSet.add(I18nPrefix.tpdt);
+        prefixSet.add(I18nPrefix.cdrf);
+        prefixSet.add(I18nPrefix.enti);
+
+        final List<LabelValueVO> list = i18nBO.selectLabelValueList(prefixSet, locale.getLanguage());
+
+        for (final LabelValueVO vo : list) {
+            contentList.add(new Object[] { vo.getLabel(), vo.getValue() });
+        }
+
+        final Object[][] contents = new Object[contentList.size()][2];
+
+        for (int i = 0; i < contentList.size(); i++) {
+            contents[i] = contentList.get(i);
         }
 
         return contents;

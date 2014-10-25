@@ -29,24 +29,21 @@
         </thead>
         <tbody>
             <tr ng-repeat="entd in enti.entdList track by $index">
-                <td><a ng-href="#/metamodelo/entd/detail/{{enti.id}}/{{entd}}"><i
+                <td><a ng-href="#/metamodelo/entd/detail/{{enti.id}}/{{entd.tpdt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="enti.entdMap[entd].grupo"></td>
-                <td ng-bind="enti.entdMap[entd].fila"></td>
-                <td ng-bind="enti.entdMap[entd].orden"></td>
-                <td ng-bind="enti.entdMap[entd].span"></td>
-                <td ng-bind="enti.entdMap[entd].spanLg"></td>
-                <td nowrap="nowrap" ng-bind="enti.entdMap[entd].etiqueta"></td>
-                <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].obligatorio ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].gridable ? 'ok' : 'remove'}}"></i></td>
-                <td><i class="glyphicon glyphicon-{{enti.entdMap[entd].filtrable ? 'ok' : 'remove'}}"></i></td>
-                <td nowrap="nowrap" ng-bind="enti.entdMap[entd].tpdt.nombre"></td>
-                <td title="{{'ElementoTipo_' + enti.entdMap[entd].tpdt.tipoElemento | translate}}"
-                    ng-bind="enti.entdMap[entd].tpdt.tipoElemento"></td>
-                <td title="{{'HtmlTipo_' + enti.entdMap[entd].tpdt.tpht | translate}}"
-                    ng-bind="enti.entdMap[entd].tpdt.tpht"></td>
-                <td nowrap="nowrap" ng-bind="enti.entdMap[entd].tpdt.enti.nombre"></span>
-                </td>
+                <td ng-bind="entd.grupo"></td>
+                <td ng-bind="entd.fila"></td>
+                <td ng-bind="entd.orden"></td>
+                <td ng-bind="entd.span"></td>
+                <td ng-bind="entd.spanLg"></td>
+                <td nowrap="nowrap" ng-bind="entd.etiqueta"></td>
+                <td><i class="glyphicon glyphicon-{{entd.obligatorio ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entd.gridable ? 'ok' : 'remove'}}"></i></td>
+                <td><i class="glyphicon glyphicon-{{entd.filtrable ? 'ok' : 'remove'}}"></i></td>
+                <td nowrap="nowrap" ng-bind="entd.tpdt.nombre"></td>
+                <td title="{{'ElementoTipo_' + entd.tpdt.tipoElemento | translate}}" ng-bind="entd.tpdt.tipoElemento"></td>
+                <td title="{{'HtmlTipo_' + entd.tpdt.tpht | translate}}" ng-bind="entd.tpdt.tpht"></td>
+                <td nowrap="nowrap" ng-bind="entd.tpdt.enti.nombre"></span></td>
             </tr>
         </tbody>
     </table>

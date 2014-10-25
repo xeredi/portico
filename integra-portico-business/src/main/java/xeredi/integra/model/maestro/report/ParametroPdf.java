@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
@@ -13,13 +14,16 @@ import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
+import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -33,6 +37,9 @@ import com.google.common.base.Preconditions;
  */
 public final class ParametroPdf extends BasePdf {
 
+    /** The bundle. */
+    private final ResourceBundle bundle;
+
     /**
      * Instantiates a new parametro pdf.
      *
@@ -41,6 +48,8 @@ public final class ParametroPdf extends BasePdf {
      */
     public ParametroPdf(final Locale alocale) {
         super(alocale);
+
+        bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
     }
 
     /**
@@ -67,21 +76,25 @@ public final class ParametroPdf extends BasePdf {
         Preconditions.checkNotNull(prmtVO);
         Preconditions.checkNotNull(tpprVO);
 
+        final String tpprLabel = bundle.getString("enti_" + tpprVO.getId());
+        final String prmtFiniLabel = bundle.getString("prmt_fini");
+        final String prmtFfinLabel = bundle.getString("prmt_ffin");
+
         final JasperReportBuilder report = DynamicReports.report();
 
         report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
-        report.addTitle(DynamicReports.cmp.text(tpprVO.getNombre()).setStyle(PdfConstants.H1_STYLE));
+        report.addTitle(DynamicReports.cmp.text(tpprLabel).setStyle(PdfConstants.H1_STYLE));
 
         final List<List<PdfCell>> listCells = new ArrayList<>();
 
         List<PdfCell> rowCells = new ArrayList<>();
         int accWidth = 0;
 
-        rowCells.add(new PdfCell(tpprVO.getNombre(), prmtVO.getEtiqueta(), 8, TipoElemento.TX));
+        rowCells.add(new PdfCell(tpprLabel, prmtVO.getEtiqueta(), 8, TipoElemento.TX));
 
-        rowCells.add(new PdfCell("F. Inicio", PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFini()), 2,
+        rowCells.add(new PdfCell(prmtFiniLabel, PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFini()), 2,
                 TipoElemento.FE));
-        rowCells.add(new PdfCell("F. Fin", prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
+        rowCells.add(new PdfCell(prmtFfinLabel, prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
                 .format(prmtVO.getPrvr().getFfin()), 2, TipoElemento.FE));
 
         listCells.add(rowCells);
@@ -98,31 +111,36 @@ public final class ParametroPdf extends BasePdf {
         report.addTitle(getForm(listCells));
         listCells.clear();
 
-        for (final Integer engdId : tpprVO.getEngdList()) {
-            rowCells = new ArrayList<>();
-            accWidth = 0;
+        if (tpprVO.getEngdList() != null) {
+            for (final EntidadGrupoDatoVO engd : tpprVO.getEngdList()) {
+                rowCells = new ArrayList<>();
+                accWidth = 0;
 
-            for (final Long tpdtId : tpprVO.getEngdEntdMap().get(engdId)) {
-                final EntidadTipoDatoVO entdVO = tpprVO.getEntdMap().get(tpdtId);
-                final ItemDatoVO itdtVO = prmtVO.getItdtMap().get(tpdtId);
+                if (tpprVO.getEntdList() != null) {
+                    for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                        if (entd.getGrupo() == engd.getNumero()) {
+                            final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
 
-                if (accWidth + entdVO.getSpan() > PdfConstants.MAX_SPAN) {
-                    listCells.add(rowCells);
-                    rowCells = new ArrayList<>();
-                    accWidth = 0;
+                            if (accWidth + entd.getSpan() > PdfConstants.MAX_SPAN) {
+                                listCells.add(rowCells);
+                                rowCells = new ArrayList<>();
+                                accWidth = 0;
+                            }
+
+                            rowCells.add(new PdfCell(entd.getEtiqueta(), getItdtValue(entd, itdt), entd.getSpan(), entd
+                                    .getTpdt().getTipoElemento()));
+                            accWidth += entd.getSpan();
+                        }
+                    }
                 }
 
-                rowCells.add(new PdfCell(entdVO.getEtiqueta(), getItdtValue(entdVO, itdtVO), entdVO.getSpan(), entdVO
-                        .getTpdt().getTipoElemento()));
-                accWidth += entdVO.getSpan();
-            }
+                if (!rowCells.isEmpty()) {
+                    listCells.add(rowCells);
+                }
 
-            if (!rowCells.isEmpty()) {
-                listCells.add(rowCells);
+                report.addTitle(getForm(listCells), Components.pageBreak());
+                listCells.clear();
             }
-
-            report.addTitle(getForm(listCells), Components.pageBreak());
-            listCells.clear();
         }
 
         if (tpprVO.getEntiHijasList() != null) {
@@ -165,34 +183,36 @@ public final class ParametroPdf extends BasePdf {
         Preconditions.checkNotNull(entiVO);
         Preconditions.checkNotNull(itemList);
 
+        final String tpspLabel = bundle.getString("enti_" + entiVO.getId());
+        final String tpprAsociadoLabel = bundle.getString("enti_" + entiVO.getTpprAsociado().getId());
+        final String sprmFiniLabel = bundle.getString("sprm_fini");
+        final String sprmFfinLabel = bundle.getString("sprm_ffin");
+
         final JasperReportBuilder report = DynamicReports.report();
         final List<String> columns = new ArrayList<>();
 
         report.setTemplate(DynamicReports.template());
         report.setColumnTitleStyle(PdfConstants.TH_STYLE);
         report.setColumnStyle(PdfConstants.TD_STYLE);
-        report.addTitle(DynamicReports.cmp.text(entiVO.getNombre()).setStyle(PdfConstants.H1_STYLE));
+        report.addTitle(DynamicReports.cmp.text(tpspLabel).setStyle(PdfConstants.H1_STYLE));
 
-        columns.add(entiVO.getTpprAsociado().getNombre());
+        columns.add(tpprAsociadoLabel);
 
-        report.addColumn(DynamicReports.col.column(entiVO.getTpprAsociado().getNombre(),
-                entiVO.getTpprAsociado().getNombre(), DynamicReports.type.stringType()).setWidth(4));
+        report.addColumn(DynamicReports.col.column(tpprAsociadoLabel, tpprAsociadoLabel,
+                DynamicReports.type.stringType()).setWidth(4));
 
-        columns.add("finicio");
+        columns.add("fini");
         columns.add("ffin");
 
-        report.addColumn(DynamicReports.col.column("F. Inicio", "finicio", DynamicReports.type.stringType())
-                .setWidth(2));
-        report.addColumn(DynamicReports.col.column("F. Fin", "ffin", DynamicReports.type.stringType()).setWidth(2));
+        report.addColumn(DynamicReports.col.column(sprmFiniLabel, "fini", DynamicReports.type.stringType()).setWidth(2));
+        report.addColumn(DynamicReports.col.column(sprmFfinLabel, "ffin", DynamicReports.type.stringType()).setWidth(2));
 
         if (entiVO.getEntdList() != null) {
-            for (final Long tpdtId : entiVO.getEntdList()) {
-                final EntidadTipoDatoVO entdVO = entiVO.getEntdMap().get(tpdtId);
+            for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+                columns.add(entd.getEtiqueta());
 
-                columns.add(entdVO.getEtiqueta());
-
-                report.addColumn(DynamicReports.col.column(entdVO.getEtiqueta(), entdVO.getEtiqueta(),
-                        DynamicReports.type.stringType()).setWidth(entdVO.getSpan()));
+                report.addColumn(DynamicReports.col.column(entd.getEtiqueta(), entd.getEtiqueta(),
+                        DynamicReports.type.stringType()).setWidth(entd.getSpan()));
             }
         }
 
@@ -210,8 +230,8 @@ public final class ParametroPdf extends BasePdf {
                     .getFfin());
 
             if (entiVO.getEntdList() != null) {
-                for (final Long tpdtId : entiVO.getEntdList()) {
-                    objects[i++] = getItdtValue(entiVO.getEntdMap().get(tpdtId), itemVO.getItdtMap().get(tpdtId));
+                for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
+                    objects[i++] = getItdtValue(entd, itemVO.getItdtMap().get(entd.getTpdt().getId()));
                 }
             }
 
