@@ -67,9 +67,18 @@ public interface CodigoReferenciaDAO {
     /**
      * Delete.
      *
-     * @param cdrfVO
-     *            the cdrf vo
+     * @param cdrfId
+     *            the cdrf id
      * @return the int
      */
     int delete(final Long cdrfId);
+
+    /**
+     * Delete list.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the int
+     */
+    int deleteList(final Long tpdtId);
 }

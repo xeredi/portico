@@ -52,15 +52,13 @@ public class PartidaBO {
     public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
+            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            equiDAO = session.getMapper(EquipamientoDAO.class);
+            blDAO = session.getMapper(BlDAO.class);
 
-        ssrvDAO = session.getMapper(SubservicioDAO.class);
-        maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-        maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-        equiDAO = session.getMapper(EquipamientoDAO.class);
-        blDAO = session.getMapper(BlDAO.class);
-
-        try {
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -97,8 +95,6 @@ public class PartidaBO {
             maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -115,15 +111,13 @@ public class PartidaBO {
     public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
+            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            equiDAO = session.getMapper(EquipamientoDAO.class);
+            blDAO = session.getMapper(BlDAO.class);
 
-        ssrvDAO = session.getMapper(SubservicioDAO.class);
-        maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-        maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-        equiDAO = session.getMapper(EquipamientoDAO.class);
-        blDAO = session.getMapper(BlDAO.class);
-
-        try {
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -160,8 +154,6 @@ public class PartidaBO {
             maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -178,15 +170,13 @@ public class PartidaBO {
     public final void anular(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
+            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            equiDAO = session.getMapper(EquipamientoDAO.class);
+            blDAO = session.getMapper(BlDAO.class);
 
-        ssrvDAO = session.getMapper(SubservicioDAO.class);
-        maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-        maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-        equiDAO = session.getMapper(EquipamientoDAO.class);
-        blDAO = session.getMapper(BlDAO.class);
-
-        try {
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -228,8 +218,6 @@ public class PartidaBO {
             maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 

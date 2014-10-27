@@ -40,11 +40,9 @@ public class TipoSubservicioBO {
      * @return the list
      */
     public final List<LabelValueVO> selectLabelValues(final TipoSubservicioCriterioVO criterioVO) {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpssDAO = session.getMapper(TipoSubservicioDAO.class);
 
-        tpssDAO = session.getMapper(TipoSubservicioDAO.class);
-
-        try {
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoSubservicioVO tpss : tpssDAO.selectList(criterioVO)) {
@@ -52,8 +50,6 @@ public class TipoSubservicioBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -67,14 +63,10 @@ public class TipoSubservicioBO {
     public final List<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO) {
         Preconditions.checkNotNull(tpssCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpssDAO = session.getMapper(TipoSubservicioDAO.class);
 
-        tpssDAO = session.getMapper(TipoSubservicioDAO.class);
-
-        try {
             return tpssDAO.selectList(tpssCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -93,11 +85,9 @@ public class TipoSubservicioBO {
             final int offset, final int limit) {
         Preconditions.checkNotNull(tpssCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpssDAO = session.getMapper(TipoSubservicioDAO.class);
 
-        tpssDAO = session.getMapper(TipoSubservicioDAO.class);
-
-        try {
             final int count = tpssDAO.count(tpssCriterioVO);
             final List<TipoSubservicioVO> list = new ArrayList<>();
 
@@ -106,8 +96,6 @@ public class TipoSubservicioBO {
             }
 
             return new PaginatedList<>(list, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -124,11 +112,9 @@ public class TipoSubservicioBO {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpssDAO = session.getMapper(TipoSubservicioDAO.class);
 
-        tpssDAO = session.getMapper(TipoSubservicioDAO.class);
-
-        try {
             final TipoSubservicioCriterioVO entiCriterioVO = new TipoSubservicioCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -142,11 +128,9 @@ public class TipoSubservicioBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO, idioma);
+            entiBO.fillDependencies(session, entiVO, idioma);
 
             return entiVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -162,12 +146,10 @@ public class TipoSubservicioBO {
         Preconditions.checkNotNull(tpssVO);
         Preconditions.checkNotNull(tpssVO.getTpsrId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpssDAO = session.getMapper(TipoSubservicioDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpssDAO = session.getMapper(TipoSubservicioDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final Long id = entiDAO.nextSequence();
 
             tpssVO.setId(id);
@@ -181,8 +163,6 @@ public class TipoSubservicioBO {
             tpssDAO.insert(tpssVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -198,12 +178,10 @@ public class TipoSubservicioBO {
         Preconditions.checkNotNull(tpssVO);
         Preconditions.checkNotNull(tpssVO.getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpssDAO = session.getMapper(TipoSubservicioDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpssDAO = session.getMapper(TipoSubservicioDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = tpssDAO.update(tpssVO);
 
             if (updated == 0) {
@@ -213,8 +191,6 @@ public class TipoSubservicioBO {
             entiDAO.update(tpssVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -229,12 +205,10 @@ public class TipoSubservicioBO {
     public final void delete(final Long tpssId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpssId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpssDAO = session.getMapper(TipoSubservicioDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpssDAO = session.getMapper(TipoSubservicioDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = tpssDAO.delete(tpssId);
 
             if (updated == 0) {
@@ -244,8 +218,6 @@ public class TipoSubservicioBO {
             entiDAO.delete(tpssId);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 }

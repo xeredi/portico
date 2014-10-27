@@ -38,11 +38,9 @@ public class TipoEstadisticaBO {
      * @return the list
      */
     public final List<LabelValueVO> selectLabelValues() {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
-        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-
-        try {
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoEstadisticaVO tpes : tpesDAO.selectList(new TipoEstadisticaCriterioVO())) {
@@ -50,8 +48,6 @@ public class TipoEstadisticaBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -65,14 +61,10 @@ public class TipoEstadisticaBO {
     public final List<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterioVO) {
         Preconditions.checkNotNull(tpesCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
-        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-
-        try {
             return tpesDAO.selectList(tpesCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -91,11 +83,9 @@ public class TipoEstadisticaBO {
             final int offset, final int limit) {
         Preconditions.checkNotNull(tpesCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
-        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-
-        try {
             final int count = tpesDAO.count(tpesCriterioVO);
             final List<TipoEstadisticaVO> list = new ArrayList<>();
 
@@ -104,8 +94,6 @@ public class TipoEstadisticaBO {
             }
 
             return new PaginatedList<>(list, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -122,11 +110,9 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
-        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-
-        try {
             final TipoEstadisticaCriterioVO entiCriterioVO = new TipoEstadisticaCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -140,11 +126,9 @@ public class TipoEstadisticaBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO, idioma);
+            entiBO.fillDependencies(session, entiVO, idioma);
 
             return entiVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -159,12 +143,10 @@ public class TipoEstadisticaBO {
     public final void insert(final TipoEstadisticaVO tpesVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpesVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final Long id = entiDAO.nextSequence();
 
             tpesVO.setId(id);
@@ -178,8 +160,6 @@ public class TipoEstadisticaBO {
             tpesDAO.insert(tpesVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -195,12 +175,10 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(tpesVO);
         Preconditions.checkNotNull(tpesVO.getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = entiDAO.update(tpesVO);
 
             if (updated == 0) {
@@ -208,8 +186,6 @@ public class TipoEstadisticaBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -224,12 +200,10 @@ public class TipoEstadisticaBO {
     public final void delete(final Long tpesId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpesId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = tpesDAO.delete(tpesId);
 
             if (updated == 0) {
@@ -239,8 +213,6 @@ public class TipoEstadisticaBO {
             entiDAO.delete(tpesId);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 }

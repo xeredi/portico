@@ -38,11 +38,9 @@ public class TipoSubparametroBO {
      * @return the list
      */
     public final List<LabelValueVO> selectLabelValues() {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
-        tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-
-        try {
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoSubparametroVO tpsp : tpspDAO.selectList(new TipoSubparametroCriterioVO())) {
@@ -50,8 +48,6 @@ public class TipoSubparametroBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -65,14 +61,10 @@ public class TipoSubparametroBO {
     public final List<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterioVO) {
         Preconditions.checkNotNull(tpspCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
-        tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-
-        try {
             return tpspDAO.selectList(tpspCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -91,11 +83,9 @@ public class TipoSubparametroBO {
             final int offset, final int limit) {
         Preconditions.checkNotNull(tpspCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
-        tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-
-        try {
             final int count = tpspDAO.count(tpspCriterioVO);
             final List<TipoSubparametroVO> list = new ArrayList<>();
 
@@ -104,8 +94,6 @@ public class TipoSubparametroBO {
             }
 
             return new PaginatedList<>(list, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -120,11 +108,9 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
-        tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-
-        try {
             final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -138,11 +124,9 @@ public class TipoSubparametroBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO, idioma);
+            entiBO.fillDependencies(session, entiVO, idioma);
 
             return entiVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -157,12 +141,10 @@ public class TipoSubparametroBO {
     public final void insert(final TipoSubparametroVO tpspVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpspVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final Long id = entiDAO.nextSequence();
 
             tpspVO.setId(id);
@@ -176,8 +158,6 @@ public class TipoSubparametroBO {
             tpspDAO.insert(tpspVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -193,12 +173,10 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(tpspVO);
         Preconditions.checkNotNull(tpspVO.getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = tpspDAO.update(tpspVO);
 
             if (updated == 0) {
@@ -208,8 +186,6 @@ public class TipoSubparametroBO {
             entiDAO.update(tpspVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -224,12 +200,10 @@ public class TipoSubparametroBO {
     public final void delete(final Long tpspId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpspId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = tpspDAO.delete(tpspId);
 
             if (updated == 0) {
@@ -239,9 +213,6 @@ public class TipoSubparametroBO {
             entiDAO.delete(tpspId);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
-
 }

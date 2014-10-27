@@ -47,12 +47,10 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfVO);
         Preconditions.checkNotNull(i18nMap);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+            i18nDAO = session.getMapper(I18nDAO.class);
 
-        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-        i18nDAO = session.getMapper(I18nDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             if (cdrfDAO.exists(cdrfVO)) {
@@ -73,8 +71,6 @@ public class CodigoReferenciaBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -93,12 +89,10 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfVO);
         Preconditions.checkNotNull(i18nMap);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+            i18nDAO = session.getMapper(I18nDAO.class);
 
-        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-        i18nDAO = session.getMapper(I18nDAO.class);
-
-        try {
             final int updated = cdrfDAO.update(cdrfVO);
 
             if (updated == 0) {
@@ -114,8 +108,6 @@ public class CodigoReferenciaBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -131,12 +123,9 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfVO);
         Preconditions.checkNotNull(cdrfVO.getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-        i18nDAO = session.getMapper(I18nDAO.class);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+            i18nDAO = session.getMapper(I18nDAO.class);
 
             final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
 
@@ -152,8 +141,6 @@ public class CodigoReferenciaBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -167,14 +154,10 @@ public class CodigoReferenciaBO {
     public CodigoReferenciaVO selectObject(final CodigoReferenciaCriterioVO cdrfCriterioVO) {
         Preconditions.checkNotNull(cdrfCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
-        try {
             return cdrfDAO.selectObject(cdrfCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -188,14 +171,10 @@ public class CodigoReferenciaBO {
     public CodigoReferenciaVO select(final Long cdrfId) {
         Preconditions.checkNotNull(cdrfId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
-        try {
             return cdrfDAO.select(cdrfId);
-        } finally {
-            session.close();
         }
     }
 }

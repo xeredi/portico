@@ -49,11 +49,9 @@ public class EstadisticaBO {
             final int limit) {
         Preconditions.checkNotNull(estdCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            estdDAO = session.getMapper(EstadisticaDAO.class);
 
-        estdDAO = session.getMapper(EstadisticaDAO.class);
-
-        try {
             final int count = estdDAO.selectCount(estdCriterioVO);
             final List<EstadisticaVO> estdList = new ArrayList<>();
 
@@ -66,8 +64,6 @@ public class EstadisticaBO {
             }
 
             return new PaginatedList<>(estdList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -81,18 +77,14 @@ public class EstadisticaBO {
     public final List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO) {
         Preconditions.checkNotNull(estdCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            estdDAO = session.getMapper(EstadisticaDAO.class);
 
-        estdDAO = session.getMapper(EstadisticaDAO.class);
-
-        try {
             final List<EstadisticaVO> estdList = estdDAO.selectList(estdCriterioVO);
 
             fillDependencies(session, estdList, estdCriterioVO, false);
 
             return estdList;
-        } finally {
-            session.close();
         }
     }
 
@@ -109,11 +101,9 @@ public class EstadisticaBO {
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(estdCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            estdDAO = session.getMapper(EstadisticaDAO.class);
 
-        estdDAO = session.getMapper(EstadisticaDAO.class);
-
-        try {
             final EstadisticaVO estdVO = estdDAO.selectObject(estdCriterioVO);
 
             if (estdVO == null) {
@@ -125,8 +115,6 @@ public class EstadisticaBO {
             fillDependencies(session, estdList, estdCriterioVO, true);
 
             return estdList.get(0);
-        } finally {
-            session.close();
         }
     }
 

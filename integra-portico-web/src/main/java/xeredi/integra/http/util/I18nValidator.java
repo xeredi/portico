@@ -30,17 +30,20 @@ public final class I18nValidator {
         final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
         final String[] language_available = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
 
-        for (final String language : i18nMap.keySet()) {
-            final I18nVO i18nVO = i18nMap.get(language);
+        if (i18nMap != null) {
+            for (final String language : i18nMap.keySet()) {
+                final I18nVO i18nVO = i18nMap.get(language);
 
-            Preconditions.checkNotNull(i18nVO.getPrefix());
+                Preconditions.checkNotNull(i18nVO.getPrefix());
 
-            i18nVO.setLanguage(language);
+                i18nVO.setLanguage(language);
+            }
         }
 
         if (i18nMap == null || i18nMap.isEmpty() || !i18nMap.containsKey(language_default)
                 || GenericValidator.isBlankOrNull(i18nMap.get(language_default).getText())) {
             action.addActionError(action.getText(MessageI18nKey.E00002.name(), new String[] { language_default }));
         }
+
     }
 }

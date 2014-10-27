@@ -77,8 +77,15 @@
 
     <delete id="delete" parameterType="Long">
     <![CDATA[
-    	DELETE FROM tbl_codigo_ref_cdrf
-    	WHERE cdrf_pk = #{value}
+        DELETE FROM tbl_codigo_ref_cdrf
+        WHERE cdrf_pk = #{value}
+    ]]>
+    </delete>
+
+    <delete id="deleteList" parameterType="Long">
+    <![CDATA[
+        DELETE FROM tbl_codigo_ref_cdrf
+        WHERE cdrf_tpdt_pk = #{value}
     ]]>
     </delete>
 </mapper>

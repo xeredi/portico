@@ -51,13 +51,11 @@ public class BlBO {
     public final void completar(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
 
-        ssrvDAO = session.getMapper(SubservicioDAO.class);
-        maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-        maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-
-        try {
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -81,8 +79,6 @@ public class BlBO {
             maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -99,13 +95,11 @@ public class BlBO {
     public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
 
-        ssrvDAO = session.getMapper(SubservicioDAO.class);
-        maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-        maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-
-        try {
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -150,8 +144,6 @@ public class BlBO {
             maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -168,13 +160,11 @@ public class BlBO {
     public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
 
-        ssrvDAO = session.getMapper(SubservicioDAO.class);
-        maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-        maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-
-        try {
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -220,8 +210,6 @@ public class BlBO {
             maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -238,13 +226,11 @@ public class BlBO {
     public final void anular(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
         Preconditions.checkNotNull(ssrvId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
 
-        ssrvDAO = session.getMapper(SubservicioDAO.class);
-        maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
-        maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
-
-        try {
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -289,8 +275,6 @@ public class BlBO {
             maniSrvcDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -309,11 +293,9 @@ public class BlBO {
         Preconditions.checkNotNull(maniId);
         Preconditions.checkNotNull(blId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
 
-        resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
-
-        try {
             final ResumenTotalesCriterioVO totalCriterioVO = new ResumenTotalesCriterioVO();
 
             totalCriterioVO.setManiId(maniId);
@@ -326,8 +308,6 @@ public class BlBO {
             }
 
             return totalVO;
-        } finally {
-            session.close();
         }
     }
 }

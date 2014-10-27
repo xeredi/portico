@@ -37,12 +37,10 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            entiDAO = session.getMapper(EntidadDAO.class);
+            enacDAO = session.getMapper(EntidadAccionDAO.class);
 
-        entiDAO = session.getMapper(EntidadDAO.class);
-        enacDAO = session.getMapper(EntidadAccionDAO.class);
-
-        try {
             if (enacDAO.exists(enacVO)) {
                 throw new DuplicateInstanceException(EntidadAccionVO.class.getName(), enacVO);
             }
@@ -50,8 +48,6 @@ public final class EntidadAccionBO {
             enacDAO.insert(enacVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -66,11 +62,9 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            enacDAO = session.getMapper(EntidadAccionDAO.class);
 
-        enacDAO = session.getMapper(EntidadAccionDAO.class);
-
-        try {
             final int updated = enacDAO.update(enacVO);
 
             if (updated == 0) {
@@ -78,8 +72,6 @@ public final class EntidadAccionBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -94,11 +86,9 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            enacDAO = session.getMapper(EntidadAccionDAO.class);
 
-        enacDAO = session.getMapper(EntidadAccionDAO.class);
-
-        try {
             final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
 
             enacCriterioVO.setEntiId(enacVO.getEntiId());
@@ -107,8 +97,6 @@ public final class EntidadAccionBO {
             enacDAO.deleteCriterio(enacCriterioVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -125,11 +113,9 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(path);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            enacDAO = session.getMapper(EntidadAccionDAO.class);
 
-        enacDAO = session.getMapper(EntidadAccionDAO.class);
-
-        try {
             final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
 
             enacCriterioVO.setEntiId(entiId);
@@ -142,9 +128,6 @@ public final class EntidadAccionBO {
             }
 
             return enacVO;
-        } finally {
-            session.close();
         }
     }
-
 }

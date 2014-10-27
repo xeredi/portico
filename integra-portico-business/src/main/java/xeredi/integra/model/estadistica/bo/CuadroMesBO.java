@@ -33,11 +33,9 @@ public class CuadroMesBO {
     public final Map<String, List<CuadroMesVO>> selectMap(final Long peprId) {
         Preconditions.checkNotNull(peprId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            cdmsDAO = session.getMapper(CuadroMesDAO.class);
 
-        cdmsDAO = session.getMapper(CuadroMesDAO.class);
-
-        try {
             final Map<String, List<CuadroMesVO>> cdmsMap = new HashMap<>();
 
             for (final CuadroMesVO cdmsVO : cdmsDAO.selectList(peprId)) {
@@ -51,8 +49,6 @@ public class CuadroMesBO {
             }
 
             return cdmsMap;
-        } finally {
-            session.close();
         }
     }
 }

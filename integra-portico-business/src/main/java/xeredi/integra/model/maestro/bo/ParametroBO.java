@@ -15,12 +15,9 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
-import xeredi.integra.model.comun.dao.I18nDAO;
 import xeredi.integra.model.comun.exception.OverlapException;
-import xeredi.integra.model.comun.proxy.ConfigurationProxy;
-import xeredi.integra.model.comun.vo.ConfigurationKey;
-import xeredi.integra.model.comun.vo.I18nCriterioVO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -57,9 +54,6 @@ public class ParametroBO {
     /** The prdt dao. */
     ParametroDatoDAO prdtDAO;
 
-    /** The i18n dao. */
-    I18nDAO i18nDAO;
-
     /** The sprm dao. */
     SubparametroDAO sprmDAO;
 
@@ -90,15 +84,6 @@ public class ParametroBO {
             Preconditions.checkNotNull(i18nMap);
         }
 
-        if (tpprVO.getI18n()) {
-            final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
-
-            if (!i18nMap.containsKey(language_default)) {
-                throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default
-                        + " del parametro: " + prmt);
-            }
-        }
-
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
@@ -115,7 +100,6 @@ public class ParametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             prmtDAO = session.getMapper(ParametroDAO.class);
             prdtDAO = session.getMapper(ParametroDatoDAO.class);
-            i18nDAO = session.getMapper(I18nDAO.class);
 
             final IgBO igBO = new IgBO();
 
@@ -135,21 +119,14 @@ public class ParametroBO {
 
             prmtDAO.insertVersion(prmt);
 
+            if (tpprVO.getI18n()) {
+                I18nBO.insertMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
+            }
+
             if (prmt.getItdtMap() != null) {
                 for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
                     itdtVO.setItemId(prmt.getPrvr().getId());
                     prdtDAO.insert(itdtVO);
-                }
-            }
-
-            if (tpprVO.getI18n()) {
-                for (final I18nVO i18nVO : i18nMap.values()) {
-                    i18nVO.setPrefix(I18nPrefix.prvr);
-                    i18nVO.setExternalId(prmt.getPrvr().getId());
-
-                    if (i18nVO.getText() != null || !i18nVO.getText().isEmpty()) {
-                        i18nDAO.insert(i18nVO);
-                    }
                 }
             }
 
@@ -185,15 +162,6 @@ public class ParametroBO {
             Preconditions.checkNotNull(i18nMap);
         }
 
-        if (tpprVO.getI18n()) {
-            final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
-
-            if (!i18nMap.containsKey(language_default)) {
-                throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default
-                        + " del parametro: " + prmt);
-            }
-        }
-
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
@@ -214,7 +182,6 @@ public class ParametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             prmtDAO = session.getMapper(ParametroDAO.class);
             prdtDAO = session.getMapper(ParametroDatoDAO.class);
-            i18nDAO = session.getMapper(I18nDAO.class);
             sprmDAO = session.getMapper(SubparametroDAO.class);
             spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
@@ -248,22 +215,15 @@ public class ParametroBO {
 
             prmtDAO.insertVersion(prmt);
 
+            if (tpprVO.getI18n()) {
+                I18nBO.duplicateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
+            }
+
             if (prmt.getItdtMap() != null) {
                 for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
                     itdtVO.setItemId(prmt.getPrvr().getId());
 
                     prdtDAO.insert(itdtVO);
-                }
-            }
-
-            if (tpprVO.getI18n()) {
-                for (final I18nVO i18nVO : i18nMap.values()) {
-                    i18nVO.setPrefix(I18nPrefix.prvr);
-                    i18nVO.setExternalId(prmt.getPrvr().getId());
-
-                    if (i18nVO.getText() != null || !i18nVO.getText().isEmpty()) {
-                        i18nDAO.insert(i18nVO);
-                    }
                 }
             }
 
@@ -375,16 +335,6 @@ public class ParametroBO {
             Preconditions.checkNotNull(prmt.getPrvr().getFini());
         }
 
-        // Validaciones
-        if (tpprVO.getI18n()) {
-            final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
-
-            if (!i18nMap.containsKey(language_default)) {
-                throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default
-                        + " del parametro: " + prmt);
-            }
-        }
-
         // Validar que los datos del parametro son correctos
         if (tpprVO.getEntdList() != null && !tpprVO.getEntdList().isEmpty()) {
             for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
@@ -398,7 +348,6 @@ public class ParametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             prmtDAO = session.getMapper(ParametroDAO.class);
             prdtDAO = session.getMapper(ParametroDatoDAO.class);
-            i18nDAO = session.getMapper(I18nDAO.class);
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(ParametroVO.class.getName(), prmt);
@@ -410,23 +359,14 @@ public class ParametroBO {
                 throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
             }
 
+            if (tpprVO.getI18n()) {
+                I18nBO.updateMap(session, I18nPrefix.prvr, prmt.getPrvr().getId(), i18nMap);
+            }
+
             if (prmt.getItdtMap() != null) {
                 for (final ItemDatoVO itdtVO : prmt.getItdtMap().values()) {
                     itdtVO.setItemId(prmt.getPrvr().getId());
                     prdtDAO.update(itdtVO);
-                }
-            }
-
-            if (i18nMap != null) {
-                for (final I18nVO i18nVO : i18nMap.values()) {
-                    i18nVO.setPrefix(I18nPrefix.prvr);
-                    i18nVO.setExternalId(prmt.getPrvr().getId());
-
-                    if (i18nVO.getText() == null || i18nVO.getText().isEmpty()) {
-                        i18nDAO.delete(i18nVO);
-                    } else {
-                        i18nDAO.update(i18nVO);
-                    }
                 }
             }
 
@@ -450,16 +390,10 @@ public class ParametroBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             prmtDAO = session.getMapper(ParametroDAO.class);
             prdtDAO = session.getMapper(ParametroDatoDAO.class);
-            i18nDAO = session.getMapper(I18nDAO.class);
 
             prdtDAO.deleteVersion(prmt);
 
-            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
-
-            i18nCriterioVO.setPrefix(I18nPrefix.prvr);
-            i18nCriterioVO.setExternalId(prmt.getPrvr().getId());
-
-            i18nDAO.deleteList(i18nCriterioVO);
+            I18nBO.deleteMap(session, I18nPrefix.prvr, prmt.getPrvr().getId());
 
             final int updated = prmtDAO.deleteVersion(prmt);
 

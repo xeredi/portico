@@ -12,6 +12,9 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
 import xeredi.integra.model.metamodelo.dao.TipoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
@@ -43,18 +46,18 @@ public class TipoDatoBO {
      *
      * @param id
      *            the id
+     * @param idioma
+     *            the idioma
      * @return the tipo dato vo
      */
     public final TipoDatoVO select(final Long id, final String idioma) {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
-        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
-        try {
             final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
 
             tpdtCriterioVO.setId(id);
@@ -85,8 +88,6 @@ public class TipoDatoBO {
             }
 
             return tpdtVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -95,17 +96,18 @@ public class TipoDatoBO {
      *
      * @param tpdtVO
      *            the tpdt vo
+     * @param i18nMap
+     *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final TipoDatoVO tpdtVO) throws DuplicateInstanceException {
+    public final void insert(final TipoDatoVO tpdtVO, final Map<String, I18nVO> i18nMap)
+            throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpdtVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
-
-        try {
             if (tpdtDAO.exists(tpdtVO)) {
                 throw new DuplicateInstanceException(TipoDatoVO.class.getName(), tpdtVO);
             }
@@ -113,9 +115,9 @@ public class TipoDatoBO {
             tpdtVO.setId(tpdtDAO.nextSequence());
             tpdtDAO.insert(tpdtVO);
 
+            I18nBO.insertMap(session, I18nPrefix.tpdt, tpdtVO.getId(), i18nMap);
+
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -125,20 +127,18 @@ public class TipoDatoBO {
      * @param tpdtVO
      *            the tpdt vo
      */
-    public final void update(final TipoDatoVO tpdtVO) {
+    public final void update(final TipoDatoVO tpdtVO, final Map<String, I18nVO> i18nMap) {
         Preconditions.checkNotNull(tpdtVO);
         Preconditions.checkNotNull(tpdtVO.getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
-
-        try {
             tpdtDAO.update(tpdtVO);
 
+            I18nBO.updateMap(session, I18nPrefix.tpdt, tpdtVO.getId(), i18nMap);
+
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -152,16 +152,16 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtVO);
         Preconditions.checkNotNull(tpdtVO.getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            I18nBO.deleteMap(session, I18nPrefix.tpdt, tpdtVO.getId());
 
-        try {
+            cdrfDAO.deleteList(tpdtVO.getId());
             tpdtDAO.delete(tpdtVO.getId());
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -175,14 +175,10 @@ public class TipoDatoBO {
     public final List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
-
-        try {
             return tpdtDAO.selectList(tpdtCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -201,11 +197,9 @@ public class TipoDatoBO {
             final int limit) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
-
-        try {
             final int count = tpdtDAO.count(tpdtCriterioVO);
             final List<TipoDatoVO> tpdtList = new ArrayList<>();
 
@@ -214,8 +208,6 @@ public class TipoDatoBO {
             }
 
             return new PaginatedList<>(tpdtList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -229,11 +221,9 @@ public class TipoDatoBO {
     public final List<LabelValueVO> selectLabelValues(final TipoDatoCriterioVO tpdtCriterioVO) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
-
-        try {
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoDatoVO tpdt : tpdtDAO.selectList(tpdtCriterioVO)) {
@@ -241,8 +231,6 @@ public class TipoDatoBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -256,12 +244,10 @@ public class TipoDatoBO {
     public final Map<Long, TipoDatoVO> selectMap(final TipoDatoCriterioVO tpdtCriterioVO) {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-        tpdtDAO = session.getMapper(TipoDatoDAO.class);
-        cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
-        try {
             final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterioVO);
             final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
 
@@ -290,9 +276,6 @@ public class TipoDatoBO {
             }
 
             return tpdtMap;
-        } finally {
-            session.close();
         }
     }
-
 }

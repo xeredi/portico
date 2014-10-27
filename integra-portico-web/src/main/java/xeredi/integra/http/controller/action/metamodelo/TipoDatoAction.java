@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.I18nValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -126,6 +127,8 @@ public final class TipoDatoAction extends BaseAction {
             }
         }
 
+        I18nValidator.validate(this, i18nMap);
+
         if (hasErrors()) {
             return SUCCESS;
         }
@@ -134,13 +137,13 @@ public final class TipoDatoAction extends BaseAction {
 
         if (accion == ACCION_EDICION.create) {
             try {
-                tpdtBO.insert(tpdt);
+                tpdtBO.insert(tpdt, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
                         new String[] { getText(MessageI18nKey.tpdt.name()) }));
             }
         } else {
-            tpdtBO.update(tpdt);
+            tpdtBO.update(tpdt, i18nMap);
         }
 
         return SUCCESS;

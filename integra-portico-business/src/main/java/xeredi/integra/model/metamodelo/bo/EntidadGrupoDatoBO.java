@@ -39,11 +39,9 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO.getNumero());
         Preconditions.checkNotNull(engdVO.getEtiqueta());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
-        engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-        try {
             if (engdDAO.exists(engdVO)) {
                 throw new DuplicateInstanceException(EntidadGrupoDatoVO.class.getName(), engdVO);
             }
@@ -51,8 +49,6 @@ public class EntidadGrupoDatoBO {
             engdDAO.insert(engdVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -70,18 +66,14 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO.getNumero());
         Preconditions.checkNotNull(engdVO.getEtiqueta());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
-        engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-        try {
             if (engdDAO.update(engdVO) == 0) {
                 throw new InstanceNotFoundException(EntidadGrupoDatoVO.class.getName(), engdVO);
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -99,11 +91,9 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(numero);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
-        engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-        try {
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setEntiId(entiId);
@@ -114,8 +104,6 @@ public class EntidadGrupoDatoBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -134,11 +122,9 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(numero);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
-        engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-        try {
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setEntiId(entiId);
@@ -151,8 +137,6 @@ public class EntidadGrupoDatoBO {
             }
 
             return engdVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -168,18 +152,14 @@ public class EntidadGrupoDatoBO {
     public final List<EntidadGrupoDatoVO> selectList(final Long entiId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(entiId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
-        engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-        try {
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setEntiId(entiId);
 
             return engdDAO.selectList(engdCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -193,11 +173,9 @@ public class EntidadGrupoDatoBO {
     public final List<LabelValueVO> selectLabelValues(final Long entiId) {
         Preconditions.checkNotNull(entiId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
-        engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-        try {
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setEntiId(entiId);
@@ -209,8 +187,6 @@ public class EntidadGrupoDatoBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 }

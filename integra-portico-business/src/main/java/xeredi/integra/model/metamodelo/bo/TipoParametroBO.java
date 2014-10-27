@@ -38,11 +38,9 @@ public class TipoParametroBO {
      * @return the list
      */
     public final List<LabelValueVO> selectLabelValues() {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpprDAO = session.getMapper(TipoParametroDAO.class);
 
-        tpprDAO = session.getMapper(TipoParametroDAO.class);
-
-        try {
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoParametroVO tppr : tpprDAO.selectList(new TipoParametroCriterioVO())) {
@@ -50,8 +48,6 @@ public class TipoParametroBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -65,14 +61,10 @@ public class TipoParametroBO {
     public final List<TipoParametroVO> selectList(final TipoParametroCriterioVO tpprCriterioVO) {
         Preconditions.checkNotNull(tpprCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpprDAO = session.getMapper(TipoParametroDAO.class);
 
-        tpprDAO = session.getMapper(TipoParametroDAO.class);
-
-        try {
             return tpprDAO.selectList(tpprCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -91,11 +83,9 @@ public class TipoParametroBO {
             final int offset, final int limit) {
         Preconditions.checkNotNull(tpprCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpprDAO = session.getMapper(TipoParametroDAO.class);
 
-        tpprDAO = session.getMapper(TipoParametroDAO.class);
-
-        try {
             final int count = tpprDAO.count(tpprCriterioVO);
             final List<TipoParametroVO> list = new ArrayList<>();
 
@@ -104,8 +94,6 @@ public class TipoParametroBO {
             }
 
             return new PaginatedList<>(list, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -120,11 +108,9 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            tpprDAO = session.getMapper(TipoParametroDAO.class);
 
-        tpprDAO = session.getMapper(TipoParametroDAO.class);
-
-        try {
             final TipoParametroCriterioVO entiCriterioVO = new TipoParametroCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -138,11 +124,9 @@ public class TipoParametroBO {
 
             final EntidadBO entiBO = new EntidadBO();
 
-            entiBO.fillDependencies(entiVO, idioma);
+            entiBO.fillDependencies(session, entiVO, idioma);
 
             return entiVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -157,12 +141,10 @@ public class TipoParametroBO {
     public final void insert(final TipoParametroVO tpprVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpprVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpprDAO = session.getMapper(TipoParametroDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpprDAO = session.getMapper(TipoParametroDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final Long id = entiDAO.nextSequence();
 
             tpprVO.setId(id);
@@ -176,8 +158,6 @@ public class TipoParametroBO {
             tpprDAO.insert(tpprVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -193,12 +173,10 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(tpprVO);
         Preconditions.checkNotNull(tpprVO.getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpprDAO = session.getMapper(TipoParametroDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpprDAO = session.getMapper(TipoParametroDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = tpprDAO.update(tpprVO);
 
             if (updated == 0) {
@@ -208,8 +186,6 @@ public class TipoParametroBO {
             entiDAO.update(tpprVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -224,12 +200,10 @@ public class TipoParametroBO {
     public final void delete(final Long tpprId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpprId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            tpprDAO = session.getMapper(TipoParametroDAO.class);
+            entiDAO = session.getMapper(EntidadDAO.class);
 
-        tpprDAO = session.getMapper(TipoParametroDAO.class);
-        entiDAO = session.getMapper(EntidadDAO.class);
-
-        try {
             final int updated = tpprDAO.delete(tpprId);
 
             if (updated == 0) {
@@ -239,8 +213,6 @@ public class TipoParametroBO {
             entiDAO.delete(tpprId);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 }

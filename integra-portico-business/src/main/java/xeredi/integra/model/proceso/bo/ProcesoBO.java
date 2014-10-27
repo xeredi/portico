@@ -61,15 +61,13 @@ public class ProcesoBO {
     public final void crear(final ProcesoVO prbtVO) {
         Preconditions.checkNotNull(prbtVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
+            prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+            pritDAO = session.getMapper(ProcesoItemDAO.class);
+            prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+            prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-        pritDAO = session.getMapper(ProcesoItemDAO.class);
-        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             prbtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
@@ -100,8 +98,6 @@ public class ProcesoBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -118,15 +114,13 @@ public class ProcesoBO {
         Preconditions.checkNotNull(modulo);
         Preconditions.checkNotNull(tipo);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
+            prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+            pritDAO = session.getMapper(ProcesoItemDAO.class);
+            prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+            prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-        pritDAO = session.getMapper(ProcesoItemDAO.class);
-        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
-
-        try {
             final ProcesoCriterioVO prbtCriterioVO = new ProcesoCriterioVO();
 
             prbtCriterioVO.setEstado(ProcesoEstado.C);
@@ -154,8 +148,6 @@ public class ProcesoBO {
 
                 return prbtVO;
             }
-        } finally {
-            session.close();
         }
 
         return null;
@@ -174,15 +166,13 @@ public class ProcesoBO {
     public final void finalizar(final ProcesoVO prbtVO) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbtVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
+            prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+            pritDAO = session.getMapper(ProcesoItemDAO.class);
+            prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+            prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-        pritDAO = session.getMapper(ProcesoItemDAO.class);
-        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
-
-        try {
             final ProcesoVO prbtActualVO = prbtDAO.select(prbtVO.getId());
 
             if (prbtActualVO == null) {
@@ -216,8 +206,6 @@ public class ProcesoBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -234,15 +222,13 @@ public class ProcesoBO {
     public final void cancelar(final Long prbtId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(prbtId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
+            prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+            pritDAO = session.getMapper(ProcesoItemDAO.class);
+            prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+            prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-        pritDAO = session.getMapper(ProcesoItemDAO.class);
-        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
-
-        try {
             final ProcesoVO prbtVO = prbtDAO.select(prbtId);
 
             if (prbtVO == null) {
@@ -261,8 +247,6 @@ public class ProcesoBO {
             prbtDAO.delete(prbtId);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -281,11 +265,9 @@ public class ProcesoBO {
             final int limit) {
         Preconditions.checkNotNull(prbtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
 
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-
-        try {
             final int count = prbtDAO.selectCount(prbtCriterioVO);
             final List<ProcesoVO> prbtList = new ArrayList<>();
 
@@ -294,8 +276,6 @@ public class ProcesoBO {
             }
 
             return new PaginatedList<>(prbtList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -309,14 +289,10 @@ public class ProcesoBO {
     public final List<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO) {
         Preconditions.checkNotNull(prbtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
 
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-
-        try {
             return prbtDAO.selectList(prbtCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -332,15 +308,13 @@ public class ProcesoBO {
     public final ProcesoVO select(final Long prbtId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prbtId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
+            prarDAO = session.getMapper(ProcesoArchivoDAO.class);
+            pritDAO = session.getMapper(ProcesoItemDAO.class);
+            prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+            prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-        prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-        pritDAO = session.getMapper(ProcesoItemDAO.class);
-        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-        prpmDAO = session.getMapper(ProcesoParametroDAO.class);
-
-        try {
             final ProcesoVO prbtVO = prbtDAO.select(prbtId);
 
             if (prbtVO == null) {
@@ -376,8 +350,6 @@ public class ProcesoBO {
             }
 
             return prbtVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -395,11 +367,9 @@ public class ProcesoBO {
     public PaginatedList<ProcesoMensajeVO> selectPrmnList(final Long prbtId, final int offset, final int limit) {
         Preconditions.checkNotNull(prbtId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
 
-        prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-
-        try {
             final List<ProcesoMensajeVO> prmnList = new ArrayList<>();
             final int count = prmnDAO.count(prbtId);
 
@@ -408,8 +378,6 @@ public class ProcesoBO {
             }
 
             return new PaginatedList<ProcesoMensajeVO>(prmnList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 }
