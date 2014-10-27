@@ -272,7 +272,7 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
     }
 
     search();
-    pageTitleService.setTitle($routeParams.entiId, "page_item_grid");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
 function prmtFilterController($modalInstance, enti, itemCriterio, prmtService) {
@@ -433,7 +433,7 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
 
     // findItem();
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_detail");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
 function prmtCreateController($http, $location, $routeParams, pageTitleService) {
@@ -474,7 +474,7 @@ function prmtCreateController($http, $location, $routeParams, pageTitleService) 
         vm.accion = data.accion;
     });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_create");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_create");
 }
 
 function prmtEditController($http, $location, $routeParams, pageTitleService) {
@@ -515,7 +515,7 @@ function prmtEditController($http, $location, $routeParams, pageTitleService) {
                 vm.accion = data.accion;
             });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_edit");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_edit");
 }
 
 function prmtDuplicateController($http, $location, $routeParams, pageTitleService) {
@@ -559,7 +559,7 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
                 vm.accion = data.accion;
             });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_duplicate");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate");
 }
 
 function prmtsLupaCtrl($http, $scope) {
@@ -597,7 +597,7 @@ function sprmDetailController($http, $routeParams, pageTitleService) {
                 vm.item = data.item;
             });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_detail");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
 function sprmCreateController($http, $location, $routeParams, pageTitleService) {
@@ -637,7 +637,7 @@ function sprmCreateController($http, $location, $routeParams, pageTitleService) 
         vm.accion = data.accion;
     });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_create");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_create");
 }
 
 function sprmEditController($http, $location, $routeParams, pageTitleService) {
@@ -675,7 +675,7 @@ function sprmEditController($http, $location, $routeParams, pageTitleService) {
                 vm.accion = data.accion;
             });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_edit");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_edit");
 }
 
 function sprmDuplicateController($http, $location, $routeParams, pageTitleService) {
@@ -716,5 +716,5 @@ function sprmDuplicateController($http, $location, $routeParams, pageTitleServic
                 vm.accion = data.accion;
             });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_duplicate");
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate");
 }

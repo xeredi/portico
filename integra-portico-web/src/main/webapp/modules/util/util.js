@@ -28,10 +28,17 @@ function datepickerController($scope) {
 
 function pageTitleService($rootScope, $translate) {
     return {
+        setTitleEnti : setTitleEnti,
         setTitle : setTitle
     };
 
-    function setTitle(entiId, title) {
+    function setTitle(prefix, title) {
+        $translate([ prefix, title ]).then(function(translations) {
+            $rootScope.title = translations[prefix] + ": " + translations[title];
+        });
+    }
+
+    function setTitleEnti(entiId, title) {
         $translate([ 'enti_' + entiId, title ]).then(function(translations) {
             $rootScope.title = translations['enti_' + entiId] + ": " + translations[title];
         });
@@ -53,16 +60,4 @@ function timepickerController($scope) {
     $scope.timepickerConfig = {
         showMeridian : false
     };
-}
-
-function pagetitleService($rootScope, $translate) {
-    var setTitle = function() {
-        alert('setTitle');
-    }
-
-    return function(titleKey) {
-        alert('setTitle 2');
-
-        $rootScope.title = titleKey;
-    }
 }

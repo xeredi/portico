@@ -1,8 +1,13 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.Map;
+
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
@@ -27,6 +32,9 @@ public final class TipoDatoAction extends BaseAction {
 
     /** The tppr. */
     private TipoDatoVO tpdt;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /**
      * Instantiates a new tipo dato action.
@@ -63,6 +71,7 @@ public final class TipoDatoAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
+        final I18nBO i18nBO = new I18nBO();
 
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
@@ -70,6 +79,8 @@ public final class TipoDatoAction extends BaseAction {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
                 String.valueOf(tpdt.getId()) }));
         }
+
+        i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
 
         return SUCCESS;
     }
@@ -163,6 +174,7 @@ public final class TipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(tpdt.getId());
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
+        final I18nBO i18nBO = new I18nBO();
 
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
@@ -170,6 +182,8 @@ public final class TipoDatoAction extends BaseAction {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
                 String.valueOf(tpdt.getId()) }));
         }
+
+        i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
 
         return SUCCESS;
     }
@@ -229,6 +243,25 @@ public final class TipoDatoAction extends BaseAction {
      */
     public void setTpdt(final TipoDatoVO value) {
         tpdt = value;
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 
 }

@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <p class="modal-title" translate="filtro"></p>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                    <label translate>tpdt_codigo</label> <input type="text" ng-model="vm.tpdtCriterio.codigo"
+                        class="form-control input-sm" />
+                </div>
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label translate>tpdt_nombre</label> <input type="text" ng-model="vm.tpdtCriterio.nombre"
+                        class="form-control input-sm" maxlength="50" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" data-ng-click="vm.ok()">
+        <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+    </button>
+    <button class="btn btn-default" data-ng-click="vm.cancel()">
+        <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+    </button>
+</div>

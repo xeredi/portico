@@ -267,17 +267,19 @@ public enum MessageI18nKey {
     cdrf_orden,
 
     /** The page_item_grid. */
-    page_item_grid,
+    page_grid,
     /** The page_item_detail. */
-    page_item_detail,
+    page_detail,
     /** The page_item_create. */
-    page_item_create,
+    page_create,
     /** The page_item_duplicate. */
-    page_item_duplicate,
+    page_duplicate,
     /** The page_item_edit. */
-    page_item_edit,
+    page_edit,
     /** The i18n_text. */
     i18n_text,
+    /** The i18n_text_lang. */
+    i18n_text_lang,
     /** The prmt. */
     prmt,
     /** The prmt list. */
