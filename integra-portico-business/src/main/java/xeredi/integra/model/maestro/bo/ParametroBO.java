@@ -91,12 +91,11 @@ public class ParametroBO {
         }
 
         if (tpprVO.getI18n()) {
-            final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
-            for (final String language : languages) {
-                if (!i18nMap.containsKey(language)) {
-                    throw new Error("No se ha pasado informacion de i18n para el idioma " + language
-                            + " del parametro: " + prmt);
-                }
+            final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
+
+            if (!i18nMap.containsKey(language_default)) {
+                throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default
+                        + " del parametro: " + prmt);
             }
         }
 
@@ -113,13 +112,11 @@ public class ParametroBO {
             }
         }
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
+            prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            i18nDAO = session.getMapper(I18nDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-        prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        i18nDAO = session.getMapper(I18nDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             if (prmtDAO.exists(prmt)) {
@@ -149,13 +146,14 @@ public class ParametroBO {
                 for (final I18nVO i18nVO : i18nMap.values()) {
                     i18nVO.setPrefix(I18nPrefix.prvr);
                     i18nVO.setExternalId(prmt.getPrvr().getId());
-                    i18nDAO.insert(i18nVO);
+
+                    if (i18nVO.getText() != null || !i18nVO.getText().isEmpty()) {
+                        i18nDAO.insert(i18nVO);
+                    }
                 }
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -188,12 +186,11 @@ public class ParametroBO {
         }
 
         if (tpprVO.getI18n()) {
-            final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
-            for (final String language : languages) {
-                if (!i18nMap.containsKey(language)) {
-                    throw new Error("No se ha pasado informacion de i18n para el idioma " + language
-                            + " del parametro: " + prmt);
-                }
+            final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
+
+            if (!i18nMap.containsKey(language_default)) {
+                throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default
+                        + " del parametro: " + prmt);
             }
         }
 
@@ -214,15 +211,13 @@ public class ParametroBO {
             }
         }
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
+            prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            i18nDAO = session.getMapper(I18nDAO.class);
+            sprmDAO = session.getMapper(SubparametroDAO.class);
+            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-        prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        i18nDAO = session.getMapper(I18nDAO.class);
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-        spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             // Busqueda del parametro a duplicar
@@ -266,7 +261,9 @@ public class ParametroBO {
                     i18nVO.setPrefix(I18nPrefix.prvr);
                     i18nVO.setExternalId(prmt.getPrvr().getId());
 
-                    i18nDAO.insert(i18nVO);
+                    if (i18nVO.getText() != null || !i18nVO.getText().isEmpty()) {
+                        i18nDAO.insert(i18nVO);
+                    }
                 }
             }
 
@@ -346,8 +343,6 @@ public class ParametroBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -382,12 +377,11 @@ public class ParametroBO {
 
         // Validaciones
         if (tpprVO.getI18n()) {
-            final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
-            for (final String language : languages) {
-                if (!i18nMap.containsKey(language)) {
-                    throw new Error("No se ha pasado informacion de i18n para el idioma " + language
-                            + " del parametro: " + prmt);
-                }
+            final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
+
+            if (!i18nMap.containsKey(language_default)) {
+                throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default
+                        + " del parametro: " + prmt);
             }
         }
 
@@ -401,13 +395,11 @@ public class ParametroBO {
             }
         }
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
+            prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            i18nDAO = session.getMapper(I18nDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-        prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        i18nDAO = session.getMapper(I18nDAO.class);
-
-        try {
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(ParametroVO.class.getName(), prmt);
             }
@@ -429,13 +421,16 @@ public class ParametroBO {
                 for (final I18nVO i18nVO : i18nMap.values()) {
                     i18nVO.setPrefix(I18nPrefix.prvr);
                     i18nVO.setExternalId(prmt.getPrvr().getId());
-                    i18nDAO.update(i18nVO);
+
+                    if (i18nVO.getText() == null || i18nVO.getText().isEmpty()) {
+                        i18nDAO.delete(i18nVO);
+                    } else {
+                        i18nDAO.update(i18nVO);
+                    }
                 }
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -452,13 +447,11 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmt.getPrvr());
         Preconditions.checkNotNull(prmt.getPrvr().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
+            prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            i18nDAO = session.getMapper(I18nDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-        prdtDAO = session.getMapper(ParametroDatoDAO.class);
-        i18nDAO = session.getMapper(I18nDAO.class);
-
-        try {
             prdtDAO.deleteVersion(prmt);
 
             final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
@@ -475,8 +468,6 @@ public class ParametroBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -490,18 +481,14 @@ public class ParametroBO {
     public final List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
 
             fillDependencies(session, prmtList, prmtCriterioVO, false);
 
             return prmtList;
-        } finally {
-            session.close();
         }
     }
 
@@ -520,11 +507,9 @@ public class ParametroBO {
             final int limit) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final List<ParametroVO> prmtList = new ArrayList<>();
             final int count = prmtDAO.count(prmtCriterioVO);
 
@@ -537,8 +522,6 @@ public class ParametroBO {
             }
 
             return new PaginatedList<>(prmtList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -552,18 +535,14 @@ public class ParametroBO {
     public final Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
 
             fillDependencies(session, prmtMap.values(), prmtCriterioVO, false);
 
             return prmtMap;
-        } finally {
-            session.close();
         }
     }
 
@@ -577,18 +556,14 @@ public class ParametroBO {
     public final Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
 
             fillDependencies(session, prmtMap.values(), prmtCriterioVO, false);
 
             return prmtMap;
-        } finally {
-            session.close();
         }
     }
 
@@ -602,11 +577,9 @@ public class ParametroBO {
     public final Map<String, Long> selectMapCodigoId(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final Map<String, Long> map = new HashMap<>();
 
             for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
@@ -614,8 +587,6 @@ public class ParametroBO {
             }
 
             return map;
-        } finally {
-            session.close();
         }
     }
 
@@ -629,11 +600,9 @@ public class ParametroBO {
     public final Map<Long, String> selectMapIdCodigo(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final Map<Long, String> map = new HashMap<>();
 
             for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
@@ -641,8 +610,6 @@ public class ParametroBO {
             }
 
             return map;
-        } finally {
-            session.close();
         }
     }
 
@@ -663,11 +630,9 @@ public class ParametroBO {
         Preconditions.checkNotNull(fechaReferencia);
         Preconditions.checkNotNull(idioma);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setEntiIds(tpprIds);
@@ -685,8 +650,6 @@ public class ParametroBO {
             }
 
             return map;
-        } finally {
-            session.close();
         }
     }
 
@@ -700,11 +663,9 @@ public class ParametroBO {
     public final List<LabelValueVO> selectLabelValues(final ParametroCriterioVO criterioVO) {
         Preconditions.checkNotNull(criterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final ParametroVO prmtVO : prmtDAO.selectList(criterioVO)) {
@@ -712,8 +673,6 @@ public class ParametroBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -729,11 +688,9 @@ public class ParametroBO {
     public final ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
 
             if (prmtVO == null) {
@@ -743,8 +700,6 @@ public class ParametroBO {
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
 
             return prmtVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -765,11 +720,9 @@ public class ParametroBO {
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmtId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setId(prmtId);
@@ -785,8 +738,6 @@ public class ParametroBO {
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
 
             return prmtVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -804,11 +755,9 @@ public class ParametroBO {
     public ParametroVO select(final Long prvrId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prvrId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
 
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
             final Set<Long> prvrIds = new HashSet<>();
 
@@ -826,8 +775,6 @@ public class ParametroBO {
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
 
             return prmtVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -841,16 +788,11 @@ public class ParametroBO {
     public final List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(prmtLupaCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
-
-        prmtDAO = session.getMapper(ParametroDAO.class);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            prmtDAO = session.getMapper(ParametroDAO.class);
             prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
 
             return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
-        } finally {
-            session.close();
         }
     }
 

@@ -3,7 +3,7 @@
     <p class="form-control-static" ng-bind="vm.i18nMap[default_language].text"></p>
 </div>
 <div class="col-sm-10 col-md-9 col-lg-8 form-group" ng-repeat="language in available_languages"
-    ng-if="language != default_language">
+    ng-if="language != default_language && vm.i18nMap[language].text != null">
     <label translate>i18n_text {{language}}</label>
     <p class="form-control-static" ng-bind="vm.i18nMap[language].text"></p>
 </div>

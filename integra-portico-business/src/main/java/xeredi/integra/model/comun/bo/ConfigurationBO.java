@@ -22,14 +22,10 @@ public final class ConfigurationBO {
      * @return the list
      */
     public final List<ConfigurationVO> selectList() {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 
-        final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
-
-        try {
             return confDAO.selectList();
-        } finally {
-            session.close();
         }
     }
 
@@ -41,14 +37,10 @@ public final class ConfigurationBO {
      * @return the configuration vo
      */
     public final ConfigurationVO select(final ConfigurationKey key) {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 
-        final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
-
-        try {
             return confDAO.select(key);
-        } finally {
-            session.close();
         }
     }
 
@@ -60,18 +52,14 @@ public final class ConfigurationBO {
      * @return the int
      */
     public final int update(final ConfigurationVO vo) {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 
-        final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
-
-        try {
             final int updated = confDAO.update(vo);
 
             session.commit();
 
             return updated;
-        } finally {
-            session.close();
         }
     }
 

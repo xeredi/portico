@@ -29,6 +29,15 @@ public interface I18nDAO {
     int update(final I18nVO vo);
 
     /**
+     * Delete.
+     *
+     * @param vo
+     *            the vo
+     * @return the int
+     */
+    int delete(final I18nVO vo);
+
+    /**
      * Delete list.
      *
      * @param criterioVO

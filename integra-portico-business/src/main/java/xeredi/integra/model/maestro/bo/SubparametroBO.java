@@ -69,12 +69,10 @@ public class SubparametroBO {
             }
         }
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            sprmDAO = session.getMapper(SubparametroDAO.class);
+            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-        spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             if (sprmDAO.exists(sprm)) {
@@ -101,8 +99,6 @@ public class SubparametroBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -122,12 +118,10 @@ public class SubparametroBO {
         Preconditions.checkNotNull(sprm.getId());
         Preconditions.checkNotNull(tpsrVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            sprmDAO = session.getMapper(SubparametroDAO.class);
+            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-        spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             if (sprmDAO.exists(sprm)) {
@@ -154,8 +148,6 @@ public class SubparametroBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -198,12 +190,10 @@ public class SubparametroBO {
             }
         }
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            sprmDAO = session.getMapper(SubparametroDAO.class);
+            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-        spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-
-        try {
             if (sprmDAO.existsOverlap(sprm)) {
                 throw new OverlapException(SubparametroVO.class.getName(), sprm);
             }
@@ -222,8 +212,6 @@ public class SubparametroBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -240,12 +228,10 @@ public class SubparametroBO {
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            sprmDAO = session.getMapper(SubparametroDAO.class);
+            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-        spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-
-        try {
             spdtDAO.deleteVersion(sprm);
 
             final int updated = sprmDAO.deleteVersion(sprm);
@@ -255,8 +241,6 @@ public class SubparametroBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -275,11 +259,9 @@ public class SubparametroBO {
             final int offset, final int limit) {
         Preconditions.checkNotNull(sprmCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            sprmDAO = session.getMapper(SubparametroDAO.class);
 
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-
-        try {
             final List<SubparametroVO> sprmList = new ArrayList<>();
             final int count = sprmDAO.selectCount(sprmCriterioVO);
 
@@ -292,8 +274,6 @@ public class SubparametroBO {
             }
 
             return new PaginatedList<>(sprmList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -307,11 +287,9 @@ public class SubparametroBO {
     public final List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO) {
         Preconditions.checkNotNull(sprmCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            sprmDAO = session.getMapper(SubparametroDAO.class);
 
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-
-        try {
             final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
 
             if (!sprmList.isEmpty()) {
@@ -319,8 +297,6 @@ public class SubparametroBO {
             }
 
             return sprmList;
-        } finally {
-            session.close();
         }
     }
 
@@ -337,11 +313,9 @@ public class SubparametroBO {
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(sprmCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            sprmDAO = session.getMapper(SubparametroDAO.class);
 
-        sprmDAO = session.getMapper(SubparametroDAO.class);
-
-        try {
             final SubparametroVO sprmVO = sprmDAO.selectObject(sprmCriterioVO);
 
             if (sprmVO == null) {
@@ -351,8 +325,6 @@ public class SubparametroBO {
             fillDependencies(session, Arrays.asList(new SubparametroVO[] { sprmVO }), sprmCriterioVO);
 
             return sprmVO;
-        } finally {
-            session.close();
         }
     }
 
@@ -402,5 +374,4 @@ public class SubparametroBO {
             sprmCriterioVO.setSpvrIds(null);
         }
     }
-
 }

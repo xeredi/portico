@@ -10,6 +10,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.http.util.I18nValidator;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.OverlapException;
@@ -202,15 +203,7 @@ public final class ParametroAction extends ItemAction {
         }
 
         if (enti.getI18n()) {
-            for (final String idioma : getAvailableLanguages()) {
-                final I18nVO i18nVO = i18nMap.get(idioma);
-
-                if (i18nVO == null || GenericValidator.isBlankOrNull(i18nVO.getText())) {
-                    addActionError(getText(MessageI18nKey.E00002.name(), new String[] { idioma }));
-                } else {
-                    i18nVO.setLanguage(idioma);
-                }
-            }
+            I18nValidator.validate(this, i18nMap);
         }
 
         ItemDatoValidator.validate(this, enti, item);

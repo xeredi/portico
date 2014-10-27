@@ -90,6 +90,16 @@
     ]]>
     </update>
 
+    <delete id="delete" parameterType="I18nVO">
+    <![CDATA[
+        DELETE FROM tbl_i18n_i18n
+        WHERE
+            i18n_pref = #{prefix}
+            AND i18n_ext_pk = #{externalId}
+            AND i18n_lang = #{language}
+    ]]>
+    </delete>
+
     <delete id="deleteList" parameterType="I18nCriterioVO">
         DELETE FROM tbl_i18n_i18n
         <include refid="SelectWhere" />

@@ -1,12 +1,12 @@
-<alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+<alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
 <ul>
-    <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+    <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
 </ul>
 </alert>
 
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/administracion/conf/edit/{{conf.key}}"><i
+        <a class="btn btn-default" ng-href="#/administracion/conf/edit/{{vm.conf.key}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
     </div>
 </div>
@@ -15,19 +15,19 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label translate>conf_valueType</label>
-            <p class="form-control-static" ng-bind="conf.valueType"></p>
+            <p class="form-control-static" ng-bind="vm.conf.valueType"></p>
         </div>
         <div class="col-sm-9 col-md-8 col-lg-7 form-group">
             <label translate>conf_key</label>
-            <p class="form-control-static" ng-bind="conf.key"></p>
+            <p class="form-control-static" ng-bind="vm.conf.key"></p>
         </div>
         <div class="col-sm-9 col-md-8 col-lg-7 form-group">
             <label translate>conf_defaultValue</label>
-            <p class="form-control-static" ng-bind="conf.defaultValue"></p>
+            <p class="form-control-static" ng-bind="vm.conf.defaultValue"></p>
         </div>
         <div class="col-sm-9 col-md-8 col-lg-7 form-group">
             <label translate>conf_value</label>
-            <p class="form-control-static" ng-bind="conf.value"></p>
+            <p class="form-control-static" ng-bind="vm.conf.value"></p>
         </div>
     </div>
 </div>

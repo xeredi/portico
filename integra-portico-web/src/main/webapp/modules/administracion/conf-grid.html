@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in confList track by $index" ng-show="([item] | filter:confSearch).length > 0">
+            <tr ng-repeat="item in vm.confList track by $index" ng-show="([item] | filter:confSearch).length > 0">
                 <td><a ng-href="#/administracion/conf/detail/{{item.key}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="item.key"></td>

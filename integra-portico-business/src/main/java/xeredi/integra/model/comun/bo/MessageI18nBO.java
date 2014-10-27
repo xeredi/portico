@@ -26,32 +26,26 @@ public final class MessageI18nBO {
      * @return the list
      */
     public List<String> selectLanguageList() {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
 
-        final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
-
-        try {
             return m18nDAO.selectLanguageList();
-        } finally {
-            session.close();
         }
     }
 
     /**
      * Select key value map.
      *
-     * @param bundle
-     *            the bundle
      * @param locale
      *            the locale
+     * @param externalsOnly
+     *            the externals only
      * @return the map
      */
     public Map<MessageI18nKey, String> selectKeyValueMap(final Locale locale, final boolean externalsOnly) {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
 
-        final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
-
-        try {
             final Map<MessageI18nKey, String> map = new HashMap<>();
             final MessageI18nCriterioVO i18nCriterioVO = new MessageI18nCriterioVO();
 
@@ -63,24 +57,18 @@ public final class MessageI18nBO {
             }
 
             return map;
-        } finally {
-            session.close();
         }
     }
 
     /**
      * Report.
      *
-     * @param bundle
-     *            the bundle
      * @return the message i18n report vo
      */
     public MessageI18nReportVO report() {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
 
-        final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
-
-        try {
             final List<String> languageList = m18nDAO.selectLanguageList();
 
             final MessageI18nReportVO reportVO = new MessageI18nReportVO(languageList);
@@ -93,8 +81,24 @@ public final class MessageI18nBO {
             }
 
             return reportVO;
-        } finally {
-            session.close();
+        }
+    }
+
+    /**
+     * Select list.
+     *
+     * @param key
+     *            the key
+     * @return the list
+     */
+    public List<MessageI18nVO> selectList(final MessageI18nKey key) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
+            final MessageI18nCriterioVO m18nCriterioVO = new MessageI18nCriterioVO();
+
+            m18nCriterioVO.setKey(key);
+
+            return m18nDAO.selectList(m18nCriterioVO);
         }
     }
 

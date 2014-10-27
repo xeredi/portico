@@ -210,7 +210,7 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
                                                      * , $routeParams.limit ?
                                                      * $routeParams.limit : 20
                                                      */);
-    pageTitleService.setTitle($routeParams.entiId, "page_item_grid")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid")
 }
 
 function srvcFilterController($http, $modalInstance, enti, itemCriterio) {
@@ -388,7 +388,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
         }
     });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_detail")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail")
 }
 
 function srvcCreateController($http, $location, $routeParams, pageTitleService) {
@@ -424,7 +424,7 @@ function srvcCreateController($http, $location, $routeParams, pageTitleService) 
         vm.subpList = data.subpList;
     });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_create")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_create")
 }
 
 function srvcEditController($http, $routeParams, pageTitleService) {
@@ -459,7 +459,7 @@ function srvcEditController($http, $routeParams, pageTitleService) {
         vm.labelValuesMap = data.labelValuesMap;
     });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_edit")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_edit")
 }
 
 function srvcDuplicateController($http, $location, $routeParams, pageTitleService) {
@@ -493,7 +493,7 @@ function srvcDuplicateController($http, $location, $routeParams, pageTitleServic
         vm.subpList = data.subpList;
     });
 
-    pageTitleService.setTitle($routeParams.entiId, "page_item_duplicate")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate")
 }
 
 function srvcLupaCtrl($http, $scope) {

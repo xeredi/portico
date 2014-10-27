@@ -12,7 +12,7 @@ public final class MessageI18nCriterioVO {
     private boolean externalsOnly;
 
     /** The key. */
-    private String key;
+    private MessageI18nKey key;
 
     /** The language. */
     private String language;
@@ -30,7 +30,7 @@ public final class MessageI18nCriterioVO {
      *
      * @return the key
      */
-    public String getKey() {
+    public MessageI18nKey getKey() {
         return key;
     }
 
@@ -40,7 +40,7 @@ public final class MessageI18nCriterioVO {
      * @param value
      *            the new key
      */
-    public void setKey(final String value) {
+    public void setKey(final MessageI18nKey value) {
         key = value;
     }
 
