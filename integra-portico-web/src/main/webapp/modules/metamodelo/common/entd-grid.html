@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="entd in vm.enti.entdList track by $index">
-                <td><a ng-href="#/metamodelo/entd/detail/{{enti.id}}/{{entd.tpdt.id}}"><i
+                <td><a ng-href="#/metamodelo/entd/detail/{{vm.enti.id}}/{{entd.tpdt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entd.grupo"></td>
                 <td ng-bind="entd.fila"></td>

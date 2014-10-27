@@ -124,7 +124,6 @@ function config($routeProvider) {
     })
 
     .when("/metamodelo/tppr/grid", {
-        title : 'tpprList',
         templateUrl : "modules/metamodelo/tppr-grid.html",
         controller : "tpprGridController",
         controllerAs : 'vm',
@@ -236,45 +235,45 @@ function config($routeProvider) {
     })
 
     .when("/metamodelo/entd/detail/:entiId/:tpdtId", {
-        title : 'entd',
         templateUrl : "modules/metamodelo/entd-detail.html",
-        controller : "entdDetailController"
+        controller : "entdDetailController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/entd/edit/:entiId/:tpdtId", {
-        title : 'entd_edit',
         templateUrl : "modules/metamodelo/entd-edit.html",
-        controller : "entdEditController"
+        controller : "entdEditController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/entd/create/:entiId", {
-        title : 'entd_create',
         templateUrl : "modules/metamodelo/entd-edit.html",
-        controller : "entdCreateController"
+        controller : "entdCreateController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/enac/detail/:entiId/:path", {
-        title : 'enac',
         templateUrl : "modules/metamodelo/enac-detail.html",
-        controller : "enacDetailController"
+        controller : "enacDetailController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/enac/edit/:entiId/:path", {
-        title : 'enac_edit',
         templateUrl : "modules/metamodelo/enac-edit.html",
-        controller : "enacEditController"
+        controller : "enacEditController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/enac/create/:entiId", {
-        title : 'enac_create',
         templateUrl : "modules/metamodelo/enac-edit.html",
-        controller : "enacCreateController"
+        controller : "enacCreateController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/enen/create/:entipId", {
-        title : 'enen_create',
         templateUrl : "modules/metamodelo/enen-edit.html",
-        controller : "enenCreateController"
+        controller : "enenCreateController",
+        controllerAs : 'vm'
     });
 }
 
@@ -1228,50 +1227,47 @@ function tpesCreateController($scope, $http, $location, $routeParams) {
     }
 }
 
-function entdDetailController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/entd-detail.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
-            + $routeParams.tpdtId;
+function entdDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.entd = data.entd;
-    });
+    vm.remove = remove;
 
-    $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "metamodelo/entd-remove.action?entd.entiId=" + $scope.entd.entiId + "&entd.tpdt.id="
-                        + $scope.entd.tpdt.id;
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.get(
+                    "metamodelo/entd-remove.action?entd.entiId=" + vm.entd.entiId + "&entd.tpdt.id=" + vm.entd.tpdt.id)
+                    .success(function(data) {
+                        vm.actionErrors = data.actionErrors;
 
-                $http.get(url).success(function(data) {
-                    $scope.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    }
-                });
-            }
-        });
+                        if (data.actionErrors.length == 0) {
+                            window.history.back();
+                        }
+                    });
+        }
     }
+
+    $http
+            .get(
+                    "metamodelo/entd-detail.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
+                            + $routeParams.tpdtId).success(function(data) {
+                vm.entd = data.entd;
+            });
+
+    pageTitleService.setTitle("entd", "page_detail");
 }
 
-function entdEditController($scope, $http, $routeParams) {
-    var url = "metamodelo/entd-edit.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id=" + $routeParams.tpdtId;
+function entdEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.entd = data.entd;
-        $scope.accion = data.accion;
-        $scope.tpdtList = data.tpdtList;
-        $scope.engdList = data.engdList;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "metamodelo/entd-save.action";
-
-        $http.post(url, {
-            entd : $scope.entd,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/entd-save.action", {
+            entd : vm.entd,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -1281,29 +1277,35 @@ function entdEditController($scope, $http, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http
+            .get(
+                    "metamodelo/entd-edit.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
+                            + $routeParams.tpdtId).success(function(data) {
+                vm.entd = data.entd;
+                vm.accion = data.accion;
+                vm.tpdtList = data.tpdtList;
+                vm.engdList = data.engdList;
+            });
+
+    pageTitleService.setTitle("entd", "page_edit");
 }
 
-function entdCreateController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/entd-create.action?entd.entiId=" + $routeParams.entiId;
+function entdCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.entd = data.entd;
-        $scope.tpdtList = data.tpdtList;
-        $scope.engdList = data.engdList;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "metamodelo/entd-save.action";
-
-        $http.post(url, {
-            entd : $scope.entd,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/entd-save.action", {
+            entd : vm.entd,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/entd/detail/" + data.entd.entiId + "/" + data.entd.tpdt.id).replace();
@@ -1311,52 +1313,58 @@ function entdCreateController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
-}
 
-function enacDetailController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/enac-detail.action?enac.entiId=" + $routeParams.entiId + "&enac.path=" + $routeParams.path;
-
-    $http.get(url).success(function(data) {
-        $scope.enac = data.enac;
+    $http.get("metamodelo/entd-create.action?entd.entiId=" + $routeParams.entiId).success(function(data) {
+        vm.entd = data.entd;
+        vm.tpdtList = data.tpdtList;
+        vm.engdList = data.engdList;
+        vm.accion = data.accion;
     });
 
-    $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "metamodelo/enac-remove.action?enac.entiId=" + $scope.enac.entiId + "&enac.path="
-                        + $scope.enac.path;
+    pageTitleService.setTitle("entd", "page_create");
+}
 
-                $http.get(url).success(function(data) {
-                    $scope.actionErrors = data.actionErrors;
+function enacDetailController($scope, $http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    }
-                });
-            }
-        });
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.get("metamodelo/enac-remove.action?enac.entiId=" + vm.enac.entiId + "&enac.path=" + vm.enac.path)
+                    .success(function(data) {
+                        vm.actionErrors = data.actionErrors;
+
+                        if (data.actionErrors.length == 0) {
+                            window.history.back();
+                        }
+                    });
+        }
     }
+
+    $http.get("metamodelo/enac-detail.action?enac.entiId=" + $routeParams.entiId + "&enac.path=" + $routeParams.path)
+            .success(function(data) {
+                vm.enac = data.enac;
+            });
+
+    pageTitleService.setTitle("enac", "page_detail");
 }
 
-function enacEditController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/enac-edit.action?enac.entiId=" + $routeParams.entiId + "&enac.path=" + $routeParams.path;
+function enacEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enac = data.enac;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "metamodelo/enac-save.action";
-
-        $http.post(url, {
-            enac : $scope.enac,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/enac-save.action", {
+            enac : vm.enac,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -1366,27 +1374,31 @@ function enacEditController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("metamodelo/enac-edit.action?enac.entiId=" + $routeParams.entiId + "&enac.path=" + $routeParams.path)
+            .success(function(data) {
+                vm.enac = data.enac;
+                vm.accion = data.accion;
+            });
+
+    pageTitleService.setTitle("enac", "page_edit");
 }
 
-function enacCreateController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/enac-create.action?enac.entiId=" + $routeParams.entiId;
+function enacCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enac = data.enac;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "metamodelo/enac-save.action";
-
-        $http.post(url, {
-            enac : $scope.enac,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/enac-save.action", {
+            enac : vm.enac,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/enac/detail/" + data.enac.entiId + "/" + data.enac.path).replace();
@@ -1394,21 +1406,28 @@ function enacCreateController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("metamodelo/enac-create.action?enac.entiId=" + $routeParams.entiId).success(function(data) {
+        vm.enac = data.enac;
+        vm.accion = data.accion;
+    });
+
+    pageTitleService.setTitle("enac", "page_create");
 }
 
-function enenCreateController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/enen-create.action?enen.entiPadreId=" + $routeParams.entipId;
+function enenCreateController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enen = data.enen;
+    $http.get("metamodelo/enen-create.action?enen.entiPadreId=" + $routeParams.entipId).success(function(data) {
+        vm.enen = data.enen;
     });
 
-    var urlEnti = "metamodelo/enti-lv-list.action?entiCriterio.tipo=S";
-
-    $http.get(urlEnti).success(function(data) {
-        $scope.entiList = data.lvList;
+    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=S").success(function(data) {
+        vm.entiList = data.lvList;
     });
+
+    pageTitleService.setTitle("enen", "page_create");
 }
