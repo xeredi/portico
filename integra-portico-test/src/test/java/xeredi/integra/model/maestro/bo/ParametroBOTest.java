@@ -34,8 +34,7 @@ public final class ParametroBOTest {
 
         criterioVO.setEntiIds(tpprIds);
         criterioVO.setFechaVigencia(Calendar.getInstance().getTime());
-        criterioVO.setIdioma(ConfigurationProxy.getConfiguration()
-                .getString(ConfigurationKey.LANGUAGE_DEFAULT.getKey()));
+        criterioVO.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
 
         final List<ParametroVO> list = prmtBO.selectList(criterioVO);
 
@@ -55,8 +54,7 @@ public final class ParametroBOTest {
 
         prmtCriterioVO.setEntiIds(tpprIds);
         prmtCriterioVO.setFechaVigencia(Calendar.getInstance().getTime());
-        prmtCriterioVO.setIdioma(ConfigurationProxy.getConfiguration().getString(
-                ConfigurationKey.LANGUAGE_DEFAULT.getKey()));
+        prmtCriterioVO.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
 
         final Map<String, ParametroVO> prmtMap = prmtBO.selectMapByCodigo(prmtCriterioVO);
 

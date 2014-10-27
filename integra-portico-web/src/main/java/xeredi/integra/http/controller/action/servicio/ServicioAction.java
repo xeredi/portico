@@ -35,6 +35,9 @@ public final class ServicioAction extends ItemAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2809685065940465041L;
 
+    /** The enti. */
+    private TipoServicioVO enti;
+
     /** The srvc form. */
     private ServicioVO item;
 
@@ -78,6 +81,8 @@ public final class ServicioAction extends ItemAction {
 
         item = srvcBO.select(item.getId(), getIdioma());
 
+        enti = TipoServicioProxy.select(item.getEntiId());
+
         return SUCCESS;
     }
 
@@ -93,7 +98,7 @@ public final class ServicioAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
 
-        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
+        enti = TipoServicioProxy.select(item.getEntiId());
 
         if (!enti.getTemporal()) {
             item.setFref(Calendar.getInstance().getTime());
@@ -125,7 +130,7 @@ public final class ServicioAction extends ItemAction {
 
         item = srvcBO.select(item.getId(), getIdioma());
 
-        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
+        enti = TipoServicioProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
         loadSubpList();
@@ -151,7 +156,7 @@ public final class ServicioAction extends ItemAction {
 
         item = srvcBO.select(item.getId(), getIdioma());
 
-        final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
+        enti = TipoServicioProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
         loadSubpList();
@@ -303,6 +308,15 @@ public final class ServicioAction extends ItemAction {
     @Override
     public Date getFechaVigencia() {
         return fechaVigencia;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoServicioVO getEnti() {
+        return enti;
     }
 
 }

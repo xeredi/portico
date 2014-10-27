@@ -8,14 +8,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class MessageI18nVO {
 
-    /** The bundle. */
-    private MessageI18nBundlename bundle;
-
     /** The key. */
-    private String key;
+    private MessageI18nKey key;
 
     /** The language. */
     private String language;
+
+    /** The internal. */
+    private boolean internal;
 
     /** The value. */
     private String value;
@@ -29,22 +29,22 @@ public final class MessageI18nVO {
     }
 
     /**
-     * Gets the bundle.
+     * Checks if is internal.
      *
-     * @return the bundle
+     * @return true, if is internal
      */
-    public MessageI18nBundlename getBundle() {
-        return bundle;
+    public boolean isInternal() {
+        return internal;
     }
 
     /**
-     * Sets the bundle.
+     * Sets the internal.
      *
      * @param value
-     *            the new bundle
+     *            the new internal
      */
-    public void setBundle(final MessageI18nBundlename value) {
-        bundle = value;
+    public void setInternal(final boolean value) {
+        internal = value;
     }
 
     /**
@@ -52,7 +52,7 @@ public final class MessageI18nVO {
      *
      * @return the key
      */
-    public String getKey() {
+    public MessageI18nKey getKey() {
         return key;
     }
 
@@ -62,7 +62,7 @@ public final class MessageI18nVO {
      * @param value
      *            the new key
      */
-    public void setKey(final String value) {
+    public void setKey(final MessageI18nKey value) {
         key = value;
     }
 

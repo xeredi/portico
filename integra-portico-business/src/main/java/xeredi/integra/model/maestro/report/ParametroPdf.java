@@ -20,7 +20,6 @@ import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
@@ -49,7 +48,7 @@ public final class ParametroPdf extends BasePdf {
     public ParametroPdf(final Locale alocale) {
         super(alocale);
 
-        bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
+        bundle = PorticoResourceBundle.getBundle(locale);
     }
 
     /**

@@ -26,8 +26,7 @@ public final class ParametroLupaAction extends BaseAction {
     private static final long serialVersionUID = 5446558166864475230L;
 
     /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getConfiguration()
-            .getInt(ConfigurationKey.FILTER_LIMIT.getKey());
+    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
 
     /** The prmts. */
     private List<ParametroVO> itemList;

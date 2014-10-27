@@ -1,7 +1,5 @@
 package xeredi.integra.model.comun.vo;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
@@ -10,11 +8,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class MessageI18nCriterioVO {
 
-    /** The bundle set. */
-    private Set<MessageI18nBundlename> bundleSet;
-
-    /** The bundle. */
-    private MessageI18nBundlename bundle;
+    /** The internals only. */
+    private boolean externalsOnly;
 
     /** The key. */
     private String key;
@@ -28,25 +23,6 @@ public final class MessageI18nCriterioVO {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the bundle.
-     *
-     * @return the bundle
-     */
-    public MessageI18nBundlename getBundle() {
-        return bundle;
-    }
-
-    /**
-     * Sets the bundle.
-     *
-     * @param value
-     *            the new bundle
-     */
-    public void setBundle(final MessageI18nBundlename value) {
-        bundle = value;
     }
 
     /**
@@ -88,22 +64,22 @@ public final class MessageI18nCriterioVO {
     }
 
     /**
-     * Gets the bundle set.
+     * Checks if is externals only.
      *
-     * @return the bundle set
+     * @return true, if is externals only
      */
-    public Set<MessageI18nBundlename> getBundleSet() {
-        return bundleSet;
+    public boolean isExternalsOnly() {
+        return externalsOnly;
     }
 
     /**
-     * Sets the bundle set.
+     * Sets the externals only.
      *
      * @param value
-     *            the new bundle set
+     *            the new externals only
      */
-    public void setBundleSet(final Set<MessageI18nBundlename> value) {
-        bundleSet = value;
+    public void setExternalsOnly(final boolean value) {
+        externalsOnly = value;
     }
 
 }

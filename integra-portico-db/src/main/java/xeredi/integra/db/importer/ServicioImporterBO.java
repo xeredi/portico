@@ -22,7 +22,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import oracle.sql.TIMESTAMP;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +30,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -100,37 +100,35 @@ public final class ServicioImporterBO {
      * Import entities.
      */
     public void importEntities() {
-        Connection con = null;
-
         try {
             LOG.info("Importacion de servicios");
 
-            final Configuration configuration = ConfigurationProxy.getConfiguration();
+            Class.forName(ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_driver));
 
-            Class.forName(configuration.getString("db.migration.dataSource.driver"));
+            try (final Connection con = DriverManager.getConnection(
+                    ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_url),
+                    ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_username),
+                    ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_password));) {
 
-            con = DriverManager.getConnection(configuration.getString("db.migration.dataSource.url"),
-                    configuration.getString("db.migration.dataSource.username"),
-                    configuration.getString("db.migration.dataSource.password"));
+                entidadesList.clear();
+                entidadesSqlMap.clear();
 
-            entidadesList.clear();
-            entidadesSqlMap.clear();
+                parseXml(entidadesList, entidadesSqlMap);
 
-            parseXml(entidadesList, entidadesSqlMap);
+                entiMap = new HashMap<>();
 
-            entiMap = new HashMap<>();
+                for (final Entidad entidad : entidadesList) {
+                    final ServicioNodoVO entidadVO = entidadesSqlMap.get(entidad);
 
-            for (final Entidad entidad : entidadesList) {
-                final ServicioNodoVO entidadVO = entidadesSqlMap.get(entidad);
+                    entiMap.put(entidad.getId(), new HashMap<Long, Long>());
 
-                entiMap.put(entidad.getId(), new HashMap<Long, Long>());
-
-                importEntity(con, entidadVO.getEntidad(), entidadVO.getSqlQuery());
+                    importEntity(con, entidadVO.getEntidad(), entidadVO.getSqlQuery());
+                }
+            } catch (final Throwable ex) {
+                LOG.fatal(ex, ex);
             }
         } catch (final Throwable ex) {
             LOG.fatal(ex, ex);
-        } finally {
-            DbUtils.closeQuietly(con);
         }
 
         LOG.info("Fin de Importacion de servicios");

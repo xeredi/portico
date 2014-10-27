@@ -91,8 +91,7 @@ public class ParametroBO {
         }
 
         if (tpprVO.getI18n()) {
-            final String[] languages = ConfigurationProxy.getConfiguration().getStringArray(
-                    ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
+            final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language
@@ -189,8 +188,7 @@ public class ParametroBO {
         }
 
         if (tpprVO.getI18n()) {
-            final String[] languages = ConfigurationProxy.getConfiguration().getStringArray(
-                    ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
+            final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language
@@ -384,8 +382,7 @@ public class ParametroBO {
 
         // Validaciones
         if (tpprVO.getI18n()) {
-            final String[] languages = ConfigurationProxy.getConfiguration().getStringArray(
-                    ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
+            final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
             for (final String language : languages) {
                 if (!i18nMap.containsKey(language)) {
                     throw new Error("No se ha pasado informacion de i18n para el idioma " + language

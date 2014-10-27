@@ -5,11 +5,10 @@
 
 <mapper namespace="xeredi.integra.model.comun.dao.MessageI18nDAO">
     <resultMap type="MessageI18nVO" id="ResultMap">
-        <id column="msbl_bundle" />
         <id column="m18n_language" />
         <id column="m18n_key" />
 
-        <result column="msbl_bundle" property="bundle" />
+        <result column="m18n_internal" property="internal" />
         <result column="m18n_language" property="language" />
         <result column="m18n_key" property="key" />
         <result column="m18n_value" property="value" />
@@ -18,18 +17,15 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        m18n_language, m18n_key, m18n_value
-        , msbl_bundle
+        m18n_language, m18n_key, m18n_value, m18n_internal
     FROM tbl_message_i18n_m18n
-        INNER JOIN tbl_message_bundle_msbl ON
-            msbl_key = m18n_key
     ]]>
     </sql>
 
     <sql id="SelectWhere">
         <where>
-            <if test="bundle != null">
-                AND msbl_bundle = #{bundle}
+            <if test="externalsOnly">
+                AND m18n_internal = 0
             </if>
             <if test="language != null">
                 AND m18n_language = #{language}
@@ -56,15 +52,6 @@
         SELECT DISTINCT m18n_language
         FROM tbl_message_i18n_m18n
         ORDER BY m18n_language
-    ]]>
-    </select>
-
-    <select id="selectKeyList" parameterType="MessageI18nBundlename" resultType="String">
-    <![CDATA[
-        SELECT DISTINCT msbl_key
-        FROM tbl_message_bundle_msbl
-        WHERE msbl_bundle = #{value}
-        ORDER BY msbl_key
     ]]>
     </select>
 

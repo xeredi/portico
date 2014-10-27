@@ -24,8 +24,7 @@ public final class ServicioLupaAction extends BaseAction {
     private static final long serialVersionUID = 1371351782684147321L;
 
     /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getConfiguration()
-            .getInt(ConfigurationKey.FILTER_LIMIT.getKey());
+    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
 
     /** The srvcs. */
     private List<ServicioVO> itemList;

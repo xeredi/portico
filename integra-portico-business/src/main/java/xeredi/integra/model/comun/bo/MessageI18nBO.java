@@ -9,8 +9,8 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.dao.MessageI18nDAO;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.comun.vo.MessageI18nCriterioVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -38,25 +38,6 @@ public final class MessageI18nBO {
     }
 
     /**
-     * Select key list.
-     *
-     * @param bundle
-     *            the bundle
-     * @return the list
-     */
-    public List<String> selectKeyList(final MessageI18nBundlename bundle) {
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
-
-        final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
-
-        try {
-            return m18nDAO.selectKeyList(bundle);
-        } finally {
-            session.close();
-        }
-    }
-
-    /**
      * Select key value map.
      *
      * @param bundle
@@ -65,16 +46,16 @@ public final class MessageI18nBO {
      *            the locale
      * @return the map
      */
-    public Map<String, String> selectKeyValueMap(final MessageI18nBundlename bundle, final Locale locale) {
+    public Map<MessageI18nKey, String> selectKeyValueMap(final Locale locale, final boolean externalsOnly) {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
 
         try {
-            final Map<String, String> map = new HashMap<>();
+            final Map<MessageI18nKey, String> map = new HashMap<>();
             final MessageI18nCriterioVO i18nCriterioVO = new MessageI18nCriterioVO();
 
-            i18nCriterioVO.setBundle(bundle);
+            i18nCriterioVO.setExternalsOnly(externalsOnly);
             i18nCriterioVO.setLanguage(locale.getLanguage());
 
             for (final MessageI18nVO i18nVO : m18nDAO.selectList(i18nCriterioVO)) {
@@ -94,19 +75,16 @@ public final class MessageI18nBO {
      *            the bundle
      * @return the message i18n report vo
      */
-    public MessageI18nReportVO report(final MessageI18nBundlename bundle) {
+    public MessageI18nReportVO report() {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
 
         try {
-            final List<String> keyList = m18nDAO.selectKeyList(bundle);
             final List<String> languageList = m18nDAO.selectLanguageList();
 
-            final MessageI18nReportVO reportVO = new MessageI18nReportVO(keyList, languageList);
+            final MessageI18nReportVO reportVO = new MessageI18nReportVO(languageList);
             final MessageI18nCriterioVO criterioVO = new MessageI18nCriterioVO();
-
-            criterioVO.setBundle(bundle);
 
             final List<MessageI18nVO> list = m18nDAO.selectList(criterioVO);
 

@@ -1,6 +1,6 @@
 angular.module("util", [ 'ui.bootstrap' ])
 
-.factory("pagetitleService", pagetitleService)
+.factory('pageTitleService', pageTitleService)
 
 .controller("datepickerController", datepickerController)
 
@@ -26,6 +26,18 @@ function datepickerController($scope) {
     $scope.format = "dd/MM/yyyy";
 }
 
+function pageTitleService($rootScope, $translate) {
+    return {
+        setTitle : setTitle
+    };
+
+    function setTitle(entiId, title) {
+        $translate([ 'enti_' + entiId, title ]).then(function(translations) {
+            $rootScope.title = translations['enti_' + entiId] + ": " + translations[title];
+        });
+    }
+}
+
 // http://adamalbrecht.github.io/ngQuickDate/
 // https://github.com/adamalbrecht/ngQuickDate
 function timepickerController($scope) {
@@ -44,7 +56,7 @@ function timepickerController($scope) {
 }
 
 function pagetitleService($rootScope, $translate) {
-    var setTitle = function () {
+    var setTitle = function() {
         alert('setTitle');
     }
 
@@ -54,4 +66,3 @@ function pagetitleService($rootScope, $translate) {
         $rootScope.title = titleKey;
     }
 }
-

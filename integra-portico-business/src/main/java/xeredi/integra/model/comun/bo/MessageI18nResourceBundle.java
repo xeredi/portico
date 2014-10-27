@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import xeredi.integra.model.comun.vo.I18nPrefix;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -17,9 +17,6 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * The Class MessageI18nResourceBundle.
  */
 public final class MessageI18nResourceBundle extends ListResourceBundle {
-
-    /** The bundle. */
-    private final MessageI18nBundlename bundle;
 
     /** The locale. */
     private final Locale locale;
@@ -32,9 +29,8 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
      * @param locale
      *            the locale
      */
-    public MessageI18nResourceBundle(final MessageI18nBundlename bundle, final Locale locale) {
+    public MessageI18nResourceBundle(final Locale locale) {
         super();
-        this.bundle = bundle;
         this.locale = locale;
     }
 
@@ -47,9 +43,9 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
 
         final MessageI18nBO messageI18nBO = new MessageI18nBO();
 
-        final Map<String, String> map = messageI18nBO.selectKeyValueMap(bundle, locale);
+        final Map<MessageI18nKey, String> map = messageI18nBO.selectKeyValueMap(locale, false);
 
-        for (final String key : map.keySet()) {
+        for (final MessageI18nKey key : map.keySet()) {
             contentList.add(new Object[] { key, map.get(key) });
         }
 

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.dao.ConfigurationDAO;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -39,7 +40,7 @@ public final class ConfigurationBO {
      *            the key
      * @return the configuration vo
      */
-    public final ConfigurationVO select(final String key) {
+    public final ConfigurationVO select(final ConfigurationKey key) {
         final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
 
         final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);

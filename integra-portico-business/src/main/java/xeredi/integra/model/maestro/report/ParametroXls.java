@@ -13,7 +13,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -38,7 +37,7 @@ public final class ParametroXls extends BaseXls {
     public ParametroXls(final Locale locale) {
         super(locale);
 
-        bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
+        bundle = PorticoResourceBundle.getBundle(locale);
     }
 
     /**

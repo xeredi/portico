@@ -12,7 +12,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
@@ -49,9 +48,9 @@ public abstract class BaseXls {
 
         locale = alocale;
 
-        bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
-        datetimeFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.FORMAT_DATETIME.getKey()));
-        dateFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.FORMAT_DATE.getKey()));
+        bundle = PorticoResourceBundle.getBundle(locale);
+        datetimeFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.format_datetime.name()));
+        dateFormat = new SimpleDateFormat(bundle.getString(MessageI18nKey.format_date.name()));
     }
 
     /**

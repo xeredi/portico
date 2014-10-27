@@ -16,7 +16,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.ValueStack;
@@ -40,7 +39,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
     private Map<String, Object> session;
 
     /** The bundle. */
-    private final ResourceBundle bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, getLocale());
+    private final ResourceBundle bundle = PorticoResourceBundle.getBundle(getLocale());
 
     // get / set
     /**
@@ -49,7 +48,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
      * @return the idioma
      */
     public final String getIdioma() {
-        return ConfigurationProxy.getConfiguration().getString(ConfigurationKey.LANGUAGE_DEFAULT.getKey());
+        return ConfigurationProxy.getString(ConfigurationKey.language_default);
     }
 
     /**
@@ -58,7 +57,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
      * @return the available languages
      */
     public final String[] getAvailableLanguages() {
-        return ConfigurationProxy.getConfiguration().getStringArray(ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
+        return ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
     }
 
     /**

@@ -5,9 +5,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.MessageI18nBO;
 import xeredi.integra.model.comun.bo.MessageI18nReportVO;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -17,9 +14,6 @@ public final class MessageI18nListAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9186179634462884228L;
-
-    /** The bundle. */
-    private MessageI18nBundlename bundle;
 
     /** The report. */
     private MessageI18nReportVO report;
@@ -31,32 +25,11 @@ public final class MessageI18nListAction extends BaseAction {
      */
     @Action("m18n-grid")
     public String list() {
-        Preconditions.checkNotNull(bundle);
-
         final MessageI18nBO m18nBO = new MessageI18nBO();
 
-        report = m18nBO.report(bundle);
+        report = m18nBO.report();
 
         return SUCCESS;
-    }
-
-    /**
-     * Gets the bundle.
-     *
-     * @return the bundle
-     */
-    public MessageI18nBundlename getBundle() {
-        return bundle;
-    }
-
-    /**
-     * Sets the bundle.
-     *
-     * @param bundle
-     *            the new bundle
-     */
-    public void setBundle(final MessageI18nBundlename bundle) {
-        this.bundle = bundle;
     }
 
     /**

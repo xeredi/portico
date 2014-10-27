@@ -59,14 +59,14 @@ angular.module("administracion", [ "ngRoute" ])
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
-    .when("/administracion/m18n/:bundle/grid", {
-        title : 'm18n_bundle_grid',
+    .when("/administracion/m18n/grid", {
+        title : 'm18nList',
         templateUrl : "modules/administracion/m18n-grid.html",
         controller : "m18nGridController"
     })
 
-    .when("/administracion/m18n/:bundle/detail/:key", {
-        title : 'm18n_bundle_detail',
+    .when("/administracion/m18n/detail/:key", {
+        title : 'm18n',
         templateUrl : "modules/administracion/m18n-detail.html",
         controller : "m18nDetailController"
     })
@@ -75,13 +75,6 @@ angular.module("administracion", [ "ngRoute" ])
 .controller("m18nGridController", m18nGridController);
 
 function administracionController($scope, $http, $location) {
-    $http.get("administracion/main.action").success(function(data) {
-        $scope.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            $scope.bundleList = data.bundleList;
-        }
-    });
 }
 
 function metamodeloReloadController($scope, $http, $location, $routeParams) {
@@ -146,11 +139,10 @@ function confEditController($scope, $http, $location, $routeParams) {
 }
 
 function m18nGridController($scope, $http, $location, $routeParams) {
-    $http.get("administracion/messagei18n/m18n-grid.action?bundle=" + $routeParams.bundle).success(function(data) {
+    $http.get("administracion/messagei18n/m18n-grid.action").success(function(data) {
         $scope.actionErrors = data.actionErrors;
 
         if (data.actionErrors.length == 0) {
-            $scope.bundle = data.bundle;
             $scope.report = data.report;
         }
     });

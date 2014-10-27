@@ -1,4 +1,4 @@
--- // 0 0 5.sql
+-- // 0 0 6.sql
 -- Migration SQL that makes the change goes here.
 
 -- i18n de entidades

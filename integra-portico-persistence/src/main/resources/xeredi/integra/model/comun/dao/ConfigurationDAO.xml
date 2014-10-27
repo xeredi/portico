@@ -20,7 +20,7 @@
     ]]>
     </sql>
 
-    <select id="select" parameterType="String" resultMap="ResultMap">
+    <select id="select" parameterType="ConfigurationKey" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         WHERE conf_key = #{value}
     </select>

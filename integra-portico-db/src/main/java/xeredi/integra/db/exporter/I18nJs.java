@@ -18,7 +18,7 @@ import xeredi.integra.model.comun.bo.MessageI18nBO;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -33,17 +33,13 @@ public class I18nJs {
      * Export.
      */
     public void export() throws IOException {
-        final String[] languages = ConfigurationProxy.getConfiguration().getStringArray(
-                ConfigurationKey.LANGUAGE_AVAILABLE.getKey());
-        final String defaultLanguage = ConfigurationProxy.getConfiguration().getString(
-                ConfigurationKey.LANGUAGE_DEFAULT.getKey());
-        final String webappInstallPath = ConfigurationProxy.getConfiguration().getString(
-                ConfigurationKey.WEBAPP_INSTALL_PATH.getKey());
+        final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
+        final String defaultLanguage = ConfigurationProxy.getString(ConfigurationKey.language_default);
+        final String webappInstallPath = ConfigurationProxy.getString(ConfigurationKey.webapp_install_path);
 
         final I18nBO i18nBO = new I18nBO();
         final MessageI18nBO messageI18nBO = new MessageI18nBO();
 
-        final List<String> messageI18nKeys = messageI18nBO.selectKeyList(MessageI18nBundlename.web);
         final Set<I18nPrefix> i18nPrefixSet = new HashSet<>();
 
         i18nPrefixSet.add(I18nPrefix.cdrf);
@@ -55,13 +51,11 @@ public class I18nJs {
 
             labelValues.addAll(i18nBO.selectLabelValueList(i18nPrefixSet, language));
 
-            final Map<String, String> messageI18nMap = messageI18nBO.selectKeyValueMap(MessageI18nBundlename.web,
-                    new Locale(language));
+            final Map<MessageI18nKey, String> messageI18nMap = messageI18nBO.selectKeyValueMap(new Locale(language),
+                    true);
 
-            for (final String key : messageI18nKeys) {
-                if (messageI18nMap.containsKey(key)) {
-                    labelValues.add(new LabelValueVO(key, messageI18nMap.get(key)));
-                }
+            for (final MessageI18nKey key : messageI18nMap.keySet()) {
+                labelValues.add(new LabelValueVO(key.name(), messageI18nMap.get(key)));
             }
 
             final Iterator<LabelValueVO> labelValueIterator = labelValues.iterator();

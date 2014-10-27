@@ -35,6 +35,9 @@ public final class ServicioListadoAction extends ItemListadoAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -6459367626812047036L;
 
+    /** The enti. */
+    private TipoServicioVO enti;
+
     /** The srvcs. */
     private PaginatedList<ServicioVO> itemList;
 
@@ -88,6 +91,8 @@ public final class ServicioListadoAction extends ItemListadoAction {
         itemCriterio.setIdioma(getIdioma());
 
         itemList = srvcBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+
+        enti = TipoServicioProxy.select(itemCriterio.getEntiId());
 
         return SUCCESS;
     }
@@ -182,6 +187,15 @@ public final class ServicioListadoAction extends ItemListadoAction {
      */
     public PaginatedList<ServicioVO> getItemList() {
         return itemList;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoServicioVO getEnti() {
+        return enti;
     }
 
 }

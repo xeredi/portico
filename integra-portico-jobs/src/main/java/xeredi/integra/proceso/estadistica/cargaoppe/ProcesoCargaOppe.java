@@ -13,10 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileKeyword;
 import xeredi.integra.model.estadistica.bo.EstadisticaFileType;
@@ -43,15 +43,6 @@ import xeredi.util.exception.DuplicateInstanceException;
 public final class ProcesoCargaOppe extends ProcesoTemplate {
     /** The Constant SIGMA_TOKEN. */
     private static final String SIGMA_TOKEN = "SIGMA";
-
-    /** The Constant PATH_ENTRADA_PARAM. */
-    private static final String PATH_ENTRADA_PARAM = "estadistica.files.oppe.entrada.home";
-
-    /** The Constant PATH_PROCESADO_PARAM. */
-    private static final String PATH_PROCESADO_PARAM = "estadistica.files.oppe.procesado.home";
-
-    /** The Constant PATH_ERRONEO_PARAM. */
-    private static final String PATH_ERRONEO_PARAM = "estadistica.files.oppe.erroneo.home";
 
     /** The path entrada. */
     private static String PATH_ENTRADA;
@@ -100,11 +91,9 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      */
     @Override
     protected void ejecutar() {
-        final Configuration configuration = ConfigurationProxy.getConfiguration();
-
-        PATH_ENTRADA = configuration.getString(PATH_ENTRADA_PARAM);
-        PATH_PROCESADO = configuration.getString(PATH_PROCESADO_PARAM);
-        PATH_ERRONEO = configuration.getString(PATH_ERRONEO_PARAM);
+        PATH_ENTRADA = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
+        PATH_PROCESADO = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_procesado_home);
+        PATH_ERRONEO = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_erroneo_home);
 
         // Lectura de los parametros de entrada
         final String autp = prbtVO.getPrpmMap().get(AUTP_PARAM);

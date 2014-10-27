@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class ConfigurationVO {
 
     /** The key. */
-    private String key;
+    private ConfigurationKey key;
 
     /** The value type. */
     private ConfigurationValueType valueType;
@@ -33,7 +33,7 @@ public final class ConfigurationVO {
      *
      * @return the key
      */
-    public String getKey() {
+    public ConfigurationKey getKey() {
         return key;
     }
 
@@ -43,7 +43,7 @@ public final class ConfigurationVO {
      * @param value
      *            the new key
      */
-    public void setKey(final String value) {
+    public void setKey(final ConfigurationKey value) {
         key = value;
     }
 

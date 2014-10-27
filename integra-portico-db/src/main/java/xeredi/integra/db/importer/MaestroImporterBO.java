@@ -20,7 +20,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import oracle.sql.TIMESTAMP;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -122,14 +121,12 @@ public final class MaestroImporterBO {
         LOG.info("Importacion de maestros");
 
         try {
-            final Configuration configuration = ConfigurationProxy.getConfiguration();
-
-            Class.forName(configuration.getString("db.migration.dataSource.driver"));
+            Class.forName(ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_driver));
 
             try (final Connection con = DriverManager.getConnection(
-                    configuration.getString("db.migration.dataSource.url"),
-                    configuration.getString("db.migration.dataSource.username"),
-                    configuration.getString("db.migration.dataSource.password"));) {
+                    ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_url),
+                    ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_username),
+                    ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_password));) {
 
                 parseXml(maestrosList, maestrosSqlMap);
 
@@ -262,8 +259,7 @@ public final class MaestroImporterBO {
                     final String texto = rs.getString(i++);
 
                     i18nVO.setPrefix(I18nPrefix.prvr);
-                    i18nVO.setLanguage(ConfigurationProxy.getConfiguration().getString(
-                            ConfigurationKey.LANGUAGE_DEFAULT.getKey()));
+                    i18nVO.setLanguage(ConfigurationProxy.getString(ConfigurationKey.language_default));
                     i18nVO.setText(texto);
 
                     if (rs.wasNull()) {

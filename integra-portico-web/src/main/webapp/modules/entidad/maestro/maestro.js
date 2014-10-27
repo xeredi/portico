@@ -1,8 +1,6 @@
-angular.module("maestro", [ "ngRoute" ])
+angular.module("maestro", [ "ngRoute", "util" ])
 
 .config(config)
-
-.factory('pageTitleService', pageTitleService)
 
 .factory('tpprService', tpprService)
 
@@ -117,18 +115,6 @@ function config($routeProvider) {
         controller : "sprmDetailController",
         controllerAs : 'vm'
     })
-}
-
-function pageTitleService($rootScope, $translate) {
-    return {
-        setTitle : setTitle
-    };
-
-    function setTitle(entiId, title) {
-        $translate([ 'enti_' + entiId, title ]).then(function(translations) {
-            $rootScope.title = translations['enti_' + entiId] + ": " + translations[title];
-        });
-    }
 }
 
 function tpprService($http) {
@@ -341,6 +327,8 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
                 if (data.actionErrors.length == 0) {
                     vm.enti = data.enti;
                     vm.item = data.item;
+                    vm.availableLanguages = data.availableLanguages;
+                    vm.i18nMap = data.i18nMap;
                     vm.itemHijosMap = {};
                     vm.entiHijasMap = {};
 

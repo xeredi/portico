@@ -23,8 +23,7 @@ public final class SubservicioLupaAction extends BaseAction {
     private static final long serialVersionUID = -979190040769739626L;
 
     /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getConfiguration()
-            .getInt(ConfigurationKey.FILTER_LIMIT.getKey());
+    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
 
     /** The item list. */
     private List<SubservicioVO> itemList;

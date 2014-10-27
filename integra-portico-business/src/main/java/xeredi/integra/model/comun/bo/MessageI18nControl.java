@@ -8,8 +8,6 @@ import java.util.ResourceBundle.Control;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nControl.
@@ -28,7 +26,7 @@ public final class MessageI18nControl extends Control {
             IOException {
         LOG.info("Loading messages from database for bundle '" + baseName + "' and locale '" + locale + "'");
 
-        return new MessageI18nResourceBundle(MessageI18nBundlename.valueOf(baseName), locale);
+        return new MessageI18nResourceBundle(locale);
     }
 
 }

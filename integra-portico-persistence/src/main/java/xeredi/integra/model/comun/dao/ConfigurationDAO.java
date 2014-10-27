@@ -2,6 +2,7 @@ package xeredi.integra.model.comun.dao;
 
 import java.util.List;
 
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
 
 // TODO: Auto-generated Javadoc
@@ -31,5 +32,5 @@ public interface ConfigurationDAO {
      *            the key
      * @return the configuration vo
      */
-    ConfigurationVO select(final String key);
+    ConfigurationVO select(final ConfigurationKey key);
 }

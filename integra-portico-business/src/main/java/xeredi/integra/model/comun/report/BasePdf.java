@@ -9,7 +9,6 @@ import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.comun.vo.MessageI18nBundlename;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
 import com.google.common.base.Preconditions;
@@ -37,7 +36,7 @@ public abstract class BasePdf {
         Preconditions.checkNotNull(alocale);
 
         locale = alocale;
-        bundle = PorticoResourceBundle.getBundle(MessageI18nBundlename.app, locale);
+        bundle = PorticoResourceBundle.getBundle(locale);
     }
 
     /**

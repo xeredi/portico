@@ -4,20 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import xeredi.integra.model.comun.vo.MessageI18nKey;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nReportVO.
  */
 public final class MessageI18nReportVO {
-
-    /** The key list. */
-    private final List<String> keyList;
-
     /** The language list. */
     private final List<String> languageList;
 
     /** The values map. */
-    private final Map<String, Map<String, String>> valuesMap;
+    private final Map<MessageI18nKey, Map<String, String>> valuesMap;
 
     /**
      * Instantiates a new message i18n report vo.
@@ -27,12 +25,11 @@ public final class MessageI18nReportVO {
      * @param alanguageList
      *            the alanguage list
      */
-    public MessageI18nReportVO(final List<String> akeyList, final List<String> alanguageList) {
-        keyList = akeyList;
+    public MessageI18nReportVO(final List<String> alanguageList) {
         languageList = alanguageList;
         valuesMap = new HashMap<>();
 
-        for (final String key : keyList) {
+        for (final MessageI18nKey key : MessageI18nKey.values()) {
             valuesMap.put(key, new HashMap<String, String>());
         }
     }
@@ -42,8 +39,8 @@ public final class MessageI18nReportVO {
      *
      * @return the key list
      */
-    public List<String> getKeyList() {
-        return keyList;
+    public MessageI18nKey[] getKeys() {
+        return MessageI18nKey.values();
     }
 
     /**
@@ -60,7 +57,7 @@ public final class MessageI18nReportVO {
      *
      * @return the values map
      */
-    public Map<String, Map<String, String>> getValuesMap() {
+    public Map<MessageI18nKey, Map<String, String>> getValuesMap() {
         return valuesMap;
     }
 
