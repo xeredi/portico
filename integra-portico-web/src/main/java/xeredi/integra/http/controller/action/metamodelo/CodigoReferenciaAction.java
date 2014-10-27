@@ -7,6 +7,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.I18nValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -118,11 +119,7 @@ public final class CodigoReferenciaAction extends BaseAction {
                     new String[] { getText(MessageI18nKey.cdrf_orden.name()) }));
         }
 
-        for (final String language : getAvailableLanguages()) {
-            if (!i18nMap.containsKey(language) || GenericValidator.isBlankOrNull(i18nMap.get(language).getText())) {
-                addActionError(getText(MessageI18nKey.E00002.name(), new String[] { language }));
-            }
-        }
+        I18nValidator.validate(this, i18nMap);
 
         if (!hasErrors()) {
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();

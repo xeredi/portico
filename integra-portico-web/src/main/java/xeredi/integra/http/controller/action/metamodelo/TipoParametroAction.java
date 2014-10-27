@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.I18nValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -134,13 +135,11 @@ public final class TipoParametroAction extends BaseAction {
                 addActionError(getText(MessageI18nKey.E00001.name(),
                         new String[] { getText(MessageI18nKey.enti_codigo.name()) }));
             }
-            if (enti.getNombre() == null || enti.getNombre().isEmpty()) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.enti_nombre.name()) }));
-            }
         } else {
             Preconditions.checkNotNull(enti.getId());
         }
+
+        I18nValidator.validate(this, i18nMap);
 
         if (enti.getCmdAlta() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
@@ -177,14 +176,14 @@ public final class TipoParametroAction extends BaseAction {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             try {
-                tpprBO.insert(enti);
+                tpprBO.insert(enti, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
                         new String[] { getText(MessageI18nKey.tppr.name()) }));
             }
         } else {
             try {
-                tpprBO.update(enti);
+                tpprBO.update(enti, i18nMap);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
                     getText(MessageI18nKey.tppr.name()), String.valueOf(enti.getId()) }));

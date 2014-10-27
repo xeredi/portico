@@ -1,4 +1,4 @@
-angular.module("metamodelo", [ "ngRoute", "util" ])
+angular.module("metamodelo", [ "ngRoute", "angularSpinner", "util" ])
 
 .config(config)
 
@@ -21,6 +21,8 @@ angular.module("metamodelo", [ "ngRoute", "util" ])
 
 // -------------------- MAESTRO ------------------
 .controller("tpprGridController", tpprGridController)
+
+.controller("tpprFilterController", tpprFilterController)
 
 .controller("tpprDetailController", tpprDetailController)
 
@@ -79,7 +81,6 @@ function config($routeProvider) {
     $routeProvider
 
     .when("/metamodelo/tpdt/grid", {
-        title : 'tpdtList',
         templateUrl : "modules/metamodelo/tpdt-grid.html",
         controller : "tpdtGridController",
         controllerAs : 'vm',
@@ -87,42 +88,36 @@ function config($routeProvider) {
     })
 
     .when("/metamodelo/tpdt/create", {
-        title : 'tpdt_create',
         templateUrl : "modules/metamodelo/tpdt-edit.html",
         controller : "tpdtCreateController",
         controllerAs : 'vm'
     })
 
     .when("/metamodelo/tpdt/detail/:tpdtId", {
-        title : 'tpdt',
         templateUrl : "modules/metamodelo/tpdt-detail.html",
         controller : "tpdtDetailController",
         controllerAs : 'vm'
     })
 
     .when("/metamodelo/tpdt/edit/:tpdtId", {
-        title : 'tpdt_edit',
         templateUrl : "modules/metamodelo/tpdt-edit.html",
         controller : "tpdtEditController",
         controllerAs : 'vm'
     })
 
     .when("/metamodelo/cdrf/detail/:cdrfId", {
-        title : 'cdrf',
         templateUrl : "modules/metamodelo/cdrf-detail.html",
         controller : "cdrfDetailController",
         controllerAs : 'vm'
     })
 
     .when("/metamodelo/cdrf/edit/:cdrfId", {
-        title : 'cdrf_edit',
         templateUrl : "modules/metamodelo/cdrf-edit.html",
         controller : "cdrfEditController",
         controllerAs : 'vm'
     })
 
     .when("/metamodelo/cdrf/create/:tpdtId", {
-        title : 'cdrf_create',
         templateUrl : "modules/metamodelo/cdrf-edit.html",
         controller : "cdrfCreateController",
         controllerAs : 'vm'
@@ -132,43 +127,44 @@ function config($routeProvider) {
         title : 'tpprList',
         templateUrl : "modules/metamodelo/tppr-grid.html",
         controller : "tpprGridController",
+        controllerAs : 'vm',
         reloadOnSearch : false
     })
 
     .when("/metamodelo/tppr/detail/:entiId", {
-        title : 'tppr',
         templateUrl : "modules/metamodelo/tppr-detail.html",
-        controller : "tpprDetailController"
+        controller : "tpprDetailController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/tppr/edit/:entiId", {
-        title : 'tppr_edit',
         templateUrl : "modules/metamodelo/tppr-edit.html",
-        controller : "tpprEditController"
+        controller : "tpprEditController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/tppr/create", {
-        title : 'tppr_create',
         templateUrl : "modules/metamodelo/tppr-edit.html",
-        controller : "tpprCreateController"
+        controller : "tpprCreateController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/tpsp/detail/:entiId", {
-        title : 'tpsp',
         templateUrl : "modules/metamodelo/tpsp-detail.html",
-        controller : "tpspDetailController"
+        controller : "tpspDetailController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/tpsp/edit/:entiId", {
-        title : 'tpsp_edit',
         templateUrl : "modules/metamodelo/tpsp-edit.html",
-        controller : "tpspEditController"
+        controller : "tpspEditController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/tpsp/create/:tpprId", {
-        title : 'tpsp_create',
         templateUrl : "modules/metamodelo/tpsp-edit.html",
-        controller : "tpspCreateController"
+        controller : "tpspCreateController",
+        controllerAs : 'vm'
     })
 
     .when("/metamodelo/tpsr/grid", {
@@ -402,17 +398,21 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
     pageTitleService.setTitle("tpdt", "page_create");
 }
 
-function tpdtDetailController($http, $location, $routeParams, pageTitleService) {
+function tpdtDetailController($http, $routeParams, pageTitleService, usSpinnerService) {
     var vm = this;
 
     vm.remove = remove;
 
     function remove() {
         if (confirm("Are you sure?")) {
+            usSpinnerService.spin("spinner");
+
             $http.get("metamodelo/tpdt-remove.action?tpdt.id=" + vm.tpdt.id).success(function(data) {
                 vm.actionErrors = data.actionErrors;
 
                 if (data.actionErrors.length == 0) {
+                    usSpinnerService.stop("spinner");
+
                     window.history.back();
                 }
             });
@@ -422,12 +422,13 @@ function tpdtDetailController($http, $location, $routeParams, pageTitleService) 
     $http.get("metamodelo/tpdt-detail.action?tpdt.id=" + $routeParams.tpdtId).success(function(data) {
         vm.tpdt = data.tpdt;
         vm.i18nMap = data.i18nMap;
+        vm.cdrfList = data.cdrfList;
     });
 
     pageTitleService.setTitle("tpdt", "page_detail");
 }
 
-function tpdtEditController($http, $location, $routeParams, pageTitleService) {
+function tpdtEditController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.save = save;
@@ -472,24 +473,19 @@ function tpdtEditController($http, $location, $routeParams, pageTitleService) {
     pageTitleService.setTitle("tpdt", "page_edit");
 }
 
-function cdrfCreateController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/cdrf-create.action?cdrf.tpdtId=" + $routeParams.tpdtId;
+function cdrfCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.cdrf = data.cdrf;
-        $scope.i18nMap = data.i18nMap;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "metamodelo/cdrf-save.action";
-
-        $http.post(url, {
-            cdrf : $scope.cdrf,
-            i18nMap : $scope.i18nMap,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/cdrf-save.action", {
+            cdrf : vm.cdrf,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/cdrf/detail/" + data.cdrf.id).replace();
@@ -497,25 +493,28 @@ function cdrfCreateController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
-}
 
-function cdrfDetailController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/cdrf-detail.action?cdrf.id=" + $routeParams.cdrfId;
-
-    $http.get(url).success(function(data) {
-        $scope.cdrf = data.cdrf;
-        $scope.i18nMap = data.i18nMap;
+    $http.get("metamodelo/cdrf-create.action?cdrf.tpdtId=" + $routeParams.tpdtId).success(function(data) {
+        vm.cdrf = data.cdrf;
+        vm.i18nMap = data.i18nMap;
+        vm.accion = data.accion;
     });
 
-    $scope.remove = function() {
-        if (confirm("Are you sure?")) {
-            var url = "metamodelo/cdrf-remove.action?cdrf.id=" + $scope.cdrf.id;
+    pageTitleService.setTitle("cdrf", "page_create");
+}
 
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
+function cdrfDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.get("metamodelo/cdrf-remove.action?cdrf.id=" + vm.cdrf.id).success(function(data) {
+                vm.actionErrors = data.actionErrors;
 
                 if (data.actionErrors.length == 0) {
                     window.history.back();
@@ -523,26 +522,28 @@ function cdrfDetailController($scope, $http, $location, $routeParams) {
             });
         }
     }
-}
 
-function cdrfEditController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/cdrf-edit.action?cdrf.id=" + $routeParams.cdrfId;
-
-    $http.get(url).success(function(data) {
-        $scope.cdrf = data.cdrf;
-        $scope.i18nMap = data.i18nMap;
-        $scope.accion = data.accion;
+    $http.get("metamodelo/cdrf-detail.action?cdrf.id=" + $routeParams.cdrfId).success(function(data) {
+        vm.cdrf = data.cdrf;
+        vm.i18nMap = data.i18nMap;
     });
 
-    $scope.save = function(form) {
-        var url = "metamodelo/cdrf-save.action";
+    pageTitleService.setTitle("cdrf", "page_detail");
+}
 
-        $http.post(url, {
-            cdrf : $scope.cdrf,
-            i18nMap : $scope.i18nMap,
-            accion : $scope.accion
+function cdrfEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("metamodelo/cdrf-save.action", {
+            cdrf : vm.cdrf,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -552,14 +553,26 @@ function cdrfEditController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("metamodelo/cdrf-edit.action?cdrf.id=" + $routeParams.cdrfId).success(function(data) {
+        vm.cdrf = data.cdrf;
+        vm.i18nMap = data.i18nMap;
+        vm.accion = data.accion;
+    });
+
+    pageTitleService.setTitle("cdrf", "page_edit");
 }
 
-function tpprGridController($scope, $http, $location, $routeParams) {
-    $scope.showFilter = false;
-    $scope.entiCriterio = {};
+function tpprGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.entiCriterio = {};
 
     function search(entiCriterio, page, limit) {
         var url = "metamodelo/tppr-list.action";
@@ -569,92 +582,107 @@ function tpprGridController($scope, $http, $location, $routeParams) {
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.entiList.page;
-                $scope.entiList = data.entiList;
+                vm.page = data.entiList.page;
+                vm.entiList = data.entiList;
 
                 var map = {};
 
                 map["page"] = data.entiList.page;
 
                 $location.search(map).replace();
-
-                $scope.showFilter = false;
             }
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.entiCriterio, $scope.page, $scope.limit);
+    function pageChanged() {
+        search(vm.entiCriterio, vm.page, vm.limit);
     }
 
-    $scope.filter = function() {
-        $scope.showFilter = true;
-    }
-
-    $scope.search = function() {
-        search($scope.entiCriterio, 1, $scope.limit);
-    }
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    search($scope.entiCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
-}
-
-function tpprDetailController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/tppr-detail.action?enti.id=" + $routeParams.entiId;
-
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.subentiList = data.subentiList;
-        $scope.i18nMap = data.i18nMap;
-    });
-
-    $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "metamodelo/tppr-remove.action?enti.id=" + $scope.enti.id;
-
-                $http.get(url).success(function(data) {
-                    $scope.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    }
-                });
+    function filter(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modules/metamodelo/tppr-filter-content.html',
+            controller : 'tpprFilterController',
+            controllerAs : 'vm',
+            size : size,
+            resolve : {
+                entiCriterio : function() {
+                    return vm.entiCriterio;
+                }
             }
         });
+
+        modalInstance.result.then(function(entiCriterio) {
+            vm.entiCriterio = entiCriterio;
+            vm.page = 1;
+
+            search(vm.entiCriterio, 1, vm.limit);
+        });
+    }
+
+    search(vm.entiCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
+
+    pageTitleService.setTitle("tppr", "page_grid");
+}
+
+function tpprFilterController($modalInstance, entiCriterio) {
+    var vm = this;
+
+    vm.ok = ok;
+    vm.cancel = cancel;
+
+    vm.entiCriterio = entiCriterio;
+
+    function ok() {
+        $modalInstance.close(vm.entiCriterio);
+    }
+
+    function cancel() {
+        $modalInstance.dismiss('cancel');
     }
 }
 
-function tpprEditController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/tppr-edit.action?enti.id=" + $routeParams.entiId;
+function tpprDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.accion = data.accion;
-        $scope.i18nMap = data.i18nMap;
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.get("metamodelo/tppr-remove.action?enti.id=" + $scope.enti.id).success(function(data) {
+                vm.actionErrors = data.actionErrors;
+
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                }
+            });
+        }
+    }
+
+    $http.get("metamodelo/tppr-detail.action?enti.id=" + $routeParams.entiId).success(function(data) {
+        vm.enti = data.enti;
+        vm.subentiList = data.subentiList;
+        vm.i18nMap = data.i18nMap;
     });
 
-    var urlTpdtNombreList = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
-            + $routeParams.entiId;
+    pageTitleService.setTitle("tppr", "page_detail");
+}
 
-    $http.get(urlTpdtNombreList).success(function(data) {
-        $scope.tpdtNombreList = data.lvList;
-    });
+function tpprEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $scope.save = function() {
-        var url = "metamodelo/tppr-save.action";
+    vm.save = save;
+    vm.cancel = cancel;
 
-        $http.post(url, {
-            enti : $scope.enti,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/tppr-save.action", {
+            enti : vm.enti,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -664,34 +692,41 @@ function tpprEditController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("metamodelo/tppr-edit.action?enti.id=" + $routeParams.entiId).success(function(data) {
+        vm.enti = data.enti;
+        vm.accion = data.accion;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    $http
+            .get(
+                    "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
+                            + $routeParams.entiId).success(function(data) {
+                vm.tpdtNombreList = data.lvList;
+            });
+
+    pageTitleService.setTitle("tppr", "page_edit");
 }
 
-function tpprCreateController($scope, $http, $location, $routeParams) {
-    var url = "metamodelo/tppr-create.action";
+function tpprCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    var urlTpdtNombreList = "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
-            + $routeParams.entiId;
-
-    $http.get(urlTpdtNombreList).success(function(data) {
-        $scope.tpdtNombreList = data.lvList;
-    });
-
-    $scope.save = function() {
+    function save() {
         var url = "metamodelo/tppr-save.action";
 
         $http.post(url, {
-            enti : $scope.enti,
-            accion : $scope.accion
+            enti : vm.enti,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tppr/detail/" + data.enti.id).replace();
@@ -699,14 +734,28 @@ function tpprCreateController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         setTimeout(function() {
             window.history.back();
         }, 0);
     }
+
+    $http.get("metamodelo/tppr-create.action").success(function(data) {
+        vm.enti = data.enti;
+        vm.accion = data.accion;
+    });
+
+    $http
+            .get(
+                    "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
+                            + $routeParams.entiId).success(function(data) {
+                vm.tpdtNombreList = data.lvList;
+            });
+
+    pageTitleService.setTitle("tppr", "page_create");
 }
 
-function tpspDetailController($scope, $http, $location, $routeParams) {
+function tpspDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "metamodelo/tpsp-detail.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -728,9 +777,11 @@ function tpspDetailController($scope, $http, $location, $routeParams) {
             }
         });
     }
+
+    pageTitleService.setTitle("tpsp", "page_detail");
 }
 
-function tpspEditController($scope, $http, $location, $routeParams) {
+function tpspEditController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "metamodelo/tpsp-edit.action?enti.id=" + $routeParams.entiId;
 
     $http.get(url).success(function(data) {
@@ -764,9 +815,11 @@ function tpspEditController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("tpsp", "page_edit");
 }
 
-function tpspCreateController($scope, $http, $location, $routeParams) {
+function tpspCreateController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "metamodelo/tpsp-create.action?enti.tpprId=" + $routeParams.tpprId;
 
     $http.get(url).success(function(data) {
@@ -798,6 +851,8 @@ function tpspCreateController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("tpsp", "page_create");
 }
 
 function tpsrGridController($scope, $http, $location, $routeParams) {

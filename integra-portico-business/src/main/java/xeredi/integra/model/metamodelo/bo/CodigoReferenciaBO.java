@@ -5,9 +5,8 @@ import java.util.Map;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
-import xeredi.integra.model.comun.dao.I18nDAO;
-import xeredi.integra.model.comun.vo.I18nCriterioVO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
@@ -29,9 +28,6 @@ public class CodigoReferenciaBO {
     /** The cdrf dao. */
     CodigoReferenciaDAO cdrfDAO;
 
-    /** The cdri dao. */
-    I18nDAO i18nDAO;
-
     /**
      * Insert.
      *
@@ -49,7 +45,6 @@ public class CodigoReferenciaBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-            i18nDAO = session.getMapper(I18nDAO.class);
 
             final IgBO igBO = new IgBO();
 
@@ -60,15 +55,7 @@ public class CodigoReferenciaBO {
             cdrfVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
             cdrfDAO.insert(cdrfVO);
 
-            for (final String language : i18nMap.keySet()) {
-                final I18nVO i18nVO = i18nMap.get(language);
-
-                i18nVO.setPrefix(I18nPrefix.cdrf);
-                i18nVO.setExternalId(cdrfVO.getId());
-                i18nVO.setLanguage(language);
-
-                i18nDAO.insert(i18nVO);
-            }
+            I18nBO.insertMap(session, I18nPrefix.cdrf, cdrfVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -91,7 +78,6 @@ public class CodigoReferenciaBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-            i18nDAO = session.getMapper(I18nDAO.class);
 
             final int updated = cdrfDAO.update(cdrfVO);
 
@@ -99,13 +85,7 @@ public class CodigoReferenciaBO {
                 throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
             }
 
-            for (final String language : i18nMap.keySet()) {
-                final I18nVO i18nVO = i18nMap.get(language);
-
-                i18nVO.setPrefix(I18nPrefix.cdrf);
-                i18nVO.setLanguage(language);
-                i18nDAO.update(i18nVO);
-            }
+            I18nBO.updateMap(session, I18nPrefix.cdrf, cdrfVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -125,14 +105,8 @@ public class CodigoReferenciaBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-            i18nDAO = session.getMapper(I18nDAO.class);
 
-            final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
-
-            i18nCriterioVO.setPrefix(I18nPrefix.cdrf);
-            i18nCriterioVO.setExternalId(cdrfVO.getId());
-
-            i18nDAO.deleteList(i18nCriterioVO);
+            I18nBO.deleteMap(session, I18nPrefix.cdrf, cdrfVO.getId());
 
             final int deleted = cdrfDAO.delete(cdrfVO.getId());
 

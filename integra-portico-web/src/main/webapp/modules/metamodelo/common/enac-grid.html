@@ -1,5 +1,5 @@
 <fieldset>
-    <legend ng-bind="'Acciones'"></legend>
+    <legend translate="enti_enacList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <table ng-if="enti.enacList" class="table-bordered table-condensed table-hover table-nonfluid">
+    <table ng-if="vm.enti.enacList" class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="enac in enti.enacList track by $index">
+            <tr ng-repeat="enac in vm.enti.enacList track by $index">
                 <td><a ng-href="#/metamodelo/enac/detail/{{enac.entiId}}/{{enac.path}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="enac.path"></td>

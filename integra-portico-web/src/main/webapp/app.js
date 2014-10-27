@@ -1,5 +1,5 @@
-var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "ngRoute", "util", "i18n",
-        "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ]);
+var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "angularSpinner", "ngRoute", "util",
+        "i18n", "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ]);
 
 app.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -22,5 +22,5 @@ app.config([ '$httpProvider', function($httpProvider) {
 
 app.run([ '$location', '$rootScope', function($location, $rootScope) {
     $rootScope.default_language = "es";
-    $rootScope.available_languages = ["es", "ca", "en"];
+    $rootScope.available_languages = [ "es", "ca", "en" ];
 } ]);

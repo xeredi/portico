@@ -1,78 +1,68 @@
 <form name="editForm" novalidate role="form">
-    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enti.id" /> <input type="hidden"
-        ng-model="enti.tipo" />
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.enti.id" /> <input type="hidden"
+        ng-model="vm.enti.tipo" />
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>enti_codigo</label> <input ng-if="accion == 'create'" type="text"
-                    ng-model="enti.codigo" class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="enti.codigo"></p>
-            </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label translate>enti_nombre</label> <input ng-if="accion == 'create'" type="text"
-                    ng-model="enti.nombre" class="form-control input-sm" />
-                <p ng-if="accion == 'edit'" class="form-control-static" ng-bind="enti.nombre"></p>
+                <label translate>enti_codigo</label> <input ng-if="vm.accion == 'create'" type="text"
+                    ng-model="vm.enti.codigo" class="form-control input-sm" />
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.enti.codigo"></p>
             </div>
         </div>
 
-        <div class="row">
-            <div ng-repeat="language in availableLanguages" class="col-sm-10 col-md-9 col-lg-8 form-group">
-                <label>Nombre {{language}}</label> <input type="text" ng-model="i18nMap[language].text"
-                    class="form-control input-sm" />
-            </div>
-        </div>
+        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
 
         <div class="row">
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>enti_cmdAlta</label> <select ng-model="enti.cmdAlta"
+                <label translate>enti_cmdAlta</label> <select ng-model="vm.enti.cmdAlta"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>enti_cmdBaja</label> <select ng-model="enti.cmdBaja"
+                <label translate>enti_cmdBaja</label> <select ng-model="vm.enti.cmdBaja"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>enti_cmdEdicion</label> <select ng-model="enti.cmdEdicion"
+                <label translate>enti_cmdEdicion</label> <select ng-model="vm.enti.cmdEdicion"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>enti_cmdDuplicado</label> <select ng-model="enti.cmdDuplicado"
+                <label translate>enti_cmdDuplicado</label> <select ng-model="vm.enti.cmdDuplicado"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>enti_i18n</label> <select ng-model="enti.i18n"
+                <label translate>enti_i18n</label> <select ng-model="vm.enti.i18n"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>enti_tempExp</label> <select ng-model="enti.tempExp"
+                <label translate>enti_tempExp</label> <select ng-model="vm.enti.tempExp"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                <label translate>enti_maxGrid</label> <input type="text" ng-model="enti.maxGrid"
+                <label translate>enti_maxGrid</label> <input type="text" ng-model="vm.enti.maxGrid"
                     class="form-control input-sm" />
             </div>
             <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label translate>enti_tpdtNombre</label> <select ng-model="enti.tpdtNombre.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in tpdtNombreList"
+                <label translate>enti_tpdtNombre</label> <select ng-model="vm.enti.tpdtNombre.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtNombreList"
                     class="form-control input-sm">
                     <option />
                 </select>
@@ -80,17 +70,17 @@
         </div>
     </div>
 
-    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>
-        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+        <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
     </ul>
     </alert>
 
     <div class="btn-group">
-        <button data-ng-click="save()" class="btn btn-primary">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
         </button>
-        <button data-ng-click="cancel()" class="btn btn-default">
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
         </button>
     </div>

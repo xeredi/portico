@@ -1,14 +1,14 @@
 <fieldset>
-    <legend ng-bind="'Datos'"></legend>
+    <legend translate="enti_entdList"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/entd/create/{{enti.id}}"><i
+            <a class="btn btn-default" ng-href="#/metamodelo/entd/create/{{vm.enti.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
 
-    <table ng-if="enti.entdList" class="table-bordered table-condensed table-hover table-nonfluid">
+    <table ng-if="vm.enti.entdList" class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
@@ -28,7 +28,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entd in enti.entdList track by $index">
+            <tr ng-repeat="entd in vm.enti.entdList track by $index">
                 <td><a ng-href="#/metamodelo/entd/detail/{{enti.id}}/{{entd.tpdt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entd.grupo"></td>
