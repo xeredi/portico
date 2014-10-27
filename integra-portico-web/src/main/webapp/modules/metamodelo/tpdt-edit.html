@@ -8,11 +8,6 @@
                     ng-model="vm.tpdt.codigo" class="form-control input-sm" />
                 <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.tpdt.codigo"></p>
             </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label translate>tpdt_nombre</label> <input ng-if="vm.accion == 'create'" type="text"
-                    ng-model="vm.tpdt.nombre" class="form-control input-sm" />
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.tpdt.nombre"></p>
-            </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate>tpdt_tpht</label> <select ng-model="vm.tpdt.tpht"
                     ng-options="cdrf as ('HtmlTipo_' + cdrf | translate) for cdrf in vm.tphts"

@@ -11,6 +11,16 @@ import xeredi.util.applicationobjects.LabelValueVO;
  * The Interface I18nDAO.
  */
 public interface I18nDAO {
+
+    /**
+     * Exists.
+     *
+     * @param vo
+     *            the vo
+     * @return true, if successful
+     */
+    boolean exists(final I18nVO vo);
+
     /**
      * Insert.
      *

@@ -78,7 +78,7 @@ public final class TipoDatoAction extends BaseAction {
 
         if (tpdt == null) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
-                String.valueOf(tpdt.getId()) }));
+                    String.valueOf(tpdt.getId()) }));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
@@ -106,10 +106,6 @@ public final class TipoDatoAction extends BaseAction {
             Preconditions.checkNotNull(tpdt.getId());
         }
 
-        if (tpdt.getNombre() == null || tpdt.getNombre().isEmpty()) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.tpdt_nombre.name()) }));
-        }
         if (tpdt.getTpht() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
                     new String[] { getText(MessageI18nKey.tpdt_tpht.name()) }));
@@ -183,7 +179,7 @@ public final class TipoDatoAction extends BaseAction {
 
         if (tpdt == null) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
-                String.valueOf(tpdt.getId()) }));
+                    String.valueOf(tpdt.getId()) }));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());

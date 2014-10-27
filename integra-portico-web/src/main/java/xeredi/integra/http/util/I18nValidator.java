@@ -10,8 +10,6 @@ import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class I18nValidator.
@@ -33,8 +31,6 @@ public final class I18nValidator {
         if (i18nMap != null) {
             for (final String language : i18nMap.keySet()) {
                 final I18nVO i18nVO = i18nMap.get(language);
-
-                Preconditions.checkNotNull(i18nVO.getPrefix());
 
                 i18nVO.setLanguage(language);
             }

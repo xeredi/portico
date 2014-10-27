@@ -72,6 +72,18 @@
         ORDER BY i18n_pref, i18n_ext_pk, i18n_lang
     </select>
 
+    <select id="exists" parameterType="I18nVO" resultType="Boolean">
+    <![CDATA[
+        SELECT COUNT(1)
+        FROM
+            tbl_i18n_i18n SET
+        WHERE
+            i18n_pref = #{prefix}
+            AND i18n_ext_pk = #{externalId}
+            AND i18n_lang = #{language}
+    ]]>
+    </select>
+
     <insert id="insert" parameterType="I18nVO">
     <![CDATA[
         INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_ext_pk, i18n_lang, i18n_text)

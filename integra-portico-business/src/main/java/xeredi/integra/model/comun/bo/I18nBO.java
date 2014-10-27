@@ -191,15 +191,19 @@ public final class I18nBO {
         }
 
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
+        final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
+
+        i18nCriterioVO.setExternalId(externalId);
+        i18nCriterioVO.setPrefix(prefix);
+
+        i18nDAO.deleteList(i18nCriterioVO);
 
         for (final I18nVO i18nVO : i18nMap.values()) {
             i18nVO.setPrefix(prefix);
             i18nVO.setExternalId(externalId);
 
-            if (i18nVO.getText() == null || i18nVO.getText().isEmpty()) {
-                i18nDAO.delete(i18nVO);
-            } else {
-                i18nDAO.update(i18nVO);
+            if (i18nVO.getText() != null && !i18nVO.getText().isEmpty()) {
+                i18nDAO.insert(i18nVO);
             }
         }
     }

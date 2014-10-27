@@ -369,6 +369,7 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
 
         $http.post(url, {
             tpdt : vm.tpdt,
+            i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
             vm.actionErrors = data.actionErrors;
@@ -435,6 +436,7 @@ function tpdtEditController($http, $location, $routeParams, pageTitleService) {
     function save() {
         $http.post("metamodelo/tpdt-save.action", {
             tpdt : vm.tpdt,
+            i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
             vm.actionErrors = data.actionErrors;

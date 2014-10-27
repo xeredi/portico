@@ -126,8 +126,8 @@
 
     <insert id="insert" parameterType="TipoDatoVO">
         <![CDATA[
-        INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_codigo, tpdt_nombre, tpdt_tipo_elemento, tpdt_tipo_html, tpdt_enti_pk)
-        VALUES (#{id}, #{codigo}, #{nombre}, #{tipoElemento}, #{tpht}, #{enti.id})
+        INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_codigo, tpdt_tipo_elemento, tpdt_tipo_html, tpdt_enti_pk)
+        VALUES (#{id}, #{codigo}, #{tipoElemento}, #{tpht}, #{enti.id})
         ]]>
     </insert>
 
