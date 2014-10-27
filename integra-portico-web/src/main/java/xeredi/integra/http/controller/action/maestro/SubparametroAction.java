@@ -8,8 +8,8 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
-import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -152,7 +152,8 @@ public final class SubparametroAction extends ItemAction {
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
             if (item.getPrmtAsociado() == null || item.getPrmtAsociado().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { enti.getTpprAsociado().getNombre() }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { enti.getTpprAsociado().getNombre() }));
             }
         }
 
@@ -163,10 +164,11 @@ public final class SubparametroAction extends ItemAction {
         }
 
         if (item.getSpvr() == null || item.getSpvr().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("sprm_fini") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.sprm_fini.name()) }));
         } else {
             if (item.getSpvr().getFfin() != null && !item.getSpvr().getFini().before(item.getSpvr().getFfin())) {
-                addActionError(getText(ErrorCode.E00006.name()));
+                addActionError(getText(MessageI18nKey.E00006.name()));
             }
         }
 
@@ -197,9 +199,9 @@ public final class SubparametroAction extends ItemAction {
                 throw new Error("Accion no valida: " + accion);
             }
         } catch (final OverlapException ex) {
-            addActionError(getText(ErrorCode.E00009.name(), new String[] { enti.getNombre() }));
+            addActionError(getText(MessageI18nKey.E00009.name(), new String[] { enti.getNombre() }));
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
+            addActionError(getText(MessageI18nKey.E00008.name(),
                     new String[] { enti.getNombre(), String.valueOf(item.getId()) }));
         }
 
@@ -226,7 +228,8 @@ public final class SubparametroAction extends ItemAction {
         try {
             sprmBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(), new String[] { String.valueOf(item.getSpvr().getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(),
+                    new String[] { String.valueOf(item.getSpvr().getId()) }));
         }
 
         return SUCCESS;

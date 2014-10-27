@@ -10,8 +10,8 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
@@ -151,11 +151,13 @@ public final class CargoAction extends BaseAction {
 
         if (ACCION_EDICION.create == accion) {
             if (GenericValidator.isBlankOrNull(crgo.getCodigo())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_codigo") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.crgo_codigo.name()) }));
             }
 
             if (crgo.getTpsr() == null || crgo.getTpsr().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_tpsr") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.crgo_tpsr.name()) }));
             }
         }
 
@@ -165,19 +167,24 @@ public final class CargoAction extends BaseAction {
         }
 
         if (GenericValidator.isBlankOrNull(crgo.getCrgv().getDescripcion())) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_descripcion") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.crgo_descripcion.name()) }));
         }
         if (crgo.getCrgv().getTipo() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_tipo") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.crgo_tipo.name()) }));
         }
         if (crgo.getCrgv().getTemporal() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_temporal") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.crgo_temporal.name()) }));
         }
         if (crgo.getCrgv().getPrincipal() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_principal") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.crgo_principal.name()) }));
         }
         if (crgo.getCrgv().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("crgo_fini") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.crgo_fini.name()) }));
         }
 
         if (hasErrors()) {
@@ -191,7 +198,8 @@ public final class CargoAction extends BaseAction {
             try {
                 crgoBO.insert(crgo);
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("crgo") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.crgo.name()) }));
             }
 
             break;
@@ -199,9 +207,11 @@ public final class CargoAction extends BaseAction {
             try {
                 crgoBO.update(crgo);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("crgo"), crgo.getCodigo() }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
+                    getText(MessageI18nKey.crgo.name()), crgo.getCodigo() }));
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("crgo") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.crgo.name()) }));
             }
 
             break;
@@ -228,7 +238,8 @@ public final class CargoAction extends BaseAction {
         try {
             crgoBO.delete(crgo);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("crgo"), crgo.getCodigo() }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.crgo.name()),
+                crgo.getCodigo() }));
         }
 
         return SUCCESS;

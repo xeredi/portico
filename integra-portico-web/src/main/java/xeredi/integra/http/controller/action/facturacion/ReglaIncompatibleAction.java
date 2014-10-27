@@ -9,8 +9,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
@@ -87,8 +87,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { getText("rgin"), String.valueOf(rginCriterioVO.getRgivId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgin.name()),
+                String.valueOf(rginCriterioVO.getRgivId()) }));
         }
 
         return SUCCESS;
@@ -144,8 +144,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { getText("rgin"), String.valueOf(rginCriterioVO.getRgivId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgin.name()),
+                String.valueOf(rginCriterioVO.getRgivId()) }));
         }
 
         return SUCCESS;
@@ -165,7 +165,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
 
         if (accion == ACCION_EDICION.create) {
             if (rgin.getRgla2() == null || rgin.getRgla2().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgin_rgla2") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.rgin_rgla2.name()) }));
             }
         } else {
             Preconditions.checkNotNull(rgin.getId());
@@ -175,7 +176,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         }
 
         if (rgin.getRgiv().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("rgin_fini") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.rgin_fini.name()) }));
         }
 
         if (hasErrors()) {
@@ -189,17 +191,22 @@ public final class ReglaIncompatibleAction extends BaseAction {
             try {
                 rginBO.insert(rgin);
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("rgin") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.rgin.name()) }));
             }
+
             break;
         case edit:
             try {
                 rginBO.update(rgin);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("rgin") }));
+                addActionError(getText(MessageI18nKey.E00008.name(),
+                        new String[] { getText(MessageI18nKey.rgin.name()) }));
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("rgin") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.rgin.name()) }));
             }
+
             break;
 
         default:
@@ -224,8 +231,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rginBO.delete(rgin);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { getText("rgin"), String.valueOf(rgin.getRgiv().getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgin.name()),
+                String.valueOf(rgin.getRgiv().getId()) }));
         }
 
         return SUCCESS;

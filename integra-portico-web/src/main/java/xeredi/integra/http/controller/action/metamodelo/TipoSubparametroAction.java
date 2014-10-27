@@ -4,7 +4,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -80,35 +80,44 @@ public final class TipoSubparametroAction extends BaseAction {
         // Validaciones
         if (accion == ACCION_EDICION.create) {
             if (GenericValidator.isBlankOrNull(enti.getCodigo())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_codigo") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.enti_codigo.name()) }));
             }
             if (GenericValidator.isBlankOrNull(enti.getNombre())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_nombre") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.enti_nombre.name()) }));
             }
         } else {
             Preconditions.checkNotNull(enti.getId());
         }
 
         if (enti.getTpprAsociado() == null || enti.getTpprAsociado().getId() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_tpprAsociado") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_tpprAsociado.name()) }));
         }
         if (enti.getCmdAlta() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdAlta") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdAlta.name()) }));
         }
         if (enti.getCmdBaja() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdBaja") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdBaja.name()) }));
         }
         if (enti.getCmdEdicion() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdEdicion") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdEdicion.name()) }));
         }
         if (enti.getCmdDuplicado() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdDuplicado") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdDuplicado.name()) }));
         }
         if (enti.getI18n() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_i18n") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_i18n.name()) }));
         }
         if (enti.getTempExp() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_tempExp") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_tempExp.name()) }));
         }
 
         if (hasErrors()) {
@@ -123,14 +132,15 @@ public final class TipoSubparametroAction extends BaseAction {
             try {
                 tpspBO.insert(enti);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpsp") }));
+                addActionError(getText(MessageI18nKey.E00005.name(),
+                        new String[] { getText(MessageI18nKey.tpsp.name()) }));
             }
         } else {
             try {
                 tpspBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(ErrorCode.E00008.name(),
-                        new String[] { getText("tpsp"), String.valueOf(enti.getId()) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
+                    getText(MessageI18nKey.tpsp.name()), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -152,8 +162,8 @@ public final class TipoSubparametroAction extends BaseAction {
         try {
             tpspBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { getText("tpsp"), String.valueOf(enti.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpsp.name()),
+                String.valueOf(enti.getId()) }));
         }
 
         return SUCCESS;

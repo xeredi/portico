@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -66,7 +66,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("engd"), String.valueOf(engd) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.engd.name()),
+                String.valueOf(engd) }));
         }
 
         return SUCCESS;
@@ -93,13 +94,15 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             try {
                 engdBO.insert(engd);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("engd") }));
+                addActionError(getText(MessageI18nKey.E00005.name(),
+                        new String[] { getText(MessageI18nKey.engd.name()) }));
             }
         } else {
             try {
                 engdBO.update(engd);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("engd"), String.valueOf(engd) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
+                    getText(MessageI18nKey.engd.name()), String.valueOf(engd) }));
             }
         }
 
@@ -118,7 +121,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("engd"), String.valueOf(engd) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.engd.name()),
+                String.valueOf(engd) }));
         }
 
         return SUCCESS;

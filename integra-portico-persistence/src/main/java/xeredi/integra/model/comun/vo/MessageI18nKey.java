@@ -414,14 +414,74 @@ public enum MessageI18nKey {
     aspc_prioridad,
     /** The aspc_cetiq info. */
     aspc_cetiqInfo,
+    /** The aspc_cetiq info1. */
+    aspc_cetiqInfo1,
+    /** The aspc_cetiq info2. */
+    aspc_cetiqInfo2,
+    /** The aspc_cetiq info3. */
+    aspc_cetiqInfo3,
+    /** The aspc_cetiq info4. */
+    aspc_cetiqInfo4,
+    /** The aspc_cetiq info5. */
+    aspc_cetiqInfo5,
+    /** The aspc_cetiq info6. */
+    aspc_cetiqInfo6,
     /** The aspc_cpath info. */
     aspc_cpathInfo,
+    /** The aspc_cpath info1. */
+    aspc_cpathInfo1,
+    /** The aspc_cpath info2. */
+    aspc_cpathInfo2,
+    /** The aspc_cpath info3. */
+    aspc_cpathInfo3,
+    /** The aspc_cpath info4. */
+    aspc_cpathInfo4,
+    /** The aspc_cpath info5. */
+    aspc_cpathInfo5,
+    /** The aspc_cpath info6. */
+    aspc_cpathInfo6,
     /** The aspc_cgrp info. */
     aspc_cgrpInfo,
+    /** The aspc_cgrp info1. */
+    aspc_cgrpInfo1,
+    /** The aspc_cgrp info2. */
+    aspc_cgrpInfo2,
+    /** The aspc_cgrp info3. */
+    aspc_cgrpInfo3,
+    /** The aspc_cgrp info4. */
+    aspc_cgrpInfo4,
+    /** The aspc_cgrp info5. */
+    aspc_cgrpInfo5,
+    /** The aspc_cgrp info6. */
+    aspc_cgrpInfo6,
     /** The aspc_lsum cuant. */
     aspc_lsumCuant,
+    /** The aspc_lsum cuant1. */
+    aspc_lsumCuant1,
+    /** The aspc_lsum cuant2. */
+    aspc_lsumCuant2,
+    /** The aspc_lsum cuant3. */
+    aspc_lsumCuant3,
+    /** The aspc_lsum cuant4. */
+    aspc_lsumCuant4,
+    /** The aspc_lsum cuant5. */
+    aspc_lsumCuant5,
+    /** The aspc_lsum cuant6. */
+    aspc_lsumCuant6,
     /** The aspc_lgrp info. */
     aspc_lgrpInfo,
+    /** The aspc_lgrp info1. */
+    aspc_lgrpInfo1,
+    /** The aspc_lgrp info2. */
+    aspc_lgrpInfo2,
+    /** The aspc_lgrp info3. */
+    aspc_lgrpInfo3,
+    /** The aspc_lgrp info4. */
+    aspc_lgrpInfo4,
+    /** The aspc_lgrp info5. */
+    aspc_lgrpInfo5,
+    /** The aspc_lgrp info6. */
+    aspc_lgrpInfo6,
     /** The ascr. */
     ascr,
     /** The ascr_crgo. */
@@ -452,6 +512,102 @@ public enum MessageI18nKey {
     crgo_principal,
     /** The crgo_temporal. */
     crgo_temporal,
+    /** The rgla. */
+    rgla,
+    /** The rgla list. */
+    rglaList,
+    /** The rgla_codigo. */
+    rgla_codigo,
+    /** The rgla_tipo. */
+    rgla_tipo,
+    /** The rgla_enti. */
+    rgla_enti,
+    /** The rgla_fini. */
+    rgla_fini,
+    /** The rgla_ffin. */
+    rgla_ffin,
+    /** The rgla_orden. */
+    rgla_orden,
+    /** The rgla_condicion. */
+    rgla_condicion,
+    /** The rgla_formula. */
+    rgla_formula,
+    /** The rgla_importe base. */
+    rgla_importeBase,
+    /** The rgla_path impuesto. */
+    rgla_pathImpuesto,
+    /** The rgla_path pagador. */
+    rgla_pathPagador,
+    /** The rgla_path es suj pasivo. */
+    rgla_pathEsSujPasivo,
+    /** The rgla_path cod exen. */
+    rgla_pathCodExen,
+    /** The rgla_etiq info. */
+    rgla_etiqInfo,
+    /** The rgla_etiq info1. */
+    rgla_etiqInfo1,
+    /** The rgla_etiq info2. */
+    rgla_etiqInfo2,
+    /** The rgla_etiq info3. */
+    rgla_etiqInfo3,
+    /** The rgla_etiq info4. */
+    rgla_etiqInfo4,
+    /** The rgla_etiq info5. */
+    rgla_etiqInfo5,
+    /** The rgla_etiq info6. */
+    rgla_etiqInfo6,
+    /** The rgla_path info. */
+    rgla_pathInfo,
+    /** The rgla_path info1. */
+    rgla_pathInfo1,
+    /** The rgla_path info2. */
+    rgla_pathInfo2,
+    /** The rgla_path info3. */
+    rgla_pathInfo3,
+    /** The rgla_path info4. */
+    rgla_pathInfo4,
+    /** The rgla_path info5. */
+    rgla_pathInfo5,
+    /** The rgla_path info6. */
+    rgla_pathInfo6,
+    /** The rgla_etiq cuant. */
+    rgla_etiqCuant,
+    /** The rgla_etiq cuant1. */
+    rgla_etiqCuant1,
+    /** The rgla_etiq cuant2. */
+    rgla_etiqCuant2,
+    /** The rgla_etiq cuant3. */
+    rgla_etiqCuant3,
+    /** The rgla_etiq cuant4. */
+    rgla_etiqCuant4,
+    /** The rgla_etiq cuant5. */
+    rgla_etiqCuant5,
+    /** The rgla_etiq cuant6. */
+    rgla_etiqCuant6,
+    /** The rgla_path cuant. */
+    rgla_pathCuant,
+    /** The rgla_path cuant1. */
+    rgla_pathCuant1,
+    /** The rgla_path cuant2. */
+    rgla_pathCuant2,
+    /** The rgla_path cuant3. */
+    rgla_pathCuant3,
+    /** The rgla_path cuant4. */
+    rgla_pathCuant4,
+    /** The rgla_path cuant5. */
+    rgla_pathCuant5,
+    /** The rgla_path cuant6. */
+    rgla_pathCuant6,
+    /** The rgin. */
+    rgin,
+    /** The rgin list. */
+    rginList,
+    /** The rgin_fini. */
+    rgin_fini,
+    /** The rgin_ffin. */
+    rgin_ffin,
+    /** The rgin_rgla2. */
+    rgin_rgla2,
     /** The vlrc. */
     vlrc,
     /** The vlrc list. */
@@ -501,29 +657,34 @@ public enum MessageI18nKey {
     /** The m18n_key. */
     m18n_key,
 
-    /** The E00000. */
+    /** Error no controlado. Se pasa como argumento el mensaje de la excepcion. */
     E00000,
-    /** The E00001. */
+    /** Campo obligatorio. Se pasa como argumento la etiqueta del campo. */
     E00001,
-    /** The E00002. */
+    /** Texto obligatorio para un idioma. Se pasa como argumento el idioma. */
     E00002,
-    /** The E00003. */
+    /** Fecha de inicio de vigencia de un maestro obligatoria. Sin argumentos. */
     E00003,
-    /** The E00004. */
+    /** Codigo Obligatorio para un maestro. Sin argumentos. */
     E00004,
-    /** The E00005. */
+    /** Instancia Duplicada. Se pasa como argumento el nombre de la entidad. */
     E00005,
-    /** The E00006. */
+    /** Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin argumentos. */
     E00006,
-    /** The E00007. */
+    /** Parametro no encontrado. Se pasa como argumento el identificador no encontrado. */
     E00007,
-    /** The E00008. */
+    /** Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su identificador. */
     E00008,
-    /** The E00009. */
+    /** Error de solape de rangos de vigencia de una entidad. Se pasa como argumento el nombre de la entidad. */
     E00009,
-    /** The E00010. */
+    /**
+     * Error de servicio en estado inválido para realizar una acción. Se pasa como argumento el estado del servicio.
+     */
     E00010,
-    /** The E00011. */
+    /**
+     * Error de subservicio en estado inválido para realizar una acción. Se pasa como argumento el estado del
+     * subservicio.
+     */
     E00011, ;
 
 }

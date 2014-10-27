@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
@@ -67,8 +67,8 @@ public final class TipoDatoAction extends BaseAction {
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { getText("tptd"), String.valueOf(tpdt.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
+                String.valueOf(tpdt.getId()) }));
         }
 
         return SUCCESS;
@@ -87,28 +87,31 @@ public final class TipoDatoAction extends BaseAction {
         // Validacion de datos
         if (accion == ACCION_EDICION.create) {
             if (tpdt.getCodigo() == null || tpdt.getCodigo().isEmpty()) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_codigo") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.tpdt_codigo.name()) }));
             }
         } else {
-            if (tpdt.getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_id") }));
-            }
+            Preconditions.checkNotNull(tpdt.getId());
         }
 
         if (tpdt.getNombre() == null || tpdt.getNombre().isEmpty()) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_nombre") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.tpdt_nombre.name()) }));
         }
         if (tpdt.getTpht() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_tpht") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.tpdt_tpht.name()) }));
         }
         if (tpdt.getTipoElemento() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_tipoElemento") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.tpdt_tpel.name()) }));
         }
 
         if (tpdt.getTipoElemento() != null
                 && (tpdt.getTipoElemento() == TipoElemento.PR || tpdt.getTipoElemento() == TipoElemento.SR)) {
             if (tpdt.getEnti() == null || tpdt.getEnti().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("tpdt_enti") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.tpdt_enti.name()) }));
             }
         }
 
@@ -122,7 +125,8 @@ public final class TipoDatoAction extends BaseAction {
             try {
                 tpdtBO.insert(tpdt);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tpdt") }));
+                addActionError(getText(MessageI18nKey.E00005.name(),
+                        new String[] { getText(MessageI18nKey.tpdt.name()) }));
             }
         } else {
             tpdtBO.update(tpdt);
@@ -163,8 +167,8 @@ public final class TipoDatoAction extends BaseAction {
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { getText("tptd"), String.valueOf(tpdt.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
+                String.valueOf(tpdt.getId()) }));
         }
 
         return SUCCESS;

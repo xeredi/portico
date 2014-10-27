@@ -9,8 +9,8 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
@@ -175,11 +175,13 @@ public final class AspectoAction extends BaseAction {
 
         if (ACCION_EDICION.create == accion) {
             if (GenericValidator.isBlankOrNull(aspc.getCodigo())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_codigo") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_codigo.name()) }));
             }
 
             if (aspc.getTpsr() == null || aspc.getTpsr().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_tpsr") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_tpsr.name()) }));
             }
         }
 
@@ -189,29 +191,35 @@ public final class AspectoAction extends BaseAction {
         }
 
         if (GenericValidator.isBlankOrNull(aspc.getAspv().getDescripcion())) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_descripcion") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.aspc_descripcion.name()) }));
         }
 
         if (aspc.getAspv().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_fini") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.aspc_fini.name()) }));
         }
         if (aspc.getAspv().getPrioridad() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_prioridad") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.aspc_prioridad.name()) }));
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())
                 || aspc.getAspv().getCgrpInfo1() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo1") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo1.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo1") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cpathInfo1.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo1() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo1") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo1.name()) }));
             }
         }
 
@@ -219,15 +227,18 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())
                 || aspc.getAspv().getCgrpInfo2() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo2())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo2") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo2.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo2") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cpathInfo2.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo2() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo2") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo2.name()) }));
             }
         }
 
@@ -235,15 +246,18 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())
                 || aspc.getAspv().getCgrpInfo3() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo3())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo3") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo3.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo3") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cpathInfo3.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo3() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo3") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo3.name()) }));
             }
         }
 
@@ -251,15 +265,18 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())
                 || aspc.getAspv().getCgrpInfo4() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo4())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo4") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo4.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo4") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cpathInfo4.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo4() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo4") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo4.name()) }));
             }
         }
 
@@ -267,15 +284,18 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())
                 || aspc.getAspv().getCgrpInfo5() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo5())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo5") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo5.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo5") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cpathInfo5.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo5() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo5") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo5.name()) }));
             }
         }
 
@@ -283,15 +303,18 @@ public final class AspectoAction extends BaseAction {
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())
                 || aspc.getAspv().getCgrpInfo6() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo6())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cetiqInfo6") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo6.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cpathInfo6") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cpathInfo6.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo6() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("aspc_cgrpInfo6") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo6.name()) }));
             }
         }
 
@@ -306,7 +329,8 @@ public final class AspectoAction extends BaseAction {
             try {
                 aspcBO.insert(aspc);
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("aspc") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.aspc.name()) }));
             }
 
             break;
@@ -314,7 +338,8 @@ public final class AspectoAction extends BaseAction {
             try {
                 aspcBO.duplicate(aspc);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("aspc") }));
+                addActionError(getText(MessageI18nKey.E00005.name(),
+                        new String[] { getText(MessageI18nKey.aspc.name()) }));
             }
 
             break;
@@ -322,9 +347,11 @@ public final class AspectoAction extends BaseAction {
             try {
                 aspcBO.update(aspc);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(ErrorCode.E00008.name(), new String[] { getText("aspc"), aspc.getCodigo() }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
+                    getText(MessageI18nKey.aspc.name()), aspc.getCodigo() }));
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("aspc") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.aspc.name()) }));
             }
 
             break;

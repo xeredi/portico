@@ -8,8 +8,8 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.bo.CargoBO;
@@ -148,7 +148,8 @@ public final class AspectoCargoAction extends BaseAction {
             Preconditions.checkNotNull(ascr.getAspcId());
 
             if (ascr.getCrgo() == null || ascr.getCrgo().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("ascr_crgo") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.ascr_crgo.name()) }));
             }
         } else {
             Preconditions.checkNotNull(ascr.getId());
@@ -156,7 +157,8 @@ public final class AspectoCargoAction extends BaseAction {
         }
 
         if (ascr.getAscv().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("ascr_fini") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.ascr_fini.name()) }));
         }
 
         if (hasErrors()) {
@@ -170,7 +172,8 @@ public final class AspectoCargoAction extends BaseAction {
             try {
                 ascrBO.insert(ascr);
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("ascr") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.ascr.name()) }));
             }
 
             break;
@@ -178,10 +181,11 @@ public final class AspectoCargoAction extends BaseAction {
             try {
                 ascrBO.update(ascr);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(ErrorCode.E00008.name(),
-                        new String[] { getText("ascr"), String.valueOf(ascr.getId()) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
+                    getText(MessageI18nKey.ascr.name()), String.valueOf(ascr.getId()) }));
             } catch (final OverlapException ex) {
-                addActionError(getText(ErrorCode.E00009.name(), new String[] { getText("ascr") }));
+                addActionError(getText(MessageI18nKey.E00009.name(),
+                        new String[] { getText(MessageI18nKey.ascr.name()) }));
             }
 
             break;

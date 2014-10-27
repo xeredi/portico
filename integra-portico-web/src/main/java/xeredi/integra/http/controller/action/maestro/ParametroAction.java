@@ -12,10 +12,10 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
-import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -35,6 +35,7 @@ public final class ParametroAction extends ItemAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 477492673223023219L;
 
+    /** The enti. */
     private TipoParametroVO enti;
 
     /** The prmt . */
@@ -117,7 +118,7 @@ public final class ParametroAction extends ItemAction {
 
             loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
+            addActionError(getText(MessageI18nKey.E00007.name(), new String[] { String.valueOf(item.getId()) }));
         }
 
         return SUCCESS;
@@ -157,7 +158,7 @@ public final class ParametroAction extends ItemAction {
 
             loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(item.getId()) }));
+            addActionError(getText(MessageI18nKey.E00007.name(), new String[] { String.valueOf(item.getId()) }));
         }
 
         return SUCCESS;
@@ -180,7 +181,8 @@ public final class ParametroAction extends ItemAction {
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
             if (GenericValidator.isBlankOrNull(item.getParametro())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_parametro") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.prmt_parametro.name()) }));
             }
         }
 
@@ -191,10 +193,11 @@ public final class ParametroAction extends ItemAction {
         }
 
         if (item.getPrvr() == null || item.getPrvr().getFini() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("prmt_fini") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.prmt_fini.name()) }));
         } else {
             if (item.getPrvr().getFfin() != null && !item.getPrvr().getFini().before(item.getPrvr().getFfin())) {
-                addActionError(getText(ErrorCode.E00006.name()));
+                addActionError(getText(MessageI18nKey.E00006.name()));
             }
         }
 
@@ -203,7 +206,7 @@ public final class ParametroAction extends ItemAction {
                 final I18nVO i18nVO = i18nMap.get(idioma);
 
                 if (i18nVO == null || GenericValidator.isBlankOrNull(i18nVO.getText())) {
-                    addActionError(getText(ErrorCode.E00002.name(), new String[] { idioma }));
+                    addActionError(getText(MessageI18nKey.E00002.name(), new String[] { idioma }));
                 } else {
                     i18nVO.setLanguage(idioma);
                 }
@@ -237,9 +240,9 @@ public final class ParametroAction extends ItemAction {
                 throw new Error("Accion no valida: " + accion);
             }
         } catch (final OverlapException ex) {
-            addActionError(getText(ErrorCode.E00009.name(), new String[] { enti.getNombre() }));
+            addActionError(getText(MessageI18nKey.E00009.name(), new String[] { enti.getNombre() }));
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
+            addActionError(getText(MessageI18nKey.E00008.name(),
                     new String[] { enti.getNombre(), String.valueOf(item.getId()) }));
         }
 
@@ -266,7 +269,8 @@ public final class ParametroAction extends ItemAction {
         try {
             prmtBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(), new String[] { String.valueOf(item.getPrvr().getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(),
+                    new String[] { String.valueOf(item.getPrvr().getId()) }));
         }
 
         return SUCCESS;
@@ -304,7 +308,7 @@ public final class ParametroAction extends ItemAction {
                 i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
             }
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00007.name(), new String[] { String.valueOf(prmtCriterioVO) }));
+            addActionError(getText(MessageI18nKey.E00007.name(), new String[] { String.valueOf(prmtCriterioVO) }));
         }
 
         return SUCCESS;
@@ -357,6 +361,11 @@ public final class ParametroAction extends ItemAction {
         i18nMap = value;
     }
 
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
     public TipoParametroVO getEnti() {
         return enti;
     }

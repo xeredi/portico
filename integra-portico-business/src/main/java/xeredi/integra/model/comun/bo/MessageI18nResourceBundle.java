@@ -46,7 +46,7 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
         final Map<MessageI18nKey, String> map = messageI18nBO.selectKeyValueMap(locale, false);
 
         for (final MessageI18nKey key : map.keySet()) {
-            contentList.add(new Object[] { key, map.get(key) });
+            contentList.add(new Object[] { key.name(), map.get(key) });
         }
 
         final I18nBO i18nBO = new I18nBO();

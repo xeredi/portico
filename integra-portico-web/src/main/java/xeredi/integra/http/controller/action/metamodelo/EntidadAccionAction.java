@@ -4,7 +4,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
@@ -76,17 +76,20 @@ public final class EntidadAccionAction extends BaseAction {
 
         if (accion == ACCION_EDICION.create) {
             if (GenericValidator.isBlankOrNull(enac.getPath())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enac_path") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.enac_path.name()) }));
             }
         } else {
             Preconditions.checkNotNull(enac.getPath());
         }
 
         if (GenericValidator.isBlankOrNull(enac.getEtiqueta())) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enac_etiqueta") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enac_etiqueta.name()) }));
         }
         if (enac.getOrden() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enac_orden") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enac_orden.name()) }));
         }
 
         if (hasErrors()) {
@@ -99,7 +102,8 @@ public final class EntidadAccionAction extends BaseAction {
             try {
                 enacBO.insert(enac);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("enac") }));
+                addActionError(getText(MessageI18nKey.E00005.name(),
+                        new String[] { getText(MessageI18nKey.enac.name()) }));
             }
         } else {
             enacBO.update(enac);

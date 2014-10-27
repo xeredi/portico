@@ -2,6 +2,8 @@ package xeredi.integra.model.comun.exception;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.MessageI18nKey;
+
 import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
@@ -11,7 +13,7 @@ import com.google.common.base.Preconditions;
 public final class BusinessExceptionVO {
 
     /** The error code. */
-    private final ErrorCode errorCode;
+    private final MessageI18nKey key;
 
     /** The error args. */
     private final Object[] errorArgs;
@@ -24,12 +26,12 @@ public final class BusinessExceptionVO {
      * @param aerrorArgs
      *            the aerror args
      */
-    public BusinessExceptionVO(final ErrorCode aerrorCode, final Object[] aerrorArgs) {
+    public BusinessExceptionVO(final MessageI18nKey akey, final Object[] aerrorArgs) {
         super();
 
-        Preconditions.checkNotNull(aerrorCode);
+        Preconditions.checkNotNull(akey);
 
-        errorCode = aerrorCode;
+        key = akey;
         errorArgs = aerrorArgs;
     }
 
@@ -39,8 +41,8 @@ public final class BusinessExceptionVO {
      * @param aerrorCode
      *            the aerror code
      */
-    public BusinessExceptionVO(final ErrorCode aerrorCode) {
-        this(aerrorCode, null);
+    public BusinessExceptionVO(final MessageI18nKey akey) {
+        this(akey, null);
     }
 
     /**
@@ -56,8 +58,8 @@ public final class BusinessExceptionVO {
      *
      * @return the error code
      */
-    public ErrorCode getErrorCode() {
-        return errorCode;
+    public MessageI18nKey getKey() {
+        return key;
     }
 
     /**

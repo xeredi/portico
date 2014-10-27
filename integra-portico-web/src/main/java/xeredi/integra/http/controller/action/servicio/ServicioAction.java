@@ -12,7 +12,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.ItemDatoValidator;
-import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -179,13 +179,16 @@ public final class ServicioAction extends ItemAction {
 
         if (accion == ACCION_EDICION.create) {
             if (item.getSubp() == null || item.getSubp().getId() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_subp") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.srvc_subp.name()) }));
             }
             if (item.getAnno() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_anno") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.srvc_anno.name()) }));
             }
             if (item.getNumero() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_numero") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.srvc_numero.name()) }));
             }
         } else {
             Preconditions.checkNotNull(item.getId());
@@ -193,20 +196,24 @@ public final class ServicioAction extends ItemAction {
 
         if (enti.getTpdtEstado() != null) {
             if (GenericValidator.isBlankOrNull(item.getEstado())) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_estado") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.srvc_estado.name()) }));
             }
         }
 
         if (enti.getTemporal()) {
             if (item.getFini() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_fini") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.srvc_fini.name()) }));
             }
             if (item.getFfin() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_ffin") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.srvc_ffin.name()) }));
             }
         } else {
             if (item.getFref() == null) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("srvc_fref") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.srvc_fref.name()) }));
             }
         }
 

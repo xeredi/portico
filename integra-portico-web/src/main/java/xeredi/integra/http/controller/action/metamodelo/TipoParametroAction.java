@@ -7,9 +7,9 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.I18nBO;
-import xeredi.integra.model.comun.exception.ErrorCode;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
@@ -131,32 +131,40 @@ public final class TipoParametroAction extends BaseAction {
         // Validaciones
         if (accion == ACCION_EDICION.create) {
             if (enti.getCodigo() == null || enti.getCodigo().isEmpty()) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_codigo") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.enti_codigo.name()) }));
             }
             if (enti.getNombre() == null || enti.getNombre().isEmpty()) {
-                addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_nombre") }));
+                addActionError(getText(MessageI18nKey.E00001.name(),
+                        new String[] { getText(MessageI18nKey.enti_nombre.name()) }));
             }
         } else {
             Preconditions.checkNotNull(enti.getId());
         }
 
         if (enti.getCmdAlta() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdAlta") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdAlta.name()) }));
         }
         if (enti.getCmdBaja() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdBaja") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdBaja.name()) }));
         }
         if (enti.getCmdEdicion() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdEdicion") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdEdicion.name()) }));
         }
         if (enti.getCmdDuplicado() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_cmdDuplicado") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_cmdDuplicado.name()) }));
         }
         if (enti.getI18n() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_i18n") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_i18n.name()) }));
         }
         if (enti.getTempExp() == null) {
-            addActionError(getText(ErrorCode.E00001.name(), new String[] { getText("enti_tempExp") }));
+            addActionError(getText(MessageI18nKey.E00001.name(),
+                    new String[] { getText(MessageI18nKey.enti_tempExp.name()) }));
         }
 
         if (hasErrors()) {
@@ -171,14 +179,15 @@ public final class TipoParametroAction extends BaseAction {
             try {
                 tpprBO.insert(enti);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(ErrorCode.E00005.name(), new String[] { getText("tppr") }));
+                addActionError(getText(MessageI18nKey.E00005.name(),
+                        new String[] { getText(MessageI18nKey.tppr.name()) }));
             }
         } else {
             try {
                 tpprBO.update(enti);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(ErrorCode.E00008.name(),
-                        new String[] { getText("tppr"), String.valueOf(enti.getId()) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
+                    getText(MessageI18nKey.tppr.name()), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -200,8 +209,8 @@ public final class TipoParametroAction extends BaseAction {
         try {
             tpprBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(ErrorCode.E00008.name(),
-                    new String[] { getText("tppr"), String.valueOf(enti.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tppr.name()),
+                String.valueOf(enti.getId()) }));
         }
 
         return SUCCESS;

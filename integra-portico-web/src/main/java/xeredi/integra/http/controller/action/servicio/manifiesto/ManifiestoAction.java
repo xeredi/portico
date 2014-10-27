@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.ErrorCode;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -45,7 +45,7 @@ public final class ManifiestoAction extends BaseAction {
         try {
             maniBO.bloquear(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -65,7 +65,7 @@ public final class ManifiestoAction extends BaseAction {
         try {
             maniBO.completar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -85,7 +85,7 @@ public final class ManifiestoAction extends BaseAction {
         try {
             maniBO.iniciar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -105,7 +105,7 @@ public final class ManifiestoAction extends BaseAction {
         try {
             maniBO.anular(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(ErrorCode.E00010.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00010.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;

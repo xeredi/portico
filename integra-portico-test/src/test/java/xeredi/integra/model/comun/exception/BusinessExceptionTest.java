@@ -8,6 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.vo.MessageI18nKey;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class BusinessExceptionTest.
@@ -22,7 +24,7 @@ public final class BusinessExceptionTest {
      */
     @Test
     public void test() {
-        final BusinessExceptionVO exceptionVO = new BusinessExceptionVO(ErrorCode.E00000,
+        final BusinessExceptionVO exceptionVO = new BusinessExceptionVO(MessageI18nKey.E00000,
                 new Object[] { "Error de prueba" });
 
         try {

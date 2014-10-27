@@ -85,7 +85,7 @@ public final class BusinessException extends Exception {
         Preconditions.checkNotNull(bundle);
 
         for (final BusinessExceptionVO vo : list) {
-            final String message = vo.getErrorCode().name() + " - " + bundle.getString(vo.getErrorCode().name());
+            final String message = vo.getKey().name() + " - " + bundle.getString(vo.getKey().name());
 
             Preconditions.checkNotNull(message);
 

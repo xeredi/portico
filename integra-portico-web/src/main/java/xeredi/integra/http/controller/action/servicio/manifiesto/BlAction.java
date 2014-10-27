@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -44,7 +45,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.bloquear(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -64,7 +65,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.completar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -84,7 +85,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.iniciar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -104,7 +105,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.anular(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText("ssrv.error.estadoInvalido", new String[] { ex.getEstado(), ex.getItem() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
         }
 
         return SUCCESS;
