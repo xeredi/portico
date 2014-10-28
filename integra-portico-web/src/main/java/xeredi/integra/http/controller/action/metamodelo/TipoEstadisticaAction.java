@@ -1,8 +1,14 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.Map;
+
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -26,6 +32,9 @@ public final class TipoEstadisticaAction extends BaseAction {
 
     /** The tpes form. */
     private TipoEstadisticaVO enti;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /**
      * Instantiates a new tipo estadistica action.
@@ -62,8 +71,10 @@ public final class TipoEstadisticaAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+        final I18nBO i18nBO = new I18nBO();
 
         enti = tpesBO.select(enti.getId(), getIdioma());
+        i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
         return SUCCESS;
     }
@@ -84,13 +95,11 @@ public final class TipoEstadisticaAction extends BaseAction {
                 addActionError(getText(MessageI18nKey.E00001.name(),
                         new String[] { getText(MessageI18nKey.enti_codigo.name()) }));
             }
-            if (enti.getNombre() == null || enti.getNombre().isEmpty()) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.enti_nombre.name()) }));
-            }
         } else {
             Preconditions.checkNotNull(enti.getId());
         }
+
+        I18nValidator.validate(this, i18nMap);
 
         if (hasErrors()) {
             return SUCCESS;
@@ -102,17 +111,17 @@ public final class TipoEstadisticaAction extends BaseAction {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             try {
-                tpesBO.insert(enti);
+                tpesBO.insert(enti, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
                         new String[] { getText(MessageI18nKey.tpes.name()) }));
             }
         } else {
             try {
-                tpesBO.update(enti);
+                tpesBO.update(enti, i18nMap);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                    getText(MessageI18nKey.tpes.name()), String.valueOf(enti.getId()) }));
+                        getText(MessageI18nKey.tpes.name()), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -135,7 +144,7 @@ public final class TipoEstadisticaAction extends BaseAction {
             tpesBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpes.name()),
-                String.valueOf(enti.getId()) }));
+                    String.valueOf(enti.getId()) }));
         }
 
         return SUCCESS;
@@ -152,8 +161,10 @@ public final class TipoEstadisticaAction extends BaseAction {
         Preconditions.checkNotNull(enti.getId());
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+        final I18nBO i18nBO = new I18nBO();
 
         enti = tpesBO.select(enti.getId(), getIdioma());
+        i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
         return SUCCESS;
     }
@@ -196,6 +207,25 @@ public final class TipoEstadisticaAction extends BaseAction {
      */
     public void setEnti(final TipoEstadisticaVO value) {
         enti = value;
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 
 }

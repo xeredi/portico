@@ -2,11 +2,15 @@ package xeredi.integra.model.metamodelo.bo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.TipoEstadisticaDAO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
@@ -140,7 +144,8 @@ public class TipoEstadisticaBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final TipoEstadisticaVO tpesVO) throws DuplicateInstanceException {
+    public final void insert(final TipoEstadisticaVO tpesVO, final Map<String, I18nVO> i18nMap)
+            throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpesVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -159,6 +164,8 @@ public class TipoEstadisticaBO {
             entiDAO.insert(tpesVO);
             tpesDAO.insert(tpesVO);
 
+            I18nBO.insertMap(session, I18nPrefix.enti, tpesVO.getId(), i18nMap);
+
             session.commit();
         }
     }
@@ -171,7 +178,8 @@ public class TipoEstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final TipoEstadisticaVO tpesVO) throws InstanceNotFoundException {
+    public final void update(final TipoEstadisticaVO tpesVO, final Map<String, I18nVO> i18nMap)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpesVO);
         Preconditions.checkNotNull(tpesVO.getId());
 
@@ -184,6 +192,8 @@ public class TipoEstadisticaBO {
             if (updated == 0) {
                 throw new InstanceNotFoundException(TipoEstadisticaVO.class.getName(), tpesVO);
             }
+
+            I18nBO.updateMap(session, I18nPrefix.enti, tpesVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -203,6 +213,8 @@ public class TipoEstadisticaBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
+
+            I18nBO.deleteMap(session, I18nPrefix.enti, tpesId);
 
             final int updated = tpesDAO.delete(tpesId);
 

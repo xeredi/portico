@@ -722,9 +722,7 @@ function tpprCreateController($http, $location, $routeParams, pageTitleService) 
     vm.cancel = cancel;
 
     function save() {
-        var url = "metamodelo/tppr-save.action";
-
-        $http.post(url, {
+        $http.post("metamodelo/tppr-save.action", {
             enti : vm.enti,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -860,52 +858,61 @@ function tpspCreateController($http, $location, $routeParams, pageTitleService) 
     pageTitleService.setTitle("tpsp", "page_create");
 }
 
-function tpsrGridController($scope, $http, $location, $routeParams, pageTitleService) {
-    $scope.showFilter = false;
-    $scope.entiCriterio = {};
+function tpsrGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.entiCriterio = {};
 
     function search(entiCriterio, page, limit) {
-        var url = "metamodelo/tpsr-list.action";
-
-        $http.post(url, {
+        $http.post("metamodelo/tpsr-list.action", {
             entiCriterio : entiCriterio,
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.entiList.page;
-                $scope.entiList = data.entiList;
+                vm.page = data.entiList.page;
+                vm.entiList = data.entiList;
 
                 var map = {};
 
                 map["page"] = data.entiList.page;
 
                 $location.search(map).replace();
-
-                $scope.showFilter = false;
             }
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.entiCriterio, $scope.page, $scope.limit);
+    function pageChanged() {
+        search(vm.entiCriterio, vm.page, vm.limit);
     }
 
-    $scope.filter = function() {
-        $scope.showFilter = true;
+    function filter(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modules/metamodelo/tpsr-filter-content.html',
+            controller : 'tpsrFilterController',
+            controllerAs : 'vm',
+            size : size,
+            resolve : {
+                entiCriterio : function() {
+                    return vm.entiCriterio;
+                }
+            }
+        });
+
+        modalInstance.result.then(function(entiCriterio) {
+            vm.entiCriterio = entiCriterio;
+            vm.page = 1;
+
+            search(vm.entiCriterio, 1, vm.limit);
+        });
     }
 
-    $scope.search = function() {
-        search($scope.entiCriterio, 1, $scope.limit);
-    }
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    search($scope.entiCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    search(vm.entiCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
 
     pageTitleService.setTitle("tpsr", "page_grid");
 }
@@ -1131,9 +1138,13 @@ function tpssCreateController($scope, $http, $location, $routeParams, pageTitleS
     pageTitleService.setTitle("tpss", "page_create");
 }
 
-function tpesGridController($scope, $http, $location, $routeParams, pageTitleService) {
-    $scope.showFilter = false;
-    $scope.entiCriterio = {};
+function tpesGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.entiCriterio = {};
 
     function search(entiCriterio, page, limit) {
         var url = "metamodelo/tpes-list.action";
@@ -1143,40 +1154,47 @@ function tpesGridController($scope, $http, $location, $routeParams, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.entiList.page;
-                $scope.entiList = data.entiList;
+                vm.page = data.entiList.page;
+                vm.entiList = data.entiList;
 
                 var map = {};
 
                 map["page"] = data.entiList.page;
 
                 $location.search(map).replace();
-
-                $scope.showFilter = false;
             }
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.entiCriterio, $scope.page, $scope.limit);
+    function pageChanged() {
+        search(vm.entiCriterio, vm.page, vm.limit);
     }
 
-    $scope.filter = function() {
-        $scope.showFilter = true;
+    function filter(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modules/metamodelo/tpes-filter-content.html',
+            controller : 'tpesFilterController',
+            controllerAs : 'vm',
+            size : size,
+            resolve : {
+                entiCriterio : function() {
+                    return vm.entiCriterio;
+                }
+            }
+        });
+
+        modalInstance.result.then(function(entiCriterio) {
+            vm.entiCriterio = entiCriterio;
+            vm.page = 1;
+
+            search(vm.entiCriterio, 1, vm.limit);
+        });
     }
 
-    $scope.search = function() {
-        search($scope.entiCriterio, 1, $scope.limit);
-    }
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    search($scope.entiCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    search(vm.entiCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
 
     pageTitleService.setTitle("tpes", "page_grid");
 }
@@ -1198,49 +1216,45 @@ function tpesFilterController($modalInstance, entiCriterio) {
     }
 }
 
-function tpesDetailController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "metamodelo/tpes-detail.action?enti.id=" + $routeParams.entiId;
+function tpesDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.subentiList = data.subentiList;
-    });
+    vm.remove = remove;
 
-    $scope.remove = function() {
-        bootbox.confirm("Are you sure?", function(result) {
-            if (result) {
-                var url = "metamodelo/tpes-remove.action?enti.id=" + $scope.enti.id;
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.get("metamodelo/tpes-remove.action?enti.id=" + vm.enti.id).success(function(data) {
+                vm.actionErrors = data.actionErrors;
 
-                $http.get(url).success(function(data) {
-                    $scope.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        window.history.back();
-                    }
-                });
-            }
-        });
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                }
+            });
+        }
     }
+
+    $http.get("metamodelo/tpes-detail.action?enti.id=" + $routeParams.entiId).success(function(data) {
+        vm.enti = data.enti;
+        vm.i18nMap = data.i18nMap;
+        vm.subentiList = data.subentiList;
+    });
 
     pageTitleService.setTitle("tpes", "page_detail");
 }
 
-function tpesEditController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "metamodelo/tpes-edit.action?enti.id=" + $routeParams.entiId;
+function tpesEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "metamodelo/tpes-save.action";
-
-        $http.post(url, {
-            enti : $scope.enti,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/tpes-save.action", {
+            enti : vm.enti,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -1250,29 +1264,32 @@ function tpesEditController($scope, $http, $location, $routeParams, pageTitleSer
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("metamodelo/tpes-edit.action?enti.id=" + $routeParams.entiId).success(function(data) {
+        vm.enti = data.enti;
+        vm.i18nMap = data.i18nMap;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitle("tpes", "page_edit");
 }
 
-function tpesCreateController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "metamodelo/tpes-create.action";
+function tpesCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.enti = data.enti;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "metamodelo/tpes-save.action";
-
-        $http.post(url, {
-            enti : $scope.enti,
-            accion : $scope.accion
+    function save() {
+        $http.post("metamodelo/tpes-save.action", {
+            enti : vm.enti,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/metamodelo/tpes/detail/" + data.enti.id).replace();
@@ -1280,9 +1297,14 @@ function tpesCreateController($scope, $http, $location, $routeParams, pageTitleS
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("metamodelo/tpes-create.action").success(function(data) {
+        vm.enti = data.enti;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitle("tpes", "page_create");
 }
