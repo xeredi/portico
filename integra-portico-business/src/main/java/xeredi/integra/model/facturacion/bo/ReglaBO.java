@@ -44,11 +44,9 @@ public class ReglaBO {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rglaDAO = session.getMapper(ReglaDAO.class);
 
-        rglaDAO = session.getMapper(ReglaDAO.class);
-
-        try {
             final int count = rglaDAO.count(rglaCriterioVO);
             final List<ReglaVO> rglaList = new ArrayList<>();
 
@@ -57,8 +55,6 @@ public class ReglaBO {
             }
 
             return new PaginatedList<ReglaVO>(rglaList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -72,14 +68,10 @@ public class ReglaBO {
     public List<ReglaVO> selectList(final ReglaCriterioVO rglaCriterioVO) {
         Preconditions.checkNotNull(rglaCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rglaDAO = session.getMapper(ReglaDAO.class);
 
-        rglaDAO = session.getMapper(ReglaDAO.class);
-
-        try {
             return rglaDAO.selectList(rglaCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -95,11 +87,9 @@ public class ReglaBO {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rglaDAO = session.getMapper(ReglaDAO.class);
 
-        rglaDAO = session.getMapper(ReglaDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             if (rglaDAO.exists(rgla)) {
@@ -119,8 +109,6 @@ public class ReglaBO {
             rglaDAO.insertVersion(rgla);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -139,11 +127,9 @@ public class ReglaBO {
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rglaDAO = session.getMapper(ReglaDAO.class);
 
-        rglaDAO = session.getMapper(ReglaDAO.class);
-
-        try {
             if (rglaDAO.existsOverlap(rgla)) {
                 throw new OverlapException(ReglaVO.class.getName(), rgla);
             }
@@ -155,8 +141,6 @@ public class ReglaBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -173,11 +157,9 @@ public class ReglaBO {
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rglaDAO = session.getMapper(ReglaDAO.class);
 
-        rglaDAO = session.getMapper(ReglaDAO.class);
-
-        try {
             final int updated = rglaDAO.deleteVersion(rgla);
 
             if (updated == 0) {
@@ -185,8 +167,6 @@ public class ReglaBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -204,11 +184,9 @@ public class ReglaBO {
         Preconditions.checkArgument(rglaCriterioVO.getRglvId() != null || rglaCriterioVO.getId() != null
                 && rglaCriterioVO.getFechaVigencia() != null);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rglaDAO = session.getMapper(ReglaDAO.class);
 
-        rglaDAO = session.getMapper(ReglaDAO.class);
-
-        try {
             final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
 
             if (rgla == null) {
@@ -216,9 +194,6 @@ public class ReglaBO {
             }
 
             return rgla;
-        } finally {
-            session.close();
         }
     }
-
 }

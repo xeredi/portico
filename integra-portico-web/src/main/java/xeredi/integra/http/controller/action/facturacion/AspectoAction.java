@@ -3,13 +3,18 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
@@ -38,6 +43,9 @@ public final class AspectoAction extends BaseAction {
 
     /** The aspc. */
     private AspectoVO aspc;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /** The ascr list. */
     private List<AspectoCargoVO> ascrList;
@@ -72,20 +80,18 @@ public final class AspectoAction extends BaseAction {
     @Action("aspc-detail")
     public String detail() {
         Preconditions.checkNotNull(aspc);
-        Preconditions.checkArgument(aspc.getId() != null && fechaVigencia != null || aspc.getAspv() != null
-                && aspc.getAspv().getId() != null);
+        Preconditions.checkNotNull(aspc.getId());
 
         final AspectoBO aspcBO = new AspectoBO();
+        final I18nBO i18nBO = new I18nBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setId(aspc.getId());
         aspcCriterioVO.setFechaVigencia(getFechaVigencia());
-
-        if (aspc.getAspv() != null) {
-            aspcCriterioVO.setAspvId(aspc.getAspv().getId());
-        }
+        aspcCriterioVO.setIdioma(getIdioma());
 
         aspc = aspcBO.select(aspcCriterioVO);
+        i18nMap = i18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
 
         if (aspc != null && fechaVigencia != null) {
             final AspectoCargoBO ascrBO = new AspectoCargoBO();
@@ -130,11 +136,13 @@ public final class AspectoAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final AspectoBO aspcBO = new AspectoBO();
+        final I18nBO i18nBO = new I18nBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setAspvId(aspc.getAspv().getId());
 
         aspc = aspcBO.select(aspcCriterioVO);
+        i18nMap = i18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
 
         return SUCCESS;
     }
@@ -153,11 +161,13 @@ public final class AspectoAction extends BaseAction {
         accion = ACCION_EDICION.duplicate;
 
         final AspectoBO aspcBO = new AspectoBO();
+        final I18nBO i18nBO = new I18nBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setAspvId(aspc.getAspv().getId());
 
         aspc = aspcBO.select(aspcCriterioVO);
+        i18nMap = i18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
 
         return SUCCESS;
     }
@@ -190,10 +200,7 @@ public final class AspectoAction extends BaseAction {
             Preconditions.checkNotNull(aspc.getAspv().getId());
         }
 
-        if (GenericValidator.isBlankOrNull(aspc.getAspv().getDescripcion())) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.aspc_descripcion.name()) }));
-        }
+        I18nValidator.validate(this, i18nMap);
 
         if (aspc.getAspv().getFini() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
@@ -327,7 +334,7 @@ public final class AspectoAction extends BaseAction {
         switch (accion) {
         case create:
             try {
-                aspcBO.insert(aspc);
+                aspcBO.insert(aspc, i18nMap);
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
                         new String[] { getText(MessageI18nKey.aspc.name()) }));
@@ -336,7 +343,7 @@ public final class AspectoAction extends BaseAction {
             break;
         case duplicate:
             try {
-                aspcBO.duplicate(aspc);
+                aspcBO.duplicate(aspc, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
                         new String[] { getText(MessageI18nKey.aspc.name()) }));
@@ -345,10 +352,10 @@ public final class AspectoAction extends BaseAction {
             break;
         case edit:
             try {
-                aspcBO.update(aspc);
+                aspcBO.update(aspc, i18nMap);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                    getText(MessageI18nKey.aspc.name()), aspc.getCodigo() }));
+                        getText(MessageI18nKey.aspc.name()), aspc.getCodigo() }));
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
                         new String[] { getText(MessageI18nKey.aspc.name()) }));
@@ -429,6 +436,25 @@ public final class AspectoAction extends BaseAction {
      */
     public List<AspectoCargoVO> getAscrList() {
         return ascrList;
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 
 }

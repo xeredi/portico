@@ -43,11 +43,9 @@ public class CargoBO {
     public PaginatedList<CargoVO> selectList(final CargoCriterioVO crgoCriterioVO, final int offset, final int limit) {
         Preconditions.checkNotNull(crgoCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            crgoDAO = session.getMapper(CargoDAO.class);
 
-        crgoDAO = session.getMapper(CargoDAO.class);
-
-        try {
             final int count = crgoDAO.count(crgoCriterioVO);
             final List<CargoVO> crgoList = new ArrayList<>();
 
@@ -56,8 +54,6 @@ public class CargoBO {
             }
 
             return new PaginatedList<CargoVO>(crgoList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -71,11 +67,9 @@ public class CargoBO {
     public List<LabelValueVO> selectLabelValueList(final CargoCriterioVO crgoCriterioVO) {
         Preconditions.checkNotNull(crgoCriterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            crgoDAO = session.getMapper(CargoDAO.class);
 
-        crgoDAO = session.getMapper(CargoDAO.class);
-
-        try {
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final CargoVO crgo : crgoDAO.selectList(crgoCriterioVO)) {
@@ -83,8 +77,6 @@ public class CargoBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -100,14 +92,10 @@ public class CargoBO {
         Preconditions.checkArgument(crgoCriterioVO.getCrgvId() != null || crgoCriterioVO.getId() != null
                 && crgoCriterioVO.getFechaVigencia() != null);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            crgoDAO = session.getMapper(CargoDAO.class);
 
-        crgoDAO = session.getMapper(CargoDAO.class);
-
-        try {
             return crgoDAO.selectObject(crgoCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -126,11 +114,9 @@ public class CargoBO {
         Preconditions.checkNotNull(crgo.getTpsr());
         Preconditions.checkNotNull(crgo.getTpsr().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            crgoDAO = session.getMapper(CargoDAO.class);
 
-        crgoDAO = session.getMapper(CargoDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             if (crgoDAO.exists(crgo)) {
@@ -150,8 +136,6 @@ public class CargoBO {
             crgoDAO.insertVersion(crgo);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -170,11 +154,9 @@ public class CargoBO {
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            crgoDAO = session.getMapper(CargoDAO.class);
 
-        crgoDAO = session.getMapper(CargoDAO.class);
-
-        try {
             if (crgoDAO.existsOverlap(crgo)) {
                 throw new OverlapException(CargoVO.class.getName(), crgo);
             }
@@ -186,8 +168,6 @@ public class CargoBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -204,11 +184,9 @@ public class CargoBO {
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            crgoDAO = session.getMapper(CargoDAO.class);
 
-        crgoDAO = session.getMapper(CargoDAO.class);
-
-        try {
             final int updated = crgoDAO.deleteVersion(crgo);
 
             if (updated == 0) {
@@ -216,8 +194,6 @@ public class CargoBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 

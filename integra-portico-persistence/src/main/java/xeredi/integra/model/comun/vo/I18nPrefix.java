@@ -13,5 +13,7 @@ public enum I18nPrefix {
     /** The enti. */
     enti,
     /** The tpdt. */
-    tpdt, ;
+    tpdt, aspv,
+
+    ;
 }

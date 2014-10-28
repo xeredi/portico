@@ -1,4 +1,4 @@
-angular.module("facturacion", [ "ngRoute" ])
+angular.module("facturacion", [ "ngRoute", "util" ])
 
 .config(config)
 
@@ -20,6 +20,8 @@ angular.module("facturacion", [ "ngRoute" ])
 
 // ----------- CARGO y REGLA------------------
 .controller("crgoGridController", crgoGridController)
+
+.controller("crgoFilterController", crgoFilterController)
 
 .controller("crgoCreateController", crgoCreateController)
 
@@ -62,199 +64,200 @@ function config($routeProvider) {
     $routeProvider
 
     .when("/facturacion", {
-        title : 'menu_facturacion',
         templateUrl : "modules/facturacion/facturacion.html",
-        controller : "facturacionController"
+        controller : "facturacionController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/vlrc/grid", {
-        title : 'vlrc_grid',
         templateUrl : "modules/facturacion/vlrc-grid.html",
         controller : "vlrcGridController",
+        controllerAs : "vm",
         reloadOnSearch : false
     })
 
     .when("/facturacion/vlrc/detail/:vlrcId", {
-        title : 'vlrc_detail',
         templateUrl : "modules/facturacion/vlrc-detail.html",
-        controller : "vlrcDetailController"
+        controller : "vlrcDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/vlrc/edit/:vlrcId", {
-        title : 'vlrc_edit',
         templateUrl : "modules/facturacion/vlrc-edit.html",
-        controller : "vlrcEditController"
+        controller : "vlrcEditController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/vlrl/create/:vlrcId", {
-        title : 'vlrl_create',
         templateUrl : "modules/facturacion/vlrl-edit.html",
-        controller : "vlrlCreateController"
+        controller : "vlrlCreateController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/vlrl/detail/:vlrlId", {
-        title : 'vlrl_detail',
         templateUrl : "modules/facturacion/vlrl-detail.html",
-        controller : "vlrlDetailController"
+        controller : "vlrlDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/vlrl/edit/:vlrlId", {
-        title : 'vlrl_edit',
         templateUrl : "modules/facturacion/vlrl-edit.html",
-        controller : "vlrlEditController"
+        controller : "vlrlEditController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/vlrd/detail/:vlrdId", {
-        title : 'vlrd_detail',
         templateUrl : "modules/facturacion/vlrd-detail.html",
-        controller : "vlrdDetailController"
+        controller : "vlrdDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/vlrd/edit/:vlrdId", {
-        title : 'vlrd_edit',
         templateUrl : "modules/facturacion/vlrd-edit.html",
-        controller : "vlrdEditController"
+        controller : "vlrdEditController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/crgo/grid", {
-        title : 'crgo_grid',
         templateUrl : "modules/facturacion/crgo-grid.html",
         controller : "crgoGridController",
+        controllerAs : "vm",
         reloadOnSearch : false
     })
 
     .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
-        title : 'crgo_detail',
         templateUrl : "modules/facturacion/crgo-detail.html",
-        controller : "crgoDetailController"
+        controller : "crgoDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/crgo/detail/:crgvId", {
-        title : 'crgo_detail',
         templateUrl : "modules/facturacion/crgo-detail.html",
-        controller : "crgoDetailController"
+        controller : "crgoDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/crgo/edit/:crgvId", {
-        title : 'crgo_edit',
         templateUrl : "modules/facturacion/crgo-edit.html",
-        controller : "crgoEditController"
+        controller : "crgoEditController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/crgo/create", {
-        title : 'crgo_create',
         templateUrl : "modules/facturacion/crgo-edit.html",
-        controller : "crgoCreateController"
+        controller : "crgoCreateController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
-        title : 'rgla_detail',
         templateUrl : "modules/facturacion/rgla-detail.html",
-        controller : "rglaDetailController"
+        controller : "rglaDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgla/detail/:rglvId", {
-        title : 'rgla_detail',
         templateUrl : "modules/facturacion/rgla-detail.html",
-        controller : "rglaDetailController"
+        controller : "rglaDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgla/edit/:rglvId", {
-        title : 'rgla_edit',
         templateUrl : "modules/facturacion/rgla-edit.html",
-        controller : "rglaEditController"
+        controller : "rglaEditController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgla/create/:crgvId", {
-        title : 'rgla_create',
         templateUrl : "modules/facturacion/rgla-edit.html",
-        controller : "rglaCreateController"
+        controller : "rglaCreateController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgin/detail/:rgivId", {
-        title : 'rgin_detail',
         templateUrl : "modules/facturacion/rgin-detail.html",
-        controller : "rginDetailController"
+        controller : "rginDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgin/detail/:rginId/:fechaVigencia", {
-        title : 'rgin_detail',
         templateUrl : "modules/facturacion/rgin-detail.html",
-        controller : "rginDetailController"
+        controller : "rginDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgin/edit/:rgivId", {
-        title : 'rgin_edit',
         templateUrl : "modules/facturacion/rgin-edit.html",
-        controller : "rginEditController"
+        controller : "rginEditController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/rgin/create/:crgoId/:rglaId", {
-        title : 'rgin_create',
         templateUrl : "modules/facturacion/rgin-edit.html",
-        controller : "rginCreateController"
+        controller : "rginCreateController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/aspc/grid", {
-        title : 'aspc_grid',
         templateUrl : "modules/facturacion/aspc-grid.html",
         controller : "aspcGridController",
+        controllerAs : "vm",
         reloadOnSearch : false
     })
 
     .when("/facturacion/aspc/create", {
-        title : 'aspc_create',
         templateUrl : "modules/facturacion/aspc-edit.html",
-        controller : "aspcCreateController"
+        controller : "aspcCreateController",
+        controllerAs : "vm"
     })
 
-    .when("/facturacion/aspc/detail/:aspvId", {
-        title : 'aspc_detail',
+    .when("/facturacion/aspc/detail/:aspcId", {
         templateUrl : "modules/facturacion/aspc-detail.html",
-        controller : "aspcDetailController"
-    })
-
-    .when("/facturacion/aspc/edit/:aspvId", {
-        title : 'aspc_edit',
-        templateUrl : "modules/facturacion/aspc-edit.html",
-        controller : "aspcEditController"
-    })
-
-    .when("/facturacion/aspc/duplicate/:aspvId", {
-        title : 'aspc_duplicate',
-        templateUrl : "modules/facturacion/aspc-edit.html",
-        controller : "aspcDuplicateController"
+        controller : "aspcDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/aspc/detail/:aspcId/:fechaVigencia", {
-        title : 'aspc_detail',
         templateUrl : "modules/facturacion/aspc-detail.html",
-        controller : "aspcDetailController"
+        controller : "aspcDetailController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/aspc/edit/:aspvId", {
+        templateUrl : "modules/facturacion/aspc-edit.html",
+        controller : "aspcEditController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/aspc/duplicate/:aspvId", {
+        templateUrl : "modules/facturacion/aspc-edit.html",
+        controller : "aspcDuplicateController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/ascr/create/:aspcId/:fechaVigencia", {
-        title : 'ascr_create',
         templateUrl : "modules/facturacion/ascr-edit.html",
-        controller : "ascrCreateController"
+        controller : "ascrCreateController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/ascr/detail/:ascrId/:fechaVigencia", {
-        title : 'ascr_detail',
         templateUrl : "modules/facturacion/ascr-detail.html",
-        controller : "ascrDetailController"
+        controller : "ascrDetailController",
+        controllerAs : "vm"
     })
 
     .when("/facturacion/ascr/edit/:ascvId", {
-        title : 'ascr_edit',
         templateUrl : "modules/facturacion/ascr-edit.html",
-        controller : "ascrEditController"
+        controller : "ascrEditController",
+        controllerAs : "vm"
     })
 }
 
-function facturacionController($scope, $http, $location) {
+function facturacionController(pageTitleService) {
+    pageTitleService.setTitle("facturacion", "page_home");
 }
 
-function vlrcGridController($scope, $http, $location, $routeParams) {
+function vlrcGridController($scope, $http, $location, $routeParams, pageTitleService) {
     $scope.showFilter = false;
 
     $scope.pageChanged = function() {
@@ -338,9 +341,11 @@ function vlrcGridController($scope, $http, $location, $routeParams) {
     }
 
     search($scope.vlrcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+
+    pageTitleService.setTitle("vlrc", "page_grid");
 }
 
-function vlrlCreateController($scope, $http, $location, $routeParams) {
+function vlrlCreateController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/vlrl-create.action?vlrl.vlrcId=" + $routeParams.vlrcId;
 
     $http.get(url).success(function(data) {
@@ -366,9 +371,11 @@ function vlrlCreateController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("vlrc", "page_create");
 }
 
-function vlrcDetailController($scope, $http, $location, $routeParams) {
+function vlrcDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/vlrc-detail.action?vlrc.id=" + $routeParams.vlrcId;
 
     $http.get(url).success(function(data) {
@@ -382,9 +389,11 @@ function vlrcDetailController($scope, $http, $location, $routeParams) {
     $http.get(urlVlrlList).success(function(data) {
         $scope.vlrlList = data.vlrlList;
     });
+
+    pageTitleService.setTitle("vlrc", "page_detail");
 }
 
-function vlrlDetailController($scope, $http, $location, $routeParams) {
+function vlrlDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/vlrl-detail.action?vlrl.id=" + $routeParams.vlrlId;
 
     $http.get(url).success(function(data) {
@@ -410,9 +419,11 @@ function vlrlDetailController($scope, $http, $location, $routeParams) {
             });
         }
     }
+
+    pageTitleService.setTitle("vlrl", "page_detail");
 }
 
-function vlrlEditController($scope, $http, $location, $routeParams) {
+function vlrlEditController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/vlrl-edit.action?vlrl.id=" + $routeParams.vlrlId;
 
     $http.get(url).success(function(data) {
@@ -440,72 +451,134 @@ function vlrlEditController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("vlrl", "page_edit");
 }
 
-function vlrdDetailController($scope, $http, $location, $routeParams) {
+function vlrdDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/vlrd-detail.action?vlrd.id=" + $routeParams.vlrdId;
 
     $http.get(url).success(function(data) {
         $scope.vlrd = data.vlrd;
     });
+
+    pageTitleService.setTitle("vlrl", "page_edit");
 }
 
-function crgoGridController($scope, $http, $location, $routeParams) {
-    $scope.showFilter = false;
-    $scope.crgoCriterio = {};
+function crgoGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.crgoCriterio = {};
 
     function search(crgoCriterio, page, limit) {
-        var url = "facturacion/crgo-list.action";
-
-        $http.post(url, {
+        $http.post("facturacion/crgo-list.action", {
             crgoCriterio : crgoCriterio,
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.crgoList.page;
-                $scope.crgoList = data.crgoList;
-                $scope.crgoCriterio = data.crgoCriterio;
+                vm.page = data.crgoList.page;
+                vm.crgoList = data.crgoList;
+                vm.crgoCriterio = data.crgoCriterio;
 
                 var map = {};
 
                 map["page"] = data.crgoList.page;
 
                 $location.search(map).replace();
-
-                $scope.showFilter = false;
             }
         });
     }
 
-    $scope.pageChanged = function() {
+    function pageChanged() {
         search($scope.crgoCriterio, $scope.page, $scope.limit);
     }
 
-    $scope.filter = function() {
-        $scope.showFilter = true;
+    function filter(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modules/facturacion/crgo-filter-content.html',
+            controller : 'crgoFilterController',
+            controllerAs : 'vm',
+            size : size,
+            resolve : {
+                crgoCriterio : function() {
+                    return vm.crgoCriterio;
+                }
+            }
+        });
 
-        var urlEntiList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
+        modalInstance.result.then(function(crgoCriterio) {
+            vm.crgoCriterio = crgoCriterio;
 
-        $http.get(urlEntiList).success(function(data) {
-            $scope.entiList = data.lvList;
+            search(vm.crgoCriterio, 1, vm.limit);
         });
     }
 
-    $scope.search = function() {
-        search($scope.crgoCriterio, 1, $scope.limit);
-    }
+    search(vm.crgoCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
 
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    search($scope.crgoCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    pageTitleService.setTitle("crgo", "page_grid");
 }
 
-function crgoCreateController($scope, $http, $location, $routeParams) {
+function crgoFilterController($http, $modalInstance, crgoCriterio, pageTitleService) {
+    var vm = this;
+
+    vm.ok = ok;
+    vm.cancel = cancel;
+
+    function ok() {
+        $modalInstance.close(vm.crgoCriterio);
+    }
+
+    function cancel() {
+        $modalInstance.dismiss('cancel');
+    }
+
+    vm.crgoCriterio = crgoCriterio;
+
+    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(function(data) {
+        vm.entiList = data.lvList;
+    });
+}
+
+function crgoDetailController($scope, $http, $location, $routeParams, pageTitleService) {
+    var url = "facturacion/crgo-detail.action";
+
+    if ($routeParams.fechaVigencia) {
+        $scope.fechaVigencia = $routeParams.fechaVigencia;
+        url += "?crgo.id=" + $routeParams.crgoId + "&fechaVigencia=" + $routeParams.fechaVigencia;
+    } else {
+        url += "?crgo.crgv.id=" + $routeParams.crgvId;
+    }
+
+    $http.get(url).success(function(data) {
+        $scope.crgo = data.crgo;
+        $scope.rglaList = data.rglaList;
+        $scope.fechaVigencia = data.fechaVigencia;
+    });
+
+    $scope.remove = function() {
+        if (confirm("Are you sure?")) {
+            var url = "facturacion/crgo-remove.action?crgo.crgv.id=" + $scope.crgo.crgv.id;
+
+            $http.get(url).success(function(data) {
+                $scope.actionErrors = data.actionErrors;
+
+                if (data.actionErrors.length == 0) {
+                    window.history.back();
+                }
+            });
+        }
+    }
+
+    pageTitleService.setTitle("crgo", "page_detail");
+}
+
+function crgoCreateController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/crgo-create.action";
 
     $http.get(url).success(function(data) {
@@ -538,40 +611,11 @@ function crgoCreateController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("crgo", "page_create");
 }
 
-function crgoDetailController($scope, $http, $location, $routeParams) {
-    var url = "facturacion/crgo-detail.action";
-
-    if ($routeParams.fechaVigencia) {
-        $scope.fechaVigencia = $routeParams.fechaVigencia;
-        url += "?crgo.id=" + $routeParams.crgoId + "&fechaVigencia=" + $routeParams.fechaVigencia;
-    } else {
-        url += "?crgo.crgv.id=" + $routeParams.crgvId;
-    }
-
-    $http.get(url).success(function(data) {
-        $scope.crgo = data.crgo;
-        $scope.rglaList = data.rglaList;
-        $scope.fechaVigencia = data.fechaVigencia;
-    });
-
-    $scope.remove = function() {
-        if (confirm("Are you sure?")) {
-            var url = "facturacion/crgo-remove.action?crgo.crgv.id=" + $scope.crgo.crgv.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
-            });
-        }
-    }
-}
-
-function crgoEditController($scope, $http, $location, $routeParams) {
+function crgoEditController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/crgo-edit.action?crgo.crgv.id=" + $routeParams.crgvId;
 
     $http.get(url).success(function(data) {
@@ -600,9 +644,11 @@ function crgoEditController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("crgo", "page_edit");
 }
 
-function rglaDetailController($scope, $http, $location, $routeParams) {
+function rglaDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/rgla-detail.action";
 
     if ($routeParams.fechaVigencia) {
@@ -631,9 +677,11 @@ function rglaDetailController($scope, $http, $location, $routeParams) {
             });
         }
     }
+
+    pageTitleService.setTitle("rgla", "page_detail");
 }
 
-function rglaEditController($scope, $http, $location, $routeParams) {
+function rglaEditController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/rgla-edit.action?rgla.rglv.id=" + $routeParams.rglvId;
 
     $http.get(url).success(function(data) {
@@ -663,9 +711,11 @@ function rglaEditController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("rgla", "page_edit");
 }
 
-function rglaCreateController($scope, $http, $location, $routeParams) {
+function rglaCreateController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/rgla-create.action?rgla.crgo.crgv.id=" + $routeParams.crgvId;
 
     $http.get(url).success(function(data) {
@@ -693,9 +743,11 @@ function rglaCreateController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("rgla", "page_create");
 }
 
-function rginDetailController($scope, $http, $location, $routeParams) {
+function rginDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/rgin-detail.action";
 
     if ($routeParams.fechaVigencia) {
@@ -722,9 +774,11 @@ function rginDetailController($scope, $http, $location, $routeParams) {
             });
         }
     }
+
+    pageTitleService.setTitle("rgin", "page_detail");
 }
 
-function rginEditController($scope, $http, $location, $routeParams) {
+function rginEditController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/rgin-edit.action?rgin.rgiv.id=" + $routeParams.rgivId;
 
     $http.get(url).success(function(data) {
@@ -752,9 +806,11 @@ function rginEditController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("rgin", "page_edit");
 }
 
-function rginCreateController($scope, $http, $location, $routeParams) {
+function rginCreateController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/rgin-create.action?rgin.rgla1Id=" + $routeParams.rglaId + "&rgin.rgla2.crgo.id="
             + $routeParams.crgoId;
 
@@ -782,25 +838,30 @@ function rginCreateController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("rgin", "page_create");
 }
 
-function aspcGridController($scope, $http, $location, $routeParams, $modal) {
-    $scope.aspcCriterio = {};
+function aspcGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.aspcCriterio = {};
 
     function search(aspcCriterio, page, limit) {
-        var url = "facturacion/aspc-list.action";
-
-        $http.post(url, {
+        $http.post("facturacion/aspc-list.action", {
             aspcCriterio : aspcCriterio,
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.aspcList.page;
-                $scope.aspcList = data.aspcList;
-                $scope.aspcCriterio = data.aspcCriterio;
+                vm.page = data.aspcList.page;
+                vm.aspcList = data.aspcList;
+                vm.aspcCriterio = data.aspcCriterio;
 
                 var map = {};
 
@@ -811,105 +872,65 @@ function aspcGridController($scope, $http, $location, $routeParams, $modal) {
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.aspcCriterio, $scope.page, $scope.limit);
+    function pageChanged() {
+        search(vm.aspcCriterio, vm.page, vm.limit);
     }
 
-    $scope.filter = function(size) {
+    function filter(size) {
         var modalInstance = $modal.open({
-            templateUrl : 'aspc-filter-content.html',
+            templateUrl : 'modules/facturacion/aspc-filter-content.html',
             controller : 'aspcFilterController',
+            controllerAs : 'vm',
             size : size,
             resolve : {
                 aspcCriterio : function() {
-                    return $scope.aspcCriterio;
+                    return vm.aspcCriterio;
                 }
             }
         });
 
         modalInstance.result.then(function(aspcCriterio) {
-            $scope.aspcCriterio = aspcCriterio;
+            vm.aspcCriterio = aspcCriterio;
 
-            search($scope.aspcCriterio, 1, $scope.limit);
+            search(vm.aspcCriterio, 1, vm.limit);
         });
-    };
+    }
 
-    search($scope.aspcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    search(vm.aspcCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
+
+    pageTitleService.setTitle("aspc", "page_grid");
 }
 
-function aspcFilterController($scope, $http, $modalInstance, aspcCriterio) {
-    $scope.aspcCriterio = aspcCriterio;
+function aspcFilterController($http, $modalInstance, aspcCriterio, pageTitleService) {
+    var vm = this;
 
-    $scope.ok = function() {
-        $modalInstance.close($scope.aspcCriterio);
-    };
+    vm.ok = ok;
+    vm.cancel = cancel;
 
-    $scope.cancel = function() {
+    function ok() {
+        $modalInstance.close(vm.aspcCriterio);
+    }
+
+    function cancel() {
         $modalInstance.dismiss('cancel');
-    };
+    }
+
+    vm.aspcCriterio = aspcCriterio;
 
     $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(function(data) {
-        $scope.entiList = data.lvList;
+        vm.entiList = data.lvList;
     });
 }
 
-function aspcCreateController($scope, $http, $location, $routeParams) {
-    var url = "facturacion/aspc-create.action";
+function aspcDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.aspc = data.aspc;
-        $scope.accion = data.accion;
-    });
+    vm.remove = remove;
 
-    var urlEntiTpsrList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
-
-    $http.get(urlEntiTpsrList).success(function(data) {
-        $scope.entiTpsrList = data.lvList;
-    });
-
-    $scope.save = function() {
-        var url = "facturacion/aspc-save.action";
-
-        $http.post(url, {
-            aspc : $scope.aspc,
-            accion : $scope.accion
-        }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
-            }
-        });
-    }
-
-    $scope.cancel = function() {
-        window.history.back();
-    }
-}
-
-function aspcDetailController($scope, $http, $location, $routeParams) {
-    var url = "facturacion/aspc-detail.action";
-
-    if ($routeParams.fechaVigencia) {
-        $scope.fechaVigencia = $routeParams.fechaVigencia;
-        url += "?aspc.id=" + $routeParams.aspcId + "&fechaVigencia=" + $routeParams.fechaVigencia;
-    } else {
-        url += "?aspc.aspv.id=" + $routeParams.aspvId;
-    }
-
-    $http.get(url).success(function(data) {
-        $scope.urlInclude = 'modules/facturacion/aspc-detail.html';
-        $scope.aspc = data.aspc;
-        $scope.ascrList = data.ascrList;
-        $scope.fechaVigencia = data.fechaVigencia;
-    });
-
-    $scope.remove = function() {
+    function remove() {
         if (confirm("Are you sure?")) {
-            var url = "facturacion/aspc-remove.action?aspc.aspv.id=" + $scope.aspc.aspv.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
+            $http.get("facturacion/aspc-remove.action?aspc.aspv.id=" + vm.aspc.aspv.id).success(function(data) {
+                vm.actionErrors = data.actionErrors;
 
                 if (data.actionErrors.length == 0) {
                     window.history.back();
@@ -917,24 +938,69 @@ function aspcDetailController($scope, $http, $location, $routeParams) {
             });
         }
     }
-}
 
-function aspcEditController($scope, $http, $location, $routeParams) {
-    var url = "facturacion/aspc-edit.action?aspc.aspv.id=" + $routeParams.aspvId;
-
-    $http.get(url).success(function(data) {
-        $scope.aspc = data.aspc;
-        $scope.accion = data.accion;
+    $http.get(
+            "facturacion/aspc-detail.action?aspc.id=" + $routeParams.aspcId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
+        vm.urlInclude = 'modules/facturacion/aspc-detail.html';
+        vm.aspc = data.aspc;
+        vm.i18nMap = data.i18nMap;
+        vm.ascrList = data.ascrList;
+        vm.fechaVigencia = data.fechaVigencia;
     });
 
-    $scope.save = function() {
-        var url = "facturacion/aspc-save.action";
+    pageTitleService.setTitle("aspc", "page_detail");
+}
 
-        $http.post(url, {
-            aspc : $scope.aspc,
-            accion : $scope.accion
+function aspcCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("facturacion/aspc-save.action", {
+            aspc : vm.aspc,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
+
+            if (data.actionErrors.length == 0) {
+                $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
+            }
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.get("facturacion/aspc-create.action").success(function(data) {
+        vm.aspc = data.aspc;
+        vm.accion = data.accion;
+    });
+
+    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(function(data) {
+        vm.entiTpsrList = data.lvList;
+    });
+
+    pageTitleService.setTitle("aspc", "page_create");
+}
+
+function aspcEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("facturacion/aspc-save.action", {
+            aspc : vm.aspc,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
+        }).success(function(data) {
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -944,27 +1010,32 @@ function aspcEditController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
-}
 
-function aspcDuplicateController($scope, $http, $location, $routeParams) {
-    var url = "facturacion/aspc-duplicate.action?aspc.aspv.id=" + $routeParams.aspvId;
-
-    $http.get(url).success(function(data) {
-        $scope.aspc = data.aspc;
-        $scope.accion = data.accion;
+    $http.get("facturacion/aspc-edit.action?aspc.aspv.id=" + $routeParams.aspvId).success(function(data) {
+        vm.aspc = data.aspc;
+        vm.i18nMap = data.i18nMap;
+        vm.accion = data.accion;
     });
 
-    $scope.save = function() {
-        var url = "facturacion/aspc-save.action";
+    pageTitleService.setTitle("aspc", "page_edit");
+}
 
-        $http.post(url, {
-            aspc : $scope.aspc,
-            accion : $scope.accion
+function aspcDuplicateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("facturacion/aspc-save.action", {
+            aspc : vm.aspc,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
@@ -972,12 +1043,20 @@ function aspcDuplicateController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("facturacion/aspc-duplicate.action?aspc.aspv.id=" + $routeParams.aspvId).success(function(data) {
+        vm.aspc = data.aspc;
+        vm.i18nMap = data.i18nMap;
+        vm.accion = data.accion;
+    });
+
+    pageTitleService.setTitle("aspc", "page_duplicate");
 }
 
-function ascrCreateController($scope, $http, $location, $routeParams) {
+function ascrCreateController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "facturacion/ascr-create.action?ascr.aspcId=" + $routeParams.aspcId + "&fechaVigencia="
             + $routeParams.fechaVigencia;
 
@@ -1005,9 +1084,11 @@ function ascrCreateController($scope, $http, $location, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("ascr", "page_create");
 }
 
-function ascrDetailController($scope, $http, $routeParams) {
+function ascrDetailController($scope, $http, $routeParams, pageTitleService) {
     $scope.fechaVigencia = $routeParams.fechaVigencia;
 
     var url = "facturacion/ascr-detail.action?ascr.id=" + $routeParams.ascrId + "&fechaVigencia="
@@ -1031,9 +1112,11 @@ function ascrDetailController($scope, $http, $routeParams) {
             });
         }
     }
+
+    pageTitleService.setTitle("ascr", "page_detail");
 }
 
-function ascrEditController($scope, $http, $routeParams) {
+function ascrEditController($scope, $http, $routeParams, pageTitleService) {
     var url = "facturacion/ascr-edit.action?ascr.ascv.id=" + $routeParams.ascvId;
 
     $http.get(url).success(function(data) {
@@ -1061,4 +1144,6 @@ function ascrEditController($scope, $http, $routeParams) {
     $scope.cancel = function() {
         window.history.back();
     }
+
+    pageTitleService.setTitle("ascr", "page_edit");
 }

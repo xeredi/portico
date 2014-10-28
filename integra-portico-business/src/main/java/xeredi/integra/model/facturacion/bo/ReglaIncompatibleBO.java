@@ -36,11 +36,9 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rgin.getRgiv());
         Preconditions.checkNotNull(rgin.getRgiv().getFini());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
-        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
-        try {
             final IgBO igBO = new IgBO();
 
             if (rginDAO.exists(rgin)) {
@@ -60,8 +58,6 @@ public class ReglaIncompatibleBO {
             rginDAO.insertVersion(rgin);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -81,11 +77,9 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rgin.getRgiv().getId());
         Preconditions.checkNotNull(rgin.getRgiv().getFini());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
-        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
-        try {
             if (rginDAO.existsOverlap(rgin)) {
                 throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
             }
@@ -97,8 +91,6 @@ public class ReglaIncompatibleBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -115,11 +107,9 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rgin.getRgiv());
         Preconditions.checkNotNull(rgin.getRgiv().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
-        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
-        try {
             final int updated = rginDAO.deleteVersion(rgin);
 
             if (updated == 0) {
@@ -127,8 +117,6 @@ public class ReglaIncompatibleBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -144,11 +132,9 @@ public class ReglaIncompatibleBO {
     public ReglaIncompatibleVO select(final ReglaIncompatibleCriterioVO rginCriterio) throws InstanceNotFoundException {
         Preconditions.checkNotNull(rginCriterio);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
-        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
-        try {
             final ReglaIncompatibleVO rgin = rginDAO.selectObject(rginCriterio);
 
             if (rgin == null) {
@@ -156,8 +142,6 @@ public class ReglaIncompatibleBO {
             }
 
             return rgin;
-        } finally {
-            session.close();
         }
     }
 
@@ -171,14 +155,10 @@ public class ReglaIncompatibleBO {
     public List<ReglaIncompatibleVO> selectList(final ReglaIncompatibleCriterioVO rginCriterio) {
         Preconditions.checkNotNull(rginCriterio);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
-        rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
-        try {
             return rginDAO.selectList(rginCriterio);
-        } finally {
-            session.close();
         }
     }
 

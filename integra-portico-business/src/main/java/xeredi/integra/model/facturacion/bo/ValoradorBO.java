@@ -131,15 +131,13 @@ public class ValoradorBO {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
                 + ", prbtId: " + prbtId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            srvcDAO = session.getMapper(ServicioDAO.class);
+            prbtDAO = session.getMapper(ProcesoDAO.class);
+            crgoDAO = session.getMapper(CargoDAO.class);
+            contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+            aspcDAO = session.getMapper(AspectoDAO.class);
 
-        srvcDAO = session.getMapper(ServicioDAO.class);
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-        crgoDAO = session.getMapper(CargoDAO.class);
-        contextoDAO = session.getMapper(ValoradorContextoDAO.class);
-        aspcDAO = session.getMapper(AspectoDAO.class);
-
-        try {
             Preconditions.checkNotNull(srvcId);
             Preconditions.checkNotNull(crgoIds);
             Preconditions.checkNotNull(fechaLiquidacion);
@@ -234,8 +232,6 @@ public class ValoradorBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 

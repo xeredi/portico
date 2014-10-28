@@ -32,14 +32,10 @@ public final class AspectoCargoBO {
     public List<AspectoCargoVO> selectList(final AspectoCargoCriterioVO criterioVO) {
         Preconditions.checkNotNull(criterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
             return ascrDAO.selectList(criterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -53,14 +49,10 @@ public final class AspectoCargoBO {
     public AspectoCargoVO select(final AspectoCargoCriterioVO criterioVO) {
         Preconditions.checkNotNull(criterioVO);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
             return ascrDAO.selectObject(criterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -80,9 +72,7 @@ public final class AspectoCargoBO {
         Preconditions.checkNotNull(vo.getCrgo());
         Preconditions.checkNotNull(vo.getCrgo().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
             final IgBO igBO = new IgBO();
@@ -104,8 +94,6 @@ public final class AspectoCargoBO {
             ascrDAO.insertVersion(vo);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -126,9 +114,7 @@ public final class AspectoCargoBO {
         Preconditions.checkNotNull(vo.getAscv().getId());
         Preconditions.checkNotNull(vo.getAscv().getFini());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
             if (ascrDAO.existsOverlap(vo)) {
@@ -142,8 +128,6 @@ public final class AspectoCargoBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -160,9 +144,7 @@ public final class AspectoCargoBO {
         Preconditions.checkNotNull(vo.getAscv());
         Preconditions.checkNotNull(vo.getAscv().getId());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
             final int updated = ascrDAO.deleteVersion(vo);
@@ -172,8 +154,6 @@ public final class AspectoCargoBO {
             }
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 }

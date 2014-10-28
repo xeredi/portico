@@ -135,26 +135,23 @@ public class FacturadorBO {
         Preconditions.checkNotNull(fechaFacturacion);
         Preconditions.checkNotNull(prbtId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
-
-        prbtDAO = session.getMapper(ProcesoDAO.class);
-        fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-        aspcDAO = session.getMapper(AspectoDAO.class);
-        fctaDAO = session.getMapper(FacturaAgregadaDAO.class);
-        fctrDAO = session.getMapper(FacturaDAO.class);
-        fctlDAO = session.getMapper(FacturaLineaDAO.class);
-        fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-        fctsDAO = session.getMapper(FacturaServicioDAO.class);
-        fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-        fctgDAO = session.getMapper(FacturaCargoDAO.class);
-        vlrcDAO = session.getMapper(ValoracionDAO.class);
-        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-        srcrDAO = session.getMapper(ServicioCargoDAO.class);
-
-        try {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            prbtDAO = session.getMapper(ProcesoDAO.class);
+            fcsrDAO = session.getMapper(FacturaSerieDAO.class);
+            aspcDAO = session.getMapper(AspectoDAO.class);
+            fctaDAO = session.getMapper(FacturaAgregadaDAO.class);
+            fctrDAO = session.getMapper(FacturaDAO.class);
+            fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
+            fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            fctgDAO = session.getMapper(FacturaCargoDAO.class);
+            vlrcDAO = session.getMapper(ValoracionDAO.class);
+            vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+            vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            srcrDAO = session.getMapper(ServicioCargoDAO.class);
 
             final FacturadorContextoVO contextoVO = new FacturadorContextoVO();
 
@@ -367,8 +364,6 @@ public class FacturadorBO {
             vlrcDAO.delete(vlrcCriterioVO);
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 }

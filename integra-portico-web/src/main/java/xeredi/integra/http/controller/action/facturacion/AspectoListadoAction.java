@@ -60,6 +60,8 @@ public final class AspectoListadoAction extends BaseAction {
     public String list() {
         Preconditions.checkNotNull(aspcCriterio);
 
+        aspcCriterio.setIdioma(getIdioma());
+
         final AspectoBO aspcBO = new AspectoBO();
 
         aspcList = aspcBO.selectList(aspcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());

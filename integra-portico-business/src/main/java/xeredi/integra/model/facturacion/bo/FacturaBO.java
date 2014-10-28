@@ -107,17 +107,15 @@ public class FacturaBO {
         Preconditions.checkNotNull(fechaAnulacion);
         Preconditions.checkNotNull(fcsrId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctrDAO = session.getMapper(FacturaDAO.class);
+            fcsrDAO = session.getMapper(FacturaSerieDAO.class);
+            fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            fctgDAO = session.getMapper(FacturaCargoDAO.class);
+            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
 
-        fctrDAO = session.getMapper(FacturaDAO.class);
-        fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-        fctsDAO = session.getMapper(FacturaServicioDAO.class);
-        fctgDAO = session.getMapper(FacturaCargoDAO.class);
-        fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-        fctlDAO = session.getMapper(FacturaLineaDAO.class);
-        fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-
-        try {
             final boolean existsValoracionPosterior = fctrDAO.existsValoracionPosterior(fctrId);
             final boolean existsFacturaPosterior = fctrDAO.existsFacturaPosterior(fctrId);
 
@@ -222,8 +220,6 @@ public class FacturaBO {
             // FIXME Acabar
 
             session.commit();
-        } finally {
-            session.close();
         }
     }
 
@@ -242,21 +238,19 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctrId);
         Preconditions.checkNotNull(fctsId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctrDAO = session.getMapper(FacturaDAO.class);
+            fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            fctgDAO = session.getMapper(FacturaCargoDAO.class);
+            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
+            vlrcDAO = session.getMapper(ValoracionDAO.class);
+            vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+            vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
-        fctrDAO = session.getMapper(FacturaDAO.class);
-        fctsDAO = session.getMapper(FacturaServicioDAO.class);
-        fctgDAO = session.getMapper(FacturaCargoDAO.class);
-        fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-        fctlDAO = session.getMapper(FacturaLineaDAO.class);
-        fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-        vlrcDAO = session.getMapper(ValoracionDAO.class);
-        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-
-        try {
             final FacturaVO fctr = fctrDAO.select(fctrId);
 
             if (fctr == null) {
@@ -411,8 +405,6 @@ public class FacturaBO {
             session.commit();
 
             return vlrc.getId();
-        } finally {
-            session.close();
         }
     }
 
@@ -427,15 +419,13 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctrIds);
         Preconditions.checkArgument(!fctrIds.isEmpty());
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctrDAO = session.getMapper(FacturaDAO.class);
+            fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            fctgDAO = session.getMapper(FacturaCargoDAO.class);
+            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            fctlDAO = session.getMapper(FacturaLineaDAO.class);
 
-        fctrDAO = session.getMapper(FacturaDAO.class);
-        fctsDAO = session.getMapper(FacturaServicioDAO.class);
-        fctgDAO = session.getMapper(FacturaCargoDAO.class);
-        fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-        fctlDAO = session.getMapper(FacturaLineaDAO.class);
-
-        try {
             final List<FacturaImpresionVO> list = new ArrayList<>();
 
             for (final Long fctrId : fctrIds) {
@@ -464,8 +454,6 @@ public class FacturaBO {
             }
 
             return list;
-        } finally {
-            session.close();
         }
     }
 
@@ -479,14 +467,10 @@ public class FacturaBO {
     public FacturaVO select(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctrDAO = session.getMapper(FacturaDAO.class);
 
-        fctrDAO = session.getMapper(FacturaDAO.class);
-
-        try {
             return fctrDAO.select(fctrId);
-        } finally {
-            session.close();
         }
     }
 
@@ -506,11 +490,9 @@ public class FacturaBO {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctrDAO = session.getMapper(FacturaDAO.class);
 
-        fctrDAO = session.getMapper(FacturaDAO.class);
-
-        try {
             final int count = fctrDAO.count(fctrCriterioVO);
             final List<FacturaVO> fctrList = new ArrayList<>();
 
@@ -519,8 +501,6 @@ public class FacturaBO {
             }
 
             return new PaginatedList<FacturaVO>(fctrList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -534,18 +514,14 @@ public class FacturaBO {
     public List<FacturaServicioVO> selectFctsList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctsDAO = session.getMapper(FacturaServicioDAO.class);
 
-        fctsDAO = session.getMapper(FacturaServicioDAO.class);
-
-        try {
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctrId);
 
             return fctsDAO.selectList(fctrCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -559,18 +535,14 @@ public class FacturaBO {
     public List<FacturaImpuestoVO> selectFctiList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
 
-        fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-
-        try {
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctrId);
 
             return fctiDAO.selectList(fctrCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -584,18 +556,14 @@ public class FacturaBO {
     public List<FacturaCargoVO> selectFctgList(final Long fctrId) {
         Preconditions.checkNotNull(fctrId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctgDAO = session.getMapper(FacturaCargoDAO.class);
 
-        fctgDAO = session.getMapper(FacturaCargoDAO.class);
-
-        try {
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctrId);
 
             return fctgDAO.selectList(fctrCriterioVO);
-        } finally {
-            session.close();
         }
     }
 
@@ -615,11 +583,9 @@ public class FacturaBO {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctlDAO = session.getMapper(FacturaLineaDAO.class);
 
-        fctlDAO = session.getMapper(FacturaLineaDAO.class);
-
-        try {
             final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
@@ -634,8 +600,6 @@ public class FacturaBO {
             }
 
             return new PaginatedList<FacturaLineaVO>(fctlList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -649,14 +613,10 @@ public class FacturaBO {
     public FacturaLineaVO selectFctl(final Long fctlId) {
         Preconditions.checkNotNull(fctlId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctlDAO = session.getMapper(FacturaLineaDAO.class);
 
-        fctlDAO = session.getMapper(FacturaLineaDAO.class);
-
-        try {
             return fctlDAO.select(fctlId);
-        } finally {
-            session.close();
         }
     }
 
@@ -676,11 +636,9 @@ public class FacturaBO {
         Preconditions.checkArgument(offset >= 0);
         Preconditions.checkArgument(limit > 0);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
 
-        fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-
-        try {
             final FacturaDetalleCriterioVO fctdCriterioVO = new FacturaDetalleCriterioVO();
             final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
 
@@ -695,8 +653,6 @@ public class FacturaBO {
             }
 
             return new PaginatedList<FacturaDetalleVO>(fctdList, offset, limit, count);
-        } finally {
-            session.close();
         }
     }
 
@@ -710,14 +666,10 @@ public class FacturaBO {
     public FacturaDetalleVO selectFctd(final Long fctdId) {
         Preconditions.checkNotNull(fctdId);
 
-        final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
 
-        fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-
-        try {
             return fctdDAO.select(fctdId);
-        } finally {
-            session.close();
         }
     }
 

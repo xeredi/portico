@@ -10,6 +10,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class AspectoCriterioVO {
 
+    /** The idioma. */
+    private String idioma;
+
     /** The fecha vigencia. */
     private Date fechaVigencia;
 
@@ -148,6 +151,25 @@ public final class AspectoCriterioVO {
      */
     public void setTpsrId(final Long value) {
         tpsrId = value;
+    }
+
+    /**
+     * Gets the idioma.
+     *
+     * @return the idioma
+     */
+    public String getIdioma() {
+        return idioma;
+    }
+
+    /**
+     * Sets the idioma.
+     *
+     * @param value
+     *            the new idioma
+     */
+    public void setIdioma(final String value) {
+        idioma = value;
     }
 
 }
