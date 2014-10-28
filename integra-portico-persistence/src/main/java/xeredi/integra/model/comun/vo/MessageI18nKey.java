@@ -687,6 +687,67 @@ public enum MessageI18nKey {
      * Error de subservicio en estado inválido para realizar una acción. Se pasa como argumento el estado del
      * subservicio.
      */
-    E00011, ;
+    E00011,
+
+    /** The cdms_numero. */
+    cdms_numero,
+    /** The cdms_tm. */
+    cdms_tm,
+    /** The cdms_teus. */
+    cdms_teus,
+    /** The cdms_ca. */
+    cdms_ca,
+    /** The cdms_va. */
+    cdms_va,
+    /** The cdms_embarcado. */
+    cdms_embarcado,
+    /** The cdms_desembarcado. */
+    cdms_desembarcado,
+    /** The cdms_transito. */
+    cdms_transito,
+    /** The cdms_transbordo. */
+    cdms_transbordo,
+    /** The cdms_ gl. */
+    cdms_GL,
+    /** The cdms_ glpetr. */
+    cdms_GLPETR,
+    /** The cdms_ glgasn. */
+    cdms_GLGASN,
+    /** The cdms_ glpref. */
+    cdms_GLPREF,
+    /** The cdms_ glotro. */
+    cdms_GLOTRO,
+    /** The cdms_ gs. */
+    cdms_GS,
+    /** The cdms_ gsiesp. */
+    cdms_GSIESP,
+    /** The cdms_ gsnies. */
+    cdms_GSNIES,
+    /** The cdms_ mg. */
+    cdms_MG,
+    /** The cdms_ pasaje. */
+    cdms_PASAJE,
+    /** The cdms_ pascru. */
+    cdms_PASCRU,
+    /** The cdms_ ve t2. */
+    cdms_VET2,
+    /** The cdms_ cteus. */
+    cdms_CTEUS,
+    /** The cdms_ rr. */
+    cdms_RR,
+    /** The cdms_ rrc. */
+    cdms_RRC,
+    /** The cdms_ rro. */
+    cdms_RRO,
+    /** The cdms_ av. */
+    cdms_AV,
+    /** The cdms_ avppet. */
+    cdms_AVPPET,
+    /** The cdms_ avotro. */
+    cdms_AVOTRO,
+    /** The cdms_ traloc. */
+    cdms_TRALOC,
+    /** The cdms_ pescaf. */
+    cdms_PESCAF, ;
 
 }

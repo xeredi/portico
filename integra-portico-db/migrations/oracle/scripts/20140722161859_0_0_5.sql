@@ -470,6 +470,38 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00010', 'E00010 - Servicio en estado {0} inválido para ejecutar la acción')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00011', 'E00011 - Subservicio en estado {0} inválido para ejecutar la acción')\
 
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_numero', 'Nº')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_tm', 'Tm')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_teus', 'TEUS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_ca', 'Con Carga')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_va', 'Vacíos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_embarcado', 'Embarcado')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_desembarcado', 'Desembarcado')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_transito', 'Tránsito')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_transbordo', 'Transbordo')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GL', 'GRANELES LIQUIDOS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLPETR', 'CRUDOS DE PETROLEO')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLGASN', 'GAS NATURAL')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLPREF', 'PRODUCTOS PETROLIFEROS REFINADOS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLOTRO', 'OTROS GRANELES LIQUIDOS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GS', 'GRANELES SOLIDOS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GSIESP', 'POR INSTALACION ESPECIAL')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GSNIES', 'SIN INSTALACION ESPECIAL')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_MG', 'MERCANCIA GENERAL')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_PASAJE', 'Nº PASAJEROS (EXCLUIDO T. BAHIA)')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_PASCRU', 'Nº PASAJEROS DE CRUCERO')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_VET2', 'Nº VEHICULOS (Turismos en rég. pasaje, Automóviles y Autobuses)')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_CTEUS', 'TEUS (con carga y vacíos)')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_RR', 'TRAFICO RO-RO')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_RRC', 'EN CONTENEDORES')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_RRO', 'EN OTROS MEDIOS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_AV', 'AVITUALLAMIENTO')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_AVPPET', 'PROD. PETROLIFEROS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_AVOTRO', 'OTROS')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_TRALOC', 'TRAFICO LOCAL')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_PESCAF', 'PESCA FRESCA')\
+
+
 
 -- Borrado de laas tablas de configuracion y configuracion de idioma
 DROP TABLE tbl_conf_valor_i18n_cnvi\

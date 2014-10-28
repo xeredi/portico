@@ -303,7 +303,7 @@ public class PeriodoProcesoBO {
                 LOG.debug("Generacion de cuadro mensual");
             }
 
-            // generarCuadroMensual(session, peprVO.getId(), removeIfExists);
+            generarCuadroMensual(session, peprVO.getId(), removeIfExists);
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Commit datos");

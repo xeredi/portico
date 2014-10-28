@@ -214,6 +214,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                     final EstadisticaVO estd = new EstadisticaVO();
 
                     estd.setEntiId(tpesVO.getId());
+                    estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                     {
                         final ItemDatoVO itdt = new ItemDatoVO();
@@ -265,6 +266,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                     final EstadisticaVO estd = new EstadisticaVO();
 
                     estd.setEntiId(tpesVO.getId());
+                    estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                     {
                         String tipoSuministro = getTokenString(EstadisticaFileKeyword.EAV_TipoSuministro, line, i);
@@ -312,6 +314,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                     final EstadisticaVO estd = new EstadisticaVO();
 
                     estd.setEntiId(tpesVO.getId());
+                    estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                     {
                         // FIXME Conversion de Tipo de Buque
@@ -402,6 +405,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                     final EstadisticaVO estd = new EstadisticaVO();
 
                     estd.setEntiId(tpesVO.getId());
+                    estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                     {
                         final ItemDatoVO itdt = new ItemDatoVO();
@@ -612,6 +616,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                     final EstadisticaVO estd = new EstadisticaVO();
 
                     estd.setEntiId(tpesVO.getId());
+                    estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                     {
                         final ItemDatoVO itdt = new ItemDatoVO();

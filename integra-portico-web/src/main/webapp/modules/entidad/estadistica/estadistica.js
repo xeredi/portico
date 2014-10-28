@@ -137,13 +137,17 @@ function peprFilterController($modalInstance, $http, peprCriterio) {
     });
 }
 
-function peprDetailController($scope, $http, $location, $routeParams, pageTitleService) {
-    $scope.remove = function() {
+function peprDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
         if (confirm("Are you sure?")) {
-            var url = "estadistica/pepr-remove.action?pepr.id=" + $scope.pepr.id;
+            var url = "estadistica/pepr-remove.action?pepr.id=" + vm.pepr.id;
 
             $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
+                vm.actionErrors = data.actionErrors;
 
                 if (data.actionErrors.length == 0) {
                     window.history.back();
@@ -153,20 +157,22 @@ function peprDetailController($scope, $http, $location, $routeParams, pageTitleS
     }
 
     $http.get("estadistica/pepr-detail.action?pepr.id=" + $routeParams.peprId).success(function(data) {
-        $scope.pepr = data.pepr;
-        $scope.tpesList = data.tpesList;
+        vm.pepr = data.pepr;
+        vm.tpesList = data.tpesList;
     });
+
+    pageTitleService.setTitle("pepr", "page_detail");
 }
 
-function cdmsDetailController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "estadistica/cdms-detail.action";
+function cdmsDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    url += "?pepr.id=" + $routeParams.peprId;
-
-    $http.get(url).success(function(data) {
-        $scope.pepr = data.pepr;
-        $scope.cdmsMap = data.cdmsMap;
+    $http.get("estadistica/cdms-detail.action?pepr.id=" + $routeParams.peprId).success(function(data) {
+        vm.pepr = data.pepr;
+        vm.cdmsMap = data.cdmsMap;
     });
+
+    pageTitleService.setTitle("cdms", "page_detail");
 }
 
 function estdGridController($scope, $http, $location, $routeParams, $modal, pageTitleService) {
