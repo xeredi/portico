@@ -1,10 +1,8 @@
-<p class="bg-primary" ng-bind="enti.nombre"></p>
-
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpss/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>btn_editar</span></a>
-        <button data-ng-click="remove()" class="btn btn-default">
+        <a class="btn btn-default" ng-href="#/metamodelo/tpss/edit/{{vm.enti.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
@@ -14,69 +12,68 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
             <label translate>enti_codigo</label>
-            <p class="form-control-static" ng-bind="enti.codigo"></p>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-            <label translate>enti_nombre</label>
-            <p class="form-control-static" ng-bind="enti.nombre"></p>
+            <p class="form-control-static" ng-bind="vm.enti.codigo"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>enti_tipo</label>
-            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}" ng-bind="enti.tipo"></p>
+            <p class="form-control-static" title="{{'TipoEntidad_' + vm.enti.tipo | translate}}" ng-bind="vm.enti.tipo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpsr</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{enti.tpsr.id}}" ng-bind="enti.tpsr.etiqueta"></a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{vm.enti.tpsr.id}}" ng-bind="vm.enti.tpsr.nombre"></a>
             </p>
         </div>
     </div>
+
+    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+
     <div class="row">
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmdAlta</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{enti.cmdAlta ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.enti.cmdAlta ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmdBaja</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{enti.cmdBaja ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.enti.cmdBaja ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmdEdicion</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.enti.cmdEdicion ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_cmdDuplicado</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.enti.cmdDuplicado ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_temporal</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{enti.temporal ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.enti.temporal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">
             <label translate>enti_facturable</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{enti.facturable ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.enti.facturable ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-sm-3 col-md-2 form-group">
             <label translate>enti_maxGrid</label>
-            <p class="form-control-static" ng-bind="enti.maxGrid | number:0"></p>
+            <p class="form-control-static" ng-bind="vm.enti.maxGrid | number:0"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_tpdtEstado</label>
             <p class="form-control-static">
-                <a ng-if="enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtEstado.id}}"
-                    ng-bind="enti.tpdtEstado.nombre"></a>
+                <a ng-if="vm.enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{vm.enti.tpdtEstado.id}}"
+                    ng-bind="vm.enti.tpdtEstado.nombre"></a>
             </p>
         </div>
     </div>
@@ -95,7 +92,7 @@
         </div>
     </div>
 
-    <table ng-if="entiHijasList" class="table-bordered table-condensed table-hover table-nonfluid">
+    <table ng-if="vm.entiHijasList" class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
@@ -108,7 +105,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entiHija in entiHijasList track by $index">
+            <tr ng-repeat="entiHija in vm.entiHijasList track by $index">
                 <td><a ng-href="#/metamodelo/tpss/detail/{{entiHija.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="entiHija.codigo"></td>
                 <td ng-bind="entiHija.nombre"></td>
@@ -123,7 +120,7 @@
 
 <fieldset>
     <legend ng-bind="'Entidades Padres'"></legend>
-    <table ng-if="entiPadresList" class="table-bordered table-condensed table-hover table-nonfluid">
+    <table ng-if="vm.entiPadresList" class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
@@ -136,7 +133,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="entiPadre in entiPadresList track by $index">
+            <tr ng-repeat="entiPadre in vm.entiPadresList track by $index">
                 <td><a ng-if="entiPadre.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{entiPadre.id}}"><i
                         class="glyphicon glyphicon-search"></i></a><a ng-if="entiPadre.tipo == 'S'"
                     ng-href="#/metamodelo/tpss/detail/{{entiPadre.id}}"><i class="glyphicon glyphicon-search"></i></a></td>

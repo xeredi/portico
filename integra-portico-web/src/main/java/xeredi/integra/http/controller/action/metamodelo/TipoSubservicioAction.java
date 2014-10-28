@@ -1,11 +1,16 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
@@ -32,6 +37,9 @@ public final class TipoSubservicioAction extends BaseAction {
 
     /** The tpss form. */
     private TipoSubservicioVO enti;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /** The enti hijas list. */
     private List<EntidadVO> entiHijasList;
@@ -68,8 +76,10 @@ public final class TipoSubservicioAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+        final I18nBO i18nBO = new I18nBO();
 
         enti = tpssBO.select(enti.getId(), getIdioma());
+        i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
         return SUCCESS;
     }
@@ -90,13 +100,11 @@ public final class TipoSubservicioAction extends BaseAction {
                 addActionError(getText(MessageI18nKey.E00001.name(),
                         new String[] { getText(MessageI18nKey.enti_codigo.name()) }));
             }
-            if (GenericValidator.isBlankOrNull(enti.getNombre())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.enti_nombre.name()) }));
-            }
         } else {
             Preconditions.checkNotNull(enti.getId());
         }
+
+        I18nValidator.validate(this, i18nMap);
 
         if (enti.getCmdAlta() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
@@ -133,14 +141,14 @@ public final class TipoSubservicioAction extends BaseAction {
             enti.setCodigo(enti.getCodigo().toUpperCase());
 
             try {
-                tpssBO.insert(enti);
+                tpssBO.insert(enti, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
                         new String[] { getText(MessageI18nKey.tpss.name()) }));
             }
         } else {
             try {
-                tpssBO.update(enti);
+                tpssBO.update(enti, i18nMap);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
                     getText(MessageI18nKey.tpss.name()), String.valueOf(enti.getId()) }));
@@ -184,8 +192,10 @@ public final class TipoSubservicioAction extends BaseAction {
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final EntidadBO entiBO = new EntidadBO();
+        final I18nBO i18nBO = new I18nBO();
 
         enti = tpssBO.select(enti.getId(), getIdioma());
+        i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
         EntidadCriterioVO entiCriterioVO = null;
 
@@ -264,5 +274,24 @@ public final class TipoSubservicioAction extends BaseAction {
      */
     public List<EntidadVO> getEntiPadresList() {
         return entiPadresList;
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 }

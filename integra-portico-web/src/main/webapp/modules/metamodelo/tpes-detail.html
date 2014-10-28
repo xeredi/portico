@@ -1,10 +1,8 @@
-<p class="bg-primary" ng-bind="enti.nombre"></p>
-
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpes/edit/{{enti.id}}"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>btn_editar</span></a>
-        <button data-ng-click="remove()" class="btn btn-default">
+        <a class="btn btn-default" ng-href="#/metamodelo/tpes/edit/{{vm.enti.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
@@ -14,19 +12,19 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>enti_codigo</label>
-            <p class="form-control-static" ng-bind="enti.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.enti.codigo"></p>
         </div>
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>enti_nombre</label>
-            <p class="form-control-static" ng-bind="enti.nombre"></p>
+            <p class="form-control-static" ng-bind="vm.enti.nombre"></p>
         </div>
         <div class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>enti_tipo</label>
-            <p class="form-control-static" title="{{'TipoEntidad_' + enti.tipo | translate}}" ng-bind="enti.tipo"></p>
+            <p class="form-control-static" title="{{'TipoEntidad_' + vm.enti.tipo | translate}}" ng-bind="vm.enti.tipo"></p>
         </div>
         <div class="col-sm-3 col-md-2 form-group">
             <label translate>enti_maxGrid</label>
-            <p class="form-control-static" ng-bind="enti.maxGrid | number:0"></p>
+            <p class="form-control-static" ng-bind="vm.enti.maxGrid | number:0"></p>
         </div>
     </div>
 </div>

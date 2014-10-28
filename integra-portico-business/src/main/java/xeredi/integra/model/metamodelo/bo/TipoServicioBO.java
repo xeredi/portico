@@ -2,11 +2,15 @@ package xeredi.integra.model.metamodelo.bo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.TipoServicioDAO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
@@ -142,7 +146,8 @@ public class TipoServicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final TipoServicioVO tpsrVO) throws DuplicateInstanceException {
+    public final void insert(final TipoServicioVO tpsrVO, final Map<String, I18nVO> i18nMap)
+            throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpsrVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -161,6 +166,8 @@ public class TipoServicioBO {
             entiDAO.insert(tpsrVO);
             tpsrDAO.insert(tpsrVO);
 
+            I18nBO.insertMap(session, I18nPrefix.enti, tpsrVO.getId(), i18nMap);
+
             session.commit();
         }
     }
@@ -173,7 +180,8 @@ public class TipoServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final TipoServicioVO tpsrVO) throws InstanceNotFoundException {
+    public final void update(final TipoServicioVO tpsrVO, final Map<String, I18nVO> i18nMap)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpsrVO);
         Preconditions.checkNotNull(tpsrVO.getId());
 
@@ -188,6 +196,8 @@ public class TipoServicioBO {
             }
 
             entiDAO.update(tpsrVO);
+
+            I18nBO.updateMap(session, I18nPrefix.enti, tpsrVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -207,6 +217,8 @@ public class TipoServicioBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             tpsrDAO = session.getMapper(TipoServicioDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
+
+            I18nBO.deleteMap(session, I18nPrefix.enti, tpsrId);
 
             final int updated = tpsrDAO.delete(tpsrId);
 
