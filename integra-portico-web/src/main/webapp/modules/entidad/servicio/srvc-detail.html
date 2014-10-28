@@ -32,22 +32,22 @@
             <p class="form-control-static" ng-bind="vm.item.etiqueta"></p>
         </div>
 
-        <div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-2 form-group">
+        <div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-2 form-group">
             <label translate>srvc_estado</label>
             <p class="form-control-static" ng-bind="'cdrf_' + vm.enti.tpdtEstado.id + '_' + vm.item.estado | translate"></p>
         </div>
 
-        <div ng-if="!enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div ng-if="!vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>srvc_fref</label>
             <p class="form-control-static" ng-bind="vm.item.fref | date"></p>
         </div>
 
-        <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>srvc_fini</label>
             <p class="form-control-static" ng-bind="vm.item.fini | date"></p>
         </div>
 
-        <div ng-if="enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
+        <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
             <label translate>srvc_ffin</label>
             <p class="form-control-static" ng-bind="vm.item.ffin | date"></p>
         </div>

@@ -79,11 +79,11 @@ public final class CodigoReferenciaAction extends BaseAction {
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
         final I18nBO i18nBO = new I18nBO();
 
-        cdrf = cdrfBO.select(cdrf.getId());
+        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
 
         if (cdrf == null) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.cdrf.name()),
-                cdrf.getValor() }));
+                    cdrf.getValor() }));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
@@ -160,7 +160,7 @@ public final class CodigoReferenciaAction extends BaseAction {
             cdrfBO.delete(cdrf);
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.cdrf.name()),
-                cdrf.getValor() }));
+                    cdrf.getValor() }));
         }
 
         return SUCCESS;
@@ -181,11 +181,11 @@ public final class CodigoReferenciaAction extends BaseAction {
         final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
         final I18nBO i18nBO = new I18nBO();
 
-        cdrf = cdrfBO.select(cdrf.getId());
+        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
 
         if (cdrf == null) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.cdrf.name()),
-                cdrf.getValor() }));
+                    cdrf.getValor() }));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());

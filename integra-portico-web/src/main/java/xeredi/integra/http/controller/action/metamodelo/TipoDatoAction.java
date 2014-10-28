@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -10,7 +11,9 @@ import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
+import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
@@ -36,6 +39,9 @@ public final class TipoDatoAction extends BaseAction {
 
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
+
+    /** The cdrf list. */
+    private List<CodigoReferenciaVO> cdrfList;
 
     /**
      * Instantiates a new tipo dato action.
@@ -174,6 +180,7 @@ public final class TipoDatoAction extends BaseAction {
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
         final I18nBO i18nBO = new I18nBO();
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
@@ -183,6 +190,7 @@ public final class TipoDatoAction extends BaseAction {
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
+        cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -261,6 +269,15 @@ public final class TipoDatoAction extends BaseAction {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * Gets the cdrf list.
+     *
+     * @return the cdrf list
+     */
+    public List<CodigoReferenciaVO> getCdrfList() {
+        return cdrfList;
     }
 
 }

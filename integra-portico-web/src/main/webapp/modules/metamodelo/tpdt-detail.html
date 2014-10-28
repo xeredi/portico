@@ -55,13 +55,15 @@
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
                 <th translate>cdrf_valor</th>
+                <th translate>cdrf_texto</th>
                 <th translate>cdrf_orden</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="cdrf in vm.tpdt.cdrfList track by $index">
+            <tr ng-repeat="cdrf in vm.cdrfList track by $index">
                 <td><a ng-href="#/metamodelo/cdrf/detail/{{cdrf.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="cdrf.valor"></td>
+                <td ng-bind="cdrf.texto"></td>
                 <td class="number" ng-bind="cdrf.orden"></td>
             </tr>
         </tbody>

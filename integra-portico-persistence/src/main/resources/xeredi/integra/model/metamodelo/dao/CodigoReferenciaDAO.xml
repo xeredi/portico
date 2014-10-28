@@ -8,18 +8,29 @@
         <result column="cdrf_tpdt_pk" property="tpdtId" />
         <result column="cdrf_valor" property="valor" />
         <result column="cdrf_orden" property="orden" />
+        <result column="cdrf_texto" property="texto" />
     </resultMap>
 
     <sql id="SelectPrefix">
-    <![CDATA[
-    SELECT
-        cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden
-    FROM tbl_codigo_ref_cdrf
-    ]]>
+        SELECT cdrf_pk, cdrf_tpdt_pk, cdrf_valor, cdrf_orden
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_ext_pk = cdrf_pk
+                    AND i18n_pref = 'cdrf'
+                    AND i18n_lang = #{idioma}
+            ) AS cdrf_texto
+        ]]>
+        </if>
+        FROM tbl_codigo_ref_cdrf
     </sql>
 
     <sql id="SelectWhere">
         <where>
+            <if test="id != null">
+                AND cdrf_pk = #{id}
+            </if>
             <if test="tpdtId != null">
                 AND cdrf_tpdt_pk = #{tpdtId}
             </if>
@@ -45,11 +56,6 @@
     <select id="selectObject" parameterType="CodigoReferenciaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-    </select>
-
-    <select id="select" parameterType="Long" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        WHERE cdrf_pk = #{value}
     </select>
 
     <select id="exists" parameterType="CodigoReferenciaVO" resultType="boolean">

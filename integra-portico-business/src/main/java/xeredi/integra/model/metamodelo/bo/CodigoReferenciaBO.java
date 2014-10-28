@@ -1,5 +1,6 @@
 package xeredi.integra.model.metamodelo.bo;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -140,15 +141,46 @@ public class CodigoReferenciaBO {
      *
      * @param cdrfId
      *            the cdrf id
+     * @param idioma
+     *            the idioma
      * @return the codigo referencia vo
      */
-    public CodigoReferenciaVO select(final Long cdrfId) {
+    public CodigoReferenciaVO select(final Long cdrfId, final String idioma) {
         Preconditions.checkNotNull(cdrfId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
-            return cdrfDAO.select(cdrfId);
+            final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
+
+            cdrfCriterioVO.setId(cdrfId);
+            cdrfCriterioVO.setIdioma(idioma);
+
+            return cdrfDAO.selectObject(cdrfCriterioVO);
+        }
+    }
+
+    /**
+     * Select list.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param idioma
+     *            the idioma
+     * @return the list
+     */
+    public List<CodigoReferenciaVO> selectList(final Long tpdtId, final String idioma) {
+        Preconditions.checkNotNull(tpdtId);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+
+            final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
+
+            cdrfCriterioVO.setTpdtId(tpdtId);
+            cdrfCriterioVO.setIdioma(idioma);
+
+            return cdrfDAO.selectList(cdrfCriterioVO);
         }
     }
 }

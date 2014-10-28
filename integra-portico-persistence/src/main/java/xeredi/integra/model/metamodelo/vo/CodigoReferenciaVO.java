@@ -20,6 +20,9 @@ public final class CodigoReferenciaVO {
     /** The orden. */
     private Integer orden;
 
+    /** The texto. */
+    private String texto;
+
     /**
      * {@inheritDoc}
      */
@@ -102,6 +105,25 @@ public final class CodigoReferenciaVO {
      */
     public void setOrden(final Integer value) {
         orden = value;
+    }
+
+    /**
+     * Gets the texto.
+     *
+     * @return the texto
+     */
+    public String getTexto() {
+        return texto;
+    }
+
+    /**
+     * Sets the texto.
+     *
+     * @param value
+     *            the new texto
+     */
+    public void setTexto(final String value) {
+        texto = value;
     }
 
 }

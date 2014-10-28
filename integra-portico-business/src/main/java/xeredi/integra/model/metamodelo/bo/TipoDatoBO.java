@@ -257,6 +257,9 @@ public class TipoDatoBO {
                 }
 
                 cdrfMap.get(cdrfVO.getTpdtId()).add(cdrfVO);
+
+                cdrfVO.setTpdtId(null);
+                cdrfVO.setOrden(null);
             }
 
             for (final TipoDatoVO tpdtVO : tpdtMap.values()) {

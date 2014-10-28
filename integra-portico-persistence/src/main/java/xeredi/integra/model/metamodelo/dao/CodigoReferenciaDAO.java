@@ -30,15 +30,6 @@ public interface CodigoReferenciaDAO {
     CodigoReferenciaVO selectObject(final CodigoReferenciaCriterioVO cdrfCriterioVO);
 
     /**
-     * Select.
-     *
-     * @param cdrfId
-     *            the cdrf id
-     * @return the codigo referencia vo
-     */
-    CodigoReferenciaVO select(final Long cdrfId);
-
-    /**
      * Exists.
      *
      * @param cdrfVO
