@@ -54,6 +54,7 @@
                 <result column="rglv_enti_pk" property="id" />
                 <result column="enti_codigo" property="codigo" />
                 <result column="enti_nombre" property="nombre" />
+                <result column="enti_tipo" property="tipo" />
             </association>
         </association>
 
@@ -63,7 +64,7 @@
     <sql id="SelectPrefix">
     <![CDATA[
         SELECT *
-        FROM portico.vw_regla_rgla
+        FROM vw_regla_rgla
     ]]>
     </sql>
 

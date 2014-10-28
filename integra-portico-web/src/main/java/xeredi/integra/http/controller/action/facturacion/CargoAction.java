@@ -92,9 +92,10 @@ public final class CargoAction extends BaseAction {
         crgoCriterioVO.setIdioma(getIdioma());
 
         crgo = crgoBO.select(crgoCriterioVO);
-        i18nMap = i18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
 
         if (crgo != null) {
+            i18nMap = i18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+
             final ReglaBO rglaBO = new ReglaBO();
             final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
@@ -215,7 +216,7 @@ public final class CargoAction extends BaseAction {
                 crgoBO.update(crgo, i18nMap);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                    getText(MessageI18nKey.crgo.name()), crgo.getCodigo() }));
+                        getText(MessageI18nKey.crgo.name()), crgo.getCodigo() }));
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
                         new String[] { getText(MessageI18nKey.crgo.name()) }));
@@ -246,7 +247,7 @@ public final class CargoAction extends BaseAction {
             crgoBO.delete(crgo);
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.crgo.name()),
-                crgo.getCodigo() }));
+                    crgo.getCodigo() }));
         }
 
         return SUCCESS;

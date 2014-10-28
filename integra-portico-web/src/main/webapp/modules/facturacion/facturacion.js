@@ -155,7 +155,7 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/rgla/detail/:rglvId", {
+    .when("/facturacion/rgla/detail/:rglaId", {
         templateUrl : "modules/facturacion/rgla-detail.html",
         controller : "rglaDetailController",
         controllerAs : "vm"
@@ -647,28 +647,15 @@ function crgoEditController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("crgo", "page_edit");
 }
 
-function rglaDetailController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/rgla-detail.action";
+function rglaDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    if ($routeParams.fechaVigencia) {
-        $scope.fechaVigencia = $routeParams.fechaVigencia;
-        url += "?rgla.id=" + $routeParams.rglaId + "&fechaVigencia=" + $routeParams.fechaVigencia;
-    } else {
-        url += "?rgla.rglv.id=" + $routeParams.rglvId;
-    }
+    vm.remove = remove;
 
-    $http.get(url).success(function(data) {
-        $scope.rgla = data.rgla;
-        $scope.rginList = data.rginList;
-        $scope.fechaVigencia = data.fechaVigencia;
-    });
-
-    $scope.remove = function() {
+    function remove() {
         if (confirm("Are you sure?")) {
-            var url = "facturacion/rgla-remove.action?rgla.rglv.id=" + $scope.rgla.rglv.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
+             $http.get("facturacion/rgla-remove.action?rgla.rglv.id=" + vm.rgla.rglv.id).success(function(data) {
+                 vm.actionErrors = data.actionErrors;
 
                 if (data.actionErrors.length == 0) {
                     window.history.back();
@@ -677,27 +664,27 @@ function rglaDetailController($scope, $http, $location, $routeParams, pageTitleS
         }
     }
 
+    $http.get("facturacion/rgla-detail.action?rgla.id=" + $routeParams.rglaId + "&fechaVigencia=" + $routeParams.fechaVigencia).success(function(data) {
+        vm.rgla = data.rgla;
+        vm.rginList = data.rginList;
+        vm.fechaVigencia = data.fechaVigencia;
+    });
+
     pageTitleService.setTitle("rgla", "page_detail");
 }
 
-function rglaEditController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/rgla-edit.action?rgla.rglv.id=" + $routeParams.rglvId;
+function rglaEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.rgla = data.rgla;
-        $scope.tipos = data.tipos;
-        $scope.entiFacturableList = data.entiFacturableList;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "facturacion/rgla-save.action";
-
-        $http.post(url, {
-            rgla : $scope.rgla,
-            accion : $scope.accion
+    function save() {
+        $http.post("facturacion/rgla-save.action", {
+            rgla : vm.rgla,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -707,31 +694,32 @@ function rglaEditController($scope, $http, $location, $routeParams, pageTitleSer
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("facturacion/rgla-edit.action?rgla.rglv.id=" + $routeParams.rglvId).success(function(data) {
+        vm.rgla = data.rgla;
+        vm.tipos = data.tipos;
+        vm.entiFacturableList = data.entiFacturableList;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitle("rgla", "page_edit");
 }
 
-function rglaCreateController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/rgla-create.action?rgla.crgo.crgv.id=" + $routeParams.crgvId;
+function rglaCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.rgla = data.rgla;
-        $scope.tipos = data.tipos;
-        $scope.entiFacturableList = data.entiFacturableList;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "facturacion/rgla-save.action";
-
-        $http.post(url, {
-            rgla : $scope.rgla,
-            accion : $scope.accion
+    function save() {
+        $http.post("facturacion/rgla-save.action", {
+            rgla : vm.rgla,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
@@ -739,9 +727,16 @@ function rglaCreateController($scope, $http, $location, $routeParams, pageTitleS
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("facturacion/rgla-create.action?rgla.crgo.crgv.id=" + $routeParams.crgvId).success(function(data) {
+        vm.rgla = data.rgla;
+        vm.tipos = data.tipos;
+        vm.entiFacturableList = data.entiFacturableList;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitle("rgla", "page_create");
 }

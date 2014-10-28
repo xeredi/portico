@@ -5,22 +5,22 @@
     <form>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-1 form-group">
+                <div class="col-sm-2 col-md-1 form-group">
                     <label translate>crgo_codigo</label> <input type="text" ng-model="vm.crgoCriterio.codigo"
                         class="form-control input-sm" />
                 </div>
-                <div class="col-md-2 form-group">
+                <div class="col-sm-2 col-md-2 form-group">
                     <label translate>crgo_codigoNormalizado</label> <input type="text"
                         ng-model="vm.crgoCriterio.codigoNormalizado" class="form-control input-sm" />
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-sm-3 col-md-2 form-group">
                     <label translate>crgo_tpsr</label> <select ng-model="vm.crgoCriterio.tpsrId"
                         ng-options="labelValue.value as labelValue.label for labelValue in vm.entiList"
                         class="form-control input-sm">
                         <option />
                     </select>
                 </div>
-                <div class="col-md-2 form-group">
+                <div class="col-sm-2 col-md-2 form-group">
                     <label translate>crgo_fechaVigencia</label>
                     <div class="input-group" ng-controller="datepickerController">
                         <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"

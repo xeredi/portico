@@ -520,6 +520,8 @@ public enum MessageI18nKey {
     rglaList,
     /** The rgla_codigo. */
     rgla_codigo,
+    /** The rgla_crgo. */
+    rgla_crgo,
     /** The rgla_tipo. */
     rgla_tipo,
     /** The rgla_enti. */
@@ -755,7 +757,27 @@ public enum MessageI18nKey {
     /** The Mensaje nivel_ w. */
     MensajeNivel_W,
     /** The Mensaje nivel_ e. */
-    MensajeNivel_E, ProcesoEstado_C, ProcesoEstado_E, ProcesoEstado_F, ProcesoModulo_S, ProcesoModulo_E, CargoTipo_B, CargoTipo_T,
+    MensajeNivel_E,
+    /** The Proceso estado_ c. */
+    ProcesoEstado_C,
+    /** The Proceso estado_ e. */
+    ProcesoEstado_E,
+    /** The Proceso estado_ f. */
+    ProcesoEstado_F,
+    /** The Proceso modulo_ s. */
+    ProcesoModulo_S,
+    /** The Proceso modulo_ e. */
+    ProcesoModulo_E,
+    /** The Cargo tipo_ b. */
+    CargoTipo_B,
+    /** The Cargo tipo_ t. */
+    CargoTipo_T,
+    /** The Regla tipo_ t. */
+    ReglaTipo_T,
+    /** The Regla tipo_ c. */
+    ReglaTipo_C,
+    /** The Regla tipo_ d. */
+    ReglaTipo_D,
 
     ;
 

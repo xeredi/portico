@@ -108,7 +108,7 @@ public final class ReglaAction extends BaseAction {
             rginList.addAll(rginBO.selectList(rginCriterioVO));
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgla.name()),
-                rglaCriterioVO.toString() }));
+                    rglaCriterioVO.toString() }));
         }
 
         return SUCCESS;
@@ -170,7 +170,7 @@ public final class ReglaAction extends BaseAction {
             loadEntiFacturables();
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgla.name()),
-                String.valueOf(rgla.getRglv().getId()) }));
+                    String.valueOf(rgla.getRglv().getId()) }));
         }
 
         return SUCCESS;
@@ -185,6 +185,7 @@ public final class ReglaAction extends BaseAction {
 
         tpsrCriterioVO.setId(rgla.getCrgo().getTpsr().getId());
         tpsrCriterioVO.setFacturable(Boolean.TRUE);
+        tpsrCriterioVO.setIdioma(getIdioma());
 
         entiFacturableList.addAll(tpsrBO.selectLabelValues(tpsrCriterioVO));
 
@@ -193,6 +194,7 @@ public final class ReglaAction extends BaseAction {
 
         tpssCriterioVO.setTpsrId(rgla.getCrgo().getTpsr().getId());
         tpssCriterioVO.setFacturable(Boolean.TRUE);
+        tpssCriterioVO.setIdioma(getIdioma());
 
         entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
     }
@@ -441,7 +443,7 @@ public final class ReglaAction extends BaseAction {
                 rglaBO.update(rgla);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                    getText(MessageI18nKey.rgla.name()), rgla.getCodigo() }));
+                        getText(MessageI18nKey.rgla.name()), rgla.getCodigo() }));
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
                         new String[] { getText(MessageI18nKey.rgla.name()) }));
@@ -471,7 +473,7 @@ public final class ReglaAction extends BaseAction {
             rglaBO.delete(rgla);
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgla.name()),
-                rgla.getCodigo() }));
+                    rgla.getCodigo() }));
         }
 
         return SUCCESS;
