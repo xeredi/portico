@@ -748,6 +748,15 @@ public enum MessageI18nKey {
     /** The cdms_ traloc. */
     cdms_TRALOC,
     /** The cdms_ pescaf. */
-    cdms_PESCAF, ;
+    cdms_PESCAF,
+
+    /** The Mensaje nivel_ i. */
+    MensajeNivel_I,
+    /** The Mensaje nivel_ w. */
+    MensajeNivel_W,
+    /** The Mensaje nivel_ e. */
+    MensajeNivel_E, ProcesoEstado_C, ProcesoEstado_E, ProcesoEstado_F, ProcesoModulo_S, ProcesoModulo_E,
+
+    ;
 
 }

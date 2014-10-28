@@ -1,110 +1,131 @@
-angular.module("proceso", [ "ngRoute" ])
+angular.module("proceso", [ "ngRoute", "util" ])
 
-.config([ "$routeProvider", function($routeProvider) {
+.config(config)
+
+.controller("prbtGridController", prbtGridController)
+
+.controller("prbtFilterController", prbtFilterController)
+
+.controller("prbtDetailController", prbtDetailController);
+
+function config($routeProvider) {
     $routeProvider
 
     .when("/proceso/prbt/grid", {
-        title : 'prbt_grid',
         templateUrl : "modules/proceso/prbt-grid.html",
         controller : "prbtGridController",
+        controllerAs : 'vm',
         reloadOnSearch : false
     })
 
     .when("/proceso/prbt/detail/:prbtId", {
-        title : 'prbt_detail',
         templateUrl : "modules/proceso/prbt-detail.html",
-        controller : "prbtDetailController"
+        controller : "prbtDetailController",
+        controllerAs : 'vm'
     })
-} ])
+}
 
-.controller("prbtGridController", prbtGridController)
+function prbtGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
 
-.controller("prbtDetailController", prbtDetailController);
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
 
-function prbtGridController($scope, $http, $location, $route, $routeParams) {
-    $scope.showFilter = false;
-    $scope.prbtCriterio = {};
+    vm.prbtCriterio = {};
 
     function search(prbtCriterio, page, limit) {
         var url = "proceso/prbt-list.action";
 
-        $scope.limit = limit;
+        vm.limit = limit;
 
         $http.post(url, {
             prbtCriterio : prbtCriterio,
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.prbtList.page;
-                $scope.prbtList = data.prbtList;
-                $scope.prbtCriterio = data.prbtCriterio;
+                vm.page = data.prbtList.page;
+                vm.prbtList = data.prbtList;
+                vm.prbtCriterio = data.prbtCriterio;
 
                 var map = {};
 
                 map["page"] = data.prbtList.page;
 
                 $location.search(map).replace();
-
-                $scope.showFilter = false;
             }
         });
     }
 
-    $scope.pageChanged = function() {
-        console.log("pageChanged: " + $scope.page);
-        console.log("limit: " + $scope.limit);
-
-        search($scope.prbtCriterio, $scope.page, $scope.limit);
+    function pageChanged() {
+        search(vm.prbtCriterio, vm.page, vm.limit);
     }
 
-    $scope.filter = function() {
-        var url = "proceso/prbt-filter.action";
-
-        $http.get(url).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $scope.procesoModulos = data.procesoModulos;
-                $scope.procesoTipos = data.procesoTipos;
-                $scope.procesoEstados = data.procesoEstados;
-                $scope.limits = data.limits;
+    function filter(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modules/proceso/prbt-filter-content.html',
+            controller : 'prbtFilterController',
+            controllerAs : 'vm',
+            size : size,
+            resolve : {
+                prbtCriterio : function() {
+                    return vm.prbtCriterio;
+                }
             }
         });
 
-        $scope.showFilter = true;
+        modalInstance.result.then(function(prbtCriterio) {
+            vm.prbtCriterio = prbtCriterio;
+            vm.page = 1;
+
+            search(vm.prbtCriterio, 1, vm.limit);
+        });
     }
 
-    $scope.search = function() {
-        search($scope.prbtCriterio, 1, $scope.limit);
-    }
+    search(vm.prbtCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
 
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    search($scope.prbtCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit ? $scope.limit : 20);
+    pageTitleService.setTitle("prbt", "page_grid");
 }
 
-function prbtDetailController($scope, $http, $location, $route, $routeParams) {
-    function findItem() {
-        {
-            var url = "proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId;
+function prbtFilterController($modalInstance, $http, prbtCriterio) {
+    var vm = this;
 
-            $http.get(url).success(function(data) {
-                $scope.prbt = data.prbt;
-            });
-        }
-        {
-            var url = "proceso/prmn-list.action?prbtId=" + $routeParams.prbtId;
+    vm.ok = ok;
+    vm.cancel = cancel;
 
-            $http.get(url).success(function(data) {
-                $scope.prmnList = data.prmnList;
-            });
-        }
+    vm.prbtCriterio = prbtCriterio;
+
+    function ok() {
+        $modalInstance.close(vm.prbtCriterio);
     }
 
-    findItem();
+    function cancel() {
+        $modalInstance.dismiss('cancel');
+    }
+
+    $http.get("proceso/prbt-filter.action").success(function(data) {
+        vm.actionErrors = data.actionErrors;
+
+        if (data.actionErrors.length == 0) {
+            vm.procesoTipos = data.procesoTipos;
+            vm.procesoModulos = data.procesoModulos;
+            vm.procesoEstados = data.procesoEstados;
+        }
+    });
+}
+
+function prbtDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.get("proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId).success(function(data) {
+        vm.prbt = data.prbt;
+    });
+
+    $http.get("proceso/prmn-list.action?prbtId=" + $routeParams.prbtId).success(function(data) {
+        vm.prmnList = data.prmnList;
+    });
+
+    pageTitleService.setTitle("prbt", "page_detail");
 }

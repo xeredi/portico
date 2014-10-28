@@ -12,48 +12,48 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate="prbt_modulo"></label>
-                <p class="form-control-static" ng-bind="prbt.modulo"></p>
+                <p class="form-control-static" ng-bind="'ProcesoModulo_' + vm.prbt.modulo | translate"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate="prbt_tipo"></label>
-                <p class="form-control-static" ng-bind="prbt.tipo"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.tipo"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate="prbt_estado"></label>
-                <p class="form-control-static" ng-bind="prbt.estado"></p>
+                <p class="form-control-static" ng-bind="'ProcesoEstado_' + vm.prbt.estado | translate"></p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate="prbt_falta"></label>
-                <p class="form-control-static" ng-bind="prbt.falta | date:'medium'"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.falta | date:'medium'"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate="prbt_fini"></label>
-                <p class="form-control-static" ng-bind="prbt.finicio | date:'medium'"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.finicio | date:'medium'"></p>
             </div>
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate="prbt_ffin"></label>
-                <p class="form-control-static" ng-bind="prbt.ffin | date:'medium'"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.ffin | date:'medium'"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate="prbt_duracion"></label>
-                <p class="form-control-static" ng-bind="prbt.duracion | number:0"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.duracion | number:0"></p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate="prbt_erroresCnt"></label>
-                <p class="form-control-static" ng-bind="prbt.erroresCnt | number:0"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.erroresCnt | number:0"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate="prbt_alertasCnt"></label>
-                <p class="form-control-static" ng-bind="prbt.alertasCnt | number:0"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.alertasCnt | number:0"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate="prbt_mensajesCnt"></label>
-                <p class="form-control-static" ng-bind="prbt.mensajesCnt | number:0"></p>
+                <p class="form-control-static" ng-bind="vm.prbt.mensajesCnt | number:0"></p>
             </div>
         </div>
     </div>
@@ -69,15 +69,15 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="(key, value) in prbt.prpmMap track by $index">
+                <tr ng-repeat="(key, value) in vm.prbt.prpmMap track by $index">
                     <td ng-bind="key"></td>
                     <td ng-bind="value"></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    </tab> <tab ng-if="prbt.prarEntradaList.length || prbt.prarSalidaList.length" heading="{{'prarList' | translate}}">
-    <div ng-if="prbt.prarEntradaList.length" class="table-responsive">
+    </tab> <tab ng-if="vm.prbt.prarEntradaList.length || vm.prbt.prarSalidaList.length" heading="{{'prarList' | translate}}">
+    <div ng-if="vm.prbt.prarEntradaList.length" class="table-responsive">
         <legend translate="prarEntradaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -87,14 +87,14 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prar in prbt.prarEntradaList track by $index">
+                <tr ng-repeat="prar in vm.prbt.prarEntradaList track by $index">
                     <td ng-bind="prar.nombre"></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div ng-if="prbt.prarSalidaList.length" class="table-responsive">
+    <div ng-if="vm.prbt.prarSalidaList.length" class="table-responsive">
         <legend translate="prarSalidaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -104,14 +104,14 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prar in prbt.prarSalidaList track by $index">
+                <tr ng-repeat="prar in vm.prbt.prarSalidaList track by $index">
                     <td ng-bind="prar.nombre"></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    </tab> <tab ng-if="prbt.pritEntradaList.length || prbt.pritSalidaList.length" heading="Items">
-    <div ng-if="prbt.pritEntradaList.length" class="table-responsive">
+    </tab> <tab ng-if="vm.prbt.pritEntradaList.length || vm.prbt.pritSalidaList.length" heading="Items">
+    <div ng-if="vm.prbt.pritEntradaList.length" class="table-responsive">
         <legend translate="pritEntradaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -121,14 +121,14 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prit in prbt.pritEntradaList track by $index">
+                <tr ng-repeat="prit in vm.prbt.pritEntradaList track by $index">
                     <td ng-bind="prit.itemId"></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div ng-if="prbt.pritSalidaList.length" class="table-responsive">
+    <div ng-if="vm.prbt.pritSalidaList.length" class="table-responsive">
         <legend translate="pritSalidaList"></legend>
         <table class="table-bordered table-condensed table-hover table-nonfluid">
             <thead>
@@ -138,17 +138,17 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="prit in prbt.pritSalidaList track by $index">
+                <tr ng-repeat="prit in vm.prbt.pritSalidaList track by $index">
                     <td ng-bind="prit.itemId"></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    </tab> <tab heading="{{'prmnList' | translate}}" ng-if="prmnList.list">
+    </tab> <tab heading="{{'prmnList' | translate}}" ng-if="vm.prmnList.list">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <pagination total-items="prmnList.count" items-per-page="prmnList.limit" ng-model="page"
-                ng-change="pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            <pagination total-items="vm.prmnList.count" items-per-page="vm.prmnList.limit" ng-model="vm.page"
+                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
                 next-text="&rsaquo;&rsaquo;"></pagination>
         </div>
     </div>
@@ -163,8 +163,8 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="prmn in prmnList.list track by $index">
-                <td ng-bind="prmn.nivel"></td>
+            <tr ng-repeat="prmn in vm.prmnList.list track by $index">
+                <td ng-bind="'MensajeNivel_' + prmn.nivel | translate"></td>
                 <td ng-bind="prmn.codigo"></td>
                 <td ng-bind="prmn.mensaje"></td>
             </tr>
