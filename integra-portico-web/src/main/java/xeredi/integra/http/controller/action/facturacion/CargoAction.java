@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
@@ -39,6 +44,9 @@ public final class CargoAction extends BaseAction {
 
     /** The crgo. */
     private CargoVO crgo;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /** The rgla list. */
     private final List<ReglaVO> rglaList = new ArrayList<>();
@@ -73,20 +81,18 @@ public final class CargoAction extends BaseAction {
     @Action("crgo-detail")
     public String detail() {
         Preconditions.checkNotNull(crgo);
-        Preconditions.checkArgument(crgo.getId() != null && fechaVigencia != null || crgo.getCrgv() != null
-                && crgo.getCrgv().getId() != null);
+        Preconditions.checkNotNull(crgo.getId());
 
         final CargoBO crgoBO = new CargoBO();
+        final I18nBO i18nBO = new I18nBO();
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setId(crgo.getId());
         crgoCriterioVO.setFechaVigencia(fechaVigencia);
-
-        if (crgo.getCrgv() != null) {
-            crgoCriterioVO.setCrgvId(crgo.getCrgv().getId());
-        }
+        crgoCriterioVO.setIdioma(getIdioma());
 
         crgo = crgoBO.select(crgoCriterioVO);
+        i18nMap = i18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
 
         if (crgo != null) {
             final ReglaBO rglaBO = new ReglaBO();
@@ -129,11 +135,14 @@ public final class CargoAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final CargoBO crgoBO = new CargoBO();
+        final I18nBO i18nBO = new I18nBO();
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setCrgvId(crgo.getCrgv().getId());
+        crgoCriterioVO.setIdioma(getIdioma());
 
         crgo = crgoBO.select(crgoCriterioVO);
+        i18nMap = i18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
 
         return SUCCESS;
     }
@@ -166,10 +175,8 @@ public final class CargoAction extends BaseAction {
             Preconditions.checkNotNull(crgo.getCrgv().getId());
         }
 
-        if (GenericValidator.isBlankOrNull(crgo.getCrgv().getDescripcion())) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.crgo_descripcion.name()) }));
-        }
+        I18nValidator.validate(this, i18nMap);
+
         if (crgo.getCrgv().getTipo() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
                     new String[] { getText(MessageI18nKey.crgo_tipo.name()) }));
@@ -196,7 +203,7 @@ public final class CargoAction extends BaseAction {
         switch (accion) {
         case create:
             try {
-                crgoBO.insert(crgo);
+                crgoBO.insert(crgo, i18nMap);
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
                         new String[] { getText(MessageI18nKey.crgo.name()) }));
@@ -205,7 +212,7 @@ public final class CargoAction extends BaseAction {
             break;
         case edit:
             try {
-                crgoBO.update(crgo);
+                crgoBO.update(crgo, i18nMap);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
                     getText(MessageI18nKey.crgo.name()), crgo.getCodigo() }));
@@ -320,6 +327,25 @@ public final class CargoAction extends BaseAction {
      */
     public List<ReglaVO> getRglaList() {
         return rglaList;
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 
 }

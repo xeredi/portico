@@ -34,7 +34,7 @@
 
         <tbody>
             <tr ng-repeat="crgo in vm.crgoList.list track by $index">
-                <td><a ng-href="#/facturacion/crgo/detail/{{crgo.crgv.id}}"><i
+                <td><a ng-href="#/facturacion/crgo/detail/{{crgo.id}}/{{vm.crgoCriterio.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="crgo.codigo"></td>
                 <td ng-bind="crgo.crgv.descripcion"></td>

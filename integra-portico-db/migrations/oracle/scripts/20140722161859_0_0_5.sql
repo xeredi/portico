@@ -509,6 +509,8 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoEstado_F', 'F - Finalizado')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoModulo_S', 'S - Servicios')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoModulo_E', 'E - Estadísticas')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'CargoTipo_T', 'T - Tarifa')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'CargoTipo_B', 'B - Tasa')\
 
 
 -- Borrado de laas tablas de configuracion y configuracion de idioma

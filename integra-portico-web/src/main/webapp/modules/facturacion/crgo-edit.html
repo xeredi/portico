@@ -1,44 +1,42 @@
-<p class="bg-primary" ng-bind="'Cargo'"></p>
-
 <form role="form">
-    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="crgo.id" /><input type="hidden"
-        ng-model="crgo.crgv.id" />
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.crgo.id" /><input type="hidden"
+        ng-model="vm.crgo.crgv.id" />
 
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 form-group">
-                <label translate>crgo_tpsr</label> <select ng-if="accion == 'create'" ng-model="crgo.tpsr.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in entiList"
+                <label translate>crgo_tpsr</label> <select ng-if="vm.accion == 'create'" ng-model="vm.crgo.tpsr.id"
+                    ng-options="labelValue.value as labelValue.label for labelValue in vm.entiList"
                     class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="crgo.tpsr.nombre"></p>
+                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="'enti_' + vm.crgo.tpsr.id | translate"></p>
             </div>
             <div class="col-md-1 form-group">
-                <label translate>crgo_codigo</label> <input ng-if="accion == 'create'" type="text"
-                    ng-model="crgo.codigo" class="form-control input-sm" />
-                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="crgo.codigo"></p>
+                <label translate>crgo_codigo</label> <input ng-if="vm.accion == 'create'" type="text"
+                    ng-model="vm.crgo.codigo" class="form-control input-sm" />
+                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.crgo.codigo"></p>
             </div>
             <div class="col-md-2 form-group">
                 <label translate>crgo_codigoNormalizado</label> <input type="text"
-                    ng-model="crgo.crgv.codigoNormalizado" class="form-control input-sm" />
+                    ng-model="vm.crgo.crgv.codigoNormalizado" class="form-control input-sm" />
             </div>
             <div class="col-md-1 form-group">
-                <label translate>crgo_tipo</label> <select ng-model="crgo.crgv.tipo"
-                    ng-options="cdrf as (cdrf + ' - ' + ('CargoTipo_' + cdrf | translate)) for cdrf in tipos"
+                <label translate>crgo_tipo</label> <select ng-model="vm.crgo.crgv.tipo"
+                    ng-options="cdrf as ('CargoTipo_' + cdrf | translate) for cdrf in vm.tipos"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label translate>crgo_principal</label> <select ng-model="crgo.crgv.principal"
+                <label translate>crgo_principal</label> <select ng-model="vm.crgo.crgv.principal"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
                 </select>
             </div>
             <div class="col-md-1 form-group">
-                <label translate>crgo_temporal</label> <select ng-model="crgo.crgv.temporal"
+                <label translate>crgo_temporal</label> <select ng-model="vm.crgo.crgv.temporal"
                     ng-options="item as ('format_' + item | translate) for item in [true , false]"
                     class="form-control input-sm">
                     <option />
@@ -51,7 +49,7 @@
                 <label translate>crgo_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.fini" /> <span
+                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.crgo.crgv.fini" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
@@ -59,28 +57,26 @@
                 <label translate>crgo_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="crgo.crgv.ffin" /> <span
+                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.crgo.crgv.ffin" /> <span
                         class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
-            <div class="col-md-3 form-group">
-                <label translate>crgo_descripcion</label> <input type="text" ng-model="crgo.crgv.descripcion"
-                    class="form-control input-sm" />
-            </div>
         </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
     </div>
 
-    <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate>errors</span>:
+    <alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
     <ul>
-        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+        <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
     </ul>
     </alert>
 
     <div class="btn-group">
-        <button data-ng-click="save()" class="btn btn-primary">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
         </button>
-        <button data-ng-click="cancel()" class="btn btn-default">
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
         </button>
     </div>

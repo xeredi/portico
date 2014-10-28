@@ -755,7 +755,7 @@ public enum MessageI18nKey {
     /** The Mensaje nivel_ w. */
     MensajeNivel_W,
     /** The Mensaje nivel_ e. */
-    MensajeNivel_E, ProcesoEstado_C, ProcesoEstado_E, ProcesoEstado_F, ProcesoModulo_S, ProcesoModulo_E,
+    MensajeNivel_E, ProcesoEstado_C, ProcesoEstado_E, ProcesoEstado_F, ProcesoModulo_S, ProcesoModulo_E, CargoTipo_B, CargoTipo_T,
 
     ;
 

@@ -62,6 +62,8 @@ public final class CargoListadoAction extends BaseAction {
     public String listado() {
         Preconditions.checkNotNull(crgoCriterio);
 
+        crgoCriterio.setIdioma(getIdioma());
+
         final CargoBO crgoBO = new CargoBO();
 
         crgoList = crgoBO.selectList(crgoCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());

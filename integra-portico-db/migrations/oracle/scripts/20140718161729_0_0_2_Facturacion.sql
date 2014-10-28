@@ -43,7 +43,7 @@ CREATE TABLE tbl_cargo_version_crgv (
 		REFERENCES tbl_cargo_crgo (crgo_pk)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_cargo_version_crgv FOR porticoadm.tbl_cargo_crgo\
+CREATE OR REPLACE SYNONYM portico.tbl_cargo_version_crgv FOR porticoadm.tbl_cargo_version_crgv\
 
 CREATE INDEX ix_crgv_crgo_pk ON tbl_cargo_version_crgv (crgv_crgo_pk)\
 

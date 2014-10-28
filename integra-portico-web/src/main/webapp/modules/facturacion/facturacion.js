@@ -131,7 +131,7 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/crgo/detail/:crgvId", {
+    .when("/facturacion/crgo/detail/:crgoId", {
         templateUrl : "modules/facturacion/crgo-detail.html",
         controller : "crgoDetailController",
         controllerAs : "vm"
@@ -545,28 +545,15 @@ function crgoFilterController($http, $modalInstance, crgoCriterio, pageTitleServ
     });
 }
 
-function crgoDetailController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/crgo-detail.action";
+function crgoDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    if ($routeParams.fechaVigencia) {
-        $scope.fechaVigencia = $routeParams.fechaVigencia;
-        url += "?crgo.id=" + $routeParams.crgoId + "&fechaVigencia=" + $routeParams.fechaVigencia;
-    } else {
-        url += "?crgo.crgv.id=" + $routeParams.crgvId;
-    }
+    vm.remove = remove;
 
-    $http.get(url).success(function(data) {
-        $scope.crgo = data.crgo;
-        $scope.rglaList = data.rglaList;
-        $scope.fechaVigencia = data.fechaVigencia;
-    });
-
-    $scope.remove = function() {
+    function remove() {
         if (confirm("Are you sure?")) {
-            var url = "facturacion/crgo-remove.action?crgo.crgv.id=" + $scope.crgo.crgv.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
+            $http.get("facturacion/crgo-remove.action?crgo.crgv.id=" + vm.crgo.crgv.id).success(function(data) {
+                vm.actionErrors = data.actionErrors;
 
                 if (data.actionErrors.length == 0) {
                     window.history.back();
@@ -575,32 +562,31 @@ function crgoDetailController($scope, $http, $location, $routeParams, pageTitleS
         }
     }
 
+    $http.get(
+            "facturacion/crgo-detail.action?crgo.id=" + $routeParams.crgoId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
+        vm.crgo = data.crgo;
+        vm.i18nMap = data.i18nMap;
+        vm.rglaList = data.rglaList;
+        vm.fechaVigencia = data.fechaVigencia;
+    });
+
     pageTitleService.setTitle("crgo", "page_detail");
 }
 
-function crgoCreateController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/crgo-create.action";
+function crgoCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.crgo = data.crgo;
-        $scope.tipos = data.tipos;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    var urlEntiList = "metamodelo/enti-lv-list.action?entiCriterio.tipo=T";
-
-    $http.get(urlEntiList).success(function(data) {
-        $scope.entiList = data.lvList;
-    });
-
-    $scope.save = function() {
-        var url = "facturacion/crgo-save.action";
-
-        $http.post(url, {
-            crgo : $scope.crgo,
-            accion : $scope.accion
+    function save() {
+        $http.post("facturacion/crgo-save.action", {
+            crgo : vm.crgo,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 $location.path("/facturacion/crgo/detail/" + data.crgo.crgv.id).replace();
@@ -608,30 +594,36 @@ function crgoCreateController($scope, $http, $location, $routeParams, pageTitleS
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("facturacion/crgo-create.action").success(function(data) {
+        vm.crgo = data.crgo;
+        vm.tipos = data.tipos;
+        vm.accion = data.accion;
+    });
+
+    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(function(data) {
+        vm.entiList = data.lvList;
+    });
 
     pageTitleService.setTitle("crgo", "page_create");
 }
 
-function crgoEditController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/crgo-edit.action?crgo.crgv.id=" + $routeParams.crgvId;
+function crgoEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.crgo = data.crgo;
-        $scope.tipos = data.tipos;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "facturacion/crgo-save.action";
-
-        $http.post(url, {
-            crgo : $scope.crgo,
-            accion : $scope.accion
+    function save() {
+        $http.post("facturacion/crgo-save.action", {
+            crgo : vm.crgo,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
                 setTimeout(function() {
@@ -641,9 +633,16 @@ function crgoEditController($scope, $http, $location, $routeParams, pageTitleSer
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("facturacion/crgo-edit.action?crgo.crgv.id=" + $routeParams.crgvId).success(function(data) {
+        vm.crgo = data.crgo;
+        vm.i18nMap = data.i18nMap;
+        vm.tipos = data.tipos;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitle("crgo", "page_edit");
 }

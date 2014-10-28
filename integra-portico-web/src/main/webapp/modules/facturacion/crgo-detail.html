@@ -1,71 +1,68 @@
-<p class="bg-primary" ng-bind="'Cargo'"></p>
-
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/crgo/edit/{{crgo.crgv.id}}"><i
+        <a class="btn btn-default" ng-href="#/facturacion/crgo/edit/{{vm.crgo.crgv.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button data-ng-click="remove()" class="btn btn-default">
+        <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
 </div>
 
-<fieldset>
-    <div class="row-fluid">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-md-2 form-group">
             <label translate>crgo_tpsr</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{crgo.tpsr.id}}" ng-bind="crgo.tpsr.nombre"></a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{vm.crgo.tpsr.id}}"
+                    ng-bind="'enti_' + vm.crgo.tpsr.id | translate"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_codigo</label>
-            <p class="form-control-static" ng-bind="crgo.codigo"></p>
+            <p class="form-control-static" ng-bind="vm.crgo.codigo"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>crgo_codigoNormalizado</label>
-            <p class="form-control-static" ng-bind="crgo.crgv.codigoNormalizado"></p>
+            <p class="form-control-static" ng-bind="vm.crgo.crgv.codigoNormalizado"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_tipo</label>
-            <p class="form-control-static" ng-bind="crgo.crgv.tipo"></p>
+            <p class="form-control-static" ng-bind="'CargoTipo_' + vm.crgo.crgv.tipo | translate"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_principal</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{crgo.crgv.principal ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.crgo.crgv.principal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_temporal</label>
             <p class="form-control-static">
-                <i class="glyphicon glyphicon-{{crgo.crgv.temporal ? 'ok' : 'remove'}}"></i>
+                <i class="glyphicon glyphicon-{{vm.crgo.crgv.temporal ? 'ok' : 'remove'}}"></i>
             </p>
         </div>
     </div>
 
-    <div class="row-fluid">
+    <div class="row">
         <div class="col-md-1 form-group">
             <label translate>crgo_fini</label>
-            <p class="form-control-static" ng-bind="crgo.crgv.fini | date"></p>
+            <p class="form-control-static" ng-bind="vm.crgo.crgv.fini | date"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>crgo_ffin</label>
-            <p class="form-control-static" ng-bind="crgo.crgv.ffin | date"></p>
-        </div>
-        <div class="col-md-3 form-group">
-            <label translate>crgo_descripcion</label>
-            <p class="form-control-static" ng-bind="crgo.crgv.descripcion"></p>
+            <p class="form-control-static" ng-bind="vm.crgo.crgv.ffin | date"></p>
         </div>
     </div>
-</fieldset>
+
+    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+</div>
 
 <fieldset>
     <legend ng-bind="'Reglas'"></legend>
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/facturacion/rgla/create/{{crgo.crgv.id}}"><i
+            <a class="btn btn-default" ng-href="#/facturacion/rgla/create/{{vm.crgo.crgv.id}}"><i
                 class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
         </div>
     </div>
@@ -87,10 +84,11 @@
             </thead>
 
             <tbody>
-                <tr ng-repeat="rgla in rglaList track by $index">
-                    <td><a ng-if="fechaVigencia" ng-href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
+                <tr ng-repeat="rgla in vm.rglaList track by $index">
+                    <td><a ng-if="vm.fechaVigencia"
+                        ng-href="#/facturacion/rgla/detail/{{rgla.id}}/{{vm.fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a><a ng-if="!fechaVigencia"
-                        ng-href="#/facturacion/rgla/detail/{{rgla.id}}/{{fechaVigencia}}"><i
+                        ng-href="#/facturacion/rgla/detail/{{rgla.id}}/{{vm.fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="rgla.codigo"></td>
                     <td ng-bind="rgla.rglv.tipo"></td>

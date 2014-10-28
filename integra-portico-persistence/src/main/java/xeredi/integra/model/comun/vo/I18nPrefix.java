@@ -6,14 +6,18 @@ package xeredi.integra.model.comun.vo;
  */
 public enum I18nPrefix {
 
-    /** The prvr. */
-    prvr,
-    /** The cdrf. */
-    cdrf,
     /** The enti. */
     enti,
     /** The tpdt. */
-    tpdt, aspv,
+    tpdt,
+    /** The cdrf. */
+    cdrf,
+    /** The aspv. */
+    aspv,
+    /** The crgv. */
+    crgv,
+    /** The prvr. */
+    prvr,
 
     ;
 }
