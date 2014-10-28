@@ -1,8 +1,10 @@
-angular.module("estadistica", [ "ngRoute" ])
+angular.module("estadistica", [ "ngRoute", "util" ])
 
 .config(config)
 
 .controller("peprGridController", peprGridController)
+
+.controller("peprFilterController", peprFilterController)
 
 .controller("peprDetailController", peprDetailController)
 
@@ -18,107 +20,124 @@ function config($routeProvider) {
     $routeProvider
 
     .when("/estadistica/pepr/grid", {
-        title : 'peprList',
         templateUrl : "modules/entidad/estadistica/pepr-grid.html",
         controller : "peprGridController",
+        controllerAs : "vm",
         reloadOnSearch : false
     })
 
     .when("/estadistica/pepr/detail/:peprId", {
-        title : 'pepr',
         templateUrl : "modules/entidad/estadistica/pepr-detail.html",
-        controller : "peprDetailController"
+        controller : "peprDetailController",
+        controllerAs : "vm"
     })
 
     .when("/estadistica/cdms/detail/:peprId", {
-        title : 'cdms',
         templateUrl : "modules/entidad/estadistica/cdms-detail.html",
-        controller : "cdmsDetailController"
+        controller : "cdmsDetailController",
+        controllerAs : "vm"
     })
 
     .when("/estadistica/estd/grid/:entiId/:peprId/:autpId", {
-        title : 'estdList',
         templateUrl : "modules/entidad/estadistica/estd-grid.html",
         controller : "estdGridController",
+        controllerAs : "vm",
         reloadOnSearch : false
     })
 
     .when("/estadistica/estd/detail/:entiId/:itemId", {
-        title : 'estd',
         templateUrl : "modules/entidad/estadistica/estd-detail.html",
-        controller : "estdDetailController"
+        controller : "estdDetailController",
+        controllerAs : "vm"
     })
 }
 
-function peprGridController($scope, $http, $location, $route, $routeParams) {
-    $scope.showFilter = false;
-    $scope.peprCriterio = {};
+function peprGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.peprCriterio = {};
 
     function search(peprCriterio, page, limit) {
-        var url = "estadistica/pepr-list.action";
-
-        $http.post(url, {
+        $http.post("estadistica/pepr-list.action", {
             peprCriterio : peprCriterio,
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            vm.actionErrors = data.actionErrors;
 
             if (data.actionErrors.length == 0) {
-                $scope.page = data.peprList.page;
-                $scope.peprList = data.peprList;
+                vm.page = data.peprList.page;
+                vm.peprList = data.peprList;
 
                 var map = {};
 
                 map["page"] = data.peprList.page;
 
                 $location.search(map).replace();
-
-                $scope.showFilter = false;
             }
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.peprCriterio, $scope.page, $scope.limit);
+    function pageChanged() {
+        search(vm.peprCriterio, vm.page, vm.limit);
     }
 
-    $scope.filter = function() {
-        var url = "estadistica/pepr-filter.action";
-
-        $http.get(url).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $scope.autpList = data.autpList;
-                $scope.limits = data.limits;
+    function filter(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modules/entidad/estadistica/pepr-filter-content.html',
+            controller : 'peprFilterController',
+            controllerAs : 'vm',
+            size : size,
+            resolve : {
+                peprCriterio : function() {
+                    return vm.peprCriterio;
+                }
             }
         });
 
-        $scope.showFilter = true;
+        modalInstance.result.then(function(peprCriterio) {
+            vm.peprCriterio = peprCriterio;
+            vm.page = 1;
+
+            search(vm.peprCriterio, 1, vm.limit);
+        });
     }
 
-    $scope.search = function() {
-        search($scope.peprCriterio, 1, $scope.limit);
-    }
+    search(vm.peprCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
 
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    }
-
-    search($scope.peprCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    pageTitleService.setTitle("pepr", "page_grid");
 }
 
-function peprDetailController($scope, $http, $location, $route, $routeParams) {
-    var url = "estadistica/pepr-detail.action";
+function peprFilterController($modalInstance, $http, peprCriterio) {
+    var vm = this;
 
-    url += "?pepr.id=" + $routeParams.peprId;
+    vm.ok = ok;
+    vm.cancel = cancel;
 
-    $http.get(url).success(function(data) {
-        $scope.pepr = data.pepr;
-        $scope.tpesList = data.tpesList;
+    vm.peprCriterio = peprCriterio;
+
+    function ok() {
+        $modalInstance.close(vm.peprCriterio);
+    }
+
+    function cancel() {
+        $modalInstance.dismiss('cancel');
+    }
+
+    $http.get("estadistica/pepr-filter.action").success(function(data) {
+        vm.actionErrors = data.actionErrors;
+
+        if (data.actionErrors.length == 0) {
+            vm.autpList = data.autpList;
+            vm.limits = data.limits;
+        }
     });
+}
 
+function peprDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     $scope.remove = function() {
         if (confirm("Are you sure?")) {
             var url = "estadistica/pepr-remove.action?pepr.id=" + $scope.pepr.id;
@@ -132,9 +151,14 @@ function peprDetailController($scope, $http, $location, $route, $routeParams) {
             });
         }
     }
+
+    $http.get("estadistica/pepr-detail.action?pepr.id=" + $routeParams.peprId).success(function(data) {
+        $scope.pepr = data.pepr;
+        $scope.tpesList = data.tpesList;
+    });
 }
 
-function cdmsDetailController($scope, $http, $location, $route, $routeParams) {
+function cdmsDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "estadistica/cdms-detail.action";
 
     url += "?pepr.id=" + $routeParams.peprId;
@@ -145,7 +169,7 @@ function cdmsDetailController($scope, $http, $location, $route, $routeParams) {
     });
 }
 
-function estdGridController($scope, $http, $location, $routeParams, $modal) {
+function estdGridController($scope, $http, $location, $routeParams, $modal, pageTitleService) {
     $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     $scope.itemCriterio.entiId = $routeParams.entiId;
     $scope.itemCriterio.pepr = {};
@@ -252,7 +276,7 @@ function estdFilterController($scope, $http, $modalInstance, enti, itemCriterio)
             });
 }
 
-function estdDetailController($scope, $http, $location, $route, $routeParams) {
+function estdDetailController($scope, $http, $location, $routeParams, pageTitleService) {
     function findEnti() {
         var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
 
