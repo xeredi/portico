@@ -87,8 +87,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgin.name()),
-                String.valueOf(rginCriterioVO.getRgivId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgin.name()),
+                    String.valueOf(rginCriterioVO.getRgivId()) }));
         }
 
         return SUCCESS;
@@ -144,8 +144,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgin.name()),
-                String.valueOf(rginCriterioVO.getRgivId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgin.name()),
+                    String.valueOf(rginCriterioVO.getRgivId()) }));
         }
 
         return SUCCESS;
@@ -166,7 +166,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             if (rgin.getRgla2() == null || rgin.getRgla2().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.rgin_rgla2.name()) }));
+                        new Object[] { getText(MessageI18nKey.rgin_rgla2.name()) }));
             }
         } else {
             Preconditions.checkNotNull(rgin.getId());
@@ -177,7 +177,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
 
         if (rgin.getRgiv().getFini() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.rgin_fini.name()) }));
+                    new Object[] { getText(MessageI18nKey.rgin_fini.name()) }));
         }
 
         if (hasErrors()) {
@@ -192,7 +192,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
                 rginBO.insert(rgin);
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
-                        new String[] { getText(MessageI18nKey.rgin.name()) }));
+                        new Object[] { getText(MessageI18nKey.rgin.name()) }));
             }
 
             break;
@@ -201,10 +201,10 @@ public final class ReglaIncompatibleAction extends BaseAction {
                 rginBO.update(rgin);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(getText(MessageI18nKey.E00008.name(),
-                        new String[] { getText(MessageI18nKey.rgin.name()) }));
+                        new Object[] { getText(MessageI18nKey.rgin.name()) }));
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
-                        new String[] { getText(MessageI18nKey.rgin.name()) }));
+                        new Object[] { getText(MessageI18nKey.rgin.name()) }));
             }
 
             break;
@@ -231,8 +231,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rginBO.delete(rgin);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.rgin.name()),
-                String.valueOf(rgin.getRgiv().getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgin.name()),
+                    String.valueOf(rgin.getRgiv().getId()) }));
         }
 
         return SUCCESS;

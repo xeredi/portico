@@ -93,7 +93,7 @@ public final class TipoEstadisticaAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             if (enti.getCodigo() == null || enti.getCodigo().isEmpty()) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.enti_codigo.name()) }));
+                        new Object[] { getText(MessageI18nKey.enti_codigo.name()) }));
             }
         } else {
             Preconditions.checkNotNull(enti.getId());
@@ -114,14 +114,14 @@ public final class TipoEstadisticaAction extends BaseAction {
                 tpesBO.insert(enti, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.tpes.name()) }));
+                        new Object[] { getText(MessageI18nKey.tpes.name()) }));
             }
         } else {
             try {
                 tpesBO.update(enti, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                        getText(MessageI18nKey.tpes.name()), String.valueOf(enti.getId()) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
+                    getText(MessageI18nKey.tpes.name()), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -143,8 +143,8 @@ public final class TipoEstadisticaAction extends BaseAction {
         try {
             tpesBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpes.name()),
-                    String.valueOf(enti.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.tpes.name()),
+                String.valueOf(enti.getId()) }));
         }
 
         return SUCCESS;

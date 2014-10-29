@@ -104,7 +104,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             if (entd.getTpdt() == null || entd.getTpdt().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.entd_tpdt.name()) }));
+                        new Object[] { getText(MessageI18nKey.entd_tpdt.name()) }));
             }
         } else {
             Preconditions.checkNotNull(entd.getTpdt());
@@ -113,39 +113,39 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         if (GenericValidator.isBlankOrNull(entd.getEtiqueta())) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_etiqueta.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_etiqueta.name()) }));
         }
         if (entd.getGrupo() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_grupo.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_grupo.name()) }));
         }
         if (entd.getFila() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_fila.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_fila.name()) }));
         }
         if (entd.getOrden() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_orden.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_orden.name()) }));
         }
         if (entd.getSpan() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_span.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_span.name()) }));
         }
         if (entd.getSpanLg() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_spanLg.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_spanLg.name()) }));
         }
         if (entd.getObligatorio() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_obligatorio.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_obligatorio.name()) }));
         }
         if (entd.getGridable() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_gridable.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_gridable.name()) }));
         }
         if (entd.getFiltrable() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.entd_filtrable.name()) }));
+                    new Object[] { getText(MessageI18nKey.entd_filtrable.name()) }));
         }
 
         if (hasErrors()) {
@@ -159,7 +159,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
                 entdBO.insert(entd);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.entd.name()) }));
+                        new Object[] { getText(MessageI18nKey.entd.name()) }));
             }
         } else {
             entdBO.update(entd);

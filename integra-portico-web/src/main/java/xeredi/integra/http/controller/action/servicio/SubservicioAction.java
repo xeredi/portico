@@ -164,11 +164,11 @@ public final class SubservicioAction extends ItemAction {
         if (accion == ACCION_EDICION.create) {
             if (item.getSrvc() == null || item.getSrvc().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.ssrv_srvc.name()) }));
+                        new Object[] { getText(MessageI18nKey.ssrv_srvc.name()) }));
             }
             if (item.getNumero() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.ssrv_numero.name()) }));
+                        new Object[] { getText(MessageI18nKey.ssrv_numero.name()) }));
             }
         } else {
             Preconditions.checkNotNull(item.getId());
@@ -180,18 +180,18 @@ public final class SubservicioAction extends ItemAction {
         if (enti.getTpdtEstado() != null) {
             if (GenericValidator.isBlankOrNull(item.getEstado())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.ssrv_estado.name()) }));
+                        new Object[] { getText(MessageI18nKey.ssrv_estado.name()) }));
             }
         }
 
         if (enti.getTemporal()) {
             if (item.getFini() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.ssrv_fini.name()) }));
+                        new Object[] { getText(MessageI18nKey.ssrv_fini.name()) }));
             }
             if (item.getFfin() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.ssrv_ffin.name()) }));
+                        new Object[] { getText(MessageI18nKey.ssrv_ffin.name()) }));
             }
         }
 
@@ -208,7 +208,7 @@ public final class SubservicioAction extends ItemAction {
             try {
                 ssrvBO.insert(item, enti, null);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(), new String[] { enti.getNombre() }));
+                addActionError(getText(MessageI18nKey.E00005.name(), new Object[] { enti.getNombre() }));
             }
 
             break;
@@ -216,8 +216,8 @@ public final class SubservicioAction extends ItemAction {
             try {
                 ssrvBO.update(item);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new String[] { enti.getNombre(),
-                    item.getId().toString() }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { enti.getNombre(),
+                        item.getId().toString() }));
             }
 
             break;

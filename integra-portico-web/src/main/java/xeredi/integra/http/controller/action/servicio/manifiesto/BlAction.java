@@ -45,7 +45,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.bloquear(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -65,7 +65,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.completar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -85,7 +85,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.iniciar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -105,7 +105,7 @@ public final class BlAction extends BaseAction {
         try {
             mablBO.anular(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
         }
 
         return SUCCESS;

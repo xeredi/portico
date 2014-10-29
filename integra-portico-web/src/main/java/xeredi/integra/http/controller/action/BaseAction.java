@@ -88,8 +88,7 @@ public class BaseAction extends ActionSupport implements SessionAware {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public String getText(final String key, final String[] args) {
+    public String getText(final String key, final Object[] args) {
         return MessageFormat.format(bundle.getString(key), args);
     }
 

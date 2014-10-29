@@ -162,12 +162,12 @@ public final class CargoAction extends BaseAction {
         if (ACCION_EDICION.create == accion) {
             if (GenericValidator.isBlankOrNull(crgo.getCodigo())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.crgo_codigo.name()) }));
+                        new Object[] { getText(MessageI18nKey.crgo_codigo.name()) }));
             }
 
             if (crgo.getTpsr() == null || crgo.getTpsr().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.crgo_tpsr.name()) }));
+                        new Object[] { getText(MessageI18nKey.crgo_tpsr.name()) }));
             }
         }
 
@@ -180,19 +180,19 @@ public final class CargoAction extends BaseAction {
 
         if (crgo.getCrgv().getTipo() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.crgo_tipo.name()) }));
+                    new Object[] { getText(MessageI18nKey.crgo_tipo.name()) }));
         }
         if (crgo.getCrgv().getTemporal() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.crgo_temporal.name()) }));
+                    new Object[] { getText(MessageI18nKey.crgo_temporal.name()) }));
         }
         if (crgo.getCrgv().getPrincipal() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.crgo_principal.name()) }));
+                    new Object[] { getText(MessageI18nKey.crgo_principal.name()) }));
         }
         if (crgo.getCrgv().getFini() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.crgo_fini.name()) }));
+                    new Object[] { getText(MessageI18nKey.crgo_fini.name()) }));
         }
 
         if (hasErrors()) {
@@ -207,7 +207,7 @@ public final class CargoAction extends BaseAction {
                 crgoBO.insert(crgo, i18nMap);
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
-                        new String[] { getText(MessageI18nKey.crgo.name()) }));
+                        new Object[] { getText(MessageI18nKey.crgo.name()) }));
             }
 
             break;
@@ -215,11 +215,11 @@ public final class CargoAction extends BaseAction {
             try {
                 crgoBO.update(crgo, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                        getText(MessageI18nKey.crgo.name()), crgo.getCodigo() }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
+                    getText(MessageI18nKey.crgo.name()), crgo.getCodigo() }));
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
-                        new String[] { getText(MessageI18nKey.crgo.name()) }));
+                        new Object[] { getText(MessageI18nKey.crgo.name()) }));
             }
 
             break;
@@ -246,8 +246,8 @@ public final class CargoAction extends BaseAction {
         try {
             crgoBO.delete(crgo);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.crgo.name()),
-                    crgo.getCodigo() }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.crgo.name()),
+                crgo.getCodigo() }));
         }
 
         return SUCCESS;

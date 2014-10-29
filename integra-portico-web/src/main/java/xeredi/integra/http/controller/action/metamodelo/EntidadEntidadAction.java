@@ -82,7 +82,7 @@ public final class EntidadEntidadAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             if (enen.getEntiHija() == null || enen.getEntiHija().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.enen_entiHija.name()) }));
+                        new Object[] { getText(MessageI18nKey.enen_entiHija.name()) }));
             }
         } else {
             Preconditions.checkNotNull(enen.getEntiHija());
@@ -91,7 +91,7 @@ public final class EntidadEntidadAction extends BaseAction {
 
         if (enen.getOrden() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enen_orden.name()) }));
+                    new Object[] { getText(MessageI18nKey.enen_orden.name()) }));
         }
 
         if (hasErrors()) {
@@ -105,14 +105,14 @@ public final class EntidadEntidadAction extends BaseAction {
                 enenBO.insert(enen);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.enen.name()) }));
+                        new Object[] { getText(MessageI18nKey.enen.name()) }));
             }
         } else {
             try {
                 enenBO.update(enen);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                    getText(MessageI18nKey.enen.name()), String.valueOf(enen) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
+                        getText(MessageI18nKey.enen.name()), String.valueOf(enen) }));
             }
         }
 
@@ -136,8 +136,8 @@ public final class EntidadEntidadAction extends BaseAction {
         try {
             enenBO.delete(enen);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.enen.name()),
-                String.valueOf(enen) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.enen.name()),
+                    String.valueOf(enen) }));
         }
 
         return SUCCESS;

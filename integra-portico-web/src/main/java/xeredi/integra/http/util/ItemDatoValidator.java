@@ -2,13 +2,12 @@ package xeredi.integra.http.util;
 
 import java.util.Map;
 
+import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,7 +24,7 @@ public final class ItemDatoValidator {// srdtMap
      * @param itemVO
      *            the item vo
      */
-    public static void validate(final ActionSupport support, final EntidadVO entiVO, final ItemVO itemVO) {
+    public static void validate(final BaseAction support, final EntidadVO entiVO, final ItemVO itemVO) {
         if (entiVO.getEntdList() != null) {
             final Map<Long, ItemDatoVO> itdtMap = itemVO.getItdtMap();
 
@@ -34,7 +33,7 @@ public final class ItemDatoValidator {// srdtMap
 
                 if (entd.getObligatorio() && itdtVO == null) {
                     support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                            new String[] { entd.getEtiqueta() }));
+                            new Object[] { entd.getEtiqueta() }));
                 }
 
                 if (itdtVO != null) {
@@ -43,35 +42,35 @@ public final class ItemDatoValidator {// srdtMap
                     case BO:
                         if (entd.getObligatorio() && itdtVO.getCantidadEntera() == null) {
                             support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                                    new String[] { entd.getEtiqueta() }));
+                                    new Object[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case NE:
                         if (entd.getObligatorio() && itdtVO.getCantidadEntera() == null) {
                             support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                                    new String[] { entd.getEtiqueta() }));
+                                    new Object[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case ND:
                         if (entd.getObligatorio() && itdtVO.getCantidadDecimal() == null) {
                             support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                                    new String[] { entd.getEtiqueta() }));
+                                    new Object[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case PR:
                         if (entd.getObligatorio() && (itdtVO.getPrmt() == null || itdtVO.getPrmt().getId() == null)) {
                             support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                                    new String[] { entd.getEtiqueta() }));
+                                    new Object[] { entd.getEtiqueta() }));
                         }
 
                         break;
                     case SR:
                         if (entd.getObligatorio() && (itdtVO.getSrvc() == null || itdtVO.getSrvc().getId() == null)) {
                             support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                                    new String[] { entd.getEtiqueta() }));
+                                    new Object[] { entd.getEtiqueta() }));
                         }
 
                         break;
@@ -79,7 +78,7 @@ public final class ItemDatoValidator {// srdtMap
                     case TX:
                         if (entd.getObligatorio() && (itdtVO.getCadena() == null || itdtVO.getCadena().isEmpty())) {
                             support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                                    new String[] { entd.getEtiqueta() }));
+                                    new Object[] { entd.getEtiqueta() }));
                         }
 
                         break;
@@ -87,7 +86,7 @@ public final class ItemDatoValidator {// srdtMap
                     case FH:
                         if (entd.getObligatorio() && itdtVO.getFecha() == null) {
                             support.addActionError(support.getText(MessageI18nKey.E00001.name(),
-                                    new String[] { entd.getEtiqueta() }));
+                                    new Object[] { entd.getEtiqueta() }));
                         }
 
                         break;

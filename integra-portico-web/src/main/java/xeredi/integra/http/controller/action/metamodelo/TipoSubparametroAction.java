@@ -92,7 +92,7 @@ public final class TipoSubparametroAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             if (GenericValidator.isBlankOrNull(enti.getCodigo())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.enti_codigo.name()) }));
+                        new Object[] { getText(MessageI18nKey.enti_codigo.name()) }));
             }
         } else {
             Preconditions.checkNotNull(enti.getId());
@@ -102,31 +102,31 @@ public final class TipoSubparametroAction extends BaseAction {
 
         if (enti.getTpprAsociado() == null || enti.getTpprAsociado().getId() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enti_tpprAsociado.name()) }));
+                    new Object[] { getText(MessageI18nKey.enti_tpprAsociado.name()) }));
         }
         if (enti.getCmdAlta() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enti_cmdAlta.name()) }));
+                    new Object[] { getText(MessageI18nKey.enti_cmdAlta.name()) }));
         }
         if (enti.getCmdBaja() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enti_cmdBaja.name()) }));
+                    new Object[] { getText(MessageI18nKey.enti_cmdBaja.name()) }));
         }
         if (enti.getCmdEdicion() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enti_cmdEdicion.name()) }));
+                    new Object[] { getText(MessageI18nKey.enti_cmdEdicion.name()) }));
         }
         if (enti.getCmdDuplicado() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enti_cmdDuplicado.name()) }));
+                    new Object[] { getText(MessageI18nKey.enti_cmdDuplicado.name()) }));
         }
         if (enti.getI18n() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enti_i18n.name()) }));
+                    new Object[] { getText(MessageI18nKey.enti_i18n.name()) }));
         }
         if (enti.getTempExp() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enti_tempExp.name()) }));
+                    new Object[] { getText(MessageI18nKey.enti_tempExp.name()) }));
         }
 
         if (hasErrors()) {
@@ -142,14 +142,14 @@ public final class TipoSubparametroAction extends BaseAction {
                 tpspBO.insert(enti, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.tpsp.name()) }));
+                        new Object[] { getText(MessageI18nKey.tpsp.name()) }));
             }
         } else {
             try {
                 tpspBO.update(enti, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                    getText(MessageI18nKey.tpsp.name()), String.valueOf(enti.getId()) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
+                        getText(MessageI18nKey.tpsp.name()), String.valueOf(enti.getId()) }));
             }
         }
 
@@ -171,8 +171,8 @@ public final class TipoSubparametroAction extends BaseAction {
         try {
             tpspBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpsp.name()),
-                String.valueOf(enti.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.tpsp.name()),
+                    String.valueOf(enti.getId()) }));
         }
 
         return SUCCESS;

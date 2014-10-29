@@ -83,7 +83,6 @@ public final class AspectoAction extends BaseAction {
         Preconditions.checkNotNull(aspc.getId());
 
         final AspectoBO aspcBO = new AspectoBO();
-        final I18nBO i18nBO = new I18nBO();
         final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
         aspcCriterioVO.setId(aspc.getId());
@@ -91,17 +90,25 @@ public final class AspectoAction extends BaseAction {
         aspcCriterioVO.setIdioma(getIdioma());
 
         aspc = aspcBO.select(aspcCriterioVO);
+
+        if (aspc == null) {
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.aspc.name()),
+                    aspcCriterioVO.getId() }));
+
+            return SUCCESS;
+        }
+
+        final I18nBO i18nBO = new I18nBO();
+
         i18nMap = i18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
 
-        if (aspc != null && fechaVigencia != null) {
-            final AspectoCargoBO ascrBO = new AspectoCargoBO();
-            final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
+        final AspectoCargoBO ascrBO = new AspectoCargoBO();
+        final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
 
-            ascrCriterioVO.setAspcId(aspc.getId());
-            ascrCriterioVO.setFechaVigencia(fechaVigencia);
+        ascrCriterioVO.setAspcId(aspc.getId());
+        ascrCriterioVO.setFechaVigencia(fechaVigencia);
 
-            ascrList = ascrBO.selectList(ascrCriterioVO);
-        }
+        ascrList = ascrBO.selectList(ascrCriterioVO);
 
         return SUCCESS;
     }
@@ -142,6 +149,14 @@ public final class AspectoAction extends BaseAction {
         aspcCriterioVO.setAspvId(aspc.getAspv().getId());
 
         aspc = aspcBO.select(aspcCriterioVO);
+
+        if (aspc == null) {
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.aspc.name()),
+                    aspcCriterioVO.getId() }));
+
+            return SUCCESS;
+        }
+
         i18nMap = i18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
 
         return SUCCESS;
@@ -186,12 +201,12 @@ public final class AspectoAction extends BaseAction {
         if (ACCION_EDICION.create == accion) {
             if (GenericValidator.isBlankOrNull(aspc.getCodigo())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_codigo.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_codigo.name()) }));
             }
 
             if (aspc.getTpsr() == null || aspc.getTpsr().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_tpsr.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_tpsr.name()) }));
             }
         }
 
@@ -204,11 +219,11 @@ public final class AspectoAction extends BaseAction {
 
         if (aspc.getAspv().getFini() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.aspc_fini.name()) }));
+                    new Object[] { getText(MessageI18nKey.aspc_fini.name()) }));
         }
         if (aspc.getAspv().getPrioridad() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.aspc_prioridad.name()) }));
+                    new Object[] { getText(MessageI18nKey.aspc_prioridad.name()) }));
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())
@@ -216,17 +231,17 @@ public final class AspectoAction extends BaseAction {
                 || aspc.getAspv().getCgrpInfo1() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo1.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo1.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cpathInfo1.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo1.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo1() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo1.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo1.name()) }));
             }
         }
 
@@ -235,17 +250,17 @@ public final class AspectoAction extends BaseAction {
                 || aspc.getAspv().getCgrpInfo2() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo2())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo2.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo2.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cpathInfo2.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo2.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo2() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo2.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo2.name()) }));
             }
         }
 
@@ -254,17 +269,17 @@ public final class AspectoAction extends BaseAction {
                 || aspc.getAspv().getCgrpInfo3() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo3())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo3.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo3.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cpathInfo3.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo3.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo3() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo3.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo3.name()) }));
             }
         }
 
@@ -273,17 +288,17 @@ public final class AspectoAction extends BaseAction {
                 || aspc.getAspv().getCgrpInfo4() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo4())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo4.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo4.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cpathInfo4.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo4.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo4() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo4.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo4.name()) }));
             }
         }
 
@@ -292,17 +307,17 @@ public final class AspectoAction extends BaseAction {
                 || aspc.getAspv().getCgrpInfo5() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo5())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo5.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo5.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cpathInfo5.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo5.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo5() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo5.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo5.name()) }));
             }
         }
 
@@ -311,17 +326,17 @@ public final class AspectoAction extends BaseAction {
                 || aspc.getAspv().getCgrpInfo6() != null) {
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo6())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cetiqInfo6.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo6.name()) }));
             }
 
             if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cpathInfo6.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo6.name()) }));
             }
 
             if (aspc.getAspv().getCgrpInfo6() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.aspc_cgrpInfo6.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo6.name()) }));
             }
         }
 
@@ -337,7 +352,7 @@ public final class AspectoAction extends BaseAction {
                 aspcBO.insert(aspc, i18nMap);
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
-                        new String[] { getText(MessageI18nKey.aspc.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc.name()) }));
             }
 
             break;
@@ -346,7 +361,7 @@ public final class AspectoAction extends BaseAction {
                 aspcBO.duplicate(aspc, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.aspc.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc.name()) }));
             }
 
             break;
@@ -354,11 +369,11 @@ public final class AspectoAction extends BaseAction {
             try {
                 aspcBO.update(aspc, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
+                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
                         getText(MessageI18nKey.aspc.name()), aspc.getCodigo() }));
             } catch (final OverlapException ex) {
                 addActionError(getText(MessageI18nKey.E00009.name(),
-                        new String[] { getText(MessageI18nKey.aspc.name()) }));
+                        new Object[] { getText(MessageI18nKey.aspc.name()) }));
             }
 
             break;

@@ -83,8 +83,8 @@ public final class TipoDatoAction extends BaseAction {
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
-                    String.valueOf(tpdt.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.tpdt.name()),
+                String.valueOf(tpdt.getId()) }));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
@@ -106,7 +106,7 @@ public final class TipoDatoAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             if (tpdt.getCodigo() == null || tpdt.getCodigo().isEmpty()) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.tpdt_codigo.name()) }));
+                        new Object[] { getText(MessageI18nKey.tpdt_codigo.name()) }));
             }
         } else {
             Preconditions.checkNotNull(tpdt.getId());
@@ -114,18 +114,18 @@ public final class TipoDatoAction extends BaseAction {
 
         if (tpdt.getTpht() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.tpdt_tpht.name()) }));
+                    new Object[] { getText(MessageI18nKey.tpdt_tpht.name()) }));
         }
         if (tpdt.getTipoElemento() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.tpdt_tpel.name()) }));
+                    new Object[] { getText(MessageI18nKey.tpdt_tpel.name()) }));
         }
 
         if (tpdt.getTipoElemento() != null
                 && (tpdt.getTipoElemento() == TipoElemento.PR || tpdt.getTipoElemento() == TipoElemento.SR)) {
             if (tpdt.getEnti() == null || tpdt.getEnti().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.tpdt_enti.name()) }));
+                        new Object[] { getText(MessageI18nKey.tpdt_enti.name()) }));
             }
         }
 
@@ -142,7 +142,7 @@ public final class TipoDatoAction extends BaseAction {
                 tpdtBO.insert(tpdt, i18nMap);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.tpdt.name()) }));
+                        new Object[] { getText(MessageI18nKey.tpdt.name()) }));
             }
         } else {
             tpdtBO.update(tpdt, i18nMap);
@@ -185,8 +185,8 @@ public final class TipoDatoAction extends BaseAction {
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.tpdt.name()),
-                    String.valueOf(tpdt.getId()) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.tpdt.name()),
+                String.valueOf(tpdt.getId()) }));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());

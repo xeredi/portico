@@ -180,15 +180,15 @@ public final class ServicioAction extends ItemAction {
         if (accion == ACCION_EDICION.create) {
             if (item.getSubp() == null || item.getSubp().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.srvc_subp.name()) }));
+                        new Object[] { getText(MessageI18nKey.srvc_subp.name()) }));
             }
             if (item.getAnno() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.srvc_anno.name()) }));
+                        new Object[] { getText(MessageI18nKey.srvc_anno.name()) }));
             }
             if (item.getNumero() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.srvc_numero.name()) }));
+                        new Object[] { getText(MessageI18nKey.srvc_numero.name()) }));
             }
         } else {
             Preconditions.checkNotNull(item.getId());
@@ -197,23 +197,23 @@ public final class ServicioAction extends ItemAction {
         if (enti.getTpdtEstado() != null) {
             if (GenericValidator.isBlankOrNull(item.getEstado())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.srvc_estado.name()) }));
+                        new Object[] { getText(MessageI18nKey.srvc_estado.name()) }));
             }
         }
 
         if (enti.getTemporal()) {
             if (item.getFini() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.srvc_fini.name()) }));
+                        new Object[] { getText(MessageI18nKey.srvc_fini.name()) }));
             }
             if (item.getFfin() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.srvc_ffin.name()) }));
+                        new Object[] { getText(MessageI18nKey.srvc_ffin.name()) }));
             }
         } else {
             if (item.getFref() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.srvc_fref.name()) }));
+                        new Object[] { getText(MessageI18nKey.srvc_fref.name()) }));
             }
         }
 

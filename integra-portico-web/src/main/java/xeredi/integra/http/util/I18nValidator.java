@@ -38,7 +38,7 @@ public final class I18nValidator {
 
         if (i18nMap == null || i18nMap.isEmpty() || !i18nMap.containsKey(language_default)
                 || GenericValidator.isBlankOrNull(i18nMap.get(language_default).getText())) {
-            action.addActionError(action.getText(MessageI18nKey.E00002.name(), new String[] { language_default }));
+            action.addActionError(action.getText(MessageI18nKey.E00002.name(), new Object[] { language_default }));
         }
 
     }

@@ -119,7 +119,7 @@ public final class ParametroAction extends ItemAction {
 
             loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00007.name(), new String[] { String.valueOf(item.getId()) }));
+            addActionError(getText(MessageI18nKey.E00007.name(), new Object[] { String.valueOf(item.getId()) }));
         }
 
         return SUCCESS;
@@ -159,7 +159,7 @@ public final class ParametroAction extends ItemAction {
 
             loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00007.name(), new String[] { String.valueOf(item.getId()) }));
+            addActionError(getText(MessageI18nKey.E00007.name(), new Object[] { String.valueOf(item.getId()) }));
         }
 
         return SUCCESS;
@@ -183,7 +183,7 @@ public final class ParametroAction extends ItemAction {
         if (accion != ACCION_EDICION.edit) {
             if (GenericValidator.isBlankOrNull(item.getParametro())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.prmt_parametro.name()) }));
+                        new Object[] { getText(MessageI18nKey.prmt_parametro.name()) }));
             }
         }
 
@@ -195,7 +195,7 @@ public final class ParametroAction extends ItemAction {
 
         if (item.getPrvr() == null || item.getPrvr().getFini() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.prmt_fini.name()) }));
+                    new Object[] { getText(MessageI18nKey.prmt_fini.name()) }));
         } else {
             if (item.getPrvr().getFfin() != null && !item.getPrvr().getFini().before(item.getPrvr().getFfin())) {
                 addActionError(getText(MessageI18nKey.E00006.name()));
@@ -233,10 +233,10 @@ public final class ParametroAction extends ItemAction {
                 throw new Error("Accion no valida: " + accion);
             }
         } catch (final OverlapException ex) {
-            addActionError(getText(MessageI18nKey.E00009.name(), new String[] { enti.getNombre() }));
+            addActionError(getText(MessageI18nKey.E00009.name(), new Object[] { enti.getNombre() }));
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(),
-                    new String[] { enti.getNombre(), String.valueOf(item.getId()) }));
+                    new Object[] { enti.getNombre(), String.valueOf(item.getId()) }));
         }
 
         if (hasErrors()) {
@@ -263,7 +263,7 @@ public final class ParametroAction extends ItemAction {
             prmtBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(),
-                    new String[] { String.valueOf(item.getPrvr().getId()) }));
+                    new Object[] { String.valueOf(item.getPrvr().getId()) }));
         }
 
         return SUCCESS;
@@ -301,7 +301,7 @@ public final class ParametroAction extends ItemAction {
                 i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
             }
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00007.name(), new String[] { String.valueOf(prmtCriterioVO) }));
+            addActionError(getText(MessageI18nKey.E00007.name(), new Object[] { String.valueOf(prmtCriterioVO) }));
         }
 
         return SUCCESS;

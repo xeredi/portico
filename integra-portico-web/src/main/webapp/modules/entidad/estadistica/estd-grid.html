@@ -55,7 +55,7 @@
                     class="pull-right" ng-bind="item.itdtMap[tpdtId].fecha | date:'short'"></span> <span
                     ng-switch-when="CR" ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="TX"
                     ng-bind="item.itdtMap[tpdtId].cadena"></span><span ng-switch-when="PR"
-                    title="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
+                    tooltip="{{item.itdtMap[tpdtId].prmt.etiqueta}}" ng-bind="item.itdtMap[tpdtId].prmt.parametro"></span></td>
             </tr>
         </tbody>
     </table>

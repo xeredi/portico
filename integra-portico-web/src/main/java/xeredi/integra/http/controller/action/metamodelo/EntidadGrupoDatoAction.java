@@ -66,8 +66,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.engd.name()),
-                String.valueOf(engd) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.engd.name()),
+                    String.valueOf(engd) }));
         }
 
         return SUCCESS;
@@ -95,14 +95,14 @@ public final class EntidadGrupoDatoAction extends BaseAction {
                 engdBO.insert(engd);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.engd.name()) }));
+                        new Object[] { getText(MessageI18nKey.engd.name()) }));
             }
         } else {
             try {
                 engdBO.update(engd);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new String[] {
-                    getText(MessageI18nKey.engd.name()), String.valueOf(engd) }));
+                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
+                        getText(MessageI18nKey.engd.name()), String.valueOf(engd) }));
             }
         }
 
@@ -121,8 +121,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new String[] { getText(MessageI18nKey.engd.name()),
-                String.valueOf(engd) }));
+            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.engd.name()),
+                    String.valueOf(engd) }));
         }
 
         return SUCCESS;

@@ -315,7 +315,6 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
             function(data) {
                 vm.enti = data.enti;
                 vm.item = data.item;
-                vm.availableLanguages = data.availableLanguages;
                 vm.i18nMap = data.i18nMap;
                 vm.itemHijosMap = {};
                 vm.entiHijasMap = {};
@@ -443,7 +442,6 @@ function prmtCreateController($http, $location, $routeParams, pageTitleService) 
 
     $http.get("maestro/prmt-create.action?item.entiId=" + $routeParams.entiId).success(function(data) {
         vm.enti = data.enti;
-        vm.availableLanguages = data.availableLanguages;
         vm.item = data.item;
         vm.i18nMap = data.i18nMap;
         vm.labelValuesMap = data.labelValuesMap;
@@ -480,7 +478,6 @@ function prmtEditController($http, $location, $routeParams, pageTitleService) {
     $http.get("maestro/prmt-edit.action?item.id=" + $routeParams.itemId + "&item.fref=" + $routeParams.fechaVigencia)
             .success(function(data) {
                 vm.enti = data.enti;
-                vm.availableLanguages = data.availableLanguages;
                 vm.item = data.item;
                 vm.i18nMap = data.i18nMap;
                 vm.labelValuesMap = data.labelValuesMap;
@@ -521,7 +518,6 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
                     "maestro/prmt-duplicate.action?item.id=" + $routeParams.itemId + "&item.fref="
                             + $routeParams.fechaVigencia).success(function(data) {
                 vm.enti = data.enti;
-                vm.availableLanguages = data.availableLanguages;
                 vm.item = data.item;
                 vm.i18nMap = data.i18nMap;
                 vm.labelValuesMap = data.labelValuesMap;

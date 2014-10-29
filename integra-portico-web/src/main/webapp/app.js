@@ -1,16 +1,18 @@
-var app = angular.module("integraApp", [ "ui.bootstrap", "pascalprecht.translate", "angularSpinner", "ngRoute", "util",
-        "i18n", "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ]);
+angular.module(
+        "integraApp",
+        [ "ui.bootstrap", "pascalprecht.translate", "angularSpinner", "ngRoute", "util", "i18n", "administracion",
+                "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ])
 
-app.config([ "$routeProvider", function($routeProvider) {
+.config([ "$routeProvider", function($routeProvider) {
     $routeProvider
 
     .when("/", {
         title : 'home',
         templateUrl : "modules/home.html",
     })
-} ]);
+} ])
 
-app.config([ '$httpProvider', function($httpProvider) {
+.config([ '$httpProvider', function($httpProvider) {
     // initialize get if not there
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};
@@ -38,9 +40,9 @@ app.config([ '$httpProvider', function($httpProvider) {
             }
         };
     });
-} ]);
+} ])
 
-app.run([ '$location', '$rootScope', function($location, $rootScope) {
+.run([ '$location', '$rootScope', function($location, $rootScope) {
     $rootScope.default_language = "es";
     $rootScope.available_languages = [ "es", "ca", "en" ];
 } ]);

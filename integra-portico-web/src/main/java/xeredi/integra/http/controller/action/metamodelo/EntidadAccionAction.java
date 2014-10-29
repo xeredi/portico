@@ -77,7 +77,7 @@ public final class EntidadAccionAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             if (GenericValidator.isBlankOrNull(enac.getPath())) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { getText(MessageI18nKey.enac_path.name()) }));
+                        new Object[] { getText(MessageI18nKey.enac_path.name()) }));
             }
         } else {
             Preconditions.checkNotNull(enac.getPath());
@@ -85,11 +85,11 @@ public final class EntidadAccionAction extends BaseAction {
 
         if (GenericValidator.isBlankOrNull(enac.getEtiqueta())) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enac_etiqueta.name()) }));
+                    new Object[] { getText(MessageI18nKey.enac_etiqueta.name()) }));
         }
         if (enac.getOrden() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.enac_orden.name()) }));
+                    new Object[] { getText(MessageI18nKey.enac_orden.name()) }));
         }
 
         if (hasErrors()) {
@@ -103,7 +103,7 @@ public final class EntidadAccionAction extends BaseAction {
                 enacBO.insert(enac);
             } catch (final DuplicateInstanceException ex) {
                 addActionError(getText(MessageI18nKey.E00005.name(),
-                        new String[] { getText(MessageI18nKey.enac.name()) }));
+                        new Object[] { getText(MessageI18nKey.enac.name()) }));
             }
         } else {
             enacBO.update(enac);

@@ -35,9 +35,9 @@
         <tbody>
             <tr ng-repeat="prbt in vm.prbtList.list track by $index">
                 <td><a ng-href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td title="{{'ProcesoModulo_' + prbt.modulo | translate}}" ng-bind="prbt.modulo"></td>
-                <td title="{{'ProcesoTipo_' + prbt.tipo | translate}}" ng-bind="prbt.tipo"></td>
-                <td title="{{'ProcesoEstado_' + prbt.estado | translate}}" ng-bind="prbt.estado"></td>
+                <td ng-bind="'ProcesoModulo_' + prbt.modulo | translate"></td>
+                <td ng-bind="'ProcesoTipo_' + prbt.tipo | translate"></td>
+                <td ng-bind="'ProcesoEstado_' + prbt.estado | translate"></td>
                 <td ng-bind="prbt.falta | date:'medium'"></td>
                 <td ng-bind="prbt.finicio | date:'medium'"></td>
                 <td ng-bind="prbt.ffin | date:'medium'"></td>

@@ -153,7 +153,7 @@ public final class SubparametroAction extends ItemAction {
         if (accion != ACCION_EDICION.edit) {
             if (item.getPrmtAsociado() == null || item.getPrmtAsociado().getId() == null) {
                 addActionError(getText(MessageI18nKey.E00001.name(),
-                        new String[] { enti.getTpprAsociado().getNombre() }));
+                        new Object[] { enti.getTpprAsociado().getNombre() }));
             }
         }
 
@@ -165,7 +165,7 @@ public final class SubparametroAction extends ItemAction {
 
         if (item.getSpvr() == null || item.getSpvr().getFini() == null) {
             addActionError(getText(MessageI18nKey.E00001.name(),
-                    new String[] { getText(MessageI18nKey.sprm_fini.name()) }));
+                    new Object[] { getText(MessageI18nKey.sprm_fini.name()) }));
         } else {
             if (item.getSpvr().getFfin() != null && !item.getSpvr().getFini().before(item.getSpvr().getFfin())) {
                 addActionError(getText(MessageI18nKey.E00006.name()));
@@ -199,10 +199,10 @@ public final class SubparametroAction extends ItemAction {
                 throw new Error("Accion no valida: " + accion);
             }
         } catch (final OverlapException ex) {
-            addActionError(getText(MessageI18nKey.E00009.name(), new String[] { enti.getNombre() }));
+            addActionError(getText(MessageI18nKey.E00009.name(), new Object[] { enti.getNombre() }));
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(),
-                    new String[] { enti.getNombre(), String.valueOf(item.getId()) }));
+                    new Object[] { enti.getNombre(), String.valueOf(item.getId()) }));
         }
 
         return SUCCESS;
@@ -229,7 +229,7 @@ public final class SubparametroAction extends ItemAction {
             sprmBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
             addActionError(getText(MessageI18nKey.E00008.name(),
-                    new String[] { String.valueOf(item.getSpvr().getId()) }));
+                    new Object[] { String.valueOf(item.getSpvr().getId()) }));
         }
 
         return SUCCESS;

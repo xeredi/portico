@@ -50,7 +50,7 @@ public final class PartidaAction extends BaseAction {
         try {
             partBO.bloquear(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -73,7 +73,7 @@ public final class PartidaAction extends BaseAction {
         try {
             partBO.iniciar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
         }
 
         return SUCCESS;
@@ -96,7 +96,7 @@ public final class PartidaAction extends BaseAction {
         try {
             partBO.anular(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new String[] { ex.getEstado() }));
+            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
         }
 
         return SUCCESS;
