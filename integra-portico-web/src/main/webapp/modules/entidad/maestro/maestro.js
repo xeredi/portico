@@ -206,20 +206,15 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
         vm.loading = true;
 
         prmtService.search($routeParams.entiId, vm.itemCriterio, vm.page, 20).then(function(data) {
-            vm.actionErors = data.actionErors;
             vm.itemList = data.itemList;
             vm.enti = data.enti;
 
-            if (data.actionErrors.length == 0) {
-                // alert("Replace");
+            $location.search({
+                page : vm.page,
+                itemCriterio : JSON.stringify(data.itemCriterio)
+            }).replace();
 
-                $location.search({
-                    page : vm.page,
-                    itemCriterio : JSON.stringify(data.itemCriterio)
-                }).replace();
-
-                vm.loading = false;
-            }
+            vm.loading = false;
         });
         /*
          * $http.post("maestro/prmt-list.action", { entiId :
@@ -293,12 +288,8 @@ function prmtFilterController($modalInstance, enti, itemCriterio, prmtService) {
     }
 
     prmtService.filter(vm.enti.id).then(function(data) {
-        vm.actionErors = data.actionErors;
-
-        if (data.actionErrors.length == 0) {
-            vm.labelValuesMap = data.labelValuesMap;
-            vm.limits = data.limits;
-        }
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.limits = data.limits;
     });
 }
 
@@ -322,28 +313,20 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
 
     prmtService.detail($routeParams.itemId, $routeParams.fechaVigencia).then(
             function(data) {
-                vm.actionErors = data.actionErors;
+                vm.enti = data.enti;
+                vm.item = data.item;
+                vm.availableLanguages = data.availableLanguages;
+                vm.i18nMap = data.i18nMap;
+                vm.itemHijosMap = {};
+                vm.entiHijasMap = {};
 
-                if (data.actionErrors.length == 0) {
-                    vm.enti = data.enti;
-                    vm.item = data.item;
-                    vm.availableLanguages = data.availableLanguages;
-                    vm.i18nMap = data.i18nMap;
-                    vm.itemHijosMap = {};
-                    vm.entiHijasMap = {};
-
-                    if (vm.enti.entiHijasList) {
-                        for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                            sprmService.search(vm.enti.entiHijasList[i], vm.item.id, 1, $routeParams.fechaVigencia)
-                                    .then(function(data) {
-                                        vm.actionErors = data.actionErors;
-
-                                        if (data.actionErrors.length == 0) {
-                                            vm.entiHijasMap[data.enti.id] = data.enti;
-                                            vm.itemHijosMap[data.enti.id] = data.itemList;
-                                        }
-                                    });
-                        }
+                if (vm.enti.entiHijasList) {
+                    for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                        sprmService.search(vm.enti.entiHijasList[i], vm.item.id, 1, $routeParams.fechaVigencia).then(
+                                function(data) {
+                                    vm.entiHijasMap[data.enti.id] = data.enti;
+                                    vm.itemHijosMap[data.enti.id] = data.itemList;
+                                });
                     }
                 }
             });
@@ -410,11 +393,7 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
             var url = "maestro/prmt-remove.action?item.prvr.id=" + vm.item.prvr.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -451,13 +430,10 @@ function prmtCreateController($http, $location, $routeParams, pageTitleService) 
             accion : vm.accion
         }).success(
                 function(data) {
-                    vm.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        $location.path(
-                                "/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.id + "/"
-                                        + data.item.prvr.fini).replace();
-                    }
+                    $location
+                            .path(
+                                    "/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.id + "/"
+                                            + data.item.prvr.fini).replace();
                 });
     }
 
@@ -491,13 +467,9 @@ function prmtEditController($http, $location, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -533,13 +505,10 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
             accion : vm.accion
         }).success(
                 function(data) {
-                    vm.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        $location.path(
-                                "/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.id + "/"
-                                        + data.item.prvr.fini).replace();
-                    }
+                    $location
+                            .path(
+                                    "/maestro/prmt/detail/" + data.item.entiId + "/" + data.item.id + "/"
+                                            + data.item.prvr.fini).replace();
                 });
     }
 
@@ -582,11 +551,7 @@ function sprmDetailController($http, $routeParams, pageTitleService) {
             var url = "maestro/sprm-remove.action?item.spvr.id=" + vm.item.spvr.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -614,13 +579,10 @@ function sprmCreateController($http, $location, $routeParams, pageTitleService) 
             accion : vm.accion
         }).success(
                 function(data) {
-                    vm.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        $location.path(
-                                "/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.id + "/"
-                                        + data.item.spvr.fini).replace();
-                    }
+                    $location
+                            .path(
+                                    "/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.id + "/"
+                                            + data.item.spvr.fini).replace();
                 });
     }
 
@@ -653,13 +615,9 @@ function sprmEditController($http, $location, $routeParams, pageTitleService) {
             item : vm.item,
             accion : vm.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -692,13 +650,10 @@ function sprmDuplicateController($http, $location, $routeParams, pageTitleServic
             accion : vm.accion
         }).success(
                 function(data) {
-                    vm.actionErrors = data.actionErrors;
-
-                    if (data.actionErrors.length == 0) {
-                        $location.path(
-                                "/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.id + "/"
-                                        + data.item.spvr.fini).replace();
-                    }
+                    $location
+                            .path(
+                                    "/maestro/sprm/detail/" + data.item.entiId + "/" + data.item.id + "/"
+                                            + data.item.spvr.fini).replace();
                 });
     }
 

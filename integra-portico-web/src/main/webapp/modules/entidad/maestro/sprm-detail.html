@@ -1,9 +1,3 @@
-<alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-<ul>
-    <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
-</ul>
-</alert>
-
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.item.fref}}"><i

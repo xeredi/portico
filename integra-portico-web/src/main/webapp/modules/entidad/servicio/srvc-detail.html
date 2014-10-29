@@ -1,9 +1,3 @@
-<alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-<ul>
-    <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
-</ul>
-</alert>
-
 <tabset type="pills"> <tab heading="{{'enti_' + vm.enti.id | translate}}" select="vm.tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">

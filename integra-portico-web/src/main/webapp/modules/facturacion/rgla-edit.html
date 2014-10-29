@@ -192,12 +192,6 @@
         </div>
     </fieldset>
 
-    <alert ng-if="vm.actionErrors && vm.actionErrors.length > 0" type="danger"> <span translate>errors</span>:
-    <ul>
-        <li ng-repeat="error in vm.actionErrors track by $index" ng-bind="error"></li>
-    </ul>
-    </alert>
-
     <div class="btn-group">
         <button data-ng-click="vm.save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>

@@ -157,21 +157,17 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : vm.itemCriterio.limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.enti = data.enti;
+            vm.page = data.itemList.page;
+            vm.itemList = data.itemList;
+            vm.itemCriterio = data.itemCriterio;
 
-            if (data.actionErrors.length == 0) {
-                vm.enti = data.enti;
-                vm.page = data.itemList.page;
-                vm.itemList = data.itemList;
-                vm.itemCriterio = data.itemCriterio;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.itemList.page;
+            map["itemCriterio"] = JSON.stringify(data.itemCriterio);
 
-                map["page"] = data.itemList.page;
-                map["itemCriterio"] = JSON.stringify(data.itemCriterio);
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
 
             vm.loading = false;
         });
@@ -231,14 +227,10 @@ function srvcFilterController($http, $modalInstance, enti, itemCriterio) {
     }
 
     $http.get("servicio/srvc-filter.action?itemCriterio.entiId=" + itemCriterio.entiId).success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.labelValuesMap = data.labelValuesMap;
-            vm.subpList = data.subpList;
-            vm.limits = data.limits;
-            vm.fechaVigencia = data.fechaVigencia;
-        }
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.subpList = data.subpList;
+        vm.limits = data.limits;
+        vm.fechaVigencia = data.fechaVigencia;
     });
 }
 
@@ -264,14 +256,11 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
         $http.get(
                 "servicio/ssrv-list.action?itemCriterio.entiId=" + subentiId + "&page=" + page
                         + "&itemCriterio.srvc.id=" + srvcId).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.entiHijasMap[data.itemCriterio.entiId] = data.enti;
+            vm.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
+            vm.pageMap[data.itemCriterio.entiId] = data.itemList.page;
 
-            if (data.actionErrors.length == 0) {
-                vm.entiHijasMap[data.itemCriterio.entiId] = data.enti;
-                vm.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
-                vm.pageMap[data.itemCriterio.entiId] = data.itemList.page;
-                $location.search("pageMap", JSON.stringify(vm.pageMap)).replace();
-            }
+            $location.search("pageMap", JSON.stringify(vm.pageMap)).replace();
 
             vm.loading = false;
         });
@@ -292,11 +281,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
             var url = "servicio/srvc-remove.action?item.id=" + vm.item.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -311,11 +296,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
             var url = "servicio/manifiesto/mani-bloquear.action?item.id=" + vm.item.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+                findItem();
             });
 
             break;
@@ -323,11 +304,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
             var url = "servicio/manifiesto/mani-completar.action?item.id=" + vm.item.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+                findItem();
             });
 
             break;
@@ -335,11 +312,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
             var url = "servicio/manifiesto/mani-iniciar.action?item.id=" + vm.item.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+                findItem();
             });
 
             break;
@@ -347,11 +320,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
             var url = "servicio/manifiesto/mani-anular.action?item.id=" + vm.item.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+                findItem();
             });
 
             break;
@@ -404,11 +373,7 @@ function srvcCreateController($http, $location, $routeParams, pageTitleService) 
             item : vm.item,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
-            }
+            $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
         });
     }
 
@@ -438,13 +403,9 @@ function srvcEditController($http, $routeParams, pageTitleService) {
             item : vm.item,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -473,11 +434,7 @@ function srvcDuplicateController($http, $location, $routeParams, pageTitleServic
             item : vm.item,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
-            }
+            $location.path("/servicio/srvc/detail/" + data.item.entiId + "/" + data.item.id).replace();
         });
     }
 
@@ -527,20 +484,16 @@ function ssrvGridController($scope, $http, $location, $routeParams, $modal) {
             page : page,
             limit : itemCriterio.limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            $scope.page = data.itemList.page;
+            $scope.itemList = data.itemList;
+            $scope.itemCriterio = data.itemCriterio;
 
-            if (data.actionErrors.length == 0) {
-                $scope.page = data.itemList.page;
-                $scope.itemList = data.itemList;
-                $scope.itemCriterio = data.itemCriterio;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.itemList.page;
+            map["itemCriterio"] = JSON.stringify(data.itemCriterio);
 
-                map["page"] = data.itemList.page;
-                map["itemCriterio"] = JSON.stringify(data.itemCriterio);
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
 
             $scope.loading = false;
         });
@@ -601,13 +554,9 @@ function ssrvFilterController($scope, $http, $modalInstance, enti, itemCriterio)
     };
 
     $http.get("servicio/ssrv-filter.action?itemCriterio.entiId=" + itemCriterio.entiId).success(function(data) {
-        $scope.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            $scope.labelValuesMap = data.labelValuesMap;
-            $scope.limits = data.limits;
-            $scope.fechaVigencia = data.fechaVigencia;
-        }
+        $scope.labelValuesMap = data.labelValuesMap;
+        $scope.limits = data.limits;
+        $scope.fechaVigencia = data.fechaVigencia;
     });
 }
 
@@ -649,13 +598,9 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
                 + "&itemCriterio.padreId=" + ssrvId;
 
         $http.get(url).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $scope.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
-                $scope.pageMap[data.itemCriterio.entiId] = data.itemList.page;
-                $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
-            }
+            $scope.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
+            $scope.pageMap[data.itemCriterio.entiId] = data.itemList.page;
+            $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
         });
     }
 
@@ -674,11 +619,7 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
             var url = "servicio/ssrv-remove.action?item.id=" + $scope.item.id;
 
             $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -690,50 +631,26 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
         // ----------- BL ------------------
 
         case "mabl-bloquear":
-            var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
         case "mabl-completar":
-            var url = "servicio/manifiesto/mabl-completar.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-completar.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
         case "mabl-iniciar":
-            var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
         case "mabl-anular":
-            var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
@@ -747,38 +664,20 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
         // ----------- EQUIPAMIENTO ------------------
 
         case "equi-bloquear":
-            var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
         case "equi-iniciar":
-            var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
         case "equi-anular":
-            var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
@@ -788,38 +687,20 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
         // ----------- PARTIDA ------------------
 
         case "part-bloquear":
-            var url = "servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
         case "part-iniciar":
-            var url = "servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
         case "part-anular":
-            var url = "servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    findItem();
-                }
+            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id).success(function(data) {
+                findItem();
             });
 
             break;
@@ -841,11 +722,7 @@ function ssrvCreateController($scope, $http, $location, $routeParams) {
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/servicio/ssrv/detail/" + data.item.id).replace();
-            }
+            $location.path("/servicio/ssrv/detail/" + data.item.id).replace();
         });
     }
 
@@ -888,13 +765,9 @@ function ssrvEditController($scope, $http, $location, $routeParams) {
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -932,11 +805,7 @@ function ssrvDuplicateController($scope, $http, $location, $routeParams) {
             item : $scope.item,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/servicio/ssrv/detail/" + data.item.entiId + "/" + data.item.id).replace();
-            }
+            $location.path("/servicio/ssrv/detail/" + data.item.entiId + "/" + data.item.id).replace();
         });
     }
 

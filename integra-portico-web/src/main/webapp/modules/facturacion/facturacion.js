@@ -279,12 +279,8 @@ function vlrcGridController($scope, $http, $location, $routeParams, pageTitleSer
             var url = "facturacion/vlrc-reload-filter.action?vlrcCriterio.tpsrId=" + $scope.vlrcCriterio.tpsrId;
 
             $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    $scope.crgoList = data.crgoList;
-                    $scope.aspcList = data.aspcList;
-                }
+                $scope.crgoList = data.crgoList;
+                $scope.aspcList = data.aspcList;
             });
         }
     }
@@ -293,12 +289,8 @@ function vlrcGridController($scope, $http, $location, $routeParams, pageTitleSer
         var url = "facturacion/vlrc-filter.action";
 
         $http.get(url).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $scope.tpsrList = data.tpsrList;
-                $scope.limits = data.limits;
-            }
+            $scope.tpsrList = data.tpsrList;
+            $scope.limits = data.limits;
         });
 
         $scope.showFilter = true;
@@ -320,23 +312,19 @@ function vlrcGridController($scope, $http, $location, $routeParams, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            $scope.page = data.vlrcList.page;
+            $scope.vlrcList = data.vlrcList;
+            $scope.vlrcCriterio = data.vlrcCriterio;
+            $scope.limit = data.limit;
 
-            if (data.actionErrors.length == 0) {
-                $scope.page = data.vlrcList.page;
-                $scope.vlrcList = data.vlrcList;
-                $scope.vlrcCriterio = data.vlrcCriterio;
-                $scope.limit = data.limit;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.vlrcList.page;
+            map["vlrcCriterio"] = data.vlrcCriterio;
 
-                map["page"] = data.vlrcList.page;
-                map["vlrcCriterio"] = data.vlrcCriterio;
+            $location.search(map).replace();
 
-                $location.search(map).replace();
-
-                $scope.showFilter = false;
-            }
+            $scope.showFilter = false;
         });
     }
 
@@ -360,11 +348,7 @@ function vlrlCreateController($scope, $http, $location, $routeParams, pageTitleS
             vlrl : $scope.vlrl,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
-            }
+            $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
         });
     }
 
@@ -411,11 +395,7 @@ function vlrlDetailController($scope, $http, $location, $routeParams, pageTitleS
             var url = "facturacion/vlrl-remove.action?vlrl.id=" + $scope.vlrl.id;
 
             $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -438,13 +418,9 @@ function vlrlEditController($scope, $http, $location, $routeParams, pageTitleSer
             vlrl : $scope.vlrl,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -479,19 +455,15 @@ function crgoGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.crgoList.page;
+            vm.crgoList = data.crgoList;
+            vm.crgoCriterio = data.crgoCriterio;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.crgoList.page;
-                vm.crgoList = data.crgoList;
-                vm.crgoCriterio = data.crgoCriterio;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.crgoList.page;
 
-                map["page"] = data.crgoList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -553,11 +525,7 @@ function crgoDetailController($http, $routeParams, pageTitleService) {
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("facturacion/crgo-remove.action?crgo.crgv.id=" + vm.crgo.crgv.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -586,11 +554,7 @@ function crgoCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/crgo/detail/" + data.crgo.crgv.id).replace();
-            }
+            $location.path("/facturacion/crgo/detail/" + data.crgo.crgv.id).replace();
         });
     }
 
@@ -623,13 +587,9 @@ function crgoEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -654,17 +614,15 @@ function rglaDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-             $http.get("facturacion/rgla-remove.action?rgla.rglv.id=" + vm.rgla.rglv.id).success(function(data) {
-                 vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+            $http.get("facturacion/rgla-remove.action?rgla.rglv.id=" + vm.rgla.rglv.id).success(function(data) {
+                window.history.back();
             });
         }
     }
 
-    $http.get("facturacion/rgla-detail.action?rgla.id=" + $routeParams.rglaId + "&fechaVigencia=" + $routeParams.fechaVigencia).success(function(data) {
+    $http.get(
+            "facturacion/rgla-detail.action?rgla.id=" + $routeParams.rglaId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
         vm.rgla = data.rgla;
         vm.rginList = data.rginList;
         vm.fechaVigencia = data.fechaVigencia;
@@ -684,13 +642,9 @@ function rglaEditController($http, $routeParams, pageTitleService) {
             rgla : vm.rgla,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -719,11 +673,7 @@ function rglaCreateController($http, $location, $routeParams, pageTitleService) 
             rgla : vm.rgla,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
-            }
+            $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
         });
     }
 
@@ -760,11 +710,7 @@ function rginDetailController($scope, $http, $location, $routeParams, pageTitleS
             var url = "facturacion/rgin-remove.action?rgin.rgiv.id=" + $scope.rgin.rgiv.id;
 
             $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -787,13 +733,9 @@ function rginEditController($scope, $http, $location, $routeParams, pageTitleSer
             rgin : $scope.rgin,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -821,11 +763,7 @@ function rginCreateController($scope, $http, $location, $routeParams, pageTitleS
             rgin : $scope.rgin,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
-            }
+            $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
         });
     }
 
@@ -850,19 +788,15 @@ function aspcGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.aspcList.page;
+            vm.aspcList = data.aspcList;
+            vm.aspcCriterio = data.aspcCriterio;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.aspcList.page;
-                vm.aspcList = data.aspcList;
-                vm.aspcCriterio = data.aspcCriterio;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.aspcList.page;
 
-                map["page"] = data.aspcList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -924,11 +858,7 @@ function aspcDetailController($http, $location, $routeParams, pageTitleService) 
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("facturacion/aspc-remove.action?aspc.aspv.id=" + vm.aspc.aspv.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -958,11 +888,7 @@ function aspcCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
-            }
+            $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
         });
     }
 
@@ -994,13 +920,9 @@ function aspcEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -1029,11 +951,7 @@ function aspcDuplicateController($http, $location, $routeParams, pageTitleServic
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
-            }
+            $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
         });
     }
 
@@ -1067,11 +985,7 @@ function ascrCreateController($scope, $http, $location, $routeParams, pageTitleS
             ascr : $scope.ascr,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/facturacion/ascr/detail/" + data.ascr.id + "/" + data.ascr.ascv.fini).replace();
-            }
+            $location.path("/facturacion/ascr/detail/" + data.ascr.id + "/" + data.ascr.ascv.fini).replace();
         });
     }
 
@@ -1098,11 +1012,7 @@ function ascrDetailController($scope, $http, $routeParams, pageTitleService) {
             var url = "facturacion/ascr-remove.action?ascr.ascv.id=" + $scope.ascr.ascv.id;
 
             $http.get(url).success(function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -1125,13 +1035,9 @@ function ascrEditController($scope, $http, $routeParams, pageTitleService) {
             ascr : $scope.ascr,
             accion : $scope.accion
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 

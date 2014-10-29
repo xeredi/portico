@@ -18,6 +18,26 @@ app.config([ '$httpProvider', function($httpProvider) {
     // disable IE ajax request caching
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+
+    $httpProvider.interceptors.push(function($q, $rootScope) {
+        return {
+            'response' : function(response) {
+                // alert('response: ' + JSON.stringify(response));
+                $rootScope.actionErrors = null;
+
+                if (response.data && response.data.actionErrors && response.data.actionErrors.length > 0) {
+                    // alert('Errors: ' +
+                    // JSON.stringify(response.data.actionErrors));
+
+                    $rootScope.actionErrors = response.data.actionErrors;
+
+                    return $q.reject(response.data.actionErrors);
+                }
+
+                return response;
+            }
+        };
+    });
 } ]);
 
 app.run([ '$location', '$rootScope', function($location, $rootScope) {

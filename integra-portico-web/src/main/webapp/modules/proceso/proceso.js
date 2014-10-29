@@ -43,19 +43,15 @@ function prbtGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.prbtList.page;
+            vm.prbtList = data.prbtList;
+            vm.prbtCriterio = data.prbtCriterio;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.prbtList.page;
-                vm.prbtList = data.prbtList;
-                vm.prbtCriterio = data.prbtCriterio;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.prbtList.page;
 
-                map["page"] = data.prbtList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -106,13 +102,9 @@ function prbtFilterController($modalInstance, $http, prbtCriterio) {
     }
 
     $http.get("proceso/prbt-filter.action").success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.procesoTipos = data.procesoTipos;
-            vm.procesoModulos = data.procesoModulos;
-            vm.procesoEstados = data.procesoEstados;
-        }
+        vm.procesoTipos = data.procesoTipos;
+        vm.procesoModulos = data.procesoModulos;
+        vm.procesoEstados = data.procesoEstados;
     });
 }
 

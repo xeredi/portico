@@ -66,18 +66,14 @@ function peprGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.peprList.page;
+            vm.peprList = data.peprList;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.peprList.page;
-                vm.peprList = data.peprList;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.peprList.page;
 
-                map["page"] = data.peprList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -128,12 +124,8 @@ function peprFilterController($modalInstance, $http, peprCriterio) {
     }
 
     $http.get("estadistica/pepr-filter.action").success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.autpList = data.autpList;
-            vm.limits = data.limits;
-        }
+        vm.autpList = data.autpList;
+        vm.limits = data.limits;
     });
 }
 
@@ -147,11 +139,7 @@ function peprDetailController($http, $routeParams, pageTitleService) {
             var url = "estadistica/pepr-remove.action?pepr.id=" + vm.pepr.id;
 
             $http.get(url).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -190,20 +178,16 @@ function estdGridController($scope, $http, $location, $routeParams, $modal, page
             page : page,
             limit : itemCriterio.limit
         }).success(function(data) {
-            $scope.actionErrors = data.actionErrors;
+            $scope.page = data.itemList.page;
+            $scope.itemList = data.itemList;
+            $scope.itemCriterio = data.itemCriterio;
 
-            if (data.actionErrors.length == 0) {
-                $scope.page = data.itemList.page;
-                $scope.itemList = data.itemList;
-                $scope.itemCriterio = data.itemCriterio;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.itemList.page;
+            map["itemCriterio"] = JSON.stringify(data.itemCriterio);
 
-                map["page"] = data.itemList.page;
-                map["itemCriterio"] = JSON.stringify(data.itemCriterio);
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
 
             $scope.loading = false;
         });
@@ -271,14 +255,10 @@ function estdFilterController($scope, $http, $modalInstance, enti, itemCriterio)
             "estadistica/estd-filter.action?itemCriterio.entiId=" + itemCriterio.entiId + "&itemCriterio.pepr.id="
                     + itemCriterio.pepr.id + "&itemCriterio.pepr.autpId=" + itemCriterio.pepr.autpId).success(
             function(data) {
-                $scope.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    $scope.labelValuesMap = data.labelValuesMap;
-                    $scope.subpList = data.subpList;
-                    $scope.limits = data.limits;
-                    $scope.fechaVigencia = data.fechaVigencia;
-                }
+                $scope.labelValuesMap = data.labelValuesMap;
+                $scope.subpList = data.subpList;
+                $scope.limits = data.limits;
+                $scope.fechaVigencia = data.fechaVigencia;
             });
 }
 

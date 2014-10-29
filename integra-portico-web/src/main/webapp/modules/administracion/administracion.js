@@ -87,10 +87,6 @@ function metamodeloReloadController($http, pageTitleService) {
 
     function reload() {
         $http.get("administracion/metamodelo/reload.action").success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-            }
         });
     }
 
@@ -101,11 +97,7 @@ function confGridController($http, pageTitleService) {
     var vm = this;
 
     $http.get("administracion/configuracion/conf-grid.action").success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.confList = data.confList;
-        }
+        vm.confList = data.confList;
     });
 
     pageTitleService.setTitle("conf", "page_grid");
@@ -115,11 +107,7 @@ function confDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     $http.get("administracion/configuracion/conf-detail.action?conf.key=" + $routeParams.key).success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.conf = data.conf;
-        }
+        vm.conf = data.conf;
     });
 
     pageTitleService.setTitle("conf", "page_detail");
@@ -136,13 +124,9 @@ function confEditController($http, $routeParams, pageTitleService) {
             conf : vm.conf,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -151,12 +135,8 @@ function confEditController($http, $routeParams, pageTitleService) {
     }
 
     $http.get("administracion/configuracion/conf-edit.action?conf.key=" + $routeParams.key).success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.accion = data.accion;
-            vm.conf = data.conf;
-        }
+        vm.accion = data.accion;
+        vm.conf = data.conf;
     });
 
     pageTitleService.setTitle("conf", "page_edit");
@@ -166,11 +146,7 @@ function m18nGridController($http, pageTitleService) {
     var vm = this;
 
     $http.get("administracion/messagei18n/m18n-grid.action").success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.report = data.report;
-        }
+        vm.report = data.report;
     });
 
     pageTitleService.setTitle("m18n", "page_grid");
@@ -180,11 +156,7 @@ function m18nDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     $http.get("administracion/messagei18n/m18n-detail.action?m18n.key=" + $routeParams.key).success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.m18n = data.m18n;
-        }
+        vm.m18n = data.m18n;
     });
 
     pageTitleService.setTitle("m18n", "page_detail");
@@ -201,13 +173,9 @@ function m18nEditController($http, $routeParams, pageTitleService) {
             conf : vm.m18n,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -216,12 +184,8 @@ function m18nEditController($http, $routeParams, pageTitleService) {
     }
 
     $http.get("administracion/messagei18n/m18n-edit.action?m18n.key=" + $routeParams.key).success(function(data) {
-        vm.actionErrors = data.actionErrors;
-
-        if (data.actionErrors.length == 0) {
-            vm.accion = data.accion;
-            vm.m18n = data.m18n;
-        }
+        vm.accion = data.accion;
+        vm.m18n = data.m18n;
     });
 
     pageTitleService.setTitle("m18n", "page_edit");

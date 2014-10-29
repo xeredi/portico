@@ -18,12 +18,6 @@
         </div>
     </div>
 
-    <alert ng-if="actionErrors" type="danger"> <span translate>errors</span>:
-    <ul>
-        <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-    </ul>
-    </alert>
-
     <div class="btn-group">
         <button data-ng-click="submit(editForm)" class="btn btn-default">
             <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>

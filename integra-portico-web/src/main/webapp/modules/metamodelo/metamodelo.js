@@ -295,18 +295,14 @@ function tpdtGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.tpdtList.page;
+            vm.tpdtList = data.tpdtList;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.tpdtList.page;
-                vm.tpdtList = data.tpdtList;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.tpdtList.page;
 
-                map["page"] = data.tpdtList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -371,11 +367,7 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpdt/detail/" + data.tpdt.id).replace();
-            }
+            $location.path("/metamodelo/tpdt/detail/" + data.tpdt.id).replace();
         });
     }
 
@@ -411,13 +403,8 @@ function tpdtDetailController($http, $routeParams, pageTitleService, usSpinnerSe
             usSpinnerService.spin("spinner");
 
             $http.get("metamodelo/tpdt-remove.action?tpdt.id=" + vm.tpdt.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    usSpinnerService.stop("spinner");
-
-                    window.history.back();
-                }
+                usSpinnerService.stop("spinner");
+                window.history.back();
             });
         }
     }
@@ -443,13 +430,9 @@ function tpdtEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -488,11 +471,7 @@ function cdrfCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/cdrf/detail/" + data.cdrf.id).replace();
-            }
+            $location.path("/metamodelo/cdrf/detail/" + data.cdrf.id).replace();
         });
     }
 
@@ -517,11 +496,7 @@ function cdrfDetailController($http, $location, $routeParams, pageTitleService) 
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("metamodelo/cdrf-remove.action?cdrf.id=" + vm.cdrf.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -546,13 +521,9 @@ function cdrfEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -585,18 +556,14 @@ function tpprGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.entiList.page;
+            vm.entiList = data.entiList;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.entiList.page;
-                vm.entiList = data.entiList;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.entiList.page;
 
-                map["page"] = data.entiList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -655,11 +622,7 @@ function tpprDetailController($http, $location, $routeParams, pageTitleService) 
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("metamodelo/tppr-remove.action?enti.id=" + $scope.enti.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -685,13 +648,9 @@ function tpprEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -727,11 +686,7 @@ function tpprCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tppr/detail/" + data.enti.id).replace();
-            }
+            $location.path("/metamodelo/tppr/detail/" + data.enti.id).replace();
         });
     }
 
@@ -764,11 +719,7 @@ function tpspDetailController($http, $routeParams, pageTitleService) {
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("metamodelo/tpsp-remove.action?enti.id=" + vm.enti.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -795,13 +746,9 @@ function tpspEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -834,11 +781,7 @@ function tpspCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsp/detail/" + data.enti.id).replace();
-            }
+            $location.path("/metamodelo/tpsp/detail/" + data.enti.id).replace();
         });
     }
 
@@ -872,18 +815,14 @@ function tpsrGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.entiList.page;
+            vm.entiList = data.entiList;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.entiList.page;
-                vm.entiList = data.entiList;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.entiList.page;
 
-                map["page"] = data.entiList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -942,11 +881,7 @@ function tpsrDetailController($http, $routeParams, pageTitleService) {
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("metamodelo/tpsr-remove.action?enti.id=" + vm.enti.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -973,13 +908,9 @@ function tpsrEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -1012,11 +943,7 @@ function tpsrCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpsr/detail/" + data.enti.id).replace();
-            }
+            $location.path("/metamodelo/tpsr/detail/" + data.enti.id).replace();
         });
     }
 
@@ -1044,11 +971,7 @@ function tpssDetailController($http, $routeParams, pageTitleService) {
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("metamodelo/tpss-remove.action?enti.id=" + vm.enti.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -1075,13 +998,9 @@ function tpssEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -1114,11 +1033,7 @@ function tpssCreateController($scope, $http, $location, $routeParams, pageTitleS
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpss/detail/" + data.enti.id).replace();
-            }
+            $location.path("/metamodelo/tpss/detail/" + data.enti.id).replace();
         });
     }
 
@@ -1154,18 +1069,14 @@ function tpesGridController($http, $location, $routeParams, $modal, pageTitleSer
             page : page,
             limit : limit
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
+            vm.page = data.entiList.page;
+            vm.entiList = data.entiList;
 
-            if (data.actionErrors.length == 0) {
-                vm.page = data.entiList.page;
-                vm.entiList = data.entiList;
+            var map = {};
 
-                var map = {};
+            map["page"] = data.entiList.page;
 
-                map["page"] = data.entiList.page;
-
-                $location.search(map).replace();
-            }
+            $location.search(map).replace();
         });
     }
 
@@ -1224,11 +1135,7 @@ function tpesDetailController($http, $routeParams, pageTitleService) {
     function remove() {
         if (confirm("Are you sure?")) {
             $http.get("metamodelo/tpes-remove.action?enti.id=" + vm.enti.id).success(function(data) {
-                vm.actionErrors = data.actionErrors;
-
-                if (data.actionErrors.length == 0) {
-                    window.history.back();
-                }
+                window.history.back();
             });
         }
     }
@@ -1254,13 +1161,9 @@ function tpesEditController($http, $routeParams, pageTitleService) {
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -1289,11 +1192,7 @@ function tpesCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/tpes/detail/" + data.enti.id).replace();
-            }
+            $location.path("/metamodelo/tpes/detail/" + data.enti.id).replace();
         });
     }
 
@@ -1319,11 +1218,7 @@ function entdDetailController($http, $routeParams, pageTitleService) {
             $http.get(
                     "metamodelo/entd-remove.action?entd.entiId=" + vm.entd.entiId + "&entd.tpdt.id=" + vm.entd.tpdt.id)
                     .success(function(data) {
-                        vm.actionErrors = data.actionErrors;
-
-                        if (data.actionErrors.length == 0) {
-                            window.history.back();
-                        }
+                        window.history.back();
                     });
         }
     }
@@ -1349,13 +1244,9 @@ function entdEditController($http, $routeParams, pageTitleService) {
             entd : vm.entd,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -1387,11 +1278,7 @@ function entdCreateController($http, $location, $routeParams, pageTitleService) 
             entd : vm.entd,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/entd/detail/" + data.entd.entiId + "/" + data.entd.tpdt.id).replace();
-            }
+            $location.path("/metamodelo/entd/detail/" + data.entd.entiId + "/" + data.entd.tpdt.id).replace();
         });
     }
 
@@ -1418,11 +1305,7 @@ function enacDetailController($scope, $http, $location, $routeParams, pageTitleS
         if (confirm("Are you sure?")) {
             $http.get("metamodelo/enac-remove.action?enac.entiId=" + vm.enac.entiId + "&enac.path=" + vm.enac.path)
                     .success(function(data) {
-                        vm.actionErrors = data.actionErrors;
-
-                        if (data.actionErrors.length == 0) {
-                            window.history.back();
-                        }
+                        window.history.back();
                     });
         }
     }
@@ -1446,13 +1329,9 @@ function enacEditController($http, $routeParams, pageTitleService) {
             enac : vm.enac,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                setTimeout(function() {
-                    window.history.back();
-                }, 0);
-            }
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
         });
     }
 
@@ -1480,11 +1359,7 @@ function enacCreateController($http, $location, $routeParams, pageTitleService) 
             enac : vm.enac,
             accion : vm.accion
         }).success(function(data) {
-            vm.actionErrors = data.actionErrors;
-
-            if (data.actionErrors.length == 0) {
-                $location.path("/metamodelo/enac/detail/" + data.enac.entiId + "/" + data.enac.path).replace();
-            }
+            $location.path("/metamodelo/enac/detail/" + data.enac.entiId + "/" + data.enac.path).replace();
         });
     }
 
