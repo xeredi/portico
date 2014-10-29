@@ -10,7 +10,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
@@ -92,8 +92,7 @@ public final class AspectoAction extends BaseAction {
         aspc = aspcBO.select(aspcCriterioVO);
 
         if (aspc == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.aspc.name()),
-                    aspcCriterioVO.getId() }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.aspc), String.valueOf(aspcCriterioVO.getId()));
 
             return SUCCESS;
         }
@@ -151,8 +150,7 @@ public final class AspectoAction extends BaseAction {
         aspc = aspcBO.select(aspcCriterioVO);
 
         if (aspc == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.aspc.name()),
-                    aspcCriterioVO.getId() }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.aspc), String.valueOf(aspcCriterioVO.getId()));
 
             return SUCCESS;
         }
@@ -199,15 +197,8 @@ public final class AspectoAction extends BaseAction {
         Preconditions.checkNotNull(aspc.getAspv());
 
         if (ACCION_EDICION.create == accion) {
-            if (GenericValidator.isBlankOrNull(aspc.getCodigo())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_codigo.name()) }));
-            }
-
-            if (aspc.getTpsr() == null || aspc.getTpsr().getId() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_tpsr.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_codigo, aspc.getCodigo());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_tpsr, aspc.getTpsr());
         }
 
         if (ACCION_EDICION.create != accion) {
@@ -215,129 +206,57 @@ public final class AspectoAction extends BaseAction {
             Preconditions.checkNotNull(aspc.getAspv().getId());
         }
 
-        I18nValidator.validate(this, i18nMap);
+        FieldValidator.validateI18n(this, i18nMap);
 
-        if (aspc.getAspv().getFini() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.aspc_fini.name()) }));
-        }
-        if (aspc.getAspv().getPrioridad() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.aspc_prioridad.name()) }));
-        }
+        FieldValidator.validateRequired(this, MessageI18nKey.aspc_fini, aspc.getAspv().getFini());
+        FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, aspc.getAspv().getPrioridad());
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())
                 || aspc.getAspv().getCgrpInfo1() != null) {
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo1.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo1())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo1.name()) }));
-            }
-
-            if (aspc.getAspv().getCgrpInfo1() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo1.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo1, aspc.getAspv().getCetiqInfo1());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo1, aspc.getAspv().getCpathInfo1());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo1, aspc.getAspv().getCgrpInfo1());
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo2())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())
                 || aspc.getAspv().getCgrpInfo2() != null) {
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo2())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo2.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo2())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo2.name()) }));
-            }
-
-            if (aspc.getAspv().getCgrpInfo2() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo2.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo2, aspc.getAspv().getCetiqInfo2());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo2, aspc.getAspv().getCpathInfo2());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo2, aspc.getAspv().getCgrpInfo2());
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo3())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())
                 || aspc.getAspv().getCgrpInfo3() != null) {
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo3())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo3.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo3())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo3.name()) }));
-            }
-
-            if (aspc.getAspv().getCgrpInfo3() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo3.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo3, aspc.getAspv().getCetiqInfo3());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo3, aspc.getAspv().getCpathInfo3());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo3, aspc.getAspv().getCgrpInfo3());
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo4())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())
                 || aspc.getAspv().getCgrpInfo4() != null) {
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo4())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo4.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo4())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo4.name()) }));
-            }
-
-            if (aspc.getAspv().getCgrpInfo4() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo4.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo4, aspc.getAspv().getCetiqInfo4());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo4, aspc.getAspv().getCpathInfo4());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo4, aspc.getAspv().getCgrpInfo4());
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo5())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())
                 || aspc.getAspv().getCgrpInfo5() != null) {
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo5())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo5.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo5())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo5.name()) }));
-            }
-
-            if (aspc.getAspv().getCgrpInfo5() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo5.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo5, aspc.getAspv().getCetiqInfo5());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo5, aspc.getAspv().getCpathInfo5());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo5, aspc.getAspv().getCgrpInfo5());
         }
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo6())
                 || !GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())
                 || aspc.getAspv().getCgrpInfo6() != null) {
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo6())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cetiqInfo6.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(aspc.getAspv().getCpathInfo6())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cpathInfo6.name()) }));
-            }
-
-            if (aspc.getAspv().getCgrpInfo6() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.aspc_cgrpInfo6.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cetiqInfo6, aspc.getAspv().getCetiqInfo6());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cpathInfo6, aspc.getAspv().getCpathInfo6());
+            FieldValidator.validateRequired(this, MessageI18nKey.aspc_cgrpInfo6, aspc.getAspv().getCgrpInfo6());
         }
 
         if (hasErrors()) {
@@ -351,8 +270,7 @@ public final class AspectoAction extends BaseAction {
             try {
                 aspcBO.insert(aspc, i18nMap);
             } catch (final OverlapException ex) {
-                addActionError(getText(MessageI18nKey.E00009.name(),
-                        new Object[] { getText(MessageI18nKey.aspc.name()) }));
+                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.aspc));
             }
 
             break;
@@ -360,8 +278,7 @@ public final class AspectoAction extends BaseAction {
             try {
                 aspcBO.duplicate(aspc, i18nMap);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(),
-                        new Object[] { getText(MessageI18nKey.aspc.name()) }));
+                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.aspc));
             }
 
             break;
@@ -369,11 +286,9 @@ public final class AspectoAction extends BaseAction {
             try {
                 aspcBO.update(aspc, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
-                        getText(MessageI18nKey.aspc.name()), aspc.getCodigo() }));
+                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.aspc), aspc.getCodigo());
             } catch (final OverlapException ex) {
-                addActionError(getText(MessageI18nKey.E00009.name(),
-                        new Object[] { getText(MessageI18nKey.aspc.name()) }));
+                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.aspc));
             }
 
             break;

@@ -1,9 +1,9 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
@@ -75,22 +75,13 @@ public final class EntidadAccionAction extends BaseAction {
         Preconditions.checkNotNull(enac.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            if (GenericValidator.isBlankOrNull(enac.getPath())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.enac_path.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.enac_path, enac.getPath());
         } else {
             Preconditions.checkNotNull(enac.getPath());
         }
 
-        if (GenericValidator.isBlankOrNull(enac.getEtiqueta())) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.enac_etiqueta.name()) }));
-        }
-        if (enac.getOrden() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.enac_orden.name()) }));
-        }
+        FieldValidator.validateRequired(this, MessageI18nKey.enac_etiqueta, enac.getEtiqueta());
+        FieldValidator.validateRequired(this, MessageI18nKey.enac_orden, enac.getOrden());
 
         if (hasErrors()) {
             return SUCCESS;
@@ -102,8 +93,7 @@ public final class EntidadAccionAction extends BaseAction {
             try {
                 enacBO.insert(enac);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(),
-                        new Object[] { getText(MessageI18nKey.enac.name()) }));
+                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.enac));
             }
         } else {
             enacBO.update(enac);

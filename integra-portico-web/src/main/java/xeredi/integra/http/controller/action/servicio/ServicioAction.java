@@ -11,7 +11,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.http.util.ItemDatoValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
@@ -179,16 +179,13 @@ public final class ServicioAction extends ItemAction {
 
         if (accion == ACCION_EDICION.create) {
             if (item.getSubp() == null || item.getSubp().getId() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.srvc_subp.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_subp));
             }
             if (item.getAnno() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.srvc_anno.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_anno));
             }
             if (item.getNumero() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.srvc_numero.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_numero));
             }
         } else {
             Preconditions.checkNotNull(item.getId());
@@ -196,28 +193,24 @@ public final class ServicioAction extends ItemAction {
 
         if (enti.getTpdtEstado() != null) {
             if (GenericValidator.isBlankOrNull(item.getEstado())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.srvc_estado.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_estado));
             }
         }
 
         if (enti.getTemporal()) {
             if (item.getFini() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.srvc_fini.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_fini));
             }
             if (item.getFfin() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.srvc_ffin.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_ffin));
             }
         } else {
             if (item.getFref() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.srvc_fref.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_fref));
             }
         }
 
-        ItemDatoValidator.validate(this, enti, item);
+        FieldValidator.validateItem(this, enti, item);
 
         if (hasErrors()) {
             return SUCCESS;

@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.http.util.ItemDatoValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
@@ -172,7 +172,7 @@ public final class SubparametroAction extends ItemAction {
             }
         }
 
-        ItemDatoValidator.validate(this, enti, item);
+        FieldValidator.validateItem(this, enti, item);
 
         // Fin de validacion de datos
 

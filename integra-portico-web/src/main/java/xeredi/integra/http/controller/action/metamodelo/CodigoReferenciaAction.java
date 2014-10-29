@@ -3,11 +3,10 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -82,8 +81,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
 
         if (cdrf == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.cdrf.name()),
-                cdrf.getValor() }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
@@ -105,21 +103,15 @@ public final class CodigoReferenciaAction extends BaseAction {
 
         // Validacion de datos
         if (accion == ACCION_EDICION.create) {
-            if (GenericValidator.isBlankOrNull(cdrf.getValor())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.cdrf_valor.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.cdrf_valor, cdrf.getValor());
         } else {
             Preconditions.checkNotNull(cdrf.getId());
             Preconditions.checkNotNull(cdrf.getValor());
         }
 
-        if (cdrf.getOrden() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.cdrf_orden.name()) }));
-        }
+        FieldValidator.validateRequired(this, MessageI18nKey.cdrf_orden, cdrf.getOrden());
 
-        I18nValidator.validate(this, i18nMap);
+        FieldValidator.validateI18n(this, i18nMap);
 
         if (!hasErrors()) {
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
@@ -128,15 +120,13 @@ public final class CodigoReferenciaAction extends BaseAction {
                 try {
                     cdrfBO.insert(cdrf, i18nMap);
                 } catch (final DuplicateInstanceException ex) {
-                    addActionError(getText(MessageI18nKey.E00005.name(),
-                            new Object[] { getText(MessageI18nKey.cdrf.name()) }));
+                    addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.cdrf));
                 }
             } else {
                 try {
                     cdrfBO.update(cdrf, i18nMap);
                 } catch (final InstanceNotFoundException ex) {
-                    addActionError(getText(MessageI18nKey.E00008.name(),
-                            new Object[] { getText(MessageI18nKey.cdrf.name()), cdrf.getValor() }));
+                    addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
                 }
             }
         }
@@ -159,8 +149,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         try {
             cdrfBO.delete(cdrf);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.cdrf.name()),
-                cdrf.getValor() }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
         }
 
         return SUCCESS;
@@ -184,8 +173,7 @@ public final class CodigoReferenciaAction extends BaseAction {
         cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
 
         if (cdrf == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.cdrf.name()),
-                cdrf.getValor() }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());

@@ -3,10 +3,10 @@ package xeredi.integra.http.controller.action.metamodelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
@@ -102,51 +102,21 @@ public final class EntidadTipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(entd.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            if (entd.getTpdt() == null || entd.getTpdt().getId() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.entd_tpdt.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.entd_tpdt, entd.getTpdt());
         } else {
             Preconditions.checkNotNull(entd.getTpdt());
             Preconditions.checkNotNull(entd.getTpdt().getId());
         }
 
-        if (GenericValidator.isBlankOrNull(entd.getEtiqueta())) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_etiqueta.name()) }));
-        }
-        if (entd.getGrupo() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_grupo.name()) }));
-        }
-        if (entd.getFila() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_fila.name()) }));
-        }
-        if (entd.getOrden() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_orden.name()) }));
-        }
-        if (entd.getSpan() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_span.name()) }));
-        }
-        if (entd.getSpanLg() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_spanLg.name()) }));
-        }
-        if (entd.getObligatorio() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_obligatorio.name()) }));
-        }
-        if (entd.getGridable() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_gridable.name()) }));
-        }
-        if (entd.getFiltrable() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.entd_filtrable.name()) }));
-        }
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_etiqueta, entd.getEtiqueta());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_grupo, entd.getGrupo());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_fila, entd.getFila());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_orden, entd.getOrden());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_span, entd.getSpan());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_spanLg, entd.getSpanLg());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_obligatorio, entd.getObligatorio());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, entd.getGridable());
+        FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, entd.getFiltrable());
 
         if (hasErrors()) {
             return SUCCESS;
@@ -158,8 +128,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
             try {
                 entdBO.insert(entd);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(),
-                        new Object[] { getText(MessageI18nKey.entd.name()) }));
+                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.entd));
             }
         } else {
             entdBO.update(entd);

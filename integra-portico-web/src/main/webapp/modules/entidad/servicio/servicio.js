@@ -131,13 +131,15 @@ function config($routeProvider) {
     })
 }
 
-function servicioController($scope, $http, $location) {
+function servicioController($scope, $http, pageTitleService) {
     var url = "servicio/tpsr-list.action";
 
     $http.get(url).success(function(data) {
         $scope.tpsrList = data.tpsrList;
         $scope.tpssMap = data.tpssMap;
     });
+
+    pageTitleService.setTitle("servicio", "page_home")
 }
 
 function srvcGridController($http, $location, $routeParams, $modal, pageTitleService) {

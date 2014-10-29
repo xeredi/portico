@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action;
 
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -16,9 +15,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.util.ValueStack;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,7 +26,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 @ParentPackage("json-default")
 @Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "false" })
 @InterceptorRefs({ @InterceptorRef(value = "timer"), @InterceptorRef(value = "json"), @InterceptorRef("basicStack") })
-public class BaseAction extends ActionSupport implements SessionAware {
+public abstract class BaseAction extends ActionSupport implements SessionAware {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 473290129182463314L;
@@ -78,74 +77,32 @@ public class BaseAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * {@inheritDoc}
+     * Adds the action error.
+     *
+     * @param key
+     *            the key
      */
-    @Override
-    public String getText(final String aTextName) {
-        return bundle.getString(aTextName);
+    public final void addActionError(final MessageI18nKey key) {
+        addActionError(bundle.getString(key.name()));
+    }
+
+    /**
+     * Adds the action error.
+     *
+     * @param key
+     *            the key
+     * @param args
+     *            the args
+     */
+    public final void addActionError(final MessageI18nKey key, final String... args) {
+        addActionError(MessageFormat.format(bundle.getString(key.name()), args));
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getText(final String key, final Object[] args) {
-        return MessageFormat.format(bundle.getString(key), args);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getText(final String aTextName, final String defaultValue) {
-        throw new Error("No implementado!");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getText(final String aTextName, final String defaultValue, final String obj) {
-        throw new Error("No implementado!");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getText(final String aTextName, final List<?> args) {
-        throw new Error("No implementado!");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getText(final String aTextName, final String defaultValue, final List<?> args) {
-        throw new Error("No implementado!");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getText(final String key, final String defaultValue, final String[] args) {
-        throw new Error("No implementado!");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getText(final String key, final String defaultValue, final List<?> args, final ValueStack stack) {
-        throw new Error("No implementado!");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getText(final String key, final String defaultValue, final String[] args, final ValueStack stack) {
-        throw new Error("No implementado!");
+    public final String getText(final MessageI18nKey key) {
+        return bundle.getString(key.name());
     }
 
 }

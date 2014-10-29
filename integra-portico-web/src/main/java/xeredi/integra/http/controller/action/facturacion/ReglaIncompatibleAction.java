@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
@@ -87,8 +88,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgin.name()),
-                    String.valueOf(rginCriterioVO.getRgivId()) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin),
+                    String.valueOf(rginCriterioVO.getRgivId()));
         }
 
         return SUCCESS;
@@ -144,8 +145,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgin.name()),
-                    String.valueOf(rginCriterioVO.getRgivId()) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin),
+                    String.valueOf(rginCriterioVO.getRgivId()));
         }
 
         return SUCCESS;
@@ -164,10 +165,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         Preconditions.checkNotNull(rgin.getRgla1Id());
 
         if (accion == ACCION_EDICION.create) {
-            if (rgin.getRgla2() == null || rgin.getRgla2().getId() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.rgin_rgla2.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.rgin_rgla2, rgin.getRgla2());
         } else {
             Preconditions.checkNotNull(rgin.getId());
             Preconditions.checkNotNull(rgin.getRgiv().getId());
@@ -175,10 +173,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
             Preconditions.checkNotNull(rgin.getRgla2().getId());
         }
 
-        if (rgin.getRgiv().getFini() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.rgin_fini.name()) }));
-        }
+        FieldValidator.validateRequired(this, MessageI18nKey.rgin_fini, rgin.getRgiv().getFini());
 
         if (hasErrors()) {
             return SUCCESS;
@@ -191,8 +186,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
             try {
                 rginBO.insert(rgin);
             } catch (final OverlapException ex) {
-                addActionError(getText(MessageI18nKey.E00009.name(),
-                        new Object[] { getText(MessageI18nKey.rgin.name()) }));
+                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgin));
             }
 
             break;
@@ -200,11 +194,9 @@ public final class ReglaIncompatibleAction extends BaseAction {
             try {
                 rginBO.update(rgin);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(),
-                        new Object[] { getText(MessageI18nKey.rgin.name()) }));
+                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin));
             } catch (final OverlapException ex) {
-                addActionError(getText(MessageI18nKey.E00009.name(),
-                        new Object[] { getText(MessageI18nKey.rgin.name()) }));
+                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgin));
             }
 
             break;
@@ -231,8 +223,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rginBO.delete(rgin);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgin.name()),
-                    String.valueOf(rgin.getRgiv().getId()) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin), String.valueOf(rgin.getRgiv().getId()));
         }
 
         return SUCCESS;

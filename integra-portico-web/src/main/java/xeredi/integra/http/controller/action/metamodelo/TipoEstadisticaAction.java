@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -91,15 +91,12 @@ public final class TipoEstadisticaAction extends BaseAction {
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {
-            if (enti.getCodigo() == null || enti.getCodigo().isEmpty()) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.enti_codigo.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.enti_codigo, enti.getCodigo());
         } else {
             Preconditions.checkNotNull(enti.getId());
         }
 
-        I18nValidator.validate(this, i18nMap);
+        FieldValidator.validateI18n(this, i18nMap);
 
         if (hasErrors()) {
             return SUCCESS;
@@ -113,15 +110,13 @@ public final class TipoEstadisticaAction extends BaseAction {
             try {
                 tpesBO.insert(enti, i18nMap);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(),
-                        new Object[] { getText(MessageI18nKey.tpes.name()) }));
+                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.tpes));
             }
         } else {
             try {
                 tpesBO.update(enti, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
-                    getText(MessageI18nKey.tpes.name()), String.valueOf(enti.getId()) }));
+                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpes), String.valueOf(enti.getId()));
             }
         }
 
@@ -143,8 +138,7 @@ public final class TipoEstadisticaAction extends BaseAction {
         try {
             tpesBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.tpes.name()),
-                String.valueOf(enti.getId()) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpes), String.valueOf(enti.getId()));
         }
 
         return SUCCESS;

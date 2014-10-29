@@ -8,7 +8,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.http.util.ItemDatoValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
@@ -163,12 +163,10 @@ public final class SubservicioAction extends ItemAction {
 
         if (accion == ACCION_EDICION.create) {
             if (item.getSrvc() == null || item.getSrvc().getId() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.ssrv_srvc.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_srvc));
             }
             if (item.getNumero() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.ssrv_numero.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_numero));
             }
         } else {
             Preconditions.checkNotNull(item.getId());
@@ -179,23 +177,20 @@ public final class SubservicioAction extends ItemAction {
 
         if (enti.getTpdtEstado() != null) {
             if (GenericValidator.isBlankOrNull(item.getEstado())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.ssrv_estado.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_estado));
             }
         }
 
         if (enti.getTemporal()) {
             if (item.getFini() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.ssrv_fini.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_fini));
             }
             if (item.getFfin() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.ssrv_ffin.name()) }));
+                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_ffin));
             }
         }
 
-        ItemDatoValidator.validate(this, enti, item);
+        FieldValidator.validateItem(this, enti, item);
 
         if (hasErrors()) {
             return SUCCESS;
@@ -208,7 +203,7 @@ public final class SubservicioAction extends ItemAction {
             try {
                 ssrvBO.insert(item, enti, null);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(), new Object[] { enti.getNombre() }));
+                addActionError(MessageI18nKey.E00005, enti.getNombre());
             }
 
             break;
@@ -216,8 +211,7 @@ public final class SubservicioAction extends ItemAction {
             try {
                 ssrvBO.update(item);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { enti.getNombre(),
-                        item.getId().toString() }));
+                addActionError(MessageI18nKey.E00008, enti.getNombre(), item.getId().toString());
             }
 
             break;

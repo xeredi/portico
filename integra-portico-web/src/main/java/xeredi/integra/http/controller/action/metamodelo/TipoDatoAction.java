@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.util.I18nValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -83,8 +83,7 @@ public final class TipoDatoAction extends BaseAction {
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.tpdt.name()),
-                String.valueOf(tpdt.getId()) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpdt), String.valueOf(tpdt.getId()));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
@@ -104,32 +103,19 @@ public final class TipoDatoAction extends BaseAction {
 
         // Validacion de datos
         if (accion == ACCION_EDICION.create) {
-            if (tpdt.getCodigo() == null || tpdt.getCodigo().isEmpty()) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.tpdt_codigo.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.tpdt_codigo, tpdt.getCodigo());
         } else {
             Preconditions.checkNotNull(tpdt.getId());
         }
 
-        if (tpdt.getTpht() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.tpdt_tpht.name()) }));
-        }
-        if (tpdt.getTipoElemento() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.tpdt_tpel.name()) }));
+        FieldValidator.validateRequired(this, MessageI18nKey.tpdt_tpht, tpdt.getTpht());
+        FieldValidator.validateRequired(this, MessageI18nKey.tpdt_tpel, tpdt.getTipoElemento());
+
+        if (FieldValidator.isInList(tpdt.getTipoElemento(), TipoElemento.PR, TipoElemento.SR)) {
+            FieldValidator.validateRequired(this, MessageI18nKey.tpdt_enti, tpdt.getEnti());
         }
 
-        if (tpdt.getTipoElemento() != null
-                && (tpdt.getTipoElemento() == TipoElemento.PR || tpdt.getTipoElemento() == TipoElemento.SR)) {
-            if (tpdt.getEnti() == null || tpdt.getEnti().getId() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.tpdt_enti.name()) }));
-            }
-        }
-
-        I18nValidator.validate(this, i18nMap);
+        FieldValidator.validateI18n(this, i18nMap);
 
         if (hasErrors()) {
             return SUCCESS;
@@ -141,8 +127,7 @@ public final class TipoDatoAction extends BaseAction {
             try {
                 tpdtBO.insert(tpdt, i18nMap);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(),
-                        new Object[] { getText(MessageI18nKey.tpdt.name()) }));
+                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.tpdt));
             }
         } else {
             tpdtBO.update(tpdt, i18nMap);
@@ -185,8 +170,7 @@ public final class TipoDatoAction extends BaseAction {
         tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
 
         if (tpdt == null) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.tpdt.name()),
-                String.valueOf(tpdt.getId()) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpdt), String.valueOf(tpdt.getId()));
         }
 
         i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());

@@ -50,7 +50,7 @@ public final class EquipamientoAction extends BaseAction {
         try {
             equiBO.bloquear(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
+            addActionError(MessageI18nKey.E00011, ex.getEstado());
         }
 
         return SUCCESS;
@@ -73,7 +73,7 @@ public final class EquipamientoAction extends BaseAction {
         try {
             equiBO.iniciar(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
+            addActionError(MessageI18nKey.E00011, ex.getEstado());
         }
 
         return SUCCESS;
@@ -96,7 +96,7 @@ public final class EquipamientoAction extends BaseAction {
         try {
             equiBO.anular(item.getId());
         } catch (final EstadoInvalidoException ex) {
-            addActionError(getText(MessageI18nKey.E00011.name(), new Object[] { ex.getEstado() }));
+            addActionError(MessageI18nKey.E00011, ex.getEstado());
         }
 
         return SUCCESS;

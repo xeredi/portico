@@ -39,7 +39,6 @@ function config($routeProvider) {
     $routeProvider
 
     .when("/maestro", {
-        title : 'maestro_main',
         templateUrl : "modules/entidad/maestro/maestro.html",
         controller : "maestroController",
         controllerAs : 'vm'
@@ -185,12 +184,14 @@ function sprmService($http) {
     }
 }
 
-function maestroController(tpprService) {
+function maestroController(tpprService, pageTitleService) {
     var vm = this;
 
     tpprService.getEntiList().then(function(data) {
         vm.tpprList = data;
     });
+
+    pageTitleService.setTitle("maestro", "page_home");
 }
 
 function prmtGridController($location, $routeParams, $modal, prmtService, pageTitleService) {

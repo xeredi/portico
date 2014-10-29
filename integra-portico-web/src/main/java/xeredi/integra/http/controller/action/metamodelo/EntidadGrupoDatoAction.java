@@ -3,13 +3,13 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -66,8 +66,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.engd.name()),
-                    String.valueOf(engd) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
         }
 
         return SUCCESS;
@@ -82,9 +81,9 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     public String save() throws InstanceNotFoundException {
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        PropertyValidator.validateRequired(this, "engd.entiId", engd.getEntiId());
-        PropertyValidator.validateRequired(this, "engd.numero", engd.getNumero());
-        PropertyValidator.validateRequired(this, "engd.etiqueta", engd.getEtiqueta());
+        FieldValidator.validateRequired(this, MessageI18nKey.engd_enti, engd.getEntiId());
+        FieldValidator.validateRequired(this, MessageI18nKey.engd_numero, engd.getNumero());
+        FieldValidator.validateRequired(this, MessageI18nKey.engd_etiqueta, engd.getEtiqueta());
 
         if (hasErrors()) {
             return SUCCESS;
@@ -94,15 +93,13 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             try {
                 engdBO.insert(engd);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(getText(MessageI18nKey.E00005.name(),
-                        new Object[] { getText(MessageI18nKey.engd.name()) }));
+                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.engd));
             }
         } else {
             try {
                 engdBO.update(engd);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
-                        getText(MessageI18nKey.engd.name()), String.valueOf(engd) }));
+                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
             }
         }
 
@@ -121,8 +118,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         try {
             engd = engdBO.select(engd.getEntiId(), engd.getNumero());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.engd.name()),
-                    String.valueOf(engd) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
         }
 
         return SUCCESS;

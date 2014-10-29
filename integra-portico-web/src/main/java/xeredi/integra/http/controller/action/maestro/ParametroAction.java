@@ -10,8 +10,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.http.util.I18nValidator;
-import xeredi.integra.http.util.ItemDatoValidator;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
@@ -203,10 +202,10 @@ public final class ParametroAction extends ItemAction {
         }
 
         if (enti.getI18n()) {
-            I18nValidator.validate(this, i18nMap);
+            FieldValidator.validateI18n(this, i18nMap);
         }
 
-        ItemDatoValidator.validate(this, enti, item);
+        FieldValidator.validateItem(this, enti, item);
 
         // Fin de validacion de datos
 

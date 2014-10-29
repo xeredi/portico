@@ -10,6 +10,7 @@ import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
@@ -107,8 +108,7 @@ public final class ReglaAction extends BaseAction {
 
             rginList.addAll(rginBO.selectList(rginCriterioVO));
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgla.name()),
-                rglaCriterioVO.toString() }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), String.valueOf(rgla.getId()));
         }
 
         return SUCCESS;
@@ -169,8 +169,7 @@ public final class ReglaAction extends BaseAction {
 
             loadEntiFacturables();
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgla.name()),
-                String.valueOf(rgla.getRglv().getId()) }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), String.valueOf(rgla.getId()));
         }
 
         return SUCCESS;
@@ -213,213 +212,97 @@ public final class ReglaAction extends BaseAction {
         if (accion == ACCION_EDICION.create) {
             Preconditions.checkNotNull(rgla.getCrgo().getId());
 
-            if (GenericValidator.isBlankOrNull(rgla.getCodigo())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.rgla_codigo.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.rgla_codigo, rgla.getCodigo());
         } else {
             Preconditions.checkNotNull(rgla.getId());
             Preconditions.checkNotNull(rgla.getRglv().getId());
         }
 
-        if (rgla.getRglv().getTipo() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.rgla_tipo.name()) }));
-        }
-
-        if (rgla.getRglv().getEnti() == null || rgla.getRglv().getEnti().getId() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.rgla_enti.name()) }));
-        }
-
-        if (rgla.getRglv().getFini() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.rgla_fini.name()) }));
-        }
-
-        if (rgla.getRglv().getOrden() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.rgla_orden.name()) }));
-        }
-
-        if (GenericValidator.isBlankOrNull(rgla.getRglv().getCondicion())) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.rgla_condicion.name()) }));
-        }
-
-        if (GenericValidator.isBlankOrNull(rgla.getRglv().getFormula())) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.rgla_formula.name()) }));
-        }
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_tipo, rgla.getRglv().getTipo());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_enti, rgla.getRglv().getEnti());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_fini, rgla.getRglv().getFini());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_orden, rgla.getRglv().getOrden());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_condicion, rgla.getRglv().getCondicion());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_formula, rgla.getRglv().getFormula());
 
         if (ReglaTipo.T == rgla.getRglv().getTipo()) {
-            if (rgla.getRglv().getImporteBase() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.rgla_importeBase.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathImpuesto())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.rgla_pathImpuesto.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathPagador())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.rgla_pathPagador.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathEsSujPasivo())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.rgla_pathEsSujPasivo.name()) }));
-            }
-
-            if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathCodExen())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.rgla_pathCodExen.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.rgla_importeBase, rgla.getRglv().getImporteBase());
+            FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathImpuesto, rgla.getRglv().getPathImpuesto());
+            FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathPagador, rgla.getRglv().getPathPagador());
+            FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathEsSujPasivo, rgla.getRglv()
+                    .getPathEsSujPasivo());
+            FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathCodExen, rgla.getRglv().getPathCodExen());
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo1())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo1())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo1())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqInfo1.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo1())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathInfo1.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqInfo1, rgla.getRglv().getEtiqInfo1());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathInfo1, rgla.getRglv().getPathInfo1());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo2())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo2())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo2())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqInfo2.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo2())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathInfo2.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqInfo2, rgla.getRglv().getEtiqInfo2());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathInfo2, rgla.getRglv().getPathInfo2());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo3())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo3())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo3())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqInfo3.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo3())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathInfo3.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqInfo3, rgla.getRglv().getEtiqInfo3());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathInfo3, rgla.getRglv().getPathInfo3());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo4())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo4())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo4())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqInfo4.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo4())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathInfo4.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqInfo4, rgla.getRglv().getEtiqInfo4());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathInfo4, rgla.getRglv().getPathInfo4());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo5())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo5())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo5())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqInfo5.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo5())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathInfo5.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqInfo5, rgla.getRglv().getEtiqInfo5());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathInfo5, rgla.getRglv().getPathInfo5());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo6())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo6())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqInfo6())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqInfo6.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathInfo6())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathInfo6.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqInfo6, rgla.getRglv().getEtiqInfo6());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathInfo6, rgla.getRglv().getPathInfo6());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant1())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant1())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant1())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqCuant1.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant1())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathCuant1.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqCuant1, rgla.getRglv().getEtiqCuant1());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathCuant1, rgla.getRglv().getPathCuant1());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant2())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant2())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant2())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqCuant2.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant2())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathCuant2.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqCuant2, rgla.getRglv().getEtiqCuant2());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathCuant2, rgla.getRglv().getPathCuant2());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant3())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant3())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant3())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqCuant3.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant3())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathCuant3.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqCuant3, rgla.getRglv().getEtiqCuant3());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathCuant3, rgla.getRglv().getPathCuant3());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant4())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant4())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant4())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqCuant4.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant4())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathCuant4.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqCuant4, rgla.getRglv().getEtiqCuant4());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathCuant4, rgla.getRglv().getPathCuant4());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant5())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant5())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant5())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqCuant5.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant5())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathCuant5.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqCuant5, rgla.getRglv().getEtiqCuant5());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathCuant5, rgla.getRglv().getPathCuant5());
             }
 
             if (!GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant6())
                     || !GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant6())) {
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getEtiqCuant6())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_etiqCuant6.name()) }));
-                }
-                if (GenericValidator.isBlankOrNull(rgla.getRglv().getPathCuant6())) {
-                    addActionError(getText(MessageI18nKey.E00001.name(),
-                            new Object[] { getText(MessageI18nKey.rgla_pathCuant6.name()) }));
-                }
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_etiqCuant6, rgla.getRglv().getEtiqCuant6());
+                FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathCuant6, rgla.getRglv().getPathCuant6());
             }
         }
 
@@ -434,19 +317,16 @@ public final class ReglaAction extends BaseAction {
             try {
                 rglaBO.insert(rgla);
             } catch (final OverlapException ex) {
-                addActionError(getText(MessageI18nKey.E00009.name(),
-                        new Object[] { getText(MessageI18nKey.rgla.name()) }));
+                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgla));
             }
             break;
         case edit:
             try {
                 rglaBO.update(rgla);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(getText(MessageI18nKey.E00008.name(), new Object[] {
-                    getText(MessageI18nKey.rgla.name()), rgla.getCodigo() }));
+                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), rgla.getCodigo());
             } catch (final OverlapException ex) {
-                addActionError(getText(MessageI18nKey.E00009.name(),
-                        new Object[] { getText(MessageI18nKey.rgla.name()) }));
+                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgla));
             }
             break;
         default:
@@ -472,8 +352,7 @@ public final class ReglaAction extends BaseAction {
         try {
             rglaBO.delete(rgla);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(), new Object[] { getText(MessageI18nKey.rgla.name()),
-                rgla.getCodigo() }));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), String.valueOf(rgla.getId()));
         }
 
         return SUCCESS;
