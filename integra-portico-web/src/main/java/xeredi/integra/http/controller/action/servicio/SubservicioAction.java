@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
@@ -28,6 +27,9 @@ public final class SubservicioAction extends ItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9210521463729954776L;
+
+    /** The enti. */
+    private TipoSubservicioVO enti;
 
     /** The srvc form. */
     private SubservicioVO item;
@@ -69,6 +71,7 @@ public final class SubservicioAction extends ItemAction {
 
         accion = ACCION_EDICION.edit;
         item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         return SUCCESS;
     }
@@ -87,7 +90,7 @@ public final class SubservicioAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
 
-        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (item.getSrvc() != null && item.getSrvc().getId() != null) {
             final ServicioBO srvcBO = new ServicioBO();
@@ -118,7 +121,7 @@ public final class SubservicioAction extends ItemAction {
 
         item = ssrvBO.select(item.getId(), getIdioma());
 
-        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
 
@@ -140,7 +143,7 @@ public final class SubservicioAction extends ItemAction {
 
         item = ssrvBO.select(item.getId(), getIdioma());
 
-        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         loadLabelValuesMap(enti);
 
@@ -158,15 +161,11 @@ public final class SubservicioAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
-        final TipoSubservicioVO enti = TipoSubservicioProxy.select(item.getEntiId());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            if (item.getSrvc() == null || item.getSrvc().getId() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_srvc));
-            }
-            if (item.getNumero() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_numero));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_srvc, item.getSrvc());
+            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_numero, item.getNumero());
         } else {
             Preconditions.checkNotNull(item.getId());
             Preconditions.checkNotNull(item.getSrvc());
@@ -175,18 +174,12 @@ public final class SubservicioAction extends ItemAction {
         }
 
         if (enti.getTpdtEstado() != null) {
-            if (GenericValidator.isBlankOrNull(item.getEstado())) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_estado));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_estado, item.getEstado());
         }
 
         if (enti.getTemporal()) {
-            if (item.getFini() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_fini));
-            }
-            if (item.getFfin() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.ssrv_ffin));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_fini, item.getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.ssrv_ffin, item.getFfin());
         }
 
         FieldValidator.validateItem(this, enti, item);
@@ -272,6 +265,15 @@ public final class SubservicioAction extends ItemAction {
      */
     public void setItemPadresMap(final Map<Long, SubservicioVO> value) {
         itemPadresMap = value;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoSubservicioVO getEnti() {
+        return enti;
     }
 
 }

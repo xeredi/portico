@@ -45,7 +45,8 @@ function config($routeProvider) {
     .when("/servicio", {
         title : 'servicio_main',
         templateUrl : "modules/entidad/servicio/servicio.html",
-        controller : "servicioController"
+        controller : "servicioController",
+        controllerAs : "vm"
     })
 
     .when("/servicio/srvc/grid/:entiId", {
@@ -81,65 +82,65 @@ function config($routeProvider) {
     })
 
     .when("/servicio/srvc/maniTotales/:srvcId", {
-        title : 'mani_totales',
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
-        controller : "maniTotalesController"
+        controller : "maniTotalesController",
+        controllerAs : "vm"
     })
 
     .when("/servicio/ssrv/grid/:entiId", {
-        title : 'ssrv_grid',
         templateUrl : "modules/entidad/servicio/ssrv-grid.html",
         controller : "ssrvGridController",
+        controllerAs : "vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/ssrv/create/:entiId/:srvcId", {
-        title : 'ssrv_create',
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
-        controller : "ssrvCreateController"
+        controller : "ssrvCreateController",
+        controllerAs : "vm"
     })
 
     .when("/servicio/ssrv/create/:entiId", {
-        title : 'ssrv_create',
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
-        controller : "ssrvCreateController"
+        controller : "ssrvCreateController",
+        controllerAs : "vm"
     })
 
     .when("/servicio/ssrv/detail/:entiId/:ssrvId", {
-        title : 'ssrv_detail',
         templateUrl : "modules/entidad/servicio/ssrv-detail.html",
         controller : "ssrvDetailController",
+        controllerAs : "vm",
         reloadOnSearch : false
     })
 
     .when("/servicio/ssrv/edit/:entiId/:ssrvId", {
-        title : 'ssrv_edit',
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
-        controller : "ssrvEditController"
+        controller : "ssrvEditController",
+        controllerAs : "vm"
     })
 
     .when("/servicio/ssrv/duplicate/:entiId/:ssrvId", {
-        title : 'ssrv_duplicate',
         templateUrl : "modules/entidad/servicio/ssrv-edit.html",
-        controller : "ssrvDuplicateController"
+        controller : "ssrvDuplicateController",
+        controllerAs : "vm"
     })
 
     .when("/servicio/ssrv/mablTotales/:srvcId/:ssrvId", {
-        title : 'mabl_totales',
         templateUrl : "modules/entidad/servicio/manifiesto/mabl-totales.html",
-        controller : "mablTotalesController"
-    })
+        controller : "mablTotalesController",
+        controllerAs : "vm"
+    });
 }
 
-function servicioController($scope, $http, pageTitleService) {
-    var url = "servicio/tpsr-list.action";
+function servicioController($http, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.tpsrList = data.tpsrList;
-        $scope.tpssMap = data.tpssMap;
+    $http.get("servicio/tpsr-list.action").success(function(data) {
+        vm.tpsrList = data.tpsrList;
+        vm.tpssMap = data.tpssMap;
     });
 
-    pageTitleService.setTitle("servicio", "page_home")
+    pageTitleService.setTitle("servicio", "page_home");
 }
 
 function srvcGridController($http, $location, $routeParams, $modal, pageTitleService, usSpinnerService) {
@@ -208,7 +209,7 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
                                                      * , $routeParams.limit ?
                                                      * $routeParams.limit : 20
                                                      */);
-    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
 function srvcFilterController($http, $modalInstance, enti, itemCriterio) {
@@ -351,7 +352,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
         }
     });
 
-    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
 function srvcCreateController($http, $location, $routeParams, pageTitleService) {
@@ -383,7 +384,7 @@ function srvcCreateController($http, $location, $routeParams, pageTitleService) 
         vm.subpList = data.subpList;
     });
 
-    pageTitleService.setTitleEnti($routeParams.entiId, "page_create")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_create");
 }
 
 function srvcEditController($http, $routeParams, pageTitleService) {
@@ -414,7 +415,7 @@ function srvcEditController($http, $routeParams, pageTitleService) {
         vm.labelValuesMap = data.labelValuesMap;
     });
 
-    pageTitleService.setTitleEnti($routeParams.entiId, "page_edit")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_edit");
 }
 
 function srvcDuplicateController($http, $location, $routeParams, pageTitleService) {
@@ -444,7 +445,7 @@ function srvcDuplicateController($http, $location, $routeParams, pageTitleServic
         vm.subpList = data.subpList;
     });
 
-    pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate")
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate");
 }
 
 function srvcLupaCtrl($http, $scope) {
@@ -466,21 +467,27 @@ function maniTotalesController($scope, $http, $location, $routeParams) {
     });
 }
 
-function ssrvGridController($scope, $http, $location, $routeParams, $modal) {
-    $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
-    $scope.itemCriterio.entiId = $routeParams.entiId;
+function ssrvGridController($http, $location, $routeParams, $modal, pageTitleService, usSpinnerService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+    vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(itemCriterio, page) {
-        $scope.loading = true;
+        usSpinnerService.spin("spinner");
 
         $http.post("servicio/ssrv-list.action", {
             itemCriterio : itemCriterio,
             page : page,
             limit : itemCriterio.limit
         }).success(function(data) {
-            $scope.page = data.itemList.page;
-            $scope.itemList = data.itemList;
-            $scope.itemCriterio = data.itemCriterio;
+            vm.page = data.itemList.page;
+            vm.enti = data.enti;
+            vm.itemList = data.itemList;
+            vm.itemCriterio = data.itemCriterio;
 
             var map = {};
 
@@ -489,167 +496,150 @@ function ssrvGridController($scope, $http, $location, $routeParams, $modal) {
 
             $location.search(map).replace();
 
-            $scope.loading = false;
+            usSpinnerService.stop("spinner");
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.itemCriterio, $scope.page);
+    function pageChanged() {
+        search(vm.itemCriterio, vm.page);
     }
 
-    $scope.filter = function(size) {
+    function filter(size) {
         var modalInstance = $modal.open({
-            templateUrl : 'ssrv-filter-content.html',
+            templateUrl : 'modules/entidad/servicio/ssrv-filter-content.html',
             controller : 'ssrvFilterController',
+            controllerAs : 'vm',
             size : size,
             resolve : {
                 itemCriterio : function() {
-                    return $scope.itemCriterio;
+                    return vm.itemCriterio;
                 },
                 enti : function() {
-                    return $scope.enti;
+                    return vm.enti;
                 }
             }
         });
 
         modalInstance.result.then(function(itemCriterio) {
-            console.log("ssrvGridController: " + JSON.stringify(itemCriterio));
+            vm.itemCriterio = itemCriterio;
 
-            $scope.itemCriterio = itemCriterio;
-
-            search($scope.itemCriterio, 1);
+            search(vm.itemCriterio, 1);
         });
     }
 
-    function findEnti() {
-        var url = "metamodelo/tpss-proxy-detail.action?enti.id=" + $routeParams.entiId;
+    search(vm.itemCriterio, $routeParams.page ? $routeParams.page : 1);
 
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
-
-    findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1);
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function ssrvFilterController($scope, $http, $modalInstance, enti, itemCriterio) {
-    console.log("ssrvFilterController: " + JSON.stringify(itemCriterio));
+function ssrvFilterController($http, $modalInstance, enti, itemCriterio) {
+    var vm = this;
 
-    $scope.itemCriterio = itemCriterio;
-    $scope.enti = enti;
+    vm.ok = ok;
+    vm.cancel = cancel;
+    vm.ssrvAction = ssrvAction;
 
-    $scope.ok = function() {
-        $modalInstance.close($scope.itemCriterio);
-    };
+    vm.itemCriterio = itemCriterio;
+    vm.enti = enti;
 
-    $scope.cancel = function() {
+    function ok() {
+        $modalInstance.close(vm.itemCriterio);
+    }
+
+    function cancel() {
         $modalInstance.dismiss('cancel');
-    };
+    }
 
     $http.get("servicio/ssrv-filter.action?itemCriterio.entiId=" + itemCriterio.entiId).success(function(data) {
-        $scope.labelValuesMap = data.labelValuesMap;
-        $scope.limits = data.limits;
-        $scope.fechaVigencia = data.fechaVigencia;
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.limits = data.limits;
+        vm.fechaVigencia = data.fechaVigencia;
     });
 }
 
-function ssrvDetailController($scope, $http, $location, $routeParams) {
-    var path = $location.path();
-    var tabSelected = $routeParams.tabSelected;
-    var ssrvId = $routeParams.ssrvId;
-    var entiId = $routeParams.entiId;
-    var pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
+function ssrvDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $scope.pageMap = {};
+    vm.pageChanged = pageChanged;
+    vm.tabSelected = tabSelected;
+    vm.remove = remove;
+    vm.ssrvAction = ssrvAction;
 
-    function findItem() {
-        $http.get("metamodelo/tpss-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId)
-                .success(function(data) {
-                    $scope.enti = data.enti;
-                    $scope.subentiList = data.subentiList;
+    vm.path = $location.path();
+    vm.tabSelected = $routeParams.tabSelected;
+    vm.ssrvId = $routeParams.ssrvId;
+    vm.entiId = $routeParams.entiId;
+    vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
-                    if (tabSelected) {
-                        $scope.subentiList[tabSelected].active = true;
-                    }
-
-                    $http.get("servicio/ssrv-detail.action?item.id=" + $routeParams.ssrvId).success(function(data) {
-                        $scope.item = data.item;
-                    });
-
-                    $scope.itemHijosMap = {};
-
-                    for (i = 0; i < $scope.subentiList.length; i++) {
-                        var subenti = $scope.subentiList[i];
-
-                        findSublist(subenti.id, pageMap[subenti.id] ? pageMap[subenti.id] : 1);
-                    }
-                });
-    }
+    vm.pageMap = {};
 
     function findSublist(subentiId, page) {
-        var url = "servicio/ssrv-list.action?itemCriterio.entiId=" + subentiId + "&page=" + page
-                + "&itemCriterio.padreId=" + ssrvId;
+        $http.get(
+                "servicio/ssrv-list.action?itemCriterio.entiId=" + subentiId + "&page=" + page
+                        + "&itemCriterio.padreId=" + $routeParams.ssrvId).success(function(data) {
 
-        $http.get(url).success(function(data) {
-            $scope.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
-            $scope.pageMap[data.itemCriterio.entiId] = data.itemList.page;
-            $location.search("pageMap", JSON.stringify($scope.pageMap)).replace();
+            vm.entiHijasMap[data.itemCriterio.entiId] = data.enti;
+            vm.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
+            vm.pageMap[data.itemCriterio.entiId] = data.itemList.page;
+
+            if (data.enti.id == vm.tabSelected) {
+                vm.entiHijasMap[data.itemCriterio.entiId].active = true;
+            }
+
+            $location.search("pageMap", JSON.stringify(vm.pageMap)).replace();
         });
     }
 
-    $scope.pageChanged = function(subentiId) {
-        findSublist(subentiId, $scope.pageMap[subentiId]);
+    function pageChanged(subentiId) {
+        findSublist(subentiId, vm.pageMap[subentiId]);
     }
 
-    $scope.tabSelected = function(tabNo) {
+    function tabSelected(tabNo) {
         if (path == $location.path()) {
             $location.search("tabSelected", tabNo).replace();
         }
     }
 
-    $scope.remove = function() {
+    function remove() {
         if (confirm("Are you sure?")) {
-            var url = "servicio/ssrv-remove.action?item.id=" + $scope.item.id;
-
-            $http.get(url).success(function(data) {
+            $http.get("servicio/ssrv-remove.action?item.id=" + $scope.item.id).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $scope.ssrvAction = function(accName) {
+    function ssrvAction(accName) {
         switch (accName) {
         // ----------- BL ------------------
         // ----------- BL ------------------
         // ----------- BL ------------------
 
         case "mabl-bloquear":
-            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id).success(function(data) {
-                $scope.item = data.item;
+            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "mabl-completar":
-            $http.get("servicio/manifiesto/mabl-completar.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-completar.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "mabl-iniciar":
-            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "mabl-anular":
-            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "mabl-totales":
-            $location.path("/servicio/ssrv/mablTotales/" + $scope.item.srvc.id + "/" + $scope.item.id);
+            $location.path("/servicio/ssrv/mablTotales/" + vm.item.srvc.id + "/" + vm.item.id);
 
             break;
 
@@ -658,20 +648,20 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
         // ----------- EQUIPAMIENTO ------------------
 
         case "equi-bloquear":
-            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "equi-iniciar":
-            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "equi-anular":
-            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
@@ -679,22 +669,21 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
         // ----------- PARTIDA ------------------
         // ----------- PARTIDA ------------------
         // ----------- PARTIDA ------------------
-
         case "part-bloquear":
-            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "part-iniciar":
-            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
         case "part-anular":
-            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + vm.item.id).success(function(data) {
+                vm.item = data.item;
             });
 
             break;
@@ -705,59 +694,75 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
         }
     }
 
-    findItem();
+    $http.get("servicio/ssrv-detail.action?item.id=" + $routeParams.ssrvId).success(function(data) {
+        vm.enti = data.enti;
+        vm.item = data.item;
+
+        vm.itemHijosMap = {};
+        vm.entiHijasMap = {};
+
+        if (data.enti.entiHijasList) {
+            for (i = 0; i < data.enti.entiHijasList.length; i++) {
+                findSublist(data.enti.entiHijasList[i], 1);
+            }
+        }
+    });
+    /*
+     * vm.subentiList = data.subentiList;
+     *
+     * if (tabSelected) { vm.subentiList[tabSelected].active = true; }
+     *
+     * for (i = 0; i < vm.subentiList.length; i++) { var subenti =
+     * vm.subentiList[i];
+     *
+     * findSublist(subenti.id, pageMap[subenti.id] ? pageMap[subenti.id] : 1); }
+     */
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function ssrvCreateController($scope, $http, $location, $routeParams) {
-    $scope.save = function() {
-        var url = "servicio/ssrv-save.action";
+function ssrvCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-        $http.post(url, {
-            item : $scope.item,
-            accion : $scope.accion
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("servicio/ssrv-save.action", {
+            item : vm.item,
+            accion : vm.accion
         }).success(function(data) {
             $location.path("/servicio/ssrv/detail/" + data.item.id).replace();
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
 
-    function findItem() {
-        var url = "servicio/ssrv-create.action?item.entiId=" + $routeParams.entiId;
+    $http
+            .get(
+                    "servicio/ssrv-create.action?item.entiId=" + $routeParams.entiId + "&item.srvc.id="
+                            + $routeParams.srvcId).success(function(data) {
+                vm.enti = data.enti;
+                vm.superentiList = data.superentiList;
+                vm.item = data.item;
+                vm.labelValuesMap = data.labelValuesMap;
+                vm.accion = data.accion;
+            });
 
-        if ($routeParams.srvcId) {
-            url += "&item.srvc.id=" + $routeParams.srvcId;
-        }
-
-        $http.get(url).success(function(data) {
-            $scope.item = data.item;
-            $scope.labelValuesMap = data.labelValuesMap;
-            $scope.accion = data.accion;
-        });
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tpss-proxy-detail.action?includeDependencies=true&enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-            $scope.superentiList = data.superentiList;
-        });
-    }
-
-    findEnti();
-    findItem();
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_create");
 }
 
-function ssrvEditController($scope, $http, $location, $routeParams) {
-    $scope.save = function() {
-        var url = "servicio/ssrv-save.action";
+function ssrvEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-        $http.post(url, {
-            item : $scope.item,
-            accion : $scope.accion
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("servicio/ssrv-save.action", {
+            item : vm.item,
+            accion : vm.accion
         }).success(function(data) {
             setTimeout(function() {
                 window.history.back();
@@ -765,68 +770,47 @@ function ssrvEditController($scope, $http, $location, $routeParams) {
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
 
-    function findItem() {
-        var url = "servicio/ssrv-edit.action?item.id=" + $routeParams.ssrvId;
+    $http.get("servicio/ssrv-edit.action?item.id=" + $routeParams.ssrvId).success(function(data) {
+        vm.enti = data.enti;
+        vm.item = data.item;
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.accion = data.accion;
+    });
 
-        $http.get(url).success(function(data) {
-            $scope.item = data.item;
-            $scope.labelValuesMap = data.labelValuesMap;
-            $scope.accion = data.accion;
-        });
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tpss-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
-
-    findEnti();
-    findItem();
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_edit");
 }
 
-function ssrvDuplicateController($scope, $http, $location, $routeParams) {
-    $scope.save = function() {
-        var url = "servicio/ssrv-save.action";
+function ssrvDuplicateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-        $http.post(url, {
-            item : $scope.item,
-            accion : $scope.accion
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("servicio/ssrv-save.action", {
+            item : vm.item,
+            accion : vm.accion
         }).success(function(data) {
             $location.path("/servicio/ssrv/detail/" + data.item.entiId + "/" + data.item.id).replace();
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
 
-    function findItem() {
-        var url = "servicio/ssrv-duplicate.action?item.id=" + $routeParams.ssrvId;
+    $http.get("servicio/ssrv-duplicate.action?item.id=" + $routeParams.ssrvId).success(function(data) {
+        vm.enti = data.enti;
+        vm.item = data.item;
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.accion = data.accion;
+    });
 
-        $http.get(url).success(function(data) {
-            $scope.item = data.item;
-            $scope.labelValuesMap = data.labelValuesMap;
-            $scope.accion = data.accion;
-        });
-    }
-
-    function findEnti() {
-        var url = "metamodelo/tpss-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
-
-    findEnti();
-    findItem();
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate");
 }
 
 function ssrvLupaCtrl($http, $scope) {
@@ -840,7 +824,7 @@ function ssrvLupaCtrl($http, $scope) {
     };
 }
 
-function mablTotalesController($scope, $http, $location, $routeParams) {
+function mablTotalesController($scope, $http, $location, $routeParams, pageTitleService) {
     var url = "servicio/manifiesto/mabl-totales.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
             + $routeParams.srvcId;
 
@@ -848,4 +832,6 @@ function mablTotalesController($scope, $http, $location, $routeParams) {
         $scope.item = data.item;
         $scope.resumen = data.resumen;
     });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_verificarTotales");
 }
