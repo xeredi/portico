@@ -151,10 +151,8 @@ public final class SubparametroAction extends ItemAction {
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
-            if (item.getPrmtAsociado() == null || item.getPrmtAsociado().getId() == null) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { enti.getTpprAsociado().getNombre() }));
-            }
+            FieldValidator.validateRequired(this, getText("enti_" + enti.getTpprAsociado().getId()),
+                    item.getPrmtAsociado());
         }
 
         if (accion != ACCION_EDICION.create) {
@@ -163,13 +161,11 @@ public final class SubparametroAction extends ItemAction {
             Preconditions.checkNotNull(item.getSpvr().getId());
         }
 
-        if (item.getSpvr() == null || item.getSpvr().getFini() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.sprm_fini.name()) }));
+        if (item.getSpvr() == null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, item.getSpvr());
         } else {
-            if (item.getSpvr().getFfin() != null && !item.getSpvr().getFini().before(item.getSpvr().getFfin())) {
-                addActionError(getText(MessageI18nKey.E00006.name()));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.sprm_fini, item.getSpvr().getFini());
+            FieldValidator.validatePeriod(this, item.getSpvr().getFini(), item.getSpvr().getFfin());
         }
 
         FieldValidator.validateItem(this, enti, item);
@@ -199,10 +195,9 @@ public final class SubparametroAction extends ItemAction {
                 throw new Error("Accion no valida: " + accion);
             }
         } catch (final OverlapException ex) {
-            addActionError(getText(MessageI18nKey.E00009.name(), new Object[] { enti.getNombre() }));
+            addActionError(MessageI18nKey.E00009, enti.getNombre());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(),
-                    new Object[] { enti.getNombre(), String.valueOf(item.getId()) }));
+            addActionError(MessageI18nKey.E00008, enti.getNombre(), String.valueOf(item.getId()));
         }
 
         return SUCCESS;
@@ -228,8 +223,7 @@ public final class SubparametroAction extends ItemAction {
         try {
             sprmBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(),
-                    new Object[] { String.valueOf(item.getSpvr().getId()) }));
+            addActionError(MessageI18nKey.E00008, enti.getNombre(), String.valueOf(item.getId()));
         }
 
         return SUCCESS;

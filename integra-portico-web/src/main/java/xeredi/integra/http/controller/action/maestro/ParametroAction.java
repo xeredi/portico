@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
@@ -118,7 +117,7 @@ public final class ParametroAction extends ItemAction {
 
             loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00007.name(), new Object[] { String.valueOf(item.getId()) }));
+            addActionError(MessageI18nKey.E00007, String.valueOf(item.getId()));
         }
 
         return SUCCESS;
@@ -158,7 +157,7 @@ public final class ParametroAction extends ItemAction {
 
             loadLabelValuesMap(enti);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00007.name(), new Object[] { String.valueOf(item.getId()) }));
+            addActionError(MessageI18nKey.E00007, String.valueOf(item.getId()));
         }
 
         return SUCCESS;
@@ -180,10 +179,7 @@ public final class ParametroAction extends ItemAction {
 
         // Validacion de Datos
         if (accion != ACCION_EDICION.edit) {
-            if (GenericValidator.isBlankOrNull(item.getParametro())) {
-                addActionError(getText(MessageI18nKey.E00001.name(),
-                        new Object[] { getText(MessageI18nKey.prmt_parametro.name()) }));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, item.getParametro());
         }
 
         if (accion != ACCION_EDICION.create) {
@@ -192,13 +188,11 @@ public final class ParametroAction extends ItemAction {
             Preconditions.checkNotNull(item.getPrvr().getId());
         }
 
-        if (item.getPrvr() == null || item.getPrvr().getFini() == null) {
-            addActionError(getText(MessageI18nKey.E00001.name(),
-                    new Object[] { getText(MessageI18nKey.prmt_fini.name()) }));
+        if (item.getPrvr() == null) {
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, item.getPrvr());
         } else {
-            if (item.getPrvr().getFfin() != null && !item.getPrvr().getFini().before(item.getPrvr().getFfin())) {
-                addActionError(getText(MessageI18nKey.E00006.name()));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.prmt_fini, item.getPrvr().getFini());
+            FieldValidator.validatePeriod(this, item.getPrvr().getFini(), item.getPrvr().getFfin());
         }
 
         if (enti.getI18n()) {
@@ -232,10 +226,9 @@ public final class ParametroAction extends ItemAction {
                 throw new Error("Accion no valida: " + accion);
             }
         } catch (final OverlapException ex) {
-            addActionError(getText(MessageI18nKey.E00009.name(), new Object[] { enti.getNombre() }));
+            addActionError(MessageI18nKey.E00009, enti.getNombre());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(),
-                    new Object[] { enti.getNombre(), String.valueOf(item.getId()) }));
+            addActionError(MessageI18nKey.E00008, enti.getNombre(), String.valueOf(item.getId()));
         }
 
         if (hasErrors()) {
@@ -261,8 +254,7 @@ public final class ParametroAction extends ItemAction {
         try {
             prmtBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00008.name(),
-                    new Object[] { String.valueOf(item.getPrvr().getId()) }));
+            addActionError(MessageI18nKey.E00008, enti.getNombre(), String.valueOf(item.getPrvr().getId()));
         }
 
         return SUCCESS;
@@ -300,7 +292,7 @@ public final class ParametroAction extends ItemAction {
                 i18nMap = i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
             }
         } catch (final InstanceNotFoundException ex) {
-            addActionError(getText(MessageI18nKey.E00007.name(), new Object[] { String.valueOf(prmtCriterioVO) }));
+            addActionError(MessageI18nKey.E00007, enti.getNombre(), String.valueOf(prmtCriterioVO));
         }
 
         return SUCCESS;

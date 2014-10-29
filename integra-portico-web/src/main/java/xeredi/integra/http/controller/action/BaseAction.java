@@ -99,10 +99,22 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the text.
+     *
+     * @param key
+     *            the key
+     * @return the text
      */
     public final String getText(final MessageI18nKey key) {
         return bundle.getString(key.name());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getText(final String key) {
+        return bundle.getString(key);
     }
 
 }

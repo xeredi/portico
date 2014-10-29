@@ -23,7 +23,11 @@ import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 
@@ -52,6 +56,8 @@ public final class AspectoAction extends BaseAction {
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
+
+    private List<LabelValueVO> entiList;
 
     /**
      * Instantiates a new aspecto action.
@@ -124,6 +130,14 @@ public final class AspectoAction extends BaseAction {
         aspc = new AspectoVO();
         aspc.setAspv(new AspectoVersionVO());
         aspc.getAspv().setFini(Calendar.getInstance().getTime());
+
+        final EntidadBO entiBO = new EntidadBO();
+        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
+
+        entiCriterioVO.setTipo(TipoEntidad.T);
+        entiCriterioVO.setIdioma(getIdioma());
+
+        entiList = entiBO.selectLabelValues(entiCriterioVO);
 
         return SUCCESS;
     }
@@ -385,6 +399,10 @@ public final class AspectoAction extends BaseAction {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    public List<LabelValueVO> getEntiList() {
+        return entiList;
     }
 
 }

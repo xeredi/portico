@@ -899,10 +899,7 @@ function aspcCreateController($http, $location, $routeParams, pageTitleService) 
     $http.get("facturacion/aspc-create.action").success(function(data) {
         vm.aspc = data.aspc;
         vm.accion = data.accion;
-    });
-
-    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(function(data) {
-        vm.entiTpsrList = data.lvList;
+        vm.entiTpsrList = data.entiList;
     });
 
     pageTitleService.setTitle("aspc", "page_create");

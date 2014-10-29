@@ -1,6 +1,7 @@
 package xeredi.integra.http.util;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.validator.GenericValidator;
@@ -92,6 +93,22 @@ public final class FieldValidator {
     }
 
     /**
+     * Validate period.
+     *
+     * @param action
+     *            the action
+     * @param startDate
+     *            the start date
+     * @param endDate
+     *            the end date
+     */
+    public static void validatePeriod(final BaseAction action, final Date startDate, final Date endDate) {
+        if (startDate != null && endDate != null && startDate.after(endDate)) {
+            action.addActionError(MessageI18nKey.E00006);
+        }
+    }
+
+    /**
      * Validate i18n.
      *
      * @param action
@@ -101,7 +118,6 @@ public final class FieldValidator {
      */
     public static void validateI18n(final BaseAction action, final Map<String, I18nVO> i18nMap) {
         final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
-        final String[] language_available = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);
 
         if (i18nMap != null) {
             for (final String language : i18nMap.keySet()) {
