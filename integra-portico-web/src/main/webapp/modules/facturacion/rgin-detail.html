@@ -1,10 +1,8 @@
-<p class="bg-primary" ng-bind="'Incompatibilidad'"></p>
-
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/rgin/edit/{{rgin.rgiv.id}}"><i class="glyphicon glyphicon-edit"></i>
-            <span translate>btn_editar</span></a>
-        <button data-ng-click="remove()" class="btn btn-default">
+        <a class="btn btn-default" ng-href="#/facturacion/rgin/edit/{{vm.rgin.rgiv.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
     </div>
@@ -15,16 +13,17 @@
         <div class="col-md-2 form-group">
             <label translate>rgin_rgla2</label>
             <p class="form-control-static">
-                <a ng-href="#/facturacion/rgla/detail/{{rgin.rgla2.id}}/{{fechaVigencia}}" ng-bind="rgin.rgla2.codigo"></a>
+                <a ng-href="#/facturacion/rgla/detail/{{vm.rgin.rgla2.id}}/{{vm.fechaVigencia}}"
+                    ng-bind="vm.rgin.rgla2.codigo"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgin_fini</label>
-            <p class="form-control-static" ng-bind="rgin.rgiv.fini | date"></p>
+            <p class="form-control-static" ng-bind="vm.rgin.rgiv.fini | date"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgin_ffin</label>
-            <p class="form-control-static" ng-bind="rgin.rgiv.ffin | date"></p>
+            <p class="form-control-static" ng-bind="vm.rgin.rgiv.ffin | date"></p>
         </div>
     </div>
 </fieldset>

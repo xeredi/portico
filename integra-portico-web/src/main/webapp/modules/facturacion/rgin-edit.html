@@ -1,24 +1,22 @@
-<p class="bg-primary" ng-bind="'Incompatibilidad'"></p>
-
 <form role="form">
-    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="rgin.id" /><input type="hidden"
-        ng-model="rgin.rgiv.id" />
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.rgin.id" /><input type="hidden"
+        ng-model="vm.rgin.rgiv.id" />
 
     <fieldset>
         <div class="row-fluid">
             <div class="col-md-2 form-group">
-                <label translate>rgin_rgla2</label> <select ng-if="accion == 'create'" ng-model="rgin.rgla2.id"
-                    ng-options="rgla.id as rgla.codigo for rgla in rgla2List" class="form-control input-sm">
+                <label translate>rgin_rgla2</label> <select ng-if="vm.accion == 'create'" ng-model="vm.rgin.rgla2.id"
+                    ng-options="rgla.value as rgla.label for rgla in vm.rgla2List" class="form-control input-sm">
                     <option />
                 </select>
-                <p ng-if="accion != 'create'" class="form-control-static" ng-bind="rgin.rgla2.codigo"></p>
+                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.rgin.rgla2.codigo"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgin_fini</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="rgin.rgiv.fini" ng-required="true" />
-                    <span class="input-group-addon" ng-click="open($event)"><i
+                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.rgin.rgiv.fini"
+                        ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
                         class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
@@ -26,19 +24,18 @@
                 <label translate>rgin_ffin</label>
                 <div class="input-group" ng-controller="datepickerController">
                     <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="rgin.rgiv.ffin" />
-                    <span class="input-group-addon" ng-click="open($event)"><i
-                        class="glyphicon glyphicon-calendar"></i></span>
+                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.rgin.rgiv.ffin" /> <span
+                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
                 </div>
             </div>
         </div>
     </fieldset>
 
     <div class="btn-group">
-        <button data-ng-click="save()" class="btn btn-primary">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
             <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
         </button>
-        <button data-ng-click="cancel()" class="btn btn-default">
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
         </button>
     </div>

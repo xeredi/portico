@@ -5,6 +5,7 @@
 <mapper namespace="xeredi.integra.model.facturacion.dao.ReglaIncompatibleDAO">
     <resultMap type="ReglaIncompatibleVO" id="ResultMap">
         <id column="rgiv_pk" />
+        <id column="rgin_pk" />
 
         <result column="rgin_pk" property="id" />
         <result column="rgin_rgla1_pk" property="rgla1Id" />
@@ -73,7 +74,8 @@
             rgin_pk = #{id}
             AND (
                 #{rgiv.fini} BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, #{rgiv.fini})
-                OR COALESCE(#{rgiv.ffin}, portico.getSysdateTime()) BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, COALESCE(#{rgiv.ffin}, portico.getSysdateTime()))
+                OR COALESCE(#{rgiv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN rgiv_fini AND COALESCE(rgiv_ffin, COALESCE(#{rgiv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
         <if test="rgiv.id != null">

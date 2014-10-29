@@ -173,7 +173,7 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/rgin/detail/:rgivId", {
+    .when("/facturacion/rgin/detail/:rginId", {
         templateUrl : "modules/facturacion/rgin-detail.html",
         controller : "rginDetailController",
         controllerAs : "vm"
@@ -691,47 +691,39 @@ function rglaCreateController($http, $location, $routeParams, pageTitleService) 
     pageTitleService.setTitle("rgla", "page_create");
 }
 
-function rginDetailController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/rgin-detail.action";
+function rginDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    if ($routeParams.fechaVigencia) {
-        url += "?rgin.id=" + $routeParams.rginId + "&fechaVigencia=" + $routeParams.fechaVigencia;
-    } else {
-        url += "?rgin.rgiv.id=" + $routeParams.rgivId;
-    }
+    vm.remove = remove;
 
-    $http.get(url).success(function(data) {
-        $scope.rgin = data.rgin;
-        $scope.fechaVigencia = data.fechaVigencia;
-    });
-
-    $scope.remove = function() {
+    function remove() {
         if (confirm("Are you sure?")) {
-            var url = "facturacion/rgin-remove.action?rgin.rgiv.id=" + $scope.rgin.rgiv.id;
-
-            $http.get(url).success(function(data) {
+            $http.get("facturacion/rgin-remove.action?rgin.rgiv.id=" + vm.rgin.rgiv.id).success(function(data) {
                 window.history.back();
             });
         }
     }
 
+    $http.get(
+            "facturacion/rgin-detail.action?rgin.id=" + $routeParams.rginId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
+        vm.rgin = data.rgin;
+        vm.fechaVigencia = data.fechaVigencia;
+    });
+
     pageTitleService.setTitle("rgin", "page_detail");
 }
 
-function rginEditController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/rgin-edit.action?rgin.rgiv.id=" + $routeParams.rgivId;
+function rginEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.rgin = data.rgin;
-        $scope.accion = data.accion;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "facturacion/rgin-save.action";
-
-        $http.post(url, {
-            rgin : $scope.rgin,
-            accion : $scope.accion
+    function save() {
+        $http.post("facturacion/rgin-save.action", {
+            rgin : vm.rgin,
+            accion : vm.accion
         }).success(function(data) {
             setTimeout(function() {
                 window.history.back();
@@ -739,37 +731,44 @@ function rginEditController($scope, $http, $location, $routeParams, pageTitleSer
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get("facturacion/rgin-edit.action?rgin.rgiv.id=" + $routeParams.rgivId).success(function(data) {
+        vm.rgin = data.rgin;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitle("rgin", "page_edit");
 }
 
-function rginCreateController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "facturacion/rgin-create.action?rgin.rgla1Id=" + $routeParams.rglaId + "&rgin.rgla2.crgo.id="
-            + $routeParams.crgoId;
+function rginCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.rgin = data.rgin;
-        $scope.accion = data.accion;
-        $scope.rgla2List = data.rgla2List;
-    });
+    vm.save = save;
+    vm.cancel = cancel;
 
-    $scope.save = function() {
-        var url = "facturacion/rgin-save.action";
-
-        $http.post(url, {
-            rgin : $scope.rgin,
-            accion : $scope.accion
+    function save() {
+        $http.post("facturacion/rgin-save.action", {
+            rgin : vm.rgin,
+            accion : vm.accion
         }).success(function(data) {
-            $location.path("/facturacion/rgin/detail/" + data.rgin.rgiv.id).replace();
+            $location.path("/facturacion/rgin/detail/" + data.rgin.id).replace();
         });
     }
 
-    $scope.cancel = function() {
+    function cancel() {
         window.history.back();
     }
+
+    $http.get(
+            "facturacion/rgin-create.action?rgin.rgla1Id=" + $routeParams.rglaId + "&crgoId="
+                    + $routeParams.crgoId).success(function(data) {
+        vm.rgin = data.rgin;
+        vm.accion = data.accion;
+        vm.rgla2List = data.rgla2List;
+    });
 
     pageTitleService.setTitle("rgin", "page_create");
 }

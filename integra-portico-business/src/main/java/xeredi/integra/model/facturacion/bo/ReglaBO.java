@@ -12,6 +12,7 @@ import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -71,6 +72,29 @@ public class ReglaBO {
             rglaDAO = session.getMapper(ReglaDAO.class);
 
             return rglaDAO.selectList(rglaCriterioVO);
+        }
+    }
+
+    /**
+     * Select label value list.
+     *
+     * @param rglaCriterioVO
+     *            the rgla criterio vo
+     * @return the list
+     */
+    public List<LabelValueVO> selectLabelValueList(final ReglaCriterioVO rglaCriterioVO) {
+        Preconditions.checkNotNull(rglaCriterioVO);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            rglaDAO = session.getMapper(ReglaDAO.class);
+
+            final List<LabelValueVO> list = new ArrayList<>();
+
+            for (final ReglaVO reglaVO : rglaDAO.selectList(rglaCriterioVO)) {
+                list.add(new LabelValueVO(reglaVO.getCodigo(), reglaVO.getId()));
+            }
+
+            return list;
         }
     }
 

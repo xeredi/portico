@@ -18,7 +18,7 @@ import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVersionVO;
-import xeredi.integra.model.facturacion.vo.ReglaVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
@@ -35,11 +35,14 @@ public final class ReglaIncompatibleAction extends BaseAction {
     /** The accion. */
     private ACCION_EDICION accion;
 
+    /** The crgo id. */
+    private Long crgoId;
+
     /** The crgo. */
     private ReglaIncompatibleVO rgin;
 
     /** The rgla2 list. */
-    private final List<ReglaVO> rgla2List = new ArrayList<>();
+    private final List<LabelValueVO> rgla2List = new ArrayList<>();
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
@@ -71,8 +74,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
     @Action("rgin-detail")
     public String detail() {
         Preconditions.checkNotNull(rgin);
-        Preconditions.checkArgument(rgin.getId() != null && fechaVigencia != null || rgin.getRgiv() != null
-                && rgin.getRgiv().getId() != null);
+        Preconditions.checkNotNull(rgin.getId());
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
         final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
@@ -101,11 +103,9 @@ public final class ReglaIncompatibleAction extends BaseAction {
      */
     @Action("rgin-create")
     public String create() {
+        Preconditions.checkNotNull(crgoId);
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgla1Id());
-        Preconditions.checkNotNull(rgin.getRgla2());
-        Preconditions.checkNotNull(rgin.getRgla2().getCrgo());
-        Preconditions.checkNotNull(rgin.getRgla2().getCrgo().getId());
 
         accion = ACCION_EDICION.create;
 
@@ -116,9 +116,9 @@ public final class ReglaIncompatibleAction extends BaseAction {
             final ReglaBO rglaBO = new ReglaBO();
             final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
-            rglaCriterioVO.setCrgoId(rgin.getRgla2().getCrgo().getId());
+            rglaCriterioVO.setCrgoId(crgoId);
 
-            rgla2List.addAll(rglaBO.selectList(rglaCriterioVO));
+            rgla2List.addAll(rglaBO.selectLabelValueList(rglaCriterioVO));
         }
 
         return SUCCESS;
@@ -292,8 +292,27 @@ public final class ReglaIncompatibleAction extends BaseAction {
      *
      * @return the rgla2 list
      */
-    public List<ReglaVO> getRgla2List() {
+    public List<LabelValueVO> getRgla2List() {
         return rgla2List;
+    }
+
+    /**
+     * Gets the crgo id.
+     *
+     * @return the crgo id
+     */
+    public Long getCrgoId() {
+        return crgoId;
+    }
+
+    /**
+     * Sets the crgo id.
+     *
+     * @param value
+     *            the new crgo id
+     */
+    public void setCrgoId(final Long value) {
+        crgoId = value;
     }
 
 }

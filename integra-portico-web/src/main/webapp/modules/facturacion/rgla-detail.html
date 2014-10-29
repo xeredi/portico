@@ -179,7 +179,7 @@
 
     <div class="row-fluid">
         <div class="col-md-9 form-group">
-            <table ng-if="rginList" class="table-bordered table-condensed table-hover table-nonfluid">
+            <table ng-if="vm.rginList" class="table-bordered table-condensed table-hover table-nonfluid">
                 <thead>
                     <tr>
                         <th />
@@ -195,8 +195,8 @@
                         <td><a ng-href="#/facturacion/rgin/detail/{{rgin.id}}/{{vm.fechaVigencia}}"><i
                                 class="glyphicon glyphicon-search"></i></a></td>
                         <td ng-bind="rgin.rgla2.codigo"></td>
-                        <td ng-bind="rgin.rgla2.tipo"></td>
-                        <td ng-bind="rgin.rgla2.enti.nombre"></td>
+                        <td ng-bind="rgin.rgla2.rglv.tipo"></td>
+                        <td ng-bind="'enti_' + rgin.rgla2.rglv.enti.id | translate"></td>
                         <td ng-bind="rgin.rgiv.fini | date"></td>
                         <td ng-bind="rgin.rgiv.ffin | date"></td>
                     </tr>
