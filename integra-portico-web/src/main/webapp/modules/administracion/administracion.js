@@ -73,7 +73,7 @@ function config($routeProvider) {
         templateUrl : "modules/administracion/m18n-edit.html",
         controller : "m18nEditController",
         controllerAs : "vm"
-    })
+    });
 }
 
 function administracionController(pageTitleService) {

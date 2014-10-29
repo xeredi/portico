@@ -113,7 +113,7 @@ function config($routeProvider) {
         templateUrl : "modules/entidad/maestro/sprm-detail.html",
         controller : "sprmDetailController",
         controllerAs : 'vm'
-    })
+    });
 }
 
 function tpprService($http) {
@@ -194,7 +194,7 @@ function maestroController(tpprService, pageTitleService) {
     pageTitleService.setTitle("maestro", "page_home");
 }
 
-function prmtGridController($location, $routeParams, $modal, prmtService, pageTitleService) {
+function prmtGridController($location, $routeParams, $modal, prmtService, pageTitleService, usSpinnerService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -204,7 +204,7 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search() {
-        vm.loading = true;
+        usSpinnerService.spin("spinner");
 
         prmtService.search($routeParams.entiId, vm.itemCriterio, vm.page, 20).then(function(data) {
             vm.itemList = data.itemList;
@@ -215,7 +215,7 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
                 itemCriterio : JSON.stringify(data.itemCriterio)
             }).replace();
 
-            vm.loading = false;
+            usSpinnerService.stop("spinner");
         });
         /*
          * $http.post("maestro/prmt-list.action", { entiId :

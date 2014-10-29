@@ -33,23 +33,13 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
     private PaginatedList<PeriodoProcesoVO> peprList;
 
     /** The page. */
-    private int page;
+    private int page = PaginatedList.FIRST_PAGE;
 
     /** The pepr criterio form. */
     private PeriodoProcesoCriterioVO peprCriterio;
 
     /** The subps. */
     private List<LabelValueVO> autpList;
-
-    /**
-     * Instantiates a new periodo proceso listado action.
-     */
-    public PeriodoProcesoListadoAction() {
-        super();
-
-        page = PaginatedList.FIRST_PAGE;
-        peprCriterio = new PeriodoProcesoCriterioVO();
-    }
 
     /**
      * {@inheritDoc}
@@ -79,8 +69,8 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      */
     @Action("pepr-list")
     public String listado() {
-        if (hasErrors()) {
-            return INPUT;
+        if (peprCriterio == null) {
+            peprCriterio = new PeriodoProcesoCriterioVO();
         }
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();

@@ -1,16 +1,14 @@
-<p class="bg-primary" ng-bind="'enti_' + enti.id | translate"></p>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>estd_pepr</label>
             <p class="form-control-static">
-                <a ng-href="#/estadistica/pepr/detail/{{item.pepr.id}}" ng-bind="item.pepr.etiqueta"></a>
+                <a ng-href="#/estadistica/pepr/detail/{{vm.item.pepr.id}}" ng-bind="vm.item.pepr.etiqueta"></a>
             </p>
         </div>
         <div class="col-sm-4 col-md-3 col-md-2 form-group">
             <label translate>estd_subp</label>
-            <p class="form-control-static" ng-bind="item.subp.etiqueta"></p>
+            <p class="form-control-static" ng-bind="vm.item.subp.etiqueta"></p>
         </div>
     </div>
 

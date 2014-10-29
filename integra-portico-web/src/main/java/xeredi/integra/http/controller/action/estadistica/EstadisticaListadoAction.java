@@ -38,6 +38,9 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3980612360200744744L;
 
+    /** The enti. */
+    private TipoEstadisticaVO enti;
+
     /** The estds. */
     private PaginatedList<EstadisticaVO> itemList;
 
@@ -94,11 +97,9 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());
 
-        if (hasErrors()) {
-            return INPUT;
-        }
-
         itemList = estdBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+
+        enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());
 
         return SUCCESS;
     }
@@ -203,6 +204,15 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      */
     public List<ParametroVO> getSubpList() {
         return subpList;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoEstadisticaVO getEnti() {
+        return enti;
     }
 
 }

@@ -6,14 +6,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label translate>estd_subp</label> <select ng-model="itemCriterio.subpId"
-                        ng-options="prmt.id as prmt.etiqueta for prmt in subpList" class="form-control input-sm">
+                    <label translate>estd_subp</label> <select ng-model="vm.itemCriterio.subpId"
+                        ng-options="prmt.id as prmt.etiqueta for prmt in vm.subpList" class="form-control input-sm">
                         <option />
                     </select>
                 </div>
                 <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>filtro_limit</label> <select ng-model="itemCriterio.limit"
-                        ng-options="limitValue for limitValue in limits" class="form-control input-sm">
+                    <label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
+                        ng-options="limitValue for limitValue in vm.limits" class="form-control input-sm">
                         <option />
                     </select>
                 </div>
@@ -24,10 +24,10 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" data-ng-click="ok()">
+    <button class="btn btn-primary" data-ng-click="vm.ok()">
         <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
     </button>
-    <button class="btn btn-default" data-ng-click="cancel()">
+    <button class="btn btn-default" data-ng-click="vm.cancel()">
         <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
     </button>
 </div>

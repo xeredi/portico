@@ -9,6 +9,8 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
@@ -21,6 +23,9 @@ public final class EstadisticaAction extends ItemAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8514285987958813188L;
+
+    /** The enti. */
+    private TipoEstadisticaVO enti;
 
     /** The estd. */
     private EstadisticaVO item;
@@ -55,6 +60,8 @@ public final class EstadisticaAction extends ItemAction {
 
         item = estdBO.selectObject(estdCriterioVO);
 
+        enti = TipoEstadisticaProxy.select(item.getEntiId());
+
         return SUCCESS;
     }
 
@@ -84,6 +91,15 @@ public final class EstadisticaAction extends ItemAction {
      */
     public final void setItem(final EstadisticaVO item) {
         this.item = item;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoEstadisticaVO getEnti() {
+        return enti;
     }
 
 }

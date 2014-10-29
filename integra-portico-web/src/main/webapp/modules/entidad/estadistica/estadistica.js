@@ -49,7 +49,7 @@ function config($routeProvider) {
         templateUrl : "modules/entidad/estadistica/estd-detail.html",
         controller : "estdDetailController",
         controllerAs : "vm"
-    })
+    });
 }
 
 function peprGridController($http, $location, $routeParams, $modal, pageTitleService) {
@@ -163,24 +163,30 @@ function cdmsDetailController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("cdms", "page_detail");
 }
 
-function estdGridController($scope, $http, $location, $routeParams, $modal, pageTitleService) {
-    $scope.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
-    $scope.itemCriterio.entiId = $routeParams.entiId;
-    $scope.itemCriterio.pepr = {};
-    $scope.itemCriterio.pepr.id = $routeParams.peprId;
-    $scope.itemCriterio.pepr.autpId = $routeParams.autpId;
+function estdGridController($http, $location, $routeParams, $modal, pageTitleService, usSpinnerService) {
+    var vm = this;
+
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
+
+    vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
+    vm.itemCriterio.entiId = $routeParams.entiId;
+    vm.itemCriterio.pepr = {};
+    vm.itemCriterio.pepr.id = $routeParams.peprId;
+    vm.itemCriterio.pepr.autpId = $routeParams.autpId;
 
     function search(itemCriterio, page) {
-        $scope.loading = true;
+        usSpinnerService.spin("spinner");
 
         $http.post("estadistica/estd-list.action", {
             itemCriterio : itemCriterio,
             page : page,
             limit : itemCriterio.limit
         }).success(function(data) {
-            $scope.page = data.itemList.page;
-            $scope.itemList = data.itemList;
-            $scope.itemCriterio = data.itemCriterio;
+            vm.enti = data.enti;
+            vm.page = data.itemList.page;
+            vm.itemList = data.itemList;
+            vm.itemCriterio = data.itemCriterio;
 
             var map = {};
 
@@ -189,97 +195,78 @@ function estdGridController($scope, $http, $location, $routeParams, $modal, page
 
             $location.search(map).replace();
 
-            $scope.loading = false;
+            usSpinnerService.stop("spinner");
         });
     }
 
-    $scope.pageChanged = function() {
-        search($scope.itemCriterio, $scope.page);
+    function pageChanged() {
+        search(vm.itemCriterio, vm.page);
     }
 
-    $scope.filter = function(size) {
+    function filter(size) {
         var modalInstance = $modal.open({
-            templateUrl : 'estd-filter-content.html',
+            templateUrl : 'modules/entidad/estadistica/estd-filter-content.html',
             controller : 'estdFilterController',
+            controllerAs : 'vm',
             size : size,
             resolve : {
                 itemCriterio : function() {
-                    return $scope.itemCriterio;
+                    return vm.itemCriterio;
                 },
                 enti : function() {
-                    return $scope.enti;
+                    return vm.enti;
                 }
             }
         });
 
         modalInstance.result.then(function(itemCriterio) {
-            console.log("estdGridController: " + JSON.stringify(itemCriterio));
+            vm.itemCriterio = itemCriterio;
 
-            $scope.itemCriterio = itemCriterio;
-
-            search($scope.itemCriterio, 1);
+            search(vm.itemCriterio, 1);
         });
     }
 
-    $scope.search = function() {
-        search($scope.itemCriterio, 1);
-    }
+    search(vm.itemCriterio, $routeParams.page ? $routeParams.page : 1);
 
-    function findEnti() {
-        var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
-
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
-
-    findEnti();
-    search($scope.itemCriterio, $routeParams.page ? $routeParams.page : 1);
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function estdFilterController($scope, $http, $modalInstance, enti, itemCriterio) {
-    console.log("estdFilterController: " + JSON.stringify(itemCriterio));
+function estdFilterController($http, $modalInstance, enti, itemCriterio) {
+    var vm = this;
 
-    $scope.itemCriterio = itemCriterio;
-    $scope.enti = enti;
+    vm.ok = ok;
+    vm.cancel = cancel;
 
-    $scope.ok = function() {
-        $modalInstance.close($scope.itemCriterio);
-    };
+    vm.itemCriterio = itemCriterio;
+    vm.enti = enti;
 
-    $scope.cancel = function() {
+    function ok() {
+        $modalInstance.close(vm.itemCriterio);
+    }
+
+    function cancel() {
         $modalInstance.dismiss('cancel');
-    };
+    }
 
     $http.get(
             "estadistica/estd-filter.action?itemCriterio.entiId=" + itemCriterio.entiId + "&itemCriterio.pepr.id="
                     + itemCriterio.pepr.id + "&itemCriterio.pepr.autpId=" + itemCriterio.pepr.autpId).success(
             function(data) {
-                $scope.labelValuesMap = data.labelValuesMap;
-                $scope.subpList = data.subpList;
-                $scope.limits = data.limits;
-                $scope.fechaVigencia = data.fechaVigencia;
+                vm.labelValuesMap = data.labelValuesMap;
+                vm.subpList = data.subpList;
+                vm.limits = data.limits;
+                vm.fechaVigencia = data.fechaVigencia;
             });
 }
 
-function estdDetailController($scope, $http, $location, $routeParams, pageTitleService) {
-    function findEnti() {
-        var url = "metamodelo/tpes-proxy-detail.action?enti.id=" + $routeParams.entiId;
+function estdDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
 
-        $http.get(url).success(function(data) {
-            $scope.enti = data.enti;
-        });
-    }
+    $http.get("estadistica/estd-detail.action?item.id=" + $routeParams.itemId).success(function(data) {
+        vm.enti = data.enti;
+        vm.item = data.item;
+        vm.fechaVigencia = data.fechaVigencia;
+    });
 
-    function findItem() {
-        var url = "estadistica/estd-detail.action?item.id=" + $routeParams.itemId;
-
-        $http.get(url).success(function(data) {
-            $scope.item = data.item;
-            $scope.fechaVigencia = data.fechaVigencia;
-        });
-    }
-
-    findEnti();
-    findItem();
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }

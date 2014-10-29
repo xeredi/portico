@@ -1,4 +1,4 @@
-angular.module("servicio", [ "ngRoute", "util" ])
+angular.module("servicio", [])
 
 .config(config)
 
@@ -142,7 +142,7 @@ function servicioController($scope, $http, pageTitleService) {
     pageTitleService.setTitle("servicio", "page_home")
 }
 
-function srvcGridController($http, $location, $routeParams, $modal, pageTitleService) {
+function srvcGridController($http, $location, $routeParams, $modal, pageTitleService, usSpinnerService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -152,7 +152,7 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(page) {
-        vm.loading = true;
+        usSpinnerService.spin("spinner");
 
         $http.post("servicio/srvc-list.action", {
             itemCriterio : vm.itemCriterio,
@@ -171,7 +171,7 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             $location.search(map).replace();
 
-            vm.loading = false;
+            usSpinnerService.stop("spinner");
         });
     }
 

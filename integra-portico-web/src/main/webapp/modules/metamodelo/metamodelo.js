@@ -1,4 +1,4 @@
-angular.module("metamodelo", [ "ngRoute", "angularSpinner", "util" ])
+angular.module("metamodelo", [  ])
 
 .config(config)
 
