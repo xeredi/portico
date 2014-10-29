@@ -3,6 +3,7 @@ package xeredi.integra.http.util;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.validator.GenericValidator;
 
@@ -109,6 +110,25 @@ public final class FieldValidator {
     }
 
     /**
+     * Validate cr.
+     *
+     * @param action
+     *            the action
+     * @param fieldName
+     *            the field name
+     * @param value
+     *            the value
+     * @param validValues
+     *            the valid values
+     */
+    public static void validateCR(final BaseAction action, final String fieldName, final String value,
+            final Set<String> validValues) {
+        if (value != null && !validValues.contains(value)) {
+            action.addActionError(MessageI18nKey.E00012, fieldName, validValues.toString());
+        }
+    }
+
+    /**
      * Validate i18n.
      *
      * @param action
@@ -173,6 +193,10 @@ public final class FieldValidator {
 
                         break;
                     case CR:
+                        validateRequired(action, entd.getEtiqueta(), itdtVO.getCadena(), entd.getObligatorio());
+                        validateCR(action, entd.getEtiqueta(), itdtVO.getCadena(), entd.getTpdt().getCdrfCodeSet());
+
+                        break;
                     case TX:
                         validateRequired(action, entd.getEtiqueta(), itdtVO.getCadena(), entd.getObligatorio());
 

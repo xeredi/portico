@@ -690,6 +690,11 @@ public enum MessageI18nKey {
      * subservicio.
      */
     E00011,
+    /**
+     * Error de valor no perteneciente a una lista de valores válidos. Se pasa como argumento el nombre del campo y la
+     * lista de valores válidos.
+     */
+    E00012,
 
     /** The cdms_numero. */
     cdms_numero,

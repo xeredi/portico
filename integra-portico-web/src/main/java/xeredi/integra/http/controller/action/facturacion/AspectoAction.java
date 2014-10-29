@@ -223,6 +223,7 @@ public final class AspectoAction extends BaseAction {
         FieldValidator.validateI18n(this, i18nMap);
 
         FieldValidator.validateRequired(this, MessageI18nKey.aspc_fini, aspc.getAspv().getFini());
+        FieldValidator.validatePeriod(this, aspc.getAspv().getFini(), aspc.getAspv().getFfin());
         FieldValidator.validateRequired(this, MessageI18nKey.aspc_prioridad, aspc.getAspv().getPrioridad());
 
         if (!GenericValidator.isBlankOrNull(aspc.getAspv().getCetiqInfo1())
