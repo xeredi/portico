@@ -89,6 +89,7 @@
 
 					    ELSE 'X'
 					END
+                FROM sql
             )
         WHERE
             srvc_tpsr_pk = portico.getEntidad('MANIFIESTO')

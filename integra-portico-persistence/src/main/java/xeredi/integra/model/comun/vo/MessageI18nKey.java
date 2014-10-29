@@ -783,6 +783,20 @@ public enum MessageI18nKey {
     ReglaTipo_C,
     /** The Regla tipo_ d. */
     ReglaTipo_D,
+    /** The Configuration value type_ string. */
+    ConfigurationValueType_String,
+    /** The Configuration value type_ boolean. */
+    ConfigurationValueType_Boolean,
+    /** The Configuration value type_ double. */
+    ConfigurationValueType_Double,
+    /** The Configuration value type_ long. */
+    ConfigurationValueType_Long,
+    /** The Configuration value type_ date. */
+    ConfigurationValueType_Date,
+    /** The Configuration value type_ date time. */
+    ConfigurationValueType_DateTime,
+    /** The Configuration value type_ string list. */
+    ConfigurationValueType_StringList,
 
     ;
 

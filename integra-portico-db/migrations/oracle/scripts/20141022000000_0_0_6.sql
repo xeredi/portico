@@ -74,7 +74,7 @@ UPDATE tbl_aspecto_version_aspv SET
 	aspv_descripcion = (
 		SELECT i18n_text
 		FROM tbl_i18n_i18n
-		WHERE i18n_ext_pk = aspv_pk AND i18n_pref = 'aspv'
+		WHERE i18n_ext_pk = aspv_pk AND i18n_pref = 'aspv' AND i18n_lang = 'es'
 	)\
 
 DELETE FROM tbl_i18n_i18n
@@ -89,7 +89,7 @@ UPDATE tbl_entidad_enti SET
 	enti_nombre = (
 		SELECT i18n_text
 		FROM tbl_i18n_i18n
-		WHERE i18n_ext_pk = enti_pk AND i18n_pref = 'enti'
+		WHERE i18n_ext_pk = enti_pk AND i18n_pref = 'enti' AND i18n_lang = 'es'
 	)\
 
 DELETE FROM tbl_i18n_i18n
@@ -103,7 +103,7 @@ UPDATE tbl_tipo_dato_tpdt SET
 	tpdt_nombre = (
 		SELECT i18n_text
 		FROM tbl_i18n_i18n
-		WHERE i18n_ext_pk = tpdt_pk AND i18n_pref = 'tpdt'
+		WHERE i18n_ext_pk = tpdt_pk AND i18n_pref = 'tpdt' AND i18n_lang = 'es'
 	)\
 
 DELETE FROM tbl_i18n_i18n

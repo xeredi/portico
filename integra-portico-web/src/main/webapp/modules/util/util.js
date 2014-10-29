@@ -21,7 +21,7 @@ function datepickerController($scope) {
 
     $scope.datepickerConfig = {
         format : "dd/MM/yyyy"
-    }
+    };
 
     $scope.format = "dd/MM/yyyy";
 }

@@ -71,7 +71,7 @@ function peprGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             var map = {};
 
-            map["page"] = data.peprList.page;
+            map.page = data.peprList.page;
 
             $location.search(map).replace();
         });
@@ -184,8 +184,8 @@ function estdGridController($scope, $http, $location, $routeParams, $modal, page
 
             var map = {};
 
-            map["page"] = data.itemList.page;
-            map["itemCriterio"] = JSON.stringify(data.itemCriterio);
+            map.page = data.itemList.page;
+            map.itemCriterio = JSON.stringify(data.itemCriterio);
 
             $location.search(map).replace();
 

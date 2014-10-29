@@ -27,43 +27,6 @@ public final class SubservicioVO extends ItemVO {
     /** The estado. */
     private String estado;
 
-    // /**
-    // * Instancia un nuevo {@link SubservicioVO} con todos sus datos asociados.
-    // *
-    // * @param tpssVO
-    // * Tipo de Subervicio del que se quiere instanciar un subservicio.
-    // * @return Subservicio creado.
-    // */
-    // public static SubservicioVO newInstance(final TipoSubservicioVO tpssVO) {
-    // final SubservicioVO ssrvVO = new SubservicioVO();
-    //
-    // ssrvVO.setEntiId(tpssVO.getId());
-    //
-    // if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
-    // final Map<String, ItemDatoVO> itdtMap = new HashMap<>();
-    //
-    // for (final Long tpdtId : tpssVO.getEntdList()) {
-    // final ItemDatoVO itdtVO = new ItemDatoVO();
-    //
-    // itdtVO.setTpdtId(tpdtId);
-    // itdtMap.put(itdtVO.getTpdtId().toString(), itdtVO);
-    // }
-    //
-    // ssrvVO.setItdtMap(itdtMap);
-    // }
-    //
-    // return ssrvVO;
-    // }
-
-    /**
-     * Instantiates a new subservicio vo.
-     */
-    public SubservicioVO() {
-        super();
-
-        srvc = new ServicioVO();
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -77,6 +40,10 @@ public final class SubservicioVO extends ItemVO {
      */
     @Override
     public String getEtiqueta() {
+        if (srvc == null) {
+            return null;
+        }
+
         final StringBuffer buffer = new StringBuffer();
 
         if (srvc != null) {

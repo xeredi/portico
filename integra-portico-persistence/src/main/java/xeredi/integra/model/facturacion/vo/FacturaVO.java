@@ -87,6 +87,10 @@ public final class FacturaVO {
      * @return the etiqueta
      */
     public String getEtiqueta() {
+        if (fcsr == null) {
+            return null;
+        }
+
         final StringBuilder etiqueta = new StringBuilder();
 
         if (fcsr != null) {

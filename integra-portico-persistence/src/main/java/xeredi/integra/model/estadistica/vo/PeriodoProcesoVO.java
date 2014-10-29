@@ -48,10 +48,14 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the etiqueta.
-     * 
+     *
      * @return the etiqueta
      */
     public String getEtiqueta() {
+        if (autp == null) {
+            return null;
+        }
+
         final StringBuffer buffer = new StringBuffer();
 
         if (autp != null && autp.getParametro() != null) {
@@ -88,7 +92,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public Long getId() {
@@ -97,7 +101,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
@@ -107,7 +111,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the autp.
-     * 
+     *
      * @return the autp
      */
     public ParametroVO getAutp() {
@@ -116,7 +120,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the autp.
-     * 
+     *
      * @param value
      *            the new autp
      */
@@ -126,7 +130,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the anio.
-     * 
+     *
      * @return the anio
      */
     public Integer getAnio() {
@@ -135,7 +139,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the anio.
-     * 
+     *
      * @param value
      *            the new anio
      */
@@ -147,7 +151,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the mes.
-     * 
+     *
      * @return the mes
      */
     public Integer getMes() {
@@ -156,7 +160,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the mes.
-     * 
+     *
      * @param value
      *            the new mes
      */
@@ -168,7 +172,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the falta.
-     * 
+     *
      * @return the falta
      */
     public Date getFalta() {
@@ -177,7 +181,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the falta.
-     * 
+     *
      * @param value
      *            the new falta
      */
@@ -187,7 +191,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the trimestre.
-     * 
+     *
      * @return the trimestre
      */
     public Integer getTrimestre() {
@@ -196,7 +200,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the trimestre.
-     * 
+     *
      * @param value
      *            the new trimestre
      */
@@ -206,7 +210,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Gets the freferencia.
-     * 
+     *
      * @return the freferencia
      */
     public Date getFreferencia() {
@@ -215,7 +219,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the freferencia.
-     * 
+     *
      * @param value
      *            the new freferencia
      */
@@ -225,7 +229,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Checks if is cdms generado.
-     * 
+     *
      * @return true, if is cdms generado
      */
     public boolean isCdmsGenerado() {
@@ -234,7 +238,7 @@ public final class PeriodoProcesoVO {
 
     /**
      * Sets the cdms generado.
-     * 
+     *
      * @param value
      *            the new cdms generado
      */

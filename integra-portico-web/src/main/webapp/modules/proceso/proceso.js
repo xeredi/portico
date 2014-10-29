@@ -22,7 +22,7 @@ function config($routeProvider) {
         templateUrl : "modules/proceso/prbt-detail.html",
         controller : "prbtDetailController",
         controllerAs : 'vm'
-    })
+    });
 }
 
 function prbtGridController($http, $location, $routeParams, $modal, pageTitleService) {
@@ -49,7 +49,7 @@ function prbtGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             var map = {};
 
-            map["page"] = data.prbtList.page;
+            map.page = data.prbtList.page;
 
             $location.search(map).replace();
         });

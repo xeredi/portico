@@ -36,6 +36,10 @@ public final class AspectoVO {
      * @return the etiqueta
      */
     public String getEtiqueta() {
+        if (codigo == null) {
+            return null;
+        }
+
         final StringBuffer buffer = new StringBuffer();
 
         buffer.append(codigo);

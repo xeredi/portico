@@ -111,6 +111,10 @@ public class JSONPopulator {
         } else if (clazz.isArray()) {
             return convertToArray(clazz, type, value, method);
         } else if (value instanceof Map) {
+            if (value == null || ((Map) value).isEmpty()) {
+                return null;
+            }
+
             // nested bean
             final Object convertedValue = clazz.newInstance();
             populateObject(convertedValue, (Map) value);

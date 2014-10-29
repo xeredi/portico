@@ -73,7 +73,8 @@
             ascr_pk = #{id}
             AND (
                 #{ascv.fini} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{ascv.fini})
-                OR COALESCE(#{ascv.ffin}, portico.getSysdateTime()) BETWEEN ascv_fini AND COALESCE(ascv_ffin, COALESCE(#{ascv.ffin}, portico.getSysdateTime()))
+                OR COALESCE(#{ascv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN ascv_fini AND COALESCE(ascv_ffin, COALESCE(#{ascv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
         <if test="ascv.id != null">

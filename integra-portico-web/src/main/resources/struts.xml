@@ -12,6 +12,10 @@
             <interceptor-stack name="porticoStack">
                 <interceptor-ref name="timer" />
                 <interceptor-ref name="basicStack" />
+                <interceptor-ref name="exception">
+                    <param name="logEnabled">true</param>
+                    <param name="logLevel">error</param>
+                </interceptor-ref>
             </interceptor-stack>
         </interceptors>
 

@@ -42,15 +42,6 @@ public final class ServicioVO extends ItemVO {
     private String estado;
 
     /**
-     * Instantiates a new servicio vo.
-     */
-    public ServicioVO() {
-        super();
-
-        subp = new ParametroVO();
-    }
-
-    /**
      * Convert numero.
      *
      * @param numero

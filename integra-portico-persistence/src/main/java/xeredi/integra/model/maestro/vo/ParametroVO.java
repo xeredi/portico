@@ -21,15 +21,6 @@ public final class ParametroVO extends ItemVO {
     private String texto;
 
     /**
-     * Instantiates a new parametro vo.
-     */
-    public ParametroVO() {
-        super();
-
-        // prvr = new ParametroVersionVO();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

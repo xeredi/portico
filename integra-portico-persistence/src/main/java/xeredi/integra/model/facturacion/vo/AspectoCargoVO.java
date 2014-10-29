@@ -21,15 +21,6 @@ public final class AspectoCargoVO {
     private AspectoCargoVersionVO ascv;
 
     /**
-     * Instantiates a new aspecto cargo vo.
-     */
-    public AspectoCargoVO() {
-        super();
-
-        ascv = new AspectoCargoVersionVO();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

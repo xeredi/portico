@@ -166,8 +166,8 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             var map = {};
 
-            map["page"] = data.itemList.page;
-            map["itemCriterio"] = JSON.stringify(data.itemCriterio);
+            map.page = data.itemList.page;
+            map.itemCriterio = JSON.stringify(data.itemCriterio);
 
             $location.search(map).replace();
 
@@ -295,33 +295,25 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
         // ----------- MANIFIESTO ------------------
 
         case "mani-bloquear":
-            var url = "servicio/manifiesto/mani-bloquear.action?item.id=" + vm.item.id;
-
-            $http.get(url).success(function(data) {
+            $http.get("servicio/manifiesto/mani-bloquear.action?item.id=" + vm.item.id).success(function(data) {
                 findItem();
             });
 
             break;
         case "mani-completar":
-            var url = "servicio/manifiesto/mani-completar.action?item.id=" + vm.item.id;
-
-            $http.get(url).success(function(data) {
+            $http.get("servicio/manifiesto/mani-completar.action?item.id=" + vm.item.id).success(function(data) {
                 findItem();
             });
 
             break;
         case "mani-iniciar":
-            var url = "servicio/manifiesto/mani-iniciar.action?item.id=" + vm.item.id;
-
-            $http.get(url).success(function(data) {
+            $http.get("servicio/manifiesto/mani-iniciar.action?item.id=" + vm.item.id).success(function(data) {
                 findItem();
             });
 
             break;
         case "mani-anular":
-            var url = "servicio/manifiesto/mani-anular.action?item.id=" + vm.item.id;
-
-            $http.get(url).success(function(data) {
+            $http.get("servicio/manifiesto/mani-anular.action?item.id=" + vm.item.id).success(function(data) {
                 findItem();
             });
 
@@ -492,8 +484,8 @@ function ssrvGridController($scope, $http, $location, $routeParams, $modal) {
 
             var map = {};
 
-            map["page"] = data.itemList.page;
-            map["itemCriterio"] = JSON.stringify(data.itemCriterio);
+            map.page = data.itemList.page;
+            map.itemCriterio = JSON.stringify(data.itemCriterio);
 
             $location.search(map).replace();
 
@@ -634,7 +626,7 @@ function ssrvDetailController($scope, $http, $location, $routeParams) {
 
         case "mabl-bloquear":
             $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + $scope.item.id).success(function(data) {
-                findItem();
+                $scope.item = data.item;
             });
 
             break;

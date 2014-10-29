@@ -143,7 +143,6 @@ public final class AspectoCargoAction extends BaseAction {
     public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(ascr);
-        Preconditions.checkNotNull(ascr.getAscv());
 
         if (ACCION_EDICION.create == accion) {
             Preconditions.checkNotNull(ascr.getAspcId());
@@ -151,39 +150,42 @@ public final class AspectoCargoAction extends BaseAction {
             FieldValidator.validateRequired(this, MessageI18nKey.ascr_crgo, ascr.getCrgo());
         } else {
             Preconditions.checkNotNull(ascr.getId());
+            Preconditions.checkNotNull(ascr.getAscv());
             Preconditions.checkNotNull(ascr.getAscv().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, ascr.getAscv().getFini());
+        FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, ascr.getAscv());
 
-        if (hasErrors()) {
-            return SUCCESS;
+        if (!hasErrors()) {
+            FieldValidator.validateRequired(this, MessageI18nKey.ascr_fini, ascr.getAscv().getFini());
         }
 
-        final AspectoCargoBO ascrBO = new AspectoCargoBO();
+        if (!hasErrors()) {
+            final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-        switch (accion) {
-        case create:
-            try {
-                ascrBO.insert(ascr);
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.ascr));
+            switch (accion) {
+            case create:
+                try {
+                    ascrBO.insert(ascr);
+                } catch (final OverlapException ex) {
+                    addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.ascr));
+                }
+
+                break;
+            case edit:
+                try {
+                    ascrBO.update(ascr);
+                } catch (final InstanceNotFoundException ex) {
+                    addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.ascr), String.valueOf(ascr.getId()));
+                } catch (final OverlapException ex) {
+                    addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.ascr));
+                }
+
+                break;
+
+            default:
+                throw new Error("Accion no valida: " + accion);
             }
-
-            break;
-        case edit:
-            try {
-                ascrBO.update(ascr);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.ascr), String.valueOf(ascr.getId()));
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.ascr));
-            }
-
-            break;
-
-        default:
-            throw new Error("Accion no valida: " + accion);
         }
 
         return SUCCESS;

@@ -300,7 +300,7 @@ function tpdtGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             var map = {};
 
-            map["page"] = data.tpdtList.page;
+            map.page = data.tpdtList.page;
 
             $location.search(map).replace();
         });
@@ -561,7 +561,7 @@ function tpprGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             var map = {};
 
-            map["page"] = data.entiList.page;
+            map.page = data.entiList.page;
 
             $location.search(map).replace();
         });
@@ -820,7 +820,7 @@ function tpsrGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             var map = {};
 
-            map["page"] = data.entiList.page;
+            map.page = data.entiList.page;
 
             $location.search(map).replace();
         });
@@ -1074,7 +1074,7 @@ function tpesGridController($http, $location, $routeParams, $modal, pageTitleSer
 
             var map = {};
 
-            map["page"] = data.entiList.page;
+            map.page = data.entiList.page;
 
             $location.search(map).replace();
         });

@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -41,9 +42,12 @@ public final class BlAction extends BaseAction {
     @Action("mabl-bloquear")
     public String bloquear() throws InstanceNotFoundException {
         final BlBO mablBO = new BlBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         try {
             mablBO.bloquear(item.getId());
+
+            item = ssrvBO.select(item.getId(), getIdioma());
         } catch (final EstadoInvalidoException ex) {
             addActionError(MessageI18nKey.E00011, ex.getEstado());
         }
