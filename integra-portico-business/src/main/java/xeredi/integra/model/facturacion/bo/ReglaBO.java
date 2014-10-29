@@ -12,7 +12,6 @@ import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -99,12 +98,12 @@ public class ReglaBO {
                     throw new OverlapException(ReglaVO.class.getName(), rgla);
                 }
             } else {
-                rgla.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                rgla.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 rglaDAO.insert(rgla);
             }
 
-            rgla.getRglv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            rgla.getRglv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             rglaDAO.insertVersion(rgla);
 

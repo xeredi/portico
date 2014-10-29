@@ -4,24 +4,21 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoEstadisticaListadoAction.
  */
-public final class TipoEstadisticaListadoAction extends BaseAction {
+public final class TipoEstadisticaListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3298081565039330996L;
-
-    /** The Constant ROWS. */
-    private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The list. */
     private PaginatedList<TipoEstadisticaVO> entiList;
@@ -30,17 +27,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
     private TipoEstadisticaCriterioVO entiCriterio;
 
     /** The page. */
-    private int page;
-
-    /**
-     * Instantiates a new tipo estadistica listado action.
-     */
-    public TipoEstadisticaListadoAction() {
-        super();
-
-        page = PaginatedList.FIRST_PAGE;
-        entiCriterio = new TipoEstadisticaCriterioVO();
-    }
+    private int page = PaginatedList.FIRST_PAGE;
 
     // Acciones Web
     /**
@@ -50,7 +37,9 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
      */
     @Action("tpes-list")
     public String list() {
-        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+        if (entiCriterio == null) {
+            entiCriterio = new TipoEstadisticaCriterioVO();
+        }
 
         if (entiCriterio.getCodigo() != null) {
             entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
@@ -60,7 +49,10 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
         entiCriterio.setTipo(TipoEntidad.E);
         entiCriterio.setIdioma(getIdioma());
 
-        entiList = tpesBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+
+        entiList = tpesBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
+                ROWS_PER_PAGE_DEFAULT);
 
         return SUCCESS;
     }

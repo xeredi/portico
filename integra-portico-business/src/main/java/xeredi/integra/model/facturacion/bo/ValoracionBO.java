@@ -34,7 +34,6 @@ import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -432,8 +431,8 @@ public class ValoracionBO {
             // Grabacion de datos
             final IgBO igBO = new IgBO();
 
-            vlrl.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vlrl.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            vlrd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             vlrd.setVlrlId(vlrl.getId());
             vlrd.setVlrcId(vlrl.getVlrcId());
 
@@ -587,7 +586,7 @@ public class ValoracionBO {
 
             final IgBO igBO = new IgBO();
 
-            vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vlrd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             vlrdDAO.insert(vlrd);
 

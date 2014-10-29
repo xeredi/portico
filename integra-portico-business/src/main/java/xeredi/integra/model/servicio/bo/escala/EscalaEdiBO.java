@@ -20,7 +20,6 @@ import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -35,7 +34,7 @@ public final class EscalaEdiBO {
 
     /**
      * Alta escala.
-     * 
+     *
      * @param esclVO
      *            the escl vo
      * @param atrqList
@@ -84,7 +83,7 @@ public final class EscalaEdiBO {
                 throw new Error("No se encuentra secuencia para: " + esclVO);
             }
 
-            esclVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            esclVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             esclVO.setNumero(String.valueOf(secuencia));
             srvcDAO.insert(esclVO);
 
@@ -98,7 +97,7 @@ public final class EscalaEdiBO {
             int numeroAtraque = 1;
 
             for (final SubservicioVO atrqVO : atrqList) {
-                atrqVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                atrqVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 atrqVO.setSrvc(esclVO);
                 atrqVO.setNumero(numeroAtraque++);
                 ssrvDAO.insert(atrqVO);
@@ -156,7 +155,7 @@ public final class EscalaEdiBO {
 
     /**
      * Notificar practico.
-     * 
+     *
      * @param escaId
      *            the esca id
      * @param numeroManifiesto
@@ -168,7 +167,7 @@ public final class EscalaEdiBO {
         Preconditions.checkNotNull(escaId);
         Preconditions.checkNotNull(numeroManifiesto);
         Preconditions.checkNotNull(fechaNotificacion);
-        
+
         throw new Error("No implementado");
     }
 }

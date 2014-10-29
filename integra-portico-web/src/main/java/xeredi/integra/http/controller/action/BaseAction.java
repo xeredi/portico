@@ -34,6 +34,18 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
     /** The Constant LOG. */
     protected static final Log LOG = LogFactory.getLog(BaseAction.class);
 
+    /**
+     * The Enum ACCION_EDICION.
+     */
+    public static enum ACCION_EDICION {
+        /** The alta. */
+        create,
+        /** The modificar. */
+        edit,
+        /** The duplicar. */
+        duplicate;
+    }
+
     /** The session. */
     private Map<String, Object> session;
 

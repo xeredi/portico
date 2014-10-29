@@ -48,7 +48,6 @@ import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.proceso.dao.ProcesoDAO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -225,7 +224,7 @@ public class FacturadorBO {
             for (final FacturaAgregadaVO fctr : fctrList) {
                 fcsrDAO.updateIncrementar(fcsrId);
 
-                fctr.getFctr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                fctr.getFctr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 fctr.getFctr().setFcsr(fcsr);
                 fctr.getFctr().setNumero(fcsrDAO.select(fcsrId).getNumeroUltimo());
                 fctr.getFctr().setFalta(Calendar.getInstance().getTime());
@@ -243,7 +242,7 @@ public class FacturadorBO {
                 for (final FacturaServicioVO fcts : fctr.getFctsList()) {
                     final Long fctsOldId = fcts.getId();
 
-                    generatedIds.put(fcts.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    generatedIds.put(fcts.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     fcts.setId(generatedIds.get(fcts.getId()));
                     fcts.setFctrId(fctr.getFctr().getId());
@@ -255,7 +254,7 @@ public class FacturadorBO {
             }
 
             for (final ValoracionLineaVO vlrl : vlrlList) {
-                generatedIds.put(vlrl.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                generatedIds.put(vlrl.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 final FacturaLineaVO fctl = new FacturaLineaVO();
 
@@ -289,7 +288,7 @@ public class FacturadorBO {
             for (final ValoracionDetalleVO vlrd : vlrdList) {
                 final FacturaDetalleVO fctd = new FacturaDetalleVO();
 
-                fctd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                fctd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 fctd.setFctlId(generatedIds.get(vlrd.getVlrlId()));
                 fctd.setFctrId(generatedFcts.get(vlrd.getVlrcId()).getFctrId());
 

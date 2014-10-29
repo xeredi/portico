@@ -24,7 +24,6 @@ import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.CargoVersionVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;

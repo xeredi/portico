@@ -2,13 +2,12 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -17,7 +16,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ValoracionDetalleListadoAction.
  */
-public final class ValoracionDetalleListadoAction extends BaseAction {
+public final class ValoracionDetalleListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 9004620291483639470L;
@@ -32,7 +31,7 @@ public final class ValoracionDetalleListadoAction extends BaseAction {
     private int page = 1;
 
     /** The limit. */
-    private int limit = GlobalNames.ROWS_PER_PAGE_DEFAULT;
+    private int limit = ROWS_PER_PAGE_DEFAULT;
 
     /**
      * The Constructor.
@@ -58,7 +57,7 @@ public final class ValoracionDetalleListadoAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action("vlrd-list") })
+    @Action("vlrd-list")
     public String listado() {
         Preconditions.checkNotNull(vlrdCriterio);
 

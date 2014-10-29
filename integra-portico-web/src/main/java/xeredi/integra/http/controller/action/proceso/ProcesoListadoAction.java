@@ -4,26 +4,23 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoEstado;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoListadoAction.
  */
-public final class ProcesoListadoAction extends BaseAction {
+public final class ProcesoListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8194151847278687792L;
-
-    /** The Constant ROWS. */
-    private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The prbt criterio vo. */
     private ProcesoCriterioVO prbtCriterio;
@@ -32,17 +29,7 @@ public final class ProcesoListadoAction extends BaseAction {
     private PaginatedList<ProcesoVO> prbtList;
 
     /** The page. */
-    private int page;
-
-    /**
-     * Instantiates a new proceso listado action.
-     */
-    public ProcesoListadoAction() {
-        super();
-
-        page = PaginatedList.FIRST_PAGE;
-        prbtCriterio = new ProcesoCriterioVO();
-    }
+    private int page = PaginatedList.FIRST_PAGE;
 
     /**
      * {@inheritDoc}
@@ -61,7 +48,12 @@ public final class ProcesoListadoAction extends BaseAction {
     public String listado() {
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        prbtList = prbtBO.selectList(prbtCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        if (prbtCriterio == null) {
+            prbtCriterio = new ProcesoCriterioVO();
+        }
+
+        prbtList = prbtBO.selectList(prbtCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
+                ROWS_PER_PAGE_DEFAULT);
 
         return SUCCESS;
     }

@@ -7,7 +7,6 @@ import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
-import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.exception.DuplicateInstanceException;
 
 import com.google.common.base.Preconditions;

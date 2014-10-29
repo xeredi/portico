@@ -24,7 +24,6 @@ import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -70,7 +69,7 @@ public class ProcesoBO {
 
             final IgBO igBO = new IgBO();
 
-            prbtVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            prbtVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             prbtDAO.insert(prbtVO);
 
             for (final String prpmNombre : prbtVO.getPrpmMap().keySet()) {

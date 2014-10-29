@@ -10,7 +10,6 @@ import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.ReglaIncompatibleDAO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -48,12 +47,12 @@ public class ReglaIncompatibleBO {
                     throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
                 }
             } else {
-                rgin.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                rgin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 rginDAO.insert(rgin);
             }
 
-            rgin.getRgiv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            rgin.getRgiv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             rginDAO.insertVersion(rgin);
 

@@ -34,7 +34,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -106,12 +105,12 @@ public class ParametroBO {
             if (prmtDAO.exists(prmt)) {
                 prmt.setId(prmtDAO.selectId(prmt));
             } else {
-                prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                prmt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 prmtDAO.insert(prmt);
             }
 
-            prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            prmt.getPrvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(ParametroVO.class.getName(), prmt);
@@ -202,12 +201,12 @@ public class ParametroBO {
             if (prmtDAO.exists(prmt)) {
                 prmt.setId(prmtDAO.selectId(prmt));
             } else {
-                prmt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                prmt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 prmtDAO.insert(prmt);
             }
 
-            prmt.getPrvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            prmt.getPrvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(ParametroVO.class.getName(), prmt);
@@ -271,8 +270,8 @@ public class ParametroBO {
 
                         for (final SubparametroVO sprmVO : sprmMap.values()) {
                             sprmVO.setPrmtId(prmt.getId());
-                            sprmVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-                            sprmVO.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                            sprmVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                            sprmVO.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                             sprmVO.getSpvr().setFini(prmt.getPrvr().getFini());
                             sprmVO.getSpvr().setFfin(prmt.getPrvr().getFfin());
 

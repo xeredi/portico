@@ -26,7 +26,6 @@ import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
-import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;

@@ -3,9 +3,9 @@ package xeredi.integra.http.controller.action.proceso;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -14,12 +14,10 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ProcesoMensajeListadoAction.
  */
-public final class ProcesoMensajeListadoAction extends BaseAction {
+public final class ProcesoMensajeListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 2398654673428203733L;
-
-    private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The prbt id. */
     private Long prbtId;
@@ -41,7 +39,8 @@ public final class ProcesoMensajeListadoAction extends BaseAction {
 
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        prmnList = prbtBO.selectPrmnList(prbtId, PaginatedList.getOffset(page, ROWS), ROWS);
+        prmnList = prbtBO.selectPrmnList(prbtId, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
+                ROWS_PER_PAGE_DEFAULT);
 
         return SUCCESS;
     }

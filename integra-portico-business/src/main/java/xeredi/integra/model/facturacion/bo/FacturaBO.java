@@ -42,7 +42,6 @@ import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -160,7 +159,7 @@ public class FacturaBO {
             final Map<Long, Long> generatedIds = new HashMap<>();
             final IgBO igBO = new IgBO();
 
-            generatedIds.put(fctr.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            generatedIds.put(fctr.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
             fctr.setId(generatedIds.get(fctr.getId()));
             fctr.setFcsr(fcsr);
@@ -173,7 +172,7 @@ public class FacturaBO {
             fctrDAO.insert(fctr);
 
             for (final FacturaServicioVO fcts : fctsList) {
-                generatedIds.put(fcts.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                generatedIds.put(fcts.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 fcts.setId(generatedIds.get(fcts.getId()));
                 fcts.setFctrId(generatedIds.get(fcts.getFctrId()));
@@ -196,7 +195,7 @@ public class FacturaBO {
             }
 
             for (final FacturaLineaVO fctl : fctlList) {
-                generatedIds.put(fctl.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                generatedIds.put(fctl.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 fctl.setId(generatedIds.get(fctl.getId()));
                 fctl.setPadreId(generatedIds.get(fctl.getPadreId()));
@@ -206,7 +205,7 @@ public class FacturaBO {
             }
 
             for (final FacturaDetalleVO fctd : fctdList) {
-                generatedIds.put(fctd.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                generatedIds.put(fctd.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 fctd.setId(generatedIds.get(fctd.getId()));
                 fctd.setFctrId(generatedIds.get(fctd.getFctrId()));
@@ -289,7 +288,7 @@ public class FacturaBO {
             final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
             final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
 
-            vlrc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vlrc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             vlrc.setAspc(fcts.getAspc());
             vlrc.setFalta(Calendar.getInstance().getTime());
@@ -317,7 +316,7 @@ public class FacturaBO {
                 final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);
 
                 for (final FacturaLineaVO fctl : fctlList) {
-                    generatedIds.put(fctl.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    generatedIds.put(fctl.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     final ValoracionLineaVO vlrl = new ValoracionLineaVO();
 
@@ -348,7 +347,7 @@ public class FacturaBO {
                 }
 
                 for (final FacturaDetalleVO fctd : fctdList) {
-                    generatedIds.put(fctd.getId(), igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    generatedIds.put(fctd.getId(), igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     final ValoracionDetalleVO vlrd = new ValoracionDetalleVO();
 

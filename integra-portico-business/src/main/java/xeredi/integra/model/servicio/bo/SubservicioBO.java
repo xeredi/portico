@@ -23,7 +23,6 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -192,7 +191,7 @@ public class SubservicioBO {
                 throw new DuplicateInstanceException(SubservicioVO.class.getName(), ssrvVO);
             }
 
-            ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             ssrvDAO.insert(ssrvVO);
 
             for (final Long tpdtId : ssrvVO.getItdtMap().keySet()) {

@@ -9,12 +9,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -24,13 +24,10 @@ import com.google.common.base.Preconditions;
 /**
  * The Class PeriodoProcesoListadoAction.
  */
-public final class PeriodoProcesoListadoAction extends BaseAction {
+public final class PeriodoProcesoListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -3153358700832148921L;
-
-    /** The Constant ROWS. */
-    private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The peprs. */
     private PaginatedList<PeriodoProcesoVO> peprList;
@@ -88,7 +85,8 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-        peprList = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        peprList = peprBO.selectList(peprCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
+                ROWS_PER_PAGE_DEFAULT);
 
         return SUCCESS;
     }
@@ -174,7 +172,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction {
      * @return the limits
      */
     public int[] getLimits() {
-        return GlobalNames.VALID_ROWS_PER_PAGE;
+        return VALID_ROWS_PER_PAGE;
     }
 
 }

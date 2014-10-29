@@ -13,7 +13,6 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -53,7 +52,7 @@ public class CodigoReferenciaBO {
                 throw new DuplicateInstanceException(CodigoReferenciaVO.class.getName(), cdrfVO);
             }
 
-            cdrfVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            cdrfVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             cdrfDAO.insert(cdrfVO);
 
             I18nBO.insertMap(session, I18nPrefix.cdrf, cdrfVO.getId(), i18nMap);

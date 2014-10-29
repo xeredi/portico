@@ -30,7 +30,6 @@ import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -224,7 +223,7 @@ public class ServicioBO {
                 throw new DuplicateInstanceException(ServicioVO.class.getName(), srvcVO);
             }
 
-            srvcVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             srvcDAO.insert(srvcVO);
 
             if (srvcVO.getItdtMap() != null) {
@@ -236,7 +235,7 @@ public class ServicioBO {
 
             if (ssrvList != null) {
                 for (final SubservicioVO ssrvVO : ssrvList) {
-                    ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                     ssrvVO.setSrvc(srvcVO);
                     ssrvDAO.insert(ssrvVO);
                 }
@@ -321,13 +320,13 @@ public class ServicioBO {
                 throw new Error("No se encuentra secuencia para: " + srvcVO.getEtiqueta());
             }
 
-            srvcVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
 
             for (final SubservicioVO ssrvVO : ssrvList) {
                 final Long ssrvIdActual = ssrvVO.getId();
 
-                ssrvVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 ssrvVO.setSrvc(srvcVO);
 
                 ssrvIds.put(ssrvIdActual, ssrvVO.getId());

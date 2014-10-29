@@ -23,6 +23,9 @@ public final class IgBO {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(IgBO.class);
 
+    /** The Constant SQ_INTEGRA. */
+    public static final String SQ_INTEGRA = "sq_integra";
+
     /** The Constant MAP. */
     private static final Map<String, IgVO> MAP = new HashMap<>();
 

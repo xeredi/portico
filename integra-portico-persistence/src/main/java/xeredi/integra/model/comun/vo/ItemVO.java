@@ -22,13 +22,6 @@ public abstract class ItemVO implements ItemEntidad {
     private Map<Long, ItemDatoVO> itdtMap;
 
     /**
-     * Instantiates a new item vo.
-     */
-    public ItemVO() {
-        super();
-    }
-
-    /**
      * Gets the id.
      *
      * @return the id

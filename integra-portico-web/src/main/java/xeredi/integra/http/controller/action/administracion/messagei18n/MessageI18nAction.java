@@ -10,7 +10,6 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.MessageI18nBO;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
-import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 
 import com.google.common.base.Preconditions;
 

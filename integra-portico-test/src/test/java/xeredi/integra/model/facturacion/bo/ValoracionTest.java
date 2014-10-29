@@ -2,6 +2,7 @@ package xeredi.integra.model.facturacion.bo;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -9,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.facturacion.report.ValoracionPdf;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
@@ -18,7 +21,6 @@ import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
@@ -76,7 +78,8 @@ public final class ValoracionTest {
 
                 LOG.info("vlrcImpresion: " + vlrcList);
 
-                final ValoracionPdf valoracionPdf = new ValoracionPdf(GlobalNames.DEFAULT_LOCALE);
+                final ValoracionPdf valoracionPdf = new ValoracionPdf(new Locale(
+                        ConfigurationProxy.getString(ConfigurationKey.language_default)));
 
                 valoracionPdf.imprimir(vlrcList, null);
             }

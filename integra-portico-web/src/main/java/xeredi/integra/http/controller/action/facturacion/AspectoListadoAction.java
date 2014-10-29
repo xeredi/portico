@@ -4,18 +4,17 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.util.pagination.PaginatedList;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoListadoAction.
  */
-public final class AspectoListadoAction extends BaseAction {
+public final class AspectoListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7615445979289765235L;
@@ -27,19 +26,10 @@ public final class AspectoListadoAction extends BaseAction {
     private AspectoCriterioVO aspcCriterio;
 
     /** The page. */
-    private int page = 1;
+    private int page = PaginatedList.FIRST_PAGE;
 
     /** The limit. */
-    private int limit = 20;
-
-    /**
-     * The Constructor.
-     */
-    public AspectoListadoAction() {
-        super();
-
-        aspcCriterio = new AspectoCriterioVO();
-    }
+    private int limit = ROWS_PER_PAGE_DEFAULT;
 
     /**
      * {@inheritDoc}
@@ -58,7 +48,9 @@ public final class AspectoListadoAction extends BaseAction {
      */
     @Action("aspc-list")
     public String list() {
-        Preconditions.checkNotNull(aspcCriterio);
+        if (aspcCriterio == null) {
+            aspcCriterio = new AspectoCriterioVO();
+        }
 
         aspcCriterio.setIdioma(getIdioma());
 

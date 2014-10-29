@@ -5,10 +5,10 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
@@ -17,7 +17,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ValoracionLineaListadoAction.
  */
-public final class ValoracionLineaListadoAction extends BaseAction {
+public final class ValoracionLineaListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4531375285740204285L;
@@ -32,7 +32,7 @@ public final class ValoracionLineaListadoAction extends BaseAction {
     private int page = 1;
 
     /** The limit. */
-    private int limit = GlobalNames.ROWS_PER_PAGE_DEFAULT;
+    private int limit = ROWS_PER_PAGE_DEFAULT;
 
     /**
      * The Constructor.

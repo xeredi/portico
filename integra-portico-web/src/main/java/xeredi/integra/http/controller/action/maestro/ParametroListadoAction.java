@@ -34,7 +34,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
     private PaginatedList<ParametroVO> itemList;
 
     /** The criterio vo. */
-    private ParametroCriterioVO itemCriterio = new ParametroCriterioVO();
+    private ParametroCriterioVO itemCriterio;
 
     /** The enti id. */
     private TipoParametroVO enti;
@@ -57,6 +57,10 @@ public final class ParametroListadoAction extends ItemListadoAction {
     public String filter() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
+
+        if (itemCriterio == null) {
+            itemCriterio = new ParametroCriterioVO();
+        }
 
         itemCriterio.setEntiId(enti.getId());
 
@@ -82,6 +86,10 @@ public final class ParametroListadoAction extends ItemListadoAction {
     public String list() {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
+
+        if (itemCriterio == null) {
+            itemCriterio = new ParametroCriterioVO();
+        }
 
         itemCriterio.setEntiId(enti.getId());
 

@@ -21,7 +21,6 @@ import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -78,12 +77,12 @@ public class SubparametroBO {
             if (sprmDAO.exists(sprm)) {
                 sprm.setId(sprmDAO.selectId(sprm));
             } else {
-                sprm.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 sprmDAO.insert(sprm);
             }
 
-            sprm.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (sprmDAO.existsOverlap(sprm)) {
                 throw new OverlapException(SubparametroVO.class.getName(), sprm);
@@ -127,12 +126,12 @@ public class SubparametroBO {
             if (sprmDAO.exists(sprm)) {
                 sprm.setId(sprmDAO.selectId(sprm));
             } else {
-                sprm.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 sprmDAO.insert(sprm);
             }
 
-            sprm.getSpvr().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (sprmDAO.existsOverlap(sprm)) {
                 throw new OverlapException(SubparametroVO.class.getName(), sprm);

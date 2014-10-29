@@ -4,9 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.bo.IgBO;
-import xeredi.integra.model.util.GlobalNames;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class IgBOTest.
@@ -24,7 +21,7 @@ public final class IgBOTest {
         final IgBO igBO = new IgBO();
 
         for (int i = 0; i < 100000; i++) {
-            final Long value = igBO.nextVal(GlobalNames.SQ_INTEGRA);
+            final Long value = igBO.nextVal(IgBO.SQ_INTEGRA);
 
             if (value % 1000 == 0) {
                 LOG.info(value);

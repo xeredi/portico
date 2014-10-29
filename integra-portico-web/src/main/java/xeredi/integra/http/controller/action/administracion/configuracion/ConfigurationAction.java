@@ -5,7 +5,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.ConfigurationBO;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
-import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 
 import com.google.common.base.Preconditions;
 

@@ -17,16 +17,6 @@ public final class EstadisticaVO extends ItemVO {
     private ParametroVO subp;
 
     /**
-     * Instantiates a new estadistica vo.
-     */
-    public EstadisticaVO() {
-        super();
-
-        pepr = new PeriodoProcesoVO();
-        subp = new ParametroVO();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

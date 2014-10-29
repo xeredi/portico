@@ -16,7 +16,6 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -130,12 +129,12 @@ public class CargoBO {
                     throw new OverlapException(CargoVO.class.getName(), crgo);
                 }
             } else {
-                crgo.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                crgo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 crgoDAO.insert(crgo);
             }
 
-            crgo.getCrgv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            crgo.getCrgv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             crgoDAO.insertVersion(crgo);
 
@@ -156,7 +155,7 @@ public class CargoBO {
      *             the overlap exception
      */
     public void update(final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-    OverlapException {
+            OverlapException {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());

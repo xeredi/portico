@@ -50,15 +50,6 @@ public abstract class ItemCriterioVO implements Criterio {
     private Map<Long, ItemDatoCriterioVO> itdtMap;
 
     /**
-     * Instantiates a new item criterio vo.
-     */
-    public ItemCriterioVO() {
-        super();
-
-        // itdtMap = new HashMap<>();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

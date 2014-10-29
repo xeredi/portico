@@ -15,8 +15,6 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.integra.model.util.GlobalNames;
-import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 // TODO: Auto-generated Javadoc
@@ -27,9 +25,6 @@ public abstract class ItemAction extends BaseAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6333242573443367864L;
-
-    /** The Constant ROWS. */
-    protected static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The accion. */
     protected ACCION_EDICION accion;

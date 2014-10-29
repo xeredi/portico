@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -11,9 +12,10 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.facturacion.bo.FacturaBO;
 import xeredi.integra.model.facturacion.bo.FacturaImpresionVO;
-import xeredi.integra.model.util.GlobalNames;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,7 +38,8 @@ public final class FacturaPdfTest {
                 final Long id = 2196001L;
 
                 final Set<Long> fctrIds = new HashSet<>();
-                final FacturaPdf facturaPdf = new FacturaPdf(GlobalNames.DEFAULT_LOCALE);
+                final FacturaPdf facturaPdf = new FacturaPdf(new Locale(
+                        ConfigurationProxy.getString(ConfigurationKey.language_default)));
                 final FacturaBO fctrBO = new FacturaBO();
 
                 fctrIds.add(id);

@@ -10,7 +10,6 @@ import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.facturacion.dao.AspectoCargoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -84,12 +83,12 @@ public final class AspectoCargoBO {
                     throw new OverlapException(AspectoCargoVO.class.getName(), vo);
                 }
             } else {
-                vo.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                vo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 ascrDAO.insert(vo);
             }
 
-            vo.getAscv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vo.getAscv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             ascrDAO.insertVersion(vo);
 

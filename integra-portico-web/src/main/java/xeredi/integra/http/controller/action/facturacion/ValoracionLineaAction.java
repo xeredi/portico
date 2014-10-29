@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
-import xeredi.integra.model.util.GlobalNames.ACCION_EDICION;
 
 import com.google.common.base.Preconditions;
 

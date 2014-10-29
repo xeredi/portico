@@ -3,24 +3,21 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoServicioListadoAction.
  */
-public final class TipoServicioListadoAction extends BaseAction {
+public final class TipoServicioListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -1106261956835773345L;
-
-    /** The Constant ROWS. */
-    private static final int ROWS = GlobalNames.ROWS_PER_PAGE_DEFAULT;
 
     /** The list. */
     private PaginatedList<TipoServicioVO> entiList;
@@ -29,17 +26,7 @@ public final class TipoServicioListadoAction extends BaseAction {
     private TipoServicioCriterioVO entiCriterio;
 
     /** The page. */
-    private int page;
-
-    /**
-     * Instantiates a new tipo servicio listado action.
-     */
-    public TipoServicioListadoAction() {
-        super();
-
-        page = PaginatedList.FIRST_PAGE;
-        entiCriterio = new TipoServicioCriterioVO();
-    }
+    private int page = PaginatedList.FIRST_PAGE;
 
     // Acciones Web
     /**
@@ -49,7 +36,9 @@ public final class TipoServicioListadoAction extends BaseAction {
      */
     @Action("tpsr-list")
     public String list() {
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
+        if (entiCriterio == null) {
+            entiCriterio = new TipoServicioCriterioVO();
+        }
 
         if (entiCriterio.getCodigo() != null) {
             entiCriterio.setCodigo(entiCriterio.getCodigo().toUpperCase());
@@ -59,7 +48,10 @@ public final class TipoServicioListadoAction extends BaseAction {
         entiCriterio.setTipo(TipoEntidad.T);
         entiCriterio.setIdioma(getIdioma());
 
-        entiList = tpsrBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS), ROWS);
+        final TipoServicioBO tpsrBO = new TipoServicioBO();
+
+        entiList = tpsrBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
+                ROWS_PER_PAGE_DEFAULT);
 
         return SUCCESS;
     }

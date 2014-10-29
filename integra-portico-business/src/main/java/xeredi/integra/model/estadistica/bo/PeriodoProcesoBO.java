@@ -43,7 +43,6 @@ import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -267,11 +266,11 @@ public class PeriodoProcesoBO {
                 LOG.debug("Obtencion de secuencias");
             }
 
-            peprVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            peprVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             peprVO.setFalta(falta);
 
             for (final EstadisticaVO estdVO : estdList) {
-                estdVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 estdVO.setPepr(peprVO);
             }
 
@@ -351,7 +350,7 @@ public class PeriodoProcesoBO {
 
             final Map<Long, List<EstadisticaVO>> estdMap = new HashMap<>();
 
-            peprVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            peprVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             peprVO.setFalta(Calendar.getInstance().getTime());
             peprDAO.insert(peprVO);
 
@@ -455,7 +454,7 @@ public class PeriodoProcesoBO {
 
             autpVO.setId(esagVO.getSubpId());
 
-            estdVO.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             estdVO.setSubp(autpVO);
             estdVO.setPepr(peprVO);
 
@@ -847,400 +846,399 @@ public class PeriodoProcesoBO {
             }
         }
 
-        cdmsDAO.insert_CM_PESCAF(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PESCAF, "**", "**", "ZZ", null, null, null));
+        cdmsDAO.insert_CM_PESCAF(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PESCAF, "**", "**", "ZZ", null, null, null));
 
-        cdmsDAO.insert_CM_AVPPET(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.AVPPET, "**", "**", "ZZ", null, null, null));
-        cdmsDAO.insert_CM_AVOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.AVOTRO, "**", "**", "ZZ", null, null, null));
+        cdmsDAO.insert_CM_AVPPET(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.AVPPET, "**", "**", "ZZ", null, null, null));
+        cdmsDAO.insert_CM_AVOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.AVOTRO, "**", "**", "ZZ", null, null, null));
 
-        cdmsDAO.insert_CM_BUQUNI_BUQGT_ES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_BUQUNI_BUQGT_ES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.BUQUNI, "**", "**", "ES", null, null, null));
-        cdmsDAO.insert_CM_BUQUNI_BUQGT_ES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_BUQUNI_BUQGT_ES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_02, CuadroMesConcepto.BUQGT, "**", "**", "ES", null, null, null));
-        cdmsDAO.insert_CM_BUQUNI_BUQGT_ZZ(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_BUQUNI_BUQGT_ZZ(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.BUQUNI, "**", "**", "ZZ", null, null, null));
-        cdmsDAO.insert_CM_BUQUNI_BUQGT_ZZ(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_BUQUNI_BUQGT_ZZ(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_02, CuadroMesConcepto.BUQGT, "**", "**", "ZZ", null, null, null));
-        cdmsDAO.insert_CM_CRUBUQ(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CRUBUQ, "**", "**", "ZZ", null, null, null));
+        cdmsDAO.insert_CM_CRUBUQ(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CRUBUQ, "**", "**", "ZZ", null, null, null));
 
         // Campo Adicional contiene un codigo de U.C.
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "E", "C", "ZZ", "E", "C%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "D", "C", "ZZ", "D", "C%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "ET", "C", "ZZ", "ET", "C%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "DT", "C", "ZZ", "DT", "C%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "E", "E", "ZZ", "E", "E%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "D", "E", "ZZ", "D", "E%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "ET", "E", "ZZ", "ET", "E%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "DT", "E", "ZZ", "DT", "E%", "12"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "T", "E", "ZZ", "T%", null, "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "E", "C", "ZZ", "E", "C%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "D", "C", "ZZ", "D", "C%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "ET", "C", "ZZ", "ET", "C%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "DT", "C", "ZZ", "DT", "C%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "E", "E", "ZZ", "E", "E%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "D", "E", "ZZ", "D", "E%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "ET", "E", "ZZ", "ET", "E%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "DT", "E", "ZZ", "DT", "E%", "12"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPETR, "T", "E", "ZZ", "T%", null, "12"));
 
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "E", "C", "ZZ", "E", "C%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "D", "C", "ZZ", "D", "C%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "ET", "C", "ZZ", "ET", "C%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "DT", "C", "ZZ", "DT", "C%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "E", "E", "ZZ", "E", "E%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "D", "E", "ZZ", "D", "E%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "ET", "E", "ZZ", "ET", "E%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "DT", "E", "ZZ", "DT", "E%", "11"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "T", "E", "ZZ", "T%", null, "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "E", "C", "ZZ", "E", "C%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "D", "C", "ZZ", "D", "C%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "ET", "C", "ZZ", "ET", "C%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "DT", "C", "ZZ", "DT", "C%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "E", "E", "ZZ", "E", "E%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "D", "E", "ZZ", "D", "E%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "ET", "E", "ZZ", "ET", "E%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "DT", "E", "ZZ", "DT", "E%", "11"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLGASN, "T", "E", "ZZ", "T%", null, "11"));
 
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "E", "C", "ZZ", "E", "C%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "D", "C", "ZZ", "D", "C%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "ET", "C", "ZZ", "ET", "C%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "DT", "C", "ZZ", "DT", "C%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "E", "E", "ZZ", "E", "E%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "D", "E", "ZZ", "D", "E%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "ET", "E", "ZZ", "ET", "E%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "DT", "E", "ZZ", "DT", "E%", "13"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "T", "E", "ZZ", "T%", null, "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "E", "C", "ZZ", "E", "C%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "D", "C", "ZZ", "D", "C%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "ET", "C", "ZZ", "ET", "C%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "DT", "C", "ZZ", "DT", "C%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "E", "E", "ZZ", "E", "E%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "D", "E", "ZZ", "D", "E%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "ET", "E", "ZZ", "ET", "E%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "DT", "E", "ZZ", "DT", "E%", "13"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLPREF, "T", "E", "ZZ", "T%", null, "13"));
 
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "E", "C", "ZZ", "E", "C%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "D", "C", "ZZ", "D", "C%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "ET", "C", "ZZ", "ET", "C%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "DT", "C", "ZZ", "DT", "C%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "E", "E", "ZZ", "E", "E%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "D", "E", "ZZ", "D", "E%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "ET", "E", "ZZ", "ET", "E%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "DT", "E", "ZZ", "DT", "E%", "19"));
-        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA),
-                peprId, TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "T", "E", "ZZ", "T%", null, "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "E", "C", "ZZ", "E", "C%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "D", "C", "ZZ", "D", "C%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "ET", "C", "ZZ", "ET", "C%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "DT", "C", "ZZ", "DT", "C%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "E", "E", "ZZ", "E", "E%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "D", "E", "ZZ", "D", "E%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "ET", "E", "ZZ", "ET", "E%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "DT", "E", "ZZ", "DT", "E%", "19"));
+        cdmsDAO.insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
+                TipoDato.DECIMAL_01, CuadroMesConcepto.GLOTRO, "T", "E", "ZZ", "T%", null, "19"));
 
         // Campo Adicional contiene un codigo de Instalacion Especial
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "E", "C", "ZZ", "E", "C%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "D", "C", "ZZ", "D", "C%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "ET", "C", "ZZ", "ET", "C%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "DT", "C", "ZZ", "DT", "C%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "E", "E", "ZZ", "E", "E%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "D", "E", "ZZ", "D", "E%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "ET", "E", "ZZ", "ET", "E%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "DT", "E", "ZZ", "DT", "E%", "**************S"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSIESP, "T", "E", "ZZ", "T%", null, "**************S"));
 
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "E", "C", "ZZ", "E", "C%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "D", "C", "ZZ", "D", "C%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "ET", "C", "ZZ", "ET", "C%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "DT", "C", "ZZ", "DT", "C%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "E", "E", "ZZ", "E", "E%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "D", "E", "ZZ", "D", "E%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "ET", "E", "ZZ", "ET", "E%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "DT", "E", "ZZ", "DT", "E%", "**************N"));
-        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_GSIESP_GSNIES(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.GSNIES, "T", "E", "ZZ", "T%", null, "**************N"));
 
         // Campo Adicional contiene el tipo de mercancia de una unidad de carga
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "E", "C", "ZZ", "E", "C%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "D", "C", "ZZ", "D", "C%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "ET", "C", "ZZ", "ET", "C%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "DT", "C", "ZZ", "DT", "C%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "E", "E", "ZZ", "E", "E%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "D", "E", "ZZ", "D", "E%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "ET", "E", "ZZ", "ET", "E%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "DT", "E", "ZZ", "DT", "E%", "M%"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.MG, "T", "E", "ZZ", "T%", null, "M%"));
 
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "E", "C", "ZZ", "E", "C%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "D", "C", "ZZ", "D", "C%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "ET", "C", "ZZ", "ET", "C%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "DT", "C", "ZZ", "DT", "C%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "E", "E", "ZZ", "E", "E%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "D", "E", "ZZ", "D", "E%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "ET", "E", "ZZ", "ET", "E%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "DT", "E", "ZZ", "DT", "E%", "PS"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.PASAJE, "T", "E", "ZZ", "T%", null, "PS"));
 
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "E", "C", "ZZ", "E", "C%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "D", "C", "ZZ", "D", "C%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "ET", "C", "ZZ", "ET", "C%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "DT", "C", "ZZ", "DT", "C%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "E", "E", "ZZ", "E", "E%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "D", "E", "ZZ", "D", "E%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "ET", "E", "ZZ", "ET", "E%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "DT", "E", "ZZ", "DT", "E%", "PA"));
-        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_MG_PASAJE_VET2(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.VET2, "T", "E", "ZZ", "T%", null, "PA"));
 
         // Campo Adicional contiene el codigo de mercancia
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "E", "C", "ZZ", "E", "C%", "'0001X', '0002X'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "D", "C", "ZZ", "D", "C%", "'0001X', '0002X'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "ET", "C", "ZZ", "E%", "C%", "'0001C', '0002C'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "DT", "C", "ZZ", "D%", "C%", "'0001C', '0002C'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "E", "E", "ZZ", "E", "E%", "'0001X', '0002X'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "D", "E", "ZZ", "D", "E%", "'0001X', '0002X'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "ET", "E", "ZZ", "E$", "E%", "'0001C', '0002C'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "DT", "E", "ZZ", "D$", "E%", "'0001C', '0002C'"));
-        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.PASCRU, "T", "E", "ZZ", "T%", null,
-                "'0001X', '0002X', '0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "E", "C", "ZZ", "E", "C%", "'0001X', '0002X'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "D", "C", "ZZ", "D", "C%", "'0001X', '0002X'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "ET", "C", "ZZ", "E%", "C%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "DT", "C", "ZZ", "D%", "C%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "E", "E", "ZZ", "E", "E%", "'0001X', '0002X'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "D", "E", "ZZ", "D", "E%", "'0001X', '0002X'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "ET", "E", "ZZ", "E$", "E%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "DT", "E", "ZZ", "D$", "E%", "'0001C', '0002C'"));
+        cdmsDAO.insert_CM_PASCRU(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.PASCRU, "T", "E", "ZZ", "T%", null, "'0001X', '0002X', '0001C', '0002C'"));
 
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "E", "C", "ZZ", "E", "C%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "D", "C", "ZZ", "D", "C%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "ET", "C", "ZZ", "ET", "C%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "DT", "C", "ZZ", "DT", "C%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "E", "E", "ZZ", "E", "E%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "D", "E", "ZZ", "D", "E%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "ET", "E", "ZZ", "ET", "E%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "DT", "E", "ZZ", "DT", "E%", null));
-        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.ENTERO_01, CuadroMesConcepto.CNUMCA, "T", "E", "ZZ", "T%", null, null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "E", "C", "ZZ", "E", "C%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "D", "C", "ZZ", "D", "C%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "ET", "C", "ZZ", "ET", "C%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "DT", "C", "ZZ", "DT", "C%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "E", "E", "ZZ", "E", "E%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "D", "E", "ZZ", "D", "E%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "ET", "E", "ZZ", "ET", "E%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "DT", "E", "ZZ", "DT", "E%", null));
+        cdmsDAO.insert_CM_CNUMCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
+                CuadroMesConcepto.CNUMCA, "T", "E", "ZZ", "T%", null, null));
 
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "E", "C", "ZZ", "E", "C%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "D", "C", "ZZ", "D", "C%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "ET", "C", "ZZ", "ET", "C%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "DT", "C", "ZZ", "DT", "C%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "E", "E", "ZZ", "E", "E%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "D", "E", "ZZ", "D", "E%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "ET", "E", "ZZ", "ET", "E%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "DT", "E", "ZZ", "DT", "E%", null));
-        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.CTONCA, "T", "E", "ZZ", "T%", null, null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "E", "C", "ZZ", "E", "C%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "D", "C", "ZZ", "D", "C%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "ET", "C", "ZZ", "ET", "C%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "DT", "C", "ZZ", "DT", "C%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "E", "E", "ZZ", "E", "E%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "D", "E", "ZZ", "D", "E%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "ET", "E", "ZZ", "ET", "E%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "DT", "E", "ZZ", "DT", "E%", null));
+        cdmsDAO.insert_CM_CTONCA(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.CTONCA, "T", "E", "ZZ", "T%", null, null));
 
         // Campo Adicional contiene codigo de mercancia
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "E", "C", "ZZ", "E", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "D", "C", "ZZ", "D", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "ET", "C", "ZZ", "ET", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "DT", "C", "ZZ", "DT", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "E", "E", "ZZ", "E", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "D", "E", "ZZ", "D", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "ET", "E", "ZZ", "ET", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "DT", "E", "ZZ", "DT", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.ENTERO_01, CuadroMesConcepto.CNUMVA, "T", "E", "ZZ", "T%", null, "8609*"));
 
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "E", "C", "ZZ", "E", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "D", "C", "ZZ", "D", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "ET", "C", "ZZ", "ET", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "DT", "C", "ZZ", "DT", "C%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "E", "E", "ZZ", "E", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "D", "E", "ZZ", "D", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "ET", "E", "ZZ", "ET", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "DT", "E", "ZZ", "DT", "E%", "8609*"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.CTONVA, "T", "E", "ZZ", "T%", null, "8609*"));
 
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "E", "C", "ZZ", "E", "C%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "D", "C", "ZZ", "D", "C%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "ET", "C", "ZZ", "ET", "C%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "DT", "C", "ZZ", "DT", "C%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "E", "E", "ZZ", "E", "E%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "D", "E", "ZZ", "D", "E%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "ET", "E", "ZZ", "ET", "E%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "DT", "E", "ZZ", "DT", "E%", "8609%"));
-        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_CNUMVA_CTONVA_CTEUS(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.CTEUS, "T", "E", "ZZ", "T%", null, "8609%"));
 
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "E", "C", "ZZ", "E", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "D", "C", "ZZ", "D", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "ET", "C", "ZZ", "ET", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "DT", "C", "ZZ", "DT", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "E", "E", "ZZ", "E", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "D", "E", "ZZ", "D", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "ET", "E", "ZZ", "ET", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "DT", "E", "ZZ", "DT", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_02, CuadroMesConcepto.RRTEUS, "T", "E", "ZZ", "T%", null, null));
 
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "E", "C", "ZZ", "E", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "D", "C", "ZZ", "D", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "ET", "C", "ZZ", "ET", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "DT", "C", "ZZ", "DT", "C%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "E", "E", "ZZ", "E", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "D", "E", "ZZ", "D", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "ET", "E", "ZZ", "ET", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "DT", "E", "ZZ", "DT", "E%", null));
-        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
+        cdmsDAO.insert_CM_RRTEUS_RRTONC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId,
                 TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONC, "T", "E", "ZZ", "T%", null, null));
 
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "E", "C", "ZZ", "E", "C%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "D", "C", "ZZ", "D", "C%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "ET", "C", "ZZ", "ET", "C%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "DT", "C", "ZZ", "DT", "C%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "E", "E", "ZZ", "E", "E%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "D", "E", "ZZ", "D", "E%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "ET", "E", "ZZ", "ET", "E%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "DT", "E", "ZZ", "DT", "E%", null));
-        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.RRTONO, "T", "E", "ZZ", "T%", null, null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "E", "C", "ZZ", "E", "C%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "D", "C", "ZZ", "D", "C%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "ET", "C", "ZZ", "ET", "C%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "DT", "C", "ZZ", "DT", "C%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "E", "E", "ZZ", "E", "E%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "D", "E", "ZZ", "D", "E%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "ET", "E", "ZZ", "ET", "E%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "DT", "E", "ZZ", "DT", "E%", null));
+        cdmsDAO.insert_CM_RRTONO(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.RRTONO, "T", "E", "ZZ", "T%", null, null));
 
-        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.TRALOC, "E", "I", "ZZ", "E", "I%", null));
-        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.TRALOC, "D", "I", "ZZ", "D", "I%", null));
-        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.TRALOC, "ET", "I", "ZZ", "%T", "I%", null));
-        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId,
-                TipoDato.DECIMAL_01, CuadroMesConcepto.TRALOC, "T", "I", "ZZ", "T%", "I%", null));
+        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.TRALOC, "E", "I", "ZZ", "E", "I%", null));
+        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.TRALOC, "D", "I", "ZZ", "D", "I%", null));
+        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.TRALOC, "ET", "I", "ZZ", "%T", "I%", null));
+        cdmsDAO.insert_CM_TRALOC(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.DECIMAL_01,
+                CuadroMesConcepto.TRALOC, "T", "I", "ZZ", "T%", "I%", null));
 
         // CONSULTAS RESUMEN DE LA PROPIA TABLA DE CUADRO MES
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "E", "C", "ZZ", "E", "C", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "D", "C", "ZZ", "D", "C", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "ET", "C", "ZZ", "ET", "C", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "DT", "C", "ZZ", "DT", "C", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "E", "E", "ZZ", "E", "E", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "D", "E", "ZZ", "D", "E", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "ET", "E", "ZZ", "ET", "E", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "DT", "E", "ZZ", "DT", "E", null));
-        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(GlobalNames.SQ_INTEGRA), peprId, null,
+        cdmsDAO.insert_CM_MCONV(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, null,
                 CuadroMesConcepto.MCONV, "T", "E", "ZZ", "T", "E", null));
     }
 }

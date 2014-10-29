@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
@@ -17,7 +18,6 @@ import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -27,7 +27,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ValoracionListadoAction.
  */
-public final class ValoracionListadoAction extends BaseAction {
+public final class ValoracionListadoAction extends BaseAction implements PaginatedGrid {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -8684408096397399011L;
@@ -41,10 +41,11 @@ public final class ValoracionListadoAction extends BaseAction {
     /** The page. */
     private int page = 1;
 
+    /** The fecha vigencia. */
     private final Date fechaVigencia = Calendar.getInstance().getTime();
 
     /** The limit. */
-    private int limit = GlobalNames.ROWS_PER_PAGE_DEFAULT;
+    private int limit = ROWS_PER_PAGE_DEFAULT;
 
     /** The tpsr list. */
     private final List<LabelValueVO> tpsrList = new ArrayList<>();

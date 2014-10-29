@@ -16,7 +16,6 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
@@ -133,12 +132,12 @@ public class AspectoBO {
                     throw new OverlapException(AspectoVO.class.getName(), aspc);
                 }
             } else {
-                aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                aspc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 aspcDAO.insert(aspc);
             }
 
-            aspc.getAspv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            aspc.getAspv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             aspcDAO.insertVersion(aspc);
 
@@ -169,8 +168,8 @@ public class AspectoBO {
 
             final IgBO igBO = new IgBO();
 
-            aspc.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
-            aspc.getAspv().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            aspc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            aspc.getAspv().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             aspcDAO.insert(aspc);
             aspcDAO.insertVersion(aspc);

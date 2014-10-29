@@ -52,7 +52,6 @@ import xeredi.integra.model.proceso.dao.ProcesoDAO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-import xeredi.integra.model.util.GlobalNames;
 import xeredi.integra.model.util.grammar.ConditionLexer;
 import xeredi.integra.model.util.grammar.ConditionParser;
 import xeredi.integra.model.util.grammar.FormulaLexer;
@@ -261,7 +260,7 @@ public class ValoradorBO {
         final Set<Long> vlrcIds = new HashSet<Long>();
 
         for (final ValoracionAgregadaVO vlra : vlraList) {
-            vlra.getVlrc().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+            vlra.getVlrc().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             vlra.getVlrc().setAspc(contextoVO.getAspc());
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
 
@@ -273,7 +272,7 @@ public class ValoradorBO {
 
             for (final ValoracionLineaAgregadaVO vlrl : vlra.getVlrlList()) {
                 vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
-                vlrl.getVlrl().setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                vlrl.getVlrl().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                 if (vlrl.getVlrl().getRgla().getRglv().getTipo() == ReglaTipo.T) {
                     vlrlPadreId = vlrl.getVlrl().getId();
@@ -284,7 +283,7 @@ public class ValoradorBO {
                 for (final ValoracionDetalleVO vlrd : vlrl.getVlrdList()) {
                     vlrd.setVlrcId(vlra.getVlrc().getId());
                     vlrd.setVlrlId(vlrl.getVlrl().getId());
-                    vlrd.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    vlrd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 }
             }
         }
@@ -392,7 +391,7 @@ public class ValoradorBO {
                 final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                     vlrt.setPadreId(vlrt.getId());
 
                     vlrt.setRgla(rgla);
@@ -455,7 +454,7 @@ public class ValoradorBO {
                 final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     vlrt.setRgla(rgla);
                     vlrt.setFreferencia(contextoVO.getFref());
@@ -523,7 +522,7 @@ public class ValoradorBO {
                 final List<ValoracionTemporalVO> vlrtListGanadores = new ArrayList<ValoracionTemporalVO>();
 
                 for (final ValoracionTemporalVO vlrt : vlrtList) {
-                    vlrt.setId(igBO.nextVal(GlobalNames.SQ_INTEGRA));
+                    vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     vlrt.setRgla(rgla);
                     vlrt.setFreferencia(contextoVO.getFref());
