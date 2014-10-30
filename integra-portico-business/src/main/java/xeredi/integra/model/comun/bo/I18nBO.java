@@ -34,7 +34,7 @@ public final class I18nBO {
      *            the prvr id
      * @return the map
      */
-    public final Map<String, I18nVO> selectMap(final I18nPrefix prefix, final Long prvrId) {
+    public final static Map<String, I18nVO> selectMap(final I18nPrefix prefix, final Long prvrId) {
         Preconditions.checkNotNull(prefix);
         Preconditions.checkNotNull(prvrId);
 
@@ -64,7 +64,7 @@ public final class I18nBO {
      *            the language
      * @return the list
      */
-    public final List<I18nVO> selectList(final I18nPrefix prefix, final String language) {
+    public final static List<I18nVO> selectList(final I18nPrefix prefix, final String language) {
         Preconditions.checkNotNull(prefix);
         Preconditions.checkNotNull(language);
 

@@ -2,15 +2,19 @@ package xeredi.integra.model.metamodelo.bo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.metamodelo.dao.EntidadGrupoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
@@ -30,23 +34,24 @@ public class EntidadGrupoDatoBO {
      *
      * @param engdVO
      *            the engd vo
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @param i18nMap
+     *            the i18n map
      */
-    public final void insert(final EntidadGrupoDatoVO engdVO) throws DuplicateInstanceException {
+    public final void insert(final EntidadGrupoDatoVO engdVO, final Map<String, I18nVO> i18nMap) {
         Preconditions.checkNotNull(engdVO);
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
         Preconditions.checkNotNull(engdVO.getEtiqueta());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            final IgBO igBO = new IgBO();
+
+            engdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
             engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-            if (engdDAO.exists(engdVO)) {
-                throw new DuplicateInstanceException(EntidadGrupoDatoVO.class.getName(), engdVO);
-            }
-
             engdDAO.insert(engdVO);
+
+            I18nBO.insertMap(session, I18nPrefix.engd, engdVO.getId(), i18nMap);
 
             session.commit();
         }
@@ -57,10 +62,13 @@ public class EntidadGrupoDatoBO {
      *
      * @param engdVO
      *            the engd vo
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final EntidadGrupoDatoVO engdVO) throws InstanceNotFoundException {
+    public final void update(final EntidadGrupoDatoVO engdVO, final Map<String, I18nVO> i18nMap)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(engdVO);
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
@@ -73,6 +81,8 @@ public class EntidadGrupoDatoBO {
                 throw new InstanceNotFoundException(EntidadGrupoDatoVO.class.getName(), engdVO);
             }
 
+            I18nBO.updateMap(session, I18nPrefix.engd, engdVO.getId(), i18nMap);
+
             session.commit();
         }
     }
@@ -80,28 +90,22 @@ public class EntidadGrupoDatoBO {
     /**
      * Delete.
      *
-     * @param entiId
-     *            the enti id
-     * @param numero
-     *            the numero
+     * @param id
+     *            the id
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void delete(final Long entiId, final Integer numero) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(entiId);
-        Preconditions.checkNotNull(numero);
+    public final void delete(final Long id) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(id);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
-            engdCriterioVO.setEntiId(entiId);
-            engdCriterioVO.setNumero(numero);
-
-            if (engdDAO.delete(engdCriterioVO) == 0) {
-                throw new InstanceNotFoundException(EntidadGrupoDatoVO.class.getName(), engdCriterioVO);
-            }
+            engdCriterioVO.setId(id);
+            engdDAO.delete(engdCriterioVO);
+            I18nBO.deleteMap(session, I18nPrefix.engd, id);
 
             session.commit();
         }
@@ -110,30 +114,29 @@ public class EntidadGrupoDatoBO {
     /**
      * Select.
      *
-     * @param entiId
-     *            the enti id
-     * @param numero
-     *            the numero
+     * @param id
+     *            the id
+     * @param idioma
+     *            the idioma
      * @return the entidad grupo dato vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EntidadGrupoDatoVO select(final Long entiId, final Integer numero) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(entiId);
-        Preconditions.checkNotNull(numero);
+    public final EntidadGrupoDatoVO select(final Long id, final String idioma) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(id);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
-            engdCriterioVO.setEntiId(entiId);
-            engdCriterioVO.setNumero(numero);
+            engdCriterioVO.setId(id);
+            engdCriterioVO.setIdioma(idioma);
 
-            final EntidadGrupoDatoVO engdVO = engdDAO.selectCriterio(engdCriterioVO);
+            final EntidadGrupoDatoVO engdVO = engdDAO.selectObject(engdCriterioVO);
 
             if (engdVO == null) {
-                throw new InstanceNotFoundException(EntidadGrupoDatoVO.class.getName(), engdCriterioVO);
+                throw new InstanceNotFoundException(EntidadGrupoDatoVO.class.getName(), id);
             }
 
             return engdVO;
@@ -145,11 +148,11 @@ public class EntidadGrupoDatoBO {
      *
      * @param entiId
      *            the enti id
+     * @param idioma
+     *            the idioma
      * @return the list
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
-    public final List<EntidadGrupoDatoVO> selectList(final Long entiId) throws InstanceNotFoundException {
+    public final List<EntidadGrupoDatoVO> selectList(final Long entiId, final String idioma) {
         Preconditions.checkNotNull(entiId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -158,6 +161,7 @@ public class EntidadGrupoDatoBO {
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setEntiId(entiId);
+            engdCriterioVO.setIdioma(idioma);
 
             return engdDAO.selectList(engdCriterioVO);
         }
@@ -168,25 +172,17 @@ public class EntidadGrupoDatoBO {
      *
      * @param entiId
      *            the enti id
+     * @param idioma
+     *            the idioma
      * @return the list
      */
-    public final List<LabelValueVO> selectLabelValues(final Long entiId) {
-        Preconditions.checkNotNull(entiId);
+    public final List<LabelValueVO> selectLabelValues(final Long entiId, final String idioma) {
+        final List<LabelValueVO> list = new ArrayList<>();
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
-            final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
-
-            engdCriterioVO.setEntiId(entiId);
-
-            final List<LabelValueVO> list = new ArrayList<>();
-
-            for (final EntidadGrupoDatoVO engd : engdDAO.selectList(engdCriterioVO)) {
-                list.add(new LabelValueVO(engd.getEtiqueta(), engd.getNumero()));
-            }
-
-            return list;
+        for (final EntidadGrupoDatoVO engd : selectList(entiId, idioma)) {
+            list.add(new LabelValueVO(engd.getEtiqueta(), engd.getNumero()));
         }
+
+        return list;
     }
 }

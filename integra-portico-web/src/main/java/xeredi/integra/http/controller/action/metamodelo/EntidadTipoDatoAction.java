@@ -180,7 +180,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
     private void loadLabelValues() {
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        engdList.addAll(engdBO.selectLabelValues(entd.getEntiId()));
+        engdList.addAll(engdBO.selectLabelValues(entd.getEntiId(), getIdioma()));
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
         final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();

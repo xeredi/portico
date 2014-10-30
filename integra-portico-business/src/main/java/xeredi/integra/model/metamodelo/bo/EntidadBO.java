@@ -182,6 +182,7 @@ public class EntidadBO {
         final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
         engdCriterioVO.setEntiId(entiVO.getId());
+        engdCriterioVO.setIdioma(idioma);
 
         final List<EntidadGrupoDatoVO> engdList = engdDAO.selectList(engdCriterioVO);
 
@@ -191,6 +192,7 @@ public class EntidadBO {
             for (final EntidadGrupoDatoVO engdVO : engdList) {
                 if (engdVO.getNumero() > 1) {
                     entiVO.getEngdList().add(engdVO);
+                    engdVO.setEntiId(null);
                 }
             }
         }
@@ -208,6 +210,7 @@ public class EntidadBO {
 
             for (final EntidadTipoDatoVO entdVO : entdList) {
                 entiVO.getEntdList().add(entdVO);
+                entdVO.setEntiId(null);
             }
         }
 

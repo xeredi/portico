@@ -38,13 +38,13 @@ public interface EntidadGrupoDatoDAO {
     int delete(final EntidadGrupoDatoCriterioVO engdCriterioVO);
 
     /**
-     * Exists.
+     * Delete list.
      *
-     * @param engdVO
-     *            the engd vo
-     * @return true, if successful
+     * @param entiId
+     *            the enti id
+     * @return the int
      */
-    boolean exists(final EntidadGrupoDatoVO engdVO);
+    int deleteList(final Long entiId);
 
     /**
      * Select criterio.
@@ -53,7 +53,7 @@ public interface EntidadGrupoDatoDAO {
      *            the engd criterio vo
      * @return the entidad grupo dato vo
      */
-    EntidadGrupoDatoVO selectCriterio(final EntidadGrupoDatoCriterioVO engdCriterioVO);
+    EntidadGrupoDatoVO selectObject(final EntidadGrupoDatoCriterioVO engdCriterioVO);
 
     /**
      * Select list.

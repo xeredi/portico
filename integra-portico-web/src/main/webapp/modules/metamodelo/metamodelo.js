@@ -1,4 +1,4 @@
-angular.module("metamodelo", [  ])
+angular.module("metamodelo", [])
 
 .config(config)
 
@@ -312,7 +312,7 @@ function tpdtGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function filter(size) {
         var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tpdt-filter-content.html',
+            templateUrl : 'modules/metamodelo/tpdt-filter-modal.html',
             controller : 'tpdtFilterController',
             controllerAs : 'vm',
             size : size,
@@ -573,7 +573,7 @@ function tpprGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function filter(size) {
         var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tppr-filter-content.html',
+            templateUrl : 'modules/metamodelo/tppr-filter-modal.html',
             controller : 'tpprFilterController',
             controllerAs : 'vm',
             size : size,
@@ -832,7 +832,7 @@ function tpsrGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function filter(size) {
         var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tpsr-filter-content.html',
+            templateUrl : 'modules/metamodelo/tpsr-filter-modal.html',
             controller : 'tpsrFilterController',
             controllerAs : 'vm',
             size : size,
@@ -1086,7 +1086,7 @@ function tpesGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function filter(size) {
         var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tpes-filter-content.html',
+            templateUrl : 'modules/metamodelo/tpes-filter-modal.html',
             controller : 'tpesFilterController',
             controllerAs : 'vm',
             size : size,

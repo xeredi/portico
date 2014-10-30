@@ -1,12 +1,15 @@
 package xeredi.integra.model.metamodelo.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadGrupoDatoCriterioVO.
  */
-public final class EntidadGrupoDatoCriterioVO {
+public final class EntidadGrupoDatoCriterioVO extends BaseCriterioVO {
+
+    /** The id. */
+    private Long id;
 
     /** The enti id. */
     private Long entiId;
@@ -15,16 +18,8 @@ public final class EntidadGrupoDatoCriterioVO {
     private Integer numero;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -33,7 +28,7 @@ public final class EntidadGrupoDatoCriterioVO {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -43,7 +38,7 @@ public final class EntidadGrupoDatoCriterioVO {
 
     /**
      * Gets the numero.
-     * 
+     *
      * @return the numero
      */
     public Integer getNumero() {
@@ -52,12 +47,31 @@ public final class EntidadGrupoDatoCriterioVO {
 
     /**
      * Sets the numero.
-     * 
+     *
      * @param value
      *            the new numero
      */
     public void setNumero(final Integer value) {
         numero = value;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
 }

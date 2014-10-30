@@ -77,11 +77,10 @@ public final class TipoServicioAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final TipoServicioBO tpsrBO = new TipoServicioBO();
-        final I18nBO i18nBO = new I18nBO();
 
         try {
             enti = tpsrBO.select(enti.getId(), getIdioma());
-            i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpsr), String.valueOf(enti.getId()));
         }
@@ -169,12 +168,10 @@ public final class TipoServicioAction extends BaseAction {
         final TipoServicioBO tpsrBO = new TipoServicioBO();
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final EntidadBO entiBO = new EntidadBO();
-        final I18nBO i18nBO = new I18nBO();
 
         try {
             enti = tpsrBO.select(enti.getId(), getIdioma());
-
-            i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
             TipoSubservicioCriterioVO tpssCriterioVO = null;
 

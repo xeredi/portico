@@ -8,6 +8,8 @@ public enum I18nPrefix {
 
     /** The enti. */
     enti,
+    /** The engd. */
+    engd,
     /** The tpdt. */
     tpdt,
     /** The cdrf. */

@@ -16,12 +16,14 @@ FROM tbl_tipo_dato_tpdt\
 
 ALTER TABLE tbl_tipo_dato_tpdt DROP COLUMN tpdt_nombre\
 
+
 -- i18n de aspectos
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
 SELECT 'aspv', 'es', aspv_pk, aspv_descripcion
 FROM tbl_aspecto_version_aspv\
 
 ALTER TABLE tbl_aspecto_version_aspv DROP COLUMN aspv_descripcion\
+
 
 -- i18n de cargos
 INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
@@ -30,6 +32,21 @@ FROM tbl_cargo_version_crgv\
 
 ALTER TABLE tbl_cargo_version_crgv DROP COLUMN crgv_descripcion\
 
+
+-- i18n de grupos de datos de entidades
+ALTER TABLE tbl_entidad_grupo_dato_engd ADD engd_pk NUMBER(19)\
+
+UPDATE tbl_entidad_grupo_dato_engd SET engd_pk = engd_enti_pk * 10 + engd_orden\
+
+ALTER TABLE tbl_entidad_grupo_dato_engd drop constraint pk_engd\
+
+ALTER table tbl_entidad_grupo_dato_engd add CONSTRAINT pk_engd PRIMARY KEY  (engd_pk)\
+
+INSERT INTO tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
+SELECT 'engd', 'es', engd_pk, engd_etiqueta
+FROM tbl_entidad_grupo_dato_engd\
+
+ALTER TABLE tbl_entidad_grupo_dato_engd DROP COLUMN engd_etiqueta\
 
 
 
@@ -50,6 +67,24 @@ ALTER TABLE tbl_cargo_version_crgv DROP COLUMN crgv_descripcion\
 
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+-- i18n de grupos de datos de entidades
+ALTER TABLE tbl_entidad_grupo_dato_engd ADD engd_etiqueta VARCHAR2(255)\
+
+UPDATE tbl_entidad_grupo_dato_engd SET
+ 	engd_etiqueta = (
+		SELECT i18n_text
+		FROM tbl_i18n_i18n
+		WHERE i18n_ext_pk = engd_pk AND i18n_pref = 'engd' AND i18n_lang = 'es'
+	)\
+
+DELETE FROM tbl_i18n_i18n
+WHERE i18n_pref = 'engd'
+	AND I18N_lang = 'es'\
+
+ALTER TABLE tbl_entidad_grupo_dato_engd DROP CONSTRAINT pk_engd\
+ALTER TABLE tbl_entidad_grupo_dato_engd ADD CONSTRAINT pk_engd PRIMARY KEY (engd_enti_pk, engd_orden)\
+ALTER TABLE tbl_entidad_grupo_dato_engd DROP COLUMN engd_pk\
 
 
 -- i18n de cargos
@@ -109,4 +144,5 @@ UPDATE tbl_tipo_dato_tpdt SET
 DELETE FROM tbl_i18n_i18n
 WHERE i18n_pref = 'tpdt'
   AND I18N_lang = 'es'\
+
 

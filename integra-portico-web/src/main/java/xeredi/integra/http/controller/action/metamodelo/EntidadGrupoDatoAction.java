@@ -1,13 +1,17 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.Map;
+
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc
@@ -24,6 +28,9 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
     /** The entd form. */
     private EntidadGrupoDatoVO engd;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /**
      * Instantiates a new entidad grupo dato action.
@@ -63,7 +70,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
         try {
-            engd = engdBO.select(engd.getEntiId(), engd.getNumero());
+            engd = engdBO.select(engd.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
         }
@@ -75,6 +83,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("engd-save")
     public String save() throws InstanceNotFoundException {
@@ -84,19 +94,17 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.engd_numero, engd.getNumero());
         FieldValidator.validateRequired(this, MessageI18nKey.engd_etiqueta, engd.getEtiqueta());
 
+        FieldValidator.validateI18n(this, i18nMap);
+
         if (hasErrors()) {
             return SUCCESS;
         }
 
         if (accion == ACCION_EDICION.create) {
-            try {
-                engdBO.insert(engd);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.engd));
-            }
+            engdBO.insert(engd, i18nMap);
         } else {
             try {
-                engdBO.update(engd);
+                engdBO.update(engd, i18nMap);
             } catch (final InstanceNotFoundException ex) {
                 addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
             }
@@ -115,7 +123,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
         final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
         try {
-            engd = engdBO.select(engd.getEntiId(), engd.getNumero());
+            engd = engdBO.select(engd.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
         }
@@ -160,6 +169,25 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     public void setEngd(final EntidadGrupoDatoVO value) {
         engd = value;
+    }
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
     }
 
 }

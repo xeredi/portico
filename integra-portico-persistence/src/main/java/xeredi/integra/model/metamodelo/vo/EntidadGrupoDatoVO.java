@@ -9,6 +9,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public final class EntidadGrupoDatoVO {
 
     /** The enti id. */
+    private Long id;
+
+    /** The enti id. */
     private Long entiId;
 
     /** The numero. */
@@ -27,7 +30,7 @@ public final class EntidadGrupoDatoVO {
 
     /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -36,7 +39,7 @@ public final class EntidadGrupoDatoVO {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -46,7 +49,7 @@ public final class EntidadGrupoDatoVO {
 
     /**
      * Gets the numero.
-     * 
+     *
      * @return the numero
      */
     public Integer getNumero() {
@@ -55,7 +58,7 @@ public final class EntidadGrupoDatoVO {
 
     /**
      * Sets the numero.
-     * 
+     *
      * @param value
      *            the new numero
      */
@@ -65,7 +68,7 @@ public final class EntidadGrupoDatoVO {
 
     /**
      * Gets the etiqueta.
-     * 
+     *
      * @return the etiqueta
      */
     public String getEtiqueta() {
@@ -74,12 +77,31 @@ public final class EntidadGrupoDatoVO {
 
     /**
      * Sets the etiqueta.
-     * 
+     *
      * @param value
      *            the new etiqueta
      */
     public void setEtiqueta(final String value) {
         etiqueta = value;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
 }
