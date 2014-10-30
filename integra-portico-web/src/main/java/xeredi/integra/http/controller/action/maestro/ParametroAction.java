@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,6 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
-import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -70,7 +68,8 @@ public final class ParametroAction extends ItemAction {
 
         accion = ACCION_EDICION.create;
         i18nMap = new HashMap<>();
-        item.setFref(Calendar.getInstance().getTime());
+
+        setFechaVigencia(Calendar.getInstance().getTime());
 
         enti = TipoParametroProxy.select(item.getEntiId());
 
@@ -89,24 +88,16 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        if (item.getFref() == null) {
-            item.setFref(Calendar.getInstance().getTime());
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
         }
 
         accion = ACCION_EDICION.edit;
 
-        final ParametroBO prmtBO = new ParametroBO();
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-
-        prmtCriterioVO.setId(item.getId());
-        prmtCriterioVO.setFechaVigencia(item.getFref());
-        prmtCriterioVO.setIdioma(getIdioma());
-
         try {
-            item = prmtBO.selectObject(prmtCriterioVO);
+            final ParametroBO prmtBO = new ParametroBO();
 
-            item.setFref(prmtCriterioVO.getFechaVigencia());
-
+            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
             enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
@@ -130,22 +121,17 @@ public final class ParametroAction extends ItemAction {
     public String duplicate() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getFref());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.duplicate;
 
         try {
             final ParametroBO prmtBO = new ParametroBO();
-            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-            prmtCriterioVO.setId(item.getId());
-            prmtCriterioVO.setFechaVigencia(item.getFref());
-            prmtCriterioVO.setIdioma(getIdioma());
-
-            item = prmtBO.selectObject(prmtCriterioVO);
-
-            item.setFref(prmtCriterioVO.getFechaVigencia());
-
+            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
             enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
@@ -267,21 +253,14 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        if (item.getFref() == null) {
-            item.setFref(Calendar.getInstance().getTime());
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-
-        prmtCriterioVO.setId(item.getId());
-        prmtCriterioVO.setFechaVigencia(item.getFref());
-        prmtCriterioVO.setIdioma(getIdioma());
-
         try {
-            item = prmtBO.selectObject(prmtCriterioVO);
+            final ParametroBO prmtBO = new ParametroBO();
 
-            item.setFref(prmtCriterioVO.getFechaVigencia());
+            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
             enti = TipoParametroProxy.select(item.getEntiId());
 
             if (enti.getI18n()) {
@@ -302,14 +281,6 @@ public final class ParametroAction extends ItemAction {
     @Override
     public final ParametroVO getItem() {
         return item;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return item == null ? Calendar.getInstance().getTime() : item.getFref();
     }
 
     /**

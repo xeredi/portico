@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action;
 
 import java.text.MessageFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -51,6 +52,9 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 
     /** The bundle. */
     private final ResourceBundle bundle = PorticoResourceBundle.getBundle(getLocale());
+
+    /** The fecha vigencia. */
+    private Date fechaVigencia;
 
     // get / set
     /**
@@ -127,6 +131,25 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
     @Override
     public final String getText(final String key) {
         return bundle.getString(key);
+    }
+
+    /**
+     * Gets the fecha vigencia.
+     *
+     * @return the fecha vigencia
+     */
+    public final Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    /**
+     * Sets the fecha vigencia.
+     *
+     * @param value
+     *            the new fecha vigencia
+     */
+    public final void setFechaVigencia(final Date value) {
+        fechaVigencia = value;
     }
 
 }

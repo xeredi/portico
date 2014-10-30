@@ -24,6 +24,9 @@ public final class SubservicioVO extends ItemVO {
     /** The ffin. */
     private Date ffin;
 
+    /** The fref. */
+    private Date fref;
+
     /** The estado. */
     private String estado;
 
@@ -149,6 +152,25 @@ public final class SubservicioVO extends ItemVO {
      */
     public void setEstado(final String value) {
         estado = value;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
     }
 
 }

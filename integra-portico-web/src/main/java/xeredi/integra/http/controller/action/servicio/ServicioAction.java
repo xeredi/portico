@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,20 +38,8 @@ public final class ServicioAction extends ItemAction {
     /** The srvc form. */
     private ServicioVO item;
 
-    /** The fecha vigencia. */
-    private final Date fechaVigencia;
-
     /** The subps. */
     private List<LabelValueVO> subpList;
-
-    /**
-     * Instantiates a new servicio action.
-     */
-    public ServicioAction() {
-        super();
-
-        fechaVigencia = Calendar.getInstance().getTime();
-    }
 
     /**
      * {@inheritDoc}
@@ -78,6 +65,8 @@ public final class ServicioAction extends ItemAction {
 
             item = srvcBO.select(item.getId(), getIdioma());
             enti = TipoServicioProxy.select(item.getEntiId());
+
+            setFechaVigencia(item.getFref());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
@@ -99,14 +88,13 @@ public final class ServicioAction extends ItemAction {
 
         enti = TipoServicioProxy.select(item.getEntiId());
 
-        if (!enti.getTemporal()) {
-            item.setFref(Calendar.getInstance().getTime());
-        }
-
+        item.setFref(Calendar.getInstance().getTime());
         item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
         loadLabelValuesMap(enti);
         loadSubpList();
+
+        setFechaVigencia(item.getFref());
 
         return SUCCESS;
     }
@@ -129,6 +117,7 @@ public final class ServicioAction extends ItemAction {
             item = srvcBO.select(item.getId(), getIdioma());
             enti = TipoServicioProxy.select(item.getEntiId());
 
+            setFechaVigencia(item.getFref());
             loadLabelValuesMap(enti);
             loadSubpList();
         } catch (final InstanceNotFoundException ex) {
@@ -156,6 +145,7 @@ public final class ServicioAction extends ItemAction {
             item = srvcBO.select(item.getId(), getIdioma());
             enti = TipoServicioProxy.select(item.getEntiId());
 
+            setFechaVigencia(item.getFref());
             loadLabelValuesMap(enti);
             loadSubpList();
         } catch (final InstanceNotFoundException ex) {
@@ -261,7 +251,8 @@ public final class ServicioAction extends ItemAction {
             final Set<Long> tpprIds = new HashSet<>();
 
             tpprIds.add(Entidad.SUBPUERTO.getId());
-            subpList = prmtBO.selectLabelValues(tpprIds, fechaVigencia, getIdioma()).get(Entidad.SUBPUERTO.getId());
+            subpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma())
+                    .get(Entidad.SUBPUERTO.getId());
         }
     }
 
@@ -292,14 +283,6 @@ public final class ServicioAction extends ItemAction {
      */
     public void setItem(final ServicioVO value) {
         item = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return fechaVigencia;
     }
 
     /**

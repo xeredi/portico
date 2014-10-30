@@ -1,7 +1,5 @@
 package xeredi.integra.http.controller.action.estadistica;
 
-import java.util.Date;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
@@ -68,14 +66,6 @@ public final class EstadisticaAction extends ItemAction {
     }
 
     // get / set
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return item.getPepr().getFreferencia();
-    }
 
     /**
      * {@inheritDoc}

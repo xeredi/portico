@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.comun;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,13 +36,6 @@ public abstract class ItemListadoAction extends BaseAction implements PaginatedG
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public abstract Date getFechaVigencia();
 
     /**
      * Gets the limits.

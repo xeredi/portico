@@ -45,7 +45,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
     private final List<LabelValueVO> rgla2List = new ArrayList<>();
 
     /** The fecha vigencia. */
-    private Date fechaVigencia;
+    private final Date fechaVigencia;
 
     /**
      * Instantiates a new regla incompatible action.
@@ -245,25 +245,6 @@ public final class ReglaIncompatibleAction extends BaseAction {
      */
     public void setAccion(final ACCION_EDICION value) {
         accion = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

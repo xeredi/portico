@@ -42,9 +42,10 @@ public class I18nJs {
 
         final Set<I18nPrefix> i18nPrefixSet = new HashSet<>();
 
-        i18nPrefixSet.add(I18nPrefix.cdrf);
         i18nPrefixSet.add(I18nPrefix.enti);
+        i18nPrefixSet.add(I18nPrefix.engd);
         i18nPrefixSet.add(I18nPrefix.tpdt);
+        i18nPrefixSet.add(I18nPrefix.cdrf);
 
         for (final String language : languages) {
             final List<LabelValueVO> labelValues = new ArrayList<>();

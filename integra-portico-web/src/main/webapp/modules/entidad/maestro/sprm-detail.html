@@ -1,8 +1,8 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.item.fref}}"><i
+        <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
-            ng-href="#/maestro/sprm/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.item.fref}}"><i
+            ng-href="#/maestro/sprm/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
             class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
         <button data-ng-click="remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
@@ -16,7 +16,7 @@
             <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
             <p class="form-control-static">
                 <a
-                    ng-href="#/maestro/prmt/detail/{{vm.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.item.fref}}"
+                    ng-href="#/maestro/prmt/detail/{{vm.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.fechaVigencia}}"
                     ng-bind="vm.item.prmtAsociado.etiqueta"></a>
             </p>
         </div>

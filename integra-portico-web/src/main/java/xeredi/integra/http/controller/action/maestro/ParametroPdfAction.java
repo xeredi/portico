@@ -136,16 +136,6 @@ public final class ParametroPdfAction extends BaseAction {
     }
 
     /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
-    }
-
-    /**
      * Gets the stream.
      *
      * @return the stream

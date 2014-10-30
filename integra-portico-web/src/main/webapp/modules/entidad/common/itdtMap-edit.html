@@ -44,7 +44,7 @@
                 <div ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'" class="input-group-sm"
                     ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="vm.item.itdtMap[entd.tpdt.id].prmt"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, vm.item.fref)"
+                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, vm.fechaVigencia)"
                         typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
                         class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>

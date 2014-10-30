@@ -52,7 +52,7 @@ public final class ReglaAction extends BaseAction {
     private final List<ReglaIncompatibleVO> rginList = new ArrayList<>();
 
     /** The fecha vigencia. */
-    private Date fechaVigencia;
+    private final Date fechaVigencia;
 
     /** The enti facturable list. */
     private final List<LabelValueVO> entiFacturableList = new ArrayList<>();
@@ -385,25 +385,6 @@ public final class ReglaAction extends BaseAction {
      */
     public void setRgla(final ReglaVO value) {
         rgla = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.servicio.escala;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -63,7 +62,7 @@ public final class EscalaAction extends ItemAction {
                     && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
 
             item.getItdtMap().get(TipoDato.CADENA_03.getId())
-                    .setCadena(escaBO.obtenerNumeroManifiestoAeat(item.getId()));
+            .setCadena(escaBO.obtenerNumeroManifiestoAeat(item.getId()));
             item.getItdtMap().get(TipoDato.FECHA_02.getId()).setFecha(Calendar.getInstance().getTime());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
@@ -92,14 +91,6 @@ public final class EscalaAction extends ItemAction {
     }
 
     // get / set
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return item == null ? Calendar.getInstance().getTime() : item.getFref();
-    }
 
     /**
      * {@inheritDoc}

@@ -64,13 +64,6 @@ function config($routeProvider) {
         controllerAs : 'vm'
     })
 
-    .when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
-        templateUrl : "modules/entidad/maestro/prmt-detail.html",
-        controller : "prmtDetailController",
-        controllerAs : 'vm',
-        reloadOnSearch : false
-    })
-
     .when("/maestro/prmt/detail/:entiId/:itemId", {
         templateUrl : "modules/entidad/maestro/prmt-detail.html",
         controller : "prmtDetailController",
@@ -78,10 +71,30 @@ function config($routeProvider) {
         reloadOnSearch : false
     })
 
+    .when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
+        templateUrl : "modules/entidad/maestro/prmt-detail.html",
+        controller : "prmtDetailController",
+        controllerAs : 'vm',
+        reloadOnSearch : false
+    })
+
+    .when("/maestro/prmt/edit/:entiId/:itemId", {
+        templateUrl : "modules/entidad/maestro/prmt-edit.html",
+        controller : "prmtEditController",
+        controllerAs : 'vm'
+    })
+
     .when("/maestro/prmt/edit/:entiId/:itemId/:fechaVigencia", {
         templateUrl : "modules/entidad/maestro/prmt-edit.html",
         controller : "prmtEditController",
         controllerAs : 'vm'
+    })
+
+    .when("/maestro/prmt/duplicate/:entiId/:itemId", {
+        templateUrl : "modules/entidad/maestro/prmt-edit.html",
+        controller : "prmtDuplicateController",
+        controllerAs : 'vm',
+        reloadOnSearch : false
     })
 
     .when("/maestro/prmt/duplicate/:entiId/:itemId/:fechaVigencia", {
@@ -91,9 +104,33 @@ function config($routeProvider) {
         reloadOnSearch : false
     })
 
+    .when("/maestro/sprm/detail/:entiId/:itemId", {
+        templateUrl : "modules/entidad/maestro/sprm-detail.html",
+        controller : "sprmDetailController",
+        controllerAs : 'vm'
+    })
+
+    .when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia", {
+        templateUrl : "modules/entidad/maestro/sprm-detail.html",
+        controller : "sprmDetailController",
+        controllerAs : 'vm'
+    })
+
+    .when("/maestro/sprm/create/:entiId/:prmtId", {
+        templateUrl : "modules/entidad/maestro/sprm-edit.html",
+        controller : "sprmCreateController",
+        controllerAs : 'vm'
+    })
+
     .when("/maestro/sprm/create/:entiId/:prmtId/:fechaVigencia", {
         templateUrl : "modules/entidad/maestro/sprm-edit.html",
         controller : "sprmCreateController",
+        controllerAs : 'vm'
+    })
+
+    .when("/maestro/sprm/edit/:entiId/:itemId", {
+        templateUrl : "modules/entidad/maestro/sprm-edit.html",
+        controller : "sprmEditController",
         controllerAs : 'vm'
     })
 
@@ -103,17 +140,19 @@ function config($routeProvider) {
         controllerAs : 'vm'
     })
 
+    .when("/maestro/sprm/duplicate/:entiId/:itemId", {
+        templateUrl : "modules/entidad/maestro/sprm-edit.html",
+        controller : "sprmDuplicateController",
+        controllerAs : 'vm'
+    })
+
     .when("/maestro/sprm/duplicate/:entiId/:itemId/:fechaVigencia", {
         templateUrl : "modules/entidad/maestro/sprm-edit.html",
         controller : "sprmDuplicateController",
         controllerAs : 'vm'
     })
 
-    .when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia", {
-        templateUrl : "modules/entidad/maestro/sprm-detail.html",
-        controller : "sprmDetailController",
-        controllerAs : 'vm'
-    });
+    ;
 }
 
 function tpprService($http) {
@@ -158,7 +197,7 @@ function prmtService($http) {
     }
 
     function detail(itemId, fechaVigencia) {
-        return $http.get("maestro/prmt-detail.action?item.id=" + itemId + "&item.fref=" + fechaVigencia).then(
+        return $http.get("maestro/prmt-detail.action?item.id=" + itemId + "&fechaVigencia=" + fechaVigencia).then(
                 searchComplete);
 
         function searchComplete(response) {
@@ -315,6 +354,7 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
     prmtService.detail($routeParams.itemId, $routeParams.fechaVigencia).then(
             function(data) {
                 vm.enti = data.enti;
+                vm.fechaVigencia = data.fechaVigencia;
                 vm.item = data.item;
                 vm.i18nMap = data.i18nMap;
                 vm.itemHijosMap = {};
@@ -443,6 +483,7 @@ function prmtCreateController($http, $location, $routeParams, pageTitleService) 
 
     $http.get("maestro/prmt-create.action?item.entiId=" + $routeParams.entiId).success(function(data) {
         vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.i18nMap = data.i18nMap;
         vm.labelValuesMap = data.labelValuesMap;
@@ -476,9 +517,10 @@ function prmtEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("maestro/prmt-edit.action?item.id=" + $routeParams.itemId + "&item.fref=" + $routeParams.fechaVigencia)
+    $http.get("maestro/prmt-edit.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
             .success(function(data) {
                 vm.enti = data.enti;
+                vm.fechaVigencia = data.fechaVigencia;
                 vm.item = data.item;
                 vm.i18nMap = data.i18nMap;
                 vm.labelValuesMap = data.labelValuesMap;
@@ -516,9 +558,10 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
 
     $http
             .get(
-                    "maestro/prmt-duplicate.action?item.id=" + $routeParams.itemId + "&item.fref="
+                    "maestro/prmt-duplicate.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
                             + $routeParams.fechaVigencia).success(function(data) {
                 vm.enti = data.enti;
+                vm.fechaVigencia = data.fechaVigencia;
                 vm.item = data.item;
                 vm.i18nMap = data.i18nMap;
                 vm.labelValuesMap = data.labelValuesMap;
@@ -553,9 +596,10 @@ function sprmDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.get("maestro/sprm-detail.action?item.id=" + $routeParams.itemId + "&item.fref=" + $routeParams.fechaVigencia)
+    $http.get("maestro/sprm-detail.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
             .success(function(data) {
                 vm.enti = data.enti;
+                vm.fechaVigencia = data.fechaVigencia;
                 vm.item = data.item;
             });
 
@@ -589,8 +633,9 @@ function sprmCreateController($http, $location, $routeParams, pageTitleService) 
 
     $http.get(
             "maestro/sprm-create.action?item.entiId=" + $routeParams.entiId + "&item.prmtId=" + $routeParams.prmtId
-                    + "&item.fref=" + $routeParams.fechaVigencia).success(function(data) {
+                    + "&fechaVigencia=" + $routeParams.fechaVigencia).success(function(data) {
         vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
         vm.accion = data.accion;
@@ -622,9 +667,10 @@ function sprmEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("maestro/sprm-edit.action?item.id=" + $routeParams.itemId + "&item.fref=" + $routeParams.fechaVigencia)
+    $http.get("maestro/sprm-edit.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
             .success(function(data) {
                 vm.enti = data.enti;
+                vm.fechaVigencia = data.fechaVigencia;
                 vm.item = data.item;
                 vm.labelValuesMap = data.labelValuesMap;
                 vm.accion = data.accion;
@@ -660,9 +706,10 @@ function sprmDuplicateController($http, $location, $routeParams, pageTitleServic
 
     $http
             .get(
-                    "maestro/sprm-duplicate.action?item.id=" + $routeParams.itemId + "&item.fref="
+                    "maestro/sprm-duplicate.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
                             + $routeParams.fechaVigencia).success(function(data) {
                 vm.enti = data.enti;
+                vm.fechaVigencia = data.fechaVigencia;
                 vm.item = data.item;
                 vm.labelValuesMap = data.labelValuesMap;
                 vm.accion = data.accion;

@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.comun;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -41,13 +40,6 @@ public abstract class ItemAction extends BaseAction {
     }
 
     // get / set
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public abstract Date getFechaVigencia();
 
     /**
      * Gets the label values map.

@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.servicio.escala;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -33,9 +32,6 @@ public final class AtraqueAction extends ItemAction {
 
     /** The item. */
     private SubservicioVO item;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
 
     /**
      * {@inheritDoc}
@@ -484,14 +480,6 @@ public final class AtraqueAction extends ItemAction {
      */
     public void setItem(final SubservicioVO value) {
         item = value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return item == null || item.getSrvc() == null ? Calendar.getInstance().getTime() : item.getSrvc().getFref();
     }
 
 }

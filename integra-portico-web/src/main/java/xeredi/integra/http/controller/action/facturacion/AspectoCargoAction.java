@@ -40,7 +40,7 @@ public final class AspectoCargoAction extends BaseAction {
     private AspectoCargoVO ascr;
 
     /** The fecha vigencia. */
-    private Date fechaVigencia;
+    private final Date fechaVigencia;
 
     /** The crgo list. */
     private final List<LabelValueVO> crgoList = new ArrayList<LabelValueVO>();
@@ -229,25 +229,6 @@ public final class AspectoCargoAction extends BaseAction {
      */
     public void setAscr(final AspectoCargoVO value) {
         ascr = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

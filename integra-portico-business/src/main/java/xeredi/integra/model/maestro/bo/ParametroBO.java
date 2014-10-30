@@ -627,7 +627,7 @@ public class ParametroBO {
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
 
             if (prmtVO == null) {
-                throw new InstanceNotFoundException(prmtCriterioVO.getEntiId(), prmtCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.prmt, prmtCriterioVO);
             }
 
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
@@ -665,44 +665,7 @@ public class ParametroBO {
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
 
             if (prmtVO == null) {
-                throw new InstanceNotFoundException(prmtCriterioVO.getEntiId(), prmtCriterioVO);
-            }
-
-            fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
-
-            return prmtVO;
-        }
-    }
-
-    /**
-     * Select.
-     *
-     * @param prvrId
-     *            the prvr id
-     * @param idioma
-     *            the idioma
-     * @return the parametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public ParametroVO select(final Long prvrId, final String idioma) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(prvrId);
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
-            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-            final Set<Long> prvrIds = new HashSet<>();
-
-            prvrIds.add(prvrId);
-
-            prmtCriterioVO.setPrvrIds(prvrIds);
-            prmtCriterioVO.setIdioma(idioma);
-
-            final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
-
-            if (prmtVO == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.prmt, prmtCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.prmt, prmtId);
             }
 
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);

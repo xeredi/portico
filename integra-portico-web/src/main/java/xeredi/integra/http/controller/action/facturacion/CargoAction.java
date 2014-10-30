@@ -50,7 +50,7 @@ public final class CargoAction extends BaseAction {
     private final List<ReglaVO> rglaList = new ArrayList<>();
 
     /** The fecha vigencia. */
-    private Date fechaVigencia;
+    private final Date fechaVigencia;
 
     /**
      * Instantiates a new cargo action.
@@ -254,25 +254,6 @@ public final class CargoAction extends BaseAction {
      */
     public void setCrgo(final CargoVO value) {
         crgo = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

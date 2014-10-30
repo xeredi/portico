@@ -9,7 +9,7 @@
                 <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
                 <div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
                     <input type="text" ng-model="vm.item.prmtAsociado"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, item.fref)"
+                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
                         typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
                         class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
                 </div>

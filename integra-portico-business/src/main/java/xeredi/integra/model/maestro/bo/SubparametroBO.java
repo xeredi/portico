@@ -3,6 +3,7 @@ package xeredi.integra.model.maestro.bo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -303,23 +304,35 @@ public class SubparametroBO {
     /**
      * Select object.
      *
-     * @param sprmCriterioVO
-     *            the sprm criterio vo
+     * @param sprmId
+     *            the sprm id
+     * @param idioma
+     *            the idioma
+     * @param fechaVigencia
+     *            the fecha vigencia
      * @return the subparametro vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final SubparametroVO selectObject(final SubparametroCriterioVO sprmCriterioVO)
+    public final SubparametroVO selectObject(final Long sprmId, final String idioma, final Date fechaVigencia)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(sprmCriterioVO);
+        Preconditions.checkNotNull(sprmId);
+        Preconditions.checkNotNull(idioma);
+        Preconditions.checkNotNull(fechaVigencia);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             sprmDAO = session.getMapper(SubparametroDAO.class);
 
+            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+
+            sprmCriterioVO.setId(sprmId);
+            sprmCriterioVO.setIdioma(idioma);
+            sprmCriterioVO.setFechaVigencia(fechaVigencia);
+
             final SubparametroVO sprmVO = sprmDAO.selectObject(sprmCriterioVO);
 
             if (sprmVO == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.sprm, sprmCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.sprm, sprmId);
             }
 
             fillDependencies(session, Arrays.asList(new SubparametroVO[] { sprmVO }), sprmCriterioVO);

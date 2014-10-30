@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -12,7 +11,6 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
-import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
@@ -62,6 +60,10 @@ public final class SubparametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getEntiId());
         Preconditions.checkNotNull(item.getPrmtId());
 
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         accion = ACCION_EDICION.create;
 
         enti = TipoSubparametroProxy.select(item.getEntiId());
@@ -80,19 +82,17 @@ public final class SubparametroAction extends ItemAction {
     public String edit() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getFref());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.edit;
 
         try {
             final SubparametroBO sprmBO = new SubparametroBO();
-            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-            sprmCriterioVO.setId(item.getId());
-            sprmCriterioVO.setFechaVigencia(item.getFref());
-            sprmCriterioVO.setIdioma(getIdioma());
-
-            item = sprmBO.selectObject(sprmCriterioVO);
+            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
             enti = TipoSubparametroProxy.select(item.getEntiId());
 
             loadLabelValuesMap(enti);
@@ -112,22 +112,17 @@ public final class SubparametroAction extends ItemAction {
     public String duplicate() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getFref());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.duplicate;
 
         try {
             final SubparametroBO sprmBO = new SubparametroBO();
-            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-            sprmCriterioVO.setId(item.getId());
-            sprmCriterioVO.setFechaVigencia(item.getFref());
-            sprmCriterioVO.setIdioma(getIdioma());
-
-            item = sprmBO.selectObject(sprmCriterioVO);
-
-            item.setFref(sprmCriterioVO.getFechaVigencia());
-
+            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
             enti = TipoSubparametroProxy.select(item.getEntiId());
 
             loadLabelValuesMap(enti);
@@ -237,24 +232,15 @@ public final class SubparametroAction extends ItemAction {
     public String detalle() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
-        Preconditions.checkNotNull(item.getFref());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         try {
             final SubparametroBO sprmBO = new SubparametroBO();
-            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-            sprmCriterioVO.setId(item.getId());
-            sprmCriterioVO.setFechaVigencia(item.getFref());
-            sprmCriterioVO.setIdioma(getIdioma());
-
-            if (item.getSpvr() != null) {
-                sprmCriterioVO.setSpvrId(item.getSpvr().getId());
-            }
-
-            item = sprmBO.selectObject(sprmCriterioVO);
-
-            item.setFref(sprmCriterioVO.getFechaVigencia());
-
+            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
             enti = TipoSubparametroProxy.select(item.getEntiId());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
@@ -264,14 +250,6 @@ public final class SubparametroAction extends ItemAction {
     }
 
     // get / set
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return item == null ? Calendar.getInstance().getTime() : item.getFref();
-    }
 
     /**
      * {@inheritDoc}

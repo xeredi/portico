@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
@@ -77,15 +76,6 @@ public final class SubparametroListadoAction extends ItemListadoAction {
     @Override
     public SubparametroCriterioVO getItemCriterio() {
         return itemCriterio;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        return itemCriterio == null || itemCriterio.getFechaVigencia() == null ? Calendar.getInstance().getTime()
-                : itemCriterio.getFechaVigencia();
     }
 
     /**

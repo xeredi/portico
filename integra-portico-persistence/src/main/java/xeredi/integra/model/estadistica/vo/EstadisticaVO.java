@@ -1,5 +1,7 @@
 package xeredi.integra.model.estadistica.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.comun.vo.ItemVO;
@@ -15,6 +17,9 @@ public final class EstadisticaVO extends ItemVO {
 
     /** The autp. */
     private ParametroVO subp;
+
+    /** The fref. */
+    private Date fref;
 
     /**
      * {@inheritDoc}
@@ -69,6 +74,25 @@ public final class EstadisticaVO extends ItemVO {
      */
     public void setPepr(final PeriodoProcesoVO value) {
         pepr = value;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
     }
 
 }

@@ -2,6 +2,8 @@ package xeredi.integra.model.comun.exception;
 
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ModelException.
@@ -30,6 +32,9 @@ public abstract class ModelException extends Exception {
     public ModelException(final String message, final MessageI18nKey aclassName, final Object aobjId) {
         super(message + " de la clase '" + aclassName + " con identificador :" + aobjId);
 
+        Preconditions.checkNotNull(message);
+        Preconditions.checkNotNull(aclassName);
+
         className = aclassName.name();
         objId = aobjId;
     }
@@ -46,6 +51,9 @@ public abstract class ModelException extends Exception {
      */
     public ModelException(final String message, final Long aclassId, final Object aobjId) {
         super(message + " de la clase '" + "enti_" + aclassId + " con identificador :" + aobjId);
+
+        Preconditions.checkNotNull(message);
+        Preconditions.checkNotNull(aclassId);
 
         className = "enti_" + aclassId;
         objId = aobjId;

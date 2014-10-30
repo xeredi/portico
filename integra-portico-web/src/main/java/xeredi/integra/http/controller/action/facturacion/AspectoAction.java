@@ -54,7 +54,7 @@ public final class AspectoAction extends BaseAction {
     private List<AspectoCargoVO> ascrList;
 
     /** The fecha vigencia. */
-    private Date fechaVigencia;
+    private final Date fechaVigencia;
 
     private List<LabelValueVO> entiList;
 
@@ -327,25 +327,6 @@ public final class AspectoAction extends BaseAction {
      */
     public void setAspc(final AspectoVO value) {
         aspc = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

@@ -1,5 +1,5 @@
 <fieldset ng-repeat="engd in vm.enti.engdList track by $index">
-    <legend ng-if="vm.enti.engdList.length > 1" ng-bind="engd.etiqueta"></legend>
+    <legend ng-if="vm.enti.engdList.length > 1" ng-bind="'engd_' + engd.id | translate"></legend>
 
     <div class="row">
         <div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero"
@@ -16,7 +16,7 @@
                     ng-bind="'cdrf_' + entd.tpdt.id + '_' + vm.item.itdtMap[entd.tpdt.id].cadena | translate"></span> <span
                     ng-switch-when="TX" ng-bind="vm.item.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="PR">
                     <a
-                    ng-href="#/maestro/prmt/detail/{{entd.tpdt.enti.id}}/{{vm.item.itdtMap[entd.tpdt.id].prmt.id}}/{{vm.item.fref}}"
+                    ng-href="#/maestro/prmt/detail/{{entd.tpdt.enti.id}}/{{vm.item.itdtMap[entd.tpdt.id].prmt.id}}/{{vm.fechaVigencia}}"
                     ng-bind="vm.item.itdtMap[entd.tpdt.id].prmt.etiqueta"></a>
                 </span> <span ng-switch-when="SR"> <a
                     ng-href="#/servicio/srvc/detail/{{entd.tpdt.enti.id}}/{{vm.item.itdtMap[entd.tpdt.id].srvc.id}}"

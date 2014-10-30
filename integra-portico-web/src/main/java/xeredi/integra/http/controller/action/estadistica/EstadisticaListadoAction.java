@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.estadistica;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -167,15 +166,6 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
     @Override
     public final EstadisticaCriterioVO getItemCriterio() {
         return itemCriterio;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Date getFechaVigencia() {
-        // FIXME Devolver fecha del periodo de proceso
-        return Calendar.getInstance().getTime();
     }
 
     /**
