@@ -14,6 +14,8 @@ import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.util.exception.InstanceNotFoundException;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadGrupoDatoAction.
@@ -49,9 +51,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-create")
     public String create() {
-        if (engd.getEntiId() == null) {
-            throw new Error("No se ha seleccionado una entidad");
-        }
+        Preconditions.checkNotNull(engd);
+        Preconditions.checkNotNull(engd.getEntiId());
 
         accion = ACCION_EDICION.create;
 
@@ -65,11 +66,14 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-edit")
     public String edit() {
+        Preconditions.checkNotNull(engd);
+        Preconditions.checkNotNull(engd.getId());
+
         accion = ACCION_EDICION.edit;
 
-        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
-
         try {
+            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+
             engd = engdBO.select(engd.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
         } catch (final InstanceNotFoundException ex) {
@@ -88,25 +92,30 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-save")
     public String save() throws InstanceNotFoundException {
-        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        Preconditions.checkNotNull(accion);
+        Preconditions.checkNotNull(engd);
+        Preconditions.checkNotNull(engd.getEntiId());
 
-        FieldValidator.validateRequired(this, MessageI18nKey.engd_enti, engd.getEntiId());
         FieldValidator.validateRequired(this, MessageI18nKey.engd_numero, engd.getNumero());
-        FieldValidator.validateRequired(this, MessageI18nKey.engd_etiqueta, engd.getEtiqueta());
-
         FieldValidator.validateI18n(this, i18nMap);
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-        if (accion == ACCION_EDICION.create) {
-            engdBO.insert(engd, i18nMap);
-        } else {
-            try {
-                engdBO.update(engd, i18nMap);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
+            switch (accion) {
+            case create:
+                engdBO.insert(engd, i18nMap);
+
+                break;
+            case edit:
+                try {
+                    engdBO.update(engd, i18nMap);
+                } catch (final InstanceNotFoundException ex) {
+                    addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
+                }
+                break;
+            default:
+                throw new Error("No implementado :" + accion);
             }
         }
 
@@ -120,13 +129,37 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      */
     @Action("engd-detail")
     public String detail() {
-        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        Preconditions.checkNotNull(engd);
+        Preconditions.checkNotNull(engd.getId());
 
         try {
+            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+
             engd = engdBO.select(engd.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd.getId()));
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Removes the.
+     *
+     * @return the string
+     */
+    @Action("engd-remove")
+    public String remove() {
+        Preconditions.checkNotNull(engd);
+        Preconditions.checkNotNull(engd.getId());
+
+        try {
+            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+
+            engdBO.delete(engd.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd.getId()));
         }
 
         return SUCCESS;

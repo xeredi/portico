@@ -41,7 +41,6 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO);
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
-        Preconditions.checkNotNull(engdVO.getEtiqueta());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final IgBO igBO = new IgBO();
@@ -72,7 +71,6 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO);
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
-        Preconditions.checkNotNull(engdVO.getEtiqueta());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);

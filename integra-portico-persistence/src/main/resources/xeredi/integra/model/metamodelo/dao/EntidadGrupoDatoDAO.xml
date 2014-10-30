@@ -69,7 +69,7 @@
     <update id="update" parameterType="EntidadGrupoDatoVO">
         <![CDATA[
         UPDATE tbl_entidad_grupo_dato_engd SET
-            engd_orden = #{etiqueta}
+            engd_orden = #{numero}
         WHERE engd_pk = #{id}
         ]]>
     </update>
