@@ -8,13 +8,13 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -35,15 +35,6 @@ public final class CodigoReferenciaAction extends BaseAction {
 
     /** The cdri map. */
     private Map<String, I18nVO> i18nMap;
-
-    /**
-     * Instantiates a new codigo referencia action.
-     */
-    public CodigoReferenciaAction() {
-        super();
-
-        cdrf = new CodigoReferenciaVO();
-    }
 
     // Acciones Web
     /**
@@ -74,16 +65,14 @@ public final class CodigoReferenciaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
-        final I18nBO i18nBO = new I18nBO();
+        try {
+            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
-
-        if (cdrf == null) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
+            cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
-
-        i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
 
         return SUCCESS;
     }
@@ -109,7 +98,6 @@ public final class CodigoReferenciaAction extends BaseAction {
         }
 
         FieldValidator.validateRequired(this, MessageI18nKey.cdrf_orden, cdrf.getOrden());
-
         FieldValidator.validateI18n(this, i18nMap);
 
         if (!hasErrors()) {
@@ -119,13 +107,13 @@ public final class CodigoReferenciaAction extends BaseAction {
                 try {
                     cdrfBO.insert(cdrf, i18nMap);
                 } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.cdrf));
+                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
                 }
             } else {
                 try {
                     cdrfBO.update(cdrf, i18nMap);
                 } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
+                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
                 }
             }
         }
@@ -143,12 +131,12 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getId());
 
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
-
         try {
+            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+
             cdrfBO.delete(cdrf);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -166,16 +154,14 @@ public final class CodigoReferenciaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
-        final I18nBO i18nBO = new I18nBO();
+        try {
+            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
-
-        if (cdrf == null) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.cdrf), cdrf.getValor());
+            cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
-
-        i18nMap = i18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
 
         return SUCCESS;
     }

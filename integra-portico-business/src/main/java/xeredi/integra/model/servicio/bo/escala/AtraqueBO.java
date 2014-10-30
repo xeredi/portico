@@ -5,8 +5,9 @@ import java.util.Map;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
-import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.escala.AtraqueDAO;
@@ -14,7 +15,6 @@ import xeredi.integra.model.servicio.dao.escala.EscalaDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -55,7 +55,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void autorizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            EstadoInvalidoException {
+    OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -73,12 +73,11 @@ public final class AtraqueBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
             }
 
             if (atraDAO.updateAutorizar(ssrvVO.getId()) == 0) {
-                throw new EstadoInvalidoException(SubservicioVO.class.getName(), ssrvVO.getId(), ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -127,7 +126,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void denegar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            EstadoInvalidoException {
+    OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -145,12 +144,11 @@ public final class AtraqueBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
             }
 
             if (atraDAO.updateDenegar(ssrvVO.getId()) == 0) {
-                throw new EstadoInvalidoException(SubservicioVO.class.getName(), ssrvVO.getId(), ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -199,7 +197,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void anular(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            EstadoInvalidoException {
+    OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -217,12 +215,11 @@ public final class AtraqueBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
             }
 
             if (atraDAO.updateAnular(ssrvVO.getId()) == 0) {
-                throw new EstadoInvalidoException(SubservicioVO.class.getName(), ssrvVO.getId(), ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -271,7 +268,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            EstadoInvalidoException {
+    OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -289,12 +286,11 @@ public final class AtraqueBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
             }
 
             if (atraDAO.updateIniciar(ssrvVO.getId()) == 0) {
-                throw new EstadoInvalidoException(SubservicioVO.class.getName(), ssrvVO.getId(), ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -345,7 +341,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void finalizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            EstadoInvalidoException {
+    OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -363,12 +359,11 @@ public final class AtraqueBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
             }
 
             if (atraDAO.updateFinalizar(ssrvVO.getId()) == 0) {
-                throw new EstadoInvalidoException(SubservicioVO.class.getName(), ssrvVO.getId(), ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -436,7 +431,7 @@ public final class AtraqueBO {
      *             the estado invalido exception
      */
     public void autorizarFprevio(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap)
-            throws InstanceNotFoundException, EstadoInvalidoException {
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -454,7 +449,7 @@ public final class AtraqueBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.ATRAQUE.getId(), ssrvId);
             }
 
             // TODO Alta del fondeo previo en estado autorizado (C)

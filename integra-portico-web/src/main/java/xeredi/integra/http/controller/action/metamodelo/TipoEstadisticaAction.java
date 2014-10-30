@@ -7,13 +7,13 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -69,11 +69,14 @@ public final class TipoEstadisticaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
-        final I18nBO i18nBO = new I18nBO();
+        try {
+            final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        enti = tpesBO.select(enti.getId(), getIdioma());
-        i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            enti = tpesBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -97,25 +100,30 @@ public final class TipoEstadisticaAction extends BaseAction {
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+            switch (accion) {
+            case create:
+                enti.setCodigo(enti.getCodigo().toUpperCase());
 
-        if (accion == ACCION_EDICION.create) {
-            enti.setCodigo(enti.getCodigo().toUpperCase());
+                try {
+                    tpesBO.insert(enti, i18nMap);
+                } catch (final DuplicateInstanceException ex) {
+                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
+                }
 
-            try {
-                tpesBO.insert(enti, i18nMap);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.tpes));
-            }
-        } else {
-            try {
-                tpesBO.update(enti, i18nMap);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpes), String.valueOf(enti.getId()));
+                break;
+            case edit:
+                try {
+                    tpesBO.update(enti, i18nMap);
+                } catch (final InstanceNotFoundException ex) {
+                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+                }
+
+                break;
+            default:
+                throw new Error("Accion no soportada: " + accion);
             }
         }
 
@@ -137,7 +145,7 @@ public final class TipoEstadisticaAction extends BaseAction {
         try {
             tpesBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpes), String.valueOf(enti.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -153,11 +161,14 @@ public final class TipoEstadisticaAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
-        final I18nBO i18nBO = new I18nBO();
+        try {
+            final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        enti = tpesBO.select(enti.getId(), getIdioma());
-        i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            enti = tpesBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

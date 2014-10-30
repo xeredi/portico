@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
@@ -20,7 +21,6 @@ import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -89,15 +89,15 @@ public final class AspectoCargoAction extends BaseAction {
 
         accion = ACCION_EDICION.create;
 
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+        try {
+            final AspectoBO aspcBO = new AspectoBO();
+            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
-        aspcCriterioVO.setId(ascr.getAspcId());
-        aspcCriterioVO.setFechaVigencia(fechaVigencia);
+            aspcCriterioVO.setId(ascr.getAspcId());
+            aspcCriterioVO.setFechaVigencia(fechaVigencia);
 
-        final AspectoVO aspc = aspcBO.select(aspcCriterioVO);
+            final AspectoVO aspc = aspcBO.select(aspcCriterioVO);
 
-        if (aspc != null) {
             final CargoBO crgoBO = new CargoBO();
             final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
@@ -105,6 +105,8 @@ public final class AspectoCargoAction extends BaseAction {
             crgoCriterioVO.setFechaVigencia(fechaVigencia);
 
             crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -167,7 +169,7 @@ public final class AspectoCargoAction extends BaseAction {
                 try {
                     ascrBO.insert(ascr);
                 } catch (final OverlapException ex) {
-                    addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.ascr));
+                    addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
                 }
 
                 break;
@@ -175,9 +177,9 @@ public final class AspectoCargoAction extends BaseAction {
                 try {
                     ascrBO.update(ascr);
                 } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.ascr), String.valueOf(ascr.getId()));
+                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
                 } catch (final OverlapException ex) {
-                    addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.ascr));
+                    addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
                 }
 
                 break;

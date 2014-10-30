@@ -10,14 +10,15 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -126,7 +127,7 @@ public class CargoBO {
                 crgo.setId(crgoDAO.selectId(crgo));
 
                 if (crgoDAO.existsOverlap(crgo)) {
-                    throw new OverlapException(CargoVO.class.getName(), crgo);
+                    throw new OverlapException(MessageI18nKey.crgo, crgo);
                 }
             } else {
                 crgo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -155,7 +156,7 @@ public class CargoBO {
      *             the overlap exception
      */
     public void update(final CargoVO crgo, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-            OverlapException {
+    OverlapException {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());
@@ -164,13 +165,13 @@ public class CargoBO {
             crgoDAO = session.getMapper(CargoDAO.class);
 
             if (crgoDAO.existsOverlap(crgo)) {
-                throw new OverlapException(CargoVO.class.getName(), crgo);
+                throw new OverlapException(MessageI18nKey.crgo, crgo);
             }
 
             final int updated = crgoDAO.updateVersion(crgo);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(CargoVO.class.getName(), crgo);
+                throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
             I18nBO.updateMap(session, I18nPrefix.crgv, crgo.getCrgv().getId(), i18nMap);
@@ -198,7 +199,7 @@ public class CargoBO {
             final int updated = crgoDAO.deleteVersion(crgo);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(CargoVO.class.getName(), crgo);
+                throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
             }
 
             I18nBO.deleteMap(session, I18nPrefix.crgv, crgo.getCrgv().getId());

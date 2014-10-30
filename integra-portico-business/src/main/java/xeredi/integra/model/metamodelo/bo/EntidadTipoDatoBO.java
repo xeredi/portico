@@ -3,11 +3,13 @@ package xeredi.integra.model.metamodelo.bo;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -38,12 +40,12 @@ public class EntidadTipoDatoBO {
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             entiDAO = session.getMapper(EntidadDAO.class);
             entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
             if (entdDAO.exists(entdVO)) {
-                throw new DuplicateInstanceException(EntidadTipoDatoVO.class.getName(), entdVO);
+                throw new DuplicateInstanceException(MessageI18nKey.entd, entdVO);
             }
 
             entdDAO.insert(entdVO);
@@ -57,20 +59,20 @@ public class EntidadTipoDatoBO {
      *
      * @param entdVO
      *            the entd vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final void update(final EntidadTipoDatoVO entdVO) {
+    public final void update(final EntidadTipoDatoVO entdVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(entdVO);
         Preconditions.checkNotNull(entdVO.getEntiId());
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
-            final int updated = entdDAO.update(entdVO);
-
-            if (updated == 0) {
-                throw new Error("Dato de entidad no encontrado: " + entdVO);
+            if (entdDAO.update(entdVO) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
             }
 
             session.commit();
@@ -82,22 +84,21 @@ public class EntidadTipoDatoBO {
      *
      * @param entdVO
      *            the entd vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final void delete(final EntidadTipoDatoVO entdVO) {
+    public final void delete(final EntidadTipoDatoVO entdVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(entdVO);
         Preconditions.checkNotNull(entdVO.getEntiId());
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
-            final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
-
-            entdCriterioVO.setEntiId(entdVO.getEntiId());
-            entdCriterioVO.setTpdtId(entdVO.getTpdt().getId());
-
-            entdDAO.deleteCriterio(entdCriterioVO);
+            if (entdDAO.delete(entdVO) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
+            }
 
             session.commit();
         }
@@ -110,9 +111,14 @@ public class EntidadTipoDatoBO {
      *            the enti id
      * @param tpdtId
      *            the tpdt id
+     * @param idioma
+     *            the idioma
      * @return the entidad tipo dato vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final EntidadTipoDatoVO select(final Long entiId, final Long tpdtId, final String idioma) {
+    public final EntidadTipoDatoVO select(final Long entiId, final Long tpdtId, final String idioma)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(tpdtId);
 
@@ -128,7 +134,7 @@ public class EntidadTipoDatoBO {
             final EntidadTipoDatoVO entdVO = entdDAO.selectObject(entdCriterioVO);
 
             if (entdVO == null) {
-                throw new Error("Dato de entidad no encontrado: " + entdCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.entd, entdCriterioVO);
             }
 
             return entdVO;

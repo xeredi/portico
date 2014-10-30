@@ -106,7 +106,7 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
      * @param args
      *            the args
      */
-    public final void addActionError(final MessageI18nKey key, final String... args) {
+    public final void addActionError(final MessageI18nKey key, final Object... args) {
         addActionError(MessageFormat.format(bundle.getString(key.name()), args));
     }
 

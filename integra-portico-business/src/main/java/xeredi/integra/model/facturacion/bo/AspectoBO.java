@@ -10,15 +10,16 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -93,7 +94,7 @@ public class AspectoBO {
      *            the aspc criterio vo
      * @return the aspecto vo
      */
-    public AspectoVO select(final AspectoCriterioVO aspcCriterioVO) {
+    public AspectoVO select(final AspectoCriterioVO aspcCriterioVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(aspcCriterioVO);
         Preconditions.checkArgument(aspcCriterioVO.getAspvId() != null || aspcCriterioVO.getId() != null
                 && aspcCriterioVO.getFechaVigencia() != null);
@@ -129,7 +130,7 @@ public class AspectoBO {
                 aspc.setId(aspcDAO.selectId(aspc));
 
                 if (aspcDAO.existsOverlap(aspc)) {
-                    throw new OverlapException(AspectoVO.class.getName(), aspc);
+                    throw new OverlapException(MessageI18nKey.aspc, aspc);
                 }
             } else {
                 aspc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -163,7 +164,7 @@ public class AspectoBO {
             aspcDAO = session.getMapper(AspectoDAO.class);
 
             if (aspcDAO.exists(aspc)) {
-                throw new DuplicateInstanceException(AspectoVO.class.getName(), aspc);
+                throw new DuplicateInstanceException(MessageI18nKey.aspc, aspc);
             }
 
             final IgBO igBO = new IgBO();
@@ -201,13 +202,13 @@ public class AspectoBO {
             aspcDAO = session.getMapper(AspectoDAO.class);
 
             if (aspcDAO.existsOverlap(aspc)) {
-                throw new OverlapException(AspectoVO.class.getName(), aspc);
+                throw new OverlapException(MessageI18nKey.aspc, aspc);
             }
 
             final int updated = aspcDAO.updateVersion(aspc);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(AspectoVO.class.getName(), aspc);
+                throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);
             }
 
             I18nBO.updateMap(session, I18nPrefix.aspv, aspc.getAspv().getId(), i18nMap);

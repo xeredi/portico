@@ -8,6 +8,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
@@ -15,7 +16,6 @@ import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -75,28 +75,30 @@ public final class SubparametroAction extends ItemAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("sprm-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getFref());
 
         accion = ACCION_EDICION.edit;
 
-        final SubparametroBO sprmBO = new SubparametroBO();
-        final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+        try {
+            final SubparametroBO sprmBO = new SubparametroBO();
+            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setId(item.getId());
-        sprmCriterioVO.setFechaVigencia(item.getFref());
-        sprmCriterioVO.setIdioma(getIdioma());
+            sprmCriterioVO.setId(item.getId());
+            sprmCriterioVO.setFechaVigencia(item.getFref());
+            sprmCriterioVO.setIdioma(getIdioma());
 
-        item = sprmBO.selectObject(sprmCriterioVO);
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+            item = sprmBO.selectObject(sprmCriterioVO);
+            enti = TipoSubparametroProxy.select(item.getEntiId());
 
-        loadLabelValuesMap(enti);
+            loadLabelValuesMap(enti);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -105,31 +107,33 @@ public final class SubparametroAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("sprm-duplicate")
-    public String duplicate() throws InstanceNotFoundException {
+    public String duplicate() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getFref());
 
         accion = ACCION_EDICION.duplicate;
 
-        final SubparametroBO sprmBO = new SubparametroBO();
-        final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+        try {
+            final SubparametroBO sprmBO = new SubparametroBO();
+            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setId(item.getId());
-        sprmCriterioVO.setFechaVigencia(item.getFref());
-        sprmCriterioVO.setIdioma(getIdioma());
+            sprmCriterioVO.setId(item.getId());
+            sprmCriterioVO.setFechaVigencia(item.getFref());
+            sprmCriterioVO.setIdioma(getIdioma());
 
-        item = sprmBO.selectObject(sprmCriterioVO);
+            item = sprmBO.selectObject(sprmCriterioVO);
 
-        item.setFref(sprmCriterioVO.getFechaVigencia());
+            item.setFref(sprmCriterioVO.getFechaVigencia());
 
-        enti = TipoSubparametroProxy.select(item.getEntiId());
+            enti = TipoSubparametroProxy.select(item.getEntiId());
 
-        loadLabelValuesMap(enti);
+            loadLabelValuesMap(enti);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -194,9 +198,9 @@ public final class SubparametroAction extends ItemAction {
                 throw new Error("Accion no valida: " + accion);
             }
         } catch (final OverlapException ex) {
-            addActionError(MessageI18nKey.E00009, enti.getNombre());
+            addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, enti.getNombre(), String.valueOf(item.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -213,16 +217,12 @@ public final class SubparametroAction extends ItemAction {
         Preconditions.checkNotNull(item.getSpvr());
         Preconditions.checkNotNull(item.getSpvr().getId());
 
-        if (item.getSpvr() == null || item.getSpvr().getId() == null) {
-            throw new Error("Identificador de version del subparametro no especificado");
-        }
-
-        final SubparametroBO sprmBO = new SubparametroBO();
-
         try {
+            final SubparametroBO sprmBO = new SubparametroBO();
+
             sprmBO.delete(item);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, enti.getNombre(), String.valueOf(item.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -232,31 +232,33 @@ public final class SubparametroAction extends ItemAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("sprm-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getFref());
 
-        final SubparametroBO sprmBO = new SubparametroBO();
-        final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
+        try {
+            final SubparametroBO sprmBO = new SubparametroBO();
+            final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
-        sprmCriterioVO.setId(item.getId());
-        sprmCriterioVO.setFechaVigencia(item.getFref());
-        sprmCriterioVO.setIdioma(getIdioma());
+            sprmCriterioVO.setId(item.getId());
+            sprmCriterioVO.setFechaVigencia(item.getFref());
+            sprmCriterioVO.setIdioma(getIdioma());
 
-        if (item.getSpvr() != null) {
-            sprmCriterioVO.setSpvrId(item.getSpvr().getId());
+            if (item.getSpvr() != null) {
+                sprmCriterioVO.setSpvrId(item.getSpvr().getId());
+            }
+
+            item = sprmBO.selectObject(sprmCriterioVO);
+
+            item.setFref(sprmCriterioVO.getFechaVigencia());
+
+            enti = TipoSubparametroProxy.select(item.getEntiId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
-
-        item = sprmBO.selectObject(sprmCriterioVO);
-
-        item.setFref(sprmCriterioVO.getFechaVigencia());
-
-        enti = TipoSubparametroProxy.select(item.getEntiId());
 
         return SUCCESS;
     }

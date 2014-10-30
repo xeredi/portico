@@ -29,6 +29,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -48,7 +49,6 @@ import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.util.exception.DuplicateInstanceException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -149,7 +149,7 @@ public final class ServicioImporterBO {
      *             the duplicate instance exception
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-            DuplicateInstanceException {
+    DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();

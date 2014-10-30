@@ -6,11 +6,12 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.AspectoCargoDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -80,7 +81,7 @@ public final class AspectoCargoBO {
                 vo.setId(ascrDAO.selectId(vo));
 
                 if (ascrDAO.existsOverlap(vo)) {
-                    throw new OverlapException(AspectoCargoVO.class.getName(), vo);
+                    throw new OverlapException(MessageI18nKey.ascr, vo);
                 }
             } else {
                 vo.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -117,13 +118,13 @@ public final class AspectoCargoBO {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
 
             if (ascrDAO.existsOverlap(vo)) {
-                throw new OverlapException(AspectoCargoVO.class.getName(), vo);
+                throw new OverlapException(MessageI18nKey.ascr, vo);
             }
 
             final int updated = ascrDAO.updateVersion(vo);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(AspectoCargoVO.class.getName(), vo);
+                throw new InstanceNotFoundException(MessageI18nKey.ascr, vo);
             }
 
             session.commit();
@@ -149,7 +150,7 @@ public final class AspectoCargoBO {
             final int updated = ascrDAO.deleteVersion(vo);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(AspectoCargoVO.class.getName(), vo);
+                throw new InstanceNotFoundException(MessageI18nKey.ascr, vo);
             }
 
             session.commit();

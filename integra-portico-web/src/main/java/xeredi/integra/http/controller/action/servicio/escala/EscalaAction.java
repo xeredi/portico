@@ -8,12 +8,13 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -46,24 +47,27 @@ public final class EscalaAction extends ItemAction {
      * Autorizar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action(value = "esca-notificar-popup", results = { @Result(name = "success", location = "escala/esca-notificar.jsp") })
-    public String notificar() throws InstanceNotFoundException {
+    public String notificar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final ServicioBO srvcBO = new ServicioBO();
-        final EscalaBO escaBO = new EscalaBO();
+        try {
+            final ServicioBO srvcBO = new ServicioBO();
+            final EscalaBO escaBO = new EscalaBO();
 
-        item = srvcBO.select(item.getId(), getIdioma());
+            item = srvcBO.select(item.getId(), getIdioma());
 
-        notificado = item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
-                && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
+            notificado = item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
+                    && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
 
-        item.getItdtMap().get(TipoDato.CADENA_03.getId()).setCadena(escaBO.obtenerNumeroManifiestoAeat(item.getId()));
-        item.getItdtMap().get(TipoDato.FECHA_02.getId()).setFecha(Calendar.getInstance().getTime());
+            item.getItdtMap().get(TipoDato.CADENA_03.getId())
+                    .setCadena(escaBO.obtenerNumeroManifiestoAeat(item.getId()));
+            item.getItdtMap().get(TipoDato.FECHA_02.getId()).setFecha(Calendar.getInstance().getTime());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -72,12 +76,10 @@ public final class EscalaAction extends ItemAction {
      * Notificar guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action(value = "esca-notificar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "srvc-detalle", "item.id", "%{item.id}" }) })
-    public String notificarGuardar() throws InstanceNotFoundException {
+    public String notificarGuardar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 

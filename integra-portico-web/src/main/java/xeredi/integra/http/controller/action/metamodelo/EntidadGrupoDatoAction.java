@@ -7,12 +7,12 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -77,7 +77,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             engd = engdBO.select(engd.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -87,11 +87,9 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("engd-save")
-    public String save() throws InstanceNotFoundException {
+    public String save() {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(engd);
         Preconditions.checkNotNull(engd.getEntiId());
@@ -111,8 +109,9 @@ public final class EntidadGrupoDatoAction extends BaseAction {
                 try {
                     engdBO.update(engd, i18nMap);
                 } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd));
+                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
                 }
+
                 break;
             default:
                 throw new Error("No implementado :" + accion);
@@ -138,7 +137,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
             engd = engdBO.select(engd.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -159,7 +158,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
             engdBO.delete(engd.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.engd), String.valueOf(engd.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

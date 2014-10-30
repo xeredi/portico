@@ -15,7 +15,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
@@ -30,8 +33,6 @@ import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -90,7 +91,7 @@ public class ServicioBO {
             final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
 
             if (srvcVO == null) {
-                throw new InstanceNotFoundException(ServicioVO.class.getName(), srvcId);
+                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
             }
 
             fillDependencies(session, Arrays.asList(new ServicioVO[] { srvcVO }), srvcCriterioVO, true);
@@ -220,7 +221,7 @@ public class ServicioBO {
             srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
 
             if (srvcDAO.exists(srvcVO)) {
-                throw new DuplicateInstanceException(ServicioVO.class.getName(), srvcVO);
+                throw new DuplicateInstanceException(srvcVO.getEntiId(), srvcVO);
             }
 
             srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -391,7 +392,7 @@ public class ServicioBO {
             final int updated = srvcDAO.delete(srvcId);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ServicioVO.class.getName(), srvcId);
+                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
             }
 
             session.commit();

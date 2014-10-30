@@ -8,6 +8,8 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -19,8 +21,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -87,14 +87,12 @@ public final class TipoParametroAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final TipoParametroBO tpprBO = new TipoParametroBO();
-        final EntidadBO entiBO = new EntidadBO();
-        final I18nBO i18nBO = new I18nBO();
+        try {
+            final TipoParametroBO tpprBO = new TipoParametroBO();
+            final EntidadBO entiBO = new EntidadBO();
 
-        enti = tpprBO.select(enti.getId(), getIdioma());
-
-        if (enti != null) {
-            i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            enti = tpprBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
             EntidadCriterioVO entiCriterioVO = null;
 
@@ -113,6 +111,8 @@ public final class TipoParametroAction extends BaseAction {
 
                 entiHijasList = entiBO.selectList(entiCriterioVO);
             }
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -144,25 +144,30 @@ public final class TipoParametroAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.enti_i18n, enti.getI18n());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_tempExp, enti.getTempExp());
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final TipoParametroBO tpprBO = new TipoParametroBO();
 
-        final TipoParametroBO tpprBO = new TipoParametroBO();
+            switch (accion) {
+            case create:
+                enti.setCodigo(enti.getCodigo().toUpperCase());
 
-        if (accion == ACCION_EDICION.create) {
-            enti.setCodigo(enti.getCodigo().toUpperCase());
+                try {
+                    tpprBO.insert(enti, i18nMap);
+                } catch (final DuplicateInstanceException ex) {
+                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
+                }
 
-            try {
-                tpprBO.insert(enti, i18nMap);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.tppr));
-            }
-        } else {
-            try {
-                tpprBO.update(enti, i18nMap);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tppr), String.valueOf(enti.getId()));
+                break;
+            case edit:
+                try {
+                    tpprBO.update(enti, i18nMap);
+                } catch (final InstanceNotFoundException ex) {
+                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+                }
+
+                break;
+            default:
+                throw new Error("Accion no soportada: " + accion);
             }
         }
 
@@ -184,7 +189,7 @@ public final class TipoParametroAction extends BaseAction {
         try {
             tpprBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tppr), String.valueOf(enti.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -200,14 +205,12 @@ public final class TipoParametroAction extends BaseAction {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        final TipoParametroBO tpprBO = new TipoParametroBO();
-        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
-        final I18nBO i18nBO = new I18nBO();
+        try {
+            final TipoParametroBO tpprBO = new TipoParametroBO();
+            final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-        enti = tpprBO.select(enti.getId(), getIdioma());
-
-        if (enti != null) {
-            i18nMap = i18nBO.selectMap(I18nPrefix.enti, enti.getId());
+            enti = tpprBO.select(enti.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
             final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
@@ -215,6 +218,8 @@ public final class TipoParametroAction extends BaseAction {
             entiCriterioVO.setIdioma(getIdioma());
 
             subentiList = tpspBO.selectList(entiCriterioVO);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

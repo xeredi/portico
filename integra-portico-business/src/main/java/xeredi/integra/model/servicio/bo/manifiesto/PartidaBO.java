@@ -3,17 +3,16 @@ package xeredi.integra.model.servicio.bo.manifiesto;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.EquipamientoDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
-import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -49,7 +48,7 @@ public class PartidaBO {
      * @throws EstadoInvalidoException
      *             the estado invalido exception
      */
-    public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
+    public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -67,15 +66,14 @@ public class PartidaBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.PARTIDA.getId(), ssrvId);
             }
 
             // Bloqueo de la partida
             final int updatedRows = maniSsrvDAO.updateBloquear(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new EstadoInvalidoException(ServicioVO.class.getName(), ssrvId, ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.PARTIDA.getId(), ssrvId);
             }
 
             // Bloqueo de los equipamientos asociados a la partida
@@ -108,7 +106,7 @@ public class PartidaBO {
      * @throws EstadoInvalidoException
      *             the estado invalido exception
      */
-    public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
+    public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -126,15 +124,14 @@ public class PartidaBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.PARTIDA.getId(), ssrvId);
             }
 
             // Inicio de la partida
             final int updatedRows = maniSsrvDAO.updateIniciar(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new EstadoInvalidoException(ServicioVO.class.getName(), ssrvId, ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.PARTIDA.getId(), ssrvId);
             }
 
             // Inicio de los equipamientos asociados a la partida
@@ -167,7 +164,7 @@ public class PartidaBO {
      * @throws EstadoInvalidoException
      *             the estado invalido exception
      */
-    public final void anular(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
+    public final void anular(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -185,15 +182,14 @@ public class PartidaBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.PARTIDA.getId(), ssrvId);
             }
 
             // Anulacion de la partida
             final int updatedRows = maniSsrvDAO.updateAnular(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new EstadoInvalidoException(ServicioVO.class.getName(), ssrvId, ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.PARTIDA.getId(), ssrvId);
             }
 
             // Borrado de las partida-equipamiento asociadas

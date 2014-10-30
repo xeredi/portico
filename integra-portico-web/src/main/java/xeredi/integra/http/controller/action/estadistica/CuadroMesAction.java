@@ -7,11 +7,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.CuadroMesBO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.util.exception.InstanceNotFoundException;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,20 +44,21 @@ public final class CuadroMesAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("cdms-detail")
-    public String detalle() throws InstanceNotFoundException {
-        if (pepr == null || pepr.getId() == null) {
-            throw new Error("Periodo de Proceso nulo");
+    public String detalle() {
+        Preconditions.checkNotNull(pepr);
+        Preconditions.checkNotNull(pepr.getId());
+
+        try {
+            final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+            final CuadroMesBO cdmsBO = new CuadroMesBO();
+
+            pepr = peprBO.select(pepr.getId());
+            cdmsMap = cdmsBO.selectMap(pepr.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
-
-        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-        final CuadroMesBO cdmsBO = new CuadroMesBO();
-
-        pepr = peprBO.select(pepr.getId());
-        cdmsMap = cdmsBO.selectMap(pepr.getId());
 
         return SUCCESS;
     }

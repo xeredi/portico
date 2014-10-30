@@ -4,10 +4,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.proceso.bo.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-import xeredi.util.exception.InstanceNotFoundException;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,14 +38,19 @@ public final class ProcesoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("prbt-detail")
-    public String detalle() throws InstanceNotFoundException {
-        final ProcesoBO prbtBO = new ProcesoBO();
+    public String detalle() {
+        Preconditions.checkNotNull(prbt);
+        Preconditions.checkNotNull(prbt.getId());
 
-        prbt = prbtBO.select(prbt.getId());
+        try {
+            final ProcesoBO prbtBO = new ProcesoBO();
+
+            prbt = prbtBO.select(prbt.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -51,21 +59,20 @@ public final class ProcesoAction extends BaseAction {
      * Borrar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("prbt-cancel")
-    public String borrar() throws InstanceNotFoundException {
-        if (prbt.getId() == null) {
-            throw new Error("No se ha especificado un proceso");
-        }
+    public String borrar() {
+        Preconditions.checkNotNull(prbt);
+        Preconditions.checkNotNull(prbt.getId());
 
         try {
             final ProcesoBO prbtBO = new ProcesoBO();
 
             prbtBO.cancelar(prbt.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         } catch (final OperacionNoPermitidaException ex) {
-            addActionError("El proceso seleccionado no se puede cancelar");
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

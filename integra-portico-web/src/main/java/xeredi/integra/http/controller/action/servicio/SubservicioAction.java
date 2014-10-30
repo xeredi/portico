@@ -8,14 +8,14 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -62,16 +62,22 @@ public final class SubservicioAction extends ItemAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("ssrv-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final SubservicioBO ssrvBO = new SubservicioBO();
 
         accion = ACCION_EDICION.edit;
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        try {
+            item = ssrvBO.select(item.getId(), getIdioma());
+            enti = TipoSubservicioProxy.select(item.getEntiId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -80,11 +86,9 @@ public final class SubservicioAction extends ItemAction {
      * Alta.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("ssrv-create")
-    public String alta() throws InstanceNotFoundException {
+    public String alta() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
@@ -93,9 +97,13 @@ public final class SubservicioAction extends ItemAction {
         enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (item.getSrvc() != null && item.getSrvc().getId() != null) {
-            final ServicioBO srvcBO = new ServicioBO();
+            try {
+                final ServicioBO srvcBO = new ServicioBO();
 
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
+                item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
+            } catch (final InstanceNotFoundException ex) {
+                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+            }
         }
 
         loadLabelValuesMap(enti);
@@ -107,23 +115,24 @@ public final class SubservicioAction extends ItemAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("ssrv-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String modificar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        accion = ACCION_EDICION.edit;
+        try {
+            accion = ACCION_EDICION.edit;
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
+            final SubservicioBO ssrvBO = new SubservicioBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
+            item = ssrvBO.select(item.getId(), getIdioma());
+            enti = TipoSubservicioProxy.select(item.getEntiId());
 
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-
-        loadLabelValuesMap(enti);
+            loadLabelValuesMap(enti);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -132,20 +141,21 @@ public final class SubservicioAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("ssrv-duplicate")
-    public String duplicar() throws InstanceNotFoundException {
+    public String duplicar() {
         accion = ACCION_EDICION.duplicate;
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
+        try {
+            final SubservicioBO ssrvBO = new SubservicioBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
+            item = ssrvBO.select(item.getId(), getIdioma());
+            enti = TipoSubservicioProxy.select(item.getEntiId());
 
-        enti = TipoSubservicioProxy.select(item.getEntiId());
-
-        loadLabelValuesMap(enti);
+            loadLabelValuesMap(enti);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -195,7 +205,7 @@ public final class SubservicioAction extends ItemAction {
             try {
                 ssrvBO.insert(item, enti, null);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, enti.getNombre());
+                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
             }
 
             break;
@@ -203,7 +213,7 @@ public final class SubservicioAction extends ItemAction {
             try {
                 ssrvBO.update(item);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, enti.getNombre(), item.getId().toString());
+                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             }
 
             break;

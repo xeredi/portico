@@ -4,12 +4,12 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -57,13 +57,17 @@ public final class EntidadEntidadAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
+        try {
+            final EntidadEntidadBO enenBO = new EntidadEntidadBO();
+            final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
-        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
+            enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
+            enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
 
-        enen = enenBO.selectObject(enenCriterioVO);
+            enen = enenBO.selectObject(enenCriterioVO);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -98,13 +102,13 @@ public final class EntidadEntidadAction extends BaseAction {
             try {
                 enenBO.insert(enen);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.enen));
+                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
             }
         } else {
             try {
                 enenBO.update(enen);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.enen), String.valueOf(enen));
+                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             }
         }
 
@@ -128,7 +132,7 @@ public final class EntidadEntidadAction extends BaseAction {
         try {
             enenBO.delete(enen);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.enen), String.valueOf(enen));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -148,13 +152,17 @@ public final class EntidadEntidadAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
+        try {
+            final EntidadEntidadBO enenBO = new EntidadEntidadBO();
+            final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
-        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
+            enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
+            enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
 
-        enen = enenBO.selectObject(enenCriterioVO);
+            enen = enenBO.selectObject(enenCriterioVO);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

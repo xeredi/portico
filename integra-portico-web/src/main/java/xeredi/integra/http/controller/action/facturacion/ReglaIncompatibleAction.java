@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
@@ -19,7 +20,6 @@ import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVersionVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -89,8 +89,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin),
-                    String.valueOf(rginCriterioVO.getRgivId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -144,8 +143,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rgin = rginBO.select(rginCriterioVO);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin),
-                    String.valueOf(rginCriterioVO.getRgivId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -185,7 +183,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
             try {
                 rginBO.insert(rgin);
             } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgin));
+                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
             }
 
             break;
@@ -193,9 +191,9 @@ public final class ReglaIncompatibleAction extends BaseAction {
             try {
                 rginBO.update(rgin);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin));
+                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgin));
+                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
             }
 
             break;
@@ -222,7 +220,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
         try {
             rginBO.delete(rgin);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgin), String.valueOf(rgin.getRgiv().getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

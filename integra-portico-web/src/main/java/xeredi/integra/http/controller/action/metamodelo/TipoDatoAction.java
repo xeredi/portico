@@ -8,6 +8,8 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -17,7 +19,6 @@ import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
-import xeredi.util.exception.DuplicateInstanceException;
 
 import com.google.common.base.Preconditions;
 
@@ -76,16 +77,14 @@ public final class TipoDatoAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final TipoDatoBO tpdtBO = new TipoDatoBO();
-        final I18nBO i18nBO = new I18nBO();
+        try {
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-
-        if (tpdt == null) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpdt), String.valueOf(tpdt.getId()));
+            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
-
-        i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
 
         return SUCCESS;
     }
@@ -100,7 +99,6 @@ public final class TipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(tpdt);
 
-        // Validacion de datos
         if (accion == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.tpdt_codigo, tpdt.getCodigo());
         } else {
@@ -116,20 +114,29 @@ public final class TipoDatoAction extends BaseAction {
 
         FieldValidator.validateI18n(this, i18nMap);
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        final TipoDatoBO tpdtBO = new TipoDatoBO();
+            switch (accion) {
+            case create:
+                try {
+                    tpdtBO.insert(tpdt, i18nMap);
+                } catch (final DuplicateInstanceException ex) {
+                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
+                }
 
-        if (accion == ACCION_EDICION.create) {
-            try {
-                tpdtBO.insert(tpdt, i18nMap);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.tpdt));
+                break;
+            case edit:
+                try {
+                    tpdtBO.update(tpdt, i18nMap);
+                } catch (final InstanceNotFoundException ex) {
+                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+                }
+
+                break;
+            default:
+                throw new Error("Accion no soportada: " + accion);
             }
-        } else {
-            tpdtBO.update(tpdt, i18nMap);
         }
 
         return SUCCESS;
@@ -145,9 +152,13 @@ public final class TipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
-        final TipoDatoBO tpdtBO = new TipoDatoBO();
+        try {
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        tpdtBO.delete(tpdt);
+            tpdtBO.delete(tpdt);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -162,18 +173,16 @@ public final class TipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
-        final TipoDatoBO tpdtBO = new TipoDatoBO();
-        final I18nBO i18nBO = new I18nBO();
-        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        try {
+            final TipoDatoBO tpdtBO = new TipoDatoBO();
+            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-
-        if (tpdt == null) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpdt), String.valueOf(tpdt.getId()));
+            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
+            cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
-
-        i18nMap = i18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
-        cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
 
         return SUCCESS;
     }

@@ -3,11 +3,13 @@ package xeredi.integra.model.metamodelo.bo;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadAccionDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
-import xeredi.util.exception.DuplicateInstanceException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -37,12 +39,12 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             entiDAO = session.getMapper(EntidadDAO.class);
             enacDAO = session.getMapper(EntidadAccionDAO.class);
 
             if (enacDAO.exists(enacVO)) {
-                throw new DuplicateInstanceException(EntidadAccionVO.class.getName(), enacVO);
+                throw new DuplicateInstanceException(MessageI18nKey.enac, enacVO);
             }
 
             enacDAO.insert(enacVO);
@@ -62,7 +64,7 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             enacDAO = session.getMapper(EntidadAccionDAO.class);
 
             final int updated = enacDAO.update(enacVO);
@@ -80,13 +82,15 @@ public final class EntidadAccionBO {
      *
      * @param enacVO
      *            the enac vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final void delete(final EntidadAccionVO enacVO) {
+    public final void delete(final EntidadAccionVO enacVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enacVO);
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             enacDAO = session.getMapper(EntidadAccionDAO.class);
 
             final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
@@ -94,7 +98,11 @@ public final class EntidadAccionBO {
             enacCriterioVO.setEntiId(enacVO.getEntiId());
             enacCriterioVO.setPath(enacVO.getPath());
 
-            enacDAO.deleteCriterio(enacCriterioVO);
+            final int updated = enacDAO.deleteCriterio(enacCriterioVO);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.enac, enacVO);
+            }
 
             session.commit();
         }
@@ -108,8 +116,10 @@ public final class EntidadAccionBO {
      * @param path
      *            the path
      * @return the entidad accion vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final EntidadAccionVO select(final Long entiId, final String path) {
+    public final EntidadAccionVO select(final Long entiId, final String path) throws InstanceNotFoundException {
         Preconditions.checkNotNull(entiId);
         Preconditions.checkNotNull(path);
 
@@ -124,7 +134,7 @@ public final class EntidadAccionBO {
             final EntidadAccionVO enacVO = enacDAO.selectObject(enacCriterioVO);
 
             if (enacVO == null) {
-                throw new Error("Accion de entidad no encontrada: " + enacCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.enac, enacCriterioVO);
             }
 
             return enacVO;

@@ -17,10 +17,12 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.dao.ParametroDAO;
 import xeredi.integra.model.maestro.dao.ParametroDatoDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDAO;
@@ -35,7 +37,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -113,7 +114,7 @@ public class ParametroBO {
             prmt.getPrvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (prmtDAO.existsOverlap(prmt)) {
-                throw new OverlapException(ParametroVO.class.getName(), prmt);
+                throw new OverlapException(MessageI18nKey.prmt, prmt);
             }
 
             prmtDAO.insertVersion(prmt);
@@ -149,7 +150,6 @@ public class ParametroBO {
      */
     public void duplicate(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
             throws OverlapException, InstanceNotFoundException {
-        // TODO Implementar
         Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(prmt.getId());
         Preconditions.checkNotNull(prmt.getParametro());
@@ -194,7 +194,7 @@ public class ParametroBO {
             final ParametroVO prmtActual = prmtDAO.selectObject(prmtCriterio);
 
             if (prmtActual == null) {
-                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
+                throw new InstanceNotFoundException(MessageI18nKey.prmt, prmt);
             }
 
             // Alta del nuevo parametro
@@ -209,7 +209,7 @@ public class ParametroBO {
             prmt.getPrvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (prmtDAO.existsOverlap(prmt)) {
-                throw new OverlapException(ParametroVO.class.getName(), prmt);
+                throw new OverlapException(MessageI18nKey.prmt, prmt);
             }
 
             prmtDAO.insertVersion(prmt);
@@ -349,13 +349,13 @@ public class ParametroBO {
             prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
             if (prmtDAO.existsOverlap(prmt)) {
-                throw new OverlapException(ParametroVO.class.getName(), prmt);
+                throw new OverlapException(MessageI18nKey.prmt, prmt);
             }
 
             final int updated = prmtDAO.updateVersion(prmt);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
+                throw new InstanceNotFoundException(prmt.getEntiId(), prmt);
             }
 
             if (tpprVO.getI18n()) {
@@ -386,7 +386,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmt.getPrvr());
         Preconditions.checkNotNull(prmt.getPrvr().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             prmtDAO = session.getMapper(ParametroDAO.class);
             prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
@@ -397,7 +397,7 @@ public class ParametroBO {
             final int updated = prmtDAO.deleteVersion(prmt);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmt);
+                throw new InstanceNotFoundException(prmt.getEntiId(), prmt);
             }
 
             session.commit();
@@ -627,7 +627,7 @@ public class ParametroBO {
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
 
             if (prmtVO == null) {
-                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+                throw new InstanceNotFoundException(prmtCriterioVO.getEntiId(), prmtCriterioVO);
             }
 
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
@@ -665,7 +665,7 @@ public class ParametroBO {
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
 
             if (prmtVO == null) {
-                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+                throw new InstanceNotFoundException(prmtCriterioVO.getEntiId(), prmtCriterioVO);
             }
 
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);
@@ -702,7 +702,7 @@ public class ParametroBO {
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
 
             if (prmtVO == null) {
-                throw new InstanceNotFoundException(ParametroVO.class.getName(), prmtCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.prmt, prmtCriterioVO);
             }
 
             fillDependencies(session, Arrays.asList(new ParametroVO[] { prmtVO }), prmtCriterioVO, true);

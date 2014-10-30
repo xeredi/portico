@@ -4,11 +4,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,16 +40,18 @@ public final class ManifiestoTotalAction extends BaseAction {
      * Totales.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("mani-totales")
-    public String totales() throws InstanceNotFoundException {
+    public String totales() {
         final ServicioBO srvcBO = new ServicioBO();
         final ManifiestoBO maniBO = new ManifiestoBO();
 
-        item = srvcBO.select(item.getId(), getIdioma());
-        resumen = maniBO.selectResumen(item.getId());
+        try {
+            item = srvcBO.select(item.getId(), getIdioma());
+            resumen = maniBO.selectResumen(item.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

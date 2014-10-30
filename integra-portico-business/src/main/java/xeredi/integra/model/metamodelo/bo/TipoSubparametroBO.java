@@ -9,16 +9,17 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.TipoSubparametroDAO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -108,7 +109,7 @@ public class TipoSubparametroBO {
      *            the id
      * @return the tipo subparametro vo
      */
-    public final TipoSubparametroVO select(final Long id, final String idioma) {
+    public final TipoSubparametroVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(idioma);
 
@@ -123,7 +124,7 @@ public class TipoSubparametroBO {
             final TipoSubparametroVO entiVO = tpspDAO.selectObject(entiCriterioVO);
 
             if (entiVO == null) {
-                throw new Error("Tipo de subparametro no encontrado: " + id);
+                throw new InstanceNotFoundException(MessageI18nKey.tpsp, id);
             }
 
             final EntidadBO entiBO = new EntidadBO();
@@ -146,22 +147,19 @@ public class TipoSubparametroBO {
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpspVO);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
 
-            final Long id = entiDAO.nextSequence();
-
-            tpspVO.setId(id);
-            tpspVO.setTipo(TipoEntidad.B);
-
             if (entiDAO.exists(tpspVO)) {
-                throw new DuplicateInstanceException(TipoSubparametroVO.class.getName(), tpspVO);
+                throw new DuplicateInstanceException(MessageI18nKey.tpsp, tpspVO);
             }
+
+            tpspVO.setId(entiDAO.nextSequence());
+            tpspVO.setTipo(TipoEntidad.B);
 
             entiDAO.insert(tpspVO);
             tpspDAO.insert(tpspVO);
-
             I18nBO.insertMap(session, I18nPrefix.enti, tpspVO.getId(), i18nMap);
 
             session.commit();
@@ -181,18 +179,15 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(tpspVO);
         Preconditions.checkNotNull(tpspVO.getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
 
-            final int updated = tpspDAO.update(tpspVO);
-
-            if (updated == 0) {
-                throw new InstanceNotFoundException(TipoSubparametroVO.class.getName(), tpspVO);
+            if (tpspDAO.update(tpspVO) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tpsp, tpspVO);
             }
 
             entiDAO.update(tpspVO);
-
             I18nBO.updateMap(session, I18nPrefix.enti, tpspVO.getId(), i18nMap);
 
             session.commit();
@@ -210,19 +205,16 @@ public class TipoSubparametroBO {
     public final void delete(final Long tpspId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpspId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
 
-            I18nBO.deleteMap(session, I18nPrefix.enti, tpspId);
-
-            final int updated = tpspDAO.delete(tpspId);
-
-            if (updated == 0) {
-                throw new InstanceNotFoundException(TipoSubparametroVO.class.getName(), tpspId);
+            if (tpspDAO.delete(tpspId) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tpsp, tpspId);
             }
 
             entiDAO.delete(tpspId);
+            I18nBO.deleteMap(session, I18nPrefix.enti, tpspId);
 
             session.commit();
         }

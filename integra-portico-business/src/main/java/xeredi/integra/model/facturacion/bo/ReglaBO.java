@@ -8,12 +8,13 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -119,7 +120,7 @@ public class ReglaBO {
                 rgla.setId(rglaDAO.selectId(rgla));
 
                 if (rglaDAO.existsOverlap(rgla)) {
-                    throw new OverlapException(ReglaVO.class.getName(), rgla);
+                    throw new OverlapException(MessageI18nKey.rgla, rgla);
                 }
             } else {
                 rgla.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -154,13 +155,13 @@ public class ReglaBO {
             rglaDAO = session.getMapper(ReglaDAO.class);
 
             if (rglaDAO.existsOverlap(rgla)) {
-                throw new OverlapException(ReglaVO.class.getName(), rgla);
+                throw new OverlapException(MessageI18nKey.rgla, rgla);
             }
 
             final int updated = rglaDAO.updateVersion(rgla);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ReglaVO.class.getName(), rgla);
+                throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
             }
 
             session.commit();
@@ -186,7 +187,7 @@ public class ReglaBO {
             final int updated = rglaDAO.deleteVersion(rgla);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ReglaVO.class.getName(), rgla);
+                throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
             }
 
             session.commit();
@@ -213,7 +214,7 @@ public class ReglaBO {
             final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
 
             if (rgla == null) {
-                throw new InstanceNotFoundException(ReglaVO.class.getName(), rglaCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.rgla, rglaCriterioVO);
             }
 
             return rgla;

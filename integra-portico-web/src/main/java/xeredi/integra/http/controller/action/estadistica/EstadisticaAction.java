@@ -6,12 +6,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -43,24 +44,25 @@ public final class EstadisticaAction extends ItemAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
 
     @Action("estd-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final EstadisticaBO estdBO = new EstadisticaBO();
-        final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
+        try {
+            final EstadisticaBO estdBO = new EstadisticaBO();
+            final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
 
-        estdCriterioVO.setId(item.getId());
-        estdCriterioVO.setIdioma(getIdioma());
+            estdCriterioVO.setId(item.getId());
+            estdCriterioVO.setIdioma(getIdioma());
 
-        item = estdBO.selectObject(estdCriterioVO);
-
-        enti = TipoEstadisticaProxy.select(item.getEntiId());
+            item = estdBO.selectObject(estdCriterioVO);
+            enti = TipoEstadisticaProxy.select(item.getEntiId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

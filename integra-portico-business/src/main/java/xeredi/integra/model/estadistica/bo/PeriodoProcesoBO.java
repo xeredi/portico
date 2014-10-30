@@ -20,7 +20,10 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaAgregadoDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaDAO;
@@ -29,7 +32,6 @@ import xeredi.integra.model.estadistica.dao.EstadisticaExportDAO;
 import xeredi.integra.model.estadistica.dao.PeriodoProcesoDAO;
 import xeredi.integra.model.estadistica.vo.CuadroMesConcepto;
 import xeredi.integra.model.estadistica.vo.CuadroMesParametroVO;
-import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaExportVO;
@@ -44,8 +46,6 @@ import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -113,7 +113,7 @@ public class PeriodoProcesoBO {
             final PeriodoProcesoVO peprVO = peprDAO.select(peprId);
 
             if (peprVO == null) {
-                throw new InstanceNotFoundException(PeriodoProcesoVO.class.getName(), peprId);
+                throw new InstanceNotFoundException(MessageI18nKey.pepr, peprId);
             }
 
             return peprVO;
@@ -257,7 +257,7 @@ public class PeriodoProcesoBO {
                 if (removeIfExists) {
                     delete(session, peprVO);
                 } else {
-                    throw new DuplicateInstanceException(PeriodoProcesoVO.class.getName(), peprVO);
+                    throw new DuplicateInstanceException(MessageI18nKey.pepr, peprVO);
                 }
             }
 
@@ -344,7 +344,7 @@ public class PeriodoProcesoBO {
                 if (removeIfExists) {
                     delete(session, peprVO);
                 } else {
-                    throw new DuplicateInstanceException(PeriodoProcesoVO.class.getName(), peprVO);
+                    throw new DuplicateInstanceException(MessageI18nKey.pepr, peprVO);
                 }
             }
 
@@ -832,19 +832,10 @@ public class PeriodoProcesoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    private final void generarCuadroMensual(final SqlSession session, final Long peprId, final boolean sobreescribir)
-            throws DuplicateInstanceException {
+    private final void generarCuadroMensual(final SqlSession session, final Long peprId, final boolean sobreescribir) {
         Preconditions.checkNotNull(peprId);
 
         final IgBO igBO = new IgBO();
-
-        if (cdmsDAO.exists(peprId)) {
-            if (sobreescribir) {
-                cdmsDAO.delete(peprId);
-            } else {
-                throw new DuplicateInstanceException(CuadroMesVO.class.getName(), peprId);
-            }
-        }
 
         cdmsDAO.insert_CM_PESCAF(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
                 CuadroMesConcepto.PESCAF, "**", "**", "ZZ", null, null, null));

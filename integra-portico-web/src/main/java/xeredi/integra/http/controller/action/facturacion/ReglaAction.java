@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
@@ -29,7 +30,6 @@ import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -107,7 +107,7 @@ public final class ReglaAction extends BaseAction {
 
             rginList.addAll(rginBO.selectList(rginCriterioVO));
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), String.valueOf(rgla.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -168,7 +168,7 @@ public final class ReglaAction extends BaseAction {
 
             loadEntiFacturables();
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), String.valueOf(rgla.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -316,16 +316,16 @@ public final class ReglaAction extends BaseAction {
             try {
                 rglaBO.insert(rgla);
             } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgla));
+                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
             }
             break;
         case edit:
             try {
                 rglaBO.update(rgla);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), rgla.getCodigo());
+                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.rgla));
+                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
             }
             break;
         default:
@@ -351,7 +351,7 @@ public final class ReglaAction extends BaseAction {
         try {
             rglaBO.delete(rgla);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.rgla), String.valueOf(rgla.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

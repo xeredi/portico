@@ -4,10 +4,11 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadAccionBO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
-import xeredi.util.exception.DuplicateInstanceException;
 
 import com.google.common.base.Preconditions;
 
@@ -55,9 +56,13 @@ public final class EntidadAccionAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final EntidadAccionBO enacBO = new EntidadAccionBO();
+        try {
+            final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        enac = enacBO.select(enac.getEntiId(), enac.getPath());
+            enac = enacBO.select(enac.getEntiId(), enac.getPath());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -92,7 +97,7 @@ public final class EntidadAccionAction extends BaseAction {
             try {
                 enacBO.insert(enac);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.enac));
+                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
             }
         } else {
             enacBO.update(enac);
@@ -112,9 +117,13 @@ public final class EntidadAccionAction extends BaseAction {
         Preconditions.checkNotNull(enac.getEntiId());
         Preconditions.checkNotNull(enac.getPath());
 
-        final EntidadAccionBO enacBO = new EntidadAccionBO();
+        try {
+            final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        enacBO.delete(enac);
+            enacBO.delete(enac);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -130,9 +139,13 @@ public final class EntidadAccionAction extends BaseAction {
         Preconditions.checkNotNull(enac.getEntiId());
         Preconditions.checkNotNull(enac.getPath());
 
-        final EntidadAccionBO enacBO = new EntidadAccionBO();
+        try {
+            final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        enac = enacBO.select(enac.getEntiId(), enac.getPath());
+            enac = enacBO.select(enac.getEntiId(), enac.getPath());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

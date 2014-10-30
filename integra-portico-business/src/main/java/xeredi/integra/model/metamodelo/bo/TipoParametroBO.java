@@ -9,16 +9,17 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.TipoParametroDAO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -106,9 +107,13 @@ public class TipoParametroBO {
      *
      * @param id
      *            the id
+     * @param idioma
+     *            the idioma
      * @return the tipo parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final TipoParametroVO select(final Long id, final String idioma) {
+    public final TipoParametroVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
         Preconditions.checkNotNull(idioma);
 
@@ -123,7 +128,7 @@ public class TipoParametroBO {
             final TipoParametroVO entiVO = tpprDAO.selectObject(entiCriterioVO);
 
             if (entiVO == null) {
-                throw new Error("Tipo de parametro no encontrado: " + id);
+                throw new InstanceNotFoundException(MessageI18nKey.tppr, id);
             }
 
             final EntidadBO entiBO = new EntidadBO();
@@ -139,6 +144,8 @@ public class TipoParametroBO {
      *
      * @param tpprVO
      *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
@@ -146,18 +153,18 @@ public class TipoParametroBO {
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(tpprVO);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             tpprDAO = session.getMapper(TipoParametroDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
+
+            if (entiDAO.exists(tpprVO)) {
+                throw new DuplicateInstanceException(MessageI18nKey.tppr, tpprVO);
+            }
 
             final Long id = entiDAO.nextSequence();
 
             tpprVO.setId(id);
             tpprVO.setTipo(TipoEntidad.P);
-
-            if (entiDAO.exists(tpprVO)) {
-                throw new DuplicateInstanceException(TipoParametroVO.class.getName(), tpprVO);
-            }
 
             entiDAO.insert(tpprVO);
             tpprDAO.insert(tpprVO);
@@ -173,6 +180,8 @@ public class TipoParametroBO {
      *
      * @param tpprVO
      *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
@@ -181,18 +190,15 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(tpprVO);
         Preconditions.checkNotNull(tpprVO.getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             tpprDAO = session.getMapper(TipoParametroDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
 
-            final int updated = tpprDAO.update(tpprVO);
-
-            if (updated == 0) {
-                throw new InstanceNotFoundException(TipoParametroVO.class.getName(), tpprVO);
+            if (tpprDAO.update(tpprVO) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tppr, tpprVO);
             }
 
             entiDAO.update(tpprVO);
-
             I18nBO.updateMap(session, I18nPrefix.enti, tpprVO.getId(), i18nMap);
 
             session.commit();
@@ -210,18 +216,15 @@ public class TipoParametroBO {
     public final void delete(final Long tpprId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpprId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             tpprDAO = session.getMapper(TipoParametroDAO.class);
             entiDAO = session.getMapper(EntidadDAO.class);
 
-            I18nBO.deleteMap(session, I18nPrefix.enti, tpprId);
-
-            final int updated = tpprDAO.delete(tpprId);
-
-            if (updated == 0) {
-                throw new InstanceNotFoundException(TipoParametroVO.class.getName(), tpprId);
+            if (tpprDAO.delete(tpprId) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.tppr, tpprId);
             }
 
+            I18nBO.deleteMap(session, I18nPrefix.enti, tpprId);
             entiDAO.delete(tpprId);
 
             session.commit();

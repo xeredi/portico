@@ -5,14 +5,15 @@ import java.util.List;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -44,7 +45,7 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
         Preconditions.checkNotNull(enenVO.getOrden());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             entiDAO = session.getMapper(EntidadDAO.class);
             enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
@@ -63,7 +64,7 @@ public class EntidadEntidadBO {
             }
 
             if (enenDAO.exists(enenVO)) {
-                throw new DuplicateInstanceException(EntidadEntidadVO.class.getName(), enenVO);
+                throw new DuplicateInstanceException(MessageI18nKey.enen, enenVO);
             }
 
             enenDAO.insert(enenVO);
@@ -87,13 +88,13 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
         Preconditions.checkNotNull(enenVO.getOrden());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
             final int updated = enenDAO.update(enenVO);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
+                throw new InstanceNotFoundException(MessageI18nKey.enen, enenVO);
             }
 
             session.commit();
@@ -114,13 +115,13 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenVO.getEntiHija());
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
             final int updated = enenDAO.delete(enenVO);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(EntidadEntidadVO.class.getName(), enenVO);
+                throw new InstanceNotFoundException(MessageI18nKey.enen, enenVO);
             }
 
             session.commit();
@@ -150,8 +151,11 @@ public class EntidadEntidadBO {
      * @param enenCriterioVO
      *            the enen criterio vo
      * @return the entidad entidad vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO) {
+    public final EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenCriterioVO);
         Preconditions.checkNotNull(enenCriterioVO.getEntiPadreId());
         Preconditions.checkNotNull(enenCriterioVO.getEntiHijaId());
@@ -159,7 +163,13 @@ public class EntidadEntidadBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
-            return enenDAO.selectObject(enenCriterioVO);
+            final EntidadEntidadVO enen = enenDAO.selectObject(enenCriterioVO);
+
+            if (enen == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.enen, enenCriterioVO);
+            }
+
+            return enen;
         }
     }
 }

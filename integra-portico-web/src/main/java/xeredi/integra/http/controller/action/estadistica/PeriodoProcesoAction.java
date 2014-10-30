@@ -6,12 +6,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
-import xeredi.util.struts.PropertyValidator;
 
 import com.google.common.base.Preconditions;
 
@@ -26,13 +27,6 @@ public final class PeriodoProcesoAction extends BaseAction {
 
     /** The pepr form. */
     private PeriodoProcesoVO pepr;
-
-    /**
-     * Instantiates a new periodo proceso action.
-     */
-    public PeriodoProcesoAction() {
-        super();
-    }
 
     /**
      * {@inheritDoc}
@@ -60,15 +54,19 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-cargar")
     public String cargar() {
-        PropertyValidator.validateRequired(this, "pepr.anio", pepr.getAnio());
-        PropertyValidator.validateRequired(this, "pepr.mes", pepr.getMes());
-        PropertyValidator.validateRequired(this, "pepr.autp", pepr.getAutp());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr);
 
-        if (hasErrors()) {
-            return INPUT;
+        if (!hasErrors()) {
+            FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
+            FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, pepr.getMes());
+            FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp());
         }
 
-        throw new Error("No Implementado");
+        if (!hasErrors()) {
+            throw new Error("No Implementado");
+        }
+
+        return SUCCESS;
     }
 
     /**
@@ -92,17 +90,19 @@ public final class PeriodoProcesoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("pepr-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
         Preconditions.checkNotNull(pepr);
         Preconditions.checkNotNull(pepr.getId());
 
-        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+        try {
+            final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-        pepr = peprBO.select(pepr.getId());
+            pepr = peprBO.select(pepr.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -111,11 +111,9 @@ public final class PeriodoProcesoAction extends BaseAction {
      * Exportar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("pepr-export")
-    public String exportar() throws InstanceNotFoundException {
+    public String exportar() {
         Preconditions.checkNotNull(pepr);
         Preconditions.checkNotNull(pepr.getId());
 

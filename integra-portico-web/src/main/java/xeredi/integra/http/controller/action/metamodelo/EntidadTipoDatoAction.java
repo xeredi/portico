@@ -7,6 +7,8 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
@@ -14,7 +16,6 @@ import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
 
 import com.google.common.base.Preconditions;
 
@@ -80,11 +81,15 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+        try {
+            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
+            entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
 
-        loadLabelValues();
+            loadLabelValues();
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -117,20 +122,29 @@ public final class EntidadTipoDatoAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, entd.getGridable());
         FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, entd.getFiltrable());
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+            switch (accion) {
+            case create:
+                try {
+                    entdBO.insert(entd);
+                } catch (final DuplicateInstanceException ex) {
+                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
+                }
 
-        if (accion == ACCION_EDICION.create) {
-            try {
-                entdBO.insert(entd);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.entd));
+                break;
+            case edit:
+                try {
+                    entdBO.update(entd);
+                } catch (final InstanceNotFoundException ex) {
+                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+                }
+
+                break;
+            default:
+                throw new Error("Accion no contemplada: " + accion);
             }
-        } else {
-            entdBO.update(entd);
         }
 
         return SUCCESS;
@@ -148,9 +162,13 @@ public final class EntidadTipoDatoAction extends BaseAction {
         Preconditions.checkNotNull(entd.getTpdt());
         Preconditions.checkNotNull(entd.getTpdt().getId());
 
-        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+        try {
+            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entdBO.delete(entd);
+            entdBO.delete(entd);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -169,7 +187,11 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
+        try {
+            entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

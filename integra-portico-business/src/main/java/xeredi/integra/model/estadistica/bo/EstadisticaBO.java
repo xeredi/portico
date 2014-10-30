@@ -11,12 +11,13 @@ import java.util.Set;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.dao.EstadisticaDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaDatoDAO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -107,7 +108,7 @@ public class EstadisticaBO {
             final EstadisticaVO estdVO = estdDAO.selectObject(estdCriterioVO);
 
             if (estdVO == null) {
-                throw new InstanceNotFoundException(EstadisticaVO.class.getName(), estdCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.estd, estdCriterioVO);
             }
 
             final List<EstadisticaVO> estdList = Arrays.asList(new EstadisticaVO[] { estdVO });

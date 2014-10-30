@@ -131,19 +131,21 @@
         ]]>
     </update>
 
-    <delete id="deleteCriterio" parameterType="EntidadTipoDatoCriterioVO">
+    <delete id="delete" parameterType="EntidadTipoDatoVO">
         <![CDATA[
         DELETE FROM tbl_entidad_tipo_dato_entd
+        WHERE
+            entd_enti_pk = #{entiId}
+            AND entd_tpdt_pk = #{tpdtId}
         ]]>
-        <where>
-            <![CDATA[
-                entd_enti_pk = #{entiId}
-            ]]>
+    </delete>
 
+    <delete id="deleteList" parameterType="EntidadTipoDatoCriterioVO">
+        DELETE FROM tbl_entidad_tipo_dato_entd
+        <where>
+            entd_enti_pk = #{entiId}
             <if test="tpdtId != null">
-            <![CDATA[
                 AND entd_tpdt_pk = #{tpdtId}
-            ]]>
             </if>
         </where>
     </delete>

@@ -9,6 +9,8 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -20,8 +22,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -82,7 +82,7 @@ public final class TipoServicioAction extends BaseAction {
             enti = tpsrBO.select(enti.getId(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpsr), String.valueOf(enti.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -127,13 +127,13 @@ public final class TipoServicioAction extends BaseAction {
             try {
                 tpsrBO.insert(enti, i18nMap);
             } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(MessageI18nKey.tpsr));
+                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
             }
         } else {
             try {
                 tpsrBO.update(enti, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpsr), String.valueOf(enti.getId()));
+                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             }
         }
 
@@ -152,7 +152,7 @@ public final class TipoServicioAction extends BaseAction {
         try {
             tpsrBO.delete(enti.getId());
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpsr), String.valueOf(enti.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -191,7 +191,7 @@ public final class TipoServicioAction extends BaseAction {
                 entiHijasList.addAll(entiBO.selectList(entiCriterioVO));
             }
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.tpsr), String.valueOf(enti.getId()));
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

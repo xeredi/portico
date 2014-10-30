@@ -12,6 +12,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -24,7 +25,6 @@ import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.CargoVersionVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -82,7 +82,6 @@ public final class CargoAction extends BaseAction {
         Preconditions.checkNotNull(crgo.getId());
 
         final CargoBO crgoBO = new CargoBO();
-        final I18nBO i18nBO = new I18nBO();
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setId(crgo.getId());
@@ -92,7 +91,7 @@ public final class CargoAction extends BaseAction {
         crgo = crgoBO.select(crgoCriterioVO);
 
         if (crgo != null) {
-            i18nMap = i18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+            i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
 
             final ReglaBO rglaBO = new ReglaBO();
             final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
@@ -134,14 +133,13 @@ public final class CargoAction extends BaseAction {
         accion = ACCION_EDICION.edit;
 
         final CargoBO crgoBO = new CargoBO();
-        final I18nBO i18nBO = new I18nBO();
         final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
         crgoCriterioVO.setCrgvId(crgo.getCrgv().getId());
         crgoCriterioVO.setIdioma(getIdioma());
 
         crgo = crgoBO.select(crgoCriterioVO);
-        i18nMap = i18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+        i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
 
         return SUCCESS;
     }
@@ -185,7 +183,7 @@ public final class CargoAction extends BaseAction {
             try {
                 crgoBO.insert(crgo, i18nMap);
             } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.crgo));
+                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
             }
 
             break;
@@ -193,9 +191,9 @@ public final class CargoAction extends BaseAction {
             try {
                 crgoBO.update(crgo, i18nMap);
             } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.crgo), crgo.getCodigo());
+                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(MessageI18nKey.crgo));
+                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
             }
 
             break;
@@ -222,7 +220,7 @@ public final class CargoAction extends BaseAction {
         try {
             crgoBO.delete(crgo);
         } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(MessageI18nKey.crgo), crgo.getCodigo());
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

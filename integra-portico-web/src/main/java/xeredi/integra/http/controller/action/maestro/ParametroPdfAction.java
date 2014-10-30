@@ -17,6 +17,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -30,7 +31,6 @@ import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubparametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -80,7 +80,6 @@ public final class ParametroPdfAction extends BaseAction {
         }
 
         final ParametroBO prmtBO = new ParametroBO();
-        final I18nBO i18nBO = new I18nBO();
         final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
 
         item = prmtBO.select(item.getId(), getIdioma(), fechaVigencia);
@@ -112,7 +111,7 @@ public final class ParametroPdfAction extends BaseAction {
         final Map<String, I18nVO> i18nMap = new HashMap<>();
 
         if (enti.getI18n()) {
-            i18nMap.putAll(i18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId()));
+            i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId()));
         }
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {

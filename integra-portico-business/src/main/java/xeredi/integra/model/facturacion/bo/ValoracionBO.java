@@ -10,6 +10,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
 import xeredi.integra.model.facturacion.dao.ServicioCargoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionCargoDAO;
@@ -34,7 +36,6 @@ import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -464,7 +465,7 @@ public class ValoracionBO {
             final int updated = vlrlDAO.update(vlrl);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ValoracionLineaVO.class.getName(), vlrl.getId());
+                throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrl.getId());
             }
 
             session.commit();
@@ -616,7 +617,7 @@ public class ValoracionBO {
             final int updated = vlrdDAO.update(vlrd);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ValoracionDetalleVO.class.getName(), vlrd.getId());
+                throw new InstanceNotFoundException(MessageI18nKey.vlrd, vlrd.getId());
             }
 
             recalcularVlrc(session, vlrd.getVlrcId());
@@ -646,7 +647,7 @@ public class ValoracionBO {
             final int updated = vlrdDAO.delete(vlrd);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ValoracionDetalleVO.class.getName(), vlrd.getId());
+                throw new InstanceNotFoundException(MessageI18nKey.vlrd, vlrd.getId());
             }
 
             final ValoracionDetalleCriterioVO vlrdCriterioVO = new ValoracionDetalleCriterioVO();

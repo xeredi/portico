@@ -13,15 +13,16 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.dao.SubparametroDAO;
 import xeredi.integra.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -85,7 +86,7 @@ public class SubparametroBO {
             sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(SubparametroVO.class.getName(), sprm);
+                throw new OverlapException(sprm.getEntiId(), sprm);
             }
 
             sprmDAO.insertVersion(sprm);
@@ -134,7 +135,7 @@ public class SubparametroBO {
             sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(SubparametroVO.class.getName(), sprm);
+                throw new OverlapException(sprm.getEntiId(), sprm);
             }
 
             sprmDAO.insertVersion(sprm);
@@ -194,13 +195,13 @@ public class SubparametroBO {
             spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
             if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(SubparametroVO.class.getName(), sprm);
+                throw new OverlapException(sprm.getEntiId(), sprm);
             }
 
             final int updated = sprmDAO.updateVersion(sprm);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(SubparametroVO.class.getName(), sprm);
+                throw new InstanceNotFoundException(sprm.getEntiId(), sprm);
             }
 
             if (sprm.getItdtMap() != null) {
@@ -227,7 +228,7 @@ public class SubparametroBO {
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             sprmDAO = session.getMapper(SubparametroDAO.class);
             spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
@@ -236,7 +237,7 @@ public class SubparametroBO {
             final int updated = sprmDAO.deleteVersion(sprm);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(SubparametroVO.class.getName(), sprm);
+                throw new InstanceNotFoundException(MessageI18nKey.sprm, sprm);
             }
 
             session.commit();
@@ -318,7 +319,7 @@ public class SubparametroBO {
             final SubparametroVO sprmVO = sprmDAO.selectObject(sprmCriterioVO);
 
             if (sprmVO == null) {
-                throw new InstanceNotFoundException(SubparametroVO.class.getName(), sprmCriterioVO);
+                throw new InstanceNotFoundException(MessageI18nKey.sprm, sprmCriterioVO);
             }
 
             fillDependencies(session, Arrays.asList(new SubparametroVO[] { sprmVO }), sprmCriterioVO);

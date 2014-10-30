@@ -8,6 +8,9 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.proceso.dao.ProcesoArchivoDAO;
 import xeredi.integra.model.proceso.dao.ProcesoDAO;
 import xeredi.integra.model.proceso.dao.ProcesoItemDAO;
@@ -24,7 +27,6 @@ import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -175,11 +177,11 @@ public class ProcesoBO {
             final ProcesoVO prbtActualVO = prbtDAO.select(prbtVO.getId());
 
             if (prbtActualVO == null) {
-                throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtVO.getId());
+                throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtVO.getId());
             }
 
             if (prbtActualVO.getEstado() != ProcesoEstado.E) {
-                throw new OperacionNoPermitidaException(ProcesoVO.class.getName(), prbtVO.getId());
+                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, prbtVO.getId());
             }
 
             prbtDAO.updateFinalizar(prbtVO.getId());
@@ -231,18 +233,17 @@ public class ProcesoBO {
             final ProcesoVO prbtVO = prbtDAO.select(prbtId);
 
             if (prbtVO == null) {
-                throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtId);
+                throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtId);
             }
 
             if (prbtVO.getEstado() == ProcesoEstado.E) {
-                throw new OperacionNoPermitidaException(ProcesoVO.class.getName(), prbtVO);
+                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, prbtVO);
             }
 
             prarDAO.delete(prbtId);
             pritDAO.delete(prbtId);
             prmnDAO.delete(prbtId);
             prpmDAO.delete(prbtId);
-
             prbtDAO.delete(prbtId);
 
             session.commit();
@@ -317,7 +318,7 @@ public class ProcesoBO {
             final ProcesoVO prbtVO = prbtDAO.select(prbtId);
 
             if (prbtVO == null) {
-                throw new InstanceNotFoundException(ProcesoVO.class.getName(), prbtId);
+                throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtId);
             }
 
             final List<ProcesoArchivoVO> prarList = prarDAO.selectList(prbtId);

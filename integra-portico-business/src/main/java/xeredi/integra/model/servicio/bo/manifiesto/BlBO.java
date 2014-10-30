@@ -3,19 +3,18 @@ package xeredi.integra.model.servicio.bo.manifiesto;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
-import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.integra.model.util.Entidad;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -48,10 +47,10 @@ public class BlBO {
      * @throws EstadoInvalidoException
      *             the estado invalido exception
      */
-    public final void completar(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
+    public final void completar(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             ssrvDAO = session.getMapper(SubservicioDAO.class);
             maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
             maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -64,15 +63,14 @@ public class BlBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.BL.getId(), ssrvId);
             }
 
             // Completar el Bl
             final int updatedRows = maniSsrvDAO.updateCompletar(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new EstadoInvalidoException(ServicioVO.class.getName(), ssrvId, ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvVO.getId());
             }
 
             // Recalcular Estado del manifiesto
@@ -92,10 +90,10 @@ public class BlBO {
      * @throws EstadoInvalidoException
      *             the estado invalido exception
      */
-    public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
+    public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             ssrvDAO = session.getMapper(SubservicioDAO.class);
             maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
             maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -108,7 +106,7 @@ public class BlBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.BL.getId(), ssrvId);
             }
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
@@ -119,8 +117,7 @@ public class BlBO {
             final int updatedRows = maniSsrvDAO.updateBloquear(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new EstadoInvalidoException(ServicioVO.class.getName(), ssrvId, ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvId);
             }
 
             // Bloqueo de los equipamientos y partidas del BL
@@ -157,10 +154,10 @@ public class BlBO {
      * @throws EstadoInvalidoException
      *             the estado invalido exception
      */
-    public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
+    public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             ssrvDAO = session.getMapper(SubservicioDAO.class);
             maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
             maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -173,7 +170,7 @@ public class BlBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.BL.getId(), ssrvId);
             }
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
@@ -185,8 +182,7 @@ public class BlBO {
             final int updatedRows = maniSsrvDAO.updateIniciar(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new EstadoInvalidoException(ServicioVO.class.getName(), ssrvId, ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvId);
             }
 
             // Inicio de los equipamientos y partidas del BL
@@ -223,10 +219,10 @@ public class BlBO {
      * @throws EstadoInvalidoException
      *             the estado invalido exception
      */
-    public final void anular(final Long ssrvId) throws InstanceNotFoundException, EstadoInvalidoException {
+    public final void anular(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             ssrvDAO = session.getMapper(SubservicioDAO.class);
             maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
             maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -239,7 +235,7 @@ public class BlBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(Entidad.BL.getId(), ssrvId);
             }
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
@@ -250,8 +246,7 @@ public class BlBO {
             final int updatedRows = maniSsrvDAO.updateAnular(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new EstadoInvalidoException(ServicioVO.class.getName(), ssrvId, ssrvVO.getEstado(),
-                        ssrvVO.getEtiqueta());
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvId);
             }
 
             // Anular de los equipamientos y partidas del BL
@@ -304,7 +299,7 @@ public class BlBO {
             final ResumenTotalesVO totalVO = resumenDAO.selectObject(totalCriterioVO);
 
             if (totalVO == null) {
-                throw new InstanceNotFoundException(ResumenTotalesVO.class.getName(), totalCriterioVO);
+                throw new InstanceNotFoundException(Entidad.BL.getId(), totalCriterioVO);
             }
 
             return totalVO;

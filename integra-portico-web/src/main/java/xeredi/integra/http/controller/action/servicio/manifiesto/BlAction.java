@@ -4,12 +4,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,11 +36,9 @@ public final class BlAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("mabl-bloquear")
-    public String bloquear() throws InstanceNotFoundException {
+    public String bloquear() {
         final BlBO mablBO = new BlBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
 
@@ -48,8 +46,10 @@ public final class BlAction extends BaseAction {
             mablBO.bloquear(item.getId());
 
             item = ssrvBO.select(item.getId(), getIdioma());
-        } catch (final EstadoInvalidoException ex) {
-            addActionError(MessageI18nKey.E00011, ex.getEstado());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        } catch (final OperacionNoPermitidaException ex) {
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -59,17 +59,17 @@ public final class BlAction extends BaseAction {
      * Completar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("mabl-completar")
-    public String completar() throws InstanceNotFoundException {
+    public String completar() {
         final BlBO mablBO = new BlBO();
 
         try {
             mablBO.completar(item.getId());
-        } catch (final EstadoInvalidoException ex) {
-            addActionError(MessageI18nKey.E00011, ex.getEstado());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        } catch (final OperacionNoPermitidaException ex) {
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -79,17 +79,17 @@ public final class BlAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("mabl-iniciar")
-    public String iniciar() throws InstanceNotFoundException {
+    public String iniciar() {
         final BlBO mablBO = new BlBO();
 
         try {
             mablBO.iniciar(item.getId());
-        } catch (final EstadoInvalidoException ex) {
-            addActionError(MessageI18nKey.E00011, ex.getEstado());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        } catch (final OperacionNoPermitidaException ex) {
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -99,17 +99,17 @@ public final class BlAction extends BaseAction {
      * Anular.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("mabl-anular")
-    public String anular() throws InstanceNotFoundException {
+    public String anular() {
         final BlBO mablBO = new BlBO();
 
         try {
             mablBO.anular(item.getId());
-        } catch (final EstadoInvalidoException ex) {
-            addActionError(MessageI18nKey.E00011, ex.getEstado());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        } catch (final OperacionNoPermitidaException ex) {
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

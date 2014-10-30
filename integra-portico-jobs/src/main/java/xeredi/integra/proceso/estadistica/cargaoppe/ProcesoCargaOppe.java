@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -34,7 +35,6 @@ import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.proceso.ProcesoTemplate;
-import xeredi.util.exception.DuplicateInstanceException;
 
 // TODO: Auto-generated Javadoc
 /**

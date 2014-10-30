@@ -1,6 +1,6 @@
 package xeredi.integra.model.comun.exception;
 
-import xeredi.util.exception.ModelException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,8 +24,24 @@ public final class TooManyResultsException extends ModelException {
      * @param amaxResults
      *            the amax results
      */
-    public TooManyResultsException(final String aclassName, final Object aobjId, final int amaxResults) {
+    public TooManyResultsException(final MessageI18nKey aclassName, final Object aobjId, final int amaxResults) {
         super("TooManyResults", aclassName, aobjId);
+
+        maxResults = amaxResults;
+    }
+
+    /**
+     * Instantiates a new too many results exception.
+     *
+     * @param aclassId
+     *            the aclass id
+     * @param aobjId
+     *            the aobj id
+     * @param amaxResults
+     *            the amax results
+     */
+    public TooManyResultsException(final Long aclassId, final Object aobjId, final int amaxResults) {
+        super("TooManyResults", aclassId, aobjId);
 
         maxResults = amaxResults;
     }

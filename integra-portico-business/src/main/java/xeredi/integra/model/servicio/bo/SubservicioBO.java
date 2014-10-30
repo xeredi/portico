@@ -13,7 +13,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
@@ -23,8 +26,6 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -124,7 +125,7 @@ public class SubservicioBO {
             final SubservicioVO ssrvVO = ssrvDAO.selectObject(ssrvCriterioVO);
 
             if (ssrvVO == null) {
-                throw new InstanceNotFoundException(SubservicioVO.class.getName(), ssrvId);
+                throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvId);
             }
 
             fillDependencies(session, Arrays.asList(new SubservicioVO[] { ssrvVO }), ssrvCriterioVO, true);
@@ -188,7 +189,7 @@ public class SubservicioBO {
             final IgBO igBO = new IgBO();
 
             if (ssrvDAO.exists(ssrvVO)) {
-                throw new DuplicateInstanceException(SubservicioVO.class.getName(), ssrvVO);
+                throw new DuplicateInstanceException(ssrvVO.getEntiId(), ssrvVO);
             }
 
             ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));

@@ -9,13 +9,14 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadGrupoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -42,7 +43,7 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final IgBO igBO = new IgBO();
 
             engdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -72,11 +73,11 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
             if (engdDAO.update(engdVO) == 0) {
-                throw new InstanceNotFoundException(EntidadGrupoDatoVO.class.getName(), engdVO);
+                throw new InstanceNotFoundException(MessageI18nKey.engd, engdVO);
             }
 
             I18nBO.updateMap(session, I18nPrefix.engd, engdVO.getId(), i18nMap);
@@ -96,13 +97,17 @@ public class EntidadGrupoDatoBO {
     public final void delete(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setId(id);
-            engdDAO.delete(engdCriterioVO);
+
+            if (engdDAO.delete(engdCriterioVO) == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.engd, id);
+            }
+
             I18nBO.deleteMap(session, I18nPrefix.engd, id);
 
             session.commit();
@@ -134,7 +139,7 @@ public class EntidadGrupoDatoBO {
             final EntidadGrupoDatoVO engdVO = engdDAO.selectObject(engdCriterioVO);
 
             if (engdVO == null) {
-                throw new InstanceNotFoundException(EntidadGrupoDatoVO.class.getName(), id);
+                throw new InstanceNotFoundException(MessageI18nKey.engd, id);
             }
 
             return engdVO;

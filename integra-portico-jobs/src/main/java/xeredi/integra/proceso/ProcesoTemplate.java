@@ -10,13 +10,14 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.proceso.bo.OperacionNoPermitidaException;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
@@ -26,7 +27,6 @@ import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.integra.model.util.TipoDato;
-import xeredi.util.exception.InstanceNotFoundException;
 
 // TODO: Auto-generated Javadoc
 /**

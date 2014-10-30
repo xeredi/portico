@@ -6,11 +6,12 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.ReglaIncompatibleDAO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -44,7 +45,7 @@ public class ReglaIncompatibleBO {
                 rgin.setId(rginDAO.selectId(rgin));
 
                 if (rginDAO.existsOverlap(rgin)) {
-                    throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
+                    throw new OverlapException(MessageI18nKey.rgin, rgin);
                 }
             } else {
                 rgin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -80,13 +81,13 @@ public class ReglaIncompatibleBO {
             rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
             if (rginDAO.existsOverlap(rgin)) {
-                throw new OverlapException(ReglaIncompatibleVO.class.getName(), rgin);
+                throw new OverlapException(MessageI18nKey.rgin, rgin);
             }
 
             final int updated = rginDAO.updateVersion(rgin);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rgin);
+                throw new InstanceNotFoundException(MessageI18nKey.rgin, rgin);
             }
 
             session.commit();
@@ -112,7 +113,7 @@ public class ReglaIncompatibleBO {
             final int updated = rginDAO.deleteVersion(rgin);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rgin);
+                throw new InstanceNotFoundException(MessageI18nKey.rgin, rgin);
             }
 
             session.commit();
@@ -137,7 +138,7 @@ public class ReglaIncompatibleBO {
             final ReglaIncompatibleVO rgin = rginDAO.selectObject(rginCriterio);
 
             if (rgin == null) {
-                throw new InstanceNotFoundException(ReglaIncompatibleVO.class.getName(), rginCriterio);
+                throw new InstanceNotFoundException(MessageI18nKey.rgin, rginCriterio);
             }
 
             return rgin;

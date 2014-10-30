@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
@@ -20,8 +21,6 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.Entidad;
 import xeredi.util.applicationobjects.LabelValueVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -68,19 +67,20 @@ public final class ServicioAction extends ItemAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("srvc-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final ServicioBO srvcBO = new ServicioBO();
+        try {
+            final ServicioBO srvcBO = new ServicioBO();
 
-        item = srvcBO.select(item.getId(), getIdioma());
-
-        enti = TipoServicioProxy.select(item.getEntiId());
+            item = srvcBO.select(item.getId(), getIdioma());
+            enti = TipoServicioProxy.select(item.getEntiId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -115,24 +115,25 @@ public final class ServicioAction extends ItemAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action(value = "srvc-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String modificar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         accion = ACCION_EDICION.edit;
 
-        final ServicioBO srvcBO = new ServicioBO();
+        try {
+            final ServicioBO srvcBO = new ServicioBO();
 
-        item = srvcBO.select(item.getId(), getIdioma());
+            item = srvcBO.select(item.getId(), getIdioma());
+            enti = TipoServicioProxy.select(item.getEntiId());
 
-        enti = TipoServicioProxy.select(item.getEntiId());
-
-        loadLabelValuesMap(enti);
-        loadSubpList();
+            loadLabelValuesMap(enti);
+            loadSubpList();
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -141,24 +142,25 @@ public final class ServicioAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("srvc-duplicate")
-    public String duplicar() throws InstanceNotFoundException {
+    public String duplicar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         accion = ACCION_EDICION.duplicate;
 
-        final ServicioBO srvcBO = new ServicioBO();
+        try {
+            final ServicioBO srvcBO = new ServicioBO();
 
-        item = srvcBO.select(item.getId(), getIdioma());
+            item = srvcBO.select(item.getId(), getIdioma());
+            enti = TipoServicioProxy.select(item.getEntiId());
 
-        enti = TipoServicioProxy.select(item.getEntiId());
-
-        loadLabelValuesMap(enti);
-        loadSubpList();
+            loadLabelValuesMap(enti);
+            loadSubpList();
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -177,36 +179,22 @@ public final class ServicioAction extends ItemAction {
         final TipoServicioVO enti = TipoServicioProxy.select(item.getEntiId());
 
         if (accion == ACCION_EDICION.create) {
-            if (item.getSubp() == null || item.getSubp().getId() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_subp));
-            }
-            if (item.getAnno() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_anno));
-            }
-            if (item.getNumero() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_numero));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_subp, item.getSubp());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_anno, item.getAnno());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_numero, item.getNumero());
         } else {
             Preconditions.checkNotNull(item.getId());
         }
 
         if (enti.getTpdtEstado() != null) {
-            if (GenericValidator.isBlankOrNull(item.getEstado())) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_estado));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_estado, item.getEstado());
         }
 
         if (enti.getTemporal()) {
-            if (item.getFini() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_fini));
-            }
-            if (item.getFfin() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_ffin));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fini, item.getFini());
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_ffin, item.getFfin());
         } else {
-            if (item.getFref() == null) {
-                addActionError(MessageI18nKey.E00001, getText(MessageI18nKey.srvc_fref));
-            }
+            FieldValidator.validateRequired(this, MessageI18nKey.srvc_fref, item.getFref());
         }
 
         FieldValidator.validateItem(this, enti, item);
@@ -246,14 +234,19 @@ public final class ServicioAction extends ItemAction {
      * Borrar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("srvc-remove")
-    public String borrar() throws InstanceNotFoundException {
-        final ServicioBO srvcBO = new ServicioBO();
+    public String borrar() {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
 
-        srvcBO.delete(item.getId());
+        try {
+            final ServicioBO srvcBO = new ServicioBO();
+
+            srvcBO.delete(item.getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

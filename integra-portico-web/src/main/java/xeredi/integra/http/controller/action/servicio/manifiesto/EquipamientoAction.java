@@ -4,11 +4,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.servicio.bo.EstadoInvalidoException;
 import xeredi.integra.model.servicio.bo.manifiesto.EquipamientoBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.util.exception.InstanceNotFoundException;
 
 import com.google.common.base.Preconditions;
 
@@ -37,11 +37,9 @@ public final class EquipamientoAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("equi-bloquear")
-    public String bloquear() throws InstanceNotFoundException {
+    public String bloquear() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -49,8 +47,10 @@ public final class EquipamientoAction extends BaseAction {
 
         try {
             equiBO.bloquear(item.getId());
-        } catch (final EstadoInvalidoException ex) {
-            addActionError(MessageI18nKey.E00011, ex.getEstado());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        } catch (final OperacionNoPermitidaException ex) {
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -60,11 +60,9 @@ public final class EquipamientoAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("equi-iniciar")
-    public String iniciar() throws InstanceNotFoundException {
+    public String iniciar() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -72,8 +70,10 @@ public final class EquipamientoAction extends BaseAction {
 
         try {
             equiBO.iniciar(item.getId());
-        } catch (final EstadoInvalidoException ex) {
-            addActionError(MessageI18nKey.E00011, ex.getEstado());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        } catch (final OperacionNoPermitidaException ex) {
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -83,11 +83,9 @@ public final class EquipamientoAction extends BaseAction {
      * Anular.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
     @Action("equi-anular")
-    public String anular() throws InstanceNotFoundException {
+    public String anular() {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -95,8 +93,10 @@ public final class EquipamientoAction extends BaseAction {
 
         try {
             equiBO.anular(item.getId());
-        } catch (final EstadoInvalidoException ex) {
-            addActionError(MessageI18nKey.E00011, ex.getEstado());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        } catch (final OperacionNoPermitidaException ex) {
+            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;

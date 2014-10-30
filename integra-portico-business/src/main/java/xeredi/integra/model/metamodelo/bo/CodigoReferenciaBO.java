@@ -8,13 +8,14 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.CodigoReferenciaDAO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
-import xeredi.util.exception.DuplicateInstanceException;
-import xeredi.util.exception.InstanceNotFoundException;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -43,13 +44,13 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfVO);
         Preconditions.checkNotNull(i18nMap);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
             final IgBO igBO = new IgBO();
 
             if (cdrfDAO.exists(cdrfVO)) {
-                throw new DuplicateInstanceException(CodigoReferenciaVO.class.getName(), cdrfVO);
+                throw new DuplicateInstanceException(MessageI18nKey.cdrf, cdrfVO);
             }
 
             cdrfVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
@@ -76,13 +77,13 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfVO);
         Preconditions.checkNotNull(i18nMap);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
             final int updated = cdrfDAO.update(cdrfVO);
 
             if (updated == 0) {
-                throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
+                throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrfVO);
             }
 
             I18nBO.updateMap(session, I18nPrefix.cdrf, cdrfVO.getId(), i18nMap);
@@ -103,7 +104,7 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfVO);
         Preconditions.checkNotNull(cdrfVO.getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
             I18nBO.deleteMap(session, I18nPrefix.cdrf, cdrfVO.getId());
@@ -111,27 +112,10 @@ public class CodigoReferenciaBO {
             final int deleted = cdrfDAO.delete(cdrfVO.getId());
 
             if (deleted == 0) {
-                throw new InstanceNotFoundException(CodigoReferenciaVO.class.getName(), cdrfVO);
+                throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrfVO);
             }
 
             session.commit();
-        }
-    }
-
-    /**
-     * Select object.
-     *
-     * @param cdrfCriterioVO
-     *            the cdrf criterio vo
-     * @return the codigo referencia vo
-     */
-    public CodigoReferenciaVO selectObject(final CodigoReferenciaCriterioVO cdrfCriterioVO) {
-        Preconditions.checkNotNull(cdrfCriterioVO);
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
-            return cdrfDAO.selectObject(cdrfCriterioVO);
         }
     }
 
@@ -144,7 +128,7 @@ public class CodigoReferenciaBO {
      *            the idioma
      * @return the codigo referencia vo
      */
-    public CodigoReferenciaVO select(final Long cdrfId, final String idioma) {
+    public CodigoReferenciaVO select(final Long cdrfId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrfId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -155,7 +139,13 @@ public class CodigoReferenciaBO {
             cdrfCriterioVO.setId(cdrfId);
             cdrfCriterioVO.setIdioma(idioma);
 
-            return cdrfDAO.selectObject(cdrfCriterioVO);
+            final CodigoReferenciaVO cdrf = cdrfDAO.selectObject(cdrfCriterioVO);
+
+            if (cdrf == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrfId);
+            }
+
+            return cdrf;
         }
     }
 
