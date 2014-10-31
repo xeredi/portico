@@ -89,7 +89,10 @@ public final class TipoEstadisticaAction extends BaseAction {
     @Action("tpes-save")
     public String save() {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(enti);
+
+        if (enti == null) {
+            enti = new TipoEstadisticaVO();
+        }
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {

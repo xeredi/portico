@@ -1,5 +1,5 @@
 <fieldset ng-repeat="engd in vm.enti.engdList track by $index">
-    <legend ng-if="vm.enti.engdList.length > 1" ng-bind="engd.etiqueta"></legend>
+    <legend ng-if="vm.enti.engdList.length > 1" ng-bind="'engd_' + engd.id | translate"></legend>
 
     <div class="row">
         <div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero"

@@ -126,7 +126,10 @@ public final class TipoParametroAction extends BaseAction {
     @Action("tppr-save")
     public String save() {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(enti);
+
+        if (enti == null) {
+            enti = new TipoParametroVO();
+        }
 
         // Validaciones
         if (accion == ACCION_EDICION.create) {

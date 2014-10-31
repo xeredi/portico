@@ -97,7 +97,10 @@ public final class TipoDatoAction extends BaseAction {
     @Action("tpdt-save")
     public String save() {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(tpdt);
+
+        if (tpdt == null) {
+            tpdt = new TipoDatoVO();
+        }
 
         if (accion == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.tpdt_codigo, tpdt.getCodigo());

@@ -3,8 +3,8 @@
         <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.rgin.id" /><input type="hidden"
             ng-model="vm.rgin.rgiv.id" />
 
-        <fieldset>
-            <div class="row-fluid">
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-md-2 form-group">
                     <label translate>rgin_rgla2</label> <select ng-if="vm.accion == 'create'"
                         ng-model="vm.rgin.rgla2.id" ng-options="rgla.value as rgla.label for rgla in vm.rgla2List"
@@ -17,8 +17,8 @@
                     <label translate>rgin_fini</label>
                     <div class="input-group" ng-controller="datepickerController">
                         <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.rgin.rgiv.fini"
-                            ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
+                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.rgin.rgiv.fini" />
+                        <span class="input-group-addon" ng-click="open($event)"><i
                             class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-        </fieldset>
+        </div>
 
         <div class="btn-group">
             <button data-ng-click="vm.save()" class="btn btn-primary">

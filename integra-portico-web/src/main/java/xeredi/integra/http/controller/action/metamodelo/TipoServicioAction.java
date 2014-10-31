@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,10 +43,10 @@ public final class TipoServicioAction extends BaseAction {
     private Map<String, I18nVO> i18nMap;
 
     /** The tpss list. */
-    private final List<TipoSubservicioVO> subentiList = new ArrayList<>();
+    private List<TipoSubservicioVO> subentiList;
 
     /** The enti hijas list. */
-    private final List<EntidadVO> entiHijasList = new ArrayList<>();
+    private List<EntidadVO> entiHijasList;
 
     // Acciones Web
     /**
@@ -96,7 +95,10 @@ public final class TipoServicioAction extends BaseAction {
     @Action("tpsr-save")
     public String save() {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(enti);
+
+        if (enti == null) {
+            enti = new TipoServicioVO();
+        }
 
         // Validaciones
 
@@ -179,7 +181,7 @@ public final class TipoServicioAction extends BaseAction {
             tpssCriterioVO.setTpsrId(enti.getId());
             tpssCriterioVO.setIdioma(getIdioma());
 
-            subentiList.addAll(tpssBO.selectList(tpssCriterioVO));
+            subentiList = tpssBO.selectList(tpssCriterioVO);
 
             if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
                 EntidadCriterioVO entiCriterioVO = null;
@@ -188,7 +190,7 @@ public final class TipoServicioAction extends BaseAction {
                 entiCriterioVO.setEntiPadreId(enti.getId());
                 entiCriterioVO.setIdioma(getIdioma());
 
-                entiHijasList.addAll(entiBO.selectList(entiCriterioVO));
+                entiHijasList = entiBO.selectList(entiCriterioVO);
             }
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());

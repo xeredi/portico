@@ -96,6 +96,8 @@ public final class SubservicioAction extends ItemAction {
             } catch (final InstanceNotFoundException ex) {
                 addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             }
+        } else {
+            item.setSrvc(null);
         }
 
         setFechaVigencia(item.getFref());

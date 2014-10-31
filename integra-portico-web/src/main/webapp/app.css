@@ -3,32 +3,32 @@
 }
 
 body {
-	font-family: Verdana, sans-serif;
+	font-family: Verdana /*, sans-serif*/;
 }
 
-p, label, legend, li, .btn, .form-control, .input-group-sm>.form-control,
+p, label, li, .btn, .form-control, .input-group-sm>.form-control,
 	.form-control-static, .bootstrap-datetimepicker-widget,
-	.table-condensed, .dropdown-menu, .list-group, .nav-tabs,
+	.table-condensed, .dropdown-menu, .list-group,
 	.tt-dropdown-menu, .typeahead, .pagination-sm>li>a {
 	font-size: 11px;
+}
+
+.nav-pills>li, .modal-title, legend, .bg-primary, .nav-tabs {
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+legend, label {
+	font-weight: bold;
 }
 
 td span {
 	display: block;
 }
 
-label {
-	font-weight: bold;
-}
-
 .container-fluid {
 	padding-left: 10px;
 	padding-right: 10px;
-}
-
-.nav-pills>li, .modal-title, legend, .bg-primary {
-	text-transform: uppercase;
-	font-size: 12px;
 }
 
 .modal.custom, .modal-dialog {
@@ -51,11 +51,6 @@ label {
 
 .brand {
 	font-size: 15px;
-	font-weight: normal;
-}
-
-.nav-tabs {
-	font-size: 12px;
 	font-weight: normal;
 }
 
@@ -102,7 +97,6 @@ table {
 }
 
 table a, .table a {
-	color: #DF691A;
 	text-decoration: none;
 }
 
@@ -114,6 +108,11 @@ table a, .table a {
 
 .btn-toolbar {
 	padding-top: 5px;
+	padding-bottom: 0px;
+}
+
+.btn-group {
+	padding-top: 0px;
 	padding-bottom: 5px;
 }
 
@@ -133,10 +132,9 @@ form {
 }
 
 legend {
-	font-size: 12px;
-	font-weight: bold;
 	padding-top: 5px;
-	margin-bottom: 0px;
+	margin-bottom: 5px;
+	border: 0px;
 }
 
 .form-group {
@@ -151,3 +149,24 @@ legend {
 	padding-left: 1px;
 	padding-right: 1px;
 }
+
+/* Theme */
+/*
+body, legend {
+	color: #FFFFFA;
+	background-color: #2B3E50;
+}
+
+.navbar {
+	color: #EBEBEB;
+	background-color: #4E5D6C;
+}
+
+.modal-header, .modal-footer {
+	background-color: #485563;
+}
+
+.modal-body {
+	background-color: #4E5D6C;
+}
+*/

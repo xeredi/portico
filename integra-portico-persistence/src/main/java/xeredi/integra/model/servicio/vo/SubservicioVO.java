@@ -43,7 +43,7 @@ public final class SubservicioVO extends ItemVO {
      */
     @Override
     public String getEtiqueta() {
-        if (srvc == null) {
+        if (srvc == null || srvc.getId() == null) {
             return null;
         }
 
