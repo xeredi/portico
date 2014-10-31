@@ -33,7 +33,7 @@
                     <th ng-if="vm.enti.tpdtEstado" translate>ssrv_estado</th>
                     <th ng-if="vm.enti.temporal" translate>ssrv_fini</th>
                     <th ng-if="vm.enti.temporal" translate>ssrv_ffin</th>
-                    <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable" nowrap="nowrap"
+                    <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable"
                         ng-bind="entd.etiqueta"></th>
                 </tr>
             </thead>
@@ -41,7 +41,7 @@
                 <tr ng-repeat="item in vm.itemList.list track by $index">
                     <td><a ng-href="#/servicio/ssrv/detail/{{vm.enti.id}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="item.srvc.etiqueta"></td>
+                    <td ng-bind="item.srvc.etiqueta" nowrap="nowrap"></td>
                     <td ng-bind="item.numero" class="number"></td>
                     <td ng-if="vm.enti.tpdtEstado" ng-bind="item.estado"></td>
                     <td ng-if="vm.enti.temporal" ng-bind="item.fini | date"></td>

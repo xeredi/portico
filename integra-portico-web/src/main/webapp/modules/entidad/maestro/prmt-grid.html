@@ -39,7 +39,7 @@
                     <th ng-if="vm.enti.i18n" translate>prmt_i18n_texto</th>
                     <th translate>prmt_fini</th>
                     <th translate>prmt_ffin</th>
-                    <th ng-repeat="entd in vm.enti.entdList" nowrap="nowrap" ng-if="entd.gridable"
+                    <th ng-repeat="entd in vm.enti.entdList" ng-if="entd.gridable"
                         ng-bind="entd.etiqueta" />
                 </tr>
             </thead>

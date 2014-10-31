@@ -84,10 +84,10 @@
                 <tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
                     <td><a ng-href="#/maestro/sprm/detail/{{entiHijaId}}/{{itemHijo.id}}/{{vm.fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="itemHijo.prmtAsociado.etiqueta"></td>
+                    <td ng-bind="itemHijo.prmtAsociado.etiqueta" nowrap="nowrap"></td>
 
-                    <td ng-bind="itemHijo.spvr.fini | date"></td>
-                    <td ng-bind="itemHijo.spvr.ffin | date"></td>
+                    <td ng-bind="itemHijo.spvr.fini | date" nowrap="nowrap"></td>
+                    <td ng-bind="itemHijo.spvr.ffin | date" nowrap="nowrap"></td>
 
                     <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index" ng-if="entd.gridable"
                         ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i

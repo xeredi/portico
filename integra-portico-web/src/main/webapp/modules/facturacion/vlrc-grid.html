@@ -16,7 +16,7 @@
                 <div class="col-sm-3 col-md-2 form-group" ng-show="vlrcCriterio.tpsrId">
                     <label translate>vlrc_srvc</label>
                     <div class="input-group-sm" ng-controller="srvcLupaCtrl">
-                        <input type="text" ng-model="vlrcCriterio.srvc"
+                        <input type="text" autocomplete="off" ng-model="vlrcCriterio.srvc"
                             typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vlrcCriterio.tpsrId, $viewValue)"
                             typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
                             class="form-control input-sm"> <i ng-show="loading"
@@ -38,7 +38,7 @@
                 <div class="col-sm-4 col-md-3 form-group">
                     <label translate>vlrc_pagador</label>
                     <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
-                        <input type="text" ng-model="vlrcCriterio.pagador"
+                        <input type="text" autocomplete="off" ng-model="vlrcCriterio.pagador"
                             typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
                             typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
                             class="form-control input-sm"> <i ng-show="loading"
