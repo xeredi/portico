@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
-import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoTipo;
 import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.CargoVersionVO;
@@ -49,18 +47,6 @@ public final class CargoAction extends BaseAction {
     /** The rgla list. */
     private final List<ReglaVO> rglaList = new ArrayList<>();
 
-    /** The fecha vigencia. */
-    private final Date fechaVigencia;
-
-    /**
-     * Instantiates a new cargo action.
-     */
-    public CargoAction() {
-        super();
-
-        fechaVigencia = Calendar.getInstance().getTime();
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -81,16 +67,14 @@ public final class CargoAction extends BaseAction {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getId());
 
-        final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
-        crgoCriterioVO.setId(crgo.getId());
-        crgoCriterioVO.setFechaVigencia(fechaVigencia);
-        crgoCriterioVO.setIdioma(getIdioma());
+        try {
+            final CargoBO crgoBO = new CargoBO();
 
-        crgo = crgoBO.select(crgoCriterioVO);
-
-        if (crgo != null) {
+            crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
 
             final ReglaBO rglaBO = new ReglaBO();
@@ -98,6 +82,8 @@ public final class CargoAction extends BaseAction {
 
             rglaCriterioVO.setCrgvId(crgo.getCrgv().getId());
             rglaList.addAll(rglaBO.selectList(rglaCriterioVO));
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -127,19 +113,22 @@ public final class CargoAction extends BaseAction {
     @Action("crgo-edit")
     public String edit() {
         Preconditions.checkNotNull(crgo);
-        Preconditions.checkNotNull(crgo.getCrgv());
-        Preconditions.checkNotNull(crgo.getCrgv().getId());
+        Preconditions.checkNotNull(crgo.getId());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.edit;
 
-        final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+        try {
+            final CargoBO crgoBO = new CargoBO();
 
-        crgoCriterioVO.setCrgvId(crgo.getCrgv().getId());
-        crgoCriterioVO.setIdioma(getIdioma());
-
-        crgo = crgoBO.select(crgoCriterioVO);
-        i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+            crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
+            i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

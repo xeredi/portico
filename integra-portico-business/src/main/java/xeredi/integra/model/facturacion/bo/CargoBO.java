@@ -1,6 +1,7 @@
 package xeredi.integra.model.facturacion.bo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -87,19 +88,37 @@ public class CargoBO {
     /**
      * Select.
      *
-     * @param crgoCriterioVO
-     *            the crgo criterio vo
+     * @param id
+     *            the id
+     * @param fechaVigencia
+     *            the fecha vigencia
+     * @param idioma
+     *            the idioma
      * @return the cargo vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public CargoVO select(final CargoCriterioVO crgoCriterioVO) {
-        Preconditions.checkNotNull(crgoCriterioVO);
-        Preconditions.checkArgument(crgoCriterioVO.getCrgvId() != null || crgoCriterioVO.getId() != null
-                && crgoCriterioVO.getFechaVigencia() != null);
+    public CargoVO select(final Long id, final Date fechaVigencia, final String idioma)
+            throws InstanceNotFoundException {
+        Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(fechaVigencia);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             crgoDAO = session.getMapper(CargoDAO.class);
 
-            return crgoDAO.selectObject(crgoCriterioVO);
+            final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+
+            crgoCriterioVO.setId(id);
+            crgoCriterioVO.setFechaVigencia(fechaVigencia);
+            crgoCriterioVO.setIdioma(idioma);
+
+            final CargoVO crgo = crgoDAO.selectObject(crgoCriterioVO);
+
+            if (crgo == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.crgo, id);
+            }
+
+            return crgo;
         }
     }
 
@@ -108,6 +127,8 @@ public class CargoBO {
      *
      * @param crgo
      *            the crgo
+     * @param i18nMap
+     *            the i18n map
      * @throws OverlapException
      *             the overlap exception
      */
@@ -150,6 +171,8 @@ public class CargoBO {
      *
      * @param crgo
      *            the crgo
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws OverlapException

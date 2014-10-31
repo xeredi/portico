@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -17,9 +16,7 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
 import xeredi.integra.model.facturacion.bo.ReglaIncompatibleBO;
-import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.CargoVO;
-import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaIncompatibleVO;
 import xeredi.integra.model.facturacion.vo.ReglaTipo;
@@ -51,20 +48,8 @@ public final class ReglaAction extends BaseAction {
     /** The rgin list. */
     private final List<ReglaIncompatibleVO> rginList = new ArrayList<>();
 
-    /** The fecha vigencia. */
-    private final Date fechaVigencia;
-
     /** The enti facturable list. */
     private final List<LabelValueVO> entiFacturableList = new ArrayList<>();
-
-    /**
-     * Instantiates a new regla action.
-     */
-    public ReglaAction() {
-        super();
-
-        fechaVigencia = Calendar.getInstance().getTime();
-    }
 
     /**
      * {@inheritDoc}
@@ -84,21 +69,16 @@ public final class ReglaAction extends BaseAction {
     @Action("rgla-detail")
     public String detail() {
         Preconditions.checkNotNull(rgla);
-        Preconditions.checkArgument(rgla.getId() != null && fechaVigencia != null || rgla.getRglv() != null
-                && rgla.getRglv().getId() != null);
+        Preconditions.checkNotNull(rgla.getId());
 
-        final ReglaBO rglaBO = new ReglaBO();
-        final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
-
-        rglaCriterioVO.setId(rgla.getId());
-        rglaCriterioVO.setFechaVigencia(fechaVigencia);
-
-        if (rgla.getRglv() != null) {
-            rglaCriterioVO.setRglvId(rgla.getRglv().getId());
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
         }
 
         try {
-            rgla = rglaBO.select(rglaCriterioVO);
+            final ReglaBO rglaBO = new ReglaBO();
+
+            rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
 
             final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
             final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
@@ -122,25 +102,29 @@ public final class ReglaAction extends BaseAction {
     public String create() {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getCrgo());
-        Preconditions.checkNotNull(rgla.getCrgo().getCrgv());
-        Preconditions.checkNotNull(rgla.getCrgo().getCrgv().getId());
+        Preconditions.checkNotNull(rgla.getCrgo().getId());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.create;
 
-        final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+        try {
+            final CargoBO crgoBO = new CargoBO();
+            final CargoVO crgo = crgoBO.select(rgla.getCrgo().getId(), getFechaVigencia(), getIdioma());
+            final ReglaVersionVO rglv = new ReglaVersionVO();
 
-        crgoCriterioVO.setCrgvId(rgla.getCrgo().getCrgv().getId());
+            rglv.setFini(Calendar.getInstance().getTime());
 
-        final CargoVO crgo = crgoBO.select(crgoCriterioVO);
-        final ReglaVersionVO rglv = new ReglaVersionVO();
+            rgla = new ReglaVO();
+            rgla.setRglv(rglv);
+            rgla.setCrgo(crgo);
 
-        rgla = new ReglaVO();
-        rglv.setFini(Calendar.getInstance().getTime());
-        rgla.setRglv(rglv);
-        rgla.setCrgo(crgo);
-
-        loadEntiFacturables();
+            loadEntiFacturables();
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -153,18 +137,18 @@ public final class ReglaAction extends BaseAction {
     @Action("rgla-edit")
     public String edit() {
         Preconditions.checkNotNull(rgla);
-        Preconditions.checkNotNull(rgla.getRglv());
-        Preconditions.checkNotNull(rgla.getRglv().getId());
+        Preconditions.checkNotNull(rgla.getId());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.edit;
 
-        final ReglaBO rglaBO = new ReglaBO();
-        final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
-
-        rglaCriterioVO.setRglvId(rgla.getRglv().getId());
-
         try {
-            rgla = rglaBO.select(rglaCriterioVO);
+            final ReglaBO rglaBO = new ReglaBO();
+
+            rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
 
             loadEntiFacturables();
         } catch (final InstanceNotFoundException ex) {

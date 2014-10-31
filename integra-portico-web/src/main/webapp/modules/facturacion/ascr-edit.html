@@ -1,42 +1,46 @@
-<form role="form">
-    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.ascr.aspc.id" /><input type="hidden"
-        ng-model="vm.ascr.id" /><input type="hidden" ng-model="vm.ascr.ascv.id" />
+<div ng-if="vm.ascr">
+    <form role="form">
+        <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.ascr.aspc.id" /><input
+            type="hidden" ng-model="vm.ascr.id" /><input type="hidden" ng-model="vm.ascr.ascv.id" />
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label translate>ascr_crgo</label> <select ng-if="vm.accion == 'create'" ng-model="vm.ascr.crgo.id"
-                    ng-options="labelValue.value as labelValue.label for labelValue in vm.crgoList"
-                    class="form-control input-sm">
-                    <option />
-                </select>
-                <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.ascr.crgo.etiqueta"></p>
-            </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>aspc_fini</label>
-                <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.ascr.ascv.fini" /> <span
-                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                    <label translate>ascr_crgo</label> <select ng-if="vm.accion == 'create'" ng-model="vm.ascr.crgo.id"
+                        ng-options="labelValue.value as labelValue.label for labelValue in vm.crgoList"
+                        class="form-control input-sm">
+                        <option />
+                    </select>
+                    <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.ascr.crgo.etiqueta"></p>
                 </div>
-            </div>
-            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-                <label translate>aspc_ffin</label>
-                <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.ascr.ascv.ffin" /> <span
-                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                    <label translate>aspc_fini</label>
+                    <div class="input-group" ng-controller="datepickerController">
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.ascr.ascv.fini" /> <span
+                            class="input-group-addon" ng-click="open($event)"><i
+                            class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                    <label translate>aspc_ffin</label>
+                    <div class="input-group" ng-controller="datepickerController">
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.ascr.ascv.ffin" /> <span
+                            class="input-group-addon" ng-click="open($event)"><i
+                            class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-        </button>
-    </div>
-</form>
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+            </button>
+        </div>
+    </form>
+</div>

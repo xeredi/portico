@@ -183,6 +183,28 @@ public final class AspectoCargoAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * Removes the.
+     *
+     * @return the string
+     */
+    @Action("ascr-remove")
+    public String remove() {
+        Preconditions.checkNotNull(ascr);
+        Preconditions.checkNotNull(ascr.getAscv());
+        Preconditions.checkNotNull(ascr.getAscv().getId());
+
+        try {
+            final AspectoCargoBO ascrBO = new AspectoCargoBO();
+
+            ascrBO.delete(ascr);
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
+
+        return SUCCESS;
+    }
+
     // get / set
     /**
      * Gets the accion.

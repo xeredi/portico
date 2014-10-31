@@ -196,7 +196,8 @@
             rgla_pk = #{id}
             AND (
                 #{rglv.fini} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{rglv.fini})
-                OR COALESCE(#{rglv.ffin}, portico.getSysdateTime()) BETWEEN rglv_fini AND COALESCE(rglv_ffin, COALESCE(#{rglv.ffin}, portico.getSysdateTime()))
+                OR COALESCE(#{rglv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime())
+                    BETWEEN rglv_fini AND COALESCE(rglv_ffin, COALESCE(#{rglv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
         <if test="rglv.id != null">

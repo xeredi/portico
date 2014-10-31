@@ -1,6 +1,7 @@
 package xeredi.integra.model.facturacion.bo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -197,19 +198,24 @@ public class ReglaBO {
     /**
      * Select.
      *
-     * @param rglaCriterioVO
-     *            the rgla criterio vo
+     * @param id
+     *            the id
+     * @param fechaVigencia
+     *            the fecha vigencia
      * @return the regla vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ReglaVO select(final ReglaCriterioVO rglaCriterioVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(rglaCriterioVO);
-        Preconditions.checkArgument(rglaCriterioVO.getRglvId() != null || rglaCriterioVO.getId() != null
-                && rglaCriterioVO.getFechaVigencia() != null);
+    public ReglaVO select(final Long id, final Date fechaVigencia) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(fechaVigencia);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             rglaDAO = session.getMapper(ReglaDAO.class);
+            final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
+
+            rglaCriterioVO.setId(id);
+            rglaCriterioVO.setFechaVigencia(fechaVigencia);
 
             final ReglaVO rgla = rglaDAO.selectObject(rglaCriterioVO);
 

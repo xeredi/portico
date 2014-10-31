@@ -155,7 +155,7 @@
     <select id="exists" parameterType="AspectoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_aspecto_aspc
+        FROM tbl_aspecto_aspc
         WHERE aspc_codigo = #{codigo} AND aspc_tpsr_pk = #{tpsr.id}
     ]]>
     </select>

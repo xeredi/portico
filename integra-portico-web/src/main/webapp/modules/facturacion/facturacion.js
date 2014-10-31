@@ -137,7 +137,13 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/crgo/edit/:crgvId", {
+    .when("/facturacion/crgo/edit/:crgoId", {
+        templateUrl : "modules/facturacion/crgo-edit.html",
+        controller : "crgoEditController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/crgo/edit/:crgoId/:fechaVigencia", {
         templateUrl : "modules/facturacion/crgo-edit.html",
         controller : "crgoEditController",
         controllerAs : "vm"
@@ -161,13 +167,25 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/rgla/edit/:rglvId", {
+    .when("/facturacion/rgla/edit/:rglaId", {
         templateUrl : "modules/facturacion/rgla-edit.html",
         controller : "rglaEditController",
         controllerAs : "vm"
     })
 
-    .when("/facturacion/rgla/create/:crgvId", {
+    .when("/facturacion/rgla/edit/:rglaId/:fechaVigencia", {
+        templateUrl : "modules/facturacion/rgla-edit.html",
+        controller : "rglaEditController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/rgla/create/:crgoId", {
+        templateUrl : "modules/facturacion/rgla-edit.html",
+        controller : "rglaCreateController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/rgla/create/:crgoId/:fechaVigencia", {
         templateUrl : "modules/facturacion/rgla-edit.html",
         controller : "rglaCreateController",
         controllerAs : "vm"
@@ -258,7 +276,13 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/ascr/edit/:ascvId", {
+    .when("/facturacion/ascr/edit/:ascrId", {
+        templateUrl : "modules/facturacion/ascr-edit.html",
+        controller : "ascrEditController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/ascr/edit/:ascrId/:fechaVigencia", {
         templateUrl : "modules/facturacion/ascr-edit.html",
         controller : "ascrEditController",
         controllerAs : "vm"
@@ -274,7 +298,7 @@ function vlrcGridController($scope, $http, $location, $routeParams, pageTitleSer
 
     $scope.pageChanged = function() {
         search($scope.vlrcCriterio, $scope.page, $scope.limit);
-    }
+    };
 
     $scope.tpsrChanged = function() {
         if ($scope.vlrcCriterio.srvc) {
@@ -295,7 +319,7 @@ function vlrcGridController($scope, $http, $location, $routeParams, pageTitleSer
                 $scope.aspcList = data.aspcList;
             });
         }
-    }
+    };
 
     $scope.filter = function() {
         var url = "facturacion/vlrc-filter.action";
@@ -306,15 +330,15 @@ function vlrcGridController($scope, $http, $location, $routeParams, pageTitleSer
         });
 
         $scope.showFilter = true;
-    }
+    };
 
     $scope.search = function() {
         search($scope.vlrcCriterio, 1, $scope.limit);
-    }
+    };
 
     $scope.cancelSearch = function() {
         $scope.showFilter = false;
-    }
+    };
 
     function search(vlrcCriterio, page, limit) {
         var url = "facturacion/vlrc-list.action";
@@ -362,11 +386,11 @@ function vlrlCreateController($scope, $http, $location, $routeParams, pageTitleS
         }).success(function(data) {
             $location.path("/facturacion/vlrl/detail/" + data.vlrl.id).replace();
         });
-    }
+    };
 
     $scope.cancel = function() {
         window.history.back();
-    }
+    };
 
     pageTitleService.setTitle("vlrc", "page_create");
 }
@@ -410,7 +434,7 @@ function vlrlDetailController($scope, $http, $location, $routeParams, pageTitleS
                 window.history.back();
             });
         }
-    }
+    };
 
     pageTitleService.setTitle("vlrl", "page_detail");
 }
@@ -434,11 +458,11 @@ function vlrlEditController($scope, $http, $location, $routeParams, pageTitleSer
                 window.history.back();
             }, 0);
         });
-    }
+    };
 
     $scope.cancel = function() {
         window.history.back();
-    }
+    };
 
     pageTitleService.setTitle("vlrl", "page_edit");
 }
@@ -609,7 +633,9 @@ function crgoEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("facturacion/crgo-edit.action?crgo.crgv.id=" + $routeParams.crgvId).success(function(data) {
+    $http.get(
+            "facturacion/crgo-edit.action?crgo.id=" + $routeParams.crgoId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
         vm.crgo = data.crgo;
         vm.i18nMap = data.i18nMap;
         vm.tipos = data.tipos;
@@ -664,7 +690,9 @@ function rglaEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("facturacion/rgla-edit.action?rgla.rglv.id=" + $routeParams.rglvId).success(function(data) {
+    $http.get(
+            "facturacion/rgla-edit.action?rgla.id=" + $routeParams.rglaId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
         vm.rgla = data.rgla;
         vm.tipos = data.tipos;
         vm.entiFacturableList = data.entiFacturableList;
@@ -685,7 +713,7 @@ function rglaCreateController($http, $location, $routeParams, pageTitleService) 
             rgla : vm.rgla,
             accion : vm.accion
         }).success(function(data) {
-            $location.path("/facturacion/rgla/detail/" + data.rgla.rglv.id).replace();
+            $location.path("/facturacion/rgla/detail/" + data.rgla.id + "/" + data.rgla.rglv.fini).replace();
         });
     }
 
@@ -693,7 +721,9 @@ function rglaCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("facturacion/rgla-create.action?rgla.crgo.crgv.id=" + $routeParams.crgvId).success(function(data) {
+    $http.get(
+            "facturacion/rgla-create.action?rgla.crgo.id=" + $routeParams.crgoId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
         vm.rgla = data.rgla;
         vm.tipos = data.tipos;
         vm.entiFacturableList = data.entiFacturableList;
@@ -1055,7 +1085,9 @@ function ascrEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("facturacion/ascr-edit.action?ascr.ascv.id=" + $routeParams.ascvId).success(function(data) {
+    $http.get(
+            "facturacion/ascr-edit.action?ascr.id=" + $routeParams.ascrId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
         vm.ascr = data.ascr;
         vm.accion = data.accion;
     });

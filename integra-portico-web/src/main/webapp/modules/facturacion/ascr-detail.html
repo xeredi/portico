@@ -1,29 +1,31 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/ascr/edit/{{vm.ascr.ascv.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
+<div ng-if="vm.ascr">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/facturacion/ascr/edit/{{vm.ascr.id}}/{{vm.fechaVigencia}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
+        </div>
     </div>
-</div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-            <label translate>ascr_crgo</label>
-            <p class="form-control-static">
-                <a ng-href="#/facturacion/crgo/detail/{{vm.ascr.crgo.id}}/{{vm.fechaVigencia}}"
-                    ng-bind="vm.ascr.crgo.etiqueta"></a>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label translate>ascr_fini</label>
-            <p class="form-control-static" ng-bind="vm.ascr.ascv.fini | date"></p>
-        </div>
-        <div class="col-sm-2 col-md-1 col-lg-1 form-group">
-            <label translate>ascr_ffin</label>
-            <p class="form-control-static" ng-bind="vm.ascr.ascv.ffin | date"></p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                <label translate>ascr_crgo</label>
+                <p class="form-control-static">
+                    <a ng-href="#/facturacion/crgo/detail/{{vm.ascr.crgo.id}}/{{vm.fechaVigencia}}"
+                        ng-bind="vm.ascr.crgo.etiqueta"></a>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                <label translate>ascr_fini</label>
+                <p class="form-control-static" ng-bind="vm.ascr.ascv.fini | date"></p>
+            </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                <label translate>ascr_ffin</label>
+                <p class="form-control-static" ng-bind="vm.ascr.ascv.ffin | date"></p>
+            </div>
         </div>
     </div>
 </div>

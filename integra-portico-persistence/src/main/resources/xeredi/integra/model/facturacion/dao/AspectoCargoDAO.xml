@@ -60,7 +60,7 @@
     <select id="exists" parameterType="AspectoCargoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_aspecto_cargo_ascr
+        FROM tbl_aspecto_cargo_ascr
         WHERE ascr_aspc_pk = #{aspcId} AND ascr_crgo_pk = #{crgo.id}
     ]]>
     </select>
