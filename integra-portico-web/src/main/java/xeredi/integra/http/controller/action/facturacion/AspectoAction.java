@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,6 @@ import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
-import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.AspectoVersionVO;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
@@ -53,19 +51,8 @@ public final class AspectoAction extends BaseAction {
     /** The ascr list. */
     private List<AspectoCargoVO> ascrList;
 
-    /** The fecha vigencia. */
-    private final Date fechaVigencia;
-
+    /** The enti list. */
     private List<LabelValueVO> entiList;
-
-    /**
-     * Instantiates a new aspecto action.
-     */
-    public AspectoAction() {
-        super();
-
-        fechaVigencia = Calendar.getInstance().getTime();
-    }
 
     /**
      * {@inheritDoc}
@@ -87,22 +74,21 @@ public final class AspectoAction extends BaseAction {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getId());
 
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
+
         try {
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
-            aspcCriterioVO.setId(aspc.getId());
-            aspcCriterioVO.setFechaVigencia(getFechaVigencia());
-            aspcCriterioVO.setIdioma(getIdioma());
-
-            aspc = aspcBO.select(aspcCriterioVO);
+            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
 
             final AspectoCargoBO ascrBO = new AspectoCargoBO();
             final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
 
             ascrCriterioVO.setAspcId(aspc.getId());
-            ascrCriterioVO.setFechaVigencia(fechaVigencia);
+            ascrCriterioVO.setFechaVigencia(getFechaVigencia());
 
             ascrList = ascrBO.selectList(ascrCriterioVO);
         } catch (final InstanceNotFoundException ex) {
@@ -144,18 +130,18 @@ public final class AspectoAction extends BaseAction {
     @Action("aspc-edit")
     public String edit() {
         Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getAspv());
-        Preconditions.checkNotNull(aspc.getAspv().getId());
+        Preconditions.checkNotNull(aspc.getId());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.edit;
 
         try {
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
-            aspcCriterioVO.setAspvId(aspc.getAspv().getId());
-
-            aspc = aspcBO.select(aspcCriterioVO);
+            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
@@ -172,18 +158,18 @@ public final class AspectoAction extends BaseAction {
     @Action("aspc-duplicate")
     public String duplicate() {
         Preconditions.checkNotNull(aspc);
-        Preconditions.checkNotNull(aspc.getAspv());
-        Preconditions.checkNotNull(aspc.getAspv().getId());
+        Preconditions.checkNotNull(aspc.getId());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.duplicate;
 
         try {
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
-            aspcCriterioVO.setAspvId(aspc.getAspv().getId());
-
-            aspc = aspcBO.select(aspcCriterioVO);
+            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
             i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
@@ -376,6 +362,11 @@ public final class AspectoAction extends BaseAction {
         i18nMap = value;
     }
 
+    /**
+     * Gets the enti list.
+     *
+     * @return the enti list
+     */
     public List<LabelValueVO> getEntiList() {
         return entiList;
     }

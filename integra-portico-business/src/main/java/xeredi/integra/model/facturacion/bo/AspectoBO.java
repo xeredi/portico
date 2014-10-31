@@ -1,6 +1,7 @@
 package xeredi.integra.model.facturacion.bo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -90,19 +91,37 @@ public class AspectoBO {
     /**
      * Select.
      *
-     * @param aspcCriterioVO
-     *            the aspc criterio vo
+     * @param id
+     *            the id
+     * @param fechaVigencia
+     *            the fecha vigencia
+     * @param idioma
+     *            the idioma
      * @return the aspecto vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public AspectoVO select(final AspectoCriterioVO aspcCriterioVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(aspcCriterioVO);
-        Preconditions.checkArgument(aspcCriterioVO.getAspvId() != null || aspcCriterioVO.getId() != null
-                && aspcCriterioVO.getFechaVigencia() != null);
+    public AspectoVO select(final Long id, final Date fechaVigencia, final String idioma)
+            throws InstanceNotFoundException {
+        Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(fechaVigencia);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             aspcDAO = session.getMapper(AspectoDAO.class);
 
-            return aspcDAO.selectObject(aspcCriterioVO);
+            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+
+            aspcCriterioVO.setId(id);
+            aspcCriterioVO.setFechaVigencia(fechaVigencia);
+            aspcCriterioVO.setIdioma(idioma);
+
+            final AspectoVO aspc = aspcDAO.selectObject(aspcCriterioVO);
+
+            if (aspc == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.aspc, id);
+            }
+
+            return aspc;
         }
     }
 
@@ -111,6 +130,8 @@ public class AspectoBO {
      *
      * @param aspc
      *            the aspc
+     * @param i18nMap
+     *            the i18n map
      * @throws OverlapException
      *             the overlap exception
      */
@@ -153,6 +174,8 @@ public class AspectoBO {
      *
      * @param aspc
      *            the aspc
+     * @param i18nMap
+     *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
@@ -186,13 +209,15 @@ public class AspectoBO {
      *
      * @param aspc
      *            the aspc
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws OverlapException
      *             the overlap exception
      */
     public void update(final AspectoVO aspc, final Map<String, I18nVO> i18nMap) throws InstanceNotFoundException,
-            OverlapException {
+    OverlapException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
         Preconditions.checkNotNull(aspc.getId());

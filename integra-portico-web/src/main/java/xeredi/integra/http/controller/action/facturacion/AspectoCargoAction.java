@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -15,9 +14,7 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
 import xeredi.integra.model.facturacion.bo.CargoBO;
-import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
-import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -39,20 +36,8 @@ public final class AspectoCargoAction extends BaseAction {
     /** The ascr. */
     private AspectoCargoVO ascr;
 
-    /** The fecha vigencia. */
-    private final Date fechaVigencia;
-
     /** The crgo list. */
     private final List<LabelValueVO> crgoList = new ArrayList<LabelValueVO>();
-
-    /**
-     * Instantiates a new aspecto cargo action.
-     */
-    public AspectoCargoAction() {
-        super();
-
-        fechaVigencia = Calendar.getInstance().getTime();
-    }
 
     /**
      * Detail.
@@ -63,15 +48,18 @@ public final class AspectoCargoAction extends BaseAction {
     public String detail() {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getId());
-        Preconditions.checkNotNull(fechaVigencia);
 
-        final AspectoCargoBO ascrBO = new AspectoCargoBO();
-        final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
-        ascrCriterioVO.setId(ascr.getId());
-        ascrCriterioVO.setFechaVigencia(fechaVigencia);
+        try {
+            final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-        ascr = ascrBO.select(ascrCriterioVO);
+            ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }
@@ -85,24 +73,23 @@ public final class AspectoCargoAction extends BaseAction {
     public String create() {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getAspcId());
-        Preconditions.checkNotNull(fechaVigencia);
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.create;
 
         try {
             final AspectoBO aspcBO = new AspectoBO();
-            final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
-            aspcCriterioVO.setId(ascr.getAspcId());
-            aspcCriterioVO.setFechaVigencia(fechaVigencia);
-
-            final AspectoVO aspc = aspcBO.select(aspcCriterioVO);
+            final AspectoVO aspc = aspcBO.select(ascr.getAspcId(), getFechaVigencia(), getIdioma());
 
             final CargoBO crgoBO = new CargoBO();
             final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
             crgoCriterioVO.setTpsrId(aspc.getTpsr().getId());
-            crgoCriterioVO.setFechaVigencia(fechaVigencia);
+            crgoCriterioVO.setFechaVigencia(getFechaVigencia());
 
             crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
         } catch (final InstanceNotFoundException ex) {
@@ -120,17 +107,21 @@ public final class AspectoCargoAction extends BaseAction {
     @Action("ascr-edit")
     public String edit() {
         Preconditions.checkNotNull(ascr);
-        Preconditions.checkNotNull(ascr.getAscv());
-        Preconditions.checkNotNull(ascr.getAscv().getId());
+        Preconditions.checkNotNull(ascr.getId());
+
+        if (getFechaVigencia() == null) {
+            setFechaVigencia(Calendar.getInstance().getTime());
+        }
 
         accion = ACCION_EDICION.edit;
 
-        final AspectoCargoBO ascrBO = new AspectoCargoBO();
-        final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
+        try {
+            final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-        ascrCriterioVO.setAscvId(ascr.getAscv().getId());
-
-        ascr = ascrBO.select(ascrCriterioVO);
+            ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
+        } catch (final InstanceNotFoundException ex) {
+            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        }
 
         return SUCCESS;
     }

@@ -125,13 +125,13 @@ function config($routeProvider) {
         reloadOnSearch : false
     })
 
-    .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
+    .when("/facturacion/crgo/detail/:crgoId", {
         templateUrl : "modules/facturacion/crgo-detail.html",
         controller : "crgoDetailController",
         controllerAs : "vm"
     })
 
-    .when("/facturacion/crgo/detail/:crgoId", {
+    .when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
         templateUrl : "modules/facturacion/crgo-detail.html",
         controller : "crgoDetailController",
         controllerAs : "vm"
@@ -149,13 +149,13 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
+    .when("/facturacion/rgla/detail/:rglaId", {
         templateUrl : "modules/facturacion/rgla-detail.html",
         controller : "rglaDetailController",
         controllerAs : "vm"
     })
 
-    .when("/facturacion/rgla/detail/:rglaId", {
+    .when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
         templateUrl : "modules/facturacion/rgla-detail.html",
         controller : "rglaDetailController",
         controllerAs : "vm"
@@ -222,13 +222,25 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/aspc/edit/:aspvId", {
+    .when("/facturacion/aspc/edit/:aspcId", {
         templateUrl : "modules/facturacion/aspc-edit.html",
         controller : "aspcEditController",
         controllerAs : "vm"
     })
 
-    .when("/facturacion/aspc/duplicate/:aspvId", {
+    .when("/facturacion/aspc/edit/:aspcId/:fechaVigencia", {
+        templateUrl : "modules/facturacion/aspc-edit.html",
+        controller : "aspcEditController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/aspc/duplicate/:aspcId", {
+        templateUrl : "modules/facturacion/aspc-edit.html",
+        controller : "aspcDuplicateController",
+        controllerAs : "vm"
+    })
+
+    .when("/facturacion/aspc/duplicate/:aspcId/:fechaVigencia", {
         templateUrl : "modules/facturacion/aspc-edit.html",
         controller : "aspcDuplicateController",
         controllerAs : "vm"
@@ -762,13 +774,12 @@ function rginCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get(
-            "facturacion/rgin-create.action?rgin.rgla1Id=" + $routeParams.rglaId + "&crgoId="
-                    + $routeParams.crgoId).success(function(data) {
-        vm.rgin = data.rgin;
-        vm.accion = data.accion;
-        vm.rgla2List = data.rgla2List;
-    });
+    $http.get("facturacion/rgin-create.action?rgin.rgla1Id=" + $routeParams.rglaId + "&crgoId=" + $routeParams.crgoId)
+            .success(function(data) {
+                vm.rgin = data.rgin;
+                vm.accion = data.accion;
+                vm.rgla2List = data.rgla2List;
+            });
 
     pageTitleService.setTitle("rgin", "page_create");
 }
@@ -887,7 +898,7 @@ function aspcCreateController($http, $location, $routeParams, pageTitleService) 
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
+            $location.path("/facturacion/aspc/detail/" + data.aspc.id + "/" + data.aspc.aspv.fini).replace();
         });
     }
 
@@ -926,7 +937,9 @@ function aspcEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("facturacion/aspc-edit.action?aspc.aspv.id=" + $routeParams.aspvId).success(function(data) {
+    $http.get(
+            "facturacion/aspc-edit.action?aspc.id=" + $routeParams.aspcId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
         vm.aspc = data.aspc;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
@@ -947,7 +960,7 @@ function aspcDuplicateController($http, $location, $routeParams, pageTitleServic
             i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
-            $location.path("/facturacion/aspc/detail/" + data.aspc.aspv.id).replace();
+            $location.path("/facturacion/aspc/detail/" + data.aspc.id + "/" + data.aspc.aspv.fini).replace();
         });
     }
 
@@ -955,7 +968,9 @@ function aspcDuplicateController($http, $location, $routeParams, pageTitleServic
         window.history.back();
     }
 
-    $http.get("facturacion/aspc-duplicate.action?aspc.aspv.id=" + $routeParams.aspvId).success(function(data) {
+    $http.get(
+            "facturacion/aspc-duplicate.action?aspc.id=" + $routeParams.aspcId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
         vm.aspc = data.aspc;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;

@@ -1,9 +1,9 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/aspc/edit/{{vm.aspc.aspv.id}}"><i
+        <a class="btn btn-default" ng-href="#/facturacion/aspc/edit/{{vm.aspc.id}}/{{vm.fechaVigencia}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
-            ng-href="#/facturacion/aspc/duplicate/{{vm.aspc.aspv.id}}"><i class="glyphicon glyphicon-tags"></i> <span
-            translate>btn_duplicar</span></a>
+            ng-href="#/facturacion/aspc/duplicate/{{vm.aspc.id}}/{{vm.fechaVigencia}}"><i
+            class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
         </button>
@@ -15,7 +15,8 @@
         <div class="col-sm-4 col-md-3 col-lg-2 form-group">
             <label translate>aspc_tpsr</label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{vm.aspc.tpsr.id}}" ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{vm.aspc.tpsr.id}}"
+                    ng-bind="'enti_' + vm.aspc.tpsr.id | translate"></a>
             </p>
         </div>
         <div class="col-sm-2 col-md-1 col-lg-1 form-group">

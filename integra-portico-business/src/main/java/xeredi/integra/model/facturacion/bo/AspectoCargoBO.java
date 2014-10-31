@@ -1,5 +1,6 @@
 package xeredi.integra.model.facturacion.bo;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
@@ -42,17 +43,32 @@ public final class AspectoCargoBO {
     /**
      * Select.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param id
+     *            the id
+     * @param fechaVigencia
+     *            the fecha vigencia
      * @return the aspecto cargo vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public AspectoCargoVO select(final AspectoCargoCriterioVO criterioVO) {
-        Preconditions.checkNotNull(criterioVO);
+    public AspectoCargoVO select(final Long id, final Date fechaVigencia) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(fechaVigencia);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final AspectoCargoDAO ascrDAO = session.getMapper(AspectoCargoDAO.class);
+            final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
 
-            return ascrDAO.selectObject(criterioVO);
+            ascrCriterioVO.setId(id);
+            ascrCriterioVO.setFechaVigencia(fechaVigencia);
+
+            final AspectoCargoVO ascr = ascrDAO.selectObject(ascrCriterioVO);
+
+            if (ascr == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.ascr, id);
+            }
+
+            return ascr;
         }
     }
 

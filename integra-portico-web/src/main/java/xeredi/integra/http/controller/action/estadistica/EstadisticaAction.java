@@ -58,6 +58,7 @@ public final class EstadisticaAction extends ItemAction {
 
             item = estdBO.selectObject(estdCriterioVO);
             enti = TipoEstadisticaProxy.select(item.getEntiId());
+            setFechaVigencia(item.getFref());
         } catch (final InstanceNotFoundException ex) {
             addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }

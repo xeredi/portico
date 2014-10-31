@@ -379,6 +379,7 @@ function srvcCreateController($http, $location, $routeParams, pageTitleService) 
     $http.get("servicio/srvc-create.action?item.entiId=" + $routeParams.entiId).success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
         vm.subpList = data.subpList;
@@ -411,6 +412,7 @@ function srvcEditController($http, $routeParams, pageTitleService) {
     $http.get("servicio/srvc-edit.action?item.id=" + $routeParams.srvcId).success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
     });
@@ -440,6 +442,7 @@ function srvcDuplicateController($http, $location, $routeParams, pageTitleServic
     $http.get("servicio/srvc-duplicate.action?item.id=" + $routeParams.srvcId).success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
         vm.subpList = data.subpList;
@@ -696,6 +699,7 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
 
     $http.get("servicio/ssrv-detail.action?item.id=" + $routeParams.ssrvId).success(function(data) {
         vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
 
         vm.itemHijosMap = {};
@@ -745,6 +749,7 @@ function ssrvCreateController($http, $location, $routeParams, pageTitleService) 
                             + $routeParams.srvcId).success(function(data) {
                 vm.enti = data.enti;
                 vm.superentiList = data.superentiList;
+                vm.fechaVigencia = data.fechaVigencia;
                 vm.item = data.item;
                 vm.labelValuesMap = data.labelValuesMap;
                 vm.accion = data.accion;
@@ -776,6 +781,7 @@ function ssrvEditController($http, $routeParams, pageTitleService) {
 
     $http.get("servicio/ssrv-edit.action?item.id=" + $routeParams.ssrvId).success(function(data) {
         vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
         vm.accion = data.accion;
@@ -805,6 +811,7 @@ function ssrvDuplicateController($http, $location, $routeParams, pageTitleServic
 
     $http.get("servicio/ssrv-duplicate.action?item.id=" + $routeParams.ssrvId).success(function(data) {
         vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
         vm.labelValuesMap = data.labelValuesMap;
         vm.accion = data.accion;
