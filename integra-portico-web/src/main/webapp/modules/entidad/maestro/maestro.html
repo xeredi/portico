@@ -1,16 +1,18 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-            <input type="text" ng-model="tpprSearch" name="tpprSearch" maxlength="30" class="form-control input-sm" />
+<div ng-if="vm.tpprList">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+                <input type="text" ng-model="tpprSearch" name="tpprSearch" maxlength="30" class="form-control input-sm" />
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="list-group">
-            <a ng-href="#/maestro/prmt/grid/{{tppr.value}}" class="list-group-item col-sm-6 col-md-4 col-lg-3"
-                ng-repeat="tppr in vm.tpprList track by $index"
-                ng-show="(('enti_' + tppr.value | translate) | filter:tpprSearch).length > 0"
-                ng-bind="'enti_' + tppr.value | translate | uppercase"></a>
+        <div class="row">
+            <div class="list-group">
+                <a ng-href="#/maestro/prmt/grid/{{tppr.value}}" class="list-group-item col-sm-6 col-md-4 col-lg-3"
+                    ng-repeat="tppr in vm.tpprList track by $index"
+                    ng-show="(('enti_' + tppr.value | translate) | filter:tpprSearch).length > 0"
+                    ng-bind="'enti_' + tppr.value | translate | uppercase"></a>
+            </div>
         </div>
     </div>
 </div>
