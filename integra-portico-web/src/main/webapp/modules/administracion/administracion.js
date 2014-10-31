@@ -77,7 +77,7 @@ function config($routeProvider) {
 }
 
 function administracionController(pageTitleService) {
-    pageTitleService.setTitle("administracion", "page_home");
+    pageTitleService.setTitle("sec_administracion", "page_home");
 }
 
 function metamodeloReloadController($http, pageTitleService) {

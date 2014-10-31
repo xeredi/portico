@@ -140,7 +140,7 @@ function servicioController($http, pageTitleService) {
         vm.tpssMap = data.tpssMap;
     });
 
-    pageTitleService.setTitle("servicio", "page_home");
+    pageTitleService.setTitle("srvcList", "page_home");
 }
 
 function srvcGridController($http, $location, $routeParams, $modal, pageTitleService) {

@@ -290,7 +290,7 @@ function config($routeProvider) {
 }
 
 function facturacionController(pageTitleService) {
-    pageTitleService.setTitle("facturacion", "page_home");
+    pageTitleService.setTitle("sec_facturacion", "page_home");
 }
 
 function vlrcGridController($scope, $http, $location, $routeParams, pageTitleService) {

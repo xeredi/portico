@@ -266,6 +266,7 @@ public enum MessageI18nKey {
     /** The cdrf_orden. */
     cdrf_orden,
 
+    page_home,
     /** The page_item_grid. */
     page_grid,
     /** The page_item_detail. */

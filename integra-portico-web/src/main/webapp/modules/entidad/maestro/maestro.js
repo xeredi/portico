@@ -195,7 +195,7 @@ function maestroController($http, pageTitleService) {
         vm.tpprList = data.tpprList;
     });
 
-    pageTitleService.setTitle("maestro", "page_home");
+    pageTitleService.setTitle("prmtList", "page_home");
 }
 
 function prmtGridController($location, $routeParams, $modal, prmtService, pageTitleService) {
