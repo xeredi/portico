@@ -1,49 +1,52 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <pagination total-items="vm.aspcList.count" items-per-page="vm.aspcList.limit" ng-model="vm.page"
-            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-            next-text="&rsaquo;&rsaquo;"></pagination>
-    </div>
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/aspc/create"><i class="glyphicon glyphicon-file"></i><span
-            translate>btn_crear</span> </a>
-        <button class="btn btn-default" data-ng-click="vm.filter('lg')">
-            <i class="glyphicon glyphicon-search"></i><span translate>btn_filtrar</span>
-        </button>
+<div ng-if="vm.aspcList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <pagination total-items="vm.aspcList.count" items-per-page="vm.aspcList.limit" ng-model="vm.page"
+                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/facturacion/aspc/create"><i class="glyphicon glyphicon-file"></i><span
+                translate>btn_crear</span> </a>
+            <button class="btn btn-default" data-ng-click="vm.filter('lg')">
+                <i class="glyphicon glyphicon-search"></i><span translate>btn_filtrar</span>
+            </button>
 
-        <script type="text/ng-template" id="aspc-filter-content.html">
+            <script type="text/ng-template" id="aspc-filter-content.html">
         	<div ng-include="'modules/facturacion/aspc-filter-content.html'"></div>
     		</script>
+        </div>
     </div>
-</div>
 
-<div class="table-responsive">
-    <span class="label label-default" translate="grid_count" translate-value-count="{{vm.aspcList.count | number:0}}"></span>
+    <div class="table-responsive">
+        <span class="label label-default" translate="grid_count"
+            translate-value-count="{{vm.aspcList.count | number:0}}"></span>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate>aspc_codigo</th>
-                <th translate>aspc_descripcion</th>
-                <th translate>aspc_tpsr</th>
-                <th translate>aspc_fini</th>
-                <th translate>aspc_ffin</th>
-                <th translate>aspc_prioridad</th>
-            </tr>
-        </thead>
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap" translate>aspc_codigo</th>
+                    <th translate>aspc_descripcion</th>
+                    <th translate>aspc_tpsr</th>
+                    <th translate>aspc_fini</th>
+                    <th translate>aspc_ffin</th>
+                    <th translate>aspc_prioridad</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr ng-repeat="aspc in vm.aspcList.list track by $index">
-                <td><a ng-href="#/facturacion/aspc/detail/{{aspc.id}}/{{vm.aspcCriterio.fechaVigencia}}"><i
-                        class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="aspc.codigo"></td>
-                <td ng-bind="aspc.aspv.descripcion"></td>
-                <td ng-bind="'enti_' + aspc.tpsr.id | translate"></td>
-                <td ng-bind="aspc.aspv.fini | date"></td>
-                <td ng-bind="aspc.aspv.ffin | date"></td>
-                <td class="number" ng-bind="aspc.aspv.prioridad"></td>
-            </tr>
-        </tbody>
-    </table>
+            <tbody>
+                <tr ng-repeat="aspc in vm.aspcList.list track by $index">
+                    <td><a ng-href="#/facturacion/aspc/detail/{{aspc.id}}/{{vm.aspcCriterio.fechaVigencia}}"><i
+                            class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="aspc.codigo"></td>
+                    <td ng-bind="aspc.aspv.descripcion"></td>
+                    <td ng-bind="'enti_' + aspc.tpsr.id | translate"></td>
+                    <td ng-bind="aspc.aspv.fini | date"></td>
+                    <td ng-bind="aspc.aspv.ffin | date"></td>
+                    <td class="number" ng-bind="aspc.aspv.prioridad"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -113,10 +113,10 @@ function prbtDetailController($http, $routeParams, pageTitleService) {
 
     $http.get("proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId).success(function(data) {
         vm.prbt = data.prbt;
-    });
 
-    $http.get("proceso/prmn-list.action?prbtId=" + $routeParams.prbtId).success(function(data) {
-        vm.prmnList = data.prmnList;
+        $http.get("proceso/prmn-list.action?prbtId=" + $routeParams.prbtId).success(function(data) {
+            vm.prmnList = data.prmnList;
+        });
     });
 
     pageTitleService.setTitle("prbt", "page_detail");
