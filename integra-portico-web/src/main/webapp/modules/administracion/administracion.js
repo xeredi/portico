@@ -93,15 +93,11 @@ function metamodeloReloadController($http, pageTitleService) {
     pageTitleService.setTitle("metamodelo", "page_reload");
 }
 
-function confGridController($http, pageTitleService, usSpinnerService) {
+function confGridController($http, pageTitleService) {
     var vm = this;
-
-    usSpinnerService.spin("spinner");
 
     $http.get("administracion/configuracion/conf-grid.action").success(function(data) {
         vm.confList = data.confList;
-
-        usSpinnerService.stop("spinner");
     });
 
     pageTitleService.setTitle("conf", "page_grid");
@@ -146,15 +142,11 @@ function confEditController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("conf", "page_edit");
 }
 
-function m18nGridController($http, pageTitleService, usSpinnerService) {
+function m18nGridController($http, pageTitleService) {
     var vm = this;
-
-    usSpinnerService.spin("spinner");
 
     $http.get("administracion/messagei18n/m18n-grid.action").success(function(data) {
         vm.report = data.report;
-
-        usSpinnerService.stop("spinner");
     });
 
     pageTitleService.setTitle("m18n", "page_grid");

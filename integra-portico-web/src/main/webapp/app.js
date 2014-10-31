@@ -13,6 +13,8 @@ angular.module(
 } ])
 
 .config([ '$httpProvider', function($httpProvider) {
+    var activeRequests = 0;
+
     // initialize get if not there
     if (!$httpProvider.defaults.headers.get) {
         $httpProvider.defaults.headers.get = {};
@@ -21,22 +23,39 @@ angular.module(
     $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
 
-    $httpProvider.interceptors.push(function($q, $rootScope) {
+    $httpProvider.interceptors.push(function($q, $rootScope, usSpinnerService) {
         return {
+            'request' : function(request) {
+                activeRequests++;
+                usSpinnerService.spin("spinner");
+
+                return request;
+            },
             'response' : function(response) {
-                // alert('response: ' + JSON.stringify(response));
+                activeRequests--;
+
+                if (activeRequests <= 0) {
+                    usSpinnerService.stop("spinner");
+                }
+
                 $rootScope.actionErrors = null;
 
                 if (response.data && response.data.actionErrors && response.data.actionErrors.length > 0) {
-                    // alert('Errors: ' +
-                    // JSON.stringify(response.data.actionErrors));
-
                     $rootScope.actionErrors = response.data.actionErrors;
 
                     return $q.reject(response.data.actionErrors);
                 }
 
                 return response;
+            },
+            'responseError' : function(responseError) {
+                activeRequests--;
+
+                if (activeRequests <= 0) {
+                    usSpinnerService.stop("spinner");
+                }
+
+                return responseError;
             }
         };
     });

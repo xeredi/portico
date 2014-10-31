@@ -2,8 +2,6 @@ angular.module("maestro", [ "ngRoute", "util" ])
 
 .config(config)
 
-.factory('tpprService', tpprService)
-
 .factory('prmtService', prmtService)
 
 .factory('sprmService', sprmService)
@@ -155,25 +153,9 @@ function config($routeProvider) {
     ;
 }
 
-function tpprService($http) {
-    return {
-        getEntiList : getEntiList
-    };
-
-    function getEntiList() {
-        return $http.get('maestro/tppr-list.action').then(getTpprListComplete);
-
-        function getTpprListComplete(response) {
-            return response.data.tpprList;
-        }
-    }
-}
-
 function prmtService($http) {
     return {
-        search : search,
-        filter : filter,
-        detail : detail
+        search : search
     };
 
     function search(entiId, itemCriterio, page, limit) {
@@ -182,23 +164,6 @@ function prmtService($http) {
             page : page,
             limit : itemCriterio.limit
         }).then(searchComplete);
-
-        function searchComplete(response) {
-            return response.data;
-        }
-    }
-
-    function filter(entiId) {
-        return $http.get("maestro/prmt-filter.action?enti.id=" + entiId).then(searchComplete);
-
-        function searchComplete(response) {
-            return response.data;
-        }
-    }
-
-    function detail(itemId, fechaVigencia) {
-        return $http.get("maestro/prmt-detail.action?item.id=" + itemId + "&fechaVigencia=" + fechaVigencia).then(
-                searchComplete);
 
         function searchComplete(response) {
             return response.data;
@@ -223,17 +188,17 @@ function sprmService($http) {
     }
 }
 
-function maestroController(tpprService, pageTitleService) {
+function maestroController($http, pageTitleService) {
     var vm = this;
 
-    tpprService.getEntiList().then(function(data) {
-        vm.tpprList = data;
+    $http.get('maestro/tppr-list.action').success(function(data) {
+        vm.tpprList = data.tpprList;
     });
 
     pageTitleService.setTitle("maestro", "page_home");
 }
 
-function prmtGridController($location, $routeParams, $modal, prmtService, pageTitleService, usSpinnerService) {
+function prmtGridController($location, $routeParams, $modal, prmtService, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -243,8 +208,6 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search() {
-        usSpinnerService.spin("spinner");
-
         prmtService.search($routeParams.entiId, vm.itemCriterio, vm.page, 20).then(function(data) {
             vm.itemList = data.itemList;
             vm.enti = data.enti;
@@ -253,27 +216,7 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
                 page : vm.page,
                 itemCriterio : JSON.stringify(data.itemCriterio)
             }).replace();
-
-            usSpinnerService.stop("spinner");
         });
-        /*
-         * $http.post("maestro/prmt-list.action", { entiId :
-         * itemCriterio.entiId, itemCriterio : itemCriterio, page : page, limit :
-         * itemCriterio.limit }).success(function(data) { vm.actionErrors =
-         * data.actionErrors;
-         *
-         * if (data.actionErrors.length == 0) { vm.page = data.itemList.page;
-         * vm.itemList = data.itemList; vm.itemCriterio = data.itemCriterio;
-         *
-         * var map = {};
-         *
-         * map["page"] = data.itemList.page; map["itemCriterio"] =
-         * JSON.stringify(data.itemCriterio);
-         *
-         * $location.search(map).replace(); }
-         *
-         * vm.loading = false; });
-         */
     }
 
     function pageChanged() {
@@ -310,7 +253,7 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function prmtFilterController($modalInstance, enti, itemCriterio, prmtService) {
+function prmtFilterController($http, $modalInstance, enti, itemCriterio) {
     var vm = this;
 
     vm.ok = ok;
@@ -327,7 +270,7 @@ function prmtFilterController($modalInstance, enti, itemCriterio, prmtService) {
         $modalInstance.dismiss('cancel');
     }
 
-    prmtService.filter(vm.enti.id).then(function(data) {
+    $http.get("maestro/prmt-filter.action?enti.id=" + enti.id).success(function(data) {
         vm.labelValuesMap = data.labelValuesMap;
         vm.limits = data.limits;
     });
@@ -341,62 +284,7 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
     vm.remove = remove;
     vm.print = print;
 
-    // var tabSelected = $routeParams.tabSelected;
-    // var itemId = $routeParams.itemId;
-    // var entiId = $routeParams.entiId;
-    // var fechaVigencia = $routeParams.fechaVigencia;
-    // var pageMap = $routeParams.pageMap ?
-    // angular.fromJson($routeParams.pageMap) : {};
-
-    // function findItem() {
-    // $http.get("metamodelo/tppr-proxy-detail.action?includeDependencies=true&enti.id="
-    // + entiId).success(
-    // function(data) {
-    // vm.enti = data.enti;
-    // vm.subentiList = data.subentiList;
-    // vm.availableLanguages = data.availableLanguages;
-    //
-    // if (tabSelected) {
-    // vm.subentiList[tabSelected].active = true;
-    // }
-    //
-    // $http.get("maestro/prmt-detail.action?item.id=" + itemId + "&item.fref="
-    // + fechaVigencia).success(
-    // function(data) {
-    // vm.item = data.item;
-    // vm.i18nMap = data.i18nMap;
-    // vm.fechaVigencia = data.fechaVigencia;
-    // });
-    //
-    // vm.itemHijosMap = {};
-    //
-    // for (i = 0; i < vm.subentiList.length; i++) {
-    // var subenti = vm.subentiList[i];
-    //
-    // findSublist(subenti.id, pageMap[subenti.id] ? pageMap[subenti.id] : 1);
-    // }
-    // });
-    // }
-
-    // function findSublist(subentiId, page) {
-    // var url = "maestro/sprm-list.action?itemCriterio.entiId=" + subentiId +
-    // "&page=" + page
-    // + "&itemCriterio.prmt.id=" + itemId + "&itemCriterio.fechaVigencia=" +
-    // fechaVigencia;
-    //
-    // $http.get(url).success(function(data) {
-    // vm.actionErrors = data.actionErrors;
-    //
-    // if (data.actionErrors.length == 0) {
-    // vm.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
-    // vm.pageMap[data.itemCriterio.entiId] = data.itemList.page;
-    // vm.search("pageMap", JSON.stringify(vm.pageMap)).replace();
-    // }
-    // });
-    // }
-
     function pageChanged(subentiId) {
-        // findSublist(subentiId, vm.pageMap[subentiId]);
     }
 
     function tabSelected(tabNo) {
@@ -436,7 +324,9 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
         vm.tabActive[$routeParams.tab] = true;
     }
 
-    prmtService.detail($routeParams.itemId, $routeParams.fechaVigencia).then(
+    $http.get(
+            "maestro/prmt-detail.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(
             function(data) {
                 vm.enti = data.enti;
                 vm.fechaVigencia = data.fechaVigencia;

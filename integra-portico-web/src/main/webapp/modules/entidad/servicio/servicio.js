@@ -143,7 +143,7 @@ function servicioController($http, pageTitleService) {
     pageTitleService.setTitle("servicio", "page_home");
 }
 
-function srvcGridController($http, $location, $routeParams, $modal, pageTitleService, usSpinnerService) {
+function srvcGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -153,8 +153,6 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(page) {
-        usSpinnerService.spin("spinner");
-
         $http.post("servicio/srvc-list.action", {
             itemCriterio : vm.itemCriterio,
             page : page,
@@ -171,8 +169,6 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
             map.itemCriterio = JSON.stringify(data.itemCriterio);
 
             $location.search(map).replace();
-
-            usSpinnerService.stop("spinner");
         });
     }
 
@@ -463,7 +459,7 @@ function maniTotalesController($scope, $http, $location, $routeParams) {
     });
 }
 
-function ssrvGridController($http, $location, $routeParams, $modal, pageTitleService, usSpinnerService) {
+function ssrvGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -473,8 +469,6 @@ function ssrvGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.entiId = $routeParams.entiId;
 
     function search(itemCriterio, page) {
-        usSpinnerService.spin("spinner");
-
         $http.post("servicio/ssrv-list.action", {
             itemCriterio : itemCriterio,
             page : page,
@@ -491,8 +485,6 @@ function ssrvGridController($http, $location, $routeParams, $modal, pageTitleSer
             map.itemCriterio = JSON.stringify(data.itemCriterio);
 
             $location.search(map).replace();
-
-            usSpinnerService.stop("spinner");
         });
     }
 

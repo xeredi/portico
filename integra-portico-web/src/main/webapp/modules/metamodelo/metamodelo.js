@@ -418,17 +418,14 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
     pageTitleService.setTitle("tpdt", "page_create");
 }
 
-function tpdtDetailController($http, $routeParams, pageTitleService, usSpinnerService) {
+function tpdtDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
 
     function remove() {
         if (confirm("Are you sure?")) {
-            usSpinnerService.spin("spinner");
-
             $http.get("metamodelo/tpdt-remove.action?tpdt.id=" + vm.tpdt.id).success(function(data) {
-                usSpinnerService.stop("spinner");
                 window.history.back();
             });
         }

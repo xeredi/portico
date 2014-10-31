@@ -163,7 +163,7 @@ function cdmsDetailController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("cdms", "page_detail");
 }
 
-function estdGridController($http, $location, $routeParams, $modal, pageTitleService, usSpinnerService) {
+function estdGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -176,8 +176,6 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.pepr.autpId = $routeParams.autpId;
 
     function search(itemCriterio, page) {
-        usSpinnerService.spin("spinner");
-
         $http.post("estadistica/estd-list.action", {
             itemCriterio : itemCriterio,
             page : page,
@@ -194,8 +192,6 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
             map.itemCriterio = JSON.stringify(data.itemCriterio);
 
             $location.search(map).replace();
-
-            usSpinnerService.stop("spinner");
         });
     }
 
