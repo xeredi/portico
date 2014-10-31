@@ -18,8 +18,6 @@ import xeredi.integra.model.util.Entidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoListadoAction.
@@ -57,6 +55,8 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      */
     @Action("pepr-filter")
     public String filtro() {
+        setFechaVigencia(Calendar.getInstance().getTime());
+
         loadLabelValuesMap();
 
         return SUCCESS;
@@ -85,8 +85,6 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      * Load label values map.
      */
     protected final void loadLabelValuesMap() {
-        Preconditions.checkNotNull(peprCriterio);
-
         final ParametroBO prmtBO = new ParametroBO();
 
         {
@@ -94,7 +92,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
 
             tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
 
-            autpList = prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getIdioma()).get(
+            autpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()).get(
                     Entidad.AUTORIDAD_PORTUARIA.getId());
         }
     }

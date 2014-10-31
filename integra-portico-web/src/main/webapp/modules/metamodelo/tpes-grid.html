@@ -1,39 +1,42 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <pagination total-items="vm.entiList.count" items-per-page="vm.entiList.limit" ng-model="vm.page"
-            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-            next-text="&rsaquo;&rsaquo;"></pagination>
+<div ng-if="vm.entiList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <pagination total-items="vm.entiList.count" items-per-page="vm.entiList.limit" ng-model="vm.page"
+                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+        </div>
+
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/metamodelo/tpes/create"><i class="glyphicon glyphicon-file"></i> <span
+                translate>btn_crear</span> </a>
+            <button data-ng-click="vm.filter()" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+            </button>
+        </div>
     </div>
 
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpes/create"><i class="glyphicon glyphicon-file"></i> <span
-            translate>btn_crear</span> </a>
-        <button data-ng-click="vm.filter()" class="btn btn-default">
-            <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
-        </button>
+    <div class="table-responsive">
+        <span class="label label-default" translate="grid_count"
+            translate-value-count="{{vm.entiList.count | number:0}}"></span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th class="codigo" nowrap="nowrap" translate>enti_codigo</th>
+                    <th nowrap="nowrap" translate>enti_nombre</th>
+                    <th nowrap="nowrap" translate>enti_maxGrid</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="enti in vm.entiList.list track by $index">
+                    <td><a ng-href="#/metamodelo/tpes/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="enti.codigo"></td>
+                    <td ng-bind="enti.nombre"></td>
+                    <td class="number" ng-bind="enti.maxGrid | number:0"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
-
-<div class="table-responsive">
-    <span class="label label-default" translate="grid_count" translate-value-count="{{vm.entiList.count | number:0}}"></span>
-
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate>enti_codigo</th>
-                <th nowrap="nowrap" translate>enti_nombre</th>
-                <th nowrap="nowrap" translate>enti_maxGrid</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr ng-repeat="enti in vm.entiList.list track by $index">
-                <td><a ng-href="#/metamodelo/tpes/detail/{{enti.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="enti.codigo"></td>
-                <td ng-bind="enti.nombre"></td>
-                <td class="number" ng-bind="enti.maxGrid | number:0"></td>
-            </tr>
-        </tbody>
-    </table>
 </div>

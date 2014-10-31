@@ -1,34 +1,36 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
-            ng-href="#/maestro/sprm/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
-            class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
-        <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-4 col-md-2 col-md-2 form-group">
-            <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
-            <p class="form-control-static">
-                <a
-                    ng-href="#/maestro/prmt/detail/{{vm.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.fechaVigencia}}"
-                    ng-bind="vm.item.prmtAsociado.etiqueta"></a>
-            </p>
-        </div>
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-            <label translate>sprm_fini</label>
-            <p class="form-control-static" ng-bind="vm.item.spvr.fini | date"></p>
-        </div>
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-            <label translate>sprm_ffin</label>
-            <p class="form-control-static" ng-bind="vm.item.spvr.ffin | date"></p>
+<div ng-if="vm.item">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/maestro/sprm/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
+                ng-href="#/maestro/sprm/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+                class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
+            <button data-ng-click="remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
         </div>
     </div>
 
-    <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-2 col-md-2 form-group">
+                <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
+                <p class="form-control-static">
+                    <a
+                        ng-href="#/maestro/prmt/detail/{{vm.enti.tpprAsociado.id}}/{{vm.item.prmtAsociado.id}}/{{vm.fechaVigencia}}"
+                        ng-bind="vm.item.prmtAsociado.etiqueta"></a>
+                </p>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <label translate>sprm_fini</label>
+                <p class="form-control-static" ng-bind="vm.item.spvr.fini | date"></p>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <label translate>sprm_ffin</label>
+                <p class="form-control-static" ng-bind="vm.item.spvr.ffin | date"></p>
+            </div>
+        </div>
+
+        <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+    </div>
 </div>

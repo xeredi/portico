@@ -1,24 +1,26 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/engd/edit/{{vm.engd.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-            <label translate>engd_etiqueta</label>
-            <p class="form-control-static" ng-bind="vm.engd.etiqueta"></p>
-        </div>
-        <div class="col-sm-1 col-md-1 col-lg-1 form-group">
-            <label translate>engd_numero</label>
-            <p class="form-control-static" ng-bind="vm.engd.numero"></p>
+<div ng-if="vm.engd">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/metamodelo/engd/edit/{{vm.engd.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
         </div>
     </div>
 
-    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                <label translate>engd_etiqueta</label>
+                <p class="form-control-static" ng-bind="vm.engd.etiqueta"></p>
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1 form-group">
+                <label translate>engd_numero</label>
+                <p class="form-control-static" ng-bind="vm.engd.numero"></p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+    </div>
 </div>

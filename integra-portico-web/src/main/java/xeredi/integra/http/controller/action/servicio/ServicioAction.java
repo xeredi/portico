@@ -91,10 +91,9 @@ public final class ServicioAction extends ItemAction {
         item.setFref(Calendar.getInstance().getTime());
         item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
 
+        setFechaVigencia(item.getFref());
         loadLabelValuesMap(enti);
         loadSubpList();
-
-        setFechaVigencia(item.getFref());
 
         return SUCCESS;
     }

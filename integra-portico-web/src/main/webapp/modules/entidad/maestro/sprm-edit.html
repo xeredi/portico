@@ -1,50 +1,54 @@
-<form role="form">
-    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.item.entiId" /><input type="hidden"
-        ng-model="vm.item.id" /><input type="hidden" ng-model="vm.item.prmtId" /><input type="hidden"
-        ng-model="vm.item.spvr.id" />
+<div ng-if="vm.item">
+    <form role="form">
+        <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.item.entiId" /><input
+            type="hidden" ng-model="vm.item.id" /><input type="hidden" ng-model="vm.item.prmtId" /><input
+            type="hidden" ng-model="vm.item.spvr.id" />
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-4 col-md-2 col-md-2 form-group">
-                <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
-                <div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
-                    <input type="text" ng-model="vm.item.prmtAsociado"
-                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
-                        typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
-                        class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-4 col-md-2 col-md-2 form-group">
+                    <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
+                    <div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
+                        <input type="text" ng-model="vm.item.prmtAsociado"
+                            typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
+                            typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+                            class="form-control input-sm"> <i ng-show="loading"
+                            class="glyphicon glyphicon-refresh"></i>
+                    </div>
+                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prmtAsociado.etiqueta"></p>
                 </div>
-                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prmtAsociado.etiqueta"></p>
+
+                <div class="col-sm-2 col-md-2 col-md-1 form-group">
+                    <label translate>prmt_fini</label>
+                    <div class="input-group" ng-controller="datepickerController">
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.spvr.fini" /> <span
+                            class="input-group-addon" ng-click="open($event)"><i
+                            class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 col-md-2 col-md-1 form-group">
+                    <label translate>prmt_ffin</label>
+                    <div class="input-group" ng-controller="datepickerController">
+                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.spvr.ffin" /> <span
+                            class="input-group-addon" ng-click="open($event)"><i
+                            class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-2 col-md-2 col-md-1 form-group">
-                <label translate>prmt_fini</label>
-                <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.spvr.fini" /> <span
-                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </div>
-
-            <div class="col-sm-2 col-md-2 col-md-1 form-group">
-                <label translate>prmt_ffin</label>
-                <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.spvr.ffin" /> <span
-                        class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </div>
+            <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
         </div>
 
-        <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
-    </div>
-
-    <div class="btn-group">
-        <button data-ng-click="vm.save()" class="btn btn-primary">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-        </button>
-        <button data-ng-click="vm.cancel()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-        </button>
-    </div>
-</form>
-
+        <div class="btn-group">
+            <button data-ng-click="vm.save()" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            </button>
+            <button data-ng-click="vm.cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+            </button>
+        </div>
+    </form>
+</div>

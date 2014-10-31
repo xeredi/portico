@@ -1,51 +1,53 @@
+<div ng-if="vm.prbtList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <pagination total-items="vm.prbtList.count" items-per-page="vm.prbtList.limit" ng-model="vm.page"
+                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+        </div>
 
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <pagination total-items="vm.prbtList.count" items-per-page="vm.prbtList.limit" ng-model="vm.page"
-            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-            next-text="&rsaquo;&rsaquo;"></pagination>
+        <div class="btn-group">
+            <button data-ng-click="vm.filter()" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
+            </button>
+        </div>
     </div>
 
-    <div class="btn-group">
-        <button data-ng-click="vm.filter()" class="btn btn-default">
-            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
-        </button>
+    <div class="table-responsive">
+        <span class="label label-default" translate="grid_count"
+            translate-value-count="{{vm.prbtList.count | number:0}}"></span>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th nowrap="nowrap" translate="prbt_modulo"></th>
+                    <th nowrap="nowrap" translate="prbt_tipo"></th>
+                    <th nowrap="nowrap" translate="prbt_estado"></th>
+                    <th nowrap="nowrap" translate="prbt_falta"></th>
+                    <th nowrap="nowrap" translate="prbt_fini"></th>
+                    <th nowrap="nowrap" translate="prbt_ffin"></th>
+                    <th nowrap="nowrap" translate="prbt_duracion"></th>
+                    <th nowrap="nowrap" translate="prbt_erroresCnt"></th>
+                    <th nowrap="nowrap" translate="prbt_alertasCnt"></th>
+                    <th nowrap="nowrap" translate="prbt_mensajesCnt"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="prbt in vm.prbtList.list track by $index">
+                    <td><a ng-href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="'ProcesoModulo_' + prbt.modulo | translate"></td>
+                    <td ng-bind="'ProcesoTipo_' + prbt.tipo | translate"></td>
+                    <td ng-bind="'ProcesoEstado_' + prbt.estado | translate"></td>
+                    <td ng-bind="prbt.falta | date:'medium'"></td>
+                    <td ng-bind="prbt.finicio | date:'medium'"></td>
+                    <td ng-bind="prbt.ffin | date:'medium'"></td>
+                    <td class="number" ng-bind="prbt.duracion | number:0"></td>
+                    <td class="number" ng-bind="prbt.erroresCnt | number:0"></td>
+                    <td class="number" ng-bind="prbt.alertasCnt | number:0"></td>
+                    <td class="number" ng-bind="prbt.mensajesCnt | number:0"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-</div>
-
-<div class="table-responsive">
-    <span class="label label-default" translate="grid_count" translate-value-count="{{vm.prbtList.count | number:0}}"></span>
-
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th nowrap="nowrap" translate="prbt_modulo"></th>
-                <th nowrap="nowrap" translate="prbt_tipo"></th>
-                <th nowrap="nowrap" translate="prbt_estado"></th>
-                <th nowrap="nowrap" translate="prbt_falta"></th>
-                <th nowrap="nowrap" translate="prbt_fini"></th>
-                <th nowrap="nowrap" translate="prbt_ffin"></th>
-                <th nowrap="nowrap" translate="prbt_duracion"></th>
-                <th nowrap="nowrap" translate="prbt_erroresCnt"></th>
-                <th nowrap="nowrap" translate="prbt_alertasCnt"></th>
-                <th nowrap="nowrap" translate="prbt_mensajesCnt"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="prbt in vm.prbtList.list track by $index">
-                <td><a ng-href="#/proceso/prbt/detail/{{prbt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="'ProcesoModulo_' + prbt.modulo | translate"></td>
-                <td ng-bind="'ProcesoTipo_' + prbt.tipo | translate"></td>
-                <td ng-bind="'ProcesoEstado_' + prbt.estado | translate"></td>
-                <td ng-bind="prbt.falta | date:'medium'"></td>
-                <td ng-bind="prbt.finicio | date:'medium'"></td>
-                <td ng-bind="prbt.ffin | date:'medium'"></td>
-                <td class="number" ng-bind="prbt.duracion | number:0"></td>
-                <td class="number" ng-bind="prbt.erroresCnt | number:0"></td>
-                <td class="number" ng-bind="prbt.alertasCnt | number:0"></td>
-                <td class="number" ng-bind="prbt.mensajesCnt | number:0"></td>
-            </tr>
-        </tbody>
-    </table>
 </div>

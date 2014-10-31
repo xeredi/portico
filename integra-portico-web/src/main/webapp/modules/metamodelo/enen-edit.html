@@ -1,27 +1,28 @@
-<form name="editForm" novalidate role="form">
-    <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enen.entiPadreId" /> <input type="hidden"
-        ng-model="enti.tipo" />
+<div ng-if="vm.enen">
+    <form name="editForm" novalidate role="form">
+        <input type="hidden" ng-model="accion" /><input type="hidden" ng-model="enen.entiPadreId" /> <input
+            type="hidden" ng-model="enti.tipo" />
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 form-group">
-                <label translate>enen_entih</label> <select ng-model="enen.entiHijaId"
-                    ng-options="labelValue.value as labelValue.label for labelValue in entiList"
-                    class="form-control input-sm">
-                    <option />
-                </select>
-            </div>
-            <div class="col-md-1 form-group">
-                <label translate>enen_orden</label> <input type="text" ng-model="enen.orden"
-                    class="form-control input-sm" />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label translate>enen_entih</label> <select ng-model="enen.entiHijaId"
+                        ng-options="labelValue.value as labelValue.label for labelValue in vm.entiList"
+                        class="form-control input-sm">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-md-1 form-group">
+                    <label translate>enen_orden</label> <input type="text" ng-model="enen.orden"
+                        class="form-control input-sm" />
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="btn-group">
-        <button data-ng-click="submit(editForm)" class="btn btn-default">
-            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-        </button>
-    </div>
-</form>
-
+        <div class="btn-group">
+            <button data-ng-click="submit(editForm)" class="btn btn-default">
+                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+            </button>
+        </div>
+    </form>
+</div>

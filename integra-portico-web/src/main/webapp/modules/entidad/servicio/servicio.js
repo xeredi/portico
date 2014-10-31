@@ -540,7 +540,6 @@ function ssrvFilterController($http, $modalInstance, enti, itemCriterio) {
 
     vm.ok = ok;
     vm.cancel = cancel;
-    vm.ssrvAction = ssrvAction;
 
     vm.itemCriterio = itemCriterio;
     vm.enti = enti;

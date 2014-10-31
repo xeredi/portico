@@ -1,71 +1,73 @@
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/metamodelo/tpdt/edit/{{vm.tpdt.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-        <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-        </button>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-            <label translate>tpdt_codigo</label>
-            <p class="form-control-static" ng-bind="vm.tpdt.codigo"></p>
-        </div>
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-            <label translate>tpdt_tpht</label>
-            <p class="form-control-static">{{'HtmlTipo_' + vm.tpdt.tpht | translate}}</p>
-        </div>
-        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-            <label translate>tpdt_tpel</label>
-            <p class="form-control-static">{{'ElementoTipo_' + vm.tpdt.tipoElemento | translate}}</p>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-            <label translate>tpdt_enti</label>
-            <p class="form-control-static">
-                <a ng-if="vm.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.tpdt.enti.id}}"
-                    ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'S'"
-                    ng-href="#/metamodelo/tpss/detail/{{vm.tpdt.enti.id}}" ng-bind="vm.tpdt.enti.nombre"></a><a
-                    ng-if="vm.tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{vm.tpdt.enti.id}}"
-                    ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'B'"
-                    ng-href="#/metamodelo/tpsp/detail/{{vm.tpdt.enti.id}}" ng-bind="vm.tpdt.enti.nombre"></a> <a
-                    ng-if="vm.tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{vm.tpdt.enti.id}}"
-                    ng-bind="vm.tpdt.enti.nombre"></a>
-            </p>
-        </div>
-    </div>
-
-    <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
-</div>
-
-<fieldset ng-if="vm.tpdt.tipoElemento == 'CR'">
-    <legend ng-bind="'Valores de Codigo de Referencia'"></legend>
-
+<div ng-if="vm.tpdt">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/cdrf/create/{{vm.tpdt.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            <a class="btn btn-default" ng-href="#/metamodelo/tpdt/edit/{{vm.tpdt.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
         </div>
     </div>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th translate>cdrf_valor</th>
-                <th translate>cdrf_texto</th>
-                <th translate>cdrf_orden</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="cdrf in vm.cdrfList track by $index">
-                <td><a ng-href="#/metamodelo/cdrf/detail/{{cdrf.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="cdrf.valor"></td>
-                <td ng-bind="cdrf.texto"></td>
-                <td class="number" ng-bind="cdrf.orden"></td>
-            </tr>
-        </tbody>
-    </table>
-</fieldset>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                <label translate>tpdt_codigo</label>
+                <p class="form-control-static" ng-bind="vm.tpdt.codigo"></p>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <label translate>tpdt_tpht</label>
+                <p class="form-control-static">{{'HtmlTipo_' + vm.tpdt.tpht | translate}}</p>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <label translate>tpdt_tpel</label>
+                <p class="form-control-static">{{'ElementoTipo_' + vm.tpdt.tipoElemento | translate}}</p>
+            </div>
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                <label translate>tpdt_enti</label>
+                <p class="form-control-static">
+                    <a ng-if="vm.tpdt.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.tpdt.enti.id}}"
+                        ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'S'"
+                        ng-href="#/metamodelo/tpss/detail/{{vm.tpdt.enti.id}}" ng-bind="vm.tpdt.enti.nombre"></a><a
+                        ng-if="vm.tpdt.enti.tipo == 'P'" ng-href="#/metamodelo/tppr/detail/{{vm.tpdt.enti.id}}"
+                        ng-bind="vm.tpdt.enti.nombre"></a><a ng-if="vm.tpdt.enti.tipo == 'B'"
+                        ng-href="#/metamodelo/tpsp/detail/{{vm.tpdt.enti.id}}" ng-bind="vm.tpdt.enti.nombre"></a> <a
+                        ng-if="vm.tpdt.enti.tipo == 'E'" ng-href="#/metamodelo/tpes/detail/{{vm.tpdt.enti.id}}"
+                        ng-bind="vm.tpdt.enti.nombre"></a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+    </div>
+
+    <fieldset ng-if="vm.tpdt.tipoElemento == 'CR'">
+        <legend ng-bind="'Valores de Codigo de Referencia'"></legend>
+
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-default" ng-href="#/metamodelo/cdrf/create/{{vm.tpdt.id}}"><i
+                    class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+            </div>
+        </div>
+
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th class="buttonLinks" nowrap="nowrap" />
+                    <th translate>cdrf_valor</th>
+                    <th translate>cdrf_texto</th>
+                    <th translate>cdrf_orden</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cdrf in vm.cdrfList track by $index">
+                    <td><a ng-href="#/metamodelo/cdrf/detail/{{cdrf.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                    <td ng-bind="cdrf.valor"></td>
+                    <td ng-bind="cdrf.texto"></td>
+                    <td class="number" ng-bind="cdrf.orden"></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

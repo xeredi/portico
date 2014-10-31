@@ -32,7 +32,7 @@
     </header>
 
     <div id="body-content" class="container-fluid">
-        <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate="errorList"></span>:
+        <alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate="errorList"></span>
         <ul>
             <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
         </ul>
