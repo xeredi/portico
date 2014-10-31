@@ -341,35 +341,12 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
     vm.remove = remove;
     vm.print = print;
 
-    // var path = $location.path();
     // var tabSelected = $routeParams.tabSelected;
     // var itemId = $routeParams.itemId;
     // var entiId = $routeParams.entiId;
     // var fechaVigencia = $routeParams.fechaVigencia;
     // var pageMap = $routeParams.pageMap ?
     // angular.fromJson($routeParams.pageMap) : {};
-
-    vm.pageMap = {};
-
-    prmtService.detail($routeParams.itemId, $routeParams.fechaVigencia).then(
-            function(data) {
-                vm.enti = data.enti;
-                vm.fechaVigencia = data.fechaVigencia;
-                vm.item = data.item;
-                vm.i18nMap = data.i18nMap;
-                vm.itemHijosMap = {};
-                vm.entiHijasMap = {};
-
-                if (vm.enti.entiHijasList) {
-                    for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                        sprmService.search(vm.enti.entiHijasList[i], vm.item.id, 1, $routeParams.fechaVigencia).then(
-                                function(data) {
-                                    vm.entiHijasMap[data.enti.id] = data.enti;
-                                    vm.itemHijosMap[data.enti.id] = data.itemList;
-                                });
-                    }
-                }
-            });
 
     // function findItem() {
     // $http.get("metamodelo/tppr-proxy-detail.action?includeDependencies=true&enti.id="
@@ -423,9 +400,9 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
     }
 
     function tabSelected(tabNo) {
-        // if (path == $location.path()) {
-        // $location.search("tabSelected", tabNo).replace();
-        // }
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
+        }
     }
 
     function remove() {
@@ -450,7 +427,34 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
         });
     }
 
-    // findItem();
+    vm.path = $location.path();
+    vm.pageMap = {};
+
+    vm.tabActive = {};
+
+    if ($routeParams.tab) {
+        vm.tabActive[$routeParams.tab] = true;
+    }
+
+    prmtService.detail($routeParams.itemId, $routeParams.fechaVigencia).then(
+            function(data) {
+                vm.enti = data.enti;
+                vm.fechaVigencia = data.fechaVigencia;
+                vm.item = data.item;
+                vm.i18nMap = data.i18nMap;
+                vm.itemHijosMap = {};
+                vm.entiHijasMap = {};
+
+                if (vm.enti.entiHijasList) {
+                    for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                        sprmService.search(vm.enti.entiHijasList[i], vm.item.id, 1, $routeParams.fechaVigencia).then(
+                                function(data) {
+                                    vm.entiHijasMap[data.enti.id] = data.enti;
+                                    vm.itemHijosMap[data.enti.id] = data.itemList;
+                                });
+                    }
+                }
+            });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
@@ -517,7 +521,8 @@ function prmtEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("maestro/prmt-edit.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
+    $http.get(
+            "maestro/prmt-edit.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
             .success(function(data) {
                 vm.enti = data.enti;
                 vm.fechaVigencia = data.fechaVigencia;
@@ -556,17 +561,16 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
         window.history.back();
     }
 
-    $http
-            .get(
-                    "maestro/prmt-duplicate.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
-                            + $routeParams.fechaVigencia).success(function(data) {
-                vm.enti = data.enti;
-                vm.fechaVigencia = data.fechaVigencia;
-                vm.item = data.item;
-                vm.i18nMap = data.i18nMap;
-                vm.labelValuesMap = data.labelValuesMap;
-                vm.accion = data.accion;
-            });
+    $http.get(
+            "maestro/prmt-duplicate.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
+        vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
+        vm.item = data.item;
+        vm.i18nMap = data.i18nMap;
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate");
 }
@@ -596,12 +600,13 @@ function sprmDetailController($http, $routeParams, pageTitleService) {
         }
     }
 
-    $http.get("maestro/sprm-detail.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
-            .success(function(data) {
-                vm.enti = data.enti;
-                vm.fechaVigencia = data.fechaVigencia;
-                vm.item = data.item;
-            });
+    $http.get(
+            "maestro/sprm-detail.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
+        vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
+        vm.item = data.item;
+    });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
@@ -667,7 +672,8 @@ function sprmEditController($http, $location, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("maestro/sprm-edit.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
+    $http.get(
+            "maestro/sprm-edit.action?item.id=" + $routeParams.itemId + "&fechaVigencia=" + $routeParams.fechaVigencia)
             .success(function(data) {
                 vm.enti = data.enti;
                 vm.fechaVigencia = data.fechaVigencia;
@@ -704,16 +710,15 @@ function sprmDuplicateController($http, $location, $routeParams, pageTitleServic
         window.history.back();
     }
 
-    $http
-            .get(
-                    "maestro/sprm-duplicate.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
-                            + $routeParams.fechaVigencia).success(function(data) {
-                vm.enti = data.enti;
-                vm.fechaVigencia = data.fechaVigencia;
-                vm.item = data.item;
-                vm.labelValuesMap = data.labelValuesMap;
-                vm.accion = data.accion;
-            });
+    $http.get(
+            "maestro/sprm-duplicate.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
+                    + $routeParams.fechaVigencia).success(function(data) {
+        vm.enti = data.enti;
+        vm.fechaVigencia = data.fechaVigencia;
+        vm.item = data.item;
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate");
 }

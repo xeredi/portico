@@ -245,27 +245,20 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
     vm.remove = remove;
     vm.srvcAction = srvcAction;
 
-    var path = $location.path();
-    var tabSelected = $routeParams.tabSelected;
-    var srvcId = $routeParams.srvcId;
-    var entiId = $routeParams.entiId;
+    vm.path = $location.path();
     var pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
     vm.pageMap = {};
 
     function findSublist(subentiId, page) {
-        vm.loading = true;
-
         $http.get(
                 "servicio/ssrv-list.action?itemCriterio.entiId=" + subentiId + "&page=" + page
-                        + "&itemCriterio.srvc.id=" + srvcId).success(function(data) {
+                        + "&itemCriterio.srvc.id=" + $routeParams.srvcId).success(function(data) {
             vm.entiHijasMap[data.itemCriterio.entiId] = data.enti;
             vm.itemHijosMap[data.itemCriterio.entiId] = data.itemList;
             vm.pageMap[data.itemCriterio.entiId] = data.itemList.page;
 
             $location.search("pageMap", JSON.stringify(vm.pageMap)).replace();
-
-            vm.loading = false;
         });
     }
 
@@ -274,8 +267,8 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function tabSelected(tabNo) {
-        if (path == $location.path()) {
-            $location.search("tabSelected", tabNo).replace();
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
         }
     }
 
@@ -330,7 +323,13 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.get("servicio/srvc-detail.action?item.id=" + srvcId).success(function(data) {
+    vm.tabActive = {};
+
+    if ($routeParams.tab) {
+        vm.tabActive[$routeParams.tab] = true;
+    }
+
+    $http.get("servicio/srvc-detail.action?item.id=" + $routeParams.srvcId).success(function(data) {
         vm.enti = data.enti;
         // vm.subentiList = data.subentiList;
         vm.item = data.item;
@@ -339,14 +338,8 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
         vm.entiHijasMap = {};
         vm.itemHijosMap = {};
 
-        if (tabSelected) {
-            // vm.entiHijasMap[tabSelected].active = true;
-        }
-
         for (i = 0; i < vm.enti.entiHijasList.length; i++) {
             var subentiId = vm.enti.entiHijasList[i];
-
-            console.log("getList: " + subentiId + ", " + pageMap[subentiId] ? pageMap[subentiId] : 1);
 
             findSublist(subentiId, pageMap[subentiId] ? pageMap[subentiId] : 1);
         }
@@ -568,9 +561,6 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
     vm.ssrvAction = ssrvAction;
 
     vm.path = $location.path();
-    vm.tabSelected = $routeParams.tabSelected;
-    vm.ssrvId = $routeParams.ssrvId;
-    vm.entiId = $routeParams.entiId;
     vm.pageMap = $routeParams.pageMap ? angular.fromJson($routeParams.pageMap) : {};
 
     vm.pageMap = {};
@@ -597,8 +587,8 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
     }
 
     function tabSelected(tabNo) {
-        if (path == $location.path()) {
-            $location.search("tabSelected", tabNo).replace();
+        if (vm.path == $location.path()) {
+            $location.search("tab", tabNo).replace();
         }
     }
 
@@ -694,6 +684,12 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
 
             break;
         }
+    }
+
+    vm.tabActive = {};
+
+    if ($routeParams.tab) {
+        vm.tabActive[$routeParams.tab] = true;
     }
 
     $http.get("servicio/ssrv-detail.action?item.id=" + $routeParams.ssrvId).success(function(data) {

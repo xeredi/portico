@@ -26,8 +26,7 @@
 
     <div class="table-responsive">
         <span class="label label-default" translate="grid_count"
-            translate-value-count="{{vm.itemList.count | number:0}}"></span><i ng-show="vm.loading"
-            class="glyphicon glyphicon-time"></i>
+            translate-value-count="{{vm.itemList.count | number:0}}"></span>
 
         <!--
  -->
@@ -39,8 +38,7 @@
                     <th ng-if="vm.enti.i18n" translate>prmt_i18n_texto</th>
                     <th translate>prmt_fini</th>
                     <th translate>prmt_ffin</th>
-                    <th ng-repeat="entd in vm.enti.entdList" ng-if="entd.gridable"
-                        ng-bind="entd.etiqueta" />
+                    <th ng-repeat="entd in vm.enti.entdList" ng-if="entd.gridable" ng-bind="entd.etiqueta" />
                 </tr>
             </thead>
             <tbody>
