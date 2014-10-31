@@ -8,5 +8,6 @@ exports.config = {
             extensions : [],
         }
     },
-    specs : [ "metamodelo-spec.js", "maestro-spec.js" ]
+    specs : [ "*-spec.js" ],
+    baseUrl : "http://xeredi.ddns.net/portico/"
 }

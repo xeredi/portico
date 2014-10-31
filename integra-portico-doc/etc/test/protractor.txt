@@ -43,3 +43,5 @@ Ejemplo de fichero "*-spec.js" (Fichero de caso de prueba). En este caso, metamo
 	    });
 	});
 
+Ejecucion de test:
+	$ protractor conf.js
