@@ -8,5 +8,5 @@ exports.config = {
             extensions : [],
         }
     },
-    specs : [ 'metamodelo-spec.js' ]
+    specs : [ "metamodelo-spec.js", "maestro-spec.js" ]
 }
