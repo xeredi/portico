@@ -1,0 +1,45 @@
+http://angular.github.io/protractor/#/
+
+Instalacion
+	Requisitos:
+		NodeJs	http://nodejs.org/
+
+	Pasos:
+		$ npm install -g protractor
+		$ webdriver-manager update
+
+Arranque servidor de pruebas
+	$ webdriver-manager start
+
+Ejemplo de fichero conf.js:
+
+	exports.config = {
+	    seleniumAddress : 'http://localhost:4444/wd/hub',
+	    capabilities : {
+	        'browserName' : 'chrome',
+	        "chromeOptions" : {
+	            binary : 'G:/tools/portableapps/PortableApps/GoogleChromePortable/GoogleChromePortable.exe',
+	            args : [ '--test-type' ],
+	            extensions : [],
+	        }
+	    },
+	    specs : [ 'metamodelo-spec.js' ]
+	}
+
+	binary -> En caso de que el navegador no esté instalado en una ruta estandar.
+    args : [ '--test-type' ] -> Para que el chrome no se queje de cómo accede a él el Protractor
+
+Ejemplo de fichero "*-spec.js" (Fichero de caso de prueba). En este caso, metamodelo-spec.js:
+
+	var baseUrl = "http://xeredi.ddns.net/portico/index.html#";
+
+	describe('Metamodelo', function() {
+	    it('Tipos de Servicio', function() {
+	        browser.get(baseUrl + "/metamodelo/tpsr/grid");
+
+	        var entiList = element.all(by.repeater("enti in vm.entiList.list"));
+
+	        expect(entiList.count()).toEqual(9);
+	    });
+	});
+
