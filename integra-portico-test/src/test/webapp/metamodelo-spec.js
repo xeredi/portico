@@ -16,6 +16,11 @@ describe('Metamodelo', function() {
         console.log("enti: ");
         console.log(enti);
 
-        browser.get("#/metamodelo/tpsr/detail/" + enti.getAttribute("id"));
+        var entiId = element(by.binding('vm.entiList.list[0].id'));
+
+        console.log("entiId: ");
+        console.log(entiId);
+
+        browser.get("#/metamodelo/tpsr/detail/" + entiId.getText());
     });
 });
