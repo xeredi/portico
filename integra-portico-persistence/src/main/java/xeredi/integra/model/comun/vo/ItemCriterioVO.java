@@ -5,17 +5,15 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.util.pagination.Criterio;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemCriterioVO.
  */
 /**
  * @author xeredi
- *
+ * 
  */
-public abstract class ItemCriterioVO implements Criterio {
+public abstract class ItemCriterioVO {
     /** The idioma. */
     private String idioma;
 
@@ -59,7 +57,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the idioma.
-     *
+     * 
      * @return the idioma
      */
     public final String getIdioma() {
@@ -68,7 +66,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the idioma.
-     *
+     * 
      * @param value
      *            the new idioma
      */
@@ -78,7 +76,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the id.
-     *
+     * 
      * @return the id
      */
     public final Long getId() {
@@ -87,7 +85,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the id.
-     *
+     * 
      * @param value
      *            the new id
      */
@@ -97,7 +95,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the ids.
-     *
+     * 
      * @return the ids
      */
     public final Set<Long> getIds() {
@@ -106,7 +104,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the ids.
-     *
+     * 
      * @param value
      *            the new ids
      */
@@ -116,7 +114,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the enti id.
-     *
+     * 
      * @return the enti id
      */
     public final Long getEntiId() {
@@ -125,7 +123,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the enti id.
-     *
+     * 
      * @param value
      *            the new enti id
      */
@@ -135,7 +133,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the enti ids.
-     *
+     * 
      * @return the enti ids
      */
     public final Set<Long> getEntiIds() {
@@ -144,7 +142,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the enti ids.
-     *
+     * 
      * @param value
      *            the new enti ids
      */
@@ -154,7 +152,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Checks if is solo gridables.
-     *
+     * 
      * @return true, if is solo gridables
      */
     public final boolean isSoloDatosGrid() {
@@ -163,7 +161,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the solo gridables.
-     *
+     * 
      * @param value
      *            the new solo gridables
      */
@@ -173,7 +171,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the itdt map.
-     *
+     * 
      * @return the itdt map
      */
     public final Map<Long, ItemDatoCriterioVO> getItdtMap() {
@@ -182,7 +180,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the itdt map.
-     *
+     * 
      * @param value
      *            the value
      */
@@ -202,7 +200,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the etiqueta.
-     *
+     * 
      * @return the etiqueta
      */
     public final String getEtiqueta() {
@@ -211,7 +209,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the etiqueta.
-     *
+     * 
      * @param value
      *            the new etiqueta
      */
@@ -221,7 +219,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the limit.
-     *
+     * 
      * @return the limit
      */
     public final Integer getLimit() {
@@ -230,7 +228,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the limit.
-     *
+     * 
      * @param value
      *            the new limit
      */
@@ -240,7 +238,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the offset.
-     *
+     * 
      * @return the offset
      */
     public Integer getOffset() {
@@ -249,7 +247,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the offset.
-     *
+     * 
      * @param value
      *            the new offset
      */
@@ -259,7 +257,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Gets the max limit.
-     *
+     * 
      * @return the max limit
      */
     public Integer getMaxLimit() {
@@ -268,7 +266,7 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /**
      * Sets the max limit.
-     *
+     * 
      * @param value
      *            the new max limit
      */

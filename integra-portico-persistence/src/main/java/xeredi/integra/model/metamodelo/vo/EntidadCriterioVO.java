@@ -4,13 +4,11 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.util.pagination.Criterio;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadCriterioVO.
  */
-public class EntidadCriterioVO implements Criterio {
+public class EntidadCriterioVO {
 
     /** The offset. */
     private Integer offset;
@@ -52,7 +50,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the ids.
-     *
+     * 
      * @return the ids
      */
     public final Set<Long> getIds() {
@@ -61,7 +59,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the ids.
-     *
+     * 
      * @param value
      *            the new ids
      */
@@ -71,7 +69,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the tipo.
-     *
+     * 
      * @return the tipo
      */
     public final TipoEntidad getTipo() {
@@ -80,7 +78,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the tipo.
-     *
+     * 
      * @param value
      *            the new tipo
      */
@@ -90,7 +88,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the codigos.
-     *
+     * 
      * @return the codigos
      */
     public final String getCodigo() {
@@ -99,7 +97,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the codigos.
-     *
+     * 
      * @param value
      *            the new codigos
      */
@@ -109,7 +107,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the nombre.
-     *
+     * 
      * @return the nombre
      */
     public final String getNombre() {
@@ -118,7 +116,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the nombre.
-     *
+     * 
      * @param value
      *            the new nombre
      */
@@ -128,7 +126,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the enti padre id.
-     *
+     * 
      * @return the enti padre id
      */
     public final Long getEntiPadreId() {
@@ -137,7 +135,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the enti padre id.
-     *
+     * 
      * @param value
      *            the new enti padre id
      */
@@ -147,7 +145,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the enti hija id.
-     *
+     * 
      * @return the enti hija id
      */
     public final Long getEntiHijaId() {
@@ -156,7 +154,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the enti hija id.
-     *
+     * 
      * @param value
      *            the new enti hija id
      */
@@ -166,7 +164,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the offset.
-     *
+     * 
      * @return the offset
      */
     public final Integer getOffset() {
@@ -175,7 +173,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the offset.
-     *
+     * 
      * @param value
      *            the new offset
      */
@@ -185,7 +183,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the limit.
-     *
+     * 
      * @return the limit
      */
     public final Integer getLimit() {
@@ -194,7 +192,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the limit.
-     *
+     * 
      * @param value
      *            the new limit
      */
@@ -204,7 +202,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the id.
-     *
+     * 
      * @return the id
      */
     public final Long getId() {
@@ -213,7 +211,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the id.
-     *
+     * 
      * @param value
      *            the new id
      */
@@ -223,7 +221,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Gets the idioma.
-     *
+     * 
      * @return the idioma
      */
     public String getIdioma() {
@@ -232,7 +230,7 @@ public class EntidadCriterioVO implements Criterio {
 
     /**
      * Sets the idioma.
-     *
+     * 
      * @param value
      *            the new idioma
      */

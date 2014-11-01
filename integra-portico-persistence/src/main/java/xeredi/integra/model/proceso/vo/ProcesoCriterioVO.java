@@ -4,13 +4,11 @@ import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.util.pagination.Criterio;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoCriterioVO.
  */
-public final class ProcesoCriterioVO implements Criterio {
+public final class ProcesoCriterioVO {
 
     /** The modulo. */
     private ProcesoModulo modulo;
@@ -37,7 +35,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Gets the modulo.
-     *
+     * 
      * @return the modulo
      */
     public ProcesoModulo getModulo() {
@@ -46,7 +44,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Sets the modulo.
-     *
+     * 
      * @param value
      *            the new modulo
      */
@@ -56,7 +54,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Gets the tipo.
-     *
+     * 
      * @return the tipo
      */
     public ProcesoTipo getTipo() {
@@ -65,7 +63,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Sets the tipo.
-     *
+     * 
      * @param value
      *            the new tipo
      */
@@ -75,7 +73,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Gets the estado.
-     *
+     * 
      * @return the estado
      */
     public ProcesoEstado getEstado() {
@@ -84,7 +82,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Sets the estado.
-     *
+     * 
      * @param value
      *            the new estado
      */
@@ -94,7 +92,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Gets the falta min.
-     *
+     * 
      * @return the falta min
      */
     public Date getFaltaMin() {
@@ -103,7 +101,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Sets the falta min.
-     *
+     * 
      * @param value
      *            the new falta min
      */
@@ -113,7 +111,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Gets the falta max.
-     *
+     * 
      * @return the falta max
      */
     public Date getFaltaMax() {
@@ -122,7 +120,7 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /**
      * Sets the falta max.
-     *
+     * 
      * @param value
      *            the new falta max
      */

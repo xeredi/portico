@@ -4,13 +4,11 @@ import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.util.pagination.Criterio;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoDatoCriterioVO.
  */
-public final class TipoDatoCriterioVO implements Criterio {
+public final class TipoDatoCriterioVO {
 
     /** The offset. */
     private Integer offset;
@@ -55,7 +53,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the ids.
-     *
+     * 
      * @return the ids
      */
     public Set<Long> getIds() {
@@ -64,7 +62,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the ids.
-     *
+     * 
      * @param value
      *            the new ids
      */
@@ -74,7 +72,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the nombre.
-     *
+     * 
      * @return the nombre
      */
     public String getNombre() {
@@ -83,7 +81,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the nombre.
-     *
+     * 
      * @param value
      *            the new nombre
      */
@@ -93,7 +91,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the tipo elemento.
-     *
+     * 
      * @return the tipo elemento
      */
     public TipoElemento getTipoElemento() {
@@ -102,7 +100,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the tipo elemento.
-     *
+     * 
      * @param value
      *            the new tipo elemento
      */
@@ -112,7 +110,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the tpht id.
-     *
+     * 
      * @return the tpht id
      */
     public TipoHtml getTpht() {
@@ -121,7 +119,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the tpht id.
-     *
+     * 
      * @param value
      *            the new tpht id
      */
@@ -131,7 +129,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the enti id.
-     *
+     * 
      * @return the enti id
      */
     public Long getEntiId() {
@@ -140,7 +138,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the enti id.
-     *
+     * 
      * @param value
      *            the new enti id
      */
@@ -150,7 +148,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the offset.
-     *
+     * 
      * @return the offset
      */
     public Integer getOffset() {
@@ -159,7 +157,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the offset.
-     *
+     * 
      * @param value
      *            the new offset
      */
@@ -169,7 +167,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the limit.
-     *
+     * 
      * @return the limit
      */
     public Integer getLimit() {
@@ -178,7 +176,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the limit.
-     *
+     * 
      * @param value
      *            the new limit
      */
@@ -188,7 +186,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the codigo.
-     *
+     * 
      * @return the codigo
      */
     public String getCodigo() {
@@ -197,7 +195,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the codigo.
-     *
+     * 
      * @param value
      *            the new codigo
      */
@@ -207,7 +205,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the enti ref id.
-     *
+     * 
      * @return the enti ref id
      */
     public Long getEntiRefId() {
@@ -216,7 +214,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the enti ref id.
-     *
+     * 
      * @param value
      *            the new enti ref id
      */
@@ -226,7 +224,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the idioma.
-     *
+     * 
      * @return the idioma
      */
     public String getIdioma() {
@@ -235,7 +233,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the idioma.
-     *
+     * 
      * @param value
      *            the new idioma
      */
@@ -245,7 +243,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Gets the id.
-     *
+     * 
      * @return the id
      */
     public Long getId() {
@@ -254,7 +252,7 @@ public final class TipoDatoCriterioVO implements Criterio {
 
     /**
      * Sets the id.
-     *
+     * 
      * @param value
      *            the new id
      */
