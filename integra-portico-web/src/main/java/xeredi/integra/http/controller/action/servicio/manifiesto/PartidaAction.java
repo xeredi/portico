@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.manifiesto.PartidaBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
@@ -39,19 +38,13 @@ public final class PartidaAction extends BaseAction {
      * @return the string
      */
     @Action("part-bloquear")
-    public String bloquear() {
+    public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         final PartidaBO partBO = new PartidaBO();
 
-        try {
-            partBO.bloquear(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        partBO.bloquear(item.getId());
 
         return SUCCESS;
     }
@@ -62,19 +55,13 @@ public final class PartidaAction extends BaseAction {
      * @return the string
      */
     @Action("part-iniciar")
-    public String iniciar() {
+    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         final PartidaBO partBO = new PartidaBO();
 
-        try {
-            partBO.iniciar(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        partBO.iniciar(item.getId());
 
         return SUCCESS;
     }
@@ -85,19 +72,13 @@ public final class PartidaAction extends BaseAction {
      * @return the string
      */
     @Action("part-anular")
-    public String anular() {
+    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         final PartidaBO partBO = new PartidaBO();
 
-        try {
-            partBO.anular(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        partBO.anular(item.getId());
 
         return SUCCESS;
     }

@@ -52,22 +52,16 @@ public final class SubservicioAction extends ItemAction {
      * @return the string
      */
     @Action("ssrv-detail")
-    public String detalle() {
+    public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         final SubservicioBO ssrvBO = new SubservicioBO();
 
-        accion = ACCION_EDICION.edit;
+        item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
-        try {
-            item = ssrvBO.select(item.getId(), getIdioma());
-            enti = TipoSubservicioProxy.select(item.getEntiId());
-
-            setFechaVigencia(item.getFref());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        setFechaVigencia(item.getFref());
 
         return SUCCESS;
     }
@@ -78,7 +72,7 @@ public final class SubservicioAction extends ItemAction {
      * @return the string
      */
     @Action("ssrv-create")
-    public String alta() {
+    public String alta() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
@@ -88,14 +82,10 @@ public final class SubservicioAction extends ItemAction {
         item.setFref(Calendar.getInstance().getTime());
 
         if (item.getSrvc() != null && item.getSrvc().getId() != null) {
-            try {
-                final ServicioBO srvcBO = new ServicioBO();
+            final ServicioBO srvcBO = new ServicioBO();
 
-                item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-                item.setFref(item.getSrvc().getFref());
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-            }
+            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
+            item.setFref(item.getSrvc().getFref());
         } else {
             item.setSrvc(null);
         }
@@ -112,23 +102,18 @@ public final class SubservicioAction extends ItemAction {
      * @return the string
      */
     @Action("ssrv-edit")
-    public String modificar() {
+    public String modificar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            accion = ACCION_EDICION.edit;
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
-            final SubservicioBO ssrvBO = new SubservicioBO();
+        item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
+        accion = ACCION_EDICION.edit;
 
-            item = ssrvBO.select(item.getId(), getIdioma());
-            enti = TipoSubservicioProxy.select(item.getEntiId());
-
-            setFechaVigencia(item.getFref());
-            loadLabelValuesMap(enti);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        setFechaVigencia(item.getFref());
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -139,20 +124,15 @@ public final class SubservicioAction extends ItemAction {
      * @return the string
      */
     @Action("ssrv-duplicate")
-    public String duplicar() {
+    public String duplicar() throws InstanceNotFoundException {
+        final SubservicioBO ssrvBO = new SubservicioBO();
+
+        item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
         accion = ACCION_EDICION.duplicate;
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-
-            item = ssrvBO.select(item.getId(), getIdioma());
-            enti = TipoSubservicioProxy.select(item.getEntiId());
-
-            setFechaVigencia(item.getFref());
-            loadLabelValuesMap(enti);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        setFechaVigencia(item.getFref());
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -163,7 +143,7 @@ public final class SubservicioAction extends ItemAction {
      * @return the string
      */
     @Action("ssrv-save")
-    public String guardar() {
+    public String guardar() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
@@ -191,37 +171,23 @@ public final class SubservicioAction extends ItemAction {
 
         FieldValidator.validateItem(this, enti, item);
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final SubservicioBO ssrvBO = new SubservicioBO();
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
-
-        switch (accion) {
-        case create:
-            try {
+            switch (accion) {
+            case create:
                 ssrvBO.insert(item, enti, null);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-            }
 
-            break;
-        case edit:
-            try {
+                break;
+            case edit:
                 ssrvBO.update(item);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+
+                break;
+            case duplicate:
+                throw new Error("No implementado");
+            default:
+                throw new Error("Accion no valida: " + accion);
             }
-
-            break;
-        case duplicate:
-            throw new Error("No implementado");
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
-
-        if (hasErrors()) {
-            return INPUT;
         }
 
         return SUCCESS;

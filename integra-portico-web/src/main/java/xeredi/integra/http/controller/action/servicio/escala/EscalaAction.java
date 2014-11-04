@@ -8,7 +8,6 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
@@ -48,25 +47,20 @@ public final class EscalaAction extends ItemAction {
      * @return the string
      */
     @Action(value = "esca-notificar-popup", results = { @Result(name = "success", location = "escala/esca-notificar.jsp") })
-    public String notificar() {
+    public String notificar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final ServicioBO srvcBO = new ServicioBO();
-            final EscalaBO escaBO = new EscalaBO();
+        final ServicioBO srvcBO = new ServicioBO();
+        final EscalaBO escaBO = new EscalaBO();
 
-            item = srvcBO.select(item.getId(), getIdioma());
+        item = srvcBO.select(item.getId(), getIdioma());
 
-            notificado = item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
-                    && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
+        notificado = item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
+                && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;
 
-            item.getItdtMap().get(TipoDato.CADENA_03.getId())
-            .setCadena(escaBO.obtenerNumeroManifiestoAeat(item.getId()));
-            item.getItdtMap().get(TipoDato.FECHA_02.getId()).setFecha(Calendar.getInstance().getTime());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        item.getItdtMap().get(TipoDato.CADENA_03.getId()).setCadena(escaBO.obtenerNumeroManifiestoAeat(item.getId()));
+        item.getItdtMap().get(TipoDato.FECHA_02.getId()).setFecha(Calendar.getInstance().getTime());
 
         return SUCCESS;
     }

@@ -56,20 +56,16 @@ public final class ServicioAction extends ItemAction {
      * @return the string
      */
     @Action("srvc-detail")
-    public String detalle() {
+    public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
 
-            item = srvcBO.select(item.getId(), getIdioma());
-            enti = TipoServicioProxy.select(item.getEntiId());
+        item = srvcBO.select(item.getId(), getIdioma());
+        enti = TipoServicioProxy.select(item.getEntiId());
 
-            setFechaVigencia(item.getFref());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        setFechaVigencia(item.getFref());
 
         return SUCCESS;
     }
@@ -104,24 +100,19 @@ public final class ServicioAction extends ItemAction {
      * @return the string
      */
     @Action(value = "srvc-edit")
-    public String modificar() {
+    public String modificar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
+        final ServicioBO srvcBO = new ServicioBO();
+
+        item = srvcBO.select(item.getId(), getIdioma());
+        enti = TipoServicioProxy.select(item.getEntiId());
         accion = ACCION_EDICION.edit;
 
-        try {
-            final ServicioBO srvcBO = new ServicioBO();
-
-            item = srvcBO.select(item.getId(), getIdioma());
-            enti = TipoServicioProxy.select(item.getEntiId());
-
-            setFechaVigencia(item.getFref());
-            loadLabelValuesMap(enti);
-            loadSubpList();
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        setFechaVigencia(item.getFref());
+        loadLabelValuesMap(enti);
+        loadSubpList();
 
         return SUCCESS;
     }
@@ -132,24 +123,19 @@ public final class ServicioAction extends ItemAction {
      * @return the string
      */
     @Action("srvc-duplicate")
-    public String duplicar() {
+    public String duplicar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
+        final ServicioBO srvcBO = new ServicioBO();
+
+        item = srvcBO.select(item.getId(), getIdioma());
+        enti = TipoServicioProxy.select(item.getEntiId());
         accion = ACCION_EDICION.duplicate;
 
-        try {
-            final ServicioBO srvcBO = new ServicioBO();
-
-            item = srvcBO.select(item.getId(), getIdioma());
-            enti = TipoServicioProxy.select(item.getEntiId());
-
-            setFechaVigencia(item.getFref());
-            loadLabelValuesMap(enti);
-            loadSubpList();
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        setFechaVigencia(item.getFref());
+        loadLabelValuesMap(enti);
+        loadSubpList();
 
         return SUCCESS;
     }
@@ -160,7 +146,7 @@ public final class ServicioAction extends ItemAction {
      * @return the string
      */
     @Action("srvc-save")
-    public String guardar() {
+    public String guardar() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
@@ -188,32 +174,26 @@ public final class ServicioAction extends ItemAction {
 
         FieldValidator.validateItem(this, enti, item);
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            // FIXME ACABAR
+            final ServicioBO srvcBO = new ServicioBO();
 
-        // FIXME ACABAR
-        final ServicioBO srvcBO = new ServicioBO();
-
-        switch (accion) {
-        case create:
-            try {
+            switch (accion) {
+            case create:
                 srvcBO.insert(item, enti, null);
-            } catch (final DuplicateInstanceException ex) {
-                throw new Error(ex);
+
+                break;
+            case edit:
+                srvcBO.update(item);
+
+                break;
+            case duplicate:
+                srvcBO.duplicate(item);
+
+                break;
+            default:
+                throw new Error("Accion no soportada: " + accion);
             }
-
-            break;
-        case edit:
-            srvcBO.update(item);
-
-            break;
-        case duplicate:
-            srvcBO.duplicate(item);
-
-            break;
-        default:
-            throw new Error("Accion no soportada: " + accion);
         }
 
         return SUCCESS;
@@ -225,17 +205,13 @@ public final class ServicioAction extends ItemAction {
      * @return the string
      */
     @Action("srvc-remove")
-    public String borrar() {
+    public String borrar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
 
-            srvcBO.delete(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        srvcBO.delete(item.getId());
 
         return SUCCESS;
     }

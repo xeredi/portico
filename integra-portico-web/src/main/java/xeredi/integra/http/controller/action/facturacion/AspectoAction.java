@@ -70,7 +70,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getId());
 
@@ -78,22 +78,18 @@ public final class AspectoAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        try {
-            final AspectoBO aspcBO = new AspectoBO();
+        final AspectoBO aspcBO = new AspectoBO();
 
-            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
+        aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
 
-            final AspectoCargoBO ascrBO = new AspectoCargoBO();
-            final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
+        final AspectoCargoBO ascrBO = new AspectoCargoBO();
+        final AspectoCargoCriterioVO ascrCriterioVO = new AspectoCargoCriterioVO();
 
-            ascrCriterioVO.setAspcId(aspc.getId());
-            ascrCriterioVO.setFechaVigencia(getFechaVigencia());
+        ascrCriterioVO.setAspcId(aspc.getId());
+        ascrCriterioVO.setFechaVigencia(getFechaVigencia());
 
-            ascrList = ascrBO.selectList(ascrCriterioVO);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        ascrList = ascrBO.selectList(ascrCriterioVO);
 
         return SUCCESS;
     }
@@ -128,7 +124,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getId());
 
@@ -136,16 +132,11 @@ public final class AspectoAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final AspectoBO aspcBO = new AspectoBO();
+
+        aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final AspectoBO aspcBO = new AspectoBO();
-
-            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -156,7 +147,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-duplicate")
-    public String duplicate() {
+    public String duplicate() throws InstanceNotFoundException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getId());
 
@@ -164,16 +155,11 @@ public final class AspectoAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final AspectoBO aspcBO = new AspectoBO();
+
+        aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
         accion = ACCION_EDICION.duplicate;
-
-        try {
-            final AspectoBO aspcBO = new AspectoBO();
-
-            aspc = aspcBO.select(aspc.getId(), getFechaVigencia(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.aspv, aspc.getAspv().getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -184,7 +170,7 @@ public final class AspectoAction extends BaseAction {
      * @return the string
      */
     @Action("aspc-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException, OverlapException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());
@@ -261,29 +247,15 @@ public final class AspectoAction extends BaseAction {
 
         switch (accion) {
         case create:
-            try {
-                aspcBO.insert(aspc, i18nMap);
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-            }
+            aspcBO.insert(aspc, i18nMap);
 
             break;
         case duplicate:
-            try {
-                aspcBO.duplicate(aspc, i18nMap);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-            }
+            aspcBO.duplicate(aspc, i18nMap);
 
             break;
         case edit:
-            try {
-                aspcBO.update(aspc, i18nMap);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-            }
+            aspcBO.update(aspc, i18nMap);
 
             break;
 

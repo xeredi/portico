@@ -5,7 +5,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -44,21 +43,17 @@ public final class BlTotalAction extends BaseAction {
      * @return the string
      */
     @Action("mabl-totales")
-    public String totales() {
+    public String totales() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getSrvc());
         Preconditions.checkNotNull(item.getSrvc().getId());
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-            final BlBO mablBO = new BlBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
+        final BlBO mablBO = new BlBO();
 
-            item = ssrvBO.select(item.getId(), getIdioma());
-            resumen = mablBO.selectResumen(item.getSrvc().getId(), item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        item = ssrvBO.select(item.getId(), getIdioma());
+        resumen = mablBO.selectResumen(item.getSrvc().getId(), item.getId());
 
         return SUCCESS;
     }

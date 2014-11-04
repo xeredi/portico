@@ -72,7 +72,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * @return the string
      */
     @Action("rgin-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getId());
 
@@ -86,11 +86,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
             rginCriterioVO.setRgivId(rgin.getRgiv().getId());
         }
 
-        try {
-            rgin = rginBO.select(rginCriterioVO);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        rgin = rginBO.select(rginCriterioVO);
 
         return SUCCESS;
     }
@@ -129,7 +125,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * @return the string
      */
     @Action("rgin-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgiv().getId());
 
@@ -140,11 +136,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
 
         rginCriterioVO.setRgivId(rgin.getRgiv().getId());
 
-        try {
-            rgin = rginBO.select(rginCriterioVO);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        rgin = rginBO.select(rginCriterioVO);
 
         return SUCCESS;
     }
@@ -155,7 +147,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * @return the string
      */
     @Action("rgin-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgiv());
@@ -172,34 +164,22 @@ public final class ReglaIncompatibleAction extends BaseAction {
 
         FieldValidator.validateRequired(this, MessageI18nKey.rgin_fini, rgin.getRgiv().getFini());
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
 
-        final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
-
-        switch (accion) {
-        case create:
-            try {
+            switch (accion) {
+            case create:
                 rginBO.insert(rgin);
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-            }
 
-            break;
-        case edit:
-            try {
+                break;
+            case edit:
                 rginBO.update(rgin);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
+
+                break;
+
+            default:
+                throw new Error("Accion no valida: " + accion);
             }
-
-            break;
-
-        default:
-            throw new Error("Accion no valida: " + accion);
         }
 
         return SUCCESS;
@@ -211,17 +191,13 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * @return the string
      */
     @Action("rgin-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgin);
         Preconditions.checkNotNull(rgin.getRgiv().getId());
 
         final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
 
-        try {
-            rginBO.delete(rgin);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        rginBO.delete(rgin);
 
         return SUCCESS;
     }

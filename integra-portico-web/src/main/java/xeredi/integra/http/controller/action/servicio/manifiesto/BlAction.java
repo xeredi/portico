@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -38,19 +37,13 @@ public final class BlAction extends BaseAction {
      * @return the string
      */
     @Action("mabl-bloquear")
-    public String bloquear() {
+    public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final BlBO mablBO = new BlBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
 
-        try {
-            mablBO.bloquear(item.getId());
+        mablBO.bloquear(item.getId());
 
-            item = ssrvBO.select(item.getId(), getIdioma());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        item = ssrvBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -61,16 +54,10 @@ public final class BlAction extends BaseAction {
      * @return the string
      */
     @Action("mabl-completar")
-    public String completar() {
+    public String completar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final BlBO mablBO = new BlBO();
 
-        try {
-            mablBO.completar(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        mablBO.completar(item.getId());
 
         return SUCCESS;
     }
@@ -81,16 +68,10 @@ public final class BlAction extends BaseAction {
      * @return the string
      */
     @Action("mabl-iniciar")
-    public String iniciar() {
+    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final BlBO mablBO = new BlBO();
 
-        try {
-            mablBO.iniciar(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        mablBO.iniciar(item.getId());
 
         return SUCCESS;
     }
@@ -101,16 +82,10 @@ public final class BlAction extends BaseAction {
      * @return the string
      */
     @Action("mabl-anular")
-    public String anular() {
+    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final BlBO mablBO = new BlBO();
 
-        try {
-            mablBO.anular(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        mablBO.anular(item.getId());
 
         return SUCCESS;
     }

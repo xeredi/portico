@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
@@ -37,16 +36,10 @@ public final class ManifiestoAction extends BaseAction {
      * @return the string
      */
     @Action("mani-bloquear")
-    public String bloquear() {
+    public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final ManifiestoBO maniBO = new ManifiestoBO();
 
-        try {
-            maniBO.bloquear(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        maniBO.bloquear(item.getId());
 
         return SUCCESS;
     }
@@ -57,16 +50,10 @@ public final class ManifiestoAction extends BaseAction {
      * @return the string
      */
     @Action("mani-completar")
-    public String completar() {
+    public String completar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final ManifiestoBO maniBO = new ManifiestoBO();
 
-        try {
-            maniBO.completar(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        maniBO.completar(item.getId());
 
         return SUCCESS;
     }
@@ -77,16 +64,10 @@ public final class ManifiestoAction extends BaseAction {
      * @return the string
      */
     @Action("mani-iniciar")
-    public String iniciar() {
+    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final ManifiestoBO maniBO = new ManifiestoBO();
 
-        try {
-            maniBO.iniciar(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        maniBO.iniciar(item.getId());
 
         return SUCCESS;
     }
@@ -97,16 +78,10 @@ public final class ManifiestoAction extends BaseAction {
      * @return the string
      */
     @Action("mani-anular")
-    public String anular() {
+    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
         final ManifiestoBO maniBO = new ManifiestoBO();
 
-        try {
-            maniBO.anular(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        maniBO.anular(item.getId());
 
         return SUCCESS;
     }

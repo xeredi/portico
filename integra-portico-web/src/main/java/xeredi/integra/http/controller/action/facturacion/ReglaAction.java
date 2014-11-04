@@ -67,7 +67,7 @@ public final class ReglaAction extends BaseAction {
      * @return the string
      */
     @Action("rgla-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getId());
 
@@ -75,20 +75,16 @@ public final class ReglaAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        try {
-            final ReglaBO rglaBO = new ReglaBO();
+        final ReglaBO rglaBO = new ReglaBO();
 
-            rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
+        rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
 
-            final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
-            final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
+        final ReglaIncompatibleBO rginBO = new ReglaIncompatibleBO();
+        final ReglaIncompatibleCriterioVO rginCriterioVO = new ReglaIncompatibleCriterioVO();
 
-            rginCriterioVO.setRgla1Id(rgla.getId());
+        rginCriterioVO.setRgla1Id(rgla.getId());
 
-            rginList.addAll(rginBO.selectList(rginCriterioVO));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        rginList.addAll(rginBO.selectList(rginCriterioVO));
 
         return SUCCESS;
     }
@@ -99,7 +95,7 @@ public final class ReglaAction extends BaseAction {
      * @return the string
      */
     @Action("rgla-create")
-    public String create() {
+    public String create() throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getCrgo());
         Preconditions.checkNotNull(rgla.getCrgo().getId());
@@ -110,21 +106,17 @@ public final class ReglaAction extends BaseAction {
 
         accion = ACCION_EDICION.create;
 
-        try {
-            final CargoBO crgoBO = new CargoBO();
-            final CargoVO crgo = crgoBO.select(rgla.getCrgo().getId(), getFechaVigencia(), getIdioma());
-            final ReglaVersionVO rglv = new ReglaVersionVO();
+        final CargoBO crgoBO = new CargoBO();
+        final CargoVO crgo = crgoBO.select(rgla.getCrgo().getId(), getFechaVigencia(), getIdioma());
+        final ReglaVersionVO rglv = new ReglaVersionVO();
 
-            rglv.setFini(Calendar.getInstance().getTime());
+        rglv.setFini(Calendar.getInstance().getTime());
 
-            rgla = new ReglaVO();
-            rgla.setRglv(rglv);
-            rgla.setCrgo(crgo);
+        rgla = new ReglaVO();
+        rgla.setRglv(rglv);
+        rgla.setCrgo(crgo);
 
-            loadEntiFacturables();
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        loadEntiFacturables();
 
         return SUCCESS;
     }
@@ -135,7 +127,7 @@ public final class ReglaAction extends BaseAction {
      * @return the string
      */
     @Action("rgla-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getId());
 
@@ -145,15 +137,11 @@ public final class ReglaAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        try {
-            final ReglaBO rglaBO = new ReglaBO();
+        final ReglaBO rglaBO = new ReglaBO();
 
-            rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
+        rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
 
-            loadEntiFacturables();
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        loadEntiFacturables();
 
         return SUCCESS;
     }
@@ -187,7 +175,7 @@ public final class ReglaAction extends BaseAction {
      * @return the string
      */
     @Action("rgla-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
@@ -289,31 +277,21 @@ public final class ReglaAction extends BaseAction {
             }
         }
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final ReglaBO rglaBO = new ReglaBO();
 
-        final ReglaBO rglaBO = new ReglaBO();
-
-        switch (accion) {
-        case create:
-            try {
+            switch (accion) {
+            case create:
                 rglaBO.insert(rgla);
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-            }
-            break;
-        case edit:
-            try {
+
+                break;
+            case edit:
                 rglaBO.update(rgla);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
+
+                break;
+            default:
+                throw new Error(accion + " no implementada");
             }
-            break;
-        default:
-            break;
         }
 
         return SUCCESS;
@@ -325,18 +303,14 @@ public final class ReglaAction extends BaseAction {
      * @return the string
      */
     @Action("rgla-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
         final ReglaBO rglaBO = new ReglaBO();
 
-        try {
-            rglaBO.delete(rgla);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        rglaBO.delete(rgla);
 
         return SUCCESS;
     }
