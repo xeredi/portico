@@ -47,22 +47,19 @@ public final class EntidadAccionAction extends BaseAction {
      * Edits the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("enac-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getEntiId());
         Preconditions.checkNotNull(enac.getPath());
 
+        final EntidadAccionBO enacBO = new EntidadAccionBO();
+
+        enac = enacBO.select(enac.getEntiId(), enac.getPath());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final EntidadAccionBO enacBO = new EntidadAccionBO();
-
-            enac = enacBO.select(enac.getEntiId(), enac.getPath());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -71,9 +68,13 @@ public final class EntidadAccionAction extends BaseAction {
      * Save.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("enac-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getEntiId());
@@ -87,20 +88,21 @@ public final class EntidadAccionAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.enac_etiqueta, enac.getEtiqueta());
         FieldValidator.validateRequired(this, MessageI18nKey.enac_orden, enac.getOrden());
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        final EntidadAccionBO enacBO = new EntidadAccionBO();
-
-        if (accion == ACCION_EDICION.create) {
-            try {
+            switch (accion) {
+            case create:
                 enacBO.insert(enac);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
+
+                break;
+            case edit:
+                enacBO.update(enac);
+
+                break;
+            default:
+                throw new Error("Accion " + accion + " no implementada");
             }
-        } else {
-            enacBO.update(enac);
         }
 
         return SUCCESS;
@@ -110,20 +112,18 @@ public final class EntidadAccionAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("enac-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getEntiId());
         Preconditions.checkNotNull(enac.getPath());
 
-        try {
-            final EntidadAccionBO enacBO = new EntidadAccionBO();
+        final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-            enacBO.delete(enac);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        enacBO.delete(enac);
 
         return SUCCESS;
     }
@@ -132,20 +132,18 @@ public final class EntidadAccionAction extends BaseAction {
      * Detail.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("enac-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getEntiId());
         Preconditions.checkNotNull(enac.getPath());
 
-        try {
-            final EntidadAccionBO enacBO = new EntidadAccionBO();
+        final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-            enac = enacBO.select(enac.getEntiId(), enac.getPath());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        enac = enacBO.select(enac.getEntiId(), enac.getPath());
 
         return SUCCESS;
     }

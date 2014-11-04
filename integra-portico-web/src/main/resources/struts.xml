@@ -3,22 +3,21 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-    <constant name="struts.devMode" value="false" />
-    <constant name="struts.i18n.reload" value="false" />
-    <constant name="struts.configuration.xml.reload" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.i18n.reload" value="false" />
+	<constant name="struts.configuration.xml.reload" value="false" />
 
-    <package name="portico" extends="json-default">
-        <interceptors>
-            <interceptor-stack name="porticoStack">
-                <interceptor-ref name="timer" />
-                <interceptor-ref name="basicStack" />
-                <interceptor-ref name="exception">
-                    <param name="logEnabled">true</param>
-                    <param name="logLevel">error</param>
-                </interceptor-ref>
-            </interceptor-stack>
-        </interceptors>
+	<package name="default" extends="json-default">
+		<interceptors>
+			<interceptor name="app"
+				class="xeredi.integra.http.util.interceptor.AppInterceptor" />
+			<interceptor-stack name="porticoStack">
+				<interceptor-ref name="timer" />
+				<interceptor-ref name="app" />
+				<interceptor-ref name="basicStack" />
+			</interceptor-stack>
+		</interceptors>
 
-        <default-interceptor-ref name="porticoStack" />
-    </package>
+		<default-interceptor-ref name="porticoStack" />
+	</package>
 </struts>

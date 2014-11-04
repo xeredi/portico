@@ -59,22 +59,22 @@ GRANT EXECUTE ON FUNCTION portico.getSysDatetime() TO portico\
 COMMENT ON FUNCTION portico.getSysDatetime() IS 'Obtencion de la Fecha-Hora del Sistema'\
 
 
-CREATE FUNCTION portico.concat(vc1 varchar, vc2 varchar) RETURNS varchar IMMUTABLE AS $$
+CREATE FUNCTION portico.concatenate(vc1 anyelement, vc2 anyelement) RETURNS varchar IMMUTABLE AS $$
 BEGIN
      RETURN vc1 || vc2;
 END;
 $$ LANGUAGE plpgsql
 \
 
-GRANT EXECUTE ON FUNCTION portico.concat(varchar, varchar) TO portico\
+GRANT EXECUTE ON FUNCTION portico.concatenate(anyelement, anyelement) TO portico\
 
-COMMENT ON FUNCTION portico.concat(varchar, varchar) IS 'Concatenacion de Elementos'\
+COMMENT ON FUNCTION portico.concatenate(anyelement, anyelement) IS 'Concatenacion de Elementos'\
 
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP FUNCTION portico.concat(varchar, varchar)\
+DROP FUNCTION portico.concatenate(anyelement, anyelement)\
 DROP FUNCTION portico.getSysDatetime()\
 DROP FUNCTION portico.getTipoDato(varchar)\
 DROP FUNCTION portico.getEntidad(varchar)\

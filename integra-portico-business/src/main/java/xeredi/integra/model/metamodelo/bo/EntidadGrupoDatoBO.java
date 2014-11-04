@@ -49,6 +49,8 @@ public class EntidadGrupoDatoBO {
             engdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
+
+            // FIXME Deberia controlar duplicados
             engdDAO.insert(engdVO);
 
             I18nBO.insertMap(session, I18nPrefix.engd, engdVO.getId(), i18nMap);

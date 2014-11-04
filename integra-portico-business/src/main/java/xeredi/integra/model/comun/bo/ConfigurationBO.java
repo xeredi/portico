@@ -6,8 +6,10 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.dao.ConfigurationDAO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
@@ -36,11 +38,17 @@ public final class ConfigurationBO {
      *            the key
      * @return the configuration vo
      */
-    public final ConfigurationVO select(final ConfigurationKey key) {
+    public final ConfigurationVO select(final ConfigurationKey key) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 
-            return confDAO.select(key);
+            final ConfigurationVO conf = confDAO.select(key);
+
+            if (conf == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.conf, key);
+            }
+
+            return conf;
         }
     }
 
@@ -51,11 +59,15 @@ public final class ConfigurationBO {
      *            the vo
      * @return the int
      */
-    public final int update(final ConfigurationVO vo) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+    public final int update(final ConfigurationVO vo) throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ConfigurationDAO confDAO = session.getMapper(ConfigurationDAO.class);
 
             final int updated = confDAO.update(vo);
+
+            if (updated == 0) {
+                throw new InstanceNotFoundException(MessageI18nKey.conf, vo.getKey());
+            }
 
             session.commit();
 

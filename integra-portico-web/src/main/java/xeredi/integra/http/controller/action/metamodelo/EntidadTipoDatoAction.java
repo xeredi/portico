@@ -40,15 +40,6 @@ public final class EntidadTipoDatoAction extends BaseAction {
     /** The tpdt list. */
     private final List<LabelValueVO> tpdtList = new ArrayList<>();
 
-    /**
-     * Instantiates a new entidad tipo dato action.
-     */
-    public EntidadTipoDatoAction() {
-        super();
-
-        entd = new EntidadTipoDatoVO();
-    }
-
     // Acciones Web
     /**
      * Alta.
@@ -73,7 +64,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("entd-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
         Preconditions.checkNotNull(entd.getTpdt());
@@ -81,15 +72,11 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         accion = ACCION_EDICION.edit;
 
-        try {
-            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-            entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
+        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
 
-            loadLabelValues();
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -100,7 +87,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("entd-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
@@ -127,19 +114,11 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                try {
-                    entdBO.insert(entd);
-                } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-                }
+                entdBO.insert(entd);
 
                 break;
             case edit:
-                try {
-                    entdBO.update(entd);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+                entdBO.update(entd);
 
                 break;
             default:
@@ -156,19 +135,15 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("entd-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
         Preconditions.checkNotNull(entd.getTpdt());
         Preconditions.checkNotNull(entd.getTpdt().getId());
 
-        try {
-            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-            entdBO.delete(entd);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        entdBO.delete(entd);
 
         return SUCCESS;
     }
@@ -179,7 +154,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("entd-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(entd);
         Preconditions.checkNotNull(entd.getEntiId());
         Preconditions.checkNotNull(entd.getTpdt());
@@ -187,11 +162,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
-        try {
-            entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
 
         return SUCCESS;
     }

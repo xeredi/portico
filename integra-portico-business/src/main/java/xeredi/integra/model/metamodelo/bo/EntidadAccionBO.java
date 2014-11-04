@@ -58,8 +58,10 @@ public final class EntidadAccionBO {
      *
      * @param enacVO
      *            the enac vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public final void update(final EntidadAccionVO enacVO) {
+    public final void update(final EntidadAccionVO enacVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enacVO);
         Preconditions.checkNotNull(enacVO.getEntiId());
         Preconditions.checkNotNull(enacVO.getPath());
@@ -70,7 +72,7 @@ public final class EntidadAccionBO {
             final int updated = enacDAO.update(enacVO);
 
             if (updated == 0) {
-                throw new Error("Accion de entidad no encontrada: " + enacVO);
+                throw new InstanceNotFoundException(MessageI18nKey.enac, enacVO);
             }
 
             session.commit();

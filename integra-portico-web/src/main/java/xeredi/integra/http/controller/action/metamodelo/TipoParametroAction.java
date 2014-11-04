@@ -51,15 +51,6 @@ public final class TipoParametroAction extends BaseAction {
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
-    /**
-     * Instantiates a new tipo parametro action.
-     */
-    public TipoParametroAction() {
-        super();
-
-        enti = new TipoParametroVO();
-    }
-
     // Acciones Web
     /**
      * Alta.
@@ -81,38 +72,33 @@ public final class TipoParametroAction extends BaseAction {
      * @return the string
      */
     @Action("tppr-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
+        final TipoParametroBO tpprBO = new TipoParametroBO();
+        final EntidadBO entiBO = new EntidadBO();
+
+        enti = tpprBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
         accion = ACCION_EDICION.edit;
 
-        try {
-            final TipoParametroBO tpprBO = new TipoParametroBO();
-            final EntidadBO entiBO = new EntidadBO();
+        EntidadCriterioVO entiCriterioVO = null;
 
-            enti = tpprBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
+            entiCriterioVO = new EntidadCriterioVO();
+            entiCriterioVO.setEntiHijaId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
 
-            EntidadCriterioVO entiCriterioVO = null;
+            entiPadresList = entiBO.selectList(entiCriterioVO);
+        }
 
-            if (enti.getEntiPadresList() != null && !enti.getEntiPadresList().isEmpty()) {
-                entiCriterioVO = new EntidadCriterioVO();
-                entiCriterioVO.setEntiHijaId(enti.getId());
-                entiCriterioVO.setIdioma(getIdioma());
+        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
+            entiCriterioVO = new EntidadCriterioVO();
+            entiCriterioVO.setEntiPadreId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
 
-                entiPadresList = entiBO.selectList(entiCriterioVO);
-            }
-
-            if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-                entiCriterioVO = new EntidadCriterioVO();
-                entiCriterioVO.setEntiPadreId(enti.getId());
-                entiCriterioVO.setIdioma(getIdioma());
-
-                entiHijasList = entiBO.selectList(entiCriterioVO);
-            }
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+            entiHijasList = entiBO.selectList(entiCriterioVO);
         }
 
         return SUCCESS;
@@ -124,7 +110,7 @@ public final class TipoParametroAction extends BaseAction {
      * @return the string
      */
     @Action("tppr-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
 
         if (enti == null) {
@@ -153,20 +139,11 @@ public final class TipoParametroAction extends BaseAction {
             switch (accion) {
             case create:
                 enti.setCodigo(enti.getCodigo().toUpperCase());
-
-                try {
-                    tpprBO.insert(enti, i18nMap);
-                } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-                }
+                tpprBO.insert(enti, i18nMap);
 
                 break;
             case edit:
-                try {
-                    tpprBO.update(enti, i18nMap);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+                tpprBO.update(enti, i18nMap);
 
                 break;
             default:
@@ -183,17 +160,13 @@ public final class TipoParametroAction extends BaseAction {
      * @return the string
      */
     @Action("tppr-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
         final TipoParametroBO tpprBO = new TipoParametroBO();
 
-        try {
-            tpprBO.delete(enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpprBO.delete(enti.getId());
 
         return SUCCESS;
     }
@@ -204,26 +177,22 @@ public final class TipoParametroAction extends BaseAction {
      * @return the string
      */
     @Action("tppr-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        try {
-            final TipoParametroBO tpprBO = new TipoParametroBO();
-            final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+        final TipoParametroBO tpprBO = new TipoParametroBO();
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-            enti = tpprBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        enti = tpprBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
-            final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
+        final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
-            entiCriterioVO.setTpprId(enti.getId());
-            entiCriterioVO.setIdioma(getIdioma());
+        entiCriterioVO.setTpprId(enti.getId());
+        entiCriterioVO.setIdioma(getIdioma());
 
-            subentiList = tpspBO.selectList(entiCriterioVO);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        subentiList = tpspBO.selectList(entiCriterioVO);
 
         return SUCCESS;
     }

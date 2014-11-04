@@ -47,8 +47,8 @@ public final class CodigoReferenciaAction extends BaseAction {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
 
-        accion = ACCION_EDICION.create;
         i18nMap = new HashMap<>();
+        accion = ACCION_EDICION.create;
 
         return SUCCESS;
     }
@@ -57,22 +57,19 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("cdrf-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getId());
 
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+
+        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
-
-            cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -81,9 +78,13 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("cdrf-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getTpdtId());
@@ -103,18 +104,17 @@ public final class CodigoReferenciaAction extends BaseAction {
         if (!hasErrors()) {
             final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-            if (accion == ACCION_EDICION.create) {
-                try {
-                    cdrfBO.insert(cdrf, i18nMap);
-                } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-                }
-            } else {
-                try {
-                    cdrfBO.update(cdrf, i18nMap);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+            switch (accion) {
+            case create:
+                cdrfBO.insert(cdrf, i18nMap);
+
+                break;
+            case edit:
+                cdrfBO.update(cdrf, i18nMap);
+
+                break;
+            default:
+                throw new Error("Accion " + accion + " no implementada");
             }
         }
 
@@ -125,19 +125,17 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Eliminar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("cdrf-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getId());
 
-        try {
-            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-            cdrfBO.delete(cdrf);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        cdrfBO.delete(cdrf);
 
         return SUCCESS;
     }
@@ -146,22 +144,18 @@ public final class CodigoReferenciaAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("cdrf-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrf);
         Preconditions.checkNotNull(cdrf.getId());
 
-        accion = ACCION_EDICION.edit;
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-        try {
-            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
-
-            cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        cdrf = cdrfBO.select(cdrf.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.cdrf, cdrf.getId());
 
         return SUCCESS;
     }

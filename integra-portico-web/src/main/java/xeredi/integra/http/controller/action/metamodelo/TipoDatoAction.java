@@ -43,15 +43,6 @@ public final class TipoDatoAction extends BaseAction {
     /** The cdrf list. */
     private List<CodigoReferenciaVO> cdrfList;
 
-    /**
-     * Instantiates a new tipo dato action.
-     */
-    public TipoDatoAction() {
-        super();
-
-        tpdt = new TipoDatoVO();
-    }
-
     // Acciones Web
     /**
      * Alta.
@@ -71,20 +62,15 @@ public final class TipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
+
+        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final TipoDatoBO tpdtBO = new TipoDatoBO();
-
-            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -95,7 +81,7 @@ public final class TipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
 
         if (tpdt == null) {
@@ -122,19 +108,11 @@ public final class TipoDatoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                try {
-                    tpdtBO.insert(tpdt, i18nMap);
-                } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-                }
+                tpdtBO.insert(tpdt, i18nMap);
 
                 break;
             case edit:
-                try {
-                    tpdtBO.update(tpdt, i18nMap);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+                tpdtBO.update(tpdt, i18nMap);
 
                 break;
             default:
@@ -151,17 +129,13 @@ public final class TipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
-        try {
-            final TipoDatoBO tpdtBO = new TipoDatoBO();
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-            tpdtBO.delete(tpdt);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpdtBO.delete(tpdt);
 
         return SUCCESS;
     }
@@ -172,20 +146,16 @@ public final class TipoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("tpdt-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
-        try {
-            final TipoDatoBO tpdtBO = new TipoDatoBO();
-            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
-            cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
+        cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
 
         return SUCCESS;
     }
