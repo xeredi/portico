@@ -181,7 +181,8 @@ public class ProcesoBO {
             }
 
             if (prbtActualVO.getEstado() != ProcesoEstado.E) {
-                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, prbtVO.getId());
+                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_finalizar,
+                        prbtVO.getId());
             }
 
             prbtDAO.updateFinalizar(prbtVO.getId());
@@ -237,7 +238,7 @@ public class ProcesoBO {
             }
 
             if (prbtVO.getEstado() == ProcesoEstado.E) {
-                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, prbtVO);
+                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_cancelar, prbtVO);
             }
 
             prarDAO.delete(prbtId);

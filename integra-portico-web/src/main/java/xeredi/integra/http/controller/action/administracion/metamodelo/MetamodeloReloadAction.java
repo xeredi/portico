@@ -31,11 +31,7 @@ public final class MetamodeloReloadAction extends BaseAction {
      */
     @Action("reload")
     public String reload() {
-        try {
-            MetamodeloProxy.reload();
-        } catch (final Throwable ex) {
-            addActionError(ex.getMessage());
-        }
+        MetamodeloProxy.reload();
 
         return SUCCESS;
     }

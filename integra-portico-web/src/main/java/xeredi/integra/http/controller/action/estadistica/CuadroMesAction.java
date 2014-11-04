@@ -8,7 +8,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.CuadroMesBO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
@@ -46,19 +45,15 @@ public final class CuadroMesAction extends BaseAction {
      * @return the string
      */
     @Action("cdms-detail")
-    public String detalle() {
+    public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(pepr);
         Preconditions.checkNotNull(pepr.getId());
 
-        try {
-            final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-            final CuadroMesBO cdmsBO = new CuadroMesBO();
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+        final CuadroMesBO cdmsBO = new CuadroMesBO();
 
-            pepr = peprBO.select(pepr.getId());
-            cdmsMap = cdmsBO.selectMap(pepr.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        pepr = peprBO.select(pepr.getId());
+        cdmsMap = cdmsBO.selectMap(pepr.getId());
 
         return SUCCESS;
     }

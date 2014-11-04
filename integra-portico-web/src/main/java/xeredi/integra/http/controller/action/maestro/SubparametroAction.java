@@ -33,13 +33,6 @@ public final class SubparametroAction extends ItemAction {
     private SubparametroVO item;
 
     /**
-     * Instantiates a new subparametro action.
-     */
-    public SubparametroAction() {
-        super();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -79,7 +72,7 @@ public final class SubparametroAction extends ItemAction {
      * @return the string
      */
     @Action("sprm-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -87,18 +80,13 @@ public final class SubparametroAction extends ItemAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final SubparametroBO sprmBO = new SubparametroBO();
+
+        item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
         accion = ACCION_EDICION.edit;
 
-        try {
-            final SubparametroBO sprmBO = new SubparametroBO();
-
-            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
-            enti = TipoSubparametroProxy.select(item.getEntiId());
-
-            loadLabelValuesMap(enti);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -109,7 +97,7 @@ public final class SubparametroAction extends ItemAction {
      * @return the string
      */
     @Action("sprm-duplicate")
-    public String duplicate() {
+    public String duplicate() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -117,18 +105,13 @@ public final class SubparametroAction extends ItemAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final SubparametroBO sprmBO = new SubparametroBO();
+
+        item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
         accion = ACCION_EDICION.duplicate;
 
-        try {
-            final SubparametroBO sprmBO = new SubparametroBO();
-
-            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
-            enti = TipoSubparametroProxy.select(item.getEntiId());
-
-            loadLabelValuesMap(enti);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -139,7 +122,7 @@ public final class SubparametroAction extends ItemAction {
      * @return the string
      */
     @Action("sprm-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
 
@@ -170,11 +153,7 @@ public final class SubparametroAction extends ItemAction {
 
         // Fin de validacion de datos
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
-
-        try {
+        if (!hasErrors()) {
             switch (accion) {
             case create:
                 sprmBO.insert(item, enti);
@@ -188,14 +167,9 @@ public final class SubparametroAction extends ItemAction {
                 sprmBO.duplicate(item, enti);
 
                 break;
-
             default:
                 throw new Error("Accion no valida: " + accion);
             }
-        } catch (final OverlapException ex) {
-            addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
         }
 
         return SUCCESS;
@@ -207,18 +181,14 @@ public final class SubparametroAction extends ItemAction {
      * @return the string
      */
     @Action("sprm-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getSpvr());
         Preconditions.checkNotNull(item.getSpvr().getId());
 
-        try {
-            final SubparametroBO sprmBO = new SubparametroBO();
+        final SubparametroBO sprmBO = new SubparametroBO();
 
-            sprmBO.delete(item);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        sprmBO.delete(item);
 
         return SUCCESS;
     }
@@ -229,7 +199,7 @@ public final class SubparametroAction extends ItemAction {
      * @return the string
      */
     @Action("sprm-detail")
-    public String detalle() {
+    public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -237,14 +207,10 @@ public final class SubparametroAction extends ItemAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        try {
-            final SubparametroBO sprmBO = new SubparametroBO();
+        final SubparametroBO sprmBO = new SubparametroBO();
 
-            item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
-            enti = TipoSubparametroProxy.select(item.getEntiId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        item = sprmBO.selectObject(item.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoSubparametroProxy.select(item.getEntiId());
 
         return SUCCESS;
     }

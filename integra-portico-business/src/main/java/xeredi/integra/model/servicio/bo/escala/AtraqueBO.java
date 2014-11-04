@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.escala.AtraqueDAO;
@@ -77,7 +78,8 @@ public final class AtraqueBO {
             }
 
             if (atraDAO.updateAutorizar(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizar,
+                        ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -148,7 +150,8 @@ public final class AtraqueBO {
             }
 
             if (atraDAO.updateDenegar(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_denegar,
+                        ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -219,7 +222,8 @@ public final class AtraqueBO {
             }
 
             if (atraDAO.updateAnular(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_anular,
+                        ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -290,7 +294,8 @@ public final class AtraqueBO {
             }
 
             if (atraDAO.updateIniciar(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_iniciar,
+                        ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {
@@ -363,7 +368,8 @@ public final class AtraqueBO {
             }
 
             if (atraDAO.updateFinalizar(ssrvVO.getId()) == 0) {
-                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), ssrvVO.getId());
+                throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_finalizar,
+                        ssrvVO.getId());
             }
 
             for (final Long tpdtId : itdtMap.keySet()) {

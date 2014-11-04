@@ -92,17 +92,13 @@ public final class PeriodoProcesoAction extends BaseAction {
      * @return the string
      */
     @Action("pepr-detail")
-    public String detalle() {
+    public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(pepr);
         Preconditions.checkNotNull(pepr.getId());
 
-        try {
-            final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
-            pepr = peprBO.select(pepr.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        pepr = peprBO.select(pepr.getId());
 
         return SUCCESS;
     }

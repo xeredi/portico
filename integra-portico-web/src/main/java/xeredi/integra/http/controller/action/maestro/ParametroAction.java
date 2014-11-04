@@ -41,13 +41,6 @@ public final class ParametroAction extends ItemAction {
     private Map<String, I18nVO> i18nMap;
 
     /**
-     * Instantiates a new parametro action.
-     */
-    public ParametroAction() {
-        super();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -84,7 +77,7 @@ public final class ParametroAction extends ItemAction {
      * @return the string
      */
     @Action("prmt-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -92,22 +85,17 @@ public final class ParametroAction extends ItemAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final ParametroBO prmtBO = new ParametroBO();
+
+        item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoParametroProxy.select(item.getEntiId());
         accion = ACCION_EDICION.edit;
 
-        try {
-            final ParametroBO prmtBO = new ParametroBO();
-
-            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
-            enti = TipoParametroProxy.select(item.getEntiId());
-
-            if (enti.getI18n()) {
-                i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
-            }
-
-            loadLabelValuesMap(enti);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (enti.getI18n()) {
+            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
         }
+
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -118,7 +106,7 @@ public final class ParametroAction extends ItemAction {
      * @return the string
      */
     @Action("prmt-duplicate")
-    public String duplicate() {
+    public String duplicate() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -126,22 +114,17 @@ public final class ParametroAction extends ItemAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final ParametroBO prmtBO = new ParametroBO();
+
+        item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoParametroProxy.select(item.getEntiId());
         accion = ACCION_EDICION.duplicate;
 
-        try {
-            final ParametroBO prmtBO = new ParametroBO();
-
-            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
-            enti = TipoParametroProxy.select(item.getEntiId());
-
-            if (enti.getI18n()) {
-                i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
-            }
-
-            loadLabelValuesMap(enti);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (enti.getI18n()) {
+            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
         }
+
+        loadLabelValuesMap(enti);
 
         return SUCCESS;
     }
@@ -152,7 +135,7 @@ public final class ParametroAction extends ItemAction {
      * @return the string
      */
     @Action("prmt-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
 
@@ -186,11 +169,7 @@ public final class ParametroAction extends ItemAction {
 
         // Fin de validacion de datos
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
-
-        try {
+        if (!hasErrors()) {
             switch (accion) {
             case create:
                 prmtBO.insert(item, enti, i18nMap);
@@ -204,18 +183,9 @@ public final class ParametroAction extends ItemAction {
                 prmtBO.duplicate(item, enti, i18nMap);
 
                 break;
-
             default:
                 throw new Error("Accion no valida: " + accion);
             }
-        } catch (final OverlapException ex) {
-            addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
-
-        if (hasErrors()) {
-            return SUCCESS;
         }
 
         return SUCCESS;
@@ -227,18 +197,14 @@ public final class ParametroAction extends ItemAction {
      * @return the string
      */
     @Action("prmt-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getPrvr());
         Preconditions.checkNotNull(item.getPrvr().getId());
 
         final ParametroBO prmtBO = new ParametroBO();
 
-        try {
-            prmtBO.delete(item);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        prmtBO.delete(item);
 
         return SUCCESS;
     }
@@ -249,7 +215,7 @@ public final class ParametroAction extends ItemAction {
      * @return the string
      */
     @Action("prmt-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -257,17 +223,13 @@ public final class ParametroAction extends ItemAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        try {
-            final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = new ParametroBO();
 
-            item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
-            enti = TipoParametroProxy.select(item.getEntiId());
+        item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
+        enti = TipoParametroProxy.select(item.getEntiId());
 
-            if (enti.getI18n()) {
-                i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
-            }
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (enti.getI18n()) {
+            i18nMap = I18nBO.selectMap(I18nPrefix.prvr, item.getPrvr().getId());
         }
 
         return SUCCESS;

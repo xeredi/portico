@@ -13,47 +13,63 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
  */
 public final class OperacionNoPermitidaException extends ModelException {
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 1079106391938492752L;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 1079106391938492752L;
 
-	/**
-	 * Instantiates a new operacion no permitida exception.
-	 *
-	 * @param aclassName
-	 *            the aclass name
-	 * @param aobjId
-	 *            the aobj id
-	 */
-	public OperacionNoPermitidaException(final MessageI18nKey aclassName,
-			final Object aobjId) {
-		super("El estado del objeto no permite la ejecucion de esta operacion",
-				aclassName, aobjId);
-	}
+    /** The operacion. */
+    private final MessageI18nKey operacion;
 
-	/**
-	 * Instantiates a new operacion no permitida exception.
-	 *
-	 * @param aclassId
-	 *            the aclass id
-	 * @param aobjId
-	 *            the aobj id
-	 */
-	public OperacionNoPermitidaException(final Long aclassId,
-			final Object aobjId) {
-		super("El estado del objeto no permite la ejecucion de esta operacion",
-				aclassId, aobjId);
-	}
+    /**
+     * Instantiates a new operacion no permitida exception.
+     *
+     * @param aclassName
+     *            the aclass name
+     * @param operacion
+     *            the operacion
+     * @param aobjId
+     *            the aobj id
+     */
+    public OperacionNoPermitidaException(final MessageI18nKey aclassName, final MessageI18nKey operacion,
+            final Object aobjId) {
+        super("No se puede realizar la operacion " + operacion.name(), aclassName, aobjId);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getMessage(Locale locale) {
-		final ResourceBundle bundle = PorticoResourceBundle.getBundle(locale);
+        this.operacion = operacion;
+    }
 
-		return MessageFormat.format(
-				bundle.getString(MessageI18nKey.E00013.name()), new Object[] {
-						bundle.getString(getClassName()), getObjId() });
-	}
+    /**
+     * Instantiates a new operacion no permitida exception.
+     *
+     * @param aclassId
+     *            the aclass id
+     * @param operacion
+     *            the operacion
+     * @param aobjId
+     *            the aobj id
+     */
+    public OperacionNoPermitidaException(final Long aclassId, final MessageI18nKey operacion, final Object aobjId) {
+        super("No se puede realizar la operacion " + operacion.name(), aclassId, aobjId);
+
+        this.operacion = operacion;
+    }
+
+    /**
+     * Gets the operacion.
+     *
+     * @return the operacion
+     */
+    public MessageI18nKey getOperacion() {
+        return operacion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getMessage(final Locale locale) {
+        final ResourceBundle bundle = PorticoResourceBundle.getBundle(locale);
+
+        return MessageFormat.format(bundle.getString(MessageI18nKey.E00013.name()),
+                new Object[] { bundle.getString(operacion.name()), bundle.getString(getClassName()), getObjId() });
+    }
 
 }

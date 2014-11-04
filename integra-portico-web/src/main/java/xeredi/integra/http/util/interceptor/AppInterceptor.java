@@ -1,5 +1,8 @@
 package xeredi.integra.http.util.interceptor;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -16,6 +19,8 @@ public final class AppInterceptor extends AbstractInterceptor {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2275010347766981914L;
 
+    private static Log LOG = LogFactory.getLog(AppInterceptor.class);
+
     /**
      * {@inheritDoc}
      */
@@ -31,6 +36,8 @@ public final class AppInterceptor extends AbstractInterceptor {
             action.addActionError(ex.getMessage(action.getLocale()));
         } catch (final Throwable ex) {
             action.addActionError(MessageI18nKey.E00000, ex.getMessage());
+
+            LOG.error(ex, ex);
         }
 
         return result;

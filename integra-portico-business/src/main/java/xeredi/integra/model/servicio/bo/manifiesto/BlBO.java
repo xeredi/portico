@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
@@ -70,7 +71,8 @@ public class BlBO {
             final int updatedRows = maniSsrvDAO.updateCompletar(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvVO.getId());
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), MessageI18nKey.mabl_completar,
+                        ssrvVO.getId());
             }
 
             // Recalcular Estado del manifiesto
@@ -117,7 +119,7 @@ public class BlBO {
             final int updatedRows = maniSsrvDAO.updateBloquear(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvId);
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), MessageI18nKey.mabl_bloquear, ssrvId);
             }
 
             // Bloqueo de los equipamientos y partidas del BL
@@ -182,7 +184,7 @@ public class BlBO {
             final int updatedRows = maniSsrvDAO.updateIniciar(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvId);
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), MessageI18nKey.mabl_iniciar, ssrvId);
             }
 
             // Inicio de los equipamientos y partidas del BL
@@ -246,7 +248,7 @@ public class BlBO {
             final int updatedRows = maniSsrvDAO.updateAnular(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.BL.getId(), ssrvId);
+                throw new OperacionNoPermitidaException(Entidad.BL.getId(), MessageI18nKey.mabl_anular, ssrvId);
             }
 
             // Anular de los equipamientos y partidas del BL

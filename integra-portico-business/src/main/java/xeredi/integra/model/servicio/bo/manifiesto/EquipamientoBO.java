@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.BlDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
@@ -73,7 +74,8 @@ public class EquipamientoBO {
             final int updatedRows = maniSsrvDAO.updateBloquear(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.EQUIPAMIENTO.getId(), ssrvId);
+                throw new OperacionNoPermitidaException(Entidad.EQUIPAMIENTO.getId(), MessageI18nKey.equi_bloquear,
+                        ssrvId);
             }
 
             // Bloqueo de las partidas asociadas al equipamiento
@@ -131,7 +133,8 @@ public class EquipamientoBO {
             final int updatedRows = maniSsrvDAO.updateIniciar(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.EQUIPAMIENTO.getId(), ssrvId);
+                throw new OperacionNoPermitidaException(Entidad.EQUIPAMIENTO.getId(), MessageI18nKey.equi_iniciar,
+                        ssrvId);
             }
 
             // Inicio de las partidas asociadas al equipamiento
@@ -189,7 +192,8 @@ public class EquipamientoBO {
             final int updatedRows = maniSsrvDAO.updateAnular(ssrvCriterioVO);
 
             if (updatedRows == 0) {
-                throw new OperacionNoPermitidaException(Entidad.EQUIPAMIENTO.getId(), ssrvId);
+                throw new OperacionNoPermitidaException(Entidad.EQUIPAMIENTO.getId(), MessageI18nKey.equi_anular,
+                        ssrvId);
             }
 
             // Borrado de las partida-equipamiento asociadas
