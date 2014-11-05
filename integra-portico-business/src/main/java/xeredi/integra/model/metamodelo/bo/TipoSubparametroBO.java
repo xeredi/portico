@@ -30,13 +30,6 @@ import com.google.common.base.Preconditions;
  * The Class TipoSubparametroBO.
  */
 public class TipoSubparametroBO {
-
-    /** The tpsp dao. */
-    TipoSubparametroDAO tpspDAO;
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
     /**
      * Select label values.
      *
@@ -44,8 +37,7 @@ public class TipoSubparametroBO {
      */
     public final List<LabelValueVO> selectLabelValues() {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-
+            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoSubparametroVO tpsp : tpspDAO.selectList(new TipoSubparametroCriterioVO())) {
@@ -67,7 +59,7 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(tpspCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
             return tpspDAO.selectList(tpspCriterioVO);
         }
@@ -89,13 +81,12 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(tpspCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-
+            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             final int count = tpspDAO.count(tpspCriterioVO);
             final List<TipoSubparametroVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpspDAO.selectList(tpspCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpspDAO.selectPaginatedList(tpspCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
@@ -114,8 +105,7 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-
+            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
             final TipoSubparametroCriterioVO entiCriterioVO = new TipoSubparametroCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -148,8 +138,8 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(tpspVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (entiDAO.exists(tpspVO)) {
                 throw new DuplicateInstanceException(MessageI18nKey.tpsp, tpspVO);
@@ -180,8 +170,8 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(tpspVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (tpspDAO.update(tpspVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpsp, tpspVO);
@@ -206,8 +196,8 @@ public class TipoSubparametroBO {
         Preconditions.checkNotNull(tpspId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (tpspDAO.delete(tpspId) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpsp, tpspId);

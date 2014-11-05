@@ -1,7 +1,5 @@
 package xeredi.integra.model.estadistica.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -15,14 +13,6 @@ public final class EstadisticaCriterioVO extends ItemCriterioVO {
 
     /** The subp id. */
     private Long subpId;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the pepr id.

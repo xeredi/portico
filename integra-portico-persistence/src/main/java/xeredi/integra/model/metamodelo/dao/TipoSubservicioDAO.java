@@ -66,7 +66,7 @@ public interface TipoSubservicioDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoSubservicioVO> selectList(final TipoSubservicioCriterioVO tpssCriterioVO, final RowBounds bounds);
+    List<TipoSubservicioVO> selectPaginatedList(final TipoSubservicioCriterioVO tpssCriterioVO, final RowBounds bounds);
 
     /**
      * Select.

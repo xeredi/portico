@@ -7,7 +7,6 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.dao.EntidadAccionDAO;
-import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -19,13 +18,6 @@ import com.google.common.base.Preconditions;
  * The Class EntidadAccionBO.
  */
 public final class EntidadAccionBO {
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
-    /** The enac dao. */
-    EntidadAccionDAO enacDAO;
-
     /**
      * Insert.
      *
@@ -40,8 +32,7 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getPath());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entiDAO = session.getMapper(EntidadDAO.class);
-            enacDAO = session.getMapper(EntidadAccionDAO.class);
+            final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
 
             if (enacDAO.exists(enacVO)) {
                 throw new DuplicateInstanceException(MessageI18nKey.enac, enacVO);
@@ -67,8 +58,7 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getPath());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            enacDAO = session.getMapper(EntidadAccionDAO.class);
-
+            final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
             final int updated = enacDAO.update(enacVO);
 
             if (updated == 0) {
@@ -93,8 +83,7 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(enacVO.getPath());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            enacDAO = session.getMapper(EntidadAccionDAO.class);
-
+            final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
             final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
 
             enacCriterioVO.setEntiId(enacVO.getEntiId());
@@ -126,8 +115,7 @@ public final class EntidadAccionBO {
         Preconditions.checkNotNull(path);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            enacDAO = session.getMapper(EntidadAccionDAO.class);
-
+            final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
             final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
 
             enacCriterioVO.setEntiId(entiId);

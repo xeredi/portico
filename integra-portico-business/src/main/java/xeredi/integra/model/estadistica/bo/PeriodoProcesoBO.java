@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
@@ -40,12 +41,12 @@ import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.TipoDato;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -60,24 +61,6 @@ public class PeriodoProcesoBO {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(PeriodoProcesoBO.class);
 
-    /** The pepr dao. */
-    PeriodoProcesoDAO peprDAO;
-
-    /** The esdt dao. */
-    EstadisticaDatoDAO esdtDAO;
-
-    /** The estd dao. */
-    EstadisticaDAO estdDAO;
-
-    /** The cdms dao. */
-    CuadroMesDAO cdmsDAO;
-
-    /** The esex dao. */
-    EstadisticaExportDAO esexDAO;
-
-    /** The esag dao. */
-    EstadisticaAgregadoDAO esagDAO;
-
     /**
      * Exists.
      *
@@ -89,7 +72,7 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
 
             return peprDAO.exists(peprVO);
         }
@@ -108,8 +91,7 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-
+            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final PeriodoProcesoVO peprVO = peprDAO.select(peprId);
 
             if (peprVO == null) {
@@ -131,7 +113,7 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
 
             return peprDAO.selectList(peprCriterioVO);
         }
@@ -153,13 +135,12 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-
+            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
             final int count = peprDAO.selectCount(peprCriterioVO);
             final List<PeriodoProcesoVO> peprList = new ArrayList<>();
 
             if (count > offset) {
-                peprList.addAll(peprDAO.selectList(peprCriterioVO));
+                peprList.addAll(peprDAO.selectPaginatedList(peprCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(peprList, offset, limit, count);
@@ -176,10 +157,10 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-            cdmsDAO = session.getMapper(CuadroMesDAO.class);
-            estdDAO = session.getMapper(EstadisticaDAO.class);
-            esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+            final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
+            final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
+            final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
             cdmsDAO.delete(peprId);
             esdtDAO.delete(peprId);
@@ -201,10 +182,10 @@ public class PeriodoProcesoBO {
     private final void delete(final SqlSession session, final PeriodoProcesoVO peprVO) {
         final PeriodoProcesoCriterioVO peprCriterioVO = new PeriodoProcesoCriterioVO();
 
-        peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-        cdmsDAO = session.getMapper(CuadroMesDAO.class);
-        estdDAO = session.getMapper(EstadisticaDAO.class);
-        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+        final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+        final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
+        final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
+        final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
         peprCriterioVO.setAnio(peprVO.getAnio());
         peprCriterioVO.setMes(peprVO.getMes());
@@ -243,10 +224,9 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(estdList);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-            cdmsDAO = session.getMapper(CuadroMesDAO.class);
-            estdDAO = session.getMapper(EstadisticaDAO.class);
-            esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+            final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
+            final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
             final IgBO igBO = new IgBO();
 
@@ -331,11 +311,8 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprVO.getMes());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-            cdmsDAO = session.getMapper(CuadroMesDAO.class);
-            estdDAO = session.getMapper(EstadisticaDAO.class);
-            esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
-            esagDAO = session.getMapper(EstadisticaAgregadoDAO.class);
+            final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
+            final EstadisticaAgregadoDAO esagDAO = session.getMapper(EstadisticaAgregadoDAO.class);
 
             final IgBO igBO = new IgBO();
 
@@ -523,8 +500,8 @@ public class PeriodoProcesoBO {
                         case FE:
                         case FH:
                             /*
-                             * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP) value).dateValue()); }
-                             * else { itdtVO.setFecha((Date) value); }
+                             * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP)
+                             * value).dateValue()); } else { itdtVO.setFecha((Date) value); }
                              */
                             itdtVO.setFecha((Date) value);
 
@@ -557,8 +534,7 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprVO);
         Preconditions.checkNotNull(peprVO.getId());
 
-        esexDAO = session.getMapper(EstadisticaExportDAO.class);
-
+        final EstadisticaExportDAO esexDAO = session.getMapper(EstadisticaExportDAO.class);
         final String fileName = peprVO.getAutp().getParametro()
                 + StringUtils.leftPad(peprVO.getAnio().toString(), 4, '0')
                 + StringUtils.leftPad(peprVO.getMes().toString(), 2, '0');
@@ -802,8 +778,8 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(tpesId);
         Preconditions.checkNotNull(estdList);
 
-        estdDAO = session.getMapper(EstadisticaDAO.class);
-        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+        final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
+        final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
         for (final EstadisticaVO estdVO : estdList) {
             estdDAO.insert(estdVO);
@@ -836,6 +812,7 @@ public class PeriodoProcesoBO {
         Preconditions.checkNotNull(peprId);
 
         final IgBO igBO = new IgBO();
+        final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
 
         cdmsDAO.insert_CM_PESCAF(new CuadroMesParametroVO(igBO.nextVal(IgBO.SQ_INTEGRA), peprId, TipoDato.ENTERO_01,
                 CuadroMesConcepto.PESCAF, "**", "**", "ZZ", null, null, null));

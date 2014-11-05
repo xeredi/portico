@@ -46,31 +46,6 @@ import com.google.common.base.Preconditions;
  * The Class ValoracionBO.
  */
 public class ValoracionBO {
-
-    /** The vlrc dao. */
-    ValoracionDAO vlrcDAO;
-
-    /** The vlrl dao. */
-    ValoracionLineaDAO vlrlDAO;
-
-    /** The vlrd dao. */
-    ValoracionDetalleDAO vlrdDAO;
-
-    /** The vlri dao. */
-    ValoracionImpuestoDAO vlriDAO;
-
-    /** The vlrg dao. */
-    ValoracionCargoDAO vlrgDAO;
-
-    /** The srcr dao. */
-    ServicioCargoDAO srcrDAO;
-
-    /** The rgla dao. */
-    ReglaDAO rglaDAO;
-
-    /** The ssrv dao. */
-    SubservicioDAO ssrvDAO;
-
     /**
      * Delete.
      *
@@ -97,12 +72,12 @@ public class ValoracionBO {
         Preconditions.checkArgument(!ids.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srcrDAO = session.getMapper(ServicioCargoDAO.class);
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-            vlrcDAO = session.getMapper(ValoracionDAO.class);
+            final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
 
             final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
             final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
@@ -116,7 +91,7 @@ public class ValoracionBO {
 
             srcrDAO.deleteValoracion(srcrCriterioVO);
 
-            vlrdDAO.delete(vlrdCriterioVO);
+            vlrdDAO.deleteList(vlrdCriterioVO);
             vlrlDAO.delete(vlrlCriterioVO);
             vlriDAO.delete(vlrcCriterioVO);
             vlrgDAO.delete(vlrcCriterioVO);
@@ -133,13 +108,16 @@ public class ValoracionBO {
      *            the id
      * @return the valoracion vo
      */
-    public ValoracionVO select(final Long id) {
+    public ValoracionVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrcDAO = session.getMapper(ValoracionDAO.class);
-
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
             final ValoracionVO vlrc = vlrcDAO.select(id);
+
+            if (vlrc == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.vlrc, id);
+            }
 
             return vlrc;
         }
@@ -163,13 +141,12 @@ public class ValoracionBO {
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrcDAO = session.getMapper(ValoracionDAO.class);
-
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
             final int count = vlrcDAO.count(vlrcCriterioVO);
             final List<ValoracionVO> vlrcList = new ArrayList<>();
 
             if (count >= offset) {
-                vlrcList.addAll(vlrcDAO.selectList(vlrcCriterioVO, new RowBounds(offset, limit)));
+                vlrcList.addAll(vlrcDAO.selectPaginatedList(vlrcCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ValoracionVO>(vlrcList, offset, limit, count);
@@ -188,10 +165,10 @@ public class ValoracionBO {
         Preconditions.checkArgument(!ids.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrcDAO = session.getMapper(ValoracionDAO.class);
-            vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-            vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
             final List<ValoracionImpresionVO> list = new ArrayList<>();
 
@@ -228,7 +205,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrcCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
 
             return vlriDAO.selectList(vlrcCriterioVO);
         }
@@ -245,7 +222,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrcCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
 
             return vlrgDAO.selectList(vlrcCriterioVO);
         }
@@ -262,7 +239,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrlId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
             return vlrlDAO.select(vlrlId);
         }
@@ -279,7 +256,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrlId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
             return vlrlDAO.existsDependencia(vlrlId);
         }
@@ -296,7 +273,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrlCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
 
             return vlrlDAO.selectList(vlrlCriterioVO);
         }
@@ -318,13 +295,12 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrlCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final int count = vlrlDAO.count(vlrlCriterioVO);
             final List<ValoracionLineaVO> vlrlList = new ArrayList<>();
 
             if (count >= offset) {
-                vlrlList.addAll(vlrlDAO.selectList(vlrlCriterioVO, new RowBounds(offset, limit)));
+                vlrlList.addAll(vlrlDAO.selectPaginatedList(vlrlCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ValoracionLineaVO>(vlrlList, offset, limit, count);
@@ -341,10 +317,10 @@ public class ValoracionBO {
      * <li>El detalle ha de tener importe base e importe</li>
      * <li>La valoracion asociada a la linea debe existir</li>
      * <li>La regla ha de ser valida para el aspecto de la valoracion asociada a la linea</li>
-     * <li>Si la regla está asociada a subservicios y el aspecto es de agrupacion, se comprueba que la linea tenga un
-     * subservicio asociado, y que sea de la misma entidad que la regla</li>
-     * <li>Si la regla está asociada a subservicios y el aspecto no es de agrupacion, se comprueba que el detalle tenga
-     * un subservicio asociado, y que sea de la misma entidad que la regla</li>
+     * <li>Si la regla está asociada a subservicios y el aspecto es de agrupacion, se comprueba que la linea
+     * tenga un subservicio asociado, y que sea de la misma entidad que la regla</li>
+     * <li>Si la regla está asociada a subservicios y el aspecto no es de agrupacion, se comprueba que el
+     * detalle tenga un subservicio asociado, y que sea de la misma entidad que la regla</li>
      * <li>Si la regla no es de tipo precio, la linea ha de estar asociada a una linea padre</li>
      * </ul>
      *
@@ -366,11 +342,11 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrd.getImporteBase());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrcDAO = session.getMapper(ValoracionDAO.class);
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            rglaDAO = session.getMapper(ReglaDAO.class);
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
             // Validacion de datos
             final ValoracionVO vlrc = vlrcDAO.select(vlrl.getVlrcId());
@@ -460,8 +436,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrl.getVlrcId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final int updated = vlrlDAO.update(vlrl);
 
             if (updated == 0) {
@@ -482,8 +457,8 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrlId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
             if (vlrlDAO.existsDependencia(vlrlId)) {
                 throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
@@ -503,7 +478,7 @@ public class ValoracionBO {
 
                 vlrdCriterioVO.setVlrl(vlrlCriterioVO);
 
-                vlrdDAO.delete(vlrdCriterioVO);
+                vlrdDAO.deleteList(vlrdCriterioVO);
                 vlrlDAO.delete(vlrlCriterioVO);
 
                 // Recalcular cargos e importes de IVA
@@ -525,7 +500,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrdId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
             return vlrdDAO.select(vlrdId);
         }
@@ -547,13 +522,12 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrdCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final int count = vlrdDAO.count(vlrdCriterioVO);
             final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
 
             if (count >= offset) {
-                vlrdList.addAll(vlrdDAO.selectList(vlrdCriterioVO, new RowBounds(offset, limit)));
+                vlrdList.addAll(vlrdDAO.selectPaginatedList(vlrdCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ValoracionDetalleVO>(vlrdList, offset, limit, count);
@@ -572,9 +546,8 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrd.getVlrcId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionLineaVO vlrl = vlrlDAO.select(vlrd.getVlrlId());
 
             if (vlrl == null) {
@@ -612,8 +585,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrd.getVlrcId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final int updated = vlrdDAO.update(vlrd);
 
             if (updated == 0) {
@@ -641,9 +613,8 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrd.getVlrcId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final int updated = vlrdDAO.delete(vlrd);
 
             if (updated == 0) {
@@ -679,8 +650,8 @@ public class ValoracionBO {
     private void recalcularVlrc(final SqlSession session, final Long vlrcId) {
         Preconditions.checkNotNull(vlrcId);
 
-        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+        final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+        final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
 
         // Recalcular cargos e importes de IVA
 

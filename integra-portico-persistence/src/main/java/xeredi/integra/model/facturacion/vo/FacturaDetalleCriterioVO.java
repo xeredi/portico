@@ -2,13 +2,13 @@ package xeredi.integra.model.facturacion.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaDetalleCriterioVO.
  */
-public final class FacturaDetalleCriterioVO {
+public final class FacturaDetalleCriterioVO extends BaseCriterioVO {
 
     /** The fctl. */
     private FacturaLineaCriterioVO fctl;
@@ -18,14 +18,6 @@ public final class FacturaDetalleCriterioVO {
 
     /** The ids. */
     private Set<Long> ids;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the fctl.
@@ -42,8 +34,8 @@ public final class FacturaDetalleCriterioVO {
      * @param value
      *            the fctl
      */
-    public void setFctl(FacturaLineaCriterioVO value) {
-        this.fctl = value;
+    public void setFctl(final FacturaLineaCriterioVO value) {
+        fctl = value;
     }
 
     /**
@@ -61,8 +53,8 @@ public final class FacturaDetalleCriterioVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -80,8 +72,8 @@ public final class FacturaDetalleCriterioVO {
      * @param value
      *            the ids
      */
-    public void setIds(Set<Long> value) {
-        this.ids = value;
+    public void setIds(final Set<Long> value) {
+        ids = value;
     }
 
 }

@@ -46,7 +46,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd criterio vo
      * @return the int
      */
-    int delete(final ValoracionDetalleCriterioVO vlrdCriterioVO);
+    int deleteList(final ValoracionDetalleCriterioVO vlrdCriterioVO);
 
     /**
      * Select.
@@ -75,7 +75,8 @@ public interface ValoracionDetalleDAO {
      *            the bounds
      * @return the list
      */
-    List<ValoracionDetalleVO> selectList(final ValoracionDetalleCriterioVO vlrdCriterioVO, final RowBounds bounds);
+    List<ValoracionDetalleVO> selectPaginatedList(final ValoracionDetalleCriterioVO vlrdCriterioVO,
+            final RowBounds bounds);
 
     /**
      * Select list.

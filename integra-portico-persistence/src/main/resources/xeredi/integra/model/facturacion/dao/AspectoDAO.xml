@@ -114,6 +114,12 @@
         ORDER BY aspc_tpsr_pk, aspv_prioridad
     </select>
 
+    <select id="selectPaginatedList" parameterType="AspectoCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY aspc_tpsr_pk, aspv_prioridad
+    </select>
+
     <select id="selectObject" parameterType="AspectoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />

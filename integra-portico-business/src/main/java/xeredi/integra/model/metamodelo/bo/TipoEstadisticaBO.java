@@ -30,13 +30,6 @@ import com.google.common.base.Preconditions;
  * The Class TipoEstadisticaBO.
  */
 public class TipoEstadisticaBO {
-
-    /** The tpes dao. */
-    TipoEstadisticaDAO tpesDAO;
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
     /**
      * Select label values.
      *
@@ -44,8 +37,7 @@ public class TipoEstadisticaBO {
      */
     public final List<LabelValueVO> selectLabelValues() {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-
+            final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoEstadisticaVO tpes : tpesDAO.selectList(new TipoEstadisticaCriterioVO())) {
@@ -67,7 +59,7 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(tpesCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+            final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
 
             return tpesDAO.selectList(tpesCriterioVO);
         }
@@ -89,13 +81,12 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(tpesCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-
+            final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
             final int count = tpesDAO.count(tpesCriterioVO);
             final List<TipoEstadisticaVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpesDAO.selectList(tpesCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpesDAO.selectPaginatedList(tpesCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
@@ -118,8 +109,7 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-
+            final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
             final TipoEstadisticaCriterioVO entiCriterioVO = new TipoEstadisticaCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -154,9 +144,8 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(tpesVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
-
+            final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final Long id = entiDAO.nextSequence();
 
             tpesVO.setId(id);
@@ -191,8 +180,7 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(tpesVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (entiDAO.update(tpesVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpes, tpesVO);
@@ -216,8 +204,8 @@ public class TipoEstadisticaBO {
         Preconditions.checkNotNull(tpesId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoEstadisticaDAO tpesDAO = session.getMapper(TipoEstadisticaDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (tpesDAO.delete(tpesId) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpes, tpesId);

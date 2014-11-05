@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -19,13 +18,6 @@ import com.google.common.base.Preconditions;
  * The Class EntidadTipoDatoAdminBO.
  */
 public class EntidadTipoDatoBO {
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
-    /** The entd dao. */
-    EntidadTipoDatoDAO entdDAO;
-
     /**
      * Insert.
      *
@@ -41,8 +33,7 @@ public class EntidadTipoDatoBO {
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entiDAO = session.getMapper(EntidadDAO.class);
-            entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
+            final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
             if (entdDAO.exists(entdVO)) {
                 throw new DuplicateInstanceException(MessageI18nKey.entd, entdVO);
@@ -69,7 +60,7 @@ public class EntidadTipoDatoBO {
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
+            final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
             if (entdDAO.update(entdVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
@@ -94,7 +85,7 @@ public class EntidadTipoDatoBO {
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
+            final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
 
             if (entdDAO.delete(entdVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
@@ -123,8 +114,7 @@ public class EntidadTipoDatoBO {
         Preconditions.checkNotNull(tpdtId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
-
+            final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
             final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
 
             entdCriterioVO.setEntiId(entiId);

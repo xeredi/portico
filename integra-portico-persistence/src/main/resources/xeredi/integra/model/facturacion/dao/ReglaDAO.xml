@@ -166,6 +166,12 @@
         ORDER BY rgla_crgo_pk, rglv_enti_pk, rglv_orden
     </select>
 
+    <select id="selectPaginatedList" parameterType="ReglaCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY rgla_crgo_pk, rglv_enti_pk, rglv_orden
+    </select>
+
     <select id="selectObject" parameterType="ReglaCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />

@@ -1,4 +1,4 @@
-package xeredi.integra.model.util;
+package xeredi.integra.model.metamodelo.vo;
 
 // TODO: Auto-generated Javadoc
 /**

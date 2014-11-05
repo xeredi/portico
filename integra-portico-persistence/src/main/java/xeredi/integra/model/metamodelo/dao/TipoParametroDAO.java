@@ -31,7 +31,7 @@ public interface TipoParametroDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoParametroVO> selectList(final TipoParametroCriterioVO tpprCriterioVO, final RowBounds bounds);
+    List<TipoParametroVO> selectPaginatedList(final TipoParametroCriterioVO tpprCriterioVO, final RowBounds bounds);
 
     /**
      * Select.

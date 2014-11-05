@@ -25,10 +25,6 @@ import com.google.common.base.Preconditions;
  * The Class CodigoReferenciaAdminBO.
  */
 public class CodigoReferenciaBO {
-
-    /** The cdrf dao. */
-    CodigoReferenciaDAO cdrfDAO;
-
     /**
      * Insert.
      *
@@ -45,8 +41,7 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(i18nMap);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final IgBO igBO = new IgBO();
 
             if (cdrfDAO.exists(cdrfVO)) {
@@ -78,8 +73,7 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(i18nMap);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final int updated = cdrfDAO.update(cdrfVO);
 
             if (updated == 0) {
@@ -105,7 +99,7 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
             I18nBO.deleteMap(session, I18nPrefix.cdrf, cdrfVO.getId());
 
@@ -132,8 +126,7 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(cdrfId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
 
             cdrfCriterioVO.setId(cdrfId);
@@ -162,8 +155,7 @@ public class CodigoReferenciaBO {
         Preconditions.checkNotNull(tpdtId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
 
             cdrfCriterioVO.setTpdtId(tpdtId);

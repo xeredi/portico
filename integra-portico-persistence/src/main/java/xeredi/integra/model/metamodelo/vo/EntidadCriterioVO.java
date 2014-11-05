@@ -2,22 +2,13 @@ package xeredi.integra.model.metamodelo.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadCriterioVO.
  */
-public class EntidadCriterioVO {
-
-    /** The offset. */
-    private Integer offset;
-
-    /** The limit. */
-    private Integer limit;
-
-    /** The idioma. */
-    private String idioma;
+public class EntidadCriterioVO extends BaseCriterioVO {
 
     /** The ids. */
     private Long id;
@@ -41,16 +32,8 @@ public class EntidadCriterioVO {
     private Long entiHijaId;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Gets the ids.
-     * 
+     *
      * @return the ids
      */
     public final Set<Long> getIds() {
@@ -59,7 +42,7 @@ public class EntidadCriterioVO {
 
     /**
      * Sets the ids.
-     * 
+     *
      * @param value
      *            the new ids
      */
@@ -69,7 +52,7 @@ public class EntidadCriterioVO {
 
     /**
      * Gets the tipo.
-     * 
+     *
      * @return the tipo
      */
     public final TipoEntidad getTipo() {
@@ -78,7 +61,7 @@ public class EntidadCriterioVO {
 
     /**
      * Sets the tipo.
-     * 
+     *
      * @param value
      *            the new tipo
      */
@@ -88,7 +71,7 @@ public class EntidadCriterioVO {
 
     /**
      * Gets the codigos.
-     * 
+     *
      * @return the codigos
      */
     public final String getCodigo() {
@@ -97,7 +80,7 @@ public class EntidadCriterioVO {
 
     /**
      * Sets the codigos.
-     * 
+     *
      * @param value
      *            the new codigos
      */
@@ -107,7 +90,7 @@ public class EntidadCriterioVO {
 
     /**
      * Gets the nombre.
-     * 
+     *
      * @return the nombre
      */
     public final String getNombre() {
@@ -116,7 +99,7 @@ public class EntidadCriterioVO {
 
     /**
      * Sets the nombre.
-     * 
+     *
      * @param value
      *            the new nombre
      */
@@ -126,7 +109,7 @@ public class EntidadCriterioVO {
 
     /**
      * Gets the enti padre id.
-     * 
+     *
      * @return the enti padre id
      */
     public final Long getEntiPadreId() {
@@ -135,7 +118,7 @@ public class EntidadCriterioVO {
 
     /**
      * Sets the enti padre id.
-     * 
+     *
      * @param value
      *            the new enti padre id
      */
@@ -145,7 +128,7 @@ public class EntidadCriterioVO {
 
     /**
      * Gets the enti hija id.
-     * 
+     *
      * @return the enti hija id
      */
     public final Long getEntiHijaId() {
@@ -154,7 +137,7 @@ public class EntidadCriterioVO {
 
     /**
      * Sets the enti hija id.
-     * 
+     *
      * @param value
      *            the new enti hija id
      */
@@ -163,46 +146,8 @@ public class EntidadCriterioVO {
     }
 
     /**
-     * Gets the offset.
-     * 
-     * @return the offset
-     */
-    public final Integer getOffset() {
-        return offset;
-    }
-
-    /**
-     * Sets the offset.
-     * 
-     * @param value
-     *            the new offset
-     */
-    public final void setOffset(final Integer value) {
-        offset = value;
-    }
-
-    /**
-     * Gets the limit.
-     * 
-     * @return the limit
-     */
-    public final Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     * 
-     * @param value
-     *            the new limit
-     */
-    public final void setLimit(final Integer value) {
-        limit = value;
-    }
-
-    /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public final Long getId() {
@@ -211,31 +156,11 @@ public class EntidadCriterioVO {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
     public final void setId(final Long value) {
         id = value;
     }
-
-    /**
-     * Gets the idioma.
-     * 
-     * @return the idioma
-     */
-    public String getIdioma() {
-        return idioma;
-    }
-
-    /**
-     * Sets the idioma.
-     * 
-     * @param value
-     *            the new idioma
-     */
-    public void setIdioma(final String value) {
-        idioma = value;
-    }
-
 }

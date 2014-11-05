@@ -314,26 +314,30 @@ function tpdtGridController($http, $location, $routeParams, $modal,
 	vm.filter = filter;
 
 	vm.tpdtCriterio = {};
+	vm.page = $routeParams.page ? $routeParams.page : 1;
 
-	function search(tpdtCriterio, page, limit) {
+	function search() {
+		console.log("search: " + vm.page);
+
 		$http.post("metamodelo/tpdt-list.action", {
-			tpdtCriterio : tpdtCriterio,
-			page : page,
-			limit : limit
+			tpdtCriterio : vm.tpdtCriterio,
+			page : vm.page,
+			limit : vm.limit
 		}).success(function(data) {
-			vm.page = data.tpdtList.page;
 			vm.tpdtList = data.tpdtList;
 
-			var map = {};
+			$location.search({
+				page : vm.page
+			}).replace();
 
-			map.page = data.tpdtList.page;
-
-			$location.search(map).replace();
+			console.log("page: " + vm.page);
 		});
 	}
 
 	function pageChanged() {
-		search(vm.tpdtCriterio, vm.page, vm.limit);
+		console.log("pageChanged: " + vm.page);
+
+		search();
 	}
 
 	function filter(size) {
@@ -353,11 +357,11 @@ function tpdtGridController($http, $location, $routeParams, $modal,
 			vm.tpdtCriterio = tpdtCriterio;
 			vm.page = 1;
 
-			search(vm.tpdtCriterio, 1, vm.limit);
+			search();
 		});
 	}
 
-	search(vm.tpdtCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
+	search();
 
 	pageTitleService.setTitle("tpdt", "page_grid");
 }
@@ -587,28 +591,26 @@ function tpprGridController($http, $location, $routeParams, $modal,
 	vm.filter = filter;
 
 	vm.entiCriterio = {};
+	vm.page = $routeParams.page ? $routeParams.page : 1;
 
-	function search(entiCriterio, page, limit) {
+	function search() {
 		var url = "metamodelo/tppr-list.action";
 
 		$http.post(url, {
-			entiCriterio : entiCriterio,
-			page : page,
-			limit : limit
+			entiCriterio : vm.entiCriterio,
+			page : vm.page,
+			limit : vm.limit
 		}).success(function(data) {
-			vm.page = data.entiList.page;
 			vm.entiList = data.entiList;
 
-			var map = {};
-
-			map.page = data.entiList.page;
-
-			$location.search(map).replace();
+			$location.search({
+				page : vm.page
+			}).replace();
 		});
 	}
 
 	function pageChanged() {
-		search(vm.entiCriterio, vm.page, vm.limit);
+		search();
 	}
 
 	function filter(size) {
@@ -628,11 +630,11 @@ function tpprGridController($http, $location, $routeParams, $modal,
 			vm.entiCriterio = entiCriterio;
 			vm.page = 1;
 
-			search(vm.entiCriterio, 1, vm.limit);
+			search();
 		});
 	}
 
-	search(vm.entiCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
+	search();
 
 	pageTitleService.setTitle("tppr", "page_grid");
 }
@@ -868,26 +870,24 @@ function tpsrGridController($http, $location, $routeParams, $modal,
 	vm.filter = filter;
 
 	vm.entiCriterio = {};
+	vm.page = $routeParams.page ? $routeParams.page : 1;
 
-	function search(entiCriterio, page, limit) {
+	function search() {
 		$http.post("metamodelo/tpsr-list.action", {
-			entiCriterio : entiCriterio,
-			page : page,
-			limit : limit
+			entiCriterio : vm.entiCriterio,
+			page : vm.page,
+			limit : vm.limit
 		}).success(function(data) {
-			vm.page = data.entiList.page;
 			vm.entiList = data.entiList;
 
-			var map = {};
-
-			map.page = data.entiList.page;
-
-			$location.search(map).replace();
+			$location.search({
+				page : vm.page
+			}).replace();
 		});
 	}
 
 	function pageChanged() {
-		search(vm.entiCriterio, vm.page, vm.limit);
+		search();
 	}
 
 	function filter(size) {
@@ -907,7 +907,7 @@ function tpsrGridController($http, $location, $routeParams, $modal,
 			vm.entiCriterio = entiCriterio;
 			vm.page = 1;
 
-			search(vm.entiCriterio, 1, vm.limit);
+			search();
 		});
 	}
 
@@ -1138,28 +1138,26 @@ function tpesGridController($http, $location, $routeParams, $modal,
 	vm.filter = filter;
 
 	vm.entiCriterio = {};
+	vm.page = $routeParams.page ? $routeParams.page : 1;
 
-	function search(entiCriterio, page, limit) {
+	function search() {
 		var url = "metamodelo/tpes-list.action";
 
 		$http.post(url, {
-			entiCriterio : entiCriterio,
-			page : page,
-			limit : limit
+			entiCriterio : vm.entiCriterio,
+			page : vm.page,
+			limit : vm.limit
 		}).success(function(data) {
-			vm.page = data.entiList.page;
 			vm.entiList = data.entiList;
 
-			var map = {};
-
-			map.page = data.entiList.page;
-
-			$location.search(map).replace();
+			$location.search({
+				page : vm.page
+			}).replace();
 		});
 	}
 
 	function pageChanged() {
-		search(vm.entiCriterio, vm.page, vm.limit);
+		search();
 	}
 
 	function filter(size) {
@@ -1179,11 +1177,11 @@ function tpesGridController($http, $location, $routeParams, $modal,
 			vm.entiCriterio = entiCriterio;
 			vm.page = 1;
 
-			search(vm.entiCriterio, 1, vm.limit);
+			search();
 		});
 	}
 
-	search(vm.entiCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
+	search();
 
 	pageTitleService.setTitle("tpes", "page_grid");
 }

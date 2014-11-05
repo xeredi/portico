@@ -30,13 +30,6 @@ import com.google.common.base.Preconditions;
  * The Class TipoServicioAdminBO.
  */
 public class TipoServicioBO {
-
-    /** The tpsr dao. */
-    TipoServicioDAO tpsrDAO;
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
     /**
      * Select label values.
      *
@@ -46,8 +39,7 @@ public class TipoServicioBO {
      */
     public final List<LabelValueVO> selectLabelValues(final TipoServicioCriterioVO criterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpsrDAO = session.getMapper(TipoServicioDAO.class);
-
+            final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoServicioVO tpsr : tpsrDAO.selectList(criterioVO)) {
@@ -69,7 +61,7 @@ public class TipoServicioBO {
         Preconditions.checkNotNull(tpsrCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpsrDAO = session.getMapper(TipoServicioDAO.class);
+            final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
 
             return tpsrDAO.selectList(tpsrCriterioVO);
         }
@@ -91,13 +83,12 @@ public class TipoServicioBO {
         Preconditions.checkNotNull(tpsrCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpsrDAO = session.getMapper(TipoServicioDAO.class);
-
+            final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
             final int count = tpsrDAO.count(tpsrCriterioVO);
             final List<TipoServicioVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpsrDAO.selectList(tpsrCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpsrDAO.selectPaginatedList(tpsrCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
@@ -118,8 +109,7 @@ public class TipoServicioBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpsrDAO = session.getMapper(TipoServicioDAO.class);
-
+            final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
             final TipoServicioCriterioVO entiCriterioVO = new TipoServicioCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -152,8 +142,8 @@ public class TipoServicioBO {
         Preconditions.checkNotNull(tpsrVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpsrDAO = session.getMapper(TipoServicioDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (entiDAO.exists(tpsrVO)) {
                 throw new DuplicateInstanceException(MessageI18nKey.tpsr, tpsrVO);
@@ -184,8 +174,8 @@ public class TipoServicioBO {
         Preconditions.checkNotNull(tpsrVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpsrDAO = session.getMapper(TipoServicioDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (tpsrDAO.update(tpsrVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpsr, tpsrVO);
@@ -210,8 +200,8 @@ public class TipoServicioBO {
         Preconditions.checkNotNull(tpsrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpsrDAO = session.getMapper(TipoServicioDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoServicioDAO tpsrDAO = session.getMapper(TipoServicioDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (tpsrDAO.delete(tpsrId) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpsr, tpsrId);

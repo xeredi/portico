@@ -28,13 +28,6 @@ import com.google.common.base.Preconditions;
  * The Class EstadisticaBO.
  */
 public class EstadisticaBO {
-
-    /** The estd dao. */
-    EstadisticaDAO estdDAO;
-
-    /** The esdt dao. */
-    EstadisticaDatoDAO esdtDAO;
-
     /**
      * Select list.
      *
@@ -51,8 +44,7 @@ public class EstadisticaBO {
         Preconditions.checkNotNull(estdCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            estdDAO = session.getMapper(EstadisticaDAO.class);
-
+            final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final int count = estdDAO.selectCount(estdCriterioVO);
             final List<EstadisticaVO> estdList = new ArrayList<>();
 
@@ -79,8 +71,7 @@ public class EstadisticaBO {
         Preconditions.checkNotNull(estdCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            estdDAO = session.getMapper(EstadisticaDAO.class);
-
+            final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final List<EstadisticaVO> estdList = estdDAO.selectList(estdCriterioVO);
 
             fillDependencies(session, estdList, estdCriterioVO, false);
@@ -103,8 +94,7 @@ public class EstadisticaBO {
         Preconditions.checkNotNull(estdCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            estdDAO = session.getMapper(EstadisticaDAO.class);
-
+            final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final EstadisticaVO estdVO = estdDAO.selectObject(estdCriterioVO);
 
             if (estdVO == null) {
@@ -134,8 +124,6 @@ public class EstadisticaBO {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(estdCriterioVO);
 
-        esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
-
         if (!estdList.isEmpty()) {
             if (useIds) {
                 final Set<Long> ids = new HashSet<>();
@@ -147,6 +135,7 @@ public class EstadisticaBO {
                 estdCriterioVO.setIds(ids);
             }
 
+            final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
             final Map<Long, Map<Long, ItemDatoVO>> itdtMap = new HashMap<>();
 
             for (final ItemDatoVO itdtVO : esdtDAO.selectList(estdCriterioVO)) {

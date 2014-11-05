@@ -1,18 +1,12 @@
 package xeredi.integra.model.facturacion.vo;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AspectoCargoCriterioVO.
  */
-public final class AspectoCargoCriterioVO {
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
-
+public final class AspectoCargoCriterioVO extends BaseCriterioVO {
     /** The id. */
     private Long id;
 
@@ -21,33 +15,6 @@ public final class AspectoCargoCriterioVO {
 
     /** The aspc id. */
     private Long aspcId;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
-    }
 
     /**
      * Gets the id.

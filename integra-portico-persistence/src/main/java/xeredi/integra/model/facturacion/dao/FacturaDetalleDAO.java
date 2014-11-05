@@ -57,5 +57,5 @@ public interface FacturaDetalleDAO {
      *            the bounds
      * @return the list
      */
-    List<FacturaDetalleVO> selectList(final FacturaDetalleCriterioVO fctdCriterioVO, final RowBounds bounds);
+    List<FacturaDetalleVO> selectPaginatedList(final FacturaDetalleCriterioVO fctdCriterioVO, final RowBounds bounds);
 }

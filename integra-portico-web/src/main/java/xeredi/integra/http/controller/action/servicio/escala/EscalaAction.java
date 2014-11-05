@@ -8,11 +8,11 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
-import xeredi.integra.model.util.TipoDato;
 
 import com.google.common.base.Preconditions;
 

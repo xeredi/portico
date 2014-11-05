@@ -1,12 +1,12 @@
 package xeredi.integra.model.estadistica.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoCriterioVO.
  */
-public final class PeriodoProcesoCriterioVO {
+public final class PeriodoProcesoCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
@@ -24,16 +24,8 @@ public final class PeriodoProcesoCriterioVO {
     private Integer trimestre;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Gets the id.
-     * 
+     *
      * @return the id
      */
     public Long getId() {
@@ -42,7 +34,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Sets the id.
-     * 
+     *
      * @param value
      *            the new id
      */
@@ -52,7 +44,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Gets the autp id.
-     * 
+     *
      * @return the autp id
      */
     public Long getAutpId() {
@@ -61,7 +53,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Sets the autp id.
-     * 
+     *
      * @param value
      *            the new autp id
      */
@@ -71,7 +63,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Gets the anio.
-     * 
+     *
      * @return the anio
      */
     public Integer getAnio() {
@@ -80,7 +72,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Sets the anio.
-     * 
+     *
      * @param value
      *            the new anio
      */
@@ -90,7 +82,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Gets the mes.
-     * 
+     *
      * @return the mes
      */
     public Integer getMes() {
@@ -99,7 +91,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Sets the mes.
-     * 
+     *
      * @param value
      *            the new mes
      */
@@ -109,7 +101,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Gets the trimestre.
-     * 
+     *
      * @return the trimestre
      */
     public Integer getTrimestre() {
@@ -118,7 +110,7 @@ public final class PeriodoProcesoCriterioVO {
 
     /**
      * Sets the trimestre.
-     * 
+     *
      * @param value
      *            the new trimestre
      */

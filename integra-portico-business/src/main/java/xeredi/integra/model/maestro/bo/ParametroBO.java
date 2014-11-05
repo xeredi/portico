@@ -47,19 +47,6 @@ import com.google.common.base.Preconditions;
  * Implementación del servicio de gestión de maestros de la aplicación.
  */
 public class ParametroBO {
-
-    /** The prmt dao. */
-    ParametroDAO prmtDAO;
-
-    /** The prdt dao. */
-    ParametroDatoDAO prdtDAO;
-
-    /** The sprm dao. */
-    SubparametroDAO sprmDAO;
-
-    /** The spdt dao. */
-    SubparametroDatoDAO spdtDAO;
-
     /**
      * Insert.
      *
@@ -98,9 +85,8 @@ public class ParametroBO {
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-            prdtDAO = session.getMapper(ParametroDatoDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
+            final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
             final IgBO igBO = new IgBO();
 
             if (prmtDAO.exists(prmt)) {
@@ -179,10 +165,10 @@ public class ParametroBO {
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-            prdtDAO = session.getMapper(ParametroDatoDAO.class);
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
+            final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
             final IgBO igBO = new IgBO();
 
@@ -345,8 +331,8 @@ public class ParametroBO {
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-            prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
+            final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
             if (prmtDAO.existsOverlap(prmt)) {
                 throw new OverlapException(MessageI18nKey.prmt, prmt);
@@ -387,8 +373,8 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmt.getPrvr().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-            prdtDAO = session.getMapper(ParametroDatoDAO.class);
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
+            final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
             prdtDAO.deleteVersion(prmt);
 
@@ -415,8 +401,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
 
             fillDependencies(session, prmtList, prmtCriterioVO, false);
@@ -441,8 +426,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final List<ParametroVO> prmtList = new ArrayList<>();
             final int count = prmtDAO.count(prmtCriterioVO);
 
@@ -469,8 +453,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
 
             fillDependencies(session, prmtMap.values(), prmtCriterioVO, false);
@@ -490,8 +473,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
 
             fillDependencies(session, prmtMap.values(), prmtCriterioVO, false);
@@ -511,8 +493,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<String, Long> map = new HashMap<>();
 
             for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
@@ -534,8 +515,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final Map<Long, String> map = new HashMap<>();
 
             for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
@@ -564,8 +544,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setEntiIds(tpprIds);
@@ -597,8 +576,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(criterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final ParametroVO prmtVO : prmtDAO.selectList(criterioVO)) {
@@ -622,8 +600,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroVO prmtVO = prmtDAO.selectObject(prmtCriterioVO);
 
             if (prmtVO == null) {
@@ -654,8 +631,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
-
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setId(prmtId);
@@ -685,8 +661,9 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtLupaCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            prmtDAO = session.getMapper(ParametroDAO.class);
             prmtLupaCriterioVO.setTextoBusqueda(prmtLupaCriterioVO.getTextoBusqueda().toUpperCase().trim() + '%');
+
+            final ParametroDAO prmtDAO = session.getMapper(ParametroDAO.class);
 
             return prmtDAO.selectLupaList(prmtLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
@@ -700,8 +677,8 @@ public class ParametroBO {
      * @param prmtList
      *            Colleccion de parámetros de los que se desea obtener sus datos asociados.
      * @param prmtCriterioVO
-     *            Criterio de búsqueda de parámetros. Este criterio ha sido el utilizado para obtener la coleccion de
-     *            parámetros pasada como argumento.
+     *            Criterio de búsqueda de parámetros. Este criterio ha sido el utilizado para obtener la
+     *            coleccion de parámetros pasada como argumento.
      * @param useIds
      *            the use ids
      */
@@ -710,7 +687,7 @@ public class ParametroBO {
         Preconditions.checkNotNull(prmtList);
         Preconditions.checkNotNull(prmtCriterioVO);
 
-        prdtDAO = session.getMapper(ParametroDatoDAO.class);
+        final ParametroDatoDAO prdtDAO = session.getMapper(ParametroDatoDAO.class);
 
         if (!prmtList.isEmpty()) {
             if (useIds) {

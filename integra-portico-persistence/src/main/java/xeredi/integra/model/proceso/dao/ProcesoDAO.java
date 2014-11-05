@@ -84,7 +84,7 @@ public interface ProcesoDAO {
      *            the bounds
      * @return the list
      */
-    List<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO, final RowBounds bounds);
+    List<ProcesoVO> selectPaginatedList(final ProcesoCriterioVO prbtCriterioVO, final RowBounds bounds);
 
     /**
      * Select list.

@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -43,28 +41,6 @@ import com.google.common.base.Preconditions;
  * The Class ServicioBO.
  */
 public class ServicioBO {
-
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ServicioBO.class);
-
-    /** The srvc dao. */
-    ServicioDAO srvcDAO;
-
-    /** The srsc dao. */
-    ServicioSecuenciaDAO srscDAO;
-
-    /** The srdt dao. */
-    ServicioDatoDAO srdtDAO;
-
-    /** The ssrv dao. */
-    SubservicioDAO ssrvDAO;
-
-    /** The ssdt dao. */
-    SubservicioDatoDAO ssdtDAO;
-
-    /** The ssss dao. */
-    SubservicioSubservicioDAO ssssDAO;
-
     /**
      * Select.
      *
@@ -81,8 +57,7 @@ public class ServicioBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
             srvcCriterioVO.setId(srvcId);
@@ -116,8 +91,7 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final int count = srvcDAO.selectCount(srvcCriterioVO);
             final List<ServicioVO> srvcList = new ArrayList<>();
 
@@ -144,8 +118,7 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
 
             fillDependencies(session, srvcList, srvcCriterioVO, false);
@@ -165,7 +138,7 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcLupaCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
 
             return srvcDAO.selectLupaList(srvcLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
@@ -188,12 +161,11 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
-            srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
-            srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
 
             if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
                 for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
@@ -265,7 +237,7 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
 
             for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
                 srdtDAO.update(itdtVO);
@@ -287,12 +259,12 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
-            srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
-            srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
 
             final IgBO igBO = new IgBO();
             final Map<Long, Long> ssrvIds = new HashMap<>();
@@ -372,11 +344,11 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
-            srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
@@ -416,7 +388,7 @@ public class ServicioBO {
         Preconditions.checkNotNull(srvcList);
         Preconditions.checkNotNull(srvcCriterioVO);
 
-        srdtDAO = session.getMapper(ServicioDatoDAO.class);
+        final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
 
         if (!srvcList.isEmpty()) {
             if (useIds) {

@@ -66,5 +66,5 @@ public interface ValoracionDAO {
      *            Limites de la pagina.
      * @return {@link List} de valoraciones que cumplan el criterio de busqueda.
      */
-    List<ValoracionVO> selectList(final ValoracionCriterioVO vlrcCriterioVO, final RowBounds bounds);
+    List<ValoracionVO> selectPaginatedList(final ValoracionCriterioVO vlrcCriterioVO, final RowBounds bounds);
 }

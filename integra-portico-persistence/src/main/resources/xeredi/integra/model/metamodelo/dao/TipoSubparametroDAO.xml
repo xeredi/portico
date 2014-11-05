@@ -3,20 +3,19 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoSubparametroDAO">
-    <resultMap type="TipoSubparametroVO" id="ResultMap"
-        extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
-        <result column="tpsp_es_i18n" property="i18n" />
-        <result column="tpsp_es_tmp_exp" property="tempExp" />
-        <result column="tpsp_tppr_pk" property="tpprId" />
+	<resultMap type="TipoSubparametroVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+		<result column="tpsp_es_i18n" property="i18n" />
+		<result column="tpsp_es_tmp_exp" property="tempExp" />
+		<result column="tpsp_tppr_pk" property="tpprId" />
 
-        <association property="tpprAsociado" javaType="TipoParametroVO">
-            <result column="tppr_asociado_pk" property="id" />
-            <result column="tppr_asociado_codigo" property="codigo" />
-            <result column="tppr_asociado_nombre" property="nombre" />
-        </association>
-    </resultMap>
+		<association property="tpprAsociado" javaType="TipoParametroVO">
+			<result column="tppr_asociado_pk" property="id" />
+			<result column="tppr_asociado_codigo" property="codigo" />
+			<result column="tppr_asociado_nombre" property="nombre" />
+		</association>
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
         SELECT
             enti.enti_pk, enti.enti_codigo, enti.enti_tipo, enti.enti_max_grid
@@ -25,7 +24,7 @@
             , entiAsociado.enti_pk AS tppr_asociado_pk
             , entiAsociado.enti_codigo AS tppr_asociado_codigo
     ]]>
-        <if test="idioma != null">
+		<if test="idioma != null">
         <![CDATA[
             , (
                 SELECT i18n_text FROM tbl_i18n_i18n
@@ -40,7 +39,7 @@
                     AND i18n_lang = #{idioma}
             ) AS tppr_asociado_nombre
         ]]>
-        </if>
+		</if>
     <![CDATA[
         FROM
             tbl_tipo_subparametro_tpsp tpsp
@@ -49,40 +48,42 @@
             INNER JOIN tbl_entidad_enti entiAsociado ON
                 entiAsociado.enti_pk = tpsp.tpsp_tppr_dep_pk
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND enti.enti_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND enti.enti_pk IN
-                <foreach collection="ids" item="item" open="(" close=")"
-                    separator=", ">#{item}</foreach>
-            </if>
-            <if test="nombre != null and !nombre.empty">
-                AND enti.enti_nombre LIKE #{nombre}
-            </if>
-            <if test="codigo != null and !codigo.empty">
-                AND enti.enti_codigo LIKE #{codigo}
-            </if>
-            <if test="tpprId != null">
-                AND tpsp.tpsp_tppr_pk = #{tpprId}
-            </if>
-        </where>
-    </sql>
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND enti.enti_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND enti.enti_pk IN
+				<foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
+			</if>
+			<if test="nombre != null and !nombre.empty">
+				AND enti.enti_nombre LIKE #{nombre}
+			</if>
+			<if test="codigo != null and !codigo.empty">
+				AND enti.enti_codigo LIKE #{codigo}
+			</if>
+			<if test="tpprId != null">
+				AND tpsp.tpsp_tppr_pk = #{tpprId}
+			</if>
+		</where>
+	</sql>
 
-    <select id="selectList" parameterType="TipoSubparametroCriterioVO"
-        resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-        <![CDATA[
-        ORDER BY enti.enti_codigo, enti.enti_pk
-        ]]>
-    </select>
+	<select id="selectList" parameterType="TipoSubparametroCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY enti.enti_codigo, enti.enti_pk
+	</select>
 
-    <select id="count" resultType="int" parameterType="TipoSubparametroCriterioVO">
+	<select id="selectPaginatedList" parameterType="TipoSubparametroCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY enti.enti_codigo, enti.enti_pk
+	</select>
+
+	<select id="count" resultType="int" parameterType="TipoSubparametroCriterioVO">
         <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -90,15 +91,15 @@
             INNER JOIN tbl_entidad_enti enti ON
                 enti.enti_pk = tpsp.tpsp_pk
         ]]>
-        <include refid="SelectWhere" />
-    </select>
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="selectObject" resultMap="ResultMap" parameterType="TipoSubparametroCriterioVO">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectObject" resultMap="ResultMap" parameterType="TipoSubparametroCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <insert id="insert" parameterType="TipoSubparametroVO">
+	<insert id="insert" parameterType="TipoSubparametroVO">
     <![CDATA[
         INSERT INTO tbl_tipo_subparametro_tpsp(tpsp_pk, tpsp_tppr_pk, tpsp_tppr_dep_pk, tpsp_es_i18n, tpsp_es_tmp_exp)
         VALUES (
@@ -109,9 +110,9 @@
             , #{tempExp, jdbcType=INTEGER, javaType=Boolean}
         )
     ]]>
-    </insert>
+	</insert>
 
-    <insert id="update" parameterType="TipoSubparametroVO">
+	<insert id="update" parameterType="TipoSubparametroVO">
     <![CDATA[
         UPDATE tbl_tipo_subparametro_tpsp SET
             tpsp_tppr_dep_pk = #{tpprAsociado.id}
@@ -119,5 +120,5 @@
             , tpsp_es_tmp_exp = #{tempExp, jdbcType=INTEGER, javaType=Boolean}
         WHERE tpsp_pk = #{id}
     ]]>
-    </insert>
+	</insert>
 </mapper>

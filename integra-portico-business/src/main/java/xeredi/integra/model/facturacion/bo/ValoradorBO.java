@@ -71,48 +71,6 @@ public class ValoradorBO {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
 
-    /** The srvc dao. */
-    ServicioDAO srvcDAO;
-
-    /** The crgo dao. */
-    CargoDAO crgoDAO;
-
-    /** The prbt dao. */
-    ProcesoDAO prbtDAO;
-
-    /** The rgla dao. */
-    ReglaDAO rglaDAO;
-
-    /** The vlrt dao. */
-    ValoracionTemporalDAO vlrtDAO;
-
-    /** The aspc dao. */
-    AspectoDAO aspcDAO;
-
-    /** The vlra dao. */
-    ValoracionAgregadaDAO vlraDAO;
-
-    /** The vlrc dao. */
-    ValoracionDAO vlrcDAO;
-
-    /** The vlrl dao. */
-    ValoracionLineaDAO vlrlDAO;
-
-    /** The vlrd dao. */
-    ValoracionDetalleDAO vlrdDAO;
-
-    /** The vlri dao. */
-    ValoracionImpuestoDAO vlriDAO;
-
-    /** The contexto dao. */
-    ValoradorContextoDAO contextoDAO;
-
-    /** The srcr dao. */
-    ServicioCargoDAO srcrDAO;
-
-    /** The vlrg dao. */
-    ValoracionCargoDAO vlrgDAO;
-
     /**
      * Valorar servicio.
      *
@@ -131,11 +89,12 @@ public class ValoradorBO {
                 + ", prbtId: " + prbtId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            prbtDAO = session.getMapper(ProcesoDAO.class);
-            crgoDAO = session.getMapper(CargoDAO.class);
-            contextoDAO = session.getMapper(ValoradorContextoDAO.class);
-            aspcDAO = session.getMapper(AspectoDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
+            final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
+            final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
+            final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
             Preconditions.checkNotNull(srvcId);
             Preconditions.checkNotNull(crgoIds);
@@ -243,14 +202,14 @@ public class ValoradorBO {
      *            the contexto vo
      */
     private void aplicarAspecto(final SqlSession session, final ValoradorContextoVO contextoVO) {
-        vlraDAO = session.getMapper(ValoracionAgregadaDAO.class);
-        vlrcDAO = session.getMapper(ValoracionDAO.class);
-        vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-        vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-        vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-        vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-        vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
-        srcrDAO = session.getMapper(ServicioCargoDAO.class);
+        final ValoracionAgregadaDAO vlraDAO = session.getMapper(ValoracionAgregadaDAO.class);
+        final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+        final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+        final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+        final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+        final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+        final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
+        final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
 
         final IgBO igBO = new IgBO();
 
@@ -338,9 +297,9 @@ public class ValoradorBO {
      *            the contexto vo
      */
     private void valorarCargoServicio(final SqlSession session, final ValoradorContextoVO contextoVO) {
-        contextoDAO = session.getMapper(ValoradorContextoDAO.class);
-        rglaDAO = session.getMapper(ReglaDAO.class);
-        vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
+        final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
+        final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
+        final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
         LOG.info("Cargo: " + contextoVO.getCrgo().getCodigo());
 

@@ -1,12 +1,12 @@
 package xeredi.integra.model.metamodelo.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadAccionCriterioVO.
  */
-public final class EntidadAccionCriterioVO {
+public final class EntidadAccionCriterioVO extends BaseCriterioVO {
 
     /** The enti id. */
     private Long entiId;
@@ -15,16 +15,8 @@ public final class EntidadAccionCriterioVO {
     private String path;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -33,7 +25,7 @@ public final class EntidadAccionCriterioVO {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -43,7 +35,7 @@ public final class EntidadAccionCriterioVO {
 
     /**
      * Gets the path.
-     * 
+     *
      * @return the path
      */
     public String getPath() {
@@ -52,7 +44,7 @@ public final class EntidadAccionCriterioVO {
 
     /**
      * Sets the path.
-     * 
+     *
      * @param value
      *            the new path
      */

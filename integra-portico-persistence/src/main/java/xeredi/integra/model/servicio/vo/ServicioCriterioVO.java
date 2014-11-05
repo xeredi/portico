@@ -1,7 +1,5 @@
 package xeredi.integra.model.servicio.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 
@@ -22,14 +20,6 @@ public final class ServicioCriterioVO extends ItemCriterioVO {
 
     /** The estado. */
     private String estado;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the subp.

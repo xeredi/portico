@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
@@ -15,7 +16,6 @@ import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
-import xeredi.integra.model.util.Entidad;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -25,19 +25,6 @@ import com.google.common.base.Preconditions;
  * The Class ManifiestoBO.
  */
 public class ManifiestoBO {
-
-    /** The srvc dao. */
-    ServicioDAO srvcDAO;
-
-    /** The mani dao. */
-    ManifiestoServicioDAO maniDAO;
-
-    /** The mani ssrv dao. */
-    ManifiestoSubservicioDAO maniSsrvDAO;
-
-    /** The resumen dao. */
-    ManifiestoResumenDAO resumenDAO;
-
     /**
      * Bloquear.
      *
@@ -52,9 +39,9 @@ public class ManifiestoBO {
         Preconditions.checkNotNull(srvcId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
@@ -97,9 +84,9 @@ public class ManifiestoBO {
         Preconditions.checkNotNull(srvcId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
@@ -142,9 +129,9 @@ public class ManifiestoBO {
         Preconditions.checkNotNull(srvcId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
@@ -186,9 +173,9 @@ public class ManifiestoBO {
         Preconditions.checkNotNull(srvcId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            srvcDAO = session.getMapper(ServicioDAO.class);
-            maniDAO = session.getMapper(ManifiestoServicioDAO.class);
-            maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+            final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
@@ -229,8 +216,7 @@ public class ManifiestoBO {
         Preconditions.checkNotNull(maniId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
-
+            final ManifiestoResumenDAO resumenDAO = session.getMapper(ManifiestoResumenDAO.class);
             final ResumenTotalesCriterioVO totalCriterioVO = new ResumenTotalesCriterioVO();
 
             totalCriterioVO.setManiId(maniId);

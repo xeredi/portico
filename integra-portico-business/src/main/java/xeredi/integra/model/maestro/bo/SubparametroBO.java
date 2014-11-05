@@ -34,13 +34,6 @@ import com.google.common.base.Preconditions;
  * The Class SubparametroBO.
  */
 public class SubparametroBO {
-
-    /** The sprm dao. */
-    SubparametroDAO sprmDAO;
-
-    /** The spdt dao. */
-    SubparametroDatoDAO spdtDAO;
-
     /**
      * Insert.
      *
@@ -71,9 +64,8 @@ public class SubparametroBO {
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
             final IgBO igBO = new IgBO();
 
             if (sprmDAO.exists(sprm)) {
@@ -120,9 +112,8 @@ public class SubparametroBO {
         Preconditions.checkNotNull(tpsrVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
             final IgBO igBO = new IgBO();
 
             if (sprmDAO.exists(sprm)) {
@@ -186,14 +177,15 @@ public class SubparametroBO {
                     sprm.getItdtMap().put(tpdtId, itdt);
 
                     // throw new Error("No se ha pasado informacion del dato "
-                    // + tpspVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del subparametro: " + sprm);
+                    // + tpspVO.getEntdMap().get(tpdtId).getTpdt().getNombre() + " del subparametro: " +
+                    // sprm);
                 }
             }
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
             if (sprmDAO.existsOverlap(sprm)) {
                 throw new OverlapException(sprm.getEntiId(), sprm);
@@ -230,8 +222,8 @@ public class SubparametroBO {
         Preconditions.checkNotNull(sprm.getSpvr().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-            spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
             spdtDAO.deleteVersion(sprm);
 
@@ -261,8 +253,7 @@ public class SubparametroBO {
         Preconditions.checkNotNull(sprmCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final List<SubparametroVO> sprmList = new ArrayList<>();
             final int count = sprmDAO.selectCount(sprmCriterioVO);
 
@@ -289,8 +280,7 @@ public class SubparametroBO {
         Preconditions.checkNotNull(sprmCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
 
             if (!sprmList.isEmpty()) {
@@ -321,8 +311,7 @@ public class SubparametroBO {
         Preconditions.checkNotNull(fechaVigencia);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            sprmDAO = session.getMapper(SubparametroDAO.class);
-
+            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
             sprmCriterioVO.setId(sprmId);
@@ -356,7 +345,7 @@ public class SubparametroBO {
         Preconditions.checkNotNull(sprmList);
         Preconditions.checkNotNull(sprmCriterioVO);
 
-        spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+        final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
         if (!sprmList.isEmpty()) {
             final Set<Long> spvrIds = new HashSet<>();

@@ -18,6 +18,8 @@ import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
@@ -25,8 +27,6 @@ import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.TipoDato;
 
 // TODO: Auto-generated Javadoc
 /**

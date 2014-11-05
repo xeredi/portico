@@ -36,15 +36,6 @@ import com.google.common.base.Preconditions;
  * The Class SubservicioBO.
  */
 public class SubservicioBO {
-    /** The ssrv dao. */
-    SubservicioDAO ssrvDAO;
-
-    /** The ssdt dao. */
-    SubservicioDatoDAO ssdtDAO;
-
-    /** The ssss dao. */
-    SubservicioSubservicioDAO ssssDAO;
-
     /**
      * Select list.
      *
@@ -61,8 +52,7 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ssrvCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
-
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final int count = ssrvDAO.selectCount(ssrvCriterioVO);
             final List<SubservicioVO> ssrvList = new ArrayList<>();
 
@@ -89,8 +79,7 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ssrvCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
-
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
 
             fillDependencies(session, ssrvList, ssrvCriterioVO, false);
@@ -115,8 +104,7 @@ public class SubservicioBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
-
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
 
             ssrvCriterioVO.setId(ssrvId);
@@ -145,7 +133,7 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ssrvLupaCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
             return ssrvDAO.selectLupaList(ssrvLupaCriterioVO, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
         }
@@ -169,9 +157,9 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ssrvPadreIds);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            ssrvDAO = session.getMapper(SubservicioDAO.class);
-            ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
 
             if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
                 for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
@@ -225,7 +213,7 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ssrvVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
             for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
                 ssdtDAO.update(itdtVO);
@@ -266,7 +254,7 @@ public class SubservicioBO {
         Preconditions.checkNotNull(ssrvList);
         Preconditions.checkNotNull(ssrvCriterioVO);
 
-        ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
         // Datos asociados
         if (!ssrvList.isEmpty()) {

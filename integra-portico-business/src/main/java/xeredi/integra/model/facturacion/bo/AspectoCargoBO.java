@@ -22,7 +22,6 @@ import com.google.common.base.Preconditions;
  * The Class AspectoCargoBO.
  */
 public final class AspectoCargoBO {
-
     /**
      * Select list.
      *

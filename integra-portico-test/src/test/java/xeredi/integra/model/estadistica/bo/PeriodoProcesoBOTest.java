@@ -12,7 +12,7 @@ import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.util.Entidad;
+import xeredi.integra.model.metamodelo.vo.Entidad;
 
 // TODO: Auto-generated Javadoc
 /**
