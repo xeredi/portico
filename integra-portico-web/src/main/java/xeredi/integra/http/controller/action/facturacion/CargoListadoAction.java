@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.facturacion;
 
 import java.util.Calendar;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -32,14 +31,6 @@ public final class CargoListadoAction extends BaseAction implements PaginatedGri
 
     /** The limit. */
     private int limit = ROWS_PER_PAGE_DEFAULT;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // acciones web
 

@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
@@ -36,14 +35,6 @@ public final class SubservicioAction extends ItemAction {
 
     /** The item padres map. */
     private Map<Long, SubservicioVO> itemPadresMap;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // Acciones web
     /**

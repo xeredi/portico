@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -45,24 +44,7 @@ public final class ReglaIncompatibleAction extends BaseAction {
     private final List<LabelValueVO> rgla2List = new ArrayList<>();
 
     /** The fecha vigencia. */
-    private final Date fechaVigencia;
-
-    /**
-     * Instantiates a new regla incompatible action.
-     */
-    public ReglaIncompatibleAction() {
-        super();
-
-        fechaVigencia = Calendar.getInstance().getTime();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+    private Date fechaVigencia;
 
     // acciones web
 

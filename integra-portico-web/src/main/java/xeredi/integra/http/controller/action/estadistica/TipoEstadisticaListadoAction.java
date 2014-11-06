@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.estadistica;
 
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -25,18 +24,10 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
     /** The tppr criterio. */
     private TipoEstadisticaCriterioVO tpesCriterio;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
     // Acciones web
     /**
      * Listado.
-     * 
+     *
      * @return the string
      */
     @Action(value = "tpes-listado")
@@ -49,7 +40,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
     // get / set
     /**
      * Gets the tpes criterio.
-     * 
+     *
      * @return the tpes criterio
      */
     public TipoEstadisticaCriterioVO getTpesCriterio() {
@@ -58,7 +49,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
 
     /**
      * Sets the tpes criterio.
-     * 
+     *
      * @param value
      *            the new tpes criterio
      */
@@ -68,7 +59,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction {
 
     /**
      * Gets the tpess.
-     * 
+     *
      * @return the tpess
      */
     public List<LabelValueVO> getTpess() {

@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.facturacion;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
@@ -21,14 +20,6 @@ public final class ValoracionDetalleAction extends BaseAction {
 
     /** The vlrd. */
     private ValoracionDetalleVO vlrd;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // acciones web
 

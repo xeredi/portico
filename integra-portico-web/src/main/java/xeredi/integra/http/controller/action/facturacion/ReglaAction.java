@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
@@ -50,14 +49,6 @@ public final class ReglaAction extends BaseAction {
 
     /** The enti facturable list. */
     private final List<LabelValueVO> entiFacturableList = new ArrayList<>();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // acciones web
 

@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.estadistica;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -29,14 +28,6 @@ public final class CuadroMesAction extends BaseAction {
 
     /** The pepr id. */
     private PeriodoProcesoVO pepr;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // acciones web
     /**

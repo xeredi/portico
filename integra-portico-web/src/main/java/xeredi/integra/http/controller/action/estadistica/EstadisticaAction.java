@@ -1,6 +1,5 @@
 package xeredi.integra.http.controller.action.estadistica;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
@@ -27,14 +26,6 @@ public final class EstadisticaAction extends ItemAction {
 
     /** The estd. */
     private EstadisticaVO item;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // Acciones web
     /**

@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.struts2.convention.annotation.Action;
 
@@ -53,14 +52,6 @@ public final class AspectoAction extends BaseAction {
 
     /** The enti list. */
     private List<LabelValueVO> entiList;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // acciones web
 

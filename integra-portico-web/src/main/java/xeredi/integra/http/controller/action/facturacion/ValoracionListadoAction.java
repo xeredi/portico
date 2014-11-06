@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -55,23 +54,6 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
 
     /** The aspc list. */
     private final List<LabelValueVO> aspcList = new ArrayList<>();
-
-    /**
-     * The Constructor.
-     */
-    public ValoracionListadoAction() {
-        super();
-
-        vlrcCriterio = new ValoracionCriterioVO();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // acciones web
 

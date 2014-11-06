@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.servicio.escala;
 
 import java.util.Calendar;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
@@ -30,14 +29,6 @@ public final class EscalaAction extends ItemAction {
 
     /** The notificado. */
     private boolean notificado;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // Acciones Web
 

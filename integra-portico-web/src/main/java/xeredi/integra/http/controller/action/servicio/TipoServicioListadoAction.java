@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -28,14 +27,6 @@ public final class TipoServicioListadoAction extends BaseAction {
 
     /** {@link Map} de tipos de subservicio indexados por id de tipo de servicio. */
     private Map<Long, List<LabelValueVO>> tpssMap;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // Acciones web
     /**
