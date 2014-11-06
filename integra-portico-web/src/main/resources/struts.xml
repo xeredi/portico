@@ -9,11 +9,15 @@
 
 	<package name="default" extends="json-default">
 		<interceptors>
-			<interceptor name="app"
-				class="xeredi.integra.http.util.interceptor.AppInterceptor" />
+			<interceptor name="app" class="xeredi.integra.http.util.interceptor.AppInterceptor" />
 			<interceptor-stack name="porticoStack">
 				<interceptor-ref name="timer" />
 				<interceptor-ref name="app" />
+				<interceptor-ref name="json">
+					<param name="excludeNullProperties">true</param>
+					<param name="ignoreHierarchy">false</param>
+					<param name="enableGZIP">false</param>
+				</interceptor-ref>
 				<interceptor-ref name="basicStack" />
 			</interceptor-stack>
 		</interceptors>
