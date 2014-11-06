@@ -1,7 +1,5 @@
 <div ng-if="vm.tpdt">
     <form role="form">
-        <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.tpdt.id" />
-
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 col-lg-2 form-group">
@@ -16,7 +14,7 @@
                         <option />
                     </select>
                 </div>
-                <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <div class="col-sm-2 col-md-2 col-lg-2 form-group">
                     <label translate>tpdt_tpel</label> <select
                         ng-options="cdrf as ('ElementoTipo_' + cdrf | translate) for cdrf in vm.tiposElemento"
                         ng-model="vm.tpdt.tipoElemento" class="form-control input-sm">

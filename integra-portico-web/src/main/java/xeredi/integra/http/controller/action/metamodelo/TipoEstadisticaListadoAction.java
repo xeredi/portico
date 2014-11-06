@@ -3,8 +3,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
@@ -15,7 +14,7 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class TipoEstadisticaListadoAction.
  */
-public final class TipoEstadisticaListadoAction extends BaseAction implements PaginatedGrid {
+public final class TipoEstadisticaListadoAction extends PaginableAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3298081565039330996L;
@@ -25,9 +24,6 @@ public final class TipoEstadisticaListadoAction extends BaseAction implements Pa
 
     /** The tpes criterio. */
     private TipoEstadisticaCriterioVO entiCriterio;
-
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
 
     // Acciones Web
     /**
@@ -51,7 +47,7 @@ public final class TipoEstadisticaListadoAction extends BaseAction implements Pa
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        entiList = tpesBO.selectList(entiCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
+        entiList = tpesBO.selectList(entiCriterio, PaginatedList.getOffset(getPage(), ROWS_PER_PAGE_DEFAULT),
                 ROWS_PER_PAGE_DEFAULT);
 
         return SUCCESS;
@@ -68,26 +64,6 @@ public final class TipoEstadisticaListadoAction extends BaseAction implements Pa
     }
 
     // get / set
-
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
-    }
-
     /**
      * Gets the enti criterio.
      *

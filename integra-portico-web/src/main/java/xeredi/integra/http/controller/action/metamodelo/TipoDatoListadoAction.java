@@ -2,8 +2,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.convention.annotation.Action;
 
-import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.http.controller.action.PaginatedGrid;
+import xeredi.integra.http.controller.action.PaginableAction;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
@@ -15,7 +14,7 @@ import xeredi.util.pagination.PaginatedList;
 /**
  * The Class TipoDatoListadoAction.
  */
-public final class TipoDatoListadoAction extends BaseAction implements PaginatedGrid {
+public final class TipoDatoListadoAction extends PaginableAction {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -9073603323433179379L;
@@ -25,9 +24,6 @@ public final class TipoDatoListadoAction extends BaseAction implements Paginated
 
     /** The tpdt criterio. */
     private TipoDatoCriterioVO tpdtCriterio;
-
-    /** The page. */
-    private int page = PaginatedList.FIRST_PAGE;
 
     // Acciones Web
     /**
@@ -45,7 +41,7 @@ public final class TipoDatoListadoAction extends BaseAction implements Paginated
 
         final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-        tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(page, ROWS_PER_PAGE_DEFAULT),
+        tpdtList = tpdtBO.selectList(tpdtCriterio, PaginatedList.getOffset(getPage(), ROWS_PER_PAGE_DEFAULT),
                 ROWS_PER_PAGE_DEFAULT);
 
         return SUCCESS;
@@ -59,26 +55,6 @@ public final class TipoDatoListadoAction extends BaseAction implements Paginated
     @Action("tpdt-filter")
     public static String filter() {
         return SUCCESS;
-    }
-
-    // get / set
-    /**
-     * Gets the page.
-     *
-     * @return the page
-     */
-    public int getPage() {
-        return page;
-    }
-
-    /**
-     * Sets the page.
-     *
-     * @param value
-     *            the new page
-     */
-    public void setPage(final int value) {
-        page = value;
     }
 
     /**

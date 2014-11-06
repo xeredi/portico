@@ -14,11 +14,15 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -43,6 +47,12 @@ public final class TipoDatoAction extends BaseAction {
     /** The cdrf list. */
     private List<CodigoReferenciaVO> cdrfList;
 
+    /** The tppr list. */
+    private List<LabelValueVO> tpprList;
+
+    /** The tpsr list. */
+    private List<LabelValueVO> tpsrList;
+
     // Acciones Web
     /**
      * Alta.
@@ -53,6 +63,10 @@ public final class TipoDatoAction extends BaseAction {
     public String create() {
         accion = ACCION_EDICION.create;
 
+        tpdt = new TipoDatoVO();
+
+        loadLabelValues();
+
         return SUCCESS;
     }
 
@@ -60,6 +74,8 @@ public final class TipoDatoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpdt-edit")
     public String edit() throws InstanceNotFoundException {
@@ -72,6 +88,8 @@ public final class TipoDatoAction extends BaseAction {
         i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
         accion = ACCION_EDICION.edit;
 
+        loadLabelValues();
+
         return SUCCESS;
     }
 
@@ -79,6 +97,10 @@ public final class TipoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("tpdt-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -127,6 +149,8 @@ public final class TipoDatoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpdt-remove")
     public String remove() throws InstanceNotFoundException {
@@ -144,6 +168,8 @@ public final class TipoDatoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpdt-detail")
     public String detail() throws InstanceNotFoundException {
@@ -160,7 +186,46 @@ public final class TipoDatoAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * Load label values.
+     */
+    private void loadLabelValues() {
+        final EntidadBO entiBO = new EntidadBO();
+        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
+
+        entiCriterioVO.setIdioma(getIdioma());
+
+        {
+            entiCriterioVO.setTipo(TipoEntidad.P);
+            tpprList = entiBO.selectLabelValues(entiCriterioVO);
+        }
+
+        {
+            entiCriterioVO.setTipo(TipoEntidad.T);
+            tpsrList = entiBO.selectLabelValues(entiCriterioVO);
+        }
+    }
+
     // get / set
+
+    /**
+     * Gets the tppr list.
+     *
+     * @return the tppr list
+     */
+    public List<LabelValueVO> getTpprList() {
+        return tpprList;
+    }
+
+    /**
+     * Gets the tpsr list.
+     *
+     * @return the tpsr list
+     */
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
+    }
+
     /**
      * Gets the tphts.
      *

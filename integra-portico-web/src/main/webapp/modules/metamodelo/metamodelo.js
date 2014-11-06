@@ -317,8 +317,6 @@ function tpdtGridController($http, $location, $routeParams, $modal,
 	vm.page = $routeParams.page ? $routeParams.page : 1;
 
 	function search() {
-		console.log("search: " + vm.page);
-
 		$http.post("metamodelo/tpdt-list.action", {
 			tpdtCriterio : vm.tpdtCriterio,
 			page : vm.page,
@@ -329,14 +327,10 @@ function tpdtGridController($http, $location, $routeParams, $modal,
 			$location.search({
 				page : vm.page
 			}).replace();
-
-			console.log("page: " + vm.page);
 		});
 	}
 
 	function pageChanged() {
-		console.log("pageChanged: " + vm.page);
-
 		search();
 	}
 
@@ -412,17 +406,10 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
 		vm.accion = data.accion;
 		vm.tphts = data.tphts;
 		vm.tiposElemento = data.tiposElemento;
+
+		vm.entiTpprList = data.tpprList;
+		vm.entiTpsrList = data.tpsrList;
 	});
-
-	$http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=P").success(
-			function(data) {
-				vm.entiTpprList = data.lvList;
-			});
-
-	$http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(
-			function(data) {
-				vm.entiTpsrList = data.lvList;
-			});
 
 	pageTitleService.setTitle("tpdt", "page_create");
 }
@@ -480,16 +467,9 @@ function tpdtEditController($http, $routeParams, pageTitleService) {
 				vm.accion = data.accion;
 				vm.tphts = data.tphts;
 				vm.tiposElemento = data.tiposElemento;
-			});
 
-	$http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=P").success(
-			function(data) {
-				vm.entiTpprList = data.lvList;
-			});
-
-	$http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=T").success(
-			function(data) {
-				vm.entiTpsrList = data.lvList;
+				vm.entiTpprList = data.tpprList;
+				vm.entiTpsrList = data.tpsrList;
 			});
 
 	pageTitleService.setTitle("tpdt", "page_edit");
