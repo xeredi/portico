@@ -3,44 +3,52 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO">
-    <resultMap type="EntidadTipoDatoVO" id="ResultMap">
-        <id column="entd_enti_pk" property="entiId" />
-        <id column="entd_tpdt_pk" />
-        <result column="entd_grupo" property="grupo" />
-        <result column="entd_fila" property="fila" />
-        <result column="entd_orden" property="orden" />
-        <result column="entd_span" property="span" />
-        <result column="entd_obligatorio" property="obligatorio" />
-        <result column="entd_gridable" property="gridable" />
-        <result column="entd_filtrable" property="filtrable" />
-        <result column="entd_valor_defecto" property="valorDefecto" />
-        <result column="entd_etiqueta" property="etiqueta" />
+	<resultMap type="EntidadTipoDatoVO" id="ResultMap">
+		<id column="entd_pk" />
 
-        <association property="tpdt" javaType="TipoDatoVO">
-            <id column="tpdt_pk" property="id" />
-            <result column="tpdt_tipo_elemento" property="tipoElemento" />
-            <result column="tpdt_tipo_html" property="tpht" />
-            <result column="tpdt_nombre" property="nombre" />
+		<result column="entd_pk" property="id" />
+		<result column="entd_enti_pk" property="entiId" />
+		<result column="entd_grupo" property="grupo" />
+		<result column="entd_fila" property="fila" />
+		<result column="entd_orden" property="orden" />
+		<result column="entd_span" property="span" />
+		<result column="entd_obligatorio" property="obligatorio" />
+		<result column="entd_gridable" property="gridable" />
+		<result column="entd_filtrable" property="filtrable" />
+		<result column="entd_valor_defecto" property="valorDefecto" />
+		<result column="entd_etiqueta" property="etiqueta" />
 
-            <association property="enti" javaType="EntidadVO">
-                <result column="enti_pk" property="id" />
-                <result column="enti_codigo" property="codigo" />
-                <result column="enti_tipo" property="tipo" />
-                <result column="enti_nombre" property="nombre" />
-            </association>
-        </association>
-    </resultMap>
+		<association property="tpdt" javaType="TipoDatoVO">
+			<id column="tpdt_pk" property="id" />
+			<result column="tpdt_tipo_elemento" property="tipoElemento" />
+			<result column="tpdt_tipo_html" property="tpht" />
+			<result column="tpdt_nombre" property="nombre" />
 
-    <sql id="SelectPrefix">
+			<association property="enti" javaType="EntidadVO">
+				<result column="enti_pk" property="id" />
+				<result column="enti_codigo" property="codigo" />
+				<result column="enti_tipo" property="tipo" />
+				<result column="enti_nombre" property="nombre" />
+			</association>
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio
-            , entd_gridable, entd_filtrable, entd_valor_defecto, entd_etiqueta
+            entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio
+            , entd_gridable, entd_filtrable, entd_valor_defecto
             , tpdt_pk, tpdt_tipo_elemento, tpdt_tipo_html
             , enti_pk, enti_codigo, enti_tipo
     ]]>
-        <if test="idioma != null">
+		<if test="idioma != null">
         <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'entd'
+                    AND i18n_ext_pk = entd_pk
+                    AND i18n_lang = #{idioma}
+            ) AS entd_etiqueta
             , (
                 SELECT i18n_text FROM tbl_i18n_i18n
                 WHERE i18n_pref = 'tpdt'
@@ -54,7 +62,7 @@
                     AND i18n_lang = #{idioma}
             ) AS enti_nombre
         ]]>
-        </if>
+		</if>
     <![CDATA[
         FROM
             tbl_entidad_tipo_dato_entd entd
@@ -63,59 +71,59 @@
             LEFT JOIN tbl_entidad_enti enti ON
                 enti.enti_pk = tpdt.tpdt_enti_pk
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            entd_enti_pk = #{entiId}
-            <if test="tpdtId != null">
-                AND entd_tpdt_pk = #{tpdtId}
-            </if>
-        </where>
-    </sql>
+	<sql id="SelectWhere">
+		<where>
+			entd_enti_pk = #{entiId}
+			<if test="tpdtId != null">
+				AND entd_tpdt_pk = #{tpdtId}
+			</if>
+		</where>
+	</sql>
 
-    <select id="selectAll" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
+	<select id="selectAll" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
         <![CDATA[
         ORDER BY entd.entd_enti_pk, entd.entd_grupo, entd.entd_fila, entd.entd_orden
         ]]>
-    </select>
+	</select>
 
-    <select id="selectList" resultMap="ResultMap" parameterType="EntidadTipoDatoCriterioVO">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+	<select id="selectList" resultMap="ResultMap" parameterType="EntidadTipoDatoCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
         <![CDATA[
         ORDER BY entd.entd_enti_pk, entd.entd_grupo, entd.entd_fila, entd.entd_orden
         ]]>
-    </select>
+	</select>
 
-    <select id="selectObject" resultMap="ResultMap" parameterType="EntidadTipoDatoCriterioVO">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectObject" resultMap="ResultMap" parameterType="EntidadTipoDatoCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="exists" parameterType="EntidadTipoDatoVO" resultType="boolean">
+	<select id="exists" parameterType="EntidadTipoDatoVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_entidad_tipo_dato_entd entd
         WHERE entd.entd_enti_pk = #{entiId} AND entd.entd_tpdt_pk = #{tpdt.id}
         ]]>
-    </select>
+	</select>
 
-    <insert id="insert" parameterType="EntidadTipoDatoVO">
+	<insert id="insert" parameterType="EntidadTipoDatoVO">
         <![CDATA[
         INSERT INTO tbl_entidad_tipo_dato_entd (
-            entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable
-            , entd_filtrable, entd_valor_defecto, entd_etiqueta)
-        VALUES (#{entiId}, #{tpdt.id}, #{grupo}, #{fila}, #{orden}, #{span}
+            entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable
+            , entd_filtrable, entd_valor_defecto)
+        VALUES (#{id}, #{entiId}, #{tpdt.id}, #{grupo}, #{fila}, #{orden}, #{span}
             , #{obligatorio, jdbcType=INTEGER, javaType=Boolean}
             , #{gridable, jdbcType=INTEGER, javaType=Boolean}
             , #{filtrable, jdbcType=INTEGER, javaType=Boolean}
-            , #{valorDefecto}, #{etiqueta})
+            , #{valorDefecto})
         ]]>
-    </insert>
+	</insert>
 
-    <update id="update" parameterType="EntidadTipoDatoVO">
+	<update id="update" parameterType="EntidadTipoDatoVO">
         <![CDATA[
         UPDATE tbl_entidad_tipo_dato_entd SET
             entd_grupo = #{grupo}
@@ -126,27 +134,20 @@
             , entd_gridable = #{gridable, jdbcType=INTEGER, javaType=Boolean}
             , entd_filtrable = #{filtrable, jdbcType=INTEGER, javaType=Boolean}
             , entd_valor_defecto = #{valorDefecto}
-            , entd_etiqueta = #{etiqueta}
-        WHERE entd_enti_pk = #{entiId} AND entd_tpdt_pk = #{tpdt.id}
+        WHERE entd_pk = #{id}
         ]]>
-    </update>
+	</update>
 
-    <delete id="delete" parameterType="EntidadTipoDatoVO">
+	<delete id="delete" parameterType="EntidadTipoDatoVO">
         <![CDATA[
         DELETE FROM tbl_entidad_tipo_dato_entd
         WHERE
-            entd_enti_pk = #{entiId}
-            AND entd_tpdt_pk = #{tpdtId}
+            entd_pk = #{id}
         ]]>
-    </delete>
+	</delete>
 
-    <delete id="deleteList" parameterType="EntidadTipoDatoCriterioVO">
-        DELETE FROM tbl_entidad_tipo_dato_entd
-        <where>
-            entd_enti_pk = #{entiId}
-            <if test="tpdtId != null">
-                AND entd_tpdt_pk = #{tpdtId}
-            </if>
-        </where>
-    </delete>
+	<delete id="deleteList" parameterType="EntidadTipoDatoCriterioVO">
+		DELETE FROM tbl_entidad_tipo_dato_entd
+		<include refid="SelectWhere" />
+	</delete>
 </mapper>

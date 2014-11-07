@@ -1276,12 +1276,10 @@ function entdDetailController($http, $routeParams, pageTitleService) {
 
 	function remove() {
 		if (confirm("Are you sure?")) {
-			$http.get(
-					"metamodelo/entd-remove.action?entd.entiId="
-							+ vm.entd.entiId + "&entd.tpdt.id="
-							+ vm.entd.tpdt.id).success(function(data) {
-				window.history.back();
-			});
+			$http.get("metamodelo/entd-remove.action?entd.id=" + vm.entd.id)
+					.success(function(data) {
+						window.history.back();
+					});
 		}
 	}
 
@@ -1290,6 +1288,7 @@ function entdDetailController($http, $routeParams, pageTitleService) {
 					+ "&entd.tpdt.id=" + $routeParams.tpdtId).success(
 			function(data) {
 				vm.entd = data.entd;
+				vm.i18nMap = data.i18nMap;
 			});
 
 	pageTitleService.setTitle("entd", "page_detail");
@@ -1304,6 +1303,7 @@ function entdEditController($http, $routeParams, pageTitleService) {
 	function save() {
 		$http.post("metamodelo/entd-save.action", {
 			entd : vm.entd,
+			i18nMap : vm.i18nMap,
 			accion : vm.accion
 		}).success(function(data) {
 			setTimeout(function() {
@@ -1321,6 +1321,7 @@ function entdEditController($http, $routeParams, pageTitleService) {
 					+ "&entd.tpdt.id=" + $routeParams.tpdtId).success(
 			function(data) {
 				vm.entd = data.entd;
+				vm.i18nMap = data.i18nMap;
 				vm.accion = data.accion;
 				vm.tpdtList = data.tpdtList;
 				vm.engdList = data.engdList;
@@ -1338,6 +1339,7 @@ function entdCreateController($http, $location, $routeParams, pageTitleService) 
 	function save() {
 		$http.post("metamodelo/entd-save.action", {
 			entd : vm.entd,
+			i18nMap : vm.i18nMap,
 			accion : vm.accion
 		}).success(
 				function(data) {

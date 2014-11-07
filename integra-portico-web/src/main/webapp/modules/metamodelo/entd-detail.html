@@ -18,10 +18,6 @@
                         ng-bind="'tpdt_' + vm.entd.tpdt.id | translate"></a>
                 </p>
             </div>
-            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                <label translate>entd_etiqueta</label>
-                <p class="form-control-static" ng-bind="vm.entd.etiqueta"></p>
-            </div>
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label translate>tpdt_tpel</label>
                 <p class="form-control-static" ng-bind="vm.entd.tpdt.tipoElemento"></p>
@@ -83,5 +79,7 @@
                 </p>
             </div>
         </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
     </div>
 </div>

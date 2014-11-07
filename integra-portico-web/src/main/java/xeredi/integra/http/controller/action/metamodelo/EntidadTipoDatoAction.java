@@ -2,13 +2,17 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.I18nPrefix;
+import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.integra.model.metamodelo.bo.EntidadTipoDatoBO;
@@ -33,6 +37,9 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
     /** The entd form. */
     private EntidadTipoDatoVO entd;
+
+    /** The i18n map. */
+    private Map<String, I18nVO> i18nMap;
 
     /** The engd list. */
     private final List<LabelValueVO> engdList = new ArrayList<>();
@@ -62,6 +69,8 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("entd-edit")
     public String edit() throws InstanceNotFoundException {
@@ -75,6 +84,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.entd, entd.getId());
 
         loadLabelValues();
 
@@ -85,6 +95,10 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("entd-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -99,7 +113,8 @@ public final class EntidadTipoDatoAction extends BaseAction {
             Preconditions.checkNotNull(entd.getTpdt().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_etiqueta, entd.getEtiqueta());
+        FieldValidator.validateI18n(this, i18nMap);
+
         FieldValidator.validateRequired(this, MessageI18nKey.entd_grupo, entd.getGrupo());
         FieldValidator.validateRequired(this, MessageI18nKey.entd_fila, entd.getFila());
         FieldValidator.validateRequired(this, MessageI18nKey.entd_orden, entd.getOrden());
@@ -114,11 +129,11 @@ public final class EntidadTipoDatoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                entdBO.insert(entd);
+                entdBO.insert(entd, i18nMap);
 
                 break;
             case edit:
-                entdBO.update(entd);
+                entdBO.update(entd, i18nMap);
 
                 break;
             default:
@@ -133,13 +148,13 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("entd-remove")
     public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(entd);
-        Preconditions.checkNotNull(entd.getEntiId());
-        Preconditions.checkNotNull(entd.getTpdt());
-        Preconditions.checkNotNull(entd.getTpdt().getId());
+        Preconditions.checkNotNull(entd.getId());
 
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
@@ -152,6 +167,8 @@ public final class EntidadTipoDatoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("entd-detail")
     public String detail() throws InstanceNotFoundException {
@@ -163,6 +180,7 @@ public final class EntidadTipoDatoAction extends BaseAction {
         final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 
         entd = entdBO.select(entd.getEntiId(), entd.getTpdt().getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.entd, entd.getId());
 
         return SUCCESS;
     }
@@ -184,6 +202,25 @@ public final class EntidadTipoDatoAction extends BaseAction {
     }
 
     // get/set
+
+    /**
+     * Gets the i18n map.
+     *
+     * @return the i18n map
+     */
+    public Map<String, I18nVO> getI18nMap() {
+        return i18nMap;
+    }
+
+    /**
+     * Sets the i18n map.
+     *
+     * @param value
+     *            the value
+     */
+    public void setI18nMap(final Map<String, I18nVO> value) {
+        i18nMap = value;
+    }
 
     /**
      * Gets the engd list.
