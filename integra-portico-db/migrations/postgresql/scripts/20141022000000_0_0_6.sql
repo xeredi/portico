@@ -65,8 +65,11 @@ ALTER TABLE portico.tbl_entidad_grupo_dato_engd DROP COLUMN engd_etiqueta CASCAD
 
 
 
+
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+
 
 -- i18n de grupos de datos de entidades
 ALTER TABLE portico.tbl_entidad_grupo_dato_engd ADD engd_etiqueta VARCHAR(255)\

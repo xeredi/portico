@@ -44,6 +44,7 @@ public class I18nJs {
 
         i18nPrefixSet.add(I18nPrefix.enti);
         i18nPrefixSet.add(I18nPrefix.engd);
+        i18nPrefixSet.add(I18nPrefix.entd);
         i18nPrefixSet.add(I18nPrefix.tpdt);
         i18nPrefixSet.add(I18nPrefix.cdrf);
 
