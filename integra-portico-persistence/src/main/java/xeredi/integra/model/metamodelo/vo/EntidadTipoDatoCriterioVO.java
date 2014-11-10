@@ -1,15 +1,15 @@
 package xeredi.integra.model.metamodelo.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoParametroTipoDatoCriterioVO.
  */
-public final class EntidadTipoDatoCriterioVO {
+public final class EntidadTipoDatoCriterioVO extends BaseCriterioVO {
 
-    /** The idioma. */
-    private String idioma;
+    /** The id. */
+    private Long id;
 
     /** The tppr id. */
     private Long entiId;
@@ -18,11 +18,22 @@ public final class EntidadTipoDatoCriterioVO {
     private Long tpdtId;
 
     /**
-     * {@inheritDoc}
+     * Gets the id.
+     *
+     * @return the id
      */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -61,24 +72,5 @@ public final class EntidadTipoDatoCriterioVO {
      */
     public void setEntiId(final Long value) {
         entiId = value;
-    }
-
-    /**
-     * Gets the idioma.
-     *
-     * @return the idioma
-     */
-    public String getIdioma() {
-        return idioma;
-    }
-
-    /**
-     * Sets the idioma.
-     *
-     * @param value
-     *            the new idioma
-     */
-    public void setIdioma(final String value) {
-        idioma = value;
     }
 }

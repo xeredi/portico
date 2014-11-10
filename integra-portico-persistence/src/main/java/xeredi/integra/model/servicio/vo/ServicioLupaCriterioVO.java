@@ -1,16 +1,12 @@
 package xeredi.integra.model.servicio.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioLupaCriterioVO.
  */
-public final class ServicioLupaCriterioVO {
-
-    /** The limit. */
-    private Integer limit;
-
+public final class ServicioLupaCriterioVO extends BaseCriterioVO {
     /** The enti id. */
     private Long entiId;
 
@@ -27,35 +23,8 @@ public final class ServicioLupaCriterioVO {
     private String numero;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the limit.
-     * 
-     * @return the limit
-     */
-    public Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     * 
-     * @param value
-     *            the new limit
-     */
-    public void setLimit(final Integer value) {
-        limit = value;
-    }
-
-    /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -64,7 +33,7 @@ public final class ServicioLupaCriterioVO {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -74,7 +43,7 @@ public final class ServicioLupaCriterioVO {
 
     /**
      * Gets the subpuerto.
-     * 
+     *
      * @return the subpuerto
      */
     public final String getSubpuerto() {
@@ -83,17 +52,17 @@ public final class ServicioLupaCriterioVO {
 
     /**
      * Sets the subpuerto.
-     * 
+     *
      * @param value
      *            the new subpuerto
      */
-    public final void setSubpuerto(String value) {
-        this.subpuerto = value;
+    public final void setSubpuerto(final String value) {
+        subpuerto = value;
     }
 
     /**
      * Gets the anno.
-     * 
+     *
      * @return the anno
      */
     public final String getAnno() {
@@ -102,17 +71,17 @@ public final class ServicioLupaCriterioVO {
 
     /**
      * Sets the anno.
-     * 
+     *
      * @param value
      *            the new anno
      */
-    public final void setAnno(String value) {
-        this.anno = value;
+    public final void setAnno(final String value) {
+        anno = value;
     }
 
     /**
      * Gets the numero.
-     * 
+     *
      * @return the numero
      */
     public final String getNumero() {
@@ -121,17 +90,17 @@ public final class ServicioLupaCriterioVO {
 
     /**
      * Sets the numero.
-     * 
+     *
      * @param value
      *            the new numero
      */
-    public final void setNumero(String value) {
-        this.numero = value;
+    public final void setNumero(final String value) {
+        numero = value;
     }
 
     /**
      * Gets the texto busqueda.
-     * 
+     *
      * @return the texto busqueda
      */
     public final String getTextoBusqueda() {
@@ -140,12 +109,12 @@ public final class ServicioLupaCriterioVO {
 
     /**
      * Sets the texto busqueda.
-     * 
+     *
      * @param value
      *            the new texto busqueda
      */
-    public final void setTextoBusqueda(String value) {
-        this.textoBusqueda = value;
+    public final void setTextoBusqueda(final String value) {
+        textoBusqueda = value;
     }
 
 }

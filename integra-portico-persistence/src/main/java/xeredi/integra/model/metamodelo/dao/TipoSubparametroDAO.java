@@ -66,7 +66,7 @@ public interface TipoSubparametroDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterioVO, final RowBounds bounds);
+    List<TipoSubparametroVO> selectPaginatedList(final TipoSubparametroCriterioVO tpspCriterioVO, final RowBounds bounds);
 
     /**
      * Select.

@@ -2,8 +2,7 @@ package xeredi.integra.model.facturacion.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
@@ -11,7 +10,7 @@ import xeredi.integra.model.servicio.vo.ServicioVO;
 /**
  * The Class ValoracionCriterioVO.
  */
-public final class ValoracionCriterioVO {
+public final class ValoracionCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
@@ -33,14 +32,6 @@ public final class ValoracionCriterioVO {
 
     /** The crgo. */
     private Long crgoId;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the id.

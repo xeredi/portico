@@ -1,62 +1,72 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>web</artifactId>
-    <packaging>war</packaging>
-    <parent>
-        <groupId>integra-portico</groupId>
-        <artifactId>pom</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../integra-portico-pom</relativePath>
-    </parent>
-    <name>Web</name>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>web</artifactId>
+	<packaging>war</packaging>
+	<parent>
+		<groupId>integra-portico</groupId>
+		<artifactId>pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../integra-portico-pom</relativePath>
+	</parent>
+	<name>Web</name>
 
-    <build>
-        <directory>target/${profile-id}</directory>
-    </build>
+	<build>
+		<directory>target/${profile-id}</directory>
+	</build>
 
-    <dependencies>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>integra-portico</groupId>
-            <artifactId>business</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-core</artifactId>
-            <version>2.3.16.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-convention-plugin</artifactId>
-            <version>2.3.16.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-json-plugin</artifactId>
-            <version>2.3.16.3</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-validator</groupId>
-            <artifactId>commons-validator</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <!-- <dependency> <groupId>org.webjars</groupId> <artifactId>jquery</artifactId> <version>2.1.1</version> </dependency>
-            <dependency> <groupId>org.webjars</groupId> <artifactId>bootstrap</artifactId> <version>3.2.0</version> </dependency> <dependency>
-            <groupId>org.webjars</groupId> <artifactId>angularjs</artifactId> <version>1.2.22</version> </dependency> <dependency> <groupId>org.webjars</groupId>
-            <artifactId>angular-ui-bootstrap</artifactId> <version>0.10.0-1</version> </dependency> <dependency> <groupId>org.webjars</groupId>
-            <artifactId>angular-translate</artifactId> <version>2.0.1</version> </dependency> <dependency> <groupId>org.webjars</groupId>
-            <artifactId>typeaheadjs</artifactId> <version>0.9.3</version> </dependency> -->
-        <!-- Para el typeahead 'formateado' -->
-        <!-- <dependency> <groupId>org.webjars</groupId> <artifactId>hoganjs</artifactId> <version>2.0.0</version> </dependency> -->
-        <!-- Para el calendario -->
-        <!-- <dependency> <groupId>org.webjars</groupId> <artifactId>momentjs</artifactId> <version>2.5.0</version> </dependency> -->
-    </dependencies>
+		<dependency>
+			<groupId>integra-portico</groupId>
+			<artifactId>business</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-core</artifactId>
+			<version>2.3.16.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-convention-plugin</artifactId>
+			<version>2.3.16.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>2.3.16.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.webjars</groupId> <artifactId>jquery</artifactId>
+			<version>2.1.1</version> </dependency> <dependency> <groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId> <version>3.2.0</version> </dependency>
+			<dependency> <groupId>org.webjars</groupId> <artifactId>angularjs</artifactId>
+			<version>1.2.22</version> </dependency> <dependency> <groupId>org.webjars</groupId>
+			<artifactId>angular-ui-bootstrap</artifactId> <version>0.10.0-1</version>
+			</dependency> <dependency> <groupId>org.webjars</groupId> <artifactId>angular-translate</artifactId>
+			<version>2.0.1</version> </dependency> <dependency> <groupId>org.webjars</groupId>
+			<artifactId>typeaheadjs</artifactId> <version>0.9.3</version> </dependency> -->
+		<!-- Para el typeahead 'formateado' -->
+		<!-- <dependency> <groupId>org.webjars</groupId> <artifactId>hoganjs</artifactId>
+			<version>2.0.0</version> </dependency> -->
+		<!-- Para el calendario -->
+		<!-- <dependency> <groupId>org.webjars</groupId> <artifactId>momentjs</artifactId>
+			<version>2.5.0</version> </dependency> -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-juli</artifactId>
+			<version>8.0.14</version>
+		</dependency>
+	</dependencies>
 </project>

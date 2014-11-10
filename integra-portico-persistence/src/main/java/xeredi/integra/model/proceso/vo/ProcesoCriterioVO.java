@@ -2,15 +2,13 @@ package xeredi.integra.model.proceso.vo;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import xeredi.util.pagination.Criterio;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoCriterioVO.
  */
-public final class ProcesoCriterioVO implements Criterio {
+public final class ProcesoCriterioVO extends BaseCriterioVO {
 
     /** The modulo. */
     private ProcesoModulo modulo;
@@ -26,14 +24,6 @@ public final class ProcesoCriterioVO implements Criterio {
 
     /** The falta max. */
     private Date faltaMax;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the modulo.

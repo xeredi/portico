@@ -6,12 +6,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.TipoDato;
 import xeredi.integra.model.util.grammar.PathBaseVisitor;
 
 import com.google.common.base.Preconditions;

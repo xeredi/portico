@@ -3,14 +3,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.proceso.dao.ProcesoMensajeDAO">
-    <resultMap type="ProcesoMensajeVO" id="ResultMap">
-        <id column="prmn_prbt_pk" property="prbtId" />
-        <result column="prmn_nivel" property="nivel" />
-        <result column="prmn_codigo" property="codigo" />
-        <result column="prmn_mensaje" property="mensaje" />
-    </resultMap>
+	<resultMap type="ProcesoMensajeVO" id="ResultMap">
+		<id column="prmn_prbt_pk" property="prbtId" />
+		<result column="prmn_nivel" property="nivel" />
+		<result column="prmn_codigo" property="codigo" />
+		<result column="prmn_mensaje" property="mensaje" />
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
         prmn_prbt_pk
@@ -20,40 +20,45 @@
     FROM
         tbl_proceso_mensaje_prmn prmn
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            prmn_prbt_pk = #{value}
-        </where>
-    </sql>
+	<sql id="SelectWhere">
+		<where>
+			prmn_prbt_pk = #{value}
+		</where>
+	</sql>
 
-    <select id="selectList" parameterType="Long" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectList" parameterType="Long" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="count" parameterType="Long" resultType="Integer">
+	<select id="selectPaginatedList" parameterType="Long" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="count" parameterType="Long" resultType="Integer">
         <![CDATA[
         SELECT COUNT(1)
         FROM
             tbl_proceso_mensaje_prmn prmn
         ]]>
-        <include refid="SelectWhere" />
-    </select>
+		<include refid="SelectWhere" />
+	</select>
 
-    <insert id="insert" parameterType="ProcesoMensajeVO">
+	<insert id="insert" parameterType="ProcesoMensajeVO">
         <![CDATA[
         INSERT INTO tbl_proceso_mensaje_prmn (prmn_prbt_pk, prmn_nivel, prmn_codigo, prmn_mensaje)
         VALUES (#{prbtId}, #{nivel}, #{codigo}, #{mensaje})
         ]]>
-    </insert>
+	</insert>
 
-    <delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_proceso_mensaje_prmn
         WHERE
             prmn_prbt_pk = #{value}
         ]]>
-    </delete>
+	</delete>
 </mapper>

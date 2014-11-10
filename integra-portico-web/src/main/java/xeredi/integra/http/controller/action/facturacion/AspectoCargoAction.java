@@ -45,7 +45,7 @@ public final class AspectoCargoAction extends BaseAction {
      * @return the string
      */
     @Action("ascr-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getId());
 
@@ -53,13 +53,9 @@ public final class AspectoCargoAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        try {
-            final AspectoCargoBO ascrBO = new AspectoCargoBO();
+        final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-            ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
 
         return SUCCESS;
     }
@@ -70,7 +66,7 @@ public final class AspectoCargoAction extends BaseAction {
      * @return the string
      */
     @Action("ascr-create")
-    public String create() {
+    public String create() throws InstanceNotFoundException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getAspcId());
 
@@ -80,21 +76,15 @@ public final class AspectoCargoAction extends BaseAction {
 
         accion = ACCION_EDICION.create;
 
-        try {
-            final AspectoBO aspcBO = new AspectoBO();
+        final AspectoBO aspcBO = new AspectoBO();
+        final AspectoVO aspc = aspcBO.select(ascr.getAspcId(), getFechaVigencia(), getIdioma());
+        final CargoBO crgoBO = new CargoBO();
+        final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
 
-            final AspectoVO aspc = aspcBO.select(ascr.getAspcId(), getFechaVigencia(), getIdioma());
+        crgoCriterioVO.setTpsrId(aspc.getTpsr().getId());
+        crgoCriterioVO.setFechaVigencia(getFechaVigencia());
 
-            final CargoBO crgoBO = new CargoBO();
-            final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
-
-            crgoCriterioVO.setTpsrId(aspc.getTpsr().getId());
-            crgoCriterioVO.setFechaVigencia(getFechaVigencia());
-
-            crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
 
         return SUCCESS;
     }
@@ -105,7 +95,7 @@ public final class AspectoCargoAction extends BaseAction {
      * @return the string
      */
     @Action("ascr-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getId());
 
@@ -113,15 +103,10 @@ public final class AspectoCargoAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final AspectoCargoBO ascrBO = new AspectoCargoBO();
+
+        ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final AspectoCargoBO ascrBO = new AspectoCargoBO();
-
-            ascr = ascrBO.select(ascr.getId(), getFechaVigencia());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -132,7 +117,7 @@ public final class AspectoCargoAction extends BaseAction {
      * @return the string
      */
     @Action("ascr-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(ascr);
 
@@ -157,21 +142,11 @@ public final class AspectoCargoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                try {
-                    ascrBO.insert(ascr);
-                } catch (final OverlapException ex) {
-                    addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-                }
+                ascrBO.insert(ascr);
 
                 break;
             case edit:
-                try {
-                    ascrBO.update(ascr);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                } catch (final OverlapException ex) {
-                    addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-                }
+                ascrBO.update(ascr);
 
                 break;
 
@@ -189,18 +164,14 @@ public final class AspectoCargoAction extends BaseAction {
      * @return the string
      */
     @Action("ascr-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getAscv());
         Preconditions.checkNotNull(ascr.getAscv().getId());
 
-        try {
-            final AspectoCargoBO ascrBO = new AspectoCargoBO();
+        final AspectoCargoBO ascrBO = new AspectoCargoBO();
 
-            ascrBO.delete(ascr);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        ascrBO.delete(ascr);
 
         return SUCCESS;
     }

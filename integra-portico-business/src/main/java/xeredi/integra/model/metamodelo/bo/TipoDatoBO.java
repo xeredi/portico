@@ -36,13 +36,6 @@ import com.google.common.base.Preconditions;
  * The Class TipoDatoAdminBO.
  */
 public class TipoDatoBO {
-
-    /** The tpdt dao. */
-    TipoDatoDAO tpdtDAO;
-
-    /** The cdrf dao. */
-    CodigoReferenciaDAO cdrfDAO;
-
     /**
      * Select.
      *
@@ -59,9 +52,8 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
-
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
             final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
 
             tpdtCriterioVO.setId(id);
@@ -110,7 +102,7 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
             if (tpdtDAO.exists(tpdtVO)) {
                 throw new DuplicateInstanceException(MessageI18nKey.tpdt, tpdtVO);
@@ -141,7 +133,7 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
             if (tpdtDAO.update(tpdtVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tpdt, tpdtVO.getCodigo());
@@ -166,8 +158,8 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
             I18nBO.deleteMap(session, I18nPrefix.tpdt, tpdtVO.getId());
 
@@ -192,7 +184,7 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
 
             return tpdtDAO.selectList(tpdtCriterioVO);
         }
@@ -214,13 +206,12 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
-
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final int count = tpdtDAO.count(tpdtCriterioVO);
             final List<TipoDatoVO> tpdtList = new ArrayList<>();
 
             if (count > offset) {
-                tpdtList.addAll(tpdtDAO.selectList(tpdtCriterioVO, new RowBounds(offset, limit)));
+                tpdtList.addAll(tpdtDAO.selectPaginatedList(tpdtCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(tpdtList, offset, limit, count);
@@ -238,8 +229,7 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
-
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoDatoVO tpdt : tpdtDAO.selectList(tpdtCriterioVO)) {
@@ -261,8 +251,8 @@ public class TipoDatoBO {
         Preconditions.checkNotNull(tpdtCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpdtDAO = session.getMapper(TipoDatoDAO.class);
-            cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
+            final TipoDatoDAO tpdtDAO = session.getMapper(TipoDatoDAO.class);
+            final CodigoReferenciaDAO cdrfDAO = session.getMapper(CodigoReferenciaDAO.class);
 
             final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterioVO);
             final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();

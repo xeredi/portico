@@ -13,7 +13,7 @@ import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
-import xeredi.integra.model.util.Entidad;
+import xeredi.integra.model.metamodelo.vo.Entidad;
 
 // TODO: Auto-generated Javadoc
 /**

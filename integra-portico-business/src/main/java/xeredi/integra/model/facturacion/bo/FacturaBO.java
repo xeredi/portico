@@ -52,43 +52,6 @@ import com.google.common.base.Preconditions;
  * The Class FacturaBO.
  */
 public class FacturaBO {
-
-    /** The fctr dao. */
-    FacturaDAO fctrDAO;
-
-    /** The fctg dao. */
-    FacturaCargoDAO fctgDAO;
-
-    /** The fcti dao. */
-    FacturaImpuestoDAO fctiDAO;
-
-    /** The fcts dao. */
-    FacturaServicioDAO fctsDAO;
-
-    /** The fctl dao. */
-    FacturaLineaDAO fctlDAO;
-
-    /** The fctd dao. */
-    FacturaDetalleDAO fctdDAO;
-
-    /** The fcsr dao. */
-    FacturaSerieDAO fcsrDAO;
-
-    /** The vlrc dao. */
-    ValoracionDAO vlrcDAO;
-
-    /** The vlri dao. */
-    ValoracionImpuestoDAO vlriDAO;
-
-    /** The vlrg dao. */
-    ValoracionCargoDAO vlrgDAO;
-
-    /** The vlrl dao. */
-    ValoracionLineaDAO vlrlDAO;
-
-    /** The vlrd dao. */
-    ValoracionDetalleDAO vlrdDAO;
-
     /**
      * Anular.
      *
@@ -107,13 +70,13 @@ public class FacturaBO {
         Preconditions.checkNotNull(fcsrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctrDAO = session.getMapper(FacturaDAO.class);
-            fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-            fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            fctgDAO = session.getMapper(FacturaCargoDAO.class);
-            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-            fctlDAO = session.getMapper(FacturaLineaDAO.class);
-            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
+            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
+            final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
+            final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
+            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
 
             final boolean existsValoracionPosterior = fctrDAO.existsValoracionPosterior(fctrId);
             final boolean existsFacturaPosterior = fctrDAO.existsFacturaPosterior(fctrId);
@@ -238,17 +201,16 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctsId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctrDAO = session.getMapper(FacturaDAO.class);
-            fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            fctgDAO = session.getMapper(FacturaCargoDAO.class);
-            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-            fctlDAO = session.getMapper(FacturaLineaDAO.class);
-            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-            vlrcDAO = session.getMapper(ValoracionDAO.class);
-            vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
+            final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
             final FacturaVO fctr = fctrDAO.select(fctrId);
 
@@ -419,11 +381,11 @@ public class FacturaBO {
         Preconditions.checkArgument(!fctrIds.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctrDAO = session.getMapper(FacturaDAO.class);
-            fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            fctgDAO = session.getMapper(FacturaCargoDAO.class);
-            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-            fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
+            final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
+            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
 
             final List<FacturaImpresionVO> list = new ArrayList<>();
 
@@ -467,7 +429,7 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctrDAO = session.getMapper(FacturaDAO.class);
+            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
 
             return fctrDAO.select(fctrId);
         }
@@ -490,8 +452,7 @@ public class FacturaBO {
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctrDAO = session.getMapper(FacturaDAO.class);
-
+            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
             final int count = fctrDAO.count(fctrCriterioVO);
             final List<FacturaVO> fctrList = new ArrayList<>();
 
@@ -514,8 +475,7 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctsDAO = session.getMapper(FacturaServicioDAO.class);
-
+            final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctrId);
@@ -535,8 +495,7 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-
+            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctrId);
@@ -556,8 +515,7 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctgDAO = session.getMapper(FacturaCargoDAO.class);
-
+            final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
             fctrCriterioVO.setId(fctrId);
@@ -583,8 +541,7 @@ public class FacturaBO {
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctlDAO = session.getMapper(FacturaLineaDAO.class);
-
+            final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
             final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
             final FacturaCriterioVO fctrCriterioVO = new FacturaCriterioVO();
 
@@ -595,7 +552,7 @@ public class FacturaBO {
             final List<FacturaLineaVO> fctlList = new ArrayList<>();
 
             if (count >= offset) {
-                fctlList.addAll(fctlDAO.selectList(fctlCriterioVO, new RowBounds(offset, limit)));
+                fctlList.addAll(fctlDAO.selectPaginatedList(fctlCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<FacturaLineaVO>(fctlList, offset, limit, count);
@@ -613,7 +570,7 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctlId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
 
             return fctlDAO.select(fctlId);
         }
@@ -636,8 +593,7 @@ public class FacturaBO {
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-
+            final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
             final FacturaDetalleCriterioVO fctdCriterioVO = new FacturaDetalleCriterioVO();
             final FacturaLineaCriterioVO fctlCriterioVO = new FacturaLineaCriterioVO();
 
@@ -648,7 +604,7 @@ public class FacturaBO {
             final List<FacturaDetalleVO> fctdList = new ArrayList<>();
 
             if (count >= offset) {
-                fctdList.addAll(fctdDAO.selectList(fctdCriterioVO, new RowBounds(offset, limit)));
+                fctdList.addAll(fctdDAO.selectPaginatedList(fctdCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<FacturaDetalleVO>(fctdList, offset, limit, count);
@@ -666,7 +622,7 @@ public class FacturaBO {
         Preconditions.checkNotNull(fctdId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
+            final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
 
             return fctdDAO.select(fctdId);
         }

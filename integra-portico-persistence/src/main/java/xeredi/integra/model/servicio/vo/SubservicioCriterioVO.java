@@ -2,8 +2,6 @@ package xeredi.integra.model.servicio.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -32,14 +30,6 @@ public final class SubservicioCriterioVO extends ItemCriterioVO {
 
     /** The srvc. */
     private ServicioCriterioVO srvc;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the srvc.

@@ -3,10 +3,6 @@ package xeredi.integra.model.comun.vo;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import xeredi.util.pagination.Criterio;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemCriterioVO.
@@ -15,19 +11,7 @@ import xeredi.util.pagination.Criterio;
  * @author xeredi
  *
  */
-public abstract class ItemCriterioVO implements Criterio {
-    /** The idioma. */
-    private String idioma;
-
-    /** The max limit. */
-    private Integer maxLimit;
-
-    /** The limit. */
-    private Integer limit;
-
-    /** The offset. */
-    private Integer offset;
-
+public abstract class ItemCriterioVO extends BaseCriterioVO {
     /** The solo gridables. */
     private boolean soloDatosGrid;
 
@@ -48,33 +32,6 @@ public abstract class ItemCriterioVO implements Criterio {
 
     /** The itdt map. */
     private Map<Long, ItemDatoCriterioVO> itdtMap;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the idioma.
-     *
-     * @return the idioma
-     */
-    public final String getIdioma() {
-        return idioma;
-    }
-
-    /**
-     * Sets the idioma.
-     *
-     * @param value
-     *            the new idioma
-     */
-    public final void setIdioma(final String value) {
-        idioma = value;
-    }
 
     /**
      * Gets the id.
@@ -217,63 +174,6 @@ public abstract class ItemCriterioVO implements Criterio {
      */
     public final void setEtiqueta(final String value) {
         etiqueta = value;
-    }
-
-    /**
-     * Gets the limit.
-     *
-     * @return the limit
-     */
-    public final Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the new limit
-     */
-    public final void setLimit(final Integer value) {
-        limit = value;
-    }
-
-    /**
-     * Gets the offset.
-     *
-     * @return the offset
-     */
-    public Integer getOffset() {
-        return offset;
-    }
-
-    /**
-     * Sets the offset.
-     *
-     * @param value
-     *            the new offset
-     */
-    public void setOffset(final Integer value) {
-        offset = value;
-    }
-
-    /**
-     * Gets the max limit.
-     *
-     * @return the max limit
-     */
-    public Integer getMaxLimit() {
-        return maxLimit;
-    }
-
-    /**
-     * Sets the max limit.
-     *
-     * @param value
-     *            the new max limit
-     */
-    public void setMaxLimit(final Integer value) {
-        maxLimit = value;
     }
 
 }

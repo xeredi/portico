@@ -7,6 +7,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -34,15 +35,6 @@ public final class EntidadGrupoDatoAction extends BaseAction {
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
-    /**
-     * Instantiates a new entidad grupo dato action.
-     */
-    public EntidadGrupoDatoAction() {
-        super();
-
-        engd = new EntidadGrupoDatoVO();
-    }
-
     // Acciones Web
     /**
      * Alta.
@@ -65,20 +57,15 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("engd-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(engd);
         Preconditions.checkNotNull(engd.getId());
 
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+
+        engd = engdBO.select(engd.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
-
-            engd = engdBO.select(engd.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -89,7 +76,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("engd-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(engd);
         Preconditions.checkNotNull(engd.getEntiId());
@@ -106,11 +93,7 @@ public final class EntidadGrupoDatoAction extends BaseAction {
 
                 break;
             case edit:
-                try {
-                    engdBO.update(engd, i18nMap);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+                engdBO.update(engd, i18nMap);
 
                 break;
             default:
@@ -127,18 +110,14 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("engd-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(engd);
         Preconditions.checkNotNull(engd.getId());
 
-        try {
-            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-            engd = engdBO.select(engd.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        engd = engdBO.select(engd.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.engd, engd.getId());
 
         return SUCCESS;
     }
@@ -149,17 +128,13 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * @return the string
      */
     @Action("engd-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(engd);
         Preconditions.checkNotNull(engd.getId());
 
-        try {
-            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-            engdBO.delete(engd.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        engdBO.delete(engd.getId());
 
         return SUCCESS;
     }

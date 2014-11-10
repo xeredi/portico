@@ -31,7 +31,7 @@ public interface TipoEstadisticaDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoEstadisticaVO> selectList(final TipoEstadisticaCriterioVO tpesCriterioVO, final RowBounds bounds);
+    List<TipoEstadisticaVO> selectPaginatedList(final TipoEstadisticaCriterioVO tpesCriterioVO, final RowBounds bounds);
 
     /**
      * Select.

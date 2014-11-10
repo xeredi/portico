@@ -21,10 +21,6 @@ import com.google.common.base.Preconditions;
  * The Class ReglaIncompatibleBO.
  */
 public class ReglaIncompatibleBO {
-
-    /** The rgin dao. */
-    ReglaIncompatibleDAO rginDAO;
-
     /**
      * {@inheritDoc}
      */
@@ -37,8 +33,7 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rgin.getRgiv().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
+            final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
             final IgBO igBO = new IgBO();
 
             if (rginDAO.exists(rgin)) {
@@ -78,7 +73,7 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rgin.getRgiv().getFini());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
+            final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
             if (rginDAO.existsOverlap(rgin)) {
                 throw new OverlapException(MessageI18nKey.rgin, rgin);
@@ -108,8 +103,7 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rgin.getRgiv().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
+            final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
             final int updated = rginDAO.deleteVersion(rgin);
 
             if (updated == 0) {
@@ -133,8 +127,7 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rginCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
-
+            final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
             final ReglaIncompatibleVO rgin = rginDAO.selectObject(rginCriterio);
 
             if (rgin == null) {
@@ -156,7 +149,7 @@ public class ReglaIncompatibleBO {
         Preconditions.checkNotNull(rginCriterio);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
+            final ReglaIncompatibleDAO rginDAO = session.getMapper(ReglaIncompatibleDAO.class);
 
             return rginDAO.selectList(rginCriterio);
         }

@@ -49,25 +49,20 @@ public final class EntidadEntidadAction extends BaseAction {
      * @return the string
      */
     @Action("enen-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHija());
         Preconditions.checkNotNull(enen.getEntiHija().getId());
 
+        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
+        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
+
+        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
+        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
+
+        enen = enenBO.selectObject(enenCriterioVO);
         accion = ACCION_EDICION.edit;
-
-        try {
-            final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-            final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
-
-            enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
-            enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
-
-            enen = enenBO.selectObject(enenCriterioVO);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -78,7 +73,7 @@ public final class EntidadEntidadAction extends BaseAction {
      * @return the string
      */
     @Action("enen-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
@@ -92,23 +87,13 @@ public final class EntidadEntidadAction extends BaseAction {
 
         FieldValidator.validateRequired(this, MessageI18nKey.enen_orden, enen.getOrden());
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final EntidadEntidadBO enenBO = new EntidadEntidadBO();
 
-        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-
-        if (accion == ACCION_EDICION.create) {
-            try {
+            if (accion == ACCION_EDICION.create) {
                 enenBO.insert(enen);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-            }
-        } else {
-            try {
+            } else {
                 enenBO.update(enen);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
             }
         }
 
@@ -121,7 +106,7 @@ public final class EntidadEntidadAction extends BaseAction {
      * @return the string
      */
     @Action("enen-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHija());
@@ -129,11 +114,7 @@ public final class EntidadEntidadAction extends BaseAction {
 
         final EntidadEntidadBO enenBO = new EntidadEntidadBO();
 
-        try {
-            enenBO.delete(enen);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        enenBO.delete(enen);
 
         return SUCCESS;
     }
@@ -144,25 +125,19 @@ public final class EntidadEntidadAction extends BaseAction {
      * @return the string
      */
     @Action("enen-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHija());
         Preconditions.checkNotNull(enen.getEntiHija().getId());
 
-        accion = ACCION_EDICION.edit;
+        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
+        final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-        try {
-            final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-            final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
+        enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
+        enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
 
-            enenCriterioVO.setEntiPadreId(enen.getEntiPadreId());
-            enenCriterioVO.setEntiHijaId(enen.getEntiHija().getId());
-
-            enen = enenBO.selectObject(enenCriterioVO);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        enen = enenBO.selectObject(enenCriterioVO);
 
         return SUCCESS;
     }

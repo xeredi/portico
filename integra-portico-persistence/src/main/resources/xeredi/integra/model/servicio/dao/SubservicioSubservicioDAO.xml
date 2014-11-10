@@ -3,26 +3,17 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO">
-    <resultMap type="SubservicioSubservicioVO" id="ResultMap">
-        <constructor>
-            <arg column="ssss_ssrvp_pk" javaType="Long" />
-            <arg column="ssss_ssrvh_pk" javaType="Long" />
-        </constructor>
+	<resultMap type="SubservicioSubservicioVO" id="ResultMap">
+		<constructor>
+			<arg column="ssss_ssrvp_pk" javaType="Long" />
+			<arg column="ssss_ssrvh_pk" javaType="Long" />
+		</constructor>
 
-        <id column="ssss_ssrvp_pk" />
-        <id column="ssss_ssrvh_pk" />
-    </resultMap>
+		<id column="ssss_ssrvp_pk" />
+		<id column="ssss_ssrvh_pk" />
+	</resultMap>
 
-    <select id="exists" parameterType="SubservicioSubservicioVO" resultType="boolean">
-        <![CDATA[
-        SELECT COUNT(1)
-        FROM tbl_subserv_subserv_ssss
-        WHERE ssss_ssrvp_pk = #{ssrvPadreId}
-            AND ssss_ssrvh_pk = #{ssrvHijoId}
-        ]]>
-    </select>
-
-    <insert id="insert" parameterType="SubservicioSubservicioVO">
+	<insert id="insert" parameterType="SubservicioSubservicioVO">
         <![CDATA[
         INSERT INTO tbl_subserv_subserv_ssss (
             ssss_ssrvp_pk, ssss_ssrvh_pk
@@ -30,12 +21,12 @@
             #{ssrvPadreId}, #{ssrvHijoId}
         )
         ]]>
-    </insert>
+	</insert>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="srvc != null">
-                <if test="srvc.id != null">
+	<sql id="SelectWhere">
+		<where>
+			<if test="srvc != null">
+				<if test="srvc.id != null">
                 <![CDATA[
                 AND EXISTS (
                     SELECT 1
@@ -44,16 +35,17 @@
                         AND ssrv_srvc_pk = #{srvc.id}
                 )
                 ]]>
-                </if>
-            </if>
-        </where>
-    </sql>
+				</if>
+			</if>
+		</where>
+	</sql>
 
-    <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="SubservicioCriterioVO"
+		resultMap="ResultMap">
     <![CDATA[
         SELECT ssss_ssrvp_pk, ssss_ssrvh_pk
         FROM tbl_subserv_subserv_ssss
     ]]>
-        <include refid="SelectWhere" />
-    </select>
+		<include refid="SelectWhere" />
+	</select>
 </mapper>

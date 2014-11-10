@@ -3,12 +3,10 @@ package xeredi.integra.http.controller.action.estadistica;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.CuadroMesBO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
@@ -31,14 +29,6 @@ public final class CuadroMesAction extends BaseAction {
     /** The pepr id. */
     private PeriodoProcesoVO pepr;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
     // acciones web
     /**
      * Detalle.
@@ -46,19 +36,15 @@ public final class CuadroMesAction extends BaseAction {
      * @return the string
      */
     @Action("cdms-detail")
-    public String detalle() {
+    public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(pepr);
         Preconditions.checkNotNull(pepr.getId());
 
-        try {
-            final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-            final CuadroMesBO cdmsBO = new CuadroMesBO();
+        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+        final CuadroMesBO cdmsBO = new CuadroMesBO();
 
-            pepr = peprBO.select(pepr.getId());
-            cdmsMap = cdmsBO.selectMap(pepr.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        pepr = peprBO.select(pepr.getId());
+        cdmsMap = cdmsBO.selectMap(pepr.getId());
 
         return SUCCESS;
     }

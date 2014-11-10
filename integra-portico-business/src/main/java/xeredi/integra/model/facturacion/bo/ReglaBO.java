@@ -26,10 +26,6 @@ import com.google.common.base.Preconditions;
  * The Class ReglaBO.
  */
 public class ReglaBO {
-
-    /** The rgla dao. */
-    ReglaDAO rglaDAO;
-
     /**
      * Select list.
      *
@@ -47,13 +43,12 @@ public class ReglaBO {
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rglaDAO = session.getMapper(ReglaDAO.class);
-
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final int count = rglaDAO.count(rglaCriterioVO);
             final List<ReglaVO> rglaList = new ArrayList<>();
 
             if (count >= offset) {
-                rglaList.addAll(rglaDAO.selectList(rglaCriterioVO, new RowBounds(offset, limit)));
+                rglaList.addAll(rglaDAO.selectPaginatedList(rglaCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<ReglaVO>(rglaList, offset, limit, count);
@@ -71,7 +66,7 @@ public class ReglaBO {
         Preconditions.checkNotNull(rglaCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rglaDAO = session.getMapper(ReglaDAO.class);
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
 
             return rglaDAO.selectList(rglaCriterioVO);
         }
@@ -88,8 +83,7 @@ public class ReglaBO {
         Preconditions.checkNotNull(rglaCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rglaDAO = session.getMapper(ReglaDAO.class);
-
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final ReglaVO reglaVO : rglaDAO.selectList(rglaCriterioVO)) {
@@ -113,8 +107,7 @@ public class ReglaBO {
         Preconditions.checkNotNull(rgla.getRglv());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rglaDAO = session.getMapper(ReglaDAO.class);
-
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final IgBO igBO = new IgBO();
 
             if (rglaDAO.exists(rgla)) {
@@ -153,7 +146,7 @@ public class ReglaBO {
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rglaDAO = session.getMapper(ReglaDAO.class);
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
 
             if (rglaDAO.existsOverlap(rgla)) {
                 throw new OverlapException(MessageI18nKey.rgla, rgla);
@@ -183,8 +176,7 @@ public class ReglaBO {
         Preconditions.checkNotNull(rgla.getRglv().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rglaDAO = session.getMapper(ReglaDAO.class);
-
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final int updated = rglaDAO.deleteVersion(rgla);
 
             if (updated == 0) {
@@ -211,7 +203,7 @@ public class ReglaBO {
         Preconditions.checkNotNull(fechaVigencia);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            rglaDAO = session.getMapper(ReglaDAO.class);
+            final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
             final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
             rglaCriterioVO.setId(id);

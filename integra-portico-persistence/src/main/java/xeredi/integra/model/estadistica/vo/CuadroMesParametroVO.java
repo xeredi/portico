@@ -2,7 +2,7 @@ package xeredi.integra.model.estadistica.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.util.TipoDato;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
 
 // TODO: Auto-generated Javadoc
 /**

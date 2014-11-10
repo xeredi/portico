@@ -400,35 +400,19 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP VIEW portico.vw_aspecto_cargo_ascr
-\
-DROP VIEW portico.vw_aspecto_aspc
-\
-DROP VIEW portico.vw_cargo_crgo
-\
-DROP VIEW portico.vw_regla_rgla
-\
-DROP VIEW portico.vw_regla_inc_rgin
-\
-DROP VIEW portico.vw_factura_det_fctd
-\
-DROP VIEW portico.vw_factura_lin_fctl
-\
-DROP VIEW portico.vw_factura_srv_fcts
-\
-DROP VIEW portico.vw_factura_imp_fcti
-\
-DROP VIEW portico.vw_factura_cargo_fctc
-\
-DROP VIEW portico.vw_factura_fctr
-\
-DROP VIEW portico.vw_valoracion_imp_vlri
-\
-DROP VIEW portico.vw_valoracion_cargo_vlrg
-\
-DROP VIEW portico.vw_valoracion_det_vlrd
-\
-DROP VIEW portico.vw_valoracion_lin_vlrl
-\
-DROP VIEW portico.vw_valoracion_vlrc
-\
+DROP VIEW IF EXISTS portico.vw_aspecto_cargo_ascr\
+DROP VIEW IF EXISTS portico.vw_aspecto_aspc\
+DROP VIEW IF EXISTS portico.vw_cargo_crgo\
+DROP VIEW IF EXISTS portico.vw_regla_rgla\
+DROP VIEW IF EXISTS portico.vw_regla_inc_rgin\
+DROP VIEW IF EXISTS portico.vw_factura_det_fctd\
+DROP VIEW IF EXISTS portico.vw_factura_lin_fctl\
+DROP VIEW IF EXISTS portico.vw_factura_srv_fcts\
+DROP VIEW IF EXISTS portico.vw_factura_imp_fcti\
+DROP VIEW IF EXISTS portico.vw_factura_cargo_fctc\
+DROP VIEW IF EXISTS portico.vw_factura_fctr\
+DROP VIEW IF EXISTS portico.vw_valoracion_imp_vlri\
+DROP VIEW IF EXISTS portico.vw_valoracion_cargo_vlrg\
+DROP VIEW IF EXISTS portico.vw_valoracion_det_vlrd\
+DROP VIEW IF EXISTS portico.vw_valoracion_lin_vlrl\
+DROP VIEW IF EXISTS portico.vw_valoracion_vlrc\

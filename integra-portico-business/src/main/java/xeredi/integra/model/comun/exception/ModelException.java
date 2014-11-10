@@ -8,7 +8,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ModelException.
  */
-public abstract class ModelException extends Exception {
+public abstract class ModelException extends ApplicationException {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4946073733597057632L;

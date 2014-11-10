@@ -57,20 +57,15 @@ public final class TipoSubparametroAction extends BaseAction {
      * @return the string
      */
     @Action("tpsp-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+
+        enti = tpspBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
-
-            enti = tpspBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -81,7 +76,7 @@ public final class TipoSubparametroAction extends BaseAction {
      * @return the string
      */
     @Action("tpsp-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enti);
 
@@ -107,21 +102,12 @@ public final class TipoSubparametroAction extends BaseAction {
 
             switch (accion) {
             case create:
-                try {
-                    enti.setCodigo(enti.getCodigo().toUpperCase());
-
-                    tpspBO.insert(enti, i18nMap);
-                } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-                }
+                enti.setCodigo(enti.getCodigo().toUpperCase());
+                tpspBO.insert(enti, i18nMap);
 
                 break;
             case edit:
-                try {
-                    tpspBO.update(enti, i18nMap);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+                tpspBO.update(enti, i18nMap);
 
                 break;
             default:
@@ -138,17 +124,13 @@ public final class TipoSubparametroAction extends BaseAction {
      * @return the string
      */
     @Action("tpsp-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
         final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-        try {
-            tpspBO.delete(enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpspBO.delete(enti.getId());
 
         return SUCCESS;
     }
@@ -159,18 +141,14 @@ public final class TipoSubparametroAction extends BaseAction {
      * @return the string
      */
     @Action("tpsp-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        try {
-            final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
 
-            enti = tpspBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        enti = tpspBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
         return SUCCESS;
     }

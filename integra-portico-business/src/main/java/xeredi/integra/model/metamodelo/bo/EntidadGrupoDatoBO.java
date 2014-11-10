@@ -26,10 +26,6 @@ import com.google.common.base.Preconditions;
  * The Class EntidadGrupoDatoBO.
  */
 public class EntidadGrupoDatoBO {
-
-    /** The engd dao. */
-    EntidadGrupoDatoDAO engdDAO;
-
     /**
      * Insert.
      *
@@ -48,7 +44,9 @@ public class EntidadGrupoDatoBO {
 
             engdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
-            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
+            final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
+
+            // FIXME Deberia controlar duplicados
             engdDAO.insert(engdVO);
 
             I18nBO.insertMap(session, I18nPrefix.engd, engdVO.getId(), i18nMap);
@@ -74,7 +72,7 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(engdVO.getNumero());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
+            final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
 
             if (engdDAO.update(engdVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.engd, engdVO);
@@ -98,8 +96,7 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(id);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
+            final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setId(id);
@@ -129,8 +126,7 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(id);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
+            final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setId(id);
@@ -159,8 +155,7 @@ public class EntidadGrupoDatoBO {
         Preconditions.checkNotNull(entiId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-
+            final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
 
             engdCriterioVO.setEntiId(entiId);

@@ -1,14 +1,12 @@
 package xeredi.integra.model.facturacion.vo;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaIncompatibleCriterioVO.
  */
-public final class ReglaIncompatibleCriterioVO {
+public final class ReglaIncompatibleCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
@@ -18,17 +16,6 @@ public final class ReglaIncompatibleCriterioVO {
 
     /** The rgla1 id. */
     private Long rgla1Id;
-
-    /** The fecha vigencia. */
-    private Date fechaVigencia;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the id.
@@ -66,25 +53,6 @@ public final class ReglaIncompatibleCriterioVO {
      */
     public void setRgla1Id(final Long value) {
         rgla1Id = value;
-    }
-
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public Date getFechaVigencia() {
-        return fechaVigencia;
-    }
-
-    /**
-     * Sets the fecha vigencia.
-     *
-     * @param value
-     *            the new fecha vigencia
-     */
-    public void setFechaVigencia(final Date value) {
-        fechaVigencia = value;
     }
 
     /**

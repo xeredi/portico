@@ -58,7 +58,6 @@ public final class ParametroPdfTest {
 
         final ParametroPdf prmtPdf = new ParametroPdf(new Locale(language, country));
         final ParametroBO prmtBO = new ParametroBO();
-        final I18nBO i18nBO = new I18nBO();
 
         for (final Long tpprId : tpprIds) {
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -105,7 +104,7 @@ public final class ParametroPdfTest {
                 final Map<String, I18nVO> i18nMap = new HashMap<>();
 
                 if (tpprVO.getI18n()) {
-                    i18nMap.putAll(i18nBO.selectMap(I18nPrefix.prvr, prmtVO.getPrvr().getId()));
+                    i18nMap.putAll(I18nBO.selectMap(I18nPrefix.prvr, prmtVO.getPrvr().getId()));
                 }
 
                 try (final OutputStream stream = new FileOutputStream("/temp/prmt_" + tpprVO.getId() + "_"

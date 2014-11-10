@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.servicio.grammar.manifiesto.IfcsumParser.IfcsumContext;
-import xeredi.integra.model.util.Entidad;
 
 // TODO: Auto-generated Javadoc
 /**

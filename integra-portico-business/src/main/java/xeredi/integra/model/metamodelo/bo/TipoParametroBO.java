@@ -30,13 +30,6 @@ import com.google.common.base.Preconditions;
  * The Class TipoParametroAdminBO.
  */
 public class TipoParametroBO {
-
-    /** The tppr dao. */
-    TipoParametroDAO tpprDAO;
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
     /**
      * Select label values.
      *
@@ -44,8 +37,7 @@ public class TipoParametroBO {
      */
     public final List<LabelValueVO> selectLabelValues() {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpprDAO = session.getMapper(TipoParametroDAO.class);
-
+            final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final TipoParametroVO tppr : tpprDAO.selectList(new TipoParametroCriterioVO())) {
@@ -67,7 +59,7 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(tpprCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpprDAO = session.getMapper(TipoParametroDAO.class);
+            final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
 
             return tpprDAO.selectList(tpprCriterioVO);
         }
@@ -89,13 +81,12 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(tpprCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpprDAO = session.getMapper(TipoParametroDAO.class);
-
+            final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
             final int count = tpprDAO.count(tpprCriterioVO);
             final List<TipoParametroVO> list = new ArrayList<>();
 
             if (count > offset) {
-                list.addAll(tpprDAO.selectList(tpprCriterioVO, new RowBounds(offset, limit)));
+                list.addAll(tpprDAO.selectPaginatedList(tpprCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<>(list, offset, limit, count);
@@ -118,8 +109,7 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(idioma);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpprDAO = session.getMapper(TipoParametroDAO.class);
-
+            final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
             final TipoParametroCriterioVO entiCriterioVO = new TipoParametroCriterioVO();
 
             entiCriterioVO.setId(id);
@@ -154,8 +144,8 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(tpprVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpprDAO = session.getMapper(TipoParametroDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (entiDAO.exists(tpprVO)) {
                 throw new DuplicateInstanceException(MessageI18nKey.tppr, tpprVO);
@@ -191,8 +181,8 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(tpprVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpprDAO = session.getMapper(TipoParametroDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (tpprDAO.update(tpprVO) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tppr, tpprVO);
@@ -217,8 +207,8 @@ public class TipoParametroBO {
         Preconditions.checkNotNull(tpprId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            tpprDAO = session.getMapper(TipoParametroDAO.class);
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final TipoParametroDAO tpprDAO = session.getMapper(TipoParametroDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             if (tpprDAO.delete(tpprId) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.tppr, tpprId);

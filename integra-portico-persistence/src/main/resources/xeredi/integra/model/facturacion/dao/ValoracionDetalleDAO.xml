@@ -3,36 +3,37 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionDetalleDAO">
-    <resultMap type="ValoracionDetalleVO" id="ResultMap">
-        <id column="vlrd_pk" />
+	<resultMap type="ValoracionDetalleVO" id="ResultMap">
+		<id column="vlrd_pk" />
 
-        <result column="vlrd_pk" property="id" />
-        <result column="vlrd_vlrc_pk" property="vlrcId" />
-        <result column="vlrd_vlrl_pk" property="vlrlId" />
-        <result column="vlrd_fref" property="fref" />
-        <result column="vlrd_valor_base" property="valorBase" />
-        <result column="vlrd_importe_base" property="importeBase" />
-        <result column="vlrd_importe" property="importe" />
-        <result column="vlrd_fini" property="fini" />
-        <result column="vlrd_ffin" property="ffin" />
+		<result column="vlrd_pk" property="id" />
+		<result column="vlrd_vlrc_pk" property="vlrcId" />
+		<result column="vlrd_vlrl_pk" property="vlrlId" />
+		<result column="vlrd_fref" property="fref" />
+		<result column="vlrd_valor_base" property="valorBase" />
+		<result column="vlrd_importe_base" property="importeBase" />
+		<result column="vlrd_importe" property="importe" />
+		<result column="vlrd_fini" property="fini" />
+		<result column="vlrd_ffin" property="ffin" />
 
-        <result column="vlrd_cuant1" property="cuant1" />
-        <result column="vlrd_cuant2" property="cuant2" />
-        <result column="vlrd_cuant3" property="cuant3" />
-        <result column="vlrd_cuant4" property="cuant4" />
-        <result column="vlrd_cuant5" property="cuant5" />
-        <result column="vlrd_cuant6" property="cuant6" />
-        <result column="vlrd_info1" property="info1" />
-        <result column="vlrd_info2" property="info2" />
-        <result column="vlrd_info3" property="info3" />
-        <result column="vlrd_info4" property="info4" />
-        <result column="vlrd_info5" property="info5" />
-        <result column="vlrd_info6" property="info6" />
+		<result column="vlrd_cuant1" property="cuant1" />
+		<result column="vlrd_cuant2" property="cuant2" />
+		<result column="vlrd_cuant3" property="cuant3" />
+		<result column="vlrd_cuant4" property="cuant4" />
+		<result column="vlrd_cuant5" property="cuant5" />
+		<result column="vlrd_cuant6" property="cuant6" />
+		<result column="vlrd_info1" property="info1" />
+		<result column="vlrd_info2" property="info2" />
+		<result column="vlrd_info3" property="info3" />
+		<result column="vlrd_info4" property="info4" />
+		<result column="vlrd_info5" property="info5" />
+		<result column="vlrd_info6" property="info6" />
 
-        <association property="ssrv" resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
-    </resultMap>
+		<association property="ssrv"
+			resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
+	</resultMap>
 
-    <insert id="insert" parameterType="ValoracionDetalleVO">
+	<insert id="insert" parameterType="ValoracionDetalleVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_det_vlrd (
             vlrd_pk, vlrd_vlrl_pk, vlrd_vlrc_pk, vlrd_valor_base, vlrd_importe_base, vlrd_importe
@@ -47,61 +48,69 @@
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>
-    </insert>
+	</insert>
 
-    <delete id="delete" parameterType="ValoracionDetalleCriterioVO">
-    <![CDATA[
-        DELETE FROM tbl_valoracion_det_vlrd
-    ]]>
-        <include refid="SelectWhere" />
-    </delete>
+	<delete id="deleteList" parameterType="ValoracionDetalleCriterioVO">
+		DELETE FROM tbl_valoracion_det_vlrd
+		<include refid="SelectWhere" />
+	</delete>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
         SELECT *
         FROM vw_valoracion_det_vlrd
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND vlrd_pk = #{id}
-            </if>
-            <if test="vlrl != null">
-                <if test="vlrl.id != null">
-                    AND vlrd_vlrl_pk = #{vlrl.id}
-                </if>
-                <if test="vlrl.vlrc != null">
-                    <if test="vlrl.vlrc.id != null">
-                        AND vlrd_vlrc_pk = #{vlrl.vlrc.id}
-                    </if>
-                    <if test="vlrl.vlrc.ids != null">
-                        AND vlrd_vlrc_pk IN
-                        <foreach collection="vlrl.vlrc.ids" item="item" open="(" close=")" separator=",">#{item}
-                        </foreach>
-                    </if>
-                </if>
-            </if>
-        </where>
-    </sql>
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND vlrd_pk = #{id}
+			</if>
+			<if test="vlrl != null">
+				<if test="vlrl.id != null">
+					AND vlrd_vlrl_pk = #{vlrl.id}
+				</if>
+				<if test="vlrl.vlrc != null">
+					<if test="vlrl.vlrc.id != null">
+						AND vlrd_vlrc_pk = #{vlrl.vlrc.id}
+					</if>
+					<if test="vlrl.vlrc.ids != null">
+						AND vlrd_vlrc_pk IN
+						<foreach collection="vlrl.vlrc.ids" item="item" open="("
+							close=")" separator=",">#{item}
+						</foreach>
+					</if>
+				</if>
+			</if>
+		</where>
+	</sql>
 
-    <select id="select" parameterType="Long" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        WHERE vlrd_pk = #{value}
-    </select>
+	<select id="select" parameterType="Long" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		WHERE vlrd_pk = #{value}
+	</select>
 
-    <select id="count" parameterType="ValoracionDetalleCriterioVO" resultType="Integer">
+	<select id="count" parameterType="ValoracionDetalleCriterioVO"
+		resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
         FROM vw_valoracion_det_vlrd
     ]]>
-        <include refid="SelectWhere" />
-    </select>
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="selectList" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-        ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk
-    </select>
+	<select id="selectList" parameterType="ValoracionDetalleCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk
+	</select>
+
+	<select id="selectPaginatedList" parameterType="ValoracionDetalleCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk
+	</select>
 </mapper>

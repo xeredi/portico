@@ -50,66 +50,68 @@ CREATE TABLE portico.tbl_configuration_conf (
 GRANT SELECT, UPDATE ON portico.tbl_configuration_conf TO portico\
 
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'language.default', 'String', 'es')\
+	'language_default', 'String', 'es')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'language.available', 'StringList', 'es, ca, en')\
+	'language_available', 'StringList', 'es, ca, en')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'parametrizacion.app.mode', 'Boolean', 'true')\
+	'parametrizacion_app_mode', 'Boolean', 'true')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'estadistica.files.home', 'String', '${files.home}/estadistica')\
+	'estadistica_files_home', 'String', '${files_home}/estadistica')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'estadistica.files.oppe.home', 'String', '${estadistica.files.home}/oppe')\
+	'estadistica_files_oppe_home', 'String', '${estadistica_files_home}/oppe')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'estadistica.files.oppe.procesado.home', 'String', '${estadistica.files.oppe.home}/procesado')\
+	'estadistica_files_oppe_entrada_home', 'String', '${estadistica_files_oppe_home}/entrada')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'estadistica.files.oppe.erroneo.home', 'String', '${estadistica.files.oppe.home}/erroneo')\
+	'estadistica_files_oppe_procesado_home', 'String', '${estadistica_files_oppe_home}/procesado')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'servicio.files.home', 'String', '${files.home}/servicio')\
+	'estadistica_files_oppe_erroneo_home', 'String', '${estadistica_files_oppe_home}/erroneo')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'pesca.files.home', 'String', '${servicio.files.home}/pesca')\
+	'servicio_files_home', 'String', '${files_home}/servicio')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'pesca.files.entrada.home', 'String', '${pesca.files.home}/entrada')\
+	'pesca_files_home', 'String', '${servicio_files_home}/pesca')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'pesca.files.procesado.home', 'String', '${pesca.files.home}/procesado')\
+	'pesca_files_entrada_home', 'String', '${pesca_files_home}/entrada')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'pesca.files.erroneo.home', 'String', '${pesca.files.home}/erroneo')\
+	'pesca_files_procesado_home', 'String', '${pesca_files_home}/procesado')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'manifiesto.files.home', 'String', '${servicio.files.home}/manifiesto')\
+	'pesca_files_erroneo_home', 'String', '${pesca_files_home}/erroneo')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'manifiesto.files.entrada.home', 'String', '${manifiesto.files.home}/entrada')\
+	'manifiesto_files_home', 'String', '${servicio_files_home}/manifiesto')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'manifiesto.files.procesado.home', 'String', '${manifiesto.files.home}/procesado')\
+	'manifiesto_files_entrada_home', 'String', '${manifiesto_files_home}/entrada')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'manifiesto.files.erroneo.home', 'String', '${manifiesto.files.home}/erroneo')\
+	'manifiesto_files_procesado_home', 'String', '${manifiesto_files_home}/procesado')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'escala.files.home', 'String', '${servicio.files.home}/escala')\
+	'manifiesto_files_erroneo_home', 'String', '${manifiesto_files_home}/erroneo')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'escala.files.entrada.home', 'String', '${escala.files.home}/entrada')\
+	'escala_files_home', 'String', '${servicio_files_home}/escala')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'escala.files.procesado.home', 'String', '${escala.files.home}/procesado')\
+	'escala_files_entrada_home', 'String', '${escala_files_home}/entrada')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'escala.files.erroneo.home', 'String', '${escala.files.home}/erroneo')\
+	'escala_files_procesado_home', 'String', '${escala_files_home}/procesado')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'files.home', 'String', '/proyectos/deploy/files/portico')\
+	'escala_files_erroneo_home', 'String', '${escala_files_home}/erroneo')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'filter.limit', 'Long', '5')\
+	'files_home', 'String', '/proyectos/deploy/files/portico')\
 INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
-	'webapp.install.path', 'String', '/proyectos/team/git/portico/integra-portico-web/src/main/webapp')\
+	'filter_limit', 'Long', '5')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'webapp_install_path', 'String', '/proyectos/git/portico/integra-portico-web/src/main/webapp')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'db_migration_dataSource_driver', 'String', 'oracle.jdbc.OracleDriver')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'db_migration_dataSource_url', 'String', 'jdbc:oracle:thin:@localhost:1521:orcl')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'db_migration_dataSource_username', 'String', 'integra')\
+INSERT INTO portico.tbl_configuration_conf (conf_key, conf_value_type, conf_default_value) VALUES (
+	'db_migration_dataSource_password', 'String', 'integra')\
 
 
 -- Mensajes i18n
-CREATE TABLE portico.tbl_message_bundle_msbl (
-	msbl_key VARCHAR(100) NOT NULL
-	, msbl_bundle VARCHAR(30) NOT NULL
-
-	, CONSTRAINT pk_msbl PRIMARY KEY (msbl_key, msbl_bundle)
-)\
-
-GRANT SELECT, INSERT, UPDATE ON portico.tbl_message_bundle_msbl TO portico\
-
 CREATE TABLE portico.tbl_message_i18n_m18n (
 	m18n_key VARCHAR(100) NOT NULL
 	, m18n_language VARCHAR(5) NOT NULL
+	, m18n_internal INT NOT NULL
 	, m18n_value VARCHAR(250) NOT NULL
 
 	, CONSTRAINT pk_m18n PRIMARY KEY (m18n_key, m18n_language)
@@ -117,347 +119,406 @@ CREATE TABLE portico.tbl_message_i18n_m18n (
 
 GRANT SELECT, INSERT, UPDATE ON portico.tbl_message_i18n_m18n TO portico\
 
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'format_date', 'dd/MM/yyyy')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_date', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_date', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'format_datetime', 'dd/MM/yyyy HH:mm')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_datetime', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_datetime', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'format_true', 'Si')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_true', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_true', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'format_false', 'No')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_false', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_false', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'format_1', 'Si')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_1', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_1', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'format_0', 'No')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_0', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('format_0', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_buscar', 'Buscar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_buscar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_volver', 'Volver')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_volver', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_aceptar', 'Aceptar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_aceptar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_cancelar', 'Cancelar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_cancelar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_crear', 'Nuevo')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_crear', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_editar', 'Editar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_editar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_guardar', 'Guardar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_guardar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_borrar', 'Borrar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_borrar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_duplicar', 'Duplicar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_duplicar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_filtrar', 'Filtro')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_filtrar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_exportar', 'Exportar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_exportar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_imprimir', 'Imprimir')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_imprimir', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_recargar', 'Recargar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_recargar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'btn_valorar', 'Valorar')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('btn_valorar', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti', 'Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entiList', 'Entidades')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entiList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_codigo', 'Código')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_codigo', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_tipo', 'Tipo')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_tipo', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_nombre', 'Nombre')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_nombre', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_cmdAlta', 'Alta?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_cmdAlta', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_cmdBaja', 'Baja?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_cmdBaja', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_cmdEdicion', 'Edición?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_cmdEdicion', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_cmdDuplicado', 'Duplicado?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_cmdDuplicado', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_maxGrid', 'Grid Máx (filas)')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_maxGrid', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_engdList', 'Grupos de Datos')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_engdList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_entdList', 'Datos')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_entdList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_entdGridList', 'Datos del Grid')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_entdGridList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_entiPadresList', 'Entidades Padre')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_entiPadresList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_entiHijasList', 'Entidades Hija')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_entiHijasList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enti_enacList', 'Acciones')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enti_enacList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enac', 'Acción Asociada a Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enac', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enacList', 'Acciónes Asociadas a Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enacList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enac_enti', 'Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enac_enti', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enac_path', 'Ruta (URL)')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enac_path', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enac_etiqueta', 'Etiqueta')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enac_etiqueta', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enac_orden', 'Orden')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enac_orden', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enen', 'Dependencia entre Entidades')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enen', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enenList', 'Dependencias entre Entidades')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enenList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enen_entiPadre', 'Entidad Padre')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enen_entiPadre', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enen_entiHija', 'Entidad Hija')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enen_entiHija', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'enen_orden', 'Orden')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('enen_orden', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'engd', 'Grupo de Datos')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('engd', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'engdList', 'Grupos de Datos')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('engdList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'engd_enti', 'Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('engd_enti', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'engd_numero', 'Nº')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('engd_numero', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'engd_etiqueta', 'Etiqueta')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('engd_etiqueta', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd', 'Dato de Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entdList', 'Datos de Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entdList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_enti', 'Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_enti', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_tpdt', 'Tipo de Dato')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_tpdt', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_grupo', 'Grupo')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_grupo', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_fila', 'Fila')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_fila', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_orden', 'Orden')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_orden', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_span', 'Span')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_span', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_obligatorio', 'Obligatorio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_obligatorio', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_gridable', 'Grid?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_gridable', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_filtrable', 'Filtrable?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_filtrable', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_valorDefecto', 'V. Defecto')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_valorDefecto', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'entd_etiqueta', 'Etiqueta')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('entd_etiqueta', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'EntidadTipo_P', 'Maestro')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('EntidadTipo_P', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'EntidadTipo_B', 'Maestro Dependiente')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('EntidadTipo_B', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'EntidadTipo_T', 'Tipo de Servicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('EntidadTipo_T', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'EntidadTipo_S', 'Tipo de Subservicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('EntidadTipo_S', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'EntidadTipo_E', 'Tipo de Estadística')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('EntidadTipo_E', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tppr', 'Maestro')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tppr', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpprList', 'Maestros')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpprList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tppr_i18n', 'I18n?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tppr_i18n', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tppr_tempExp', 'Temporal?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tppr_tempExp', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tppr_tpdtNombre', 'T. Dato Nombre')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tppr_tpdtNombre', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsp', 'Maestro Dependiente')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsp', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpspList', 'Maestros Dependiente')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpspList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsp_tppr', 'Maestro')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsp_tppr', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsp_tpprAsociado', 'Maestro Asociado')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsp_tpprAsociado', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsp_i18n', 'I18n?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsp_i18n', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsp_tempExp', 'Temporal?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsp_tempExp', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsr', 'Tipo de Servicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsr', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsrList', 'Tipos de Servicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsrList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsr_temporal', 'Temporal?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsr_temporal', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsr_facturable', 'Facturable?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsr_facturable', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpsr_tpdtEstado', 'T. Dato Estado')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpsr_tpdtEstado', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpss', 'Tipo de Subservicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpss', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpssList', 'Tipos de Subservicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpssList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpss_tpsr', 'Tipo de Servicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpss_tpsr', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpss_temporal', 'Temporal?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpss_temporal', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpss_facturable', 'Facturable?')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpss_facturable', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpss_tpdtEstado', 'T. Dato Estado')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpss_tpdtEstado', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdt', 'Tipo de Dato')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdt', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdtList', 'Tipos de Dato')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdtList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdt_codigo', 'Código')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdt_codigo', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdt_nombre', 'Nombre')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdt_nombre', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdt_tpht', 'Tipo HTML')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdt_tpht', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdt_enti', 'Entidad')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdt_enti', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdt_tpel', 'Tipo de Elemento')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdt_tpel', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'tpdt_cdrfList', 'Códigos de Referencia')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('tpdt_cdrfList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'HtmlTipo_T', 'Textfield')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('HtmlTipo_T', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'HtmlTipo_S', 'Select')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('HtmlTipo_S', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'HtmlTipo_CB', 'Checkbox')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('HtmlTipo_CB', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'HtmlTipo_D', 'Date')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('HtmlTipo_D', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'HtmlTipo_DT', 'Datetime')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('HtmlTipo_DT', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'HtmlTipo_F', 'Filtro')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('HtmlTipo_F', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'HtmlTipo_TA', 'Textarea')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('HtmlTipo_TA', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_ND', 'Nº Decimal')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_ND', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_NE', 'Nº Entero')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_NE', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_TX', 'Texto')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_TX', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_FE', 'Fecha')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_FE', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_FH', 'Fecha/Hora')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_FH', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_PR', 'Maestro')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_PR', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_BO', 'Booleano')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_BO', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_CR', 'Cód. Referencia')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_CR', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ElementoTipo_SR', 'Servicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ElementoTipo_SR', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdrf', 'Código de Referencia')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('cdrf', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdrfList', 'Códigos de Referencia')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('cdrfList', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdrf_tpdt', 'T. Dato')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('cdrf_tpdt', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdrf_valor', 'Valor')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('cdrf_valor', 'web')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'cdrf_orden', 'Orden')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('cdrf_orden', 'web')\
 
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'i18n_text', 'Texto')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('i18n_text', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('i18n_text', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'prmt_parametro', 'Código')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('prmt_parametro', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('prmt_parametro', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'prmt_fini', 'F. Inicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('prmt_fini', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('prmt_fini', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'prmt_ffin', 'F. Fin')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('prmt_ffin', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('prmt_ffin', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_tpsr', 'T. Servicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_tpsr', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_tpsr', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_subp', 'Subpuerto')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_subp', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_subp', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_anno', 'Año')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_anno', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_anno', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_numero', 'Nº')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_numero', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_numero', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_fini', 'F. Inicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_fini', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_fini', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_ffin', 'F. Fin')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_ffin', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_ffin', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_falta', 'F. Alta')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_falta', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_falta', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_fref', 'F. Referencia')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_fref', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_fref', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'srvc_estado', 'Estado')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_estado', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('srvc_estado', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ssrv_tpss', 'T. Subservicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_tpss', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_tpss', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ssrv_srvc', 'Servicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_srvc', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_srvc', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ssrv_estado', 'Estado')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_estado', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_estado', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ssrv_numero', 'Nº')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_numero', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_numero', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ssrv_fini', 'F. Inicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_fini', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_fini', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ssrv_ffin', 'F. Fin')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_ffin', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('ssrv_ffin', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'estd_tpes', 'Informe')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('estd_tpes', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('estd_tpes', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'estd_pepr', 'P. Proceso.')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('estd_pepr', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('estd_pepr', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'estd_subp', 'Subpuerto')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('estd_subp', 'web')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('estd_subp', 'app')\
 
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00000', 'E00000 - Error no controlado: {0}')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00000', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00001', 'E00001 - Campo Obligatorio: {0}')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00001', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00002', 'E00002 - Campo Obligatorio: Descripción para el idioma {0}')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00002', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00003', 'E00003 - Campo Obligatorio: F. Inicio')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00003', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00004', 'E00004 - Campo Obligatorio: Código')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00004', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00005', 'E00005 - {0} duplicado/a')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00005', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00006', 'E00006 - Error de período de Vigencia. F. Fin ha de ser posterior a F.Fin')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00006', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00007', 'E00007 - Parámetro con Identificador {0} no encontrado')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00007', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00008', 'E00008 - {0} con identificador {1} no encontrado/a')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00008', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00009', 'E00009 - Otro elemento se solapa con el período de vigencia')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00009', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00010', 'E00010 - Servicio en estado {0} inválido para ejecutar la acción')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00010', 'app')\
-INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'E00011', 'E00011 - Subservicio en estado {0} inválido para ejecutar la acción')\
-	INSERT INTO portico.tbl_message_bundle_msbl (msbl_key, msbl_bundle) VALUES ('E00011', 'app')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'app_nombre', 'Pórtico')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'menu', 'Menú')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'errorList', 'Errores')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'filtro', 'Filtro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('en', 0, 'filtro', 'Filter')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'filtro_limit', 'Máx. Resultados')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'grid_count', '{{count}} Resultado(s)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'format_date', 'dd/MM/yyyy')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'format_datetime', 'dd/MM/yyyy HH:mm')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'format_true', 'Si')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'format_false', 'No')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'format_1', 'Si')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'format_0', 'No')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_buscar', 'Buscar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_volver', 'Volver')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_aceptar', 'Aceptar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_cancelar', 'Cancelar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_crear', 'Nuevo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_editar', 'Editar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_guardar', 'Guardar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_borrar', 'Borrar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_duplicar', 'Duplicar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_filtrar', 'Filtro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_exportar', 'Exportar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_imprimir', 'Imprimir')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_recargar', 'Recargar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_valorar', 'Valorar')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'sec_facturacion', 'Facturación')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'sec_administracion', 'Administración')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'sec_metamodelo', 'Metamodelo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'sec_configuracion', 'Configuración')\
 
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entiList', 'Entidades')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_codigo', 'Código')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tipo', 'Tipo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_cmdAlta', 'Alta?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_cmdBaja', 'Baja?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_cmdEdicion', 'Edición?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_cmdDuplicado', 'Duplicado?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_maxGrid', 'Grid Máx (filas)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_engdList', 'Grupos de Datos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_entdList', 'Datos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_entdGridList', 'Datos del Grid')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_entiPadresList', 'Entidades Padre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_entiHijasList', 'Entidades Hija')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_enacList', 'Acciones')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_i18n', 'I18n?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tempExp', 'Temporal?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpdt', 'T. Dato')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tppr', 'Maestro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpprAsociado', 'Maestro Asociado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_temporal', 'Temporal?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_facturable', 'Facturable?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpdtEstado', 'T. Dato Estado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpsr', 'Tipo de Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tppr', 'Maestro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpprList', 'Maestros')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpsp', 'Maestro Dependiente')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpspList', 'Maestros Dependiente')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpsr', 'Tipo de Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpsrList', 'Tipos de Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpss', 'Tipo de Subservicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpssList', 'Tipos de Subservicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpes', 'Tipo de Estadística')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpesList', 'Tipos de Estadística')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac', 'Acción Asociada a Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enacList', 'Acciónes Asociadas a Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_path', 'Ruta (URL)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_etiqueta', 'Etiqueta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_orden', 'Orden')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enen', 'Dependencia entre Entidades')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enenList', 'Dependencias entre Entidades')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enen_entiPadre', 'Entidad Padre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enen_entiHija', 'Entidad Hija')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enen_orden', 'Orden')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'engd', 'Grupo de Datos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'engdList', 'Grupos de Datos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'engd_enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'engd_numero', 'Nº')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'engd_etiqueta', 'Etiqueta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd', 'Dato de Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entdList', 'Datos de Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_tpdt', 'Tipo de Dato')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_grupo', 'Grupo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_fila', 'Fila')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_orden', 'Orden')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_span', 'Span')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_spanLg', 'Span (Lg)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_obligatorio', 'Obligatorio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_gridable', 'Grid?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_filtrable', 'Filtrable?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_valorDefecto', 'V. Defecto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'entd_etiqueta', 'Etiqueta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'EntidadTipo_P', 'Maestro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'EntidadTipo_B', 'Maestro Dependiente')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'EntidadTipo_T', 'Tipo de Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'EntidadTipo_S', 'Tipo de Subservicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'EntidadTipo_E', 'Tipo de Estadística')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdt', 'Tipo de Dato')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdtList', 'Tipos de Dato')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdt_codigo', 'Código')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdt_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdt_tpht', 'Tipo HTML')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdt_enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdt_tpel', 'Tipo de Elemento')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpdt_cdrfList', 'Códigos de Referencia')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'HtmlTipo_T', 'T - Textfield')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'HtmlTipo_S', 'S - Select')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'HtmlTipo_CB', 'CB - Checkbox')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'HtmlTipo_D', 'D - Date')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'HtmlTipo_DT', 'DT - Datetime')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'HtmlTipo_F', 'F - Filtro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'HtmlTipo_TA', 'TA - Textarea')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_ND', 'ND - Nº Decimal')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_NE', 'NE - Nº Entero')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_TX', 'TX - Texto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_FE', 'FE - Fecha')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_FH', 'FH - Fecha/Hora')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_PR', 'PR - Maestro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_BO', 'BO - Booleano')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_CR', 'CR - Cód. Referencia')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ElementoTipo_SR', 'SR - Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdrf', 'Código de Referencia')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdrfList', 'Códigos de Referencia')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdrf_tpdt', 'T. Dato')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdrf_valor', 'Valor')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdrf_orden', 'Orden')\
+
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'page_home', 'Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'page_grid', 'Listado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'page_detail', 'Detalle')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'page_create', 'Nuevo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'page_duplicate', 'Duplicado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'page_edit', 'Edición')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'i18n_text', 'Nombre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'i18n_text_lang', 'Nombre {{lang}}')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmt', 'Maestro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmtList', 'Maestro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmt_parametro', 'Código')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmt_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmt_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmt_fvigencia', 'F. Vigencia')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'sprm', 'Maestro Dependiente')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'sprm_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'sprm_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc', 'Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvcList', 'Servicios')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_tpsr', 'T. Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_subp', 'Subpuerto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_anno', 'Año')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_numero', 'Nº')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_falta', 'F. Alta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_fref', 'F. Referencia')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'srvc_estado', 'Estado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ssrv', 'Subservicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ssrv_tpss', 'T. Subservicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ssrv_srvc', 'Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ssrv_estado', 'Estado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ssrv_numero', 'Nº')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ssrv_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ssrv_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr', 'Período de Proceso')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'peprList', 'Períodos de Proceso')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_autp', 'Aut. Portuaria')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_anio', 'Aut. Año')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_mes', 'Mes')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms', 'Cuadro Mensual')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estd', 'Estadistica')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estdList', 'Estadisticas')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estd_tpes', 'Informe')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estd_pepr', 'P. Proceso.')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estd_subp', 'Subpuerto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt', 'Proceso')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbtList', 'Procesos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_modulo', 'Módulo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_tipo', 'Tipo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_estado', 'Estado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_falta', 'F. Alta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_duracion', 'Duración (mseg.)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_erroresCnt', 'Nº Errores')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_alertasCnt', 'Nº Alertas')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prbt_mensajesCnt', 'Nº Mensajes')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmnList', 'Mensajes')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmn_nivel', 'Nivel')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmn_codigo', 'Código')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prmn_mensaje', 'Mensaje')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prpmList', 'Parámetros')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prpm_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prpm_valor', 'Valor')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc', 'Aspecto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspcList', 'Aspectos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cList', 'Elementos de Cabecera')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lcList', 'Elementos Cuantitativos de Línea')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_liList', 'Elementos Informativos de Línea')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_ascrList', 'Cargos Asociados al Aspecto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_codigo', 'Código')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_descripcion', 'Descripción')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_tpsr', 'T. Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_prioridad', 'Prioridad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cetiqInfo', 'Etiq. Elem. Informativo Cabecera')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cetiqInfo1', 'Etiq. Elem. Informativo Cabecera 1')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cetiqInfo2', 'Etiq. Elem. Informativo Cabecera 2')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cetiqInfo3', 'Etiq. Elem. Informativo Cabecera 3')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cetiqInfo4', 'Etiq. Elem. Informativo Cabecera 4')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cetiqInfo5', 'Etiq. Elem. Informativo Cabecera 5')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cetiqInfo6', 'Etiq. Elem. Informativo Cabecera 6')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cpathInfo', 'Ruta Elem. Informativo Cabecera')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cpathInfo1', 'Ruta Elem. Informativo Cabecera 1')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cpathInfo2', 'Ruta Elem. Informativo Cabecera 2')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cpathInfo3', 'Ruta Elem. Informativo Cabecera 3')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cpathInfo4', 'Ruta Elem. Informativo Cabecera 4')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cpathInfo5', 'Ruta Elem. Informativo Cabecera 5')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cpathInfo6', 'Ruta Elem. Informativo Cabecera 6')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cgrpInfo', 'Agrupar Elem. Informativo Cabecera?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cgrpInfo1', 'Agrupar Elem. Informativo Cabecera 1?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cgrpInfo2', 'Agrupar Elem. Informativo Cabecera 2?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cgrpInfo3', 'Agrupar Elem. Informativo Cabecera 3?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cgrpInfo4', 'Agrupar Elem. Informativo Cabecera 4?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cgrpInfo5', 'Agrupar Elem. Informativo Cabecera 5?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_cgrpInfo6', 'Agrupar Elem. Informativo Cabecera 6?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lsumCuant', 'Sumarizar Elem. Cuantitativo Línea?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lsumCuant1', 'Sumarizar Elem. Cuantitativo Línea 1?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lsumCuant2', 'Sumarizar Elem. Cuantitativo Línea 2?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lsumCuant3', 'Sumarizar Elem. Cuantitativo Línea 3?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lsumCuant4', 'Sumarizar Elem. Cuantitativo Línea 4?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lsumCuant5', 'Sumarizar Elem. Cuantitativo Línea 5?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lsumCuant6', 'Sumarizar Elem. Cuantitativo Línea 6?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lgrpInfo', 'Agrupar Elem. Informativo Línea?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lgrpInfo1', 'Agrupar Elem. Informativo Línea 1?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lgrpInfo2', 'Agrupar Elem. Informativo Línea 2?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lgrpInfo3', 'Agrupar Elem. Informativo Línea 3?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lgrpInfo4', 'Agrupar Elem. Informativo Línea 4?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lgrpInfo5', 'Agrupar Elem. Informativo Línea 5?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc_lgrpInfo6', 'Agrupar Elem. Informativo Línea 6?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ascr', 'Cargo de Aspecto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ascr_crgo', 'Cargo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ascr_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ascr_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo', 'Cargo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgoList', 'Cargos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_codigo', 'Código')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_descripcion', 'Descripción')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_codigoNormalizado', 'Cód. Normalizado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_tipo', 'Tipo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_tpsr', 'T. Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_principal', 'Principal?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'crgo_temporal', 'Temporal?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla', 'Regla')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rglaList', 'Reglas')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_codigo', 'Código')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_crgo', 'Cargo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_tipo', 'Tipo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_orden', 'Orden')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_condicion', 'Condición')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_formula', 'Fórmula')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_importeBase', 'Importe Base')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathImpuesto', 'Ruta Impuesto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathPagador', 'Ruta Pagador')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathEsSujPasivo', 'Ruta Es Sujeto Pasivo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCodExen', 'Ruta Cód. Exención')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqInfo', 'Etiq. Elem. Informativo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqInfo1', 'Etiq. Elem. Informativo 1')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqInfo2', 'Etiq. Elem. Informativo 2')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqInfo3', 'Etiq. Elem. Informativo 3')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqInfo4', 'Etiq. Elem. Informativo 4')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqInfo5', 'Etiq. Elem. Informativo 5')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqInfo6', 'Etiq. Elem. Informativo 6')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathInfo', 'Ruta Elem. Informativo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathInfo1', 'Ruta Elem. Informativo 1')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathInfo2', 'Ruta Elem. Informativo 2')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathInfo3', 'Ruta Elem. Informativo 3')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathInfo4', 'Ruta Elem. Informativo 4')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathInfo5', 'Ruta Elem. Informativo 5')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathInfo6', 'Ruta Elem. Informativo 6')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqCuant', ' Etiq. Elem. Cuantitativo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqCuant1', ' Etiq. Elem. Cuantitativo 1')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqCuant2', ' Etiq. Elem. Cuantitativo 2')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqCuant3', ' Etiq. Elem. Cuantitativo 3')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqCuant4', ' Etiq. Elem. Cuantitativo 4')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqCuant5', ' Etiq. Elem. Cuantitativo 5')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_etiqCuant6', ' Etiq. Elem. Cuantitativo 6')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCuant', 'Ruta Elem. Cuantitativo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCuant1', 'Ruta Elem. Cuantitativo 1')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCuant2', 'Ruta Elem. Cuantitativo 2')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCuant3', 'Ruta Elem. Cuantitativo 3')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCuant4', 'Ruta Elem. Cuantitativo 4')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCuant5', 'Ruta Elem. Cuantitativo 5')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgla_pathCuant6', 'Ruta Elem. Cuantitativo 6')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgin', 'Incompatibilidad entre Reglas')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rginList', 'Incompatibilidades entre Reglas')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgin_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgin_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'rgin_rgla2', 'Regla Incompatible')\
+
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc', 'Valoración')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrcList', 'Valoraciones')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_id', 'ID')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_srvc', 'Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_aspc', 'Aspecto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_pagador', 'Pagador')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_importe', 'Importe')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_impuesto', 'Impuesto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_fliq', 'F. Liquidación')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_sujPasivo', 'Suj. Pasivo?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrc_codExencion', 'Cód. Exención')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrl', 'Linea de Valoración')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'vlrd', 'Detalle de Valoración')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'fctr', 'Factura')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'fctrList', 'Facturas')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'conf', 'Parámetro de Configuración')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'confList', 'Parámetros de Configuración')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'conf_key', 'Parámetro')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'conf_valueType', 'Tipo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'conf_value', 'Valor')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'conf_defaultValue', 'Valor Defecto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'm18nList', 'Mensajes i18n')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'm18n', 'Mensaje i18n')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'm18n_key', 'Clave')\
+
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00000', 'E00000 - Error no controlado: {0}')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00001', 'E00001 - Campo Obligatorio: {0}')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00002', 'E00002 - Campo Obligatorio: Descripción para el idioma {0}')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00005', 'E00005 - {0} duplicado/a')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00006', 'E00006 - Error de período de Vigencia. Fecha Fin ha de ser posterior a Fecha Inicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00008', 'E00008 - {0} con identificador {1} no encontrado/a')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00009', 'E00009 - {0} solapado/a con el período de vigencia')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00011', 'E00011 - Subservicio en estado {0} inválido para ejecutar la acción')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00012', 'E00012 - {0} solo admite los valores {1}')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'E00013', 'E00013 - Operación no Permitida')\
+
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_numero', 'Nº')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_tm', 'Tm')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_teus', 'TEUS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_ca', 'Con Carga')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_va', 'Vacíos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_embarcado', 'Embarcado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_desembarcado', 'Desembarcado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_transito', 'Tránsito')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_transbordo', 'Transbordo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GL', 'GRANELES LIQUIDOS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLPETR', 'CRUDOS DE PETROLEO')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLGASN', 'GAS NATURAL')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLPREF', 'PRODUCTOS PETROLIFEROS REFINADOS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GLOTRO', 'OTROS GRANELES LIQUIDOS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GS', 'GRANELES SOLIDOS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GSIESP', 'POR INSTALACION ESPECIAL')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_GSNIES', 'SIN INSTALACION ESPECIAL')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_MG', 'MERCANCIA GENERAL')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_PASAJE', 'Nº PASAJEROS (EXCLUIDO T. BAHIA)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_PASCRU', 'Nº PASAJEROS DE CRUCERO')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_VET2', 'Nº VEHICULOS (Turismos en rég. pasaje, Automóviles y Autobuses)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_CTEUS', 'TEUS (con carga y vacíos)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_RR', 'TRAFICO RO-RO')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_RRC', 'EN CONTENEDORES')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_RRO', 'EN OTROS MEDIOS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_AV', 'AVITUALLAMIENTO')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_AVPPET', 'PROD. PETROLIFEROS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_AVOTRO', 'OTROS')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_TRALOC', 'TRAFICO LOCAL')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms_PESCAF', 'PESCA FRESCA')\
+
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'MensajeNivel_I', 'I - Información')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'MensajeNivel_W', 'W - Alerta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'MensajeNivel_E', 'E - Error')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoEstado_C', 'C - En Cola')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoEstado_E', 'E - En Ejecución')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoEstado_F', 'F - Finalizado')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoModulo_S', 'S - Servicios')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ProcesoModulo_E', 'E - Estadísticas')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'CargoTipo_T', 'T - Tarifa')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'CargoTipo_B', 'B - Tasa')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ReglaTipo_T', 'T - Precio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ReglaTipo_C', 'C - Coeficiente')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ReglaTipo_D', 'D - Bonificación')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ConfigurationValueType_String', 'Texto')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ConfigurationValueType_Boolean', 'Lógico')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ConfigurationValueType_Double', 'Nº Decimal')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ConfigurationValueType_Long', 'Nº Entero')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ConfigurationValueType_Date', 'Fecha')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ConfigurationValueType_DateTime', 'Fecha/Hora')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ConfigurationValueType_StringList', 'Lista de Textos')\
 
 -- Borrado de laas tablas de configuracion y configuracion de idioma
 DROP TABLE portico.tbl_conf_valor_i18n_cnvi\
@@ -662,7 +723,6 @@ INSERT INTO portico.tbl_conf_valor_i18n_cnvi (cnvi_cnid_pk, cnvi_cnci_pk, cnvi_v
 
 
 -- Mensajes i18n
-DROP TABLE portico.tbl_message_bundle_msbl\
 DROP TABLE portico.tbl_message_i18n_m18n\
 
 

@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class EntidadTipoDatoVO {
 
+    /** The id. */
+    private Long id;
+
     /** The tppr id. */
     private Long entiId;
 
@@ -80,6 +83,25 @@ public final class EntidadTipoDatoVO {
         }
 
         return span * 4 / 3;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**

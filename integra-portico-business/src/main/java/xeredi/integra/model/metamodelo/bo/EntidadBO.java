@@ -33,22 +33,6 @@ import com.google.common.base.Preconditions;
  * The Class EntidadAdminBO.
  */
 public class EntidadBO {
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
-    /** The entd dao. */
-    EntidadTipoDatoDAO entdDAO;
-
-    /** The engd dao. */
-    EntidadGrupoDatoDAO engdDAO;
-
-    /** The enac dao. */
-    EntidadAccionDAO enacDAO;
-
-    /** The enen dao. */
-    EntidadEntidadDAO enenDAO;
-
     /**
      * Select list.
      *
@@ -60,7 +44,7 @@ public class EntidadBO {
         Preconditions.checkNotNull(entiCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entiDAO = session.getMapper(EntidadDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
             return entiDAO.selectList(entiCriterioVO);
         }
@@ -77,11 +61,11 @@ public class EntidadBO {
         Preconditions.checkNotNull(tpdtMap);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entiDAO = session.getMapper(EntidadDAO.class);
-            enenDAO = session.getMapper(EntidadEntidadDAO.class);
-            engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-            entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
-            enacDAO = session.getMapper(EntidadAccionDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
+            final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
+            final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
+            final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
 
             final Map<Long, EntidadVO> entiMap = entiDAO.selectMap(new EntidadCriterioVO());
 
@@ -148,8 +132,7 @@ public class EntidadBO {
         Preconditions.checkNotNull(entiCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entiDAO = session.getMapper(EntidadDAO.class);
-
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final EntidadVO enti : entiDAO.selectList(entiCriterioVO)) {
@@ -172,11 +155,10 @@ public class EntidadBO {
         Preconditions.checkNotNull(entiVO);
         Preconditions.checkNotNull(entiVO.getId());
 
-        entiDAO = session.getMapper(EntidadDAO.class);
-        enenDAO = session.getMapper(EntidadEntidadDAO.class);
-        engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
-        entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
-        enacDAO = session.getMapper(EntidadAccionDAO.class);
+        final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+        final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
+        final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
+        final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
 
         // Grupos de datos de la entidad
         final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();

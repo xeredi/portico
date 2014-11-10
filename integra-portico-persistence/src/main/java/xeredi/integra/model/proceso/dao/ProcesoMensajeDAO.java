@@ -47,7 +47,7 @@ public interface ProcesoMensajeDAO {
      *            the bounds
      * @return the list
      */
-    List<ProcesoMensajeVO> selectList(final Long prbtId, final RowBounds bounds);
+    List<ProcesoMensajeVO> selectPaginatedList(final Long prbtId, final RowBounds bounds);
 
     /**
      * Count.

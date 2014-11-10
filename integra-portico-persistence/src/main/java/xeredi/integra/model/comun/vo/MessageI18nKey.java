@@ -266,6 +266,7 @@ public enum MessageI18nKey {
     /** The cdrf_orden. */
     cdrf_orden,
 
+    /** The page_home. */
     page_home,
     /** The page_item_grid. */
     page_grid,
@@ -292,7 +293,9 @@ public enum MessageI18nKey {
     /** The prmt_ffin. */
     prmt_ffin,
     /** The prmt_fvigencia. */
-    prmt_fvigencia, sprm,
+    prmt_fvigencia,
+    /** The sprm. */
+    sprm,
     /** The sprm_fini. */
     sprm_fini,
     /** The sprm_ffin. */
@@ -320,7 +323,9 @@ public enum MessageI18nKey {
     /** The srvc_estado. */
     srvc_estado,
     /** The ssrv_tpss. */
-    ssrv, ssrv_tpss,
+    ssrv,
+    /** The ssrv_tpss. */
+    ssrv_tpss,
     /** The ssrv_srvc. */
     ssrv_srvc,
     /** The ssrv_estado. */
@@ -638,7 +643,11 @@ public enum MessageI18nKey {
     /** The vlrc_suj pasivo. */
     vlrc_sujPasivo,
     /** The vlrc_cod exencion. */
-    vlrc_codExencion, vlrl, vlrd,
+    vlrc_codExencion,
+    /** The vlrl. */
+    vlrl,
+    /** The vlrd. */
+    vlrd,
     /** The fctr. */
     fctr,
     /** The fctr list. */
@@ -670,9 +679,15 @@ public enum MessageI18nKey {
     E00002,
     /** Instancia Duplicada. Se pasa como argumento el nombre de la entidad. */
     E00005,
-    /** Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin argumentos. */
+    /**
+     * Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin
+     * argumentos.
+     */
     E00006,
-    /** Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su identificador. */
+    /**
+     * Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su
+     * identificador.
+     */
     E00008,
     /** Error de solape de rangos de vigencia de una entidad. Se pasa como argumento el nombre de la entidad. */
     E00009,
@@ -682,13 +697,13 @@ public enum MessageI18nKey {
      */
     E00011,
     /**
-     * Error de valor no perteneciente a una lista de valores válidos. Se pasa como argumento el nombre del campo y la
-     * lista de valores válidos.
+     * Error de valor no perteneciente a una lista de valores válidos. Se pasa como argumento el nombre del
+     * campo y la lista de valores válidos.
      */
     E00012,
     /**
-     * Error de operacion no permitida. Por ejemplo, finalizar un atraque que no puede ser finalizado, o cancelar un
-     * proceso batch en curso...
+     * Error de operacion no permitida. Por ejemplo, finalizar un atraque que no puede ser finalizado, o
+     * cancelar un proceso batch en curso...
      */
     E00013,
 
@@ -793,6 +808,57 @@ public enum MessageI18nKey {
     ConfigurationValueType_DateTime,
     /** The Configuration value type_ string list. */
     ConfigurationValueType_StringList,
+
+    /** The atra_denegar. */
+    atra_denegar,
+    /** The atra_autorizar. */
+    atra_autorizar,
+    /** The atra_anular. */
+    atra_anular,
+    /** The atra_iniciar. */
+    atra_iniciar,
+    /** The atra_finalizar. */
+    atra_finalizar,
+    /** The atra_cambiar muelle. */
+    atra_cambiarMuelle,
+    /** The atra_autorizar f previo. */
+    atra_autorizarFPrevio,
+    /** The mani_completar. */
+    mani_completar,
+    /** The mani_bloquear. */
+    mani_bloquear,
+    /** The mani_iniciar. */
+    mani_iniciar,
+    /** The mani_anular. */
+    mani_anular,
+    /** The mani_resumen. */
+    mani_resumen,
+    /** The mabl_completar. */
+    mabl_completar,
+    /** The mabl_bloquear. */
+    mabl_bloquear,
+    /** The mabl_iniciar. */
+    mabl_iniciar,
+    /** The mabl_finalizar. */
+    mabl_anular,
+    /** The mabl_resumen. */
+    mabl_resumen,
+    /** The equi_bloquear. */
+    equi_bloquear,
+    /** The equi_iniciar. */
+    equi_iniciar,
+    /** The equi_anular. */
+    equi_anular,
+    /** The part_bloquear. */
+    part_bloquear,
+    /** The part_iniciar. */
+    part_iniciar,
+    /** The part_anular. */
+    part_anular,
+    /** The prbt_cancelar. */
+    prbt_cancelar,
+    /** The prbt_finalizar. */
+    prbt_finalizar,
 
     ;
 

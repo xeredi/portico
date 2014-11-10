@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.maestro;
 
 import java.util.Calendar;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
@@ -32,14 +31,6 @@ public final class SubparametroListadoAction extends ItemListadoAction {
 
     /** The enti. */
     private TipoSubparametroVO enti;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Listado.

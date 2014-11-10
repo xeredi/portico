@@ -2,7 +2,6 @@ package xeredi.integra.http.controller.action.servicio.escala;
 
 import java.util.Calendar;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
@@ -11,13 +10,13 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.escala.AtraqueBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-import xeredi.integra.model.util.Entidad;
-import xeredi.integra.model.util.TipoDato;
 
 import com.google.common.base.Preconditions;
 
@@ -33,14 +32,6 @@ public final class AtraqueAction extends ItemAction {
     /** The item. */
     private SubservicioVO item;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
     // Acciones Web
 
     /**
@@ -51,41 +42,35 @@ public final class AtraqueAction extends ItemAction {
     @Action(value = "atra-autorizar-popup", results = {
             @Result(name = "success", location = "escala/atra-autorizar.jsp"),
             @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
-    public String autorizar() {
+    public String autorizar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-            final ServicioBO srvcBO = new ServicioBO();
-            final AtraqueBO atraBO = new AtraqueBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
+        final AtraqueBO atraBO = new AtraqueBO();
 
-            item = ssrvBO.select(item.getId(), getIdioma());
+        item = ssrvBO.select(item.getId(), getIdioma());
 
-            if (!atraBO.isAutorizable(item.getId())) {
-                addActionError(MessageI18nKey.E00011, item.getEstado());
-
-                return ERROR;
-            }
-
-            // Copiar los datos de solicitud a autorizacion
-            item.getItdtMap().put(TipoDato.DECIMAL_07.getId(), item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
-            item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
-            item.getItdtMap()
-                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
-            item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
-                    item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
-            item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
-            item.getItdtMap().put(TipoDato.TEXTO_02.getId(), item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
-            item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
-
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (!atraBO.isAutorizable(item.getId())) {
+            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizar,
+                    item.getId());
         }
+
+        // Copiar los datos de solicitud a autorizacion
+        item.getItdtMap().put(TipoDato.DECIMAL_07.getId(), item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
+        item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
+        item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
+        item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+        item.getItdtMap()
+                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+        item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
+        item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
+        item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
+        item.getItdtMap().put(TipoDato.TEXTO_02.getId(), item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
+        item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
+
+        item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         return SUCCESS;
     }
@@ -97,7 +82,7 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-autorizar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String autorizarGuardar() {
+    public String autorizarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -113,13 +98,7 @@ public final class AtraqueAction extends ItemAction {
 
         final AtraqueBO atraBO = new AtraqueBO();
 
-        try {
-            atraBO.autorizar(item.getId(), item.getItdtMap());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        atraBO.autorizar(item.getId(), item.getItdtMap());
 
         return SUCCESS;
     }
@@ -131,28 +110,22 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-denegar-popup", results = { @Result(name = "success", location = "escala/atra-denegar.jsp"),
             @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
-    public String denegar() {
+    public String denegar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-            final ServicioBO srvcBO = new ServicioBO();
-            final AtraqueBO atraBO = new AtraqueBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
+        final AtraqueBO atraBO = new AtraqueBO();
 
-            item = ssrvBO.select(item.getId(), getIdioma());
+        item = ssrvBO.select(item.getId(), getIdioma());
 
-            if (!atraBO.isDenegable(item.getId())) {
-                addActionError(MessageI18nKey.E00011, item.getEstado());
-
-                return ERROR;
-            }
-
-            item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (!atraBO.isDenegable(item.getId())) {
+            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_denegar, item.getId());
         }
+
+        item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
+        item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         return SUCCESS;
     }
@@ -164,7 +137,7 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-denegar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String denegarGuardar() {
+    public String denegarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -180,13 +153,7 @@ public final class AtraqueAction extends ItemAction {
 
         final AtraqueBO atraBO = new AtraqueBO();
 
-        try {
-            atraBO.denegar(item.getId(), item.getItdtMap());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        atraBO.denegar(item.getId(), item.getItdtMap());
 
         return SUCCESS;
     }
@@ -198,28 +165,22 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-anular-popup", results = { @Result(name = "success", location = "escala/atra-anular.jsp"),
             @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
-    public String anular() {
+    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-            final ServicioBO srvcBO = new ServicioBO();
-            final AtraqueBO atraBO = new AtraqueBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
+        final AtraqueBO atraBO = new AtraqueBO();
 
-            item = ssrvBO.select(item.getId(), getIdioma());
+        item = ssrvBO.select(item.getId(), getIdioma());
 
-            if (!atraBO.isAnulable(item.getId())) {
-                addActionError(MessageI18nKey.E00011, item.getEstado());
-
-                return ERROR;
-            }
-
-            item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (!atraBO.isAnulable(item.getId())) {
+            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_anular, item.getId());
         }
+
+        item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
+        item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         return SUCCESS;
     }
@@ -231,7 +192,7 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-anular-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String anularGuardar() {
+    public String anularGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -247,13 +208,7 @@ public final class AtraqueAction extends ItemAction {
 
         final AtraqueBO atraBO = new AtraqueBO();
 
-        try {
-            atraBO.anular(item.getId(), item.getItdtMap());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        atraBO.anular(item.getId(), item.getItdtMap());
 
         return SUCCESS;
     }
@@ -265,39 +220,32 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-iniciar-popup", results = { @Result(name = "success", location = "escala/atra-iniciar.jsp"),
             @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
-    public String iniciar() {
+    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-            final ServicioBO srvcBO = new ServicioBO();
-            final AtraqueBO atraBO = new AtraqueBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
+        final AtraqueBO atraBO = new AtraqueBO();
 
-            item = ssrvBO.select(item.getId(), getIdioma());
+        item = ssrvBO.select(item.getId(), getIdioma());
 
-            if (!atraBO.isIniciable(item.getId())) {
-                addActionError(MessageI18nKey.E00011, item.getEstado());
-
-                return ERROR;
-            }
-
-            // Copiar los datos de autorizacion a real
-            item.getItdtMap().put(TipoDato.DECIMAL_13.getId(), item.getItdtMap().get(TipoDato.DECIMAL_07.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_14.getId(), item.getItdtMap().get(TipoDato.DECIMAL_08.getId()));
-            item.getItdtMap().put(TipoDato.ALIN_3.getId(), item.getItdtMap().get(TipoDato.ALIN_2.getId()));
-            item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_3.getId(),
-                    item.getItdtMap().get(TipoDato.TIPO_ATR_EDI_2.getId()));
-            item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_3.getId(),
-                    item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR_2.getId()));
-            item.getItdtMap().put(TipoDato.DECIMAL_15.getId(), item.getItdtMap().get(TipoDato.DECIMAL_09.getId()));
-            item.getItdtMap().put(TipoDato.TIPO_ACT_3.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT_2.getId()));
-            item.getItdtMap().put(TipoDato.TEXTO_03.getId(), item.getItdtMap().get(TipoDato.TEXTO_02.getId()));
-
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (!atraBO.isIniciable(item.getId())) {
+            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_iniciar, item.getId());
         }
+
+        // Copiar los datos de autorizacion a real
+        item.getItdtMap().put(TipoDato.DECIMAL_13.getId(), item.getItdtMap().get(TipoDato.DECIMAL_07.getId()));
+        item.getItdtMap().put(TipoDato.DECIMAL_14.getId(), item.getItdtMap().get(TipoDato.DECIMAL_08.getId()));
+        item.getItdtMap().put(TipoDato.ALIN_3.getId(), item.getItdtMap().get(TipoDato.ALIN_2.getId()));
+        item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_3.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI_2.getId()));
+        item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_3.getId(),
+                item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR_2.getId()));
+        item.getItdtMap().put(TipoDato.DECIMAL_15.getId(), item.getItdtMap().get(TipoDato.DECIMAL_09.getId()));
+        item.getItdtMap().put(TipoDato.TIPO_ACT_3.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT_2.getId()));
+        item.getItdtMap().put(TipoDato.TEXTO_03.getId(), item.getItdtMap().get(TipoDato.TEXTO_02.getId()));
+
+        item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         return SUCCESS;
     }
@@ -309,7 +257,7 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-iniciar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String iniciarGuardar() {
+    public String iniciarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -320,13 +268,7 @@ public final class AtraqueAction extends ItemAction {
 
         final AtraqueBO atraBO = new AtraqueBO();
 
-        try {
-            atraBO.iniciar(item.getId(), item.getItdtMap());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        atraBO.iniciar(item.getId(), item.getItdtMap());
 
         return SUCCESS;
     }
@@ -339,27 +281,22 @@ public final class AtraqueAction extends ItemAction {
     @Action(value = "atra-finalizar-popup", results = {
             @Result(name = "success", location = "escala/atra-finalizar.jsp"),
             @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
-    public String finalizar() {
+    public String finalizar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-            final ServicioBO srvcBO = new ServicioBO();
-            final AtraqueBO atraBO = new AtraqueBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
+        final AtraqueBO atraBO = new AtraqueBO();
 
-            item = ssrvBO.select(item.getId(), getIdioma());
+        item = ssrvBO.select(item.getId(), getIdioma());
 
-            if (!atraBO.isFinalizable(item.getId())) {
-                addActionError(MessageI18nKey.E00011, item.getEstado());
-
-                return ERROR;
-            }
-
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (!atraBO.isFinalizable(item.getId())) {
+            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_finalizar,
+                    item.getId());
         }
+
+        item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         return SUCCESS;
     }
@@ -371,7 +308,7 @@ public final class AtraqueAction extends ItemAction {
      */
     @Action(value = "atra-finalizar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String finalizarGuardar() {
+    public String finalizarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -382,13 +319,7 @@ public final class AtraqueAction extends ItemAction {
 
         final AtraqueBO atraBO = new AtraqueBO();
 
-        try {
-            atraBO.finalizar(item.getId(), item.getItdtMap());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        atraBO.finalizar(item.getId(), item.getItdtMap());
 
         return SUCCESS;
     }
@@ -401,43 +332,38 @@ public final class AtraqueAction extends ItemAction {
     @Action(value = "atra-autorizar-fprevio-popup", results = {
             @Result(name = "success", location = "escala/atra-autorizar-fprevio.jsp"),
             @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
-    public String autorizarFprevio() {
+    public String autorizarFprevio() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final SubservicioBO ssrvBO = new SubservicioBO();
-            final ServicioBO srvcBO = new ServicioBO();
-            final AtraqueBO atraBO = new AtraqueBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
+        final ServicioBO srvcBO = new ServicioBO();
+        final AtraqueBO atraBO = new AtraqueBO();
 
-            item = ssrvBO.select(item.getId(), getIdioma());
+        item = ssrvBO.select(item.getId(), getIdioma());
 
-            if (!atraBO.isAutorizableFprevio(item.getId())) {
-                addActionError(MessageI18nKey.E00011, item.getEstado());
-
-                return ERROR;
-            }
-
-            if ("S".equals(item.getEstado())) {
-                // Copiar los datos de solicitud a autorizacion
-                item.getItdtMap().put(TipoDato.DECIMAL_07.getId(), item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
-                item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
-                item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
-                item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(),
-                        item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
-                item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
-                        item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
-                item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
-                item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
-                item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
-                item.getItdtMap().put(TipoDato.TEXTO_02.getId(), item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
-            }
-
-            item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
-            item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+        if (!atraBO.isAutorizableFprevio(item.getId())) {
+            throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizarFPrevio,
+                    item.getId());
         }
+
+        if ("S".equals(item.getEstado())) {
+            // Copiar los datos de solicitud a autorizacion
+            item.getItdtMap().put(TipoDato.DECIMAL_07.getId(), item.getItdtMap().get(TipoDato.DECIMAL_01.getId()));
+            item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
+            item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
+            item.getItdtMap()
+                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+            item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
+                    item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+            item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
+            item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
+            item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
+            item.getItdtMap().put(TipoDato.TEXTO_02.getId(), item.getItdtMap().get(TipoDato.TEXTO_01.getId()));
+        }
+
+        item.getItdtMap().get(TipoDato.FECHA_01.getId()).setFecha(Calendar.getInstance().getTime());
+        item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
 
         return SUCCESS;
     }

@@ -1,14 +1,12 @@
 package xeredi.integra.model.estadistica.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import xeredi.util.pagination.Criterio;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PeriodoProcesoCriterioVO.
  */
-public final class PeriodoProcesoCriterioVO implements Criterio {
+public final class PeriodoProcesoCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
@@ -24,14 +22,6 @@ public final class PeriodoProcesoCriterioVO implements Criterio {
 
     /** The trimestre. */
     private Integer trimestre;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the id.

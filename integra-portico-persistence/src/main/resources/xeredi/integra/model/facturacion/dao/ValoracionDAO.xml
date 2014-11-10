@@ -109,6 +109,11 @@
         <include refid="SelectWhere" />
     </select>
 
+    <select id="selectPaginatedList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+    </select>
+
     <select id="count" parameterType="ValoracionCriterioVO" resultType="Integer">
         SELECT COUNT(1)
         FROM vw_valoracion_vlrc

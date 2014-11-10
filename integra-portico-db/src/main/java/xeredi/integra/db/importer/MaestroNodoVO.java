@@ -2,7 +2,7 @@ package xeredi.integra.db.importer;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.util.Entidad;
+import xeredi.integra.model.metamodelo.vo.Entidad;
 
 // TODO: Auto-generated Javadoc
 /**

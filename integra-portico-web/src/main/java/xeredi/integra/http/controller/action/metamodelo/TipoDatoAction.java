@@ -14,11 +14,15 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.CodigoReferenciaBO;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.CodigoReferenciaVO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -43,14 +47,11 @@ public final class TipoDatoAction extends BaseAction {
     /** The cdrf list. */
     private List<CodigoReferenciaVO> cdrfList;
 
-    /**
-     * Instantiates a new tipo dato action.
-     */
-    public TipoDatoAction() {
-        super();
+    /** The tppr list. */
+    private List<LabelValueVO> tpprList;
 
-        tpdt = new TipoDatoVO();
-    }
+    /** The tpsr list. */
+    private List<LabelValueVO> tpsrList;
 
     // Acciones Web
     /**
@@ -62,6 +63,10 @@ public final class TipoDatoAction extends BaseAction {
     public String create() {
         accion = ACCION_EDICION.create;
 
+        tpdt = new TipoDatoVO();
+
+        loadLabelValues();
+
         return SUCCESS;
     }
 
@@ -69,22 +74,21 @@ public final class TipoDatoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpdt-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
+
+        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
         accion = ACCION_EDICION.edit;
 
-        try {
-            final TipoDatoBO tpdtBO = new TipoDatoBO();
-
-            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -93,9 +97,13 @@ public final class TipoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("tpdt-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
 
         if (tpdt == null) {
@@ -122,19 +130,11 @@ public final class TipoDatoAction extends BaseAction {
 
             switch (accion) {
             case create:
-                try {
-                    tpdtBO.insert(tpdt, i18nMap);
-                } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-                }
+                tpdtBO.insert(tpdt, i18nMap);
 
                 break;
             case edit:
-                try {
-                    tpdtBO.update(tpdt, i18nMap);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+                tpdtBO.update(tpdt, i18nMap);
 
                 break;
             default:
@@ -149,19 +149,17 @@ public final class TipoDatoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpdt-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
-        try {
-            final TipoDatoBO tpdtBO = new TipoDatoBO();
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
 
-            tpdtBO.delete(tpdt);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpdtBO.delete(tpdt);
 
         return SUCCESS;
     }
@@ -170,27 +168,64 @@ public final class TipoDatoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpdt-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
-        try {
-            final TipoDatoBO tpdtBO = new TipoDatoBO();
-            final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
+        final TipoDatoBO tpdtBO = new TipoDatoBO();
+        final CodigoReferenciaBO cdrfBO = new CodigoReferenciaBO();
 
-            tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
-            cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpdt = tpdtBO.select(tpdt.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.tpdt, tpdt.getId());
+        cdrfList = cdrfBO.selectList(tpdt.getId(), getIdioma());
 
         return SUCCESS;
     }
 
+    /**
+     * Load label values.
+     */
+    private void loadLabelValues() {
+        final EntidadBO entiBO = new EntidadBO();
+        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
+
+        entiCriterioVO.setIdioma(getIdioma());
+
+        {
+            entiCriterioVO.setTipo(TipoEntidad.P);
+            tpprList = entiBO.selectLabelValues(entiCriterioVO);
+        }
+
+        {
+            entiCriterioVO.setTipo(TipoEntidad.T);
+            tpsrList = entiBO.selectLabelValues(entiCriterioVO);
+        }
+    }
+
     // get / set
+
+    /**
+     * Gets the tppr list.
+     *
+     * @return the tppr list
+     */
+    public List<LabelValueVO> getTpprList() {
+        return tpprList;
+    }
+
+    /**
+     * Gets the tpsr list.
+     *
+     * @return the tpsr list
+     */
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
+    }
+
     /**
      * Gets the tphts.
      *

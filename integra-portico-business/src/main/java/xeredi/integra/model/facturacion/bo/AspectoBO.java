@@ -31,10 +31,6 @@ import com.google.common.base.Preconditions;
  * The Class AspectoBO.
  */
 public class AspectoBO {
-
-    /** The aspc dao. */
-    AspectoDAO aspcDAO;
-
     /**
      * Select list.
      *
@@ -52,13 +48,12 @@ public class AspectoBO {
         Preconditions.checkArgument(limit > 0);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            aspcDAO = session.getMapper(AspectoDAO.class);
-
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final int count = aspcDAO.count(aspcCriterioVO);
             final List<AspectoVO> aspcList = new ArrayList<>();
 
             if (count >= offset) {
-                aspcList.addAll(aspcDAO.selectList(aspcCriterioVO, new RowBounds(offset, limit)));
+                aspcList.addAll(aspcDAO.selectPaginatedList(aspcCriterioVO, new RowBounds(offset, limit)));
             }
 
             return new PaginatedList<AspectoVO>(aspcList, offset, limit, count);
@@ -76,8 +71,7 @@ public class AspectoBO {
         Preconditions.checkNotNull(aspcCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            aspcDAO = session.getMapper(AspectoDAO.class);
-
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
             for (final AspectoVO aspc : aspcDAO.selectList(aspcCriterioVO)) {
@@ -107,8 +101,7 @@ public class AspectoBO {
         Preconditions.checkNotNull(fechaVigencia);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            aspcDAO = session.getMapper(AspectoDAO.class);
-
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
 
             aspcCriterioVO.setId(id);
@@ -143,8 +136,7 @@ public class AspectoBO {
         Preconditions.checkNotNull(aspc.getTpsr().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            aspcDAO = session.getMapper(AspectoDAO.class);
-
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final IgBO igBO = new IgBO();
 
             if (aspcDAO.exists(aspc)) {
@@ -184,7 +176,7 @@ public class AspectoBO {
         Preconditions.checkNotNull(aspc.getAspv());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            aspcDAO = session.getMapper(AspectoDAO.class);
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
 
             if (aspcDAO.exists(aspc)) {
                 throw new DuplicateInstanceException(MessageI18nKey.aspc, aspc);
@@ -224,7 +216,7 @@ public class AspectoBO {
         Preconditions.checkNotNull(aspc.getAspv().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            aspcDAO = session.getMapper(AspectoDAO.class);
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
 
             if (aspcDAO.existsOverlap(aspc)) {
                 throw new OverlapException(MessageI18nKey.aspc, aspc);

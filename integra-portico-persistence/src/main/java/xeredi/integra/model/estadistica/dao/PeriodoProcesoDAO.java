@@ -15,7 +15,7 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Exists.
-     * 
+     *
      * @param peprVO
      *            the pepr vo
      * @return true, if successful
@@ -24,7 +24,7 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Insert.
-     * 
+     *
      * @param peprVO
      *            the pepr vo
      */
@@ -32,7 +32,7 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Delete.
-     * 
+     *
      * @param peprId
      *            the pepr id
      * @return the int
@@ -41,7 +41,7 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Select.
-     * 
+     *
      * @param peprId
      *            the pepr id
      * @return the periodo proceso vo
@@ -50,7 +50,7 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Select object.
-     * 
+     *
      * @param peprCriterioVO
      *            the pepr criterio vo
      * @return the periodo proceso vo
@@ -59,7 +59,7 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Count.
-     * 
+     *
      * @param peprCriterioVO
      *            the pepr criterio vo
      * @return the int
@@ -68,7 +68,7 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param peprCriterioVO
      *            the pepr criterio vo
      * @return the list
@@ -77,12 +77,12 @@ public interface PeriodoProcesoDAO {
 
     /**
      * Select list.
-     * 
+     *
      * @param peprCriterioVO
      *            the pepr criterio vo
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<PeriodoProcesoVO> selectList(final PeriodoProcesoCriterioVO peprCriterioVO, final RowBounds bounds);
+    List<PeriodoProcesoVO> selectPaginatedList(final PeriodoProcesoCriterioVO peprCriterioVO, final RowBounds bounds);
 }

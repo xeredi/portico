@@ -35,15 +35,6 @@ public final class TipoEstadisticaAction extends BaseAction {
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
-    /**
-     * Instantiates a new tipo estadistica action.
-     */
-    public TipoEstadisticaAction() {
-        super();
-
-        enti = new TipoEstadisticaVO();
-    }
-
     // Acciones Web
     /**
      * Alta.
@@ -63,20 +54,15 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @return the string
      */
     @Action("tpes-edit")
-    public String modificar() {
+    public String modificar() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+
+        enti = tpesBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
-
-            enti = tpesBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -87,7 +73,7 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @return the string
      */
     @Action("tpes-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
 
         if (enti == null) {
@@ -109,20 +95,11 @@ public final class TipoEstadisticaAction extends BaseAction {
             switch (accion) {
             case create:
                 enti.setCodigo(enti.getCodigo().toUpperCase());
-
-                try {
-                    tpesBO.insert(enti, i18nMap);
-                } catch (final DuplicateInstanceException ex) {
-                    addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-                }
+                tpesBO.insert(enti, i18nMap);
 
                 break;
             case edit:
-                try {
-                    tpesBO.update(enti, i18nMap);
-                } catch (final InstanceNotFoundException ex) {
-                    addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-                }
+                tpesBO.update(enti, i18nMap);
 
                 break;
             default:
@@ -139,17 +116,13 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @return the string
      */
     @Action("tpes-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        try {
-            tpesBO.delete(enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpesBO.delete(enti.getId());
 
         return SUCCESS;
     }
@@ -160,18 +133,14 @@ public final class TipoEstadisticaAction extends BaseAction {
      * @return the string
      */
     @Action("tpes-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        try {
-            final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-            enti = tpesBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        enti = tpesBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
         return SUCCESS;
     }

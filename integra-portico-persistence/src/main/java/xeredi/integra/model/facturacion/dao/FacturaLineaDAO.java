@@ -39,7 +39,7 @@ public interface FacturaLineaDAO {
      *            the bounds
      * @return the list
      */
-    List<FacturaLineaVO> selectList(final FacturaLineaCriterioVO fctlCriterioVO, RowBounds bounds);
+    List<FacturaLineaVO> selectPaginatedList(final FacturaLineaCriterioVO fctlCriterioVO, RowBounds bounds);
 
     /**
      * Select list.

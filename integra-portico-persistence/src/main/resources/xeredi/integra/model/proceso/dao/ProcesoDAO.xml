@@ -76,6 +76,13 @@
 		ORDER BY prbt.prbt_falta DESC
 	</select>
 
+	<select id="selectPaginatedList" parameterType="ProcesoCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY prbt.prbt_falta DESC
+	</select>
+
 	<select id="selectObject" parameterType="ProcesoCriterioVO"
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />

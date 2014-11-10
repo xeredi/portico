@@ -1,5 +1,7 @@
 package xeredi.integra.model.comun.exception;
 
+import java.util.Locale;
+
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 
 // TODO: Auto-generated Javadoc
@@ -53,6 +55,14 @@ public final class TooManyResultsException extends ModelException {
      */
     public int getMaxResults() {
         return maxResults;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getMessage(final Locale locale) {
+        throw new Error("No implementado");
     }
 
 }

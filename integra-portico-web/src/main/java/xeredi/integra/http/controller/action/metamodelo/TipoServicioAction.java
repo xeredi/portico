@@ -69,20 +69,15 @@ public final class TipoServicioAction extends BaseAction {
      * @return the string
      */
     @Action("tpsr-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
-        accion = ACCION_EDICION.edit;
-
         final TipoServicioBO tpsrBO = new TipoServicioBO();
 
-        try {
-            enti = tpsrBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        enti = tpsrBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        accion = ACCION_EDICION.edit;
 
         return SUCCESS;
     }
@@ -93,7 +88,7 @@ public final class TipoServicioAction extends BaseAction {
      * @return the string
      */
     @Action("tpsr-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
         Preconditions.checkNotNull(accion);
 
         if (enti == null) {
@@ -117,25 +112,21 @@ public final class TipoServicioAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, enti.getTemporal());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, enti.getFacturable());
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final TipoServicioBO tpsrBO = new TipoServicioBO();
 
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-
-        if (accion == ACCION_EDICION.create) {
-            enti.setCodigo(enti.getCodigo().toUpperCase());
-
-            try {
+            switch (accion) {
+            case create:
+                enti.setCodigo(enti.getCodigo().toUpperCase());
                 tpsrBO.insert(enti, i18nMap);
-            } catch (final DuplicateInstanceException ex) {
-                addActionError(MessageI18nKey.E00005, getText(ex.getClassName()));
-            }
-        } else {
-            try {
+
+                break;
+            case edit:
                 tpsrBO.update(enti, i18nMap);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+
+                break;
+            default:
+                throw new Error(accion + " noimplementado");
             }
         }
 
@@ -148,14 +139,10 @@ public final class TipoServicioAction extends BaseAction {
      * @return the string
      */
     @Action("tpsr-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         final TipoServicioBO tpsrBO = new TipoServicioBO();
 
-        try {
-            tpsrBO.delete(enti.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        tpsrBO.delete(enti.getId());
 
         return SUCCESS;
     }
@@ -166,34 +153,30 @@ public final class TipoServicioAction extends BaseAction {
      * @return the string
      */
     @Action("tpsr-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         final TipoServicioBO tpsrBO = new TipoServicioBO();
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final EntidadBO entiBO = new EntidadBO();
 
-        try {
-            enti = tpsrBO.select(enti.getId(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
+        enti = tpsrBO.select(enti.getId(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
 
-            TipoSubservicioCriterioVO tpssCriterioVO = null;
+        TipoSubservicioCriterioVO tpssCriterioVO = null;
 
-            tpssCriterioVO = new TipoSubservicioCriterioVO();
-            tpssCriterioVO.setTpsrId(enti.getId());
-            tpssCriterioVO.setIdioma(getIdioma());
+        tpssCriterioVO = new TipoSubservicioCriterioVO();
+        tpssCriterioVO.setTpsrId(enti.getId());
+        tpssCriterioVO.setIdioma(getIdioma());
 
-            subentiList = tpssBO.selectList(tpssCriterioVO);
+        subentiList = tpssBO.selectList(tpssCriterioVO);
 
-            if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
-                EntidadCriterioVO entiCriterioVO = null;
+        if (enti.getEntiHijasList() != null && !enti.getEntiHijasList().isEmpty()) {
+            EntidadCriterioVO entiCriterioVO = null;
 
-                entiCriterioVO = new EntidadCriterioVO();
-                entiCriterioVO.setEntiPadreId(enti.getId());
-                entiCriterioVO.setIdioma(getIdioma());
+            entiCriterioVO = new EntidadCriterioVO();
+            entiCriterioVO.setEntiPadreId(enti.getId());
+            entiCriterioVO.setIdioma(getIdioma());
 
-                entiHijasList = entiBO.selectList(entiCriterioVO);
-            }
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
+            entiHijasList = entiBO.selectList(entiCriterioVO);
         }
 
         return SUCCESS;

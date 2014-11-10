@@ -1,12 +1,10 @@
 package xeredi.integra.http.controller.action.servicio.manifiesto;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.servicio.bo.manifiesto.EquipamientoBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
@@ -24,14 +22,6 @@ public final class EquipamientoAction extends BaseAction {
     /** The item. */
     private SubservicioVO item;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
     // Acciones web
     /**
      * Bloquear.
@@ -39,19 +29,13 @@ public final class EquipamientoAction extends BaseAction {
      * @return the string
      */
     @Action("equi-bloquear")
-    public String bloquear() {
+    public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         final EquipamientoBO equiBO = new EquipamientoBO();
 
-        try {
-            equiBO.bloquear(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        equiBO.bloquear(item.getId());
 
         return SUCCESS;
     }
@@ -62,19 +46,13 @@ public final class EquipamientoAction extends BaseAction {
      * @return the string
      */
     @Action("equi-iniciar")
-    public String iniciar() {
+    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         final EquipamientoBO equiBO = new EquipamientoBO();
 
-        try {
-            equiBO.iniciar(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        equiBO.iniciar(item.getId());
 
         return SUCCESS;
     }
@@ -85,19 +63,13 @@ public final class EquipamientoAction extends BaseAction {
      * @return the string
      */
     @Action("equi-anular")
-    public String anular() {
+    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
         final EquipamientoBO equiBO = new EquipamientoBO();
 
-        try {
-            equiBO.anular(item.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        } catch (final OperacionNoPermitidaException ex) {
-            addActionError(MessageI18nKey.E00013, getText(ex.getClassName()), ex.getObjId());
-        }
+        equiBO.anular(item.getId());
 
         return SUCCESS;
     }

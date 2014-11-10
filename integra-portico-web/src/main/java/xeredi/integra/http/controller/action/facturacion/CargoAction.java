@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
@@ -47,14 +46,6 @@ public final class CargoAction extends BaseAction {
     /** The rgla list. */
     private final List<ReglaVO> rglaList = new ArrayList<>();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
     // acciones web
 
     /**
@@ -63,7 +54,7 @@ public final class CargoAction extends BaseAction {
      * @return the string
      */
     @Action("crgo-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getId());
 
@@ -71,20 +62,16 @@ public final class CargoAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        try {
-            final CargoBO crgoBO = new CargoBO();
+        final CargoBO crgoBO = new CargoBO();
 
-            crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
+        crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
 
-            final ReglaBO rglaBO = new ReglaBO();
-            final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
+        final ReglaBO rglaBO = new ReglaBO();
+        final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
-            rglaCriterioVO.setCrgvId(crgo.getCrgv().getId());
-            rglaList.addAll(rglaBO.selectList(rglaCriterioVO));
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        rglaCriterioVO.setCrgvId(crgo.getCrgv().getId());
+        rglaList.addAll(rglaBO.selectList(rglaCriterioVO));
 
         return SUCCESS;
     }
@@ -111,7 +98,7 @@ public final class CargoAction extends BaseAction {
      * @return the string
      */
     @Action("crgo-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getId());
 
@@ -119,16 +106,11 @@ public final class CargoAction extends BaseAction {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
+        final CargoBO crgoBO = new CargoBO();
+
+        crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
+        i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
         accion = ACCION_EDICION.edit;
-
-        try {
-            final CargoBO crgoBO = new CargoBO();
-
-            crgo = crgoBO.select(crgo.getId(), getFechaVigencia(), getIdioma());
-            i18nMap = I18nBO.selectMap(I18nPrefix.crgv, crgo.getCrgv().getId());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
 
         return SUCCESS;
     }
@@ -139,7 +121,7 @@ public final class CargoAction extends BaseAction {
      * @return the string
      */
     @Action("crgo-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getCrgv());
@@ -161,33 +143,21 @@ public final class CargoAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, crgo.getCrgv().getPrincipal());
         FieldValidator.validateRequired(this, MessageI18nKey.crgo_fini, crgo.getCrgv().getFini());
 
-        if (hasErrors()) {
-            return SUCCESS;
-        }
+        if (!hasErrors()) {
+            final CargoBO crgoBO = new CargoBO();
 
-        final CargoBO crgoBO = new CargoBO();
-
-        switch (accion) {
-        case create:
-            try {
+            switch (accion) {
+            case create:
                 crgoBO.insert(crgo, i18nMap);
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-            }
 
-            break;
-        case edit:
-            try {
+                break;
+            case edit:
                 crgoBO.update(crgo, i18nMap);
-            } catch (final InstanceNotFoundException ex) {
-                addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-            } catch (final OverlapException ex) {
-                addActionError(MessageI18nKey.E00009, getText(ex.getClassName()), ex.getObjId());
-            }
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
+                break;
+            default:
+                throw new Error("Accion no valida: " + accion);
+            }
         }
 
         return SUCCESS;
@@ -199,18 +169,14 @@ public final class CargoAction extends BaseAction {
      * @return the string
      */
     @Action("crgo-remove")
-    public String remove() {
+    public String remove() throws InstanceNotFoundException {
         Preconditions.checkNotNull(crgo);
         Preconditions.checkNotNull(crgo.getCrgv());
         Preconditions.checkNotNull(crgo.getCrgv().getId());
 
         final CargoBO crgoBO = new CargoBO();
 
-        try {
-            crgoBO.delete(crgo);
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        crgoBO.delete(crgo);
 
         return SUCCESS;
     }

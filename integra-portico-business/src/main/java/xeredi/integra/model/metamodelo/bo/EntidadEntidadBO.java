@@ -23,13 +23,6 @@ import com.google.common.base.Preconditions;
  * The Class EntidadEntidadAdminBO.
  */
 public class EntidadEntidadBO {
-
-    /** The enti dao. */
-    EntidadDAO entiDAO;
-
-    /** The enen dao. */
-    EntidadEntidadDAO enenDAO;
-
     /**
      * Insert.
      *
@@ -46,8 +39,8 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenVO.getOrden());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            entiDAO = session.getMapper(EntidadDAO.class);
-            enenDAO = session.getMapper(EntidadEntidadDAO.class);
+            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
             final EntidadVO entiPadreVO = entiDAO.select(enenVO.getEntiPadreId());
             final EntidadVO entiHijaVO = entiDAO.select(enenVO.getEntiHija().getId());
@@ -89,8 +82,7 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenVO.getOrden());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            enenDAO = session.getMapper(EntidadEntidadDAO.class);
-
+            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
             final int updated = enenDAO.update(enenVO);
 
             if (updated == 0) {
@@ -116,8 +108,7 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            enenDAO = session.getMapper(EntidadEntidadDAO.class);
-
+            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
             final int updated = enenDAO.delete(enenVO);
 
             if (updated == 0) {
@@ -139,7 +130,7 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenCriterioVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            enenDAO = session.getMapper(EntidadEntidadDAO.class);
+            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
             return enenDAO.selectList(enenCriterioVO);
         }
@@ -161,8 +152,7 @@ public class EntidadEntidadBO {
         Preconditions.checkNotNull(enenCriterioVO.getEntiHijaId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            enenDAO = session.getMapper(EntidadEntidadDAO.class);
-
+            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
             final EntidadEntidadVO enen = enenDAO.selectObject(enenCriterioVO);
 
             if (enen == null) {

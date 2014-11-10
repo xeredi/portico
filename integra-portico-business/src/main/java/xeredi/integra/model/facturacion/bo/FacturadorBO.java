@@ -61,54 +61,6 @@ public class FacturadorBO {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(FacturadorBO.class);
 
-    /** The fcsr dao. */
-    FacturaSerieDAO fcsrDAO;
-
-    /** The prbt dao. */
-    ProcesoDAO prbtDAO;
-
-    /** The aspc dao. */
-    AspectoDAO aspcDAO;
-
-    /** The fcta dao. */
-    FacturaAgregadaDAO fctaDAO;
-
-    /** The fctr dao. */
-    FacturaDAO fctrDAO;
-
-    /** The fctl dao. */
-    FacturaLineaDAO fctlDAO;
-
-    /** The fctd dao. */
-    FacturaDetalleDAO fctdDAO;
-
-    /** The fcts dao. */
-    FacturaServicioDAO fctsDAO;
-
-    /** The fcti dao. */
-    FacturaImpuestoDAO fctiDAO;
-
-    /** The fctg dao. */
-    FacturaCargoDAO fctgDAO;
-
-    /** The vlrc dao. */
-    ValoracionDAO vlrcDAO;
-
-    /** The vlri dao. */
-    ValoracionImpuestoDAO vlriDAO;
-
-    /** The vlrg dao. */
-    ValoracionCargoDAO vlrgDAO;
-
-    /** The vlrl dao. */
-    ValoracionLineaDAO vlrlDAO;
-
-    /** The vlrd dao. */
-    ValoracionDetalleDAO vlrdDAO;
-
-    /** The srcr dao. */
-    ServicioCargoDAO srcrDAO;
-
     /**
      * Facturar valoraciones.
      *
@@ -135,22 +87,22 @@ public class FacturadorBO {
         Preconditions.checkNotNull(prbtId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            prbtDAO = session.getMapper(ProcesoDAO.class);
-            fcsrDAO = session.getMapper(FacturaSerieDAO.class);
-            aspcDAO = session.getMapper(AspectoDAO.class);
-            fctaDAO = session.getMapper(FacturaAgregadaDAO.class);
-            fctrDAO = session.getMapper(FacturaDAO.class);
-            fctlDAO = session.getMapper(FacturaLineaDAO.class);
-            fctdDAO = session.getMapper(FacturaDetalleDAO.class);
-            fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-            fctgDAO = session.getMapper(FacturaCargoDAO.class);
-            vlrcDAO = session.getMapper(ValoracionDAO.class);
-            vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-            vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-            srcrDAO = session.getMapper(ServicioCargoDAO.class);
+            final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
+            final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
+            final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
+            final FacturaAgregadaDAO fctaDAO = session.getMapper(FacturaAgregadaDAO.class);
+            final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
+            final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
+            final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
+            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
+            final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
+            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
+            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
+            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
+            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
 
             final FacturadorContextoVO contextoVO = new FacturadorContextoVO();
 
@@ -356,7 +308,7 @@ public class FacturadorBO {
             srcrDAO.deleteValoracion(srcrCriterioVO);
 
             LOG.info("Borrado de Valoraciones");
-            vlrdDAO.delete(vlrdCriterioVO);
+            vlrdDAO.deleteList(vlrdCriterioVO);
             vlrlDAO.delete(vlrlCriterioVO);
             vlriDAO.delete(vlrcCriterioVO);
             vlrgDAO.delete(vlrcCriterioVO);

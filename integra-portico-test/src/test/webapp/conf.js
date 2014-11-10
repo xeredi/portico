@@ -3,11 +3,11 @@ exports.config = {
     capabilities : {
         'browserName' : 'chrome',
         "chromeOptions" : {
-            binary : 'G:/tools/portableapps/PortableApps/GoogleChromePortable/GoogleChromePortable.exe',
+            binary : 'D:/proyectos/tools/portable/PortableApps/GoogleChromePortable/GoogleChromePortable.exe',
             args : [ '--test-type' ],
             extensions : [],
         }
     },
     specs : [ "*-spec.js" ],
-    baseUrl : "http://xeredi.ddns.net/portico/"
+    baseUrl : "http://localhost:8080/web/"
 }

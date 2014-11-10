@@ -3,28 +3,28 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoDatoDAO">
-    <resultMap type="TipoDatoVO" id="ResultMap">
-        <id column="tpdt_pk" property="id" />
-        <result column="tpdt_codigo" property="codigo" />
-        <result column="tpdt_nombre" property="nombre" />
-        <result column="tpdt_tipo_elemento" property="tipoElemento" />
-        <result column="tpdt_tipo_html" property="tpht" />
+	<resultMap type="TipoDatoVO" id="ResultMap">
+		<id column="tpdt_pk" property="id" />
+		<result column="tpdt_codigo" property="codigo" />
+		<result column="tpdt_nombre" property="nombre" />
+		<result column="tpdt_tipo_elemento" property="tipoElemento" />
+		<result column="tpdt_tipo_html" property="tpht" />
 
-        <association property="enti" javaType="EntidadVO">
-            <id column="enti_pk" property="id" />
-            <result column="enti_codigo" property="codigo" />
-            <result column="enti_nombre" property="nombre" />
-            <result column="enti_tipo" property="tipo" />
-        </association>
-    </resultMap>
+		<association property="enti" javaType="EntidadVO">
+			<id column="enti_pk" property="id" />
+			<result column="enti_codigo" property="codigo" />
+			<result column="enti_nombre" property="nombre" />
+			<result column="enti_tipo" property="tipo" />
+		</association>
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
         tpdt_pk, tpdt_codigo, tpdt_tipo_elemento, tpdt_tipo_html
         , enti_pk, enti_codigo, enti_tipo
     ]]>
-        <if test="idioma != null">
+		<if test="idioma != null">
         <![CDATA[
             , (
                 SELECT i18n_text FROM tbl_i18n_i18n
@@ -39,99 +39,104 @@
                     AND i18n_lang = #{idioma}
             ) AS enti_nombre
         ]]>
-        </if>
+		</if>
     <![CDATA[
     FROM
         tbl_tipo_dato_tpdt tpdt
         LEFT JOIN tbl_entidad_enti enti ON
             tpdt.tpdt_enti_pk = enti.enti_pk
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND tpdt.tpdt_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND tpdt.tpdt_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
-                </foreach>
-            </if>
-            <if test="codigo != null and !codigo.empty">
-                AND tpdt.tpdt_codigo LIKE #{codigo}
-            </if>
-            <if test="nombre != null and !nombre.empty">
-                AND tpdt.tpdt_nombre LIKE #{nombre}
-            </if>
-            <if test="tipoElemento != null">
-                AND tpdt.tpdt_tipo_elemento = #{tipoElemento}
-            </if>
-            <if test="tpht != null">
-                AND tpdt.tpdt_tipo_html = #{tpht}
-            </if>
-            <if test="entiId != null">
-                AND tpdt.tpdt_enti_pk = #{entiId}
-            </if>
-            <if test="entiRefId != null">
-                AND EXISTS (
-                    SELECT 1
-                    FROM tbl_entidad_tipo_dato_entd
-                    WHERE entd_tpdt_pk = tpdt_pk
-                        AND entd_enti_pk = #{entiRefId}
-                )
-            </if>
-        </where>
-    </sql>
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND tpdt.tpdt_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND tpdt.tpdt_pk IN
+				<foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}
+				</foreach>
+			</if>
+			<if test="codigo != null and !codigo.empty">
+				AND tpdt.tpdt_codigo LIKE #{codigo}
+			</if>
+			<if test="nombre != null and !nombre.empty">
+				AND tpdt.tpdt_nombre LIKE #{nombre}
+			</if>
+			<if test="tipoElemento != null">
+				AND tpdt.tpdt_tipo_elemento = #{tipoElemento}
+			</if>
+			<if test="tpht != null">
+				AND tpdt.tpdt_tipo_html = #{tpht}
+			</if>
+			<if test="entiId != null">
+				AND tpdt.tpdt_enti_pk = #{entiId}
+			</if>
+			<if test="entiRefId != null">
+				AND EXISTS (
+				SELECT 1
+				FROM tbl_entidad_tipo_dato_entd
+				WHERE entd_tpdt_pk = tpdt_pk
+				AND entd_enti_pk = #{entiRefId}
+				)
+			</if>
+		</where>
+	</sql>
 
-    <select id="selectObject" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectObject" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="selectList" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
+	<select id="selectList" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY tpdt.tpdt_codigo
+	</select>
 
-        ORDER BY tpdt.tpdt_codigo
-    </select>
+	<select id="selectPaginatedList" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY tpdt.tpdt_codigo
+	</select>
 
-    <select id="selectMap" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectMap" parameterType="TipoDatoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="count" parameterType="TipoDatoCriterioVO" resultType="Integer">
+	<select id="count" parameterType="TipoDatoCriterioVO" resultType="Integer">
         <![CDATA[
         SELECT
             COUNT(1)
         FROM
             tbl_tipo_dato_tpdt tpdt
         ]]>
-        <include refid="SelectWhere" />
-    </select>
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="nextSequence" resultType="Long">
-        SELECT COALESCE(MAX(tpdt_pk), 40000) + 1 as tpdt_pk
-        FROM tbl_tipo_dato_tpdt
-    </select>
+	<select id="nextSequence" resultType="Long">
+		SELECT COALESCE(MAX(tpdt_pk), 40000) + 1 as tpdt_pk
+		FROM tbl_tipo_dato_tpdt
+	</select>
 
-    <select id="exists" parameterType="TipoDatoVO" resultType="boolean">
+	<select id="exists" parameterType="TipoDatoVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_tipo_dato_tpdt tpdt
         WHERE tpdt.tpdt_codigo = #{codigo}
         ]]>
-    </select>
+	</select>
 
-    <insert id="insert" parameterType="TipoDatoVO">
+	<insert id="insert" parameterType="TipoDatoVO">
         <![CDATA[
         INSERT INTO tbl_tipo_dato_tpdt (tpdt_pk, tpdt_codigo, tpdt_tipo_elemento, tpdt_tipo_html, tpdt_enti_pk)
         VALUES (#{id}, #{codigo}, #{tipoElemento}, #{tpht}, #{enti.id})
         ]]>
-    </insert>
+	</insert>
 
-    <update id="update" parameterType="TipoDatoVO">
+	<update id="update" parameterType="TipoDatoVO">
         <![CDATA[
         UPDATE tbl_tipo_dato_tpdt SET
             tpdt_tipo_elemento = #{tipoElemento}
@@ -139,12 +144,12 @@
             , tpdt_enti_pk = #{enti.id}
         WHERE tpdt_pk = #{id}
         ]]>
-    </update>
+	</update>
 
-    <delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_tipo_dato_tpdt
         WHERE tpdt_pk = #{value}
         ]]>
-    </delete>
+	</delete>
 </mapper>

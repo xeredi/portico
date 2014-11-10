@@ -1,11 +1,9 @@
 package xeredi.integra.http.controller.action.estadistica;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
@@ -29,14 +27,6 @@ public final class EstadisticaAction extends ItemAction {
     /** The estd. */
     private EstadisticaVO item;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
     // Acciones web
     /**
      * Detalle.
@@ -45,23 +35,19 @@ public final class EstadisticaAction extends ItemAction {
      */
 
     @Action("estd-detail")
-    public String detalle() {
+    public String detalle() throws InstanceNotFoundException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        try {
-            final EstadisticaBO estdBO = new EstadisticaBO();
-            final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
+        final EstadisticaBO estdBO = new EstadisticaBO();
+        final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
 
-            estdCriterioVO.setId(item.getId());
-            estdCriterioVO.setIdioma(getIdioma());
+        estdCriterioVO.setId(item.getId());
+        estdCriterioVO.setIdioma(getIdioma());
 
-            item = estdBO.selectObject(estdCriterioVO);
-            enti = TipoEstadisticaProxy.select(item.getEntiId());
-            setFechaVigencia(item.getFref());
-        } catch (final InstanceNotFoundException ex) {
-            addActionError(MessageI18nKey.E00008, getText(ex.getClassName()), ex.getObjId());
-        }
+        item = estdBO.selectObject(estdCriterioVO);
+        enti = TipoEstadisticaProxy.select(item.getEntiId());
+        setFechaVigencia(item.getFref());
 
         return SUCCESS;
     }

@@ -4,6 +4,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.ConfigurationBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
 
 import com.google.common.base.Preconditions;
@@ -29,9 +30,8 @@ public final class ConfigurationAction extends BaseAction {
      * @return the string
      */
     @Action("conf-detail")
-    public String detail() {
+    public String detail() throws InstanceNotFoundException {
         Preconditions.checkNotNull(conf);
-        Preconditions.checkNotNull(conf.getKey());
 
         final ConfigurationBO confBO = new ConfigurationBO();
 
@@ -46,9 +46,8 @@ public final class ConfigurationAction extends BaseAction {
      * @return the string
      */
     @Action("conf-edit")
-    public String edit() {
+    public String edit() throws InstanceNotFoundException {
         Preconditions.checkNotNull(conf);
-        Preconditions.checkNotNull(conf.getKey());
 
         accion = ACCION_EDICION.edit;
 
@@ -65,15 +64,20 @@ public final class ConfigurationAction extends BaseAction {
      * @return the string
      */
     @Action("conf-save")
-    public String save() {
+    public String save() throws InstanceNotFoundException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(conf);
         Preconditions.checkNotNull(conf.getKey());
 
         final ConfigurationBO confBO = new ConfigurationBO();
 
-        if (accion == ACCION_EDICION.edit) {
+        switch (accion) {
+        case edit:
             confBO.update(conf);
+
+            break;
+        default:
+            throw new Error("Accion " + accion + " no implementada");
         }
 
         return SUCCESS;

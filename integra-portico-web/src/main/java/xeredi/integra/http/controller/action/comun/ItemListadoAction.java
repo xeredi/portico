@@ -3,8 +3,6 @@ package xeredi.integra.http.controller.action.comun;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.comun.vo.ItemCriterioVO;
@@ -28,14 +26,6 @@ public abstract class ItemListadoAction extends BaseAction implements PaginatedG
 
     /** The limit. */
     private int limit = ROWS_PER_PAGE_DEFAULT;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the limits.

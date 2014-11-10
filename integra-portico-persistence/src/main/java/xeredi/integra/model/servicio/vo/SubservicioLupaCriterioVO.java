@@ -1,16 +1,12 @@
 package xeredi.integra.model.servicio.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubservicioLupaCriterioVO.
  */
-public final class SubservicioLupaCriterioVO {
-
-    /** The limit. */
-    private Integer limit;
-
+public final class SubservicioLupaCriterioVO extends BaseCriterioVO {
     /** The enti id. */
     private Long entiId;
 
@@ -19,33 +15,6 @@ public final class SubservicioLupaCriterioVO {
 
     /** The srvc id. */
     private Long srvcId;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Gets the limit.
-     *
-     * @return the limit
-     */
-    public Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the new limit
-     */
-    public void setLimit(final Integer value) {
-        limit = value;
-    }
 
     /**
      * Gets the enti id.

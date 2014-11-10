@@ -2,13 +2,13 @@ package xeredi.integra.model.facturacion.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaCriterioVO.
  */
-public final class FacturaCriterioVO {
+public final class FacturaCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
@@ -21,14 +21,6 @@ public final class FacturaCriterioVO {
 
     /** The fcsr. */
     private FacturaServicioCriterioVO fcts;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the id.
@@ -45,8 +37,8 @@ public final class FacturaCriterioVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -64,8 +56,8 @@ public final class FacturaCriterioVO {
      * @param value
      *            the ids
      */
-    public void setIds(Set<Long> value) {
-        this.ids = value;
+    public void setIds(final Set<Long> value) {
+        ids = value;
     }
 
     /**
@@ -83,8 +75,8 @@ public final class FacturaCriterioVO {
      * @param value
      *            the fcsr
      */
-    public void setFcts(FacturaServicioCriterioVO value) {
-        this.fcts = value;
+    public void setFcts(final FacturaServicioCriterioVO value) {
+        fcts = value;
     }
 
     /**
@@ -102,8 +94,8 @@ public final class FacturaCriterioVO {
      * @param value
      *            the estado
      */
-    public void setEstado(FacturaEstado value) {
-        this.estado = value;
+    public void setEstado(final FacturaEstado value) {
+        estado = value;
     }
 
 }

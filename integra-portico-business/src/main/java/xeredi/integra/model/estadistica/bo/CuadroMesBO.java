@@ -19,10 +19,6 @@ import com.google.common.base.Preconditions;
  * The Class CuadroMesBO.
  */
 public class CuadroMesBO {
-
-    /** The cdms dao. */
-    CuadroMesDAO cdmsDAO;
-
     /**
      * Select map.
      *
@@ -34,8 +30,7 @@ public class CuadroMesBO {
         Preconditions.checkNotNull(peprId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            cdmsDAO = session.getMapper(CuadroMesDAO.class);
-
+            final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
             final Map<String, List<CuadroMesVO>> cdmsMap = new HashMap<>();
 
             for (final CuadroMesVO cdmsVO : cdmsDAO.selectList(peprId)) {

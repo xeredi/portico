@@ -84,7 +84,7 @@ public interface TipoDatoDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoDatoVO> selectList(final TipoDatoCriterioVO tpdtCriterioVO, final RowBounds bounds);
+    List<TipoDatoVO> selectPaginatedList(final TipoDatoCriterioVO tpdtCriterioVO, final RowBounds bounds);
 
     /**
      * Select list.

@@ -2,24 +2,13 @@ package xeredi.integra.model.metamodelo.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import xeredi.util.pagination.Criterio;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadCriterioVO.
  */
-public class EntidadCriterioVO implements Criterio {
-
-    /** The offset. */
-    private Integer offset;
-
-    /** The limit. */
-    private Integer limit;
-
-    /** The idioma. */
-    private String idioma;
+public class EntidadCriterioVO extends BaseCriterioVO {
 
     /** The ids. */
     private Long id;
@@ -41,14 +30,6 @@ public class EntidadCriterioVO implements Criterio {
 
     /** The enti hija id. */
     private Long entiHijaId;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the ids.
@@ -165,44 +146,6 @@ public class EntidadCriterioVO implements Criterio {
     }
 
     /**
-     * Gets the offset.
-     *
-     * @return the offset
-     */
-    public final Integer getOffset() {
-        return offset;
-    }
-
-    /**
-     * Sets the offset.
-     *
-     * @param value
-     *            the new offset
-     */
-    public final void setOffset(final Integer value) {
-        offset = value;
-    }
-
-    /**
-     * Gets the limit.
-     *
-     * @return the limit
-     */
-    public final Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * Sets the limit.
-     *
-     * @param value
-     *            the new limit
-     */
-    public final void setLimit(final Integer value) {
-        limit = value;
-    }
-
-    /**
      * Gets the id.
      *
      * @return the id
@@ -220,24 +163,4 @@ public class EntidadCriterioVO implements Criterio {
     public final void setId(final Long value) {
         id = value;
     }
-
-    /**
-     * Gets the idioma.
-     *
-     * @return the idioma
-     */
-    public String getIdioma() {
-        return idioma;
-    }
-
-    /**
-     * Sets the idioma.
-     *
-     * @param value
-     *            the new idioma
-     */
-    public void setIdioma(final String value) {
-        idioma = value;
-    }
-
 }

@@ -5,10 +5,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.SessionAware;
@@ -24,9 +23,8 @@ import com.opensymphony.xwork2.ActionSupport;
 /**
  * The Class BaseAction.
  */
-@ParentPackage("json-default")
+@ParentPackage("default")
 @Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "false" })
-@InterceptorRefs({ @InterceptorRef(value = "timer"), @InterceptorRef(value = "json"), @InterceptorRef("basicStack") })
 public abstract class BaseAction extends ActionSupport implements SessionAware {
 
     /** The Constant serialVersionUID. */
@@ -55,6 +53,14 @@ public abstract class BaseAction extends ActionSupport implements SessionAware {
 
     /** The fecha vigencia. */
     private Date fechaVigencia;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     // get / set
     /**

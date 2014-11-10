@@ -2,24 +2,16 @@ package xeredi.integra.model.facturacion.vo;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioCargoCriterioVO.
  */
-public final class ServicioCargoCriterioVO {
+public final class ServicioCargoCriterioVO extends BaseCriterioVO {
 
     /** The vlrc ids. */
     private Set<Long> vlrcIds;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the vlrc ids.
@@ -33,11 +25,11 @@ public final class ServicioCargoCriterioVO {
     /**
      * Sets the vlrc ids.
      *
-     * @param value the vlrc ids
+     * @param value
+     *            the vlrc ids
      */
     public void setVlrcIds(final Set<Long> value) {
-        this.vlrcIds = value;
+        vlrcIds = value;
     }
-
 
 }

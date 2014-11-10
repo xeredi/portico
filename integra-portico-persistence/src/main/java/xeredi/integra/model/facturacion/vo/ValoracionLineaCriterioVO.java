@@ -1,26 +1,18 @@
 package xeredi.integra.model.facturacion.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionLineaCriterioVO.
  */
-public final class ValoracionLineaCriterioVO {
+public final class ValoracionLineaCriterioVO extends BaseCriterioVO {
 
     /** The vlrc. */
     private ValoracionCriterioVO vlrc;
 
     /** The id. */
     private Long id;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the vlrc.
@@ -37,8 +29,8 @@ public final class ValoracionLineaCriterioVO {
      * @param value
      *            the vlrc
      */
-    public void setVlrc(ValoracionCriterioVO value) {
-        this.vlrc = value;
+    public void setVlrc(final ValoracionCriterioVO value) {
+        vlrc = value;
     }
 
     /**
@@ -56,8 +48,8 @@ public final class ValoracionLineaCriterioVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
 }

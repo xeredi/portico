@@ -3,22 +3,22 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.estadistica.dao.PeriodoProcesoDAO">
-    <resultMap type="PeriodoProcesoVO" id="ResultMap">
-        <id column="pepr_pk" property="id" />
-        <result column="pepr_anio" property="anio" />
-        <result column="pepr_mes" property="mes" />
-        <result column="pepr_trimestre" property="trimestre" />
-        <result column="pepr_freferencia" property="freferencia" />
-        <result column="pepr_falta" property="falta" />
-        <result column="pepr_cdms_generado" property="cdmsGenerado" />
+	<resultMap type="PeriodoProcesoVO" id="ResultMap">
+		<id column="pepr_pk" property="id" />
+		<result column="pepr_anio" property="anio" />
+		<result column="pepr_mes" property="mes" />
+		<result column="pepr_trimestre" property="trimestre" />
+		<result column="pepr_freferencia" property="freferencia" />
+		<result column="pepr_falta" property="falta" />
+		<result column="pepr_cdms_generado" property="cdmsGenerado" />
 
-        <association property="autp" javaType="ParametroVO">
-            <id column="pepr_autp_pk" property="id" />
-            <result column="prmt_parametro" property="parametro" />
-        </association>
-    </resultMap>
+		<association property="autp" javaType="ParametroVO">
+			<id column="pepr_autp_pk" property="id" />
+			<result column="prmt_parametro" property="parametro" />
+		</association>
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
         pepr.pepr_pk, pepr.pepr_anio, pepr.pepr_mes, pepr.pepr_trimestre, pepr.pepr_freferencia, pepr.pepr_falta
@@ -38,9 +38,9 @@
         JOIN tbl_parametro_prmt autp ON
             autp.prmt_pk = pepr.pepr_autp_pk
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectCountPrefix">
+	<sql id="SelectCountPrefix">
     <![CDATA[
     SELECT
         COUNT(1)
@@ -48,59 +48,57 @@
         JOIN tbl_parametro_prmt autp ON
             autp.prmt_pk = pepr.pepr_autp_pk
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="anio != null">
-            <![CDATA[
-            AND pepr.pepr_anio = #{anio}
-            ]]>
-            </if>
-            <if test="mes != null">
-            <![CDATA[
-            AND pepr.pepr_mes = #{mes}
-            ]]>
-            </if>
-            <if test="trimestre != null">
-            <![CDATA[
-            AND pepr.pepr_trimestre = #{trimestre}
-            ]]>
-            </if>
-            <if test="autpId != null">
-            <![CDATA[
-            AND pepr.pepr_autp_pk = #{autpId}
-            ]]>
-            </if>
-        </where>
-    </sql>
+	<sql id="SelectWhere">
+		<where>
+			<if test="anio != null">
+				AND pepr.pepr_anio = #{anio}
+			</if>
+			<if test="mes != null">
+				AND pepr.pepr_mes = #{mes}
+			</if>
+			<if test="trimestre != null">
+				AND pepr.pepr_trimestre = #{trimestre}
+			</if>
+			<if test="autpId != null">
+				AND pepr.pepr_autp_pk = #{autpId}
+			</if>
+		</where>
+	</sql>
 
-    <select id="selectCount" parameterType="PeriodoProcesoCriterioVO" resultType="Integer">
-        <include refid="SelectCountPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectCount" parameterType="PeriodoProcesoCriterioVO"
+		resultType="Integer">
+		<include refid="SelectCountPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="selectList" parameterType="PeriodoProcesoCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-        <![CDATA[
-        ORDER BY autp.prmt_parametro, pepr.pepr_anio DESC, pepr.pepr_mes DESC
-        ]]>
-    </select>
+	<select id="selectList" parameterType="PeriodoProcesoCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY autp.prmt_parametro, pepr.pepr_anio DESC, pepr.pepr_mes DESC
+	</select>
 
-    <select id="selectObject" parameterType="PeriodoProcesoCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
+	<select id="selectPaginatedList" parameterType="PeriodoProcesoCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY autp.prmt_parametro, pepr.pepr_anio DESC, pepr.pepr_mes DESC
+	</select>
 
-    <select id="select" parameterType="Long" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <![CDATA[
-        WHERE pepr.pepr_pk = #{value}
-        ]]>
-    </select>
+	<select id="selectObject" parameterType="PeriodoProcesoCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="exists" parameterType="ParametroVO" resultType="Boolean">
+	<select id="select" parameterType="Long" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		WHERE pepr.pepr_pk = #{value}
+	</select>
+
+	<select id="exists" parameterType="ParametroVO" resultType="Boolean">
         <![CDATA[
         SELECT COUNT(1)
         FROM tbl_periodo_proceso_pepr
@@ -108,19 +106,19 @@
             AND pepr_anio = #{anio}
             AND pepr_mes = #{mes}
         ]]>
-    </select>
+	</select>
 
-    <insert id="insert" parameterType="ParametroVO">
+	<insert id="insert" parameterType="ParametroVO">
         <![CDATA[
         INSERT INTO tbl_periodo_proceso_pepr(pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta)
         VALUES (#{id}, #{autp.id}, #{anio}, #{mes}, #{trimestre}, #{freferencia}, #{falta})
         ]]>
-    </insert>
+	</insert>
 
-    <delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_periodo_proceso_pepr
         WHERE pepr_pk = #{value}
         ]]>
-    </delete>
+	</delete>
 </mapper>

@@ -1,26 +1,18 @@
 package xeredi.integra.model.facturacion.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import xeredi.integra.model.comun.vo.BaseCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturaServicioCriterioVO.
  */
-public final class FacturaServicioCriterioVO {
+public final class FacturaServicioCriterioVO extends BaseCriterioVO {
 
     /** The id. */
     private Long id;
 
     /** The srvc id. */
     private Long srvcId;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     /**
      * Gets the id.
@@ -37,8 +29,8 @@ public final class FacturaServicioCriterioVO {
      * @param value
      *            the id
      */
-    public void setId(Long value) {
-        this.id = value;
+    public void setId(final Long value) {
+        id = value;
     }
 
     /**
@@ -56,8 +48,8 @@ public final class FacturaServicioCriterioVO {
      * @param value
      *            the srvc id
      */
-    public void setSrvcId(Long value) {
-        this.srvcId = value;
+    public void setSrvcId(final Long value) {
+        srvcId = value;
     }
 
 }

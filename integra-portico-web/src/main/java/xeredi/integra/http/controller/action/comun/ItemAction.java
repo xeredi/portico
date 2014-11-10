@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.vo.ItemVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -30,14 +28,6 @@ public abstract class ItemAction extends BaseAction {
 
     /** The label values map. */
     protected Map<Long, List<LabelValueVO>> labelValuesMap;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 
     // get / set
 
