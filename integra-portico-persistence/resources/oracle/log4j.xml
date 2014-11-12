@@ -64,7 +64,7 @@
     </logger>
  -->
     <logger name='xeredi'>
-        <level value="DEBUG" />
+        <level value="INFO" />
 
         <appender-ref ref="debugLog" />
     </logger>

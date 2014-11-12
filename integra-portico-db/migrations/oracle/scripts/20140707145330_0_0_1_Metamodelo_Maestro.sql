@@ -1066,13 +1066,13 @@ VALUES (24016, 41080, 1, 2, 1,12, 0, 1, 0, NULL, 'Observaciones')\
 -- SQL to undo the change goes here.
 
 
-DELETE FROM portico.tbl_subparametro_dato_spdt\
-DELETE FROM portico.tbl_subparametro_version_spvr\
-DELETE FROM portico.tbl_subparametro_sprm\
-DELETE FROM portico.tbl_parametro_dato_prdt\
-DELETE FROM portico.tbl_parametro_i18n_p18n\
-DELETE FROM portico.tbl_parametro_version_prvr\
-DELETE FROM portico.tbl_parametro_prmt\
+TRUNCATE TABLE tbl_subparametro_dato_spdt\
+DELETE FROM tbl_subparametro_version_spvr\
+DELETE FROM tbl_subparametro_sprm\
+TRUNCATE TABLE tbl_parametro_dato_prdt\
+TRUNCATE TABLE tbl_parametro_i18n_p18n\
+DELETE FROM tbl_parametro_version_prvr\
+DELETE FROM tbl_parametro_prmt\
 
 
 

@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,7 +33,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -58,6 +62,9 @@ public final class ServicioImporterBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ServicioImporterBO.class);
+
+    /** The bundle. */
+    private static ResourceBundle bundle;
 
     /** The Constant SERVICIO_FILENAME. */
     private static final String SERVICIO_FILENAME = "/xeredi/integra/db/importer/ServicioImporter.xml";
@@ -88,20 +95,22 @@ public final class ServicioImporterBO {
      * @param numIterations
      *            the num iterations
      */
-    public void importEntities(final int numIterations) {
+    public void importEntities(final int numIterations, final Locale locale) {
         for (int i = 0; i < numIterations; i++) {
             LOG.info("Iteration: " + i);
 
-            importEntities();
+            importEntities(locale);
         }
     }
 
     /**
      * Import entities.
      */
-    public void importEntities() {
+    public void importEntities(final Locale locale) {
         try {
             LOG.info("Importacion de servicios");
+
+            bundle = PorticoResourceBundle.getBundle(locale);
 
             Class.forName(ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_driver));
 
@@ -122,7 +131,7 @@ public final class ServicioImporterBO {
 
                     entiMap.put(entidad.getId(), new HashMap<Long, Long>());
 
-                    importEntity(con, entidadVO.getEntidad(), entidadVO.getSqlQuery());
+                    importEntity(con, entidadVO.getEntidad(), entidadVO.getSqlQuery(), locale);
                 }
             } catch (final Throwable ex) {
                 LOG.fatal(ex, ex);
@@ -148,26 +157,31 @@ public final class ServicioImporterBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql) throws SQLException,
-    DuplicateInstanceException {
+    private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql, final Locale locale)
+            throws SQLException, DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
         final EntidadVO entiVO = EntidadProxy.select(entidad.getId());
+
+        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiVO.getId());
 
         if (entiVO == null) {
             throw new Error("No se encuentra la entidad con id: " + entidad.getId());
         }
 
         if (LOG.isInfoEnabled()) {
-            LOG.info("Importacion de la entidad: " + entiVO.getNombre());
+            LOG.info("Importacion de la entidad: " + entiName);
         }
 
         // Obtencion de los maestros asociados a la entidad
         for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
             if (entd.getTpdt().getEnti() != null && !tpprPrmtMap.containsKey(entd.getTpdt().getEnti().getId())) {
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Busqueda de los parametros del maestro " + entd.getTpdt().getEnti().getNombre());
+                    final String tpprName = bundle.getString(I18nPrefix.enti.name() + "_"
+                            + entd.getTpdt().getEnti().getId());
+
+                    LOG.debug("Busqueda de los parametros del maestro " + tpprName);
                 }
 
                 final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
@@ -287,8 +301,11 @@ public final class ServicioImporterBO {
 
                             if (rs.wasNull() && entd.getObligatorio()
                                     && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
-                                throw new Error("Campo obligatorio no encontrado para el dato: "
-                                        + entd.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());
+                                final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                        + entd.getTpdt().getId());
+
+                                throw new Error("Campo obligatorio no encontrado para el dato: " + tpdtName
+                                        + " de la entidad: " + entiName);
                             }
 
                             final ItemDatoVO itdtVO = getItemDato(entd, value);
@@ -301,7 +318,7 @@ public final class ServicioImporterBO {
                         srvcBO.insert(srvcVO, tpsrVO, null);
                         entiMap.get(entiVO.getId()).put(servId, srvcVO.getId());
                     } catch (final DuplicateInstanceException ex) {
-                        LOG.info(entiVO.getNombre() + " Duplicado: " + srvcVO.getEtiqueta());
+                        LOG.info(ex.getMessage(locale));
                     }
 
                     break;
@@ -318,8 +335,8 @@ public final class ServicioImporterBO {
                     final Long subservId = rs.getLong(i++);
 
                     if (ssrvVO.getSrvc().getId() == null) {
-                        LOG.error("No se encuentra servicio para " + tpssVO.getEtiqueta() + " " + subservId
-                                + " del servicio " + servId);
+                        LOG.error("No se encuentra servicio para " + entiName + " " + subservId + " del servicio "
+                                + servId);
                     } else {
                         // FIXME
                         rs.getInt(i++);
@@ -366,8 +383,11 @@ public final class ServicioImporterBO {
                                     final Long padrePorticoId = entiMap.get(entdId).get(padreIntegraId);
 
                                     if (padrePorticoId == null) {
+                                        final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_"
+                                                + entdId);
+
                                         LOG.error("No se encuentra el subservicio " + padreIntegraId
-                                                + " de la entidad " + TipoSubservicioProxy.select(entdId).getEtiqueta());
+                                                + " de la entidad " + entiPadreName);
 
                                         hasErrors = true;
                                     } else {
@@ -385,8 +405,11 @@ public final class ServicioImporterBO {
 
                                 if (rs.wasNull() && entd.getObligatorio()
                                         && entd.getTpdt().getTipoElemento() != TipoElemento.BO) {
-                                    throw new Error("Campo obligatorio no encontrado para el dato: "
-                                            + entd.getTpdt().getNombre() + " de la entidad: " + entiVO.getNombre());
+                                    final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_"
+                                            + entd.getTpdt().getId());
+
+                                    throw new Error("Campo obligatorio no encontrado para el dato: " + tpdtName
+                                            + " de la entidad: " + entiName);
                                 }
 
                                 final ItemDatoVO itdt = getItemDato(entd, value);
@@ -400,7 +423,7 @@ public final class ServicioImporterBO {
                                 ssrvBO.insert(ssrvVO, tpssVO, padreIds);
                                 entiMap.get(entiVO.getId()).put(subservId, ssrvVO.getId());
                             } catch (final DuplicateInstanceException ex) {
-                                LOG.info(entiVO.getNombre() + " Duplicado: " + ssrvVO);
+                                LOG.info(ex.getMessage(locale));
                             }
                         }
                     }
@@ -457,9 +480,12 @@ public final class ServicioImporterBO {
                         value.toString().toUpperCase());
 
                 if (prmtId == null) {
+                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                            + entdVO.getTpdt().getEnti().getId());
+                    final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_" + entdVO.getTpdt().getId());
+
                     final String errorMessage = "Parametro no encontrado para el codigo: " + value
-                            + " en el tipo de dato: " + entdVO.getTpdt().getNombre() + " del maestro: "
-                            + entdVO.getTpdt().getEnti().getNombre();
+                            + " en el tipo de dato: " + tpdtName + " del maestro: " + entiName;
 
                     throw new Error(errorMessage);
                 }
@@ -474,9 +500,12 @@ public final class ServicioImporterBO {
                 final Long srvcId = entiMap.get(entdVO.getTpdt().getEnti().getId()).get(Long.valueOf(value.toString()));
 
                 if (srvcId == null) {
+                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_"
+                            + entdVO.getTpdt().getEnti().getId());
+                    final String tpdtName = bundle.getString(I18nPrefix.tpdt.name() + "_" + entdVO.getTpdt().getId());
+
                     final String errorMessage = "Servicio no encontrado para el id: " + value + " en el tipo de dato: "
-                            + entdVO.getTpdt().getNombre() + " del tipo de servicio: "
-                            + entdVO.getTpdt().getEnti().getNombre();
+                            + tpdtName + " del tipo de servicio: " + entiName;
 
                     throw new Error(errorMessage);
                 }

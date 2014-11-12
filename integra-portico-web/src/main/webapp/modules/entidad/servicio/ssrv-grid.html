@@ -32,8 +32,8 @@
                     <th ng-if="vm.enti.tpdtEstado" translate>ssrv_estado</th>
                     <th ng-if="vm.enti.temporal" translate>ssrv_fini</th>
                     <th ng-if="vm.enti.temporal" translate>ssrv_ffin</th>
-                    <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable"
-                        ng-bind="entd.etiqueta"></th>
+                    <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable">{{'entd_'
+                        + entd.id | translate}}</th>
                 </tr>
             </thead>
             <tbody>

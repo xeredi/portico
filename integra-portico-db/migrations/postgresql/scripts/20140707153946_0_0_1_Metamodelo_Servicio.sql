@@ -839,10 +839,10 @@ VALUES (21010, 41080, 1,  4,  1, 12, 0, 0, 0, NULL, 'Observaciones')\
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DELETE FROM portico.tbl_subserv_subserv_ssss\
-DELETE FROM portico.tbl_subservicio_dato_ssdt\
+TRUNCATE TABLE portico.tbl_subserv_subserv_ssss\
+TRUNCATE TABLE portico.tbl_subservicio_dato_ssdt\
 DELETE FROM portico.tbl_subservicio_ssrv\
-DELETE FROM portico.tbl_servicio_dato_srdt\
+TRUNCATE TABLE portico.tbl_servicio_dato_srdt\
 DELETE FROM portico.tbl_servicio_srvc\
 DELETE FROM portico.tbl_servicio_secuencia_srsc\
 

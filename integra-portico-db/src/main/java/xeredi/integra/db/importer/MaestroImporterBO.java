@@ -12,7 +12,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -29,6 +31,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
@@ -57,6 +60,9 @@ public final class MaestroImporterBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(MaestroImporterBO.class);
+
+    /** The bundle. */
+    private static ResourceBundle bundle;
 
     /** The Constant MAESTRO_FILENAME. */
     private static final String MAESTRO_FILENAME = "/xeredi/integra/db/importer/MaestroImporter.xml";
@@ -96,14 +102,14 @@ public final class MaestroImporterBO {
     /**
      * Instantiates a new parametro importer2 bo.
      *
-     * @param aidioma
-     *            the aidioma
+     * @param alocale
+     *            the alocale
      * @param afechaVigencia
      *            the afecha vigencia
      */
-    public MaestroImporterBO(final String aidioma, final Date afechaVigencia) {
+    public MaestroImporterBO(final Locale alocale, final Date afechaVigencia) {
         super();
-        idioma = aidioma;
+        idioma = alocale.getLanguage() + "_" + alocale.getCountry();
         fechaVigencia = afechaVigencia;
 
         final Calendar calendar = Calendar.getInstance();
@@ -112,6 +118,8 @@ public final class MaestroImporterBO {
         calendar.add(Calendar.YEAR, -10);
 
         fechaInicioReferencia = calendar.getTime();
+
+        bundle = PorticoResourceBundle.getBundle(alocale);
     }
 
     /**
@@ -133,11 +141,12 @@ public final class MaestroImporterBO {
                 for (final Entidad entidad : maestrosList) {
                     final MaestroNodoVO maestroVO = maestrosSqlMap.get(entidad);
                     final EntidadVO entiVO = EntidadProxy.select(maestroVO.getEntidad().getId());
+                    final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiVO.getId());
 
                     switch (entiVO.getTipo()) {
                     case P:
                         if (LOG.isInfoEnabled()) {
-                            LOG.info("Importacion del maestro: " + entiVO.getNombre());
+                            LOG.info("Importacion del maestro: " + entiName);
                         }
 
                         importTipoParametro(con, maestroVO.getEntidad(), maestroVO.isTempImp(), maestroVO.getSqlQuery());
@@ -146,7 +155,7 @@ public final class MaestroImporterBO {
 
                     case B:
                         if (LOG.isInfoEnabled()) {
-                            LOG.info("Importacion del submaestro: " + entiVO.getNombre());
+                            LOG.info("Importacion del submaestro: " + entiName);
                         }
 
                         importSubtipoParametro(con, maestroVO.getEntidad(), maestroVO.isTempImp(),
@@ -156,7 +165,7 @@ public final class MaestroImporterBO {
 
                     default:
                         throw new Error("Tipo de entidad: " + entiVO.getTipo() + " no valida para la entidad "
-                                + entiVO.getNombre());
+                                + entiName);
                     }
                 }
             } catch (final Throwable ex) {
@@ -189,6 +198,7 @@ public final class MaestroImporterBO {
             final StringBuffer sql) throws SQLException, DuplicateInstanceException {
         final ParametroBO prmtBO = new ParametroBO();
         final TipoParametroVO tpprVO = TipoParametroProxy.select(entidad.getId());
+        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprVO.getId());
 
         if (tpprVO == null) {
             throw new Error("No se encuentra el tipo de parametro con id: " + entidad.getId());
@@ -246,7 +256,7 @@ public final class MaestroImporterBO {
 
                     for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
                         final Object value = rs.getObject(i++);
-                        final ItemDatoVO itdt = getItdt(value, entd, tpprVO.getNombre());
+                        final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
                         prmtVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
                     }
@@ -264,7 +274,7 @@ public final class MaestroImporterBO {
 
                     if (rs.wasNull()) {
                         LOG.warn("Texto i18n NULO para el parametro: " + prmtVO.getParametro() + " del maestro: "
-                                + tpprVO.getNombre());
+                                + entiName);
 
                         i18nVO.setText("Texto Generico");
                     }
@@ -277,7 +287,7 @@ public final class MaestroImporterBO {
 
                     tpprPrmtMap.get(prmtVO.getEntiId()).put(prmtVO.getParametro(), prmtVO.getId());
                 } catch (final OverlapException ex) {
-                    LOG.info(tpprVO.getNombre() + " Solapado: " + prmtVO.getEtiqueta());
+                    LOG.info(entiName + " Solapado: " + prmtVO.getEtiqueta());
                 }
             }
         } finally {
@@ -306,13 +316,17 @@ public final class MaestroImporterBO {
         final SubparametroBO sprmBO = new SubparametroBO();
         final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(entidad.getId());
         final TipoParametroVO tpprPadreVO = TipoParametroProxy.select(tpspVO.getTpprId());
+        final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpspVO.getId());
+        final String entiAsociadaName = bundle.getString(I18nPrefix.enti.name() + "_"
+                + tpspVO.getTpprAsociado().getId());
+        final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprPadreVO.getId());
 
         if (tpspVO == null) {
             throw new Error("No se encuentra el tipo de subparametro con id: " + entidad.getId());
         }
 
         if (tpspVO.getEntiPadresList() == null || tpspVO.getEntiPadresList().isEmpty()) {
-            throw new Error("El tipo de subparametro: " + tpspVO.getEtiqueta() + " no tiene entidades padre");
+            throw new Error("El tipo de subparametro: " + entiName + " no tiene entidades padre");
         }
 
         ResultSet rs = null;
@@ -363,20 +377,18 @@ public final class MaestroImporterBO {
 
                     for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
                         final Object value = rs.getObject(i++);
-                        final ItemDatoVO itdt = getItdt(value, entd, tpspVO.getNombre());
+                        final ItemDatoVO itdt = getItdt(value, entd, entiName);
 
                         sprmVO.getItdtMap().put(entd.getTpdt().getId(), itdt);
                     }
                 }
 
                 if (prmtId == null) {
-                    LOG.error("No encontrado parametro: " + parametro + " para la entidad: "
-                            + tpprPadreVO.getEtiqueta());
+                    LOG.error("No encontrado parametro: " + parametro + " para la entidad: " + entiPadreName);
                 }
 
                 if (prmtAsociadoId == null) {
-                    LOG.error("No encontrado parametro: " + parametroAsociado + " para la entidad: "
-                            + tpspVO.getTpprAsociado().getEtiqueta());
+                    LOG.error("No encontrado parametro: " + parametroAsociado + " para la entidad: " + entiAsociadaName);
                 }
 
                 // TODO i18n
@@ -385,7 +397,7 @@ public final class MaestroImporterBO {
                     try {
                         sprmBO.insert(sprmVO, tpspVO);
                     } catch (final OverlapException ex) {
-                        LOG.info(tpspVO.getNombre() + " Solapado: " + sprmVO.getEtiqueta());
+                        LOG.info(entiName + " Solapado: " + sprmVO.getEtiqueta());
                     }
                 }
             }

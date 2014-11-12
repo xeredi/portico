@@ -1,5 +1,7 @@
 package xeredi.integra.db.importer;
 
+import java.util.Locale;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
@@ -25,7 +27,7 @@ public final class ServicioImporterBOTest {
 
         final ServicioImporterBO importer = new ServicioImporterBO();
 
-        importer.importEntities(NUM_ITERATIONS);
+        importer.importEntities(NUM_ITERATIONS, new Locale("es", "ES"));
 
         LOG.info("End test");
     }

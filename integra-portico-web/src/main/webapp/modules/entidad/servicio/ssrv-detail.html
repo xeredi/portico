@@ -81,7 +81,7 @@
                         <th ng-if="entiHija.temporal" class="date" translate>ssrv_ffin</th>
 
                         <th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                            ng-if="entd.gridable" ng-bind="entd.etiqueta"></th>
+                            ng-if="entd.gridable">{{'entd_' + entd.id | translate}}</th>
                     </tr>
                 </thead>
 

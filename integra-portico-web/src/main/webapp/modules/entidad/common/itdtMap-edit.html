@@ -4,7 +4,7 @@
     <div class="row">
         <div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.grupo == engd.numero"
             class="col-sm-{{entd.spanSm}} col-md-{{entd.span}} col-lg-{{entd.spanLg}} form-group">
-            <label ng-bind="entd.etiqueta"></label>
+            <label>{{'entd_' + entd.id | translate}}</label>
 
             <div ng-switch on="entd.tpdt.tipoElemento">
                 <select ng-switch-when="BO" ng-model="vm.item.itdtMap[entd.tpdt.id].cantidadEntera"
