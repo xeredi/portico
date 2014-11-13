@@ -1,139 +1,19 @@
 -- // 0.0.1
 -- Migration SQL that makes the change goes here.
 
--- tbl_conf_clave_cncl
-CREATE TABLE tbl_conf_clave_cncl (
-	cncl_pk NUMBER(19) NOT NULL
-	, cncl_clave VARCHAR2(80) NOT NULL
-	, cncl_tipo_valor VARCHAR2(2) NOT NULL
-	, cncl_valor_defecto VARCHAR2(200) NOT NULL
+-- Tabla Unica para i18n
+CREATE TABLE tbl_i18n_i18n (
+	i18n_pref VARCHAR2(4) NOT NULL
+	, i18n_ext_pk NUMBER(19) NOT NULL
+	, i18n_lang VARCHAR2(5) NOT NULL
+	, i18n_text VARCHAR2(255) NOT NULL
 
-	, CONSTRAINT pk_cncl PRIMARY KEY (cncl_pk)
-	, CONSTRAINT uq_cncl UNIQUE (cncl_clave)
+	, CONSTRAINT pk_i18n PRIMARY KEY (i18n_pref, i18n_ext_pk, i18n_lang)
 )\
 
-CREATE OR REPLACE SYNONYM portico.tbl_conf_clave_cncl FOR porticoadm.tbl_conf_clave_cncl\
+CREATE OR REPLACE SYNONYM portico.tbl_i18n_i18n FOR tbl_i18n_i18n\
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_clave_cncl TO portico\
-
-COMMENT ON TABLE tbl_conf_clave_cncl IS 'Claves de Parametros de Configuracion'\
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_pk IS 'Identificador de clave'\
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_tipo_valor IS 'Tipo de Valor del parametro (Fecha, numero, ...)'\
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_clave IS 'Clave del parametro'\
-COMMENT ON COLUMN tbl_conf_clave_cncl.cncl_valor_defecto IS 'Valor por defecto del parametro'\
-
-
-
--- tbl_conf_clave_i18n_cnci
-CREATE TABLE tbl_conf_clave_i18n_cnci (
-	cnci_pk NUMBER(19) NOT NULL
-	, cnci_clave VARCHAR2(80) NOT NULL
-	, cnci_valor_defecto VARCHAR2(200) NOT NULL
-
-	, CONSTRAINT pk_cnci PRIMARY KEY (cnci_pk)
-	, CONSTRAINT uq_cnci UNIQUE (cnci_clave)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_conf_clave_i18n_cnci FOR porticoadm.tbl_conf_clave_i18n_cnci\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_clave_i18n_cnci TO portico\
-
-COMMENT ON TABLE tbl_conf_clave_i18n_cnci IS 'Claves de Configuracion de idioma'\
-COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_pk IS 'Identificador de clave de idioma'\
-COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_clave IS 'Identificador de clave'\
-COMMENT ON COLUMN tbl_conf_clave_i18n_cnci.cnci_valor_defecto IS 'Valor por Defecto'\
-
-
-
--- tbl_configuracion_idioma_cnid
-CREATE TABLE tbl_configuracion_idioma_cnid (
-	cnid_pk NUMBER(19) NOT NULL
-	, cnid_codigo VARCHAR2(5) NOT NULL
-	, cnid_descripcion VARCHAR2(100)
-
-	, CONSTRAINT pk_cnid PRIMARY KEY (cnid_pk)
-	, CONSTRAINT uq_cnid UNIQUE (cnid_codigo)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_configuracion_idioma_cnid FOR porticoadm.tbl_configuracion_idioma_cnid\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_idioma_cnid TO portico\
-
-COMMENT ON TABLE tbl_configuracion_idioma_cnid IS 'Configuraciones de idioma'\
-COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_pk IS 'Identificador de configuracion de idioma'\
-COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_codigo IS 'Codigo de configuracion de idioma'\
-COMMENT ON COLUMN tbl_configuracion_idioma_cnid.cnid_descripcion IS 'Descripcion de configuracion de idioma'\
-
-
-
--- tbl_configuracion_entorno_cnen
-CREATE TABLE tbl_configuracion_entorno_cnen (
-	cnen_pk NUMBER(19) NOT NULL
-	, cnen_codigo VARCHAR2(8) NOT NULL
-	, cnen_nombre VARCHAR2(50) NOT NULL
-
-	, CONSTRAINT pk_cnen PRIMARY KEY (cnen_pk)
-	, CONSTRAINT uq_cnen UNIQUE (cnen_codigo)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_configuracion_entorno_cnen FOR porticoadm.tbl_configuracion_entorno_cnen\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_entorno_cnen TO portico\
-
-COMMENT ON TABLE tbl_configuracion_entorno_cnen IS 'Entornos de Configuracion'\
-COMMENT ON COLUMN tbl_configuracion_entorno_cnen.cnen_pk IS 'Identificador de entorno'\
-COMMENT ON COLUMN tbl_configuracion_entorno_cnen.cnen_codigo IS 'Codigo de entorno'\
-COMMENT ON COLUMN tbl_configuracion_entorno_cnen.cnen_nombre IS 'Nombre de entorno'\
-
-
-
--- tbl_configuracion_valor_cnvl
-CREATE TABLE tbl_configuracion_valor_cnvl (
-	cnvl_cnen_pk NUMBER(19) NOT NULL
-	, cnvl_cncl_pk NUMBER(19) NOT NULL
-	, cnvl_valor VARCHAR2(200) NOT NULL
-
-	, CONSTRAINT pk_cnvl PRIMARY KEY (cnvl_cnen_pk, cnvl_cncl_pk)
-
-	, CONSTRAINT fk_cnvl_cnen_pk FOREIGN KEY (cnvl_cnen_pk)
-		REFERENCES tbl_configuracion_entorno_cnen (cnen_pk)
-	, CONSTRAINT fk_cnvl_cncl_pk FOREIGN KEY (cnvl_cncl_pk)
-		REFERENCES tbl_conf_clave_cncl (cncl_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_configuracion_valor_cnvl FOR porticoadm.tbl_configuracion_valor_cnvl\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_configuracion_valor_cnvl TO portico\
-
-COMMENT ON TABLE tbl_configuracion_valor_cnvl IS 'Valores de parametros de configuracion'\
-COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_cnen_pk IS 'Identificador de entorno'\
-COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_cncl_pk IS 'Identificador de clave'\
-COMMENT ON COLUMN tbl_configuracion_valor_cnvl.cnvl_valor IS 'Valor de parametro'\
-
-
-
--- tbl_conf_valor_i18n_cnvi
-CREATE TABLE tbl_conf_valor_i18n_cnvi (
-	cnvi_cnid_pk NUMBER(19) NOT NULL
-	, cnvi_cnci_pk NUMBER(19) NOT NULL
-	, cnvi_valor VARCHAR2(200) NOT NULL
-
-	, CONSTRAINT pk_cnvi PRIMARY KEY (cnvi_cnid_pk, cnvi_cnci_pk)
-
-	, CONSTRAINT fk_cnvi_cnid_pk FOREIGN KEY (cnvi_cnid_pk)
-		REFERENCES tbl_configuracion_idioma_cnid (cnid_pk)
-	, CONSTRAINT fk_cnvi_cnci_pk FOREIGN KEY (cnvi_cnci_pk)
-		REFERENCES tbl_conf_clave_i18n_cnci (cnci_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_conf_valor_i18n_cnvi FOR porticoadm.tbl_conf_valor_i18n_cnvi\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_conf_valor_i18n_cnvi TO portico\
-
-COMMENT ON TABLE tbl_conf_valor_i18n_cnvi IS 'Valores de parametros de configuracion de idioma'\
-COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnid_pk IS 'Identificador de Configuracion de Idioma'\
-COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_cnci_pk IS 'Identificador de Parametro de Configuracion de Idioma'\
-COMMENT ON COLUMN tbl_conf_valor_i18n_cnvi.cnvi_valor IS 'Valor de Parametro'\
+GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_i18n_i18n TO portico\
 
 
 
@@ -237,11 +117,9 @@ CREATE TABLE tbl_entidad_enti (
 	, enti_cmd_baja int NOT NULL
 	, enti_cmd_edicion int NOT NULL
 	, enti_cmd_duplicado int NOT NULL
-	, enti_nombre VARCHAR2(50) NOT NULL
 
 	, CONSTRAINT pk_enti PRIMARY KEY (enti_pk)
 	, CONSTRAINT uq_enti_codigo UNIQUE (enti_codigo)
-	, CONSTRAINT uq_enti_nombre UNIQUE (enti_nombre)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_entidad_enti FOR porticoadm.tbl_entidad_enti\
@@ -256,7 +134,6 @@ COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_alta IS 'Comando de alta Habilitado?
 COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_baja IS 'Comando de baja Habilitado?'\
 COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_edicion IS 'Comando de edicion Habilitado?'\
 COMMENT ON COLUMN tbl_entidad_enti.enti_cmd_duplicado IS 'Comando de duplicado Habilitado?'\
-COMMENT ON COLUMN tbl_entidad_enti.enti_nombre IS 'Nombre de Entidad'\
 
 
 
@@ -291,7 +168,6 @@ COMMENT ON COLUMN tbl_entidad_entidad_enen.enen_orden IS 'Orden de Entidad Hija 
 CREATE TABLE tbl_tipo_dato_tpdt (
 	tpdt_pk NUMBER(19) NOT NULL
 	, tpdt_codigo VARCHAR2(50) NOT NULL
-	, tpdt_nombre VARCHAR2(50) NOT NULL
 	, tpdt_tipo_html VARCHAR2(2) NOT NULL
 	, tpdt_tipo_elemento VARCHAR2(2) NOT NULL
 	, tpdt_enti_pk NUMBER(19)
@@ -310,7 +186,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_tipo_dato_tpdt TO portico\
 COMMENT ON TABLE tbl_tipo_dato_tpdt IS 'Tipos de dato de la aplicacion'\
 COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_pk IS 'Identificador de Tipo de Dato'\
 COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_codigo IS 'Codigo de Tipo de Dato'\
-COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_nombre IS 'Nombre de Tipo de Dato'\
 COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_tipo_html IS 'Tipo Html con el que se representa el Tipo de Dato'\
 COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_tipo_elemento IS 'Tipo de elemento que almacena el tipo de dato. Puede tomar los valores: L (Long), D (Double), S (String), T (Date), B (Boolean), P (Parametro)'\
 COMMENT ON COLUMN tbl_tipo_dato_tpdt.tpdt_enti_pk IS 'Entidad asociada al tipo de dato'\
@@ -342,32 +217,15 @@ COMMENT ON COLUMN tbl_codigo_ref_cdrf.cdrf_orden IS 'Orden de Visualiazacion del
 
 
 
--- tbl_codigo_ref_i18n_cdri
-CREATE TABLE tbl_codigo_ref_i18n_cdri (
-	cdri_cdrf_pk NUMBER(19) NOT NULL
-	, cdri_idioma VARCHAR2(5) NOT NULL
-	, cdri_texto VARCHAR2(100) NOT NULL
-
-	, CONSTRAINT pk_cdri PRIMARY KEY (cdri_cdrf_pk, cdri_idioma)
-
-	, CONSTRAINT fk_cdri_cdrf_pk FOREIGN KEY (cdri_cdrf_pk)
-		REFERENCES tbl_codigo_ref_cdrf (cdrf_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_codigo_ref_i18n_cdri FOR porticoadm.tbl_codigo_ref_i18n_cdri\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_codigo_ref_i18n_cdri TO portico\
-
-
-
 -- tbl_entidad_accion_enac
 CREATE TABLE tbl_entidad_accion_enac (
-	enac_enti_pk NUMBER(19) NOT NULL
+	enac_pk NUMBER(19) NOT NULL
+	, enac_enti_pk NUMBER(19) NOT NULL
 	, enac_path VARCHAR2(30) NOT NULL
-	, enac_etiqueta VARCHAR2(30) NOT NULL
 	, enac_orden int NOT NULL
 
-	, CONSTRAINT pk_enac PRIMARY KEY (enac_enti_pk, enac_path)
+	, CONSTRAINT pk_enac PRIMARY KEY (enac_pk)
+	, CONSTRAINT uq_enac UNIQUE (enac_enti_pk, enac_path)
 
 	, CONSTRAINT fk_enac_enti_pk FOREIGN KEY (enac_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
@@ -380,18 +238,18 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_accion_enac TO portico\
 COMMENT ON TABLE tbl_entidad_accion_enac IS 'Acciones asociadas a entidades'\
 COMMENT ON COLUMN tbl_entidad_accion_enac.enac_enti_pk IS 'Identificador de Entidad'\
 COMMENT ON COLUMN tbl_entidad_accion_enac.enac_path IS 'Path para construir la URL de la accion'\
-COMMENT ON COLUMN tbl_entidad_accion_enac.enac_etiqueta IS 'Etiqueta de visualizacion de la accion en Web'\
 COMMENT ON COLUMN tbl_entidad_accion_enac.enac_enti_pk IS 'Orden de aparacion de la accion dentro de las acciones de una entidad'\
 
 
 
 -- tbl_entidad_grupo_dato_engd
 CREATE TABLE tbl_entidad_grupo_dato_engd (
-	engd_enti_pk NUMBER(19) NOT NULL
+	engd_pk NUMBER(19) NOT NULL
+	, engd_enti_pk NUMBER(19) NOT NULL
 	, engd_orden int NOT NULL
-	, engd_etiqueta VARCHAR2(30) NOT NULL
 
-	, CONSTRAINT pk_engd PRIMARY KEY (engd_enti_pk, engd_orden)
+	, CONSTRAINT pk_engd PRIMARY KEY (engd_pk)
+	, CONSTRAINT uq_engd UNIQUE (engd_enti_pk, engd_orden)
 
 	, CONSTRAINT fk_engd_enti_pk FOREIGN KEY (engd_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
@@ -404,13 +262,13 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_entidad_grupo_dato_engd TO portico\
 COMMENT ON TABLE tbl_entidad_grupo_dato_engd IS 'Grupos de datos en los que se organizan las entidades'\
 COMMENT ON COLUMN tbl_entidad_grupo_dato_engd.engd_enti_pk IS 'Identificador de Entidad'\
 COMMENT ON COLUMN tbl_entidad_grupo_dato_engd.engd_orden IS 'Orden del grupo de datos dentro de la entidad'\
-COMMENT ON COLUMN tbl_entidad_grupo_dato_engd.engd_etiqueta IS 'Etiqueta del grupo de datos'\
 
 
 
 -- tbl_entidad_tipo_dato_entd
 CREATE TABLE tbl_entidad_tipo_dato_entd (
-	entd_enti_pk NUMBER(19) NOT NULL
+	entd_pk NUMBER(19) NOT NULL
+	, entd_enti_pk NUMBER(19) NOT NULL
 	, entd_tpdt_pk NUMBER(19) NOT NULL
 	, entd_grupo int NOT NULL
 	, entd_fila int NOT NULL
@@ -420,10 +278,9 @@ CREATE TABLE tbl_entidad_tipo_dato_entd (
 	, entd_gridable int NOT NULL
 	, entd_filtrable int NOT NULL
 	, entd_valor_defecto VARCHAR2(30)
-	, entd_etiqueta VARCHAR2(100) NOT NULL
 
-	, CONSTRAINT pk_entd PRIMARY KEY (entd_enti_pk, entd_tpdt_pk)
-	, CONSTRAINT uq_entd_etiqueta UNIQUE (entd_enti_pk, entd_grupo, entd_etiqueta)
+	, CONSTRAINT pk_entd PRIMARY KEY (entd_pk)
+	, CONSTRAINT uq_entd UNIQUE (entd_enti_pk, entd_tpdt_pk)
 
 	, CONSTRAINT fk_entd_enti_pk FOREIGN KEY (entd_enti_pk)
 		REFERENCES tbl_entidad_enti (enti_pk)
@@ -446,7 +303,6 @@ COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_obligatorio IS 'Indicador de s
 COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_gridable IS 'Indicador de si el tipo de dato va a ser visible en los grids de datos de la Entidad'\
 COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_filtrable IS 'Indicador de si el tipo de dato va a ser visible en los filtros de busqueda de la Entidad'\
 COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_valor_defecto IS 'Valor por defecto del tipo de dato'\
-COMMENT ON COLUMN tbl_entidad_tipo_dato_entd.entd_etiqueta IS 'Etiqueta de visualizacion'\
 
 
 
@@ -562,29 +418,6 @@ COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_ndecimal IS 'Valor de dato de Tip
 COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_fecha IS 'Valor de dato de Tipo Fecha'\
 COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_prmt_pk IS 'Valor de dato de Tipo Maestro'\
 COMMENT ON COLUMN tbl_parametro_dato_prdt.prdt_cadena IS 'Valor de dato de Tipo Texto'\
-
-
-
--- tbl_parametro_i18n_p18n
-CREATE TABLE tbl_parametro_i18n_p18n (
-	p18n_prvr_pk NUMBER(19) NOT NULL
-	, p18n_idioma VARCHAR2(5) NOT NULL
-	, p18n_texto VARCHAR2(350) NOT NULL
-
-	, CONSTRAINT pk_p18n PRIMARY KEY (p18n_prvr_pk, p18n_idioma)
-
-	, CONSTRAINT fk_p18n_prvr_pk FOREIGN KEY (p18n_prvr_pk)
-		REFERENCES tbl_parametro_version_prvr (prvr_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_parametro_i18n_p18n FOR porticoadm.tbl_parametro_i18n_p18n\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_parametro_i18n_p18n TO portico\
-
-COMMENT ON TABLE tbl_parametro_i18n_p18n IS 'Textos internacionalizados Asociados a las Versiones de Parametros de la aplicacion (Textos i18n de Maestros)'\
-COMMENT ON COLUMN tbl_parametro_i18n_p18n.p18n_prvr_pk IS 'Identificador de Version de Parametro'\
-COMMENT ON COLUMN tbl_parametro_i18n_p18n.p18n_idioma IS 'Idioma del texto'\
-COMMENT ON COLUMN tbl_parametro_i18n_p18n.p18n_texto IS 'Texto'\
 
 
 
@@ -1331,7 +1164,6 @@ DROP TABLE tbl_subparametro_dato_spdt\
 DROP TABLE tbl_subparametro_version_spvr\
 DROP TABLE tbl_subparametro_sprm\
 DROP TABLE tbl_tipo_subparametro_tpsp\
-DROP TABLE tbl_parametro_i18n_p18n\
 DROP TABLE tbl_parametro_dato_prdt\
 DROP TABLE tbl_parametro_version_prvr\
 DROP TABLE tbl_parametro_prmt\
@@ -1339,7 +1171,6 @@ DROP TABLE tbl_tipo_parametro_tppr\
 DROP TABLE tbl_entidad_tipo_dato_entd\
 DROP TABLE tbl_entidad_grupo_dato_engd\
 DROP TABLE tbl_entidad_accion_enac\
-DROP TABLE tbl_codigo_ref_i18n_cdri\
 DROP TABLE tbl_codigo_ref_cdrf\
 DROP TABLE tbl_tipo_dato_tpdt\
 DROP TABLE tbl_entidad_entidad_enen\
@@ -1348,9 +1179,4 @@ DROP TABLE tbl_usuario_grupo_usgr\
 DROP TABLE tbl_grupo_grpo\
 DROP TABLE tbl_usuario_usro\
 DROP TABLE tbl_ig\
-DROP TABLE tbl_conf_valor_i18n_cnvi\
-DROP TABLE tbl_configuracion_valor_cnvl\
-DROP TABLE tbl_configuracion_entorno_cnen\
-DROP TABLE tbl_configuracion_idioma_cnid\
-DROP TABLE tbl_conf_clave_i18n_cnci\
-DROP TABLE tbl_conf_clave_cncl\
+DROP TABLE tbl_i18n_i18n\

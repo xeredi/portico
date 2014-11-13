@@ -8,6 +8,9 @@ import xeredi.integra.model.comun.vo.BaseCriterioVO;
  */
 public final class EntidadAccionCriterioVO extends BaseCriterioVO {
 
+    /** The id. */
+    private Long id;
+
     /** The enti id. */
     private Long entiId;
 
@@ -50,6 +53,25 @@ public final class EntidadAccionCriterioVO extends BaseCriterioVO {
      */
     public void setPath(final String value) {
         path = value;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
 }

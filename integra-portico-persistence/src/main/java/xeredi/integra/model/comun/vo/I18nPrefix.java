@@ -12,6 +12,8 @@ public enum I18nPrefix {
     engd,
     /** The entd. */
     entd,
+    /** The enac. */
+    enac,
     /** The tpdt. */
     tpdt,
     /** The cdrf. */
@@ -21,7 +23,5 @@ public enum I18nPrefix {
     /** The crgv. */
     crgv,
     /** The prvr. */
-    prvr,
-
-    ;
+    prvr, ;
 }

@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class EntidadAccionVO {
 
+    /** The id. */
+    private Long id;
+
     /** The enti id. */
     private Long entiId;
 
@@ -30,7 +33,7 @@ public final class EntidadAccionVO {
 
     /**
      * Gets the enti id.
-     * 
+     *
      * @return the enti id
      */
     public Long getEntiId() {
@@ -39,7 +42,7 @@ public final class EntidadAccionVO {
 
     /**
      * Sets the enti id.
-     * 
+     *
      * @param value
      *            the new enti id
      */
@@ -49,7 +52,7 @@ public final class EntidadAccionVO {
 
     /**
      * Gets the path.
-     * 
+     *
      * @return the path
      */
     public String getPath() {
@@ -58,7 +61,7 @@ public final class EntidadAccionVO {
 
     /**
      * Sets the path.
-     * 
+     *
      * @param value
      *            the new path
      */
@@ -68,7 +71,7 @@ public final class EntidadAccionVO {
 
     /**
      * Gets the etiqueta.
-     * 
+     *
      * @return the etiqueta
      */
     public String getEtiqueta() {
@@ -77,7 +80,7 @@ public final class EntidadAccionVO {
 
     /**
      * Sets the etiqueta.
-     * 
+     *
      * @param value
      *            the new etiqueta
      */
@@ -87,7 +90,7 @@ public final class EntidadAccionVO {
 
     /**
      * Gets the orden.
-     * 
+     *
      * @return the orden
      */
     public Integer getOrden() {
@@ -96,12 +99,31 @@ public final class EntidadAccionVO {
 
     /**
      * Sets the orden.
-     * 
+     *
      * @param value
      *            the new orden
      */
     public void setOrden(final Integer value) {
         orden = value;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
 }

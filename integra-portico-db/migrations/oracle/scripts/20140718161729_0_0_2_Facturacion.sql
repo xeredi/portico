@@ -35,7 +35,6 @@ CREATE TABLE tbl_cargo_version_crgv (
 	, crgv_es_principal INT NOT NULL
 	, crgv_es_temporal INT NOT NULL
 	, crgv_tipo VARCHAR2(1) NOT NULL
-	, crgv_descripcion VARCHAR2(200) NOT NULL
 
 	, CONSTRAINT pk_crgv PRIMARY KEY (crgv_pk)
 
@@ -239,7 +238,6 @@ CREATE TABLE tbl_aspecto_version_aspv (
 	, aspv_aspc_pk NUMBER(19) NOT NULL
 	, aspv_fini TIMESTAMP NOT NULL
 	, aspv_ffin TIMESTAMP
-	, aspv_descripcion VARCHAR2(200) NOT NULL
 	, aspv_prioridad INT NOT NULL
 
 	, aspv_cpath_info1 VARCHAR2(250)

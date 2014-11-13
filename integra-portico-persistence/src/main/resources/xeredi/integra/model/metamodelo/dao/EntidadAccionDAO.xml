@@ -4,8 +4,11 @@
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.EntidadAccionDAO">
     <resultMap type="EntidadAccionVO" id="ResultMap">
-        <id column="enac_enti_pk" property="entiId" />
-        <id column="enac_path" property="path" />
+        <id column="enac_pk"/>
+
+        <result column="enac_pk" property="id" />
+        <result column="enac_enti_pk" property="entiId" />
+        <result column="enac_path" property="path" />
         <result column="enac_etiqueta" property="etiqueta" />
         <result column="enac_orden" property="orden" />
     </resultMap>
@@ -13,7 +16,19 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        enac.enac_enti_pk, enac.enac_path, enac.enac_etiqueta, enac.enac_orden
+        enac_pk, enac_enti_pk, enac_path, enac_orden
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'enac'
+                    AND i18n_ext_pk = enac_pk
+                    AND i18n_lang = #{idioma}
+            ) AS enac_etiqueta
+        ]]>
+        </if>
+    <![CDATA[
     FROM
         tbl_entidad_accion_enac enac
     ]]>
@@ -21,11 +36,14 @@
 
     <sql id="SelectWhere">
         <where>
+            <if test="id != null">
+                AND enac_pk = #{id}
+            </if>
             <if test="entiId != null">
-                AND enac.enac_enti_pk = #{entiId}
+                AND enac_enti_pk = #{entiId}
             </if>
             <if test="path != null">
-                AND enac.enac_path = #{path}
+                AND enac_path = #{path}
             </if>
         </where>
     </sql>
@@ -38,45 +56,42 @@
     <select id="selectList" parameterType="EntidadAccionCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
-        ORDER BY enac.enac_orden
+        ORDER BY enac_orden
     </select>
 
     <select id="selectAll" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        ORDER BY enac.enac_enti_pk, enac.enac_orden
+        ORDER BY enac_enti_pk, enac.enac_orden
     </select>
 
     <select id="exists" parameterType="EntidadAccionVO" resultType="boolean">
         <![CDATA[
         SELECT COUNT(1)
-        FROM tbl_entidad_accion_enac enac
-        WHERE enac.enac_enti_pk = #{entiId}
-            AND enac.enac_path = #{path}
+        FROM tbl_entidad_accion_enac
+        WHERE enac_enti_pk = #{entiId}
+            AND enac_path = #{path}
         ]]>
     </select>
 
     <insert id="insert" parameterType="EntidadAccionVO">
         <![CDATA[
-        INSERT INTO tbl_entidad_accion_enac (enac_enti_pk, enac_path, enac_etiqueta, enac_orden)
-        VALUES (#{entiId}, #{path}, #{etiqueta}, #{orden})
+        INSERT INTO tbl_entidad_accion_enac (enac_pk, enac_enti_pk, enac_path, enac_orden)
+        VALUES (#{id}, #{entiId}, #{path}, #{orden})
         ]]>
     </insert>
 
     <update id="update" parameterType="EntidadAccionVO">
         <![CDATA[
         UPDATE tbl_entidad_accion_enac SET
-            enac_etiqueta = #{etiqueta}
-            , enac_orden = #{orden}
-        WHERE enac_enti_pk = #{entiId}
-            AND enac_path = #{path}
+            enac_orden = #{orden}
+        WHERE enac_pk = #{id}
         ]]>
     </update>
 
     <update id="delete" parameterType="EntidadAccionVO">
         <![CDATA[
         DELETE FROM tbl_entidad_accion_enac
-        WHERE enac_enti_pk = #{entiId}
-            AND enac_path = #{path}
+        WHERE enac_pk = #{id}
         ]]>
     </update>
 </mapper>

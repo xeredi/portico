@@ -1,0 +1,23 @@
+- Borrado de tablas de configuracion antiguas
+- tbl_i18n_i18n
+	prvr, cdrf, enti, enac, engd, crgv, aspv
+- tbl_entidad_enti
+	quitar columna enti_nombre
+- tbl_tipo_dato_tpdt
+	quitar columna tpdt_nombre
+- tbl_codigo_ref_i18n_cdri -> Eliminar
+- tbl_entidad_accion_enac
+	quitar columna enac_etiqueta
+	añadir columna enac_pk
+- tbl_entidad_grupo_dato_engd
+	quitar columna engd_etiqueta
+	añadir columna engd_pk
+- tbl_entidad_tipo_dato_entd
+	quitar columna entd_etiqueta
+	añadir columna entd_pk
+- tbl_parametro_i18n_p18n -> Eliminar
+
+- tbl_cargo_version_crgv
+	quitar columna crgv_descripcion
+- tbl_aspecto_version_aspv
+	quitar columna aspv_descripcion

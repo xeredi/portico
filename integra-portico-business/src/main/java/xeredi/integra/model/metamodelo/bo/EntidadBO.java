@@ -229,6 +229,7 @@ public class EntidadBO {
         final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
 
         enacCriterioVO.setEntiId(entiVO.getId());
+        enacCriterioVO.setIdioma(idioma);
 
         final List<EntidadAccionVO> enacList = enacDAO.selectList(enacCriterioVO);
 

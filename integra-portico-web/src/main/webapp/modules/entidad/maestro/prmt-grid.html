@@ -47,10 +47,10 @@
                     <td><a
                         ng-href="#/maestro/prmt/detail/{{vm.enti.id}}/{{item.id}}/{{vm.itemCriterio.fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="item.parametro"></td>
-                    <td ng-if="vm.enti.i18n" ng-bind="item.texto"></td>
-                    <td ng-bind="item.prvr.fini | date"></td>
-                    <td ng-bind="item.prvr.ffin | date"></td>
+                    <td nowrap="nowrap" ng-bind="item.parametro"></td>
+                    <td nowrap="nowrap" ng-if="vm.enti.i18n" ng-bind="item.texto"></td>
+                    <td nowrap="nowrap" ng-bind="item.prvr.fini | date"></td>
+                    <td nowrap="nowrap" ng-bind="item.prvr.ffin | date"></td>
                     <td ng-repeat="entd in vm.enti.entdList track by $index" nowrap="nowrap" ng-if="entd.gridable"
                         ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
                             class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
