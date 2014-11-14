@@ -1,5 +1,5 @@
 <div ng-if="vm.item">
-    <tabset type="pills"> <tab heading="{{'enti_' + vm.enti.id | translate}}" select="tabSelected(null)">
+    <tabset type="pills"> <tab heading="{{'enti_' + vm.enti.id | translate}}" select="vm.tabSelected(null)">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" ng-href="#/maestro/prmt/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i

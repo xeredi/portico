@@ -1412,6 +1412,7 @@ function enacEditController($http, $routeParams, pageTitleService) {
     function save() {
         $http.post("metamodelo/enac-save.action", {
             enac : vm.enac,
+            i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
             setTimeout(function() {
@@ -1442,6 +1443,7 @@ function enacCreateController($http, $location, $routeParams, pageTitleService) 
     function save() {
         $http.post("metamodelo/enac-save.action", {
             enac : vm.enac,
+            i18nMap : vm.i18nMap,
             accion : vm.accion
         }).success(function(data) {
             $location.path("/metamodelo/enac/detail/" + data.enac.id).replace();

@@ -126,7 +126,9 @@ public final class ParametroPdf extends BasePdf {
                                 accWidth = 0;
                             }
 
-                            rowCells.add(new PdfCell(entd.getEtiqueta(), getItdtValue(entd, itdt), entd.getSpan(), entd
+                            final String entdLabel = bundle.getString("entd_" + entd.getId());
+
+                            rowCells.add(new PdfCell(entdLabel, getItdtValue(entd, itdt), entd.getSpan(), entd
                                     .getTpdt().getTipoElemento()));
                             accWidth += entd.getSpan();
                         }
@@ -208,10 +210,12 @@ public final class ParametroPdf extends BasePdf {
 
         if (entiVO.getEntdList() != null) {
             for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
-                columns.add(entd.getEtiqueta());
+                final String entdLabel = bundle.getString("entd_" + entd.getId());
 
-                report.addColumn(DynamicReports.col.column(entd.getEtiqueta(), entd.getEtiqueta(),
-                        DynamicReports.type.stringType()).setWidth(entd.getSpan()));
+                columns.add(entdLabel);
+
+                report.addColumn(DynamicReports.col.column(entdLabel, entdLabel, DynamicReports.type.stringType())
+                        .setWidth(entd.getSpan()));
             }
         }
 

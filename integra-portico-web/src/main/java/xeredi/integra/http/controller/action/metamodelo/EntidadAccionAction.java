@@ -65,7 +65,7 @@ public final class EntidadAccionAction extends BaseAction {
 
         final EntidadAccionBO enacBO = new EntidadAccionBO();
 
-        enac = enacBO.select(enac.getEntiId(), enac.getPath());
+        enac = enacBO.select(enac.getId(), getIdioma());
         i18nMap = I18nBO.selectMap(I18nPrefix.enac, enac.getId());
         accion = ACCION_EDICION.edit;
 

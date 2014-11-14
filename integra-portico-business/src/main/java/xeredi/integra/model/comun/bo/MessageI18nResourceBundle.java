@@ -55,6 +55,9 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
         prefixSet.add(I18nPrefix.tpdt);
         prefixSet.add(I18nPrefix.cdrf);
         prefixSet.add(I18nPrefix.enti);
+        prefixSet.add(I18nPrefix.entd);
+        prefixSet.add(I18nPrefix.enac);
+        prefixSet.add(I18nPrefix.engd);
 
         final List<LabelValueVO> list = i18nBO.selectLabelValueList(prefixSet, locale.getLanguage());
 
