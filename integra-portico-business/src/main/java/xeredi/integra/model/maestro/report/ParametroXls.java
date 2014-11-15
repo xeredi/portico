@@ -78,7 +78,7 @@ public final class ParametroXls extends BaseXls {
 
         if (tpprVO.getEntdList() != null) {
             for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
-                setCellValue(rowhead, i++, entd.getEtiqueta());
+                setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
             }
         }
 

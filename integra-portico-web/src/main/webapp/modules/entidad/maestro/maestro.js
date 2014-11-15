@@ -198,11 +198,12 @@ function maestroController($http, pageTitleService) {
     pageTitleService.setTitle("prmtList", "page_home");
 }
 
-function prmtGridController($location, $routeParams, $modal, prmtService, pageTitleService) {
+function prmtGridController($location, $routeParams, $http, $modal, prmtService, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
     vm.filter = filter;
+    vm.xlsExport = xlsExport;
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     vm.page = $routeParams.page ? $routeParams.page : 1;
@@ -221,6 +222,22 @@ function prmtGridController($location, $routeParams, $modal, prmtService, pageTi
 
     function pageChanged() {
         search();
+    }
+
+    function xlsExport() {
+        $http.post('maestro/prmt-xls-export.action', {
+            itemCriterio : vm.itemCriterio
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ], {
+                type : 'application/xls'
+            });
+
+            setTimeout(function() {
+                saveAs(file, vm.enti.id + '.xls');
+            }, 0);
+        });
     }
 
     function filter(size) {
@@ -304,14 +321,18 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
     }
 
     function print() {
-        $http.get('maestro/prmt-print.action?item.id=' + vm.item.id, null, {
+        $http.post('maestro/prmt-print.action', {
+            item : vm.item
+        }, {
             responseType : 'arraybuffer'
         }).success(function(data) {
             var file = new Blob([ data ], {
                 type : 'application/pdf'
             });
-            var fileURL = URL.createObjectURL(file);
-            window.open(fileURL);
+
+            setTimeout(function() {
+                saveAs(file, vm.enti.id + '.pdf');
+            }, 0);
         });
     }
 

@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
@@ -23,14 +25,19 @@ import com.google.common.base.Preconditions;
  */
 public final class EstadisticaXls extends BaseXls {
 
+    /** The bundle. */
+    private final ResourceBundle bundle;
+
     /**
      * Instantiates a new estadistica xls.
      *
      * @param alocale
      *            the alocale
      */
-    public EstadisticaXls(final Locale alocale) {
-        super(alocale);
+    public EstadisticaXls(final Locale locale) {
+        super(locale);
+
+        bundle = PorticoResourceBundle.getBundle(locale);
     }
 
     /**
@@ -52,7 +59,7 @@ public final class EstadisticaXls extends BaseXls {
         Preconditions.checkNotNull(stream);
 
         final HSSFWorkbook workbook = new HSSFWorkbook();
-        final HSSFSheet sheet = workbook.createSheet(tpesVO.getNombre());
+        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpesVO.getId()));
 
         // Cabecera XLS
         int rownum = 0;
@@ -65,7 +72,7 @@ public final class EstadisticaXls extends BaseXls {
         setCellValue(rowhead, i++, bundle.getString("estd_subp"));
 
         for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
-            setCellValue(rowhead, i++, entd.getEtiqueta());
+            setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
         }
 
         // Filas XLS
@@ -74,7 +81,7 @@ public final class EstadisticaXls extends BaseXls {
 
             int j = 0;
 
-            setCellValue(row, j++, tpesVO.getNombre());
+            setCellValue(row, j++, bundle.getString("enti_" + tpesVO.getId()));
             setCellValue(row, j++, estdVO.getPepr().getEtiqueta());
             setCellValue(row, j++, estdVO.getSubp().getEtiqueta());
 

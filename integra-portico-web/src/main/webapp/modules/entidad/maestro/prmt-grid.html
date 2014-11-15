@@ -19,8 +19,9 @@
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="maestro/prmt-xls-export.action?itemCriterio.entiId={{vm.enti.id}}"><i
-                class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span> </a>
+            <button data-ng-click="vm.xlsExport()" class="btn btn-default">
+                <i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
+            </button>
         </div>
     </div>
 
@@ -35,7 +36,7 @@
                 <tr>
                     <th class="buttonLinks" nowrap="nowrap" />
                     <th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
-                    <th ng-if="vm.enti.i18n" translate>prmt_i18n_texto</th>
+                    <th ng-if="vm.enti.i18n" translate>i18n_text</th>
                     <th translate>prmt_fini</th>
                     <th translate>prmt_ffin</th>
                     <th ng-repeat="entd in vm.enti.entdList" ng-if="entd.gridable">{{'entd_' + entd.id |

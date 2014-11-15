@@ -148,6 +148,7 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     vm.pageChanged = pageChanged;
     vm.filter = filter;
+    vm.xlsExport = xlsExport;
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     vm.itemCriterio.entiId = $routeParams.entiId;
@@ -174,6 +175,22 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function pageChanged() {
         search(vm.page);
+    }
+
+    function xlsExport() {
+        $http.post('servicio/srvc-xls-export.action', {
+            itemCriterio : vm.itemCriterio
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ], {
+                type : 'application/xls'
+            });
+
+            setTimeout(function() {
+                saveAs(file, vm.enti.id + '.xls');
+            }, 0);
+        });
     }
 
     function filter(size) {
@@ -464,6 +481,7 @@ function ssrvGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     vm.pageChanged = pageChanged;
     vm.filter = filter;
+    vm.xlsExport = xlsExport;
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     vm.itemCriterio.entiId = $routeParams.entiId;
@@ -490,6 +508,22 @@ function ssrvGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function pageChanged() {
         search(vm.itemCriterio, vm.page);
+    }
+
+    function xlsExport() {
+        $http.post('servicio/ssrv-xls-export.action', {
+            itemCriterio : vm.itemCriterio
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ], {
+                type : 'application/xls'
+            });
+
+            setTimeout(function() {
+                saveAs(file, vm.enti.id + '.xls');
+            }, 0);
+        });
     }
 
     function filter(size) {

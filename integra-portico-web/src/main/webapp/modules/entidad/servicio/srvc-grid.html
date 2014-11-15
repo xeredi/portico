@@ -19,8 +19,9 @@
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="servicio/srvc-xls-export.action?itemCriterio.entiId={{vm.enti.id}}"><i
-                class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span> </a>
+            <button data-ng-click="vm.xlsExport()" class="btn btn-default">
+                <i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
+            </button>
         </div>
     </div>
 
@@ -36,8 +37,8 @@
                     <th ng-if="vm.enti.tpdtEstado" translate>srvc_estado</th>
                     <th ng-if="vm.enti.temporal" translate>srvc_fini</th>
                     <th ng-if="vm.enti.temporal" translate>srvc_ffin</th>
-                    <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable">{{'entd_'
-                        + entd.id | translate}}</th>
+                    <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable">{{'entd_' +
+                        entd.id | translate}}</th>
                 </tr>
             </thead>
             <tbody>

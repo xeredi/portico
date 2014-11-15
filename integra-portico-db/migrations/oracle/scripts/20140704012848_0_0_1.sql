@@ -6,7 +6,7 @@ CREATE TABLE tbl_i18n_i18n (
 	i18n_pref VARCHAR2(4) NOT NULL
 	, i18n_ext_pk NUMBER(19) NOT NULL
 	, i18n_lang VARCHAR2(5) NOT NULL
-	, i18n_text VARCHAR2(255) NOT NULL
+	, i18n_text VARCHAR2(350) NOT NULL
 
 	, CONSTRAINT pk_i18n PRIMARY KEY (i18n_pref, i18n_ext_pk, i18n_lang)
 )\

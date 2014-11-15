@@ -32,7 +32,7 @@
                 <configuration>
                     <repository>migrations/${database-vendor}</repository>
                     <environment>${profile-id}</environment>
-                    <upSteps>1</upSteps>
+                    <upSteps>20</upSteps>
                 </configuration>
                 <dependencies>
                     <dependency>

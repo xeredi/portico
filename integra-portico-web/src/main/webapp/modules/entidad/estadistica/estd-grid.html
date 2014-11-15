@@ -13,9 +13,9 @@
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-default"
-                ng-href="estadistica/estd-xls-export.action?itemCriterio.entiId={{vm.enti.id}}&itemCriterio.pepr.id={{vm.itemCriterio.pepr.id}}"><i
-                class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span> </a>
+            <button data-ng-click="vm.xlsExport()" class="btn btn-default">
+                <i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
+            </button>
         </div>
     </div>
 

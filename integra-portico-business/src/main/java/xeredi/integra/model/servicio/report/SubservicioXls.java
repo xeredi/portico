@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -23,14 +25,19 @@ import com.google.common.base.Preconditions;
  */
 public final class SubservicioXls extends BaseXls {
 
+    /** The bundle. */
+    private final ResourceBundle bundle;
+
     /**
      * Instantiates a new subservicio xls.
      *
      * @param alocale
      *            the alocale
      */
-    public SubservicioXls(final Locale alocale) {
-        super(alocale);
+    public SubservicioXls(final Locale locale) {
+        super(locale);
+
+        bundle = PorticoResourceBundle.getBundle(locale);
     }
 
     /**
@@ -52,7 +59,7 @@ public final class SubservicioXls extends BaseXls {
         Preconditions.checkNotNull(stream);
 
         final HSSFWorkbook workbook = new HSSFWorkbook();
-        final HSSFSheet sheet = workbook.createSheet(tpssVO.getNombre());
+        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpssVO.getId()));
 
         // Cabecera XLS
         int rownum = 0;
@@ -74,7 +81,7 @@ public final class SubservicioXls extends BaseXls {
         }
 
         for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
-            setCellValue(rowhead, i++, entd.getEtiqueta());
+            setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
         }
 
         // Filas XLS
@@ -83,7 +90,7 @@ public final class SubservicioXls extends BaseXls {
 
             int j = 0;
 
-            setCellValue(row, j++, tpssVO.getNombre());
+            setCellValue(row, j++, bundle.getString("enti_" + tpssVO.getId()));
             setCellValue(row, j++, ssrvVO.getSrvc().getEtiqueta());
             setCellValue(row, j++, ssrvVO.getNumero());
 

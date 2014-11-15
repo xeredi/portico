@@ -168,6 +168,7 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     vm.pageChanged = pageChanged;
     vm.filter = filter;
+    vm.xlsExport = xlsExport;
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     vm.itemCriterio.entiId = $routeParams.entiId;
@@ -197,6 +198,22 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
 
     function pageChanged() {
         search(vm.itemCriterio, vm.page);
+    }
+
+    function xlsExport() {
+        $http.post('estadistica/estd-xls-export.action', {
+            itemCriterio : vm.itemCriterio
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ], {
+                type : 'application/xls'
+            });
+
+            setTimeout(function() {
+                saveAs(file, vm.enti.id + '.xls');
+            }, 0);
+        });
     }
 
     function filter(size) {

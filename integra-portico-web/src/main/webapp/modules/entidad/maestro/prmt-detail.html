@@ -6,15 +6,13 @@
                 class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
                 ng-href="#/maestro/prmt/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
                 class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
-            <button data-ng-click="remove()" class="btn btn-default">
+            <button data-ng-click="vm.remove()" class="btn btn-default">
                 <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
             </button>
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-default" ng-href="maestro/prmt-print.action?item.id={{vm.item.id}}"><i
-                class="glyphicon glyphicon-print"></i> <span translate>btn_imprimir</span> </a>
-            <button data-ng-click="print()" class="btn btn-default">
+            <button data-ng-click="vm.print()" class="btn btn-default">
                 <i class="glyphicon glyphicon-print"></i> <span translate>btn_imprimir</span>
             </button>
         </div>
