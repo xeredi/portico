@@ -38,7 +38,7 @@ public class ManifiestoBO {
     public final void bloquear(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
             final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
@@ -83,7 +83,7 @@ public class ManifiestoBO {
     public final void completar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
             final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
@@ -128,7 +128,7 @@ public class ManifiestoBO {
     public final void iniciar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
             final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);
@@ -172,7 +172,7 @@ public class ManifiestoBO {
     public final void anular(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
             final ManifiestoSubservicioDAO maniSsrvDAO = session.getMapper(ManifiestoSubservicioDAO.class);

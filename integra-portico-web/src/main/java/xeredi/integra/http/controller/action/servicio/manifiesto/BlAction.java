@@ -9,6 +9,8 @@ import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class BlAction.
@@ -29,6 +31,9 @@ public final class BlAction extends BaseAction {
      */
     @Action("mabl-bloquear")
     public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final BlBO mablBO = new BlBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
 
@@ -46,9 +51,15 @@ public final class BlAction extends BaseAction {
      */
     @Action("mabl-completar")
     public String completar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final BlBO mablBO = new BlBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         mablBO.completar(item.getId());
+
+        item = ssrvBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -60,9 +71,15 @@ public final class BlAction extends BaseAction {
      */
     @Action("mabl-iniciar")
     public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final BlBO mablBO = new BlBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         mablBO.iniciar(item.getId());
+
+        item = ssrvBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -74,9 +91,15 @@ public final class BlAction extends BaseAction {
      */
     @Action("mabl-anular")
     public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final BlBO mablBO = new BlBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         mablBO.anular(item.getId());
+
+        item = ssrvBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }

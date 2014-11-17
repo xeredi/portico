@@ -5,53 +5,57 @@
 <mapper namespace="xeredi.integra.model.servicio.dao.manifiesto.BlDAO">
     <update id="updateRecalcularEstado" parameterType="Long">
         <![CDATA[
-        UPDATE tbl_subservicio_ssrv ssrvBl SET
-        	ssrv_estado = (
-				WITH sql AS (
-					SELECT ssrv_estado
-					FROM tbl_subservicio_ssrv ssrvPartEqui
-					WHERE
-						ssrvPartEqui.ssrv_srvc_pk = ssrvBl.ssrv_srvc_pk
-						AND ssrvPartEqui.ssrv_tpss_pk IN (portico.getEntidad('PARTIDA'), portico.getEntidad('EQUIPAMIENTO'))
-						AND EXISTS (
-							SELECT 1
-							FROM tbl_subserv_subserv_ssss
-							WHERE
-								ssss_ssrvp_pk = ssrvBl.ssrv_pk
-								AND ssss_ssrvh_pk = ssrvPartEqui.ssrv_pk
-						)
-				)
-        		SELECT CASE
-        			WHEN
-					'R' = ANY (SELECT ssrv_estado FROM sql)
-        				AND NOT EXISTS (
-        					SELECT 1
-        					FROM sql
-        					WHERE
-							ssrv_estado NOT IN ('R', 'A')
-        				)
-        			THEN 'I'
+        UPDATE tbl_subservicio_ssrv SET
+            ssrv_estado = (
+                WITH sql AS (
+                    SELECT ssrv_estado
+                    FROM tbl_subservicio_ssrv
+                    WHERE
+                        ssrv_tpss_pk IN (portico.getEntidad('PARTIDA'), portico.getEntidad('EQUIPAMIENTO'))
+                        AND EXISTS (
+                            SELECT 1
+                            FROM TBL_SUBSERV_SUBSERV_SSSS
+                            WHERE
+                                ssss_ssrvh_pk = ssrv_pk
+                                AND ssss_ssrvp_pk = 1232119
+                        )
+                )
+                SELECT
+                    CASE
+                        WHEN
+                            'R' = ANY (SELECT ssrv_estado FROM sql)
+                            AND NOT EXISTS (
+                                SELECT 1
+                                FROM sql
+                                WHERE
+                                    ssrv_estado NOT IN ('R', 'A')
+                            )
+                        THEN 'I'
 
-        			WHEN
-					'B' = ANY (SELECT ssrv_estado FROM sql)
-        			THEN 'B'
+        			    WHEN
+					       'B' = ANY (SELECT ssrv_estado FROM sql)
+        			    THEN 'B'
 
-        			WHEN
-        				NOT EXISTS (
-        					SELECT 1
-        					FROM sql
-        				)
-        			THEN 'S'
+        			    WHEN
+        				    NOT EXISTS (
+        					   SELECT 1
+        					   FROM sql
+        				    )
+        			    THEN 'S'
 
-        			WHEN
-					'A' = ALL (SELECT ssrv_estado FROM sql)
-        			THEN 'A'
+        			    WHEN
+					       'A' = ALL (SELECT ssrv_estado FROM sql)
+        			    THEN 'A'
 
-        			ELSE 'X'
-        		END
-        	)
+        			    ELSE 'X'
+                    END
+                FROM tbl_subservicio_ssrv
+                WHERE
+                    ssrv_tpss_pk = portico.getEntidad('BL')
+                    AND ssrv_pk = #{value}
+            )
         WHERE
-        	ssrv_tpss_pk = portico.getEntidad('BL')
+            ssrv_tpss_pk = portico.getEntidad('BL')
             AND ssrv_pk = #{value}
         ]]>
     </update>

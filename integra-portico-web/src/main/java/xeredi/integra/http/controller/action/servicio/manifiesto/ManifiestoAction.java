@@ -5,8 +5,11 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
+
+import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,9 +31,15 @@ public final class ManifiestoAction extends BaseAction {
      */
     @Action("mani-bloquear")
     public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final ManifiestoBO maniBO = new ManifiestoBO();
+        final ServicioBO srvcBO = new ServicioBO();
 
         maniBO.bloquear(item.getId());
+
+        item = srvcBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -42,9 +51,15 @@ public final class ManifiestoAction extends BaseAction {
      */
     @Action("mani-completar")
     public String completar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final ManifiestoBO maniBO = new ManifiestoBO();
+        final ServicioBO srvcBO = new ServicioBO();
 
         maniBO.completar(item.getId());
+
+        item = srvcBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -56,9 +71,15 @@ public final class ManifiestoAction extends BaseAction {
      */
     @Action("mani-iniciar")
     public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final ManifiestoBO maniBO = new ManifiestoBO();
+        final ServicioBO srvcBO = new ServicioBO();
 
         maniBO.iniciar(item.getId());
+
+        item = srvcBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -70,9 +91,15 @@ public final class ManifiestoAction extends BaseAction {
      */
     @Action("mani-anular")
     public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+
         final ManifiestoBO maniBO = new ManifiestoBO();
+        final ServicioBO srvcBO = new ServicioBO();
 
         maniBO.anular(item.getId());
+
+        item = srvcBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }

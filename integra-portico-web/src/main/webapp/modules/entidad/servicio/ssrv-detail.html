@@ -1,5 +1,5 @@
 <div ng-if="vm.item">
-    <tabset type="pills"> <tab heading="{{'enti_' + vm.enti.id | translate}}" select="tabSelected(null)">
+    <tabset type="pills"> <tab heading="{{'enti_' + vm.enti.id | translate}}" select="vm.tabSelected(null)">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-default" ng-href="#/servicio/ssrv/edit/{{vm.enti.id}}/{{vm.item.id}}"><i
@@ -76,9 +76,9 @@
                         <th class="buttonLinks" />
 
                         <th translate>ssrv_numero</th>
-                        <th ng-if="entiHija.tpdtEstado" translate>ssrv_estado</th>
-                        <th ng-if="entiHija.temporal" class="date" translate>ssrv_fini</th>
-                        <th ng-if="entiHija.temporal" class="date" translate>ssrv_ffin</th>
+                        <th ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" translate>ssrv_estado</th>
+                        <th ng-if="vm.entiHijasMap[entiHijaId].temporal" class="date" translate>ssrv_fini</th>
+                        <th ng-if="vm.entiHijasMap[entiHijaId].temporal" class="date" translate>ssrv_ffin</th>
 
                         <th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
                             ng-if="entd.gridable">{{'entd_' + entd.id | translate}}</th>
@@ -91,9 +91,9 @@
                                 class="glyphicon glyphicon-search"></i></a></td>
 
                         <td ng-bind="itemHijo.numero"></td>
-                        <td ng-if="entiHija.tpdtEstado" ng-bind="itemHijo.estado"></td>
-                        <td ng-if="entiHija.temporal" ng-bind="itemHijo.fini | date"></td>
-                        <td ng-if="entiHija.temporal" ng-bind="itemHijo.ffin | date"></td>
+                        <td ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" ng-bind="itemHijo.estado"></td>
+                        <td ng-if="vm.entiHijasMap[entiHijaId].temporal" ng-bind="itemHijo.fini | date"></td>
+                        <td ng-if="vm.entiHijasMap[entiHijaId].temporal" ng-bind="itemHijo.ffin | date"></td>
 
                         <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
                             ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span

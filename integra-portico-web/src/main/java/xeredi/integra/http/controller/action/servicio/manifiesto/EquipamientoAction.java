@@ -5,6 +5,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.EquipamientoBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
@@ -34,8 +35,11 @@ public final class EquipamientoAction extends BaseAction {
         Preconditions.checkNotNull(item.getId());
 
         final EquipamientoBO equiBO = new EquipamientoBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         equiBO.bloquear(item.getId());
+
+        item = ssrvBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -51,8 +55,11 @@ public final class EquipamientoAction extends BaseAction {
         Preconditions.checkNotNull(item.getId());
 
         final EquipamientoBO equiBO = new EquipamientoBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         equiBO.iniciar(item.getId());
+
+        item = ssrvBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -68,8 +75,11 @@ public final class EquipamientoAction extends BaseAction {
         Preconditions.checkNotNull(item.getId());
 
         final EquipamientoBO equiBO = new EquipamientoBO();
+        final SubservicioBO ssrvBO = new SubservicioBO();
 
         equiBO.anular(item.getId());
+
+        item = ssrvBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }

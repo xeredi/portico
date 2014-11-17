@@ -56,7 +56,7 @@
 					SELECT ssrv_estado
 		            FROM tbl_subservicio_ssrv
 					WHERE
-		                ssrv_srvc_pk = srvc_pk
+		                ssrv_srvc_pk = #{id}
 		                AND ssrv_tpss_pk = portico.getEntidad('BL')
 				)
 				SELECT

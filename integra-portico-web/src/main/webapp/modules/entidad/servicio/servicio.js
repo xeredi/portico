@@ -303,25 +303,25 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
 
         case "mani-bloquear":
             $http.get("servicio/manifiesto/mani-bloquear.action?item.id=" + vm.item.id).success(function(data) {
-                findItem();
+                vm.item = data.item;
             });
 
             break;
         case "mani-completar":
             $http.get("servicio/manifiesto/mani-completar.action?item.id=" + vm.item.id).success(function(data) {
-                findItem();
+                vm.item = data.item;
             });
 
             break;
         case "mani-iniciar":
             $http.get("servicio/manifiesto/mani-iniciar.action?item.id=" + vm.item.id).success(function(data) {
-                findItem();
+                vm.item = data.item;
             });
 
             break;
         case "mani-anular":
             $http.get("servicio/manifiesto/mani-anular.action?item.id=" + vm.item.id).success(function(data) {
-                findItem();
+                vm.item = data.item;
             });
 
             break;
@@ -666,19 +666,19 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
         // ----------- EQUIPAMIENTO ------------------
 
         case "equi-bloquear":
-            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + vm.item.id).success(function(data) {
+            $http.get("servicio/manifiesto/equi-bloquear.action?item.id=" + vm.item.id).success(function(data) {
                 vm.item = data.item;
             });
 
             break;
         case "equi-iniciar":
-            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + vm.item.id).success(function(data) {
+            $http.get("servicio/manifiesto/equi-iniciar.action?item.id=" + vm.item.id).success(function(data) {
                 vm.item = data.item;
             });
 
             break;
         case "equi-anular":
-            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + vm.item.id).success(function(data) {
+            $http.get("servicio/manifiesto/equi-anular.action?item.id=" + vm.item.id).success(function(data) {
                 vm.item = data.item;
             });
 
@@ -688,19 +688,19 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
         // ----------- PARTIDA ------------------
         // ----------- PARTIDA ------------------
         case "part-bloquear":
-            $http.get("servicio/manifiesto/mabl-bloquear.action?item.id=" + vm.item.id).success(function(data) {
+            $http.get("servicio/manifiesto/part-bloquear.action?item.id=" + vm.item.id).success(function(data) {
                 vm.item = data.item;
             });
 
             break;
         case "part-iniciar":
-            $http.get("servicio/manifiesto/mabl-iniciar.action?item.id=" + vm.item.id).success(function(data) {
+            $http.get("servicio/manifiesto/part-iniciar.action?item.id=" + vm.item.id).success(function(data) {
                 vm.item = data.item;
             });
 
             break;
         case "part-anular":
-            $http.get("servicio/manifiesto/mabl-anular.action?item.id=" + vm.item.id).success(function(data) {
+            $http.get("servicio/manifiesto/part-anular.action?item.id=" + vm.item.id).success(function(data) {
                 vm.item = data.item;
             });
 
