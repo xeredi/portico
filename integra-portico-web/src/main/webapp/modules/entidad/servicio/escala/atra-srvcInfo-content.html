@@ -1,0 +1,16 @@
+<div class="form">
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label translate="ssrv_srvc"></label>
+            <p class="form-control-static" ng-bind="vm.item.srvc.etiqueta"></p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label translate="ssrv_numero"></label>
+            <p class="form-control-static" ng-bind="vm.item.numero"></p>
+        </div>
+        <div class="col-md-5 form-group">
+            <label translate="entd_45010">{{"entd_" + 45010 | translate}}</label>
+            <p class="form-control-static" ng-bind="vm.item.srvc.itdtMap[45010].prmt.etiqueta"></p>
+        </div>
+    </div>
+</div>

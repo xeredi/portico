@@ -32,16 +32,21 @@ public final class AtraqueAction extends ItemAction {
     /** The item. */
     private SubservicioVO item;
 
+    /** The enti. */
+    private TipoSubservicioVO enti;
+
     // Acciones Web
 
     /**
      * Autorizar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Action(value = "atra-autorizar-popup", results = {
-            @Result(name = "success", location = "escala/atra-autorizar.jsp"),
-            @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action(value = "atra-autorizar")
     public String autorizar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -51,6 +56,7 @@ public final class AtraqueAction extends ItemAction {
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (!atraBO.isAutorizable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizar,
@@ -63,7 +69,7 @@ public final class AtraqueAction extends ItemAction {
         item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
         item.getItdtMap()
-                .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
+        .put(TipoDato.TIPO_ESTAN_ATR_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
         item.getItdtMap().put(TipoDato.DECIMAL_10.getId(), item.getItdtMap().get(TipoDato.DECIMAL_04.getId()));
         item.getItdtMap().put(TipoDato.TIPO_ACT_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ACT.getId()));
@@ -79,6 +85,10 @@ public final class AtraqueAction extends ItemAction {
      * Autorizar guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action(value = "atra-autorizar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
@@ -107,9 +117,12 @@ public final class AtraqueAction extends ItemAction {
      * Denegar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Action(value = "atra-denegar-popup", results = { @Result(name = "success", location = "escala/atra-denegar.jsp"),
-            @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action(value = "atra-denegar")
     public String denegar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -119,6 +132,7 @@ public final class AtraqueAction extends ItemAction {
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (!atraBO.isDenegable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_denegar, item.getId());
@@ -134,6 +148,10 @@ public final class AtraqueAction extends ItemAction {
      * Denegar guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action(value = "atra-denegar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
@@ -162,9 +180,12 @@ public final class AtraqueAction extends ItemAction {
      * Anular.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Action(value = "atra-anular-popup", results = { @Result(name = "success", location = "escala/atra-anular.jsp"),
-            @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action(value = "atra-anular")
     public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -174,6 +195,7 @@ public final class AtraqueAction extends ItemAction {
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (!atraBO.isAnulable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_anular, item.getId());
@@ -189,6 +211,10 @@ public final class AtraqueAction extends ItemAction {
      * Anular guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action(value = "atra-anular-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
@@ -217,9 +243,12 @@ public final class AtraqueAction extends ItemAction {
      * Iniciar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Action(value = "atra-iniciar-popup", results = { @Result(name = "success", location = "escala/atra-iniciar.jsp"),
-            @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action(value = "atra-iniciar")
     public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -229,6 +258,7 @@ public final class AtraqueAction extends ItemAction {
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (!atraBO.isIniciable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_iniciar, item.getId());
@@ -254,6 +284,10 @@ public final class AtraqueAction extends ItemAction {
      * Anular iniciar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action(value = "atra-iniciar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
@@ -277,10 +311,12 @@ public final class AtraqueAction extends ItemAction {
      * Finalizar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Action(value = "atra-finalizar-popup", results = {
-            @Result(name = "success", location = "escala/atra-finalizar.jsp"),
-            @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action(value = "atra-finalizar")
     public String finalizar() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -290,6 +326,7 @@ public final class AtraqueAction extends ItemAction {
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (!atraBO.isFinalizable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_finalizar,
@@ -305,6 +342,10 @@ public final class AtraqueAction extends ItemAction {
      * Finalizar guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action(value = "atra-finalizar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
@@ -328,10 +369,12 @@ public final class AtraqueAction extends ItemAction {
      * Autorizar fprevio.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
-    @Action(value = "atra-autorizar-fprevio-popup", results = {
-            @Result(name = "success", location = "escala/atra-autorizar-fprevio.jsp"),
-            @Result(name = "error", location = "/WEB-INF/content/comun/item-action-result.jsp") })
+    @Action(value = "atra-autorizar-fprevio")
     public String autorizarFprevio() throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
@@ -341,6 +384,7 @@ public final class AtraqueAction extends ItemAction {
         final AtraqueBO atraBO = new AtraqueBO();
 
         item = ssrvBO.select(item.getId(), getIdioma());
+        enti = TipoSubservicioProxy.select(item.getEntiId());
 
         if (!atraBO.isAutorizableFprevio(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizarFPrevio,
@@ -353,7 +397,7 @@ public final class AtraqueAction extends ItemAction {
             item.getItdtMap().put(TipoDato.DECIMAL_08.getId(), item.getItdtMap().get(TipoDato.DECIMAL_02.getId()));
             item.getItdtMap().put(TipoDato.ALIN_2.getId(), item.getItdtMap().get(TipoDato.ALIN.getId()));
             item.getItdtMap()
-                    .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
+            .put(TipoDato.TIPO_ATR_EDI_2.getId(), item.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()));
             item.getItdtMap().put(TipoDato.TIPO_ESTAN_ATR_2.getId(),
                     item.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()));
             item.getItdtMap().put(TipoDato.DECIMAL_09.getId(), item.getItdtMap().get(TipoDato.DECIMAL_03.getId()));
@@ -373,7 +417,7 @@ public final class AtraqueAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "atra-cambiar-muelle-popup", results = { @Result(name = "success", location = "escala/atra-cambiar-muelle.jsp") })
+    @Action(value = "atra-cambiar-muelle")
     public String cambiarMuelle() {
         return SUCCESS;
     }
@@ -383,7 +427,7 @@ public final class AtraqueAction extends ItemAction {
      *
      * @return the string
      */
-    @Action(value = "atra-deshacer-estado-popup", results = { @Result(name = "success", location = "escala/atra-deshacer-estado.jsp") })
+    @Action(value = "atra-deshacer-estado")
     public String deshacerEstado() {
         return SUCCESS;
     }
@@ -406,6 +450,15 @@ public final class AtraqueAction extends ItemAction {
      */
     public void setItem(final SubservicioVO value) {
         item = value;
+    }
+
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
+    public TipoSubservicioVO getEnti() {
+        return enti;
     }
 
 }

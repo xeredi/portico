@@ -1,0 +1,44 @@
+<form role="form">
+    <fieldset>
+        <div class="row">
+            <div class="col-md-8">
+                <div ng-include="'modules/entidad/servicio/escala/atra-srvcInfo-content.html'"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div ng-include="'modules/entidad/servicio/escala/atra-solicitud-content.html'"
+                    ng-if="vm.item.estado == 'S'"></div>
+                <div ng-include="'modules/entidad/servicio/escala/atra-autorizacion-content.html'"
+                    ng-if="vm.item.estado == 'C'"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-horizontal">
+                    <fieldset>
+                        <legend> {{vm.enti.engdMap[3].etiqueta}} </legend>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">{{vm.enti.entdMap[41100].etiqueta}}</label>
+                            <div class="col-md-9">
+                                <div class="input-group" ng-controller="datepickerController">
+                                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+                                        datepicker-options="dateOptions" is-open="opened"
+                                        ng-model="vm.item.itdtMap[41100].fecha" /> <span class="input-group-addon"
+                                        ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+        </button>
+    </div>
+</form>

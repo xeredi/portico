@@ -37,7 +37,19 @@ angular.module("servicio", [])
 
 .controller('ssrvLupaCtrl', ssrvLupaCtrl)
 
-.controller("mablTotalesController", mablTotalesController);
+.controller("mablTotalesController", mablTotalesController)
+
+.controller("atraAutorizarController", atraAutorizarController)
+
+.controller("atraAnularController", atraAnularController)
+
+.controller("atraIniciarController", atraIniciarController)
+
+.controller("atraFinalizarController", atraFinalizarController)
+
+.controller("atraDenegarController", atraDenegarController)
+
+;
 
 function config($routeProvider) {
     $routeProvider
@@ -129,7 +141,51 @@ function config($routeProvider) {
         templateUrl : "modules/entidad/servicio/manifiesto/mabl-totales.html",
         controller : "mablTotalesController",
         controllerAs : "vm"
-    });
+    })
+
+    .when("/servicio/ssrv/atraDenegar/:srvcId/:ssrvId", {
+        templateUrl : "modules/entidad/servicio/escala/atra-denegar.html",
+        controller : "atraDenegarController",
+        controllerAs : "vm"
+    })
+
+    .when("/servicio/ssrv/atraAutorizar/:srvcId/:ssrvId", {
+        templateUrl : "modules/entidad/servicio/escala/atra-autorizar.html",
+        controller : "atraAutorizarController",
+        controllerAs : "vm"
+    })
+
+    .when("/servicio/ssrv/atraAnular/:srvcId/:ssrvId", {
+        templateUrl : "modules/entidad/servicio/escala/atra-anular.html",
+        controller : "atraAnularController",
+        controllerAs : "vm"
+    })
+
+    .when("/servicio/ssrv/atraIniciar/:srvcId/:ssrvId", {
+        templateUrl : "modules/entidad/servicio/escala/atra-iniciar.html",
+        controller : "atraIniciarController",
+        controllerAs : "vm"
+    })
+
+    .when("/servicio/ssrv/atraFinalizar/:srvcId/:ssrvId", {
+        templateUrl : "modules/entidad/servicio/escala/atra-finalizar.html",
+        controller : "atraFinalizarController",
+        controllerAs : "vm"
+    })
+
+    .when("/servicio/ssrv/atraCambiarMuelle/:srvcId/:ssrvId", {
+        templateUrl : "modules/entidad/servicio/escala/atra-cambiarMuelle.html",
+        controller : "atraCambiarMuelleController",
+        controllerAs : "vm"
+    })
+
+    .when("/servicio/ssrv/atraAutorizarFPrevio/:srvcId/:ssrvId", {
+        templateUrl : "modules/entidad/servicio/escala/atra-autorizarFPrevio.html",
+        controller : "atraAutorizarFPrevioController",
+        controllerAs : "vm"
+    })
+
+    ;
 }
 
 function servicioController($http, pageTitleService) {
@@ -705,6 +761,36 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
             });
 
             break;
+
+        case "atra-denegar":
+            $location.path("/servicio/ssrv/atraDenegar/" + vm.item.srvc.id + "/" + vm.item.id);
+
+            break;
+        case "atra-autorizar":
+            $location.path("/servicio/ssrv/atraAutorizar/" + vm.item.srvc.id + "/" + vm.item.id);
+
+            break;
+        case "atra-anular":
+            $location.path("/servicio/ssrv/atraAnular/" + vm.item.srvc.id + "/" + vm.item.id);
+
+            break;
+        case "atra-iniciar":
+            $location.path("/servicio/ssrv/atraIniciar/" + vm.item.srvc.id + "/" + vm.item.id);
+
+            break;
+        case "atra-finalizar":
+            $location.path("/servicio/ssrv/atraFinalizar/" + vm.item.srvc.id + "/" + vm.item.id);
+
+            break;
+        case "atra-cambiar-muelle":
+            $location.path("/servicio/ssrv/atraCambiarMuelle/" + vm.item.srvc.id + "/" + vm.item.id);
+
+            break;
+        case "atra-autorizar-fprevio":
+            $location.path("/servicio/ssrv/atraAutorizarFPrevio/" + vm.item.srvc.id + "/" + vm.item.id);
+
+            break;
+
         default:
             alert(accName);
 
@@ -852,14 +938,117 @@ function ssrvLupaCtrl($http, $scope) {
     };
 }
 
-function mablTotalesController($scope, $http, $location, $routeParams, pageTitleService) {
-    var url = "servicio/manifiesto/mabl-totales.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
-            + $routeParams.srvcId;
+function mablTotalesController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
 
-    $http.get(url).success(function(data) {
-        $scope.item = data.item;
-        $scope.resumen = data.resumen;
+    $http.get(
+            "servicio/manifiesto/mabl-totales.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.resumen = data.resumen;
     });
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_verificarTotales");
+}
+
+function atraDenegarController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.get(
+            "servicio/escala/atra-denegar.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.enti = data.enti;
+
+        pageTitleService.setTitleEnti(vm.enti.id, "page_atraDenegar");
+    });
+}
+
+function atraAutorizarController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.get(
+            "servicio/escala/atra-autorizar.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.enti = data.enti;
+
+        pageTitleService.setTitleEnti(vm.enti.id, "page_atraAutorizar");
+    });
+}
+
+function atraAnularController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        alert('save');
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.get(
+            "servicio/escala/atra-anular.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.enti = data.enti;
+
+        pageTitleService.setTitleEnti(vm.enti.id, "page_atraAnular");
+    });
+}
+
+function atraIniciarController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.get(
+            "servicio/escala/atra-iniciar.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.enti = data.enti;
+
+        pageTitleService.setTitleEnti(vm.enti.id, "page_atraIniciar");
+    });
+}
+
+function atraFinalizarController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.get(
+            "servicio/escala/atra-finalizar.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.enti = data.enti;
+
+        pageTitleService.setTitleEnti(vm.enti.id, "page_atraFinalizar");
+    });
+}
+
+function atraCambiarMuelleController($scope, $http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.get(
+            "servicio/escala/atra-cambiarMuelle.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.enti = data.enti;
+
+        pageTitleService.setTitleEnti(vm.enti.id, "page_atraCambiarMuelle");
+    });
+}
+
+function atraAutorizarFPrevioController($scope, $http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    $http.get(
+            "servicio/escala/atra-autorizarFPrevio.action?item.id=" + $routeParams.ssrvId + "&item.srvc.id="
+                    + $routeParams.srvcId).success(function(data) {
+        vm.item = data.item;
+        vm.enti = data.enti;
+
+        pageTitleService.setTitleEnti(vm.enti.id, "page_atraAutorizarFPrevio");
+    });
 }
