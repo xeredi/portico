@@ -24,11 +24,14 @@ import com.google.common.base.Preconditions;
  * The Class EntidadTipoDatoAdminBO.
  */
 public class EntidadTipoDatoBO {
+
     /**
      * Insert.
      *
      * @param entdVO
      *            the entd vo
+     * @param i18nMap
+     *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
@@ -61,6 +64,8 @@ public class EntidadTipoDatoBO {
      *
      * @param entdVO
      *            the entd vo
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */

@@ -132,6 +132,8 @@ public class ServicioBO {
      *
      * @param srvcLupaCriterioVO
      *            the srvc lupa criterio vo
+     * @param limit
+     *            the limit
      * @return the list
      */
     public final List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit) {
@@ -156,74 +158,95 @@ public class ServicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final ServicioVO srvcVO, final TipoServicioVO tpsrVO, final List<SubservicioVO> ssrvList)
+    public void insert(final ServicioVO srvcVO, final TipoServicioVO tpsrVO, final List<SubservicioVO> ssrvList)
             throws DuplicateInstanceException {
         Preconditions.checkNotNull(srvcVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
-
-            if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
-                    final Long tpdtId = entd.getTpdt().getId();
-
-                    if (!srvcVO.getItdtMap().containsKey(tpdtId) && !srvcVO.getItdtMap().containsKey(tpdtId.toString())) {
-                        final ItemDatoVO itdt = new ItemDatoVO();
-
-                        itdt.setTpdtId(tpdtId);
-                        srvcVO.getItdtMap().put(tpdtId, itdt);
-                    }
-                }
-            }
-
-            final IgBO igBO = new IgBO();
-
-            srscDAO.incrementarSecuencia(srvcVO);
-
-            final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
-
-            if (secuencia == null) {
-                throw new Error("No se encuentra secuencia para: " + srvcVO);
-            }
-
-            srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
-
-            if (srvcDAO.exists(srvcVO)) {
-                throw new DuplicateInstanceException(srvcVO.getEntiId(), srvcVO);
-            }
-
-            srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            srvcDAO.insert(srvcVO);
-
-            if (srvcVO.getItdtMap() != null) {
-                for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-                    itdtVO.setItemId(srvcVO.getId());
-                    srdtDAO.insert(itdtVO);
-                }
-            }
-
-            if (ssrvList != null) {
-                for (final SubservicioVO ssrvVO : ssrvList) {
-                    ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                    ssrvVO.setSrvc(srvcVO);
-                    ssrvDAO.insert(ssrvVO);
-                }
-
-                for (final SubservicioVO ssrvVO : ssrvList) {
-                    if (ssrvVO.getItdtMap() != null) {
-                        for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
-                            itdtVO.setItemId(ssrvVO.getId());
-                            ssdtDAO.insert(itdtVO);
-                        }
-                    }
-                }
-            }
+            insert(session, srvcVO, tpsrVO, ssrvList);
 
             session.commit();
+        }
+    }
+
+    /**
+     * Insert.
+     *
+     * @param session
+     *            the session
+     * @param srvcVO
+     *            the srvc vo
+     * @param tpsrVO
+     *            the tpsr vo
+     * @param ssrvList
+     *            the ssrv list
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    protected final void insert(final SqlSession session, final ServicioVO srvcVO, final TipoServicioVO tpsrVO,
+            final List<SubservicioVO> ssrvList) throws DuplicateInstanceException {
+        Preconditions.checkNotNull(srvcVO);
+
+        final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+        final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+        final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+        final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+
+        if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
+            for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                final Long tpdtId = entd.getTpdt().getId();
+
+                if (!srvcVO.getItdtMap().containsKey(tpdtId) && !srvcVO.getItdtMap().containsKey(tpdtId.toString())) {
+                    final ItemDatoVO itdt = new ItemDatoVO();
+
+                    itdt.setTpdtId(tpdtId);
+                    srvcVO.getItdtMap().put(tpdtId, itdt);
+                }
+            }
+        }
+
+        final IgBO igBO = new IgBO();
+
+        srscDAO.incrementarSecuencia(srvcVO);
+
+        final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
+
+        if (secuencia == null) {
+            throw new Error("No se encuentra secuencia para: " + srvcVO);
+        }
+
+        srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
+
+        if (srvcDAO.exists(srvcVO)) {
+            throw new DuplicateInstanceException(srvcVO.getEntiId(), srvcVO);
+        }
+
+        srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+        srvcDAO.insert(srvcVO);
+
+        if (srvcVO.getItdtMap() != null) {
+            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+                itdtVO.setItemId(srvcVO.getId());
+                srdtDAO.insert(itdtVO);
+            }
+        }
+
+        if (ssrvList != null) {
+            for (final SubservicioVO ssrvVO : ssrvList) {
+                ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                ssrvVO.setSrvc(srvcVO);
+                ssrvDAO.insert(ssrvVO);
+            }
+
+            for (final SubservicioVO ssrvVO : ssrvList) {
+                if (ssrvVO.getItdtMap() != null) {
+                    for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
+                        itdtVO.setItemId(ssrvVO.getId());
+                        ssdtDAO.insert(itdtVO);
+                    }
+                }
+            }
         }
     }
 
@@ -233,20 +256,34 @@ public class ServicioBO {
      * @param srvcVO
      *            the srvc vo
      */
-    public final void update(final ServicioVO srvcVO) {
+    public void update(final ServicioVO srvcVO) {
         Preconditions.checkNotNull(srvcVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
-
-            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-                srdtDAO.update(itdtVO);
-            }
-
-            // TODO Actualizar datos del servicio??
+            update(session, srvcVO);
 
             session.commit();
         }
+    }
+
+    /**
+     * Update.
+     *
+     * @param session
+     *            the session
+     * @param srvcVO
+     *            the srvc vo
+     */
+    protected final void update(final SqlSession session, final ServicioVO srvcVO) {
+        Preconditions.checkNotNull(srvcVO);
+
+        final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+
+        for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+            srdtDAO.update(itdtVO);
+        }
+
+        // TODO Actualizar datos del servicio??
     }
 
     /**
@@ -255,80 +292,94 @@ public class ServicioBO {
      * @param srvcVO
      *            the srvc vo
      */
-    public final void duplicate(final ServicioVO srvcVO) {
+    public void duplicate(final ServicioVO srvcVO) {
         Preconditions.checkNotNull(srvcVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
-            final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
-
-            final IgBO igBO = new IgBO();
-            final Map<Long, Long> ssrvIds = new HashMap<>();
-
-            // Busqueda de los elementos a duplicar
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            srvcCriterioVO.setId(srvcVO.getId());
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-
-            final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
-            final List<ItemDatoVO> ssdtList = ssdtDAO.selectList(ssrvCriterioVO);
-            final List<SubservicioSubservicioVO> ssssList = ssssDAO.selectList(ssrvCriterioVO);
-
-            // Duplicado del servicio. Se duplica el propio servicio y sus datos
-            // asociados, los
-            // subservicios y
-            // los datos asociados, y las relaciones entre subservicios.
-            srscDAO.incrementarSecuencia(srvcVO);
-
-            final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
-            final Long srvcIdActual = srvcVO.getId();
-
-            if (secuencia == null) {
-                throw new Error("No se encuentra secuencia para: " + srvcVO.getEtiqueta());
-            }
-
-            srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
-
-            for (final SubservicioVO ssrvVO : ssrvList) {
-                final Long ssrvIdActual = ssrvVO.getId();
-
-                ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-                ssrvVO.setSrvc(srvcVO);
-
-                ssrvIds.put(ssrvIdActual, ssrvVO.getId());
-            }
-
-            srvcDAO.insert(srvcVO);
-
-            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-                itdtVO.setItemId(srvcVO.getId());
-
-                srdtDAO.insert(itdtVO);
-            }
-
-            for (final SubservicioVO ssrvVO : ssrvList) {
-                ssrvDAO.insert(ssrvVO);
-            }
-
-            for (final ItemDatoVO ssdtVO : ssdtList) {
-                ssdtVO.setItemId(ssrvIds.get(ssdtVO.getItemId()));
-
-                ssdtDAO.insert(ssdtVO);
-            }
-
-            for (final SubservicioSubservicioVO ssssVO : ssssList) {
-                ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()), ssrvIds.get(ssssVO
-                        .getSsrvHijoId())));
-            }
+            duplicate(session, srvcVO);
 
             session.commit();
+        }
+    }
+
+    /**
+     * Duplicate.
+     *
+     * @param session
+     *            the session
+     * @param srvcVO
+     *            the srvc vo
+     */
+    protected final void duplicate(final SqlSession session, final ServicioVO srvcVO) {
+        Preconditions.checkNotNull(srvcVO);
+
+        final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+        final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+        final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+        final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+        final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+
+        final IgBO igBO = new IgBO();
+        final Map<Long, Long> ssrvIds = new HashMap<>();
+
+        // Busqueda de los elementos a duplicar
+        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+        srvcCriterioVO.setId(srvcVO.getId());
+        ssrvCriterioVO.setSrvc(srvcCriterioVO);
+
+        final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterioVO);
+        final List<ItemDatoVO> ssdtList = ssdtDAO.selectList(ssrvCriterioVO);
+        final List<SubservicioSubservicioVO> ssssList = ssssDAO.selectList(ssrvCriterioVO);
+
+        // Duplicado del servicio. Se duplica el propio servicio y sus datos
+        // asociados, los
+        // subservicios y
+        // los datos asociados, y las relaciones entre subservicios.
+        srscDAO.incrementarSecuencia(srvcVO);
+
+        final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
+        final Long srvcIdActual = srvcVO.getId();
+
+        if (secuencia == null) {
+            throw new Error("No se encuentra secuencia para: " + srvcVO.getEtiqueta());
+        }
+
+        srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+        srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
+
+        for (final SubservicioVO ssrvVO : ssrvList) {
+            final Long ssrvIdActual = ssrvVO.getId();
+
+            ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            ssrvVO.setSrvc(srvcVO);
+
+            ssrvIds.put(ssrvIdActual, ssrvVO.getId());
+        }
+
+        srvcDAO.insert(srvcVO);
+
+        for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+            itdtVO.setItemId(srvcVO.getId());
+
+            srdtDAO.insert(itdtVO);
+        }
+
+        for (final SubservicioVO ssrvVO : ssrvList) {
+            ssrvDAO.insert(ssrvVO);
+        }
+
+        for (final ItemDatoVO ssdtVO : ssdtList) {
+            ssdtVO.setItemId(ssrvIds.get(ssdtVO.getItemId()));
+
+            ssdtDAO.insert(ssdtVO);
+        }
+
+        for (final SubservicioSubservicioVO ssssVO : ssssList) {
+            ssssDAO.insert(new SubservicioSubservicioVO(ssrvIds.get(ssssVO.getSsrvPadreId()), ssrvIds.get(ssssVO
+                    .getSsrvHijoId())));
         }
     }
 
@@ -340,34 +391,50 @@ public class ServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void delete(final Long srvcId) throws InstanceNotFoundException {
+    public void delete(final Long srvcId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(srvcId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
-
-            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
-            final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
-
-            srvcCriterioVO.setId(srvcId);
-            ssrvCriterioVO.setSrvc(srvcCriterioVO);
-
-            ssssDAO.delete(ssrvCriterioVO);
-            ssdtDAO.delete(ssrvCriterioVO);
-            ssrvDAO.delete(ssrvCriterioVO);
-            srdtDAO.delete(srvcCriterioVO);
-
-            final int updated = srvcDAO.delete(srvcId);
-
-            if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
-            }
+            delete(session, srvcId);
 
             session.commit();
+        }
+    }
+
+    /**
+     * Delete.
+     *
+     * @param session
+     *            the session
+     * @param srvcId
+     *            the srvc id
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    protected final void delete(final SqlSession session, final Long srvcId) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(srvcId);
+
+        final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+        final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+        final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
+        final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+
+        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+        srvcCriterioVO.setId(srvcId);
+        ssrvCriterioVO.setSrvc(srvcCriterioVO);
+
+        ssssDAO.delete(ssrvCriterioVO);
+        ssdtDAO.delete(ssrvCriterioVO);
+        ssrvDAO.delete(ssrvCriterioVO);
+        srdtDAO.delete(srvcCriterioVO);
+
+        final int updated = srvcDAO.delete(srvcId);
+
+        if (updated == 0) {
+            throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
         }
     }
 

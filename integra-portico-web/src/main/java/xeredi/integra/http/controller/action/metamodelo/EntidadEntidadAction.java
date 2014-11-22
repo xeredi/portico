@@ -47,6 +47,8 @@ public final class EntidadEntidadAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("enen-edit")
     public String edit() throws InstanceNotFoundException {
@@ -71,6 +73,10 @@ public final class EntidadEntidadAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("enen-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -104,6 +110,8 @@ public final class EntidadEntidadAction extends BaseAction {
      * Eliminar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("enen-remove")
     public String remove() throws InstanceNotFoundException {
@@ -123,6 +131,8 @@ public final class EntidadEntidadAction extends BaseAction {
      * Detail.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("enen-detail")
     public String detail() throws InstanceNotFoundException {

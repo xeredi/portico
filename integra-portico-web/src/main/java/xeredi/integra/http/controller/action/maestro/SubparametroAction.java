@@ -61,6 +61,8 @@ public final class SubparametroAction extends ItemAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("sprm-edit")
     public String edit() throws InstanceNotFoundException {
@@ -86,6 +88,8 @@ public final class SubparametroAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("sprm-duplicate")
     public String duplicate() throws InstanceNotFoundException {
@@ -111,6 +115,10 @@ public final class SubparametroAction extends ItemAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
     @Action("sprm-save")
     public String save() throws InstanceNotFoundException, OverlapException {
@@ -170,6 +178,8 @@ public final class SubparametroAction extends ItemAction {
      * Borrar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("sprm-remove")
     public String remove() throws InstanceNotFoundException {
@@ -188,6 +198,8 @@ public final class SubparametroAction extends ItemAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("sprm-detail")
     public String detalle() throws InstanceNotFoundException {

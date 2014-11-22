@@ -32,6 +32,8 @@ public final class EstadisticaAction extends ItemAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
 
     @Action("estd-detail")

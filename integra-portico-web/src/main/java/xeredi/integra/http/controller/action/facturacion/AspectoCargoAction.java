@@ -43,6 +43,8 @@ public final class AspectoCargoAction extends BaseAction {
      * Detail.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ascr-detail")
     public String detail() throws InstanceNotFoundException {
@@ -64,6 +66,8 @@ public final class AspectoCargoAction extends BaseAction {
      * Creates the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ascr-create")
     public String create() throws InstanceNotFoundException {
@@ -93,6 +97,8 @@ public final class AspectoCargoAction extends BaseAction {
      * Edits the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ascr-edit")
     public String edit() throws InstanceNotFoundException {
@@ -115,6 +121,10 @@ public final class AspectoCargoAction extends BaseAction {
      * Save.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
     @Action("ascr-save")
     public String save() throws InstanceNotFoundException, OverlapException {
@@ -162,6 +172,8 @@ public final class AspectoCargoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ascr-remove")
     public String remove() throws InstanceNotFoundException {

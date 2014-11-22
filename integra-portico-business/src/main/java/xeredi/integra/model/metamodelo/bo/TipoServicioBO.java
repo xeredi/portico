@@ -100,6 +100,8 @@ public class TipoServicioBO {
      *
      * @param id
      *            the id
+     * @param idioma
+     *            the idioma
      * @return the tipo servicio vo
      * @throws InstanceNotFoundException
      *             the instance not found exception
@@ -134,6 +136,8 @@ public class TipoServicioBO {
      *
      * @param tpsrVO
      *            the tpsr vo
+     * @param i18nMap
+     *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
@@ -165,6 +169,8 @@ public class TipoServicioBO {
      *
      * @param tpsrVO
      *            the tpsr vo
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */

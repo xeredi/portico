@@ -121,6 +121,8 @@ public class CodigoReferenciaBO {
      * @param idioma
      *            the idioma
      * @return the codigo referencia vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public CodigoReferenciaVO select(final Long cdrfId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(cdrfId);

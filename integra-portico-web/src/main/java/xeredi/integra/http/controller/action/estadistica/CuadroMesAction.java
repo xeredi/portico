@@ -34,6 +34,8 @@ public final class CuadroMesAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("cdms-detail")
     public String detalle() throws InstanceNotFoundException {

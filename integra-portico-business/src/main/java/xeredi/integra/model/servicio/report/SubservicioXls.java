@@ -31,8 +31,8 @@ public final class SubservicioXls extends BaseXls {
     /**
      * Instantiates a new subservicio xls.
      *
-     * @param alocale
-     *            the alocale
+     * @param locale
+     *            the locale
      */
     public SubservicioXls(final Locale locale) {
         super(locale);

@@ -28,6 +28,8 @@ public final class ProcesoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("prbt-detail")
     public String detalle() throws InstanceNotFoundException {
@@ -45,6 +47,10 @@ public final class ProcesoAction extends BaseAction {
      * Borrar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("prbt-cancel")
     public String borrar() throws InstanceNotFoundException, OperacionNoPermitidaException {

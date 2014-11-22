@@ -21,6 +21,8 @@ public interface ConfigurationDAO {
     /**
      * Update.
      *
+     * @param vo
+     *            the vo
      * @return the int
      */
     int update(final ConfigurationVO vo);

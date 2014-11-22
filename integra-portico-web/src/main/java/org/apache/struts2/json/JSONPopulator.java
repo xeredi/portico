@@ -31,30 +31,75 @@ import org.apache.struts2.json.annotations.JSON;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
+// TODO: Auto-generated Javadoc
 /**
  * Isolate the process of populating JSON objects from the Interceptor class itself.
  */
 public class JSONPopulator {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(JSONPopulator.class);
 
+    /** The date format. */
     private String dateFormat = JSONUtil.RFC3339_FORMAT;
 
+    /**
+     * Instantiates a new JSON populator.
+     */
     public JSONPopulator() {
     }
 
+    /**
+     * Instantiates a new JSON populator.
+     *
+     * @param dateFormat
+     *            the date format
+     */
     public JSONPopulator(final String dateFormat) {
         this.dateFormat = dateFormat;
     }
 
+    /**
+     * Gets the date format.
+     *
+     * @return the date format
+     */
     public String getDateFormat() {
         return dateFormat;
     }
 
+    /**
+     * Sets the date format.
+     *
+     * @param dateFormat
+     *            the new date format
+     */
     public void setDateFormat(final String dateFormat) {
         this.dateFormat = dateFormat;
     }
 
+    /**
+     * Populate object.
+     *
+     * @param object
+     *            the object
+     * @param elements
+     *            the elements
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     * @throws InvocationTargetException
+     *             the invocation target exception
+     * @throws NoSuchMethodException
+     *             the no such method exception
+     * @throws IntrospectionException
+     *             the introspection exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws JSONException
+     *             the JSON exception
+     * @throws InstantiationException
+     *             the instantiation exception
+     */
     @SuppressWarnings("unchecked")
     public void populateObject(final Object object, final Map elements) throws IllegalAccessException,
     InvocationTargetException, NoSuchMethodException, IntrospectionException, IllegalArgumentException,
@@ -93,6 +138,33 @@ public class JSONPopulator {
         }
     }
 
+    /**
+     * Convert.
+     *
+     * @param clazz
+     *            the clazz
+     * @param type
+     *            the type
+     * @param value
+     *            the value
+     * @param method
+     *            the method
+     * @return the object
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws JSONException
+     *             the JSON exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     * @throws InvocationTargetException
+     *             the invocation target exception
+     * @throws InstantiationException
+     *             the instantiation exception
+     * @throws NoSuchMethodException
+     *             the no such method exception
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @SuppressWarnings("unchecked")
     public Object convert(final Class clazz, final Type type, final Object value, final Method method)
             throws IllegalArgumentException, JSONException, IllegalAccessException, InvocationTargetException,
@@ -128,6 +200,13 @@ public class JSONPopulator {
         }
     }
 
+    /**
+     * Checks if is JSON primitive.
+     *
+     * @param clazz
+     *            the clazz
+     * @return true, if is JSON primitive
+     */
     private static boolean isJSONPrimitive(final Class clazz) {
         return clazz.isPrimitive() || clazz.equals(String.class) || clazz.equals(Date.class)
                 || clazz.equals(Boolean.class) || clazz.equals(Byte.class) || clazz.equals(Character.class)
@@ -136,6 +215,33 @@ public class JSONPopulator {
                 || clazz.isEnum();
     }
 
+    /**
+     * Convert to array.
+     *
+     * @param clazz
+     *            the clazz
+     * @param type
+     *            the type
+     * @param value
+     *            the value
+     * @param accessor
+     *            the accessor
+     * @return the object
+     * @throws JSONException
+     *             the JSON exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     * @throws InvocationTargetException
+     *             the invocation target exception
+     * @throws InstantiationException
+     *             the instantiation exception
+     * @throws NoSuchMethodException
+     *             the no such method exception
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @SuppressWarnings("unchecked")
     private Object convertToArray(final Class clazz, final Type type, final Object value, final Method accessor)
             throws JSONException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
@@ -181,6 +287,33 @@ public class JSONPopulator {
         }
     }
 
+    /**
+     * Convert to collection.
+     *
+     * @param clazz
+     *            the clazz
+     * @param type
+     *            the type
+     * @param value
+     *            the value
+     * @param accessor
+     *            the accessor
+     * @return the object
+     * @throws JSONException
+     *             the JSON exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     * @throws InvocationTargetException
+     *             the invocation target exception
+     * @throws InstantiationException
+     *             the instantiation exception
+     * @throws NoSuchMethodException
+     *             the no such method exception
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @SuppressWarnings("unchecked")
     private Object convertToCollection(final Class clazz, final Type type, final Object value, final Method accessor)
             throws JSONException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
@@ -245,6 +378,33 @@ public class JSONPopulator {
         }
     }
 
+    /**
+     * Convert to map.
+     *
+     * @param clazz
+     *            the clazz
+     * @param type
+     *            the type
+     * @param value
+     *            the value
+     * @param accessor
+     *            the accessor
+     * @return the object
+     * @throws JSONException
+     *             the JSON exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     * @throws InvocationTargetException
+     *             the invocation target exception
+     * @throws InstantiationException
+     *             the instantiation exception
+     * @throws NoSuchMethodException
+     *             the no such method exception
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @SuppressWarnings("unchecked")
     private Object convertToMap(final Class clazz, final Type type, final Object value, final Method accessor)
             throws JSONException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
@@ -309,9 +469,17 @@ public class JSONPopulator {
     }
 
     /**
-     * Converts numbers to the desired class, if possible
+     * Converts numbers to the desired class, if possible.
      *
+     * @param clazz
+     *            the clazz
+     * @param value
+     *            the value
+     * @param method
+     *            the method
+     * @return the object
      * @throws JSONException
+     *             the JSON exception
      */
     @SuppressWarnings("unchecked")
     private Object convertPrimitive(final Class clazz, final Object value, final Method method) throws JSONException {

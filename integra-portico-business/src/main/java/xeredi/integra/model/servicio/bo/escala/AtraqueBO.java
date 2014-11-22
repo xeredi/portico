@@ -52,8 +52,8 @@ public final class AtraqueBO {
      *            the itdt map
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public void autorizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
     OperacionNoPermitidaException {
@@ -124,8 +124,8 @@ public final class AtraqueBO {
      *            the itdt map
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public void denegar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
     OperacionNoPermitidaException {
@@ -196,8 +196,8 @@ public final class AtraqueBO {
      *            the itdt map
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public void anular(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
     OperacionNoPermitidaException {
@@ -268,8 +268,8 @@ public final class AtraqueBO {
      *            the itdt map
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
     OperacionNoPermitidaException {
@@ -342,8 +342,8 @@ public final class AtraqueBO {
      *            the itdt map
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public void finalizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
     OperacionNoPermitidaException {
@@ -433,8 +433,8 @@ public final class AtraqueBO {
      *            the itdt map
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public void autorizarFprevio(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap)
             throws InstanceNotFoundException, OperacionNoPermitidaException {

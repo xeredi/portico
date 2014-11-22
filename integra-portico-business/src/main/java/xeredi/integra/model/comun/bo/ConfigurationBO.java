@@ -37,6 +37,8 @@ public final class ConfigurationBO {
      * @param key
      *            the key
      * @return the configuration vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public final ConfigurationVO select(final ConfigurationKey key) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -58,6 +60,8 @@ public final class ConfigurationBO {
      * @param vo
      *            the vo
      * @return the int
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public final int update(final ConfigurationVO vo) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {

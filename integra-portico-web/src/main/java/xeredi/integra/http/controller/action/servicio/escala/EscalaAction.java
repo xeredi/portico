@@ -36,6 +36,8 @@ public final class EscalaAction extends ItemAction {
      * Autorizar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action(value = "esca-notificar-popup", results = { @Result(name = "success", location = "escala/esca-notificar.jsp") })
     public String notificar() throws InstanceNotFoundException {

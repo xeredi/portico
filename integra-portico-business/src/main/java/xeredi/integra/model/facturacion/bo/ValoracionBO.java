@@ -107,6 +107,8 @@ public class ValoracionBO {
      * @param id
      *            the id
      * @return the valoracion vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public ValoracionVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
@@ -317,10 +319,10 @@ public class ValoracionBO {
      * <li>El detalle ha de tener importe base e importe</li>
      * <li>La valoracion asociada a la linea debe existir</li>
      * <li>La regla ha de ser valida para el aspecto de la valoracion asociada a la linea</li>
-     * <li>Si la regla está asociada a subservicios y el aspecto es de agrupacion, se comprueba que la linea
-     * tenga un subservicio asociado, y que sea de la misma entidad que la regla</li>
-     * <li>Si la regla está asociada a subservicios y el aspecto no es de agrupacion, se comprueba que el
-     * detalle tenga un subservicio asociado, y que sea de la misma entidad que la regla</li>
+     * <li>Si la regla está asociada a subservicios y el aspecto es de agrupacion, se comprueba que la linea tenga un
+     * subservicio asociado, y que sea de la misma entidad que la regla</li>
+     * <li>Si la regla está asociada a subservicios y el aspecto no es de agrupacion, se comprueba que el detalle tenga
+     * un subservicio asociado, y que sea de la misma entidad que la regla</li>
      * <li>Si la regla no es de tipo precio, la linea ha de estar asociada a una linea padre</li>
      * </ul>
      *

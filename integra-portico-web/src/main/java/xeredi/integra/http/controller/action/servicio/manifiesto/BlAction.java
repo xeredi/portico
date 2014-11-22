@@ -28,6 +28,10 @@ public final class BlAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mabl-bloquear")
     public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -48,6 +52,10 @@ public final class BlAction extends BaseAction {
      * Completar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mabl-completar")
     public String completar() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -68,6 +76,10 @@ public final class BlAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mabl-iniciar")
     public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -88,6 +100,10 @@ public final class BlAction extends BaseAction {
      * Anular.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mabl-anular")
     public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {

@@ -98,7 +98,11 @@ public class TipoSubparametroBO {
      *
      * @param id
      *            the id
+     * @param idioma
+     *            the idioma
      * @return the tipo subparametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public final TipoSubparametroVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
@@ -130,6 +134,8 @@ public class TipoSubparametroBO {
      *
      * @param tpspVO
      *            the tpsp vo
+     * @param i18nMap
+     *            the i18n map
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
@@ -161,6 +167,8 @@ public class TipoSubparametroBO {
      *
      * @param tpspVO
      *            the tpsp vo
+     * @param i18nMap
+     *            the i18n map
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */

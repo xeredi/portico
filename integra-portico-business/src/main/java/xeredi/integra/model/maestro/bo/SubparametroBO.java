@@ -45,6 +45,27 @@ public class SubparametroBO {
      *             the overlap exception
      */
     public void insert(final SubparametroVO sprm, final TipoSubparametroVO tpspVO) throws OverlapException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            insert(session, sprm, tpspVO);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Insert.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @param tpspVO
+     *            the tpsp vo
+     * @throws OverlapException
+     *             the overlap exception
+     */
+    protected final void insert(final SqlSession session, final SubparametroVO sprm, final TipoSubparametroVO tpspVO)
+            throws OverlapException {
         Preconditions.checkNotNull(sprm);
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(tpspVO);
@@ -63,35 +84,31 @@ public class SubparametroBO {
             }
         }
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
-            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-            final IgBO igBO = new IgBO();
+        final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+        final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+        final IgBO igBO = new IgBO();
 
-            if (sprmDAO.exists(sprm)) {
-                sprm.setId(sprmDAO.selectId(sprm));
-            } else {
-                sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+        if (sprmDAO.exists(sprm)) {
+            sprm.setId(sprmDAO.selectId(sprm));
+        } else {
+            sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
-                sprmDAO.insert(sprm);
+            sprmDAO.insert(sprm);
+        }
+
+        sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+        if (sprmDAO.existsOverlap(sprm)) {
+            throw new OverlapException(sprm.getEntiId(), sprm);
+        }
+
+        sprmDAO.insertVersion(sprm);
+
+        if (sprm.getItdtMap() != null) {
+            for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
+                itdtVO.setItemId(sprm.getSpvr().getId());
+                spdtDAO.insert(itdtVO);
             }
-
-            sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
-            if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(sprm.getEntiId(), sprm);
-            }
-
-            sprmDAO.insertVersion(sprm);
-
-            if (sprm.getItdtMap() != null) {
-                for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
-                    itdtVO.setItemId(sprm.getSpvr().getId());
-                    spdtDAO.insert(itdtVO);
-                }
-            }
-
-            session.commit();
         }
     }
 
@@ -106,40 +123,57 @@ public class SubparametroBO {
      *             the overlap exception
      */
     public void duplicate(final SubparametroVO sprm, final TipoSubparametroVO tpsrVO) throws OverlapException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            duplicate(session, sprm, tpsrVO);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Duplicate.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @param tpsrVO
+     *            the tpsr vo
+     * @throws OverlapException
+     *             the overlap exception
+     */
+    protected final void duplicate(final SqlSession session, final SubparametroVO sprm, final TipoSubparametroVO tpsrVO)
+            throws OverlapException {
         // TODO Implementar
         Preconditions.checkNotNull(sprm);
         Preconditions.checkNotNull(sprm.getId());
         Preconditions.checkNotNull(tpsrVO);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
-            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
-            final IgBO igBO = new IgBO();
+        final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+        final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+        final IgBO igBO = new IgBO();
 
-            if (sprmDAO.exists(sprm)) {
-                sprm.setId(sprmDAO.selectId(sprm));
-            } else {
-                sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+        if (sprmDAO.exists(sprm)) {
+            sprm.setId(sprmDAO.selectId(sprm));
+        } else {
+            sprm.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
-                sprmDAO.insert(sprm);
+            sprmDAO.insert(sprm);
+        }
+
+        sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+
+        if (sprmDAO.existsOverlap(sprm)) {
+            throw new OverlapException(sprm.getEntiId(), sprm);
+        }
+
+        sprmDAO.insertVersion(sprm);
+
+        if (sprm.getItdtMap() != null) {
+            for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
+                itdtVO.setItemId(sprm.getSpvr().getId());
+                spdtDAO.insert(itdtVO);
             }
-
-            sprm.getSpvr().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-
-            if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(sprm.getEntiId(), sprm);
-            }
-
-            sprmDAO.insertVersion(sprm);
-
-            if (sprm.getItdtMap() != null) {
-                for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
-                    itdtVO.setItemId(sprm.getSpvr().getId());
-                    spdtDAO.insert(itdtVO);
-                }
-            }
-
-            session.commit();
         }
     }
 
@@ -155,7 +189,30 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public final void update(final SubparametroVO sprm, final TipoSubparametroVO tpspVO)
+    public void update(final SubparametroVO sprm, final TipoSubparametroVO tpspVO) throws InstanceNotFoundException,
+    OverlapException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            update(session, sprm, tpspVO);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Update.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @param tpspVO
+     *            the tpsp vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
+     */
+    protected final void update(final SqlSession session, final SubparametroVO sprm, final TipoSubparametroVO tpspVO)
             throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(sprm);
         Preconditions.checkNotNull(tpspVO);
@@ -183,28 +240,24 @@ public class SubparametroBO {
             }
         }
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
-            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+        final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+        final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-            if (sprmDAO.existsOverlap(sprm)) {
-                throw new OverlapException(sprm.getEntiId(), sprm);
+        if (sprmDAO.existsOverlap(sprm)) {
+            throw new OverlapException(sprm.getEntiId(), sprm);
+        }
+
+        final int updated = sprmDAO.updateVersion(sprm);
+
+        if (updated == 0) {
+            throw new InstanceNotFoundException(sprm.getEntiId(), sprm);
+        }
+
+        if (sprm.getItdtMap() != null) {
+            for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
+                itdtVO.setItemId(sprm.getSpvr().getId());
+                spdtDAO.update(itdtVO);
             }
-
-            final int updated = sprmDAO.updateVersion(sprm);
-
-            if (updated == 0) {
-                throw new InstanceNotFoundException(sprm.getEntiId(), sprm);
-            }
-
-            if (sprm.getItdtMap() != null) {
-                for (final ItemDatoVO itdtVO : sprm.getItdtMap().values()) {
-                    itdtVO.setItemId(sprm.getSpvr().getId());
-                    spdtDAO.update(itdtVO);
-                }
-            }
-
-            session.commit();
         }
     }
 
@@ -217,23 +270,37 @@ public class SubparametroBO {
      *             the instance not found exception
      */
     public final void delete(final SubparametroVO sprm) throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            delete(session, sprm);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Delete.
+     *
+     * @param session
+     *            the session
+     * @param sprm
+     *            the sprm
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    protected final void delete(final SqlSession session, final SubparametroVO sprm) throws InstanceNotFoundException {
         Preconditions.checkNotNull(sprm);
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
-            final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
+        final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
+        final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
-            spdtDAO.deleteVersion(sprm);
+        spdtDAO.deleteVersion(sprm);
 
-            final int updated = sprmDAO.deleteVersion(sprm);
+        final int updated = sprmDAO.deleteVersion(sprm);
 
-            if (updated == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.sprm, sprm);
-            }
-
-            session.commit();
+        if (updated == 0) {
+            throw new InstanceNotFoundException(MessageI18nKey.sprm, sprm);
         }
     }
 

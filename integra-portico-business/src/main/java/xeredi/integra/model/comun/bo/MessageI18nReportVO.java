@@ -20,8 +20,6 @@ public final class MessageI18nReportVO {
     /**
      * Instantiates a new message i18n report vo.
      *
-     * @param akeyList
-     *            the akey list
      * @param alanguageList
      *            the alanguage list
      */

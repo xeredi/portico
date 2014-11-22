@@ -14,8 +14,6 @@ public final class PorticoResourceBundle {
     /**
      * Gets the bundle.
      *
-     * @param bundlename
-     *            the bundlename
      * @param locale
      *            the locale
      * @return the bundle

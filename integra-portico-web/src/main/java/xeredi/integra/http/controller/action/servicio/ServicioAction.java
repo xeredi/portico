@@ -45,6 +45,8 @@ public final class ServicioAction extends ItemAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("srvc-detail")
     public String detalle() throws InstanceNotFoundException {
@@ -89,6 +91,8 @@ public final class ServicioAction extends ItemAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action(value = "srvc-edit")
     public String modificar() throws InstanceNotFoundException {
@@ -112,6 +116,8 @@ public final class ServicioAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("srvc-duplicate")
     public String duplicar() throws InstanceNotFoundException {
@@ -135,6 +141,10 @@ public final class ServicioAction extends ItemAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("srvc-save")
     public String guardar() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -194,6 +204,8 @@ public final class ServicioAction extends ItemAction {
      * Borrar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("srvc-remove")
     public String borrar() throws InstanceNotFoundException {

@@ -81,6 +81,8 @@ public final class PeriodoProcesoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("pepr-detail")
     public String detalle() throws InstanceNotFoundException {

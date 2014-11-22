@@ -28,6 +28,10 @@ public final class ManifiestoAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mani-bloquear")
     public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -48,6 +52,10 @@ public final class ManifiestoAction extends BaseAction {
      * Completar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mani-completar")
     public String completar() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -68,6 +76,10 @@ public final class ManifiestoAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mani-iniciar")
     public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -88,6 +100,10 @@ public final class ManifiestoAction extends BaseAction {
      * Anular.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("mani-anular")
     public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {

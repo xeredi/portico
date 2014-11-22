@@ -28,6 +28,8 @@ public final class ConfigurationAction extends BaseAction {
      * Detail.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("conf-detail")
     public String detail() throws InstanceNotFoundException {
@@ -44,6 +46,8 @@ public final class ConfigurationAction extends BaseAction {
      * Update.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("conf-edit")
     public String edit() throws InstanceNotFoundException {
@@ -62,6 +66,8 @@ public final class ConfigurationAction extends BaseAction {
      * Save.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("conf-save")
     public String save() throws InstanceNotFoundException {

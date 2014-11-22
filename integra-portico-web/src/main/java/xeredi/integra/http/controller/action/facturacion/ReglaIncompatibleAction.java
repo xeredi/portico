@@ -52,6 +52,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * Detail.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("rgin-detail")
     public String detail() throws InstanceNotFoundException {
@@ -105,6 +107,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * Edits the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("rgin-edit")
     public String edit() throws InstanceNotFoundException {
@@ -127,6 +131,10 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * Save.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
     @Action("rgin-save")
     public String save() throws InstanceNotFoundException, OverlapException {
@@ -171,6 +179,8 @@ public final class ReglaIncompatibleAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("rgin-remove")
     public String remove() throws InstanceNotFoundException {

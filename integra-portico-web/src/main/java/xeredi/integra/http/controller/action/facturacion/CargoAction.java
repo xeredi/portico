@@ -52,6 +52,8 @@ public final class CargoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("crgo-detail")
     public String detail() throws InstanceNotFoundException {
@@ -96,6 +98,8 @@ public final class CargoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("crgo-edit")
     public String edit() throws InstanceNotFoundException {
@@ -119,6 +123,10 @@ public final class CargoAction extends BaseAction {
      * Save.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
     @Action("crgo-save")
     public String save() throws InstanceNotFoundException, OverlapException {
@@ -167,6 +175,8 @@ public final class CargoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("crgo-remove")
     public String remove() throws InstanceNotFoundException {

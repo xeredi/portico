@@ -500,8 +500,8 @@ public class PeriodoProcesoBO {
                         case FE:
                         case FH:
                             /*
-                             * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP)
-                             * value).dateValue()); } else { itdtVO.setFecha((Date) value); }
+                             * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP) value).dateValue()); }
+                             * else { itdtVO.setFecha((Date) value); }
                              */
                             itdtVO.setFecha((Date) value);
 
@@ -805,8 +805,6 @@ public class PeriodoProcesoBO {
      *            the pepr id
      * @param sobreescribir
      *            the sobreescribir
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
      */
     private final void generarCuadroMensual(final SqlSession session, final Long peprId, final boolean sobreescribir) {
         Preconditions.checkNotNull(peprId);

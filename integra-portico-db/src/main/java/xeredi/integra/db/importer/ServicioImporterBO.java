@@ -94,6 +94,8 @@ public final class ServicioImporterBO {
      *
      * @param numIterations
      *            the num iterations
+     * @param locale
+     *            the locale
      */
     public void importEntities(final int numIterations, final Locale locale) {
         for (int i = 0; i < numIterations; i++) {
@@ -105,6 +107,9 @@ public final class ServicioImporterBO {
 
     /**
      * Import entities.
+     *
+     * @param locale
+     *            the locale
      */
     public void importEntities(final Locale locale) {
         try {
@@ -152,6 +157,8 @@ public final class ServicioImporterBO {
      *            the entidad
      * @param sql
      *            the sql
+     * @param locale
+     *            the locale
      * @throws SQLException
      *             the sQL exception
      * @throws DuplicateInstanceException

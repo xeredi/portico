@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
  * The Class EquipamientoBO.
  */
 public class EquipamientoBO {
+
     /**
      * Bloquear.
      *
@@ -30,8 +31,8 @@ public class EquipamientoBO {
      *            the ssrv id
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
@@ -89,8 +90,8 @@ public class EquipamientoBO {
      *            the ssrv id
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
@@ -148,8 +149,8 @@ public class EquipamientoBO {
      *            the ssrv id
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public final void anular(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);

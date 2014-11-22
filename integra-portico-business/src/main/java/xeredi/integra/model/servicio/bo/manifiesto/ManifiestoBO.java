@@ -25,6 +25,7 @@ import com.google.common.base.Preconditions;
  * The Class ManifiestoBO.
  */
 public class ManifiestoBO {
+
     /**
      * Bloquear.
      *
@@ -32,8 +33,8 @@ public class ManifiestoBO {
      *            the srvc id
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public final void bloquear(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);
@@ -77,8 +78,8 @@ public class ManifiestoBO {
      *            the srvc id
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public final void completar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);
@@ -122,8 +123,8 @@ public class ManifiestoBO {
      *            the srvc id
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public final void iniciar(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);
@@ -166,8 +167,8 @@ public class ManifiestoBO {
      *            the srvc id
      * @throws InstanceNotFoundException
      *             the instance not found exception
-     * @throws EstadoInvalidoException
-     *             the estado invalido exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     public final void anular(final Long srvcId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         Preconditions.checkNotNull(srvcId);

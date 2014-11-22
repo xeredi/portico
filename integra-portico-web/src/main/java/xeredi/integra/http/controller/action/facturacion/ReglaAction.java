@@ -56,6 +56,8 @@ public final class ReglaAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("rgla-detail")
     public String detail() throws InstanceNotFoundException {
@@ -84,6 +86,8 @@ public final class ReglaAction extends BaseAction {
      * Creates the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("rgla-create")
     public String create() throws InstanceNotFoundException {
@@ -116,6 +120,8 @@ public final class ReglaAction extends BaseAction {
      * Edits the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("rgla-edit")
     public String edit() throws InstanceNotFoundException {
@@ -164,6 +170,10 @@ public final class ReglaAction extends BaseAction {
      * Save.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
     @Action("rgla-save")
     public String save() throws InstanceNotFoundException, OverlapException {
@@ -292,6 +302,8 @@ public final class ReglaAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("rgla-remove")
     public String remove() throws InstanceNotFoundException {

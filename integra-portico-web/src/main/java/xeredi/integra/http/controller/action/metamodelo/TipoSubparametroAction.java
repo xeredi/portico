@@ -55,6 +55,8 @@ public final class TipoSubparametroAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpsp-edit")
     public String edit() throws InstanceNotFoundException {
@@ -74,6 +76,10 @@ public final class TipoSubparametroAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("tpsp-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -122,6 +128,8 @@ public final class TipoSubparametroAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpsp-remove")
     public String remove() throws InstanceNotFoundException {
@@ -139,6 +147,8 @@ public final class TipoSubparametroAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpsp-detail")
     public String detail() throws InstanceNotFoundException {

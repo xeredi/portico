@@ -24,8 +24,6 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
     /**
      * Instantiates a new message i18n resource bundle.
      *
-     * @param bundle
-     *            the bundle
      * @param locale
      *            the locale
      */

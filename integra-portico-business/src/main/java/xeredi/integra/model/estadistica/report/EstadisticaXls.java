@@ -31,8 +31,8 @@ public final class EstadisticaXls extends BaseXls {
     /**
      * Instantiates a new estadistica xls.
      *
-     * @param alocale
-     *            the alocale
+     * @param locale
+     *            the locale
      */
     public EstadisticaXls(final Locale locale) {
         super(locale);

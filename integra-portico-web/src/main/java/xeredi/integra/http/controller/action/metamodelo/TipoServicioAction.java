@@ -67,6 +67,8 @@ public final class TipoServicioAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpsr-edit")
     public String edit() throws InstanceNotFoundException {
@@ -86,6 +88,10 @@ public final class TipoServicioAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("tpsr-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -137,6 +143,8 @@ public final class TipoServicioAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpsr-remove")
     public String remove() throws InstanceNotFoundException {
@@ -151,6 +159,8 @@ public final class TipoServicioAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpsr-detail")
     public String detail() throws InstanceNotFoundException {

@@ -66,6 +66,8 @@ public final class ParametroAction extends ItemAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("prmt-edit")
     public String edit() throws InstanceNotFoundException {
@@ -95,6 +97,8 @@ public final class ParametroAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("prmt-duplicate")
     public String duplicate() throws InstanceNotFoundException {
@@ -124,6 +128,10 @@ public final class ParametroAction extends ItemAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OverlapException
+     *             the overlap exception
      */
     @Action("prmt-save")
     public String save() throws InstanceNotFoundException, OverlapException {
@@ -186,6 +194,8 @@ public final class ParametroAction extends ItemAction {
      * Borrar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("prmt-remove")
     public String remove() throws InstanceNotFoundException {
@@ -204,6 +214,8 @@ public final class ParametroAction extends ItemAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("prmt-detail")
     public String detail() throws InstanceNotFoundException {

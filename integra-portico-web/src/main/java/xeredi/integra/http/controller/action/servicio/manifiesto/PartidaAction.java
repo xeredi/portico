@@ -28,6 +28,10 @@ public final class PartidaAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("part-bloquear")
     public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -48,6 +52,10 @@ public final class PartidaAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("part-iniciar")
     public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -68,6 +76,10 @@ public final class PartidaAction extends BaseAction {
      * Anular.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("part-anular")
     public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {

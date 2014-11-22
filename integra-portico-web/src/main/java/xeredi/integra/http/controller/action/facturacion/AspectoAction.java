@@ -59,6 +59,8 @@ public final class AspectoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("aspc-detail")
     public String detail() throws InstanceNotFoundException {
@@ -113,6 +115,8 @@ public final class AspectoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("aspc-edit")
     public String edit() throws InstanceNotFoundException {
@@ -136,6 +140,8 @@ public final class AspectoAction extends BaseAction {
      * Duplicar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("aspc-duplicate")
     public String duplicate() throws InstanceNotFoundException {
@@ -159,6 +165,12 @@ public final class AspectoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     * @throws OverlapException
+     *             the overlap exception
      */
     @Action("aspc-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException, OverlapException {

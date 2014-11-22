@@ -118,6 +118,8 @@ public class EstadisticaBO {
      *            the estd list
      * @param estdCriterioVO
      *            the estd criterio vo
+     * @param useIds
+     *            the use ids
      */
     private final void fillDependencies(final SqlSession session, final List<EstadisticaVO> estdList,
             final EstadisticaCriterioVO estdCriterioVO, final boolean useIds) {

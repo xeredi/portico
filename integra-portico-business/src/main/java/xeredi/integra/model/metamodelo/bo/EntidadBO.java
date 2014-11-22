@@ -146,6 +146,8 @@ public class EntidadBO {
     /**
      * Fill dependencies.
      *
+     * @param session
+     *            the session
      * @param entiVO
      *            the enti vo
      * @param idioma

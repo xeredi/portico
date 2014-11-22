@@ -32,6 +32,8 @@ public final class BlTotalAction extends BaseAction {
      * Totales.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("mabl-totales")
     public String totales() throws InstanceNotFoundException {

@@ -28,6 +28,10 @@ public final class EquipamientoAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("equi-bloquear")
     public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -48,6 +52,10 @@ public final class EquipamientoAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("equi-iniciar")
     public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
@@ -68,6 +76,10 @@ public final class EquipamientoAction extends BaseAction {
      * Anular.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws OperacionNoPermitidaException
+     *             the operacion no permitida exception
      */
     @Action("equi-anular")
     public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {

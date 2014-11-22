@@ -41,6 +41,8 @@ public final class SubservicioAction extends ItemAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ssrv-detail")
     public String detalle() throws InstanceNotFoundException {
@@ -61,6 +63,8 @@ public final class SubservicioAction extends ItemAction {
      * Alta.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ssrv-create")
     public String alta() throws InstanceNotFoundException {
@@ -91,6 +95,8 @@ public final class SubservicioAction extends ItemAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ssrv-edit")
     public String modificar() throws InstanceNotFoundException {
@@ -113,6 +119,8 @@ public final class SubservicioAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("ssrv-duplicate")
     public String duplicar() throws InstanceNotFoundException {
@@ -132,6 +140,10 @@ public final class SubservicioAction extends ItemAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("ssrv-save")
     public String guardar() throws InstanceNotFoundException, DuplicateInstanceException {

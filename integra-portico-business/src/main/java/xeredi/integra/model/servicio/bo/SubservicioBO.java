@@ -127,6 +127,8 @@ public class SubservicioBO {
      *
      * @param ssrvLupaCriterioVO
      *            the ssrv lupa criterio vo
+     * @param limit
+     *            the limit
      * @return the list
      */
     public final List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterioVO, final int limit) {
@@ -153,51 +155,70 @@ public class SubservicioBO {
      */
     public void insert(final SubservicioVO ssrvVO, final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds)
             throws DuplicateInstanceException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            insert(session, ssrvVO, tpssVO, ssrvPadreIds);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Insert.
+     *
+     * @param session
+     *            the session
+     * @param ssrvVO
+     *            the ssrv vo
+     * @param tpssVO
+     *            the tpss vo
+     * @param ssrvPadreIds
+     *            the ssrv padre ids
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
+     */
+    protected final void insert(final SqlSession session, final SubservicioVO ssrvVO, final TipoSubservicioVO tpssVO,
+            final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         Preconditions.checkNotNull(ssrvVO);
         Preconditions.checkNotNull(ssrvPadreIds);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+        final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+        final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+        final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
 
-            if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
-                for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
-                    final Long tpdtId = entd.getTpdt().getId();
+        if (tpssVO.getEntdList() != null && !tpssVO.getEntdList().isEmpty()) {
+            for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+                final Long tpdtId = entd.getTpdt().getId();
 
-                    if (!ssrvVO.getItdtMap().containsKey(tpdtId) && !ssrvVO.getItdtMap().containsKey(tpdtId.toString())) {
-                        final ItemDatoVO itdt = new ItemDatoVO();
+                if (!ssrvVO.getItdtMap().containsKey(tpdtId) && !ssrvVO.getItdtMap().containsKey(tpdtId.toString())) {
+                    final ItemDatoVO itdt = new ItemDatoVO();
 
-                        itdt.setTpdtId(tpdtId);
-                        ssrvVO.getItdtMap().put(tpdtId, itdt);
-                    }
+                    itdt.setTpdtId(tpdtId);
+                    ssrvVO.getItdtMap().put(tpdtId, itdt);
                 }
             }
+        }
 
-            final IgBO igBO = new IgBO();
+        final IgBO igBO = new IgBO();
 
-            if (ssrvDAO.exists(ssrvVO)) {
-                throw new DuplicateInstanceException(ssrvVO.getEntiId(), ssrvVO);
-            }
+        if (ssrvDAO.exists(ssrvVO)) {
+            throw new DuplicateInstanceException(ssrvVO.getEntiId(), ssrvVO);
+        }
 
-            ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            ssrvDAO.insert(ssrvVO);
+        ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+        ssrvDAO.insert(ssrvVO);
 
-            for (final Long tpdtId : ssrvVO.getItdtMap().keySet()) {
-                final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
+        for (final Long tpdtId : ssrvVO.getItdtMap().keySet()) {
+            final ItemDatoVO itdtVO = ssrvVO.getItdtMap().get(tpdtId);
 
-                itdtVO.setItemId(ssrvVO.getId());
-                itdtVO.setTpdtId(tpdtId);
-                ssdtDAO.insert(itdtVO);
-            }
+            itdtVO.setItemId(ssrvVO.getId());
+            itdtVO.setTpdtId(tpdtId);
+            ssdtDAO.insert(itdtVO);
+        }
 
-            for (final Long ssrvPadreId : ssrvPadreIds) {
-                final SubservicioSubservicioVO ssssVO = new SubservicioSubservicioVO(ssrvPadreId, ssrvVO.getId());
+        for (final Long ssrvPadreId : ssrvPadreIds) {
+            final SubservicioSubservicioVO ssssVO = new SubservicioSubservicioVO(ssrvPadreId, ssrvVO.getId());
 
-                ssssDAO.insert(ssssVO);
-            }
-
-            session.commit();
+            ssssDAO.insert(ssssVO);
         }
     }
 
@@ -210,16 +231,30 @@ public class SubservicioBO {
      *             the instance not found exception
      */
     public void update(final SubservicioVO ssrvVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(ssrvVO);
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
-
-            for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
-                ssdtDAO.update(itdtVO);
-            }
+            update(session, ssrvVO);
 
             session.commit();
+        }
+    }
+
+    /**
+     * Update.
+     *
+     * @param session
+     *            the session
+     * @param ssrvVO
+     *            the ssrv vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    protected final void update(final SqlSession session, final SubservicioVO ssrvVO) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(ssrvVO);
+
+        final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
+
+        for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
+            ssdtDAO.update(itdtVO);
         }
     }
 
@@ -232,11 +267,27 @@ public class SubservicioBO {
      *             the instance not found exception
      */
     public void delete(final Long ssrvId) throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            delete(session, ssrvId);
+
+            session.commit();
+        }
+    }
+
+    /**
+     * Delete.
+     *
+     * @param session
+     *            the session
+     * @param ssrvId
+     *            the ssrv id
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    protected final void delete(final SqlSession session, final Long ssrvId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(ssrvId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            throw new Error("No Implementado");
-        }
+        throw new Error("No Implementado");
     }
 
     /**
@@ -248,6 +299,8 @@ public class SubservicioBO {
      *            the ssrv list
      * @param ssrvCriterioVO
      *            the ssrv criterio vo
+     * @param useIds
+     *            the use ids
      */
     private void fillDependencies(final SqlSession session, final List<SubservicioVO> ssrvList,
             final SubservicioCriterioVO ssrvCriterioVO, final boolean useIds) {

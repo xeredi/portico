@@ -27,10 +27,14 @@ import xeredi.util.applicationobjects.LabelValueVO;
  */
 public class I18nJs {
 
+    /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(I18nJs.class);
 
     /**
      * Export.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public void export() throws IOException {
         final String[] languages = ConfigurationProxy.getStringArray(ConfigurationKey.language_available);

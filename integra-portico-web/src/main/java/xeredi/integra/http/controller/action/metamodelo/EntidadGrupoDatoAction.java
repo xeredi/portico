@@ -55,6 +55,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("engd-edit")
     public String edit() throws InstanceNotFoundException {
@@ -74,6 +76,10 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("engd-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -108,6 +114,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("engd-detail")
     public String detail() throws InstanceNotFoundException {
@@ -126,6 +134,8 @@ public final class EntidadGrupoDatoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("engd-remove")
     public String remove() throws InstanceNotFoundException {

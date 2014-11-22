@@ -62,8 +62,8 @@ public final class ParametroPdf extends BasePdf {
      *            the enti hijas map
      * @param itemHijosMap
      *            the item hijos map
-     * @param p18nMap
-     *            the p18n map
+     * @param i18nMap
+     *            the i18n map
      * @param stream
      *            the stream
      * @throws DRException

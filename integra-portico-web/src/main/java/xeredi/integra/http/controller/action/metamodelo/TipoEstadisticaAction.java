@@ -52,6 +52,8 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Modificar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpes-edit")
     public String modificar() throws InstanceNotFoundException {
@@ -71,6 +73,10 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Guardar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     * @throws DuplicateInstanceException
+     *             the duplicate instance exception
      */
     @Action("tpes-save")
     public String save() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -114,6 +120,8 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Removes the.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpes-remove")
     public String remove() throws InstanceNotFoundException {
@@ -131,6 +139,8 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("tpes-detail")
     public String detail() throws InstanceNotFoundException {
