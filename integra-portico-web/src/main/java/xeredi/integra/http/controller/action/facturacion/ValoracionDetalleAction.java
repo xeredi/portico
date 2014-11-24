@@ -1,9 +1,9 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 
@@ -27,17 +27,15 @@ public final class ValoracionDetalleAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
-    @Actions({ @Action("vlrd-detail") })
-    public String detalle() {
+    @Action("vlrd-detail")
+    public String detalle() throws ApplicationException {
         Preconditions.checkNotNull(vlrd);
         Preconditions.checkNotNull(vlrd.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
-
-        if (hasErrors()) {
-            return INPUT;
-        }
 
         vlrd = vlrcBO.selectVlrd(vlrd.getId());
 

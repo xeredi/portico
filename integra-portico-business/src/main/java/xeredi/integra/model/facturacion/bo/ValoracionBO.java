@@ -498,13 +498,18 @@ public class ValoracionBO {
      *            the vlrd id
      * @return the valoracion detalle vo
      */
-    public ValoracionDetalleVO selectVlrd(final Long vlrdId) {
+    public ValoracionDetalleVO selectVlrd(final Long vlrdId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(vlrdId);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
+            final ValoracionDetalleVO vlrd = vlrdDAO.select(vlrdId);
 
-            return vlrdDAO.select(vlrdId);
+            if (vlrd == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.vlrd, vlrdId);
+            }
+
+            return vlrd;
         }
     }
 
@@ -523,7 +528,7 @@ public class ValoracionBO {
             final int offset, final int limit) {
         Preconditions.checkNotNull(vlrdCriterioVO);
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final int count = vlrdDAO.count(vlrdCriterioVO);
             final List<ValoracionDetalleVO> vlrdList = new ArrayList<>();
@@ -542,7 +547,7 @@ public class ValoracionBO {
      * @param vlrd
      *            the vlrd
      */
-    public void insertVlrd(final ValoracionDetalleVO vlrd) {
+    public void insertVlrd(final ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
         Preconditions.checkNotNull(vlrd);
         Preconditions.checkNotNull(vlrd.getVlrlId());
         Preconditions.checkNotNull(vlrd.getVlrcId());
@@ -552,16 +557,13 @@ public class ValoracionBO {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionLineaVO vlrl = vlrlDAO.select(vlrd.getVlrlId());
 
-            if (vlrl == null) {
-                throw new Error("Linea asociada no encontrada: " + vlrd.getVlrlId());
-            }
-
-            if (!vlrl.getVlrcId().equals(vlrd.getVlrcId())) {
-                throw new Error("Valoracion mismatch: " + vlrd.getVlrcId() + ", " + vlrl.getVlrcId());
-            }
-
             final IgBO igBO = new IgBO();
 
+            if (vlrl == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.vlrl, vlrd.getVlrlId());
+            }
+
+            vlrd.setVlrcId(vlrl.getVlrcId());
             vlrd.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
             vlrdDAO.insert(vlrd);
@@ -586,7 +588,7 @@ public class ValoracionBO {
         Preconditions.checkNotNull(vlrd.getVlrlId());
         Preconditions.checkNotNull(vlrd.getVlrcId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final int updated = vlrdDAO.update(vlrd);
 

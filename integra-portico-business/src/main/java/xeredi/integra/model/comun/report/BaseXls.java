@@ -74,8 +74,10 @@ public abstract class BaseXls {
             switch (entdVO.getTpdt().getTipoElemento()) {
             case BO:
                 if (itdtVO.getCantidadEntera() != null) {
-                    row.createCell(position).setCellValue(
-                            bundle.getString("format_" + (itdtVO.getCantidadEntera() > 0)));
+                    final MessageI18nKey key = itdtVO.getCantidadEntera() > 0 ? MessageI18nKey.format_1
+                            : MessageI18nKey.format_0;
+
+                    row.createCell(position).setCellValue(bundle.getString(key.name()));
                 }
 
                 break;

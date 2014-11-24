@@ -4,6 +4,8 @@ import java.util.Locale;
 
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TooManyResultsException.
@@ -62,6 +64,8 @@ public final class TooManyResultsException extends ModelException {
      */
     @Override
     public String getMessage(final Locale locale) {
+        Preconditions.checkNotNull(locale);
+
         throw new Error("No implementado");
     }
 

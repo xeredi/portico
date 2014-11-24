@@ -10,6 +10,7 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
@@ -42,14 +43,12 @@ public final class ServicioXlsAction extends BaseAction {
      * Excel export.
      *
      * @return the string
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
      * @throws ApplicationException
      *             the application exception
      */
     @Action(value = "srvc-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "application/xls", "inputName", "stream", "contentDisposition", "filename=${enti.codigo}.xls" }) })
-    public String xlsExport() throws IOException, ApplicationException {
+    public String xlsExport() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
@@ -65,6 +64,8 @@ public final class ServicioXlsAction extends BaseAction {
             excelUtil.generarServicios(srvcBO.selectList(itemCriterio), enti, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
+        } catch (final IOException ex) {
+            throw new InternalErrorException(ex);
         }
 
         return SUCCESS;

@@ -10,8 +10,6 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -69,11 +67,11 @@ public final class ParametroAction extends ItemAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -100,11 +98,11 @@ public final class ParametroAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-duplicate")
-    public String duplicate() throws InstanceNotFoundException {
+    public String duplicate() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -131,13 +129,11 @@ public final class ParametroAction extends ItemAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OverlapException
-     *             the overlap exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-save")
-    public String save() throws InstanceNotFoundException, OverlapException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
 
@@ -197,11 +193,11 @@ public final class ParametroAction extends ItemAction {
      * Borrar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getPrvr());
         Preconditions.checkNotNull(item.getPrvr().getId());
@@ -217,11 +213,11 @@ public final class ParametroAction extends ItemAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 

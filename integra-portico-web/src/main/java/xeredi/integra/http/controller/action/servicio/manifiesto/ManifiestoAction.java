@@ -3,8 +3,7 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -28,13 +27,11 @@ public final class ManifiestoAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("mani-bloquear")
-    public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String bloquear() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -52,13 +49,11 @@ public final class ManifiestoAction extends BaseAction {
      * Completar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("mani-completar")
-    public String completar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String completar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -76,13 +71,11 @@ public final class ManifiestoAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("mani-iniciar")
-    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String iniciar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -100,13 +93,11 @@ public final class ManifiestoAction extends BaseAction {
      * Anular.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("mani-anular")
-    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String anular() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 

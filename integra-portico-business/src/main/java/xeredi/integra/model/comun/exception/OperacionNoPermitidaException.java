@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class OperacionNoPermitidaException.
@@ -66,6 +68,8 @@ public final class OperacionNoPermitidaException extends ModelException {
      */
     @Override
     public String getMessage(final Locale locale) {
+        Preconditions.checkNotNull(locale);
+
         final ResourceBundle bundle = PorticoResourceBundle.getBundle(locale);
 
         return MessageFormat.format(bundle.getString(MessageI18nKey.E00013.name()),

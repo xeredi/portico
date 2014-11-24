@@ -9,6 +9,8 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.report.ProcesoXls;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
@@ -34,12 +36,12 @@ public final class ProcesoXlsAction extends BaseAction {
      * Excel export.
      *
      * @return the string
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "prbt-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "application/xls", "inputName", "stream", "contentDisposition", "filename=PROCESOS.xls" }) })
-    public String xlsExport() throws IOException {
+    public String xlsExport() throws ApplicationException {
         final ProcesoBO prbtBO = new ProcesoBO();
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
@@ -48,6 +50,8 @@ public final class ProcesoXlsAction extends BaseAction {
             excelUtil.generarProcesos(prbtBO.selectList(itemCriterio), baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
+        } catch (final IOException ex) {
+            throw new InternalErrorException(ex);
         }
 
         return SUCCESS;

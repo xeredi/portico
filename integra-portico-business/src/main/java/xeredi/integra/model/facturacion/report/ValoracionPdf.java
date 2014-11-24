@@ -4,7 +4,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
-import net.sf.dynamicreports.report.exception.DRException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.facturacion.bo.ValoracionImpresionVO;
 
@@ -33,10 +33,10 @@ public final class ValoracionPdf extends BasePdf {
      *            the vos
      * @param os
      *            the os
-     * @throws DRException
-     *             the DR exception
+     * @throws InternalErrorException
+     *             the internal error exception
      */
-    public void imprimir(final List<ValoracionImpresionVO> vos, final OutputStream os) throws DRException {
+    public void imprimir(final List<ValoracionImpresionVO> vos, final OutputStream os) throws InternalErrorException {
         Preconditions.checkNotNull(vos);
         Preconditions.checkArgument(!vos.isEmpty());
         Preconditions.checkNotNull(os);

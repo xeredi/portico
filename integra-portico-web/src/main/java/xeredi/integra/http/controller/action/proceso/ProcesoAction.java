@@ -3,8 +3,7 @@ package xeredi.integra.http.controller.action.proceso;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
@@ -28,11 +27,11 @@ public final class ProcesoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prbt-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() throws ApplicationException {
         Preconditions.checkNotNull(prbt);
         Preconditions.checkNotNull(prbt.getId());
 
@@ -47,13 +46,11 @@ public final class ProcesoAction extends BaseAction {
      * Borrar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prbt-cancel")
-    public String borrar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String borrar() throws ApplicationException {
         Preconditions.checkNotNull(prbt);
         Preconditions.checkNotNull(prbt.getId());
 

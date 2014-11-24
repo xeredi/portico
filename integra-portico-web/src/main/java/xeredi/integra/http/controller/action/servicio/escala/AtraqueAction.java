@@ -6,7 +6,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
@@ -41,13 +41,11 @@ public final class AtraqueAction extends ItemAction {
      * Autorizar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-autorizar")
-    public String autorizar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String autorizar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -85,14 +83,12 @@ public final class AtraqueAction extends ItemAction {
      * Autorizar guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-autorizar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String autorizarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String autorizarGuardar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -117,13 +113,11 @@ public final class AtraqueAction extends ItemAction {
      * Denegar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-denegar")
-    public String denegar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String denegar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -148,14 +142,12 @@ public final class AtraqueAction extends ItemAction {
      * Denegar guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-denegar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String denegarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String denegarGuardar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -180,13 +172,11 @@ public final class AtraqueAction extends ItemAction {
      * Anular.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-anular")
-    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String anular() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -211,14 +201,12 @@ public final class AtraqueAction extends ItemAction {
      * Anular guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-anular-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String anularGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String anularGuardar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -243,13 +231,11 @@ public final class AtraqueAction extends ItemAction {
      * Iniciar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-iniciar")
-    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String iniciar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -284,14 +270,12 @@ public final class AtraqueAction extends ItemAction {
      * Anular iniciar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-iniciar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String iniciarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String iniciarGuardar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -311,13 +295,11 @@ public final class AtraqueAction extends ItemAction {
      * Finalizar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-finalizar")
-    public String finalizar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String finalizar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -342,14 +324,12 @@ public final class AtraqueAction extends ItemAction {
      * Finalizar guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-finalizar-guardar", results = { @Result(name = "success", type = "redirectAction", params = {
             "actionName", "ssrv-detalle", "item.id", "%{item.id}" }) })
-    public String finalizarGuardar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String finalizarGuardar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getItdtMap());
@@ -369,13 +349,11 @@ public final class AtraqueAction extends ItemAction {
      * Autorizar fprevio.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "atra-autorizar-fprevio")
-    public String autorizarFprevio() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String autorizarFprevio() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 

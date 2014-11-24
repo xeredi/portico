@@ -9,8 +9,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.CargoBO;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
@@ -56,11 +55,11 @@ public final class ReglaAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("rgla-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getId());
 
@@ -86,11 +85,11 @@ public final class ReglaAction extends BaseAction {
      * Creates the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("rgla-create")
-    public String create() throws InstanceNotFoundException {
+    public String create() throws ApplicationException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getCrgo());
         Preconditions.checkNotNull(rgla.getCrgo().getId());
@@ -120,11 +119,11 @@ public final class ReglaAction extends BaseAction {
      * Edits the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("rgla-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getId());
 
@@ -170,13 +169,11 @@ public final class ReglaAction extends BaseAction {
      * Save.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OverlapException
-     *             the overlap exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("rgla-save")
-    public String save() throws InstanceNotFoundException, OverlapException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
@@ -302,11 +299,11 @@ public final class ReglaAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("rgla-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(rgla);
         Preconditions.checkNotNull(rgla.getRglv());
         Preconditions.checkNotNull(rgla.getRglv().getId());

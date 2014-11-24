@@ -16,6 +16,7 @@ import net.sf.dynamicreports.report.builder.component.MultiPageListBuilder;
 import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.facturacion.bo.FacturaImpresionVO;
@@ -56,53 +57,57 @@ public final class FacturaPdf extends BasePdf {
      *            the vo
      * @param os
      *            the os
-     * @throws DRException
-     *             the DR exception
+     * @throws InternalErrorException
+     *             the internal error exception
      */
-    public void imprimir(final FacturaImpresionVO vo, final OutputStream os) throws DRException {
+    public void imprimir(final FacturaImpresionVO vo, final OutputStream os) throws InternalErrorException {
         Preconditions.checkNotNull(vo);
         Preconditions.checkNotNull(os);
 
-        final JasperReportBuilder report = DynamicReports.report();
+        try {
+            final JasperReportBuilder report = DynamicReports.report();
 
-        report.setPageFormat(PageType.A4);
-        report.pageHeader(LOGO);
-        report.pageFooter(DynamicReports.cmp.pageXofY());
-        // report.setVirtualizer(new JRFileVirtualizer(2));
+            report.setPageFormat(PageType.A4);
+            report.pageHeader(LOGO);
+            report.pageFooter(DynamicReports.cmp.pageXofY());
+            // report.setVirtualizer(new JRFileVirtualizer(2));
 
-        final MultiPageListBuilder builder = DynamicReports.cmp.multiPageList();
+            final MultiPageListBuilder builder = DynamicReports.cmp.multiPageList();
 
-        builder.add(createCabeceraComponent(vo.getFctr()));
-        builder.add(DynamicReports.cmp.horizontalList(
-                DynamicReports.cmp.verticalList(createImportesComponent(vo), FIRMA),
-                createDatosPagadorComponent(vo.getFctr())));
-        builder.add(createServiciosComponent(vo.getFctsMap()));
-        // builder.add(createInfoCabeceraComponent(vo.getFctr()));
+            builder.add(createCabeceraComponent(vo.getFctr()));
+            builder.add(DynamicReports.cmp.horizontalList(
+                    DynamicReports.cmp.verticalList(createImportesComponent(vo), FIRMA),
+                    createDatosPagadorComponent(vo.getFctr())));
+            builder.add(createServiciosComponent(vo.getFctsMap()));
+            // builder.add(createInfoCabeceraComponent(vo.getFctr()));
 
-        FacturaLineaVO fctlPrec = null;
-        List<FacturaLineaVO> fctlMods = null;
+            FacturaLineaVO fctlPrec = null;
+            List<FacturaLineaVO> fctlMods = null;
 
-        for (final FacturaLineaVO fctl : vo.getFctlList()) {
-            if (fctl.getRgla().getRglv().getTipo() == ReglaTipo.T) {
-                if (fctlPrec != null) {
-                    // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
+            for (final FacturaLineaVO fctl : vo.getFctlList()) {
+                if (fctl.getRgla().getRglv().getTipo() == ReglaTipo.T) {
+                    if (fctlPrec != null) {
+                        // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
+                    }
+
+                    fctlPrec = fctl;
+                    fctlMods = new ArrayList<>();
                 }
 
-                fctlPrec = fctl;
-                fctlMods = new ArrayList<>();
+                fctlMods.add(fctl);
             }
 
-            fctlMods.add(fctl);
+            if (fctlPrec != null) {
+                // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
+            }
+
+            report.summary(builder);
+            // report.rebuild();
+
+            report.toPdf(os);
+        } catch (final DRException ex) {
+            throw new InternalErrorException(ex);
         }
-
-        if (fctlPrec != null) {
-            // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
-        }
-
-        report.summary(builder);
-        // report.rebuild();
-
-        report.toPdf(os);
     }
 
     /**
@@ -248,8 +253,8 @@ public final class FacturaPdf extends BasePdf {
                 createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
                 createEtiquetaValorComponent("Cuota",
                         PdfConstants.DOUBLE_FORMAT.format(fctl.getRgla().getRglv().getImporteBase())),
-                createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
-                createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
+                        createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
+                        createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
 
         final HorizontalListBuilder infos = DynamicReports.cmp.horizontalList();
 

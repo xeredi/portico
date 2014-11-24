@@ -7,8 +7,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -64,11 +62,11 @@ public final class SubparametroAction extends ItemAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("sprm-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -91,11 +89,11 @@ public final class SubparametroAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("sprm-duplicate")
-    public String duplicate() throws InstanceNotFoundException {
+    public String duplicate() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -118,13 +116,11 @@ public final class SubparametroAction extends ItemAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OverlapException
-     *             the overlap exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("sprm-save")
-    public String save() throws InstanceNotFoundException, OverlapException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
 
@@ -181,11 +177,11 @@ public final class SubparametroAction extends ItemAction {
      * Borrar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("sprm-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getSpvr());
         Preconditions.checkNotNull(item.getSpvr().getId());
@@ -201,11 +197,11 @@ public final class SubparametroAction extends ItemAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("sprm-detail")
-    public String detalle() throws InstanceNotFoundException {
+    public String detalle() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 

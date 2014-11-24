@@ -3,7 +3,7 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -30,11 +30,11 @@ public final class ManifiestoTotalAction extends BaseAction {
      * Totales.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("mani-totales")
-    public String totales() throws InstanceNotFoundException {
+    public String totales() throws ApplicationException {
         final ServicioBO srvcBO = new ServicioBO();
         final ManifiestoBO maniBO = new ManifiestoBO();
 

@@ -7,8 +7,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
-import xeredi.integra.model.comun.exception.DuplicateInstanceException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -52,11 +51,11 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpes-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String modificar() throws ApplicationException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -73,13 +72,11 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpes-save")
-    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
         if (enti == null) {
@@ -120,11 +117,11 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpes-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -139,11 +136,11 @@ public final class TipoEstadisticaAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpes-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 

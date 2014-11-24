@@ -14,6 +14,8 @@ import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
+import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BasePdf;
 import xeredi.integra.model.comun.report.PdfCell;
@@ -71,89 +73,93 @@ public final class ParametroPdf extends BasePdf {
      */
     public void imprimir(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
             final Map<Long, TipoSubparametroVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
-            final Map<String, I18nVO> i18nMap, final OutputStream stream) throws DRException {
+            final Map<String, I18nVO> i18nMap, final OutputStream stream) throws ApplicationException {
         Preconditions.checkNotNull(prmtVO);
         Preconditions.checkNotNull(tpprVO);
 
-        final String tpprLabel = bundle.getString("enti_" + tpprVO.getId());
-        final String prmtFiniLabel = bundle.getString("prmt_fini");
-        final String prmtFfinLabel = bundle.getString("prmt_ffin");
+        try {
+            final String tpprLabel = bundle.getString("enti_" + tpprVO.getId());
+            final String prmtFiniLabel = bundle.getString("prmt_fini");
+            final String prmtFfinLabel = bundle.getString("prmt_ffin");
 
-        final JasperReportBuilder report = DynamicReports.report();
+            final JasperReportBuilder report = DynamicReports.report();
 
-        report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
-        report.addTitle(DynamicReports.cmp.text(tpprLabel).setStyle(PdfConstants.H1_STYLE));
+            report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
+            report.addTitle(DynamicReports.cmp.text(tpprLabel).setStyle(PdfConstants.H1_STYLE));
 
-        final List<List<PdfCell>> listCells = new ArrayList<>();
+            final List<List<PdfCell>> listCells = new ArrayList<>();
 
-        List<PdfCell> rowCells = new ArrayList<>();
-        int accWidth = 0;
+            List<PdfCell> rowCells = new ArrayList<>();
+            int accWidth = 0;
 
-        rowCells.add(new PdfCell(tpprLabel, prmtVO.getEtiqueta(), 8, TipoElemento.TX));
+            rowCells.add(new PdfCell(tpprLabel, prmtVO.getEtiqueta(), 8, TipoElemento.TX));
 
-        rowCells.add(new PdfCell(prmtFiniLabel, PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFini()), 2,
-                TipoElemento.FE));
-        rowCells.add(new PdfCell(prmtFfinLabel, prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
-                .format(prmtVO.getPrvr().getFfin()), 2, TipoElemento.FE));
+            rowCells.add(new PdfCell(prmtFiniLabel, PdfConstants.DATE_FORMAT.format(prmtVO.getPrvr().getFini()), 2,
+                    TipoElemento.FE));
+            rowCells.add(new PdfCell(prmtFfinLabel, prmtVO.getPrvr().getFfin() == null ? "" : PdfConstants.DATE_FORMAT
+                    .format(prmtVO.getPrvr().getFfin()), 2, TipoElemento.FE));
 
-        listCells.add(rowCells);
+            listCells.add(rowCells);
 
-        if (tpprVO.getI18n()) {
-            for (final I18nVO i18nVO : i18nMap.values()) {
-                rowCells = new ArrayList<>();
+            if (tpprVO.getI18n()) {
+                for (final I18nVO i18nVO : i18nMap.values()) {
+                    rowCells = new ArrayList<>();
 
-                rowCells.add(new PdfCell(i18nVO.getLanguage(), i18nVO.getText(), 10, TipoElemento.TX));
-                listCells.add(rowCells);
-            }
-        }
-
-        report.addTitle(getForm(listCells));
-        listCells.clear();
-
-        if (tpprVO.getEngdList() != null) {
-            for (final EntidadGrupoDatoVO engd : tpprVO.getEngdList()) {
-                rowCells = new ArrayList<>();
-                accWidth = 0;
-
-                if (tpprVO.getEntdList() != null) {
-                    for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
-                        if (entd.getGrupo() == engd.getNumero()) {
-                            final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
-
-                            if (accWidth + entd.getSpan() > PdfConstants.MAX_SPAN) {
-                                listCells.add(rowCells);
-                                rowCells = new ArrayList<>();
-                                accWidth = 0;
-                            }
-
-                            final String entdLabel = bundle.getString("entd_" + entd.getId());
-
-                            rowCells.add(new PdfCell(entdLabel, getItdtValue(entd, itdt), entd.getSpan(), entd
-                                    .getTpdt().getTipoElemento()));
-                            accWidth += entd.getSpan();
-                        }
-                    }
-                }
-
-                if (!rowCells.isEmpty()) {
+                    rowCells.add(new PdfCell(i18nVO.getLanguage(), i18nVO.getText(), 10, TipoElemento.TX));
                     listCells.add(rowCells);
                 }
-
-                report.addTitle(getForm(listCells), Components.pageBreak());
-                listCells.clear();
             }
-        }
 
-        if (tpprVO.getEntiHijasList() != null) {
-            for (final Long entiId : tpprVO.getEntiHijasList()) {
-                if (!itemHijosMap.get(entiId).isEmpty()) {
-                    report.addTitle(DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
-                            itemHijosMap.get(entiId))));
+            report.addTitle(getForm(listCells));
+            listCells.clear();
+
+            if (tpprVO.getEngdList() != null) {
+                for (final EntidadGrupoDatoVO engd : tpprVO.getEngdList()) {
+                    rowCells = new ArrayList<>();
+                    accWidth = 0;
+
+                    if (tpprVO.getEntdList() != null) {
+                        for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {
+                            if (entd.getGrupo() == engd.getNumero()) {
+                                final ItemDatoVO itdt = prmtVO.getItdtMap().get(entd.getTpdt().getId());
+
+                                if (accWidth + entd.getSpan() > PdfConstants.MAX_SPAN) {
+                                    listCells.add(rowCells);
+                                    rowCells = new ArrayList<>();
+                                    accWidth = 0;
+                                }
+
+                                final String entdLabel = bundle.getString("entd_" + entd.getId());
+
+                                rowCells.add(new PdfCell(entdLabel, getItdtValue(entd, itdt), entd.getSpan(), entd
+                                        .getTpdt().getTipoElemento()));
+                                accWidth += entd.getSpan();
+                            }
+                        }
+                    }
+
+                    if (!rowCells.isEmpty()) {
+                        listCells.add(rowCells);
+                    }
+
+                    report.addTitle(getForm(listCells), Components.pageBreak());
+                    listCells.clear();
                 }
             }
-        }
 
-        report.toPdf(stream);
+            if (tpprVO.getEntiHijasList() != null) {
+                for (final Long entiId : tpprVO.getEntiHijasList()) {
+                    if (!itemHijosMap.get(entiId).isEmpty()) {
+                        report.addTitle(DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
+                                itemHijosMap.get(entiId))));
+                    }
+                }
+            }
+
+            report.toPdf(stream);
+        } catch (final DRException ex) {
+            throw new InternalErrorException(ex);
+        }
     }
 
     /**

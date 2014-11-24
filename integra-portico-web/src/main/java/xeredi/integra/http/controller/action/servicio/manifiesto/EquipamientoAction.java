@@ -3,8 +3,7 @@ package xeredi.integra.http.controller.action.servicio.manifiesto;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.EquipamientoBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
@@ -28,13 +27,11 @@ public final class EquipamientoAction extends BaseAction {
      * Bloquear.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("equi-bloquear")
-    public String bloquear() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String bloquear() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -52,13 +49,11 @@ public final class EquipamientoAction extends BaseAction {
      * Iniciar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("equi-iniciar")
-    public String iniciar() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String iniciar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -76,13 +71,11 @@ public final class EquipamientoAction extends BaseAction {
      * Anular.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OperacionNoPermitidaException
-     *             the operacion no permitida exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("equi-anular")
-    public String anular() throws InstanceNotFoundException, OperacionNoPermitidaException {
+    public String anular() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 

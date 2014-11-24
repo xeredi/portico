@@ -7,8 +7,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
-import xeredi.integra.model.comun.exception.DuplicateInstanceException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -55,11 +54,11 @@ public final class EntidadAccionAction extends BaseAction {
      * Edits the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enac-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getId());
 
@@ -76,13 +75,11 @@ public final class EntidadAccionAction extends BaseAction {
      * Save.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enac-save")
-    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getEntiId());
@@ -122,11 +119,11 @@ public final class EntidadAccionAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enac-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getId());
 
@@ -141,11 +138,11 @@ public final class EntidadAccionAction extends BaseAction {
      * Detail.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enac-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getId());
 

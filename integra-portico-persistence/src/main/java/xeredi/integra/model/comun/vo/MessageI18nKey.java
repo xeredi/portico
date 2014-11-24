@@ -265,6 +265,8 @@ public enum MessageI18nKey {
     cdrf_valor,
     /** The cdrf_orden. */
     cdrf_orden,
+    /** The cdrf_texto. */
+    cdrf_texto,
 
     /** The page_home. */
     page_home,
@@ -680,13 +682,11 @@ public enum MessageI18nKey {
     /** Instancia Duplicada. Se pasa como argumento el nombre de la entidad. */
     E00005,
     /**
-     * Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin
-     * argumentos.
+     * Error de rango de vigencia de un parametro, Fecha fin debe ser posterior a fecha inicio. sin argumentos.
      */
     E00006,
     /**
-     * Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su
-     * identificador.
+     * Instancia no encontrada. Se pasan como argumentos el nombre de la entidad de la instancia y su identificador.
      */
     E00008,
     /** Error de solape de rangos de vigencia de una entidad. Se pasa como argumento el nombre de la entidad. */
@@ -697,13 +697,13 @@ public enum MessageI18nKey {
      */
     E00011,
     /**
-     * Error de valor no perteneciente a una lista de valores válidos. Se pasa como argumento el nombre del
-     * campo y la lista de valores válidos.
+     * Error de valor no perteneciente a una lista de valores válidos. Se pasa como argumento el nombre del campo y la
+     * lista de valores válidos.
      */
     E00012,
     /**
-     * Error de operacion no permitida. Por ejemplo, finalizar un atraque que no puede ser finalizado, o
-     * cancelar un proceso batch en curso...
+     * Error de operacion no permitida. Por ejemplo, finalizar un atraque que no puede ser finalizado, o cancelar un
+     * proceso batch en curso...
      */
     E00013,
 

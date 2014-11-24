@@ -8,8 +8,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
-import xeredi.integra.model.comun.exception.DuplicateInstanceException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -74,11 +73,11 @@ public final class TipoDatoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpdt-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
@@ -97,13 +96,11 @@ public final class TipoDatoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpdt-save")
-    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
 
         if (tpdt == null) {
@@ -149,11 +146,11 @@ public final class TipoDatoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpdt-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 
@@ -168,11 +165,11 @@ public final class TipoDatoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpdt-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(tpdt);
         Preconditions.checkNotNull(tpdt.getId());
 

@@ -3,7 +3,6 @@ package xeredi.integra.http.controller.action.facturacion;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.facturacion.bo.ReglaBO;
@@ -34,7 +33,7 @@ public final class ReglaFiltroAction extends BaseAction {
      *
      * @return the string
      */
-    @Actions({ @Action(value = "rgla-filtro") })
+    @Action(value = "rgla-filtro")
     public String filtro() {
         Preconditions.checkNotNull(rglaCriterio);
 

@@ -9,7 +9,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.report.EstadisticaXls;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
@@ -49,7 +51,7 @@ public final class EstadisticaXlsAction extends BaseAction {
      */
     @Action(value = "estd-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "application/xls", "inputName", "stream", "contentDisposition", "filename=${enti.codigo}.xls" }) })
-    public String xlsExport() throws IOException, InstanceNotFoundException {
+    public String xlsExport() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
@@ -65,6 +67,8 @@ public final class EstadisticaXlsAction extends BaseAction {
             excelUtil.generarEstadisticas(estdBO.selectList(itemCriterio), enti, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
+        } catch (final IOException ex) {
+            throw new InternalErrorException(ex);
         }
 
         return SUCCESS;

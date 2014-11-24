@@ -10,9 +10,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
-import xeredi.integra.model.comun.exception.DuplicateInstanceException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -59,11 +57,11 @@ public final class AspectoAction extends BaseAction {
      * Detalle.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("aspc-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getId());
 
@@ -115,11 +113,11 @@ public final class AspectoAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("aspc-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getId());
 
@@ -140,11 +138,11 @@ public final class AspectoAction extends BaseAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("aspc-duplicate")
-    public String duplicate() throws InstanceNotFoundException {
+    public String duplicate() throws ApplicationException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getId());
 
@@ -165,15 +163,11 @@ public final class AspectoAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
-     * @throws OverlapException
-     *             the overlap exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("aspc-save")
-    public String save() throws InstanceNotFoundException, DuplicateInstanceException, OverlapException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(aspc.getAspv());

@@ -17,7 +17,9 @@ import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -71,7 +73,7 @@ public final class ParametroPdfAction extends BaseAction {
      */
     @Action(value = "prmt-print", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "${type}", "inputName", "stream", "contentDisposition", "filename=${filename}" }) })
-    public String imprimir() throws IOException, DRException, InstanceNotFoundException {
+    public String imprimir() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -120,6 +122,8 @@ public final class ParametroPdfAction extends BaseAction {
             prmtPdf.imprimir(item, enti, entiHijasMap, itemHijosMap, i18nMap, baos);
 
             stream = new ByteArrayInputStream(baos.toByteArray());
+        } catch (final IOException ex) {
+            throw new InternalErrorException(ex);
         }
 
         return SUCCESS;

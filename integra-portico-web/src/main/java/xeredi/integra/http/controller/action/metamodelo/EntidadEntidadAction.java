@@ -4,8 +4,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
-import xeredi.integra.model.comun.exception.DuplicateInstanceException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
@@ -47,11 +46,11 @@ public final class EntidadEntidadAction extends BaseAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enen-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHija());
@@ -73,13 +72,11 @@ public final class EntidadEntidadAction extends BaseAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enen-save")
-    public String save() throws InstanceNotFoundException, DuplicateInstanceException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
@@ -110,11 +107,11 @@ public final class EntidadEntidadAction extends BaseAction {
      * Eliminar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enen-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHija());
@@ -131,11 +128,11 @@ public final class EntidadEntidadAction extends BaseAction {
      * Detail.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("enen-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(enen);
         Preconditions.checkNotNull(enen.getEntiPadreId());
         Preconditions.checkNotNull(enen.getEntiHija());

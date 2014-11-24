@@ -8,8 +8,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
-import xeredi.integra.model.comun.exception.OverlapException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.AspectoCargoBO;
@@ -43,11 +42,11 @@ public final class AspectoCargoAction extends BaseAction {
      * Detail.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("ascr-detail")
-    public String detail() throws InstanceNotFoundException {
+    public String detail() throws ApplicationException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getId());
 
@@ -66,11 +65,11 @@ public final class AspectoCargoAction extends BaseAction {
      * Creates the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("ascr-create")
-    public String create() throws InstanceNotFoundException {
+    public String create() throws ApplicationException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getAspcId());
 
@@ -97,11 +96,11 @@ public final class AspectoCargoAction extends BaseAction {
      * Edits the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("ascr-edit")
-    public String edit() throws InstanceNotFoundException {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getId());
 
@@ -121,13 +120,11 @@ public final class AspectoCargoAction extends BaseAction {
      * Save.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws OverlapException
-     *             the overlap exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("ascr-save")
-    public String save() throws InstanceNotFoundException, OverlapException {
+    public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(ascr);
 
@@ -172,11 +169,11 @@ public final class AspectoCargoAction extends BaseAction {
      * Removes the.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("ascr-remove")
-    public String remove() throws InstanceNotFoundException {
+    public String remove() throws ApplicationException {
         Preconditions.checkNotNull(ascr);
         Preconditions.checkNotNull(ascr.getAscv());
         Preconditions.checkNotNull(ascr.getAscv().getId());
