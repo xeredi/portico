@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -42,9 +43,11 @@ public final class ParametroListadoAction extends ItemListadoAction {
      * Editar filtro.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-filter")
-    public String filter() {
+    public String filter() throws ApplicationException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -71,9 +74,11 @@ public final class ParametroListadoAction extends ItemListadoAction {
      * Listado.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-list")
-    public String list() {
+    public String list() throws ApplicationException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 
@@ -101,8 +106,11 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
     /**
      * Load label values map.
+     *
+     * @throws ApplicationException
+     *             the application exception
      */
-    protected final void loadLabelValuesMap() {
+    protected final void loadLabelValuesMap() throws ApplicationException {
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
@@ -158,10 +166,21 @@ public final class ParametroListadoAction extends ItemListadoAction {
         return itemList;
     }
 
+    /**
+     * Gets the enti.
+     *
+     * @return the enti
+     */
     public TipoParametroVO getEnti() {
         return enti;
     }
 
+    /**
+     * Sets the enti.
+     *
+     * @param value
+     *            the new enti
+     */
     public void setEnti(final TipoParametroVO value) {
         enti = value;
     }

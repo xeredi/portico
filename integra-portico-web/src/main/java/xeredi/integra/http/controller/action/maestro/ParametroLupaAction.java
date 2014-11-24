@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -46,9 +47,11 @@ public final class ParametroLupaAction extends BaseAction {
      * Editar lupa.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-lupa")
-    public String lupa() {
+    public String lupa() throws ApplicationException {
         Preconditions.checkNotNull(itemLupaCriterio);
         Preconditions.checkNotNull(itemLupaCriterio.getEntiId());
         Preconditions.checkNotNull(itemLupaCriterio.getTextoBusqueda());

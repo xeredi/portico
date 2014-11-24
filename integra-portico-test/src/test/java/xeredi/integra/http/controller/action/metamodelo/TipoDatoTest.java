@@ -2,6 +2,7 @@ package xeredi.integra.http.controller.action.metamodelo;
 
 import org.apache.struts2.StrutsTestCase;
 
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionProxy;
 
 // TODO: Auto-generated Javadoc
@@ -24,7 +25,7 @@ public final class TipoDatoTest extends StrutsTestCase {
             final ActionProxy proxy = getActionProxy("/metamodelo/tpdt-list.action");
             final TipoDatoListadoAction action = (TipoDatoListadoAction) proxy.getAction();
 
-            assertEquals(action.SUCCESS, proxy.execute(), action.SUCCESS);
+            assertEquals(Action.SUCCESS, proxy.execute(), Action.SUCCESS);
             assertTrue("No Errors", action.getActionErrors().isEmpty());
             assertFalse("Data", action.getTpdtList().getList().isEmpty());
             assertEquals("First Page", action.getPage(), 1);
@@ -37,7 +38,7 @@ public final class TipoDatoTest extends StrutsTestCase {
             final ActionProxy proxy = getActionProxy("/metamodelo/tpdt-list.action");
             final TipoDatoListadoAction action = (TipoDatoListadoAction) proxy.getAction();
 
-            assertEquals(action.SUCCESS, proxy.execute(), action.SUCCESS);
+            assertEquals(Action.SUCCESS, proxy.execute(), Action.SUCCESS);
             assertTrue("No Errors", action.getActionErrors().isEmpty());
             assertTrue("No Data", action.getTpdtList().getList().isEmpty());
         }
@@ -48,7 +49,7 @@ public final class TipoDatoTest extends StrutsTestCase {
             final ActionProxy proxy = getActionProxy("/metamodelo/tpdt-create.action");
             final TipoDatoAction action = (TipoDatoAction) proxy.getAction();
 
-            assertEquals(action.SUCCESS, proxy.execute(), action.SUCCESS);
+            assertEquals(Action.SUCCESS, proxy.execute(), Action.SUCCESS);
             assertTrue("No Errors", action.getActionErrors().isEmpty());
         }
     }

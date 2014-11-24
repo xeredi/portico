@@ -12,6 +12,8 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nResourceBundle.
@@ -29,6 +31,9 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
      */
     public MessageI18nResourceBundle(final Locale locale) {
         super();
+
+        Preconditions.checkNotNull(locale);
+
         this.locale = locale;
     }
 

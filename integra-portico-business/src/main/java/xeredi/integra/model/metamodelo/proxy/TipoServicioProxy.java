@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -57,8 +59,10 @@ public final class TipoServicioProxy {
      * @param id
      *            the id
      * @return the tipo parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public static TipoServicioVO select(final Long id) {
+    public static TipoServicioVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
         TipoServicioVO tpsrVO = null;
@@ -66,7 +70,7 @@ public final class TipoServicioProxy {
         tpsrVO = TIPO_SERVICIO_MAP.get(id);
 
         if (tpsrVO == null) {
-            throw new Error("Tipo de servicio no encontrado: " + id);
+            throw new InstanceNotFoundException(MessageI18nKey.tpsr, id);
         }
 
         return tpsrVO;
@@ -83,7 +87,11 @@ public final class TipoServicioProxy {
 
         for (final TipoServicioVO tpsrVO : tpsrList) {
             if (tpsrVO.getTpdtEstado() != null) {
-                tpsrVO.setTpdtEstado(TipoDatoProxy.select(tpsrVO.getTpdtEstado().getId()));
+                try {
+                    tpsrVO.setTpdtEstado(TipoDatoProxy.select(tpsrVO.getTpdtEstado().getId()));
+                } catch (final InstanceNotFoundException ex) {
+                    throw new Error(ex);
+                }
             }
 
             TIPO_SERVICIO_MAP.put(tpsrVO.getId(), tpsrVO);

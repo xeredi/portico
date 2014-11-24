@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
@@ -27,9 +28,11 @@ public final class FormulaTest {
      *
      * @throws IOException
      *             Signals that an I/O exception has occurred.
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Test
-    public void test() throws IOException {
+    public void test() throws IOException, InstanceNotFoundException {
         // test("5 > 3");
         test("5");
         test("(4.3)");
@@ -47,8 +50,10 @@ public final class FormulaTest {
      *            the expression
      * @throws IOException
      *             the IO exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    private void test(final String expression) throws IOException {
+    private void test(final String expression) throws IOException, InstanceNotFoundException {
         System.out.println("Testing: " + expression);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -35,9 +36,11 @@ public final class TipoServicioProxyAction extends BaseAction {
      * Detalle.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("tpsr-proxy-detail")
-    public String detalle() {
+    public String detalle() throws ApplicationException {
         Preconditions.checkNotNull(enti);
         Preconditions.checkNotNull(enti.getId());
 

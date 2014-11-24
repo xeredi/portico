@@ -117,12 +117,11 @@ public final class I18nBO {
      */
     public final static void insertMap(final SqlSession session, final I18nPrefix prefix, final Long externalId,
             final Map<String, I18nVO> i18nMap) {
-        final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
-
-        if (!i18nMap.containsKey(language_default)) {
-            throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default + " del item: "
-                    + externalId);
-        }
+        Preconditions.checkNotNull(session);
+        Preconditions.checkNotNull(prefix);
+        Preconditions.checkNotNull(externalId);
+        Preconditions.checkNotNull(i18nMap);
+        Preconditions.checkNotNull(i18nMap.get(ConfigurationProxy.getString(ConfigurationKey.language_default)));
 
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
 
@@ -150,12 +149,11 @@ public final class I18nBO {
      */
     public final static void duplicateMap(final SqlSession session, final I18nPrefix prefix, final Long externalId,
             final Map<String, I18nVO> i18nMap) {
-        final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
-
-        if (!i18nMap.containsKey(language_default)) {
-            throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default + " del item: "
-                    + externalId);
-        }
+        Preconditions.checkNotNull(session);
+        Preconditions.checkNotNull(prefix);
+        Preconditions.checkNotNull(externalId);
+        Preconditions.checkNotNull(i18nMap);
+        Preconditions.checkNotNull(i18nMap.get(ConfigurationProxy.getString(ConfigurationKey.language_default)));
 
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
 
@@ -183,12 +181,11 @@ public final class I18nBO {
      */
     public final static void updateMap(final SqlSession session, final I18nPrefix prefix, final Long externalId,
             final Map<String, I18nVO> i18nMap) {
-        final String language_default = ConfigurationProxy.getString(ConfigurationKey.language_default);
-
-        if (!i18nMap.containsKey(language_default)) {
-            throw new Error("No se ha pasado informacion de i18n para el idioma " + language_default + " del item: "
-                    + externalId);
-        }
+        Preconditions.checkNotNull(session);
+        Preconditions.checkNotNull(prefix);
+        Preconditions.checkNotNull(externalId);
+        Preconditions.checkNotNull(i18nMap);
+        Preconditions.checkNotNull(i18nMap.get(ConfigurationProxy.getString(ConfigurationKey.language_default)));
 
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
         final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
@@ -220,6 +217,10 @@ public final class I18nBO {
      * @return the int
      */
     public final static int deleteMap(final SqlSession session, final I18nPrefix prefix, final Long externalId) {
+        Preconditions.checkNotNull(session);
+        Preconditions.checkNotNull(prefix);
+        Preconditions.checkNotNull(externalId);
+
         final I18nDAO i18nDAO = session.getMapper(I18nDAO.class);
         final I18nCriterioVO i18nCriterioVO = new I18nCriterioVO();
 

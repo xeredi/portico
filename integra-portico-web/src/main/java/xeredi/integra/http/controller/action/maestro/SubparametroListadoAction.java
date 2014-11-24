@@ -5,6 +5,7 @@ import java.util.Calendar;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -36,9 +37,11 @@ public final class SubparametroListadoAction extends ItemListadoAction {
      * Listado.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("sprm-list")
-    public String listado() {
+    public String listado() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
         Preconditions.checkNotNull(itemCriterio.getPrmt().getId());

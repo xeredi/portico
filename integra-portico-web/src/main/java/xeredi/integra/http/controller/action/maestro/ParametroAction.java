@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
@@ -44,9 +45,11 @@ public final class ParametroAction extends ItemAction {
      * Alta.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("prmt-create")
-    public String create() {
+    public String create() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 

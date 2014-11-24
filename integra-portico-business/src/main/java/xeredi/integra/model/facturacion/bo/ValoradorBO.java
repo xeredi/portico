@@ -16,6 +16,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
@@ -112,10 +113,14 @@ public class ValoradorBO {
                 throw new Error("Servicio no encontrado: " + srvc);
             }
 
-            contextoVO.setFliquidacion(fechaLiquidacion);
-            contextoVO.setPrbt(prbt);
-            contextoVO.setSrvc(srvc);
-            contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
+            try {
+                contextoVO.setFliquidacion(fechaLiquidacion);
+                contextoVO.setPrbt(prbt);
+                contextoVO.setSrvc(srvc);
+                contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
+            } catch (final InstanceNotFoundException ex) {
+                throw new Error(ex);
+            }
 
             for (final Long crgoId : crgoIds) {
                 // Obtencion de los cargos, y los cargos dependientes

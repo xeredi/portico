@@ -9,6 +9,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.report.EstadisticaXls;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
@@ -43,10 +44,12 @@ public final class EstadisticaXlsAction extends BaseAction {
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action(value = "estd-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "application/xls", "inputName", "stream", "contentDisposition", "filename=${enti.codigo}.xls" }) })
-    public String xlsExport() throws IOException {
+    public String xlsExport() throws IOException, InstanceNotFoundException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 

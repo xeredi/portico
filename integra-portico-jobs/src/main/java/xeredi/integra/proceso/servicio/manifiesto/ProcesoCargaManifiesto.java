@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -864,10 +865,14 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
             return null;
         }
 
-        final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
+        try {
+            final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
-        if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-            addError(MensajeCodigo.G_004, "linea:" + lineNumber + ", CR:" + tipoDato.name() + ", codigo:" + codigo);
+            if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
+                addError(MensajeCodigo.G_004, "linea:" + lineNumber + ", CR:" + tipoDato.name() + ", codigo:" + codigo);
+            }
+        } catch (final InstanceNotFoundException ex) {
+            throw new Error(ex);
         }
 
         return codigo;

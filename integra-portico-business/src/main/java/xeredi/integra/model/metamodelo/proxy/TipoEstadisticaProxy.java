@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -57,16 +59,16 @@ public final class TipoEstadisticaProxy {
      * @param id
      *            the id
      * @return the tipo parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public static TipoEstadisticaVO select(final long id) {
+    public static TipoEstadisticaVO select(final long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
-        TipoEstadisticaVO tpesVO = null;
-
-        tpesVO = TIPO_ESTADISTICA_MAP.get(id);
+        final TipoEstadisticaVO tpesVO = TIPO_ESTADISTICA_MAP.get(id);
 
         if (tpesVO == null) {
-            throw new Error("Tipo de servicio no encontrado: " + id);
+            throw new InstanceNotFoundException(MessageI18nKey.tpes, id);
         }
 
         return tpesVO;

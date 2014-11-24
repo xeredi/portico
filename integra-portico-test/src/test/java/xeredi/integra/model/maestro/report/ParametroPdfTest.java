@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import xeredi.integra.model.comun.bo.I18nBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -48,7 +49,7 @@ public final class ParametroPdfTest {
      *             the DR exception
      */
     @Test
-    public void test() throws IOException, DRException {
+    public void test() throws IOException, DRException, InstanceNotFoundException {
         LOG.info("Start Test");
 
         final List<Long> tpprIds = Arrays.asList(new Long[] { 20005L, 20049L });

@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -41,9 +42,11 @@ public final class ServicioPdfTest {
      *             Signals that an I/O exception has occurred.
      * @throws DRException
      *             the DR exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Test
-    public void test() throws IOException, DRException {
+    public void test() throws IOException, DRException, ApplicationException {
         LOG.info("Start Test");
 
         final List<Long> tpsrIds = Arrays.asList(new Long[] { 21002L, 21003L });

@@ -6,6 +6,8 @@ import java.util.Map;
 
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nReportVO.
@@ -24,6 +26,8 @@ public final class MessageI18nReportVO {
      *            the alanguage list
      */
     public MessageI18nReportVO(final List<String> alanguageList) {
+        Preconditions.checkNotNull(alanguageList);
+
         languageList = alanguageList;
         valuesMap = new HashMap<>();
 

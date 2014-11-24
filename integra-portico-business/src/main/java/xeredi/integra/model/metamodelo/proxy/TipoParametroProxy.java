@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoParametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -58,12 +60,14 @@ public final class TipoParametroProxy {
      * @param id
      *            the id
      * @return the tipo parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public static TipoParametroVO select(final Long id) {
+    public static TipoParametroVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
         if (!TIPO_PARAMETRO_MAP.containsKey(id)) {
-            throw new Error("Tipo de parametro no encontrado: " + id);
+            throw new InstanceNotFoundException(MessageI18nKey.tppr, id);
         }
 
         return TIPO_PARAMETRO_MAP.get(id);

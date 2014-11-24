@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ReglaVersionVO;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
@@ -30,9 +31,11 @@ public final class PathTest {
      *
      * @throws IOException
      *             the IO exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Test
-    public void test() throws IOException {
+    public void test() throws IOException, InstanceNotFoundException {
         for (int i = 0; i < 1; i++) {
             test("0.4", false);
             test("'ABC'", false);
@@ -56,8 +59,11 @@ public final class PathTest {
      *            the generate label
      * @throws IOException
      *             the IO exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    private void test(final String expression, final boolean generateLabel) throws IOException {
+    private void test(final String expression, final boolean generateLabel) throws IOException,
+    InstanceNotFoundException {
         final String message = "Testing: " + expression;
 
         System.out.println(message);

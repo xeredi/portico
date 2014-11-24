@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
@@ -169,13 +170,16 @@ public final class ServicioImporterBO {
         final ParametroBO prmtBO = new ParametroBO();
         final ServicioBO srvcBO = new ServicioBO();
         final SubservicioBO ssrvBO = new SubservicioBO();
-        final EntidadVO entiVO = EntidadProxy.select(entidad.getId());
+
+        EntidadVO entiVO = null;
+
+        try {
+            entiVO = EntidadProxy.select(entidad.getId());
+        } catch (final InstanceNotFoundException ex) {
+            throw new Error(ex);
+        }
 
         final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiVO.getId());
-
-        if (entiVO == null) {
-            throw new Error("No se encuentra la entidad con id: " + entidad.getId());
-        }
 
         if (LOG.isInfoEnabled()) {
             LOG.info("Importacion de la entidad: " + entiName);
@@ -220,7 +224,13 @@ public final class ServicioImporterBO {
 
                 switch (entiVO.getTipo()) {
                 case T:
-                    final TipoServicioVO tpsrVO = TipoServicioProxy.select(entiVO.getId());
+                    TipoServicioVO tpsrVO = null;
+
+                    try {
+                        tpsrVO = TipoServicioProxy.select(entiVO.getId());
+                    } catch (final InstanceNotFoundException ex) {
+                        throw new Error(ex);
+                    }
 
                     srvcVO = new ServicioVO();
                     srvcVO.setEntiId(tpsrVO.getId());
@@ -330,7 +340,14 @@ public final class ServicioImporterBO {
 
                     break;
                 case S:
-                    final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(entiVO.getId());
+                    TipoSubservicioVO tpssVO = null;
+
+                    try {
+                        tpssVO = TipoSubservicioProxy.select(entiVO.getId());
+                    } catch (final InstanceNotFoundException ex) {
+                        throw new Error(ex);
+                    }
+
                     final SubservicioVO ssrvVO = new SubservicioVO();
                     srvcVO = new ServicioVO();
                     servId = rs.getLong(i++);

@@ -10,6 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -53,73 +54,77 @@ public final class ServicioXls extends BaseXls {
      *             Signals that an I/O exception has occurred.
      */
     public void generarServicios(final List<ServicioVO> srvcList, final TipoServicioVO tpsrVO, final OutputStream stream)
-            throws IOException {
+            throws InternalErrorException {
         Preconditions.checkNotNull(srvcList);
         Preconditions.checkNotNull(tpsrVO);
         Preconditions.checkNotNull(stream);
 
-        final HSSFWorkbook workbook = new HSSFWorkbook();
-        final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpsrVO.getId()));
+        try {
+            final HSSFWorkbook workbook = new HSSFWorkbook();
+            final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpsrVO.getId()));
 
-        // Cabecera XLS
-        int rownum = 0;
+            // Cabecera XLS
+            int rownum = 0;
 
-        final HSSFRow rowhead = sheet.createRow(rownum++);
-        int i = 0;
+            final HSSFRow rowhead = sheet.createRow(rownum++);
+            int i = 0;
 
-        setCellValue(rowhead, i++, bundle.getString("srvc_tpsr"));
-        setCellValue(rowhead, i++, bundle.getString("srvc_subp"));
-        setCellValue(rowhead, i++, bundle.getString("srvc_anno"));
-        setCellValue(rowhead, i++, bundle.getString("srvc_numero"));
-        setCellValue(rowhead, i++, bundle.getString("srvc_falta"));
-        setCellValue(rowhead, i++, bundle.getString("srvc_fref"));
-
-        if (tpsrVO.getTpdtEstado() != null) {
-            setCellValue(rowhead, i++, bundle.getString("srvc_estado"));
-        }
-
-        if (tpsrVO.getTemporal()) {
-            setCellValue(rowhead, i++, bundle.getString("srvc_fini"));
-            setCellValue(rowhead, i++, bundle.getString("srvc_ffin"));
-        }
-
-        for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
-            setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
-        }
-
-        // Filas XLS
-        for (final ServicioVO srvcVO : srvcList) {
-            final HSSFRow row = sheet.createRow(rownum++);
-
-            int j = 0;
-
-            setCellValue(row, j++, bundle.getString("enti_" + tpsrVO.getId()));
-            setCellValue(row, j++, srvcVO.getSubp().getParametro());
-            setCellValue(row, j++, srvcVO.getAnno());
-            setCellValue(row, j++, srvcVO.getNumero());
-            setCellValue(row, j++, srvcVO.getFalta());
-            setCellValue(row, j++, srvcVO.getFref());
+            setCellValue(rowhead, i++, bundle.getString("srvc_tpsr"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_subp"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_anno"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_numero"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_falta"));
+            setCellValue(rowhead, i++, bundle.getString("srvc_fref"));
 
             if (tpsrVO.getTpdtEstado() != null) {
-                setCellValue(row, j++, srvcVO.getEstado());
+                setCellValue(rowhead, i++, bundle.getString("srvc_estado"));
             }
 
             if (tpsrVO.getTemporal()) {
-                setCellValue(row, j++, srvcVO.getFini());
-                setCellValue(row, j++, srvcVO.getFfin());
+                setCellValue(rowhead, i++, bundle.getString("srvc_fini"));
+                setCellValue(rowhead, i++, bundle.getString("srvc_ffin"));
             }
 
             for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
-                final ItemDatoVO itdt = srvcVO.getItdtMap().get(entd.getTpdt().getId());
-
-                setCellValue(row, j, entd, itdt);
-
-                j++;
+                setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));
             }
-        }
 
-        autoSizeColumns(sheet, rowhead);
-        workbook.write(stream);
+            // Filas XLS
+            for (final ServicioVO srvcVO : srvcList) {
+                final HSSFRow row = sheet.createRow(rownum++);
+
+                int j = 0;
+
+                setCellValue(row, j++, bundle.getString("enti_" + tpsrVO.getId()));
+                setCellValue(row, j++, srvcVO.getSubp().getParametro());
+                setCellValue(row, j++, srvcVO.getAnno());
+                setCellValue(row, j++, srvcVO.getNumero());
+                setCellValue(row, j++, srvcVO.getFalta());
+                setCellValue(row, j++, srvcVO.getFref());
+
+                if (tpsrVO.getTpdtEstado() != null) {
+                    setCellValue(row, j++, srvcVO.getEstado());
+                }
+
+                if (tpsrVO.getTemporal()) {
+                    setCellValue(row, j++, srvcVO.getFini());
+                    setCellValue(row, j++, srvcVO.getFfin());
+                }
+
+                for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
+                    final ItemDatoVO itdt = srvcVO.getItdtMap().get(entd.getTpdt().getId());
+
+                    setCellValue(row, j, entd, itdt);
+
+                    j++;
+                }
+            }
+
+            autoSizeColumns(sheet, rowhead);
+            workbook.write(stream);
+        } catch (final IOException ex) {
+            throw new InternalErrorException(ex);
+        }
     }
 
 }

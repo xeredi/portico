@@ -9,7 +9,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
-import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -67,9 +67,11 @@ public final class ServicioAction extends ItemAction {
      * Alta.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("srvc-create")
-    public String alta() {
+    public String alta() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
 
@@ -91,11 +93,11 @@ public final class ServicioAction extends ItemAction {
      * Modificar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "srvc-edit")
-    public String modificar() throws InstanceNotFoundException {
+    public String modificar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -116,11 +118,11 @@ public final class ServicioAction extends ItemAction {
      * Duplicar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("srvc-duplicate")
-    public String duplicar() throws InstanceNotFoundException {
+    public String duplicar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
@@ -141,13 +143,11 @@ public final class ServicioAction extends ItemAction {
      * Guardar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("srvc-save")
-    public String guardar() throws InstanceNotFoundException, DuplicateInstanceException {
+    public String guardar() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getEntiId());
@@ -204,11 +204,11 @@ public final class ServicioAction extends ItemAction {
      * Borrar.
      *
      * @return the string
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("srvc-remove")
-    public String borrar() throws InstanceNotFoundException {
+    public String borrar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 

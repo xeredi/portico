@@ -13,6 +13,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -76,7 +77,13 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
         PATH_PROCESADO = ConfigurationProxy.getString(ConfigurationKey.pesca_files_procesado_home);
         PATH_ERRONEO = ConfigurationProxy.getString(ConfigurationKey.pesca_files_erroneo_home);
 
-        final TipoServicioVO tpsrVO = TipoServicioProxy.select(Entidad.MANIFIESTO_PESCA.getId());
+        TipoServicioVO tpsrVO = null;
+
+        try {
+            tpsrVO = TipoServicioProxy.select(Entidad.MANIFIESTO_PESCA.getId());
+        } catch (final InstanceNotFoundException ex) {
+            throw new Error(ex);
+        }
 
         for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
             final String pathArchivo = PATH_ENTRADA + "/" + prarVO.getNombre();
@@ -311,10 +318,14 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
             return null;
         }
 
-        final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
+        try {
+            final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
-        if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-            addError(MensajeCodigo.G_004, "linea:" + lineNumber + ", CR:" + tipoDato.name() + ", codigo:" + codigo);
+            if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
+                addError(MensajeCodigo.G_004, "linea:" + lineNumber + ", CR:" + tipoDato.name() + ", codigo:" + codigo);
+            }
+        } catch (final InstanceNotFoundException ex) {
+            throw new Error(ex);
         }
 
         return codigo;

@@ -421,103 +421,107 @@ public class PeriodoProcesoBO {
      */
     private final List<EstadisticaVO> obtenerEstadisticas(final PeriodoProcesoVO peprVO, final Long tpesId,
             final List<EstadisticaAgregadoVO> esagList) {
-        final IgBO igBO = new IgBO();
-        final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(tpesId);
-        final List<EstadisticaVO> estdList = new ArrayList<>();
+        try {
+            final IgBO igBO = new IgBO();
+            final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(tpesId);
+            final List<EstadisticaVO> estdList = new ArrayList<>();
 
-        for (final EstadisticaAgregadoVO esagVO : esagList) {
-            final EstadisticaVO estdVO = new EstadisticaVO();
-            final ParametroVO autpVO = new ParametroVO();
+            for (final EstadisticaAgregadoVO esagVO : esagList) {
+                final EstadisticaVO estdVO = new EstadisticaVO();
+                final ParametroVO autpVO = new ParametroVO();
 
-            autpVO.setId(esagVO.getSubpId());
+                autpVO.setId(esagVO.getSubpId());
 
-            estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            estdVO.setSubp(autpVO);
-            estdVO.setPepr(peprVO);
+                estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                estdVO.setSubp(autpVO);
+                estdVO.setPepr(peprVO);
 
-            if (tpesVO.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
-                    final Object value = esagVO.getEsdtMap().get(entd.getTpdt().getCodigo());
-                    final ItemDatoVO itdtVO = new ItemDatoVO();
+                if (tpesVO.getEntdList() != null) {
+                    for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
+                        final Object value = esagVO.getEsdtMap().get(entd.getTpdt().getCodigo());
+                        final ItemDatoVO itdtVO = new ItemDatoVO();
 
-                    itdtVO.setTpdtId(entd.getTpdt().getId());
-                    estdVO.getItdtMap().put(entd.getTpdt().getId(), itdtVO);
+                        itdtVO.setTpdtId(entd.getTpdt().getId());
+                        estdVO.getItdtMap().put(entd.getTpdt().getId(), itdtVO);
 
-                    if (value == null) {
-                        if (entd.getTpdt().getTipoElemento() == TipoElemento.BO) {
-                            itdtVO.setCantidadEntera(0L);
-                        }
-                    } else {
-                        switch (entd.getTpdt().getTipoElemento()) {
-                        case BO:
-                        case NE:
-                            if (value instanceof BigDecimal) {
-                                itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
-                            } else if (value instanceof Long) {
-                                itdtVO.setCantidadEntera(((Long) value).longValue());
-                            } else {
-                                itdtVO.setCantidadEntera(((Double) value).longValue());
+                        if (value == null) {
+                            if (entd.getTpdt().getTipoElemento() == TipoElemento.BO) {
+                                itdtVO.setCantidadEntera(0L);
                             }
+                        } else {
+                            switch (entd.getTpdt().getTipoElemento()) {
+                            case BO:
+                            case NE:
+                                if (value instanceof BigDecimal) {
+                                    itdtVO.setCantidadEntera(((BigDecimal) value).longValue());
+                                } else if (value instanceof Long) {
+                                    itdtVO.setCantidadEntera(((Long) value).longValue());
+                                } else {
+                                    itdtVO.setCantidadEntera(((Double) value).longValue());
+                                }
 
-                            break;
-                        case ND:
-                            if (value instanceof BigDecimal) {
-                                itdtVO.setCantidadDecimal(((BigDecimal) value).doubleValue());
-                            } else {
-                                itdtVO.setCantidadDecimal(((Double) value).doubleValue());
+                                break;
+                            case ND:
+                                if (value instanceof BigDecimal) {
+                                    itdtVO.setCantidadDecimal(((BigDecimal) value).doubleValue());
+                                } else {
+                                    itdtVO.setCantidadDecimal(((Double) value).doubleValue());
+                                }
+
+                                break;
+                            case PR:
+                                final ParametroVO prmtVO = new ParametroVO();
+
+                                if (value instanceof BigDecimal) {
+                                    prmtVO.setId(((BigDecimal) value).longValue());
+                                } else {
+                                    prmtVO.setId(((Long) value).longValue());
+                                }
+
+                                itdtVO.setPrmt(prmtVO);
+
+                                break;
+                            case SR:
+                                final ServicioVO srvcVO = new ServicioVO();
+
+                                if (value instanceof BigDecimal) {
+                                    srvcVO.setId(((BigDecimal) value).longValue());
+                                } else {
+                                    srvcVO.setId(((Long) value).longValue());
+                                }
+
+                                itdtVO.setSrvc(srvcVO);
+
+                                break;
+                            case CR:
+                            case TX:
+                                itdtVO.setCadena((String) value);
+
+                                break;
+                            case FE:
+                            case FH:
+                                /*
+                                 * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP) value).dateValue()); }
+                                 * else { itdtVO.setFecha((Date) value); }
+                                 */
+                                itdtVO.setFecha((Date) value);
+
+                                break;
+
+                            default:
+                                throw new Error("TipoElemento no encontrado: " + entd.getTpdt().getTipoElemento());
                             }
-
-                            break;
-                        case PR:
-                            final ParametroVO prmtVO = new ParametroVO();
-
-                            if (value instanceof BigDecimal) {
-                                prmtVO.setId(((BigDecimal) value).longValue());
-                            } else {
-                                prmtVO.setId(((Long) value).longValue());
-                            }
-
-                            itdtVO.setPrmt(prmtVO);
-
-                            break;
-                        case SR:
-                            final ServicioVO srvcVO = new ServicioVO();
-
-                            if (value instanceof BigDecimal) {
-                                srvcVO.setId(((BigDecimal) value).longValue());
-                            } else {
-                                srvcVO.setId(((Long) value).longValue());
-                            }
-
-                            itdtVO.setSrvc(srvcVO);
-
-                            break;
-                        case CR:
-                        case TX:
-                            itdtVO.setCadena((String) value);
-
-                            break;
-                        case FE:
-                        case FH:
-                            /*
-                             * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP) value).dateValue()); }
-                             * else { itdtVO.setFecha((Date) value); }
-                             */
-                            itdtVO.setFecha((Date) value);
-
-                            break;
-
-                        default:
-                            throw new Error("TipoElemento no encontrado: " + entd.getTpdt().getTipoElemento());
                         }
                     }
                 }
+
+                estdList.add(estdVO);
             }
 
-            estdList.add(estdVO);
+            return estdList;
+        } catch (final InstanceNotFoundException ex) {
+            throw new Error(ex);
         }
-
-        return estdList;
     }
 
     /**

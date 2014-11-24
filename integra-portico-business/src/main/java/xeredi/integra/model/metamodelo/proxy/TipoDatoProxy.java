@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoDatoBO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
@@ -57,9 +59,15 @@ public final class TipoDatoProxy {
      * @param id
      *            the id
      * @return the tipo dato vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public static TipoDatoVO select(final Long id) {
+    public static TipoDatoVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
+
+        if (!TIPO_DATO_MAP.containsKey(id)) {
+            throw new InstanceNotFoundException(MessageI18nKey.tpdt, id);
+        }
 
         return TIPO_DATO_MAP.get(id);
     }

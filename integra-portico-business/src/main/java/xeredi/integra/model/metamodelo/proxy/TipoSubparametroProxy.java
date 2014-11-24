@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
@@ -57,12 +59,14 @@ public final class TipoSubparametroProxy {
      * @param id
      *            the id
      * @return the tipo subparametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public static TipoSubparametroVO select(final Long id) {
+    public static TipoSubparametroVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
         if (!TIPO_SUBPARAMETRO_MAP.containsKey(id)) {
-            throw new Error("Tipo de subparametro no encontrado: " + id);
+            throw new InstanceNotFoundException(MessageI18nKey.tpsp, id);
         }
 
         return TIPO_SUBPARAMETRO_MAP.get(id);
@@ -81,7 +85,11 @@ public final class TipoSubparametroProxy {
             // tpspVO.setTppr(TipoParametroProxy.select(tpspVO.getTppr().getId()));
 
             if (tpspVO.getTpprAsociado() != null) {
-                tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
+                try {
+                    tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
+                } catch (final InstanceNotFoundException ex) {
+                    throw new Error(ex);
+                }
             }
 
             TIPO_SUBPARAMETRO_MAP.put(tpspVO.getId(), tpspVO);

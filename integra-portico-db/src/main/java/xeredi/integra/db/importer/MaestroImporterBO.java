@@ -29,6 +29,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
@@ -193,9 +194,11 @@ public final class MaestroImporterBO {
      *             the sQL exception
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     private void importTipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
-            final StringBuffer sql) throws SQLException, DuplicateInstanceException {
+            final StringBuffer sql) throws SQLException, DuplicateInstanceException, InstanceNotFoundException {
         final ParametroBO prmtBO = new ParametroBO();
         final TipoParametroVO tpprVO = TipoParametroProxy.select(entidad.getId());
         final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprVO.getId());
@@ -310,9 +313,11 @@ public final class MaestroImporterBO {
      *             the SQL exception
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     private void importSubtipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
-            final StringBuffer sql) throws SQLException, DuplicateInstanceException {
+            final StringBuffer sql) throws SQLException, DuplicateInstanceException, InstanceNotFoundException {
         final SubparametroBO sprmBO = new SubparametroBO();
         final TipoSubparametroVO tpspVO = TipoSubparametroProxy.select(entidad.getId());
         final TipoParametroVO tpprPadreVO = TipoParametroProxy.select(tpspVO.getTpprId());

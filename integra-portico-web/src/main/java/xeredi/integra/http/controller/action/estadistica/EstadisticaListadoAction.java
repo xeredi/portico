@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
@@ -53,9 +54,11 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      * Editar filtro.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("estd-filter")
-    public String filtro() {
+    public String filtro() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
         Preconditions.checkNotNull(itemCriterio.getPepr());
@@ -73,9 +76,11 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
      * Listado.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("estd-list")
-    public String listado() {
+    public String listado() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
         Preconditions.checkNotNull(itemCriterio.getPepr());
@@ -98,8 +103,11 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
 
     /**
      * Load label values map.
+     *
+     * @throws ApplicationException
+     *             the application exception
      */
-    protected final void loadLabelValuesMap() {
+    protected final void loadLabelValuesMap() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
         Preconditions.checkNotNull(itemCriterio.getPepr());

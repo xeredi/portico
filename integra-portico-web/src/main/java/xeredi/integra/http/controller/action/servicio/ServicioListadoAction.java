@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -50,9 +51,11 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * Editar filtro.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("srvc-filter")
-    public String filtro() {
+    public String filtro() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
@@ -67,9 +70,11 @@ public final class ServicioListadoAction extends ItemListadoAction {
      * Listado.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("srvc-list")
-    public String listado() {
+    public String listado() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
@@ -91,8 +96,11 @@ public final class ServicioListadoAction extends ItemListadoAction {
 
     /**
      * Load label values map.
+     *
+     * @throws ApplicationException
+     *             the application exception
      */
-    protected final void loadLabelValuesMap() {
+    protected final void loadLabelValuesMap() throws ApplicationException {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getIdioma());
         Preconditions.checkNotNull(itemCriterio.getEntiId());

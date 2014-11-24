@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -59,12 +61,14 @@ public final class EntidadProxy {
      * @param id
      *            the id
      * @return the entidad vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public static EntidadVO select(final Long id) {
+    public static EntidadVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
         if (!ENTIDAD_MAP.containsKey(id)) {
-            throw new Error("Entidad no encontrada: " + id);
+            throw new InstanceNotFoundException(MessageI18nKey.enti, id);
         }
 
         return ENTIDAD_MAP.get(id);

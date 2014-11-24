@@ -14,6 +14,8 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class MessageI18nBO.
@@ -43,6 +45,8 @@ public final class MessageI18nBO {
      * @return the map
      */
     public Map<MessageI18nKey, String> selectKeyValueMap(final Locale locale, final boolean externalsOnly) {
+        Preconditions.checkNotNull(locale);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
 
@@ -92,6 +96,8 @@ public final class MessageI18nBO {
      * @return the list
      */
     public List<MessageI18nVO> selectList(final MessageI18nKey key) {
+        Preconditions.checkNotNull(key);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
             final MessageI18nCriterioVO m18nCriterioVO = new MessageI18nCriterioVO();

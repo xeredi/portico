@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
@@ -57,12 +59,14 @@ public final class TipoSubservicioProxy {
      * @param id
      *            the id
      * @return the tipo subservicio vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public static TipoSubservicioVO select(final Long id) {
+    public static TipoSubservicioVO select(final Long id) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
         if (!TIPO_SUBSERVICIO_MAP.containsKey(id)) {
-            throw new Error("Tipo de subservicio no encontrado: " + id);
+            throw new InstanceNotFoundException(MessageI18nKey.tpss, id);
         }
 
         return TIPO_SUBSERVICIO_MAP.get(id);
@@ -78,7 +82,11 @@ public final class TipoSubservicioProxy {
 
         for (final TipoSubservicioVO tpssVO : tpssList) {
             if (tpssVO.getTpdtEstado() != null) {
-                tpssVO.setTpdtEstado(TipoDatoProxy.select(tpssVO.getTpdtEstado().getId()));
+                try {
+                    tpssVO.setTpdtEstado(TipoDatoProxy.select(tpssVO.getTpdtEstado().getId()));
+                } catch (final InstanceNotFoundException ex) {
+                    throw new Error(ex);
+                }
             }
 
             TIPO_SUBSERVICIO_MAP.put(tpssVO.getId(), tpssVO);

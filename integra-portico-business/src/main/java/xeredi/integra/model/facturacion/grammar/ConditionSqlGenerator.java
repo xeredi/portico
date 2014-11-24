@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
@@ -135,7 +136,14 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
     public String visitPath(final PathContext ctx) {
         String sqlPath = "";
 
-        final EntidadVO entiBase = EntidadProxy.select(reglaVO.getRglv().getEnti().getId());
+        EntidadVO entiBase = null;
+
+        try {
+            entiBase = EntidadProxy.select(reglaVO.getRglv().getEnti().getId());
+        } catch (final InstanceNotFoundException ex) {
+            throw new Error(ex);
+        }
+
         EntidadVO entiElem = entiBase;
 
         boolean isFirst = true;
@@ -159,9 +167,13 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         throw new Error("Solo se puede llegar al servicio desde un subservicio");
                     }
 
-                    final TipoSubservicioVO tpss = TipoSubservicioProxy.select(entiElem.getId());
+                    try {
+                        final TipoSubservicioVO tpss = TipoSubservicioProxy.select(entiElem.getId());
 
-                    entiElem = TipoServicioProxy.select(tpss.getTpsrId());
+                        entiElem = TipoServicioProxy.select(tpss.getTpsrId());
+                    } catch (final InstanceNotFoundException ex) {
+                        throw new Error(ex);
+                    }
 
                     sqlElement += "SELECT srvc_pk FROM tbl_servicio_srvc WHERE srvc_pk = ";
                     sqlElement += isFirst ? "item.ssrv_srvc_pk" : "#{any}";
@@ -174,7 +186,11 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
 
                     final Entidad entidad = Entidad.valueOf(pathElementCtx.arg.getText());
 
-                    entiElem = EntidadProxy.select(entidad.getId());
+                    try {
+                        entiElem = EntidadProxy.select(entidad.getId());
+                    } catch (final InstanceNotFoundException ex) {
+                        throw new Error(ex);
+                    }
 
                     sqlElement += "SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = "
                             + entiElem.getId() + ") AND ssss_ssrvh_pk = ";
@@ -248,13 +264,13 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND srdt_srvc_pk = ";
+                        + " AND srdt_srvc_pk = ";
                         sqlElement += isFirst ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
                                 : "item.ssrv_srvc_pk" : "ANY(#{any})";
                         break;
                     case S:
                         sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
-                                + " AND ssdt_ssrv_pk = ";
+                        + " AND ssdt_ssrv_pk = ";
                         sqlElement += isFirst ? "item.ssrv_pk" : "ANY(#{any})";
 
                         break;
