@@ -1,4 +1,6 @@
-﻿DELETE FROM tbl_parametro_dato_prdt;
+
+
+DELETE FROM tbl_parametro_dato_prdt;
 -- DELETE FROM tbl_parametro_i18n_p18n;
 DELETE FROM tbl_parametro_version_prvr;
 DELETE FROM tbl_parametro_prmt;

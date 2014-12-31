@@ -3,7 +3,7 @@
 }
 
 body {
-	font-family: Verdana /*, sans-serif*/;
+	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
 p, label, li, .btn, .form-control, .input-group-sm>.form-control,

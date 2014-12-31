@@ -2,140 +2,18 @@
 -- Migration SQL that makes the change goes here.
 
 
--- tbl_conf_clave_cncl
-CREATE TABLE portico.tbl_conf_clave_cncl
-(
-	cncl_pk BIGINT NOT NULL
-	, cncl_clave VARCHAR(80) NOT NULL
-	, cncl_tipo_valor VARCHAR(2) NOT NULL
-	, cncl_valor_defecto VARCHAR(200) NOT NULL
+-- Tabla Unica para i18n
+CREATE TABLE portico.tbl_i18n_i18n (
+	i18n_pref VARCHAR(4) NOT NULL
+	, i18n_ext_pk BIGINT NOT NULL
+	, i18n_lang VARCHAR(5) NOT NULL
+	, i18n_text VARCHAR(350) NOT NULL
 
-	, CONSTRAINT pk_cncl PRIMARY KEY (cncl_pk)
-	, CONSTRAINT uq_cncl UNIQUE (cncl_clave)
-)
-\
+	, CONSTRAINT pk_i18n PRIMARY KEY (i18n_pref, i18n_ext_pk, i18n_lang)
+)\
 
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_i18n_i18n TO portico\
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_conf_clave_cncl TO portico\
-
-COMMENT ON TABLE portico.tbl_conf_clave_cncl IS 'Claves de Parametros de Configuracion'\
-COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_pk IS 'Identificador de clave'\
-COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_tipo_valor IS 'Tipo de Valor del parametro (Fecha, numero, ...)'\
-COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_clave IS 'Clave del parametro'\
-COMMENT ON COLUMN portico.tbl_conf_clave_cncl.cncl_valor_defecto IS 'Valor por defecto del parametro'\
-
-
-
--- tbl_conf_clave_i18n_cnci
-CREATE TABLE portico.tbl_conf_clave_i18n_cnci
-(
-	cnci_pk BIGINT NOT NULL
-	, cnci_clave VARCHAR(80) NOT NULL
-	, cnci_valor_defecto VARCHAR(200) NOT NULL
-
-	, CONSTRAINT pk_cnci PRIMARY KEY (cnci_pk)
-	, CONSTRAINT uq_cnci UNIQUE (cnci_clave)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_conf_clave_i18n_cnci TO portico\
-
-COMMENT ON TABLE portico.tbl_conf_clave_i18n_cnci IS 'Claves de Configuracion de idioma'\
-COMMENT ON COLUMN portico.tbl_conf_clave_i18n_cnci.cnci_pk IS 'Identificador de clave de idioma'\
-COMMENT ON COLUMN portico.tbl_conf_clave_i18n_cnci.cnci_clave IS 'Identificador de clave'\
-COMMENT ON COLUMN portico.tbl_conf_clave_i18n_cnci.cnci_valor_defecto IS 'Valor por Defecto'\
-
-
-
--- tbl_configuracion_idioma_cnid
-CREATE TABLE portico.tbl_configuracion_idioma_cnid
-(
-	cnid_pk BIGINT NOT NULL
-	, cnid_codigo VARCHAR(5) NOT NULL
-	, cnid_descripcion VARCHAR(100)
-
-	, CONSTRAINT pk_cnid PRIMARY KEY (cnid_pk)
-	, CONSTRAINT uq_cnid UNIQUE (cnid_codigo)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_configuracion_idioma_cnid TO portico\
-
-COMMENT ON TABLE portico.tbl_configuracion_idioma_cnid IS 'Configuraciones de idioma'\
-COMMENT ON COLUMN portico.tbl_configuracion_idioma_cnid.cnid_pk IS 'Identificador de configuracion de idioma'\
-COMMENT ON COLUMN portico.tbl_configuracion_idioma_cnid.cnid_codigo IS 'Codigo de configuracion de idioma'\
-COMMENT ON COLUMN portico.tbl_configuracion_idioma_cnid.cnid_descripcion IS 'Descripcion de configuracion de idioma'\
-
-
-
--- tbl_configuracion_entorno_cnen
-CREATE TABLE portico.tbl_configuracion_entorno_cnen
-(
-	cnen_pk BIGINT NOT NULL
-	, cnen_codigo VARCHAR(8) NOT NULL
-	, cnen_nombre VARCHAR(50) NOT NULL
-
-	, CONSTRAINT pk_cnen PRIMARY KEY (cnen_pk)
-	, CONSTRAINT uq_cnen UNIQUE (cnen_codigo)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_configuracion_entorno_cnen TO portico\
-
-COMMENT ON TABLE portico.tbl_configuracion_entorno_cnen IS 'Entornos de Configuracion'\
-COMMENT ON COLUMN portico.tbl_configuracion_entorno_cnen.cnen_pk IS 'Identificador de entorno'\
-COMMENT ON COLUMN portico.tbl_configuracion_entorno_cnen.cnen_codigo IS 'Codigo de entorno'\
-COMMENT ON COLUMN portico.tbl_configuracion_entorno_cnen.cnen_nombre IS 'Nombre de entorno'\
-
-
-
--- tbl_configuracion_valor_cnvl
-CREATE TABLE portico.tbl_configuracion_valor_cnvl
-(
-	cnvl_cnen_pk BIGINT NOT NULL
-	, cnvl_cncl_pk BIGINT NOT NULL
-	, cnvl_valor VARCHAR(200) NOT NULL
-
-	, CONSTRAINT pk_cnvl PRIMARY KEY (cnvl_cnen_pk, cnvl_cncl_pk)
-
-	, CONSTRAINT fk_cnvl_cnen_pk FOREIGN KEY (cnvl_cnen_pk)
-		REFERENCES portico.tbl_configuracion_entorno_cnen (cnen_pk)
-	, CONSTRAINT fk_cnvl_cncl_pk FOREIGN KEY (cnvl_cncl_pk)
-		REFERENCES portico.tbl_conf_clave_cncl (cncl_pk)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_configuracion_valor_cnvl TO portico\
-
-COMMENT ON TABLE portico.tbl_configuracion_valor_cnvl IS 'Valores de parametros de configuracion'\
-COMMENT ON COLUMN portico.tbl_configuracion_valor_cnvl.cnvl_cnen_pk IS 'Identificador de entorno'\
-COMMENT ON COLUMN portico.tbl_configuracion_valor_cnvl.cnvl_cncl_pk IS 'Identificador de clave'\
-COMMENT ON COLUMN portico.tbl_configuracion_valor_cnvl.cnvl_valor IS 'Valor de parametro'\
-
-
-
--- tbl_conf_valor_i18n_cnvi
-CREATE TABLE portico.tbl_conf_valor_i18n_cnvi
-(
-	cnvi_cnid_pk BIGINT NOT NULL
-	, cnvi_cnci_pk BIGINT NOT NULL
-	, cnvi_valor VARCHAR(200) NOT NULL
-
-	, CONSTRAINT pk_cnvi PRIMARY KEY (cnvi_cnid_pk, cnvi_cnci_pk)
-
-	, CONSTRAINT fk_cnvi_cnid_pk FOREIGN KEY (cnvi_cnid_pk)
-		REFERENCES portico.tbl_configuracion_idioma_cnid (cnid_pk)
-	, CONSTRAINT fk_cnvi_cnci_pk FOREIGN KEY (cnvi_cnci_pk)
-		REFERENCES portico.tbl_conf_clave_i18n_cnci (cnci_pk)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_conf_valor_i18n_cnvi TO portico\
-
-COMMENT ON TABLE portico.tbl_conf_valor_i18n_cnvi IS 'Valores de parametros de configuracion de idioma'\
-COMMENT ON COLUMN portico.tbl_conf_valor_i18n_cnvi.cnvi_cnid_pk IS 'Identificador de Configuracion de Idioma'\
-COMMENT ON COLUMN portico.tbl_conf_valor_i18n_cnvi.cnvi_cnci_pk IS 'Identificador de Parametro de Configuracion de Idioma'\
-COMMENT ON COLUMN portico.tbl_conf_valor_i18n_cnvi.cnvi_valor IS 'Valor de Parametro'\
 
 
 
@@ -240,11 +118,9 @@ CREATE TABLE portico.tbl_entidad_enti
 	, enti_cmd_baja int NOT NULL
 	, enti_cmd_edicion int NOT NULL
 	, enti_cmd_duplicado int NOT NULL
-	, enti_nombre VARCHAR(50) NOT NULL
 
 	, CONSTRAINT pk_enti PRIMARY KEY (enti_pk)
 	, CONSTRAINT uq_enti_codigo UNIQUE (enti_codigo)
-	, CONSTRAINT uq_enti_nombre UNIQUE (enti_nombre)
 )
 \
 
@@ -258,7 +134,6 @@ COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_alta IS 'Comando de alta Hab
 COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_baja IS 'Comando de baja Habilitado?'\
 COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_edicion IS 'Comando de edicion Habilitado?'\
 COMMENT ON COLUMN portico.tbl_entidad_enti.enti_cmd_duplicado IS 'Comando de duplicado Habilitado?'\
-COMMENT ON COLUMN portico.tbl_entidad_enti.enti_nombre IS 'Nombre de Entidad'\
 
 
 
@@ -294,7 +169,6 @@ CREATE TABLE portico.tbl_tipo_dato_tpdt
 (
 	tpdt_pk BIGINT NOT NULL
 	, tpdt_codigo VARCHAR(50) NOT NULL
-	, tpdt_nombre VARCHAR(50) NOT NULL
 	, tpdt_tipo_html VARCHAR(2) NOT NULL
 	, tpdt_tipo_elemento VARCHAR(2) NOT NULL
 	, tpdt_enti_pk BIGINT
@@ -312,7 +186,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_tipo_dato_tpdt TO portico\
 COMMENT ON TABLE portico.tbl_tipo_dato_tpdt IS 'Tipos de dato de la aplicacion'\
 COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_pk IS 'Identificador de Tipo de Dato'\
 COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_codigo IS 'Codigo de Tipo de Dato'\
-COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_nombre IS 'Nombre de Tipo de Dato'\
 COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_tipo_html IS 'Tipo Html con el que se representa el Tipo de Dato'\
 COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_tipo_elemento IS 'Tipo de elemento que almacena el tipo de dato. Puede tomar los valores: L (Long), D (Double), S (String), T (Date), B (Boolean), P (Parametro)'\
 COMMENT ON COLUMN portico.tbl_tipo_dato_tpdt.tpdt_enti_pk IS 'Entidad asociada al tipo de dato'\
@@ -345,33 +218,16 @@ COMMENT ON COLUMN portico.tbl_codigo_ref_cdrf.cdrf_orden IS 'Orden de Visualiaza
 
 
 
--- tbl_codigo_ref_i18n_cdri
-CREATE TABLE portico.tbl_codigo_ref_i18n_cdri
-(
-	cdri_cdrf_pk BIGINT NOT NULL
-	, cdri_idioma VARCHAR(5) NOT NULL
-	, cdri_texto VARCHAR(100) NOT NULL
-
-	, CONSTRAINT pk_cdri PRIMARY KEY (cdri_cdrf_pk, cdri_idioma)
-
-	, CONSTRAINT fk_cdri_cdrf_pk FOREIGN KEY (cdri_cdrf_pk)
-		REFERENCES portico.tbl_codigo_ref_cdrf (cdrf_pk)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_codigo_ref_i18n_cdri TO portico\
-
-
-
 -- tbl_entidad_accion_enac
 CREATE TABLE portico.tbl_entidad_accion_enac
 (
-	enac_enti_pk BIGINT NOT NULL
+	enac_pk BIGINT NOT NULL
+	, enac_enti_pk BIGINT NOT NULL
 	, enac_path VARCHAR(30) NOT NULL
-	, enac_etiqueta VARCHAR(30) NOT NULL
 	, enac_orden int NOT NULL
 
-	, CONSTRAINT pk_enac PRIMARY KEY (enac_enti_pk, enac_path)
+	, CONSTRAINT pk_enac PRIMARY KEY (enac_pk)
+	, CONSTRAINT uq_enac UNIQUE (enac_enti_pk, enac_path)
 
 	, CONSTRAINT fk_enac_enti_pk FOREIGN KEY (enac_enti_pk)
 		REFERENCES portico.tbl_entidad_enti (enti_pk)
@@ -381,9 +237,9 @@ CREATE TABLE portico.tbl_entidad_accion_enac
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_accion_enac TO portico\
 
 COMMENT ON TABLE portico.tbl_entidad_accion_enac IS 'Acciones asociadas a entidades'\
+COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_pk IS 'Identificador de Accion'\
 COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_enti_pk IS 'Identificador de Entidad'\
 COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_path IS 'Path para construir la URL de la accion'\
-COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_etiqueta IS 'Etiqueta de visualizacion de la accion en Web'\
 COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_enti_pk IS 'Orden de aparacion de la accion dentro de las acciones de una entidad'\
 
 
@@ -391,11 +247,12 @@ COMMENT ON COLUMN portico.tbl_entidad_accion_enac.enac_enti_pk IS 'Orden de apar
 -- tbl_entidad_grupo_dato_engd
 CREATE TABLE portico.tbl_entidad_grupo_dato_engd
 (
-	engd_enti_pk BIGINT NOT NULL
+	engd_pk BIGINT NOT NULL
+	, engd_enti_pk BIGINT NOT NULL
 	, engd_orden int NOT NULL
-	, engd_etiqueta VARCHAR(30) NOT NULL
 
-	, CONSTRAINT pk_engd PRIMARY KEY (engd_enti_pk, engd_orden)
+	, CONSTRAINT pk_engd PRIMARY KEY (engd_pk)
+	, CONSTRAINT uk_engd UNIQUE (engd_enti_pk, engd_orden)
 
 	, CONSTRAINT fk_engd_enti_pk FOREIGN KEY (engd_enti_pk)
 		REFERENCES portico.tbl_entidad_enti (enti_pk)
@@ -406,16 +263,17 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_grupo_dato_engd TO p
 \
 
 COMMENT ON TABLE portico.tbl_entidad_grupo_dato_engd IS 'Grupos de datos en los que se organizan las entidades'\
+COMMENT ON COLUMN portico.tbl_entidad_grupo_dato_engd.engd_pk IS 'Identificador de Grupo de Datos'\
 COMMENT ON COLUMN portico.tbl_entidad_grupo_dato_engd.engd_enti_pk IS 'Identificador de Entidad'\
 COMMENT ON COLUMN portico.tbl_entidad_grupo_dato_engd.engd_orden IS 'Orden del grupo de datos dentro de la entidad'\
-COMMENT ON COLUMN portico.tbl_entidad_grupo_dato_engd.engd_etiqueta IS 'Etiqueta del grupo de datos'\
 
 
 
 -- tbl_entidad_tipo_dato_entd
 CREATE TABLE portico.tbl_entidad_tipo_dato_entd
 (
-	entd_enti_pk BIGINT NOT NULL
+	entd_pk BIGINT NOT NULL
+	, entd_enti_pk BIGINT NOT NULL
 	, entd_tpdt_pk BIGINT NOT NULL
 	, entd_grupo int NOT NULL
 	, entd_fila int NOT NULL
@@ -425,10 +283,9 @@ CREATE TABLE portico.tbl_entidad_tipo_dato_entd
 	, entd_gridable int NOT NULL
 	, entd_filtrable int NOT NULL
 	, entd_valor_defecto VARCHAR(30)
-	, entd_etiqueta VARCHAR(100) NOT NULL
 
-	, CONSTRAINT pk_entd PRIMARY KEY (entd_enti_pk, entd_tpdt_pk)
-	, CONSTRAINT uq_entd_etiqueta UNIQUE (entd_enti_pk, entd_grupo, entd_etiqueta)
+	, CONSTRAINT pk_entd PRIMARY KEY (entd_pk)
+	, CONSTRAINT uq_entd UNIQUE (entd_enti_pk, entd_tpdt_pk)
 
 	, CONSTRAINT fk_entd_enti_pk FOREIGN KEY (entd_enti_pk)
 		REFERENCES portico.tbl_entidad_enti (enti_pk)
@@ -440,6 +297,7 @@ CREATE TABLE portico.tbl_entidad_tipo_dato_entd
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_tipo_dato_entd TO portico\
 
 COMMENT ON TABLE portico.tbl_entidad_tipo_dato_entd IS 'Tipos de datos de los que se componen las entidades'\
+COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_pk IS 'Identificador de Tipo de Dato de Entidad'\
 COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_enti_pk IS 'Identificador de Entidad'\
 COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_tpdt_pk IS 'Identificador de Tipo de Dato'\
 COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_grupo IS 'Numero de grupo al que pertenece el tipo de dato dentro de la entidad'\
@@ -450,7 +308,6 @@ COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_obligatorio IS 'Indica
 COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_gridable IS 'Indicador de si el tipo de dato va a ser visible en los grids de datos de la Entidad'\
 COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_filtrable IS 'Indicador de si el tipo de dato va a ser visible en los filtros de busqueda de la Entidad'\
 COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_valor_defecto IS 'Valor por defecto del tipo de dato'\
-COMMENT ON COLUMN portico.tbl_entidad_tipo_dato_entd.entd_etiqueta IS 'Etiqueta de visualizacion'\
 
 
 
@@ -569,26 +426,6 @@ COMMENT ON COLUMN portico.tbl_parametro_dato_prdt.prdt_cadena IS 'Valor de dato 
 
 
 
--- tbl_parametro_i18n_p18n
-CREATE TABLE portico.tbl_parametro_i18n_p18n
-(
-	p18n_prvr_pk BIGINT NOT NULL
-	, p18n_idioma VARCHAR(5) NOT NULL
-	, p18n_texto VARCHAR(350) NOT NULL
-
-	, CONSTRAINT pk_p18n PRIMARY KEY (p18n_prvr_pk, p18n_idioma)
-
-	, CONSTRAINT fk_p18n_prvr_pk FOREIGN KEY (p18n_prvr_pk)
-		REFERENCES portico.tbl_parametro_version_prvr (prvr_pk)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_parametro_i18n_p18n TO portico\
-
-COMMENT ON TABLE portico.tbl_parametro_i18n_p18n IS 'Textos internacionalizados Asociados a las Versiones de Parametros de la aplicacion (Textos i18n de Maestros)'\
-COMMENT ON COLUMN portico.tbl_parametro_i18n_p18n.p18n_prvr_pk IS 'Identificador de Version de Parametro'\
-COMMENT ON COLUMN portico.tbl_parametro_i18n_p18n.p18n_idioma IS 'Idioma del texto'\
-COMMENT ON COLUMN portico.tbl_parametro_i18n_p18n.p18n_texto IS 'Texto'\
 
 
 
@@ -1335,7 +1172,6 @@ DROP TABLE portico.tbl_subparametro_dato_spdt\
 DROP TABLE portico.tbl_subparametro_version_spvr\
 DROP TABLE portico.tbl_subparametro_sprm\
 DROP TABLE portico.tbl_tipo_subparametro_tpsp\
-DROP TABLE portico.tbl_parametro_i18n_p18n\
 DROP TABLE portico.tbl_parametro_dato_prdt\
 DROP TABLE portico.tbl_parametro_version_prvr\
 DROP TABLE portico.tbl_parametro_prmt\
@@ -1343,7 +1179,6 @@ DROP TABLE portico.tbl_tipo_parametro_tppr\
 DROP TABLE portico.tbl_entidad_tipo_dato_entd\
 DROP TABLE portico.tbl_entidad_grupo_dato_engd\
 DROP TABLE portico.tbl_entidad_accion_enac\
-DROP TABLE portico.tbl_codigo_ref_i18n_cdri\
 DROP TABLE portico.tbl_codigo_ref_cdrf\
 DROP TABLE portico.tbl_tipo_dato_tpdt\
 DROP TABLE portico.tbl_entidad_entidad_enen\
@@ -1352,12 +1187,7 @@ DROP TABLE portico.tbl_usuario_grupo_usgr\
 DROP TABLE portico.tbl_grupo_grpo\
 DROP TABLE portico.tbl_usuario_usro\
 DROP TABLE portico.tbl_ig\
-DROP TABLE portico.tbl_conf_valor_i18n_cnvi\
-DROP TABLE portico.tbl_configuracion_valor_cnvl\
-DROP TABLE portico.tbl_configuracion_entorno_cnen\
-DROP TABLE portico.tbl_configuracion_idioma_cnid\
-DROP TABLE portico.tbl_conf_clave_i18n_cnci\
-DROP TABLE portico.tbl_conf_clave_cncl\
+DROP TABLE portico.tbl_i18n_i18n\
 
 
 
