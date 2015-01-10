@@ -68,8 +68,8 @@ public final class ParametroPdf extends BasePdf {
      *            the i18n map
      * @param stream
      *            the stream
-     * @throws DRException
-     *             the DR exception
+     * @throws ApplicationException
+     *             the ApplicationException
      */
     public void imprimir(final ParametroVO prmtVO, final TipoParametroVO tpprVO,
             final Map<Long, TipoSubparametroVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,

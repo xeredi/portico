@@ -33,8 +33,8 @@ public final class ManifiestoSigmaToIfcsum {
      *            the source
      * @param dest
      *            the dest
-     * @throws IOException
-     *             the IO exception
+     * @throws InternalErrorException
+     *             Si ocurre algun error grave.
      */
     public void convert(final InputStream source, final OutputStream dest) throws InternalErrorException {
         Preconditions.checkNotNull(source);

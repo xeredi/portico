@@ -50,8 +50,8 @@ public final class ParametroXls extends BaseXls {
      *            the tppr vo
      * @param stream
      *            the stream
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws InternalErrorException
+     *             Si ocurre algun error grave.
      */
     public void generarMaestros(final List<ParametroVO> prmtList, final TipoParametroVO tpprVO,
             final OutputStream stream) throws InternalErrorException {

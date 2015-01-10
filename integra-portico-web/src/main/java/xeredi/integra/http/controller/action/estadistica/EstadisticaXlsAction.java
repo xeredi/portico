@@ -44,10 +44,8 @@ public final class EstadisticaXlsAction extends BaseAction {
      * Excel export.
      *
      * @return the string
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action(value = "estd-xls-export", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "application/xls", "inputName", "stream", "contentDisposition", "filename=${enti.codigo}.xls" }) })

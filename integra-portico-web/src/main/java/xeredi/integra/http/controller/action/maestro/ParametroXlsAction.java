@@ -44,8 +44,6 @@ public final class ParametroXlsAction extends BaseAction {
      * Excel export.
      *
      * @return the string
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
      * @throws ApplicationException
      *             the application exception
      */

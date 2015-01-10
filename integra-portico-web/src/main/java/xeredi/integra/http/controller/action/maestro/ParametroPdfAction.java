@@ -64,12 +64,8 @@ public final class ParametroPdfAction extends BaseAction {
      * Imprimir.
      *
      * @return the string
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws DRException
-     *             the DR exception
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * @throws ApplicationException
+     *             Si ocurre algun error de aplicacion
      */
     @Action(value = "prmt-print", results = { @Result(name = "success", type = "stream", params = { "contentType",
             "${type}", "inputName", "stream", "contentDisposition", "filename=${filename}" }) })

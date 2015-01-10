@@ -50,8 +50,8 @@ public final class SubservicioXls extends BaseXls {
      *            the tpss vo
      * @param stream
      *            the stream
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws InternalErrorException
+     *             Si ocurre algun error grave.
      */
     public void generarSubservicios(final List<SubservicioVO> ssrvList, final TipoSubservicioVO tpssVO,
             final OutputStream stream) throws InternalErrorException {
