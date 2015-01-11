@@ -174,7 +174,7 @@
                                 <artifactId>maven-project-info-reports-plugin</artifactId>
                                 <configuration>
                                     <dependencyLocationsEnabled>
-                                        ${maven-project-info-reports-plugin.dependencyLocationsEnabled}
+                                        false
                                     </dependencyLocationsEnabled>
                                 </configuration>
                             </plugin>
@@ -182,10 +182,10 @@
                                 <artifactId>maven-javadoc-plugin</artifactId>
                                 <configuration>
                                     <source>1.7</source>
-                                    <aggregate>${maven-javadoc-plugin.aggregate}</aggregate>
-                                    <quiet>${maven-javadoc-plugin.quiet}</quiet>
+                                    <aggregate>true</aggregate>
+                                    <quiet>true</quiet>
                                     <show>private</show>
-                                    <linksource>${maven-javadoc-plugin.linksource}</linksource>
+                                    <linksource>true</linksource>
 
  <!--                                    <doclet>ydoc.doclets.YStandard</doclet>
                                     <docletPath>/tools/java/yworks-uml-doclet/lib/ydoc.jar:/tools/java/yworks-uml-doclet/resources</docletPath>
