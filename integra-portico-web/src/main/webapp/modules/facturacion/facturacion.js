@@ -8,6 +8,8 @@ angular.module("facturacion", [ "ngRoute", "util" ])
 // ----------- VALORACION ------------------
 .controller("vlrcGridController", vlrcGridController)
 
+.controller("vlrcFilterController", vlrcFilterController)
+
 .controller("vlrlCreateController", vlrlCreateController)
 
 .controller("vlrcDetailController", vlrcDetailController)
@@ -70,6 +72,13 @@ function config($routeProvider) {
     })
 
     .when("/facturacion/vlrc/grid", {
+        templateUrl : "modules/facturacion/vlrc-grid.html",
+        controller : "vlrcGridController",
+        controllerAs : "vm",
+        reloadOnSearch : false
+    })
+
+    .when("/facturacion/vlrc/grid/:srvcId", {
         templateUrl : "modules/facturacion/vlrc-grid.html",
         controller : "vlrcGridController",
         controllerAs : "vm",
@@ -293,80 +302,89 @@ function facturacionController(pageTitleService) {
     pageTitleService.setTitle("sec_facturacion", "page_home");
 }
 
-function vlrcGridController($scope, $http, $location, $routeParams, pageTitleService) {
-    $scope.showFilter = false;
+function vlrcGridController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
 
-    $scope.pageChanged = function() {
-        search($scope.vlrcCriterio, $scope.page, $scope.limit);
-    };
+    vm.pageChanged = pageChanged;
+    vm.filter = filter;
 
-    $scope.tpsrChanged = function() {
-        if ($scope.vlrcCriterio.srvc) {
-            $scope.vlrcCriterio.srvc = null;
-        }
-        if ($scope.vlrcCriterio.aspcId) {
-            $scope.vlrcCriterio.aspcId = null;
-        }
-        if ($scope.vlrcCriterio.crgoId) {
-            $scope.vlrcCriterio.crgoId = null;
-        }
-
-        if ($scope.vlrcCriterio.tpsrId) {
-            var url = "facturacion/vlrc-reload-filter.action?vlrcCriterio.tpsrId=" + $scope.vlrcCriterio.tpsrId;
-
-            $http.get(url).success(function(data) {
-                $scope.crgoList = data.crgoList;
-                $scope.aspcList = data.aspcList;
-            });
-        }
-    };
-
-    $scope.filter = function() {
-        var url = "facturacion/vlrc-filter.action";
-
-        $http.get(url).success(function(data) {
-            $scope.tpsrList = data.tpsrList;
-            $scope.limits = data.limits;
-        });
-
-        $scope.showFilter = true;
-    };
-
-    $scope.search = function() {
-        search($scope.vlrcCriterio, 1, $scope.limit);
-    };
-
-    $scope.cancelSearch = function() {
-        $scope.showFilter = false;
-    };
+    vm.vlrcCriterio = $routeParams.vlrcCriterio ? angular.fromJson($routeParams.vlrcCriterio) : {};
 
     function search(vlrcCriterio, page, limit) {
-        var url = "facturacion/vlrc-list.action";
-
-        $http.post(url, {
+        $http.post("facturacion/vlrc-list.action", {
             vlrcCriterio : vlrcCriterio,
             page : page,
             limit : limit
         }).success(function(data) {
-            $scope.page = data.vlrcList.page;
-            $scope.vlrcList = data.vlrcList;
-            $scope.vlrcCriterio = data.vlrcCriterio;
-            $scope.limit = data.limit;
+            vm.page = data.vlrcList.page;
+            vm.vlrcList = data.vlrcList;
+            vm.vlrcCriterio = data.vlrcCriterio;
 
             var map = {};
 
             map.page = data.vlrcList.page;
-            map.vlrcCriterio = data.vlrcCriterio;
+            map.vlrcCriterio = JSON.stringify(data.vlrcCriterio);
 
             $location.search(map).replace();
-
-            $scope.showFilter = false;
         });
     }
 
-    search($scope.vlrcCriterio, $routeParams.page ? $routeParams.page : 1, $scope.limit);
+    function pageChanged() {
+        search($scope.vlrcCriterio, $scope.page, $scope.limit);
+    }
+
+    function filter(size) {
+        var modalInstance = $modal.open({
+            templateUrl : 'modules/facturacion/vlrc-filter-content.html',
+            controller : 'vlrcFilterController',
+            controllerAs : 'vm',
+            size : size,
+            resolve : {
+                vlrcCriterio : function() {
+                    return vm.vlrcCriterio;
+                }
+            }
+        });
+
+        modalInstance.result.then(function(vlrcCriterio) {
+            vm.vlrcCriterio = vlrcCriterio;
+
+            search(vm.vlrcCriterio, 1, vm.limit);
+        });
+    }
+
+    search(vm.vlrcCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
 
     pageTitleService.setTitle("vlrc", "page_grid");
+}
+
+function vlrcFilterController($http, $modalInstance, vlrcCriterio, pageTitleService) {
+    var vm = this;
+
+    vm.ok = ok;
+    vm.cancel = cancel;
+    vm.tpsrChanged = tpsrChanged;
+
+    function ok() {
+        $modalInstance.close(vm.vlrcCriterio);
+    }
+
+    function cancel() {
+        $modalInstance.dismiss('cancel');
+    }
+
+    function tpsrChanged(tpsrId) {
+        $http.get("facturacion/vlrc-reload-filter.action?vlrcCriterio.tpsrId=" + tpsrId).success(function(data) {
+            vm.crgoList = data.crgoList;
+            vm.aspcList = data.aspcList;
+        });
+    }
+
+    vm.vlrcCriterio = vlrcCriterio;
+
+    $http.get("facturacion/vlrc-filter.action").success(function(data) {
+        vm.tpsrList = data.tpsrList;
+    });
 }
 
 function vlrlCreateController($scope, $http, $location, $routeParams, pageTitleService) {
@@ -483,7 +501,7 @@ function crgoGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.crgoCriterio = {};
+    vm.crgoCriterio = $routeParams.crgoCriterio ? angular.fromJson($routeParams.crgoCriterio) : {};
 
     function search(crgoCriterio, page, limit) {
         $http.post("facturacion/crgo-list.action", {
@@ -498,6 +516,7 @@ function crgoGridController($http, $location, $routeParams, $modal, pageTitleSer
             var map = {};
 
             map.page = data.crgoList.page;
+            map.crgoCriterio = JSON.stringify(data.crgoCriterio);
 
             $location.search(map).replace();
         });
@@ -820,7 +839,7 @@ function aspcGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.aspcCriterio = {};
+    vm.aspcCriterio = $routeParams.aspcCriterio ? angular.fromJson($routeParams.aspcCriterio) : {};
 
     function search(aspcCriterio, page, limit) {
         $http.post("facturacion/aspc-list.action", {
@@ -835,6 +854,7 @@ function aspcGridController($http, $location, $routeParams, $modal, pageTitleSer
             var map = {};
 
             map.page = data.aspcList.page;
+            map.aspcCriterio = JSON.stringify(data.aspcCriterio);
 
             $location.search(map).replace();
         });

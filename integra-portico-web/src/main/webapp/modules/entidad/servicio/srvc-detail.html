@@ -10,7 +10,7 @@
                 <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
             </button>
         </div>
-        <div class="btn-group" ng-if="enti.facturable">
+        <div class="btn-group" ng-if="vm.enti.facturable">
             <a class="btn btn-default" ng-href="#/facturacion/vlrc/valorar/{{vm.item.id}}"> <span translate>btn_valorar</span></a>
             <a class="btn btn-default" ng-href="#/facturacion/vlrc/grid/?srvcId={{vm.item.id}}"> <span translate>btn_valoraciones</span></a>
         </div>
@@ -59,7 +59,7 @@
             <div class="btn-group">
                 <pagination ng-show="vm.itemHijosMap[entiHijaId].count > 0"
                     total-items="vm.itemHijosMap[entiHijaId].count" items-per-page="vm.itemHijosMap[entiHijaId].limit"
-                    ng-model="vm.pageMap[entiHijaId]" ng-change="pageChanged(entiHijaId)" class="pagination"
+                    ng-model="vm.pageMap[entiHijaId]" ng-change="vm.pageChanged(entiHijaId)" class="pagination"
                     max-size="1" previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
             </div>
 

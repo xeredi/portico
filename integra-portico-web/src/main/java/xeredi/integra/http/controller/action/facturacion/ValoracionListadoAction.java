@@ -64,13 +64,11 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
      */
     @Action("vlrc-list")
     public String listado() {
-        Preconditions.checkNotNull(vlrcCriterio);
+        if (vlrcCriterio == null) {
+            vlrcCriterio = new ValoracionCriterioVO();
+        }
 
         final ValoracionBO vlrcBO = new ValoracionBO();
-
-        if (hasErrors()) {
-            return INPUT;
-        }
 
         vlrcList = vlrcBO.selectList(vlrcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
