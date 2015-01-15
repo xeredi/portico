@@ -40,20 +40,11 @@ public interface EntidadAccionDAO {
     /**
      * Delete.
      *
-     * @param enacVO
-     *            the enac vo
+     * @param enacId
+     *            the enac id
      * @return the int
      */
-    int delete(final EntidadAccionVO enacVO);
-
-    /**
-     * Delete criterio.
-     *
-     * @param enacCriterioVO
-     *            the enac criterio vo
-     * @return the int
-     */
-    int deleteCriterio(final EntidadAccionCriterioVO enacCriterioVO);
+    int delete(final Long enacId);
 
     /**
      * Select.

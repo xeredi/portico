@@ -113,6 +113,7 @@ public final class TipoServicioAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdEdicion, enti.getCmdEdicion());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.getCmdDuplicado());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, enti.getTemporal());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, enti.getExencionable());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, enti.getFacturable());
 
         if (!hasErrors()) {

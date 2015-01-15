@@ -9,6 +9,8 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.dao.MessageI18nDAO;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.MessageI18nCriterioVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
@@ -55,6 +57,10 @@ public final class MessageI18nBO {
 
             i18nCriterioVO.setExternalsOnly(externalsOnly);
             i18nCriterioVO.setLanguage(locale.getLanguage());
+
+            if (locale == null || locale.getLanguage() == null || locale.getLanguage().isEmpty()) {
+                i18nCriterioVO.setLanguage(ConfigurationProxy.getString(ConfigurationKey.language_default));
+            }
 
             for (final MessageI18nVO i18nVO : m18nDAO.selectList(i18nCriterioVO)) {
                 map.put(i18nVO.getKey(), i18nVO.getValue());

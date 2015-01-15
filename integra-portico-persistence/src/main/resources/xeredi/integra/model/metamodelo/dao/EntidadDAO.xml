@@ -132,11 +132,11 @@
 
 	<insert id="insert" parameterType="EntidadVO">
         <![CDATA[
-        INSERT INTO tbl_entidad_enti(enti_pk, enti_nombre, enti_codigo, enti_tipo
+        INSERT INTO tbl_entidad_enti(enti_pk, enti_codigo, enti_tipo
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
             , enti_max_grid)
         VALUES (
-        	#{id}, #{nombre}, #{codigo}, #{tipo}
+        	#{id}, #{codigo}, #{tipo}
             , #{cmdAlta, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdBaja, jdbcType=INTEGER, javaType=Boolean}
             , #{cmdEdicion, jdbcType=INTEGER, javaType=Boolean}
@@ -157,4 +157,11 @@
         WHERE enti_pk = #{id}
         ]]>
 	</update>
+
+	<delete id="delete" parameterType="Long">
+        <![CDATA[
+        DELETE FROM tbl_entidad_enti
+        WHERE enti_pk = #{value}
+        ]]>
+	</delete>
 </mapper>

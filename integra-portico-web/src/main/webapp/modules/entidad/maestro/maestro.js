@@ -349,20 +349,22 @@ function prmtDetailController($http, $location, $routeParams, prmtService, sprmS
             "maestro/prmt-detail.action?item.id=" + $routeParams.itemId + "&fechaVigencia="
                     + $routeParams.fechaVigencia).success(
             function(data) {
-                vm.enti = data.enti;
-                vm.fechaVigencia = data.fechaVigencia;
-                vm.item = data.item;
-                vm.i18nMap = data.i18nMap;
-                vm.itemHijosMap = {};
-                vm.entiHijasMap = {};
+                if (data.enti) {
+                    vm.enti = data.enti;
+                    vm.fechaVigencia = data.fechaVigencia;
+                    vm.item = data.item;
+                    vm.i18nMap = data.i18nMap;
+                    vm.itemHijosMap = {};
+                    vm.entiHijasMap = {};
 
-                if (vm.enti.entiHijasList) {
-                    for (i = 0; i < vm.enti.entiHijasList.length; i++) {
-                        sprmService.search(vm.enti.entiHijasList[i], vm.item.id, 1, $routeParams.fechaVigencia).then(
-                                function(data) {
-                                    vm.entiHijasMap[data.enti.id] = data.enti;
-                                    vm.itemHijosMap[data.enti.id] = data.itemList;
-                                });
+                    if (vm.enti.entiHijasList) {
+                        for (i = 0; i < vm.enti.entiHijasList.length; i++) {
+                            sprmService.search(vm.enti.entiHijasList[i], vm.item.id, 1, $routeParams.fechaVigencia)
+                                    .then(function(data) {
+                                        vm.entiHijasMap[data.enti.id] = data.enti;
+                                        vm.itemHijosMap[data.enti.id] = data.itemList;
+                                    });
+                        }
                     }
                 }
             });

@@ -158,6 +158,7 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpprAsociado', 'Maestro Asociado')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_temporal', 'Temporal?')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_facturable', 'Facturable?')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_exencionable', 'Exencionable?')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpdtEstado', 'T. Dato Estado')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpsr', 'Tipo de Servicio')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tppr', 'Maestro')\

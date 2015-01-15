@@ -3,9 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.metamodelo.dao.TipoServicioDAO">
-	<resultMap type="TipoServicioVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
+	<resultMap type="TipoServicioVO" id="ResultMap"
+		extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
 		<result column="tpsr_es_temporal" property="temporal" />
 		<result column="tpsr_es_facturable" property="facturable" />
+		<result column="tpsr_es_exencionable" property="exencionable" />
 
 		<association property="tpdtEstado" javaType="TipoDatoVO">
 			<result column="tpdt_pk" property="id" />
@@ -18,7 +20,7 @@
         SELECT
             enti_pk, enti_codigo, enti_tipo, enti_max_grid
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
-            , tpsr_es_temporal, tpsr_es_facturable
+            , tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable
             , tpdt_pk
     ]]>
 		<if test="idioma != null">
@@ -54,7 +56,8 @@
 			</if>
 			<if test="ids != null">
 				AND enti_pk IN
-				<foreach collection="ids" item="item" open="(" close=")" separator=", ">#{item}</foreach>
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=", ">#{item}</foreach>
 			</if>
 			<if test="nombre != null and !nombre.empty">
 				AND enti_nombre LIKE #{nombre}
@@ -63,18 +66,21 @@
 				AND enti_codigo LIKE #{codigo}
 			</if>
 			<if test="facturable != null">
-				AND tpsr_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
+				AND tpsr_es_facturable = #{facturable, jdbcType=INTEGER,
+				javaType=Boolean}
 			</if>
 		</where>
 	</sql>
 
-	<select id="selectList" parameterType="TipoServicioCriterioVO" resultMap="ResultMap">
+	<select id="selectList" parameterType="TipoServicioCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY enti_codigo, enti_pk
 	</select>
 
-	<select id="selectPaginatedList" parameterType="TipoServicioCriterioVO" resultMap="ResultMap">
+	<select id="selectPaginatedList" parameterType="TipoServicioCriterioVO"
+		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
 		ORDER BY enti_codigo, enti_pk
@@ -98,10 +104,11 @@
 
 	<insert id="insert" parameterType="TipoServicioVO">
         <![CDATA[
-        INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_tpdt_estado_pk)
+        INSERT INTO tbl_tipo_servicio_tpsr(tpsr_pk, tpsr_es_temporal, tpsr_es_facturable, tpsr_es_exencionable, tpsr_tpdt_estado_pk)
         VALUES (#{id}
         	, #{temporal, jdbcType=INTEGER, javaType=Boolean}
         	, #{facturable, jdbcType=INTEGER, javaType=Boolean}
+        	, #{exencionable, jdbcType=INTEGER, javaType=Boolean}
         	, #{tpdtEstado.id})
         ]]>
 	</insert>
@@ -111,8 +118,16 @@
         UPDATE tbl_tipo_servicio_tpsr SET
             tpsr_es_temporal = #{temporal, jdbcType=INTEGER, javaType=Boolean}
             , tpsr_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
+            , tpsr_es_exencionable = #{exencionable, jdbcType=INTEGER, javaType=Boolean}
             , tpsr_tpdt_estado_pk = #{tpdtEstado.id}
         WHERE tpsr_pk = #{id}
         ]]>
 	</update>
+
+	<delete id="delete" parameterType="Long">
+        <![CDATA[
+        DELETE FROM tbl_tipo_servicio_tpsr
+        WHERE tpsr_pk = #{value}
+        ]]>
+	</delete>
 </mapper>

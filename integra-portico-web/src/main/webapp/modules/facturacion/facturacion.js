@@ -78,13 +78,6 @@ function config($routeProvider) {
         reloadOnSearch : false
     })
 
-    .when("/facturacion/vlrc/grid/:srvcId", {
-        templateUrl : "modules/facturacion/vlrc-grid.html",
-        controller : "vlrcGridController",
-        controllerAs : "vm",
-        reloadOnSearch : false
-    })
-
     .when("/facturacion/vlrc/detail/:vlrcId", {
         templateUrl : "modules/facturacion/vlrc-detail.html",
         controller : "vlrcDetailController",
@@ -309,6 +302,12 @@ function vlrcGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.filter = filter;
 
     vm.vlrcCriterio = $routeParams.vlrcCriterio ? angular.fromJson($routeParams.vlrcCriterio) : {};
+
+    if ($routeParams.srvcId) {
+        vm.vlrcCriterio.srvc = {
+            id : $routeParams.srvcId
+        };
+    }
 
     function search(vlrcCriterio, page, limit) {
         $http.post("facturacion/vlrc-list.action", {

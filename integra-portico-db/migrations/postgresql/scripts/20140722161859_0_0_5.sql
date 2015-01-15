@@ -155,6 +155,7 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpprAsociado', 'Maestro Asociado')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_temporal', 'Temporal?')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_facturable', 'Facturable?')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_exencionable', 'Exencionable?')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpdtEstado', 'T. Dato Estado')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpsr', 'Tipo de Servicio')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tppr', 'Maestro')\

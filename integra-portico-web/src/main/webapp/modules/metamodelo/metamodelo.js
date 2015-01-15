@@ -629,7 +629,7 @@ function tpprDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/tppr-remove.action?enti.id=" + $scope.enti.id).success(function(data) {
+            $http.get("metamodelo/tppr-remove.action?enti.id=" + vm.enti.id).success(function(data) {
                 window.history.back();
             });
         }
@@ -1027,7 +1027,7 @@ function tpssEditController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("tpss", "page_edit");
 }
 
-function tpssCreateController($scope, $http, $location, $routeParams, pageTitleService) {
+function tpssCreateController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.save = save;
@@ -1302,7 +1302,7 @@ function entdCreateController($http, $location, $routeParams, pageTitleService) 
     pageTitleService.setTitle("entd", "page_create");
 }
 
-function engdDetailController($scope, $http, $location, $routeParams, pageTitleService) {
+function engdDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
@@ -1382,7 +1382,7 @@ function engdCreateController($http, $location, $routeParams, pageTitleService) 
     pageTitleService.setTitle("engd", "page_create");
 }
 
-function enacDetailController($scope, $http, $location, $routeParams, pageTitleService) {
+function enacDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;

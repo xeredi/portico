@@ -111,4 +111,11 @@
         WHERE tppr_pk = #{id}
         ]]>
 	</update>
+
+	<delete id="delete" parameterType="Long">
+        <![CDATA[
+        DELETE FROM tbl_tipo_parametro_tppr
+        WHERE tppr_pk = #{value}
+        ]]>
+	</delete>
 </mapper>

@@ -14,6 +14,9 @@ public final class TipoServicioVO extends EntidadVO {
     /** The facturable. */
     private Boolean facturable;
 
+    /** The exencionable. */
+    private Boolean exencionable;
+
     /** The tpdt estado. */
     private TipoDatoVO tpdtEstado;
 
@@ -80,6 +83,25 @@ public final class TipoServicioVO extends EntidadVO {
      */
     public void setTpdtEstado(final TipoDatoVO value) {
         tpdtEstado = value;
+    }
+
+    /**
+     * Gets the exencionable.
+     *
+     * @return the exencionable
+     */
+    public Boolean getExencionable() {
+        return exencionable;
+    }
+
+    /**
+     * Sets the exencionable.
+     *
+     * @param value
+     *            the new exencionable
+     */
+    public void setExencionable(final Boolean value) {
+        exencionable = value;
     }
 
 }

@@ -100,13 +100,8 @@ public final class EntidadAccionBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
-            final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
 
-            enacCriterioVO.setId(id);
-
-            final int updated = enacDAO.deleteCriterio(enacCriterioVO);
-
-            if (updated == 0) {
+            if (enacDAO.delete(id) == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.enac, id);
             }
 

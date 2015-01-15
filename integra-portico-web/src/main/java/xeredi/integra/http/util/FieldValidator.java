@@ -169,41 +169,42 @@ public final class FieldValidator {
 
             for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {
                 final ItemDatoVO itdtVO = itdtMap == null ? null : itdtMap.get(entd.getTpdt().getId().toString());
+                final String fieldname = action.getText("entd_" + entd.getId());
 
-                validateRequired(action, entd.getEtiqueta(), itdtVO, entd.getObligatorio());
+                validateRequired(action, fieldname, itdtVO, entd.getObligatorio());
 
                 if (itdtVO != null) {
                     itdtVO.setTpdtId(entd.getTpdt().getId());
                     switch (entd.getTpdt().getTipoElemento()) {
                     case BO:
                     case NE:
-                        validateRequired(action, entd.getEtiqueta(), itdtVO.getCantidadEntera(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdtVO.getCantidadEntera(), entd.getObligatorio());
 
                         break;
                     case ND:
-                        validateRequired(action, entd.getEtiqueta(), itdtVO.getCantidadDecimal(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdtVO.getCantidadDecimal(), entd.getObligatorio());
 
                         break;
                     case PR:
-                        validateRequired(action, entd.getEtiqueta(), itdtVO.getPrmt(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdtVO.getPrmt(), entd.getObligatorio());
 
                         break;
                     case SR:
-                        validateRequired(action, entd.getEtiqueta(), itdtVO.getSrvc(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdtVO.getSrvc(), entd.getObligatorio());
 
                         break;
                     case CR:
-                        validateRequired(action, entd.getEtiqueta(), itdtVO.getCadena(), entd.getObligatorio());
-                        validateCR(action, entd.getEtiqueta(), itdtVO.getCadena(), entd.getTpdt().getCdrfCodeSet());
+                        validateRequired(action, fieldname, itdtVO.getCadena(), entd.getObligatorio());
+                        validateCR(action, fieldname, itdtVO.getCadena(), entd.getTpdt().getCdrfCodeSet());
 
                         break;
                     case TX:
-                        validateRequired(action, entd.getEtiqueta(), itdtVO.getCadena(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdtVO.getCadena(), entd.getObligatorio());
 
                         break;
                     case FE:
                     case FH:
-                        validateRequired(action, entd.getEtiqueta(), itdtVO.getFecha(), entd.getObligatorio());
+                        validateRequired(action, fieldname, itdtVO.getFecha(), entd.getObligatorio());
 
                         break;
                     default:
