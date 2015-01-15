@@ -6,6 +6,7 @@
 	<resultMap type="TipoSubservicioVO" id="ResultMap" extends="xeredi.integra.model.metamodelo.dao.EntidadDAO.ResultMap">
 		<result column="tpss_es_temporal" property="temporal" />
 		<result column="tpss_es_facturable" property="facturable" />
+		<result column="tpss_es_exencionable" property="exencionable" />
 		<result column="tpss_tpsr_pk" property="tpsrId" />
 
 		<association property="tpdtEstado" javaType="TipoDatoVO">
@@ -19,7 +20,7 @@
         SELECT
             enti.enti_pk, enti.enti_codigo, enti.enti_tipo, enti.enti_max_grid
             , enti.enti_cmd_alta, enti.enti_cmd_baja, enti.enti_cmd_edicion, enti.enti_cmd_duplicado
-            , tpss.tpss_es_temporal, tpss.tpss_es_facturable, tpss.tpss_tpsr_pk
+            , tpss.tpss_es_temporal, tpss.tpss_es_facturable, tpss.tpss_es_exencionable, tpss.tpss_tpsr_pk
             , tpdt_pk
     ]]>
 		<if test="idioma != null">
@@ -104,12 +105,13 @@
 
 	<insert id="insert" parameterType="TipoSubservicioVO">
         <![CDATA[
-        INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_tpdt_estado_pk)
+        INSERT INTO tbl_tipo_subservicio_tpss(tpss_pk, tpss_tpsr_pk, tpss_es_temporal, tpss_es_facturable, tpss_es_exencionable, tpss_tpdt_estado_pk)
         VALUES (
             #{id}
             , #{tpsrId}
             , #{temporal, jdbcType=INTEGER, javaType=Boolean}
             , #{facturable, jdbcType=INTEGER, javaType=Boolean}
+            , #{exencionable, jdbcType=INTEGER, javaType=Boolean}
             , #{tpdtEstado.id}
         )
         ]]>
@@ -120,10 +122,19 @@
         UPDATE tbl_tipo_subservicio_tpss SET
         	tpss_es_temporal = #{temporal, jdbcType=INTEGER, javaType=Boolean}
         	, tpss_es_facturable = #{facturable, jdbcType=INTEGER, javaType=Boolean}
+        	, tpss_es_exencionable = #{exencionable, jdbcType=INTEGER, javaType=Boolean}
         	, tpss_tpdt_estado_pk = #{tpdtEstado.id}
         WHERE
         	tpss_pk = #{id}
         	AND tpss_tpsr_pk = #{tpsrId}
         ]]>
 	</update>
+
+	<delete id="delete" parameterType="Long">
+        <![CDATA[
+        DELETE FROM tbl_tipo_subservicio_tpss
+        WHERE
+        	tpss_pk = #{id}
+        ]]>
+	</delete>
 </mapper>

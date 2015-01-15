@@ -108,6 +108,7 @@ public final class TipoSubservicioAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.enti_cmdDuplicado, enti.getCmdDuplicado());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, enti.getTemporal());
         FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, enti.getFacturable());
+        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, enti.getExencionable());
 
         if (!hasErrors()) {
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();

@@ -107,6 +107,7 @@
 					<th nowrap="nowrap" translate>enti_cmdDuplicado</th>
 					<th nowrap="nowrap" translate>enti_temporal</th>
 					<th nowrap="nowrap" translate>enti_facturable</th>
+					<th nowrap="nowrap" translate>enti_exencionable</th>
 					<th nowrap="nowrap" translate>enti_maxGrid</th>
 					<th nowrap="nowrap" translate>enti_tpdtEstado</th>
 				</tr>
@@ -122,6 +123,7 @@
 					<td><i class="glyphicon glyphicon-{{subenti.cmdDuplicado ? 'ok' : 'remove'}}"></i></td>
 					<td><i class="glyphicon glyphicon-{{subenti.temporal ? 'ok' : 'remove'}}"></i></td>
 					<td><i class="glyphicon glyphicon-{{subenti.facturable ? 'ok' : 'remove'}}"></i></td>
+					<td><i class="glyphicon glyphicon-{{subenti.exencionable ? 'ok' : 'remove'}}"></i></td>
 					<td class="number" ng-bind="subenti.maxGrid | number:0"></td>
 					<td ng-bind="subenti.tpdtEstado.nombre"></td>
 				</tr>

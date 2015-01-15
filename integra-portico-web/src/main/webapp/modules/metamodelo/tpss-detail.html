@@ -67,6 +67,12 @@
                     <i class="glyphicon glyphicon-{{vm.enti.facturable ? 'ok' : 'remove'}}"></i>
                 </p>
             </div>
+            <div class="col-sm-2 col-md-1 col-lg-1 form-group">
+                <label translate>enti_exencionable</label>
+                <p class="form-control-static">
+                    <i class="glyphicon glyphicon-{{vm.enti.exencionable ? 'ok' : 'remove'}}"></i>
+                </p>
+            </div>
             <div class="col-sm-3 col-md-2 form-group">
                 <label translate>enti_maxGrid</label>
                 <p class="form-control-static" ng-bind="vm.enti.maxGrid | number:0"></p>
