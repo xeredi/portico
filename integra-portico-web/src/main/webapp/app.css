@@ -73,6 +73,11 @@ td span {
 .form-control-static {
 	padding-top: 7px;
 	padding-bottom: 7px;
+	background-color: #4e5d6c;
+}
+
+a {
+	color: orange /*#df691a*/;
 }
 
 .dropdown-menu {
