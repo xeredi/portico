@@ -1,6 +1,10 @@
 package xeredi.integra.http.controller.action.estadistica;
 
+import java.io.File;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 
@@ -10,7 +14,14 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
+import xeredi.integra.model.proceso.vo.ProcesoModulo;
+import xeredi.integra.model.proceso.vo.ProcesoTipo;
+import xeredi.integra.model.proceso.vo.ProcesoVO;
+import xeredi.integra.proceso.estadistica.cargaoppe.ProcesoCargaOppe;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
@@ -27,6 +38,21 @@ public final class PeriodoProcesoAction extends BaseAction {
     /** The pepr form. */
     private PeriodoProcesoVO pepr;
 
+    /** The autp list. */
+    private List<LabelValueVO> autpList;
+
+    /** The file. */
+    private File file;
+
+    /** The file content type. */
+    private String fileContentType;
+
+    /** The file file name. */
+    private String fileFileName;
+
+    /** The sobreescribir. */
+    private Boolean sobreescribir;
+
     // Acciones web
     /**
      * Preparar carga.
@@ -35,6 +61,10 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-preparar-carga")
     public String prepararCarga() {
+        setFechaVigencia(Calendar.getInstance().getTime());
+
+        loadLabelValuesMap();
+
         return SUCCESS;
     }
 
@@ -45,16 +75,34 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     @Action("pepr-cargar")
     public String cargar() {
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr);
-
-        if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
-            FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, pepr.getMes());
-            FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp());
+        if (pepr == null) {
+            pepr = new PeriodoProcesoVO();
         }
 
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp());
+
         if (!hasErrors()) {
-            throw new Error("No Implementado");
+            FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp().getId());
+        }
+
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, pepr.getMes());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, getSobreescribir());
+
+        if (!hasErrors()) {
+            final ProcesoVO prbtVO = new ProcesoVO();
+
+            prbtVO.setModulo(ProcesoModulo.E);
+            prbtVO.setTipo(ProcesoTipo.EST_CARGA);
+
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
+
+            final ProcesoBO prbtBO = new ProcesoBO();
+
+            prbtBO.crear(prbtVO);
         }
 
         return SUCCESS;
@@ -109,6 +157,22 @@ public final class PeriodoProcesoAction extends BaseAction {
         throw new Error("No implementado");
     }
 
+    /**
+     * Load label values map.
+     */
+    private void loadLabelValuesMap() {
+        final ParametroBO prmtBO = new ParametroBO();
+
+        {
+            final Set<Long> tpprIds = new HashSet<>();
+
+            tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
+
+            autpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()).get(
+                    Entidad.AUTORIDAD_PORTUARIA.getId());
+        }
+    }
+
     // get / set
 
     /**
@@ -137,6 +201,91 @@ public final class PeriodoProcesoAction extends BaseAction {
      */
     public void setPepr(final PeriodoProcesoVO value) {
         pepr = value;
+    }
+
+    /**
+     * Gets the autp list.
+     *
+     * @return the autp list
+     */
+    public List<LabelValueVO> getAutpList() {
+        return autpList;
+    }
+
+    /**
+     * Gets the file.
+     *
+     * @return the file
+     */
+    public File getFile() {
+        return file;
+    }
+
+    /**
+     * Sets the file.
+     *
+     * @param value
+     *            the new file
+     */
+    public void setFile(final File value) {
+        file = value;
+    }
+
+    /**
+     * Gets the file content type.
+     *
+     * @return the file content type
+     */
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    /**
+     * Sets the file content type.
+     *
+     * @param value
+     *            the new file content type
+     */
+    public void setFileContentType(final String value) {
+        fileContentType = value;
+    }
+
+    /**
+     * Gets the file file name.
+     *
+     * @return the file file name
+     */
+    public String getFileFileName() {
+        return fileFileName;
+    }
+
+    /**
+     * Sets the file file name.
+     *
+     * @param value
+     *            the new file file name
+     */
+    public void setFileFileName(final String value) {
+        fileFileName = value;
+    }
+
+    /**
+     * Gets the sobreescribir.
+     *
+     * @return the sobreescribir
+     */
+    public Boolean getSobreescribir() {
+        return sobreescribir;
+    }
+
+    /**
+     * Sets the sobreescribir.
+     *
+     * @param value
+     *            the new sobreescribir
+     */
+    public void setSobreescribir(final Boolean value) {
+        sobreescribir = value;
     }
 
 }

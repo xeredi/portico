@@ -1,0 +1,43 @@
+<form enctype="multipart/form-data" method="post">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-4 col-md-3 col-lg-2 form-group">
+				<label translate>pepr_autp</label> <select ng-model="vm.pepr.autp.id"
+					ng-options="labelValue.value as labelValue.label for labelValue in vm.autpList"
+					class="form-control input-sm">
+					<option />
+				</select>
+			</div>
+			<div class="col-sm-2 col-md-1 form-group">
+				<label translate>pepr_anio</label> <input type="text" ng-model="vm.pepr.anio"
+					class="form-control input-sm" />
+			</div>
+			<div class="col-sm-2 col-md-1 form-group">
+				<label translate>pepr_mes</label> <input type="text" ng-model="vm.pepr.mes" class="form-control input-sm" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6 col-md-4 form-group">
+				<label translate>pepr_file</label>
+				<input type="file" ng-file-select ng-model="vm.file" class="form-control input-sm" />
+			</div>
+			<div class="col-sm-1 form-group">
+				<label translate>pepr_sobreescribir</label> <select ng-model="vm.sobreescribir"
+					ng-options="item as ('format_' + item | translate) for item in [true , false]"
+					class="form-control input-sm">
+					<option />
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="btn-group">
+		<button data-ng-click="vm.load()" class="btn btn-primary">
+			<i class="glyphicon glyphicon-ok"></i> <span translate>btn_load</span>
+		</button>
+		<button data-ng-click="vm.cancel()" class="btn btn-default">
+			<i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+		</button>
+	</div>
+</form>

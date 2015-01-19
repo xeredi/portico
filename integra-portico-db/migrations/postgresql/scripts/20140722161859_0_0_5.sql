@@ -274,6 +274,8 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_autp', 'Aut. Portuaria')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_anio', 'Aut. Año')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_mes', 'Mes')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_file', 'Archivo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_sobreescribir', 'Sobreescribir?')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms', 'Cuadro Mensual')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estd', 'Estadistica')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estdList', 'Estadisticas')\

@@ -1,4 +1,4 @@
-angular.module("estadistica", [ "ngRoute", "util" ])
+angular.module("estadistica", [ "ngRoute", "util", "angularFileUpload" ])
 
 .config(config)
 
@@ -7,6 +7,10 @@ angular.module("estadistica", [ "ngRoute", "util" ])
 .controller("peprFilterController", peprFilterController)
 
 .controller("peprDetailController", peprDetailController)
+
+.controller("peprPrepareLoadController", peprPrepareLoadController)
+
+.controller("peprCreateController", peprCreateController)
 
 .controller("cdmsDetailController", cdmsDetailController)
 
@@ -29,6 +33,18 @@ function config($routeProvider) {
     .when("/estadistica/pepr/detail/:peprId", {
         templateUrl : "modules/entidad/estadistica/pepr-detail.html",
         controller : "peprDetailController",
+        controllerAs : "vm"
+    })
+
+    .when("/estadistica/pepr/prepareLoad", {
+        templateUrl : "modules/entidad/estadistica/pepr-prepare-load.html",
+        controller : "peprPrepareLoadController",
+        controllerAs : "vm"
+    })
+
+    .when("/estadistica/pepr/create", {
+        templateUrl : "modules/entidad/estadistica/pepr-create.html",
+        controller : "peprCreateController",
         controllerAs : "vm"
     })
 
@@ -150,6 +166,56 @@ function peprDetailController($http, $routeParams, pageTitleService) {
     });
 
     pageTitleService.setTitle("pepr", "page_detail");
+}
+
+function peprPrepareLoadController($scope, $http, $location, $upload, pageTitleService) {
+    var vm = this;
+
+    vm.load = load;
+    vm.cancel = cancel;
+
+    function load() {
+//        $scope.$watch('file', function() {
+//            var file = vm.file;
+//
+//            $scope.upload = $upload.upload({
+//                url : 'estadistica/pepr-cargar.action',
+//                data : {
+//                    pepr : vm.pepr
+//                },
+//                file : file,
+//            });
+//        });
+
+        $http.post("estadistica/pepr-cargar.action", {
+            pepr : vm.pepr,
+            file : vm.file,
+            sobreescribir : vm.sobreescribir
+        }).success(function(data) {
+            $location.path("/proceso/prbt/grid").replace();
+        });
+
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.get("estadistica/pepr-preparar-carga.action").success(function(data) {
+        vm.autpList = data.autpList;
+    });
+
+    pageTitleService.setTitle("pepr", "page_pepr_load");
+}
+
+function peprCreateController($http, pageTitleService) {
+    var vm = this;
+
+    $http.get("estadistica/pepr-filter.action").success(function(data) {
+        vm.autpList = data.autpList;
+    });
+
+    pageTitleService.setTitle("pepr", "page_pepr_create");
 }
 
 function cdmsDetailController($http, $routeParams, pageTitleService) {
