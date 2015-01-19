@@ -2,8 +2,6 @@ angular.module("maestro", [ "ngRoute", "util" ])
 
 .config(config)
 
-.factory('prmtService', prmtService)
-
 .factory('sprmService', sprmService)
 
 // ----------------- MENU PRINCIPAL --------------------------
@@ -153,24 +151,6 @@ function config($routeProvider) {
     ;
 }
 
-function prmtService($http) {
-    return {
-        search : search
-    };
-
-    function search(entiId, itemCriterio, page, limit) {
-        return $http.post("maestro/prmt-list.action?enti.id=" + entiId, {
-            itemCriterio : itemCriterio,
-            page : page,
-            limit : itemCriterio.limit
-        }).then(searchComplete);
-
-        function searchComplete(response) {
-            return response.data;
-        }
-    }
-}
-
 function sprmService($http) {
     return {
         search : search
@@ -198,7 +178,7 @@ function maestroController($http, pageTitleService) {
     pageTitleService.setTitle("prmtList", "page_home");
 }
 
-function prmtGridController($location, $routeParams, $http, $modal, prmtService, pageTitleService) {
+function prmtGridController($location, $routeParams, $http, $modal, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -206,22 +186,30 @@ function prmtGridController($location, $routeParams, $http, $modal, prmtService,
     vm.xlsExport = xlsExport;
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
-    vm.page = $routeParams.page ? $routeParams.page : 1;
+    vm.itemCriterio.entiId = $routeParams.entiId;
 
-    function search() {
-        prmtService.search($routeParams.entiId, vm.itemCriterio, vm.page, 20).then(function(data) {
-            vm.itemList = data.itemList;
+    function search(page) {
+        $http.post("maestro/prmt-list.action", {
+            itemCriterio : vm.itemCriterio,
+            page : page,
+            limit : vm.itemCriterio.limit
+        }).success(function(data) {
             vm.enti = data.enti;
+            vm.page = data.itemList.page;
+            vm.itemList = data.itemList;
+            vm.itemCriterio = data.itemCriterio;
 
-            $location.search({
-                page : vm.page,
-                itemCriterio : JSON.stringify(data.itemCriterio)
-            }).replace();
+            var map = {};
+
+            map.page = data.itemList.page;
+            map.itemCriterio = JSON.stringify(data.itemCriterio);
+
+            $location.search(map).replace();
         });
     }
 
     function pageChanged() {
-        search();
+        search(vm.page);
     }
 
     function xlsExport() {
@@ -244,7 +232,7 @@ function prmtGridController($location, $routeParams, $http, $modal, prmtService,
         var modalInstance = $modal.open({
             templateUrl : 'prmt-filter-content.html',
             controller : 'prmtFilterController',
-            controllerAs : 'vm',
+            controllerAs : "vm",
             size : size,
             resolve : {
                 itemCriterio : function() {
@@ -260,13 +248,12 @@ function prmtGridController($location, $routeParams, $http, $modal, prmtService,
             console.log("prmtGridController: " + JSON.stringify(itemCriterio));
 
             vm.itemCriterio = itemCriterio;
-            vm.page = 1;
 
-            search();
+            search(1);
         });
     }
 
-    search();
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
@@ -287,13 +274,15 @@ function prmtFilterController($http, $modalInstance, enti, itemCriterio) {
         $modalInstance.dismiss('cancel');
     }
 
-    $http.get("maestro/prmt-filter.action?enti.id=" + enti.id).success(function(data) {
+    $http.post("maestro/prmt-filter.action", {
+        itemCriterio : vm.itemCriterio
+    }).success(function(data) {
         vm.labelValuesMap = data.labelValuesMap;
         vm.limits = data.limits;
     });
 }
 
-function prmtDetailController($http, $location, $routeParams, prmtService, sprmService, pageTitleService) {
+function prmtDetailController($http, $location, $routeParams, sprmService, pageTitleService) {
     var vm = this;
 
     vm.pageChanged = pageChanged;
@@ -379,9 +368,7 @@ function prmtCreateController($http, $location, $routeParams, pageTitleService) 
     vm.cancel = cancel;
 
     function save() {
-        var url = "maestro/prmt-save.action";
-
-        $http.post(url, {
+        $http.post("maestro/prmt-save.action", {
             item : vm.item,
             i18nMap : vm.i18nMap,
             accion : vm.accion

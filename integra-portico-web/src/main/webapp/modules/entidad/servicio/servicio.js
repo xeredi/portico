@@ -274,10 +274,7 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
         });
     }
 
-    search($routeParams.page ? $routeParams.page : 1/*
-                                                     * , $routeParams.limit ?
-                                                     * $routeParams.limit : 20
-                                                     */);
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
@@ -298,7 +295,9 @@ function srvcFilterController($http, $modalInstance, enti, itemCriterio) {
         $modalInstance.dismiss('cancel');
     }
 
-    $http.get("servicio/srvc-filter.action?itemCriterio.entiId=" + itemCriterio.entiId).success(function(data) {
+    $http.post("servicio/srvc-filter.action", {
+        itemCriterio : vm.itemCriterio
+    }).success(function(data) {
         vm.labelValuesMap = data.labelValuesMap;
         vm.subpList = data.subpList;
         vm.limits = data.limits;
@@ -627,7 +626,9 @@ function ssrvFilterController($http, $modalInstance, enti, itemCriterio) {
         $modalInstance.dismiss('cancel');
     }
 
-    $http.get("servicio/ssrv-filter.action?itemCriterio.entiId=" + itemCriterio.entiId).success(function(data) {
+    $http.post("servicio/ssrv-filter.action", {
+        itemCriterio : vm.itemCriterio
+    }).success(function(data) {
         vm.labelValuesMap = data.labelValuesMap;
         vm.limits = data.limits;
         vm.fechaVigencia = data.fechaVigencia;
@@ -823,8 +824,7 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
      *
      * if (tabSelected) { vm.subentiList[tabSelected].active = true; }
      *
-     * for (i = 0; i < vm.subentiList.length; i++) { var subenti =
-     * vm.subentiList[i];
+     * for (i = 0; i < vm.subentiList.length; i++) { var subenti = vm.subentiList[i];
      *
      * findSublist(subenti.id, pageMap[subenti.id] ? pageMap[subenti.id] : 1); }
      */

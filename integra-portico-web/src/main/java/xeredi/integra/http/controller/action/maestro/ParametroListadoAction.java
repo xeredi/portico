@@ -48,14 +48,8 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-filter")
     public String filter() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
-
-        if (itemCriterio == null) {
-            itemCriterio = new ParametroCriterioVO();
-        }
-
-        itemCriterio.setEntiId(enti.getId());
+        Preconditions.checkNotNull(itemCriterio);
+        Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
@@ -63,7 +57,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         itemCriterio.setIdioma(getIdioma());
 
-        enti = TipoParametroProxy.select(enti.getId());
+        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
         loadLabelValuesMap();
 
@@ -79,14 +73,8 @@ public final class ParametroListadoAction extends ItemListadoAction {
      */
     @Action("prmt-list")
     public String list() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
-        Preconditions.checkNotNull(enti.getId());
-
-        if (itemCriterio == null) {
-            itemCriterio = new ParametroCriterioVO();
-        }
-
-        itemCriterio.setEntiId(enti.getId());
+        Preconditions.checkNotNull(itemCriterio);
+        Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         if (itemCriterio.getFechaVigencia() == null) {
             itemCriterio.setFechaVigencia(Calendar.getInstance().getTime());
@@ -95,7 +83,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
         itemCriterio.setSoloDatosGrid(true);
         itemCriterio.setIdioma(getIdioma());
 
-        enti = TipoParametroProxy.select(enti.getId());
+        enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
         final ParametroBO prmtBO = new ParametroBO();
 
