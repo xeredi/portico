@@ -477,9 +477,13 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
 
 function prmtsLupaCtrl($http, $scope) {
     $scope.getLabelValues = function(entiId, textoBusqueda, fechaVigencia) {
-        return $http.get(
-                'maestro/prmt-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.textoBusqueda="
-                        + textoBusqueda + "&itemLupaCriterio.fechaVigencia=" + fechaVigencia).then(function(res) {
+        return $http.post('maestro/prmt-lupa.action?.entiId=', {
+            itemLupaCriterio : {
+                entiId : entiId,
+                textoBusqueda : textoBusqueda,
+                fechaVigencia : fechaVigencia
+            }
+        }).then(function(res) {
             return res.data.itemList;
         });
     };

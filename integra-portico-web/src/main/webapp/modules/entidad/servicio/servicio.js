@@ -514,18 +514,24 @@ function srvcDuplicateController($http, $location, $routeParams, pageTitleServic
 
 function srvcLupaCtrl($http, $scope) {
     $scope.getLabelValues = function(entiId, textoBusqueda) {
-        return $http.get(
-                'servicio/srvc-lupa.action?itemLupaCriterio.entiId=' + entiId + "&itemLupaCriterio.textoBusqueda="
-                        + textoBusqueda + "&itemLupaCriterio.fechaVigencia=11/12/2014").then(function(res) {
+        return $http.post('servicio/srvc-lupa.action', {
+            itemLupaCriterio : {
+                entiId : entiId,
+                textoBusqueda : textoBusqueda,
+                fechaVigencia : '2014-11-11T00:00:00'
+            }
+        }).then(function(res) {
             return res.data.itemList;
         });
     };
 }
 
 function maniTotalesController($scope, $http, $location, $routeParams) {
-    var url = "servicio/manifiesto/mani-totales.action?item.id=" + $routeParams.srvcId;
-
-    $http.get(url).success(function(data) {
+    $http.post("servicio/manifiesto/mani-totales.action", {
+        item : {
+            id : $routeParams.srvcId
+        }
+    }).success(function(data) {
         $scope.item = data.item;
         $scope.resumen = data.resumen;
     });
