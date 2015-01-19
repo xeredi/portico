@@ -8,6 +8,8 @@ public enum ProcesoTipo {
 
     /** The est carga. */
     EST_CARGA(ProcesoModulo.E),
+    /** The est creacion. */
+    EST_CREACION(ProcesoModulo.E),
     /** The pes carga. */
     PES_CARGA(ProcesoModulo.S),
     /** The man carga. */
@@ -26,8 +28,8 @@ public enum ProcesoTipo {
      * @param amodulo
      *            the amodulo
      */
-    private ProcesoTipo(ProcesoModulo amodulo) {
-        this.modulo = amodulo;
+    private ProcesoTipo(final ProcesoModulo amodulo) {
+        modulo = amodulo;
     }
 
     /**

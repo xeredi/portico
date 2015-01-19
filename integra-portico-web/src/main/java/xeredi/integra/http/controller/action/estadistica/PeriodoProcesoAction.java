@@ -90,6 +90,7 @@ public final class PeriodoProcesoAction extends BaseAction {
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, getSobreescribir());
 
         if (!hasErrors()) {
+            final ProcesoBO prbtBO = new ProcesoBO();
             final ProcesoVO prbtVO = new ProcesoVO();
 
             prbtVO.setModulo(ProcesoModulo.E);
@@ -100,7 +101,58 @@ public final class PeriodoProcesoAction extends BaseAction {
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
+            prbtBO.crear(prbtVO);
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Preparar creacion.
+     *
+     * @return the string
+     */
+    @Action("pepr-preparar-creacion")
+    public String prepararCreacion() {
+        setFechaVigencia(Calendar.getInstance().getTime());
+
+        loadLabelValuesMap();
+
+        return SUCCESS;
+    }
+
+    /**
+     * Creacion.
+     *
+     * @return the string
+     */
+    @Action("pepr-creacion")
+    public String creacion() {
+        if (pepr == null) {
+            pepr = new PeriodoProcesoVO();
+        }
+
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp());
+
+        if (!hasErrors()) {
+            FieldValidator.validateRequired(this, MessageI18nKey.pepr_autp, pepr.getAutp().getId());
+        }
+
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, pepr.getAnio());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, pepr.getMes());
+        FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, getSobreescribir());
+
+        if (!hasErrors()) {
             final ProcesoBO prbtBO = new ProcesoBO();
+            final ProcesoVO prbtVO = new ProcesoVO();
+
+            prbtVO.setModulo(ProcesoModulo.E);
+            prbtVO.setTipo(ProcesoTipo.EST_CREACION);
+
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
             prbtBO.crear(prbtVO);
         }

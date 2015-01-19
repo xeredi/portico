@@ -6,7 +6,9 @@ angular.module("proceso", [ "ngRoute", "util" ])
 
 .controller("prbtFilterController", prbtFilterController)
 
-.controller("prbtDetailController", prbtDetailController);
+.controller("prbtDetailController", prbtDetailController)
+
+;
 
 function config($routeProvider) {
     $routeProvider
@@ -108,8 +110,16 @@ function prbtFilterController($modalInstance, $http, prbtCriterio) {
     });
 }
 
-function prbtDetailController($http, $routeParams, pageTitleService) {
+function prbtDetailController($http, $location, $routeParams, pageTitleService) {
     var vm = this;
+
+    vm.cancel = cancel;
+
+    function cancel() {
+        $http.get("proceso/prbt-cancel.action?prbt.id=" + vm.prbt.id).success(function(data) {
+            window.history.back();
+        });
+    }
 
     $http.get("proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId).success(function(data) {
         vm.prbt = data.prbt;

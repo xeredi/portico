@@ -58,6 +58,8 @@ public enum MessageI18nKey {
     btn_recargar,
     /** The btn_valorar. */
     btn_valorar,
+    /** The btn_cargar. */
+    btn_cargar,
     /** The sec_facturacion. */
     sec_facturacion,
     /** The sec_administracion. */

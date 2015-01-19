@@ -168,25 +168,13 @@ function peprDetailController($http, $routeParams, pageTitleService) {
     pageTitleService.setTitle("pepr", "page_detail");
 }
 
-function peprPrepareLoadController($scope, $http, $location, $upload, pageTitleService) {
+function peprPrepareLoadController($http, $location, $upload, pageTitleService) {
     var vm = this;
 
     vm.load = load;
     vm.cancel = cancel;
 
     function load() {
-//        $scope.$watch('file', function() {
-//            var file = vm.file;
-//
-//            $scope.upload = $upload.upload({
-//                url : 'estadistica/pepr-cargar.action',
-//                data : {
-//                    pepr : vm.pepr
-//                },
-//                file : file,
-//            });
-//        });
-
         $http.post("estadistica/pepr-cargar.action", {
             pepr : vm.pepr,
             file : vm.file,
@@ -208,10 +196,27 @@ function peprPrepareLoadController($scope, $http, $location, $upload, pageTitleS
     pageTitleService.setTitle("pepr", "page_pepr_load");
 }
 
-function peprCreateController($http, pageTitleService) {
+function peprCreateController($http, $location, pageTitleService) {
     var vm = this;
 
-    $http.get("estadistica/pepr-filter.action").success(function(data) {
+    vm.create = create;
+    vm.cancel = cancel;
+
+    function create() {
+        $http.post("estadistica/pepr-creacion.action", {
+            pepr : vm.pepr,
+            sobreescribir : vm.sobreescribir
+        }).success(function(data) {
+            $location.path("/proceso/prbt/grid").replace();
+        });
+
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.get("estadistica/pepr-preparar-creacion.action").success(function(data) {
         vm.autpList = data.autpList;
     });
 
