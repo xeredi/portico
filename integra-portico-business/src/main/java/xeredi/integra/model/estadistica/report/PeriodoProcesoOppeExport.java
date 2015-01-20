@@ -2,6 +2,7 @@ package xeredi.integra.model.estadistica.report;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -89,7 +90,7 @@ public final class PeriodoProcesoOppeExport {
             final List<EstadisticaVO> estdList = estdBO.selectList(estdCriterioVO);
 
             stream.putNextEntry(new ZipEntry(getFilename(peprVO, EstadisticaFileType.EAP)));
-            stream.write(generarEAP(estdList, tpesVO).getBytes());
+            generarEAP(stream, estdList, tpesVO);
             stream.closeEntry();
         }
 
@@ -100,7 +101,7 @@ public final class PeriodoProcesoOppeExport {
             final List<EstadisticaVO> estdList = estdBO.selectList(estdCriterioVO);
 
             stream.putNextEntry(new ZipEntry(getFilename(peprVO, EstadisticaFileType.EAV)));
-            stream.write(generarEAV(estdList, tpesVO).getBytes());
+            generarEAV(stream, estdList, tpesVO);
             stream.closeEntry();
         }
 
@@ -111,7 +112,7 @@ public final class PeriodoProcesoOppeExport {
             final List<EstadisticaVO> estdList = estdBO.selectList(estdCriterioVO);
 
             stream.putNextEntry(new ZipEntry(getFilename(peprVO, EstadisticaFileType.EAE)));
-            stream.write(generarEAE(estdList, tpesVO).getBytes());
+            generarEAE(stream, estdList, tpesVO);
             stream.closeEntry();
         }
 
@@ -122,7 +123,7 @@ public final class PeriodoProcesoOppeExport {
             final List<EstadisticaVO> estdList = estdBO.selectList(estdCriterioVO);
 
             stream.putNextEntry(new ZipEntry(getFilename(peprVO, EstadisticaFileType.EMM)));
-            stream.write(generarEMM(estdList, tpesVO).getBytes());
+            generarEMM(stream, estdList, tpesVO);
             stream.closeEntry();
         }
 
@@ -133,7 +134,7 @@ public final class PeriodoProcesoOppeExport {
             final List<EstadisticaVO> estdList = estdBO.selectList(estdCriterioVO);
 
             stream.putNextEntry(new ZipEntry(getFilename(peprVO, EstadisticaFileType.EME)));
-            stream.write(generarEME(estdList, tpesVO).getBytes());
+            generarEME(stream, estdList, tpesVO);
             stream.closeEntry();
         }
 
@@ -144,29 +145,35 @@ public final class PeriodoProcesoOppeExport {
             final List<EstadisticaVO> estdList = estdBO.selectList(estdCriterioVO);
 
             stream.putNextEntry(new ZipEntry(getFilename(peprVO, EstadisticaFileType.EMT)));
-            stream.write(generarEMT(estdList, tpesVO).getBytes());
+            generarEMT(stream, estdList, tpesVO);
             stream.closeEntry();
         }
 
         stream.putNextEntry(new ZipEntry(getFilename(peprVO, EstadisticaFileType.EPP)));
-        stream.write(generarEPP(peprVO, exportDate).getBytes());
+        generarEPP(stream, peprVO, exportDate);
         stream.closeEntry();
     }
 
     /**
      * Generar epp.
      *
+     * @param stream
+     *            the stream
      * @param peprVO
      *            the pepr vo
      * @param exportDate
      *            the export date
      * @return the string
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private String generarEPP(final PeriodoProcesoVO peprVO, final Date exportDate) {
+    private void generarEPP(final OutputStream stream, final PeriodoProcesoVO peprVO, final Date exportDate)
+            throws IOException {
         Preconditions.checkNotNull(peprVO);
 
-        final StringBuffer buffer = new StringBuffer();
         for (final String subportCode : subportCodes) {
+            final StringBuffer buffer = new StringBuffer();
+
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, peprVO.getAnio()));
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Mes, peprVO.getMes()));
             buffer.append(getTokenString(EstadisticaFileKeyword.Autp, subportCode));
@@ -174,26 +181,32 @@ public final class PeriodoProcesoOppeExport {
             buffer.append(DATE_FORMAT.format(exportDate));
 
             buffer.append('\n');
-        }
 
-        return buffer.toString();
+            stream.write(buffer.toString().getBytes());
+        }
     }
 
     /**
      * Generar eap.
      *
+     * @param stream
+     *            the stream
      * @param estdList
      *            the estd list
      * @param tpesVO
      *            the tpes vo
      * @return the string
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private String generarEAP(final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO) {
+    private void generarEAP(final OutputStream stream, final List<EstadisticaVO> estdList,
+            final TipoEstadisticaVO tpesVO) throws IOException {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(tpesVO);
 
-        final StringBuffer buffer = new StringBuffer();
         for (final EstadisticaVO estdVO : estdList) {
+            final StringBuffer buffer = new StringBuffer();
+
             subportCodes.add(estdVO.getSubp().getParametro());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
@@ -208,26 +221,32 @@ public final class PeriodoProcesoOppeExport {
                     estdVO.getItdtMap().get(TipoDato.DECIMAL_01.getId()).getCantidadDecimal() * 100));
 
             buffer.append('\n');
-        }
 
-        return buffer.toString();
+            stream.write(buffer.toString().getBytes());
+        }
     }
 
     /**
      * Generar eav.
      *
+     * @param stream
+     *            the stream
      * @param estdList
      *            the estd list
      * @param tpesVO
      *            the tpes vo
      * @return the string
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private String generarEAV(final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO) {
+    private void generarEAV(final OutputStream stream, final List<EstadisticaVO> estdList,
+            final TipoEstadisticaVO tpesVO) throws IOException {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(tpesVO);
 
-        final StringBuffer buffer = new StringBuffer();
         for (final EstadisticaVO estdVO : estdList) {
+            final StringBuffer buffer = new StringBuffer();
+
             subportCodes.add(estdVO.getSubp().getParametro());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
@@ -240,26 +259,32 @@ public final class PeriodoProcesoOppeExport {
                     estdVO.getItdtMap().get(TipoDato.ENTERO_01.getId()).getCantidadEntera()));
 
             buffer.append('\n');
-        }
 
-        return buffer.toString();
+            stream.write(buffer.toString().getBytes());
+        }
     }
 
     /**
      * Generar eae.
      *
+     * @param stream
+     *            the stream
      * @param estdList
      *            the estd list
      * @param tpesVO
      *            the tpes vo
      * @return the string
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private String generarEAE(final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO) {
+    private void generarEAE(final OutputStream stream, final List<EstadisticaVO> estdList,
+            final TipoEstadisticaVO tpesVO) throws IOException {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(tpesVO);
 
-        final StringBuffer buffer = new StringBuffer();
         for (final EstadisticaVO estdVO : estdList) {
+            final StringBuffer buffer = new StringBuffer();
+
             subportCodes.add(estdVO.getSubp().getParametro());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
@@ -283,26 +308,32 @@ public final class PeriodoProcesoOppeExport {
                     estdVO.getItdtMap().get(TipoDato.ENTERO_02.getId()).getCantidadEntera()));
 
             buffer.append('\n');
-        }
 
-        return buffer.toString();
+            stream.write(buffer.toString().getBytes());
+        }
     }
 
     /**
      * Generar emm.
      *
+     * @param stream
+     *            the stream
      * @param estdList
      *            the estd list
      * @param tpesVO
      *            the tpes vo
      * @return the string
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private String generarEMM(final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO) {
+    private void generarEMM(final OutputStream stream, final List<EstadisticaVO> estdList,
+            final TipoEstadisticaVO tpesVO) throws IOException {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(tpesVO);
 
-        final StringBuffer buffer = new StringBuffer();
         for (final EstadisticaVO estdVO : estdList) {
+            final StringBuffer buffer = new StringBuffer();
+
             subportCodes.add(estdVO.getSubp().getParametro());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
@@ -357,26 +388,32 @@ public final class PeriodoProcesoOppeExport {
             }
 
             buffer.append('\n');
-        }
 
-        return buffer.toString();
+            stream.write(buffer.toString().getBytes());
+        }
     }
 
     /**
      * Generar eme.
      *
+     * @param stream
+     *            the stream
      * @param estdList
      *            the estd list
      * @param tpesVO
      *            the tpes vo
      * @return the string
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private String generarEME(final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO) {
+    private void generarEME(final OutputStream stream, final List<EstadisticaVO> estdList,
+            final TipoEstadisticaVO tpesVO) throws IOException {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(tpesVO);
 
-        final StringBuffer buffer = new StringBuffer();
         for (final EstadisticaVO estdVO : estdList) {
+            final StringBuffer buffer = new StringBuffer();
+
             subportCodes.add(estdVO.getSubp().getParametro());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
@@ -417,26 +454,32 @@ public final class PeriodoProcesoOppeExport {
             // TODO Acabar
 
             buffer.append('\n');
-        }
 
-        return buffer.toString();
+            stream.write(buffer.toString().getBytes());
+        }
     }
 
     /**
      * Generar emt.
      *
+     * @param stream
+     *            the stream
      * @param estdList
      *            the estd list
      * @param tpesVO
      *            the tpes vo
      * @return the string
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private String generarEMT(final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO) {
+    private void generarEMT(final OutputStream stream, final List<EstadisticaVO> estdList,
+            final TipoEstadisticaVO tpesVO) throws IOException {
         Preconditions.checkNotNull(estdList);
         Preconditions.checkNotNull(tpesVO);
 
-        final StringBuffer buffer = new StringBuffer();
         for (final EstadisticaVO estdVO : estdList) {
+            final StringBuffer buffer = new StringBuffer();
+
             subportCodes.add(estdVO.getSubp().getParametro());
 
             buffer.append(getTokenInteger(EstadisticaFileKeyword.Anio, estdVO.getPepr().getAnio()));
@@ -454,9 +497,9 @@ public final class PeriodoProcesoOppeExport {
                     estdVO.getItdtMap().get(TipoDato.ENTERO_02.getId()).getCantidadEntera()));
 
             buffer.append('\n');
-        }
 
-        return buffer.toString();
+            stream.write(buffer.toString().getBytes());
+        }
     }
 
     /**
