@@ -19,6 +19,8 @@ public enum EstadisticaFileType {
     /** The emm. */
     EMM,
     /** The emt. */
-    EMT
+    EMT,
+    /** The zip. */
+    zip;
 
 }

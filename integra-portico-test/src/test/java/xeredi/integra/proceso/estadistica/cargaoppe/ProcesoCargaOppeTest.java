@@ -31,13 +31,13 @@ public final class ProcesoCargaOppeTest {
             prbtVO.setModulo(cargaOppe.getProcesoModulo());
             prbtVO.setTipo(cargaOppe.getProcesoTipo());
 
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "80");
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "1030308");
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, "2013");
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, "04");
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
             prbtBO.crear(prbtVO);
 
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "80");
+            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "1030308");
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, "2012");
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, "10");
             prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");

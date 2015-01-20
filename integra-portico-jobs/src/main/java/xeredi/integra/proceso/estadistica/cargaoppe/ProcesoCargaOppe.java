@@ -25,6 +25,7 @@ import xeredi.integra.model.estadistica.bo.EstadisticaFileType;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
+import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
@@ -97,24 +98,27 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         PATH_ERRONEO = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_erroneo_home);
 
         // Lectura de los parametros de entrada
-        final String autp = prbtVO.getPrpmMap().get(AUTP_PARAM);
+        final ParametroBO prmtBO = new ParametroBO();
+        final long autpId = Long.parseLong(prbtVO.getPrpmMap().get(AUTP_PARAM));
         final int anio = Integer.parseInt(prbtVO.getPrpmMap().get(ANIO_PARAM));
         final int mes = Integer.parseInt(prbtVO.getPrpmMap().get(MES_PARAM));
         final boolean sobreescribir = Boolean.parseBoolean(prbtVO.getPrpmMap().get(SOBREESCRIBIR_PARAM));
 
-        LOG.info("Carga estadisticas: " + autp + ", " + anio + ", " + mes);
+        LOG.info("Carga estadisticas: " + autpId + ", " + anio + ", " + mes);
 
-        autpVO = new ParametroVO();
-        autpVO.setParametro(autp);
+        try {
+            autpVO = prmtBO.select(autpId, ConfigurationProxy.getString(ConfigurationKey.language_default), new Date());
+            peprVO = new PeriodoProcesoVO();
+            autpMap = new HashMap<>();
+            estaList = new ArrayList<>();
+            isSigma = false;
 
-        peprVO = new PeriodoProcesoVO();
-        autpMap = new HashMap<>();
-        estaList = new ArrayList<>();
-        isSigma = false;
+            isSigma = verificaEsSigma(autpVO, anio, mes);
 
-        isSigma = verificaEsSigma(autpVO, anio, mes);
-
-        cargaCodigoMaestros(autpVO, anio, mes);
+            cargaCodigoMaestros(autpVO, anio, mes);
+        } catch (final InstanceNotFoundException ex) {
+            addError(MensajeCodigo.G_001, "entidad: " + Entidad.AUTORIDAD_PORTUARIA.name() + ", codigo: " + autpId);
+        }
 
         if (prbtVO.getPrmnList().isEmpty()) {
             buscarMaestros(Calendar.getInstance().getTime());
@@ -241,7 +245,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                             final ItemDatoVO itdt = new ItemDatoVO();
 
                             itdt.setTpdtId(TipoDato.DECIMAL_01.getId());
-                            itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EAP_Euros, line, i));
+                            itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EAP_Euros, line, i) / 100);
 
                             estd.getItdtMap().put(itdt.getTpdtId(), itdt);
                         }
@@ -739,7 +743,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                             final ItemDatoVO itdt = new ItemDatoVO();
 
                             itdt.setTpdtId(TipoDato.ENTERO_01.getId());
-                            itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_Pasajeros, line, i));
+                            itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EME_Pasajeros, line, i));
 
                             estd.getItdtMap().put(itdt.getTpdtId(), itdt);
                         }
@@ -748,7 +752,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                             final ItemDatoVO itdt = new ItemDatoVO();
 
                             itdt.setTpdtId(TipoDato.ENTERO_02.getId());
-                            itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_UCLlenas, line, i));
+                            itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EME_UCLlenas, line, i));
 
                             estd.getItdtMap().put(itdt.getTpdtId(), itdt);
                         }
@@ -757,7 +761,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                             final ItemDatoVO itdt = new ItemDatoVO();
 
                             itdt.setTpdtId(TipoDato.ENTERO_03.getId());
-                            itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_UCVacias, line, i));
+                            itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EME_UCVacias, line, i));
 
                             estd.getItdtMap().put(itdt.getTpdtId(), itdt);
                         }
@@ -779,8 +783,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                                 final ItemDatoVO itdt = new ItemDatoVO();
 
                                 itdt.setTpdtId(TipoDato.ENTERO_04.getId());
-                                itdt.setCantidadDecimal(getTokenDouble(EstadisticaFileKeyword.EME_PasajerosCrucero,
-                                        line, i));
+                                itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EME_PasajerosCrucero, line,
+                                        i));
 
                                 estd.getItdtMap().put(itdt.getTpdtId(), itdt);
                             }
@@ -789,8 +793,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                                 final ItemDatoVO itdt = new ItemDatoVO();
 
                                 itdt.setTpdtId(TipoDato.ENTERO_05.getId());
-                                itdt.setCantidadDecimal(getTokenDouble(
-                                        EstadisticaFileKeyword.EME_PasajerosInicioFinLinea, line, i));
+                                itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EME_PasajerosInicioFinLinea,
+                                        line, i));
 
                                 estd.getItdtMap().put(itdt.getTpdtId(), itdt);
                             }
@@ -809,8 +813,80 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             addError(MensajeCodigo.G_010, filename);
         }
 
-        // FIXME Falta el EMT
+        filename = getFilename(PATH_ENTRADA, autpVO, anio, mes, EstadisticaFileType.EMT);
 
+        try (final Reader reader = new FileReader(filename);) {
+            try {
+                final TipoEstadisticaVO tpesVO = TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId());
+                final List<String> lines = IOUtils.readLines(reader);
+
+                for (int i = 0; i < lines.size(); i++) {
+                    final String line = lines.get(i);
+
+                    if (!line.isEmpty() && !line.startsWith(SIGMA_TOKEN)) {
+                        final EstadisticaVO estd = new EstadisticaVO();
+
+                        estd.setEntiId(tpesVO.getId());
+                        estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
+
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.TIPO_BUQUE_EEE.getId());
+
+                            final String tipoBuque = getTokenString(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i);
+                            final ParametroVO tipoBuqueEst = maestroMap.containsKey(Entidad.TIPO_BUQUE_EST) ? maestroMap
+                                    .get(Entidad.TIPO_BUQUE_EST).get(tipoBuque) : null;
+
+                                    if (tipoBuqueEst != null) {
+                                        itdt.setPrmt(tipoBuqueEst.getItdtMap().get(TipoDato.TIPO_BUQUE_EEE.getId()).getPrmt());
+                                    } else {
+                                        itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i,
+                                                Entidad.TIPO_BUQUE_EEE));
+                                    }
+
+                                    estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
+
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.TIPO_BUQUE_GT_EEE.getId());
+                            itdt.setPrmt(getTokenMaestro(EstadisticaFileKeyword.EMT_TipoBuqueGtEEE, line, i,
+                                    Entidad.TIPO_BUQUE_GT_EEE));
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
+
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.ENTERO_01.getId());
+                            itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EMT_NumeroBuques, line, i));
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
+
+                        {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(TipoDato.ENTERO_02.getId());
+                            itdt.setCantidadEntera(getTokenLong(EstadisticaFileKeyword.EMT_NumeroGTs, line, i));
+
+                            estd.getItdtMap().put(itdt.getTpdtId(), itdt);
+                        }
+
+                        estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
+
+                        estaList.add(estd);
+                    }
+                }
+            } catch (final InstanceNotFoundException ex) {
+                throw new Error(ex);
+            }
+        } catch (final IOException ex) {
+            addError(MensajeCodigo.G_010, filename);
+        }
     }
 
     /**
@@ -1020,7 +1096,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                             getTokenString(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i));
                     addCodigoMaestro(Entidad.TIPO_BUQUE_EST,
                             getTokenString(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i));
-                    addCodigoMaestro(Entidad.TIPO_BUQUE_GT,
+                    addCodigoMaestro(Entidad.TIPO_BUQUE_GT_EEE,
                             getTokenString(EstadisticaFileKeyword.EMT_TipoBuqueGtEEE, line, i));
                 }
             }
@@ -1114,6 +1190,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         if (!maestroMap.containsKey(entidad) || !maestroMap.get(entidad).containsKey(codigo)) {
             addError(MensajeCodigo.G_001, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
                     + ", entidad: " + entidad.name() + ", codigo: " + codigo);
+
+            return null;
         }
 
         return maestroMap.get(entidad).get(codigo);
