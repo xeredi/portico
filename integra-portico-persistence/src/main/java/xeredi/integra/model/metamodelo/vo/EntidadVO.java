@@ -6,8 +6,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
 /**
- * Datos de una entidad de la aplicación. Padre de Tipos de Parámetro, Subtipos de Parámetro, Tipos de Servicio,
- * Subtipos de Subservicio y Tipos de Estadística.
+ * Datos de una entidad de la aplicación. Padre de Tipos de Parámetro, Subtipos de Parámetro, Tipos de
+ * Servicio, Subtipos de Subservicio y Tipos de Estadística.
  */
 public class EntidadVO {
 
@@ -44,8 +44,8 @@ public class EntidadVO {
     private List<EntidadGrupoDatoVO> engdList;
 
     /**
-     * {@link List} de Ids de tipos de dato asociados a una entidad, ordenados por grupo de dato, fila y orden dentro de
-     * la fila.
+     * {@link List} de Ids de tipos de dato asociados a una entidad, ordenados por grupo de dato, fila y orden
+     * dentro de la fila.
      */
     private List<EntidadTipoDatoVO> entdList;
 

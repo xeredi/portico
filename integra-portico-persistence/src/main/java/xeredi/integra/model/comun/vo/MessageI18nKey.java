@@ -270,7 +270,7 @@ public enum MessageI18nKey {
     /** The cdrf_orden. */
     cdrf_orden,
     /** The cdrf_texto. */
-    cdrf_texto,
+    cdrf_texto, cmag, cmagList, cmag_entd, cmag_agregar, cmag_nombre,
 
     /** The page_home. */
     page_home,

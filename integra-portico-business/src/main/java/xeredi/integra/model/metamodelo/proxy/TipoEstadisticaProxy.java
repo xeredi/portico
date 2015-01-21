@@ -10,7 +10,10 @@ import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.bo.CampoAgregacionBO;
 import xeredi.integra.model.metamodelo.bo.TipoEstadisticaBO;
+import xeredi.integra.model.metamodelo.vo.CampoAgregacionCriterioVO;
+import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -81,10 +84,17 @@ public final class TipoEstadisticaProxy {
         LOG.info("Carga de tipos de estadistica");
 
         final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
-        final List<TipoEstadisticaVO> tpesList = tpesBO.selectList(new TipoEstadisticaCriterioVO());
 
-        for (final TipoEstadisticaVO tpesVO : tpesList) {
+        for (final TipoEstadisticaVO tpesVO : tpesBO.selectList(new TipoEstadisticaCriterioVO())) {
+            tpesVO.setCmagList(new ArrayList<CampoAgregacionVO>());
+
             TIPO_ESTADISTICA_MAP.put(tpesVO.getId(), tpesVO);
+        }
+
+        final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
+
+        for (final CampoAgregacionVO cmagVO : cmagBO.selectList(new CampoAgregacionCriterioVO())) {
+            TIPO_ESTADISTICA_MAP.get(cmagVO.getTpesId()).getCmagList().add(cmagVO);
         }
 
         EntidadProxy.loadDependencies(TIPO_ESTADISTICA_MAP);

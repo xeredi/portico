@@ -172,6 +172,11 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpssList', 'Tipos de Subservicio')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpes', 'Tipo de Estadística')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpesList', 'Tipos de Estadística')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cmag', 'Campo de Agregacion')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cmagList', 'Campos de Agregacion')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cmag_entd', 'Dato')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cmag_nombre', 'Nombre')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cmag_agregar', 'Agregar?')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac', 'Acción Asociada a Entidad')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enacList', 'Acciónes Asociadas a Entidad')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_enti', 'Entidad')\
@@ -537,6 +542,54 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 
 
 
+-- Campos de Agregacion de estadisticas
+CREATE TABLE tbl_campo_agregacion_cmag (
+	cmag_tpes_pk NUMBER(19) NOT NULL
+	, cmag_entd_pk NUMBER(19) NOT NULL
+	, cmag_agregar INT NOT NULL
+	, cmag_nombre VARCHAR2(250)
+
+	, CONSTRAINT pk_cmag PRIMARY KEY (cmag_tpes_pk, cmag_entd_pk)
+
+	, CONSTRAINT fk_cmag_tpes_pk FOREIGN KEY (cmag_tpes_pk)
+		REFERENCES portico.tbl_tipo_estadistica_tpes (tpes_pk)
+	, CONSTRAINT fk_cmag_entd_pk FOREIGN KEY (cmag_entd_pk)
+		REFERENCES portico.tbl_entidad_tipo_dato_entd (entd_pk)
+)\
+
+CREATE OR REPLACE SYNONYM portico.tbl_campo_agregacion_cmag FOR tbl_campo_agregacion_cmag\
+
+GRANT SELECT, UPDATE ON tbl_campo_agregacion_cmag TO portico\
+
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33003, 1, 'tipoOperacion')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33006, 1, 'zonaPesca')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33005, 1, 'artePesca')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33007, 1, 'vendedor')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23000, 33004, 1, 'especie')\
+
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33028, 1, 'buque')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33029, 1, 'tipoEstancia')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33030, 1, 'servicio')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33031, 1, 'acuerdo')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23001, 33032, 1, 'consignatario')\
+
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33042, 1, 'tipoMercancia')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33043, 1, 'tipoOperacion')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33044, 1, 'cliente')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23002, 33045, 1, 'roro')\
+
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33071, 1, 'consignatario')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33072, 1, 'buque')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33073, 1, 'servicio')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23004, 33074, 1, 'alineacion')\
+
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33106, 1, 'consignatario')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33107, 1, 'buque')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33108, 1, 'servicio')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33105, 1, 'estibador')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33109, 1, 'acuerdo')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33110, 1, 'terminal')\
+INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33111, 1, 'tipoEquipamiento')\
 
 
 
@@ -549,6 +602,8 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+-- Campos de Agregacion de estadisticas
+DROP TABLE tbl_campo_agregacion_cmag\
 
 
 -- Mensajes i18n

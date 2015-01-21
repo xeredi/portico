@@ -64,6 +64,12 @@ angular.module("metamodelo", [])
 
 .controller("tpesCreateController", tpesCreateController)
 
+.controller("cmagCreateController", cmagCreateController)
+
+.controller("cmagDetailController", cmagDetailController)
+
+.controller("cmagEditController", cmagEditController)
+
 // ------------------- GRUPO DE DATO DE ENTIDAD --------------------
 .controller("engdDetailController", engdDetailController)
 
@@ -242,6 +248,24 @@ function config($routeProvider) {
     .when("/metamodelo/tpes/create", {
         templateUrl : "modules/metamodelo/tpes-edit.html",
         controller : "tpesCreateController",
+        controllerAs : 'vm'
+    })
+
+    .when("/metamodelo/cmag/detail/:tpesId/:entdId", {
+        templateUrl : "modules/metamodelo/cmag-detail.html",
+        controller : "cmagDetailController",
+        controllerAs : 'vm'
+    })
+
+    .when("/metamodelo/cmag/edit/:tpesId/:entdId", {
+        templateUrl : "modules/metamodelo/cmag-edit.html",
+        controller : "cmagEditController",
+        controllerAs : 'vm'
+    })
+
+    .when("/metamodelo/cmag/create/:tpesId", {
+        templateUrl : "modules/metamodelo/cmag-edit.html",
+        controller : "cmagCreateController",
         controllerAs : 'vm'
     })
 
@@ -1210,6 +1234,90 @@ function tpesCreateController($http, $location, $routeParams, pageTitleService) 
     });
 
     pageTitleService.setTitle("tpes", "page_create");
+}
+
+function cmagCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("metamodelo/cmag-save.action", {
+            cmag : vm.cmag,
+            accion : vm.accion
+        }).success(function(data) {
+            $location.path("/metamodelo/cmag/detail/" + data.cmag.tpesId + "/" + data.cmag.entd.id).replace();
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.get("metamodelo/cmag-create.action?cmag.tpesId=" + $routeParams.tpesId).success(function(data) {
+        vm.cmag = data.cmag;
+        vm.accion = data.accion;
+    });
+
+    pageTitleService.setTitle("cmag", "page_create");
+}
+
+function cmagDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.get(
+                    "metamodelo/cmag-remove.action?cmag.tpesId=" + vm.cmag.tpesId + "&cmag.entd.id=" + vm.cmag.entd.id)
+                    .success(function(data) {
+                        window.history.back();
+                    });
+        }
+    }
+
+    $http
+            .get(
+                    "metamodelo/cmag-detail.action?cmag.tpesId=" + $routeParams.tpesId + "&cmag.entd.id="
+                            + $routeParams.entdId).success(function(data) {
+                vm.cmag = data.cmag;
+            });
+
+    pageTitleService.setTitle("cmag", "page_detail");
+}
+
+function cmagEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("metamodelo/cmag-save.action", {
+            cmag : vm.cmag,
+            accion : vm.accion
+        }).success(function(data) {
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http
+            .get(
+                    "metamodelo/cmag-edit.action?cmag.tpesId=" + $routeParams.tpesId + "&cmag.entd.id="
+                            + $routeParams.entdId).success(function(data) {
+                vm.cmag = data.cmag;
+                vm.accion = data.accion;
+            });
+
+    pageTitleService.setTitle("cmag", "page_edit");
 }
 
 function entdDetailController($http, $routeParams, pageTitleService) {
