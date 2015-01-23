@@ -6,6 +6,8 @@ package xeredi.integra.model.proceso.vo;
  */
 public enum MensajeCodigo {
     // Errores Generales
+    /** Error 'grave'. */
+    G_000,
     /** Maestro no encontrado. */
     G_001,
     /** Fecha no valida. */

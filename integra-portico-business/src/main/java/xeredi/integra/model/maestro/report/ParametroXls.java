@@ -14,6 +14,7 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -59,8 +60,7 @@ public final class ParametroXls extends BaseXls {
         Preconditions.checkNotNull(tpprVO);
         Preconditions.checkNotNull(stream);
 
-        try {
-            final HSSFWorkbook workbook = new HSSFWorkbook();
+        try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpprVO.getId()));
 
             // Cabecera XLS
@@ -69,14 +69,14 @@ public final class ParametroXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            setCellValue(rowhead, i++, bundle.getString("prmt_parametro"));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_parametro.name()));
 
             if (tpprVO.getI18n()) {
-                setCellValue(rowhead, i++, bundle.getString("i18n_text"));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.i18n_text.name()));
             }
 
-            setCellValue(rowhead, i++, bundle.getString("prmt_fini"));
-            setCellValue(rowhead, i++, bundle.getString("prmt_ffin"));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_fini.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prmt_ffin.name()));
 
             if (tpprVO.getEntdList() != null) {
                 for (final EntidadTipoDatoVO entd : tpprVO.getEntdList()) {

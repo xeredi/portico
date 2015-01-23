@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.report.BaseXls;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 import com.google.common.base.Preconditions;
@@ -46,8 +47,7 @@ public final class ProcesoXls extends BaseXls {
         Preconditions.checkNotNull(prbtList);
         Preconditions.checkNotNull(stream);
 
-        try {
-            final HSSFWorkbook workbook = new HSSFWorkbook();
+        try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet("prbtList");
 
             // Cabecera XLS
@@ -56,17 +56,16 @@ public final class ProcesoXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            setCellValue(rowhead, i++, bundle.getString("prbt.id"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.modulo"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.tipo"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.estado"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.falta"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.finicio"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.ffin"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.duracion"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.erroresCnt"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.alertasCnt"));
-            setCellValue(rowhead, i++, bundle.getString("prbt.mensajesCnt"));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_modulo.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_tipo.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_estado.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_falta.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_fini.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_ffin.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_duracion.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_erroresCnt.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_alertasCnt.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.prbt_mensajesCnt.name()));
 
             // Filas XLS
             for (final ProcesoVO prbtVO : prbtList) {
@@ -74,7 +73,6 @@ public final class ProcesoXls extends BaseXls {
 
                 int j = 0;
 
-                setCellValue(row, j++, prbtVO.getId());
                 setCellValue(row, j++, prbtVO.getModulo().name());
                 setCellValue(row, j++, prbtVO.getTipo().name());
                 setCellValue(row, j++, prbtVO.getEstado().name());

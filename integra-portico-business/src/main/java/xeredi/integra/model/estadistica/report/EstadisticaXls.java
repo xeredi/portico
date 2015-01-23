@@ -14,6 +14,7 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
@@ -59,8 +60,7 @@ public final class EstadisticaXls extends BaseXls {
         Preconditions.checkNotNull(tpesVO);
         Preconditions.checkNotNull(stream);
 
-        try {
-            final HSSFWorkbook workbook = new HSSFWorkbook();
+        try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpesVO.getId()));
 
             // Cabecera XLS
@@ -69,9 +69,9 @@ public final class EstadisticaXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            setCellValue(rowhead, i++, bundle.getString("estd_tpes"));
-            setCellValue(rowhead, i++, bundle.getString("estd_pepr"));
-            setCellValue(rowhead, i++, bundle.getString("estd_subp"));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_tpes.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_pepr.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.estd_subp.name()));
 
             for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
                 setCellValue(rowhead, i++, bundle.getString("entd_" + entd.getId()));

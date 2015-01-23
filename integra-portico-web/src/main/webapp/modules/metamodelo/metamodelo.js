@@ -407,9 +407,7 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
     vm.cancel = cancel;
 
     function save() {
-        var url = "metamodelo/tpdt-save.action";
-
-        $http.post(url, {
+        $http.post("metamodelo/tpdt-save.action", {
             tpdt : vm.tpdt,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -422,7 +420,7 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/tpdt-create.action").success(function(data) {
+    $http.post("metamodelo/tpdt-create.action").success(function(data) {
         vm.tpdt = data.tpdt;
         vm.accion = data.accion;
         vm.tphts = data.tphts;
@@ -442,13 +440,19 @@ function tpdtDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/tpdt-remove.action?tpdt.id=" + vm.tpdt.id).success(function(data) {
+            $http.post("metamodelo/tpdt-remove.action", {
+                tpdt : vm.tpdt
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/tpdt-detail.action?tpdt.id=" + $routeParams.tpdtId).success(function(data) {
+    $http.post("metamodelo/tpdt-detail.action", {
+        tpdt : {
+            id : $routeParams.tpdtId
+        }
+    }).success(function(data) {
         vm.tpdt = data.tpdt;
         vm.i18nMap = data.i18nMap;
         vm.cdrfList = data.cdrfList;
@@ -479,7 +483,11 @@ function tpdtEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/tpdt-edit.action?tpdt.id=" + $routeParams.tpdtId).success(function(data) {
+    $http.post("metamodelo/tpdt-edit.action", {
+        tpdt : {
+            id : $routeParams.tpdtId
+        }
+    }).success(function(data) {
         vm.tpdt = data.tpdt;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
@@ -513,7 +521,11 @@ function cdrfCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/cdrf-create.action?cdrf.tpdtId=" + $routeParams.tpdtId).success(function(data) {
+    $http.post("metamodelo/cdrf-create.action", {
+        cdrf : {
+            tpdtId : $routeParams.tpdtId
+        }
+    }).success(function(data) {
         vm.cdrf = data.cdrf;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
@@ -529,7 +541,9 @@ function cdrfDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/cdrf-remove.action?cdrf.id=" + vm.cdrf.id).success(function(data) {
+            $http.post("metamodelo/cdrf-remove.action", {
+                cdrf : vm.cdrf
+            }).success(function(data) {
                 window.history.back();
             });
         }
@@ -565,7 +579,11 @@ function cdrfEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/cdrf-edit.action?cdrf.id=" + $routeParams.cdrfId).success(function(data) {
+    $http.post("metamodelo/cdrf-edit.action", {
+        cdrf : {
+            id : $routeParams.cdrfId
+        }
+    }).success(function(data) {
         vm.cdrf = data.cdrf;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
@@ -584,9 +602,7 @@ function tpprGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search() {
-        var url = "metamodelo/tppr-list.action";
-
-        $http.post(url, {
+        $http.post("metamodelo/tppr-list.action", {
             entiCriterio : vm.entiCriterio,
             page : vm.page,
             limit : vm.limit
@@ -1255,7 +1271,11 @@ function cmagCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/cmag-create.action?cmag.tpesId=" + $routeParams.tpesId).success(function(data) {
+    $http.post("metamodelo/cmag-create.action", {
+        cmag : {
+            tpesId : $routeParams.tpesId
+        }
+    }).success(function(data) {
         vm.cmag = data.cmag;
         vm.accion = data.accion;
     });
@@ -1270,20 +1290,24 @@ function cmagDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get(
-                    "metamodelo/cmag-remove.action?cmag.tpesId=" + vm.cmag.tpesId + "&cmag.entd.id=" + vm.cmag.entd.id)
-                    .success(function(data) {
-                        window.history.back();
-                    });
+            $http.post("metamodelo/cmag-remove.action", {
+                cmag : vm.cmag
+            }).success(function(data) {
+                window.history.back();
+            });
         }
     }
 
-    $http
-            .get(
-                    "metamodelo/cmag-detail.action?cmag.tpesId=" + $routeParams.tpesId + "&cmag.entd.id="
-                            + $routeParams.entdId).success(function(data) {
-                vm.cmag = data.cmag;
-            });
+    $http.post("metamodelo/cmag-detail.action", {
+        cmag : {
+            tpesId : $routeParams.tpesId,
+            entd : {
+                id : $routeParams.entdId
+            }
+        }
+    }).success(function(data) {
+        vm.cmag = data.cmag;
+    });
 
     pageTitleService.setTitle("cmag", "page_detail");
 }
@@ -1309,13 +1333,17 @@ function cmagEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http
-            .get(
-                    "metamodelo/cmag-edit.action?cmag.tpesId=" + $routeParams.tpesId + "&cmag.entd.id="
-                            + $routeParams.entdId).success(function(data) {
-                vm.cmag = data.cmag;
-                vm.accion = data.accion;
-            });
+    $http.post("metamodelo/cmag-edit.action?cmag.tpesId=", {
+        cmag : {
+            tpesId : $routeParams.tpesId,
+            entd : {
+                id : $routeParams.entdId
+            }
+        }
+    }).success(function(data) {
+        vm.cmag = data.cmag;
+        vm.accion = data.accion;
+    });
 
     pageTitleService.setTitle("cmag", "page_edit");
 }

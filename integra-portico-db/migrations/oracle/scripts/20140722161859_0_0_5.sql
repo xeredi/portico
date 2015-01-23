@@ -593,6 +593,8 @@ INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_
 
 
 
+ALTER TABLE tbl_servicio_srvc
+	ADD COLUMN srvc_pepr_pk BIGINT\
 
 
 
@@ -603,6 +605,9 @@ INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_
 -- SQL to undo the change goes here.
 
 -- Campos de Agregacion de estadisticas
+ALTER TABLE tbl_servicio_srvc
+	DROP COLUMN srvc_pepr_pk BIGINT\
+
 DROP TABLE tbl_campo_agregacion_cmag\
 
 

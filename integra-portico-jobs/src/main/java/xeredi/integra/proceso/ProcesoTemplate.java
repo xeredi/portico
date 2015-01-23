@@ -28,6 +28,8 @@ import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
+import com.google.common.base.Preconditions;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoTemplate.
@@ -97,6 +99,37 @@ public abstract class ProcesoTemplate {
      *            the fecha vigencia
      */
     protected final void buscarMaestros(final Date fechaVigencia) {
+        Preconditions.checkNotNull(fechaVigencia);
+
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Busqueda de Maestros");
+        }
+
+        final ParametroBO prmtBO = new ParametroBO();
+
+        for (final Entidad entidad : codigoMaestroMap.keySet()) {
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+
+            prmtCriterioVO.setEntiId(entidad.getId());
+            prmtCriterioVO.setParametros(codigoMaestroMap.get(entidad));
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            prmtCriterioVO.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
+
+            maestroMap.put(entidad, prmtBO.selectMapByCodigo(prmtCriterioVO));
+        }
+    }
+
+    /**
+     * Buscar maestros.
+     *
+     * @param codigoMaestroMap
+     *            the codigo maestro map
+     * @param fechaVigencia
+     *            the fecha vigencia
+     */
+    protected final void buscarMaestros(final Map<Entidad, Set<String>> codigoMaestroMap, final Date fechaVigencia) {
+        Preconditions.checkNotNull(fechaVigencia);
+
         if (LOG.isInfoEnabled()) {
             LOG.info("Busqueda de Maestros");
         }
@@ -122,6 +155,8 @@ public abstract class ProcesoTemplate {
      *            the fecha vigencia
      */
     protected void buscarOrganizaciones(final Date fechaVigencia) {
+        Preconditions.checkNotNull(fechaVigencia);
+
         if (LOG.isInfoEnabled()) {
             LOG.info("Busqueda de Organizaciones");
         }
@@ -155,6 +190,8 @@ public abstract class ProcesoTemplate {
      *            the codigo
      */
     protected final void addCodigoMaestro(final Entidad entidad, final String codigo) {
+        Preconditions.checkNotNull(entidad);
+
         if (!codigoMaestroMap.containsKey(entidad)) {
             codigoMaestroMap.put(entidad, new HashSet<String>());
         }

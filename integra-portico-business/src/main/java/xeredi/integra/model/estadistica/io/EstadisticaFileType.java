@@ -1,4 +1,4 @@
-package xeredi.integra.model.estadistica.bo;
+package xeredi.integra.model.estadistica.io;
 
 // TODO: Auto-generated Javadoc
 /**

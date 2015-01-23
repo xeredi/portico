@@ -585,7 +585,8 @@ INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_
 INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_agregar, cmag_nombre) VALUES (23005, 33111, 1, 'tipoEquipamiento')\
 
 
-
+ALTER TABLE portico.tbl_servicio_srvc
+	ADD COLUMN srvc_pepr_pk BIGINT\
 
 
 
@@ -595,6 +596,9 @@ INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_
 -- SQL to undo the change goes here.
 
 -- Campos de agregacion de estadisticas
+ALTER TABLE portico.tbl_servicio_srvc
+	DROP COLUMN srvc_pepr_pk BIGINT\
+
 DROP TABLE portico.tbl_campo_agregacion_cmag\
 
 -- Mensajes i18n

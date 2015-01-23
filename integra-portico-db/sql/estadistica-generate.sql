@@ -1,4 +1,34 @@
 ﻿-- AGREGACION PESCA
+SELECT *
+FROM 
+	tbl_servicio_srvc
+WHERE 
+	srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+	AND (
+		EXISTS (
+			SELECT 1
+			FROM tbl_servicio_dato_srdt
+			WHERE 
+				srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+				AND srdt_cadena = '0'
+				AND srdt_srvc_pk = srvc_pk
+		)
+		OR EXISTS (
+			SELECT 1
+			FROM tbl_servicio_dato_srdt
+			WHERE 
+				srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+				AND srdt_cadena = '2'
+				AND srdt_srvc_pk = srvc_pk
+		)
+	)
+	AND (
+		srvc_fref >= '2013-05-01'
+		AND srvc_fref < '2013-06-01'
+	)
+;
+
+
 SELECT srvc_subp_pk, tipoCaptura, SUM(kilos), SUM(precio)
 	, tipoOperacion, especie, arte, zona, vendedor
 FROM (

@@ -59,8 +59,7 @@ public final class ServicioXls extends BaseXls {
         Preconditions.checkNotNull(tpsrVO);
         Preconditions.checkNotNull(stream);
 
-        try {
-            final HSSFWorkbook workbook = new HSSFWorkbook();
+        try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpsrVO.getId()));
 
             // Cabecera XLS

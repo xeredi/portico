@@ -1,6 +1,5 @@
 package xeredi.integra.model.estadistica.bo;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,11 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
@@ -29,13 +24,11 @@ import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaAgregadoDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaDatoDAO;
-import xeredi.integra.model.estadistica.dao.EstadisticaExportDAO;
 import xeredi.integra.model.estadistica.dao.PeriodoProcesoDAO;
 import xeredi.integra.model.estadistica.vo.CuadroMesConcepto;
 import xeredi.integra.model.estadistica.vo.CuadroMesParametroVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
-import xeredi.integra.model.estadistica.vo.EstadisticaExportVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
@@ -501,8 +494,8 @@ public class PeriodoProcesoBO {
                             case FE:
                             case FH:
                                 /*
-                                 * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP) value).dateValue()); }
-                                 * else { itdtVO.setFecha((Date) value); }
+                                 * if (value instanceof TIMESTAMP) { itdtVO.setFecha(((TIMESTAMP)
+                                 * value).dateValue()); } else { itdtVO.setFecha((Date) value); }
                                  */
                                 itdtVO.setFecha((Date) value);
 
@@ -521,246 +514,6 @@ public class PeriodoProcesoBO {
             return estdList;
         } catch (final InstanceNotFoundException ex) {
             throw new Error(ex);
-        }
-    }
-
-    /**
-     * Generar archivo.
-     *
-     * @param session
-     *            the session
-     * @param peprVO
-     *            the pepr vo
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     */
-    private final void generarArchivo(final SqlSession session, final PeriodoProcesoVO peprVO) throws IOException {
-        Preconditions.checkNotNull(peprVO);
-        Preconditions.checkNotNull(peprVO.getId());
-
-        final EstadisticaExportDAO esexDAO = session.getMapper(EstadisticaExportDAO.class);
-        final String fileName = peprVO.getAutp().getParametro()
-                + StringUtils.leftPad(peprVO.getAnio().toString(), 4, '0')
-                + StringUtils.leftPad(peprVO.getMes().toString(), 2, '0');
-
-        try (final ZipOutputStream zos = new ZipOutputStream(new FileOutputStream("/xeredi/" + fileName + ".zip"));) {
-            // Fichero de Actividad Pesquera
-            {
-                final List<EstadisticaExportVO> esexList = esexDAO.selectActividadPesquera(peprVO.getId());
-                final List<StringBuffer> stringBuffers = new ArrayList<>();
-
-                for (final EstadisticaExportVO esexVO : esexList) {
-                    final StringBuffer buffer = new StringBuffer();
-
-                    buffer.append(EstadisticaFileKeyword.Anio.generateStringValue(peprVO.getAnio(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Mes.generateStringValue(peprVO.getMes(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Autp.generateStringValue(esexVO.getAutp(), '0'));
-
-                    buffer.append(EstadisticaFileKeyword.EAP_TipoCaptura.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.TIPO_CAPTURA_PESCA.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EAP_Kilos.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_01.name()), '0'));
-                    buffer.append(EstadisticaFileKeyword.EAP_Euros.generateStringValue(new Double((Double) esexVO
-                            .getEsdtMap().get(TipoDato.DECIMAL_01.name()) * 100).longValue(), '0'));
-
-                    stringBuffers.add(buffer);
-                }
-
-                zos.putNextEntry(new ZipEntry(fileName + ".EAP"));
-                IOUtils.writeLines(stringBuffers, null, zos);
-                zos.closeEntry();
-            }
-
-            // Fichero de Avituallamiento
-            {
-                final List<EstadisticaExportVO> esexList = esexDAO.selectAvituallamiento(peprVO.getId());
-                final List<StringBuffer> stringBuffers = new ArrayList<>();
-
-                for (final EstadisticaExportVO esexVO : esexList) {
-                    final StringBuffer buffer = new StringBuffer();
-
-                    buffer.append(EstadisticaFileKeyword.Anio.generateStringValue(peprVO.getAnio(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Mes.generateStringValue(peprVO.getMes(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Autp.generateStringValue(esexVO.getAutp(), '0'));
-
-                    buffer.append(EstadisticaFileKeyword.EAV_TipoSuministro.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.TIPO_SUM.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EAV_Toneladas.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_01.name()), '0'));
-
-                    stringBuffers.add(buffer);
-                }
-
-                zos.putNextEntry(new ZipEntry(fileName + ".EAV"));
-                IOUtils.writeLines(stringBuffers, null, zos);
-                zos.closeEntry();
-            }
-
-            // Fichero de Agregacion de Escala
-            {
-                final List<EstadisticaExportVO> esexList = esexDAO.selectAgregacionEscala(peprVO.getId());
-                final List<StringBuffer> stringBuffers = new ArrayList<>();
-
-                for (final EstadisticaExportVO esexVO : esexList) {
-                    final StringBuffer buffer = new StringBuffer();
-
-                    buffer.append(EstadisticaFileKeyword.Anio.generateStringValue(peprVO.getAnio(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Mes.generateStringValue(peprVO.getMes(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Autp.generateStringValue(esexVO.getAutp(), '0'));
-
-                    buffer.append(EstadisticaFileKeyword.EAE_TipoBuque.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.TIPO_BUQUE_GT.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EAE_TipoNavEntrada.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.TIPO_NAV.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EAE_TipoNavSalida.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.TIPO_NAV_2.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EAE_Bandera.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.PAIS.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EAE_TipoActividad.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.TIPO_ACT_EST.name()), ' '));
-
-                    buffer.append(EstadisticaFileKeyword.EAE_NumEscalas.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_01.name()), '0'));
-                    buffer.append(EstadisticaFileKeyword.EAE_NumGTs.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_02.name()), '0'));
-
-                    stringBuffers.add(buffer);
-                }
-
-                zos.putNextEntry(new ZipEntry(fileName + ".EAE"));
-                IOUtils.writeLines(stringBuffers, null, zos);
-                zos.closeEntry();
-            }
-
-            // Fichero de Movimiento de Mercancia
-            {
-                final List<EstadisticaExportVO> esexList = esexDAO.selectMovimientoMercancia(peprVO.getId());
-                final List<StringBuffer> stringBuffers = new ArrayList<>();
-
-                for (final EstadisticaExportVO esexVO : esexList) {
-                    final StringBuffer buffer = new StringBuffer();
-
-                    buffer.append(EstadisticaFileKeyword.Anio.generateStringValue(peprVO.getAnio(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Mes.generateStringValue(peprVO.getMes(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Autp.generateStringValue(esexVO.getAutp(), '0'));
-
-                    buffer.append(EstadisticaFileKeyword.EMM_TipoOperacion.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.TIPO_OP_BL.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EMM_UnloOrigen.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.UNLOCODE_3.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EMM_UnloDestino.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.UNLOCODE_4.name()), ' '));
-
-                    buffer.append(0 == (Long) esexVO.getEsdtMap().get("ALIN_DEPARTICULARES") ? "1" : "2");
-
-                    buffer.append(EstadisticaFileKeyword.EMM_Mercancia.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.MERCANCIA.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EMM_TipoNavegacion.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.TIPO_NAV.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EMM_Roro.generateStringValue(1 == (Long) esexVO.getEsdtMap()
-                            .get(TipoDato.BOOLEANO_01.name()) ? "S" : "N", ' '));
-                    buffer.append(EstadisticaFileKeyword.EMM_UnidadCarga.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.UNIDAD_CARGA.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EMM_InstEspecial.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.INST_ESP.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EMM_TipoTransporte.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.TIPO_TRANSPORTE.name()), ' '));
-
-                    buffer.append(EstadisticaFileKeyword.EMM_Toneladas.generateStringValue(
-                            Math.round((Double) esexVO.getEsdtMap().get(TipoDato.DECIMAL_01.name())), '0'));
-                    buffer.append(EstadisticaFileKeyword.EMM_Unidades.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_01.name()), '0'));
-                    buffer.append(EstadisticaFileKeyword.EMM_Teus.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.DECIMAL_02.name()), '0'));
-
-                    buffer.append(esexVO.getEsdtMap().get(TipoDato.UNLOCODE.name()));
-                    buffer.append(esexVO.getEsdtMap().get(TipoDato.UNLOCODE_2.name()));
-
-                    stringBuffers.add(buffer);
-                }
-
-                zos.putNextEntry(new ZipEntry(fileName + ".EMM"));
-                IOUtils.writeLines(stringBuffers, null, zos);
-                zos.closeEntry();
-            }
-
-            // Fichero de Movimiento de Mercancia EEE
-            {
-                final List<EstadisticaExportVO> esexList = esexDAO.selectMovimientoMercanciaEEE(peprVO.getId());
-                final List<StringBuffer> stringBuffers = new ArrayList<>();
-
-                for (final EstadisticaExportVO esexVO : esexList) {
-                    final StringBuffer buffer = new StringBuffer();
-
-                    buffer.append(EstadisticaFileKeyword.Anio.generateStringValue(peprVO.getAnio(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Mes.generateStringValue(peprVO.getMes(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Autp.generateStringValue(esexVO.getAutp(), '0'));
-
-                    buffer.append(EstadisticaFileKeyword.EME_UnloCargaDescarga.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.UNLOCODE.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EME_UnidadCarga.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.UNIDAD_CARGA.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EME_Mercancia.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.MERCANCIA.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EME_RegistroBuqueEEE.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.REG_TBUQUE_EEE.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EME_DireccionTransporte.generateStringValue(esexVO
-                            .getEsdtMap().get(TipoDato.DIREC_MERC.name()), ' '));
-
-                    buffer.append(EstadisticaFileKeyword.EME_Toneladas.generateStringValue(
-                            Math.round((Double) esexVO.getEsdtMap().get(TipoDato.DECIMAL_01.name())), '0'));
-                    buffer.append(EstadisticaFileKeyword.EME_Pasajeros.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_01.name()), '0'));
-                    buffer.append(EstadisticaFileKeyword.EME_UCLlenas.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_04.name()), '0'));
-                    buffer.append(EstadisticaFileKeyword.EME_UCVacias.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_05.name()), '0'));
-
-                    buffer.append(EstadisticaFileKeyword.EME_Roro.generateStringValue(1 == (Long) esexVO.getEsdtMap()
-                            .get(TipoDato.BOOLEANO_01.name()) ? "S" : "N", ' '));
-
-                    buffer.append(EstadisticaFileKeyword.EME_PasajerosCrucero.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.ENTERO_02.name()), '0'));
-                    buffer.append(EstadisticaFileKeyword.EME_PasajerosInicioFinLinea.generateStringValue(esexVO
-                            .getEsdtMap().get(TipoDato.ENTERO_03.name()), '0'));
-
-                    stringBuffers.add(buffer);
-                }
-
-                zos.putNextEntry(new ZipEntry(fileName + ".EME"));
-                IOUtils.writeLines(stringBuffers, null, zos);
-                zos.closeEntry();
-            }
-
-            // Fichero de Movimiento de Tipo Buque EEE
-            {
-                final List<EstadisticaExportVO> esexList = esexDAO.selectMovimientoTipoBuqueEEE(peprVO.getId());
-                final List<StringBuffer> stringBuffers = new ArrayList<>();
-
-                for (final EstadisticaExportVO esexVO : esexList) {
-                    final StringBuffer buffer = new StringBuffer();
-
-                    buffer.append(EstadisticaFileKeyword.Anio.generateStringValue(peprVO.getAnio(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Mes.generateStringValue(peprVO.getMes(), '0'));
-                    buffer.append(EstadisticaFileKeyword.Autp.generateStringValue(esexVO.getAutp(), '0'));
-
-                    buffer.append(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.TIPO_BUQUE_EEE.name()), ' '));
-                    buffer.append(EstadisticaFileKeyword.EMT_TipoBuqueGtEEE.generateStringValue(esexVO.getEsdtMap()
-                            .get(TipoDato.TIPO_BUQUE_GT_EEE.name()), ' '));
-
-                    buffer.append(EstadisticaFileKeyword.EMT_NumeroBuques.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_01.name()), '0'));
-                    buffer.append(EstadisticaFileKeyword.EMT_NumeroGTs.generateStringValue(
-                            esexVO.getEsdtMap().get(TipoDato.ENTERO_02.name()), '0'));
-
-                    stringBuffers.add(buffer);
-                }
-
-                zos.putNextEntry(new ZipEntry(fileName + ".EMT"));
-                IOUtils.writeLines(stringBuffers, null, zos);
-                zos.closeEntry();
-            }
         }
     }
 
