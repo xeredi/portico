@@ -41,6 +41,15 @@ public interface ServicioDAO {
     int delete(final Long srvcId);
 
     /**
+     * Update pepr desasociar.
+     *
+     * @param peprId
+     *            the pepr id
+     * @return the int
+     */
+    int updatePeprDesasociar(final Long peprId);
+
+    /**
      * Select count.
      *
      * @param srvcCriterioVO

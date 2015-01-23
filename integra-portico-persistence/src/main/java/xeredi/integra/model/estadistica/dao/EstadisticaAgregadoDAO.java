@@ -4,6 +4,7 @@ import java.util.List;
 
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,8 +13,26 @@ import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
 public interface EstadisticaAgregadoDAO {
 
     /**
+     * Select subp ids.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the list
+     */
+    List<Long> selectSubpIds(final ParametroCriterioVO prmtCriterioVO);
+
+    /**
+     * Update srvc actividad pesquera.
+     *
+     * @param esagCriterioVO
+     *            the esag criterio vo
+     * @return the int
+     */
+    int updateSrvcActividadPesquera(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+
+    /**
      * Select actividad pesquera.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list
@@ -22,7 +41,7 @@ public interface EstadisticaAgregadoDAO {
 
     /**
      * Select avituallamiento.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list
@@ -31,7 +50,7 @@ public interface EstadisticaAgregadoDAO {
 
     /**
      * Select agregacion superficie.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list
@@ -40,7 +59,7 @@ public interface EstadisticaAgregadoDAO {
 
     /**
      * Select agregacion escala.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list
@@ -49,7 +68,7 @@ public interface EstadisticaAgregadoDAO {
 
     /**
      * Select movimiento tipo buque eee.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list
@@ -58,7 +77,7 @@ public interface EstadisticaAgregadoDAO {
 
     /**
      * Select buque fondeado atracado.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list
@@ -67,7 +86,7 @@ public interface EstadisticaAgregadoDAO {
 
     /**
      * Select movimiento mercancia.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list
@@ -76,7 +95,7 @@ public interface EstadisticaAgregadoDAO {
 
     /**
      * Select movimiento mercancia eee.
-     * 
+     *
      * @param esagCriterioVO
      *            the esag criterio vo
      * @return the list

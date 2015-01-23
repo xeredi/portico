@@ -72,17 +72,22 @@ public abstract class ProcesoTemplate {
                     LOG.debug("Ejecucion del proceso: " + prbtVO);
                 }
 
-                ejecutar();
+                try {
+                    ejecutar();
+                } catch (final Throwable ex) {
+                    LOG.fatal("Error en el Proceso " + prbtVO.getId());
+                    LOG.fatal(ex, ex);
+
+                    addError(MensajeCodigo.G_000, ex.getMessage());
+                }
 
                 try {
                     prbtBO.finalizar(prbtVO);
                 } catch (final InstanceNotFoundException ex) {
                     LOG.fatal("Proceso " + prbtVO.getId() + " no encontrado al tratar de finalizarlo. " + prbtVO);
-                    throw new Error("Error grave de proceso en ejecucion no encontrado");
                 } catch (final OperacionNoPermitidaException ex) {
                     LOG.fatal("Proceso " + prbtVO.getId() + " en un estado invalido al tratar de finalizarlo. "
                             + prbtVO);
-                    throw new Error("Error grave de inconsistencia de estados en los procesos");
                 }
             }
         } while (prbtVO != null);
@@ -226,7 +231,10 @@ public abstract class ProcesoTemplate {
 
         prmnVO.setCodigo(codigo);
         prmnVO.setNivel(nivel);
-        prmnVO.setMensaje(mensaje);
+
+        if (mensaje != null) {
+            prmnVO.setMensaje(mensaje.length() < 250 ? mensaje : mensaje.substring(0, 250));
+        }
 
         prbtVO.getPrmnList().add(prmnVO);
     }

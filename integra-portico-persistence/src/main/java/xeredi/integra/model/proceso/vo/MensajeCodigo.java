@@ -30,9 +30,15 @@ public enum MensajeCodigo {
     G_010,
     /** Servicio Duplicado. */
     G_011,
+    /** Parametro no encontrado. */
+    G_012,
+    /** Parametro no valido. */
+    G_013,
 
     /** Periodo de Proceso duplicado. */
     E_001,
+    /** No hay subpuertos para la AP seleccionada. */
+    E_002,
 
     ;
 }

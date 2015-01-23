@@ -3,125 +3,259 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.estadistica.dao.EstadisticaAgregadoDAO">
-    <resultMap id="ResultMapActividadPesquera" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="TIPO_CAPTURA_PESCA" />
-        <id column="ARTE_PESCA" />
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="TIPO_CAPTURA_PESCA" property="TIPO_CAPTURA_PESCA" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-            <result column="DECIMAL_01" property="DECIMAL_01" />
-            <result column="ARTE_PESCA" property="ARTE_PESCA" />
-        </association>
-    </resultMap>
-
-    <select id="selectActividadPesquera" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapActividadPesquera">
+	<select id="selectSubpIds" parameterType="ParametroCriterioVO"
+		resultType="Long">
     <![CDATA[
-        SELECT srvc_subp_pk, TIPO_CAPTURA_PESCA, SUM(ENTERO_01) AS ENTERO_01, SUM(DECIMAL_01) AS DECIMAL_01
-        FROM (
-            WITH srvcs AS (
-        		SELECT srvc_pk, srvc_subp_pk, srvc_fref
-                FROM
-                    tbl_servicio_srvc
-                WHERE
-                    srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
-                    AND srvc_fref >= #{finicio}
-                    AND srvc_fref < #{ffin}
-                    AND EXISTS (
-                        SELECT 1
-                        FROM tbl_servicio_dato_srdt
-                        WHERE srdt_srvc_pk = srvc_pk
-                            AND srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-                            AND srdt_cadena IN ('0', '2')
-                    )
-            )
-            SELECT
-                srvc_subp_pk
-                , (
-                    SELECT srdt_prmt_pk
-                    FROM tbl_servicio_dato_srdt
-                    WHERE srdt_srvc_pk = srvc_pk
-                        AND srdt_tpdt_pk = portico.getTipoDato('TIPO_OP_PESCA')
-                ) AS TIPO_OP_PESCA
-                , (
-                    SELECT srdt_prmt_pk
-                    FROM tbl_servicio_dato_srdt
-                    WHERE srdt_srvc_pk = srvc_pk
-                        AND srdt_tpdt_pk = portico.getTipoDato('ARTE_PESCA')
-                ) AS ARTE_PESCA
-                , (
-                    SELECT srdt_prmt_pk
-                    FROM tbl_servicio_dato_srdt
-                    WHERE srdt_srvc_pk = srvc_pk
-                        AND srdt_tpdt_pk = portico.getTipoDato('ZONA_PESCA')
-                ) AS ZONA_PESCA
-                , (
-                    SELECT srdt_prmt_pk
-                    FROM tbl_servicio_dato_srdt
-                    WHERE srdt_srvc_pk = srvc_pk
-                        AND srdt_tpdt_pk = portico.getTipoDato('ORGA')
-                ) AS ORGA
-                , (
-                    SELECT ssdt_prmt_pk
-                    FROM tbl_subservicio_dato_ssdt
-                    WHERE ssdt_ssrv_pk = ssrv_pk
-                        AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
-                ) AS ESPECIE_PESCA
-                , (
-                    SELECT prdt_prmt_pk
-                    FROM tbl_parametro_dato_prdt
-                    WHERE
-                        prdt_tpdt_pk = portico.getTipoDato('TIPO_CAPTURA_PESCA')
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_parametro_version_prvr
-                            WHERE prvr_pk = prdt_prvr_pk
-                                AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
-                                AND EXISTS (
-                                    SELECT 1
-                                    FROM tbl_subservicio_dato_ssdt
-                                    WHERE ssdt_ssrv_pk = ssrv_pk
-                                        AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
-                                        AND ssdt_prmt_pk = prvr_prmt_pk
-                                )
-                        )
-                ) AS TIPO_CAPTURA_PESCA
-                , (
-                    SELECT ssdt_ndecimal
-                    FROM tbl_subservicio_dato_ssdt
-                    WHERE ssdt_ssrv_pk = ssrv_pk
-                        AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
-                ) AS ENTERO_01
-                , (
-                    SELECT ssdt_ndecimal
-                    FROM tbl_subservicio_dato_ssdt
-                    WHERE ssdt_ssrv_pk = ssrv_pk
-                        AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
-                ) AS DECIMAL_01
-            FROM
-                srvcs
-                INNER JOIN tbl_subservicio_ssrv ON
-                    ssrv_srvc_pk = srvc_pk
-                    AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
-        ) sql
-        GROUP BY srvc_subp_pk, TIPO_CAPTURA_PESCA
+		SELECT prmt_pk
+		FROM
+			tbl_parametro_prmt
+		WHERE
+			prmt_tppr_pk = portico.getEntidad('SUBPUERTO')
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_parametro_version_prvr
+				WHERE prvr_prmt_pk = prmt_pk
+					AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+					AND EXISTS (
+						SELECT 1
+						FROM tbl_parametro_dato_prdt
+						WHERE prdt_prvr_pk = prvr_pk
+							AND prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+							AND prdt_prmt_pk = ANY (
+								SELECT prmt_pk
+								FROM
+									tbl_parametro_prmt
+								WHERE prmt_tppr_pk = portico.getEntidad('AUTORIDAD_PORTUARIA')
+									AND EXISTS (
+										SELECT 1
+										FROM tbl_parametro_version_prvr
+										WHERE prvr_prmt_pk = prmt_pk
+											AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
+											AND EXISTS (
+												SELECT 1
+												FROM tbl_parametro_dato_prdt
+												WHERE prdt_prvr_pk = prvr_pk
+													AND prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+													AND prdt_prmt_pk = #{id}
+											)
+									)
+							)
+					)
+			)
     ]]>
-    </select>
+	</select>
 
-    <resultMap id="ResultMapAvituallamiento" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="TIPO_SUM" />
+	<update id="updateSrvcActividadPesquera" parameterType="EstadisticaAgregadoCriterioVO">
+    <![CDATA[
+		UPDATE tbl_servicio_srvc SET
+			srvc_pepr_pk = #{peprId}
+		WHERE
+			srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_subservicio_ssrv
+				WHERE
+					ssrv_srvc_pk = srvc_pk
+					AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+			)
+			AND (
+				srvc_fref >= #{fini}
+				AND srvc_fref < #{ffin}
+			)
+			AND (
+				EXISTS (
+					SELECT 1
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+						AND srdt_cadena = '0'
+						AND srdt_srvc_pk = srvc_pk
+				)
+				OR EXISTS (
+					SELECT 1
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+						AND srdt_cadena = '2'
+						AND srdt_srvc_pk = srvc_pk
+				)
+			)
+			AND srvc_subp_pk IN
+    ]]>
+		<foreach collection="subpIds" item="item" open="(" close=")"
+			separator=",">#{item}
+		</foreach>
+	</update>
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="TIPO_SUM" property="TIPO_SUM" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-        </association>
-    </resultMap>
 
-    <select id="selectAvituallamiento" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapAvituallamiento">
+	<resultMap id="ResultMapActividadPesquera" type="EstadisticaAgregadoVO">
+		<id column="estd_subp_pk" />
+		<id column="TIPO_CAPTURA_PESCA" />
+		<id column="TIPO_OP_PESCA" />
+		<id column="ESPECIE_PESCA" />
+		<id column="ARTE_PESCA" />
+		<id column="ZONA_PESCA" />
+		<id column="ORGA" />
+
+		<result column="estd_subp_pk" property="subpId" />
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_CAPTURA_PESCA" property="TIPO_CAPTURA_PESCA" />
+			<result column="TIPO_OP_PESCA" property="TIPO_OP_PESCA" />
+			<result column="ESPECIE_PESCA" property="ESPECIE_PESCA" />
+			<result column="ARTE_PESCA" property="ARTE_PESCA" />
+			<result column="ZONA_PESCA" property="ZONA_PESCA" />
+			<result column="ORGA" property="ORGA" />
+
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="DECIMAL_01" property="DECIMAL_01" />
+		</association>
+	</resultMap>
+
+	<select id="selectActividadPesquera" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapActividadPesquera">
+    <![CDATA[
+		SELECT estd_subp_pk, TIPO_CAPTURA_PESCA, SUM(kilos) AS ENTERO_01, SUM(precio) AS DECIMAL_01
+			, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
+		FROM (
+			SELECT
+				srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_fref, srvc_estado, ssrv_tpss_pk, ssrv_estado
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = srvc_subp_pk
+						)
+				) AS estd_subp_pk
+				, (
+					SELECT prdt_prmt_pk
+					FROM tbl_parametro_dato_prdt
+					WHERE
+						prdt_tpdt_pk = portico.getTipoDato('TIPO_CAPTURA_PESCA')
+						AND prdt_prvr_pk = ANY (
+							SELECT prvr_pk
+							FROM tbl_parametro_version_prvr
+							WHERE
+								srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+								AND prvr_prmt_pk = ANY (
+									SELECT ssdt_prmt_pk
+									FROM tbl_subservicio_dato_ssdt
+									WHERE
+										ssdt_ssrv_pk = ssrv_pk
+										AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
+								)
+						)
+				) AS TIPO_CAPTURA_PESCA
+				, (
+					SELECT ssdt_ndecimal
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+				) AS kilos
+				, (
+					SELECT ssdt_ndecimal
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+				) AS precio
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('TIPO_OP_PESCA')
+				) AS TIPO_OP_PESCA
+				, (
+					SELECT ssdt_prmt_pk
+					FROM tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
+				) AS ESPECIE_PESCA
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ARTE_PESCA')
+				) AS ARTE_PESCA
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ZONA_PESCA')
+				) AS ZONA_PESCA
+				, (
+					SELECT srdt_prmt_pk
+					FROM tbl_servicio_dato_srdt
+					WHERE
+						srdt_srvc_pk = srvc_pk
+						AND srdt_tpdt_pk = portico.getTipoDato('ORGA')
+				) AS ORGA
+			FROM
+				tbl_servicio_srvc
+				INNER JOIN tbl_subservicio_ssrv ON
+					ssrv_srvc_pk = srvc_pk
+			WHERE
+				srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+				AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+				AND (
+					EXISTS (
+						SELECT 1
+						FROM tbl_servicio_dato_srdt
+						WHERE
+							srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+							AND srdt_cadena = '0'
+							AND srdt_srvc_pk = srvc_pk
+					)
+					OR EXISTS (
+						SELECT 1
+						FROM tbl_servicio_dato_srdt
+						WHERE
+							srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+							AND srdt_cadena = '2'
+							AND srdt_srvc_pk = srvc_pk
+					)
+				)
+				AND (
+					srvc_fref >= #{fini}
+					AND srvc_fref < #{ffin}
+				)
+			AND srvc_subp_pk IN
+    ]]>
+		<foreach collection="subpIds" item="item" open="(" close=")"
+			separator=",">#{item}
+		</foreach>
+    <![CDATA[
+		) sql
+		GROUP BY
+			estd_subp_pk, TIPO_CAPTURA_PESCA
+			, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
+    ]]>
+	</select>
+
+	<resultMap id="ResultMapAvituallamiento" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" property="subpId" />
+		<id column="TIPO_SUM" />
+
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_SUM" property="TIPO_SUM" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+		</association>
+	</resultMap>
+
+	<select id="selectAvituallamiento" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapAvituallamiento">
     <![CDATA[
         SELECT srvc_subp_pk, TIPO_SUM, SUM(ENTERO_01) / 1000 AS ENTERO_01
         FROM (
@@ -187,30 +321,30 @@
         ) sql
         GROUP BY srvc_subp_pk, TIPO_SUM
     ]]>
-    </select>
+	</select>
 
-    <resultMap id="ResultMapAgregacionSuperficie" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="ZONA_DEP" />
-        <id column="UNID_SUP" />
-        <id column="TIPO_MERC_EST" />
-        <id column="TIPO_OP_SUP" />
-        <id column="ORGA" />
-        <id column="BOOLEANO_01" />
+	<resultMap id="ResultMapAgregacionSuperficie" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" property="subpId" />
+		<id column="ZONA_DEP" />
+		<id column="UNID_SUP" />
+		<id column="TIPO_MERC_EST" />
+		<id column="TIPO_OP_SUP" />
+		<id column="ORGA" />
+		<id column="BOOLEANO_01" />
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="ZONA_DEP" property="ZONA_DEP" />
-            <result column="UNID_SUP" property="UNID_SUP" />
-            <result column="TIPO_MERC_EST" property="TIPO_MERC_EST" />
-            <result column="TIPO_OP_SUP" property="TIPO_OP_SUP" />
-            <result column="ORGA" property="ORGA" />
-            <result column="BOOLEANO_01" property="BOOLEANO_01" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-        </association>
-    </resultMap>
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="ZONA_DEP" property="ZONA_DEP" />
+			<result column="UNID_SUP" property="UNID_SUP" />
+			<result column="TIPO_MERC_EST" property="TIPO_MERC_EST" />
+			<result column="TIPO_OP_SUP" property="TIPO_OP_SUP" />
+			<result column="ORGA" property="ORGA" />
+			<result column="BOOLEANO_01" property="BOOLEANO_01" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+		</association>
+	</resultMap>
 
-    <select id="selectAgregacionSuperficie" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapAgregacionSuperficie">
+	<select id="selectAgregacionSuperficie" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapAgregacionSuperficie">
     <![CDATA[
         SELECT srvc_subp_pk, ZONA_DEP, UNID_SUP, TIPO_MERC_EST, TIPO_OP_SUP, ORGA, BOOLEANO_01, SUM(ENTERO_01) AS ENTERO_01
         FROM (
@@ -280,41 +414,41 @@
         ) sql
         GROUP BY srvc_subp_pk, ZONA_DEP, UNID_SUP, TIPO_MERC_EST, TIPO_OP_SUP, ORGA, BOOLEANO_01
     ]]>
-    </select>
+	</select>
 
-    <resultMap id="ResultMapAgregacionEscala" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="TIPO_BUQUE" />
-        <id column="PAIS" />
-        <id column="TIPO_NAV" />
-        <id column="TIPO_NAV_2" />
-        <id column="TIPO_ACT" />
-        <id column="BUQUE" />
-        <id column="TIPO_ESTAN_ESC" />
-        <id column="SERV_TRAF" />
-        <id column="ACUERDO" />
-        <id column="ORGA" />
-        <id column="TIPO_BUQUE_GT" />
+	<resultMap id="ResultMapAgregacionEscala" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" property="subpId" />
+		<id column="TIPO_BUQUE" />
+		<id column="PAIS" />
+		<id column="TIPO_NAV" />
+		<id column="TIPO_NAV_2" />
+		<id column="TIPO_ACT" />
+		<id column="BUQUE" />
+		<id column="TIPO_ESTAN_ESC" />
+		<id column="SERV_TRAF" />
+		<id column="ACUERDO" />
+		<id column="ORGA" />
+		<id column="TIPO_BUQUE_GT" />
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="TIPO_BUQUE" property="TIPO_BUQUE" />
-            <result column="PAIS" property="PAIS" />
-            <result column="TIPO_NAV" property="TIPO_NAV" />
-            <result column="TIPO_NAV_2" property="TIPO_NAV_2" />
-            <result column="TIPO_ACT" property="TIPO_ACT" />
-            <result column="BUQUE" property="BUQUE" />
-            <result column="TIPO_ESTAN_ESC" property="TIPO_ESTAN_ESC" />
-            <result column="SERV_TRAF" property="SERV_TRAF" />
-            <result column="ACUERDO" property="ACUERDO" />
-            <result column="ORGA" property="ORGA" />
-            <result column="TIPO_BUQUE_GT" property="TIPO_BUQUE_GT" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-            <result column="ENTERO_02" property="ENTERO_02" />
-        </association>
-    </resultMap>
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_BUQUE" property="TIPO_BUQUE" />
+			<result column="PAIS" property="PAIS" />
+			<result column="TIPO_NAV" property="TIPO_NAV" />
+			<result column="TIPO_NAV_2" property="TIPO_NAV_2" />
+			<result column="TIPO_ACT" property="TIPO_ACT" />
+			<result column="BUQUE" property="BUQUE" />
+			<result column="TIPO_ESTAN_ESC" property="TIPO_ESTAN_ESC" />
+			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="ACUERDO" property="ACUERDO" />
+			<result column="ORGA" property="ORGA" />
+			<result column="TIPO_BUQUE_GT" property="TIPO_BUQUE_GT" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+		</association>
+	</resultMap>
 
-    <select id="selectAgregacionEscala" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapAgregacionEscala">
+	<select id="selectAgregacionEscala" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapAgregacionEscala">
     <![CDATA[
         SELECT srvc_subp_pk, TIPO_BUQUE, PAIS, TIPO_NAV, TIPO_NAV_2, TIPO_ACT, BUQUE, TIPO_ESTAN_ESC, SERV_TRAF, ACUERDO, ORGA, TIPO_BUQUE_GT
             , COUNT(1) AS ENTERO_01, SUM(ENTERO_02) AS ENTERO_02
@@ -501,23 +635,23 @@
         ) sql
         GROUP BY srvc_subp_pk, TIPO_BUQUE, PAIS, TIPO_NAV, TIPO_NAV_2, TIPO_ACT, BUQUE, TIPO_ESTAN_ESC, SERV_TRAF, ACUERDO, ORGA, TIPO_BUQUE_GT
     ]]>
-    </select>
+	</select>
 
-    <resultMap id="ResultMapMovimientoTipoBuqueEEE" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="TIPO_BUQUE_EEE" />
-        <id column="TIPO_BUQUE_GT_EEE" />
+	<resultMap id="ResultMapMovimientoTipoBuqueEEE" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" property="subpId" />
+		<id column="TIPO_BUQUE_EEE" />
+		<id column="TIPO_BUQUE_GT_EEE" />
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="TIPO_BUQUE_EEE" property="TIPO_BUQUE_EEE" />
-            <result column="TIPO_BUQUE_GT_EEE" property="TIPO_BUQUE_GT_EEE" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-            <result column="ENTERO_02" property="ENTERO_02" />
-        </association>
-    </resultMap>
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_BUQUE_EEE" property="TIPO_BUQUE_EEE" />
+			<result column="TIPO_BUQUE_GT_EEE" property="TIPO_BUQUE_GT_EEE" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+		</association>
+	</resultMap>
 
-    <select id="selectMovimientoTipoBuqueEEE" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapMovimientoTipoBuqueEEE">
+	<select id="selectMovimientoTipoBuqueEEE" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapMovimientoTipoBuqueEEE">
     <![CDATA[
         SELECT srvc_subp_pk, TIPO_BUQUE_EEE, TIPO_BUQUE_GT_EEE
             , COUNT(1) AS ENTERO_01, SUM(ENTERO_02) AS ENTERO_02
@@ -661,32 +795,32 @@
         ) sql
         GROUP BY srvc_subp_pk, TIPO_BUQUE_EEE, TIPO_BUQUE_GT_EEE
     ]]>
-    </select>
+	</select>
 
-    <resultMap id="ResultMapBuqueFondeadoAtracado" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="TIPO_ATR" />
-        <id column="ORGA" />
-        <id column="BUQUE" />
-        <id column="SERV_TRAF" />
-        <id column="ALIN" />
+	<resultMap id="ResultMapBuqueFondeadoAtracado" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" property="subpId" />
+		<id column="TIPO_ATR" />
+		<id column="ORGA" />
+		<id column="BUQUE" />
+		<id column="SERV_TRAF" />
+		<id column="ALIN" />
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="TIPO_ATR" property="TIPO_ATR" />
-            <result column="ORGA" property="ORGA" />
-            <result column="BUQUE" property="BUQUE" />
-            <result column="SERV_TRAF" property="SERV_TRAF" />
-            <result column="ALIN" property="ALIN" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-            <result column="ENTERO_02" property="ENTERO_02" />
-            <result column="ENTERO_03" property="ENTERO_03" />
-            <result column="ENTERO_04" property="ENTERO_04" />
-            <result column="ENTERO_05" property="ENTERO_05" />
-        </association>
-    </resultMap>
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_ATR" property="TIPO_ATR" />
+			<result column="ORGA" property="ORGA" />
+			<result column="BUQUE" property="BUQUE" />
+			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="ALIN" property="ALIN" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+			<result column="ENTERO_03" property="ENTERO_03" />
+			<result column="ENTERO_04" property="ENTERO_04" />
+			<result column="ENTERO_05" property="ENTERO_05" />
+		</association>
+	</resultMap>
 
-    <select id="selectBuqueFondeadoAtracado" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapBuqueFondeadoAtracado">
+	<select id="selectBuqueFondeadoAtracado" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapBuqueFondeadoAtracado">
     <![CDATA[
         SELECT srvc_subp_pk, TIPO_ATR, ORGA, BUQUE, SERV_TRAF, ALIN
             , COUNT(1) AS ENTERO_01
@@ -830,58 +964,58 @@
         ) sql
         GROUP BY srvc_subp_pk, TIPO_ATR, ORGA, BUQUE, SERV_TRAF, ALIN
     ]]>
-    </select>
+	</select>
 
-    <resultMap id="ResultMapMovimientoMercancia" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="TIPO_OP_BL" />
-        <id column="UNLOCODE" />
-        <id column="UNLOCODE_2" />
-        <id column="ALIN" />
-        <id column="UNLOCODE_3" />
-        <id column="UNLOCODE_4" />
-        <id column="MERCANCIA" />
-        <id column="TIPO_NAV" />
-        <id column="UNIDAD_CARGA" />
-        <id column="INST_ESP" />
-        <id column="TIPO_TRANSPORTE" />
-        <id column="BOOLEANO_01" />
-        <id column="ORGA" />
-        <id column="ORGA_2" />
-        <id column="BUQUE" />
-        <id column="SERV_TRAF" />
-        <id column="ACUERDO" />
-        <id column="TERMINAL" />
-        <id column="CADENA_01" />
+	<resultMap id="ResultMapMovimientoMercancia" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" property="subpId" />
+		<id column="TIPO_OP_BL" />
+		<id column="UNLOCODE" />
+		<id column="UNLOCODE_2" />
+		<id column="ALIN" />
+		<id column="UNLOCODE_3" />
+		<id column="UNLOCODE_4" />
+		<id column="MERCANCIA" />
+		<id column="TIPO_NAV" />
+		<id column="UNIDAD_CARGA" />
+		<id column="INST_ESP" />
+		<id column="TIPO_TRANSPORTE" />
+		<id column="BOOLEANO_01" />
+		<id column="ORGA" />
+		<id column="ORGA_2" />
+		<id column="BUQUE" />
+		<id column="SERV_TRAF" />
+		<id column="ACUERDO" />
+		<id column="TERMINAL" />
+		<id column="CADENA_01" />
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="TIPO_OP_BL" property="TIPO_OP_BL" />
-            <result column="UNLOCODE" property="UNLOCODE" />
-            <result column="UNLOCODE_2" property="UNLOCODE_2" />
-            <result column="ALIN" property="ALIN" />
-            <result column="UNLOCODE_3" property="UNLOCODE_3" />
-            <result column="UNLOCODE_4" property="UNLOCODE_4" />
-            <result column="MERCANCIA" property="MERCANCIA" />
-            <result column="TIPO_NAV" property="TIPO_NAV" />
-            <result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
-            <result column="INST_ESP" property="INST_ESP" />
-            <result column="TIPO_TRANSPORTE" property="TIPO_TRANSPORTE" />
-            <result column="BOOLEANO_01" property="BOOLEANO_01" />
-            <result column="ORGA" property="ORGA" />
-            <result column="ORGA_2" property="ORGA_2" />
-            <result column="BUQUE" property="BUQUE" />
-            <result column="SERV_TRAF" property="SERV_TRAF" />
-            <result column="ACUERDO" property="ACUERDO" />
-            <result column="TERMINAL" property="TERMINAL" />
-            <result column="CADENA_01" property="CADENA_01" />
-            <result column="DECIMAL_01" property="DECIMAL_01" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-            <result column="DECIMAL_02" property="DECIMAL_02" />
-        </association>
-    </resultMap>
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="TIPO_OP_BL" property="TIPO_OP_BL" />
+			<result column="UNLOCODE" property="UNLOCODE" />
+			<result column="UNLOCODE_2" property="UNLOCODE_2" />
+			<result column="ALIN" property="ALIN" />
+			<result column="UNLOCODE_3" property="UNLOCODE_3" />
+			<result column="UNLOCODE_4" property="UNLOCODE_4" />
+			<result column="MERCANCIA" property="MERCANCIA" />
+			<result column="TIPO_NAV" property="TIPO_NAV" />
+			<result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
+			<result column="INST_ESP" property="INST_ESP" />
+			<result column="TIPO_TRANSPORTE" property="TIPO_TRANSPORTE" />
+			<result column="BOOLEANO_01" property="BOOLEANO_01" />
+			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_2" property="ORGA_2" />
+			<result column="BUQUE" property="BUQUE" />
+			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="ACUERDO" property="ACUERDO" />
+			<result column="TERMINAL" property="TERMINAL" />
+			<result column="CADENA_01" property="CADENA_01" />
+			<result column="DECIMAL_01" property="DECIMAL_01" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="DECIMAL_02" property="DECIMAL_02" />
+		</association>
+	</resultMap>
 
-    <select id="selectMovimientoMercancia" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapMovimientoMercancia">
+	<select id="selectMovimientoMercancia" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapMovimientoMercancia">
     <![CDATA[
         SELECT
         	srvc_subp_pk, TIPO_OP_BL, UNLOCODE, UNLOCODE_2, ALIN, UNLOCODE_3, UNLOCODE_4, MERCANCIA, TIPO_NAV, UNIDAD_CARGA, INST_ESP, TIPO_TRANSPORTE
@@ -1270,38 +1404,38 @@
         	srvc_subp_pk, TIPO_OP_BL, UNLOCODE, UNLOCODE_2, ALIN, UNLOCODE_3, UNLOCODE_4, MERCANCIA, TIPO_NAV, UNIDAD_CARGA, INST_ESP, TIPO_TRANSPORTE
         	, BOOLEANO_01, ORGA, ORGA_2, BUQUE, SERV_TRAF, ACUERDO, TERMINAL, CADENA_01
     ]]>
-    </select>
+	</select>
 
-    <resultMap id="ResultMapMovimientoMercanciaEEE" type="EstadisticaAgregadoVO">
-        <id column="srvc_subp_pk" property="subpId" />
-        <id column="UNLOCODE" />
-        <id column="MERCANCIA" />
-        <id column="UNIDAD_CARGA" />
-        <id column="GRUPO_NST" />
-        <id column="REG_TBUQUE_EEE" />
-        <id column="DIREC_MERC" />
-        <id column="BOOLEANO_01" />
+	<resultMap id="ResultMapMovimientoMercanciaEEE" type="EstadisticaAgregadoVO">
+		<id column="srvc_subp_pk" property="subpId" />
+		<id column="UNLOCODE" />
+		<id column="MERCANCIA" />
+		<id column="UNIDAD_CARGA" />
+		<id column="GRUPO_NST" />
+		<id column="REG_TBUQUE_EEE" />
+		<id column="DIREC_MERC" />
+		<id column="BOOLEANO_01" />
 
-        <association property="esdtMap" javaType="java.util.Map">
-            <result column="UNLOCODE" property="UNLOCODE" />
-            <result column="MERCANCIA" property="MERCANCIA" />
-            <result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
-            <result column="GRUPO_NST" property="GRUPO_NST" />
-            <result column="REG_TBUQUE_EEE" property="REG_TBUQUE_EEE" />
-            <result column="DIREC_MERC" property="DIREC_MERC" />
-            <result column="BOOLEANO_01" property="BOOLEANO_01" />
+		<association property="esdtMap" javaType="java.util.Map">
+			<result column="UNLOCODE" property="UNLOCODE" />
+			<result column="MERCANCIA" property="MERCANCIA" />
+			<result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
+			<result column="GRUPO_NST" property="GRUPO_NST" />
+			<result column="REG_TBUQUE_EEE" property="REG_TBUQUE_EEE" />
+			<result column="DIREC_MERC" property="DIREC_MERC" />
+			<result column="BOOLEANO_01" property="BOOLEANO_01" />
 
-            <result column="DECIMAL_01" property="DECIMAL_01" />
-            <result column="ENTERO_01" property="ENTERO_01" />
-            <result column="ENTERO_02" property="ENTERO_02" />
-            <result column="ENTERO_03" property="ENTERO_03" />
-            <result column="ENTERO_04" property="ENTERO_04" />
-            <result column="ENTERO_05" property="ENTERO_05" />
-        </association>
-    </resultMap>
+			<result column="DECIMAL_01" property="DECIMAL_01" />
+			<result column="ENTERO_01" property="ENTERO_01" />
+			<result column="ENTERO_02" property="ENTERO_02" />
+			<result column="ENTERO_03" property="ENTERO_03" />
+			<result column="ENTERO_04" property="ENTERO_04" />
+			<result column="ENTERO_05" property="ENTERO_05" />
+		</association>
+	</resultMap>
 
-    <select id="selectMovimientoMercanciaEEE" parameterType="EstadisticaAgregadoCriterioVO"
-        resultMap="ResultMapMovimientoMercanciaEEE">
+	<select id="selectMovimientoMercanciaEEE" parameterType="EstadisticaAgregadoCriterioVO"
+		resultMap="ResultMapMovimientoMercanciaEEE">
     <![CDATA[
         SELECT srvc_subp_pk, UNLOCODE, MERCANCIA, UNIDAD_CARGA, GRUPO_NST, REG_TBUQUE_EEE, DIREC_MERC, BOOLEANO_01
         	, COALESCE(SUM(DECIMAL_01), 0) AS DECIMAL_01, COALESCE(SUM(ENTERO_01), 0) AS ENTERO_01
@@ -1690,5 +1824,5 @@
         ) sql
         GROUP BY srvc_subp_pk, UNLOCODE, MERCANCIA, UNIDAD_CARGA, GRUPO_NST, REG_TBUQUE_EEE, DIREC_MERC, BOOLEANO_01
     ]]>
-    </select>
+	</select>
 </mapper>

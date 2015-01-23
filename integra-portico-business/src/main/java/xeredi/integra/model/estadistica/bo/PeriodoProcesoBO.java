@@ -1,6 +1,5 @@
 package xeredi.integra.model.estadistica.bo;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +31,7 @@ import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -39,6 +39,7 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
+import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
@@ -151,14 +152,12 @@ public class PeriodoProcesoBO {
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
-            final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
-            final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
-            final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
 
-            cdmsDAO.delete(peprId);
-            esdtDAO.delete(peprId);
-            estdDAO.delete(peprId);
-            peprDAO.delete(peprId);
+            final PeriodoProcesoVO peprVO = peprDAO.select(peprId);
+
+            if (peprVO != null) {
+                delete(session, peprVO);
+            }
 
             session.commit();
         }
@@ -173,12 +172,19 @@ public class PeriodoProcesoBO {
      *            the pepr vo
      */
     private final void delete(final SqlSession session, final PeriodoProcesoVO peprVO) {
+        Preconditions.checkNotNull(peprVO);
+        Preconditions.checkNotNull(peprVO.getAnio());
+        Preconditions.checkNotNull(peprVO.getMes());
+        Preconditions.checkNotNull(peprVO.getAutp());
+        Preconditions.checkNotNull(peprVO.getAutp().getId());
+
         final PeriodoProcesoCriterioVO peprCriterioVO = new PeriodoProcesoCriterioVO();
 
         final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
         final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
         final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
         final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+        final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
 
         peprCriterioVO.setAnio(peprVO.getAnio());
         peprCriterioVO.setMes(peprVO.getMes());
@@ -186,14 +192,13 @@ public class PeriodoProcesoBO {
 
         final PeriodoProcesoVO peprActualVO = peprDAO.selectObject(peprCriterioVO);
 
-        if (peprActualVO == null) {
-            throw new Error("Deberia haber encontrado un periodo de proceso: " + peprCriterioVO);
+        if (peprActualVO != null) {
+            srvcDAO.updatePeprDesasociar(peprActualVO.getId());
+            esdtDAO.delete(peprActualVO.getId());
+            estdDAO.delete(peprActualVO.getId());
+            cdmsDAO.delete(peprActualVO.getId());
+            peprDAO.delete(peprActualVO.getId());
         }
-
-        esdtDAO.delete(peprActualVO.getId());
-        estdDAO.delete(peprActualVO.getId());
-        cdmsDAO.delete(peprActualVO.getId());
-        peprDAO.delete(peprActualVO.getId());
     }
 
     /**
@@ -286,6 +291,31 @@ public class PeriodoProcesoBO {
     }
 
     /**
+     * Select subp ids.
+     *
+     * @param autpId
+     *            the autp id
+     * @param fref
+     *            the fref
+     * @return the list
+     */
+    public List<Long> selectSubpIds(final Long autpId, final Date fref) {
+        Preconditions.checkNotNull(autpId);
+        Preconditions.checkNotNull(fref);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final EstadisticaAgregadoDAO esagDAO = session.getMapper(EstadisticaAgregadoDAO.class);
+
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+
+            prmtCriterioVO.setId(autpId);
+            prmtCriterioVO.setFechaVigencia(fref);
+
+            return esagDAO.selectSubpIds(prmtCriterioVO);
+        }
+    }
+
+    /**
      * Agregar servicios.
      *
      * @param peprVO
@@ -294,14 +324,15 @@ public class PeriodoProcesoBO {
      *            the remove if exists
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
      */
-    public final void agregarServicios(final PeriodoProcesoVO peprVO, final boolean removeIfExists)
-            throws DuplicateInstanceException, IOException {
+    public final void agregarServicios(final PeriodoProcesoVO peprVO, final List<Long> subpIds,
+            final boolean removeIfExists) throws DuplicateInstanceException {
         Preconditions.checkNotNull(peprVO);
+        Preconditions.checkNotNull(peprVO.getAutp());
         Preconditions.checkNotNull(peprVO.getAnio());
         Preconditions.checkNotNull(peprVO.getMes());
+        Preconditions.checkNotNull(subpIds);
+        Preconditions.checkArgument(!subpIds.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final PeriodoProcesoDAO peprDAO = session.getMapper(PeriodoProcesoDAO.class);
@@ -318,8 +349,6 @@ public class PeriodoProcesoBO {
                 }
             }
 
-            final Map<Long, List<EstadisticaVO>> estdMap = new HashMap<>();
-
             peprVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
             peprVO.setFalta(Calendar.getInstance().getTime());
             peprDAO.insert(peprVO);
@@ -327,6 +356,7 @@ public class PeriodoProcesoBO {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Busqueda de datos agregados");
             }
+
             final EstadisticaAgregadoCriterioVO esagCriterioVO = new EstadisticaAgregadoCriterioVO();
 
             final Calendar finicio = Calendar.getInstance();
@@ -341,48 +371,51 @@ public class PeriodoProcesoBO {
             ffin.set(Calendar.MONTH, peprVO.getMes());
             ffin.set(Calendar.DAY_OF_MONTH, 1);
 
-            esagCriterioVO.setFinicio(finicio.getTime());
+            esagCriterioVO.setFini(finicio.getTime());
             esagCriterioVO.setFfin(ffin.getTime());
+            esagCriterioVO.setSubpIds(subpIds);
+            esagCriterioVO.setPeprId(peprVO.getId());
 
-            estdMap.put(
-                    Entidad.ACTIVIDAD_PESQUERA.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.ACTIVIDAD_PESQUERA.getId(),
-                            esagDAO.selectActividadPesquera(esagCriterioVO)));
-            estdMap.put(
-                    Entidad.AVITUALLAMIENTO.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
-                            esagDAO.selectAvituallamiento(esagCriterioVO)));
-            estdMap.put(
-                    Entidad.AGREGACION_SUPERFICIE.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
-                            esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
-            estdMap.put(
-                    Entidad.AGREGACION_ESCALA.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
-                            esagDAO.selectAgregacionEscala(esagCriterioVO)));
-            estdMap.put(
-                    Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
-                            esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
-            estdMap.put(
-                    Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
-                            esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
-            estdMap.put(
-                    Entidad.MOVIMIENTO_MERCANCIA.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA.getId(),
-                            esagDAO.selectMovimientoMercancia(esagCriterioVO)));
-            estdMap.put(
-                    Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
-                    obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
-                            esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
+            final List<EstadisticaVO> estdList = new ArrayList<>();
+
+            esagDAO.updateSrvcActividadPesquera(esagCriterioVO);
+
+            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.ACTIVIDAD_PESQUERA.getId(),
+                    esagDAO.selectActividadPesquera(esagCriterioVO)));
+            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
+            // esagDAO.selectAvituallamiento(esagCriterioVO)));
+            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
+            // esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
+            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
+            // esagDAO.selectAgregacionEscala(esagCriterioVO)));
+            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
+            // esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
+            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
+            // esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
+            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA.getId(),
+            // esagDAO.selectMovimientoMercancia(esagCriterioVO)));
+            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
+            // esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Grabacion de Datos Agregados");
             }
 
-            for (final Long tpesId : estdMap.keySet()) {
-                insertEstadisticaAgregadoList(session, peprVO, tpesId, estdMap.get(tpesId));
+            final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
+            final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+
+            for (final EstadisticaVO estdVO : estdList) {
+                estdDAO.insert(estdVO);
+            }
+
+            for (final EstadisticaVO estdVO : estdList) {
+                if (estdVO.getItdtMap() != null) {
+                    for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
+                        itdtVO.setItemId(estdVO.getId());
+
+                        esdtDAO.insert(itdtVO);
+                    }
+                }
             }
 
             if (LOG.isDebugEnabled()) {
@@ -394,8 +427,6 @@ public class PeriodoProcesoBO {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Generacion de archivo de OPPE");
             }
-
-            // generarArchivo(peprVO);
 
             session.commit();
         }
@@ -425,9 +456,11 @@ public class PeriodoProcesoBO {
 
                 autpVO.setId(esagVO.getSubpId());
 
+                estdVO.setEntiId(tpesId);
                 estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
                 estdVO.setSubp(autpVO);
                 estdVO.setPepr(peprVO);
+                estdVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
                 if (tpesVO.getEntdList() != null) {
                     for (final EntidadTipoDatoVO entd : tpesVO.getEntdList()) {
@@ -514,42 +547,6 @@ public class PeriodoProcesoBO {
             return estdList;
         } catch (final InstanceNotFoundException ex) {
             throw new Error(ex);
-        }
-    }
-
-    /**
-     * Insert estadistica agregado list.
-     *
-     * @param session
-     *            the session
-     * @param peprVO
-     *            the pepr vo
-     * @param tpesId
-     *            the tpes id
-     * @param estdList
-     *            the estd list
-     */
-    private final void insertEstadisticaAgregadoList(final SqlSession session, final PeriodoProcesoVO peprVO,
-            final Long tpesId, final List<EstadisticaVO> estdList) {
-        Preconditions.checkNotNull(peprVO);
-        Preconditions.checkNotNull(tpesId);
-        Preconditions.checkNotNull(estdList);
-
-        final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
-        final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
-
-        for (final EstadisticaVO estdVO : estdList) {
-            estdDAO.insert(estdVO);
-        }
-
-        for (final EstadisticaVO estdVO : estdList) {
-            if (estdVO.getItdtMap() != null) {
-                for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
-                    itdtVO.setItemId(estdVO.getId());
-
-                    esdtDAO.insert(itdtVO);
-                }
-            }
         }
     }
 

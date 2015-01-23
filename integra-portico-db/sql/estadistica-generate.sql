@@ -1,77 +1,10 @@
-﻿-- Busqueda de subpuertos de una AP
-SELECT *
-FROM 
-	tbl_parametro_prmt
-WHERE 
-	prmt_tppr_pk = 20063
-	AND EXISTS (
-		SELECT 1
-		FROM tbl_parametro_version_prvr
-		WHERE prvr_prmt_pk = prmt_pk
-			AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-			AND EXISTS (
-				SELECT 1
-				FROM tbl_parametro_dato_prdt
-				WHERE prdt_prvr_pk = prvr_pk
-					AND prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
-					AND prdt_prmt_pk = ANY (
-						SELECT prmt_pk
-						FROM 
-							tbl_parametro_prmt
-						WHERE prmt_tppr_pk = 20107
-							AND EXISTS (
-								SELECT 1
-								FROM tbl_parametro_version_prvr
-								WHERE prvr_prmt_pk = prmt_pk
-									AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-									AND EXISTS (
-										SELECT 1
-										FROM tbl_parametro_dato_prdt
-										WHERE prdt_prvr_pk = prvr_pk
-											AND prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
-											AND prdt_prmt_pk = 1030308
-									)
-							)
-					)
-			)
-	)
-;
-
-
+﻿SELECT *
+FROM tbl_servicio_srvc 
+WHERE srvc_pepr_pk IS NOT NULL;
 
 -- AGREGACION PESCA
-SELECT *
-FROM 
-	tbl_servicio_srvc
-WHERE 
-	srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
-	AND (
-		srvc_fref >= '2013-05-01'
-		AND srvc_fref < '2013-06-01'
-	)
-	AND (
-		EXISTS (
-			SELECT 1
-			FROM tbl_servicio_dato_srdt
-			WHERE 
-				srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-				AND srdt_cadena = '0'
-				AND srdt_srvc_pk = srvc_pk
-		)
-		OR EXISTS (
-			SELECT 1
-			FROM tbl_servicio_dato_srdt
-			WHERE 
-				srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-				AND srdt_cadena = '2'
-				AND srdt_srvc_pk = srvc_pk
-		)
-	)
-;
-
-
-SELECT autPort, tipoCaptura, SUM(kilos), SUM(precio)
-	, tipoOperacion, especie, arte, zona, vendedor
+SELECT estd_subp_pk, TIPO_CAPTURA_PESCA, SUM(kilos) AS ENTERO_01, SUM(precio) AS DECIMAL_01
+	, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
 FROM (
 	SELECT 
 		srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_fref, srvc_estado, ssrv_tpss_pk, ssrv_estado
@@ -87,7 +20,7 @@ FROM (
 						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
 						AND prvr_prmt_pk = srvc_subp_pk
 				)
-		) AS autPort
+		) AS estd_subp_pk
 		, (
 			SELECT prdt_prmt_pk
 			FROM tbl_parametro_dato_prdt
@@ -106,7 +39,7 @@ FROM (
 								AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
 						)
 				)
-		) AS tipoCaptura
+		) AS TIPO_CAPTURA_PESCA
 		, (
 			SELECT ssdt_ndecimal
 			FROM tbl_subservicio_dato_ssdt
@@ -127,35 +60,35 @@ FROM (
 			WHERE 
 				srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('TIPO_OP_PESCA')
-		) AS tipoOperacion
+		) AS TIPO_OP_PESCA
 		, (
 			SELECT ssdt_prmt_pk
 			FROM tbl_subservicio_dato_ssdt
 			WHERE 
 				ssdt_ssrv_pk = ssrv_pk
 				AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
-		) AS especie
+		) AS ESPECIE_PESCA
 		, (
 			SELECT srdt_prmt_pk
 			FROM tbl_servicio_dato_srdt
 			WHERE 
 				srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('ARTE_PESCA')
-		) AS arte
+		) AS ARTE_PESCA
 		, (
 			SELECT srdt_prmt_pk
 			FROM tbl_servicio_dato_srdt
 			WHERE 
 				srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('ZONA_PESCA')
-		) AS zona
+		) AS ZONA_PESCA
 		, (
 			SELECT srdt_prmt_pk
 			FROM tbl_servicio_dato_srdt
 			WHERE 
 				srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('ORGA')
-		) AS vendedor
+		) AS ORGA
 	FROM 
 		tbl_servicio_srvc
 		INNER JOIN tbl_subservicio_ssrv ON 
@@ -182,13 +115,13 @@ FROM (
 			)
 		)
 		AND (
-			srvc_fref >= '2013-05-01'
-			AND srvc_fref < '2013-06-01'
+			srvc_fref >= '2013-06-01'
+			AND srvc_fref < '2013-07-01'
 		)
 ) sql
 GROUP BY 
-	autPort, tipoCaptura
-	, tipoOperacion, especie, arte, zona, vendedor
+	estd_subp_pk, TIPO_CAPTURA_PESCA
+	, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
 ;
 
 

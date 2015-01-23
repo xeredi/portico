@@ -54,6 +54,16 @@ public final class PorticoScheduler {
 
             instance.scheduler.scheduleJob(cargaOppeJob, cargaOppeTrigger);
 
+            final JobDetail agregacionApJob = JobBuilder.newJob(AgregacionApJob.class)
+                    .withIdentity("agregacionApJob", "estGroup").build();
+
+            final Trigger agregacionApTrigger = TriggerBuilder.newTrigger()
+                    .withIdentity("agregacionApTrigger", "estGroup").startNow()
+                    .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
+                    .build();
+
+            instance.scheduler.scheduleJob(agregacionApJob, agregacionApTrigger);
+
             LOG.info("Scheduler Created");
         }
 
@@ -83,7 +93,7 @@ public final class PorticoScheduler {
      */
     public static void main(final String[] args) {
         try {
-            final PorticoScheduler scheduler = PorticoScheduler.getInstance();
+            PorticoScheduler.getInstance();
         } catch (final Throwable ex) {
             LOG.fatal(ex, ex);
         }
