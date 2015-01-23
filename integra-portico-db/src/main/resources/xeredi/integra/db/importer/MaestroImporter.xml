@@ -1364,6 +1364,7 @@
                 WHERE IVAT_ID = subp_IVAT_ID
             ) AS IVAT_CODIGO
             , MAES.SUBP_ES_PARA_ESTADISTICAS
+            , MAES.SUBP_AUTP_ID
             , (SELECT I18N.subp_NOMBRE
                 FROM IGEN_SUBPUERTOi18n_SUBP I18N
                 WHERE I18N.SUBP_ID = MAES.SUBP_ID

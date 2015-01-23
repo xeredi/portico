@@ -1,9 +1,54 @@
-﻿-- AGREGACION PESCA
+﻿-- Busqueda de subpuertos de una AP
+SELECT *
+FROM 
+	tbl_parametro_prmt
+WHERE 
+	prmt_tppr_pk = 20063
+	AND EXISTS (
+		SELECT 1
+		FROM tbl_parametro_version_prvr
+		WHERE prvr_prmt_pk = prmt_pk
+			AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+			AND EXISTS (
+				SELECT 1
+				FROM tbl_parametro_dato_prdt
+				WHERE prdt_prvr_pk = prvr_pk
+					AND prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+					AND prdt_prmt_pk = ANY (
+						SELECT prmt_pk
+						FROM 
+							tbl_parametro_prmt
+						WHERE prmt_tppr_pk = 20107
+							AND EXISTS (
+								SELECT 1
+								FROM tbl_parametro_version_prvr
+								WHERE prvr_prmt_pk = prmt_pk
+									AND NOW() BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+									AND EXISTS (
+										SELECT 1
+										FROM tbl_parametro_dato_prdt
+										WHERE prdt_prvr_pk = prvr_pk
+											AND prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+											AND prdt_prmt_pk = 1030308
+									)
+							)
+					)
+			)
+	)
+;
+
+
+
+-- AGREGACION PESCA
 SELECT *
 FROM 
 	tbl_servicio_srvc
 WHERE 
 	srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+	AND (
+		srvc_fref >= '2013-05-01'
+		AND srvc_fref < '2013-06-01'
+	)
 	AND (
 		EXISTS (
 			SELECT 1
@@ -22,18 +67,27 @@ WHERE
 				AND srdt_srvc_pk = srvc_pk
 		)
 	)
-	AND (
-		srvc_fref >= '2013-05-01'
-		AND srvc_fref < '2013-06-01'
-	)
 ;
 
 
-SELECT srvc_subp_pk, tipoCaptura, SUM(kilos), SUM(precio)
+SELECT autPort, tipoCaptura, SUM(kilos), SUM(precio)
 	, tipoOperacion, especie, arte, zona, vendedor
 FROM (
 	SELECT 
 		srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_fref, srvc_estado, ssrv_tpss_pk, ssrv_estado
+		, (
+			SELECT prdt_prmt_pk
+			FROM tbl_parametro_dato_prdt
+			WHERE 
+				prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+				AND prdt_prvr_pk = ANY (
+					SELECT prvr_pk
+					FROM tbl_parametro_version_prvr
+					WHERE 
+						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
+						AND prvr_prmt_pk = srvc_subp_pk
+				)
+		) AS autPort
 		, (
 			SELECT prdt_prmt_pk
 			FROM tbl_parametro_dato_prdt
@@ -133,7 +187,7 @@ FROM (
 		)
 ) sql
 GROUP BY 
-	srvc_subp_pk, tipoCaptura
+	autPort, tipoCaptura
 	, tipoOperacion, especie, arte, zona, vendedor
 ;
 

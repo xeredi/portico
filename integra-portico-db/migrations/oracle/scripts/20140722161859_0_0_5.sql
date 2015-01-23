@@ -3,9 +3,9 @@
 
 
 -- Columna de limite de filas visibles en un grid
-ALTER TABLE tbl_entidad_enti ADD enti_max_grid INT DEFAULT 0 NOT NULL\
+ALTER TABLE portico.tbl_entidad_enti ADD enti_max_grid INT NOT NULL DEFAULT 0\
 
-UPDATE tbl_entidad_enti SET enti_max_grid = CASE
+UPDATE portico.tbl_entidad_enti SET enti_max_grid = CASE
 	WHEN enti_tipo = 'P' THEN 10000
 	WHEN enti_tipo = 'B' THEN 100
 	WHEN enti_tipo = 'T' THEN 10000
@@ -594,7 +594,7 @@ INSERT INTO portico.tbl_campo_agregacion_cmag (cmag_tpes_pk, cmag_entd_pk, cmag_
 
 
 ALTER TABLE tbl_servicio_srvc
-	ADD COLUMN srvc_pepr_pk BIGINT\
+	ADD COLUMN srvc_pepr_pk NUMBER(19)\
 
 
 
@@ -606,7 +606,7 @@ ALTER TABLE tbl_servicio_srvc
 
 -- Campos de Agregacion de estadisticas
 ALTER TABLE tbl_servicio_srvc
-	DROP COLUMN srvc_pepr_pk BIGINT\
+	DROP COLUMN srvc_pepr_pk\
 
 DROP TABLE tbl_campo_agregacion_cmag\
 

@@ -1633,10 +1633,10 @@ INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text)
 -- SQL to undo the change goes here.
 
 
-TRUNCATE TABLE tbl_subparametro_dato_spdt\
+TRUNCATE TABLE portico.tbl_subparametro_dato_spdt\
 DELETE FROM portico.tbl_subparametro_version_spvr\
 DELETE FROM portico.tbl_subparametro_sprm\
-TRUNCATE TABLE tbl_parametro_dato_prdt\
+TRUNCATE TABLE portico.tbl_parametro_dato_prdt\
 DELETE FROM portico.tbl_i18n_i18n WHERE i18n_pref = 'prvr'\
 DELETE FROM portico.tbl_parametro_version_prvr\
 DELETE FROM portico.tbl_parametro_prmt\
