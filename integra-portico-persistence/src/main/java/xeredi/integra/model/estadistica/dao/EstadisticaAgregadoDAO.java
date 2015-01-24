@@ -40,6 +40,15 @@ public interface EstadisticaAgregadoDAO {
     List<EstadisticaAgregadoVO> selectActividadPesquera(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
+     * Update srvc avituallamiento.
+     *
+     * @param esagCriterioVO
+     *            the esag criterio vo
+     * @return the int
+     */
+    int updateSrvcAvituallamiento(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+
+    /**
      * Select avituallamiento.
      *
      * @param esagCriterioVO
@@ -47,6 +56,15 @@ public interface EstadisticaAgregadoDAO {
      * @return the list
      */
     List<EstadisticaAgregadoVO> selectAvituallamiento(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+
+    /**
+     * Update srvc agregacion superficie.
+     *
+     * @param esagCriterioVO
+     *            the esag criterio vo
+     * @return the int
+     */
+    int updateSrvcAgregacionSuperficie(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select agregacion superficie.

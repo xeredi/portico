@@ -1,218 +1,15 @@
-﻿SELECT *
+﻿SELECT srvc_pepr_pk, srvc_tpsr_pk, COUNT(1)
 FROM tbl_servicio_srvc 
-WHERE srvc_pepr_pk IS NOT NULL;
-
--- AGREGACION PESCA
-SELECT estd_subp_pk, TIPO_CAPTURA_PESCA, SUM(kilos) AS ENTERO_01, SUM(precio) AS DECIMAL_01
-	, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
-FROM (
-	SELECT 
-		srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_fref, srvc_estado, ssrv_tpss_pk, ssrv_estado
-		, (
-			SELECT prdt_prmt_pk
-			FROM tbl_parametro_dato_prdt
-			WHERE 
-				prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
-				AND prdt_prvr_pk = ANY (
-					SELECT prvr_pk
-					FROM tbl_parametro_version_prvr
-					WHERE 
-						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-						AND prvr_prmt_pk = srvc_subp_pk
-				)
-		) AS estd_subp_pk
-		, (
-			SELECT prdt_prmt_pk
-			FROM tbl_parametro_dato_prdt
-			WHERE 
-				prdt_tpdt_pk = portico.getTipoDato('TIPO_CAPTURA_PESCA')
-				AND prdt_prvr_pk = ANY (
-					SELECT prvr_pk
-					FROM tbl_parametro_version_prvr
-					WHERE 
-						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-						AND prvr_prmt_pk = ANY (
-							SELECT ssdt_prmt_pk
-							FROM tbl_subservicio_dato_ssdt
-							WHERE 
-								ssdt_ssrv_pk = ssrv_pk
-								AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
-						)
-				)
-		) AS TIPO_CAPTURA_PESCA
-		, (
-			SELECT ssdt_ndecimal
-			FROM tbl_subservicio_dato_ssdt
-			WHERE 
-				ssdt_ssrv_pk = ssrv_pk
-				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
-		) AS kilos
-		, (
-			SELECT ssdt_ndecimal
-			FROM tbl_subservicio_dato_ssdt
-			WHERE 
-				ssdt_ssrv_pk = ssrv_pk
-				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
-		) AS precio
-		, (
-			SELECT srdt_prmt_pk
-			FROM tbl_servicio_dato_srdt
-			WHERE 
-				srdt_srvc_pk = srvc_pk
-				AND srdt_tpdt_pk = portico.getTipoDato('TIPO_OP_PESCA')
-		) AS TIPO_OP_PESCA
-		, (
-			SELECT ssdt_prmt_pk
-			FROM tbl_subservicio_dato_ssdt
-			WHERE 
-				ssdt_ssrv_pk = ssrv_pk
-				AND ssdt_tpdt_pk = portico.getTipoDato('ESPECIE_PESCA')
-		) AS ESPECIE_PESCA
-		, (
-			SELECT srdt_prmt_pk
-			FROM tbl_servicio_dato_srdt
-			WHERE 
-				srdt_srvc_pk = srvc_pk
-				AND srdt_tpdt_pk = portico.getTipoDato('ARTE_PESCA')
-		) AS ARTE_PESCA
-		, (
-			SELECT srdt_prmt_pk
-			FROM tbl_servicio_dato_srdt
-			WHERE 
-				srdt_srvc_pk = srvc_pk
-				AND srdt_tpdt_pk = portico.getTipoDato('ZONA_PESCA')
-		) AS ZONA_PESCA
-		, (
-			SELECT srdt_prmt_pk
-			FROM tbl_servicio_dato_srdt
-			WHERE 
-				srdt_srvc_pk = srvc_pk
-				AND srdt_tpdt_pk = portico.getTipoDato('ORGA')
-		) AS ORGA
-	FROM 
-		tbl_servicio_srvc
-		INNER JOIN tbl_subservicio_ssrv ON 
-			ssrv_srvc_pk = srvc_pk
-	WHERE 
-		srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
-		AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
-		AND (
-			EXISTS (
-				SELECT 1
-				FROM tbl_servicio_dato_srdt
-				WHERE 
-					srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-					AND srdt_cadena = '0'
-					AND srdt_srvc_pk = srvc_pk
-			)
-			OR EXISTS (
-				SELECT 1
-				FROM tbl_servicio_dato_srdt
-				WHERE 
-					srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-					AND srdt_cadena = '2'
-					AND srdt_srvc_pk = srvc_pk
-			)
-		)
-		AND (
-			srvc_fref >= '2013-06-01'
-			AND srvc_fref < '2013-07-01'
-		)
-) sql
-GROUP BY 
-	estd_subp_pk, TIPO_CAPTURA_PESCA
-	, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
+WHERE srvc_pepr_pk IS NOT NULL
+GROUP BY srvc_pepr_pk, srvc_tpsr_pk
+ORDER BY srvc_pepr_pk, srvc_tpsr_pk
 ;
-
-
-
--- AVITUALLAMIENTO
--- Lecturas de Consumo con tipo de suministro = Avituallamiento
--- TODO Falta la parte de partidas
-SELECT srvc_subp_pk, tipoSum, SUM(consumo)
-FROM (
-	WITH avituallamientos AS (
-		SELECT prmt_pk, prvr_fini, prvr_ffin
-		FROM 
-			tbl_parametro_prmt
-			INNER JOIN tbl_parametro_version_prvr ON
-				prvr_prmt_pk = prmt_pk
-		WHERE 
-			prmt_tppr_pk = portico.getEntidad('TIPO_SUMINISTRO')
-			AND EXISTS (
-				SELECT 1 
-				FROM tbl_parametro_dato_prdt
-				WHERE prdt_prvr_pk = prvr_pk 
-					AND prdt_tpdt_pk = portico.getTipoDato('BOOLEANO_01')
-					AND prdt_nentero = 1
-			)
-	)
-	SELECT srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_fref, srvc_estado, ssrv_tpss_pk, ssrv_estado
-		, (
-			SELECT srdt_prmt_pk
-			FROM tbl_servicio_dato_srdt
-			WHERE srdt_srvc_pk = srvc_pk
-				AND srdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
-		) AS tipoSum
-		, (
-			SELECT ssdt_ndecimal
-			FROM tbl_subservicio_dato_ssdt
-			WHERE 
-				ssdt_ssrv_pk = ssrv_pk
-				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
-		) AS consumo
-	FROM 
-		tbl_servicio_srvc
-		INNER JOIN tbl_subservicio_ssrv ON 
-			ssrv_srvc_pk = srvc_pk
-	WHERE 
-		srvc_tpsr_pk = portico.getEntidad('SUMINISTRO_CONSUMO')
-		AND ssrv_tpss_pk = portico.getEntidad('SUMINISTRO_CONSUMO_LECTURA')
-		AND EXISTS (
-			SELECT 1
-			FROM tbl_servicio_dato_srdt
-			WHERE srdt_srvc_pk = srvc_pk
-				AND srdt_tpdt_pk = portico.getTipoDato('TIPO_SUM')
-				AND srdt_prmt_pk = ANY (
-					SELECT prmt_pk
-					FROM avituallamientos
-					WHERE srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-				)
-		)
-		AND (
-			EXISTS (
-				SELECT 1
-				FROM tbl_servicio_dato_srdt
-				WHERE 
-					srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-					AND srdt_cadena = '0'
-					AND srdt_srvc_pk = srvc_pk
-			)
-			OR EXISTS (
-				SELECT 1
-				FROM tbl_servicio_dato_srdt
-				WHERE 
-					srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
-					AND srdt_cadena = '2'
-					AND srdt_srvc_pk = srvc_pk
-			)
-		)
-		AND (
-			srvc_fref >= '2013-05-01'
-			AND srvc_fref < '2013-06-01'
-		)
-) sql
-GROUP BY srvc_subp_pk, tipoSum
-;
-
-
-
 
 
 -- AGREGACION DE ESCALAS
 -- Los buques de guerra BG no se cogen????
 SELECT 
-	srvc_subp_pk, tipoActividad_pk, tipoBuqueGT_pk, tipoBuque_pk, tipoNavEnt_pk, tipoNavSal_pk, paisBuque_pk, COUNT(1) AS numEscalas, SUM(gt)
+	estd_subp_pk, tipoActividad_pk, tipoBuqueGT_pk, tipoBuque_pk, tipoNavEnt_pk, tipoNavSal_pk, paisBuque_pk, COUNT(1) AS numEscalas, SUM(gt)
 	, buque_pk, tipoEstancia, servicioTrafico_pk, acuerdo_pk, consignatario_pk
 FROM (	
 	WITH buqueTipoGT AS (
@@ -232,6 +29,19 @@ FROM (
 	)
 	SELECT 
 		srvc_subp_pk, buque_pk
+		, (
+			SELECT prdt_prmt_pk
+			FROM tbl_parametro_dato_prdt
+			WHERE
+				prdt_tpdt_pk = portico.getTipoDato('AUT_PORT')
+				AND prdt_prvr_pk = ANY (
+					SELECT prvr_pk
+					FROM tbl_parametro_version_prvr
+					WHERE
+						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
+						AND prvr_prmt_pk = srvc_subp_pk
+				)
+		) AS estd_subp_pk
 		, (
 			SELECT ssdt_prmt_pk
 			FROM tbl_subservicio_dato_ssdt
@@ -440,13 +250,13 @@ FROM (
 				)
 			)
 			AND (
-				srvc_ffin >= '2013-05-01'
-				AND srvc_ffin < '2014-06-01'
+				srvc_ffin >= '2013-06-01'
+				AND srvc_ffin < '2013-07-01'
 			)
 	) sql
 ) sql
 GROUP BY 
-	srvc_subp_pk, tipoActividad_pk, tipoBuqueGT_pk, tipoBuque_pk, tipoNavEnt_pk, tipoNavSal_pk, paisBuque_pk
+	estd_subp_pk, tipoActividad_pk, tipoBuqueGT_pk, tipoBuque_pk, tipoNavEnt_pk, tipoNavSal_pk, paisBuque_pk
 	, buque_pk, tipoEstancia, servicioTrafico_pk, acuerdo_pk, consignatario_pk
 ;
 

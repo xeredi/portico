@@ -379,13 +379,17 @@ public class PeriodoProcesoBO {
             final List<EstadisticaVO> estdList = new ArrayList<>();
 
             esagDAO.updateSrvcActividadPesquera(esagCriterioVO);
-
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.ACTIVIDAD_PESQUERA.getId(),
                     esagDAO.selectActividadPesquera(esagCriterioVO)));
-            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
-            // esagDAO.selectAvituallamiento(esagCriterioVO)));
-            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
-            // esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
+
+            esagDAO.updateSrvcAvituallamiento(esagCriterioVO);
+            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
+                    esagDAO.selectAvituallamiento(esagCriterioVO)));
+
+            esagDAO.updateSrvcAgregacionSuperficie(esagCriterioVO);
+            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
+                    esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
+
             // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
             // esagDAO.selectAgregacionEscala(esagCriterioVO)));
             // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),

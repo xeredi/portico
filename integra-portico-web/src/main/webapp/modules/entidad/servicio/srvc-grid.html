@@ -46,11 +46,11 @@
                     <td><a ng-href="#/servicio/srvc/detail/{{vm.enti.id}}/{{item.id}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="item.etiqueta" nowrap="nowrap"></td>
-                    <td ng-if="vm.enti.tpdtEstado"
+                    <td ng-if="vm.enti.tpdtEstado" nowrap="nowrap"
                         title="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + item.estado | translate}}"
                         ng-bind="item.estado"></td>
-                    <td ng-if="vm.enti.temporal" ng-bind="item.fini | date"></td>
-                    <td ng-if="vm.enti.temporal" ng-bind="item.ffin | date"></td>
+                    <td nowrap="nowrap" ng-if="vm.enti.temporal" ng-bind="item.fini | date"></td>
+                    <td nowrap="nowrap" ng-if="vm.enti.temporal" ng-bind="item.ffin | date"></td>
                     <td ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable" ng-switch
                         on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
                             class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
