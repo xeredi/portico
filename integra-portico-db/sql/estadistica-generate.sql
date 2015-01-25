@@ -8,9 +8,60 @@ ORDER BY srvc_pepr_pk, srvc_tpsr_pk
 
 -- AGREGACION DE ESCALAS
 -- Los buques de guerra BG no se cogen????
+SELECT *
+FROM
+	tbl_servicio_srvc
+WHERE 
+	srvc_tpsr_pk = portico.getEntidad('ESCALA')
+	AND EXISTS (
+		SELECT 1
+		FROM tbl_subservicio_ssrv
+		WHERE 
+			ssrv_srvc_pk = srvc_pk
+			AND ssrv_tpss_pk = portico.getEntidad('ATRAQUE')
+			AND ssrv_estado = 'F'
+			AND EXISTS (
+				SELECT 1 
+				FROM tbl_subservicio_dato_ssdt
+				WHERE ssdt_ssrv_pk = ssrv_pk
+					AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ATR')
+					AND ssdt_prmt_pk <> (
+						SELECT prmt_pk
+						FROM 
+							tbl_parametro_prmt
+						WHERE 
+							prmt_tppr_pk = portico.getEntidad('TIPO_ATRAQUE')
+							AND prmt_parametro = 'F'
+					)
+			)
+	)
+	AND (
+		EXISTS (
+			SELECT 1
+			FROM tbl_servicio_dato_srdt
+			WHERE 
+				srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+				AND srdt_cadena = '0'
+				AND srdt_srvc_pk = srvc_pk
+		)
+		OR EXISTS (
+			SELECT 1
+			FROM tbl_servicio_dato_srdt
+			WHERE 
+				srdt_tpdt_pk = portico.getTipoDato('COD_EXEN')
+				AND srdt_cadena = '2'
+				AND srdt_srvc_pk = srvc_pk
+		)
+	)
+	AND (
+		srvc_ffin >= '2013-06-01'
+		AND srvc_ffin < '2013-07-01'
+	)
+;
+
 SELECT 
-	estd_subp_pk, tipoActividad_pk, tipoBuqueGT_pk, tipoBuque_pk, tipoNavEnt_pk, tipoNavSal_pk, paisBuque_pk, COUNT(1) AS numEscalas, SUM(gt)
-	, buque_pk, tipoEstancia, servicioTrafico_pk, acuerdo_pk, consignatario_pk
+	estd_subp_pk, TIPO_ACT, TIPO_BUQUE, TIPO_BUQUE_GT, TIPO_NAV, TIPO_NAV_2, PAIS, COUNT(1) AS ENTERO_01, SUM(ENTERO_02) AS ENTERO_02
+	, BUQUE, TIPO_ESTAN_ESC, SERV_TRAF, ACUERDO, ORGA
 FROM (	
 	WITH buqueTipoGT AS (
 		SELECT prmt_pk, prvr_fini, prvr_ffin
@@ -28,7 +79,7 @@ FROM (
 			prmt_tppr_pk = portico.getEntidad('TIPO_BUQUE_GT')
 	)
 	SELECT 
-		srvc_subp_pk, buque_pk
+		srvc_subp_pk, BUQUE
 		, (
 			SELECT prdt_prmt_pk
 			FROM tbl_parametro_dato_prdt
@@ -48,7 +99,7 @@ FROM (
 			WHERE 
 				ssdt_ssrv_pk = atraque_pk
 				AND ssdt_tpdt_pk = portico.getTipoDato('TIPO_ACT')
-		) AS tipoActividad_pk
+		) AS TIPO_ACT
 		, (
 			SELECT prdt_prmt_pk
 			FROM tbl_parametro_dato_prdt
@@ -59,9 +110,9 @@ FROM (
 					FROM tbl_parametro_version_prvr
 					WHERE 
 						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-						AND prvr_prmt_pk = buque_pk
+						AND prvr_prmt_pk = BUQUE
 				)
-		) AS tipoBuque_pk
+		) AS TIPO_BUQUE
 		, (
 			SELECT prmt_pk
 			FROM buqueTipoGT
@@ -82,24 +133,24 @@ FROM (
 									FROM tbl_parametro_version_prvr
 									WHERE 
 										srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-										AND prvr_prmt_pk = buque_pk
+										AND prvr_prmt_pk = BUQUE
 								)
 						)
 						
 				) 
-		) AS tipoBuqueGT_pk
+		) AS TIPO_BUQUE_GT
 		, (
 			SELECT srdt_prmt_pk
 			FROM tbl_servicio_dato_srdt
 			WHERE srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('TIPO_NAV')
-		) AS tipoNavEnt_pk
+		) AS TIPO_NAV
 		, (
 			SELECT srdt_prmt_pk
 			FROM tbl_servicio_dato_srdt
 			WHERE srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('TIPO_NAV_2')
-		) AS tipoNavSal_pk
+		) AS TIPO_NAV_2
 		, (
 			SELECT prdt_prmt_pk
 			FROM tbl_parametro_dato_prdt
@@ -110,33 +161,33 @@ FROM (
 					FROM tbl_parametro_version_prvr
 					WHERE 
 						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-						AND prvr_prmt_pk = buque_pk
+						AND prvr_prmt_pk = BUQUE
 				)
-		) AS paisBuque_pk
+		) AS PAIS
 		, (
 			SELECT srdt_cadena
 			FROM tbl_servicio_dato_srdt
 			WHERE srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('TIPO_ESTAN_ESC')
-		) AS tipoEstancia
+		) AS TIPO_ESTAN_ESC
 		, (
 			SELECT srdt_prmt_pk
 			FROM tbl_servicio_dato_srdt
 			WHERE srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('SERV_TRAF')
-		) AS servicioTrafico_pk
+		) AS SERV_TRAF
 		, (
 			SELECT srdt_prmt_pk
 			FROM tbl_servicio_dato_srdt
 			WHERE srdt_srvc_pk = srvc_pk
 				AND srdt_tpdt_pk = portico.getTipoDato('ACUERDO')
-		) AS acuerdo_pk
+		) AS ACUERDO
 		, (
 			SELECT ssdt_prmt_pk
 			FROM tbl_subservicio_dato_ssdt
 			WHERE ssdt_ssrv_pk = atraque_pk
 				AND ssdt_tpdt_pk = portico.getTipoDato('ORGA_2')
-		) AS consignatario_pk
+		) AS ORGA
 		, (
 			SELECT prdt_nentero
 			FROM tbl_parametro_dato_prdt
@@ -147,9 +198,9 @@ FROM (
 					FROM tbl_parametro_version_prvr
 					WHERE 
 						srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, NOW())
-						AND prvr_prmt_pk = buque_pk
+						AND prvr_prmt_pk = BUQUE
 				)
-		) AS gt
+		) AS ENTERO_02
 	FROM (
 		SELECT 
 			srvc_pk, srvc_subp_pk, srvc_fref, srvc_fini, srvc_ffin
@@ -160,7 +211,7 @@ FROM (
 				WHERE
 					srdt_srvc_pk = srvc_pk
 					AND srdt_tpdt_pk = portico.getTipoDato('BUQUE') 
-			) AS buque_pk
+			) AS BUQUE
 			, (
 				SELECT MIN(ssrv_pk)
 				FROM tbl_subservicio_ssrv
@@ -256,8 +307,8 @@ FROM (
 	) sql
 ) sql
 GROUP BY 
-	estd_subp_pk, tipoActividad_pk, tipoBuqueGT_pk, tipoBuque_pk, tipoNavEnt_pk, tipoNavSal_pk, paisBuque_pk
-	, buque_pk, tipoEstancia, servicioTrafico_pk, acuerdo_pk, consignatario_pk
+	estd_subp_pk, TIPO_ACT, TIPO_BUQUE, TIPO_BUQUE_GT, TIPO_NAV, TIPO_NAV_2, PAIS
+	, BUQUE, TIPO_ESTAN_ESC, SERV_TRAF, ACUERDO, ORGA
 ;
 
 

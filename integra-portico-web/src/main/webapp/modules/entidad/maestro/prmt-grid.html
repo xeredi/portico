@@ -1,74 +1,71 @@
 <div ng-if="vm.itemList">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <pagination total-items="vm.itemList.count" items-per-page="vm.itemList.limit" ng-model="vm.page"
-                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-                next-text="&rsaquo;&rsaquo;"></pagination>
-        </div>
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<pagination total-items="vm.itemList.count" items-per-page="vm.itemList.limit" ng-model="vm.page"
+				ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+				next-text="&rsaquo;&rsaquo;"></pagination>
+		</div>
 
-        <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/maestro/prmt/create/{{vm.enti.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span> </a>
-            <button data-ng-click="vm.filter('lg')" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
-            </button>
+		<div class="btn-group">
+			<a class="btn btn-default" ng-href="#/maestro/prmt/create/{{vm.enti.id}}"><i
+				class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span> </a>
+			<button data-ng-click="vm.filter('lg')" class="btn btn-default">
+				<i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+			</button>
 
-            <script type="text/ng-template" id="prmt-filter-content.html">
+			<script type="text/ng-template" id="prmt-filter-content.html">
             <div ng-include="'modules/entidad/maestro/prmt-filter-content.html'"></div>
             </script>
-        </div>
+		</div>
 
-        <div class="btn-group">
-            <button data-ng-click="vm.xlsExport()" class="btn btn-default">
-                <i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
-            </button>
-        </div>
-    </div>
+		<div class="btn-group">
+			<button data-ng-click="vm.xlsExport()" class="btn btn-default">
+				<i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
+			</button>
+		</div>
+	</div>
 
-    <div class="table-responsive">
-        <span class="label label-default" translate="grid_count"
-            translate-value-count="{{vm.itemList.count | number:0}}"></span>
+	<div class="table-responsive">
+		<span class="label label-default" translate="grid_count"
+			translate-value-count="{{vm.itemList.count | number:0}}"></span>
 
-        <!--
+		<!--
  -->
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
-                    <th ng-if="vm.enti.i18n" translate>i18n_text</th>
-                    <th translate>prmt_fini</th>
-                    <th translate>prmt_ffin</th>
-                    <th ng-repeat="entd in vm.enti.entdList" ng-if="entd.gridable">{{'entd_' + entd.id |
-                        translate}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in vm.itemList.list track by $index">
-                    <td><a
-                        ng-href="#/maestro/prmt/detail/{{vm.enti.id}}/{{item.id}}/{{vm.itemCriterio.fechaVigencia}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td nowrap="nowrap" ng-bind="item.parametro"></td>
-                    <td nowrap="nowrap" ng-if="vm.enti.i18n" ng-bind="item.texto"></td>
-                    <td nowrap="nowrap" ng-bind="item.prvr.fini | date"></td>
-                    <td nowrap="nowrap" ng-bind="item.prvr.ffin | date"></td>
-                    <td ng-repeat="entd in vm.enti.entdList track by $index" nowrap="nowrap" ng-if="entd.gridable"
-                        ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
-                            class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
-                        <span ng-switch-when="ND" class="pull-right"
-                        ng-bind="item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span
-                        ng-switch-when="NE" class="pull-right"
-                        ng-bind="item.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
-                        class="pull-right" ng-bind="item.itdtMap[entd.tpdt.id].fecha | date"></span> <span
-                        ng-switch-when="FH" class="pull-right" ng-bind="item.itdtMap[entd.tpdt.id].fecha | date:'short'"></span>
-                        <span ng-switch-when="CR"
-                        title="{{'cdrf_' + entd.tpdt.id + '_' + item.itdtMap[entd.tpdt.id].cadena | translate}}"
-                        ng-if="item.itdtMap[entd.tpdt.id].cadena" ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span> <span
-                        ng-switch-when="TX" ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="PR"
-                        title="{{item.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
-                        ng-bind="item.itdtMap[entd.tpdt.id].prmt.parametro"></span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+		<table class="table-bordered table-condensed table-hover table-nonfluid">
+			<thead>
+				<tr>
+					<th class="buttonLinks" nowrap="nowrap" />
+					<th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
+					<th ng-if="vm.enti.i18n" translate>i18n_text</th>
+					<th translate>prmt_fini</th>
+					<th translate>prmt_ffin</th>
+					<th ng-repeat="entd in vm.enti.entdList" ng-if="entd.gridable">{{'entd_' + entd.id | translate}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in vm.itemList.list track by $index">
+					<td><a ng-href="#/maestro/prmt/detail/{{vm.enti.id}}/{{item.id}}/{{vm.itemCriterio.fechaVigencia}}"><i
+							class="glyphicon glyphicon-search"></i></a></td>
+					<td nowrap="nowrap" ng-bind="item.parametro"></td>
+					<td nowrap="nowrap" ng-if="vm.enti.i18n" ng-bind="item.texto"></td>
+					<td nowrap="nowrap" ng-bind="item.prvr.fini | date: ('format_date' | translate)"></td>
+					<td nowrap="nowrap" ng-bind="item.prvr.ffin | date: ('format_date' | translate)"></td>
+					<td ng-repeat="entd in vm.enti.entdList track by $index" nowrap="nowrap" ng-if="entd.gridable" ng-switch
+						on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+							class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
+						ng-switch-when="ND" class="pull-right" ng-bind="item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span>
+						<span ng-switch-when="NE" class="pull-right"
+						ng-bind="item.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span> <span ng-switch-when="FE"
+						class="pull-right" ng-bind="item.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span>
+						<span ng-switch-when="FH" class="pull-right"
+						ng-bind="item.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span> <span
+						ng-switch-when="CR"
+						title="{{'cdrf_' + entd.tpdt.id + '_' + item.itdtMap[entd.tpdt.id].cadena | translate}}"
+						ng-if="item.itdtMap[entd.tpdt.id].cadena" ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span> <span
+						ng-switch-when="TX" ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="PR"
+						title="{{item.itdtMap[entd.tpdt.id].prmt.etiqueta}}" ng-bind="item.itdtMap[entd.tpdt.id].prmt.parametro"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

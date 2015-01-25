@@ -10,8 +10,8 @@
                     class="glyphicon glyphicon-{{vm.item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                 <span ng-switch-when="ND" ng-bind="vm.item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span
                     ng-switch-when="NE" ng-bind="vm.item.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span> <span
-                    ng-switch-when="FE" ng-bind="vm.item.itdtMap[entd.tpdt.id].fecha | date"></span> <span
-                    ng-switch-when="FH" ng-bind="vm.item.itdtMap[entd.tpdt.id].fecha | date:'short'"></span> <span
+                    ng-switch-when="FE" ng-bind="vm.item.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span> <span
+                    ng-switch-when="FH" ng-bind="vm.item.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span> <span
                     ng-switch-when="CR" ng-if="vm.item.itdtMap[entd.tpdt.id].cadena"
                     ng-bind="'cdrf_' + entd.tpdt.id + '_' + vm.item.itdtMap[entd.tpdt.id].cadena | translate"></span> <span
                     ng-switch-when="TX" ng-bind="vm.item.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="PR">

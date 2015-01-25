@@ -390,8 +390,10 @@ public class PeriodoProcesoBO {
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
                     esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
 
-            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
-            // esagDAO.selectAgregacionEscala(esagCriterioVO)));
+            esagDAO.updateSrvcAgregacionEscala(esagCriterioVO);
+            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
+                    esagDAO.selectAgregacionEscala(esagCriterioVO)));
+
             // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
             // esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
             // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),

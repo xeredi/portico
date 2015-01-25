@@ -23,11 +23,11 @@
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate>sprm_fini</label>
-                <p class="form-control-static" ng-bind="vm.item.spvr.fini | date"></p>
+                <p class="form-control-static" ng-bind="vm.item.spvr.fini | date: ('format_date' | translate)"></p>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-1 form-group">
                 <label translate>sprm_ffin</label>
-                <p class="form-control-static" ng-bind="vm.item.spvr.ffin | date"></p>
+                <p class="form-control-static" ng-bind="vm.item.spvr.ffin | date: ('format_date' | translate)"></p>
             </div>
         </div>
 

@@ -76,6 +76,15 @@ public interface EstadisticaAgregadoDAO {
     List<EstadisticaAgregadoVO> selectAgregacionSuperficie(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
+     * Update srvc agregacion escala.
+     *
+     * @param esagCriterioVO
+     *            the esag criterio vo
+     * @return the int
+     */
+    int updateSrvcAgregacionEscala(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+
+    /**
      * Select agregacion escala.
      *
      * @param esagCriterioVO

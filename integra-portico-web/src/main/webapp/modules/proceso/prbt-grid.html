@@ -39,9 +39,9 @@
                     <td ng-bind="'ProcesoModulo_' + prbt.modulo | translate"></td>
                     <td ng-bind="'ProcesoTipo_' + prbt.tipo | translate"></td>
                     <td ng-bind="'ProcesoEstado_' + prbt.estado | translate"></td>
-                    <td ng-bind="prbt.falta | date:'medium'"></td>
-                    <td ng-bind="prbt.finicio | date:'medium'"></td>
-                    <td ng-bind="prbt.ffin | date:'medium'"></td>
+                    <td ng-bind="prbt.falta | date: ('format_datetime' | translate)"></td>
+                    <td ng-bind="prbt.finicio | date: ('format_datetime' | translate)"></td>
+                    <td ng-bind="prbt.ffin | date: ('format_datetime' | translate)"></td>
                     <td class="number" ng-bind="prbt.duracion | number:0"></td>
                     <td class="number" ng-bind="prbt.erroresCnt | number:0"></td>
                     <td class="number" ng-bind="prbt.alertasCnt | number:0"></td>

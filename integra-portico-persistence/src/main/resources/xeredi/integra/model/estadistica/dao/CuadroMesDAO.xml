@@ -1115,9 +1115,9 @@
     <insert id="insert_CM_MCONV" parameterType="CuadroMesParametroVO">
         <include refid="InsertPrefix" />
         <![CDATA[
-        SELECT cdms_cantidad
+        SELECT COALESCE(cdms_cantidad, 0)
         	- (
-        		SELECT SUM(cdms2.cdms_cantidad)
+        		SELECT COALESCE(SUM(cdms2.cdms_cantidad), 0)
         		FROM tbl_cuadro_mes_cdms cdms2
         		WHERE cdms2.cdms_pepr_pk = cdms.cdms_pepr_pk
         			AND cdms2.cdms_opet_pk = cdms.cdms_opet_pk
