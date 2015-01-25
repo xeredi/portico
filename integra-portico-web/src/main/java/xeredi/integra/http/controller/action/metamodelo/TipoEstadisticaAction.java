@@ -44,6 +44,8 @@ public final class TipoEstadisticaAction extends BaseAction {
     public String create() {
         accion = ACCION_EDICION.create;
 
+        enti = new TipoEstadisticaVO();
+
         return SUCCESS;
     }
 

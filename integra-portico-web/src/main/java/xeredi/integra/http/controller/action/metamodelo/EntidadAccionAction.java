@@ -83,7 +83,6 @@ public final class EntidadAccionAction extends BaseAction {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(enac);
         Preconditions.checkNotNull(enac.getEntiId());
-        Preconditions.checkNotNull(i18nMap);
 
         if (accion == ACCION_EDICION.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.enac_path, enac.getPath());
