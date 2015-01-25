@@ -139,7 +139,7 @@ function peprFilterController($modalInstance, $http, peprCriterio) {
         $modalInstance.dismiss('cancel');
     }
 
-    $http.get("estadistica/pepr-filter.action").success(function(data) {
+    $http.post("estadistica/pepr-filter.action").success(function(data) {
         vm.autpList = data.autpList;
         vm.limits = data.limits;
     });
@@ -149,18 +149,43 @@ function peprDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     vm.remove = remove;
+    vm.oppeExport = oppeExport;
+
+    function oppeExport() {
+        alert('export');
+
+        $http.post('estadistica/pepr-export.action', {
+            pepr : vm.pepr
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ], {
+                type : 'application/zip'
+            });
+
+            setTimeout(function() {
+                saveAs(file, vm.pepr.filename + '.zip');
+            }, 0);
+        });
+    }
 
     function remove() {
         if (confirm("Are you sure?")) {
-            var url = "estadistica/pepr-remove.action?pepr.id=" + vm.pepr.id;
-
-            $http.get(url).success(function(data) {
+            $http.post("estadistica/pepr-remove.action", {
+                pepr : {
+                    id : vm.pepr.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("estadistica/pepr-detail.action?pepr.id=" + $routeParams.peprId).success(function(data) {
+    $http.post("estadistica/pepr-detail.action", {
+        pepr : {
+            id : $routeParams.peprId
+        }
+    }).success(function(data) {
         vm.pepr = data.pepr;
         vm.tpesList = data.tpesList;
     });
@@ -189,7 +214,7 @@ function peprPrepareLoadController($http, $location, $upload, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("estadistica/pepr-preparar-carga.action").success(function(data) {
+    $http.post("estadistica/pepr-preparar-carga.action").success(function(data) {
         vm.autpList = data.autpList;
     });
 
@@ -216,7 +241,7 @@ function peprCreateController($http, $location, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("estadistica/pepr-preparar-creacion.action").success(function(data) {
+    $http.post("estadistica/pepr-preparar-creacion.action").success(function(data) {
         vm.autpList = data.autpList;
     });
 
@@ -226,7 +251,11 @@ function peprCreateController($http, $location, pageTitleService) {
 function cdmsDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.get("estadistica/cdms-detail.action?pepr.id=" + $routeParams.peprId).success(function(data) {
+    $http.post("estadistica/cdms-detail.action", {
+        pepr : {
+            id : $routeParams.peprId
+        }
+    }).success(function(data) {
         vm.pepr = data.pepr;
         vm.cdmsMap = data.cdmsMap;
     });
@@ -332,21 +361,24 @@ function estdFilterController($http, $modalInstance, enti, itemCriterio) {
         $modalInstance.dismiss('cancel');
     }
 
-    $http.get(
-            "estadistica/estd-filter.action?itemCriterio.entiId=" + itemCriterio.entiId + "&itemCriterio.pepr.id="
-                    + itemCriterio.pepr.id + "&itemCriterio.pepr.autpId=" + itemCriterio.pepr.autpId).success(
-            function(data) {
-                vm.labelValuesMap = data.labelValuesMap;
-                vm.subpList = data.subpList;
-                vm.limits = data.limits;
-                vm.fechaVigencia = data.fechaVigencia;
-            });
+    $http.post("estadistica/estd-filter.action", {
+        itemCriterio : itemCriterio
+    }).success(function(data) {
+        vm.labelValuesMap = data.labelValuesMap;
+        vm.subpList = data.subpList;
+        vm.limits = data.limits;
+        vm.fechaVigencia = data.fechaVigencia;
+    });
 }
 
 function estdDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.get("estadistica/estd-detail.action?item.id=" + $routeParams.itemId).success(function(data) {
+    $http.post("estadistica/estd-detail.action", {
+        item : {
+            id : $routeParams.itemId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.item = data.item;
         vm.fechaVigencia = data.fechaVigencia;

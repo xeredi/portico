@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -116,8 +115,7 @@ public final class PeriodoProcesoOppeExport {
      * @return the filename
      */
     private String getFilename(final PeriodoProcesoVO peprVO, final EstadisticaFileType fileType) {
-        return peprVO.getAutp().getParametro() + peprVO.getAnio()
-                + StringUtils.leftPad(peprVO.getMes().toString(), 2, '0') + '.' + fileType.name();
+        return peprVO.getFilename() + '.' + fileType.name();
     }
 
     /**

@@ -103,7 +103,7 @@ function prbtFilterController($modalInstance, $http, prbtCriterio) {
         $modalInstance.dismiss('cancel');
     }
 
-    $http.get("proceso/prbt-filter.action").success(function(data) {
+    $http.post("proceso/prbt-filter.action").success(function(data) {
         vm.procesoTipos = data.procesoTipos;
         vm.procesoModulos = data.procesoModulos;
         vm.procesoEstados = data.procesoEstados;
@@ -116,15 +116,25 @@ function prbtDetailController($http, $location, $routeParams, pageTitleService) 
     vm.cancel = cancel;
 
     function cancel() {
-        $http.get("proceso/prbt-cancel.action?prbt.id=" + vm.prbt.id).success(function(data) {
+        $http.post("proceso/prbt-cancel.action", {
+            prbt : {
+                id : vm.prbt.id
+            }
+        }).success(function(data) {
             window.history.back();
         });
     }
 
-    $http.get("proceso/prbt-detail.action?prbt.id=" + $routeParams.prbtId).success(function(data) {
+    $http.post("proceso/prbt-detail.action", {
+        prbt : {
+            id : $routeParams.prbtId
+        }
+    }).success(function(data) {
         vm.prbt = data.prbt;
 
-        $http.get("proceso/prmn-list.action?prbtId=" + $routeParams.prbtId).success(function(data) {
+        $http.post("proceso/prmn-list.action", {
+            prbtId : $routeParams.prbtId
+        }).success(function(data) {
             vm.prmnList = data.prmnList;
         });
     });

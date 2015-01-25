@@ -197,19 +197,6 @@ public final class PeriodoProcesoAction extends BaseAction {
     }
 
     /**
-     * Exportar.
-     *
-     * @return the string
-     */
-    @Action("pepr-export")
-    public String exportar() {
-        Preconditions.checkNotNull(pepr);
-        Preconditions.checkNotNull(pepr.getId());
-
-        throw new Error("No implementado");
-    }
-
-    /**
      * Load label values map.
      */
     private void loadLabelValuesMap() {

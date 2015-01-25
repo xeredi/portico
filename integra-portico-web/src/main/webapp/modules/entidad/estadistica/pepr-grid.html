@@ -28,6 +28,7 @@
 					<th translate>pepr_anio</th>
 					<th translate>pepr_mes</th>
 					<th translate>pepr_cdmsGenerado</th>
+					<th translate>pepr_falta</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,6 +38,7 @@
 					<td ng-bind="item.anio"></td>
 					<td ng-bind="item.mes"></td>
 					<td><i class="glyphicon glyphicon-{{item.cdmsGenerado ? 'ok' : 'remove'}}"></i></td>
+					<td ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
 				</tr>
 			</tbody>
 		</table>

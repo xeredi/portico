@@ -549,7 +549,11 @@ function cdrfDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }
 
-    $http.get("metamodelo/cdrf-detail.action?cdrf.id=" + $routeParams.cdrfId).success(function(data) {
+    $http.post("metamodelo/cdrf-detail.action", {
+        cdrf : {
+            id : $routeParams.cdrfId
+        }
+    }).success(function(data) {
         vm.cdrf = data.cdrf;
         vm.i18nMap = data.i18nMap;
     });
@@ -669,13 +673,21 @@ function tpprDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/tppr-remove.action?enti.id=" + vm.enti.id).success(function(data) {
+            $http.post("metamodelo/tppr-remove.action", {
+                enti : {
+                    id : vm.enti.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/tppr-detail.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tppr-detail.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.subentiList = data.subentiList;
         vm.i18nMap = data.i18nMap;
@@ -706,18 +718,24 @@ function tpprEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/tppr-edit.action?enti.id=" + $routeParams.entiId).success(
-            function(data) {
-                vm.enti = data.enti;
-                vm.accion = data.accion;
-                vm.i18nMap = data.i18nMap;
+    $http.post("metamodelo/tppr-edit.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
+        vm.enti = data.enti;
+        vm.accion = data.accion;
+        vm.i18nMap = data.i18nMap;
 
-                $http.get(
-                        "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
-                                + $routeParams.entiId).success(function(data) {
-                    vm.tpdtNombreList = data.lvList;
-                });
-            });
+        $http.post("metamodelo/tpdt-lv-list.action", {
+            tpdtCriterio : {
+                tipoElemento : "TX",
+                entiRefId : $routeParams.entiId
+            }
+        }).success(function(data) {
+            vm.tpdtNombreList = data.lvList;
+        });
+    });
 
     pageTitleService.setTitle("tppr", "page_edit");
 }
@@ -744,17 +762,19 @@ function tpprCreateController($http, $location, $routeParams, pageTitleService) 
         }, 0);
     }
 
-    $http.get("metamodelo/tppr-create.action").success(function(data) {
+    $http.post("metamodelo/tppr-create.action").success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
     });
 
-    $http
-            .get(
-                    "metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=TX&tpdtCriterio.entiRefId="
-                            + $routeParams.entiId).success(function(data) {
-                vm.tpdtNombreList = data.lvList;
-            });
+    $http.post("metamodelo/tpdt-lv-list.action", {
+        tpdtCriterio : {
+            tipoElemento : "TX",
+            entiRefId : $routeParams.entiId
+        }
+    }).success(function(data) {
+        vm.tpdtNombreList = data.lvList;
+    });
 
     pageTitleService.setTitle("tppr", "page_create");
 }
@@ -766,13 +786,21 @@ function tpspDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/tpsp-remove.action?enti.id=" + vm.enti.id).success(function(data) {
+            $http.post("metamodelo/tpsp-remove.action", {
+                enti : {
+                    id : vm.enti.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/tpsp-detail.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpsp-detail.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
     });
@@ -787,9 +815,7 @@ function tpspEditController($http, $routeParams, pageTitleService) {
     vm.cancel = cancel;
 
     function save() {
-        var url = "metamodelo/tpsp-save.action";
-
-        $http.post(url, {
+        $http.post("metamodelo/tpsp-save.action", {
             enti : vm.enti,
             i18nMap : vm.i18nMap,
             accion : vm.accion
@@ -804,13 +830,21 @@ function tpspEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/tpsp-edit.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpsp-edit.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
     });
 
-    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=P").success(function(data) {
+    $http.post("metamodelo/enti-lv-list.action", {
+        entiCriterio : {
+            tipo : "P"
+        }
+    }).success(function(data) {
         vm.entiList = data.lvList;
     });
 
@@ -837,12 +871,20 @@ function tpspCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/tpsp-create.action?enti.tpprId=" + $routeParams.tpprId).success(function(data) {
+    $http.post("metamodelo/tpsp-create.action", {
+        enti : {
+            tpprId : $routeParams.tpprId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
     });
 
-    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=P").success(function(data) {
+    $http.post("metamodelo/enti-lv-list.action", {
+        entiCriterio : {
+            tipo : "P"
+        }
+    }).success(function(data) {
         vm.entiList = data.lvList;
     });
 
@@ -926,13 +968,21 @@ function tpsrDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/tpsr-remove.action?enti.id=" + vm.enti.id).success(function(data) {
+            $http.post("metamodelo/tpsr-remove.action", {
+                enti : {
+                    id : vm.enti.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/tpsr-detail.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpsr-detail.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.subentiList = data.subentiList;
@@ -964,13 +1014,21 @@ function tpsrEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/tpsr-edit.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpsr-edit.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
     });
 
-    $http.get("metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR").success(function(data) {
+    $http.post("metamodelo/tpdt-lv-list.action", {
+        tpdtCriterio : {
+            tipoElemento : "CR"
+        }
+    }).success(function(data) {
         vm.tpdtEstadoList = data.lvList;
     });
 
@@ -997,12 +1055,16 @@ function tpsrCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/tpsr-create.action").success(function(data) {
+    $http.post("metamodelo/tpsr-create.action").success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
     });
 
-    $http.get("metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR").success(function(data) {
+    $http.post("metamodelo/tpdt-lv-list.action", {
+        tpdtCriterio : {
+            tipoElemento : "CR"
+        }
+    }).success(function(data) {
         vm.tpdtEstadoList = data.lvList;
     });
 
@@ -1016,13 +1078,21 @@ function tpssDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/tpss-remove.action?enti.id=" + vm.enti.id).success(function(data) {
+            $http.post("metamodelo/tpss-remove.action", {
+                enti : {
+                    id : vm.enti.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/tpss-detail.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpss-detail.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.entiHijasList = data.entiHijasList;
@@ -1054,13 +1124,21 @@ function tpssEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/tpss-edit.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpss-edit.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
     });
 
-    $http.get("metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR").success(function(data) {
+    $http.post("metamodelo/tpdt-lv-list.action", {
+        tpdtCriterio : {
+            tipoElemento : "CR"
+        }
+    }).success(function(data) {
         vm.tpdtEstadoList = data.lvList;
     });
 
@@ -1087,12 +1165,20 @@ function tpssCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/tpss-create.action?enti.tpsrId=" + $routeParams.tpsrId).success(function(data) {
+    $http.post("metamodelo/tpss-create.action", {
+        enti : {
+            tpsrId : $routeParams.tpsrId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
     });
 
-    $http.get("metamodelo/tpdt-lv-list.action?tpdtCriterio.tipoElemento=CR").success(function(data) {
+    $http.post("metamodelo/tpdt-lv-list.action", {
+        tpdtCriterio : {
+            tipoElemento : "CR"
+        }
+    }).success(function(data) {
         vm.tpdtEstadoList = data.lvList;
     });
 
@@ -1109,9 +1195,7 @@ function tpesGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
     function search() {
-        var url = "metamodelo/tpes-list.action";
-
-        $http.post(url, {
+        $http.post("metamodelo/tpes-list.action", {
             entiCriterio : vm.entiCriterio,
             page : vm.page,
             limit : vm.limit
@@ -1178,13 +1262,21 @@ function tpesDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/tpes-remove.action?enti.id=" + vm.enti.id).success(function(data) {
+            $http.post("metamodelo/tpes-remove.action", {
+                enti : {
+                    id : vm.enti.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/tpes-detail.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpes-detail.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.subentiList = data.subentiList;
@@ -1215,7 +1307,11 @@ function tpesEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/tpes-edit.action?enti.id=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/tpes-edit.action", {
+        enti : {
+            id : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
@@ -1244,7 +1340,7 @@ function tpesCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/tpes-create.action").success(function(data) {
+    $http.post("metamodelo/tpes-create.action").success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
     });
@@ -1355,19 +1451,27 @@ function entdDetailController($http, $routeParams, pageTitleService) {
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/entd-remove.action?entd.id=" + vm.entd.id).success(function(data) {
+            $http.post("metamodelo/entd-remove.action", {
+                entd : {
+                    id : vm.entd.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http
-            .get(
-                    "metamodelo/entd-detail.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
-                            + $routeParams.tpdtId).success(function(data) {
-                vm.entd = data.entd;
-                vm.i18nMap = data.i18nMap;
-            });
+    $http.post("metamodelo/entd-detail.action", {
+        entd : {
+            entiId : $routeParams.entiId,
+            tpdt : {
+                id : $routeParams.tpdtId
+            }
+        }
+    }).success(function(data) {
+        vm.entd = data.entd;
+        vm.i18nMap = data.i18nMap;
+    });
 
     pageTitleService.setTitle("entd", "page_detail");
 }
@@ -1394,16 +1498,20 @@ function entdEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http
-            .get(
-                    "metamodelo/entd-edit.action?entd.entiId=" + $routeParams.entiId + "&entd.tpdt.id="
-                            + $routeParams.tpdtId).success(function(data) {
-                vm.entd = data.entd;
-                vm.i18nMap = data.i18nMap;
-                vm.accion = data.accion;
-                vm.tpdtList = data.tpdtList;
-                vm.engdList = data.engdList;
-            });
+    $http.post("metamodelo/entd-edit.action", {
+        entd : {
+            entiId : $routeParams.entiId,
+            tpdt : {
+                id : $routeParams.tpdtId
+            }
+        }
+    }).success(function(data) {
+        vm.entd = data.entd;
+        vm.i18nMap = data.i18nMap;
+        vm.accion = data.accion;
+        vm.tpdtList = data.tpdtList;
+        vm.engdList = data.engdList;
+    });
 
     pageTitleService.setTitle("entd", "page_edit");
 }
@@ -1428,7 +1536,11 @@ function entdCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/entd-create.action?entd.entiId=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/entd-create.action", {
+        entd : {
+            entiId : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.entd = data.entd;
         vm.tpdtList = data.tpdtList;
         vm.engdList = data.engdList;
@@ -1445,13 +1557,21 @@ function engdDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/engd-remove.action?engd.id=" + vm.engd.id).success(function(data) {
+            $http.post("metamodelo/engd-remove.action", {
+                engd : {
+                    id : vm.engd.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/engd-detail.action?engd.id=" + $routeParams.engdId).success(function(data) {
+    $http.post("metamodelo/engd-detail.action", {
+        engd : {
+            id : $routeParams.engdId
+        }
+    }).success(function(data) {
         vm.engd = data.engd;
         vm.i18nMap = data.i18nMap;
     });
@@ -1481,7 +1601,11 @@ function engdEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/engd-edit.action?engd.id=" + $routeParams.engdId).success(function(data) {
+    $http.post("metamodelo/engd-edit.action", {
+        engd : {
+            id : $routeParams.engdId
+        }
+    }).success(function(data) {
         vm.engd = data.engd;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
@@ -1510,7 +1634,11 @@ function engdCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/engd-create.action?engd.entiId=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/engd-create.action", {
+        engd : {
+            entiId : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.engd = data.engd;
         vm.accion = data.accion;
     });
@@ -1525,13 +1653,21 @@ function enacDetailController($http, $location, $routeParams, pageTitleService) 
 
     function remove() {
         if (confirm("Are you sure?")) {
-            $http.get("metamodelo/enac-remove.action?enac.id=" + vm.enac.id).success(function(data) {
+            $http.post("metamodelo/enac-remove.action", {
+                enac : {
+                    id : vm.enac.id
+                }
+            }).success(function(data) {
                 window.history.back();
             });
         }
     }
 
-    $http.get("metamodelo/enac-detail.action?enac.id=" + $routeParams.id).success(function(data) {
+    $http.post("metamodelo/enac-detail.action", {
+        enac : {
+            id : $routeParams.id
+        }
+    }).success(function(data) {
         vm.enac = data.enac;
         vm.i18nMap = data.i18nMap;
     });
@@ -1561,7 +1697,11 @@ function enacEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("metamodelo/enac-edit.action?enac.id=" + $routeParams.id).success(function(data) {
+    $http.post("metamodelo/enac-edit.action", {
+        enac : {
+            id : $routeParams.id
+        }
+    }).success(function(data) {
         vm.enac = data.enac;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
@@ -1590,7 +1730,11 @@ function enacCreateController($http, $location, $routeParams, pageTitleService) 
         window.history.back();
     }
 
-    $http.get("metamodelo/enac-create.action?enac.entiId=" + $routeParams.entiId).success(function(data) {
+    $http.post("metamodelo/enac-create.action", {
+        enac : {
+            entiId : $routeParams.entiId
+        }
+    }).success(function(data) {
         vm.enac = data.enac;
         vm.accion = data.accion;
     });
@@ -1601,11 +1745,19 @@ function enacCreateController($http, $location, $routeParams, pageTitleService) 
 function enenCreateController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.get("metamodelo/enen-create.action?enen.entiPadreId=" + $routeParams.entipId).success(function(data) {
+    $http.post("metamodelo/enen-create.action", {
+        enen : {
+            entiPadreId : $routeParams.entipId
+        }
+    }).success(function(data) {
         vm.enen = data.enen;
     });
 
-    $http.get("metamodelo/enti-lv-list.action?entiCriterio.tipo=S").success(function(data) {
+    $http.post("metamodelo/enti-lv-list.action", {
+        entiCriterio : {
+            tipo : "S"
+        }
+    }).success(function(data) {
         vm.entiList = data.lvList;
     });
 

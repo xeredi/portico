@@ -47,6 +47,19 @@ public final class PeriodoProcesoVO {
     }
 
     /**
+     * Gets the filename.
+     *
+     * @return the filename
+     */
+    public String getFilename() {
+        if (autp == null || anio == null || mes == null) {
+            return null;
+        }
+
+        return autp.getParametro() + anio + StringUtils.leftPad(mes.toString(), 2, '0');
+    }
+
+    /**
      * Gets the etiqueta.
      *
      * @return the etiqueta
