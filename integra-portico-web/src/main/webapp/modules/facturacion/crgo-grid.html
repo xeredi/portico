@@ -45,8 +45,8 @@
                     <td ng-bind="'enti_' + crgo.tpsr.id | translate"></td>
                     <td><i class="glyphicon glyphicon-{{crgo.crgv.principal ? 'ok' : 'remove'}}"></i></td>
                     <td><i class="glyphicon glyphicon-{{crgo.crgv.temporal ? 'ok' : 'remove'}}"></i></td>
-                    <td ng-bind="crgo.crgv.fini | date"></td>
-                    <td ng-bind="crgo.crgv.ffin | date"></td>
+                    <td ng-bind="crgo.crgv.fini | date: ('format_date' | translate)"></td>
+                    <td ng-bind="crgo.crgv.ffin | date: ('format_date' | translate)"></td>
                 </tr>
             </tbody>
         </table>

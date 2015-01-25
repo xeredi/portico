@@ -38,11 +38,11 @@
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgla_fini</label>
-                <p class="form-control-static" ng-bind="vm.rgla.rglv.fini | date"></p>
+                <p class="form-control-static" ng-bind="vm.rgla.rglv.fini | date: ('format_date' | translate)"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgla_ffin</label>
-                <p class="form-control-static" ng-bind="vm.rgla.rglv.ffin | date"></p>
+                <p class="form-control-static" ng-bind="vm.rgla.rglv.ffin | date: ('format_date' | translate)"></p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgla_orden</label>
@@ -197,8 +197,8 @@
                         <td ng-bind="rgin.rgla2.codigo"></td>
                         <td ng-bind="rgin.rgla2.rglv.tipo"></td>
                         <td ng-bind="'enti_' + rgin.rgla2.rglv.enti.id | translate"></td>
-                        <td ng-bind="rgin.rgiv.fini | date"></td>
-                        <td ng-bind="rgin.rgiv.ffin | date"></td>
+                        <td ng-bind="rgin.rgiv.fini | date: ('format_date' | translate)"></td>
+                        <td ng-bind="rgin.rgiv.ffin | date: ('format_date' | translate)"></td>
                     </tr>
                 </tbody>
             </table>

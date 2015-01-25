@@ -47,11 +47,11 @@
         <div class="row">
             <div class="col-sm-2 col-md-1 form-group">
                 <label translate>crgo_fini</label>
-                <p class="form-control-static" ng-bind="vm.crgo.crgv.fini | date"></p>
+                <p class="form-control-static" ng-bind="vm.crgo.crgv.fini | date: ('format_date' | translate)"></p>
             </div>
             <div class="col-sm-2 col-md-1 form-group">
                 <label translate>crgo_ffin</label>
-                <p class="form-control-static" ng-bind="vm.crgo.crgv.ffin | date"></p>
+                <p class="form-control-static" ng-bind="vm.crgo.crgv.ffin | date: ('format_date' | translate)"></p>
             </div>
         </div>
 
@@ -91,8 +91,8 @@
                         <td ng-bind="rgla.codigo"></td>
                         <td ng-bind="rgla.rglv.tipo"></td>
                         <td ng-bind="'enti_' + rgla.rglv.enti.id | translate"></td>
-                        <td ng-bind="rgla.rglv.fini | date"></td>
-                        <td ng-bind="rgla.rglv.ffin | date"></td>
+                        <td ng-bind="rgla.rglv.fini | date: ('format_date' | translate)"></td>
+                        <td ng-bind="rgla.rglv.ffin | date: ('format_date' | translate)"></td>
                         <td class="number" ng-bind="rgla.rglv.orden"></td>
                         <td class="number" ng-bind="rgla.rglv.importeBase | number:4"></td>
                         <td ng-bind="rgla.rglv.formula"></td>

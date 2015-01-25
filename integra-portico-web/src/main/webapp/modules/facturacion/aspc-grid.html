@@ -42,8 +42,8 @@
                     <td ng-bind="aspc.codigo"></td>
                     <td ng-bind="aspc.aspv.descripcion"></td>
                     <td ng-bind="'enti_' + aspc.tpsr.id | translate"></td>
-                    <td ng-bind="aspc.aspv.fini | date"></td>
-                    <td ng-bind="aspc.aspv.ffin | date"></td>
+                    <td ng-bind="aspc.aspv.fini | date: ('format_date' | translate)"></td>
+                    <td ng-bind="aspc.aspv.ffin | date: ('format_date' | translate)"></td>
                     <td class="number" ng-bind="aspc.aspv.prioridad"></td>
                 </tr>
             </tbody>

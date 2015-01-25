@@ -28,15 +28,15 @@
 			<div class="row">
 				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
 					<label translate="prbt_falta"></label>
-					<p class="form-control-static" ng-bind="vm.prbt.falta | date:'medium'"></p>
+					<p class="form-control-static" ng-bind="vm.prbt.falta | date: ('format_datetime' | translate)"></p>
 				</div>
 				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
 					<label translate="prbt_fini"></label>
-					<p class="form-control-static" ng-bind="vm.prbt.finicio | date:'medium'"></p>
+					<p class="form-control-static" ng-bind="vm.prbt.finicio | date: ('format_datetime' | translate)"></p>
 				</div>
 				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
 					<label translate="prbt_ffin"></label>
-					<p class="form-control-static" ng-bind="vm.prbt.ffin | date:'medium'"></p>
+					<p class="form-control-static" ng-bind="vm.prbt.ffin | date: ('format_datetime' | translate)"></p>
 				</div>
 				<div class="col-sm-2 col-md-2 col-lg-1 form-group">
 					<label translate="prbt_duracion"></label>

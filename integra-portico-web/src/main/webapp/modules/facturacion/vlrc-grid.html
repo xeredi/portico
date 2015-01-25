@@ -50,9 +50,9 @@
                     <td ng-bind="item.pagador.etiqueta"></td>
                     <td class="number" ng-bind="item.importe | number:2"></td>
                     <td class="number" ng-bind="item.impuesto | number:2"></td>
-                    <td ng-bind="item.fliq | date:'short'"></td>
-                    <td ng-bind="item.fini | date:'short'"></td>
-                    <td ng-bind="item.ffin | date:'short'"></td>
+                    <td ng-bind="item.fliq | date: ('format_date' | translate)"></td>
+                    <td ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
+                    <td ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
                     <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
                     <td ng-bind="item.codExencion"></td>
                 </tr>

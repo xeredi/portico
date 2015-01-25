@@ -53,19 +53,19 @@
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_falta</label>
-            <p class="form-control-static" ng-bind="vlrc.falta | date:'short'"></p>
+            <p class="form-control-static" ng-bind="vlrc.falta | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_fliq</label>
-            <p class="form-control-static" ng-bind="vlrc.fliq | date:'short'"></p>
+            <p class="form-control-static" ng-bind="vlrc.fliq | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_fini</label>
-            <p class="form-control-static" ng-bind="vlrc.fini | date:'short'"></p>
+            <p class="form-control-static" ng-bind="vlrc.fini | date: ('format_datetime' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>vlrc_ffin</label>
-            <p class="form-control-static" ng-bind="vlrc.ffin | date:'short'"></p>
+            <p class="form-control-static" ng-bind="vlrc.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
 
