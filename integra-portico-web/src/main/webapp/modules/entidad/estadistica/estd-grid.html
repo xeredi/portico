@@ -50,7 +50,7 @@
 						ng-bind="item.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span> <span
 						ng-switch-when="CR" ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="TX"
 						ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="PR"
-						tooltip="{{item.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
+						tooltip="{{item.itdtMap[entd.tpdt.id].prmt.etiqueta}}" tooltip-append-to-body="true"
 						ng-bind="item.itdtMap[entd.tpdt.id].prmt.parametro"></span></td>
 				</tr>
 			</tbody>

@@ -21,7 +21,6 @@ import xeredi.integra.model.estadistica.io.OppeFileExport;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 
 import com.google.common.base.Preconditions;
@@ -74,38 +73,32 @@ public final class PeriodoProcesoExportAction extends BaseAction {
 
             estdCriterioVO.setEntiId(Entidad.ACTIVIDAD_PESQUERA.getId());
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAP));
-            export.generarEAP(zipOutputStream, estdBO.selectList(estdCriterioVO),
-                    TipoEstadisticaProxy.select(estdCriterioVO.getEntiId()));
+            export.generarEAP(zipOutputStream, estdBO.selectList(estdCriterioVO));
             zipOutputStream.closeEntry();
 
             estdCriterioVO.setEntiId(Entidad.AVITUALLAMIENTO.getId());
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAV));
-            export.generarEAV(zipOutputStream, estdBO.selectList(estdCriterioVO),
-                    TipoEstadisticaProxy.select(estdCriterioVO.getEntiId()));
+            export.generarEAV(zipOutputStream, estdBO.selectList(estdCriterioVO));
             zipOutputStream.closeEntry();
 
             estdCriterioVO.setEntiId(Entidad.AGREGACION_ESCALA.getId());
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAE));
-            export.generarEAE(zipOutputStream, estdBO.selectList(estdCriterioVO),
-                    TipoEstadisticaProxy.select(estdCriterioVO.getEntiId()));
+            export.generarEAE(zipOutputStream, estdBO.selectList(estdCriterioVO));
             zipOutputStream.closeEntry();
 
             estdCriterioVO.setEntiId(Entidad.MOVIMIENTO_MERCANCIA.getId());
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EMM));
-            export.generarEMM(zipOutputStream, estdBO.selectList(estdCriterioVO),
-                    TipoEstadisticaProxy.select(estdCriterioVO.getEntiId()));
+            export.generarEMM(zipOutputStream, estdBO.selectList(estdCriterioVO));
             zipOutputStream.closeEntry();
 
             estdCriterioVO.setEntiId(Entidad.MOVIMIENTO_MERCANCIA_EEE.getId());
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EME));
-            export.generarEME(zipOutputStream, estdBO.selectList(estdCriterioVO),
-                    TipoEstadisticaProxy.select(estdCriterioVO.getEntiId()));
+            export.generarEME(zipOutputStream, estdBO.selectList(estdCriterioVO));
             zipOutputStream.closeEntry();
 
             estdCriterioVO.setEntiId(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId());
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EMT));
-            export.generarEMT(zipOutputStream, estdBO.selectList(estdCriterioVO),
-                    TipoEstadisticaProxy.select(estdCriterioVO.getEntiId()));
+            export.generarEMT(zipOutputStream, estdBO.selectList(estdCriterioVO));
             zipOutputStream.closeEntry();
 
             zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EPP));

@@ -2,15 +2,20 @@
 	margin-top: 50px;
 }
 
-body {
-	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
+body, .tooltip {
+	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma,
+		Geneva, Arial, Sans-serif;
 }
 
 p, label, li, .btn, .form-control, .input-group-sm>.form-control,
 	.form-control-static, .bootstrap-datetimepicker-widget,
-	.table-condensed, .dropdown-menu, .list-group,
-	.tt-dropdown-menu, .typeahead, .pagination-sm>li>a {
+	.table-condensed, .dropdown-menu, .list-group, .tt-dropdown-menu,
+	.typeahead, .pagination-sm>li>a, .tooltip {
 	font-size: 11px;
+}
+
+.form-control {
+	color: black;
 }
 
 .nav-pills>li, .modal-title, legend, .bg-primary, .nav-tabs {

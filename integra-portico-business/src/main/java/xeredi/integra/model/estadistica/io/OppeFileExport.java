@@ -16,7 +16,6 @@ import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
-import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 
 import com.google.common.base.Preconditions;
 
@@ -84,17 +83,13 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @param tpesVO
-     *            the tpes vo
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generarEAP(final OutputStream stream, final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO)
-            throws IOException {
+    public void generarEAP(final OutputStream stream, final List<EstadisticaVO> estdList) throws IOException {
         Preconditions.checkNotNull(stream);
         Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(tpesVO);
 
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
@@ -125,17 +120,13 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @param tpesVO
-     *            the tpes vo
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generarEAV(final OutputStream stream, final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO)
-            throws IOException {
+    public void generarEAV(final OutputStream stream, final List<EstadisticaVO> estdList) throws IOException {
         Preconditions.checkNotNull(stream);
         Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(tpesVO);
 
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
@@ -164,17 +155,13 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @param tpesVO
-     *            the tpes vo
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generarEAE(final OutputStream stream, final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO)
-            throws IOException {
+    public void generarEAE(final OutputStream stream, final List<EstadisticaVO> estdList) throws IOException {
         Preconditions.checkNotNull(stream);
         Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(tpesVO);
 
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
@@ -214,17 +201,13 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @param tpesVO
-     *            the tpes vo
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generarEMM(final OutputStream stream, final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO)
-            throws IOException {
+    public void generarEMM(final OutputStream stream, final List<EstadisticaVO> estdList) throws IOException {
         Preconditions.checkNotNull(stream);
         Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(tpesVO);
 
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
@@ -295,17 +278,13 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @param tpesVO
-     *            the tpes vo
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generarEME(final OutputStream stream, final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO)
-            throws IOException {
+    public void generarEME(final OutputStream stream, final List<EstadisticaVO> estdList) throws IOException {
         Preconditions.checkNotNull(stream);
         Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(tpesVO);
 
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();
@@ -362,17 +341,13 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @param tpesVO
-     *            the tpes vo
      * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public void generarEMT(final OutputStream stream, final List<EstadisticaVO> estdList, final TipoEstadisticaVO tpesVO)
-            throws IOException {
+    public void generarEMT(final OutputStream stream, final List<EstadisticaVO> estdList) throws IOException {
         Preconditions.checkNotNull(stream);
         Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(tpesVO);
 
         for (final EstadisticaVO estdVO : estdList) {
             final StringBuffer buffer = new StringBuffer();

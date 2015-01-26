@@ -57,7 +57,7 @@ public final class PeriodoProcesoBOTest {
 
                 LOG.info("Agregacion de servicios. Anio: " + peprVO.getAnio() + ", mes: " + peprVO.getMes());
 
-                peprBO.agregarServicios(peprVO, true);
+                peprBO.agregarServicios(peprVO, peprBO.selectSubpIds(autpVO.getId(), peprVO.getFreferencia()), true);
             }
         }
 

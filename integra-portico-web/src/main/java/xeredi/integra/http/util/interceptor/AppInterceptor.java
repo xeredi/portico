@@ -37,7 +37,9 @@ public final class AppInterceptor extends AbstractInterceptor {
         } catch (final ApplicationException ex) {
             action.addActionError(ex.getMessage(action.getLocale()));
 
-            LOG.error(ex, ex);
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(ex, ex);
+            }
         } catch (final Throwable ex) {
             action.addActionError(MessageI18nKey.E00000, ex.getMessage());
 

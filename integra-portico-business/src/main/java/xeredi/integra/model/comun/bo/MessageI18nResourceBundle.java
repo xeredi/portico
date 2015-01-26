@@ -8,6 +8,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -44,6 +46,7 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
     protected Object[][] getContents() {
         final List<Object[]> contentList = new ArrayList<>();
 
+        final String defaultLanguage = ConfigurationProxy.getString(ConfigurationKey.language_default);
         final MessageI18nBO messageI18nBO = new MessageI18nBO();
 
         final Map<MessageI18nKey, String> map = messageI18nBO.selectKeyValueMap(locale, false);
@@ -62,7 +65,8 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
         prefixSet.add(I18nPrefix.enac);
         prefixSet.add(I18nPrefix.engd);
 
-        final List<LabelValueVO> list = i18nBO.selectLabelValueList(prefixSet, locale.getLanguage());
+        final List<LabelValueVO> list = i18nBO.selectLabelValueList(prefixSet,
+                locale.getLanguage().isEmpty() ? defaultLanguage : locale.getLanguage());
 
         for (final LabelValueVO vo : list) {
             contentList.add(new Object[] { vo.getLabel(), vo.getValue() });

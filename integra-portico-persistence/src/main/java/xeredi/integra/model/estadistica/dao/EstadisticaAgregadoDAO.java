@@ -94,6 +94,15 @@ public interface EstadisticaAgregadoDAO {
     List<EstadisticaAgregadoVO> selectAgregacionEscala(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
+     * Update srvc movimiento tipo buque eee.
+     *
+     * @param esagCriterioVO
+     *            the esag criterio vo
+     * @return the int
+     */
+    int updateSrvcMovimientoTipoBuqueEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+
+    /**
      * Select movimiento tipo buque eee.
      *
      * @param esagCriterioVO
@@ -101,6 +110,15 @@ public interface EstadisticaAgregadoDAO {
      * @return the list
      */
     List<EstadisticaAgregadoVO> selectMovimientoTipoBuqueEEE(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+
+    /**
+     * Update srvc buque fondeado atracado.
+     *
+     * @param esagCriterioVO
+     *            the esag criterio vo
+     * @return the int
+     */
+    int updateSrvcBuqueFondeadoAtracado(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
      * Select buque fondeado atracado.

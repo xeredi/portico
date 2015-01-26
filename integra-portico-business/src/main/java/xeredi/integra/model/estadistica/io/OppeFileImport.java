@@ -470,8 +470,11 @@ public final class OppeFileImport {
                     final String tipoSuministro = getTipoSuministroNormalizado(getTokenString(
                             EstadisticaFileKeyword.EAV_TipoSuministro, line, i));
 
-                    generateItdtMaestro(estd, TipoDato.TIPO_SUM,
-                            maestroMap.get(Entidad.TIPO_SUMINISTRO).get(tipoSuministro));
+                    generateItdtMaestro(
+                            estd,
+                            TipoDato.TIPO_SUM,
+                            getMaestro(EstadisticaFileKeyword.EAV_TipoSuministro, line, i, Entidad.TIPO_SUMINISTRO,
+                                    tipoSuministro));
                     generateItdtLong(estd, TipoDato.ENTERO_01,
                             getTokenLong(EstadisticaFileKeyword.EAV_Toneladas, line, i));
 
@@ -572,7 +575,8 @@ public final class OppeFileImport {
 
                     final String alineacion = "***" + getTokenString(EstadisticaFileKeyword.EMM_Alineacion, line, i);
 
-                    generateItdtMaestro(estd, TipoDato.ALIN, maestroMap.get(Entidad.ALINEACION).get(alineacion));
+                    generateItdtMaestro(estd, TipoDato.ALIN,
+                            getMaestro(EstadisticaFileKeyword.EMM_Alineacion, line, i, Entidad.ALINEACION, alineacion));
                     generateItdtMaestro(estd, TipoDato.MERCANCIA,
                             getTokenMaestro(EstadisticaFileKeyword.EMM_Mercancia, line, i, Entidad.MERCANCIA));
                     generateItdtMaestro(
@@ -585,13 +589,17 @@ public final class OppeFileImport {
 
                     final String uc = getUCNormalizada(getTokenString(EstadisticaFileKeyword.EMM_UnidadCarga, line, i));
 
-                    generateItdtMaestro(estd, TipoDato.UNIDAD_CARGA, maestroMap.get(Entidad.UNIDAD_CARGA).get(uc));
+                    generateItdtMaestro(estd, TipoDato.UNIDAD_CARGA,
+                            getMaestro(EstadisticaFileKeyword.EMM_UnidadCarga, line, i, Entidad.UNIDAD_CARGA, uc));
 
                     final String instalacionEsp = "**************"
                             + getTokenString(EstadisticaFileKeyword.EMM_InstEspecial, line, i);
 
-                    generateItdtMaestro(estd, TipoDato.ALIN,
-                            maestroMap.get(Entidad.INSTALACION_ESPECIAL).get(instalacionEsp));
+                    generateItdtMaestro(
+                            estd,
+                            TipoDato.INST_ESP,
+                            getMaestro(EstadisticaFileKeyword.EMM_InstEspecial, line, i, Entidad.INSTALACION_ESPECIAL,
+                                    instalacionEsp));
 
                     generateItdtCadena(estd, TipoDato.TIPO_TRANSPORTE,
                             getTokenCR(EstadisticaFileKeyword.EMM_TipoTransporte, line, i, TipoDato.TIPO_TRANSPORTE));
@@ -753,10 +761,12 @@ public final class OppeFileImport {
                     estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
                     final String tipoBuque = getTokenString(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i);
+
                     ParametroVO tipoBuqueEst = null;
 
-                    if (maestroMap.containsKey(Entidad.TIPO_BUQUE_EST)) {
-                        tipoBuqueEst = maestroMap.get(Entidad.TIPO_BUQUE_EST).get(tipoBuque);
+                    if (maestroMap.get(Entidad.TIPO_BUQUE_EST).containsKey(tipoBuque)) {
+                        tipoBuqueEst = getMaestro(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i,
+                                Entidad.TIPO_BUQUE_EST, tipoBuque);
                     }
 
                     if (tipoBuqueEst != null) {
@@ -1186,6 +1196,37 @@ public final class OppeFileImport {
             final Entidad entidad) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
+        if (codigo == null || codigo.isEmpty()) {
+            return null;
+        }
+
+        if (!maestroMap.containsKey(entidad) || !maestroMap.get(entidad).containsKey(codigo)) {
+            addError(MensajeCodigo.G_001, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+                    + ", entidad: " + entidad.name() + ", codigo: " + codigo);
+
+            return null;
+        }
+
+        return maestroMap.get(entidad).get(codigo);
+    }
+
+    /**
+     * Gets the maestro.
+     *
+     * @param keyword
+     *            the keyword
+     * @param line
+     *            the line
+     * @param lineNumber
+     *            the line number
+     * @param entidad
+     *            the entidad
+     * @param codigo
+     *            the codigo
+     * @return the maestro
+     */
+    private ParametroVO getMaestro(final EstadisticaFileKeyword keyword, final String line, final int lineNumber,
+            final Entidad entidad, final String codigo) {
         if (codigo == null || codigo.isEmpty()) {
             return null;
         }
