@@ -1086,11 +1086,14 @@ INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt
 VALUES (29702, 20048, 41040, 1, 3, 3, 4, 0, 1, 0, NULL)\
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)
 VALUES (29703, 20048, 45115, 1, 4, 4, 4, 1, 1, 1, NULL)\
+INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)
+VALUES (29704, 20048, 45290, 1, 5, 4, 4, 0, 1, 1, NULL)\
 
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('entd', 'es', 29700, 'Tipo EEE')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('entd', 'es', 29701, 'EEE?')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('entd', 'es', 29702, 'Nº TEUS')\
 INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('entd', 'es', 29703, 'Tipo de Mercancía')\
+INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('entd', 'es', 29704, 'Mercancía')\
 
 -- Comprador de Pesca
 INSERT INTO portico.tbl_entidad_tipo_dato_entd (entd_pk, entd_enti_pk, entd_tpdt_pk, entd_grupo, entd_fila, entd_orden, entd_span, entd_obligatorio, entd_gridable, entd_filtrable, entd_valor_defecto)

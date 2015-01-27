@@ -60,6 +60,15 @@ public enum MessageI18nKey {
     btn_valorar,
     /** The btn_cargar. */
     btn_cargar,
+    /** The btn_start. */
+    btn_start,
+    /** The btn_pause. */
+    btn_pause,
+    /** The btn_shutdown. */
+    btn_shutdown,
+    /** The btn_shutdown clean. */
+    btn_shutdownClean,
+
     /** The sec_facturacion. */
     sec_facturacion,
     /** The sec_administracion. */
@@ -68,6 +77,8 @@ public enum MessageI18nKey {
     sec_metamodelo,
     /** The sec_configuracion. */
     sec_configuracion,
+    /** The sec_job. */
+    sec_job,
 
     /** The enti. */
     enti,
@@ -270,7 +281,17 @@ public enum MessageI18nKey {
     /** The cdrf_orden. */
     cdrf_orden,
     /** The cdrf_texto. */
-    cdrf_texto, cmag, cmagList, cmag_entd, cmag_agregar, cmag_nombre,
+    cdrf_texto,
+    /** The cmag. */
+    cmag,
+    /** The cmag list. */
+    cmagList,
+    /** The cmag_entd. */
+    cmag_entd,
+    /** The cmag_agregar. */
+    cmag_agregar,
+    /** The cmag_nombre. */
+    cmag_nombre,
 
     /** The page_home. */
     page_home,
@@ -680,6 +701,8 @@ public enum MessageI18nKey {
     m18n,
     /** The m18n_key. */
     m18n_key,
+    /** The schr. */
+    schr,
 
     /** Error no controlado. Se pasa como argumento el mensaje de la excepcion. */
     E00000,

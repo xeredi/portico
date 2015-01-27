@@ -22,6 +22,9 @@ angular.module("administracion", [ "ngRoute", "util" ])
 
 .controller("m18nEditController", m18nEditController)
 
+// ----------------- SCHEDULER --------------------------
+.controller("schrDetailController", schrDetailController)
+
 ;
 
 function config($routeProvider) {
@@ -73,7 +76,17 @@ function config($routeProvider) {
         templateUrl : "modules/administracion/m18n-edit.html",
         controller : "m18nEditController",
         controllerAs : "vm"
-    });
+    })
+
+    .when("/administracion/schr/detail", {
+        title : 'm18n',
+        templateUrl : "modules/administracion/schr-detail.html",
+        controller : "schrDetailController",
+        controllerAs : "vm"
+    })
+
+    ;
+
 }
 
 function administracionController(pageTitleService) {
@@ -86,7 +99,7 @@ function metamodeloReloadController($http, pageTitleService) {
     vm.reload = reload;
 
     function reload() {
-        $http.get("administracion/metamodelo/reload.action").success(function(data) {
+        $http.post("administracion/metamodelo/reload.action").success(function(data) {
         });
     }
 
@@ -96,7 +109,7 @@ function metamodeloReloadController($http, pageTitleService) {
 function confGridController($http, pageTitleService) {
     var vm = this;
 
-    $http.get("administracion/configuracion/conf-grid.action").success(function(data) {
+    $http.post("administracion/configuracion/conf-grid.action").success(function(data) {
         vm.confList = data.confList;
     });
 
@@ -106,7 +119,11 @@ function confGridController($http, pageTitleService) {
 function confDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.get("administracion/configuracion/conf-detail.action?conf.key=" + $routeParams.key).success(function(data) {
+    $http.post("administracion/configuracion/conf-detail.action", {
+        conf : {
+            key : $routeParams.key
+        }
+    }).success(function(data) {
         vm.conf = data.conf;
     });
 
@@ -134,7 +151,11 @@ function confEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("administracion/configuracion/conf-edit.action?conf.key=" + $routeParams.key).success(function(data) {
+    $http.post("administracion/configuracion/conf-edit.action", {
+        conf : {
+            key : $routeParams.key
+        }
+    }).success(function(data) {
         vm.accion = data.accion;
         vm.conf = data.conf;
     });
@@ -145,7 +166,7 @@ function confEditController($http, $routeParams, pageTitleService) {
 function m18nGridController($http, pageTitleService) {
     var vm = this;
 
-    $http.get("administracion/messagei18n/m18n-grid.action").success(function(data) {
+    $http.post("administracion/messagei18n/m18n-grid.action").success(function(data) {
         vm.report = data.report;
     });
 
@@ -155,7 +176,11 @@ function m18nGridController($http, pageTitleService) {
 function m18nDetailController($http, $routeParams, pageTitleService) {
     var vm = this;
 
-    $http.get("administracion/messagei18n/m18n-detail.action?m18n.key=" + $routeParams.key).success(function(data) {
+    $http.post("administracion/messagei18n/m18n-detail.action", {
+        m18n : {
+            key : $routeParams.key
+        }
+    }).success(function(data) {
         vm.m18n = data.m18n;
     });
 
@@ -183,10 +208,53 @@ function m18nEditController($http, $routeParams, pageTitleService) {
         window.history.back();
     }
 
-    $http.get("administracion/messagei18n/m18n-edit.action?m18n.key=" + $routeParams.key).success(function(data) {
+    $http.post("administracion/messagei18n/m18n-edit.action", {
+        m18n : {
+            key : $routeParams.key
+        }
+    }).success(function(data) {
         vm.accion = data.accion;
         vm.m18n = data.m18n;
     });
 
     pageTitleService.setTitle("m18n", "page_edit");
+}
+
+function schrDetailController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.start = start;
+    vm.pause = pause;
+    vm.shutdown = shutdown;
+    vm.shutdownClean = shutdownClean;
+
+    function start() {
+        $http.post("administracion/job/schr-start.action").success(function(data) {
+            vm.schr = data.schr;
+        });
+    }
+
+    function pause() {
+        $http.post("administracion/job/schr-pause.action").success(function(data) {
+            vm.schr = data.schr;
+        });
+    }
+
+    function shutdown() {
+        $http.post("administracion/job/schr-shutdown.action").success(function(data) {
+            vm.schr = data.schr;
+        });
+    }
+
+    function shutdownClean() {
+        $http.post("administracion/job/schr-shutdown-clean.action").success(function(data) {
+            vm.schr = data.schr;
+        });
+    }
+
+    $http.post("administracion/job/schr-detail.action").success(function(data) {
+        vm.schr = data.schr;
+    });
+
+    pageTitleService.setTitle("schr", "page_detail");
 }

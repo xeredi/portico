@@ -22,10 +22,7 @@ public final class PorticoScheduler {
     private static final Log LOG = LogFactory.getLog(PorticoScheduler.class);
 
     /** The instance. */
-    private static PorticoScheduler instance;
-
-    /** The scheduler. */
-    private Scheduler scheduler;
+    private static Scheduler instance;
 
     /**
      * Gets the single instance of PorticoScheduler.
@@ -34,15 +31,13 @@ public final class PorticoScheduler {
      * @throws SchedulerException
      *             the scheduler exception
      */
-    public static PorticoScheduler getInstance() throws SchedulerException {
+    public static Scheduler getScheduler() throws SchedulerException {
         if (instance == null) {
             LOG.info("Creating Scheduler");
 
-            instance = new PorticoScheduler();
-
             final SchedulerFactory factory = new StdSchedulerFactory();
 
-            instance.scheduler = factory.getScheduler();
+            instance = factory.getScheduler();
 
             final JobDetail cargaOppeJob = JobBuilder.newJob(CargaOppeJob.class)
                     .withIdentity("cargaOppeJob", "estGroup").build();
@@ -52,7 +47,7 @@ public final class PorticoScheduler {
                     .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
                     .build();
 
-            instance.scheduler.scheduleJob(cargaOppeJob, cargaOppeTrigger);
+            instance.scheduleJob(cargaOppeJob, cargaOppeTrigger);
 
             final JobDetail agregacionApJob = JobBuilder.newJob(AgregacionApJob.class)
                     .withIdentity("agregacionApJob", "estGroup").build();
@@ -62,20 +57,31 @@ public final class PorticoScheduler {
                     .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
                     .build();
 
-            instance.scheduler.scheduleJob(agregacionApJob, agregacionApTrigger);
+            instance.scheduleJob(agregacionApJob, agregacionApTrigger);
 
             LOG.info("Scheduler Created");
         }
 
-        if (!instance.scheduler.isStarted()) {
-            LOG.info("Starting Scheduler");
-
-            instance.scheduler.start();
-
-            LOG.info("Scheduler Started");
-        }
-
         return instance;
+    }
+
+    /**
+     * Gets the info.
+     *
+     * @return the info
+     * @throws SchedulerException
+     *             the scheduler exception
+     */
+    public static SchedulerInfoVO getInfo() throws SchedulerException {
+        final Scheduler scheduler = getScheduler();
+
+        final SchedulerInfoVO infoVO = new SchedulerInfoVO();
+
+        infoVO.setInStandbyMode(scheduler.isInStandbyMode());
+        infoVO.setStarted(scheduler.isStarted());
+        infoVO.setShutdown(scheduler.isShutdown());
+
+        return infoVO;
     }
 
     /**
@@ -93,7 +99,9 @@ public final class PorticoScheduler {
      */
     public static void main(final String[] args) {
         try {
-            PorticoScheduler.getInstance();
+            final Scheduler scheduler = PorticoScheduler.getScheduler();
+
+            scheduler.start();
         } catch (final Throwable ex) {
             LOG.fatal(ex, ex);
         }

@@ -81,21 +81,19 @@ public final class MaestroImporterBO {
     private final String idioma;
 
     /**
-     * The fecha vigencia. La que se toma como referencia para traer los datos vigentes a esa fecha en INTEGRA.
+     * The fecha vigencia. La que se toma como referencia para traer los datos vigentes a esa fecha en
+     * INTEGRA.
      */
     private final Date fechaVigencia;
 
     /**
-     * Fecha que se utiliza para marcar la fecha de inicio de las versiones de los parametros con temporalidad implicita
-     * en la BD.
+     * Fecha que se utiliza para marcar la fecha de inicio de las versiones de los parametros con temporalidad
+     * implicita en la BD.
      */
     private final Date fechaInicioReferencia;
 
     /** The maestros list. */
-    private final List<Entidad> maestrosList = new ArrayList<>();
-
-    /** The maestros sql map. */
-    private final Map<Entidad, MaestroNodoVO> maestrosSqlMap = new HashMap<>();
+    private final List<MaestroNodoVO> maestrosList = new ArrayList<>();
 
     /** The prmt map. */
     private final Map<Long, Map<String, Long>> tpprPrmtMap = new HashMap<>();
@@ -137,10 +135,9 @@ public final class MaestroImporterBO {
                     ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_username),
                     ConfigurationProxy.getString(ConfigurationKey.db_migration_dataSource_password));) {
 
-                parseXml(maestrosList, maestrosSqlMap);
+                parseXml(maestrosList);
 
-                for (final Entidad entidad : maestrosList) {
-                    final MaestroNodoVO maestroVO = maestrosSqlMap.get(entidad);
+                for (final MaestroNodoVO maestroVO : maestrosList) {
                     final EntidadVO entiVO = EntidadProxy.select(maestroVO.getEntidad().getId());
                     final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiVO.getId());
 
@@ -502,8 +499,8 @@ public final class MaestroImporterBO {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void parseXml(final List<Entidad> amaestrosList, final Map<Entidad, MaestroNodoVO> amaestrosSqlMap)
-            throws ParserConfigurationException, SAXException, IOException {
+    private void parseXml(final List<MaestroNodoVO> amaestrosList) throws ParserConfigurationException, SAXException,
+    IOException {
         LOG.info("Lectura del Archivo XML de consultas de Maestros");
 
         final SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -550,8 +547,7 @@ public final class MaestroImporterBO {
             @Override
             public void endElement(final String uri, final String localName, final String qName) throws SAXException {
                 if (XML_SQL_ELEM.equals(qName)) {
-                    amaestrosList.add(sqlName);
-                    amaestrosSqlMap.put(sqlName, new MaestroNodoVO(sqlName, tempImp, sql));
+                    amaestrosList.add(new MaestroNodoVO(sqlName, tempImp, sql));
 
                     isSql = false;
                 }
