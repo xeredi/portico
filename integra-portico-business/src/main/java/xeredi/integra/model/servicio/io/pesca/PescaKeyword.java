@@ -1,4 +1,4 @@
-package xeredi.integra.proceso.servicio.pesca;
+package xeredi.integra.model.servicio.io.pesca;
 
 // TODO: Auto-generated Javadoc
 /**

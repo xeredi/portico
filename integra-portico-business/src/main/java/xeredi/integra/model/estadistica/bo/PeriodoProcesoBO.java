@@ -343,6 +343,10 @@ public class PeriodoProcesoBO {
             // Si el periodo proceso ya existe
             if (peprDAO.exists(peprVO)) {
                 if (removeIfExists) {
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Borrado del periodo de proceso existente");
+                    }
+
                     delete(session, peprVO);
                 } else {
                     throw new DuplicateInstanceException(MessageI18nKey.pepr, peprVO);
@@ -378,31 +382,96 @@ public class PeriodoProcesoBO {
 
             final List<EstadisticaVO> estdList = new ArrayList<>();
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Actividad Pesquera - update");
+            }
+
             esagDAO.updateSrvcActividadPesquera(esagCriterioVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Actividad Pesquera - select");
+            }
+
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.ACTIVIDAD_PESQUERA.getId(),
                     esagDAO.selectActividadPesquera(esagCriterioVO)));
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Avituallamiento - update");
+            }
+
             esagDAO.updateSrvcAvituallamiento(esagCriterioVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Avituallamiento - select");
+            }
+
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
                     esagDAO.selectAvituallamiento(esagCriterioVO)));
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Agregacion Superficie - update");
+            }
+
             esagDAO.updateSrvcAgregacionSuperficie(esagCriterioVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Agregacion Superficie - select");
+            }
+
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
                     esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Agregacion Escala - update");
+            }
+
             esagDAO.updateSrvcAgregacionEscala(esagCriterioVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Agregacion Escala - select");
+            }
+
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
                     esagDAO.selectAgregacionEscala(esagCriterioVO)));
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Movimiento Tipo Buque EEE - update");
+            }
+
             esagDAO.updateSrvcMovimientoTipoBuqueEEE(esagCriterioVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Movimiento Tipo Buque EEE - select");
+            }
+
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
                     esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Buque Fondeado Atracado - update");
+            }
+
             esagDAO.updateSrvcBuqueFondeadoAtracado(esagCriterioVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Buque Fondeado Atracado - select");
+            }
+
             estdList.addAll(obtenerEstadisticas(peprVO, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
                     esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
-            // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA.getId(),
-            // esagDAO.selectMovimientoMercancia(esagCriterioVO)));
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Movimiento Mercancia - update");
+            }
+
+            esagDAO.updateSrvcMovimientoMercancia(esagCriterioVO);
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Movimiento Mercancia - select");
+            }
+
+            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA.getId(),
+                    esagDAO.selectMovimientoMercancia(esagCriterioVO)));
             // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
             // esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
 

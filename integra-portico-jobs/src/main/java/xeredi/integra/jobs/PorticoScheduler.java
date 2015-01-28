@@ -59,6 +59,16 @@ public final class PorticoScheduler {
 
             instance.scheduleJob(agregacionApJob, agregacionApTrigger);
 
+            final JobDetail pescaJob = JobBuilder.newJob(CargaPescaJob.class).withIdentity("pescaJob", "srvcGroup")
+                    .build();
+
+            final Trigger pescaTrigger = TriggerBuilder.newTrigger().withIdentity("pescaTrigger", "srvcGroup")
+                    .startNow()
+                    .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
+                    .build();
+
+            instance.scheduleJob(pescaJob, pescaTrigger);
+
             LOG.info("Scheduler Created");
         }
 

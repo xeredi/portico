@@ -71,6 +71,62 @@ public final class ProcesoVO {
     }
 
     /**
+     * Adds the mensaje.
+     *
+     * @param codigo
+     *            the codigo
+     * @param nivel
+     *            the nivel
+     * @param mensaje
+     *            the mensaje
+     */
+    private void addMensaje(final MensajeCodigo codigo, final MensajeNivel nivel, final String mensaje) {
+        final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
+
+        prmnVO.setCodigo(codigo);
+        prmnVO.setNivel(nivel);
+        prmnVO.setMensaje(mensaje);
+
+        prmnList.add(prmnVO);
+    }
+
+    /**
+     * Adds the mensaje.
+     *
+     * @param codigo
+     *            the codigo
+     * @param mensaje
+     *            the mensaje
+     */
+    public void addError(final MensajeCodigo codigo, final String mensaje) {
+        addMensaje(codigo, MensajeNivel.E, mensaje);
+    }
+
+    /**
+     * Adds the warning.
+     *
+     * @param codigo
+     *            the codigo
+     * @param mensaje
+     *            the mensaje
+     */
+    public void addWarning(final MensajeCodigo codigo, final String mensaje) {
+        addMensaje(codigo, MensajeNivel.W, mensaje);
+    }
+
+    /**
+     * Adds the info.
+     *
+     * @param codigo
+     *            the codigo
+     * @param mensaje
+     *            the mensaje
+     */
+    public void addInfo(final MensajeCodigo codigo, final String mensaje) {
+        addMensaje(codigo, MensajeNivel.I, mensaje);
+    }
+
+    /**
      * Gets the duracion.
      *
      * @return the duracion

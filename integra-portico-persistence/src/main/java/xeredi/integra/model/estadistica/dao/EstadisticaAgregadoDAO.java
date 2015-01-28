@@ -130,6 +130,15 @@ public interface EstadisticaAgregadoDAO {
     List<EstadisticaAgregadoVO> selectBuqueFondeadoAtracado(final EstadisticaAgregadoCriterioVO esagCriterioVO);
 
     /**
+     * Update srvc movimiento mercancia.
+     *
+     * @param esagCriterioVO
+     *            the esag criterio vo
+     * @return the int
+     */
+    int updateSrvcMovimientoMercancia(final EstadisticaAgregadoCriterioVO esagCriterioVO);
+
+    /**
      * Select movimiento mercancia.
      *
      * @param esagCriterioVO

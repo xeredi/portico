@@ -25,8 +25,7 @@ import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.MensajeNivel;
-import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
+import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 import com.google.common.base.Preconditions;
 
@@ -52,7 +51,7 @@ public final class OppeFileImport {
     private final List<EstadisticaVO> estdList = new ArrayList<EstadisticaVO>();
 
     /** The prmn list. */
-    private final List<ProcesoMensajeVO> prmnList;
+    private final ProcesoVO prbt;
 
     /** The maestro map. */
     private Map<Entidad, Map<String, ParametroVO>> maestroMap;
@@ -63,9 +62,9 @@ public final class OppeFileImport {
      * @param aprmnList
      *            the aprmn list
      */
-    public OppeFileImport(final List<ProcesoMensajeVO> aprmnList) {
+    public OppeFileImport(final ProcesoVO aprbt) {
         super();
-        prmnList = aprmnList;
+        prbt = aprbt;
     }
 
     /**
@@ -75,15 +74,6 @@ public final class OppeFileImport {
      */
     public Map<Entidad, Set<String>> getCodigoMaestroMap() {
         return codigoMaestroMap;
-    }
-
-    /**
-     * Gets the prmn list.
-     *
-     * @return the prmn list
-     */
-    public List<ProcesoMensajeVO> getPrmnList() {
-        return prmnList;
     }
 
     /**
@@ -131,7 +121,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EPP.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EPP.name());
         }
 
         return false;
@@ -157,7 +147,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EPP.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EPP.name());
         }
     }
 
@@ -182,7 +172,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EAP.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAP.name());
         }
     }
 
@@ -208,7 +198,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EAV.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAV.name());
         }
     }
 
@@ -245,7 +235,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EAE.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAE.name());
         }
     }
 
@@ -299,7 +289,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EMM.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EMM.name());
         }
     }
 
@@ -339,7 +329,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EME.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EME.name());
         }
     }
 
@@ -368,7 +358,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EMT.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EMT.name());
         }
     }
 
@@ -397,7 +387,7 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EPP.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EPP.name());
         }
     }
 
@@ -425,21 +415,20 @@ public final class OppeFileImport {
                     estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                     estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.TIPO_CAPTURA_PESCA,
+                    estd.addItdt(
+                            TipoDato.TIPO_CAPTURA_PESCA.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EAP_TipoCaptura, line, i, Entidad.TIPO_CAPTURA_PESCA));
-                    generateItdtLong(estd, TipoDato.ENTERO_01, getTokenLong(EstadisticaFileKeyword.EAP_Kilos, line, i));
-                    generateItdtDouble(estd, TipoDato.DECIMAL_01,
+                    estd.addItdt(TipoDato.ENTERO_01.getId(), getTokenLong(EstadisticaFileKeyword.EAP_Kilos, line, i));
+                    estd.addItdt(TipoDato.DECIMAL_01.getId(),
                             getTokenDouble(EstadisticaFileKeyword.EAP_Euros, line, i) / 100);
 
                     estdList.add(estd);
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EAP.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAP.name());
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_000, ex.getMessage());
+            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -470,21 +459,20 @@ public final class OppeFileImport {
                     final String tipoSuministro = getTipoSuministroNormalizado(getTokenString(
                             EstadisticaFileKeyword.EAV_TipoSuministro, line, i));
 
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.TIPO_SUM,
+                    estd.addItdt(
+                            TipoDato.TIPO_SUM.getId(),
                             getMaestro(EstadisticaFileKeyword.EAV_TipoSuministro, line, i, Entidad.TIPO_SUMINISTRO,
                                     tipoSuministro));
-                    generateItdtLong(estd, TipoDato.ENTERO_01,
+                    estd.addItdt(TipoDato.ENTERO_01.getId(),
                             getTokenLong(EstadisticaFileKeyword.EAV_Toneladas, line, i));
 
                     estdList.add(estd);
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EAV.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAV.name());
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_000, ex.getMessage());
+            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -513,29 +501,28 @@ public final class OppeFileImport {
                     estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
                     // FIXME Conversion de Tipo de Buque
-                    generateItdtMaestro(estd, TipoDato.TIPO_BUQUE,
+                    estd.addItdt(TipoDato.TIPO_BUQUE.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EAE_TipoBuque, line, i, Entidad.TIPO_BUQUE));
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.TIPO_NAV,
+                    estd.addItdt(
+                            TipoDato.TIPO_NAV.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EAE_TipoNavEntrada, line, i, Entidad.TIPO_NAVEGACION));
-                    generateItdtMaestro(estd, TipoDato.TIPO_NAV_2,
+                    estd.addItdt(TipoDato.TIPO_NAV_2.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EAE_TipoNavSalida, line, i, Entidad.TIPO_NAVEGACION));
-                    generateItdtMaestro(estd, TipoDato.PAIS,
+                    estd.addItdt(TipoDato.PAIS.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EAE_Bandera, line, i, Entidad.PAIS));
-                    generateItdtMaestro(estd, TipoDato.TIPO_ACT,
+                    estd.addItdt(TipoDato.TIPO_ACT.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EAE_TipoActividad, line, i, Entidad.TIPO_ACTIVIDAD));
-                    generateItdtLong(estd, TipoDato.ENTERO_01,
+                    estd.addItdt(TipoDato.ENTERO_01.getId(),
                             getTokenLong(EstadisticaFileKeyword.EAE_NumEscalas, line, i));
-                    generateItdtLong(estd, TipoDato.ENTERO_02, getTokenLong(EstadisticaFileKeyword.EAE_NumGTs, line, i));
+                    estd.addItdt(TipoDato.ENTERO_02.getId(), getTokenLong(EstadisticaFileKeyword.EAE_NumGTs, line, i));
 
                     estdList.add(estd);
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EAE.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAE.name());
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_000, ex.getMessage());
+            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -563,52 +550,45 @@ public final class OppeFileImport {
                     estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                     estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.TIPO_OP_BL,
+                    estd.addItdt(
+                            TipoDato.TIPO_OP_BL.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EMM_TipoOperacion, line, i,
                                     Entidad.TIPO_OPERACION_BL));
-                    generateItdtMaestro(estd, TipoDato.UNLOCODE_3,
+                    estd.addItdt(TipoDato.UNLOCODE_3.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EMM_UnloOrigen, line, i, Entidad.UNLOCODE));
-                    generateItdtMaestro(estd, TipoDato.UNLOCODE_4,
+                    estd.addItdt(TipoDato.UNLOCODE_4.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EMM_UnloDestino, line, i, Entidad.UNLOCODE));
 
                     final String alineacion = "***" + getTokenString(EstadisticaFileKeyword.EMM_Alineacion, line, i);
 
-                    generateItdtMaestro(estd, TipoDato.ALIN,
+                    estd.addItdt(TipoDato.ALIN.getId(),
                             getMaestro(EstadisticaFileKeyword.EMM_Alineacion, line, i, Entidad.ALINEACION, alineacion));
-                    generateItdtMaestro(estd, TipoDato.MERCANCIA,
+                    estd.addItdt(TipoDato.MERCANCIA.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EMM_Mercancia, line, i, Entidad.MERCANCIA));
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.TIPO_NAV,
+                    estd.addItdt(
+                            TipoDato.TIPO_NAV.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EMM_TipoNavegacion, line, i, Entidad.TIPO_NAVEGACION));
-
-                    generateItdtLong(estd, TipoDato.BOOLEANO_01,
-                            getTokenString(EstadisticaFileKeyword.EMM_Roro, line, i).equals("N") ? 0L : 1L);
+                    estd.addItdt(TipoDato.BOOLEANO_01.getId(), getTokenString(EstadisticaFileKeyword.EMM_Roro, line, i)
+                            .equals("N") ? 0L : 1L);
 
                     final String uc = getUCNormalizada(getTokenString(EstadisticaFileKeyword.EMM_UnidadCarga, line, i));
 
-                    generateItdtMaestro(estd, TipoDato.UNIDAD_CARGA,
+                    estd.addItdt(TipoDato.UNIDAD_CARGA.getId(),
                             getMaestro(EstadisticaFileKeyword.EMM_UnidadCarga, line, i, Entidad.UNIDAD_CARGA, uc));
 
                     final String instalacionEsp = "**************"
                             + getTokenString(EstadisticaFileKeyword.EMM_InstEspecial, line, i);
 
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.INST_ESP,
+                    estd.addItdt(
+                            TipoDato.INST_ESP.getId(),
                             getMaestro(EstadisticaFileKeyword.EMM_InstEspecial, line, i, Entidad.INSTALACION_ESPECIAL,
                                     instalacionEsp));
-
-                    generateItdtCadena(estd, TipoDato.TIPO_TRANSPORTE,
+                    estd.addItdt(TipoDato.TIPO_TRANSPORTE.getId(),
                             getTokenCR(EstadisticaFileKeyword.EMM_TipoTransporte, line, i, TipoDato.TIPO_TRANSPORTE));
-                    generateItdtDouble(estd, TipoDato.DECIMAL_01,
+                    estd.addItdt(TipoDato.DECIMAL_01.getId(),
                             getTokenDouble(EstadisticaFileKeyword.EMM_Toneladas, line, i));
-                    generateItdtLong(estd, TipoDato.ENTERO_01,
-                            getTokenLong(EstadisticaFileKeyword.EMM_Unidades, line, i));
-                    generateItdtDouble(estd, TipoDato.DECIMAL_02,
-                            getTokenDouble(EstadisticaFileKeyword.EMM_Teus, line, i));
+                    estd.addItdt(TipoDato.ENTERO_01.getId(), getTokenLong(EstadisticaFileKeyword.EMM_Unidades, line, i));
+                    estd.addItdt(TipoDato.DECIMAL_02.getId(), getTokenDouble(EstadisticaFileKeyword.EMM_Teus, line, i));
 
                     // FIXME Acabar
                     ParametroVO unloCargaDescargaVO = null;
@@ -627,11 +607,11 @@ public final class OppeFileImport {
                                 .getPrmt();
 
                         if ("TE".equals(tipoOperacion) || tipoOperacion.startsWith("E")) {
-                            generateItdtMaestro(estd, TipoDato.UNLOCODE, autpUnlo);
-                            generateItdtMaestro(estd, TipoDato.UNLOCODE_2, unloCargaDescargaVO);
+                            estd.addItdt(TipoDato.UNLOCODE.getId(), autpUnlo);
+                            estd.addItdt(TipoDato.UNLOCODE_2.getId(), unloCargaDescargaVO);
                         } else {
-                            generateItdtMaestro(estd, TipoDato.UNLOCODE, unloCargaDescargaVO);
-                            generateItdtMaestro(estd, TipoDato.UNLOCODE_2, autpUnlo);
+                            estd.addItdt(TipoDato.UNLOCODE.getId(), unloCargaDescargaVO);
+                            estd.addItdt(TipoDato.UNLOCODE_2.getId(), autpUnlo);
                         }
                     }
 
@@ -639,9 +619,9 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EMM.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EMM.name());
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_000, ex.getMessage());
+            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -671,57 +651,53 @@ public final class OppeFileImport {
                     estd.setItdtMap(new HashMap<Long, ItemDatoVO>());
                     estd.setSubp(getTokenMaestro(EstadisticaFileKeyword.Autp, line, i, Entidad.AUTORIDAD_PORTUARIA));
 
-                    generateItdtMaestro(estd, TipoDato.UNLOCODE,
+                    estd.addItdt(TipoDato.UNLOCODE.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EME_UnloCargaDescarga, line, i, Entidad.UNLOCODE));
-                    generateItdtMaestro(estd, TipoDato.UNIDAD_CARGA,
+                    estd.addItdt(TipoDato.UNIDAD_CARGA.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EME_UnidadCarga, line, i, Entidad.UNIDAD_CARGA));
 
                     if (isSigma) {
-                        generateItdtMaestro(estd, TipoDato.GRUPO_NST,
+                        estd.addItdt(TipoDato.GRUPO_NST.getId(),
                                 getTokenMaestro(EstadisticaFileKeyword.EME_GrupoNST, line, i, Entidad.GRUPO_NST));
-                        generateItdtMaestro(
-                                estd,
-                                TipoDato.MERCANCIA,
+                        estd.addItdt(
+                                TipoDato.MERCANCIA.getId(),
                                 getTokenMaestroGeneric(EstadisticaFileKeyword.EME_Mercancia, line, i, Entidad.MERCANCIA));
                     } else {
                         final ParametroVO mercanciaVO = getTokenMaestro(EstadisticaFileKeyword.EME_Mercancia, line, i,
                                 Entidad.MERCANCIA);
 
                         if (mercanciaVO != null) {
-                            generateItdtMaestro(estd, TipoDato.MERCANCIA, mercanciaVO);
-                            generateItdtMaestro(estd, TipoDato.GRUPO_NST,
+                            estd.addItdt(TipoDato.MERCANCIA.getId(), mercanciaVO);
+                            estd.addItdt(TipoDato.GRUPO_NST.getId(),
                                     mercanciaVO.getItdtMap().get(TipoDato.GRUPO_NST.getId()).getPrmt());
                         }
                     }
 
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.REG_TBUQUE_EEE,
+                    estd.addItdt(
+                            TipoDato.REG_TBUQUE_EEE.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EME_RegistroBuqueEEE, line, i,
                                     Entidad.REGISTRO_TIPO_BUQUE_EEE));
 
                     final String direccionMerc = getDireccionMercanciaNormalizada(getTokenString(
                             EstadisticaFileKeyword.EME_DireccionTransporte, line, i));
 
-                    generateItdtCadena(estd, TipoDato.DIREC_MERC, direccionMerc);
-                    generateItdtDouble(estd, TipoDato.DECIMAL_01,
+                    estd.addItdt(TipoDato.DIREC_MERC.getId(), direccionMerc);
+                    estd.addItdt(TipoDato.DECIMAL_01.getId(),
                             getTokenDouble(EstadisticaFileKeyword.EME_Toneladas, line, i));
-                    generateItdtLong(estd, TipoDato.ENTERO_01,
+                    estd.addItdt(TipoDato.ENTERO_01.getId(),
                             getTokenLong(EstadisticaFileKeyword.EME_Pasajeros, line, i));
-                    generateItdtLong(estd, TipoDato.ENTERO_02,
-                            getTokenLong(EstadisticaFileKeyword.EME_UCLlenas, line, i));
-                    generateItdtLong(estd, TipoDato.ENTERO_03,
-                            getTokenLong(EstadisticaFileKeyword.EME_UCVacias, line, i));
+                    estd.addItdt(TipoDato.ENTERO_02.getId(), getTokenLong(EstadisticaFileKeyword.EME_UCLlenas, line, i));
+                    estd.addItdt(TipoDato.ENTERO_03.getId(), getTokenLong(EstadisticaFileKeyword.EME_UCVacias, line, i));
 
                     if (line.length() > EstadisticaFileKeyword.EME_Roro.getOffset()) {
-                        generateItdtLong(estd, TipoDato.BOOLEANO_01,
+                        estd.addItdt(TipoDato.BOOLEANO_01.getId(),
                                 getTokenString(EstadisticaFileKeyword.EME_Roro, line, i).equals("N") ? 0L : 1L);
                     }
 
                     if (isSigma) {
-                        generateItdtLong(estd, TipoDato.ENTERO_04,
+                        estd.addItdt(TipoDato.ENTERO_04.getId(),
                                 getTokenLong(EstadisticaFileKeyword.EME_PasajerosCrucero, line, i));
-                        generateItdtLong(estd, TipoDato.ENTERO_05,
+                        estd.addItdt(TipoDato.ENTERO_05.getId(),
                                 getTokenLong(EstadisticaFileKeyword.EME_PasajerosInicioFinLinea, line, i));
                     }
                     // FIXME Acabar
@@ -730,9 +706,9 @@ public final class OppeFileImport {
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EME.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EME.name());
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_000, ex.getMessage());
+            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -770,110 +746,32 @@ public final class OppeFileImport {
                     }
 
                     if (tipoBuqueEst != null) {
-                        generateItdtMaestro(estd, TipoDato.TIPO_BUQUE_EEE,
+                        estd.addItdt(TipoDato.TIPO_BUQUE_EEE.getId(),
                                 tipoBuqueEst.getItdtMap().get(TipoDato.TIPO_BUQUE_EEE.getId()).getPrmt());
                     } else {
-                        generateItdtMaestro(
-                                estd,
-                                TipoDato.TIPO_BUQUE_EEE,
+                        estd.addItdt(
+                                TipoDato.TIPO_BUQUE_EEE.getId(),
                                 getTokenMaestro(EstadisticaFileKeyword.EMT_TipoBuqueEstEEE, line, i,
                                         Entidad.TIPO_BUQUE_EEE));
                     }
 
-                    generateItdtMaestro(
-                            estd,
-                            TipoDato.TIPO_BUQUE_GT_EEE,
+                    estd.addItdt(
+                            TipoDato.TIPO_BUQUE_GT_EEE.getId(),
                             getTokenMaestro(EstadisticaFileKeyword.EMT_TipoBuqueGtEEE, line, i,
                                     Entidad.TIPO_BUQUE_GT_EEE));
-                    generateItdtLong(estd, TipoDato.ENTERO_01,
+                    estd.addItdt(TipoDato.ENTERO_01.getId(),
                             getTokenLong(EstadisticaFileKeyword.EMT_NumeroBuques, line, i));
-                    generateItdtLong(estd, TipoDato.ENTERO_02,
+                    estd.addItdt(TipoDato.ENTERO_02.getId(),
                             getTokenLong(EstadisticaFileKeyword.EMT_NumeroGTs, line, i));
 
                     estdList.add(estd);
                 }
             }
         } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, EstadisticaFileType.EMT.name());
+            prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EMT.name());
         } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_000, ex.getMessage());
+            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
-    }
-
-    /**
-     * Generate itdt long.
-     *
-     * @param estd
-     *            the estd
-     * @param tpdt
-     *            the tpdt
-     * @param value
-     *            the value
-     */
-    private void generateItdtLong(final EstadisticaVO estd, final TipoDato tpdt, final Long value) {
-        final ItemDatoVO itdt = new ItemDatoVO();
-
-        itdt.setTpdtId(tpdt.getId());
-        itdt.setCantidadEntera(value);
-
-        estd.getItdtMap().put(tpdt.getId(), itdt);
-    }
-
-    /**
-     * Generate itdt cadena.
-     *
-     * @param estd
-     *            the estd
-     * @param tpdt
-     *            the tpdt
-     * @param value
-     *            the value
-     */
-    private void generateItdtCadena(final EstadisticaVO estd, final TipoDato tpdt, final String value) {
-        final ItemDatoVO itdt = new ItemDatoVO();
-
-        itdt.setTpdtId(tpdt.getId());
-        itdt.setCadena(value);
-
-        estd.getItdtMap().put(tpdt.getId(), itdt);
-    }
-
-    /**
-     * Generate itdt double.
-     *
-     * @param estd
-     *            the estd
-     * @param tpdt
-     *            the tpdt
-     * @param value
-     *            the value
-     */
-    private void generateItdtDouble(final EstadisticaVO estd, final TipoDato tpdt, final Double value) {
-        final ItemDatoVO itdt = new ItemDatoVO();
-
-        itdt.setTpdtId(tpdt.getId());
-        itdt.setCantidadDecimal(value);
-
-        estd.getItdtMap().put(tpdt.getId(), itdt);
-    }
-
-    /**
-     * Generate itdt maestro.
-     *
-     * @param estd
-     *            the estd
-     * @param tpdt
-     *            the tpdt
-     * @param prmt
-     *            the prmt
-     */
-    private void generateItdtMaestro(final EstadisticaVO estd, final TipoDato tpdt, final ParametroVO prmt) {
-        final ItemDatoVO itdt = new ItemDatoVO();
-
-        itdt.setTpdtId(tpdt.getId());
-        itdt.setPrmt(prmt);
-
-        estd.getItdtMap().put(tpdt.getId(), itdt);
     }
 
     /**
@@ -910,8 +808,8 @@ public final class OppeFileImport {
             final String token = line.substring(keyword.getOffset(), keyword.getOffset() + keyword.getLength()).trim();
 
             if ((token == null || token.isEmpty()) && keyword.isRequired()) {
-                addError(MensajeCodigo.G_005, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
-                        + ", campo: " + keyword.name());
+                prbt.addError(MensajeCodigo.G_005, "archivo: " + keyword.getFileType().name() + ", linea: "
+                        + lineNumber + ", campo: " + keyword.name());
             }
 
             return token;
@@ -941,7 +839,7 @@ public final class OppeFileImport {
         try {
             return Long.valueOf(codigo);
         } catch (final NumberFormatException ex) {
-            addError(MensajeCodigo.G_003, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+            prbt.addError(MensajeCodigo.G_003, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
                     + ", valor: " + codigo);
 
             return null;
@@ -969,7 +867,7 @@ public final class OppeFileImport {
         try {
             return Double.valueOf(codigo);
         } catch (final NumberFormatException ex) {
-            addError(MensajeCodigo.G_003, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+            prbt.addError(MensajeCodigo.G_003, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
                     + ", valor: " + codigo);
 
             return null;
@@ -1001,70 +899,14 @@ public final class OppeFileImport {
             final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
             if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-                addError(MensajeCodigo.G_004, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
-                        + ", CR: " + tipoDato.name() + ", codigo: " + codigo);
+                prbt.addError(MensajeCodigo.G_004, "archivo: " + keyword.getFileType().name() + ", linea: "
+                        + lineNumber + ", CR: " + tipoDato.name() + ", codigo: " + codigo);
             }
         } catch (final InstanceNotFoundException ex) {
             throw new Error(ex);
         }
 
         return codigo;
-    }
-
-    /**
-     * Adds the mensaje.
-     *
-     * @param codigo
-     *            the codigo
-     * @param mensaje
-     *            the mensaje
-     */
-    private void addError(final MensajeCodigo codigo, final String mensaje) {
-        addMensaje(codigo, MensajeNivel.E, mensaje);
-    }
-
-    /**
-     * Adds the warning.
-     *
-     * @param codigo
-     *            the codigo
-     * @param mensaje
-     *            the mensaje
-     */
-    private void addWarning(final MensajeCodigo codigo, final String mensaje) {
-        addMensaje(codigo, MensajeNivel.W, mensaje);
-    }
-
-    /**
-     * Adds the info.
-     *
-     * @param codigo
-     *            the codigo
-     * @param mensaje
-     *            the mensaje
-     */
-    private void addInfo(final MensajeCodigo codigo, final String mensaje) {
-        addMensaje(codigo, MensajeNivel.I, mensaje);
-    }
-
-    /**
-     * Adds the mensaje.
-     *
-     * @param codigo
-     *            the codigo
-     * @param nivel
-     *            the nivel
-     * @param mensaje
-     *            the mensaje
-     */
-    private final void addMensaje(final MensajeCodigo codigo, final MensajeNivel nivel, final String mensaje) {
-        final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
-
-        prmnVO.setCodigo(codigo);
-        prmnVO.setNivel(nivel);
-        prmnVO.setMensaje(mensaje);
-
-        prmnList.add(prmnVO);
     }
 
     /**
@@ -1141,7 +983,7 @@ public final class OppeFileImport {
         try {
             return Integer.valueOf(codigo);
         } catch (final NumberFormatException ex) {
-            addError(MensajeCodigo.G_003, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+            prbt.addError(MensajeCodigo.G_003, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
                     + ", valor: " + codigo);
 
             return null;
@@ -1172,7 +1014,7 @@ public final class OppeFileImport {
         try {
             return new SimpleDateFormat(dateFormat).parse(codigo);
         } catch (final ParseException ex) {
-            addError(MensajeCodigo.G_002, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+            prbt.addError(MensajeCodigo.G_002, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
                     + ", valor:" + codigo + ", formato: " + dateFormat);
 
             return null;
@@ -1201,7 +1043,7 @@ public final class OppeFileImport {
         }
 
         if (!maestroMap.containsKey(entidad) || !maestroMap.get(entidad).containsKey(codigo)) {
-            addError(MensajeCodigo.G_001, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+            prbt.addError(MensajeCodigo.G_001, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
                     + ", entidad: " + entidad.name() + ", codigo: " + codigo);
 
             return null;
@@ -1232,7 +1074,7 @@ public final class OppeFileImport {
         }
 
         if (!maestroMap.containsKey(entidad) || !maestroMap.get(entidad).containsKey(codigo)) {
-            addError(MensajeCodigo.G_001, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+            prbt.addError(MensajeCodigo.G_001, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
                     + ", entidad: " + entidad.name() + ", codigo: " + codigo);
 
             return null;

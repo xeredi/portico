@@ -1,13 +1,13 @@
 package xeredi.integra.http.controller.action.estadistica;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
@@ -38,7 +38,7 @@ public final class PeriodoProcesoExportAction extends BaseAction {
     private PeriodoProcesoVO pepr;
 
     /** The stream. */
-    private OutputStream stream;
+    private InputStream stream;
 
     // acciones web
 
@@ -62,13 +62,11 @@ public final class PeriodoProcesoExportAction extends BaseAction {
         final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
         final PeriodoProcesoCriterioVO peprCriterioVO = new PeriodoProcesoCriterioVO();
 
-        try (final ZipOutputStream zipOutputStream = new ZipOutputStream(new ByteArrayOutputStream())) {
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                final ZipOutputStream zipOutputStream = new ZipOutputStream(baos)) {
             pepr = peprBO.select(pepr.getId());
 
-            peprCriterioVO.setAutpId(pepr.getAutp().getId());
-            peprCriterioVO.setAnio(pepr.getAnio());
-            peprCriterioVO.setMes(pepr.getMes());
-
+            peprCriterioVO.setId(pepr.getId());
             estdCriterioVO.setPepr(peprCriterioVO);
 
             estdCriterioVO.setEntiId(Entidad.ACTIVIDAD_PESQUERA.getId());
@@ -105,9 +103,10 @@ public final class PeriodoProcesoExportAction extends BaseAction {
             export.generarEPP(zipOutputStream, pepr, exportDate);
             zipOutputStream.closeEntry();
 
-            stream = new ZipOutputStream(zipOutputStream);
+            zipOutputStream.flush();
+            zipOutputStream.close();
 
-            IOUtils.closeQuietly(stream);
+            stream = new ByteArrayInputStream(baos.toByteArray());
         } catch (final IOException ex) {
             throw new InternalErrorException(ex);
         }
@@ -141,7 +140,7 @@ public final class PeriodoProcesoExportAction extends BaseAction {
      *
      * @return the stream
      */
-    public OutputStream getStream() {
+    public InputStream getStream() {
         return stream;
     }
 

@@ -65,7 +65,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         PATH_PROCESADO = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_procesado_home);
         PATH_ERRONEO = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_erroneo_home);
 
-        final OppeFileImport fileImport = new OppeFileImport(prbtVO.getPrmnList());
+        final OppeFileImport fileImport = new OppeFileImport(prbtVO);
         final PeriodoProcesoVO peprVO = new PeriodoProcesoVO();
 
         // Lectura de los parametros de entrada

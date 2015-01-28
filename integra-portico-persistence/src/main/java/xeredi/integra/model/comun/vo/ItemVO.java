@@ -1,6 +1,10 @@
 package xeredi.integra.model.comun.vo;
 
+import java.util.Date;
 import java.util.Map;
+
+import xeredi.integra.model.maestro.vo.ParametroVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -16,6 +20,108 @@ public abstract class ItemVO implements ItemEntidad {
 
     /** The itdt map. */
     private Map<Long, ItemDatoVO> itdtMap;
+
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public void addItdt(final Long tpdtId, final Long value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
+
+        itdt.setTpdtId(tpdtId);
+        itdt.setCantidadEntera(value);
+
+        itdtMap.put(tpdtId, itdt);
+    }
+
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public void addItdt(final Long tpdtId, final Double value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
+
+        itdt.setTpdtId(tpdtId);
+        itdt.setCantidadDecimal(value);
+
+        itdtMap.put(tpdtId, itdt);
+    }
+
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public void addItdt(final Long tpdtId, final String value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
+
+        itdt.setTpdtId(tpdtId);
+        itdt.setCadena(value);
+
+        itdtMap.put(tpdtId, itdt);
+    }
+
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public void addItdt(final Long tpdtId, final ParametroVO value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
+
+        itdt.setTpdtId(tpdtId);
+        itdt.setPrmt(value);
+
+        itdtMap.put(tpdtId, itdt);
+    }
+
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public void addItdt(final Long tpdtId, final ServicioVO value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
+
+        itdt.setTpdtId(tpdtId);
+        itdt.setSrvc(value);
+
+        itdtMap.put(tpdtId, itdt);
+    }
+
+    /**
+     * Adds the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @param value
+     *            the value
+     */
+    public void addItdt(final Long tpdtId, final Date value) {
+        final ItemDatoVO itdt = new ItemDatoVO();
+
+        itdt.setTpdtId(tpdtId);
+        itdt.setFecha(value);
+
+        itdtMap.put(tpdtId, itdt);
+    }
 
     /**
      * Gets the id.

@@ -45,7 +45,7 @@ public final class ProcesoCargaPescaTest {
         prbtVO2.setTipo(cargaPesca.getProcesoTipo());
         prbtBO.crear(prbtVO2);
 
-        cargaPesca.procesar();
+        // cargaPesca.procesar();
 
         LOG.info("End test");
     }
