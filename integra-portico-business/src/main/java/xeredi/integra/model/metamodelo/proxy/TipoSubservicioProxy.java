@@ -59,14 +59,12 @@ public final class TipoSubservicioProxy {
      * @param id
      *            the id
      * @return the tipo subservicio vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
-    public static TipoSubservicioVO select(final Long id) throws InstanceNotFoundException {
+    public static TipoSubservicioVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
         if (!TIPO_SUBSERVICIO_MAP.containsKey(id)) {
-            throw new InstanceNotFoundException(MessageI18nKey.tpss, id);
+            throw new Error(new InstanceNotFoundException(MessageI18nKey.tpss, id));
         }
 
         return TIPO_SUBSERVICIO_MAP.get(id);
@@ -82,11 +80,7 @@ public final class TipoSubservicioProxy {
 
         for (final TipoSubservicioVO tpssVO : tpssList) {
             if (tpssVO.getTpdtEstado() != null) {
-                try {
-                    tpssVO.setTpdtEstado(TipoDatoProxy.select(tpssVO.getTpdtEstado().getId()));
-                } catch (final InstanceNotFoundException ex) {
-                    throw new Error(ex);
-                }
+                tpssVO.setTpdtEstado(TipoDatoProxy.select(tpssVO.getTpdtEstado().getId()));
             }
 
             TIPO_SUBSERVICIO_MAP.put(tpssVO.getId(), tpssVO);

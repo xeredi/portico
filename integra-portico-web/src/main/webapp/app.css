@@ -18,6 +18,10 @@ p, label, li, .btn, .form-control, .input-group-sm>.form-control,
 	color: black;
 }
 
+.form-control:FOCUS {
+	background-color: orange;
+}
+
 .nav-pills>li, .modal-title, legend, .bg-primary, .nav-tabs {
 	text-transform: uppercase;
 	font-size: 12px;

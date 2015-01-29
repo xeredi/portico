@@ -1,4 +1,4 @@
-package xeredi.integra.proceso.servicio.manifiesto;
+package xeredi.integra.model.servicio.io.manifiesto;
 
 // TODO: Auto-generated Javadoc
 /**

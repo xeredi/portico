@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
@@ -262,15 +261,10 @@ public final class PescaFileImport {
             return null;
         }
 
-        try {
-            final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
+        final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
-            if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-                prbt.addError(MensajeCodigo.G_004, "linea:" + lineNumber + ", CR:" + tipoDato.name() + ", codigo:"
-                        + codigo);
-            }
-        } catch (final InstanceNotFoundException ex) {
-            throw new Error(ex);
+        if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
+            prbt.addError(MensajeCodigo.G_004, "linea:" + lineNumber + ", CR:" + tipoDato.name() + ", codigo:" + codigo);
         }
 
         return codigo;

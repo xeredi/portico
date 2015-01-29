@@ -69,6 +69,16 @@ public final class PorticoScheduler {
 
             instance.scheduleJob(pescaJob, pescaTrigger);
 
+            final JobDetail manifiestoJob = JobBuilder.newJob(CargaManifiestoJob.class)
+                    .withIdentity("manifiestoJob", "srvcGroup").build();
+
+            final Trigger manifiestoTrigger = TriggerBuilder.newTrigger()
+                    .withIdentity("manifiestoTrigger", "srvcGroup").startNow()
+                    .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
+                    .build();
+
+            instance.scheduleJob(manifiestoJob, manifiestoTrigger);
+
             LOG.info("Scheduler Created");
         }
 

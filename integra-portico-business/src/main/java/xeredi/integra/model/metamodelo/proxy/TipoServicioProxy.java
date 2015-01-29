@@ -59,10 +59,8 @@ public final class TipoServicioProxy {
      * @param id
      *            the id
      * @return the tipo parametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
-    public static TipoServicioVO select(final Long id) throws InstanceNotFoundException {
+    public static TipoServicioVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
         TipoServicioVO tpsrVO = null;
@@ -70,7 +68,7 @@ public final class TipoServicioProxy {
         tpsrVO = TIPO_SERVICIO_MAP.get(id);
 
         if (tpsrVO == null) {
-            throw new InstanceNotFoundException(MessageI18nKey.tpsr, id);
+            throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsr, id));
         }
 
         return tpsrVO;
@@ -87,11 +85,7 @@ public final class TipoServicioProxy {
 
         for (final TipoServicioVO tpsrVO : tpsrList) {
             if (tpsrVO.getTpdtEstado() != null) {
-                try {
-                    tpsrVO.setTpdtEstado(TipoDatoProxy.select(tpsrVO.getTpdtEstado().getId()));
-                } catch (final InstanceNotFoundException ex) {
-                    throw new Error(ex);
-                }
+                tpsrVO.setTpdtEstado(TipoDatoProxy.select(tpsrVO.getTpdtEstado().getId()));
             }
 
             TIPO_SERVICIO_MAP.put(tpsrVO.getId(), tpsrVO);

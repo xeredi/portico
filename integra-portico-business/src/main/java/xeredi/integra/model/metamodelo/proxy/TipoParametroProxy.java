@@ -60,14 +60,12 @@ public final class TipoParametroProxy {
      * @param id
      *            the id
      * @return the tipo parametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
-    public static TipoParametroVO select(final Long id) throws InstanceNotFoundException {
+    public static TipoParametroVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
         if (!TIPO_PARAMETRO_MAP.containsKey(id)) {
-            throw new InstanceNotFoundException(MessageI18nKey.tppr, id);
+            throw new Error(new InstanceNotFoundException(MessageI18nKey.tppr, id));
         }
 
         return TIPO_PARAMETRO_MAP.get(id);

@@ -61,14 +61,12 @@ public final class EntidadProxy {
      * @param id
      *            the id
      * @return the entidad vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
-    public static EntidadVO select(final Long id) throws InstanceNotFoundException {
+    public static EntidadVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
         if (!ENTIDAD_MAP.containsKey(id)) {
-            throw new InstanceNotFoundException(MessageI18nKey.enti, id);
+            throw new Error(new InstanceNotFoundException(MessageI18nKey.enti, id));
         }
 
         return ENTIDAD_MAP.get(id);

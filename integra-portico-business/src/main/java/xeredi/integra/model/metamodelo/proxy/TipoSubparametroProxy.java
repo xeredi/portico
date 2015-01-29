@@ -59,14 +59,12 @@ public final class TipoSubparametroProxy {
      * @param id
      *            the id
      * @return the tipo subparametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
-    public static TipoSubparametroVO select(final Long id) throws InstanceNotFoundException {
+    public static TipoSubparametroVO select(final Long id) {
         Preconditions.checkNotNull(id);
 
         if (!TIPO_SUBPARAMETRO_MAP.containsKey(id)) {
-            throw new InstanceNotFoundException(MessageI18nKey.tpsp, id);
+            throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsp, id));
         }
 
         return TIPO_SUBPARAMETRO_MAP.get(id);
@@ -85,11 +83,7 @@ public final class TipoSubparametroProxy {
             // tpspVO.setTppr(TipoParametroProxy.select(tpspVO.getTppr().getId()));
 
             if (tpspVO.getTpprAsociado() != null) {
-                try {
-                    tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
-                } catch (final InstanceNotFoundException ex) {
-                    throw new Error(ex);
-                }
+                tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
             }
 
             TIPO_SUBPARAMETRO_MAP.put(tpspVO.getId(), tpspVO);

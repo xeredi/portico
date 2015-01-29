@@ -62,16 +62,14 @@ public final class TipoEstadisticaProxy {
      * @param id
      *            the id
      * @return the tipo parametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
-    public static TipoEstadisticaVO select(final long id) throws InstanceNotFoundException {
+    public static TipoEstadisticaVO select(final long id) {
         Preconditions.checkNotNull(id);
 
         final TipoEstadisticaVO tpesVO = TIPO_ESTADISTICA_MAP.get(id);
 
         if (tpesVO == null) {
-            throw new InstanceNotFoundException(MessageI18nKey.tpes, id);
+            throw new Error(new InstanceNotFoundException(MessageI18nKey.tpes, id));
         }
 
         return tpesVO;

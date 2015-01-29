@@ -1,4 +1,4 @@
-package xeredi.integra.proceso.servicio.manifiesto;
+package xeredi.integra.model.servicio.io.manifiesto;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,7 +35,7 @@ public enum ManifiestoSegmento {
 
     /**
      * Segmento valido.
-     * 
+     *
      * @param segmento
      *            the segmento
      * @param mensaje
@@ -132,7 +132,7 @@ public enum ManifiestoSegmento {
 
     /**
      * Segmento valido.
-     * 
+     *
      * @param segmento
      *            the segmento
      * @param segmentoSiguiente

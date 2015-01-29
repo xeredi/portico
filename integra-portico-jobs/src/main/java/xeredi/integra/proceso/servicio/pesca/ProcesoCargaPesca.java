@@ -8,12 +8,8 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
-import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.integra.model.metamodelo.vo.Entidad;
-import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
@@ -46,14 +42,6 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
         PATH_PROCESADO = ConfigurationProxy.getString(ConfigurationKey.pesca_files_procesado_home);
         PATH_ERRONEO = ConfigurationProxy.getString(ConfigurationKey.pesca_files_erroneo_home);
 
-        TipoServicioVO tpsrVO = null;
-
-        try {
-            tpsrVO = TipoServicioProxy.select(Entidad.MANIFIESTO_PESCA.getId());
-        } catch (final InstanceNotFoundException ex) {
-            addError(MensajeCodigo.G_000, ex.getMessage());
-        }
-
         if (prbtVO.getPrmnList().isEmpty()) {
             for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
                 final String pathArchivo = PATH_ENTRADA + "/" + prarVO.getNombre();
@@ -81,7 +69,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                         try {
                             // FIXME Verificar si ya se ha cargado el archivo
 
-                            srvcBO.insert(pescaFileImport.getSrvc(), tpsrVO, pescaFileImport.getSsrvList());
+                            srvcBO.insert(pescaFileImport.getSrvc(), pescaFileImport.getSsrvList(), null);
 
                             final ProcesoItemVO pritSalidaVO = new ProcesoItemVO();
 

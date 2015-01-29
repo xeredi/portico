@@ -1,4 +1,4 @@
-package xeredi.integra.proceso.servicio.manifiesto;
+package xeredi.integra.model.servicio.io.manifiesto;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -148,9 +148,9 @@ public enum ManifiestoKeyword {
     /** The GI d_ valor medida_1. */
     GID_ValorMedida_1(32, 18, true),
     /** The GI d_ calificador medida_2. */
-    GID_CalificadorMedida_2(50, 3, true),
+    GID_CalificadorMedida_2(50, 3, false),
     /** The GI d_ valor medida_2. */
-    GID_ValorMedida_2(59, 18, true),
+    GID_ValorMedida_2(59, 18, false),
     /** The GI d_ codigo marca vehiculo. */
     GID_CodigoMarcaVehiculo(82, 3, false),
     /** The GI d_ codigo acuerdo. */

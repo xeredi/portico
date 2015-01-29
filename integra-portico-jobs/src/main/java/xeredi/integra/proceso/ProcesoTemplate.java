@@ -104,24 +104,7 @@ public abstract class ProcesoTemplate {
      *            the fecha vigencia
      */
     protected final void buscarMaestros(final Date fechaVigencia) {
-        Preconditions.checkNotNull(fechaVigencia);
-
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Busqueda de Maestros");
-        }
-
-        final ParametroBO prmtBO = new ParametroBO();
-
-        for (final Entidad entidad : codigoMaestroMap.keySet()) {
-            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-
-            prmtCriterioVO.setEntiId(entidad.getId());
-            prmtCriterioVO.setParametros(codigoMaestroMap.get(entidad));
-            prmtCriterioVO.setFechaVigencia(fechaVigencia);
-            prmtCriterioVO.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
-
-            maestroMap.put(entidad, prmtBO.selectMapByCodigo(prmtCriterioVO));
-        }
+        buscarMaestros(codigoMaestroMap, fechaVigencia);
     }
 
     /**
@@ -160,6 +143,18 @@ public abstract class ProcesoTemplate {
      *            the fecha vigencia
      */
     protected void buscarOrganizaciones(final Date fechaVigencia) {
+        buscarOrganizaciones(nifSet, fechaVigencia);
+    }
+
+    /**
+     * Buscar organizaciones.
+     *
+     * @param nifSet
+     *            the nif set
+     * @param fechaVigencia
+     *            the fecha vigencia
+     */
+    protected void buscarOrganizaciones(final Set<String> nifSet, final Date fechaVigencia) {
         Preconditions.checkNotNull(fechaVigencia);
 
         if (LOG.isInfoEnabled()) {
@@ -169,6 +164,7 @@ public abstract class ProcesoTemplate {
         final ParametroBO prmtBO = new ParametroBO();
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
+        prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
         prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());
         prmtCriterioVO.setFechaVigencia(fechaVigencia);
 

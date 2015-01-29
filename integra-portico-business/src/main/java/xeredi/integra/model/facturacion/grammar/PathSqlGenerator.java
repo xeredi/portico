@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -92,14 +91,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
     public Object visitPathElement(final xeredi.integra.model.util.grammar.PathParser.PathElementContext ctx) {
         Preconditions.checkNotNull(entiTmp);
 
-        EntidadVO enti = null;
-
-        try {
-            enti = EntidadProxy.select(entiTmp.getId());
-        } catch (final InstanceNotFoundException ex) {
-            throw new Error(ex);
-        }
-
+        final EntidadVO enti = EntidadProxy.select(entiTmp.getId());
         final StringBuilder sqlElement = new StringBuilder();
 
         System.out.println("enti: " + enti.getCodigo());
@@ -109,13 +101,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                 throw new Error("Solo se puede llegar al servicio desde un subservicio");
             }
 
-            try {
-                final TipoSubservicioVO tpss = TipoSubservicioProxy.select(enti.getId());
+            final TipoSubservicioVO tpss = TipoSubservicioProxy.select(enti.getId());
 
-                entiTmp = EntidadProxy.select(tpss.getTpsrId());
-            } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
-            }
+            entiTmp = EntidadProxy.select(tpss.getTpsrId());
 
             sqlElement
             .append("SELECT ")
@@ -128,11 +116,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                 throw new Error("Solo se puede llegar a la entidad padre desde un subservicio");
             }
 
-            try {
-                entiTmp = EntidadProxy.select(Entidad.valueOf(ctx.ID().getText()).getId());
-            } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
-            }
+            entiTmp = EntidadProxy.select(Entidad.valueOf(ctx.ID().getText()).getId());
 
             sqlElement
             .append("SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = portico.getEntidad('"
@@ -285,12 +269,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                 throw new Error("Entidad '" + entiTmp.getTipo() + "' no valida");
             }
 
-            try {
-                entiTmp = entd.getTpdt().getEnti() == null ? null : EntidadProxy.select(entd.getTpdt().getEnti()
-                        .getId());
-            } catch (final InstanceNotFoundException ex) {
-                throw new Error(ex);
-            }
+            entiTmp = entd.getTpdt().getEnti() == null ? null : EntidadProxy.select(entd.getTpdt().getEnti().getId());
         }
 
         if (sqlElement.length() > 0) {

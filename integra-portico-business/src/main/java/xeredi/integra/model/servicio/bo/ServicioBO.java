@@ -17,8 +17,11 @@ import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
 import xeredi.integra.model.servicio.dao.ServicioSecuenciaDAO;
@@ -158,12 +161,12 @@ public class ServicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final ServicioVO srvcVO, final TipoServicioVO tpsrVO, final List<SubservicioVO> ssrvList)
-            throws DuplicateInstanceException {
+    public void insert(final ServicioVO srvcVO, final List<SubservicioVO> ssrvList,
+            final List<SubservicioSubservicioVO> ssssList) throws DuplicateInstanceException {
         Preconditions.checkNotNull(srvcVO);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            insert(session, srvcVO, tpsrVO, ssrvList);
+            insert(session, srvcVO, ssrvList, ssssList);
 
             session.commit();
         }
@@ -183,8 +186,8 @@ public class ServicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    protected final void insert(final SqlSession session, final ServicioVO srvcVO, final TipoServicioVO tpsrVO,
-            final List<SubservicioVO> ssrvList) throws DuplicateInstanceException {
+    protected final void insert(final SqlSession session, final ServicioVO srvcVO, final List<SubservicioVO> ssrvList,
+            final List<SubservicioSubservicioVO> ssssList) throws DuplicateInstanceException {
         Preconditions.checkNotNull(srvcVO);
 
         final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
@@ -192,8 +195,16 @@ public class ServicioBO {
         final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
         final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
         final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
+        final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+        final Map<Long, Long> ssrvDepsMap = new HashMap<Long, Long>();
 
-        if (tpsrVO.getEntdList() != null && !tpsrVO.getEntdList().isEmpty()) {
+        final TipoServicioVO tpsrVO = TipoServicioProxy.select(srvcVO.getEntiId());
+
+        if (tpsrVO.getEntdList() != null) {
+            if (srvcVO.getItdtMap() == null) {
+                srvcVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+            }
+
             for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
                 final Long tpdtId = entd.getTpdt().getId();
 
@@ -234,9 +245,35 @@ public class ServicioBO {
 
         if (ssrvList != null) {
             for (final SubservicioVO ssrvVO : ssrvList) {
-                ssrvVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                final Long ssrvId = igBO.nextVal(IgBO.SQ_INTEGRA);
+
+                if (ssrvVO.getId() != null) {
+                    ssrvDepsMap.put(ssrvVO.getId(), ssrvId);
+                }
+
+                ssrvVO.setId(ssrvId);
                 ssrvVO.setSrvc(srvcVO);
                 ssrvDAO.insert(ssrvVO);
+
+                final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(ssrvVO.getEntiId());
+
+                if (tpssVO.getEntdList() != null) {
+                    if (ssrvVO.getItdtMap() == null) {
+                        ssrvVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                    }
+
+                    for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {
+                        final Long tpdtId = entd.getTpdt().getId();
+
+                        if (!ssrvVO.getItdtMap().containsKey(tpdtId)
+                                && !ssrvVO.getItdtMap().containsKey(tpdtId.toString())) {
+                            final ItemDatoVO itdt = new ItemDatoVO();
+
+                            itdt.setTpdtId(tpdtId);
+                            ssrvVO.getItdtMap().put(tpdtId, itdt);
+                        }
+                    }
+                }
             }
 
             for (final SubservicioVO ssrvVO : ssrvList) {
@@ -246,6 +283,13 @@ public class ServicioBO {
                         ssdtDAO.insert(itdtVO);
                     }
                 }
+            }
+        }
+
+        if (ssssList != null) {
+            for (final SubservicioSubservicioVO ssssVO : ssssList) {
+                ssssDAO.insert(new SubservicioSubservicioVO(ssrvDepsMap.get(ssssVO.getSsrvPadreId()), ssrvDepsMap
+                        .get(ssssVO.getSsrvHijoId())));
             }
         }
     }

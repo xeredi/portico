@@ -14,7 +14,6 @@ import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -427,8 +426,6 @@ public final class OppeFileImport {
             }
         } catch (final IOException ex) {
             prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAP.name());
-        } catch (final InstanceNotFoundException ex) {
-            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -471,8 +468,6 @@ public final class OppeFileImport {
             }
         } catch (final IOException ex) {
             prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAV.name());
-        } catch (final InstanceNotFoundException ex) {
-            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -521,8 +516,6 @@ public final class OppeFileImport {
             }
         } catch (final IOException ex) {
             prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EAE.name());
-        } catch (final InstanceNotFoundException ex) {
-            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -620,8 +613,6 @@ public final class OppeFileImport {
             }
         } catch (final IOException ex) {
             prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EMM.name());
-        } catch (final InstanceNotFoundException ex) {
-            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -707,8 +698,6 @@ public final class OppeFileImport {
             }
         } catch (final IOException ex) {
             prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EME.name());
-        } catch (final InstanceNotFoundException ex) {
-            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -769,8 +758,6 @@ public final class OppeFileImport {
             }
         } catch (final IOException ex) {
             prbt.addError(MensajeCodigo.G_010, EstadisticaFileType.EMT.name());
-        } catch (final InstanceNotFoundException ex) {
-            prbt.addError(MensajeCodigo.G_000, ex.getMessage());
         }
     }
 
@@ -895,15 +882,11 @@ public final class OppeFileImport {
             return null;
         }
 
-        try {
-            final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
+        final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
-            if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-                prbt.addError(MensajeCodigo.G_004, "archivo: " + keyword.getFileType().name() + ", linea: "
-                        + lineNumber + ", CR: " + tipoDato.name() + ", codigo: " + codigo);
-            }
-        } catch (final InstanceNotFoundException ex) {
-            throw new Error(ex);
+        if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
+            prbt.addError(MensajeCodigo.G_004, "archivo: " + keyword.getFileType().name() + ", linea: " + lineNumber
+                    + ", CR: " + tipoDato.name() + ", codigo: " + codigo);
         }
 
         return codigo;

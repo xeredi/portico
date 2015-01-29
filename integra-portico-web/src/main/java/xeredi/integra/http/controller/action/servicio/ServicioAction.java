@@ -180,7 +180,7 @@ public final class ServicioAction extends ItemAction {
 
             switch (accion) {
             case create:
-                srvcBO.insert(item, enti, null);
+                srvcBO.insert(item, null, null);
 
                 break;
             case edit:

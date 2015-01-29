@@ -27,43 +27,18 @@ public final class ProcesoCargaManifiestoTest {
         final ProcesoCargaManifiesto cargaManifiesto = new ProcesoCargaManifiesto();
         final ProcesoBO prbtBO = new ProcesoBO();
 
-        final ProcesoVO prbtVO1 = new ProcesoVO();
-        final ProcesoArchivoVO prarVO1 = new ProcesoArchivoVO();
+        {
+            final ProcesoVO prbtVO = new ProcesoVO();
+            final ProcesoArchivoVO prarVO = new ProcesoArchivoVO();
 
-        prarVO1.setNombre("I0040GAAIgayWR.itc");
-        prbtVO1.getPrarEntradaList().add(prarVO1);
-        prbtVO1.setModulo(cargaManifiesto.getProcesoModulo());
-        prbtVO1.setTipo(cargaManifiesto.getProcesoTipo());
-        prbtBO.crear(prbtVO1);
+            prarVO.setNombre("11311501013_1_ALTA.itc");
+            prbtVO.getPrarEntradaList().add(prarVO);
+            prbtVO.setModulo(cargaManifiesto.getProcesoModulo());
+            prbtVO.setTipo(cargaManifiesto.getProcesoTipo());
+            prbtBO.crear(prbtVO);
+        }
 
-        final ProcesoVO prbtVO2 = new ProcesoVO();
-        final ProcesoArchivoVO prarVO2 = new ProcesoArchivoVO();
-
-        prarVO2.setNombre("I0040GAA_laqKd.itc");
-        prbtVO2.getPrarEntradaList().add(prarVO2);
-        prbtVO2.setModulo(cargaManifiesto.getProcesoModulo());
-        prbtVO2.setTipo(cargaManifiesto.getProcesoTipo());
-        prbtBO.crear(prbtVO2);
-
-        final ProcesoVO prbtVO3 = new ProcesoVO();
-        final ProcesoArchivoVO prarVO3 = new ProcesoArchivoVO();
-
-        prarVO3.setNombre("I0040EAA2Jaquw.itc");
-        prbtVO3.getPrarEntradaList().add(prarVO3);
-        prbtVO3.setModulo(cargaManifiesto.getProcesoModulo());
-        prbtVO3.setTipo(cargaManifiesto.getProcesoTipo());
-        prbtBO.crear(prbtVO3);
-
-        final ProcesoVO prbtVO4 = new ProcesoVO();
-        final ProcesoArchivoVO prarVO4 = new ProcesoArchivoVO();
-
-        prarVO4.setNombre("gh.itc");
-        prbtVO4.getPrarEntradaList().add(prarVO4);
-        prbtVO4.setModulo(cargaManifiesto.getProcesoModulo());
-        prbtVO4.setTipo(cargaManifiesto.getProcesoTipo());
-        prbtBO.crear(prbtVO4);
-
-        cargaManifiesto.procesar();
+        // cargaManifiesto.procesar();
 
         LOG.info("End test");
     }

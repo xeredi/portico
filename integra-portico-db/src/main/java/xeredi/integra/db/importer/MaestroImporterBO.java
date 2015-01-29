@@ -200,10 +200,6 @@ public final class MaestroImporterBO {
         final TipoParametroVO tpprVO = TipoParametroProxy.select(entidad.getId());
         final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprVO.getId());
 
-        if (tpprVO == null) {
-            throw new Error("No se encuentra el tipo de parametro con id: " + entidad.getId());
-        }
-
         if (!tpprPrmtMap.containsKey(tpprVO.getId())) {
             tpprPrmtMap.put(tpprVO.getId(), new HashMap<String, Long>());
         }
@@ -322,10 +318,6 @@ public final class MaestroImporterBO {
         final String entiAsociadaName = bundle.getString(I18nPrefix.enti.name() + "_"
                 + tpspVO.getTpprAsociado().getId());
         final String entiPadreName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprPadreVO.getId());
-
-        if (tpspVO == null) {
-            throw new Error("No se encuentra el tipo de subparametro con id: " + entidad.getId());
-        }
 
         if (tpspVO.getEntiPadresList() == null || tpspVO.getEntiPadresList().isEmpty()) {
             throw new Error("El tipo de subparametro: " + entiName + " no tiene entidades padre");
