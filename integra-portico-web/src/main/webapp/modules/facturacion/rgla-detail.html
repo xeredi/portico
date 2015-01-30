@@ -46,11 +46,11 @@
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgla_orden</label>
-                <p class="form-control-static" ng-bind="vm.rgla.rglv.orden"></p>
+                <p class="form-control-static number" ng-bind="vm.rgla.rglv.orden"></p>
             </div>
             <div ng-if="vm.rgla.rglv.tipo == 'T'" class="col-md-1 form-group">
                 <label translate>rgla_importeBase</label>
-                <p class="form-control-static" ng-bind="vm.rgla.rglv.importeBase | number:4"></p>
+                <p class="form-control-static number" ng-bind="vm.rgla.rglv.importeBase | number:4"></p>
             </div>
         </div>
 

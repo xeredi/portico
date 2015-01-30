@@ -31,11 +31,11 @@
             <tr ng-repeat="entd in vm.enti.entdList track by $index">
                 <td><a ng-href="#/metamodelo/entd/detail/{{vm.enti.id}}/{{entd.tpdt.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="entd.grupo"></td>
-                <td ng-bind="entd.fila"></td>
-                <td ng-bind="entd.orden"></td>
-                <td ng-bind="entd.span"></td>
-                <td ng-bind="entd.spanLg"></td>
+                <td ng-bind="entd.grupo" class="number"></td>
+                <td ng-bind="entd.fila" class="number"></td>
+                <td ng-bind="entd.orden" class="number"></td>
+                <td ng-bind="entd.span" class="number"></td>
+                <td ng-bind="entd.spanLg" class="number"></td>
                 <td nowrap="nowrap" ng-bind="entd.etiqueta"></td>
                 <td><i class="glyphicon glyphicon-{{entd.obligatorio ? 'ok' : 'remove'}}"></i></td>
                 <td><i class="glyphicon glyphicon-{{entd.gridable ? 'ok' : 'remove'}}"></i></td>

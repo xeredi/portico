@@ -211,7 +211,7 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/facturacion/rgin/create/:crgoId/:rglaId", {
+    .when("/facturacion/rgin/create/:crgoId/:rgla1Id", {
         templateUrl : "modules/facturacion/rgin-edit.html",
         controller : "rginCreateController",
         controllerAs : "vm"
@@ -896,7 +896,7 @@ function rginCreateController($http, $location, $routeParams, pageTitleService) 
 
     $http.post("facturacion/rgin-create.action", {
         rgin : {
-            rglaId : $routeParams.rglaId
+            rgla1Id : $routeParams.rgla1Id
         },
         crgoId : $routeParams.crgoId
     }).success(function(data) {
