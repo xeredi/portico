@@ -80,7 +80,7 @@
 		</tab> <tab ng-if="vm.prbt.prarEntradaList.length || vm.prbt.prarSalidaList.length"
 			heading="{{'prarList' | translate}}">
 		<div ng-if="vm.prbt.prarEntradaList.length" class="table-responsive">
-			<legend translate="prarEntradaList"></legend>
+			<legend translate="prarEntList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
 					<tr>
@@ -97,7 +97,7 @@
 		</div>
 
 		<div ng-if="vm.prbt.prarSalidaList.length" class="table-responsive">
-			<legend translate="prarSalidaList"></legend>
+			<legend translate="prarSalList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
 					<tr>
@@ -112,9 +112,9 @@
 				</tbody>
 			</table>
 		</div>
-		</tab> <tab ng-if="vm.prbt.pritEntradaList.length || vm.prbt.pritSalidaList.length" heading="Items">
+		</tab> <tab ng-if="vm.prbt.pritEntradaList.length || vm.prbt.pritSalidaList.length" heading="{{'pritList' | translate}}">
 		<div ng-if="vm.prbt.pritEntradaList.length" class="table-responsive">
-			<legend translate="pritEntradaList"></legend>
+			<legend translate="pritEntList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
 					<tr>
@@ -131,7 +131,7 @@
 		</div>
 
 		<div ng-if="vm.prbt.pritSalidaList.length" class="table-responsive">
-			<legend translate="pritSalidaList"></legend>
+			<legend translate="pritSalList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
 					<tr>

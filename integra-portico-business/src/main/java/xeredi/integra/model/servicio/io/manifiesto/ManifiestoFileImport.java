@@ -40,6 +40,9 @@ public final class ManifiestoFileImport {
     /** The prbt. */
     private final ProcesoVO prbt;
 
+    /** The escala vo. */
+    private ServicioVO escalaVO;
+
     /** The manifiesto vo. */
     private final ServicioVO manifiestoVO = new ServicioVO();
 
@@ -64,14 +67,14 @@ public final class ManifiestoFileImport {
     /** The organizaciones map. */
     private Map<String, ParametroVO> organizacionesMap;
 
-    /** The subpuertos list. */
-    private List<ParametroVO> subpuertosList;
-
     /** The mensaje. */
     private ManifiestoMensaje mensaje;
 
     /** The tipo operacion. */
     private String tipoOperacion;
+
+    /** The recinto aduanero. */
+    private String recintoAduanero;
 
     /** The numero edi. */
     private String numeroEDI;
@@ -161,6 +164,8 @@ public final class ManifiestoFileImport {
      *            the primera linea
      */
     public void readMaestros(final List<String> lines, final int primeraLinea) {
+        escalaVO = new ServicioVO();
+
         // Lectura de Codigos de Maestros
         for (int i = primeraLinea; i < lines.size(); i++) {
             final String line = lines.get(i);
@@ -168,8 +173,12 @@ public final class ManifiestoFileImport {
 
             switch (segmento) {
             case IFC:
-                addCodigoMaestro(Entidad.RECINTO_ADUANERO,
-                        getTokenString(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i));
+                escalaVO.setAnno("201" + getTokenString(ManifiestoKeyword.IFC_AnioEscala, line, i));
+                escalaVO.setNumero(getTokenString(ManifiestoKeyword.IFC_NumeroEscala, line, i));
+
+                recintoAduanero = getTokenString(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i);
+
+                addCodigoMaestro(Entidad.RECINTO_ADUANERO, recintoAduanero);
                 addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.IFC_CodigoPaisENS, line, i));
                 addCodigoMaestro(Entidad.ALINEACION, getTokenString(ManifiestoKeyword.IFC_CodigoAlineacion, line, i));
                 addCodigoMaestro(Entidad.TERMINAL, getTokenString(ManifiestoKeyword.IFC_CodigoTerminal, line, i));
@@ -280,9 +289,6 @@ public final class ManifiestoFileImport {
 
         ParametroVO estibadorVO = null;
 
-        Integer anioEscala = null;
-        Integer numeroEscala = null;
-
         long contadorSsrv = 0;
         int contadorMaco = 0;
         int contadorPado = 0;
@@ -295,28 +301,27 @@ public final class ManifiestoFileImport {
         manifiestoVO.setEntiId(Entidad.MANIFIESTO.getId());
         manifiestoVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
+        manifiestoVO.addItdt(TipoDato.ESCALA.getId(), escalaVO);
+
         for (int i = primeraLinea; i < lines.size(); i++) {
             final String line = lines.get(i);
             final ManifiestoSegmento segmento = getTokenSegmento(ManifiestoKeyword.Segmento, line, i);
 
             switch (segmento) {
             case IFC:
-                anioEscala = getTokenInteger(ManifiestoKeyword.IFC_AnioEscala, line, i);
-                numeroEscala = getTokenInteger(ManifiestoKeyword.IFC_NumeroEscala, line, i);
+                manifiestoVO.setSubp(escalaVO.getSubp());
+                // FIXME Calcular Año
+                manifiestoVO.setAnno(escalaVO.getAnno());
+                // FIXME Calcular fechaReferencia
+                manifiestoVO.setFref(Calendar.getInstance().getTime());
 
                 manifiestoVO.addItdt(TipoDato.CADENA_01.getId(),
                         getTokenString(ManifiestoKeyword.IFC_NumeroEDI, line, i));
-
-                final ParametroVO recintoAduanero = getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line,
-                        i, Entidad.RECINTO_ADUANERO);
-                final ParametroVO subpuerto = calcularSubpuerto(recintoAduanero);
-
-                manifiestoVO.setSubp(subpuerto);
-                // FIXME Calcular Año
-                manifiestoVO.setAnno("201" + anioEscala);
-                // FIXME Calcular fechaReferencia
-                manifiestoVO.setFref(Calendar.getInstance().getTime());
-                manifiestoVO.addItdt(TipoDato.REC_ADU.getId(), recintoAduanero);
+                manifiestoVO
+                .addItdt(
+                        TipoDato.REC_ADU.getId(),
+                        getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
+                                Entidad.RECINTO_ADUANERO));
 
                 final String tipoManifiestoEDI = getTokenString(ManifiestoKeyword.IFC_TipoManifiesto, line, i);
                 final String tipoManifiesto = getTipoManifiesto(tipoManifiestoEDI);
@@ -646,6 +651,8 @@ public final class ManifiestoFileImport {
                 equiActualVO.setId(contadorSsrv++);
                 equiActualVO.setNumero(++contadorEqui);
 
+                equiActualVO.addItdt(TipoDato.ESTADO_EQUI.getId(), "R");
+
                 final String indicadorLleno = getTokenString(ManifiestoKeyword.EQD_IndicadorLleno, line, i);
 
                 equiActualVO.addItdt(TipoDato.CADENA_02.getId(), indicadorLleno);
@@ -824,20 +831,6 @@ public final class ManifiestoFileImport {
         }
     }
 
-    private ParametroVO calcularSubpuerto(final ParametroVO recintoAduanero) {
-        Preconditions.checkNotNull(recintoAduanero);
-
-        final Long unlocodeId = recintoAduanero.getItdtMap().get(TipoDato.UNLOCODE.getId()).getItemId();
-
-        for (final ParametroVO vo : subpuertosList) {
-            if (unlocodeId == vo.getItdtMap().get(TipoDato.UNLOCODE.getId()).getItemId()) {
-                return vo;
-            }
-        }
-
-        throw new Error("Subpuerto no encontrado");
-    }
-
     /**
      * Gets the token organizacion.
      *
@@ -916,6 +909,17 @@ public final class ManifiestoFileImport {
         }
     }
 
+    /**
+     * Gets the token double.
+     *
+     * @param keyword
+     *            the keyword
+     * @param line
+     *            the line
+     * @param lineNumber
+     *            the line number
+     * @return the token double
+     */
     private Double getTokenDouble(final ManifiestoKeyword keyword, final String line, final int lineNumber) {
         final String codigo = getTokenString(keyword, line, lineNumber);
 
@@ -1169,12 +1173,30 @@ public final class ManifiestoFileImport {
     }
 
     /**
-     * Sets the subpuertos list.
+     * Gets the escala vo.
+     *
+     * @return the escala vo
+     */
+    public ServicioVO getEscalaVO() {
+        return escalaVO;
+    }
+
+    /**
+     * Sets the escala vo.
      *
      * @param value
-     *            the new subpuertos list
+     *            the new escala vo
      */
-    public void setSubpuertosList(final List<ParametroVO> value) {
-        subpuertosList = value;
+    public void setEscalaVO(final ServicioVO value) {
+        escalaVO = value;
+    }
+
+    /**
+     * Gets the recinto aduanero.
+     *
+     * @return the recinto aduanero
+     */
+    public String getRecintoAduanero() {
+        return recintoAduanero;
     }
 }

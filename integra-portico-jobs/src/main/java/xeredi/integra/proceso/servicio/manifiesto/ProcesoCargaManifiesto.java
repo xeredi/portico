@@ -5,17 +5,21 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
+import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
@@ -24,6 +28,8 @@ import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.io.manifiesto.ManifiestoFileImport;
 import xeredi.integra.model.servicio.io.manifiesto.ManifiestoMensaje;
+import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
+import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.proceso.ProcesoTemplate;
 
 // TODO: Auto-generated Javadoc
@@ -72,19 +78,10 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                     buscarMaestros(fileImport.getCodigoMaestroMap(), fechaVigencia);
                     buscarOrganizaciones(fileImport.getNifSet(), fechaVigencia);
 
+                    findEscala(fileImport, fechaVigencia);
+
                     fileImport.setMaestroMap(maestroMap);
                     fileImport.setOrganizacionesMap(organizacionesMap);
-
-                    // Busqueda de Subpuertos
-                    final ParametroBO prmtBO = new ParametroBO();
-                    final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
-
-                    prmtCriterioVO.setEntiId(Entidad.SUBPUERTO.getId());
-                    prmtCriterioVO.setFechaVigencia(fechaVigencia);
-
-                    final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
-
-                    fileImport.setSubpuertosList(prmtList);
                 }
                 if (prbtVO.getPrmnList().isEmpty()) {
                     fileImport.readFile(lines, primeraLinea);
@@ -141,4 +138,81 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
         return ProcesoModulo.S;
     }
 
+    /**
+     * Find escala.
+     *
+     * @param fileImport
+     *            the file import
+     * @param fechaVigencia
+     *            the fecha vigencia
+     */
+    private void findEscala(final ManifiestoFileImport fileImport, final Date fechaVigencia) {
+        final ParametroBO prmtBO = new ParametroBO();
+
+        final String recintoAduaneroCode = fileImport.getRecintoAduanero();
+        final ParametroVO recintoAduanero = maestroMap.get(Entidad.RECINTO_ADUANERO).get(recintoAduaneroCode);
+
+        ParametroVO subpuerto = null;
+        ServicioVO escalaVO = null;
+        ParametroVO buque = null;
+
+        if (recintoAduanero == null) {
+            addError(MensajeCodigo.G_001, Entidad.RECINTO_ADUANERO.name() + ": " + recintoAduaneroCode);
+        }
+
+        if (prbtVO.getPrmnList().isEmpty()) {
+            // Busqueda del subpuerto
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+
+            prmtCriterioVO.setEntiId(Entidad.SUBPUERTO.getId());
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
+
+            final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
+
+            itdtCriterioVO.setTpdtId(TipoDato.UNLOCODE.getId());
+            itdtCriterioVO.setPrmt(recintoAduanero.getItdtMap().get(TipoDato.UNLOCODE.getId()).getPrmt());
+
+            prmtCriterioVO.getItdtMap().put(itdtCriterioVO.getTpdtId(), itdtCriterioVO);
+
+            try {
+                subpuerto = prmtBO.selectObject(prmtCriterioVO);
+            } catch (final InstanceNotFoundException ex) {
+                addError(MensajeCodigo.G_001,
+                        Entidad.SUBPUERTO.name() + ": "
+                                + recintoAduanero.getItdtMap().get(TipoDato.UNLOCODE.getId()).getPrmt().getParametro());
+            }
+        }
+
+        if (subpuerto != null) {
+            // Busqueda de la escala
+            final ServicioBO srvcBO = new ServicioBO();
+            final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+
+            srvcCriterioVO.setSubp(subpuerto);
+            srvcCriterioVO.setAnno(fileImport.getEscalaVO().getAnno());
+            srvcCriterioVO.setNumero(fileImport.getEscalaVO().getNumero());
+
+            try {
+                escalaVO = srvcBO.selectObject(srvcCriterioVO);
+            } catch (final InstanceNotFoundException ex) {
+                addError(MensajeCodigo.G_001, Entidad.ESCALA.name() + ": " + srvcCriterioVO.getSubp().getParametro()
+                        + '/' + srvcCriterioVO.getAnno() + '/' + srvcCriterioVO.getNumero());
+            }
+        }
+
+        if (escalaVO != null) {
+            try {
+                // Busqueda del buque de la escala
+                buque = prmtBO.select(escalaVO.getItdtMap().get(TipoDato.BUQUE.getId()).getPrmt().getId(), null,
+                        fechaVigencia);
+
+                escalaVO.getItdtMap().get(TipoDato.BUQUE.getId()).setPrmt(buque);
+            } catch (final InstanceNotFoundException ex) {
+                throw new Error(ex);
+            }
+        }
+
+        fileImport.setEscalaVO(escalaVO);
+    }
 }

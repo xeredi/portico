@@ -79,6 +79,32 @@ public class ServicioBO {
     }
 
     /**
+     * Select object.
+     *
+     * @param srvcCriterioVO
+     *            the srvc criterio vo
+     * @return the servicio vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public final ServicioVO selectObject(final ServicioCriterioVO srvcCriterioVO) throws InstanceNotFoundException {
+        Preconditions.checkNotNull(srvcCriterioVO);
+
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
+            final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterioVO);
+
+            if (srvcVO == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcCriterioVO);
+            }
+
+            fillDependencies(session, Arrays.asList(new ServicioVO[] { srvcVO }), srvcCriterioVO, true);
+
+            return srvcVO;
+        }
+    }
+
+    /**
      * Select list.
      *
      * @param srvcCriterioVO
@@ -154,10 +180,10 @@ public class ServicioBO {
      *
      * @param srvcVO
      *            the srvc vo
-     * @param tpsrVO
-     *            the tpsr vo
      * @param ssrvList
      *            the ssrv list
+     * @param ssssList
+     *            the ssss list
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
@@ -179,10 +205,10 @@ public class ServicioBO {
      *            the session
      * @param srvcVO
      *            the srvc vo
-     * @param tpsrVO
-     *            the tpsr vo
      * @param ssrvList
      *            the ssrv list
+     * @param ssssList
+     *            the ssss list
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */

@@ -130,6 +130,8 @@ public enum MessageI18nKey {
     enti_exencionable,
     /** The enti_tpdt estado. */
     enti_tpdtEstado,
+    /** The enti_tpdt nombre. */
+    enti_tpdtNombre,
     /** The enti_tpsr. */
     enti_tpsr,
     /** The tppr. */
@@ -427,6 +429,23 @@ public enum MessageI18nKey {
     prpm_nombre,
     /** The prpm_valor. */
     prpm_valor,
+    /** The prar list. */
+    prarList,
+    /** The prar ent list. */
+    prarEntList,
+    /** The prar sal list. */
+    prarSalList,
+    /** The prar nombre. */
+    prar_nombre,
+    /** The prit list. */
+    pritList,
+    /** The prit ent list. */
+    pritEntList,
+    /** The prit sal list. */
+    pritSalList,
+    /** The prit_nombre. */
+    prit_nombre,
+
     /** The aspc. */
     aspc,
     /** The aspc list. */

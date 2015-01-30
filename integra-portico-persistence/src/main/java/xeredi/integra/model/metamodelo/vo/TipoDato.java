@@ -481,9 +481,9 @@ public enum TipoDato {
 
     // Tipos de Servicio
     /** The manifiesto. */
-    MANIFIESTO(27000L),
+    MANIFIESTO(47000L),
     /** The escala. */
-    ESCALA(27001L), ;
+    ESCALA(47001L), ;
 
     /** The id. */
     private final long id;
