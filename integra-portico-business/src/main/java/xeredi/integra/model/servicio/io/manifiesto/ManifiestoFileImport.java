@@ -482,6 +482,7 @@ public final class ManifiestoFileImport {
                 partActualVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 partActualVO.setId(contadorSsrv++);
                 partActualVO.setNumero(getTokenInteger(ManifiestoKeyword.GID_NumeroPartida, line, i));
+                partActualVO.setEstado("R");
 
                 final Long numeroBultos = getTokenLong(ManifiestoKeyword.GID_NumeroBultos, line, i);
                 final String tipoBl = blActualVO.getItdtMap().get(TipoDato.TIPO_BL.getId()).getCadena();
@@ -650,8 +651,7 @@ public final class ManifiestoFileImport {
                 equiActualVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 equiActualVO.setId(contadorSsrv++);
                 equiActualVO.setNumero(++contadorEqui);
-
-                equiActualVO.addItdt(TipoDato.ESTADO_EQUI.getId(), "R");
+                equiActualVO.setEstado("R");
 
                 final String indicadorLleno = getTokenString(ManifiestoKeyword.EQD_IndicadorLleno, line, i);
 

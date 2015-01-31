@@ -1,6 +1,6 @@
 angular.module(
         "integraApp",
-        [ "ui.bootstrap", "pascalprecht.translate", "angularSpinner", "timepickerPop", "ngRoute", "util", "i18n",
+        [ "ui.bootstrap", "mgcrea.ngStrap", "pascalprecht.translate", "angularSpinner", "ngRoute", "util", "i18n",
                 "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ])
 
 .config([ "$routeProvider", function($routeProvider) {
@@ -11,6 +11,22 @@ angular.module(
         templateUrl : "modules/home.html",
     })
 } ])
+
+.config(function($datepickerProvider) {
+    angular.extend($datepickerProvider.defaults, {
+        dateFormat : 'dd/MM/yyyy',
+        startWeek : 1,
+        container : 'body'
+    })
+})
+
+.config(function($timepickerProvider) {
+    angular.extend($timepickerProvider.defaults, {
+        timeFormat : 'HH:mm',
+        length : 7,
+        minuteStep : 1
+    })
+})
 
 .config([ '$httpProvider', function($httpProvider) {
     var activeRequests = 0;

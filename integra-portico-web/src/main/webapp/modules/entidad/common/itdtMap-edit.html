@@ -15,50 +15,13 @@
 				type="text" ng-model="vm.item.itdtMap[entd.tpdt.id].cantidadEntera" ng-pattern="/^\d+$/"
 				class="form-control input-sm number" />
 			<div ng-switch-when="FE">
-				<div class="input-group" ng-controller="datepickerController">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-						datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" /> <span
-						class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-				</div>
+				<input type="text" class="form-control input-sm" ng-model="vm.item.itdtMap[entd.tpdt.id].fecha"
+					bs-datepicker />
 			</div>
 			<div ng-switch-when="FH">
-				<!--
-				<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-					ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" is-open="datepickerOpened" ng-required="true"
-					close-text="Close" /> <span class="input-group-addon" ng-click="open($event, 'date')"> <i
-					class="glyphicon glyphicon-calendar"></i>
-				</span> <span class="input-group-addon dropdown-toggle" ng-click="open($event, 'time')"> <i
-					class="glyphicon glyphicon-time"></i>
-				</span>
-				<div dropdown is-open="timepickerOpened">
-					<span class="dropdown-menu" role="menu"> <timepicker
-							ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" ng-change="changed()" show-meridian="false"></timepicker>
-					</span>
-				</div> -->
-
-				<div class="input-group" ng-controller="datetimeController">
-					<input type="hidden" ng-model="dateTime"> <input type="text" class="form-control input-sm"
-						datepicker-popup="dd/MM/yyyy" datepicker-options="dateOptions" is-open="dateOpened"
-						ng-change="dateChanged()" ng-model="dateValue" /><span class="input-group-addon"
-						ng-click="openDate($event)"><i class="glyphicon glyphicon-calendar"></i></span><input type="text"
-						class="form-control input-sm" value="{{timeValue | date : 'HH:mm'}}" /><span
-						class="input-group-addon" ng-click="openTime($event)"><i class="glyphicon glyphicon-time"></i></span>
-
-					<p class="form-control-static">{{dateTime | date : 'dd/MM/yyyy HH:mm'}}</p>
-					<div dropdown is-open="timeOpened">
-						<span class="dropdown-menu" role="menu"> <timepicker ng-model="timeValue"
-								ng-change="timeChanged()" hour-step="1" minute-step="1" show-meridian="false"></timepicker></span>
-					</div>
-				</div>
-
-				<!--
-				<div class="input-group" ng-controller="datepickerController">
-					<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-						datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" /> <span
-						class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-				</div>
-				<timepicker-pop input-time="mytime" class="input-group" show-meridian='false'> </timepicker-pop>
- -->
+				<input type="text" class="form-control input-sm" ng-model="vm.item.itdtMap[entd.tpdt.id].fecha"
+					bs-datepicker /><input type="text" class="form-control input-sm"
+					ng-model="vm.item.itdtMap[entd.tpdt.id].fecha" bs-timepicker />
 			</div>
 			<select ng-switch-when="CR" ng-model="vm.item.itdtMap[entd.tpdt.id].cadena" ng-required="entd.obligatorio"
 				ng-options="cdrf.valor as ('cdrf_' + entd.tpdt.id + '_' + cdrf.valor | translate) for cdrf in entd.tpdt.cdrfList"

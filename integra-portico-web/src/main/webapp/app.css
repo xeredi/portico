@@ -10,7 +10,7 @@ body, .tooltip {
 p, label, li, .btn, .form-control, .input-group-sm>.form-control,
 	.form-control-static, .bootstrap-datetimepicker-widget,
 	.table-condensed, .dropdown-menu, .list-group, .tt-dropdown-menu,
-	.typeahead, .pagination-sm>li>a, .tooltip {
+	.typeahead, .pagination-sm>li>a, .tooltip, .text-strong, .text-center {
 	font-size: 11px;
 }
 
