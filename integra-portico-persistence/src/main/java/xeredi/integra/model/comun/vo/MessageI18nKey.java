@@ -540,6 +540,8 @@ public enum MessageI18nKey {
     aspc_lgrpInfo5,
     /** The aspc_lgrp info6. */
     aspc_lgrpInfo6,
+    /** The aspc_fecha vigencia. */
+    aspc_fechaVigencia,
     /** The ascr. */
     ascr,
     /** The ascr_crgo. */
@@ -570,6 +572,8 @@ public enum MessageI18nKey {
     crgo_principal,
     /** The crgo_temporal. */
     crgo_temporal,
+    /** The crgo_fecha vigencia. */
+    crgo_fechaVigencia,
     /** The rgla. */
     rgla,
     /** The rgla list. */

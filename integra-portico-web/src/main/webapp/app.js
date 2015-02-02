@@ -21,6 +21,8 @@ angular.module(
 .config(function($datepickerProvider) {
     angular.extend($datepickerProvider.defaults, {
         dateFormat : 'dd/MM/yyyy',
+        modelDateFormat : "yyyy-MM-ddTHH:mm:ss",
+        dateType : "string",
         startWeek : 1,
         container : 'body',
         autoclose : true

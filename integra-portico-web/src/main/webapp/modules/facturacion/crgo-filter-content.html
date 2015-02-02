@@ -25,13 +25,8 @@
 								</select>
 							</div>
 							<div class="col-sm-2 col-md-2 form-group">
-								<label translate>crgo_fechaVigencia</label>
-								<div class="input-group" ng-controller="datepickerController">
-									<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-										datepicker-options="dateOptions" is-open="opened" ng-model="vm.crgoCriterio.fechaVigencia"
-										ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
-										class="glyphicon glyphicon-calendar"></i></span>
-								</div>
+								<label translate>crgo_fechaVigencia</label><input type="text" class="form-control input-sm"
+									data-container=".modal-body" ng-model="vm.crgoCriterio.fechaVigencia" bs-datepicker />
 							</div>
 						</div>
 					</div>
