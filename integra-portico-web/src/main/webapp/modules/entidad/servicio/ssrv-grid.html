@@ -56,8 +56,9 @@
 						<span ng-switch-when="FH" class="pull-right"
 						ng-bind="item.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span> <span
 						ng-switch-when="CR" ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="TX"
-						ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="PR"
-						title="{{item.itdtMap[entd.tpdt.id].prmt.etiqueta}}" ng-bind="item.itdtMap[entd.tpdt.id].prmt.parametro"></span></td>
+						ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="PR" bs-tooltip
+						data-title="{{item.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
+						ng-bind="item.itdtMap[entd.tpdt.id].prmt.parametro"></span></td>
 				</tr>
 			</tbody>
 		</table>

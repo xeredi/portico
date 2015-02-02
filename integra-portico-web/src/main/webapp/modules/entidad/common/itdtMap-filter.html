@@ -1,70 +1,53 @@
 
 <div class="row">
-    <div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.filtrable"
-        class="col-sm-{{entd.spanSm}} col-md-{{entd.span}} col-lg-{{entd.spanLg}} form-group">
-        <label>{{'entd_' + entd.id | translate}}</label>
+	<div ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.filtrable"
+		class="col-sm-{{entd.spanSm}} col-md-{{entd.span}} col-lg-{{entd.spanLg}} form-group">
+		<label>{{'entd_' + entd.id | translate}}</label>
 
-        <div ng-switch on="entd.tpdt.tipoElemento">
-            <select ng-switch-when="BO" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadEntera"
-                ng-options="item as ('format_' + item | translate) for item in [1 , 0]" class="form-control input-sm">
-                <option />
-            </select> <input ng-switch-when="ND" type="text" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadDecimal"
-                class="form-control input-sm number" /> <input ng-switch-when="NE" type="text"
-                ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadEntera" ng-pattern="/^\d+$/"
-                class="form-control input-sm number" />
-            <div ng-switch-when="FE" class="dropdown">
-                <div class="input-group" ng-controller="datepickerController">
-                    <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                        datepicker-options="dateOptions" is-open="opened"
-                        ng-model="itemCriterio.itdtMap[entd.tpdt.id].fecha" /> <span class="input-group-addon"
-                        ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-                </div>
-            </div>
-            <div ng-switch-when="FH" class="dropdown">
-                Falta el reloj!!!
-                <!--
-                    <a class="dropdown-toggle" id="datepicker_{{tpdtId}}" role="button" data-toggle="dropdown"
-                        data-target="#" href="#">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-sm" name="itemCriterio.itdtMap[tpdtId].fecha"
-                                value="{{itemCriterio.itdtMap[tpdtId].fecha | date:('fmt_datetime' | translate)}}">
-                                <span class="input-group-addon"><i
-                                class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker data-ng-model="itemCriterio.itdtMap[tpdtId].fecha"
-                            data-datetimepicker-config="{ dropdownSelector: '#datepicker_tpdtId', startView:'day' }" />
-                    </ul>
- -->
-            </div>
-            <select ng-switch-when="CR" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cadena"
-                ng-options="cdrf.valor as (('cdrf_' + entd.tpdt.id + '_' + cdrf.valor) | translate) for cdrf in entd.tpdt.cdrfList"
-                class="form-control input-sm">
-                <option />
-            </select> <input ng-switch-when="TX" ng-if="entd.tpdt.tpht == 'T'" type="text"
-                ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cadena" class="form-control input-sm" />
-            <textarea ng-switch-when="TX" ng-if="entd.tpdt.tpht == 'TA'" rows="4"
-                ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cadena" class="form-control input-sm"
-                ng-bind="itemCriterio.itdtMap[entd.tpdt.id].cadena"></textarea>
-            <select ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'S'"
-                ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].prmt.id"
-                ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[entd.tpdt.enti.id]"
-                class="form-control input-sm">
-                <option />
-            </select>
-            <div ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
-                <input type="text" autocomplete="off" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].prmt"
-                    typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, fechaVigencia)"
-                    typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
-                    class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-            </div>
-            <div ng-switch-when="SR" class="input-group-sm" ng-controller="srvcLupaCtrl">
-                <input type="text" autocomplete="off" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].srvc"
-                    typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(entd.tpdt.enti.id, $viewValue)"
-                    typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
-                    class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
-            </div>
-        </div>
-    </div>
+		<div ng-switch on="entd.tpdt.tipoElemento">
+			<select ng-switch-when="BO" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadEntera"
+				ng-options="item as ('format_' + item | translate) for item in [1 , 0]" class="form-control input-sm">
+				<option />
+			</select> <input ng-switch-when="ND" type="text" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadDecimal"
+				class="form-control input-sm number" /> <input ng-switch-when="NE" type="text"
+				ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadEntera" ng-pattern="/^\d+$/"
+				class="form-control input-sm number" />
+			<div ng-switch-when="FE">
+				<input type="text" class="form-control input-sm" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha"
+					bs-datepicker />
+			</div>
+			<div ng-switch-when="FH">
+				<input type="text" class="form-control input-sm" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha"
+					bs-datepicker /><input type="text" class="form-control input-sm"
+					ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha" bs-timepicker />
+			</div>
+			<select ng-switch-when="CR" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cadena"
+				ng-options="cdrf.valor as (('cdrf_' + entd.tpdt.id + '_' + cdrf.valor) | translate) for cdrf in entd.tpdt.cdrfList"
+				class="form-control input-sm">
+				<option />
+			</select> <input ng-switch-when="TX" ng-if="entd.tpdt.tpht == 'T'" type="text"
+				ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cadena" class="form-control input-sm" />
+			<textarea ng-switch-when="TX" ng-if="entd.tpdt.tpht == 'TA'" rows="4"
+				ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cadena" class="form-control input-sm"
+				ng-bind="itemCriterio.itdtMap[entd.tpdt.id].cadena"></textarea>
+			<select ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'S'"
+				ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].prmt.id"
+				ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[entd.tpdt.enti.id]"
+				class="form-control input-sm">
+				<option />
+			</select>
+			<div ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
+				<input type="text" autocomplete="off" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].prmt"
+					typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, fechaVigencia)"
+					typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+					class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+			</div>
+			<div ng-switch-when="SR" class="input-group-sm" ng-controller="srvcLupaCtrl">
+				<input type="text" autocomplete="off" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].srvc"
+					typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(entd.tpdt.enti.id, $viewValue)"
+					typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
+					class="form-control input-sm"> <i ng-show="loading" class="glyphicon glyphicon-refresh"></i>
+			</div>
+		</div>
+	</div>
 </div>

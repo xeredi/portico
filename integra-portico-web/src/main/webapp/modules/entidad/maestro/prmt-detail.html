@@ -1,109 +1,110 @@
 <div ng-if="vm.item">
-    <tabset type="pills"> <tab heading="{{'enti_' + vm.enti.id | translate}}" select="vm.tabSelected(null)">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/maestro/prmt/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
-                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
-                ng-href="#/maestro/prmt/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
-                class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
-            <button data-ng-click="vm.remove()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-            </button>
-        </div>
+	<tabset type="pills"> <tab heading="{{'enti_' + vm.enti.id | translate}}"
+		select="vm.tabSelected(null)">
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<a class="btn btn-default" ng-href="#/maestro/prmt/edit/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+				class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a> <a class="btn btn-default"
+				ng-href="#/maestro/prmt/duplicate/{{vm.enti.id}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+				class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span></a>
+			<button data-ng-click="vm.remove()" class="btn btn-default">
+				<i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+			</button>
+		</div>
 
-        <div class="btn-group">
-            <button data-ng-click="vm.print()" class="btn btn-default">
-                <i class="glyphicon glyphicon-print"></i> <span translate>btn_imprimir</span>
-            </button>
-        </div>
-    </div>
+		<div class="btn-group">
+			<button data-ng-click="vm.print()" class="btn btn-default">
+				<i class="glyphicon glyphicon-print"></i> <span translate>btn_imprimir</span>
+			</button>
+		</div>
+	</div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                <label translate>prmt_parametro</label>
-                <p class="form-control-static" ng-bind="vm.item.parametro"></p>
-            </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 col-lg-2 form-group">
+				<label translate>prmt_parametro</label>
+				<p class="form-control-static" ng-bind="vm.item.parametro"></p>
+			</div>
 
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label translate>prmt_fini</label>
-                <p class="form-control-static" ng-bind="vm.item.prvr.fini | date: ('format_date' | translate)"></p>
-            </div>
+			<div class="col-sm-2 col-md-2 col-lg-1 form-group">
+				<label translate>prmt_fini</label>
+				<p class="form-control-static" ng-bind="vm.item.prvr.fini | date: ('format_date' | translate)"></p>
+			</div>
 
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                <label translate>prmt_ffin</label>
-                <p class="form-control-static" ng-bind="vm.item.prvr.ffin | date: ('format_date' | translate)"></p>
-            </div>
-        </div>
+			<div class="col-sm-2 col-md-2 col-lg-1 form-group">
+				<label translate>prmt_ffin</label>
+				<p class="form-control-static" ng-bind="vm.item.prvr.ffin | date: ('format_date' | translate)"></p>
+			</div>
+		</div>
 
-        <div ng-if="vm.enti.i18n" class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+		<div ng-if="vm.enti.i18n" class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
 
-        <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
-    </div>
+		<div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+	</div>
 
 
-    </tab> <tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index" heading="{{'enti_' + entiHijaId | translate}}"
-        active="vm.tabActive[entiHijaId]" select="vm.tabSelected(entiHijaId)">
-    <div ng-if="vm.itemHijosMap[entiHijaId]">
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group">
-                <pagination ng-show="vm.itemHijosMap[entiHijaId].count > 0"
-                    total-items="vm.itemHijosMap[entiHijaId].count" items-per-page="vm.itemHijosMap[entiHijaId].limit"
-                    ng-model="vm.pageMap[entiHijaId]" ng-change="vm.pageChanged(entiHijaId)" class="pagination"
-                    max-size="1" previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
-            </div>
+	</tab> <tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
+		heading="{{'enti_' + entiHijaId | translate}}" active="vm.tabActive[entiHijaId]"
+		select="vm.tabSelected(entiHijaId)">
+	<div ng-if="vm.itemHijosMap[entiHijaId]">
+		<div class="btn-toolbar" role="toolbar">
+			<div class="btn-group">
+				<pagination ng-show="vm.itemHijosMap[entiHijaId].count > 0"
+					total-items="vm.itemHijosMap[entiHijaId].count" items-per-page="vm.itemHijosMap[entiHijaId].limit"
+					ng-model="vm.pageMap[entiHijaId]" ng-change="vm.pageChanged(entiHijaId)" class="pagination" max-size="1"
+					previous-text="&lsaquo;&lsaquo;" next-text="&rsaquo;&rsaquo;"></pagination>
+			</div>
 
-            <div class="btn-group">
-                <a class="btn btn-default"
-                    ng-href="#/maestro/sprm/create/{{entiHijaId}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
-                    class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
-            </div>
-        </div>
+			<div class="btn-group">
+				<a class="btn btn-default"
+					ng-href="#/maestro/sprm/create/{{entiHijaId}}/{{vm.item.id}}/{{vm.fechaVigencia}}"><i
+					class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+			</div>
+		</div>
 
-        <div class="table-responsive">
-            <span class="label label-default" translate="grid_count"
-                translate-value-count="{{vm.itemHijosMap[entiHijaId].count | number:0}}"></span>
+		<div class="table-responsive">
+			<span class="label label-default" translate="grid_count"
+				translate-value-count="{{vm.itemHijosMap[entiHijaId].count | number:0}}"></span>
 
-            <table class="table-bordered table-condensed table-hover table-nonfluid">
-                <thead>
-                    <tr>
-                        <th class="buttonLinks" />
-                        <th ng-bind="'enti_' + vm.entiHijasMap[entiHijaId].tpprAsociado.id | translate"></th>
+			<table class="table-bordered table-condensed table-hover table-nonfluid">
+				<thead>
+					<tr>
+						<th class="buttonLinks" />
+						<th ng-bind="'enti_' + vm.entiHijasMap[entiHijaId].tpprAsociado.id | translate"></th>
 
-                        <th class="date" translate>sprm_fini</th>
-                        <th class="date" translate>sprm_ffin</th>
+						<th class="date" translate>sprm_fini</th>
+						<th class="date" translate>sprm_ffin</th>
 
-                        <th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                            ng-if="entd.gridable">{{'entd_' + entd.id | translate}}</th>
-                    </tr>
-                </thead>
+						<th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index" ng-if="entd.gridable">{{'entd_'
+							+ entd.id | translate}}</th>
+					</tr>
+				</thead>
 
-                <tbody>
-                    <tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
-                        <td><a ng-href="#/maestro/sprm/detail/{{entiHijaId}}/{{itemHijo.id}}/{{vm.fechaVigencia}}"><i
-                                class="glyphicon glyphicon-search"></i></a></td>
-                        <td ng-bind="itemHijo.prmtAsociado.etiqueta" nowrap="nowrap"></td>
+				<tbody>
+					<tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
+						<td><a ng-href="#/maestro/sprm/detail/{{entiHijaId}}/{{itemHijo.id}}/{{vm.fechaVigencia}}"><i
+								class="glyphicon glyphicon-search"></i></a></td>
+						<td ng-bind="itemHijo.prmtAsociado.etiqueta" nowrap="nowrap"></td>
 
-                        <td ng-bind="itemHijo.spvr.fini | date: ('format_date' | translate)" nowrap="nowrap"></td>
-                        <td ng-bind="itemHijo.spvr.ffin | date: ('format_date' | translate)" nowrap="nowrap"></td>
+						<td ng-bind="itemHijo.spvr.fini | date: ('format_date' | translate)" nowrap="nowrap"></td>
+						<td ng-bind="itemHijo.spvr.ffin | date: ('format_date' | translate)" nowrap="nowrap"></td>
 
-                        <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                            ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span
-                            ng-switch-when="BO"><i
-                                class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
-                            <span ng-switch-when="ND" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:2"></span>
-                            <span ng-switch-when="NE" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span>
-                            <span ng-switch-when="CR">{{("cdrf_" + entd.tpdt.id + "_" +
-                                item.itdtMap[entd.tpdt.id].cadena) | translate}}</span> <span ng-switch-when="TX"
-                            ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="PR"
-                            title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
-                            ng-bind="itemHijo.itdtMap[entd.tpdt.id].prmt.parametro"></span> <span ng-switch-when="FE"
-                            ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span> <span ng-switch-when="FH"
-                            ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    </tab></tabset>
+						<td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index" ng-if="entd.gridable"
+							ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+								class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
+							ng-switch-when="ND" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:2"></span> <span
+							ng-switch-when="NE" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:0"></span> <span
+							ng-switch-when="CR">{{("cdrf_" + entd.tpdt.id + "_" + item.itdtMap[entd.tpdt.id].cadena) |
+								translate}}</span> <span ng-switch-when="TX" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span
+							ng-switch-when="PR" bs-tooltip data-title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
+							ng-bind="itemHijo.itdtMap[entd.tpdt.id].prmt.parametro"></span> <span ng-switch-when="FE"
+							ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span> <span
+							ng-switch-when="FH"
+							ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</tab></tabset>
 </div>

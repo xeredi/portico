@@ -35,8 +35,8 @@
 				<tr ng-repeat="item in vm.peprList.list track by $index">
 					<td><a ng-href="#/estadistica/pepr/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
 					<td ng-bind="item.autp.parametro"></td>
-					<td ng-bind="item.anio"></td>
-					<td ng-bind="item.mes"></td>
+					<td ng-bind="item.anio" class="number"></td>
+					<td ng-bind="item.mes" class="number"></td>
 					<td><i class="glyphicon glyphicon-{{item.cdmsGenerado ? 'ok' : 'remove'}}"></i></td>
 					<td ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
 				</tr>
