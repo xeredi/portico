@@ -1,8 +1,9 @@
 angular.module(
         "integraApp",
         [ "ui.bootstrap", "mgcrea.ngStrap.datepicker", "mgcrea.ngStrap.timepicker", "mgcrea.ngStrap.tooltip",
-                "pascalprecht.translate", "angularSpinner", "ngRoute", "util", "i18n", "administracion", "metamodelo",
-                "facturacion", "maestro", "servicio", "estadistica", "proceso" ])
+                "mgcrea.ngStrap.typeahead", "mgcrea.ngStrap.tab", "pascalprecht.translate", "angularSpinner",
+                "ngRoute", "util", "i18n", "administracion", "metamodelo", "facturacion", "maestro", "servicio",
+                "estadistica", "proceso" ])
 
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider
@@ -34,6 +35,24 @@ angular.module(
     angular.extend($tooltipProvider.defaults, {
         container : 'body'
     })
+})
+
+.config(function($typeaheadProvider) {
+    angular.extend($typeaheadProvider.defaults, {
+        animation : 'am-flip-x',
+        minLength : 1,
+        limit : 5,
+        delay : {
+            show : 250,
+            hide : 100
+        }
+    });
+})
+
+.config(function($tabProvider) {
+    angular.extend($tabProvider.defaults, {
+        navClass : 'nav-pills'
+    });
 })
 
 .config([ '$httpProvider', function($httpProvider) {

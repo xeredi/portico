@@ -1,79 +1,73 @@
 <div ng-if="vm.item">
-    <form role="form">
-        <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.item.entiId" /><input
-            type="hidden" ng-model="vm.item.id" /><input type="hidden" ng-model="vm.item.srvc.id" />
+	<form role="form">
+		<input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.item.entiId" /><input
+			type="hidden" ng-model="vm.item.id" /><input type="hidden" ng-model="vm.item.srvc.id" />
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                    <label translate>ssrv_srvc</label>
-                    <div ng-if="!vm.item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
-                        <input type="text" autocomplete="off" ng-model="vm.item.srvc"
-                            typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
-                            class="form-control input-sm"> <i ng-show="loading"
-                            class="glyphicon glyphicon-refresh"></i>
-                    </div>
-                    <p ng-if="vm.item.srvc.id" class="form-control-static" ng-bind="vm.item.srvc.etiqueta"></p>
-                </div>
-                <div class="col-sm-1 col-md-1 form-group">
-                    <label translate>ssrv_numero</label> <input ng-if="vm.accion != 'edit'" type="text"
-                        ng-model="vm.item.numero" class="form-control input-sm" />
-                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.numero"></p>
-                </div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-2 col-lg-1 form-group">
+					<label translate>ssrv_srvc</label>
+					<div ng-if="!vm.item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
+						<input type="text" autocomplete="off" ng-model="vm.item.srvc"
+							ng-options="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)" bs-typeahead
+							class="form-control input-sm">
+					</div>
+					<p ng-if="vm.item.srvc.id" class="form-control-static" ng-bind="vm.item.srvc.etiqueta"></p>
+				</div>
+				<div class="col-sm-1 col-md-1 form-group">
+					<label translate>ssrv_numero</label> <input ng-if="vm.accion != 'edit'" type="text"
+						ng-model="vm.item.numero" class="form-control input-sm" />
+					<p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.numero"></p>
+				</div>
 
-                <div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
-                    <label translate>ssrv_estado</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.item.estado"
-                        ng-options="cdrf.valor as cdrf.valor for cdrf in vm.enti.tpdtEstado.cdrfList"
-                        class="form-control input-sm">
-                        <option />
-                    </select>
-                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.estado"></p>
-                </div>
+				<div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
+					<label translate>ssrv_estado</label> <select ng-if="vm.accion != 'edit'" ng-model="vm.item.estado"
+						ng-options="cdrf.valor as cdrf.valor for cdrf in vm.enti.tpdtEstado.cdrfList"
+						class="form-control input-sm">
+						<option />
+					</select>
+					<p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.estado"></p>
+				</div>
 
-                <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
-                    <label translate>ssrv_fini</label>
-                    <div class="input-group" ng-controller="datepickerController">
-                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.fini" /> <span
-                            class="input-group-addon" ng-click="open($event)"><i
-                            class="glyphicon glyphicon-calendar"></i></span>
-                    </div>
-                </div>
+				<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
+					<label translate>ssrv_fini</label>
+					<div class="input-group" ng-controller="datepickerController">
+						<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+							datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.fini" /> <span
+							class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+					</div>
+				</div>
 
-                <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
-                    <label translate>ssrv_ffin</label>
-                    <div class="input-group" ng-controller="datepickerController">
-                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.ffin" /> <span
-                            class="input-group-addon" ng-click="open($event)"><i
-                            class="glyphicon glyphicon-calendar"></i></span>
-                    </div>
-                </div>
+				<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
+					<label translate>ssrv_ffin</label>
+					<div class="input-group" ng-controller="datepickerController">
+						<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
+							datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.ffin" /> <span
+							class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
+					</div>
+				</div>
 
-                <div ng-if="vm.item.srvc.id" ng-repeat="entiPadre in vm.superentiList track by $index"
-                    class="col-md-2 form-group">
-                    <label ng-bind="entiPadre.nombre"></label>
-                    <div class="input-group-sm" ng-controller="ssrvLupaCtrl">
-                        <input type="text" autocomplete="off" ng-model="vm.itemPadresMap[entiPadre.id]"
-                            typeahead="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, vm.item.srvc.id, $viewValue)"
-                            typeahead-loading="loading" typeahead-wait-ms="250" typeahead-editable="false"
-                            class="form-control input-sm"> <i ng-show="loading"
-                            class="glyphicon glyphicon-refresh"></i>
-                    </div>
-                </div>
-            </div>
+				<div ng-if="vm.item.srvc.id" ng-repeat="entiPadre in vm.superentiList track by $index"
+					class="col-md-2 form-group">
+					<label ng-bind="entiPadre.nombre"></label>
+					<div class="input-group-sm" ng-controller="ssrvLupaCtrl">
+						<input type="text" autocomplete="off" ng-model="vm.itemPadresMap[entiPadre.id]"
+							ng-options="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, vm.item.srvc.id, $viewValue)"
+							bs-typeahead class="form-control input-sm">
+					</div>
+				</div>
+			</div>
 
-            <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
-        </div>
+			<div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+		</div>
 
-        <div class="btn-group">
-            <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-            </button>
-            <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-            </button>
-        </div>
-    </form>
+		<div class="btn-group">
+			<button data-ng-click="vm.save()" class="btn btn-primary">
+				<i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+			</button>
+			<button data-ng-click="vm.cancel()" class="btn btn-default">
+				<i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+			</button>
+		</div>
+	</form>
 </div>
