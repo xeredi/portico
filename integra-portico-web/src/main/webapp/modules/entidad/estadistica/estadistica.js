@@ -4,8 +4,6 @@ angular.module("estadistica", [ "ngRoute", "util", "angularFileUpload" ])
 
 .controller("peprGridController", peprGridController)
 
-.controller("peprFilterController", peprFilterController)
-
 .controller("peprDetailController", peprDetailController)
 
 .controller("peprPrepareLoadController", peprPrepareLoadController)
@@ -15,8 +13,6 @@ angular.module("estadistica", [ "ngRoute", "util", "angularFileUpload" ])
 .controller("cdmsDetailController", cdmsDetailController)
 
 .controller("estdGridController", estdGridController)
-
-.controller("estdFilterController", estdFilterController)
 
 .controller("estdDetailController", estdDetailController);
 
@@ -71,16 +67,17 @@ function config($routeProvider) {
 function peprGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.peprCriterio = {};
+    vm.peprCriterio = $routeParams.peprCriterio ? angular.fromJson($routeParams.peprCriterio) : {};
 
-    function search(peprCriterio, page, limit) {
+    function search(page) {
         $http.post("estadistica/pepr-list.action", {
-            peprCriterio : peprCriterio,
+            peprCriterio : vm.peprCriterio,
             page : page,
-            limit : limit
+            limit : vm.peprCriterio.limit
         }).success(function(data) {
             vm.page = data.peprList.page;
             vm.peprList = data.peprList;
@@ -88,61 +85,26 @@ function peprGridController($http, $location, $routeParams, $modal, pageTitleSer
             var map = {};
 
             map.page = data.peprList.page;
+            map.peprCriterio = JSON.stringify(data.peprCriterio);
 
             $location.search(map).replace();
         });
     }
 
     function pageChanged() {
-        search(vm.peprCriterio, vm.page, vm.limit);
+        search(vm.page);
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/entidad/estadistica/pepr-filter-content.html',
-            controller : 'peprFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                peprCriterio : function() {
-                    return vm.peprCriterio;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(peprCriterio) {
-            vm.peprCriterio = peprCriterio;
-            vm.page = 1;
-
-            search(vm.peprCriterio, 1, vm.limit);
+        $http.post("estadistica/pepr-filter.action").success(function(data) {
+            vm.autpList = data.autpList;
+            vm.limits = data.limits;
         });
     }
 
-    search(vm.peprCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
+    search($routeParams.page ? $routeParams.page : 1);
 
     pageTitleService.setTitle("pepr", "page_grid");
-}
-
-function peprFilterController($modalInstance, $http, peprCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.peprCriterio = peprCriterio;
-
-    function ok() {
-        $modalInstance.close(vm.peprCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
-
-    $http.post("estadistica/pepr-filter.action").success(function(data) {
-        vm.autpList = data.autpList;
-        vm.limits = data.limits;
-    });
 }
 
 function peprDetailController($http, $routeParams, pageTitleService) {
@@ -266,6 +228,7 @@ function cdmsDetailController($http, $routeParams, pageTitleService) {
 function estdGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
     vm.xlsExport = xlsExport;
@@ -276,11 +239,11 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio.pepr.id = $routeParams.peprId;
     vm.itemCriterio.pepr.autpId = $routeParams.autpId;
 
-    function search(itemCriterio, page) {
+    function search(page) {
         $http.post("estadistica/estd-list.action", {
-            itemCriterio : itemCriterio,
+            itemCriterio : vm.itemCriterio,
             page : page,
-            limit : itemCriterio.limit
+            limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.enti = data.enti;
             vm.page = data.itemList.page;
@@ -297,7 +260,7 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function pageChanged() {
-        search(vm.itemCriterio, vm.page);
+        search(vm.page);
     }
 
     function xlsExport() {
@@ -317,58 +280,19 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/entidad/estadistica/estd-filter-content.html',
-            controller : 'estdFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                itemCriterio : function() {
-                    return vm.itemCriterio;
-                },
-                enti : function() {
-                    return vm.enti;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(itemCriterio) {
-            vm.itemCriterio = itemCriterio;
-
-            search(vm.itemCriterio, 1);
+        $http.post("estadistica/estd-filter.action", {
+            itemCriterio : vm.itemCriterio
+        }).success(function(data) {
+            vm.labelValuesMap = data.labelValuesMap;
+            vm.subpList = data.subpList;
+            vm.limits = data.limits;
+            vm.fechaVigencia = data.fechaVigencia;
         });
     }
 
-    search(vm.itemCriterio, $routeParams.page ? $routeParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
-}
-
-function estdFilterController($http, $modalInstance, enti, itemCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.itemCriterio = itemCriterio;
-    vm.enti = enti;
-
-    function ok() {
-        $modalInstance.close(vm.itemCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
-
-    $http.post("estadistica/estd-filter.action", {
-        itemCriterio : itemCriterio
-    }).success(function(data) {
-        vm.labelValuesMap = data.labelValuesMap;
-        vm.subpList = data.subpList;
-        vm.limits = data.limits;
-        vm.fechaVigencia = data.fechaVigencia;
-    });
 }
 
 function estdDetailController($http, $routeParams, pageTitleService) {

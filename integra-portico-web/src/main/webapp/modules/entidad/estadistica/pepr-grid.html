@@ -1,46 +1,47 @@
-<div ng-if="vm.peprList">
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<pagination total-items="vm.peprList.count" items-per-page="vm.peprList.limit" ng-model="vm.currentPage"
-				ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-				next-text="&rsaquo;&rsaquo;"></pagination>
-		</div>
+			<div ng-if="vm.peprList">
+				<div class="btn-toolbar" role="toolbar">
+					<div class="btn-group">
+						<pagination total-items="vm.peprList.count" items-per-page="vm.peprList.limit" ng-model="vm.currentPage"
+							ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+							next-text="&rsaquo;&rsaquo;"></pagination>
+					</div>
 
-		<div class="btn-group">
-			<button data-ng-click="vm.filter()" class="btn btn-default">
-				<i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
-			</button>
-			<a class="btn btn-default" ng-href="#/estadistica/pepr/prepareLoad"><i
-				class="glyphicon glyphicon-upload"></i> <span translate>btn_cargar</span></a> <a class="btn btn-default"
-				ng-href="#/estadistica/pepr/create"><i class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
-		</div>
-	</div>
+					<div class="btn-group">
+						<button class="btn btn-default" data-ng-click="vm.filter('lg')"
+							data-template="modules/entidad/estadistica/pepr-filter-content.html" bs-modal="modal">
+							<i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+						</button>
+						<a class="btn btn-default" ng-href="#/estadistica/pepr/prepareLoad"><i
+							class="glyphicon glyphicon-upload"></i> <span translate>btn_cargar</span></a> <a class="btn btn-default"
+							ng-href="#/estadistica/pepr/create"><i class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+					</div>
+				</div>
 
-	<div class="table-responsive">
-		<span class="label label-default" translate="grid_count"
-			translate-value-count="{{vm.peprList.count | number:0}}"></span>
+				<div class="table-responsive">
+					<span class="label label-default" translate="grid_count"
+						translate-value-count="{{vm.peprList.count | number:0}}"></span>
 
-		<table class="table-bordered table-condensed table-hover table-nonfluid">
-			<thead>
-				<tr>
-					<th class="buttonLinks" nowrap="nowrap" />
-					<th class="codigo" nowrap="nowrap" translate>pepr_autp</th>
-					<th translate>pepr_anio</th>
-					<th translate>pepr_mes</th>
-					<th translate>pepr_cdmsGenerado</th>
-					<th translate>pepr_falta</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="item in vm.peprList.list track by $index">
-					<td><a ng-href="#/estadistica/pepr/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-					<td ng-bind="item.autp.parametro"></td>
-					<td ng-bind="item.anio" class="number"></td>
-					<td ng-bind="item.mes" class="number"></td>
-					<td><i class="glyphicon glyphicon-{{item.cdmsGenerado ? 'ok' : 'remove'}}"></i></td>
-					<td ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+					<table class="table-bordered table-condensed table-hover table-nonfluid">
+						<thead>
+							<tr>
+								<th class="buttonLinks" nowrap="nowrap" />
+								<th class="codigo" nowrap="nowrap" translate>pepr_autp</th>
+								<th translate>pepr_anio</th>
+								<th translate>pepr_mes</th>
+								<th translate>pepr_cdmsGenerado</th>
+								<th translate>pepr_falta</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in vm.peprList.list track by $index">
+								<td><a ng-href="#/estadistica/pepr/detail/{{item.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+								<td ng-bind="item.autp.parametro"></td>
+								<td ng-bind="item.anio" class="number"></td>
+								<td ng-bind="item.mes" class="number"></td>
+								<td><i class="glyphicon glyphicon-{{item.cdmsGenerado ? 'ok' : 'remove'}}"></i></td>
+								<td ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>

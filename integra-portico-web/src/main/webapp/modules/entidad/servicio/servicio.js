@@ -8,8 +8,6 @@ angular.module("servicio", [])
 // ----------- SERVICIOS ------------------
 .controller("srvcGridController", srvcGridController)
 
-.controller("srvcFilterController", srvcFilterController)
-
 .controller("srvcDetailController", srvcDetailController)
 
 .controller("srvcCreateController", srvcCreateController)
@@ -24,8 +22,6 @@ angular.module("servicio", [])
 
 // ----------- SUBSERVICIOS ------------------
 .controller("ssrvGridController", ssrvGridController)
-
-.controller("ssrvFilterController", ssrvFilterController)
 
 .controller("ssrvDetailController", ssrvDetailController)
 
@@ -202,6 +198,7 @@ function servicioController($http, pageTitleService) {
 function srvcGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
     vm.xlsExport = xlsExport;
@@ -250,59 +247,18 @@ function srvcGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'srvc-filter-content.html',
-            controller : 'srvcFilterController',
-            controllerAs : "vm",
-            size : size,
-            resolve : {
-                itemCriterio : function() {
-                    return vm.itemCriterio;
-                },
-                enti : function() {
-                    return vm.enti;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(itemCriterio) {
-            console.log("srvcGridController: " + JSON.stringify(itemCriterio));
-
-            vm.itemCriterio = itemCriterio;
-
-            search(1);
+        $http.post("servicio/srvc-filter.action", {
+            itemCriterio : vm.itemCriterio
+        }).success(function(data) {
+            vm.labelValuesMap = data.labelValuesMap;
+            vm.subpList = data.subpList;
+            vm.limits = data.limits;
+            vm.fechaVigencia = data.fechaVigencia;
         });
     }
 
     search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
-}
-
-function srvcFilterController($http, $modalInstance, enti, itemCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.itemCriterio = itemCriterio;
-    vm.enti = enti;
-
-    function ok() {
-        $modalInstance.close(vm.itemCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
-
-    $http.post("servicio/srvc-filter.action", {
-        itemCriterio : vm.itemCriterio
-    }).success(function(data) {
-        vm.labelValuesMap = data.labelValuesMap;
-        vm.subpList = data.subpList;
-        vm.limits = data.limits;
-        vm.fechaVigencia = data.fechaVigencia;
-    });
 }
 
 function srvcDetailController($http, $location, $routeParams, pageTitleService) {
@@ -582,6 +538,7 @@ function maniTotalesController($scope, $http, $location, $routeParams) {
 function ssrvGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
     vm.xlsExport = xlsExport;
@@ -589,11 +546,11 @@ function ssrvGridController($http, $location, $routeParams, $modal, pageTitleSer
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     vm.itemCriterio.entiId = $routeParams.entiId;
 
-    function search(itemCriterio, page) {
+    function search(page) {
         $http.post("servicio/ssrv-list.action", {
-            itemCriterio : itemCriterio,
+            itemCriterio : vm.itemCriterio,
             page : page,
-            limit : itemCriterio.limit
+            limit : vm.itemCriterio.limit
         }).success(function(data) {
             vm.page = data.itemList.page;
             vm.enti = data.enti;
@@ -610,7 +567,7 @@ function ssrvGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function pageChanged() {
-        search(vm.itemCriterio, vm.page);
+        search(vm.page);
     }
 
     function xlsExport() {
@@ -630,57 +587,18 @@ function ssrvGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/entidad/servicio/ssrv-filter-content.html',
-            controller : 'ssrvFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                itemCriterio : function() {
-                    return vm.itemCriterio;
-                },
-                enti : function() {
-                    return vm.enti;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(itemCriterio) {
-            vm.itemCriterio = itemCriterio;
-
-            search(vm.itemCriterio, 1);
+        $http.post("servicio/ssrv-filter.action", {
+            itemCriterio : vm.itemCriterio
+        }).success(function(data) {
+            vm.labelValuesMap = data.labelValuesMap;
+            vm.limits = data.limits;
+            vm.fechaVigencia = data.fechaVigencia;
         });
     }
 
-    search(vm.itemCriterio, $routeParams.page ? $routeParams.page : 1);
+    search($routeParams.page ? $routeParams.page : 1);
 
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
-}
-
-function ssrvFilterController($http, $modalInstance, enti, itemCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.itemCriterio = itemCriterio;
-    vm.enti = enti;
-
-    function ok() {
-        $modalInstance.close(vm.itemCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
-
-    $http.post("servicio/ssrv-filter.action", {
-        itemCriterio : vm.itemCriterio
-    }).success(function(data) {
-        vm.labelValuesMap = data.labelValuesMap;
-        vm.limits = data.limits;
-        vm.fechaVigencia = data.fechaVigencia;
-    });
 }
 
 function ssrvDetailController($http, $location, $routeParams, pageTitleService) {

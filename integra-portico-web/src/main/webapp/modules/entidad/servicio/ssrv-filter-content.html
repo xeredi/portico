@@ -1,47 +1,53 @@
-<div class="modal-header">
-	<p class="modal-title" translate="filtro"></p>
-</div>
-<div class="modal-body">
-	<form>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-3 col-md-2 form-group">
-					<label translate>ssrv_srvc</label>
-					<div class="input-group-sm" ng-controller="srvcLupaCtrl">
-						<input type="text" autocomplete="off" ng-model="vm.itemCriterio.srvc"
-							ng-options="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)" bs-typeahead
-							class="form-control input-sm">
-					</div>
-				</div>
-				<div class="col-sm-1 col-md-1 form-group">
-					<label translate>ssrv_numero</label> <input type="text" ng-model="vm.itemCriterio.numero"
-						class="form-control input-sm" />
-				</div>
-
-				<div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
-					<label translate>ssrv_estado</label> <select ng-model="vm.itemCriterio.estado"
-						ng-options="cdrf.valor as cdrf.valor for cdrf in vm.enti.tpdtEstado.cdrfList"
-						class="form-control input-sm">
-						<option />
-					</select>
-				</div>
-				<div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-					<label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
-						ng-options="limitValue for limitValue in vm.limits" class="form-control input-sm">
-						<option />
-					</select>
-				</div>
+<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<p class="modal-title" translate="filtro"></p>
 			</div>
+			<div class="modal-body">
+				<form>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-3 col-md-2 form-group">
+								<label translate>ssrv_srvc</label>
+								<div class="input-group-sm" ng-controller="srvcLupaCtrl">
+									<input type="text" autocomplete="off" ng-model="vm.itemCriterio.srvc"
+										ng-options="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)"
+										bs-typeahead class="form-control input-sm">
+								</div>
+							</div>
+							<div class="col-sm-1 col-md-1 form-group">
+								<label translate>ssrv_numero</label> <input type="text" ng-model="vm.itemCriterio.numero"
+									class="form-control input-sm" />
+							</div>
 
-			<div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+							<div ng-if="enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
+								<label translate>ssrv_estado</label> <select ng-model="vm.itemCriterio.estado"
+									ng-options="cdrf.valor as cdrf.valor for cdrf in vm.enti.tpdtEstado.cdrfList"
+									class="form-control input-sm">
+									<option />
+								</select>
+							</div>
+							<div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
+								<label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
+									ng-options="limitValue for limitValue in vm.limits" class="form-control input-sm">
+									<option />
+								</select>
+							</div>
+						</div>
+
+						<div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
+					<i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+				</button>
+				<button class="btn btn-default" data-ng-click="$hide()">
+					<i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+				</button>
+			</div>
 		</div>
-	</form>
-</div>
-<div class="modal-footer">
-	<button class="btn btn-primary" data-ng-click="vm.ok()">
-		<i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
-	</button>
-	<button class="btn btn-default" data-ng-click="vm.cancel()">
-		<i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
-	</button>
+	</div>
 </div>
