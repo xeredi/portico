@@ -30,21 +30,13 @@
 				</div>
 
 				<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
-					<label translate>ssrv_fini</label>
-					<div class="input-group" ng-controller="datepickerController">
-						<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-							datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.fini" /> <span
-							class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-					</div>
+					<label translate>ssrv_fini</label><input type="text" class="form-control input-sm"
+						ng-model="vm.item.fini" bs-datepicker />
 				</div>
 
 				<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
-					<label translate>ssrv_ffin</label>
-					<div class="input-group" ng-controller="datepickerController">
-						<input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-							datepicker-options="dateOptions" is-open="opened" ng-model="vm.item.ffin" /> <span
-							class="input-group-addon" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></span>
-					</div>
+					<label translate>ssrv_ffin</label><input type="text" class="form-control input-sm"
+						ng-model="vm.item.ffin" bs-datepicker />
 				</div>
 
 				<div ng-if="vm.item.srvc.id" ng-repeat="entiPadre in vm.superentiList track by $index"
