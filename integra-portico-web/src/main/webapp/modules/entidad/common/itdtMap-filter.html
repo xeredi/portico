@@ -13,13 +13,13 @@
 				ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cantidadEntera" ng-pattern="/^\d+$/"
 				class="form-control input-sm number" />
 			<div ng-switch-when="FE">
-				<input type="text" class="form-control input-sm" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha"
-					bs-datepicker />
+				<input type="text" class="form-control input-sm" data-container=".modal-body"
+					ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha" bs-datepicker />
 			</div>
 			<div ng-switch-when="FH">
-				<input type="text" class="form-control input-sm" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha"
-					bs-datepicker /><input type="text" class="form-control input-sm"
-					ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha" bs-timepicker />
+				<input type="text" class="form-control input-sm" data-container=".modal-body"
+					ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha" bs-datepicker /><input type="text"
+					class="form-control input-sm" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].fecha" bs-timepicker />
 			</div>
 			<select ng-switch-when="CR" ng-model="vm.itemCriterio.itdtMap[entd.tpdt.id].cadena"
 				ng-options="cdrf.valor as (('cdrf_' + entd.tpdt.id + '_' + cdrf.valor) | translate) for cdrf in entd.tpdt.cdrfList"

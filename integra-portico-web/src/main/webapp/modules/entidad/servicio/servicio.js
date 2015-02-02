@@ -552,6 +552,10 @@ function srvcDuplicateController($http, $location, $routeParams, pageTitleServic
 
 function srvcLupaCtrl($http, $scope) {
     $scope.getLabelValues = function(entiId, textoBusqueda) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
         return $http.post('servicio/srvc-lupa.action', {
             itemLupaCriterio : {
                 entiId : entiId,

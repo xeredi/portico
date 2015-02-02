@@ -10,8 +10,6 @@ angular.module("maestro", [ "ngRoute", "util" ])
 // ----------- PARAMETROS ------------------
 .controller("prmtGridController", prmtGridController)
 
-.controller("prmtFilterController", prmtFilterController)
-
 .controller("prmtDetailController", prmtDetailController)
 
 .controller("prmtCreateController", prmtCreateController)
@@ -187,6 +185,7 @@ function maestroController($http, pageTitleService) {
 function prmtGridController($location, $routeParams, $http, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
     vm.xlsExport = xlsExport;
@@ -235,57 +234,16 @@ function prmtGridController($location, $routeParams, $http, $modal, pageTitleSer
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'prmt-filter-content.html',
-            controller : 'prmtFilterController',
-            controllerAs : "vm",
-            size : size,
-            resolve : {
-                itemCriterio : function() {
-                    return vm.itemCriterio;
-                },
-                enti : function() {
-                    return vm.enti;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(itemCriterio) {
-            console.log("prmtGridController: " + JSON.stringify(itemCriterio));
-
-            vm.itemCriterio = itemCriterio;
-
-            search(1);
+        $http.post("maestro/prmt-filter.action", {
+            itemCriterio : vm.itemCriterio
+        }).success(function(data) {
+            vm.labelValuesMap = data.labelValuesMap;
+            vm.limits = data.limits;
         });
     }
 
     search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
-}
-
-function prmtFilterController($http, $modalInstance, enti, itemCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.itemCriterio = itemCriterio;
-    vm.enti = enti;
-
-    function ok() {
-        $modalInstance.close(vm.itemCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
-
-    $http.post("maestro/prmt-filter.action", {
-        itemCriterio : vm.itemCriterio
-    }).success(function(data) {
-        vm.labelValuesMap = data.labelValuesMap;
-        vm.limits = data.limits;
-    });
 }
 
 function prmtDetailController($http, $location, $routeParams, sprmService, pageTitleService) {
@@ -498,6 +456,10 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
 
 function prmtsLupaCtrl($http, $scope) {
     $scope.getLabelValues = function(entiId, textoBusqueda, fechaVigencia) {
+        if (textoBusqueda.length <= 0) {
+            return null;
+        }
+
         return $http.post("maestro/prmt-lupa.action", {
             itemLupaCriterio : {
                 entiId : entiId,

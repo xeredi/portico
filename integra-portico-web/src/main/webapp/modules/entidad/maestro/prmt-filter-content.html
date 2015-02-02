@@ -1,40 +1,42 @@
-<div class="modal-header">
-    <p class="modal-title" translate="filtro"></p>
-</div>
-<div class="modal-body">
-    <form>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                    <label translate>prmt_parametro</label> <input type="text" ng-model="vm.itemCriterio.parametro"
-                        class="form-control input-sm" />
-                </div>
-                <div class="col-sm-2 col-md-2 col-lg-1 form-group">
-                    <label translate>prmt_fvigencia</label>
-                    <div class="input-group" ng-controller="datepickerController">
-                        <input type="text" class="form-control input-sm" datepicker-popup="{{format}}"
-                            datepicker-options="dateOptions" is-open="opened" ng-model="vm.itemCriterio.fechaVigencia"
-                            ng-required="true" /> <span class="input-group-addon" ng-click="open($event)"><i
-                            class="glyphicon glyphicon-calendar"></i></span>
-                    </div>
-                </div>
-                <div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
-                    <label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
-                        ng-options="limitValue for limitValue in vm.limits" class="form-control input-sm">
-                        <option />
-                    </select>
-                </div>
-            </div>
+<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header" ng-show="title">
+				<button type="button" class="close" ng-click="$hide()">&times;</button>
+				<p class="modal-title" translate="filtro"></p>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-3 col-md-2 col-lg-2 form-group">
+								<label translate>prmt_parametro</label> <input type="text" ng-model="vm.itemCriterio.parametro"
+									class="form-control input-sm" />
+							</div>
+							<div class="col-sm-2 col-md-2 col-lg-1 form-group">
+								<label translate>prmt_fvigencia</label><input type="text" class="form-control input-sm"
+									ng-model="vm.itemCriterio.fechaVigencia" data-container=".modal-body" bs-datepicker />
+							</div>
+							<div class="col-sm-3 col-md-2 col-lg-1 form-group pull-right">
+								<label translate>filtro_limit</label> <select ng-model="vm.itemCriterio.limit"
+									ng-options="limitValue for limitValue in vm.limits" class="form-control input-sm">
+									<option />
+								</select>
+							</div>
+						</div>
 
-            <div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
-        </div>
-    </form>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" data-ng-click="vm.ok()">
-        <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
-    </button>
-    <button class="btn btn-default" data-ng-click="vm.cancel()">
-        <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
-    </button>
+						<div ng-include="'modules/entidad/common/itdtMap-filter.html'"></div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" ng-click="vm.search(1);$hide()">
+					<i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+				</button>
+				<button class="btn btn-default" ng-click="$hide()">
+					<i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
