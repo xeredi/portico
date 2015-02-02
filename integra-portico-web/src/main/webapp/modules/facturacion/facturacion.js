@@ -23,8 +23,6 @@ angular.module("facturacion", [ "ngRoute", "util" ])
 // ----------- CARGO y REGLA------------------
 .controller("crgoGridController", crgoGridController)
 
-.controller("crgoFilterController", crgoFilterController)
-
 .controller("crgoCreateController", crgoCreateController)
 
 .controller("crgoDetailController", crgoDetailController)
@@ -45,8 +43,6 @@ angular.module("facturacion", [ "ngRoute", "util" ])
 
 // ----------- ASPECTO y ASPECTO CARGO ------------------
 .controller("aspcGridController", aspcGridController)
-
-.controller('aspcFilterController', aspcFilterController)
 
 .controller("aspcCreateController", aspcCreateController)
 
@@ -517,82 +513,45 @@ function vlrdDetailController($scope, $http, $location, $routeParams, pageTitleS
 function crgoGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
     vm.crgoCriterio = $routeParams.crgoCriterio ? angular.fromJson($routeParams.crgoCriterio) : {};
+    vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search(crgoCriterio, page, limit) {
+    function search(page) {
         $http.post("facturacion/crgo-list.action", {
-            crgoCriterio : crgoCriterio,
+            crgoCriterio : vm.crgoCriterio,
             page : page,
-            limit : limit
+            limit : vm.limit
         }).success(function(data) {
-            vm.page = data.crgoList.page;
             vm.crgoList = data.crgoList;
-            vm.crgoCriterio = data.crgoCriterio;
+            vm.page = data.crgoList.page;
 
-            var map = {};
-
-            map.page = data.crgoList.page;
-            map.crgoCriterio = JSON.stringify(data.crgoCriterio);
-
-            $location.search(map).replace();
+            $location.search({
+                page : vm.page,
+                crgoCriterio : JSON.stringify(vm.crgoCriterio)
+            }).replace();
         });
     }
 
     function pageChanged() {
-        search($scope.crgoCriterio, $scope.page, $scope.limit);
+        search(vm.page);
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/facturacion/crgo-filter-content.html',
-            controller : 'crgoFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                crgoCriterio : function() {
-                    return vm.crgoCriterio;
-                }
+        $http.post("metamodelo/enti-lv-list.action", {
+            entiCriterio : {
+                tipo : "T"
             }
-        });
-
-        modalInstance.result.then(function(crgoCriterio) {
-            vm.crgoCriterio = crgoCriterio;
-
-            search(vm.crgoCriterio, 1, vm.limit);
+        }).success(function(data) {
+            vm.entiList = data.lvList;
         });
     }
 
-    search(vm.crgoCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
-
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitle("crgo", "page_grid");
-}
-
-function crgoFilterController($http, $modalInstance, crgoCriterio, pageTitleService) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    function ok() {
-        $modalInstance.close(vm.crgoCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
-
-    vm.crgoCriterio = crgoCriterio;
-
-    $http.post("metamodelo/enti-lv-list.action", {
-        entiCriterio : {
-            tipo : "T"
-        }
-    }).success(function(data) {
-        vm.entiList = data.lvList;
-    });
 }
 
 function crgoDetailController($http, $routeParams, pageTitleService) {
@@ -911,82 +870,45 @@ function rginCreateController($http, $location, $routeParams, pageTitleService) 
 function aspcGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
     vm.aspcCriterio = $routeParams.aspcCriterio ? angular.fromJson($routeParams.aspcCriterio) : {};
+    vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search(aspcCriterio, page, limit) {
+    function search(page) {
         $http.post("facturacion/aspc-list.action", {
-            aspcCriterio : aspcCriterio,
+            aspcCriterio : vm.aspcCriterio,
             page : page,
-            limit : limit
+            limit : vm.limit
         }).success(function(data) {
-            vm.page = data.aspcList.page;
             vm.aspcList = data.aspcList;
-            vm.aspcCriterio = data.aspcCriterio;
+            vm.page = data.aspcList.page;
 
-            var map = {};
-
-            map.page = data.aspcList.page;
-            map.aspcCriterio = JSON.stringify(data.aspcCriterio);
-
-            $location.search(map).replace();
+            $location.search({
+                page : vm.page,
+                aspcCriterio : JSON.stringify(vm.aspcCriterio)
+            }).replace();
         });
     }
 
     function pageChanged() {
-        search(vm.aspcCriterio, vm.page, vm.limit);
+        search(vm.page);
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/facturacion/aspc-filter-content.html',
-            controller : 'aspcFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                aspcCriterio : function() {
-                    return vm.aspcCriterio;
-                }
+        $http.post("metamodelo/enti-lv-list.action", {
+            entiCriterio : {
+                tipo : "T"
             }
-        });
-
-        modalInstance.result.then(function(aspcCriterio) {
-            vm.aspcCriterio = aspcCriterio;
-
-            search(vm.aspcCriterio, 1, vm.limit);
+        }).success(function(data) {
+            vm.entiList = data.lvList;
         });
     }
 
-    search(vm.aspcCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
-
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitle("aspc", "page_grid");
-}
-
-function aspcFilterController($http, $modalInstance, aspcCriterio, pageTitleService) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    function ok() {
-        $modalInstance.close(vm.aspcCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
-
-    vm.aspcCriterio = aspcCriterio;
-
-    $http.post("metamodelo/enti-lv-list.action", {
-        entiCriterio : {
-            tipo : "T"
-        }
-    }).success(function(data) {
-        vm.entiList = data.lvList;
-    });
 }
 
 function aspcDetailController($http, $location, $routeParams, pageTitleService) {
