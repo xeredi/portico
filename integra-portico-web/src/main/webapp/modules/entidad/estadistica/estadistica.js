@@ -82,12 +82,10 @@ function peprGridController($http, $location, $routeParams, $modal, pageTitleSer
             vm.page = data.peprList.page;
             vm.peprList = data.peprList;
 
-            var map = {};
-
-            map.page = data.peprList.page;
-            map.peprCriterio = JSON.stringify(data.peprCriterio);
-
-            $location.search(map).replace();
+            $location.search({
+                page : vm.page,
+                peprCriterio : JSON.stringify(vm.peprCriterio)
+            }).replace();
         });
     }
 
@@ -250,12 +248,10 @@ function estdGridController($http, $location, $routeParams, $modal, pageTitleSer
             vm.itemList = data.itemList;
             vm.itemCriterio = data.itemCriterio;
 
-            var map = {};
-
-            map.page = data.itemList.page;
-            map.itemCriterio = JSON.stringify(data.itemCriterio);
-
-            $location.search(map).replace();
+            $location.search({
+                page : vm.page,
+                itemCriterio : JSON.stringify(vm.itemCriterio)
+            }).replace();
         });
     }
 

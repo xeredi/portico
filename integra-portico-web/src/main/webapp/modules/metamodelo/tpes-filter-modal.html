@@ -1,27 +1,34 @@
-<div class="modal-header">
-    <p class="modal-title" translate="filtro"></p>
-</div>
-<div class="modal-body">
-    <form>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 col-lg-2 form-group">
-                    <label translate>enti_codigo</label> <input type="text" ng-model="vm.entiCriterio.codigo"
-                        class="form-control input-sm" />
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group">
-                    <label translate>enti_nombre</label> <input type="text" ng-model="vm.entiCriterio.nombre"
-                        class="form-control input-sm" maxlength="50" />
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" data-ng-click="vm.ok()">
-        <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
-    </button>
-    <button class="btn btn-default" data-ng-click="vm.cancel()">
-        <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
-    </button>
+<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="$hide()">&times;</button>
+				<p class="modal-title" translate="filtro"></p>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-3 col-md-2 col-lg-2 form-group">
+								<label translate>enti_codigo</label> <input type="text" ng-model="vm.entiCriterio.codigo"
+									class="form-control input-sm" />
+							</div>
+							<div class="col-sm-4 col-md-3 col-lg-2 form-group">
+								<label translate>enti_nombre</label> <input type="text" ng-model="vm.entiCriterio.nombre"
+									class="form-control input-sm" maxlength="50" />
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" data-ng-click="vm.search(1);$hide()">
+					<i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+				</button>
+				<button class="btn btn-default" data-ng-click="$hide()">
+					<i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+				</button>
+			</div>
+		</div>
+	</div>
 </div>

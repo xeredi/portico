@@ -5,8 +5,6 @@ angular.module("metamodelo", [])
 // -------------------- TIPO DE DATO ------------------
 .controller("tpdtGridController", tpdtGridController)
 
-.controller("tpdtFilterController", tpdtFilterController)
-
 .controller("tpdtCreateController", tpdtCreateController)
 
 .controller("tpdtDetailController", tpdtDetailController)
@@ -21,8 +19,6 @@ angular.module("metamodelo", [])
 
 // -------------------- MAESTRO ------------------
 .controller("tpprGridController", tpprGridController)
-
-.controller("tpprFilterController", tpprFilterController)
 
 .controller("tpprDetailController", tpprDetailController)
 
@@ -39,8 +35,6 @@ angular.module("metamodelo", [])
 // -------------------- TIPO DE SERVICIO ------------------
 .controller("tpsrGridController", tpsrGridController)
 
-.controller("tpsrFilterController", tpsrFilterController)
-
 .controller("tpsrDetailController", tpsrDetailController)
 
 .controller("tpsrEditController", tpsrEditController)
@@ -55,8 +49,6 @@ angular.module("metamodelo", [])
 
 // -------------------- ESTADISTICA ------------------
 .controller("tpesGridController", tpesGridController)
-
-.controller("tpesFilterController", tpesFilterController)
 
 .controller("tpesDetailController", tpesDetailController)
 
@@ -333,71 +325,38 @@ function config($routeProvider) {
 function tpdtGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.tpdtCriterio = {};
+    vm.tpdtCriterio = $routeParams.tpdtCriterio ? angular.fromJson($routeParams.tpdtCriterio) : {};
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search() {
+    function search(page) {
         $http.post("metamodelo/tpdt-list.action", {
             tpdtCriterio : vm.tpdtCriterio,
-            page : vm.page,
+            page : page,
             limit : vm.limit
         }).success(function(data) {
             vm.tpdtList = data.tpdtList;
+            vm.page = data.tpdtList.page;
 
             $location.search({
-                page : vm.page
+                page : vm.page,
+                tpdtCriterio : JSON.stringify(vm.tpdtCriterio)
             }).replace();
         });
     }
 
     function pageChanged() {
-        search();
+        search(vm.page);
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tpdt-filter-modal.html',
-            controller : 'tpdtFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                tpdtCriterio : function() {
-                    return vm.tpdtCriterio;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(tpdtCriterio) {
-            vm.tpdtCriterio = tpdtCriterio;
-            vm.page = 1;
-
-            search();
-        });
     }
 
-    search();
-
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitle("tpdt", "page_grid");
-}
-
-function tpdtFilterController($modalInstance, tpdtCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.tpdtCriterio = tpdtCriterio;
-
-    function ok() {
-        $modalInstance.close(vm.tpdtCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
 }
 
 function tpdtCreateController($http, $location, $routeParams, pageTitleService) {
@@ -599,71 +558,38 @@ function cdrfEditController($http, $routeParams, pageTitleService) {
 function tpprGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.entiCriterio = {};
+    vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search() {
+    function search(page) {
         $http.post("metamodelo/tppr-list.action", {
             entiCriterio : vm.entiCriterio,
-            page : vm.page,
+            page : page,
             limit : vm.limit
         }).success(function(data) {
             vm.entiList = data.entiList;
+            vm.page = data.entiList.page;
 
             $location.search({
-                page : vm.page
+                page : vm.page,
+                entiCriterio : JSON.stringify(vm.entiCriterio)
             }).replace();
         });
     }
 
     function pageChanged() {
-        search();
+        search(vm.page);
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tppr-filter-modal.html',
-            controller : 'tpprFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                entiCriterio : function() {
-                    return vm.entiCriterio;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(entiCriterio) {
-            vm.entiCriterio = entiCriterio;
-            vm.page = 1;
-
-            search();
-        });
     }
 
-    search();
-
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitle("tppr", "page_grid");
-}
-
-function tpprFilterController($modalInstance, entiCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.entiCriterio = entiCriterio;
-
-    function ok() {
-        $modalInstance.close(vm.entiCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
 }
 
 function tpprDetailController($http, $location, $routeParams, pageTitleService) {
@@ -894,71 +820,38 @@ function tpspCreateController($http, $location, $routeParams, pageTitleService) 
 function tpsrGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.entiCriterio = {};
+    vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search() {
+    function search(page) {
         $http.post("metamodelo/tpsr-list.action", {
             entiCriterio : vm.entiCriterio,
-            page : vm.page,
+            page : page,
             limit : vm.limit
         }).success(function(data) {
             vm.entiList = data.entiList;
+            vm.page = data.entiList.page;
 
             $location.search({
-                page : vm.page
+                page : vm.page,
+                entiCriterio : JSON.stringify(vm.entiCriterio)
             }).replace();
         });
     }
 
     function pageChanged() {
-        search();
+        search(vm.page);
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tpsr-filter-modal.html',
-            controller : 'tpsrFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                entiCriterio : function() {
-                    return vm.entiCriterio;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(entiCriterio) {
-            vm.entiCriterio = entiCriterio;
-            vm.page = 1;
-
-            search();
-        });
     }
 
-    search(vm.entiCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
-
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitle("tpsr", "page_grid");
-}
-
-function tpsrFilterController($modalInstance, entiCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.entiCriterio = entiCriterio;
-
-    function ok() {
-        $modalInstance.close(vm.entiCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
 }
 
 function tpsrDetailController($http, $routeParams, pageTitleService) {
@@ -1188,71 +1081,38 @@ function tpssCreateController($http, $location, $routeParams, pageTitleService) 
 function tpesGridController($http, $location, $routeParams, $modal, pageTitleService) {
     var vm = this;
 
+    vm.search = search;
     vm.pageChanged = pageChanged;
     vm.filter = filter;
 
-    vm.entiCriterio = {};
+    vm.entiCriterio = $routeParams.entiCriterio ? angular.fromJson($routeParams.entiCriterio) : {};
     vm.page = $routeParams.page ? $routeParams.page : 1;
 
-    function search() {
+    function search(page) {
         $http.post("metamodelo/tpes-list.action", {
             entiCriterio : vm.entiCriterio,
-            page : vm.page,
+            page : page,
             limit : vm.limit
         }).success(function(data) {
             vm.entiList = data.entiList;
+            vm.page = data.entiList.page;
 
             $location.search({
-                page : vm.page
+                page : vm.page,
+                entiCriterio : JSON.stringify(vm.entiCriterio)
             }).replace();
         });
     }
 
     function pageChanged() {
-        search();
+        search(vm.page);
     }
 
     function filter(size) {
-        var modalInstance = $modal.open({
-            templateUrl : 'modules/metamodelo/tpes-filter-modal.html',
-            controller : 'tpesFilterController',
-            controllerAs : 'vm',
-            size : size,
-            resolve : {
-                entiCriterio : function() {
-                    return vm.entiCriterio;
-                }
-            }
-        });
-
-        modalInstance.result.then(function(entiCriterio) {
-            vm.entiCriterio = entiCriterio;
-            vm.page = 1;
-
-            search();
-        });
     }
 
-    search();
-
+    search($routeParams.page ? $routeParams.page : 1);
     pageTitleService.setTitle("tpes", "page_grid");
-}
-
-function tpesFilterController($modalInstance, entiCriterio) {
-    var vm = this;
-
-    vm.ok = ok;
-    vm.cancel = cancel;
-
-    vm.entiCriterio = entiCriterio;
-
-    function ok() {
-        $modalInstance.close(vm.entiCriterio);
-    }
-
-    function cancel() {
-        $modalInstance.dismiss('cancel');
-    }
 }
 
 function tpesDetailController($http, $routeParams, pageTitleService) {

@@ -204,12 +204,10 @@ function prmtGridController($location, $routeParams, $http, $modal, pageTitleSer
             vm.itemList = data.itemList;
             vm.itemCriterio = data.itemCriterio;
 
-            var map = {};
-
-            map.page = data.itemList.page;
-            map.itemCriterio = JSON.stringify(data.itemCriterio);
-
-            $location.search(map).replace();
+            $location.search({
+                page : vm.page,
+                itemCriterio : JSON.stringify(vm.itemCriterio)
+            }).replace();
         });
     }
 
