@@ -1,15 +1,19 @@
 package xeredi.integra.model.servicio.bo.escala;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.escala.AtraqueDAO;
@@ -24,7 +28,32 @@ import com.google.common.base.Preconditions;
 /**
  * The Class AtraqueBO.
  */
-public final class AtraqueBO {
+public final class AtraqueBO extends AbstractSubservicioBO {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
+            final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
+            throws InstanceNotFoundException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void deletePostOperations(final SqlSession session, final Long ssrvId) throws InstanceNotFoundException {
+        // noop
+    }
 
     /**
      * Checks if is autorizable.
@@ -56,7 +85,7 @@ public final class AtraqueBO {
      *             the operacion no permitida exception
      */
     public void autorizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -128,7 +157,7 @@ public final class AtraqueBO {
      *             the operacion no permitida exception
      */
     public void denegar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -200,7 +229,7 @@ public final class AtraqueBO {
      *             the operacion no permitida exception
      */
     public void anular(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -272,7 +301,7 @@ public final class AtraqueBO {
      *             the operacion no permitida exception
      */
     public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -346,7 +375,7 @@ public final class AtraqueBO {
      *             the operacion no permitida exception
      */
     public void finalizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 

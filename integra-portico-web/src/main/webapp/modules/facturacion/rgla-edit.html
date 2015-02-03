@@ -29,11 +29,11 @@
 				</div>
 				<div class="col-md-1 form-group">
 					<label translate>rgla_fini</label><input type="text" class="form-control input-sm"
-						ng-model="vm.rgla.rglv.fini" bs-datepicker />
+						ng-model="vm.rgla.rglv.fini" data-max-date="{{vm.rgla.rglv.ffin}}" bs-datepicker />
 				</div>
 				<div class="col-md-1 form-group">
 					<label translate>rgla_ffin</label><input type="text" class="form-control input-sm"
-						ng-model="vm.rgla.rglv.ffin" bs-datepicker />
+						ng-model="vm.rgla.rglv.ffin" data-min-date="{{vm.rgla.rglv.fini}}" bs-datepicker />
 				</div>
 				<div class="col-md-1 form-group">
 					<label translate>rgla_orden</label> <input type="text" ng-model="vm.rgla.rglv.orden"

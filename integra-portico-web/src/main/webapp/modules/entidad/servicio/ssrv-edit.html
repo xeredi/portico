@@ -31,12 +31,12 @@
 
 				<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 					<label translate>ssrv_fini</label><input type="text" class="form-control input-sm"
-						ng-model="vm.item.fini" bs-datepicker />
+						ng-model="vm.item.fini" data-max-date="{{vm.item.ffin}}" bs-datepicker />
 				</div>
 
 				<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 					<label translate>ssrv_ffin</label><input type="text" class="form-control input-sm"
-						ng-model="vm.item.ffin" bs-datepicker />
+						ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" bs-datepicker />
 				</div>
 
 				<div ng-if="vm.item.srvc.id" ng-repeat="entiPadre in vm.superentiList track by $index"

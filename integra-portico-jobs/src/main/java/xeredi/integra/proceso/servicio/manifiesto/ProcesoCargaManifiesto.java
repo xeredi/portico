@@ -26,6 +26,7 @@ import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.io.manifiesto.ManifiestoFileImport;
 import xeredi.integra.model.servicio.io.manifiesto.ManifiestoMensaje;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
@@ -88,7 +89,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                 }
                 if (prbtVO.getPrmnList().isEmpty()) {
                     final ManifiestoMensaje mensaje = fileImport.getMensaje();
-                    final ServicioBO srvcBO = new ServicioBO();
+                    final ManifiestoBO srvcBO = new ManifiestoBO();
 
                     switch (mensaje) {
                     case MANIFIESTO_ALTA:

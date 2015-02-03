@@ -1,12 +1,16 @@
 package xeredi.integra.model.servicio.bo.manifiesto;
 
+import java.util.List;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ModelException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.servicio.bo.AbstractServicioBO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
@@ -14,6 +18,8 @@ import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoSubservicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
+import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
+import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesCriterioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -24,7 +30,40 @@ import com.google.common.base.Preconditions;
 /**
  * The Class ManifiestoBO.
  */
-public class ManifiestoBO {
+public class ManifiestoBO extends AbstractServicioBO {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
+            final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void updatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void duplicatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException {
+        // noop
+    }
 
     /**
      * Bloquear.

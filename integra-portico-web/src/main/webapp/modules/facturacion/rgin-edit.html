@@ -14,11 +14,11 @@
 				</div>
 				<div class="col-md-1 form-group">
 					<label translate>rgin_fini</label><input type="text" class="form-control input-sm"
-						ng-model="vm.rgin.rgiv.fini" bs-datepicker />
+						ng-model="vm.rgin.rgiv.fini" data-max-date="{{vm.rgin.rgiv.ffin}}" bs-datepicker />
 				</div>
 				<div class="col-md-1 form-group">
 					<label translate>rgin_ffin</label><input type="text" class="form-control input-sm"
-						ng-model="vm.rgin.rgiv.ffin" bs-datepicker />
+						ng-model="vm.rgin.rgiv.ffin" data-min-date="{{vm.rgin.rgiv.fini}}" bs-datepicker />
 				</div>
 			</div>
 		</div>

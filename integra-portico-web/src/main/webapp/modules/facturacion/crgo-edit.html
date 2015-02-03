@@ -49,11 +49,11 @@
 			<div class="row">
 				<div class="col-sm-2 col-md-1 form-group">
 					<label translate>crgo_fini</label><input type="text" class="form-control input-sm"
-						ng-model="vm.crgo.crgv.fini" bs-datepicker />
+						ng-model="vm.crgo.crgv.fini" data-max-date="{{vm.crgo.crgv.ffin}}" bs-datepicker />
 				</div>
 				<div class="col-sm-2 col-md-1 form-group">
 					<label translate>crgo_ffin</label><input type="text" class="form-control input-sm"
-						ng-model="vm.crgo.crgv.ffin" bs-datepicker />
+						ng-model="vm.crgo.crgv.ffin" data-min-date="{{vm.crgo.crgv.fini}}" bs-datepicker />
 				</div>
 			</div>
 

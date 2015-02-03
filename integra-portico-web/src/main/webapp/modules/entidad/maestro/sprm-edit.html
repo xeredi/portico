@@ -18,12 +18,12 @@
 
 				<div class="col-sm-2 col-md-2 col-md-1 form-group">
 					<label translate>prmt_fini</label> <input type="text" class="form-control input-sm"
-						ng-model="vm.item.spvr.fini" bs-datepicker />
+						ng-model="vm.item.spvr.fini" data-max-date="{{vm.item.spvr.ffin}}" bs-datepicker />
 				</div>
 
 				<div class="col-sm-2 col-md-2 col-md-1 form-group">
 					<label translate>prmt_ffin</label> <label translate>prmt_fini</label> <input type="text"
-						class="form-control input-sm" ng-model="vm.item.spvr.ffin" bs-datepicker />
+						class="form-control input-sm" ng-model="vm.item.spvr.ffin" data-min-date="{{vm.item.spvr.fini}}" bs-datepicker />
 				</div>
 			</div>
 

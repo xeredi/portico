@@ -1,5 +1,6 @@
 package xeredi.integra.model.servicio.dao.manifiesto;
 
+import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -9,10 +10,10 @@ public interface BlDAO {
 
     /**
      * Update recalcular estado.
-     * 
-     * @param id
-     *            the id
+     *
+     * @param criterioVO
+     *            the criterio vo
      * @return the int
      */
-    int updateRecalcularEstado(Long id);
+    int updateRecalcularEstado(final SubservicioCriterioVO criterioVO);
 }

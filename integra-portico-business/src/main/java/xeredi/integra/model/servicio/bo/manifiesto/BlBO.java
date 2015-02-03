@@ -1,12 +1,17 @@
 package xeredi.integra.model.servicio.bo.manifiesto;
 
+import java.util.Set;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
+import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.servicio.bo.AbstractSubservicioBO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoResumenDAO;
 import xeredi.integra.model.servicio.dao.manifiesto.ManifiestoServicioDAO;
@@ -24,7 +29,32 @@ import com.google.common.base.Preconditions;
 /**
  * The Class BlBO.
  */
-public class BlBO {
+public class BlBO extends AbstractSubservicioBO {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
+            final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
+            throws InstanceNotFoundException {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void deletePostOperations(final SqlSession session, final Long ssrvId) throws InstanceNotFoundException {
+        // noop
+    }
 
     /**
      * Completar.

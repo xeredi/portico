@@ -21,11 +21,11 @@
 				</div>
 				<div class="col-sm-2 col-md-1 col-lg-1 form-group">
 					<label translate>aspc_fini</label><input type="text" class="form-control input-sm"
-						ng-model="vm.aspc.aspv.fini" bs-datepicker />
+						ng-model="vm.aspc.aspv.fini" data-max-date="{{vm.aspc.aspv.ffin}}" bs-datepicker />
 				</div>
 				<div class="col-sm-2 col-md-1 col-lg-1 form-group">
 					<label translate>aspc_ffin</label><input type="text" class="form-control input-sm"
-						ng-model="vm.aspc.aspv.ffin" bs-datepicker />
+						ng-model="vm.aspc.aspv.ffin" data-min-date="{{vm.aspc.aspv.fini}}" bs-datepicker />
 				</div>
 				<div class="col-sm-2 col-md-1 col-lg-1 form-group">
 					<label translate>aspc_prioridad</label> <input type="text" ng-model="vm.aspc.aspv.prioridad"
