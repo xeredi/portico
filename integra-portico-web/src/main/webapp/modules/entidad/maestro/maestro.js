@@ -302,7 +302,8 @@ function prmtDetailController($http, $location, $routeParams, sprmService, pageT
 
     $http.post("maestro/prmt-detail.action", {
         item : {
-            id : $routeParams.itemId
+            id : $routeParams.itemId,
+            entiId : $routeParams.entiId
         },
         fechaVigencia : $routeParams.fechaVigencia
     }).success(
@@ -396,7 +397,8 @@ function prmtEditController($http, $location, $routeParams, pageTitleService) {
 
     $http.post("maestro/prmt-edit.action", {
         item : {
-            id : $routeParams.itemId
+            id : $routeParams.itemId,
+            entiId : $routeParams.entiId
         },
         fechaVigencia : $routeParams.fechaVigencia
     }).success(function(data) {

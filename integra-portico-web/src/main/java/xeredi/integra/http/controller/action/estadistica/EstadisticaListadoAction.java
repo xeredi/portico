@@ -15,6 +15,7 @@ import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.estadistica.bo.EstadisticaBO;
 import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -115,7 +116,7 @@ public final class EstadisticaListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio.getPepr().getAutpId());
         Preconditions.checkNotNull(itemCriterio.getIdioma());
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = new DefaultParametroBO();
 
         {
             final TipoEstadisticaVO enti = TipoEstadisticaProxy.select(itemCriterio.getEntiId());

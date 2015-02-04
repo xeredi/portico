@@ -24,17 +24,18 @@
 			<thead>
 				<tr>
 					<th class="buttonLinks" nowrap="nowrap" />
-					<th class="codigo" nowrap="nowrap" translate>enti_codigo</th>
-					<th nowrap="nowrap" translate>enti_nombre</th>
-					<th nowrap="nowrap" translate>enti_cmdAlta</th>
-					<th nowrap="nowrap" translate>enti_cmdBaja</th>
-					<th nowrap="nowrap" translate>enti_cmdEdicion</th>
-					<th nowrap="nowrap" translate>enti_cmdDuplicado</th>
-					<th nowrap="nowrap" translate>enti_temporal</th>
-					<th nowrap="nowrap" translate>enti_facturable</th>
-					<th nowrap="nowrap" translate>enti_exencionable</th>
-					<th nowrap="nowrap" translate>enti_maxGrid</th>
-					<th nowrap="nowrap" translate>enti_tpdtEstado</th>
+					<th class="codigo" translate>enti_codigo</th>
+					<th translate>enti_nombre</th>
+					<th translate>enti_cmdAlta</th>
+					<th translate>enti_cmdBaja</th>
+					<th translate>enti_cmdEdicion</th>
+					<th translate>enti_cmdDuplicado</th>
+					<th translate>enti_temporal</th>
+					<th translate>enti_facturable</th>
+					<th translate>enti_exencionable</th>
+					<th translate>enti_maxGrid</th>
+					<th translate>enti_tpdtEstado</th>
+					<th translate>enti_classpath</th>
 				</tr>
 			</thead>
 
@@ -52,6 +53,7 @@
 					<td><i class="glyphicon glyphicon-{{enti.exencionable ? 'ok' : 'remove'}}"></i></td>
 					<td class="number" ng-bind="enti.maxGrid | number:0"></td>
 					<td ng-bind="enti.tpdtEstado.nombre"></td>
+					<td ng-bind="enti.classpath"></td>
 				</tr>
 			</tbody>
 		</table>

@@ -16,6 +16,7 @@ import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -122,9 +123,8 @@ public abstract class ProcesoTemplate {
             LOG.info("Busqueda de Maestros");
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
-
         for (final Entidad entidad : codigoMaestroMap.keySet()) {
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
             final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
             prmtCriterioVO.setEntiId(entidad.getId());
@@ -161,7 +161,7 @@ public abstract class ProcesoTemplate {
             LOG.info("Busqueda de Organizaciones");
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());

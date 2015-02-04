@@ -4,7 +4,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.PartidaBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
@@ -36,11 +35,10 @@ public final class PartidaAction extends BaseAction {
         Preconditions.checkNotNull(item.getId());
 
         final PartidaBO partBO = new PartidaBO();
-        final SubservicioBO ssrvBO = new SubservicioBO();
 
         partBO.bloquear(item.getId());
 
-        item = ssrvBO.select(item.getId(), getIdioma());
+        item = partBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -58,11 +56,10 @@ public final class PartidaAction extends BaseAction {
         Preconditions.checkNotNull(item.getId());
 
         final PartidaBO partBO = new PartidaBO();
-        final SubservicioBO ssrvBO = new SubservicioBO();
 
         partBO.iniciar(item.getId());
 
-        item = ssrvBO.select(item.getId(), getIdioma());
+        item = partBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -80,11 +77,10 @@ public final class PartidaAction extends BaseAction {
         Preconditions.checkNotNull(item.getId());
 
         final PartidaBO partBO = new PartidaBO();
-        final SubservicioBO ssrvBO = new SubservicioBO();
 
         partBO.anular(item.getId());
 
-        item = ssrvBO.select(item.getId(), getIdioma());
+        item = partBO.select(item.getId(), getIdioma());
 
         return SUCCESS;
     }

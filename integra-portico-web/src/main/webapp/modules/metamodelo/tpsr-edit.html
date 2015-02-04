@@ -7,6 +7,17 @@
 						ng-model="vm.enti.codigo" class="form-control input-sm" />
 					<p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.enti.codigo"></p>
 				</div>
+				<div class="col-sm-3 col-md-2 col-lg-1 form-group">
+					<label translate>enti_maxGrid</label> <input type="text" ng-model="vm.enti.maxGrid"
+						class="form-control input-sm number" />
+				</div>
+				<div class="col-sm-4 col-md-3 col-lg-2 form-group">
+					<label translate>enti_tpdtEstado</label> <select ng-model="vm.enti.tpdtEstado.id"
+						ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtEstadoList"
+						class="form-control input-sm">
+						<option />
+					</select>
+				</div>
 			</div>
 
 			<div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
@@ -61,16 +72,9 @@
 						<option />
 					</select>
 				</div>
-				<div class="col-sm-3 col-md-2 col-lg-1 form-group">
-					<label translate>enti_maxGrid</label> <input type="text" ng-model="vm.enti.maxGrid"
-						class="form-control input-sm number" />
-				</div>
 				<div class="col-sm-4 col-md-3 col-lg-2 form-group">
-					<label translate>enti_tpdtEstado</label> <select ng-model="vm.enti.tpdtEstado.id"
-						ng-options="labelValue.value as labelValue.label for labelValue in vm.tpdtEstadoList"
-						class="form-control input-sm">
-						<option />
-					</select>
+					<label translate>enti_classpath</label> <input type="text" ng-model="vm.enti.classpath"
+						class="form-control input-sm" />
 				</div>
 			</div>
 		</div>

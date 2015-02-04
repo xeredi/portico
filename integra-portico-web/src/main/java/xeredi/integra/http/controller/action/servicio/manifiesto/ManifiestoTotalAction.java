@@ -4,7 +4,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
@@ -35,11 +34,10 @@ public final class ManifiestoTotalAction extends BaseAction {
      */
     @Action("mani-totales")
     public String totales() throws ApplicationException {
-        final ServicioBO srvcBO = new ServicioBO();
-        final ManifiestoBO maniBO = new ManifiestoBO();
+        final ManifiestoBO srvcBO = new ManifiestoBO();
 
         item = srvcBO.select(item.getId(), getIdioma());
-        resumen = maniBO.selectResumen(item.getId());
+        resumen = srvcBO.selectResumen(item.getId());
 
         return SUCCESS;
     }

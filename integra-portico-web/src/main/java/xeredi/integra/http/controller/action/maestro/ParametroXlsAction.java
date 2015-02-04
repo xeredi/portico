@@ -13,6 +13,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.report.ParametroXls;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -53,7 +54,7 @@ public final class ParametroXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(itemCriterio.getEntiId());
 
         enti = TipoParametroProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);

@@ -4,7 +4,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.ManifiestoBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
@@ -35,10 +34,9 @@ public final class ManifiestoAction extends BaseAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final ManifiestoBO maniBO = new ManifiestoBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        final ManifiestoBO srvcBO = new ManifiestoBO();
 
-        maniBO.bloquear(item.getId());
+        srvcBO.bloquear(item.getId());
 
         item = srvcBO.select(item.getId(), getIdioma());
 
@@ -57,10 +55,9 @@ public final class ManifiestoAction extends BaseAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final ManifiestoBO maniBO = new ManifiestoBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        final ManifiestoBO srvcBO = new ManifiestoBO();
 
-        maniBO.completar(item.getId());
+        srvcBO.completar(item.getId());
 
         item = srvcBO.select(item.getId(), getIdioma());
 
@@ -79,10 +76,9 @@ public final class ManifiestoAction extends BaseAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final ManifiestoBO maniBO = new ManifiestoBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        final ManifiestoBO srvcBO = new ManifiestoBO();
 
-        maniBO.iniciar(item.getId());
+        srvcBO.iniciar(item.getId());
 
         item = srvcBO.select(item.getId(), getIdioma());
 
@@ -101,10 +97,9 @@ public final class ManifiestoAction extends BaseAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final ManifiestoBO maniBO = new ManifiestoBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        final ManifiestoBO srvcBO = new ManifiestoBO();
 
-        maniBO.anular(item.getId());
+        srvcBO.anular(item.getId());
 
         item = srvcBO.select(item.getId(), getIdioma());
 

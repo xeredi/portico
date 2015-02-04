@@ -44,18 +44,11 @@ import com.google.common.base.Preconditions;
 /**
  * The Class AbstractServicioBO.
  */
-public abstract class AbstractServicioBO {
+public abstract class AbstractServicioBO implements ServicioBO {
     /**
-     * Select.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @param idioma
-     *            the idioma
-     * @return the servicio vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final ServicioVO select(final Long srvcId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(srvcId);
         Preconditions.checkNotNull(idioma);
@@ -80,14 +73,9 @@ public abstract class AbstractServicioBO {
     }
 
     /**
-     * Select object.
-     *
-     * @param srvcCriterioVO
-     *            the srvc criterio vo
-     * @return the servicio vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final ServicioVO selectObject(final ServicioCriterioVO srvcCriterioVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(srvcCriterioVO);
 
@@ -106,16 +94,9 @@ public abstract class AbstractServicioBO {
     }
 
     /**
-     * Select list.
-     *
-     * @param srvcCriterioVO
-     *            the srvc criterio vo
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
+     * {@inheritDoc}
      */
+    @Override
     public final PaginatedList<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(srvcCriterioVO);
@@ -138,12 +119,9 @@ public abstract class AbstractServicioBO {
     }
 
     /**
-     * Select list.
-     *
-     * @param srvcCriterioVO
-     *            the srvc criterio vo
-     * @return the list
+     * {@inheritDoc}
      */
+    @Override
     public final List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO) {
         Preconditions.checkNotNull(srvcCriterioVO);
 
@@ -158,14 +136,9 @@ public abstract class AbstractServicioBO {
     }
 
     /**
-     * Select lupa list.
-     *
-     * @param srvcLupaCriterioVO
-     *            the srvc lupa criterio vo
-     * @param limit
-     *            the limit
-     * @return the list
+     * {@inheritDoc}
      */
+    @Override
     public final List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(srvcLupaCriterioVO);
 
@@ -177,17 +150,9 @@ public abstract class AbstractServicioBO {
     }
 
     /**
-     * Insert.
-     *
-     * @param srvcVO
-     *            the srvc vo
-     * @param ssrvList
-     *            the ssrv list
-     * @param ssssList
-     *            the ssss list
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * {@inheritDoc}
      */
+    @Override
     public final void insert(final ServicioVO srvcVO, final List<SubservicioVO> ssrvList,
             final List<SubservicioSubservicioVO> ssssList) throws DuplicateInstanceException {
         Preconditions.checkNotNull(srvcVO);
@@ -318,13 +283,9 @@ public abstract class AbstractServicioBO {
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList);
 
     /**
-     * Update.
-     *
-     * @param srvcVO
-     *            the srvc vo
-     * @throws ModelException
-     *             the model exception
+     * {@inheritDoc}
      */
+    @Override
     public final void update(final ServicioVO srvcVO) throws ModelException {
         Preconditions.checkNotNull(srvcVO);
 
@@ -357,13 +318,9 @@ public abstract class AbstractServicioBO {
             throws ModelException;
 
     /**
-     * Duplicate.
-     *
-     * @param srvcVO
-     *            the srvc vo
-     * @throws ModelException
-     *             the model exception
+     * {@inheritDoc}
      */
+    @Override
     public final void duplicate(final ServicioVO srvcVO) throws ModelException {
         Preconditions.checkNotNull(srvcVO);
 
@@ -457,13 +414,9 @@ public abstract class AbstractServicioBO {
             throws ModelException;
 
     /**
-     * Delete.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @throws ModelException
-     *             the model exception
+     * {@inheritDoc}
      */
+    @Override
     public final void delete(final Long srvcId) throws ModelException {
         Preconditions.checkNotNull(srvcId);
 

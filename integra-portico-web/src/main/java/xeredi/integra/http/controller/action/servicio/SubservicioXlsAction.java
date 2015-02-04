@@ -14,6 +14,7 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
+import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.report.SubservicioXls;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 
@@ -52,7 +53,7 @@ public final class SubservicioXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(itemCriterio.getEntiId());
 
         enti = TipoSubservicioProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);

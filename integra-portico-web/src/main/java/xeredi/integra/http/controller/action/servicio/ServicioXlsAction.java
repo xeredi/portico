@@ -14,6 +14,7 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.report.ServicioXls;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 
@@ -52,7 +53,7 @@ public final class ServicioXlsAction extends BaseAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(itemCriterio.getEntiId());
 
         enti = TipoServicioProxy.select(itemCriterio.getEntiId());
         itemCriterio.setSoloDatosGrid(false);

@@ -12,7 +12,9 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
+import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 import com.google.common.base.Preconditions;
@@ -47,8 +49,9 @@ public final class SubservicioAction extends ItemAction {
     public String detalle() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
 
         item = ssrvBO.select(item.getId(), getIdioma());
         enti = TipoSubservicioProxy.select(item.getEntiId());
@@ -76,7 +79,7 @@ public final class SubservicioAction extends ItemAction {
         item.setFref(Calendar.getInstance().getTime());
 
         if (item.getSrvc() != null && item.getSrvc().getId() != null) {
-            final ServicioBO srvcBO = new ServicioBO();
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getTpsrId());
 
             item.setSrvc(srvcBO.select(item.getSrvc().getId(), getIdioma()));
             item.setFref(item.getSrvc().getFref());
@@ -101,8 +104,9 @@ public final class SubservicioAction extends ItemAction {
     public String modificar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
 
         item = ssrvBO.select(item.getId(), getIdioma());
         enti = TipoSubservicioProxy.select(item.getEntiId());
@@ -123,7 +127,11 @@ public final class SubservicioAction extends ItemAction {
      */
     @Action("ssrv-duplicate")
     public String duplicar() throws ApplicationException {
-        final SubservicioBO ssrvBO = new SubservicioBO();
+        Preconditions.checkNotNull(item);
+        Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
+
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
 
         item = ssrvBO.select(item.getId(), getIdioma());
         enti = TipoSubservicioProxy.select(item.getEntiId());
@@ -172,7 +180,7 @@ public final class SubservicioAction extends ItemAction {
         FieldValidator.validateItem(this, enti, item);
 
         if (!hasErrors()) {
-            final SubservicioBO ssrvBO = new SubservicioBO();
+            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(item.getEntiId());
 
             switch (accion) {
             case create:

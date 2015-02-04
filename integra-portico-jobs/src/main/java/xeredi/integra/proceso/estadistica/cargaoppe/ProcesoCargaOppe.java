@@ -17,6 +17,7 @@ import xeredi.integra.model.estadistica.io.EstadisticaFileType;
 import xeredi.integra.model.estadistica.io.OppeFileImport;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
@@ -69,7 +70,6 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         final PeriodoProcesoVO peprVO = new PeriodoProcesoVO();
 
         // Lectura de los parametros de entrada
-        final ParametroBO prmtBO = new ParametroBO();
         final long autpId = Long.parseLong(prbtVO.getPrpmMap().get(AUTP_PARAM));
         final int anio = Integer.parseInt(prbtVO.getPrpmMap().get(ANIO_PARAM));
         final int mes = Integer.parseInt(prbtVO.getPrpmMap().get(MES_PARAM));
@@ -78,6 +78,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         LOG.info("Carga estadisticas: " + autpId + ", " + anio + ", " + mes);
 
         try {
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
+
             peprVO.setAutp(prmtBO.select(autpId, ConfigurationProxy.getString(ConfigurationKey.language_default),
                     new Date()));
             peprVO.setAnio(anio);

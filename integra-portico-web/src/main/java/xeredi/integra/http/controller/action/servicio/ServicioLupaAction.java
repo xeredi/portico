@@ -9,6 +9,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
@@ -58,11 +59,12 @@ public final class ServicioLupaAction extends BaseAction {
         if (tokenizer.hasMoreTokens()) {
             itemLupaCriterio.setAnno(tokenizer.nextToken() + "%");
         }
+
         if (tokenizer.hasMoreTokens()) {
             itemLupaCriterio.setNumero(tokenizer.nextToken() + "%");
         }
 
-        final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(itemLupaCriterio.getEntiId());
 
         itemList = srvcBO.selectLupaList(itemLupaCriterio, ROWS);
 

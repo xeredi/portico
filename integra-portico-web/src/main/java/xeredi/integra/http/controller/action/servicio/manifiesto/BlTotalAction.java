@@ -4,7 +4,6 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.manifiesto.BlBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.integra.model.servicio.vo.manifiesto.ResumenTotalesVO;
@@ -42,10 +41,9 @@ public final class BlTotalAction extends BaseAction {
         Preconditions.checkNotNull(item.getSrvc());
         Preconditions.checkNotNull(item.getSrvc().getId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
         final BlBO mablBO = new BlBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
+        item = mablBO.select(item.getId(), getIdioma());
         resumen = mablBO.selectResumen(item.getSrvc().getId(), item.getId());
 
         return SUCCESS;

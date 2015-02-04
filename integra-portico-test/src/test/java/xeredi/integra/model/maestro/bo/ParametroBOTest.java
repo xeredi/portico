@@ -26,7 +26,7 @@ public final class ParametroBOTest {
      */
     @Test
     public static void testSelect() {
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.TIPO_ACTIVIDAD.getId());
         final ParametroCriterioVO criterioVO = new ParametroCriterioVO();
         final Set<Long> tpprIds = new HashSet<>();
 
@@ -48,7 +48,7 @@ public final class ParametroBOTest {
      */
     @Test
     public static void testSelectMap() {
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.PAIS.getId());
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
         final Set<Long> tpprIds = new HashSet<>(Arrays.asList(new Long[] { Entidad.PAIS.getId() }));
 

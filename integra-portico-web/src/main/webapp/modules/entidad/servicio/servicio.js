@@ -377,7 +377,8 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
 
     $http.post("servicio/srvc-detail.action", {
         item : {
-            id : $routeParams.srvcId
+            id : $routeParams.srvcId,
+            entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;
@@ -456,7 +457,8 @@ function srvcEditController($http, $routeParams, pageTitleService) {
 
     $http.post("servicio/srvc-edit.action", {
         item : {
-            id : $routeParams.srvcId
+            id : $routeParams.srvcId,
+            entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;
@@ -490,7 +492,8 @@ function srvcDuplicateController($http, $location, $routeParams, pageTitleServic
 
     $http.post("servicio/srvc-duplicate.action", {
         item : {
-            id : $routeParams.srvcId
+            id : $routeParams.srvcId,
+            entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;
@@ -816,7 +819,8 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
 
     $http.post("servicio/ssrv-detail.action", {
         item : {
-            id : $routeParams.ssrvId
+            id : $routeParams.ssrvId,
+            entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;
@@ -905,7 +909,8 @@ function ssrvEditController($http, $routeParams, pageTitleService) {
 
     $http.post("servicio/ssrv-edit.action", {
         item : {
-            id : $routeParams.ssrvId
+            id : $routeParams.ssrvId,
+            entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;
@@ -939,7 +944,8 @@ function ssrvDuplicateController($http, $location, $routeParams, pageTitleServic
 
     $http.post("servicio/ssrv-duplicate.action", {
         item : {
-            id : $routeParams.ssrvId
+            id : $routeParams.ssrvId,
+            entiId : $routeParams.entiId
         }
     }).success(function(data) {
         vm.enti = data.enti;

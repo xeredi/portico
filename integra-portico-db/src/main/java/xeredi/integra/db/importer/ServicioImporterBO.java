@@ -38,6 +38,7 @@ import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.EntidadProxy;
@@ -49,6 +50,8 @@ import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoElemento;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.servicio.bo.DefaultServicioBO;
+import xeredi.integra.model.servicio.bo.DefaultSubservicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -166,9 +169,8 @@ public final class ServicioImporterBO {
      */
     private void importEntity(final Connection con, final Entidad entidad, final StringBuffer sql, final Locale locale)
             throws SQLException, DuplicateInstanceException {
-        final ParametroBO prmtBO = new ParametroBO();
-        final ServicioBO srvcBO = new ServicioBO();
-        final SubservicioBO ssrvBO = new SubservicioBO();
+        final ServicioBO srvcBO = new DefaultServicioBO();
+        final SubservicioBO ssrvBO = new DefaultSubservicioBO();
 
         final EntidadVO entiVO = EntidadProxy.select(entidad.getId());
         final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + entiVO.getId());
@@ -187,6 +189,7 @@ public final class ServicioImporterBO {
                     LOG.debug("Busqueda de los parametros del maestro " + tpprName);
                 }
 
+                final ParametroBO prmtBO = ParametroBOFactory.newInstance(entd.getTpdt().getEnti().getId());
                 final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
                 prmtCriterioVO.setEntiId(entd.getTpdt().getEnti().getId());
@@ -195,6 +198,7 @@ public final class ServicioImporterBO {
         }
 
         // Obtencion de Subpuertos
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.SUBPUERTO.getId());
         final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
         prmtCriterioVO.setEntiId(Entidad.SUBPUERTO.getId());

@@ -8,7 +8,6 @@ import org.apache.struts2.convention.annotation.Result;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
-import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -44,10 +43,9 @@ public final class EscalaAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final ServicioBO srvcBO = new ServicioBO();
         final EscalaBO escaBO = new EscalaBO();
 
-        item = srvcBO.select(item.getId(), getIdioma());
+        item = escaBO.select(item.getId(), getIdioma());
 
         notificado = item.getItdtMap().get(TipoDato.CADENA_03.getId()).getCadena() != null
                 && item.getItdtMap().get(TipoDato.FECHA_02.getId()).getFecha() != null;

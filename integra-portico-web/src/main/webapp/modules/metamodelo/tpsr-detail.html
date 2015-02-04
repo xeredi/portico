@@ -20,6 +20,17 @@
 				<p class="form-control-static" bs-tooltip data-title="{{'TipoEntidad_' + vm.enti.tipo | translate}}"
 					ng-bind="vm.enti.tipo"></p>
 			</div>
+			<div class="col-sm-3 col-md-2 form-group">
+				<label translate>enti_maxGrid</label>
+				<p class="form-control-static number" ng-bind="vm.enti.maxGrid | number:0"></p>
+			</div>
+			<div class="col-sm-4 col-md-3 col-lg-2 form-group">
+				<label translate>enti_tpdtEstado</label>
+				<p class="form-control-static">
+					<a ng-if="vm.enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{vm.enti.tpdtEstado.id}}"
+						ng-bind="vm.enti.tpdtEstado.nombre"></a>
+				</p>
+			</div>
 		</div>
 
 		<div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
@@ -67,16 +78,9 @@
 					<i class="glyphicon glyphicon-{{vm.enti.exencionable ? 'ok' : 'remove'}}"></i>
 				</p>
 			</div>
-			<div class="col-sm-3 col-md-2 form-group">
-				<label translate>enti_maxGrid</label>
-				<p class="form-control-static number" ng-bind="vm.enti.maxGrid | number:0"></p>
-			</div>
 			<div class="col-sm-4 col-md-3 col-lg-2 form-group">
-				<label translate>enti_tpdtEstado</label>
-				<p class="form-control-static">
-					<a ng-if="vm.enti.tpdtEstado" ng-href="#/metamodelo/tpdt/detail/{{vm.enti.tpdtEstado.id}}"
-						ng-bind="vm.enti.tpdtEstado.nombre"></a>
-				</p>
+				<label translate>enti_classpath</label>
+				<p class="form-control-static" ng-bind="vm.enti.classpath"></p>
 			</div>
 		</div>
 	</div>

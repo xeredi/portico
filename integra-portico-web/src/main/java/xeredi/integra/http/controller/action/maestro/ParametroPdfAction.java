@@ -10,19 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.dynamicreports.report.exception.DRException;
-
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.I18nBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.report.ParametroPdf;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
@@ -72,12 +70,13 @@ public final class ParametroPdfAction extends BaseAction {
     public String imprimir() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
         if (fechaVigencia == null) {
             fechaVigencia = Calendar.getInstance().getTime();
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
         final Map<Long, TipoSubparametroVO> entiHijasMap = new HashMap<>();
 
         item = prmtBO.select(item.getId(), getIdioma(), fechaVigencia);

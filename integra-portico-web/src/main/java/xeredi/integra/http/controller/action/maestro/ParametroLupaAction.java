@@ -10,6 +10,7 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -60,7 +61,7 @@ public final class ParametroLupaAction extends BaseAction {
             itemLupaCriterio.setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(itemLupaCriterio.getEntiId());
         final TipoParametroVO enti = TipoParametroProxy.select(itemLupaCriterio.getEntiId());
 
         if (enti.getI18n()) {

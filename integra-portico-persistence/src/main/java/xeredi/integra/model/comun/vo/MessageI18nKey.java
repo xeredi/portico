@@ -133,7 +133,7 @@ public enum MessageI18nKey {
     /** The enti_tpdt nombre. */
     enti_tpdtNombre,
     /** The enti_tpsr. */
-    enti_tpsr,
+    enti_tpsr, enti_classpath,
     /** The tppr. */
     tppr,
     /** The tppr list. */

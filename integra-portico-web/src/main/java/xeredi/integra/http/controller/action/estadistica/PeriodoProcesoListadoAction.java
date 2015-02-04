@@ -13,6 +13,7 @@ import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
@@ -76,16 +77,13 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      * Load label values map.
      */
     protected final void loadLabelValuesMap() {
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
+        final Set<Long> tpprIds = new HashSet<>();
 
-        {
-            final Set<Long> tpprIds = new HashSet<>();
+        tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
 
-            tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
-
-            autpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()).get(
-                    Entidad.AUTORIDAD_PORTUARIA.getId());
-        }
+        autpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()).get(
+                Entidad.AUTORIDAD_PORTUARIA.getId());
     }
 
     // get / set

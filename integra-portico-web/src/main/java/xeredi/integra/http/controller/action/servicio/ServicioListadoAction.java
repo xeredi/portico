@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -18,6 +19,7 @@ import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoHtml;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -78,7 +80,7 @@ public final class ServicioListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio);
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
-        final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(itemCriterio.getEntiId());
 
         // Traemos solo los datos 'gridables' de los parametros (Minimiza el
         // trafico con la BD)
@@ -105,6 +107,8 @@ public final class ServicioListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio.getIdioma());
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
+        final ParametroBO prmtBO = new DefaultParametroBO();
+
         if (labelValuesMap == null) {
             labelValuesMap = new HashMap<>();
 
@@ -123,8 +127,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = new ParametroBO();
-
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(),
                         getItemCriterio().getIdioma()));
             }
@@ -133,7 +135,6 @@ public final class ServicioListadoAction extends ItemListadoAction {
         if (subpList == null) {
             subpList = new ArrayList<>();
 
-            final ParametroBO prmtBO = new ParametroBO();
             final Set<Long> tpprIds = new HashSet<>();
 
             tpprIds.add(Entidad.SUBPUERTO.getId());

@@ -17,7 +17,7 @@
 	<sql id="SelectPrefix">
     <![CDATA[
         SELECT
-            enti_pk, enti_codigo, enti_tipo, enti_max_grid
+            enti_pk, enti_codigo, enti_tipo, enti_max_grid, enti_classpath
             , enti_cmd_alta, enti_cmd_baja, enti_cmd_edicion, enti_cmd_duplicado
             , tppr_es_i18n, tppr_es_tmp_exp
             , tpdt_pk, tpdt_codigo

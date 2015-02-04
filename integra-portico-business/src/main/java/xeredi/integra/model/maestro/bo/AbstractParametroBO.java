@@ -46,19 +46,11 @@ import com.google.common.base.Preconditions;
 /**
  * The Class AbstractParametroBO.
  */
-public abstract class AbstractParametroBO {
+public abstract class AbstractParametroBO implements ParametroBO {
     /**
-     * Insert.
-     *
-     * @param prmt
-     *            the prmt
-     * @param tpprVO
-     *            the tppr vo
-     * @param i18nMap
-     *            the i18n map
-     * @throws OverlapException
-     *             the overlap exception
+     * {@inheritDoc}
      */
+    @Override
     public final void insert(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
             throws OverlapException {
         Preconditions.checkNotNull(prmt);
@@ -138,19 +130,9 @@ public abstract class AbstractParametroBO {
             final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap);
 
     /**
-     * Duplicate.
-     *
-     * @param prmt
-     *            the prmt
-     * @param tpprVO
-     *            the tppr vo
-     * @param i18nMap
-     *            the i18n map
-     * @throws OverlapException
-     *             the overlap exception
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final void duplicate(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
             throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt);
@@ -332,19 +314,9 @@ public abstract class AbstractParametroBO {
             InstanceNotFoundException;
 
     /**
-     * Update.
-     *
-     * @param prmt
-     *            the prmt
-     * @param tpprVO
-     *            the tppr vo
-     * @param i18nMap
-     *            the i18n map
-     * @throws OverlapException
-     *             the overlap exception
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final void update(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
             throws OverlapException, InstanceNotFoundException {
         Preconditions.checkNotNull(prmt);
@@ -422,13 +394,9 @@ public abstract class AbstractParametroBO {
             InstanceNotFoundException;
 
     /**
-     * Delete.
-     *
-     * @param prmt
-     *            the prmt
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final void delete(final ParametroVO prmt) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmt);
         Preconditions.checkNotNull(prmt.getPrvr());
@@ -468,12 +436,9 @@ public abstract class AbstractParametroBO {
             throws InstanceNotFoundException;
 
     /**
-     * Select list.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the list
+     * {@inheritDoc}
      */
+    @Override
     public final List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
@@ -488,16 +453,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select list.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
+     * {@inheritDoc}
      */
+    @Override
     public final PaginatedList<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(prmtCriterioVO);
@@ -520,12 +478,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select map.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the map
+     * {@inheritDoc}
      */
+    @Override
     public final Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
@@ -540,12 +495,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select map by codigo.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the map
+     * {@inheritDoc}
      */
+    @Override
     public final Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
@@ -560,12 +512,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select map codigo id.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the map
+     * {@inheritDoc}
      */
+    @Override
     public final Map<String, Long> selectMapCodigoId(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
@@ -582,12 +531,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select map id codigo.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the map
+     * {@inheritDoc}
      */
+    @Override
     public final Map<Long, String> selectMapIdCodigo(final ParametroCriterioVO prmtCriterioVO) {
         Preconditions.checkNotNull(prmtCriterioVO);
 
@@ -604,16 +550,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select label values.
-     *
-     * @param tpprIds
-     *            the tppr ids
-     * @param fechaReferencia
-     *            the fecha referencia
-     * @param idioma
-     *            the idioma
-     * @return the map
+     * {@inheritDoc}
      */
+    @Override
     public final Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
             final String idioma) {
         Preconditions.checkNotNull(tpprIds);
@@ -643,12 +582,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select label values.
-     *
-     * @param criterioVO
-     *            the criterio vo
-     * @return the list
+     * {@inheritDoc}
      */
+    @Override
     public final List<LabelValueVO> selectLabelValues(final ParametroCriterioVO criterioVO) {
         Preconditions.checkNotNull(criterioVO);
 
@@ -665,14 +601,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select object.
-     *
-     * @param prmtCriterioVO
-     *            the prmt criterio vo
-     * @return the parametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmtCriterioVO);
 
@@ -691,18 +622,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select.
-     *
-     * @param prmtId
-     *            the prmt id
-     * @param idioma
-     *            the idioma
-     * @param fechaVigencia
-     *            the fecha vigencia
-     * @return the parametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final ParametroVO select(final Long prmtId, final String idioma, final Date fechaVigencia)
             throws InstanceNotFoundException {
         Preconditions.checkNotNull(prmtId);
@@ -728,14 +650,9 @@ public abstract class AbstractParametroBO {
     }
 
     /**
-     * Select lupa list.
-     *
-     * @param prmtLupaCriterioVO
-     *            the prmt lupa criterio vo
-     * @param limit
-     *            the limit
-     * @return the list
+     * {@inheritDoc}
      */
+    @Override
     public final List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(prmtLupaCriterioVO);
 

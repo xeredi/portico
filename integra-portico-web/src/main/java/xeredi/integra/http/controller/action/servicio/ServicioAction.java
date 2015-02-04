@@ -11,11 +11,13 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -51,8 +53,9 @@ public final class ServicioAction extends ItemAction {
     public String detalle() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
-        final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
         item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
@@ -75,7 +78,6 @@ public final class ServicioAction extends ItemAction {
         Preconditions.checkNotNull(item.getEntiId());
 
         accion = ACCION_EDICION.create;
-
         enti = TipoServicioProxy.select(item.getEntiId());
 
         item.setFref(Calendar.getInstance().getTime());
@@ -99,8 +101,9 @@ public final class ServicioAction extends ItemAction {
     public String modificar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
-        final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
         item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
@@ -124,8 +127,9 @@ public final class ServicioAction extends ItemAction {
     public String duplicar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
-        final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
         item = srvcBO.select(item.getId(), getIdioma());
         enti = TipoServicioProxy.select(item.getEntiId());
@@ -176,7 +180,7 @@ public final class ServicioAction extends ItemAction {
 
         if (!hasErrors()) {
             // FIXME ACABAR
-            final ServicioBO srvcBO = new ServicioBO();
+            final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
             switch (accion) {
             case create:
@@ -210,8 +214,9 @@ public final class ServicioAction extends ItemAction {
     public String borrar() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
-        final ServicioBO srvcBO = new ServicioBO();
+        final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
         srvcBO.delete(item.getId());
 
@@ -223,8 +228,7 @@ public final class ServicioAction extends ItemAction {
      */
     private void loadSubpList() {
         if (subpList == null) {
-            final ParametroBO prmtBO = new ParametroBO();
-
+            final ParametroBO prmtBO = new DefaultParametroBO();
             final Set<Long> tpprIds = new HashSet<>();
 
             tpprIds.add(Entidad.SUBPUERTO.getId());

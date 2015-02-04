@@ -8,6 +8,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
+import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
@@ -43,7 +44,7 @@ public final class SubservicioLupaAction extends BaseAction {
         Preconditions.checkNotNull(itemLupaCriterio.getSrvcId());
         Preconditions.checkNotNull(itemLupaCriterio.getNumero());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
+        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(itemLupaCriterio.getEntiId());
 
         itemList = ssrvBO.selectLupaList(itemLupaCriterio, ROWS);
 

@@ -13,9 +13,8 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
-import xeredi.integra.model.servicio.bo.ServicioBO;
-import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.escala.AtraqueBO;
+import xeredi.integra.model.servicio.bo.escala.EscalaBO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
 import com.google.common.base.Preconditions;
@@ -49,12 +48,12 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        final EscalaBO srvcBO = new EscalaBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+        item = atraBO.select(item.getId(), getIdioma());
 
         if (!atraBO.isAutorizable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizar,
@@ -121,12 +120,12 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        final EscalaBO srvcBO = new EscalaBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+        item = atraBO.select(item.getId(), getIdioma());
 
         if (!atraBO.isDenegable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_denegar, item.getId());
@@ -180,12 +179,12 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        final EscalaBO srvcBO = new EscalaBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+        item = atraBO.select(item.getId(), getIdioma());
 
         if (!atraBO.isAnulable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_anular, item.getId());
@@ -239,12 +238,12 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        final EscalaBO srvcBO = new EscalaBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+        item = atraBO.select(item.getId(), getIdioma());
 
         if (!atraBO.isIniciable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_iniciar, item.getId());
@@ -303,12 +302,12 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        final EscalaBO srvcBO = new EscalaBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+        item = atraBO.select(item.getId(), getIdioma());
 
         if (!atraBO.isFinalizable(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_finalizar,
@@ -357,12 +356,12 @@ public final class AtraqueAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
 
-        final SubservicioBO ssrvBO = new SubservicioBO();
-        final ServicioBO srvcBO = new ServicioBO();
+        enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        final EscalaBO srvcBO = new EscalaBO();
         final AtraqueBO atraBO = new AtraqueBO();
 
-        item = ssrvBO.select(item.getId(), getIdioma());
-        enti = TipoSubservicioProxy.select(item.getEntiId());
+        item = atraBO.select(item.getId(), getIdioma());
 
         if (!atraBO.isAutorizableFprevio(item.getId())) {
             throw new OperacionNoPermitidaException(Entidad.ATRAQUE.getId(), MessageI18nKey.atra_autorizarFPrevio,

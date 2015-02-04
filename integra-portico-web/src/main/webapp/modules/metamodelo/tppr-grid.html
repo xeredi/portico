@@ -34,6 +34,7 @@
                     <th nowrap="nowrap" translate>enti_tempExp</th>
                     <th nowrap="nowrap" translate>enti_maxGrid</th>
                     <th nowrap="nowrap" translate>enti_tpdtNombre</th>
+                    <th nowrap="nowrap" translate>enti_classpath</th>
                 </tr>
             </thead>
 
@@ -51,6 +52,7 @@
                     <td class="number" ng-bind="enti.maxGrid | number:0"></td>
                     <td><a ng-href="#/metamodelo/tpdt/detail/{{enti.tpdtNombre.id}}"
                         ng-bind="enti.tpdtNombre.nombre"></a></td>
+                    <td ng-bind="enti.classpath"></td>
                 </tr>
             </tbody>
         </table>

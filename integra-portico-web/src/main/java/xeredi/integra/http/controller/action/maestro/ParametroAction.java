@@ -14,6 +14,7 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
@@ -74,12 +75,13 @@ public final class ParametroAction extends ItemAction {
     public String edit() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
 
         item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
         enti = TipoParametroProxy.select(item.getEntiId());
@@ -105,12 +107,13 @@ public final class ParametroAction extends ItemAction {
     public String duplicate() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
 
         item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
         enti = TipoParametroProxy.select(item.getEntiId());
@@ -136,8 +139,7 @@ public final class ParametroAction extends ItemAction {
     public String save() throws ApplicationException {
         Preconditions.checkNotNull(accion);
         Preconditions.checkNotNull(item);
-
-        final ParametroBO prmtBO = new ParametroBO();
+        Preconditions.checkNotNull(item.getEntiId());
 
         enti = TipoParametroProxy.select(item.getEntiId());
 
@@ -168,6 +170,8 @@ public final class ParametroAction extends ItemAction {
         // Fin de validacion de datos
 
         if (!hasErrors()) {
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
+
             switch (accion) {
             case create:
                 prmtBO.insert(item, enti, i18nMap);
@@ -201,8 +205,9 @@ public final class ParametroAction extends ItemAction {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getPrvr());
         Preconditions.checkNotNull(item.getPrvr().getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
 
         prmtBO.delete(item);
 
@@ -220,12 +225,13 @@ public final class ParametroAction extends ItemAction {
     public String detail() throws ApplicationException {
         Preconditions.checkNotNull(item);
         Preconditions.checkNotNull(item.getId());
+        Preconditions.checkNotNull(item.getEntiId());
 
         if (getFechaVigencia() == null) {
             setFechaVigencia(Calendar.getInstance().getTime());
         }
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(item.getEntiId());
 
         item = prmtBO.select(item.getId(), getIdioma(), getFechaVigencia());
         enti = TipoParametroProxy.select(item.getEntiId());

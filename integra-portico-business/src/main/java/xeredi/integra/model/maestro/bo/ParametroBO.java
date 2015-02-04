@@ -1,56 +1,202 @@
 package xeredi.integra.model.maestro.bo;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.session.SqlSession;
+import java.util.Set;
 
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OverlapException;
 import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
+import xeredi.integra.model.maestro.vo.ParametroLupaCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
+import xeredi.util.applicationobjects.LabelValueVO;
+import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
  * Implementación del servicio de gestión de maestros de la aplicación.
  */
-public final class ParametroBO extends AbstractParametroBO {
+public interface ParametroBO {
 
     /**
-     * {@inheritDoc}
+     * Insert.
+     *
+     * @param prmt
+     *            the prmt
+     * @param tpprVO
+     *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
      */
-    @Override
-    protected void insertPostOperations(final SqlSession session, final ParametroVO prmt, final TipoParametroVO tpprVO,
-            final Map<String, I18nVO> i18nMap) {
-        // noop
-    }
+    void insert(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
+            throws OverlapException;
 
     /**
-     * {@inheritDoc}
+     * Duplicate.
+     *
+     * @param prmt
+     *            the prmt
+     * @param tpprVO
+     *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    protected void duplicatePostOperations(final SqlSession session, final ParametroVO prmt,
-            final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap) throws OverlapException,
-            InstanceNotFoundException {
-        // noop
-    }
+    void duplicate(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException;
 
     /**
-     * {@inheritDoc}
+     * Update.
+     *
+     * @param prmt
+     *            the prmt
+     * @param tpprVO
+     *            the tppr vo
+     * @param i18nMap
+     *            the i18n map
+     * @throws OverlapException
+     *             the overlap exception
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    protected void updatePostOperations(final SqlSession session, final ParametroVO prmt, final TipoParametroVO tpprVO,
-            final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
-        // noop
-    }
+    void update(final ParametroVO prmt, final TipoParametroVO tpprVO, final Map<String, I18nVO> i18nMap)
+            throws OverlapException, InstanceNotFoundException;
 
     /**
-     * {@inheritDoc}
+     * Delete.
+     *
+     * @param prmt
+     *            the prmt
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    @Override
-    protected void deletePostOperations(final SqlSession session, final ParametroVO prmt)
-            throws InstanceNotFoundException {
-        // noop
-    }
+    void delete(final ParametroVO prmt) throws InstanceNotFoundException;
+
+    /**
+     * Select list.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the list
+     */
+    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO);
+
+    /**
+     * Select list.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @param offset
+     *            the offset
+     * @param limit
+     *            the limit
+     * @return the paginated list
+     */
+    PaginatedList<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO, final int offset, final int limit);
+
+    /**
+     * Select map.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
+     */
+    Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO);
+
+    /**
+     * Select map by codigo.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
+     */
+    Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO);
+
+    /**
+     * Select map codigo id.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
+     */
+    Map<String, Long> selectMapCodigoId(final ParametroCriterioVO prmtCriterioVO);
+
+    /**
+     * Select map id codigo.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the map
+     */
+    Map<Long, String> selectMapIdCodigo(final ParametroCriterioVO prmtCriterioVO);
+
+    /**
+     * Select label values.
+     *
+     * @param tpprIds
+     *            the tppr ids
+     * @param fechaReferencia
+     *            the fecha referencia
+     * @param idioma
+     *            the idioma
+     * @return the map
+     */
+    Map<Long, List<LabelValueVO>> selectLabelValues(final Set<Long> tpprIds, final Date fechaReferencia,
+            final String idioma);
+
+    /**
+     * Select label values.
+     *
+     * @param criterioVO
+     *            the criterio vo
+     * @return the list
+     */
+    List<LabelValueVO> selectLabelValues(final ParametroCriterioVO criterioVO);
+
+    /**
+     * Select object.
+     *
+     * @param prmtCriterioVO
+     *            the prmt criterio vo
+     * @return the parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO) throws InstanceNotFoundException;
+
+    /**
+     * Select.
+     *
+     * @param prmtId
+     *            the prmt id
+     * @param idioma
+     *            the idioma
+     * @param fechaVigencia
+     *            the fecha vigencia
+     * @return the parametro vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    ParametroVO select(final Long prmtId, final String idioma, final Date fechaVigencia)
+            throws InstanceNotFoundException;
+
+    /**
+     * Select lupa list.
+     *
+     * @param prmtLupaCriterioVO
+     *            the prmt lupa criterio vo
+     * @param limit
+     *            the limit
+     * @return the list
+     */
+    List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO, final int limit);
 
 }

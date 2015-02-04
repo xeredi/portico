@@ -35,18 +35,11 @@ import com.google.common.base.Preconditions;
 /**
  * The Class AbstractSubservicioBO.
  */
-public abstract class AbstractSubservicioBO {
+public abstract class AbstractSubservicioBO implements SubservicioBO {
     /**
-     * Select list.
-     *
-     * @param ssrvCriterioVO
-     *            the ssrv criterio vo
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
+     * {@inheritDoc}
      */
+    @Override
     public final PaginatedList<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO, final int offset,
             final int limit) {
         Preconditions.checkNotNull(ssrvCriterioVO);
@@ -69,12 +62,9 @@ public abstract class AbstractSubservicioBO {
     }
 
     /**
-     * Select list.
-     *
-     * @param ssrvCriterioVO
-     *            the ssrv criterio vo
-     * @return the list
+     * {@inheritDoc}
      */
+    @Override
     public final List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO) {
         Preconditions.checkNotNull(ssrvCriterioVO);
 
@@ -89,16 +79,9 @@ public abstract class AbstractSubservicioBO {
     }
 
     /**
-     * Select.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @param idioma
-     *            the idioma
-     * @return the subservicio vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final SubservicioVO select(final Long ssrvId, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(idioma);
@@ -123,14 +106,9 @@ public abstract class AbstractSubservicioBO {
     }
 
     /**
-     * Select lupa list.
-     *
-     * @param ssrvLupaCriterioVO
-     *            the ssrv lupa criterio vo
-     * @param limit
-     *            the limit
-     * @return the list
+     * {@inheritDoc}
      */
+    @Override
     public final List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvLupaCriterioVO, final int limit) {
         Preconditions.checkNotNull(ssrvLupaCriterioVO);
 
@@ -142,17 +120,9 @@ public abstract class AbstractSubservicioBO {
     }
 
     /**
-     * Insert.
-     *
-     * @param ssrvVO
-     *            the ssrv vo
-     * @param tpssVO
-     *            the tpss vo
-     * @param ssrvPadreIds
-     *            the ssrv padre ids
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
+     * {@inheritDoc}
      */
+    @Override
     public final void insert(final SubservicioVO ssrvVO, final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds)
             throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -220,13 +190,33 @@ public abstract class AbstractSubservicioBO {
             final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException;
 
     /**
-     * Update.
+     * {@inheritDoc}
+     */
+    @Override
+    public final void duplicate(final SubservicioVO ssrvVO) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            duplicatePostOperations(session, ssrvVO);
+
+            session.commit();
+        }
+
+        throw new Error("No implementado");
+    }
+
+    /**
+     * Duplicate post operations.
      *
+     * @param session
+     *            the session
      * @param ssrvVO
      *            the ssrv vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
      */
+    protected abstract void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final void update(final SubservicioVO ssrvVO) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
@@ -255,19 +245,17 @@ public abstract class AbstractSubservicioBO {
             throws InstanceNotFoundException;
 
     /**
-     * Delete.
-     *
-     * @param ssrvId
-     *            the ssrv id
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
+     * {@inheritDoc}
      */
+    @Override
     public final void delete(final Long ssrvId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             deletePostOperations(session, ssrvId);
 
             session.commit();
         }
+
+        throw new Error("No implementado");
     }
 
     /**

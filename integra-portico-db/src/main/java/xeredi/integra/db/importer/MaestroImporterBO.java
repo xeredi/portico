@@ -38,6 +38,7 @@ import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.bo.SubparametroBO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.ParametroVersionVO;
@@ -196,8 +197,8 @@ public final class MaestroImporterBO {
      */
     private void importTipoParametro(final Connection con, final Entidad entidad, final boolean isTmpImpl,
             final StringBuffer sql) throws SQLException, DuplicateInstanceException, InstanceNotFoundException {
-        final ParametroBO prmtBO = new ParametroBO();
         final TipoParametroVO tpprVO = TipoParametroProxy.select(entidad.getId());
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
         final String entiName = bundle.getString(I18nPrefix.enti.name() + "_" + tpprVO.getId());
 
         if (!tpprPrmtMap.containsKey(tpprVO.getId())) {

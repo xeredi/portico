@@ -13,6 +13,9 @@ UPDATE portico.tbl_entidad_enti SET enti_max_grid = CASE
 	WHEN enti_tipo = 'E' THEN 10000
 END\
 
+-- Ruta a clase de negocio de la entidad
+ALTER TABLE portico.tbl_entidad_enti ADD enti_classpath VARCHAR(50)\
+
 
 
 
@@ -165,6 +168,7 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpdtEstado', 'T. Dato Estado')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpdtNombre', 'T. Dato Nombre')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpsr', 'Tipo de Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_classpath', 'Classpath')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tppr', 'Maestro')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpprList', 'Maestros')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'tpsp', 'Maestro Dependiente')\
@@ -626,6 +630,8 @@ DROP TABLE portico.tbl_message_i18n_m18n\
 -- Configuracion
 DROP TABLE portico.tbl_configuration_conf\
 
+-- Ruta a clase de negocio de la entidad
+ALTER TABLE portico.tbl_entidad_enti DROP COLUMN enti_classpath\
 
 -- Columna de limite de filas visibles en un grid
 ALTER TABLE portico.tbl_entidad_enti DROP COLUMN enti_max_grid\

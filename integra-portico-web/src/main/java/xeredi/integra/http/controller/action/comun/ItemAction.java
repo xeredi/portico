@@ -8,6 +8,7 @@ import java.util.Set;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.vo.ItemVO;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
@@ -63,7 +64,7 @@ public abstract class ItemAction extends BaseAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = new ParametroBO();
+                final ParametroBO prmtBO = new DefaultParametroBO();
 
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
             }

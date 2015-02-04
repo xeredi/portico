@@ -6,7 +6,6 @@ WHERE ssrv_srvc_pk = 4401553;
 
 
 
-
 -- Recalcular Estado BL
 
 SELECT *
@@ -48,7 +47,7 @@ FROM tbl_subservicio_ssrv ssrvBl
 WHERE
 	ssrv_tpss_pk = portico.getEntidad('BL')
 --	AND ssrv_srvc_pk = 1231814
-	AND ssrv_pk = 1232111
+--	AND ssrv_pk = 1232111
 	AND ssrv_estado IS NOT NULL
 LIMIT 10000
 ;

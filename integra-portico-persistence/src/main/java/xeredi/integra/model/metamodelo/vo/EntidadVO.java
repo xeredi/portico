@@ -38,6 +38,9 @@ public class EntidadVO {
     /** The max grid. */
     private Integer maxGrid;
 
+    /** The classpath. */
+    private String classpath;
+
     /**
      * Lista de Grupos de Datos de la Entidad (Pestañas) ordenadas por orden de visualización.
      */
@@ -352,6 +355,25 @@ public class EntidadVO {
      */
     public void setEntdList(final List<EntidadTipoDatoVO> value) {
         entdList = value;
+    }
+
+    /**
+     * Gets the classpath.
+     *
+     * @return the classpath
+     */
+    public String getClasspath() {
+        return classpath;
+    }
+
+    /**
+     * Sets the classpath.
+     *
+     * @param value
+     *            the new classpath
+     */
+    public void setClasspath(final String value) {
+        classpath = value;
     }
 
 }

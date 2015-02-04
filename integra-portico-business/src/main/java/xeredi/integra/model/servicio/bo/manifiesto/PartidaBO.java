@@ -42,6 +42,14 @@ public class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
+    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
         // noop

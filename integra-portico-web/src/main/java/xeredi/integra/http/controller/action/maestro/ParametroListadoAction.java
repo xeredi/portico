@@ -9,7 +9,9 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemListadoAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
@@ -85,7 +87,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
 
         enti = TipoParametroProxy.select(itemCriterio.getEntiId());
 
-        final ParametroBO prmtBO = new ParametroBO();
+        final ParametroBO prmtBO = ParametroBOFactory.newInstance(itemCriterio.getEntiId());
 
         itemList = prmtBO.selectList(itemCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
 
@@ -117,7 +119,7 @@ public final class ParametroListadoAction extends ItemListadoAction {
             }
 
             if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = new ParametroBO();
+                final ParametroBO prmtBO = new DefaultParametroBO();
 
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getItemCriterio().getFechaVigencia(),
                         getItemCriterio().getIdioma()));

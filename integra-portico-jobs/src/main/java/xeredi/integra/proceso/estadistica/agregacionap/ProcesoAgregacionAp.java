@@ -8,6 +8,7 @@ import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
@@ -88,7 +89,7 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
         if (prbtVO.getPrmnList().isEmpty()) {
             try {
                 // Comprobar que existe la AP
-                final ParametroBO prmtBO = new ParametroBO();
+                final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
                 final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
                 final Calendar calendar = Calendar.getInstance();
 

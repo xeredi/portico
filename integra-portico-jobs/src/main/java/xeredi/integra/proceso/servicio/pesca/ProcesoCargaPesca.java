@@ -15,7 +15,7 @@ import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
-import xeredi.integra.model.servicio.bo.ServicioBO;
+import xeredi.integra.model.servicio.bo.pesca.ManifiestoPescaBO;
 import xeredi.integra.model.servicio.io.pesca.PescaFileImport;
 import xeredi.integra.proceso.ProcesoTemplate;
 
@@ -64,7 +64,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                     }
 
                     if (prbtVO.getPrmnList().isEmpty()) {
-                        final ServicioBO srvcBO = new ServicioBO();
+                        final ManifiestoPescaBO srvcBO = new ManifiestoPescaBO();
 
                         try {
                             // FIXME Verificar si ya se ha cargado el archivo
