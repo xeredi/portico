@@ -21,7 +21,8 @@ public final class ManifiestoPescaBO extends AbstractServicioBO {
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        mapeDAO.updateRecalcular(srvcVO.getId());
+        mapeDAO.updateRecalcularImporte(srvcVO.getId());
+        mapeDAO.updateRecalcularPeso(srvcVO.getId());
     }
 
     /**
@@ -29,7 +30,10 @@ public final class ManifiestoPescaBO extends AbstractServicioBO {
      */
     @Override
     protected void updatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
-        // noop
+        final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
+
+        mapeDAO.updateRecalcularImporte(srvcVO.getId());
+        mapeDAO.updateRecalcularPeso(srvcVO.getId());
     }
 
     /**
@@ -37,7 +41,10 @@ public final class ManifiestoPescaBO extends AbstractServicioBO {
      */
     @Override
     protected void duplicatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
-        // noop
+        final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
+
+        mapeDAO.updateRecalcularImporte(srvcVO.getId());
+        mapeDAO.updateRecalcularPeso(srvcVO.getId());
     }
 
     /**

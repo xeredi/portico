@@ -293,6 +293,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
             final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
 
             for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+                itdtVO.setItemId(srvcVO.getId());
                 srdtDAO.update(itdtVO);
             }
 

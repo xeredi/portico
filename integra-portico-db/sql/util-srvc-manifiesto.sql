@@ -3,7 +3,53 @@ FROM tbl_subservicio_ssrv
 WHERE ssrv_srvc_pk = 4401553;
 
 
+-- Recalcular manifiesto pesca
+SELECT *
+	, COALESCE(
+		(
+			SELECT SUM(COALESCE(ssdt_ndecimal, 0))
+			FROM tbl_subservicio_dato_ssdt
+			WHERE
+				EXISTS (
+					SELECT 1
+					FROM tbl_subservicio_ssrv
+					WHERE 
+						ssrv_pk = ssdt_ssrv_pk
+						AND ssrv_srvc_pk = srdt_srvc_pk 
+						AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+				)
+				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
+		)
+	, 0)
+FROM 
+	tbl_servicio_dato_srdt
+WHERE
+	EXISTS (
+		SELECT 1
+		FROM tbl_servicio_srvc
+		WHERE 
+			srvc_pk = srdt_srvc_pk
+			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
+	)
+	AND srdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+	AND srdt_srvc_pk = 1231635
+;
 
+-- Recalcular partida de pesca
+SELECT *
+FROM 
+	tbl_subservicio_dato_ssdt
+WHERE 
+	EXISTS (
+		SELECT 1
+		FROM 
+			tbl_subservicio_ssrv
+		WHERE 
+			ssrv_pk = ssdt_ssrv_pk
+			AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+	)
+	AND ssdt_ssrv_pk = 1231670
+;
 
 
 -- Recalcular Estado BL

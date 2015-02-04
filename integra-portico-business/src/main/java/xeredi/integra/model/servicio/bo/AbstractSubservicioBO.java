@@ -222,6 +222,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
 
             for (final ItemDatoVO itdtVO : ssrvVO.getItdtMap().values()) {
+                itdtVO.setItemId(ssrvVO.getId());
                 ssdtDAO.update(itdtVO);
             }
 

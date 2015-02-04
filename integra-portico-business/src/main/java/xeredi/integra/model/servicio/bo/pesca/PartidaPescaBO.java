@@ -27,8 +27,9 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        papeDAO.updateRecalcular(ssrvVO.getId());
-        mapeDAO.updateRecalcular(ssrvVO.getSrvc().getId());
+        // papeDAO.updateRecalcular(ssrvVO.getId());
+        mapeDAO.updateRecalcularImporte(ssrvVO.getSrvc().getId());
+        mapeDAO.updateRecalcularPeso(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -39,8 +40,9 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        papeDAO.updateRecalcular(ssrvVO.getId());
-        mapeDAO.updateRecalcular(ssrvVO.getSrvc().getId());
+        // papeDAO.updateRecalcular(ssrvVO.getId());
+        mapeDAO.updateRecalcularImporte(ssrvVO.getSrvc().getId());
+        mapeDAO.updateRecalcularPeso(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -52,8 +54,9 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        papeDAO.updateRecalcular(ssrvVO.getId());
-        mapeDAO.updateRecalcular(ssrvVO.getSrvc().getId());
+        // papeDAO.updateRecalcular(ssrvVO.getId());
+        mapeDAO.updateRecalcularImporte(ssrvVO.getSrvc().getId());
+        mapeDAO.updateRecalcularPeso(ssrvVO.getSrvc().getId());
     }
 
     /**
