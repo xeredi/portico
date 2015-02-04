@@ -3,52 +3,72 @@ FROM tbl_subservicio_ssrv
 WHERE ssrv_srvc_pk = 4401553;
 
 
--- Recalcular manifiesto pesca
-SELECT *
-	, COALESCE(
-		(
-			SELECT SUM(COALESCE(ssdt_ndecimal, 0))
-			FROM tbl_subservicio_dato_ssdt
-			WHERE
-				EXISTS (
-					SELECT 1
-					FROM tbl_subservicio_ssrv
-					WHERE 
-						ssrv_pk = ssdt_ssrv_pk
-						AND ssrv_srvc_pk = srdt_srvc_pk 
-						AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
-				)
-				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
-		)
-	, 0)
-FROM 
-	tbl_servicio_dato_srdt
-WHERE
-	EXISTS (
-		SELECT 1
-		FROM tbl_servicio_srvc
-		WHERE 
-			srvc_pk = srdt_srvc_pk
-			AND srvc_tpsr_pk = portico.getEntidad('MANIFIESTO_PESCA')
-	)
-	AND srdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
-	AND srdt_srvc_pk = 1231635
-;
+
 
 -- Recalcular partida de pesca
-SELECT *
-FROM 
-	tbl_subservicio_dato_ssdt
+WITH upd AS (
+	SELECT ssrv_pk
+		, (
+			SELECT ssdt_ndecimal
+			FROM 
+				tbl_subservicio_dato_ssdt
+			WHERE 
+				ssdt_ssrv_pk = ssrv_pk
+				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+		) AS peso
+		, (
+			SELECT ssdt_ndecimal
+			FROM 
+				tbl_subservicio_dato_ssdt
+			WHERE 
+				ssdt_ssrv_pk = ssrv_pk
+				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
+		) AS importe
+	FROM tbl_subservicio_ssrv
+	WHERE 
+		ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+		AND ssrv_pk = 4439005
+)
+UPDATE tbl_subservicio_dato_ssdt ssdt SET
+	ssdt_ndecimal = upd.importe / upd.peso
+FROM upd
 WHERE 
-	EXISTS (
-		SELECT 1
-		FROM 
-			tbl_subservicio_ssrv
-		WHERE 
-			ssrv_pk = ssdt_ssrv_pk
-			AND ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
-	)
-	AND ssdt_ssrv_pk = 1231670
+	upd.ssrv_pk = ssdt.ssdt_ssrv_pk
+	AND ssdt.ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+--	AND ssdt_ndecimal IS NULL
+;
+
+
+WITH upd AS (
+	SELECT ssrv_pk
+		, (
+			SELECT ssdt_ndecimal
+			FROM 
+				tbl_subservicio_dato_ssdt
+			WHERE 
+				ssdt_ssrv_pk = ssrv_pk
+				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+		) AS peso
+		, (
+			SELECT ssdt_ndecimal
+			FROM 
+				tbl_subservicio_dato_ssdt
+			WHERE 
+				ssdt_ssrv_pk = ssrv_pk
+				AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+		) AS precio
+	FROM tbl_subservicio_ssrv
+	WHERE 
+		ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+		AND ssrv_pk = 4439005
+)
+UPDATE tbl_subservicio_dato_ssdt ssdt SET
+	ssdt_ndecimal = upd.precio * upd.peso
+FROM upd
+WHERE 
+	upd.ssrv_pk = ssdt.ssdt_ssrv_pk
+	AND ssdt.ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
+--	AND ssdt_ndecimal IS NULL
 ;
 
 

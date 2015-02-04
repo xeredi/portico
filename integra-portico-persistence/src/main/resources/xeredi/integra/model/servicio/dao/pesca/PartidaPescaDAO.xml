@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.servicio.dao.pesca.PartidaPescaDAO">
+	<update id="updateRecalcularImporte" parameterType="Long">
+        <![CDATA[
+		WITH upd AS (
+			SELECT ssrv_pk
+				, (
+					SELECT ssdt_ndecimal
+					FROM
+						tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+				) AS peso
+				, (
+					SELECT ssdt_ndecimal
+					FROM
+						tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+				) AS precio
+			FROM tbl_subservicio_ssrv
+			WHERE
+				ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+				AND ssrv_pk = #{value}
+		)
+		UPDATE tbl_subservicio_dato_ssdt ssdt SET
+			ssdt_ndecimal = upd.precio * upd.peso
+		FROM upd
+		WHERE
+			upd.ssrv_pk = ssdt.ssdt_ssrv_pk
+			AND ssdt.ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
+			AND ssdt_ndecimal IS NULL        ]]>
+	</update>
+
+	<update id="updateRecalcularPrecio" parameterType="Long">
+        <![CDATA[
+		WITH upd AS (
+			SELECT ssrv_pk
+				, (
+					SELECT ssdt_ndecimal
+					FROM
+						tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_02')
+				) AS peso
+				, (
+					SELECT ssdt_ndecimal
+					FROM
+						tbl_subservicio_dato_ssdt
+					WHERE
+						ssdt_ssrv_pk = ssrv_pk
+						AND ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_04')
+				) AS importe
+			FROM tbl_subservicio_ssrv
+			WHERE
+				ssrv_tpss_pk = portico.getEntidad('PARTIDA_PESCA')
+				AND ssrv_pk = #{value}
+		)
+		UPDATE tbl_subservicio_dato_ssdt ssdt SET
+			ssdt_ndecimal = upd.importe / upd.peso
+		FROM upd
+		WHERE
+			upd.ssrv_pk = ssdt.ssdt_ssrv_pk
+			AND ssdt.ssdt_tpdt_pk = portico.getTipoDato('DECIMAL_03')
+			AND ssdt_ndecimal IS NULL
+        ]]>
+	</update>
+</mapper>
+

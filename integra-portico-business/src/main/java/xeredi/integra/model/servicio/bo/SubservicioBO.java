@@ -100,11 +100,13 @@ public interface SubservicioBO {
     /**
      * Delete.
      *
+     * @param srvcId
+     *            the srvc id
      * @param ssrvId
      *            the ssrv id
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void delete(final Long ssrvId) throws InstanceNotFoundException;
+    void delete(final Long srvcId, final Long ssrvId) throws InstanceNotFoundException;
 
 }

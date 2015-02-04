@@ -59,7 +59,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long ssrvId) throws InstanceNotFoundException {
+    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
+            throws InstanceNotFoundException {
         // noop
     }
 
@@ -93,7 +94,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void autorizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -165,7 +166,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void denegar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -237,7 +238,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void anular(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -309,7 +310,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 
@@ -383,7 +384,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *             the operacion no permitida exception
      */
     public void finalizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         Preconditions.checkNotNull(ssrvId);
         Preconditions.checkNotNull(itdtMap);
 

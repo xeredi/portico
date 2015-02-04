@@ -249,9 +249,9 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void delete(final Long ssrvId) throws InstanceNotFoundException {
+    public final void delete(final Long srvcId, final Long ssrvId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            deletePostOperations(session, ssrvId);
+            deletePostOperations(session, srvcId, ssrvId);
 
             session.commit();
         }
@@ -264,12 +264,14 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
      *
      * @param session
      *            the session
+     * @param srvcId
+     *            the srvc id
      * @param ssrvId
      *            the ssrv id
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    protected abstract void deletePostOperations(final SqlSession session, final Long ssrvId)
+    protected abstract void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
             throws InstanceNotFoundException;
 
     /**

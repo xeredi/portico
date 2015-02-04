@@ -45,7 +45,8 @@ public final class DefaultSubservicioBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long ssrvId) throws InstanceNotFoundException {
+    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
+            throws InstanceNotFoundException {
         // noop
     }
 

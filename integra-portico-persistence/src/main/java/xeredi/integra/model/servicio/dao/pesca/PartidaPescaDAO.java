@@ -7,11 +7,20 @@ package xeredi.integra.model.servicio.dao.pesca;
 public interface PartidaPescaDAO {
 
     /**
-     * Update recalcular.
+     * Update recalcular importe.
      *
      * @param ssrvId
      *            the ssrv id
      * @return the int
      */
-    public int updateRecalcular(final Long ssrvId);
+    public int updateRecalcularImporte(final Long ssrvId);
+
+    /**
+     * Update recalcular precio.
+     *
+     * @param ssrvId
+     *            the ssrv id
+     * @return the int
+     */
+    public int updateRecalcularPrecio(final Long ssrvId);
 }

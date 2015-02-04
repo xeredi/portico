@@ -27,7 +27,8 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        // papeDAO.updateRecalcular(ssrvVO.getId());
+        papeDAO.updateRecalcularImporte(ssrvVO.getId());
+        papeDAO.updateRecalcularPrecio(ssrvVO.getId());
         mapeDAO.updateRecalcularImporte(ssrvVO.getSrvc().getId());
         mapeDAO.updateRecalcularPeso(ssrvVO.getSrvc().getId());
     }
@@ -40,7 +41,8 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        // papeDAO.updateRecalcular(ssrvVO.getId());
+        papeDAO.updateRecalcularImporte(ssrvVO.getId());
+        papeDAO.updateRecalcularPrecio(ssrvVO.getId());
         mapeDAO.updateRecalcularImporte(ssrvVO.getSrvc().getId());
         mapeDAO.updateRecalcularPeso(ssrvVO.getSrvc().getId());
     }
@@ -54,7 +56,8 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
-        // papeDAO.updateRecalcular(ssrvVO.getId());
+        papeDAO.updateRecalcularImporte(ssrvVO.getId());
+        papeDAO.updateRecalcularPrecio(ssrvVO.getId());
         mapeDAO.updateRecalcularImporte(ssrvVO.getSrvc().getId());
         mapeDAO.updateRecalcularPeso(ssrvVO.getSrvc().getId());
     }
@@ -63,8 +66,11 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long ssrvId) throws InstanceNotFoundException {
-        throw new Error("Implementar");
-    }
+    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
+            throws InstanceNotFoundException {
+        final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
+        mapeDAO.updateRecalcularImporte(srvcId);
+        mapeDAO.updateRecalcularPeso(srvcId);
+    }
 }
