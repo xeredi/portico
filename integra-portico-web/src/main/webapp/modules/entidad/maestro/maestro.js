@@ -267,7 +267,8 @@ function prmtDetailController($http, $location, $routeParams, sprmService, pageT
                 item : {
                     prvr : {
                         id : vm.item.prvr.id
-                    }
+                    },
+                    entiId : $routeParams.entiId
                 }
             }).success(function(data) {
                 window.history.back();
@@ -439,7 +440,8 @@ function prmtDuplicateController($http, $location, $routeParams, pageTitleServic
 
     $http.post("maestro/prmt-duplicate.action", {
         item : {
-            id : $routeParams.itemId
+            id : $routeParams.itemId,
+            entiId : $routeParams.entiId
         },
         fechaVigencia : $routeParams.fechaVigencia
     }).success(function(data) {

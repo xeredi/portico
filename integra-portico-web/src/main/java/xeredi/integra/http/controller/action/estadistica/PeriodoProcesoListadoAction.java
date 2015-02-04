@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.estadistica;
 
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +16,8 @@ import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
+
+import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -78,9 +79,7 @@ public final class PeriodoProcesoListadoAction extends BaseAction implements Pag
      */
     protected final void loadLabelValuesMap() {
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
-        final Set<Long> tpprIds = new HashSet<>();
-
-        tpprIds.add(Entidad.AUTORIDAD_PORTUARIA.getId());
+        final Set<Long> tpprIds = Sets.newHashSet(Entidad.AUTORIDAD_PORTUARIA.getId());
 
         autpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()).get(
                 Entidad.AUTORIDAD_PORTUARIA.getId());

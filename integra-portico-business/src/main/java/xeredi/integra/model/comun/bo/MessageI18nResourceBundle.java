@@ -1,7 +1,6 @@
 package xeredi.integra.model.comun.bo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Locale;
@@ -15,6 +14,7 @@ import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -56,14 +56,8 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
         }
 
         final I18nBO i18nBO = new I18nBO();
-        final Set<I18nPrefix> prefixSet = new HashSet<>();
-
-        prefixSet.add(I18nPrefix.tpdt);
-        prefixSet.add(I18nPrefix.cdrf);
-        prefixSet.add(I18nPrefix.enti);
-        prefixSet.add(I18nPrefix.entd);
-        prefixSet.add(I18nPrefix.enac);
-        prefixSet.add(I18nPrefix.engd);
+        final Set<I18nPrefix> prefixSet = Sets.newHashSet(I18nPrefix.tpdt, I18nPrefix.cdrf, I18nPrefix.enti,
+                I18nPrefix.entd, I18nPrefix.enac, I18nPrefix.engd);
 
         final List<LabelValueVO> list = i18nBO.selectLabelValueList(prefixSet,
                 locale.getLanguage().isEmpty() ? defaultLanguage : locale.getLanguage());

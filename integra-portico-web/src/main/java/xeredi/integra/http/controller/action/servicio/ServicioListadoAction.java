@@ -1,8 +1,6 @@
 package xeredi.integra.http.controller.action.servicio;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +24,7 @@ import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -108,40 +107,25 @@ public final class ServicioListadoAction extends ItemListadoAction {
         Preconditions.checkNotNull(itemCriterio.getEntiId());
 
         final ParametroBO prmtBO = new DefaultParametroBO();
+        final TipoServicioVO enti = TipoServicioProxy.select(itemCriterio.getEntiId());
+        final Set<Long> tpprIds = new HashSet<>();
 
-        if (labelValuesMap == null) {
-            labelValuesMap = new HashMap<>();
-
-            final TipoServicioVO enti = TipoServicioProxy.select(itemCriterio.getEntiId());
-
-            // Carga de los labelValues (Si los hay)
-            final Set<Long> tpprIds = new HashSet<>();
-
-            if (enti.getEntdList() != null) {
-                for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
-                    if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
-                            && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
-                        tpprIds.add(entdVO.getTpdt().getEnti().getId());
-                    }
+        if (enti.getEntdList() != null) {
+            for (final EntidadTipoDatoVO entdVO : enti.getEntdList()) {
+                if (entdVO.getFiltrable() && entdVO.getTpdt().getTpht() != TipoHtml.F
+                        && entdVO.getTpdt().getEnti() != null && entdVO.getTpdt().getEnti().getId() != null) {
+                    tpprIds.add(entdVO.getTpdt().getEnti().getId());
                 }
             }
-
-            if (!tpprIds.isEmpty()) {
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(),
-                        getItemCriterio().getIdioma()));
-            }
         }
 
-        if (subpList == null) {
-            subpList = new ArrayList<>();
-
-            final Set<Long> tpprIds = new HashSet<>();
-
-            tpprIds.add(Entidad.SUBPUERTO.getId());
-
-            subpList.addAll(prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getIdioma()).get(
-                    Entidad.SUBPUERTO.getId()));
+        if (!tpprIds.isEmpty()) {
+            labelValuesMap = prmtBO.selectLabelValues(tpprIds, Calendar.getInstance().getTime(), getItemCriterio()
+                    .getIdioma());
         }
+
+        subpList = prmtBO.selectLabelValues(Sets.newHashSet(Entidad.SUBPUERTO.getId()),
+                Calendar.getInstance().getTime(), getIdioma()).get(Entidad.SUBPUERTO.getId());
     }
 
     /**

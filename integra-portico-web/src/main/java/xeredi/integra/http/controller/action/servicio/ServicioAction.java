@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,8 +10,8 @@ import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
-import xeredi.integra.model.maestro.bo.DefaultParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
+import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
@@ -22,6 +21,7 @@ import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -228,10 +228,9 @@ public final class ServicioAction extends ItemAction {
      */
     private void loadSubpList() {
         if (subpList == null) {
-            final ParametroBO prmtBO = new DefaultParametroBO();
-            final Set<Long> tpprIds = new HashSet<>();
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.SUBPUERTO.getId());
+            final Set<Long> tpprIds = Sets.newHashSet(Entidad.SUBPUERTO.getId());
 
-            tpprIds.add(Entidad.SUBPUERTO.getId());
             subpList = prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma())
                     .get(Entidad.SUBPUERTO.getId());
         }
