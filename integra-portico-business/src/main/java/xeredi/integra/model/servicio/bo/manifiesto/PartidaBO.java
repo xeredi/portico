@@ -2,6 +2,8 @@ package xeredi.integra.model.servicio.bo.manifiesto;
 
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,19 +24,17 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class PartidaBO.
  */
-public class PartidaBO extends AbstractSubservicioBO {
+public final class PartidaBO extends AbstractSubservicioBO {
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
-            final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+    protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO,
+            final @Nonnull TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -56,7 +56,7 @@ public class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
+    protected void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO) {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -78,7 +78,7 @@ public class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
+    protected void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -101,8 +101,8 @@ public class PartidaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
-            throws InstanceNotFoundException {
+    protected void deletePostOperations(final @Nonnull SqlSession session, final @Nonnull Long srvcId,
+            final @Nonnull Long ssrvId) throws InstanceNotFoundException {
         final BlDAO blDAO = session.getMapper(BlDAO.class);
         final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
 
@@ -130,9 +130,7 @@ public class PartidaBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void bloquear(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-
+    public void bloquear(final @Nonnull Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final ManifiestoServicioDAO maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -189,9 +187,7 @@ public class PartidaBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void iniciar(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-
+    public void iniciar(final @Nonnull Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final ManifiestoServicioDAO maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);
@@ -248,9 +244,7 @@ public class PartidaBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void anular(final Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-
+    public void anular(final @Nonnull Long ssrvId) throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
             final ManifiestoServicioDAO maniSrvcDAO = session.getMapper(ManifiestoServicioDAO.class);

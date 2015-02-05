@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,8 +17,6 @@ import xeredi.integra.model.comun.vo.MessageI18nCriterioVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,9 +46,7 @@ public final class MessageI18nBO {
      *            the externals only
      * @return the map
      */
-    public Map<MessageI18nKey, String> selectKeyValueMap(final Locale locale, final boolean externalsOnly) {
-        Preconditions.checkNotNull(locale);
-
+    public Map<MessageI18nKey, String> selectKeyValueMap(final @Nonnull Locale locale, final boolean externalsOnly) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
 
@@ -101,9 +99,7 @@ public final class MessageI18nBO {
      *            the key
      * @return the list
      */
-    public List<MessageI18nVO> selectList(final MessageI18nKey key) {
-        Preconditions.checkNotNull(key);
-
+    public List<MessageI18nVO> selectList(final @Nonnull MessageI18nKey key) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final MessageI18nDAO m18nDAO = session.getMapper(MessageI18nDAO.class);
             final MessageI18nCriterioVO m18nCriterioVO = new MessageI18nCriterioVO();

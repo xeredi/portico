@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -15,8 +17,6 @@ import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -62,9 +62,7 @@ public final class EntidadProxy {
      *            the id
      * @return the entidad vo
      */
-    public static EntidadVO select(final Long id) {
-        Preconditions.checkNotNull(id);
-
+    public static EntidadVO select(final @Nonnull Long id) {
         if (!ENTIDAD_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.enti, id));
         }
@@ -93,9 +91,7 @@ public final class EntidadProxy {
      * @param entiMap
      *            the enti map
      */
-    static void loadDependencies(final Map<Long, ? extends EntidadVO> entiMap) {
-        Preconditions.checkNotNull(entiMap);
-
+    static void loadDependencies(final @Nonnull Map<Long, ? extends EntidadVO> entiMap) {
         for (final EntidadVO entiVO : entiMap.values()) {
             if (ENTIDAD_MAP.containsKey(entiVO.getId())) {
                 entiVO.setEntdList(ENTIDAD_MAP.get(entiVO.getId()).getEntdList());

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -17,8 +19,6 @@ import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoEstadisticaVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -63,9 +63,7 @@ public final class TipoEstadisticaProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoEstadisticaVO select(final long id) {
-        Preconditions.checkNotNull(id);
-
+    public static TipoEstadisticaVO select(final @Nonnull long id) {
         final TipoEstadisticaVO tpesVO = TIPO_ESTADISTICA_MAP.get(id);
 
         if (tpesVO == null) {

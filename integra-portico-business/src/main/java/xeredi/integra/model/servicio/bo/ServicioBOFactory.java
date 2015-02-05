@@ -3,13 +3,13 @@ package xeredi.integra.model.servicio.bo;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -66,9 +66,7 @@ public final class ServicioBOFactory {
      *            the enti id
      * @return the servicio bo
      */
-    public static ServicioBO newInstance(final Long entiId) {
-        Preconditions.checkNotNull(entiId);
-
+    public static ServicioBO newInstance(final @Nonnull Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
                 return (ServicioBO) MAP.get(entiId).newInstance();

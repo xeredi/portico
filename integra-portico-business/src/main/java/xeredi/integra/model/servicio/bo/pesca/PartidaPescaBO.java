@@ -2,6 +2,8 @@ package xeredi.integra.model.servicio.bo.pesca;
 
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
@@ -22,7 +24,7 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
+    protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO,
             final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
@@ -37,7 +39,7 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
+    protected void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO) {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
@@ -51,7 +53,7 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
+    protected void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
         final PartidaPescaDAO papeDAO = session.getMapper(PartidaPescaDAO.class);
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
@@ -66,8 +68,8 @@ public final class PartidaPescaBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
-            throws InstanceNotFoundException {
+    protected void deletePostOperations(final @Nonnull SqlSession session, final @Nonnull Long srvcId,
+            final @Nonnull Long ssrvId) throws InstanceNotFoundException {
         final ManifiestoPescaDAO mapeDAO = session.getMapper(ManifiestoPescaDAO.class);
 
         mapeDAO.updateRecalcularImporte(srvcId);

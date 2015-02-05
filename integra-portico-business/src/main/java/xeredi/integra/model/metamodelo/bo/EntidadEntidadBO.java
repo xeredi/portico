@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.bo;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,7 +24,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class EntidadEntidadAdminBO.
  */
-public class EntidadEntidadBO {
+public final class EntidadEntidadBO {
     /**
      * Insert.
      *
@@ -31,8 +33,7 @@ public class EntidadEntidadBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final EntidadEntidadVO enenVO) throws DuplicateInstanceException {
-        Preconditions.checkNotNull(enenVO);
+    public void insert(final @Nonnull EntidadEntidadVO enenVO) throws DuplicateInstanceException {
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
         Preconditions.checkNotNull(enenVO.getEntiHija());
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
@@ -74,8 +75,7 @@ public class EntidadEntidadBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(enenVO);
+    public void update(final @Nonnull EntidadEntidadVO enenVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
         Preconditions.checkNotNull(enenVO.getEntiHija());
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
@@ -101,8 +101,7 @@ public class EntidadEntidadBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void delete(final EntidadEntidadVO enenVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(enenVO);
+    public void delete(final @Nonnull EntidadEntidadVO enenVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(enenVO.getEntiPadreId());
         Preconditions.checkNotNull(enenVO.getEntiHija());
         Preconditions.checkNotNull(enenVO.getEntiHija().getId());
@@ -126,9 +125,7 @@ public class EntidadEntidadBO {
      *            the enen criterio vo
      * @return the list
      */
-    public final List<EntidadEntidadVO> selectList(final EntidadEntidadCriterioVO enenCriterioVO) {
-        Preconditions.checkNotNull(enenCriterioVO);
-
+    public List<EntidadEntidadVO> selectList(final @Nonnull EntidadEntidadCriterioVO enenCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
@@ -145,9 +142,8 @@ public class EntidadEntidadBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO)
+    public EntidadEntidadVO selectObject(final @Nonnull EntidadEntidadCriterioVO enenCriterioVO)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(enenCriterioVO);
         Preconditions.checkNotNull(enenCriterioVO.getEntiPadreId());
         Preconditions.checkNotNull(enenCriterioVO.getEntiHijaId());
 

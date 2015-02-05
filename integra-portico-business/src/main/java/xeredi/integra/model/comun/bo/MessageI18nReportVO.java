@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import xeredi.integra.model.comun.vo.MessageI18nKey;
+import javax.annotation.Nonnull;
 
-import com.google.common.base.Preconditions;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,9 +25,7 @@ public final class MessageI18nReportVO {
      * @param alanguageList
      *            the alanguage list
      */
-    public MessageI18nReportVO(final List<String> alanguageList) {
-        Preconditions.checkNotNull(alanguageList);
-
+    public MessageI18nReportVO(final @Nonnull List<String> alanguageList) {
         languageList = alanguageList;
         valuesMap = new HashMap<>();
 

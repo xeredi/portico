@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -64,14 +66,12 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    protected final void insert(final SqlSession session, final SubparametroVO sprm, final TipoSubparametroVO tpspVO)
-            throws OverlapException {
-        Preconditions.checkNotNull(sprm);
+    protected final void insert(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
+            final @Nonnull TipoSubparametroVO tpspVO) throws OverlapException {
         Preconditions.checkNotNull(sprm.getSpvr());
-        Preconditions.checkNotNull(tpspVO);
 
         // Validar que los datos del subparametro son correctos
-        if (tpspVO.getEntdList() != null && !tpspVO.getEntdList().isEmpty()) {
+        if (tpspVO.getEntdList() != null) {
             for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
                 final Long tpdtId = entd.getTpdt().getId();
 
@@ -122,7 +122,8 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void duplicate(final SubparametroVO sprm, final TipoSubparametroVO tpsrVO) throws OverlapException {
+    public void duplicate(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroVO tpsrVO)
+            throws OverlapException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             duplicate(session, sprm, tpsrVO);
 
@@ -142,12 +143,10 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    protected final void duplicate(final SqlSession session, final SubparametroVO sprm, final TipoSubparametroVO tpsrVO)
-            throws OverlapException {
+    protected final void duplicate(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
+            final @Nonnull TipoSubparametroVO tpsrVO) throws OverlapException {
         // TODO Implementar
-        Preconditions.checkNotNull(sprm);
         Preconditions.checkNotNull(sprm.getId());
-        Preconditions.checkNotNull(tpsrVO);
 
         final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
         final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
@@ -189,8 +188,8 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    public void update(final SubparametroVO sprm, final TipoSubparametroVO tpspVO) throws InstanceNotFoundException,
-    OverlapException {
+    public void update(final @Nonnull SubparametroVO sprm, final @Nonnull TipoSubparametroVO tpspVO)
+            throws InstanceNotFoundException, OverlapException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             update(session, sprm, tpspVO);
 
@@ -212,10 +211,8 @@ public class SubparametroBO {
      * @throws OverlapException
      *             the overlap exception
      */
-    protected final void update(final SqlSession session, final SubparametroVO sprm, final TipoSubparametroVO tpspVO)
-            throws InstanceNotFoundException, OverlapException {
-        Preconditions.checkNotNull(sprm);
-        Preconditions.checkNotNull(tpspVO);
+    protected final void update(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm,
+            final @Nonnull TipoSubparametroVO tpspVO) throws InstanceNotFoundException, OverlapException {
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
         Preconditions.checkNotNull(sprm.getSpvr().getFini());
@@ -223,7 +220,7 @@ public class SubparametroBO {
         // Validaciones
 
         // Validar que los datos del parametro son correctos
-        if (!tpspVO.getEntdList().isEmpty()) {
+        if (tpspVO.getEntdList() != null) {
             for (final EntidadTipoDatoVO entd : tpspVO.getEntdList()) {
                 final Long tpdtId = entd.getTpdt().getId();
 
@@ -269,7 +266,7 @@ public class SubparametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void delete(final SubparametroVO sprm) throws InstanceNotFoundException {
+    public final void delete(final @Nonnull SubparametroVO sprm) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             delete(session, sprm);
 
@@ -287,8 +284,8 @@ public class SubparametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    protected final void delete(final SqlSession session, final SubparametroVO sprm) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(sprm);
+    protected final void delete(final @Nonnull SqlSession session, final @Nonnull SubparametroVO sprm)
+            throws InstanceNotFoundException {
         Preconditions.checkNotNull(sprm.getSpvr());
         Preconditions.checkNotNull(sprm.getSpvr().getId());
 
@@ -315,10 +312,8 @@ public class SubparametroBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO,
+    public final PaginatedList<SubparametroVO> selectList(final @Nonnull SubparametroCriterioVO sprmCriterioVO,
             final int offset, final int limit) {
-        Preconditions.checkNotNull(sprmCriterioVO);
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final List<SubparametroVO> sprmList = new ArrayList<>();
@@ -343,9 +338,7 @@ public class SubparametroBO {
      *            the sprm criterio vo
      * @return the list
      */
-    public final List<SubparametroVO> selectList(final SubparametroCriterioVO sprmCriterioVO) {
-        Preconditions.checkNotNull(sprmCriterioVO);
-
+    public final List<SubparametroVO> selectList(final @Nonnull SubparametroCriterioVO sprmCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
@@ -371,12 +364,8 @@ public class SubparametroBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final SubparametroVO selectObject(final Long sprmId, final String idioma, final Date fechaVigencia)
-            throws InstanceNotFoundException {
-        Preconditions.checkNotNull(sprmId);
-        Preconditions.checkNotNull(idioma);
-        Preconditions.checkNotNull(fechaVigencia);
-
+    public final SubparametroVO selectObject(final @Nonnull Long sprmId, final @Nonnull String idioma,
+            final @Nonnull Date fechaVigencia) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final SubparametroDAO sprmDAO = session.getMapper(SubparametroDAO.class);
             final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
@@ -407,11 +396,8 @@ public class SubparametroBO {
      * @param sprmCriterioVO
      *            the sprm criterio vo
      */
-    private void fillDependencies(final SqlSession session, final Collection<SubparametroVO> sprmList,
-            final SubparametroCriterioVO sprmCriterioVO) {
-        Preconditions.checkNotNull(sprmList);
-        Preconditions.checkNotNull(sprmCriterioVO);
-
+    private void fillDependencies(final @Nonnull SqlSession session,
+            final @Nonnull Collection<SubparametroVO> sprmList, final @Nonnull SubparametroCriterioVO sprmCriterioVO) {
         final SubparametroDatoDAO spdtDAO = session.getMapper(SubparametroDatoDAO.class);
 
         if (!sprmList.isEmpty()) {

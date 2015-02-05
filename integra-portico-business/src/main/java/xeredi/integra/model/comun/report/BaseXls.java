@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.annotation.Nonnull;
+
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
@@ -14,8 +16,6 @@ import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,10 +41,8 @@ public abstract class BaseXls {
      * @param alocale
      *            the alocale
      */
-    public BaseXls(final Locale alocale) {
+    public BaseXls(final @Nonnull Locale alocale) {
         super();
-
-        Preconditions.checkNotNull(alocale);
 
         locale = alocale;
 
@@ -65,10 +63,8 @@ public abstract class BaseXls {
      * @param itdtVO
      *            the itdt vo
      */
-    protected void setCellValue(final HSSFRow row, final int position, final EntidadTipoDatoVO entdVO,
-            final ItemDatoVO itdtVO) {
-        Preconditions.checkNotNull(row);
-        Preconditions.checkNotNull(entdVO);
+    protected void setCellValue(final @Nonnull HSSFRow row, final int position,
+            final @Nonnull EntidadTipoDatoVO entdVO, final ItemDatoVO itdtVO) {
 
         if (itdtVO != null) {
             switch (entdVO.getTpdt().getTipoElemento()) {
@@ -140,9 +136,7 @@ public abstract class BaseXls {
      * @param value
      *            the value
      */
-    protected void setCellValue(final HSSFRow row, final int position, final Object value) {
-        Preconditions.checkNotNull(row);
-
+    protected void setCellValue(final @Nonnull HSSFRow row, final int position, final Object value) {
         if (value != null) {
             if (value instanceof String) {
                 row.createCell(position).setCellValue((String) value);
@@ -172,10 +166,7 @@ public abstract class BaseXls {
      * @param header
      *            the header
      */
-    protected void autoSizeColumns(final HSSFSheet sheet, final HSSFRow header) {
-        Preconditions.checkNotNull(sheet);
-        Preconditions.checkNotNull(header);
-
+    protected void autoSizeColumns(final @Nonnull HSSFSheet sheet, final @Nonnull HSSFRow header) {
         for (int index = header.getFirstCellNum(); index < header.getLastCellNum(); index++) {
             sheet.autoSizeColumn(index);
         }

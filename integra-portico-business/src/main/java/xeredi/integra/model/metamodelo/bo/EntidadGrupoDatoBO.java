@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -25,7 +27,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class EntidadGrupoDatoBO.
  */
-public class EntidadGrupoDatoBO {
+public final class EntidadGrupoDatoBO {
     /**
      * Insert.
      *
@@ -34,8 +36,7 @@ public class EntidadGrupoDatoBO {
      * @param i18nMap
      *            the i18n map
      */
-    public final void insert(final EntidadGrupoDatoVO engdVO, final Map<String, I18nVO> i18nMap) {
-        Preconditions.checkNotNull(engdVO);
+    public void insert(final @Nonnull EntidadGrupoDatoVO engdVO, final @Nonnull Map<String, I18nVO> i18nMap) {
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
 
@@ -65,9 +66,8 @@ public class EntidadGrupoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final EntidadGrupoDatoVO engdVO, final Map<String, I18nVO> i18nMap)
+    public void update(final @Nonnull EntidadGrupoDatoVO engdVO, final @Nonnull Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(engdVO);
         Preconditions.checkNotNull(engdVO.getEntiId());
         Preconditions.checkNotNull(engdVO.getNumero());
 
@@ -92,9 +92,7 @@ public class EntidadGrupoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void delete(final Long id) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(id);
-
+    public void delete(final @Nonnull Long id) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
@@ -122,9 +120,7 @@ public class EntidadGrupoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EntidadGrupoDatoVO select(final Long id, final String idioma) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(id);
-
+    public EntidadGrupoDatoVO select(final @Nonnull Long id, final String idioma) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
@@ -151,9 +147,7 @@ public class EntidadGrupoDatoBO {
      *            the idioma
      * @return the list
      */
-    public final List<EntidadGrupoDatoVO> selectList(final Long entiId, final String idioma) {
-        Preconditions.checkNotNull(entiId);
-
+    public List<EntidadGrupoDatoVO> selectList(final @Nonnull Long entiId, final String idioma) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
             final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
@@ -174,7 +168,7 @@ public class EntidadGrupoDatoBO {
      *            the idioma
      * @return the list
      */
-    public final List<LabelValueVO> selectLabelValues(final Long entiId, final String idioma) {
+    public List<LabelValueVO> selectLabelValues(final @Nonnull Long entiId, final String idioma) {
         final List<LabelValueVO> list = new ArrayList<>();
 
         for (final EntidadGrupoDatoVO engd : selectList(entiId, idioma)) {

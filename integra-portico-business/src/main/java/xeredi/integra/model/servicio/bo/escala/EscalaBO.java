@@ -2,6 +2,8 @@ package xeredi.integra.model.servicio.bo.escala;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.exception.ModelException;
@@ -23,8 +25,10 @@ public final class EscalaBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final ServicioVO srvcVO,
+    protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO,
             final List<SubservicioVO> ssrvList, final List<SubservicioSubservicioVO> ssssList) {
+        Preconditions.checkNotNull(srvcVO.getId());
+
         final EscalaDAO esclDAO = session.getMapper(EscalaDAO.class);
 
         esclDAO.updateEstado(srvcVO.getId());
@@ -40,7 +44,8 @@ public final class EscalaBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
+    protected void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO)
+            throws ModelException {
         // noop
     }
 
@@ -48,7 +53,8 @@ public final class EscalaBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final SqlSession session, final ServicioVO srvcVO) throws ModelException {
+    protected void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull ServicioVO srvcVO)
+            throws ModelException {
         // noop
     }
 
@@ -56,7 +62,8 @@ public final class EscalaBO extends AbstractServicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId) throws ModelException {
+    protected void deletePostOperations(final @Nonnull SqlSession session, final @Nonnull Long srvcId)
+            throws ModelException {
         // noop
     }
 
@@ -67,9 +74,7 @@ public final class EscalaBO extends AbstractServicioBO {
      *            the srvc id
      * @return the string
      */
-    public String obtenerNumeroManifiestoAeat(final Long srvcId) {
-        Preconditions.checkNotNull(srvcId);
-
+    public String obtenerNumeroManifiestoAeat(final @Nonnull Long srvcId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
 

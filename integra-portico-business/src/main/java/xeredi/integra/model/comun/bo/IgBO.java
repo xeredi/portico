@@ -3,6 +3,8 @@ package xeredi.integra.model.comun.bo;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.ExecutorType;
@@ -11,8 +13,6 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.dao.IgDAO;
 import xeredi.integra.model.comun.vo.IgVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,9 +36,7 @@ public final class IgBO {
      *            the nombre
      * @return the long
      */
-    public synchronized Long nextVal(final String nombre) {
-        Preconditions.checkNotNull(nombre);
-
+    public synchronized Long nextVal(final @Nonnull String nombre) {
         IgVO vo = MAP.get(nombre);
 
         if (vo == null) {

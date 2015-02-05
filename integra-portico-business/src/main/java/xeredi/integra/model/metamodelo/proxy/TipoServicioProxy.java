@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,8 +16,6 @@ import xeredi.integra.model.metamodelo.bo.TipoServicioBO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -60,9 +60,7 @@ public final class TipoServicioProxy {
      *            the id
      * @return the tipo parametro vo
      */
-    public static TipoServicioVO select(final Long id) {
-        Preconditions.checkNotNull(id);
-
+    public static TipoServicioVO select(final @Nonnull Long id) {
         TipoServicioVO tpsrVO = null;
 
         tpsrVO = TIPO_SERVICIO_MAP.get(id);

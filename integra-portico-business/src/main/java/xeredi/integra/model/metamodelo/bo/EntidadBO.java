@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -32,7 +34,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class EntidadAdminBO.
  */
-public class EntidadBO {
+public final class EntidadBO {
     /**
      * Select list.
      *
@@ -40,9 +42,7 @@ public class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public final List<EntidadVO> selectList(final EntidadCriterioVO entiCriterioVO) {
-        Preconditions.checkNotNull(entiCriterioVO);
-
+    public List<EntidadVO> selectList(final @Nonnull EntidadCriterioVO entiCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
@@ -57,9 +57,7 @@ public class EntidadBO {
      *            the tpdt map
      * @return the map
      */
-    public final Map<Long, EntidadVO> selectMap(final Map<Long, TipoDatoVO> tpdtMap) {
-        Preconditions.checkNotNull(tpdtMap);
-
+    public Map<Long, EntidadVO> selectMap(final @Nonnull Map<Long, TipoDatoVO> tpdtMap) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
@@ -128,9 +126,7 @@ public class EntidadBO {
      *            the enti criterio vo
      * @return the list
      */
-    public final List<LabelValueVO> selectLabelValues(final EntidadCriterioVO entiCriterioVO) {
-        Preconditions.checkNotNull(entiCriterioVO);
-
+    public List<LabelValueVO> selectLabelValues(final @Nonnull EntidadCriterioVO entiCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
@@ -153,8 +149,7 @@ public class EntidadBO {
      * @param idioma
      *            the idioma
      */
-    final void fillDependencies(final SqlSession session, final EntidadVO entiVO, final String idioma) {
-        Preconditions.checkNotNull(entiVO);
+    void fillDependencies(final @Nonnull SqlSession session, final @Nonnull EntidadVO entiVO, final String idioma) {
         Preconditions.checkNotNull(entiVO.getId());
 
         final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);

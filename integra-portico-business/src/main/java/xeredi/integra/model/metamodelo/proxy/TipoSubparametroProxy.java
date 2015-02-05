@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,8 +16,6 @@ import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
 import xeredi.util.applicationobjects.LabelValueVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -60,9 +60,7 @@ public final class TipoSubparametroProxy {
      *            the id
      * @return the tipo subparametro vo
      */
-    public static TipoSubparametroVO select(final Long id) {
-        Preconditions.checkNotNull(id);
-
+    public static TipoSubparametroVO select(final @Nonnull Long id) {
         if (!TIPO_SUBPARAMETRO_MAP.containsKey(id)) {
             throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsp, id));
         }

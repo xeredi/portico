@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,9 +26,7 @@ public class CuadroMesBO {
      *            the pepr id
      * @return the map
      */
-    public final Map<String, List<CuadroMesVO>> selectMap(final Long peprId) {
-        Preconditions.checkNotNull(peprId);
-
+    public final Map<String, List<CuadroMesVO>> selectMap(final @Nonnull Long peprId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CuadroMesDAO cdmsDAO = session.getMapper(CuadroMesDAO.class);
             final Map<String, List<CuadroMesVO>> cdmsMap = new HashMap<>();

@@ -23,7 +23,10 @@ public final class ManifiestoSigmaToIfcsum {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ManifiestoSigmaToIfcsum.class);
 
+    /** The Constant FIELD_SEPARATOR. */
     private static final String FIELD_SEPARATOR = "+";
+
+    /** The Constant SEGMENT_SEPARATOR. */
     private static final String SEGMENT_SEPARATOR = "'";
 
     /**

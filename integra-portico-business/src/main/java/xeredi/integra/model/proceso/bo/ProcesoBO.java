@@ -3,6 +3,8 @@ package xeredi.integra.model.proceso.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -30,8 +32,6 @@ import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoBO.
@@ -43,9 +43,7 @@ public class ProcesoBO {
      * @param prbtVO
      *            the prbt vo
      */
-    public final void crear(final ProcesoVO prbtVO) {
-        Preconditions.checkNotNull(prbtVO);
-
+    public final void crear(final @Nonnull ProcesoVO prbtVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -94,10 +92,7 @@ public class ProcesoBO {
      *            the tipo
      * @return the proceso vo
      */
-    public ProcesoVO proteger(final ProcesoModulo modulo, final ProcesoTipo tipo) {
-        Preconditions.checkNotNull(modulo);
-        Preconditions.checkNotNull(tipo);
-
+    public ProcesoVO proteger(final @Nonnull ProcesoModulo modulo, final @Nonnull ProcesoTipo tipo) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -146,9 +141,8 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void finalizar(final ProcesoVO prbtVO) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        Preconditions.checkNotNull(prbtVO);
-
+    public final void finalizar(final @Nonnull ProcesoVO prbtVO) throws InstanceNotFoundException,
+    OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -202,9 +196,8 @@ public class ProcesoBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void cancelar(final Long prbtId) throws InstanceNotFoundException, OperacionNoPermitidaException {
-        Preconditions.checkNotNull(prbtId);
-
+    public final void cancelar(final @Nonnull Long prbtId) throws InstanceNotFoundException,
+            OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -243,10 +236,8 @@ public class ProcesoBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO, final int offset,
+    public final PaginatedList<ProcesoVO> selectList(final @Nonnull ProcesoCriterioVO prbtCriterioVO, final int offset,
             final int limit) {
-        Preconditions.checkNotNull(prbtCriterioVO);
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final int count = prbtDAO.selectCount(prbtCriterioVO);
@@ -267,9 +258,7 @@ public class ProcesoBO {
      *            the prbt criterio vo
      * @return the list
      */
-    public final List<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO) {
-        Preconditions.checkNotNull(prbtCriterioVO);
-
+    public final List<ProcesoVO> selectList(final @Nonnull ProcesoCriterioVO prbtCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
 
@@ -286,9 +275,7 @@ public class ProcesoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final ProcesoVO select(final Long prbtId) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(prbtId);
-
+    public final ProcesoVO select(final @Nonnull Long prbtId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -345,9 +332,7 @@ public class ProcesoBO {
      *            the limit
      * @return the paginated list
      */
-    public PaginatedList<ProcesoMensajeVO> selectPrmnList(final Long prbtId, final int offset, final int limit) {
-        Preconditions.checkNotNull(prbtId);
-
+    public PaginatedList<ProcesoMensajeVO> selectPrmnList(final @Nonnull Long prbtId, final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
             final List<ProcesoMensajeVO> prmnList = new ArrayList<>();

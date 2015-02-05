@@ -7,13 +7,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.applicationobjects.LabelValueVO;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
@@ -31,10 +32,8 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
      * @param locale
      *            the locale
      */
-    public MessageI18nResourceBundle(final Locale locale) {
+    public MessageI18nResourceBundle(final @Nonnull Locale locale) {
         super();
-
-        Preconditions.checkNotNull(locale);
 
         this.locale = locale;
     }

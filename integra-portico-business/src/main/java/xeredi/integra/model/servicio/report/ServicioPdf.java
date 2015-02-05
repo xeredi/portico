@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.Components;
@@ -25,8 +27,6 @@ import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServicioPdf.
@@ -39,7 +39,7 @@ public final class ServicioPdf extends BasePdf {
      * @param alocale
      *            the alocale
      */
-    public ServicioPdf(final Locale alocale) {
+    public ServicioPdf(final @Nonnull Locale alocale) {
         super(alocale);
     }
 
@@ -59,13 +59,10 @@ public final class ServicioPdf extends BasePdf {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void imprimir(final ServicioVO srvcVO, final TipoServicioVO tpsrVO,
+    public void imprimir(final @Nonnull ServicioVO srvcVO, final @Nonnull TipoServicioVO tpsrVO,
             final Map<Long, TipoSubservicioVO> entiHijasMap, final Map<Long, List<SubservicioVO>> itemHijosMap,
             final OutputStream stream) throws InternalErrorException {
         try {
-            Preconditions.checkNotNull(srvcVO);
-            Preconditions.checkNotNull(tpsrVO);
-
             final JasperReportBuilder report = DynamicReports.report();
 
             report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);

@@ -3,6 +3,8 @@ package xeredi.integra.model.servicio.bo.escala;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,8 +24,6 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class AtraqueBO.
@@ -33,8 +33,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
-            final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
+    protected void insertPostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO,
+            final @Nonnull TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
         // noop
     }
 
@@ -42,7 +42,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
+    protected void duplicatePostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO) {
         // noop
     }
 
@@ -50,7 +50,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
+    protected void updatePostOperations(final @Nonnull SqlSession session, final @Nonnull SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
         // noop
     }
@@ -59,8 +59,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * {@inheritDoc}
      */
     @Override
-    protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
-            throws InstanceNotFoundException {
+    protected void deletePostOperations(final @Nonnull SqlSession session, final @Nonnull Long srvcId,
+            final @Nonnull Long ssrvId) throws InstanceNotFoundException {
         // noop
     }
 
@@ -71,9 +71,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is autorizable
      */
-    public boolean isAutorizable(final Long ssrvId) {
-        Preconditions.checkNotNull(ssrvId);
-
+    public boolean isAutorizable(final @Nonnull Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -93,11 +91,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void autorizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-        Preconditions.checkNotNull(itdtMap);
-
+    public void autorizar(final @Nonnull Long ssrvId, final @Nonnull Map<Long, ItemDatoVO> itdtMap)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -143,9 +138,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is denegable
      */
-    public boolean isDenegable(final Long ssrvId) {
-        Preconditions.checkNotNull(ssrvId);
-
+    public boolean isDenegable(final @Nonnull Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -165,11 +158,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void denegar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-        Preconditions.checkNotNull(itdtMap);
-
+    public void denegar(final @Nonnull Long ssrvId, final @Nonnull Map<Long, ItemDatoVO> itdtMap)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -215,9 +205,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is anulable
      */
-    public boolean isAnulable(final Long ssrvId) {
-        Preconditions.checkNotNull(ssrvId);
-
+    public boolean isAnulable(final @Nonnull Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -237,11 +225,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void anular(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-        Preconditions.checkNotNull(itdtMap);
-
+    public void anular(final @Nonnull Long ssrvId, final @Nonnull Map<Long, ItemDatoVO> itdtMap)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -287,9 +272,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is iniciable
      */
-    public boolean isIniciable(final Long ssrvId) {
-        Preconditions.checkNotNull(ssrvId);
-
+    public boolean isIniciable(final @Nonnull Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -309,11 +292,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void iniciar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-        Preconditions.checkNotNull(itdtMap);
-
+    public void iniciar(final @Nonnull Long ssrvId, final @Nonnull Map<Long, ItemDatoVO> itdtMap)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -361,9 +341,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is finalizable
      */
-    public boolean isFinalizable(final Long ssrvId) {
-        Preconditions.checkNotNull(ssrvId);
-
+    public boolean isFinalizable(final @Nonnull Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -383,11 +361,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void finalizar(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-        Preconditions.checkNotNull(itdtMap);
-
+    public void finalizar(final @Nonnull Long ssrvId, final @Nonnull Map<Long, ItemDatoVO> itdtMap)
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -435,9 +410,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is cambio muelle
      */
-    public boolean isCambioMuelle(final Long ssrvId) {
-        Preconditions.checkNotNull(ssrvId);
-
+    public boolean isCambioMuelle(final @Nonnull Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -452,9 +425,7 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      *            the ssrv id
      * @return true, if is autorizable f previo
      */
-    public boolean isAutorizableFprevio(final Long ssrvId) {
-        Preconditions.checkNotNull(ssrvId);
-
+    public boolean isAutorizableFprevio(final @Nonnull Long ssrvId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession();) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
 
@@ -474,11 +445,8 @@ public final class AtraqueBO extends AbstractSubservicioBO {
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public void autorizarFprevio(final Long ssrvId, final Map<Long, ItemDatoVO> itdtMap)
+    public void autorizarFprevio(final @Nonnull Long ssrvId, final @Nonnull Map<Long, ItemDatoVO> itdtMap)
             throws InstanceNotFoundException, OperacionNoPermitidaException {
-        Preconditions.checkNotNull(ssrvId);
-        Preconditions.checkNotNull(itdtMap);
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH);) {
             final AtraqueDAO atraDAO = session.getMapper(AtraqueDAO.class);
             final EscalaDAO escaDAO = session.getMapper(EscalaDAO.class);
@@ -502,5 +470,4 @@ public final class AtraqueBO extends AbstractSubservicioBO {
             session.commit();
         }
     }
-
 }

@@ -3,13 +3,13 @@ package xeredi.integra.model.maestro.bo;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import xeredi.integra.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -65,9 +65,7 @@ public final class ParametroBOFactory {
      *            the enti id
      * @return the parametro bo
      */
-    public static ParametroBO newInstance(final Long entiId) {
-        Preconditions.checkNotNull(entiId);
-
+    public static ParametroBO newInstance(final @Nonnull Long entiId) {
         if (MAP.containsKey(entiId)) {
             try {
                 return (ParametroBO) MAP.get(entiId).newInstance();

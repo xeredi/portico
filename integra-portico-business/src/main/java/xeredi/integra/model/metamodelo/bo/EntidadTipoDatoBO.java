@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.bo;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -23,7 +25,7 @@ import com.google.common.base.Preconditions;
 /**
  * The Class EntidadTipoDatoAdminBO.
  */
-public class EntidadTipoDatoBO {
+public final class EntidadTipoDatoBO {
 
     /**
      * Insert.
@@ -35,9 +37,8 @@ public class EntidadTipoDatoBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public final void insert(final EntidadTipoDatoVO entdVO, final Map<String, I18nVO> i18nMap)
+    public void insert(final @Nonnull EntidadTipoDatoVO entdVO, final @Nonnull Map<String, I18nVO> i18nMap)
             throws DuplicateInstanceException {
-        Preconditions.checkNotNull(entdVO);
         Preconditions.checkNotNull(entdVO.getEntiId());
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
@@ -69,9 +70,8 @@ public class EntidadTipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void update(final EntidadTipoDatoVO entdVO, final Map<String, I18nVO> i18nMap)
+    public void update(final @Nonnull EntidadTipoDatoVO entdVO, final Map<String, I18nVO> i18nMap)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(entdVO);
         Preconditions.checkNotNull(entdVO.getEntiId());
         Preconditions.checkNotNull(entdVO.getTpdt());
         Preconditions.checkNotNull(entdVO.getTpdt().getId());
@@ -97,8 +97,7 @@ public class EntidadTipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final void delete(final EntidadTipoDatoVO entdVO) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(entdVO);
+    public void delete(final @Nonnull EntidadTipoDatoVO entdVO) throws InstanceNotFoundException {
         Preconditions.checkNotNull(entdVO.getId());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
@@ -127,11 +126,8 @@ public class EntidadTipoDatoBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EntidadTipoDatoVO select(final Long entiId, final Long tpdtId, final String idioma)
+    public EntidadTipoDatoVO select(final @Nonnull Long entiId, final @Nonnull Long tpdtId, final String idioma)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(entiId);
-        Preconditions.checkNotNull(tpdtId);
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
             final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();

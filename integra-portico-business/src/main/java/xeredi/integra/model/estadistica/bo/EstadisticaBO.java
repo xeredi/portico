@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -20,8 +22,6 @@ import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,10 +39,8 @@ public class EstadisticaBO {
      *            the limit
      * @return the paginated list
      */
-    public final PaginatedList<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO, final int offset,
-            final int limit) {
-        Preconditions.checkNotNull(estdCriterioVO);
-
+    public final PaginatedList<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO,
+            final int offset, final int limit) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final int count = estdDAO.selectCount(estdCriterioVO);
@@ -67,9 +65,7 @@ public class EstadisticaBO {
      *            the estd criterio vo
      * @return the list
      */
-    public final List<EstadisticaVO> selectList(final EstadisticaCriterioVO estdCriterioVO) {
-        Preconditions.checkNotNull(estdCriterioVO);
-
+    public final List<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final List<EstadisticaVO> estdList = estdDAO.selectList(estdCriterioVO);
@@ -89,10 +85,8 @@ public class EstadisticaBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public final EstadisticaVO selectObject(final EstadisticaCriterioVO estdCriterioVO)
+    public final EstadisticaVO selectObject(final @Nonnull EstadisticaCriterioVO estdCriterioVO)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(estdCriterioVO);
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final EstadisticaVO estdVO = estdDAO.selectObject(estdCriterioVO);
@@ -121,11 +115,8 @@ public class EstadisticaBO {
      * @param useIds
      *            the use ids
      */
-    private final void fillDependencies(final SqlSession session, final List<EstadisticaVO> estdList,
-            final EstadisticaCriterioVO estdCriterioVO, final boolean useIds) {
-        Preconditions.checkNotNull(estdList);
-        Preconditions.checkNotNull(estdCriterioVO);
-
+    private final void fillDependencies(final @Nonnull SqlSession session, final @Nonnull List<EstadisticaVO> estdList,
+            final @Nonnull EstadisticaCriterioVO estdCriterioVO, final boolean useIds) {
         if (!estdList.isEmpty()) {
             if (useIds) {
                 final Set<Long> ids = new HashSet<>();

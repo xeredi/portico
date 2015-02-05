@@ -2,6 +2,8 @@ package xeredi.integra.model.servicio.bo;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.ModelException;
@@ -29,7 +31,7 @@ public interface ServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    ServicioVO select(final Long srvcId, final String idioma) throws InstanceNotFoundException;
+    ServicioVO select(final @Nonnull Long srvcId, final @Nonnull String idioma) throws InstanceNotFoundException;
 
     /**
      * Select object.
@@ -40,7 +42,7 @@ public interface ServicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    ServicioVO selectObject(final ServicioCriterioVO srvcCriterioVO) throws InstanceNotFoundException;
+    ServicioVO selectObject(final @Nonnull ServicioCriterioVO srvcCriterioVO) throws InstanceNotFoundException;
 
     /**
      * Select list.
@@ -53,7 +55,8 @@ public interface ServicioBO {
      *            the limit
      * @return the paginated list
      */
-    PaginatedList<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO, final int offset, final int limit);
+    PaginatedList<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO, final int offset,
+            final int limit);
 
     /**
      * Select list.
@@ -62,7 +65,7 @@ public interface ServicioBO {
      *            the srvc criterio vo
      * @return the list
      */
-    List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO);
+    List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select lupa list.
@@ -73,7 +76,7 @@ public interface ServicioBO {
      *            the limit
      * @return the list
      */
-    List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit);
+    List<ServicioVO> selectLupaList(final @Nonnull ServicioLupaCriterioVO srvcLupaCriterioVO, final int limit);
 
     /**
      * Insert.
@@ -87,7 +90,7 @@ public interface ServicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    void insert(final ServicioVO srvcVO, final List<SubservicioVO> ssrvList,
+    void insert(final @Nonnull ServicioVO srvcVO, final List<SubservicioVO> ssrvList,
             final List<SubservicioSubservicioVO> ssssList) throws DuplicateInstanceException;
 
     /**
@@ -98,7 +101,7 @@ public interface ServicioBO {
      * @throws ModelException
      *             the model exception
      */
-    void update(final ServicioVO srvcVO) throws ModelException;
+    void update(final @Nonnull ServicioVO srvcVO) throws ModelException;
 
     /**
      * Duplicate.
@@ -108,7 +111,7 @@ public interface ServicioBO {
      * @throws ModelException
      *             the model exception
      */
-    void duplicate(final ServicioVO srvcVO) throws ModelException;
+    void duplicate(final @Nonnull ServicioVO srvcVO) throws ModelException;
 
     /**
      * Delete.
@@ -118,6 +121,6 @@ public interface ServicioBO {
      * @throws ModelException
      *             the model exception
      */
-    void delete(final Long srvcId) throws ModelException;
+    void delete(final @Nonnull Long srvcId) throws ModelException;
 
 }

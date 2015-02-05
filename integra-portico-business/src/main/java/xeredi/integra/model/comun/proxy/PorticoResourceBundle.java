@@ -3,9 +3,9 @@ package xeredi.integra.model.comun.proxy;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import xeredi.integra.model.comun.bo.MessageI18nControl;
+import javax.annotation.Nonnull;
 
-import com.google.common.base.Preconditions;
+import xeredi.integra.model.comun.bo.MessageI18nControl;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -20,9 +20,7 @@ public final class PorticoResourceBundle {
      *            the locale
      * @return the bundle
      */
-    public static ResourceBundle getBundle(final Locale locale) {
-        Preconditions.checkNotNull(locale);
-
+    public static ResourceBundle getBundle(final @Nonnull Locale locale) {
         return ResourceBundle.getBundle("portico", locale, new MessageI18nControl());
     }
 }

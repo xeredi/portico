@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.bo;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
@@ -12,8 +14,6 @@ import xeredi.integra.model.metamodelo.dao.CampoAgregacionDAO;
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.integra.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,9 +29,7 @@ public final class CampoAgregacionBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    public void insert(final CampoAgregacionVO vo) throws DuplicateInstanceException {
-        Preconditions.checkNotNull(vo);
-
+    public void insert(final @Nonnull CampoAgregacionVO vo) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CampoAgregacionDAO cmagDAO = session.getMapper(CampoAgregacionDAO.class);
 
@@ -53,9 +51,7 @@ public final class CampoAgregacionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void update(final CampoAgregacionVO vo) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(vo);
-
+    public void update(final @Nonnull CampoAgregacionVO vo) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CampoAgregacionDAO cmagDAO = session.getMapper(CampoAgregacionDAO.class);
 
@@ -75,9 +71,7 @@ public final class CampoAgregacionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public void delete(final CampoAgregacionVO vo) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(vo);
-
+    public void delete(final @Nonnull CampoAgregacionVO vo) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CampoAgregacionDAO cmagDAO = session.getMapper(CampoAgregacionDAO.class);
 
@@ -102,11 +96,8 @@ public final class CampoAgregacionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public CampoAgregacionVO select(final Long tpesId, final Long entdId, final String idioma)
+    public CampoAgregacionVO select(final @Nonnull Long tpesId, final @Nonnull Long entdId, final String idioma)
             throws InstanceNotFoundException {
-        Preconditions.checkNotNull(tpesId);
-        Preconditions.checkNotNull(entdId);
-
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CampoAgregacionDAO cmagDAO = session.getMapper(CampoAgregacionDAO.class);
             final CampoAgregacionCriterioVO cmagCriterioVO = new CampoAgregacionCriterioVO();
@@ -131,9 +122,7 @@ public final class CampoAgregacionBO {
      *            the criterio vo
      * @return the list
      */
-    public List<CampoAgregacionVO> selectList(final CampoAgregacionCriterioVO criterioVO) {
-        Preconditions.checkNotNull(criterioVO);
-
+    public List<CampoAgregacionVO> selectList(final @Nonnull CampoAgregacionCriterioVO criterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final CampoAgregacionDAO cmapDAO = session.getMapper(CampoAgregacionDAO.class);
 

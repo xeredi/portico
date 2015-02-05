@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
+import javax.annotation.Nonnull;
+
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -13,8 +15,6 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,11 +42,8 @@ public final class ProcesoXls extends BaseXls {
      * @throws InternalErrorException
      *             the internal error exception
      */
-    public void generarProcesos(final List<ProcesoVO> prbtList, final OutputStream stream)
+    public void generarProcesos(final @Nonnull List<ProcesoVO> prbtList, final @Nonnull OutputStream stream)
             throws InternalErrorException {
-        Preconditions.checkNotNull(prbtList);
-        Preconditions.checkNotNull(stream);
-
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet("prbtList");
 

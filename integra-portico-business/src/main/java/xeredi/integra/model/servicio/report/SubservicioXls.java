@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.annotation.Nonnull;
+
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -14,11 +16,10 @@ import xeredi.integra.model.comun.exception.InternalErrorException;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.report.BaseXls;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,7 +36,7 @@ public final class SubservicioXls extends BaseXls {
      * @param locale
      *            the locale
      */
-    public SubservicioXls(final Locale locale) {
+    public SubservicioXls(final @Nonnull Locale locale) {
         super(locale);
 
         bundle = PorticoResourceBundle.getBundle(locale);
@@ -53,14 +54,9 @@ public final class SubservicioXls extends BaseXls {
      * @throws InternalErrorException
      *             Si ocurre algun error grave.
      */
-    public void generarSubservicios(final List<SubservicioVO> ssrvList, final TipoSubservicioVO tpssVO,
-            final OutputStream stream) throws InternalErrorException {
-        Preconditions.checkNotNull(ssrvList);
-        Preconditions.checkNotNull(tpssVO);
-        Preconditions.checkNotNull(stream);
-
-        try {
-            final HSSFWorkbook workbook = new HSSFWorkbook();
+    public void generarSubservicios(final @Nonnull List<SubservicioVO> ssrvList,
+            final @Nonnull TipoSubservicioVO tpssVO, final @Nonnull OutputStream stream) throws InternalErrorException {
+        try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpssVO.getId()));
 
             // Cabecera XLS
@@ -69,17 +65,17 @@ public final class SubservicioXls extends BaseXls {
             final HSSFRow rowhead = sheet.createRow(rownum++);
             int i = 0;
 
-            setCellValue(rowhead, i++, bundle.getString("ssrv_tpss"));
-            setCellValue(rowhead, i++, bundle.getString("ssrv_srvc"));
-            setCellValue(rowhead, i++, bundle.getString("ssrv_numero"));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_tpss.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_srvc.name()));
+            setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_numero.name()));
 
             if (tpssVO.getTpdtEstado() != null) {
-                setCellValue(rowhead, i++, bundle.getString("ssrv_estado"));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_estado.name()));
             }
 
             if (tpssVO.getTemporal()) {
-                setCellValue(rowhead, i++, bundle.getString("ssrv_fini"));
-                setCellValue(rowhead, i++, bundle.getString("ssrv_ffin"));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_fini.name()));
+                setCellValue(rowhead, i++, bundle.getString(MessageI18nKey.ssrv_ffin.name()));
             }
 
             for (final EntidadTipoDatoVO entd : tpssVO.getEntdList()) {

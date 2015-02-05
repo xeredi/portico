@@ -3,6 +3,8 @@ package xeredi.integra.model.servicio.bo;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
@@ -28,7 +30,7 @@ public interface SubservicioBO {
      *            the limit
      * @return the paginated list
      */
-    PaginatedList<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO, final int offset,
+    PaginatedList<SubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO, final int offset,
             final int limit);
 
     /**
@@ -38,7 +40,7 @@ public interface SubservicioBO {
      *            the ssrv criterio vo
      * @return the list
      */
-    List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO);
+    List<SubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Select.
@@ -51,7 +53,7 @@ public interface SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    SubservicioVO select(final Long ssrvId, final String idioma) throws InstanceNotFoundException;
+    SubservicioVO select(final @Nonnull Long ssrvId, final @Nonnull String idioma) throws InstanceNotFoundException;
 
     /**
      * Select lupa list.
@@ -76,8 +78,8 @@ public interface SubservicioBO {
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
-    void insert(final SubservicioVO ssrvVO, final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds)
-            throws DuplicateInstanceException;
+    void insert(final @Nonnull SubservicioVO ssrvVO, final @Nonnull TipoSubservicioVO tpssVO,
+            final Set<Long> ssrvPadreIds) throws DuplicateInstanceException;
 
     /**
      * Duplicate.
@@ -85,7 +87,7 @@ public interface SubservicioBO {
      * @param ssrvVO
      *            the ssrv vo
      */
-    void duplicate(final SubservicioVO ssrvVO);
+    void duplicate(final @Nonnull SubservicioVO ssrvVO);
 
     /**
      * Update.
@@ -95,7 +97,7 @@ public interface SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void update(final SubservicioVO ssrvVO) throws InstanceNotFoundException;
+    void update(final @Nonnull SubservicioVO ssrvVO) throws InstanceNotFoundException;
 
     /**
      * Delete.
@@ -107,6 +109,6 @@ public interface SubservicioBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    void delete(final Long srvcId, final Long ssrvId) throws InstanceNotFoundException;
+    void delete(final @Nonnull Long srvcId, final @Nonnull Long ssrvId) throws InstanceNotFoundException;
 
 }
