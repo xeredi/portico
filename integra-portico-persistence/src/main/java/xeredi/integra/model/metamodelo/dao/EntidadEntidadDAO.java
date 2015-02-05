@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
 
@@ -18,7 +20,7 @@ public interface EntidadEntidadDAO {
      *            the enen vo
      * @return true, if successful
      */
-    boolean exists(final EntidadEntidadVO enenVO);
+    boolean exists(final @Nonnull EntidadEntidadVO enenVO);
 
     /**
      * Insert.
@@ -26,7 +28,7 @@ public interface EntidadEntidadDAO {
      * @param enenVO
      *            the enen vo
      */
-    void insert(final EntidadEntidadVO enenVO);
+    void insert(final @Nonnull EntidadEntidadVO enenVO);
 
     /**
      * Update.
@@ -35,7 +37,7 @@ public interface EntidadEntidadDAO {
      *            the enen vo
      * @return the int
      */
-    int update(final EntidadEntidadVO enenVO);
+    int update(final @Nonnull EntidadEntidadVO enenVO);
 
     /**
      * Delete.
@@ -44,7 +46,7 @@ public interface EntidadEntidadDAO {
      *            the enen vo
      * @return the int
      */
-    int delete(final EntidadEntidadVO enenVO);
+    int delete(final @Nonnull EntidadEntidadVO enenVO);
 
     /**
      * Select list.
@@ -53,7 +55,7 @@ public interface EntidadEntidadDAO {
      *            the enen criterio vo
      * @return the list
      */
-    List<EntidadEntidadVO> selectList(final EntidadEntidadCriterioVO enenCriterioVO);
+    List<EntidadEntidadVO> selectList(final @Nonnull EntidadEntidadCriterioVO enenCriterioVO);
 
     /**
      * Select object.
@@ -62,5 +64,5 @@ public interface EntidadEntidadDAO {
      *            the enen criterio vo
      * @return the entidad entidad vo
      */
-    EntidadEntidadVO selectObject(final EntidadEntidadCriterioVO enenCriterioVO);
+    EntidadEntidadVO selectObject(final @Nonnull EntidadEntidadCriterioVO enenCriterioVO);
 }

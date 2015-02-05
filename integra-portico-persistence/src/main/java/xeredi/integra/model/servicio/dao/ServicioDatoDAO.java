@@ -2,6 +2,8 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 
@@ -18,7 +20,7 @@ public interface ServicioDatoDAO {
      *            the srvc criterio vo
      * @return the list
      */
-    List<ItemDatoVO> selectList(final ServicioCriterioVO srvcCriterioVO);
+    List<ItemDatoVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Insert.
@@ -26,7 +28,7 @@ public interface ServicioDatoDAO {
      * @param itdtVO
      *            the itdt vo
      */
-    void insert(final ItemDatoVO itdtVO);
+    void insert(final @Nonnull ItemDatoVO itdtVO);
 
     /**
      * Update.
@@ -35,7 +37,7 @@ public interface ServicioDatoDAO {
      *            the itdt vo
      * @return the int
      */
-    int update(final ItemDatoVO itdtVO);
+    int update(final @Nonnull ItemDatoVO itdtVO);
 
     /**
      * Delete.
@@ -44,5 +46,5 @@ public interface ServicioDatoDAO {
      *            the srvc criterio vo
      * @return the int
      */
-    int delete(final ServicioCriterioVO srvcCriterioVO);
+    int delete(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 }

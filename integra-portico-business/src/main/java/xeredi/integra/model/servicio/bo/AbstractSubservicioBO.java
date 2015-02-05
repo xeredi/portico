@@ -30,6 +30,7 @@ import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -195,6 +196,36 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
     @Override
     public final void duplicate(final SubservicioVO ssrvVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+
+            // Depencias padre
+            final SubservicioCriterioVO ssrvCriterioPadreVO = new SubservicioCriterioVO();
+
+            ssrvCriterioPadreVO.setHijoId(ssrvVO.getId());
+
+            final List<SubservicioSubservicioVO> ssrvPadresList = ssssDAO.selectList(ssrvCriterioPadreVO);
+
+            // Dependencias hija hija
+            final List<SubservicioSubservicioVO> ssrvHijosList = new ArrayList<>();
+            final List<SubservicioSubservicioVO> ssrvHijosStepList = new ArrayList<>();
+            final SubservicioCriterioVO ssrvCriterioHijoVO = new SubservicioCriterioVO();
+
+            ssrvCriterioHijoVO.setPadreIds(Sets.newHashSet(ssrvVO.getId()));
+
+            do {
+                ssrvHijosStepList.clear();
+                ssrvHijosStepList.addAll(ssssDAO.selectList(ssrvCriterioHijoVO));
+
+                final Set<Long> ssrvPadreIds = new HashSet<>();
+
+                for (final SubservicioSubservicioVO ssssVO : ssrvHijosStepList) {
+                    ssrvPadreIds.add(ssssVO.getSsrvHijoId());
+                }
+
+                ssrvCriterioHijoVO.setPadreIds(ssrvPadreIds);
+            } while (!ssrvHijosStepList.isEmpty());
+
             duplicatePostOperations(session, ssrvVO);
 
             session.commit();

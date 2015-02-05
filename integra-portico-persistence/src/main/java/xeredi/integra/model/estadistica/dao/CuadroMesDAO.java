@@ -2,6 +2,8 @@ package xeredi.integra.model.estadistica.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.estadistica.vo.CuadroMesParametroVO;
 import xeredi.integra.model.estadistica.vo.CuadroMesVO;
 
@@ -18,7 +20,7 @@ public interface CuadroMesDAO {
      *            the pepr id
      * @return true, if successful
      */
-    boolean exists(final Long peprId);
+    boolean exists(final @Nonnull Long peprId);
 
     /**
      * Delete.
@@ -27,7 +29,7 @@ public interface CuadroMesDAO {
      *            the pepr id
      * @return the int
      */
-    int delete(final Long peprId);
+    int delete(final @Nonnull Long peprId);
 
     /**
      * Select list.
@@ -36,7 +38,7 @@ public interface CuadroMesDAO {
      *            the pepr id
      * @return the list
      */
-    public List<CuadroMesVO> selectList(final Long peprId);
+    public List<CuadroMesVO> selectList(final @Nonnull Long peprId);
 
     /**
      * Insert_ c m_ pescaf.
@@ -44,7 +46,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_PESCAF(final CuadroMesParametroVO vo);
+    void insert_CM_PESCAF(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ avppet.
@@ -52,7 +54,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_AVPPET(final CuadroMesParametroVO vo);
+    void insert_CM_AVPPET(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ avotro.
@@ -60,7 +62,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_AVOTRO(final CuadroMesParametroVO vo);
+    void insert_CM_AVOTRO(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ buqun i_ buqg t_ es.
@@ -68,7 +70,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_BUQUNI_BUQGT_ES(final CuadroMesParametroVO vo);
+    void insert_CM_BUQUNI_BUQGT_ES(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ buqun i_ buqg t_ zz.
@@ -76,7 +78,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_BUQUNI_BUQGT_ZZ(final CuadroMesParametroVO vo);
+    void insert_CM_BUQUNI_BUQGT_ZZ(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ crubuq.
@@ -84,7 +86,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_CRUBUQ(final CuadroMesParametroVO vo);
+    void insert_CM_CRUBUQ(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ glpet r_ glgas n_ glpre f_ glotro.
@@ -92,7 +94,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(final CuadroMesParametroVO vo);
+    void insert_CM_GLPETR_GLGASN_GLPREF_GLOTRO(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ gsies p_ gsnies.
@@ -100,7 +102,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_GSIESP_GSNIES(final CuadroMesParametroVO vo);
+    void insert_CM_GSIESP_GSNIES(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ m g_ pasaj e_ ve t2.
@@ -108,7 +110,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_MG_PASAJE_VET2(final CuadroMesParametroVO vo);
+    void insert_CM_MG_PASAJE_VET2(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ pascru.
@@ -116,7 +118,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_PASCRU(final CuadroMesParametroVO vo);
+    void insert_CM_PASCRU(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ cnumca.
@@ -124,7 +126,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_CNUMCA(final CuadroMesParametroVO vo);
+    void insert_CM_CNUMCA(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ ctonca.
@@ -132,7 +134,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_CTONCA(final CuadroMesParametroVO vo);
+    void insert_CM_CTONCA(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ cnumv a_ ctonv a_ cteus.
@@ -140,7 +142,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_CNUMVA_CTONVA_CTEUS(final CuadroMesParametroVO vo);
+    void insert_CM_CNUMVA_CTONVA_CTEUS(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ rrteu s_ rrtonc.
@@ -148,7 +150,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_RRTEUS_RRTONC(final CuadroMesParametroVO vo);
+    void insert_CM_RRTEUS_RRTONC(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ rrtono.
@@ -156,7 +158,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_RRTONO(final CuadroMesParametroVO vo);
+    void insert_CM_RRTONO(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ traloc.
@@ -164,7 +166,7 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_TRALOC(final CuadroMesParametroVO vo);
+    void insert_CM_TRALOC(final @Nonnull CuadroMesParametroVO vo);
 
     /**
      * Insert_ c m_ mconv.
@@ -172,5 +174,5 @@ public interface CuadroMesDAO {
      * @param vo
      *            the vo
      */
-    void insert_CM_MCONV(final CuadroMesParametroVO vo);
+    void insert_CM_MCONV(final @Nonnull CuadroMesParametroVO vo);
 }

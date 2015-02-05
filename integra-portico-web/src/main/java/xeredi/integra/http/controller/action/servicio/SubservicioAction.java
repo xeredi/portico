@@ -192,7 +192,9 @@ public final class SubservicioAction extends ItemAction {
 
                 break;
             case duplicate:
-                throw new Error("No implementado");
+                ssrvBO.duplicate(item);
+
+                break;
             default:
                 throw new Error("Accion no valida: " + accion);
             }

@@ -25,6 +25,7 @@
 				<th translate>tpdt_tpel</th>
 				<th translate>tpdt_tpht</th>
 				<th translate>tpdt_enti</th>
+				<th translate>entd_valorDefecto</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -45,6 +46,7 @@
 					ng-bind="entd.tpdt.tipoElemento"></td>
 				<td bs-tooltip data-title="{{'HtmlTipo_' + entd.tpdt.tpht | translate}}" ng-bind="entd.tpdt.tpht"></td>
 				<td nowrap="nowrap" ng-bind="entd.tpdt.enti.nombre"></span></td>
+				<td nowrap="nowrap" ng-bind="entd.valorDefecto"></span></td>
 			</tr>
 		</tbody>
 	</table>

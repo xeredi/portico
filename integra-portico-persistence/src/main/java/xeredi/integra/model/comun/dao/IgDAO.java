@@ -1,5 +1,7 @@
 package xeredi.integra.model.comun.dao;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.vo.IgVO;
 
 // TODO: Auto-generated Javadoc
@@ -15,7 +17,7 @@ public interface IgDAO {
      *            the nombre
      * @return the ig vo
      */
-    public IgVO select(final String nombre);
+    public IgVO select(final @Nonnull String nombre);
 
     /**
      * Update.
@@ -24,5 +26,5 @@ public interface IgDAO {
      *            the nombre
      * @return the int
      */
-    public int update(final String nombre);
+    public int update(final @Nonnull String nombre);
 }

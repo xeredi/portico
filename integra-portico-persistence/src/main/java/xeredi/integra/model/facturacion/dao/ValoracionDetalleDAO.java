@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
@@ -19,7 +21,7 @@ public interface ValoracionDetalleDAO {
      * @param vlrdVO
      *            the vlrd vo
      */
-    void insert(final ValoracionDetalleVO vlrdVO);
+    void insert(final @Nonnull ValoracionDetalleVO vlrdVO);
 
     /**
      * Update.
@@ -28,7 +30,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd vo
      * @return the int
      */
-    int update(final ValoracionDetalleVO vlrdVO);
+    int update(final @Nonnull ValoracionDetalleVO vlrdVO);
 
     /**
      * Delete.
@@ -37,7 +39,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd vo
      * @return the int
      */
-    int delete(final ValoracionDetalleVO vlrdVO);
+    int delete(final @Nonnull ValoracionDetalleVO vlrdVO);
 
     /**
      * Delete.
@@ -46,7 +48,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd criterio vo
      * @return the int
      */
-    int deleteList(final ValoracionDetalleCriterioVO vlrdCriterioVO);
+    int deleteList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO);
 
     /**
      * Select.
@@ -55,7 +57,7 @@ public interface ValoracionDetalleDAO {
      *            the id
      * @return the valoracion detalle vo
      */
-    ValoracionDetalleVO select(final Long id);
+    ValoracionDetalleVO select(final @Nonnull Long id);
 
     /**
      * Count.
@@ -64,7 +66,7 @@ public interface ValoracionDetalleDAO {
      *            the vlrd criterio vo
      * @return the int
      */
-    int count(final ValoracionDetalleCriterioVO vlrdCriterioVO);
+    int count(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO);
 
     /**
      * Select list.
@@ -75,8 +77,8 @@ public interface ValoracionDetalleDAO {
      *            the bounds
      * @return the list
      */
-    List<ValoracionDetalleVO> selectPaginatedList(final ValoracionDetalleCriterioVO vlrdCriterioVO,
-            final RowBounds bounds);
+    List<ValoracionDetalleVO> selectPaginatedList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO,
+            final @Nonnull RowBounds bounds);
 
     /**
      * Select list.
@@ -85,5 +87,5 @@ public interface ValoracionDetalleDAO {
      *            the vlrd criterio vo
      * @return the list
      */
-    List<ValoracionDetalleVO> selectList(final ValoracionDetalleCriterioVO vlrdCriterioVO);
+    List<ValoracionDetalleVO> selectList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO);
 }

@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
 
@@ -18,7 +20,7 @@ public interface ValoracionTemporalDAO {
      *            the contexto vo
      * @return the list
      */
-    List<ValoracionTemporalVO> selectAplicarReglaServicio(final ValoradorContextoVO contextoVO);
+    List<ValoracionTemporalVO> selectAplicarReglaServicio(final @Nonnull ValoradorContextoVO contextoVO);
 
     /**
      * Select aplicar regla decorador servicio.
@@ -27,7 +29,7 @@ public interface ValoracionTemporalDAO {
      *            the contexto vo
      * @return the list
      */
-    List<ValoracionTemporalVO> selectAplicarReglaDecoradorServicio(final ValoradorContextoVO contextoVO);
+    List<ValoracionTemporalVO> selectAplicarReglaDecoradorServicio(final @Nonnull ValoradorContextoVO contextoVO);
 
     /**
      * Select aplicar regla subservicio.
@@ -36,7 +38,7 @@ public interface ValoracionTemporalDAO {
      *            the contexto vo
      * @return the list
      */
-    List<ValoracionTemporalVO> selectAplicarReglaSubservicio(final ValoradorContextoVO contextoVO);
+    List<ValoracionTemporalVO> selectAplicarReglaSubservicio(final @Nonnull ValoradorContextoVO contextoVO);
 
     /**
      * Select aplicar regla decorador subservicio.
@@ -45,7 +47,7 @@ public interface ValoracionTemporalDAO {
      *            the contexto vo
      * @return the list
      */
-    List<ValoracionTemporalVO> selectAplicarReglaDecoradorSubservicio(final ValoradorContextoVO contextoVO);
+    List<ValoracionTemporalVO> selectAplicarReglaDecoradorSubservicio(final @Nonnull ValoradorContextoVO contextoVO);
 
     /**
      * Exists pendiente.
@@ -54,7 +56,7 @@ public interface ValoracionTemporalDAO {
      *            the contexto vo
      * @return true, if successful
      */
-    boolean existsPendiente(final ValoradorContextoVO contextoVO);
+    boolean existsPendiente(final @Nonnull ValoradorContextoVO contextoVO);
 
     /**
      * Insert.
@@ -62,7 +64,7 @@ public interface ValoracionTemporalDAO {
      * @param vo
      *            the vo
      */
-    void insert(final ValoracionTemporalVO vo);
+    void insert(final @Nonnull ValoracionTemporalVO vo);
 
     /**
      * Delete temporal list.
@@ -71,7 +73,7 @@ public interface ValoracionTemporalDAO {
      *            the contexto vo
      * @return the int
      */
-    int deleteList(final ValoradorContextoVO contextoVO);
+    int deleteList(final @Nonnull ValoradorContextoVO contextoVO);
 
     /**
      * Delete incompatibilidad list.
@@ -80,7 +82,7 @@ public interface ValoracionTemporalDAO {
      *            the vlrt
      * @return the int
      */
-    int deleteIncompatibilidadList(final ValoracionTemporalVO vlrt);
+    int deleteIncompatibilidadList(final @Nonnull ValoracionTemporalVO vlrt);
 
     /**
      * Update recalcular cargo.
@@ -89,5 +91,5 @@ public interface ValoracionTemporalDAO {
      *            the contexto vo
      * @return the int
      */
-    int updateRecalcularCargo(final ValoradorContextoVO contextoVO);
+    int updateRecalcularCargo(final @Nonnull ValoradorContextoVO contextoVO);
 }

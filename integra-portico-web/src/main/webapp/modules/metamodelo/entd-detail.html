@@ -10,6 +10,8 @@
     </div>
 
     <div class="container-fluid">
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-2 form-group">
                 <label translate>entd_tpdt</label>
@@ -36,6 +38,10 @@
                         ng-href="#/metamodelo/tpsr/detail/{{vm.entd.tpdt.enti.id}}"
                         ng-bind="'enti_' +  vm.entd.tpdt.enti.id | translate"></a></span>
                 </p>
+            </div>
+            <div class="col-sm-3 col-md-2 form-group">
+                <label translate>entd_valorDefecto</label>
+                <p class="form-control-static" ng-bind="vm.entd.valorDefecto"></p>
             </div>
         </div>
 
@@ -79,7 +85,5 @@
                 </p>
             </div>
         </div>
-
-        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
     </div>
 </div>

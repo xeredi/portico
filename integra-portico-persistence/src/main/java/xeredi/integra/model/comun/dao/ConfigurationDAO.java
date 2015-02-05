@@ -2,6 +2,8 @@ package xeredi.integra.model.comun.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
 
@@ -25,7 +27,7 @@ public interface ConfigurationDAO {
      *            the vo
      * @return the int
      */
-    int update(final ConfigurationVO vo);
+    int update(final @Nonnull ConfigurationVO vo);
 
     /**
      * Select.
@@ -34,5 +36,5 @@ public interface ConfigurationDAO {
      *            the key
      * @return the configuration vo
      */
-    ConfigurationVO select(final ConfigurationKey key);
+    ConfigurationVO select(final @Nonnull ConfigurationKey key);
 }

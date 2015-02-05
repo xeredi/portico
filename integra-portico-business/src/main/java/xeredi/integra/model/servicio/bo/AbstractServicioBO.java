@@ -374,7 +374,10 @@ public abstract class AbstractServicioBO implements ServicioBO {
 
             srvcDAO.insert(srvcVO);
 
-            for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
+            for (final Object tpdtId : srvcVO.getItdtMap().keySet()) {
+                final ItemDatoVO itdtVO = srvcVO.getItdtMap().get(tpdtId);
+
+                itdtVO.setTpdtId(tpdtId instanceof Long ? (Long) tpdtId : Long.parseLong(tpdtId.toString()));
                 itdtVO.setItemId(srvcVO.getId());
 
                 srdtDAO.insert(itdtVO);

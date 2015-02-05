@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 
@@ -17,7 +19,7 @@ public interface ValoracionCargoDAO {
      * @param vlrcCriterioVO
      *            the vlrc criterio vo
      */
-    void insertGenerate(final ValoracionCriterioVO vlrcCriterioVO);
+    void insertGenerate(final @Nonnull ValoracionCriterioVO vlrcCriterioVO);
 
     /**
      * Delete.
@@ -26,7 +28,7 @@ public interface ValoracionCargoDAO {
      *            the vlrc criterio vo
      * @return the int
      */
-    int delete(final ValoracionCriterioVO vlrcCriterioVO);
+    int delete(final @Nonnull ValoracionCriterioVO vlrcCriterioVO);
 
     /**
      * Select list.
@@ -35,5 +37,5 @@ public interface ValoracionCargoDAO {
      *            the vlrc criterio vo
      * @return the list
      */
-    List<ValoracionCargoVO> selectList(final ValoracionCriterioVO vlrcCriterioVO);
+    List<ValoracionCargoVO> selectList(final @Nonnull ValoracionCriterioVO vlrcCriterioVO);
 }

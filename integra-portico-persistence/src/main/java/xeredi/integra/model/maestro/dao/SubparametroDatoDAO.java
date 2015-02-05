@@ -2,6 +2,8 @@ package xeredi.integra.model.maestro.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
@@ -19,7 +21,7 @@ public interface SubparametroDatoDAO {
      *            the sprm criterio vo
      * @return the list
      */
-    List<ItemDatoVO> selectList(final SubparametroCriterioVO sprmCriterioVO);
+    List<ItemDatoVO> selectList(final @Nonnull SubparametroCriterioVO sprmCriterioVO);
 
     /**
      * Insert.
@@ -27,7 +29,7 @@ public interface SubparametroDatoDAO {
      * @param itdtVO
      *            the itdt vo
      */
-    void insert(final ItemDatoVO itdtVO);
+    void insert(final @Nonnull ItemDatoVO itdtVO);
 
     /**
      * Update.
@@ -36,7 +38,7 @@ public interface SubparametroDatoDAO {
      *            the prdt
      * @return the int
      */
-    int update(final ItemDatoVO prdt);
+    int update(final @Nonnull ItemDatoVO prdt);
 
     /**
      * Delete version.
@@ -45,5 +47,5 @@ public interface SubparametroDatoDAO {
      *            the sprm
      * @return the int
      */
-    int deleteVersion(final SubparametroVO sprm);
+    int deleteVersion(final @Nonnull SubparametroVO sprm);
 }

@@ -35,7 +35,21 @@ public class PartidaBO extends AbstractSubservicioBO {
     @Override
     protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
             final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
-        // noop
+        final BlDAO blDAO = session.getMapper(BlDAO.class);
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+
+        srvcCriterioVO.setId(ssrvVO.getSrvc().getId());
+
+        ssrvCriterioVO.setSrvc(srvcCriterioVO);
+        ssrvCriterioVO.setEntiId(Entidad.BL.getId());
+        ssrvCriterioVO.setHijoId(ssrvVO.getId());
+
+        blDAO.updateRecalcularEstado(ssrvCriterioVO);
+
+        maniDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -43,7 +57,21 @@ public class PartidaBO extends AbstractSubservicioBO {
      */
     @Override
     protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
-        // noop
+        final BlDAO blDAO = session.getMapper(BlDAO.class);
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+
+        srvcCriterioVO.setId(ssrvVO.getSrvc().getId());
+
+        ssrvCriterioVO.setSrvc(srvcCriterioVO);
+        ssrvCriterioVO.setEntiId(Entidad.BL.getId());
+        ssrvCriterioVO.setHijoId(ssrvVO.getId());
+
+        blDAO.updateRecalcularEstado(ssrvCriterioVO);
+
+        maniDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -52,7 +80,21 @@ public class PartidaBO extends AbstractSubservicioBO {
     @Override
     protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
-        // noop
+        final BlDAO blDAO = session.getMapper(BlDAO.class);
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+
+        srvcCriterioVO.setId(ssrvVO.getSrvc().getId());
+
+        ssrvCriterioVO.setSrvc(srvcCriterioVO);
+        ssrvCriterioVO.setEntiId(Entidad.BL.getId());
+        ssrvCriterioVO.setHijoId(ssrvVO.getId());
+
+        blDAO.updateRecalcularEstado(ssrvCriterioVO);
+
+        maniDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -61,7 +103,21 @@ public class PartidaBO extends AbstractSubservicioBO {
     @Override
     protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
             throws InstanceNotFoundException {
-        // noop
+        final BlDAO blDAO = session.getMapper(BlDAO.class);
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+        final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+
+        srvcCriterioVO.setId(srvcId);
+
+        ssrvCriterioVO.setSrvc(srvcCriterioVO);
+        ssrvCriterioVO.setEntiId(Entidad.BL.getId());
+        ssrvCriterioVO.setHijoId(ssrvId);
+
+        blDAO.updateRecalcularEstado(ssrvCriterioVO);
+
+        maniDAO.updateRecalcularEstado(srvcId);
     }
 
     /**
@@ -113,14 +169,6 @@ public class PartidaBO extends AbstractSubservicioBO {
             blCriterioVO.setSrvc(srvcCriterioVO);
             blCriterioVO.setEntiId(Entidad.BL.getId());
             blCriterioVO.setHijoId(ssrvId);
-
-            final SubservicioVO blVO = ssrvDAO.selectObject(blCriterioVO);
-
-            if (blVO == null) {
-                throw new InstanceNotFoundException(Entidad.BL.getId(), blCriterioVO);
-            }
-
-            blCriterioVO.setId(blVO.getId());
 
             blDAO.updateRecalcularEstado(blCriterioVO);
 
@@ -180,14 +228,6 @@ public class PartidaBO extends AbstractSubservicioBO {
             blCriterioVO.setSrvc(srvcCriterioVO);
             blCriterioVO.setEntiId(Entidad.BL.getId());
             blCriterioVO.setHijoId(ssrvId);
-
-            final SubservicioVO blVO = ssrvDAO.selectObject(blCriterioVO);
-
-            if (blVO == null) {
-                throw new InstanceNotFoundException(Entidad.BL.getId(), blCriterioVO);
-            }
-
-            blCriterioVO.setId(blVO.getId());
 
             blDAO.updateRecalcularEstado(blCriterioVO);
 
@@ -251,14 +291,6 @@ public class PartidaBO extends AbstractSubservicioBO {
             blCriterioVO.setSrvc(srvcCriterioVO);
             blCriterioVO.setEntiId(Entidad.BL.getId());
             blCriterioVO.setHijoId(ssrvId);
-
-            final SubservicioVO blVO = ssrvDAO.selectObject(blCriterioVO);
-
-            if (blVO == null) {
-                throw new InstanceNotFoundException(Entidad.BL.getId(), blCriterioVO);
-            }
-
-            blCriterioVO.setId(blVO.getId());
 
             blDAO.updateRecalcularEstado(blCriterioVO);
 

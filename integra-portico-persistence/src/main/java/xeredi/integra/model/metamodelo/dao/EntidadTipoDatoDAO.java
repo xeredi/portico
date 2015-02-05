@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 
@@ -18,7 +20,7 @@ public interface EntidadTipoDatoDAO {
      *            the entd vo
      * @return true, if successful
      */
-    boolean exists(final EntidadTipoDatoVO entdVO);
+    boolean exists(final @Nonnull EntidadTipoDatoVO entdVO);
 
     /**
      * Insert.
@@ -26,7 +28,7 @@ public interface EntidadTipoDatoDAO {
      * @param entdVO
      *            the entd vo
      */
-    void insert(final EntidadTipoDatoVO entdVO);
+    void insert(final @Nonnull EntidadTipoDatoVO entdVO);
 
     /**
      * Update.
@@ -35,7 +37,7 @@ public interface EntidadTipoDatoDAO {
      *            the entd vo
      * @return the int
      */
-    int update(final EntidadTipoDatoVO entdVO);
+    int update(final @Nonnull EntidadTipoDatoVO entdVO);
 
     /**
      * Delete.
@@ -44,7 +46,7 @@ public interface EntidadTipoDatoDAO {
      *            the entd vo
      * @return the int
      */
-    int delete(final EntidadTipoDatoVO entdVO);
+    int delete(final @Nonnull EntidadTipoDatoVO entdVO);
 
     /**
      * Delete list.
@@ -53,7 +55,7 @@ public interface EntidadTipoDatoDAO {
      *            the entd criterio vo
      * @return the int
      */
-    int deleteList(final EntidadTipoDatoCriterioVO entdCriterioVO);
+    int deleteList(final @Nonnull EntidadTipoDatoCriterioVO entdCriterioVO);
 
     /**
      * Select all.
@@ -69,7 +71,7 @@ public interface EntidadTipoDatoDAO {
      *            the entd criterio vo
      * @return the list
      */
-    List<EntidadTipoDatoVO> selectList(final EntidadTipoDatoCriterioVO entdCriterioVO);
+    List<EntidadTipoDatoVO> selectList(final @Nonnull EntidadTipoDatoCriterioVO entdCriterioVO);
 
     /**
      * Select object.
@@ -78,5 +80,5 @@ public interface EntidadTipoDatoDAO {
      *            the entd criterio vo
      * @return the entidad tipo dato vo
      */
-    EntidadTipoDatoVO selectObject(final EntidadTipoDatoCriterioVO entdCriterioVO);
+    EntidadTipoDatoVO selectObject(final @Nonnull EntidadTipoDatoCriterioVO entdCriterioVO);
 }

@@ -2,6 +2,8 @@ package xeredi.integra.model.comun.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.vo.I18nCriterioVO;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -19,7 +21,7 @@ public interface I18nDAO {
      *            the vo
      * @return true, if successful
      */
-    boolean exists(final I18nVO vo);
+    boolean exists(final @Nonnull I18nVO vo);
 
     /**
      * Insert.
@@ -27,7 +29,7 @@ public interface I18nDAO {
      * @param vo
      *            the vo
      */
-    void insert(final I18nVO vo);
+    void insert(final @Nonnull I18nVO vo);
 
     /**
      * Update.
@@ -36,7 +38,7 @@ public interface I18nDAO {
      *            the vo
      * @return the int
      */
-    int update(final I18nVO vo);
+    int update(final @Nonnull I18nVO vo);
 
     /**
      * Delete.
@@ -45,7 +47,7 @@ public interface I18nDAO {
      *            the vo
      * @return the int
      */
-    int delete(final I18nVO vo);
+    int delete(final @Nonnull I18nVO vo);
 
     /**
      * Delete list.
@@ -54,7 +56,7 @@ public interface I18nDAO {
      *            the criterio vo
      * @return the int
      */
-    int deleteList(final I18nCriterioVO criterioVO);
+    int deleteList(final @Nonnull I18nCriterioVO criterioVO);
 
     /**
      * Select list.
@@ -63,7 +65,7 @@ public interface I18nDAO {
      *            the criterio vo
      * @return the list
      */
-    List<I18nVO> selectList(final I18nCriterioVO criterioVO);
+    List<I18nVO> selectList(final @Nonnull I18nCriterioVO criterioVO);
 
     /**
      * Select label value list.
@@ -72,6 +74,6 @@ public interface I18nDAO {
      *            the criterio vo
      * @return the list
      */
-    List<LabelValueVO> selectLabelValueList(final I18nCriterioVO criterioVO);
+    List<LabelValueVO> selectLabelValueList(final @Nonnull I18nCriterioVO criterioVO);
 
 }

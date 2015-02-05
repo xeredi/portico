@@ -2,6 +2,8 @@ package xeredi.integra.model.comun.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.comun.vo.MessageI18nCriterioVO;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 
@@ -25,7 +27,7 @@ public interface MessageI18nDAO {
      *            the criterio vo
      * @return the list
      */
-    List<MessageI18nVO> selectList(final MessageI18nCriterioVO criterioVO);
+    List<MessageI18nVO> selectList(final @Nonnull MessageI18nCriterioVO criterioVO);
 
     /**
      * Select object.
@@ -34,7 +36,7 @@ public interface MessageI18nDAO {
      *            the criterio vo
      * @return the message i18n vo
      */
-    MessageI18nVO selectObject(final MessageI18nCriterioVO criterioVO);
+    MessageI18nVO selectObject(final @Nonnull MessageI18nCriterioVO criterioVO);
 
     /**
      * Update.
@@ -43,5 +45,5 @@ public interface MessageI18nDAO {
      *            the vo
      * @return the int
      */
-    int update(final MessageI18nVO vo);
+    int update(final @Nonnull MessageI18nVO vo);
 }

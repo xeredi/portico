@@ -2,6 +2,8 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
@@ -20,7 +22,7 @@ public interface SubservicioDAO {
      * @param ssrvVO
      *            the ssrv vo
      */
-    void insert(final SubservicioVO ssrvVO);
+    void insert(final @Nonnull SubservicioVO ssrvVO);
 
     /**
      * Update.
@@ -29,7 +31,7 @@ public interface SubservicioDAO {
      *            the ssrv vo
      * @return the int
      */
-    int update(final SubservicioVO ssrvVO);
+    int update(final @Nonnull SubservicioVO ssrvVO);
 
     /**
      * Update estado.
@@ -38,7 +40,7 @@ public interface SubservicioDAO {
      *            the ssrv vo
      * @return the int
      */
-    int updateEstado(final SubservicioVO ssrvVO);
+    int updateEstado(final @Nonnull SubservicioVO ssrvVO);
 
     /**
      * Delete.
@@ -47,7 +49,7 @@ public interface SubservicioDAO {
      *            the ssrv criterio vo
      * @return the int
      */
-    int delete(final SubservicioCriterioVO ssrvCriterioVO);
+    int delete(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Exists.
@@ -56,7 +58,7 @@ public interface SubservicioDAO {
      *            the ssrv vo
      * @return true, if successful
      */
-    boolean exists(final SubservicioVO ssrvVO);
+    boolean exists(final @Nonnull SubservicioVO ssrvVO);
 
     /**
      * Select count.
@@ -65,7 +67,7 @@ public interface SubservicioDAO {
      *            the ssrv criterio vo
      * @return the int
      */
-    int selectCount(final SubservicioCriterioVO ssrvCriterioVO);
+    int selectCount(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Select list.
@@ -74,7 +76,7 @@ public interface SubservicioDAO {
      *            the ssrv criterio vo
      * @return the list
      */
-    List<SubservicioVO> selectList(final SubservicioCriterioVO ssrvCriterioVO);
+    List<SubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Select paginated list.
@@ -83,7 +85,7 @@ public interface SubservicioDAO {
      *            the ssrv criterio vo
      * @return the list
      */
-    List<SubservicioVO> selectPaginatedList(final SubservicioCriterioVO ssrvCriterioVO);
+    List<SubservicioVO> selectPaginatedList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 
     /**
      * Select lupa list.
@@ -94,7 +96,8 @@ public interface SubservicioDAO {
      *            the bounds
      * @return the list
      */
-    List<SubservicioVO> selectLupaList(final SubservicioLupaCriterioVO ssrvCriterioVO, final RowBounds bounds);
+    List<SubservicioVO> selectLupaList(final @Nonnull SubservicioLupaCriterioVO ssrvCriterioVO,
+            final @Nonnull RowBounds bounds);
 
     /**
      * Select.
@@ -103,5 +106,5 @@ public interface SubservicioDAO {
      *            the ssrv criterio vo
      * @return the subservicio vo
      */
-    SubservicioVO selectObject(final SubservicioCriterioVO ssrvCriterioVO);
+    SubservicioVO selectObject(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 }

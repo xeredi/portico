@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
@@ -19,7 +21,7 @@ public interface ValoracionLineaDAO {
      * @param vlrlVO
      *            the vlrl vo
      */
-    void insert(final ValoracionLineaVO vlrlVO);
+    void insert(final @Nonnull ValoracionLineaVO vlrlVO);
 
     /**
      * Update.
@@ -28,7 +30,7 @@ public interface ValoracionLineaDAO {
      *            the vlrl vo
      * @return the int
      */
-    int update(final ValoracionLineaVO vlrlVO);
+    int update(final @Nonnull ValoracionLineaVO vlrlVO);
 
     /**
      * Delete.
@@ -37,7 +39,7 @@ public interface ValoracionLineaDAO {
      *            the vlrl criterio vo
      * @return the int
      */
-    int delete(final ValoracionLineaCriterioVO vlrlCriterioVO);
+    int delete(final @Nonnull ValoracionLineaCriterioVO vlrlCriterioVO);
 
     /**
      * Select list.
@@ -46,7 +48,7 @@ public interface ValoracionLineaDAO {
      *            the vlrl criterio vo
      * @return the list
      */
-    List<ValoracionLineaVO> selectList(final ValoracionLineaCriterioVO vlrlCriterioVO);
+    List<ValoracionLineaVO> selectList(final @Nonnull ValoracionLineaCriterioVO vlrlCriterioVO);
 
     /**
      * Count.
@@ -55,7 +57,7 @@ public interface ValoracionLineaDAO {
      *            the vlrl criterio vo
      * @return the int
      */
-    int count(final ValoracionLineaCriterioVO vlrlCriterioVO);
+    int count(final @Nonnull ValoracionLineaCriterioVO vlrlCriterioVO);
 
     /**
      * Select list.
@@ -66,7 +68,8 @@ public interface ValoracionLineaDAO {
      *            the bounds
      * @return the list
      */
-    List<ValoracionLineaVO> selectPaginatedList(final ValoracionLineaCriterioVO vlrlCriterioVO, final RowBounds bounds);
+    List<ValoracionLineaVO> selectPaginatedList(final @Nonnull ValoracionLineaCriterioVO vlrlCriterioVO,
+            final @Nonnull RowBounds bounds);
 
     /**
      * Select.
@@ -75,7 +78,7 @@ public interface ValoracionLineaDAO {
      *            the id
      * @return the valoracion linea vo
      */
-    ValoracionLineaVO select(final Long id);
+    ValoracionLineaVO select(final @Nonnull Long id);
 
     /**
      * Exists dependencia.
@@ -84,7 +87,7 @@ public interface ValoracionLineaDAO {
      *            the vlrl id
      * @return true, if successful
      */
-    boolean existsDependencia(final Long vlrlId);
+    boolean existsDependencia(final @Nonnull Long vlrlId);
 
     /**
      * Checks if is regla valida.
@@ -93,5 +96,5 @@ public interface ValoracionLineaDAO {
      *            the vlrl
      * @return true, if is regla valida
      */
-    boolean isRglaValida(final ValoracionLineaVO vlrl);
+    boolean isRglaValida(final @Nonnull ValoracionLineaVO vlrl);
 }

@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.CargoCriterioVO;
@@ -20,7 +22,7 @@ public interface CargoDAO {
      *            the criterio vo
      * @return the cargo vo
      */
-    CargoVO selectObject(final CargoCriterioVO criterioVO);
+    CargoVO selectObject(final @Nonnull CargoCriterioVO criterioVO);
 
     /**
      * Select list.
@@ -29,7 +31,7 @@ public interface CargoDAO {
      *            the criterio vo
      * @return the list
      */
-    List<CargoVO> selectList(final CargoCriterioVO criterioVO);
+    List<CargoVO> selectList(final @Nonnull CargoCriterioVO criterioVO);
 
     /**
      * Select list.
@@ -40,7 +42,7 @@ public interface CargoDAO {
      *            the bounds
      * @return the list
      */
-    List<CargoVO> selectPaginatedList(final CargoCriterioVO criterioVO, final RowBounds bounds);
+    List<CargoVO> selectPaginatedList(final @Nonnull CargoCriterioVO criterioVO, final @Nonnull RowBounds bounds);
 
     /**
      * Count.
@@ -49,7 +51,7 @@ public interface CargoDAO {
      *            the criterio vo
      * @return the int
      */
-    int count(final CargoCriterioVO criterioVO);
+    int count(final @Nonnull CargoCriterioVO criterioVO);
 
     /**
      * Exists.
@@ -58,7 +60,7 @@ public interface CargoDAO {
      *            the crgo
      * @return true, if successful
      */
-    boolean exists(final CargoVO crgo);
+    boolean exists(final @Nonnull CargoVO crgo);
 
     /**
      * Exists overlap.
@@ -67,7 +69,7 @@ public interface CargoDAO {
      *            the crgo
      * @return true, if successful
      */
-    boolean existsOverlap(final CargoVO crgo);
+    boolean existsOverlap(final @Nonnull CargoVO crgo);
 
     /**
      * Select id.
@@ -76,7 +78,7 @@ public interface CargoDAO {
      *            the crgo
      * @return the long
      */
-    Long selectId(final CargoVO crgo);
+    Long selectId(final @Nonnull CargoVO crgo);
 
     /**
      * Insert.
@@ -84,7 +86,7 @@ public interface CargoDAO {
      * @param crgo
      *            the crgo
      */
-    void insert(final CargoVO crgo);
+    void insert(final @Nonnull CargoVO crgo);
 
     /**
      * Insert version.
@@ -92,7 +94,7 @@ public interface CargoDAO {
      * @param crgo
      *            the crgo
      */
-    void insertVersion(final CargoVO crgo);
+    void insertVersion(final @Nonnull CargoVO crgo);
 
     /**
      * Update version.
@@ -101,7 +103,7 @@ public interface CargoDAO {
      *            the crgo
      * @return the int
      */
-    int updateVersion(final CargoVO crgo);
+    int updateVersion(final @Nonnull CargoVO crgo);
 
     /**
      * Delete version.
@@ -110,6 +112,6 @@ public interface CargoDAO {
      *            the crgo
      * @return the int
      */
-    int deleteVersion(final CargoVO crgo);
+    int deleteVersion(final @Nonnull CargoVO crgo);
 
 }

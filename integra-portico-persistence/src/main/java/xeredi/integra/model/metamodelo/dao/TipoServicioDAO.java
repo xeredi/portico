@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoServicioCriterioVO;
@@ -20,7 +22,7 @@ public interface TipoServicioDAO {
      *            the tpsr criterio vo
      * @return the list
      */
-    List<TipoServicioVO> selectList(final TipoServicioCriterioVO tpsrCriterioVO);
+    List<TipoServicioVO> selectList(final @Nonnull TipoServicioCriterioVO tpsrCriterioVO);
 
     /**
      * Select list.
@@ -31,7 +33,8 @@ public interface TipoServicioDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoServicioVO> selectPaginatedList(final TipoServicioCriterioVO tpsrCriterioVO, final RowBounds bounds);
+    List<TipoServicioVO> selectPaginatedList(final @Nonnull TipoServicioCriterioVO tpsrCriterioVO,
+            final @Nonnull RowBounds bounds);
 
     /**
      * Select.
@@ -40,7 +43,7 @@ public interface TipoServicioDAO {
      *            the enti criterio vo
      * @return the tipo servicio vo
      */
-    TipoServicioVO selectObject(final TipoServicioCriterioVO entiCriterioVO);
+    TipoServicioVO selectObject(final @Nonnull TipoServicioCriterioVO entiCriterioVO);
 
     /**
      * Count.
@@ -49,7 +52,7 @@ public interface TipoServicioDAO {
      *            the tpsr criterio vo
      * @return the int
      */
-    int count(final TipoServicioCriterioVO tpsrCriterioVO);
+    int count(final @Nonnull TipoServicioCriterioVO tpsrCriterioVO);
 
     /**
      * Insert.
@@ -57,7 +60,7 @@ public interface TipoServicioDAO {
      * @param tpsrVO
      *            the tpsr vo
      */
-    void insert(final TipoServicioVO tpsrVO);
+    void insert(final @Nonnull TipoServicioVO tpsrVO);
 
     /**
      * Update.
@@ -66,7 +69,7 @@ public interface TipoServicioDAO {
      *            the tpsr vo
      * @return the int
      */
-    int update(final TipoServicioVO tpsrVO);
+    int update(final @Nonnull TipoServicioVO tpsrVO);
 
     /**
      * Delete.
@@ -75,6 +78,6 @@ public interface TipoServicioDAO {
      *            the tpsr id
      * @return the int
      */
-    int delete(final Long tpsrId);
+    int delete(final @Nonnull Long tpsrId);
 
 }

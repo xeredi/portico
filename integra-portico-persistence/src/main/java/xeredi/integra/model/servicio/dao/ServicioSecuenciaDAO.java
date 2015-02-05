@@ -1,5 +1,7 @@
 package xeredi.integra.model.servicio.dao;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.servicio.vo.ServicioSecuenciaVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 
@@ -15,7 +17,7 @@ public interface ServicioSecuenciaDAO {
      * @param srscVO
      *            the srsc vo
      */
-    void insert(final ServicioSecuenciaVO srscVO);
+    void insert(final @Nonnull ServicioSecuenciaVO srscVO);
 
     /**
      * Update.
@@ -24,7 +26,7 @@ public interface ServicioSecuenciaDAO {
      *            the srsc vo
      * @return the int
      */
-    int update(final ServicioSecuenciaVO srscVO);
+    int update(final @Nonnull ServicioSecuenciaVO srscVO);
 
     /**
      * Delete.
@@ -33,7 +35,7 @@ public interface ServicioSecuenciaDAO {
      *            the srsc vo
      * @return the int
      */
-    int delete(final ServicioSecuenciaVO srscVO);
+    int delete(final @Nonnull ServicioSecuenciaVO srscVO);
 
     /**
      * Incrementar secuencia.
@@ -42,7 +44,7 @@ public interface ServicioSecuenciaDAO {
      *            the srvc vo
      * @return the int
      */
-    int incrementarSecuencia(final ServicioVO srvcVO);
+    int incrementarSecuencia(final @Nonnull ServicioVO srvcVO);
 
     /**
      * Obtener secuencia.
@@ -51,6 +53,6 @@ public interface ServicioSecuenciaDAO {
      *            the srvc vo
      * @return the integer
      */
-    Integer obtenerSecuencia(final ServicioVO srvcVO);
+    Integer obtenerSecuencia(final @Nonnull ServicioVO srvcVO);
 
 }

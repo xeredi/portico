@@ -2,6 +2,8 @@ package xeredi.integra.model.servicio.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
@@ -21,7 +23,7 @@ public interface ServicioDAO {
      *            the srvc vo
      * @return true, if successful
      */
-    boolean exists(final ServicioVO srvcVO);
+    boolean exists(final @Nonnull ServicioVO srvcVO);
 
     /**
      * Insert.
@@ -29,7 +31,7 @@ public interface ServicioDAO {
      * @param srvcVO
      *            the srvc vo
      */
-    void insert(final ServicioVO srvcVO);
+    void insert(final @Nonnull ServicioVO srvcVO);
 
     /**
      * Delete.
@@ -38,7 +40,7 @@ public interface ServicioDAO {
      *            the srvc id
      * @return the int
      */
-    int delete(final Long srvcId);
+    int delete(final @Nonnull Long srvcId);
 
     /**
      * Update pepr desasociar.
@@ -47,7 +49,7 @@ public interface ServicioDAO {
      *            the pepr id
      * @return the int
      */
-    int updatePeprDesasociar(final Long peprId);
+    int updatePeprDesasociar(final @Nonnull Long peprId);
 
     /**
      * Select count.
@@ -56,7 +58,7 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the int
      */
-    int selectCount(final ServicioCriterioVO srvcCriterioVO);
+    int selectCount(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select list.
@@ -65,7 +67,7 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the list
      */
-    List<ServicioVO> selectList(final ServicioCriterioVO srvcCriterioVO);
+    List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select paginated list.
@@ -74,7 +76,7 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the list
      */
-    List<ServicioVO> selectPaginatedList(final ServicioCriterioVO srvcCriterioVO);
+    List<ServicioVO> selectPaginatedList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select object.
@@ -83,7 +85,7 @@ public interface ServicioDAO {
      *            the srvc criterio vo
      * @return the servicio vo
      */
-    ServicioVO selectObject(final ServicioCriterioVO srvcCriterioVO);
+    ServicioVO selectObject(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
      * Select.
@@ -92,7 +94,7 @@ public interface ServicioDAO {
      *            the srvc id
      * @return the servicio vo
      */
-    ServicioVO select(final Long srvcId);
+    ServicioVO select(final @Nonnull Long srvcId);
 
     /**
      * Select lupa list.
@@ -103,6 +105,7 @@ public interface ServicioDAO {
      *            the bounds
      * @return the list
      */
-    List<ServicioVO> selectLupaList(final ServicioLupaCriterioVO srvcLupaCriterioVO, final RowBounds bounds);
+    List<ServicioVO> selectLupaList(final @Nonnull ServicioLupaCriterioVO srvcLupaCriterioVO,
+            @Nonnull final RowBounds bounds);
 
 }

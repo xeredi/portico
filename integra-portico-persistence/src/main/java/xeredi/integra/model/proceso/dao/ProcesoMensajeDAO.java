@@ -2,6 +2,8 @@ package xeredi.integra.model.proceso.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
@@ -18,7 +20,7 @@ public interface ProcesoMensajeDAO {
      * @param prmnVO
      *            the prmn vo
      */
-    void insert(final ProcesoMensajeVO prmnVO);
+    void insert(final @Nonnull ProcesoMensajeVO prmnVO);
 
     /**
      * Delete.
@@ -27,7 +29,7 @@ public interface ProcesoMensajeDAO {
      *            the prbt id
      * @return the int
      */
-    int delete(final Long prbtId);
+    int delete(final @Nonnull Long prbtId);
 
     /**
      * Select list.
@@ -36,7 +38,7 @@ public interface ProcesoMensajeDAO {
      *            the prbt id
      * @return the list
      */
-    List<ProcesoMensajeVO> selectList(final Long prbtId);
+    List<ProcesoMensajeVO> selectList(final @Nonnull Long prbtId);
 
     /**
      * Select list.
@@ -47,7 +49,7 @@ public interface ProcesoMensajeDAO {
      *            the bounds
      * @return the list
      */
-    List<ProcesoMensajeVO> selectPaginatedList(final Long prbtId, final RowBounds bounds);
+    List<ProcesoMensajeVO> selectPaginatedList(final @Nonnull Long prbtId, final @Nonnull RowBounds bounds);
 
     /**
      * Count.
@@ -56,5 +58,5 @@ public interface ProcesoMensajeDAO {
      *            the prbt id
      * @return the int
      */
-    int count(final Long prbtId);
+    int count(final @Nonnull Long prbtId);
 }

@@ -3,6 +3,8 @@ package xeredi.integra.model.maestro.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.session.RowBounds;
 
@@ -23,7 +25,7 @@ public interface ParametroDAO {
      *            the prmt
      * @return true, if successful
      */
-    boolean exists(final ParametroVO prmt);
+    boolean exists(final @Nonnull ParametroVO prmt);
 
     /**
      * Exists overlap.
@@ -32,7 +34,7 @@ public interface ParametroDAO {
      *            the prmt
      * @return true, if successful
      */
-    boolean existsOverlap(final ParametroVO prmt);
+    boolean existsOverlap(final @Nonnull ParametroVO prmt);
 
     /**
      * Select id.
@@ -41,7 +43,7 @@ public interface ParametroDAO {
      *            the prmt
      * @return the long
      */
-    Long selectId(final ParametroVO prmt);
+    Long selectId(final @Nonnull ParametroVO prmt);
 
     /**
      * Insert.
@@ -49,7 +51,7 @@ public interface ParametroDAO {
      * @param prmt
      *            the prmt
      */
-    void insert(final ParametroVO prmt);
+    void insert(final @Nonnull ParametroVO prmt);
 
     /**
      * Insert version.
@@ -57,7 +59,7 @@ public interface ParametroDAO {
      * @param prmt
      *            the prmt
      */
-    void insertVersion(final ParametroVO prmt);
+    void insertVersion(final @Nonnull ParametroVO prmt);
 
     /**
      * Update version.
@@ -66,7 +68,7 @@ public interface ParametroDAO {
      *            the prmt
      * @return the int
      */
-    int updateVersion(final ParametroVO prmt);
+    int updateVersion(final @Nonnull ParametroVO prmt);
 
     /**
      * Delete version.
@@ -75,7 +77,7 @@ public interface ParametroDAO {
      *            the prmt
      * @return the int
      */
-    int deleteVersion(final ParametroVO prmt);
+    int deleteVersion(final @Nonnull ParametroVO prmt);
 
     /**
      * Select object.
@@ -84,7 +86,7 @@ public interface ParametroDAO {
      *            the prmt criterio vo
      * @return the parametro vo
      */
-    ParametroVO selectObject(final ParametroCriterioVO prmtCriterioVO);
+    ParametroVO selectObject(final @Nonnull ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select list.
@@ -93,7 +95,7 @@ public interface ParametroDAO {
      *            the prmt criterio vo
      * @return the list
      */
-    List<ParametroVO> selectList(final ParametroCriterioVO prmtCriterioVO);
+    List<ParametroVO> selectList(final @Nonnull ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select paginated list.
@@ -102,7 +104,7 @@ public interface ParametroDAO {
      *            the prmt criterio vo
      * @return the list
      */
-    List<ParametroVO> selectPaginatedList(final ParametroCriterioVO prmtCriterioVO);
+    List<ParametroVO> selectPaginatedList(final @Nonnull ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select map.
@@ -112,7 +114,7 @@ public interface ParametroDAO {
      * @return the map
      */
     @MapKey("parametro")
-    Map<String, ParametroVO> selectMapByCodigo(final ParametroCriterioVO prmtCriterioVO);
+    Map<String, ParametroVO> selectMapByCodigo(final @Nonnull ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select map.
@@ -122,7 +124,7 @@ public interface ParametroDAO {
      * @return the map
      */
     @MapKey("id")
-    Map<Long, ParametroVO> selectMap(final ParametroCriterioVO prmtCriterioVO);
+    Map<Long, ParametroVO> selectMap(final @Nonnull ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Count.
@@ -131,7 +133,7 @@ public interface ParametroDAO {
      *            the prmt criterio vo
      * @return the int
      */
-    int count(final ParametroCriterioVO prmtCriterioVO);
+    int count(final @Nonnull ParametroCriterioVO prmtCriterioVO);
 
     /**
      * Select lupa list.
@@ -142,6 +144,7 @@ public interface ParametroDAO {
      *            the bounds
      * @return the list
      */
-    List<ParametroVO> selectLupaList(final ParametroLupaCriterioVO prmtLupaCriterioVO, final RowBounds bounds);
+    List<ParametroVO> selectLupaList(final @Nonnull ParametroLupaCriterioVO prmtLupaCriterioVO,
+            final @Nonnull RowBounds bounds);
 
 }

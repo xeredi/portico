@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
@@ -19,7 +21,7 @@ public interface FacturaDAO {
      * @param fctr
      *            the fctr
      */
-    void insert(final FacturaVO fctr);
+    void insert(final @Nonnull FacturaVO fctr);
 
     /**
      * Update estado.
@@ -28,7 +30,7 @@ public interface FacturaDAO {
      *            the fctr
      * @return the int
      */
-    int updateEstado(final FacturaVO fctr);
+    int updateEstado(final @Nonnull FacturaVO fctr);
 
     /**
      * Select.
@@ -37,7 +39,7 @@ public interface FacturaDAO {
      *            the id
      * @return the factura vo
      */
-    FacturaVO select(final Long id);
+    FacturaVO select(final @Nonnull Long id);
 
     /**
      * Count.
@@ -46,7 +48,7 @@ public interface FacturaDAO {
      *            the fctr criterio vo
      * @return the int
      */
-    int count(final FacturaCriterioVO fctrCriterioVO);
+    int count(final @Nonnull FacturaCriterioVO fctrCriterioVO);
 
     /**
      * Select list.
@@ -57,7 +59,7 @@ public interface FacturaDAO {
      *            the bounds
      * @return the list
      */
-    List<FacturaVO> selectList(final FacturaCriterioVO fctrCriterioVO, final RowBounds bounds);
+    List<FacturaVO> selectList(final @Nonnull FacturaCriterioVO fctrCriterioVO, final RowBounds bounds);
 
     /**
      * Exists factura posterior.
@@ -66,7 +68,7 @@ public interface FacturaDAO {
      *            the fctr id
      * @return true, if successful
      */
-    boolean existsFacturaPosterior(final Long fctrId);
+    boolean existsFacturaPosterior(final @Nonnull Long fctrId);
 
     /**
      * Exists valoracion posterior.
@@ -75,5 +77,5 @@ public interface FacturaDAO {
      *            the fctr id
      * @return true, if successful
      */
-    boolean existsValoracionPosterior(final Long fctrId);
+    boolean existsValoracionPosterior(final @Nonnull Long fctrId);
 }

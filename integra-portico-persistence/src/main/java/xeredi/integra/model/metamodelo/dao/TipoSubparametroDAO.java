@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroCriterioVO;
@@ -19,7 +21,7 @@ public interface TipoSubparametroDAO {
      * @param tpspVO
      *            the tpsp vo
      */
-    void insert(final TipoSubparametroVO tpspVO);
+    void insert(final @Nonnull TipoSubparametroVO tpspVO);
 
     /**
      * Update.
@@ -28,7 +30,7 @@ public interface TipoSubparametroDAO {
      *            the tpsp vo
      * @return the int
      */
-    int update(final TipoSubparametroVO tpspVO);
+    int update(final @Nonnull TipoSubparametroVO tpspVO);
 
     /**
      * Delete.
@@ -37,7 +39,7 @@ public interface TipoSubparametroDAO {
      *            the tpsp id
      * @return the int
      */
-    int delete(final Long tpspId);
+    int delete(final @Nonnull Long tpspId);
 
     /**
      * Count.
@@ -46,7 +48,7 @@ public interface TipoSubparametroDAO {
      *            the tpsp criterio vo
      * @return the int
      */
-    int count(final TipoSubparametroCriterioVO tpspCriterioVO);
+    int count(final @Nonnull TipoSubparametroCriterioVO tpspCriterioVO);
 
     /**
      * Select list.
@@ -55,7 +57,7 @@ public interface TipoSubparametroDAO {
      *            the tpsp criterio vo
      * @return the list
      */
-    List<TipoSubparametroVO> selectList(final TipoSubparametroCriterioVO tpspCriterioVO);
+    List<TipoSubparametroVO> selectList(final @Nonnull TipoSubparametroCriterioVO tpspCriterioVO);
 
     /**
      * Select list.
@@ -66,7 +68,8 @@ public interface TipoSubparametroDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoSubparametroVO> selectPaginatedList(final TipoSubparametroCriterioVO tpspCriterioVO, final RowBounds bounds);
+    List<TipoSubparametroVO> selectPaginatedList(final @Nonnull TipoSubparametroCriterioVO tpspCriterioVO,
+            final @Nonnull RowBounds bounds);
 
     /**
      * Select.
@@ -75,6 +78,6 @@ public interface TipoSubparametroDAO {
      *            the enti criterio vo
      * @return the tipo subparametro vo
      */
-    TipoSubparametroVO selectObject(final TipoSubparametroCriterioVO entiCriterioVO);
+    TipoSubparametroVO selectObject(final @Nonnull TipoSubparametroCriterioVO entiCriterioVO);
 
 }

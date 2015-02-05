@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.facturacion.vo.AspectoCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoCargoVO;
 
@@ -18,7 +20,7 @@ public interface AspectoCargoDAO {
      *            the criterio vo
      * @return the list
      */
-    List<AspectoCargoVO> selectList(final AspectoCargoCriterioVO criterioVO);
+    List<AspectoCargoVO> selectList(final @Nonnull AspectoCargoCriterioVO criterioVO);
 
     /**
      * Select object.
@@ -27,7 +29,7 @@ public interface AspectoCargoDAO {
      *            the criterio vo
      * @return the aspecto cargo vo
      */
-    AspectoCargoVO selectObject(final AspectoCargoCriterioVO criterioVO);
+    AspectoCargoVO selectObject(final @Nonnull AspectoCargoCriterioVO criterioVO);
 
     /**
      * Exists.
@@ -36,7 +38,7 @@ public interface AspectoCargoDAO {
      *            the vo
      * @return true, if successful
      */
-    boolean exists(final AspectoCargoVO vo);
+    boolean exists(final @Nonnull AspectoCargoVO vo);
 
     /**
      * Exists overlap.
@@ -45,7 +47,7 @@ public interface AspectoCargoDAO {
      *            the vo
      * @return true, if successful
      */
-    boolean existsOverlap(final AspectoCargoVO vo);
+    boolean existsOverlap(final @Nonnull AspectoCargoVO vo);
 
     /**
      * Select id.
@@ -54,7 +56,7 @@ public interface AspectoCargoDAO {
      *            the vo
      * @return the long
      */
-    Long selectId(final AspectoCargoVO vo);
+    Long selectId(final @Nonnull AspectoCargoVO vo);
 
     /**
      * Insert.
@@ -62,7 +64,7 @@ public interface AspectoCargoDAO {
      * @param vo
      *            the vo
      */
-    void insert(final AspectoCargoVO vo);
+    void insert(final @Nonnull AspectoCargoVO vo);
 
     /**
      * Insert version.
@@ -70,7 +72,7 @@ public interface AspectoCargoDAO {
      * @param vo
      *            the vo
      */
-    void insertVersion(final AspectoCargoVO vo);
+    void insertVersion(final @Nonnull AspectoCargoVO vo);
 
     /**
      * Update version.
@@ -79,7 +81,7 @@ public interface AspectoCargoDAO {
      *            the vo
      * @return the int
      */
-    int updateVersion(final AspectoCargoVO vo);
+    int updateVersion(final @Nonnull AspectoCargoVO vo);
 
     /**
      * Delete version.
@@ -88,6 +90,6 @@ public interface AspectoCargoDAO {
      *            the vo
      * @return the int
      */
-    int deleteVersion(final AspectoCargoVO vo);
+    int deleteVersion(final @Nonnull AspectoCargoVO vo);
 
 }

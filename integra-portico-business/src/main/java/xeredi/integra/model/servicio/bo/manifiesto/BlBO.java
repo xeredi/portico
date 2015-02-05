@@ -36,7 +36,9 @@ public class BlBO extends AbstractSubservicioBO {
     @Override
     protected void insertPostOperations(final SqlSession session, final SubservicioVO ssrvVO,
             final TipoSubservicioVO tpssVO, final Set<Long> ssrvPadreIds) throws DuplicateInstanceException {
-        // noop
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        maniDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -44,7 +46,9 @@ public class BlBO extends AbstractSubservicioBO {
      */
     @Override
     protected void duplicatePostOperations(final SqlSession session, final SubservicioVO ssrvVO) {
-        // noop
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        maniDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -53,7 +57,9 @@ public class BlBO extends AbstractSubservicioBO {
     @Override
     protected void updatePostOperations(final SqlSession session, final SubservicioVO ssrvVO)
             throws InstanceNotFoundException {
-        // noop
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        maniDAO.updateRecalcularEstado(ssrvVO.getSrvc().getId());
     }
 
     /**
@@ -62,7 +68,9 @@ public class BlBO extends AbstractSubservicioBO {
     @Override
     protected void deletePostOperations(final SqlSession session, final Long srvcId, final Long ssrvId)
             throws InstanceNotFoundException {
-        // noop
+        final ManifiestoServicioDAO maniDAO = session.getMapper(ManifiestoServicioDAO.class);
+
+        maniDAO.updateRecalcularEstado(srvcId);
     }
 
     /**

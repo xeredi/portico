@@ -1,7 +1,10 @@
 package xeredi.integra.model.comun.vo;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -19,7 +22,7 @@ public abstract class ItemVO implements ItemEntidad {
     private Long entiId;
 
     /** The itdt map. */
-    private Map<Long, ItemDatoVO> itdtMap;
+    private Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
 
     /**
      * Adds the itdt.
@@ -29,7 +32,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final Long tpdtId, final Long value) {
+    public void addItdt(final @Nonnull Long tpdtId, final Long value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -46,7 +49,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final Long tpdtId, final Double value) {
+    public void addItdt(final @Nonnull Long tpdtId, final Double value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -63,7 +66,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final Long tpdtId, final String value) {
+    public void addItdt(final @Nonnull Long tpdtId, final String value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -80,7 +83,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final Long tpdtId, final ParametroVO value) {
+    public void addItdt(final @Nonnull Long tpdtId, final ParametroVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -97,7 +100,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final Long tpdtId, final ServicioVO value) {
+    public void addItdt(final @Nonnull Long tpdtId, final ServicioVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -114,7 +117,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final Long tpdtId, final Date value) {
+    public void addItdt(final @Nonnull Long tpdtId, final Date value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);

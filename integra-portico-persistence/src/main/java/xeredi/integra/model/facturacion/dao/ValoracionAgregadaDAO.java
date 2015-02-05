@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.facturacion.vo.ValoracionAgregadaVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
 
@@ -18,5 +20,5 @@ public interface ValoracionAgregadaDAO {
      *            the contexto vo
      * @return the list
      */
-    List<ValoracionAgregadaVO> selectList(final ValoradorContextoVO contextoVO);
+    List<ValoracionAgregadaVO> selectList(final @Nonnull ValoradorContextoVO contextoVO);
 }

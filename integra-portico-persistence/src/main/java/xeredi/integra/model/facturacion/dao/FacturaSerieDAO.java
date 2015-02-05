@@ -1,5 +1,7 @@
 package xeredi.integra.model.facturacion.dao;
 
+import javax.annotation.Nonnull;
+
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 
 // TODO: Auto-generated Javadoc
@@ -15,7 +17,7 @@ public interface FacturaSerieDAO {
      *            the id
      * @return the factura serie vo
      */
-    FacturaSerieVO select(final Long id);
+    FacturaSerieVO select(final @Nonnull Long id);
 
     /**
      * Update incrementar.
@@ -24,5 +26,5 @@ public interface FacturaSerieDAO {
      *            the id
      * @return the int
      */
-    int updateIncrementar(final Long id);
+    int updateIncrementar(final @Nonnull Long id);
 }

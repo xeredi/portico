@@ -2,6 +2,8 @@ package xeredi.integra.model.proceso.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
@@ -19,7 +21,7 @@ public interface ProcesoDAO {
      * @param prbtVO
      *            the prbt vo
      */
-    void insert(final ProcesoVO prbtVO);
+    void insert(final @Nonnull ProcesoVO prbtVO);
 
     /**
      * Delete.
@@ -28,7 +30,7 @@ public interface ProcesoDAO {
      *            the prbt id
      * @return the int
      */
-    int delete(final Long prbtId);
+    int delete(final @Nonnull Long prbtId);
 
     /**
      * Update iniciar.
@@ -37,7 +39,7 @@ public interface ProcesoDAO {
      *            the prbt id
      * @return the int
      */
-    int updateIniciar(final Long prbtId);
+    int updateIniciar(final @Nonnull Long prbtId);
 
     /**
      * Update finalizar.
@@ -46,7 +48,7 @@ public interface ProcesoDAO {
      *            the prbt id
      * @return the int
      */
-    int updateFinalizar(final Long prbtId);
+    int updateFinalizar(final @Nonnull Long prbtId);
 
     /**
      * Select.
@@ -55,7 +57,7 @@ public interface ProcesoDAO {
      *            the prbt id
      * @return the proceso vo
      */
-    ProcesoVO select(final Long prbtId);
+    ProcesoVO select(final @Nonnull Long prbtId);
 
     /**
      * Select object.
@@ -64,7 +66,7 @@ public interface ProcesoDAO {
      *            the prbt criterio vo
      * @return the proceso vo
      */
-    ProcesoVO selectObject(final ProcesoCriterioVO prbtCriterioVO);
+    ProcesoVO selectObject(final @Nonnull ProcesoCriterioVO prbtCriterioVO);
 
     /**
      * Count.
@@ -73,7 +75,7 @@ public interface ProcesoDAO {
      *            the prbt criterio vo
      * @return the int
      */
-    int selectCount(final ProcesoCriterioVO prbtCriterioVO);
+    int selectCount(final @Nonnull ProcesoCriterioVO prbtCriterioVO);
 
     /**
      * Select list.
@@ -84,7 +86,7 @@ public interface ProcesoDAO {
      *            the bounds
      * @return the list
      */
-    List<ProcesoVO> selectPaginatedList(final ProcesoCriterioVO prbtCriterioVO, final RowBounds bounds);
+    List<ProcesoVO> selectPaginatedList(final @Nonnull ProcesoCriterioVO prbtCriterioVO, final @Nonnull RowBounds bounds);
 
     /**
      * Select list.
@@ -93,5 +95,5 @@ public interface ProcesoDAO {
      *            the prbt criterio vo
      * @return the list
      */
-    List<ProcesoVO> selectList(final ProcesoCriterioVO prbtCriterioVO);
+    List<ProcesoVO> selectList(final @Nonnull ProcesoCriterioVO prbtCriterioVO);
 }

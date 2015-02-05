@@ -2,6 +2,8 @@ package xeredi.integra.model.metamodelo.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.metamodelo.vo.TipoParametroCriterioVO;
@@ -20,7 +22,7 @@ public interface TipoParametroDAO {
      *            the tppr criterio vo
      * @return the list
      */
-    List<TipoParametroVO> selectList(final TipoParametroCriterioVO tpprCriterioVO);
+    List<TipoParametroVO> selectList(final @Nonnull TipoParametroCriterioVO tpprCriterioVO);
 
     /**
      * Select all.
@@ -31,7 +33,8 @@ public interface TipoParametroDAO {
      *            the bounds
      * @return the list
      */
-    List<TipoParametroVO> selectPaginatedList(final TipoParametroCriterioVO tpprCriterioVO, final RowBounds bounds);
+    List<TipoParametroVO> selectPaginatedList(final @Nonnull TipoParametroCriterioVO tpprCriterioVO,
+            final @Nonnull RowBounds bounds);
 
     /**
      * Select.
@@ -40,7 +43,7 @@ public interface TipoParametroDAO {
      *            the enti criterio vo
      * @return the tipo parametro vo
      */
-    TipoParametroVO selectObject(final TipoParametroCriterioVO entiCriterioVO);
+    TipoParametroVO selectObject(final @Nonnull TipoParametroCriterioVO entiCriterioVO);
 
     /**
      * Count.
@@ -49,7 +52,7 @@ public interface TipoParametroDAO {
      *            the tppr criterio vo
      * @return the int
      */
-    int count(final TipoParametroCriterioVO tpprCriterioVO);
+    int count(final @Nonnull TipoParametroCriterioVO tpprCriterioVO);
 
     /**
      * Insert.
@@ -57,7 +60,7 @@ public interface TipoParametroDAO {
      * @param tpprVO
      *            the tppr vo
      */
-    void insert(final TipoParametroVO tpprVO);
+    void insert(final @Nonnull TipoParametroVO tpprVO);
 
     /**
      * Update.
@@ -66,7 +69,7 @@ public interface TipoParametroDAO {
      *            the tppr vo
      * @return the int
      */
-    int update(final TipoParametroVO tpprVO);
+    int update(final @Nonnull TipoParametroVO tpprVO);
 
     /**
      * Delete.
@@ -75,6 +78,6 @@ public interface TipoParametroDAO {
      *            the tppr id
      * @return the int
      */
-    int delete(final Long tpprId);
+    int delete(final @Nonnull Long tpprId);
 
 }

@@ -2,6 +2,8 @@ package xeredi.integra.model.facturacion.dao;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.ibatis.session.RowBounds;
 
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
@@ -21,7 +23,7 @@ public interface AspectoDAO {
      *            the criterio vo
      * @return the list
      */
-    List<AspectoVO> selectList(final AspectoCriterioVO criterioVO);
+    List<AspectoVO> selectList(final @Nonnull AspectoCriterioVO criterioVO);
 
     /**
      * Select list.
@@ -32,7 +34,7 @@ public interface AspectoDAO {
      *            the bounds
      * @return the list
      */
-    List<AspectoVO> selectPaginatedList(final AspectoCriterioVO criterioVO, final RowBounds bounds);
+    List<AspectoVO> selectPaginatedList(final @Nonnull AspectoCriterioVO criterioVO, final @Nonnull RowBounds bounds);
 
     /**
      * Count.
@@ -41,7 +43,7 @@ public interface AspectoDAO {
      *            the criterio vo
      * @return the int
      */
-    int count(final AspectoCriterioVO criterioVO);
+    int count(final @Nonnull AspectoCriterioVO criterioVO);
 
     /**
      * Select object.
@@ -50,7 +52,7 @@ public interface AspectoDAO {
      *            the criterio vo
      * @return the aspecto vo
      */
-    AspectoVO selectObject(final AspectoCriterioVO criterioVO);
+    AspectoVO selectObject(final @Nonnull AspectoCriterioVO criterioVO);
 
     /**
      * Checks if is inaplicable.
@@ -59,7 +61,7 @@ public interface AspectoDAO {
      *            the contexto vo
      * @return true, if checks if is inaplicable
      */
-    boolean isInaplicable(final FacturadorContextoVO contextoVO);
+    boolean isInaplicable(final @Nonnull FacturadorContextoVO contextoVO);
 
     /**
      * Exists.
@@ -68,7 +70,7 @@ public interface AspectoDAO {
      *            the aspc
      * @return true, if successful
      */
-    boolean exists(final AspectoVO aspc);
+    boolean exists(final @Nonnull AspectoVO aspc);
 
     /**
      * Exists overlap.
@@ -77,7 +79,7 @@ public interface AspectoDAO {
      *            the aspc
      * @return true, if successful
      */
-    boolean existsOverlap(final AspectoVO aspc);
+    boolean existsOverlap(final @Nonnull AspectoVO aspc);
 
     /**
      * Select id.
@@ -86,7 +88,7 @@ public interface AspectoDAO {
      *            the aspc
      * @return the long
      */
-    Long selectId(final AspectoVO aspc);
+    Long selectId(final @Nonnull AspectoVO aspc);
 
     /**
      * Insert.
@@ -94,7 +96,7 @@ public interface AspectoDAO {
      * @param aspc
      *            the aspc
      */
-    void insert(final AspectoVO aspc);
+    void insert(final @Nonnull AspectoVO aspc);
 
     /**
      * Insert version.
@@ -102,7 +104,7 @@ public interface AspectoDAO {
      * @param aspc
      *            the aspc
      */
-    void insertVersion(final AspectoVO aspc);
+    void insertVersion(final @Nonnull AspectoVO aspc);
 
     /**
      * Update version.
@@ -111,5 +113,5 @@ public interface AspectoDAO {
      *            the aspc
      * @return the int
      */
-    int updateVersion(final AspectoVO aspc);
+    int updateVersion(final @Nonnull AspectoVO aspc);
 }
