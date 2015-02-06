@@ -38,12 +38,20 @@
 
 			<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 				<label translate>ssrv_fini</label>
-				<p class="form-control-static" ng-bind="vm.item.fini | date: ('format_date' | translate)"></p>
+				<p class="form-control-static" ng-bind="vm.item.fini | date: ('format_datetime' | translate)"></p>
 			</div>
 
 			<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 				<label translate>ssrv_ffin</label>
-				<p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_date' | translate)"></p>
+				<p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_datetime' | translate)"></p>
+			</div>
+
+			<div ng-repeat="entiId in vm.enti.entiPadresList track by $index" ng-if="entiId != vm.enti.tpsrId"
+				class="col-sm-3 col-md-2 col-lg-2 form-group">
+				<label>{{'enti_' + entiId | translate}}</label>
+				<p class="form-control-static">
+					<a ng-href="#/servicio/ssrv/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
+				</p>
 			</div>
 		</div>
 

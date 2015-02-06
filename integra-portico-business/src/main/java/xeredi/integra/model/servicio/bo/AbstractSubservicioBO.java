@@ -28,6 +28,7 @@ import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -73,6 +74,24 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
             fillDependencies(session, ssrvList, ssrvCriterioVO, false);
 
             return ssrvList;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LabelValueVO selectLabelValueObject(final SubservicioCriterioVO ssrvCriterioVO)
+            throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
+            final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
+
+            if (ssrv == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.ssrv, ssrvCriterioVO);
+            }
+
+            return new LabelValueVO(ssrv.getEtiqueta(), ssrv.getId());
         }
     }
 

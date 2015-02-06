@@ -7,6 +7,7 @@ import java.util.Set;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.comun.ItemAction;
+import xeredi.integra.http.util.FieldFiller;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
@@ -82,6 +83,8 @@ public final class ServicioAction extends ItemAction {
 
         item.setFref(Calendar.getInstance().getTime());
         item.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+
+        FieldFiller.fillDefaultValues(item, enti);
 
         setFechaVigencia(item.getFref());
         loadLabelValuesMap(enti);

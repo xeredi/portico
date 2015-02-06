@@ -11,6 +11,7 @@ import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 import xeredi.util.pagination.PaginatedList;
 
 // TODO: Auto-generated Javadoc
@@ -41,6 +42,16 @@ public interface SubservicioBO {
      * @return the list
      */
     List<SubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
+
+    /**
+     * Select label value object.
+     *
+     * @param ssrvCriterioVO
+     *            the ssrv criterio vo
+     * @return the label value vo
+     */
+    LabelValueVO selectLabelValueObject(final @Nonnull SubservicioCriterioVO ssrvCriterioVO)
+            throws InstanceNotFoundException;
 
     /**
      * Select.

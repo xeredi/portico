@@ -1,6 +1,7 @@
 package xeredi.integra.http.controller.action.servicio;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -15,7 +16,9 @@ import xeredi.integra.model.servicio.bo.ServicioBO;
 import xeredi.integra.model.servicio.bo.ServicioBOFactory;
 import xeredi.integra.model.servicio.bo.SubservicioBO;
 import xeredi.integra.model.servicio.bo.SubservicioBOFactory;
+import xeredi.integra.model.servicio.vo.SubservicioCriterioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -35,7 +38,7 @@ public final class SubservicioAction extends ItemAction {
     private SubservicioVO item;
 
     /** The item padres map. */
-    private Map<Long, SubservicioVO> itemPadresMap;
+    private Map<Long, LabelValueVO> itemPadresMap;
 
     // Acciones web
     /**
@@ -55,6 +58,21 @@ public final class SubservicioAction extends ItemAction {
 
         item = ssrvBO.select(item.getId(), getIdioma());
         enti = TipoSubservicioProxy.select(item.getEntiId());
+
+        if (enti.getEntiPadresList() != null) {
+            itemPadresMap = new HashMap<Long, LabelValueVO>();
+
+            for (final Long entiId : enti.getEntiPadresList()) {
+                if (!enti.getTpsrId().equals(entiId)) {
+                    final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+                    ssrvCriterioVO.setHijoId(item.getId());
+                    ssrvCriterioVO.setEntiId(entiId);
+
+                    itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+                }
+            }
+        }
 
         setFechaVigencia(item.getFref());
 
@@ -228,7 +246,7 @@ public final class SubservicioAction extends ItemAction {
      *
      * @return the item padres map
      */
-    public Map<Long, SubservicioVO> getItemPadresMap() {
+    public Map<Long, LabelValueVO> getItemPadresMap() {
         return itemPadresMap;
     }
 
@@ -238,7 +256,7 @@ public final class SubservicioAction extends ItemAction {
      * @param value
      *            the value
      */
-    public void setItemPadresMap(final Map<Long, SubservicioVO> value) {
+    public void setItemPadresMap(final Map<Long, LabelValueVO> value) {
         itemPadresMap = value;
     }
 

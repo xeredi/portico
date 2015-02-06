@@ -36,17 +36,17 @@
 
 			<div ng-if="!vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 				<label translate>srvc_fref</label>
-				<p class="form-control-static" ng-bind="vm.item.fref | date: ('format_date' | translate)"></p>
+				<p class="form-control-static" ng-bind="vm.item.fref | date: ('format_datetime' | translate)"></p>
 			</div>
 
 			<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 				<label translate>srvc_fini</label>
-				<p class="form-control-static" ng-bind="vm.item.fini | date: ('format_date' | translate)"></p>
+				<p class="form-control-static" ng-bind="vm.item.fini | date: ('format_datetime' | translate)"></p>
 			</div>
 
 			<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 				<label translate>srvc_ffin</label>
-				<p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_date' | translate)"></p>
+				<p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_datetime' | translate)"></p>
 			</div>
 		</div>
 
