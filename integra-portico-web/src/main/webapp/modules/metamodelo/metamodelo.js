@@ -353,6 +353,10 @@ function tpdtGridController($http, $location, $routeParams, $modal, pageTitleSer
     }
 
     function filter(size) {
+        $http.post("metamodelo/tpdt-filter.action").success(function(data) {
+            vm.tphtList = data.tphtList;
+            vm.tpelList = data.tpelList;
+        });
     }
 
     search($routeParams.page ? $routeParams.page : 1);
@@ -382,8 +386,8 @@ function tpdtCreateController($http, $location, $routeParams, pageTitleService) 
     $http.post("metamodelo/tpdt-create.action").success(function(data) {
         vm.tpdt = data.tpdt;
         vm.accion = data.accion;
-        vm.tphts = data.tphts;
-        vm.tiposElemento = data.tiposElemento;
+        vm.tphtList = data.tphtList;
+        vm.tpelList = data.tpelList;
 
         vm.entiTpprList = data.tpprList;
         vm.entiTpsrList = data.tpsrList;
@@ -450,8 +454,8 @@ function tpdtEditController($http, $routeParams, pageTitleService) {
         vm.tpdt = data.tpdt;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
-        vm.tphts = data.tphts;
-        vm.tiposElemento = data.tiposElemento;
+        vm.tphtList = data.tphtList;
+        vm.tpelList = data.tpelList;
 
         vm.entiTpprList = data.tpprList;
         vm.entiTpsrList = data.tpsrList;

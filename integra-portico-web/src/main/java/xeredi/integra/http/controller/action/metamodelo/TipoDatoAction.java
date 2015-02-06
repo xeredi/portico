@@ -228,7 +228,7 @@ public final class TipoDatoAction extends BaseAction {
      *
      * @return the tphts
      */
-    public TipoHtml[] getTphts() {
+    public TipoHtml[] getTphtList() {
         return TipoHtml.values();
     }
 
@@ -237,7 +237,7 @@ public final class TipoDatoAction extends BaseAction {
      *
      * @return the tipos elemento
      */
-    public TipoElemento[] getTiposElemento() {
+    public TipoElemento[] getTpelList() {
         return TipoElemento.values();
     }
 

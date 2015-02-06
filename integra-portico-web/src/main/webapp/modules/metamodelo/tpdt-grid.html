@@ -37,8 +37,8 @@
 					<td><a ng-href="#/metamodelo/tpdt/detail/{{tpdt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
 					<td ng-bind="tpdt.codigo"></td>
 					<td ng-bind="tpdt.nombre"></td>
-					<td ng-bind="tpdt.tpht"></td>
-					<td ng-bind="tpdt.tipoElemento"></td>
+					<td nowrap="nowrap" bs-tooltip data-title="{{'HtmlTipo_' + tpdt.tpht | translate}}" ng-bind="tpdt.tpht"></td>
+					<td nowrap="nowrap" bs-tooltip data-title="{{'ElementoTipo_' + tpdt.tipoElemento | translate}}" ng-bind="tpdt.tipoElemento"></td>
 					<td ng-bind="tpdt.enti.nombre"></td>
 				</tr>
 			</tbody>

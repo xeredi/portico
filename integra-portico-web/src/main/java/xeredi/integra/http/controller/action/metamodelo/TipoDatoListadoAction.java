@@ -71,7 +71,7 @@ public final class TipoDatoListadoAction extends PaginableAction {
      *
      * @return the tphts
      */
-    public TipoHtml[] getTphts() {
+    public TipoHtml[] getTphtList() {
         return TipoHtml.values();
     }
 
@@ -80,7 +80,7 @@ public final class TipoDatoListadoAction extends PaginableAction {
      *
      * @return the tipos elemento
      */
-    public TipoElemento[] getTiposElemento() {
+    public TipoElemento[] getTpelList() {
         return TipoElemento.values();
     }
 
