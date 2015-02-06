@@ -96,7 +96,9 @@
 								class="glyphicon glyphicon-search"></i></a></td>
 
 						<td ng-bind="itemHijo.numero" class="number"></td>
-						<td ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" ng-bind="itemHijo.estado"></td>
+						<td ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" nowrap="nowrap" bs-tooltip
+							data-title="{{'cdrf_' + vm.entiHijasMap[entiHijaId].tpdtEstado.id + '_' + itemHijo.estado | translate}}"
+							ng-bind="itemHijo.estado"></td>
 						<td ng-if="vm.entiHijasMap[entiHijaId].temporal"
 							ng-bind="itemHijo.fini | date: ('format_date' | translate)"></td>
 						<td ng-if="vm.entiHijasMap[entiHijaId].temporal"
@@ -107,9 +109,11 @@
 								class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span> <span
 							ng-switch-when="ND" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadDecimal | number:2" class="number"></span>
 							<span ng-switch-when="NE" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadEntera | number:0"
-							class="number"></span> <span ng-switch-when="CR" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span>
-							<span ng-switch-when="TX" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span
-							ng-switch-when="PR" bs-tooltip data-title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
+							class="number"></span> <span ng-switch-when="CR" bs-tooltip
+							data-title="{{'cdrf_' + entd.tpdt.id + '_' + itemHijo.itdtMap[entd.tpdt.id].cadena | translate}}"
+							ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="TX"
+							ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="PR" bs-tooltip
+							data-title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
 							ng-bind="itemHijo.itdtMap[entd.tpdt.id].prmt.parametro"></span> <span ng-switch-when="FE"
 							ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span> <span
 							ng-switch-when="FH" ng-bind="[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span></td>

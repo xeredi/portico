@@ -45,7 +45,8 @@
 							class="glyphicon glyphicon-search"></i></a></td>
 					<td ng-bind="item.srvc.etiqueta" nowrap="nowrap"></td>
 					<td ng-bind="item.numero" class="number"></td>
-					<td ng-if="vm.enti.tpdtEstado" ng-bind="item.estado"></td>
+					<td ng-if="vm.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
+						data-title="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + item.estado | translate}}" ng-bind="item.estado"></td>
 					<td ng-if="vm.enti.temporal" ng-bind="item.fini | date: ('format_date' | translate)"></td>
 					<td ng-if="vm.enti.temporal" ng-bind="item.ffin | date: ('format_date' | translate)"></td>
 					<td ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable" ng-switch
@@ -57,7 +58,9 @@
 						class="pull-right" ng-bind="item.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span>
 						<span ng-switch-when="FH" class="pull-right"
 						ng-bind="item.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span> <span
-						ng-switch-when="CR" ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="TX"
+						ng-switch-when="CR" bs-tooltip
+						data-title="{{'cdrf_' + entd.tpdt.id + '_' + item.itdtMap[entd.tpdt.id].cadena | translate}}"
+						ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="TX"
 						ng-bind="item.itdtMap[entd.tpdt.id].cadena"></span><span ng-switch-when="PR" bs-tooltip
 						data-title="{{item.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
 						ng-bind="item.itdtMap[entd.tpdt.id].prmt.parametro"></span></td>

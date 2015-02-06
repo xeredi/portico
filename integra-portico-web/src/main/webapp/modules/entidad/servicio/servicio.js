@@ -837,15 +837,7 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
             }
         }
     });
-    /*
-     * vm.subentiList = data.subentiList;
-     *
-     * if (tabSelected) { vm.subentiList[tabSelected].active = true; }
-     *
-     * for (i = 0; i < vm.subentiList.length; i++) { var subenti = vm.subentiList[i];
-     *
-     * findSublist(subenti.id, pageMap[subenti.id] ? pageMap[subenti.id] : 1); }
-     */
+
     pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
