@@ -1,14 +1,20 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.List;
+
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.EntidadEntidadBO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -27,6 +33,9 @@ public final class EntidadEntidadAction extends BaseAction {
     /** The enen. */
     private EntidadEntidadVO enen;
 
+    /** The tppr list. */
+    private List<LabelValueVO> tpssList;
+
     /**
      * Alta.
      *
@@ -38,6 +47,8 @@ public final class EntidadEntidadAction extends BaseAction {
         Preconditions.checkNotNull(enen.getEntiPadreId());
 
         accion = ACCION_EDICION.create;
+
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -64,6 +75,8 @@ public final class EntidadEntidadAction extends BaseAction {
 
         enen = enenBO.selectObject(enenCriterioVO);
         accion = ACCION_EDICION.edit;
+
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -149,6 +162,19 @@ public final class EntidadEntidadAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * Load label values.
+     */
+    private void loadLabelValues() {
+        final EntidadBO entiBO = new EntidadBO();
+        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
+
+        entiCriterioVO.setTipo(TipoEntidad.S);
+        entiCriterioVO.setIdioma(getIdioma());
+
+        tpssList = entiBO.selectLabelValues(entiCriterioVO);
+    }
+
     // get / set
 
     /**
@@ -158,6 +184,15 @@ public final class EntidadEntidadAction extends BaseAction {
      */
     public ACCION_EDICION getAccion() {
         return accion;
+    }
+
+    /**
+     * Gets the tpss list.
+     *
+     * @return the tpss list
+     */
+    public List<LabelValueVO> getTpssList() {
+        return tpssList;
     }
 
     /**

@@ -612,14 +612,7 @@ function crgoCreateController($http, $location, $routeParams, pageTitleService) 
         vm.crgo = data.crgo;
         vm.tipos = data.tipos;
         vm.accion = data.accion;
-    });
-
-    $http.post("metamodelo/enti-lv-list.action", {
-        entiCriterio : {
-            tipo : "T"
-        }
-    }).success(function(data) {
-        vm.entiList = data.lvList;
+        vm.entiList = data.tpsrList;
     });
 
     pageTitleService.setTitle("crgo", "page_create");

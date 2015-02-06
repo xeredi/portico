@@ -764,14 +764,7 @@ function tpspEditController($http, $routeParams, pageTitleService) {
         vm.enti = data.enti;
         vm.i18nMap = data.i18nMap;
         vm.accion = data.accion;
-    });
-
-    $http.post("metamodelo/enti-lv-list.action", {
-        entiCriterio : {
-            tipo : "P"
-        }
-    }).success(function(data) {
-        vm.entiList = data.lvList;
+        vm.entiList = data.tpprList;
     });
 
     pageTitleService.setTitle("tpsp", "page_edit");
@@ -804,14 +797,7 @@ function tpspCreateController($http, $location, $routeParams, pageTitleService) 
     }).success(function(data) {
         vm.enti = data.enti;
         vm.accion = data.accion;
-    });
-
-    $http.post("metamodelo/enti-lv-list.action", {
-        entiCriterio : {
-            tipo : "P"
-        }
-    }).success(function(data) {
-        vm.entiList = data.lvList;
+        vm.entiList = data.tpprList;
     });
 
     pageTitleService.setTitle("tpsp", "page_create");
@@ -1605,20 +1591,29 @@ function enacCreateController($http, $location, $routeParams, pageTitleService) 
 function enenCreateController($http, $routeParams, pageTitleService) {
     var vm = this;
 
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("metamodelo/enen-save.action", {
+            enac : vm.enen,
+            accion : vm.accion
+        }).success(function(data) {
+            $location.path("/metamodelo/enac/detail/" + data.enac.id).replace();
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
     $http.post("metamodelo/enen-create.action", {
         enen : {
             entiPadreId : $routeParams.entipId
         }
     }).success(function(data) {
         vm.enen = data.enen;
-    });
-
-    $http.post("metamodelo/enti-lv-list.action", {
-        entiCriterio : {
-            tipo : "S"
-        }
-    }).success(function(data) {
-        vm.entiList = data.lvList;
+        vm.entiList = data.tpssList;
     });
 
     pageTitleService.setTitle("enen", "page_create");

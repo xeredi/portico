@@ -1,5 +1,6 @@
 package xeredi.integra.http.controller.action.metamodelo;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -11,8 +12,12 @@ import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.comun.vo.I18nPrefix;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
 import xeredi.integra.model.metamodelo.bo.TipoSubparametroBO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
 import xeredi.integra.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -34,6 +39,9 @@ public final class TipoSubparametroAction extends BaseAction {
     /** The i18n map. */
     private Map<String, I18nVO> i18nMap;
 
+    /** The tppr list. */
+    private List<LabelValueVO> tpprList;
+
     // Acciones Web
     /**
      * Alta.
@@ -46,6 +54,8 @@ public final class TipoSubparametroAction extends BaseAction {
         Preconditions.checkNotNull(enti.getTpprId());
 
         accion = ACCION_EDICION.create;
+
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -67,6 +77,8 @@ public final class TipoSubparametroAction extends BaseAction {
         enti = tpspBO.select(enti.getId(), getIdioma());
         i18nMap = I18nBO.selectMap(I18nPrefix.enti, enti.getId());
         accion = ACCION_EDICION.edit;
+
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -160,6 +172,19 @@ public final class TipoSubparametroAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * Load label values.
+     */
+    private void loadLabelValues() {
+        final EntidadBO entiBO = new EntidadBO();
+        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
+
+        entiCriterioVO.setTipo(TipoEntidad.P);
+        entiCriterioVO.setIdioma(getIdioma());
+
+        tpprList = entiBO.selectLabelValues(entiCriterioVO);
+    }
+
     // get / set
     /**
      * Gets the accion.
@@ -216,6 +241,15 @@ public final class TipoSubparametroAction extends BaseAction {
      */
     public void setI18nMap(final Map<String, I18nVO> value) {
         i18nMap = value;
+    }
+
+    /**
+     * Gets the tppr list.
+     *
+     * @return the tppr list
+     */
+    public List<LabelValueVO> getTpprList() {
+        return tpprList;
     }
 
 }

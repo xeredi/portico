@@ -21,6 +21,10 @@ import xeredi.integra.model.facturacion.vo.CargoVO;
 import xeredi.integra.model.facturacion.vo.CargoVersionVO;
 import xeredi.integra.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
+import xeredi.integra.model.metamodelo.bo.EntidadBO;
+import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
+import xeredi.integra.model.metamodelo.vo.TipoEntidad;
+import xeredi.util.applicationobjects.LabelValueVO;
 
 import com.google.common.base.Preconditions;
 
@@ -44,6 +48,9 @@ public final class CargoAction extends BaseAction {
 
     /** The rgla list. */
     private final List<ReglaVO> rglaList = new ArrayList<>();
+
+    /** The tpsr list. */
+    private List<LabelValueVO> tpsrList;
 
     // acciones web
 
@@ -89,6 +96,8 @@ public final class CargoAction extends BaseAction {
         crgo = new CargoVO();
         crgo.setCrgv(new CargoVersionVO());
         crgo.getCrgv().setFini(Calendar.getInstance().getTime());
+
+        loadLabelValues();
 
         return SUCCESS;
     }
@@ -188,6 +197,19 @@ public final class CargoAction extends BaseAction {
         return SUCCESS;
     }
 
+    /**
+     * Load label values.
+     */
+    private void loadLabelValues() {
+        final EntidadBO entiBO = new EntidadBO();
+        final EntidadCriterioVO entiCriterioVO = new EntidadCriterioVO();
+
+        entiCriterioVO.setTipo(TipoEntidad.T);
+        entiCriterioVO.setIdioma(getIdioma());
+
+        tpsrList = entiBO.selectLabelValues(entiCriterioVO);
+    }
+
     // get / set
 
     /**
@@ -197,6 +219,15 @@ public final class CargoAction extends BaseAction {
      */
     public CargoTipo[] getTipos() {
         return CargoTipo.values();
+    }
+
+    /**
+     * Gets the tpsr list.
+     *
+     * @return the tpsr list
+     */
+    public List<LabelValueVO> getTpsrList() {
+        return tpsrList;
     }
 
     /**
