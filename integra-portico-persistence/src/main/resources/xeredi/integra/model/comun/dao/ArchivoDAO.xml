@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xeredi.integra.model.comun.dao.ArchivoDAO">
+	<resultMap type="ArchivoVO" id="ResultMap">
+		<id column="arch_pk" />
+
+		<result column="arch_archivo" property="archivo" />
+
+		<association property="arin" javaType="ArchivoInfoVO">
+			<result column="arch_pk" property="id" />
+			<result column="arch_sentido" property="sentido" />
+			<result column="arch_nombre" property="nombre" />
+			<result column="arch_tamanio" property="tamanio" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT arch_pk, arch_sentido, arch_nombre, arch_tamanio, arch_archivo
+		FROM tbl_archivo_arch
+    ]]>
+	</sql>
+
+	<select id="select" parameterType="Long"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		WHERE arch_pk = #{value}
+	</select>
+
+	<insert id="insert" parameterType="ArchivoVO">
+    <![CDATA[
+    	INSERT INTO tbl_archivo_arch (arch_pk, arch_sentido, arch_nombre, arch_tamanio, arch_archivo)
+    	VALUES (#{arin.id}, #{arin.sentido}, #{arin.nombre}, #{arin.tamanio}, #{archivo})
+    ]]>
+	</insert>
+</mapper>

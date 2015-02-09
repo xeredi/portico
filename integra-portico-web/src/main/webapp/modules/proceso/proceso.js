@@ -88,6 +88,11 @@ function prbtDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }).success(function(data) {
         vm.prbt = data.prbt;
+        vm.prarEntradaList = data.prarEntradaList;
+        vm.prarSalidaList = data.prarSalidaList;
+        vm.pritEntradaList = data.pritEntradaList;
+        vm.pritSalidaList = data.pritSalidaList;
+        vm.prpmMap = data.prpmMap;
 
         $http.post("proceso/prmn-list.action", {
             prbtId : $routeParams.prbtId

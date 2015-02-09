@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import javax.annotation.Nonnull;
 
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -18,11 +17,9 @@ import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
-
-import com.google.common.base.Preconditions;
+import xeredi.integra.proceso.ProcesoTemplate;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,9 +39,6 @@ public final class PescaFileImport {
     /** The Constant SUJ_PAS_SUST. */
     private static final Boolean SUJ_PAS_SUST = false;
 
-    /** The codigo maestro map. */
-    private final Map<Entidad, Set<String>> codigoMaestroMap = new HashMap<Entidad, Set<String>>();
-
     /** The srvc. */
     private final ServicioVO srvc = new ServicioVO();
 
@@ -52,10 +46,7 @@ public final class PescaFileImport {
     private final List<SubservicioVO> ssrvList = new ArrayList<>();
 
     /** The prmn list. */
-    private final ProcesoVO prbt;
-
-    /** The maestro map. */
-    private Map<Entidad, Map<String, ParametroVO>> maestroMap;
+    private final ProcesoTemplate proceso;
 
     /**
      * Instantiates a new pesca file import.
@@ -63,9 +54,10 @@ public final class PescaFileImport {
      * @param aprmnList
      *            the aprmn list
      */
-    public PescaFileImport(final ProcesoVO aprbt) {
+    public PescaFileImport(final @Nonnull ProcesoTemplate aproceso) {
         super();
-        prbt = aprbt;
+
+        proceso = aproceso;
     }
 
     /**
@@ -89,7 +81,7 @@ public final class PescaFileImport {
 
         int i = 0;
 
-        final ParametroVO tipoIvaVO = maestroMap.get(Entidad.TIPO_IVA).get(TIPO_IVA);
+        final ParametroVO tipoIvaVO = proceso.findMaestro(Entidad.TIPO_IVA, TIPO_IVA);
 
         for (final String line : lines) {
             i++;
@@ -164,26 +156,28 @@ public final class PescaFileImport {
             final String buque = getTokenString(PescaKeyword.MAN_Buque, line, i);
 
             if (buque == null || buque.isEmpty()) {
-                addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_Buque, line, i));
+                proceso.addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_Buque, line, i));
             } else {
-                addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_BuqueAlt, line, i));
+                proceso.addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_BuqueAlt, line, i));
             }
 
-            addCodigoMaestro(Entidad.SUBPUERTO, getTokenString(PescaKeyword.MAN_Subp, line, i));
-            addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_Buque, line, i));
-            addCodigoMaestro(Entidad.TIPO_OPERACION_PESCA, getTokenString(PescaKeyword.MAN_TipoOperacion, line, i));
-            addCodigoMaestro(Entidad.TIPO_MANIFIESTO_PESCA, getTokenString(PescaKeyword.MAN_Tipo, line, i));
-            addCodigoMaestro(Entidad.SUBTIPO_MANIFIESTO_PESCA, getTokenString(PescaKeyword.MAN_Subtipo, line, i));
-            addCodigoMaestro(Entidad.ARTE_PESCA, getTokenString(PescaKeyword.MAN_Arte, line, i));
-            addCodigoMaestro(Entidad.ZONA_PESCA, getTokenString(PescaKeyword.MAN_Zona, line, i));
-            addCodigoMaestro(Entidad.ORGANIZACION, getTokenString(PescaKeyword.MAN_Vendedor, line, i));
-            addCodigoMaestro(Entidad.ORGANIZACION, getTokenString(PescaKeyword.MAN_ClienteAdicional, line, i));
-            addCodigoMaestro(Entidad.COMPRADOR_PESCA, getTokenString(PescaKeyword.PAR_Comprador, line, i));
-            addCodigoMaestro(Entidad.ESPECIE_PESCA, getTokenString(PescaKeyword.PAR_Especie, line, i));
-            addCodigoMaestro(Entidad.PRESENTACION_PESCA, getTokenString(PescaKeyword.PAR_Presentacion, line, i));
+            proceso.addCodigoMaestro(Entidad.SUBPUERTO, getTokenString(PescaKeyword.MAN_Subp, line, i));
+            proceso.addCodigoMaestro(Entidad.BUQUE_PESCA, getTokenString(PescaKeyword.MAN_Buque, line, i));
+            proceso.addCodigoMaestro(Entidad.TIPO_OPERACION_PESCA,
+                    getTokenString(PescaKeyword.MAN_TipoOperacion, line, i));
+            proceso.addCodigoMaestro(Entidad.TIPO_MANIFIESTO_PESCA, getTokenString(PescaKeyword.MAN_Tipo, line, i));
+            proceso.addCodigoMaestro(Entidad.SUBTIPO_MANIFIESTO_PESCA,
+                    getTokenString(PescaKeyword.MAN_Subtipo, line, i));
+            proceso.addCodigoMaestro(Entidad.ARTE_PESCA, getTokenString(PescaKeyword.MAN_Arte, line, i));
+            proceso.addCodigoMaestro(Entidad.ZONA_PESCA, getTokenString(PescaKeyword.MAN_Zona, line, i));
+            proceso.addCodigoMaestro(Entidad.ORGANIZACION, getTokenString(PescaKeyword.MAN_Vendedor, line, i));
+            proceso.addCodigoMaestro(Entidad.ORGANIZACION, getTokenString(PescaKeyword.MAN_ClienteAdicional, line, i));
+            proceso.addCodigoMaestro(Entidad.COMPRADOR_PESCA, getTokenString(PescaKeyword.PAR_Comprador, line, i));
+            proceso.addCodigoMaestro(Entidad.ESPECIE_PESCA, getTokenString(PescaKeyword.PAR_Especie, line, i));
+            proceso.addCodigoMaestro(Entidad.PRESENTACION_PESCA, getTokenString(PescaKeyword.PAR_Presentacion, line, i));
         }
 
-        addCodigoMaestro(Entidad.TIPO_IVA, TIPO_IVA);
+        proceso.addCodigoMaestro(Entidad.TIPO_IVA, TIPO_IVA);
     }
 
     /**
@@ -207,12 +201,14 @@ public final class PescaFileImport {
             return null;
         }
 
-        if (!maestroMap.containsKey(entidad) || !maestroMap.get(entidad).containsKey(codigo)) {
-            prbt.addError(MensajeCodigo.G_001, "linea:" + lineNumber + ", entidad:" + entidad.name() + ", codigo:"
-                    + codigo);
+        final ParametroVO prmt = proceso.findMaestro(entidad, codigo);
+
+        if (prmt == null) {
+            proceso.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + entidad.name()
+                    + ", codigo: " + codigo);
         }
 
-        return maestroMap.get(entidad).get(codigo);
+        return prmt;
     }
 
     /**
@@ -231,7 +227,7 @@ public final class PescaFileImport {
             final String token = line.substring(keyword.getOffset(), keyword.getOffset() + keyword.getLength()).trim();
 
             if ((token == null || token.isEmpty()) && keyword.isRequired()) {
-                prbt.addError(MensajeCodigo.G_005, "linea:" + lineNumber + ", campo:" + keyword.name());
+                proceso.addError(MensajeCodigo.G_005, "linea: " + lineNumber + ", campo: " + keyword.name());
             }
 
             return token;
@@ -264,7 +260,8 @@ public final class PescaFileImport {
         final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
         if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-            prbt.addError(MensajeCodigo.G_004, "linea:" + lineNumber + ", CR:" + tipoDato.name() + ", codigo:" + codigo);
+            proceso.addError(MensajeCodigo.G_004, "linea: " + lineNumber + ", CR: " + tipoDato.name() + ", codigo: "
+                    + codigo);
         }
 
         return codigo;
@@ -291,7 +288,7 @@ public final class PescaFileImport {
         try {
             return Double.valueOf(codigo);
         } catch (final NumberFormatException ex) {
-            prbt.addError(MensajeCodigo.G_003, "linea:" + lineNumber + ", valor:" + codigo);
+            proceso.addError(MensajeCodigo.G_003, "linea: " + lineNumber + ", valor: " + codigo);
 
             return null;
         }
@@ -321,29 +318,10 @@ public final class PescaFileImport {
         try {
             return new SimpleDateFormat(dateFormat).parse(codigo);
         } catch (final ParseException ex) {
-            prbt.addError(MensajeCodigo.G_002, "linea:" + lineNumber + ", valor:" + codigo + ", formato:" + dateFormat);
+            proceso.addError(MensajeCodigo.G_002, "linea: " + lineNumber + ", valor: " + codigo + ", formato: "
+                    + dateFormat);
 
             return null;
-        }
-    }
-
-    /**
-     * Adds the codigo maestro.
-     *
-     * @param entidad
-     *            the entidad
-     * @param codigo
-     *            the codigo
-     */
-    protected final void addCodigoMaestro(final Entidad entidad, final String codigo) {
-        Preconditions.checkNotNull(entidad);
-
-        if (!codigoMaestroMap.containsKey(entidad)) {
-            codigoMaestroMap.put(entidad, new HashSet<String>());
-        }
-
-        if (codigo != null && !codigo.isEmpty()) {
-            codigoMaestroMap.get(entidad).add(codigo);
         }
     }
 
@@ -363,25 +341,6 @@ public final class PescaFileImport {
      */
     public List<SubservicioVO> getSsrvList() {
         return ssrvList;
-    }
-
-    /**
-     * Gets the codigo maestro map.
-     *
-     * @return the codigo maestro map
-     */
-    public Map<Entidad, Set<String>> getCodigoMaestroMap() {
-        return codigoMaestroMap;
-    }
-
-    /**
-     * Sets the maestro map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setMaestroMap(final Map<Entidad, Map<String, ParametroVO>> value) {
-        maestroMap = value;
     }
 
 }

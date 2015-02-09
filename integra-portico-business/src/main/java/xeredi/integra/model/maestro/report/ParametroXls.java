@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.annotation.Nonnull;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -19,13 +23,13 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoParametroVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ParametroXls.
  */
 public final class ParametroXls extends BaseXls {
+
+    private static final Log LOG = LogFactory.getLog(ParametroXls.class);
 
     /** The bundle. */
     private final ResourceBundle bundle;
@@ -54,11 +58,11 @@ public final class ParametroXls extends BaseXls {
      * @throws InternalErrorException
      *             Si ocurre algun error grave.
      */
-    public void generarMaestros(final List<ParametroVO> prmtList, final TipoParametroVO tpprVO,
-            final OutputStream stream) throws InternalErrorException {
-        Preconditions.checkNotNull(prmtList);
-        Preconditions.checkNotNull(tpprVO);
-        Preconditions.checkNotNull(stream);
+    public void generarMaestros(final @Nonnull List<ParametroVO> prmtList, final @Nonnull TipoParametroVO tpprVO,
+            final @Nonnull OutputStream stream) throws InternalErrorException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("XLS Generation start");
+        }
 
         try (final HSSFWorkbook workbook = new HSSFWorkbook()) {
             final HSSFSheet sheet = workbook.createSheet(bundle.getString("enti_" + tpprVO.getId()));
@@ -110,10 +114,18 @@ public final class ParametroXls extends BaseXls {
                 }
             }
 
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("XLS Autosize start");
+            }
+
             autoSizeColumns(sheet, rowhead);
             workbook.write(stream);
         } catch (final IOException ex) {
             throw new InternalErrorException(ex);
+        }
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("XLS Generation end");
         }
     }
 

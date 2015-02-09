@@ -4,15 +4,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ProcesoArchivoVO.
+ * The Class ProcesoItemCriterioVO.
  */
-public final class ProcesoArchivoVO {
+public final class ProcesoItemCriterioVO {
 
     /** The prbt id. */
     private Long prbtId;
 
     /** The sentido. */
-    private Long archId;
+    private ItemSentido sentido;
 
     /**
      * {@inheritDoc}
@@ -42,22 +42,22 @@ public final class ProcesoArchivoVO {
     }
 
     /**
-     * Gets the arch id.
+     * Gets the sentido.
      *
-     * @return the arch id
+     * @return the sentido
      */
-    public Long getArchId() {
-        return archId;
+    public ItemSentido getSentido() {
+        return sentido;
     }
 
     /**
-     * Sets the arch id.
+     * Sets the sentido.
      *
      * @param value
-     *            the new arch id
+     *            the new sentido
      */
-    public void setArchId(final Long value) {
-        archId = value;
+    public void setSentido(final ItemSentido value) {
+        sentido = value;
     }
 
 }

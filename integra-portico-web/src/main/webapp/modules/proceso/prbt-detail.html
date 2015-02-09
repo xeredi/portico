@@ -70,16 +70,16 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="(key, value) in vm.prbt.prpmMap track by $index">
+					<tr ng-repeat="(key, value) in vm.prpmMap track by $index">
 						<td ng-bind="key"></td>
-						<td ng-bind="value"></td>
+						<td ng-bind="value.valor"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		</tab> <tab ng-if="vm.prbt.prarEntradaList.length || vm.prbt.prarSalidaList.length"
+		</tab> <tab ng-if="vm.prarEntradaList.length || vm.prarSalidaList.length"
 			heading="{{'prarList' | translate}}">
-		<div ng-if="vm.prbt.prarEntradaList.length" class="table-responsive">
+		<div ng-if="vm.prarEntradaList.length" class="table-responsive">
 			<legend translate="prarEntList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
@@ -89,14 +89,14 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="prar in vm.prbt.prarEntradaList track by $index">
+					<tr ng-repeat="prar in vm.prarEntradaList track by $index">
 						<td ng-bind="prar.nombre"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div ng-if="vm.prbt.prarSalidaList.length" class="table-responsive">
+		<div ng-if="vm.prarSalidaList.length" class="table-responsive">
 			<legend translate="prarSalList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
@@ -106,14 +106,14 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="prar in vm.prbt.prarSalidaList track by $index">
+					<tr ng-repeat="prar in vm.prarSalidaList track by $index">
 						<td ng-bind="prar.nombre"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		</tab> <tab ng-if="vm.prbt.pritEntradaList.length || vm.prbt.pritSalidaList.length" heading="{{'pritList' | translate}}">
-		<div ng-if="vm.prbt.pritEntradaList.length" class="table-responsive">
+		</tab> <tab ng-if="vm.pritEntradaList.length || vm.pritSalidaList.length" heading="{{'pritList' | translate}}">
+		<div ng-if="vm.pritEntradaList.length" class="table-responsive">
 			<legend translate="pritEntList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
@@ -123,14 +123,14 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="prit in vm.prbt.pritEntradaList track by $index">
+					<tr ng-repeat="prit in vm.pritEntradaList track by $index">
 						<td ng-bind="prit.itemId"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div ng-if="vm.prbt.pritSalidaList.length" class="table-responsive">
+		<div ng-if="vm.pritSalidaList.length" class="table-responsive">
 			<legend translate="pritSalList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
@@ -140,7 +140,7 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="prit in vm.prbt.pritSalidaList track by $index">
+					<tr ng-repeat="prit in vm.pritSalidaList track by $index">
 						<td ng-bind="prit.itemId"></td>
 					</tr>
 				</tbody>

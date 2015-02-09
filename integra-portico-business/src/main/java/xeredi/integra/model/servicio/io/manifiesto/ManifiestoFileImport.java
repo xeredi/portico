@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -23,10 +21,10 @@ import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.integra.proceso.ProcesoTemplate;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,7 +36,7 @@ public final class ManifiestoFileImport {
     protected static final Log LOG = LogFactory.getLog(ManifiestoFileImport.class);
 
     /** The prbt. */
-    private final ProcesoVO prbt;
+    private final ProcesoTemplate proceso;
 
     /** The escala vo. */
     private ServicioVO escalaVO;
@@ -54,18 +52,6 @@ public final class ManifiestoFileImport {
 
     /** The paeq map. */
     private final Map<String, List<Long>> paeqMap = new HashMap<>();
-
-    /** The codigo maestro map. */
-    private final Map<Entidad, Set<String>> codigoMaestroMap = new HashMap<Entidad, Set<String>>();
-
-    /** The nif set. */
-    private final Set<String> nifSet = new HashSet<>();
-
-    /** The maestro map. */
-    private Map<Entidad, Map<String, ParametroVO>> maestroMap;
-
-    /** The organizaciones map. */
-    private Map<String, ParametroVO> organizacionesMap;
 
     /** The mensaje. */
     private ManifiestoMensaje mensaje;
@@ -84,10 +70,13 @@ public final class ManifiestoFileImport {
      *
      * @param aprbt
      *            the aprbt
+     * @param aprmnList
+     *            the aprmn list
      */
-    public ManifiestoFileImport(final @Nonnull ProcesoVO aprbt) {
+    public ManifiestoFileImport(final @Nonnull ProcesoTemplate aproceso) {
         super();
-        prbt = aprbt;
+
+        proceso = aproceso;
     }
 
     /**
@@ -120,7 +109,7 @@ public final class ManifiestoFileImport {
             primeraLinea++;
         } while (primeraLinea < lines.size());
 
-        prbt.addError(MensajeCodigo.G_008, ManifiestoSegmento.IFC.name());
+        proceso.addError(MensajeCodigo.G_008, ManifiestoSegmento.IFC.name());
 
         return primeraLinea;
     }
@@ -139,7 +128,7 @@ public final class ManifiestoFileImport {
             final ManifiestoSegmento segmento = getTokenSegmento(ManifiestoKeyword.Segmento, lines.get(i), i);
 
             if (!ManifiestoSegmento.segmentoValido(segmento, mensaje)) {
-                prbt.addError(MensajeCodigo.G_006, "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:"
+                proceso.addError(MensajeCodigo.G_006, "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:"
                         + segmento.name());
             }
         }
@@ -149,7 +138,7 @@ public final class ManifiestoFileImport {
             final ManifiestoSegmento segmentoSiguiente = getTokenSegmento(ManifiestoKeyword.Segmento, lines.get(i), i);
 
             if (!ManifiestoSegmento.segmentoValido(segmento, segmentoSiguiente)) {
-                prbt.addError(MensajeCodigo.G_006, "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:"
+                proceso.addError(MensajeCodigo.G_006, "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:"
                         + segmento.name() + ", segmentoSiguiente:" + segmentoSiguiente.name());
             }
         }
@@ -178,58 +167,69 @@ public final class ManifiestoFileImport {
 
                 recintoAduanero = getTokenString(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i);
 
-                addCodigoMaestro(Entidad.RECINTO_ADUANERO, recintoAduanero);
-                addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.IFC_CodigoPaisENS, line, i));
-                addCodigoMaestro(Entidad.ALINEACION, getTokenString(ManifiestoKeyword.IFC_CodigoAlineacion, line, i));
-                addCodigoMaestro(Entidad.TERMINAL, getTokenString(ManifiestoKeyword.IFC_CodigoTerminal, line, i));
-                addCodigoMaestro(Entidad.ACUERDO, getTokenString(ManifiestoKeyword.IFC_CodigoAcuerdo, line, i));
-                addCodigoMaestro(Entidad.SERVICIO_TRAFICO,
+                proceso.addCodigoMaestro(Entidad.RECINTO_ADUANERO, recintoAduanero);
+                proceso.addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.IFC_CodigoPaisENS, line, i));
+                proceso.addCodigoMaestro(Entidad.ALINEACION,
+                        getTokenString(ManifiestoKeyword.IFC_CodigoAlineacion, line, i));
+                proceso.addCodigoMaestro(Entidad.TERMINAL,
+                        getTokenString(ManifiestoKeyword.IFC_CodigoTerminal, line, i));
+                proceso.addCodigoMaestro(Entidad.ACUERDO, getTokenString(ManifiestoKeyword.IFC_CodigoAcuerdo, line, i));
+                proceso.addCodigoMaestro(Entidad.SERVICIO_TRAFICO,
                         getTokenString(ManifiestoKeyword.IFC_CodigoServicio, line, i));
 
-                addNif(getTokenString(ManifiestoKeyword.IFC_NIFConsignatarioBuque, line, i));
-                addNif(getTokenString(ManifiestoKeyword.IFC_NIFConsignatarioMercancia, line, i));
-                addNif(getTokenString(ManifiestoKeyword.IFC_NIFEstibador, line, i));
+                proceso.addNif(getTokenString(ManifiestoKeyword.IFC_NIFConsignatarioBuque, line, i));
+                proceso.addNif(getTokenString(ManifiestoKeyword.IFC_NIFConsignatarioMercancia, line, i));
+                proceso.addNif(getTokenString(ManifiestoKeyword.IFC_NIFEstibador, line, i));
 
                 break;
             case NAD:
-                addNif(getTokenString(ManifiestoKeyword.NAD_NIFConsignatarioMercancia, line, i));
+                proceso.addNif(getTokenString(ManifiestoKeyword.NAD_NIFConsignatarioMercancia, line, i));
 
                 break;
             case CNI:
-                addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_1, line, i));
-                addCodigoMaestro(Entidad.UNLOCODE, getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_1, line, i));
-                addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_2, line, i));
-                addCodigoMaestro(Entidad.UNLOCODE, getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_2, line, i));
-                addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_3, line, i));
-                addCodigoMaestro(Entidad.UNLOCODE, getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_3, line, i));
-                addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_4, line, i));
-                addCodigoMaestro(Entidad.UNLOCODE, getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_4, line, i));
-                addCodigoMaestro(Entidad.MODO_TRANSPORTE_EDI,
+                proceso.addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_1, line, i));
+                proceso.addCodigoMaestro(Entidad.UNLOCODE,
+                        getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_1, line, i));
+                proceso.addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_2, line, i));
+                proceso.addCodigoMaestro(Entidad.UNLOCODE,
+                        getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_2, line, i));
+                proceso.addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_3, line, i));
+                proceso.addCodigoMaestro(Entidad.UNLOCODE,
+                        getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_3, line, i));
+                proceso.addCodigoMaestro(Entidad.PAIS, getTokenString(ManifiestoKeyword.CNI_CodigoPais_4, line, i));
+                proceso.addCodigoMaestro(Entidad.UNLOCODE,
+                        getTokenString(ManifiestoKeyword.CNI_CodigoUnlocode_4, line, i));
+                proceso.addCodigoMaestro(Entidad.MODO_TRANSPORTE_EDI,
                         getTokenString(ManifiestoKeyword.CNI_CodigoModoTransporteEDI, line, i));
-                addCodigoMaestro(Entidad.ALINEACION, getTokenString(ManifiestoKeyword.CNI_CodigoAlineacion, line, i));
-                addCodigoMaestro(Entidad.TERMINAL, getTokenString(ManifiestoKeyword.CNI_CodigoTerminal, line, i));
-                addCodigoMaestro(Entidad.ACUERDO, getTokenString(ManifiestoKeyword.CNI_CodigoAcuerdo, line, i));
-                addCodigoMaestro(Entidad.SERVICIO_TRAFICO,
+                proceso.addCodigoMaestro(Entidad.ALINEACION,
+                        getTokenString(ManifiestoKeyword.CNI_CodigoAlineacion, line, i));
+                proceso.addCodigoMaestro(Entidad.TERMINAL,
+                        getTokenString(ManifiestoKeyword.CNI_CodigoTerminal, line, i));
+                proceso.addCodigoMaestro(Entidad.ACUERDO, getTokenString(ManifiestoKeyword.CNI_CodigoAcuerdo, line, i));
+                proceso.addCodigoMaestro(Entidad.SERVICIO_TRAFICO,
                         getTokenString(ManifiestoKeyword.CNI_CodigoServicio, line, i));
 
-                addNif(getTokenString(ManifiestoKeyword.CNI_NIFEstibador, line, i));
+                proceso.addNif(getTokenString(ManifiestoKeyword.CNI_NIFEstibador, line, i));
 
                 break;
             case GID:
-                addCodigoMaestro(Entidad.TIPO_BULTO, getTokenString(ManifiestoKeyword.GID_CodigoTipoBulto, line, i));
-                addCodigoMaestro(Entidad.MERCANCIA, getTokenString(ManifiestoKeyword.GID_CodigoMercancia, line, i));
-                addCodigoMaestro(Entidad.MARCA_VEHICULO,
+                proceso.addCodigoMaestro(Entidad.TIPO_BULTO,
+                        getTokenString(ManifiestoKeyword.GID_CodigoTipoBulto, line, i));
+                proceso.addCodigoMaestro(Entidad.MERCANCIA,
+                        getTokenString(ManifiestoKeyword.GID_CodigoMercancia, line, i));
+                proceso.addCodigoMaestro(Entidad.MARCA_VEHICULO,
                         getTokenString(ManifiestoKeyword.GID_CodigoMarcaVehiculo, line, i));
-                addCodigoMaestro(Entidad.ACUERDO, getTokenString(ManifiestoKeyword.GID_CodigoAcuerdo, line, i));
-                addCodigoMaestro(Entidad.INSTALACION_ESPECIAL,
+                proceso.addCodigoMaestro(Entidad.ACUERDO, getTokenString(ManifiestoKeyword.GID_CodigoAcuerdo, line, i));
+                proceso.addCodigoMaestro(Entidad.INSTALACION_ESPECIAL,
                         getTokenString(ManifiestoKeyword.GID_CodigoInstalacionEspecial, line, i));
-                addCodigoMaestro(Entidad.TERMINAL, getTokenString(ManifiestoKeyword.GID_CodigoTerminal, line, i));
+                proceso.addCodigoMaestro(Entidad.TERMINAL,
+                        getTokenString(ManifiestoKeyword.GID_CodigoTerminal, line, i));
 
-                addNif(getTokenString(ManifiestoKeyword.GID_NifEstibador, line, i));
+                proceso.addNif(getTokenString(ManifiestoKeyword.GID_NifEstibador, line, i));
 
                 break;
             case PCI:
-                addCodigoMaestro(Entidad.INSTRUCCION_MARCAJE,
+                proceso.addCodigoMaestro(Entidad.INSTRUCCION_MARCAJE,
                         getTokenString(ManifiestoKeyword.PCI_CodigoInstruccionMarcaje, line, i));
 
                 break;
@@ -237,7 +237,7 @@ public final class ManifiestoFileImport {
 
                 break;
             case DOC:
-                addCodigoMaestro(Entidad.TIPO_DOCUMENTO_AEAT,
+                proceso.addCodigoMaestro(Entidad.TIPO_DOCUMENTO_AEAT,
                         getTokenString(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i));
 
                 break;
@@ -245,17 +245,17 @@ public final class ManifiestoFileImport {
 
                 break;
             case DGS:
-                addCodigoMaestro(
+                proceso.addCodigoMaestro(
                         Entidad.MERCANCIAS_PELIGROSAS,
                         getTokenString(ManifiestoKeyword.DGS_NumeroONU, line, i)
-                                + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
+                        + getTokenString(ManifiestoKeyword.DGS_Clase, line, i));
 
                 break;
             case EQD:
-                addCodigoMaestro(
+                proceso.addCodigoMaestro(
                         Entidad.TIPO_EQUIPAMIENTO,
                         getTokenString(ManifiestoKeyword.EQD_CodigoTipoEquipamiento, line, i)
-                                + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
+                        + getTokenString(ManifiestoKeyword.EQD_TamanioEquipamiento, line, i));
 
                 break;
             case SEL:
@@ -318,10 +318,10 @@ public final class ManifiestoFileImport {
                 manifiestoVO.addItdt(TipoDato.CADENA_01.getId(),
                         getTokenString(ManifiestoKeyword.IFC_NumeroEDI, line, i));
                 manifiestoVO
-                        .addItdt(
-                                TipoDato.REC_ADU.getId(),
-                                getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
-                                        Entidad.RECINTO_ADUANERO));
+                .addItdt(
+                        TipoDato.REC_ADU.getId(),
+                        getTokenMaestro(ManifiestoKeyword.IFC_CodigoRecintoAduanero, line, i,
+                                Entidad.RECINTO_ADUANERO));
 
                 final String tipoManifiestoEDI = getTokenString(ManifiestoKeyword.IFC_TipoManifiesto, line, i);
                 final String tipoManifiesto = getTipoManifiesto(tipoManifiestoEDI);
@@ -594,10 +594,10 @@ public final class ManifiestoFileImport {
                 }
 
                 padoActualVO
-                        .addItdt(
-                                TipoDato.TIPO_DOC_AEAT.getId(),
-                                getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
-                                        Entidad.TIPO_DOCUMENTO_AEAT));
+                .addItdt(
+                        TipoDato.TIPO_DOC_AEAT.getId(),
+                        getTokenMaestro(ManifiestoKeyword.DOC_CodigoTipoDocumento, line, i,
+                                Entidad.TIPO_DOCUMENTO_AEAT));
                 padoActualVO.addItdt(TipoDato.FECHA_01.getId(),
                         getTokenDate(ManifiestoKeyword.DOC_FechaEmision, line, i, "ddMMyy"));
                 padoActualVO.addItdt(TipoDato.CADENA_01.getId(),
@@ -765,34 +765,6 @@ public final class ManifiestoFileImport {
     }
 
     /**
-     * Adds the codigo maestro.
-     *
-     * @param entidad
-     *            the entidad
-     * @param codigo
-     *            the codigo
-     */
-    private final void addCodigoMaestro(final @Nonnull Entidad entidad, final String codigo) {
-        if (!codigoMaestroMap.containsKey(entidad)) {
-            codigoMaestroMap.put(entidad, new HashSet<String>());
-        }
-
-        if (codigo != null && !codigo.isEmpty()) {
-            codigoMaestroMap.get(entidad).add(codigo);
-        }
-    }
-
-    /**
-     * Adds the nif.
-     *
-     * @param nif
-     *            the nif
-     */
-    protected final void addNif(final String nif) {
-        nifSet.add(nif);
-    }
-
-    /**
      * Sets the unlocode bl.
      *
      * @param bl
@@ -847,12 +819,14 @@ public final class ManifiestoFileImport {
             return null;
         }
 
-        if (!organizacionesMap.containsKey(codigo)) {
-            prbt.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + Entidad.ORGANIZACION.name()
+        final ParametroVO prmt = proceso.findOrganizacion(codigo);
+
+        if (prmt == null) {
+            proceso.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + Entidad.ORGANIZACION.name()
                     + ", codigo: " + codigo);
         }
 
-        return organizacionesMap.get(codigo);
+        return prmt;
     }
 
     /**
@@ -871,7 +845,7 @@ public final class ManifiestoFileImport {
             final String token = line.substring(keyword.getOffset(), keyword.getOffset() + keyword.getLength()).trim();
 
             if ((token == null || token.isEmpty()) && keyword.isRequired()) {
-                prbt.addError(MensajeCodigo.G_005, "linea: " + lineNumber + ", campo: " + keyword.name());
+                proceso.addError(MensajeCodigo.G_005, "linea: " + lineNumber + ", campo: " + keyword.name());
             }
 
             return token;
@@ -901,7 +875,7 @@ public final class ManifiestoFileImport {
         try {
             return Long.valueOf(codigo);
         } catch (final NumberFormatException ex) {
-            prbt.addError(MensajeCodigo.G_003, "linea: " + lineNumber + ", valor: " + codigo);
+            proceso.addError(MensajeCodigo.G_003, "linea: " + lineNumber + ", valor: " + codigo);
 
             return null;
         }
@@ -928,7 +902,7 @@ public final class ManifiestoFileImport {
         try {
             return Double.valueOf(codigo);
         } catch (final NumberFormatException ex) {
-            prbt.addError(MensajeCodigo.G_003, "linea: " + lineNumber + ", valor: " + codigo);
+            proceso.addError(MensajeCodigo.G_003, "linea: " + lineNumber + ", valor: " + codigo);
 
             return null;
         }
@@ -955,12 +929,14 @@ public final class ManifiestoFileImport {
             return null;
         }
 
-        if (!maestroMap.containsKey(entidad) || !maestroMap.get(entidad).containsKey(codigo)) {
-            prbt.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + entidad.name() + ", codigo: "
-                    + codigo);
+        final ParametroVO prmt = proceso.findMaestro(entidad, codigo);
+
+        if (prmt == null) {
+            proceso.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + entidad.name()
+                    + ", codigo: " + codigo);
         }
 
-        return maestroMap.get(entidad).get(codigo);
+        return prmt;
     }
 
     /**
@@ -978,16 +954,19 @@ public final class ManifiestoFileImport {
      */
     private ParametroVO getTokenMaestro(final String codigo, final String line, final int lineNumber,
             final Entidad entidad) {
+
         if (codigo == null || codigo.isEmpty()) {
             return null;
         }
 
-        if (!maestroMap.containsKey(entidad) || !maestroMap.get(entidad).containsKey(codigo)) {
-            prbt.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + entidad.name() + ", codigo: "
-                    + codigo);
+        final ParametroVO prmt = proceso.findMaestro(entidad, codigo);
+
+        if (prmt == null) {
+            proceso.addError(MensajeCodigo.G_001, "linea: " + lineNumber + ", entidad: " + entidad.name()
+                    + ", codigo: " + codigo);
         }
 
-        return maestroMap.get(entidad).get(codigo);
+        return prmt;
     }
 
     /**
@@ -1029,7 +1008,7 @@ public final class ManifiestoFileImport {
         final TipoDatoVO tpdtVO = TipoDatoProxy.select(tipoDato.getId());
 
         if (!tpdtVO.getCdrfCodeSet().contains(codigo)) {
-            prbt.addError(MensajeCodigo.G_004, "linea: " + lineNumber + ", CR: " + tipoDato.name() + ", codigo: "
+            proceso.addError(MensajeCodigo.G_004, "linea: " + lineNumber + ", CR: " + tipoDato.name() + ", codigo: "
                     + codigo);
         }
 
@@ -1057,7 +1036,7 @@ public final class ManifiestoFileImport {
         try {
             return Integer.valueOf(codigo);
         } catch (final NumberFormatException ex) {
-            prbt.addError(MensajeCodigo.G_003, "linea: " + lineNumber + ", valor: " + codigo);
+            proceso.addError(MensajeCodigo.G_003, "linea: " + lineNumber + ", valor: " + codigo);
 
             return null;
         }
@@ -1087,7 +1066,7 @@ public final class ManifiestoFileImport {
         try {
             return new SimpleDateFormat(dateFormat).parse(codigo);
         } catch (final ParseException ex) {
-            prbt.addError(MensajeCodigo.G_002, "linea: " + lineNumber + ", valor: " + codigo + ", formato: "
+            proceso.addError(MensajeCodigo.G_002, "linea: " + lineNumber + ", valor: " + codigo + ", formato: "
                     + dateFormat);
 
             return null;
@@ -1121,44 +1100,6 @@ public final class ManifiestoFileImport {
      */
     public List<SubservicioSubservicioVO> getSsssList() {
         return ssssList;
-    }
-
-    /**
-     * Sets the maestro map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setMaestroMap(final Map<Entidad, Map<String, ParametroVO>> value) {
-        maestroMap = value;
-    }
-
-    /**
-     * Sets the organizaciones map.
-     *
-     * @param value
-     *            the value
-     */
-    public void setOrganizacionesMap(final Map<String, ParametroVO> value) {
-        organizacionesMap = value;
-    }
-
-    /**
-     * Gets the codigo maestro map.
-     *
-     * @return the codigo maestro map
-     */
-    public Map<Entidad, Set<String>> getCodigoMaestroMap() {
-        return codigoMaestroMap;
-    }
-
-    /**
-     * Gets the nif set.
-     *
-     * @return the nif set
-     */
-    public Set<String> getNifSet() {
-        return nifSet;
     }
 
     /**

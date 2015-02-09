@@ -444,7 +444,7 @@ public enum MessageI18nKey {
     /** The prit sal list. */
     pritSalList,
     /** The prit_nombre. */
-    prit_nombre,
+    prit_nombre, arch,
 
     /** The aspc. */
     aspc,

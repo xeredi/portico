@@ -1,10 +1,16 @@
 package xeredi.integra.http.controller.action.proceso;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
+import xeredi.integra.model.proceso.vo.ProcesoItemVO;
+import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
 import com.google.common.base.Preconditions;
@@ -20,6 +26,21 @@ public final class ProcesoAction extends BaseAction {
 
     /** The prbt. */
     private ProcesoVO prbt;
+
+    /** The prar entrada list. */
+    private List<ArchivoInfoVO> prarEntradaList;
+
+    /** The prar salida list. */
+    private List<ArchivoInfoVO> prarSalidaList;
+
+    /** The prit entrada list. */
+    private List<ProcesoItemVO> pritEntradaList;
+
+    /** The prit salida list. */
+    private List<ProcesoItemVO> pritSalidaList;
+
+    /** The prpm map. */
+    private Map<String, ProcesoParametroVO> prpmMap;
 
     // Acciones web
 
@@ -38,6 +59,11 @@ public final class ProcesoAction extends BaseAction {
         final ProcesoBO prbtBO = new ProcesoBO();
 
         prbt = prbtBO.select(prbt.getId());
+        prarEntradaList = prbtBO.selectPrarEntradaList(prbt.getId());
+        prarSalidaList = prbtBO.selectPrarSalidaList(prbt.getId());
+        pritEntradaList = prbtBO.selectPritEntradaList(prbt.getId());
+        pritSalidaList = prbtBO.selectPritSalidaList(prbt.getId());
+        prpmMap = prbtBO.selectPrpmMap(prbt.getId());
 
         return SUCCESS;
     }
@@ -80,6 +106,51 @@ public final class ProcesoAction extends BaseAction {
      */
     public void setPrbt(final ProcesoVO value) {
         prbt = value;
+    }
+
+    /**
+     * Gets the prar entrada list.
+     *
+     * @return the prar entrada list
+     */
+    public List<ArchivoInfoVO> getPrarEntradaList() {
+        return prarEntradaList;
+    }
+
+    /**
+     * Gets the prar salida list.
+     *
+     * @return the prar salida list
+     */
+    public List<ArchivoInfoVO> getPrarSalidaList() {
+        return prarSalidaList;
+    }
+
+    /**
+     * Gets the prit entrada list.
+     *
+     * @return the prit entrada list
+     */
+    public List<ProcesoItemVO> getPritEntradaList() {
+        return pritEntradaList;
+    }
+
+    /**
+     * Gets the prit salida list.
+     *
+     * @return the prit salida list
+     */
+    public List<ProcesoItemVO> getPritSalidaList() {
+        return pritSalidaList;
+    }
+
+    /**
+     * Gets the prpm map.
+     *
+     * @return the prpm map
+     */
+    public Map<String, ProcesoParametroVO> getPrpmMap() {
+        return prpmMap;
     }
 
 }

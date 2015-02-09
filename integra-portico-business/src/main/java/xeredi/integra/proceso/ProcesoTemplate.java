@@ -1,5 +1,6 @@
 package xeredi.integra.proceso;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
@@ -24,8 +26,10 @@ import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
+import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
+import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 
@@ -38,10 +42,25 @@ import com.google.common.base.Preconditions;
 public abstract class ProcesoTemplate {
 
     /** The Constant LOG. */
-    protected static final Log LOG = LogFactory.getLog(ProcesoTemplate.class);
+    private static final Log LOG = LogFactory.getLog(ProcesoTemplate.class);
 
     /** The prbt vo. */
-    protected ProcesoVO prbtVO;
+    protected ProcesoVO prbt;
+
+    /** The prmn list. */
+    protected List<ProcesoMensajeVO> prmnList;
+
+    /** The prit salida list. */
+    protected List<ProcesoItemVO> pritSalidaList;
+
+    /** The arin salida list. */
+    protected List<ArchivoInfoVO> arinSalidaList;
+
+    /** The arin entrada list. */
+    protected List<ArchivoInfoVO> arinEntradaList;
+
+    /** The prpm map. */
+    protected Map<String, ProcesoParametroVO> prpmMap;
 
     /** The codigo maestro map. */
     protected final Map<Entidad, Set<String>> codigoMaestroMap = new HashMap<>();
@@ -59,43 +78,43 @@ public abstract class ProcesoTemplate {
      * Procesar.
      */
     public final void procesar() {
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Inicio del proceso batch");
-        }
+        prepararProcesos();
 
         final ProcesoBO prbtBO = new ProcesoBO();
 
         do {
-            prbtVO = prbtBO.proteger(getProcesoModulo(), getProcesoTipo());
+            prbt = prbtBO.proteger(getProcesoModulo(), getProcesoTipo());
 
-            if (prbtVO != null) {
+            if (prbt != null) {
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("Ejecucion del proceso: " + prbtVO);
+                    LOG.debug("Ejecucion del proceso: " + prbt);
                 }
 
                 try {
-                    ejecutar();
+                    prmnList = new ArrayList<>();
+                    pritSalidaList = new ArrayList<>();
+                    arinSalidaList = new ArrayList<>();
+
+                    prpmMap = prbtBO.selectPrpmMap(prbt.getId());
+                    arinEntradaList = prbtBO.selectPrarEntradaList(prbt.getId());
+
+                    ejecutarProceso();
                 } catch (final Throwable ex) {
-                    LOG.fatal("Error en el Proceso " + prbtVO.getId());
+                    LOG.fatal("Error en el Proceso " + prbt.getId());
                     LOG.fatal(ex, ex);
 
                     addError(MensajeCodigo.G_000, ex.getMessage());
                 }
 
                 try {
-                    prbtBO.finalizar(prbtVO);
+                    prbtBO.finalizar(prbt.getId(), prmnList, pritSalidaList, arinSalidaList);
                 } catch (final InstanceNotFoundException ex) {
-                    LOG.fatal("Proceso " + prbtVO.getId() + " no encontrado al tratar de finalizarlo. " + prbtVO);
+                    LOG.fatal("Proceso " + prbt.getId() + " no encontrado al tratar de finalizarlo. " + prbt);
                 } catch (final OperacionNoPermitidaException ex) {
-                    LOG.fatal("Proceso " + prbtVO.getId() + " en un estado invalido al tratar de finalizarlo. "
-                            + prbtVO);
+                    LOG.fatal("Proceso " + prbt.getId() + " en un estado invalido al tratar de finalizarlo. " + prbt);
                 }
             }
-        } while (prbtVO != null);
-
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Fin del proceso batch");
-        }
+        } while (prbt != null);
     }
 
     /**
@@ -105,18 +124,6 @@ public abstract class ProcesoTemplate {
      *            the fecha vigencia
      */
     protected final void buscarMaestros(final Date fechaVigencia) {
-        buscarMaestros(codigoMaestroMap, fechaVigencia);
-    }
-
-    /**
-     * Buscar maestros.
-     *
-     * @param codigoMaestroMap
-     *            the codigo maestro map
-     * @param fechaVigencia
-     *            the fecha vigencia
-     */
-    protected final void buscarMaestros(final Map<Entidad, Set<String>> codigoMaestroMap, final Date fechaVigencia) {
         Preconditions.checkNotNull(fechaVigencia);
 
         if (LOG.isInfoEnabled()) {
@@ -143,42 +150,32 @@ public abstract class ProcesoTemplate {
      *            the fecha vigencia
      */
     protected void buscarOrganizaciones(final Date fechaVigencia) {
-        buscarOrganizaciones(nifSet, fechaVigencia);
-    }
-
-    /**
-     * Buscar organizaciones.
-     *
-     * @param nifSet
-     *            the nif set
-     * @param fechaVigencia
-     *            the fecha vigencia
-     */
-    protected void buscarOrganizaciones(final Set<String> nifSet, final Date fechaVigencia) {
         Preconditions.checkNotNull(fechaVigencia);
 
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Busqueda de Organizaciones");
-        }
+        if (!nifSet.isEmpty()) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Busqueda de Organizaciones");
+            }
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
-        final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
+            final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
-        prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
-        prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());
-        prmtCriterioVO.setFechaVigencia(fechaVigencia);
+            prmtCriterioVO.setItdtMap(new HashMap<Long, ItemDatoCriterioVO>());
+            prmtCriterioVO.setEntiId(Entidad.ORGANIZACION.getId());
+            prmtCriterioVO.setFechaVigencia(fechaVigencia);
 
-        final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
+            final ItemDatoCriterioVO itdtCriterioVO = new ItemDatoCriterioVO();
 
-        itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
-        itdtCriterioVO.setCadenas(nifSet);
+            itdtCriterioVO.setTpdtId(TipoDato.CADENA_02.getId());
+            itdtCriterioVO.setCadenas(nifSet);
 
-        prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
+            prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
 
-        final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
+            final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
 
-        for (final ParametroVO prmtVO : prmtList) {
-            organizacionesMap.put(prmtVO.getItdtMap().get(TipoDato.CADENA_02.getId()).getCadena(), prmtVO);
+            for (final ParametroVO prmtVO : prmtList) {
+                organizacionesMap.put(prmtVO.getItdtMap().get(TipoDato.CADENA_02.getId()).getCadena(), prmtVO);
+            }
         }
     }
 
@@ -190,7 +187,7 @@ public abstract class ProcesoTemplate {
      * @param codigo
      *            the codigo
      */
-    protected final void addCodigoMaestro(final Entidad entidad, final String codigo) {
+    public final void addCodigoMaestro(final Entidad entidad, final String codigo) {
         Preconditions.checkNotNull(entidad);
 
         if (!codigoMaestroMap.containsKey(entidad)) {
@@ -203,12 +200,73 @@ public abstract class ProcesoTemplate {
     }
 
     /**
+     * Find maestro.
+     *
+     * @param entidad
+     *            the entidad
+     * @param codigo
+     *            the codigo
+     * @return the parametro vo
+     */
+    public final ParametroVO findMaestro(final Entidad entidad, final String codigo) {
+        Preconditions.checkNotNull(entidad);
+
+        if (codigo == null || codigo.isEmpty()) {
+            return null;
+        }
+
+        if (maestroMap.containsKey(entidad)) {
+            return maestroMap.get(entidad).get(codigo);
+        }
+
+        return null;
+    }
+
+    /**
+     * Exists maestro.
+     *
+     * @param entidad
+     *            the entidad
+     * @param codigo
+     *            the codigo
+     * @return true, if successful
+     */
+    public final boolean existsMaestro(final Entidad entidad, final String codigo) {
+        Preconditions.checkNotNull(entidad);
+
+        if (codigo == null || codigo.isEmpty()) {
+            return false;
+        }
+
+        if (maestroMap.containsKey(entidad)) {
+            return maestroMap.get(entidad).containsKey(codigo);
+        }
+
+        return false;
+    }
+
+    /**
+     * Find organizacion.
+     *
+     * @param codigo
+     *            the codigo
+     * @return the parametro vo
+     */
+    public final ParametroVO findOrganizacion(final String codigo) {
+        if (codigo == null || codigo.isEmpty()) {
+            return null;
+        }
+
+        return organizacionesMap.get(codigo);
+    }
+
+    /**
      * Adds the nif.
      *
      * @param nif
      *            the nif
      */
-    protected final void addNif(final String nif) {
+    public final void addNif(final String nif) {
         nifSet.add(nif);
     }
 
@@ -232,7 +290,7 @@ public abstract class ProcesoTemplate {
             prmnVO.setMensaje(mensaje.length() < 250 ? mensaje : mensaje.substring(0, 250));
         }
 
-        prbtVO.getPrmnList().add(prmnVO);
+        prmnList.add(prmnVO);
     }
 
     /**
@@ -243,7 +301,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    protected final void addError(final MensajeCodigo codigo, final String mensaje) {
+    public final void addError(final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.E, mensaje);
     }
 
@@ -255,7 +313,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    protected final void addWarning(final MensajeCodigo codigo, final String mensaje) {
+    public final void addWarning(final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.W, mensaje);
     }
 
@@ -267,7 +325,7 @@ public abstract class ProcesoTemplate {
      * @param mensaje
      *            the mensaje
      */
-    protected final void addInfo(final MensajeCodigo codigo, final String mensaje) {
+    public final void addInfo(final MensajeCodigo codigo, final String mensaje) {
         addMensaje(codigo, MensajeNivel.I, mensaje);
     }
 
@@ -278,14 +336,16 @@ public abstract class ProcesoTemplate {
      * @param value
      *            the new prbt vo
      */
-    public void setPrbtVO(final ProcesoVO value) {
-        prbtVO = value;
+    public void setPrbt(final ProcesoVO value) {
+        prbt = value;
     }
+
+    protected abstract void prepararProcesos();
 
     /**
      * Ejecutar.
      */
-    protected abstract void ejecutar();
+    protected abstract void ejecutarProceso();
 
     /**
      * Gets the proceso tipo.

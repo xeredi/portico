@@ -1,11 +1,12 @@
 package xeredi.integra.proceso.servicio.escala;
 
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,10 +14,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
+import xeredi.integra.model.comun.bo.FileServiceBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.ItemDatoCriterioVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
@@ -28,13 +33,14 @@ import xeredi.integra.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.servicio.vo.SubservicioVO;
+import xeredi.integra.proceso.FiledateComparator;
 import xeredi.integra.proceso.ProcesoTemplate;
 
 // TODO: Auto-generated Javadoc
@@ -42,14 +48,9 @@ import xeredi.integra.proceso.ProcesoTemplate;
  * The Class ProcesoCargaEscala.
  */
 public final class ProcesoCargaEscala extends ProcesoTemplate {
-    /** The path entrada. */
-    private static String PATH_ENTRADA;
 
-    /** The path procesado. */
-    private static String PATH_PROCESADO;
-
-    /** The path erroneo. */
-    private static String PATH_ERRONEO;
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(ProcesoCargaEscala.class);
 
     /** The mensaje. */
     private EscalaTipoMensaje mensaje = null;
@@ -85,42 +86,68 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
      * {@inheritDoc}
      */
     @Override
-    protected void ejecutar() {
-        PATH_ENTRADA = ConfigurationProxy.getString(ConfigurationKey.escala_files_entrada_home);
-        PATH_PROCESADO = ConfigurationProxy.getString(ConfigurationKey.escala_files_procesado_home);
-        PATH_ERRONEO = ConfigurationProxy.getString(ConfigurationKey.escala_files_erroneo_home);
+    protected void prepararProcesos() {
+        final ProcesoBO prbtBO = new ProcesoBO();
 
-        for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
-            final String pathArchivo = PATH_ENTRADA + "/" + prarVO.getNombre();
+        final String folderPath = ConfigurationProxy.getString(ConfigurationKey.escala_files_entrada_home);
+        final File folder = new File(folderPath);
+        final File[] files = folder.listFiles();
 
-            LOG.info("Importar: " + pathArchivo);
+        if (files.length > 0) {
+            Arrays.sort(files, new FiledateComparator());
 
-            try (final Reader reader = new FileReader(pathArchivo)) {
-                final List<String> lines = IOUtils.readLines(reader);
+            for (final File file : files) {
+                try {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
+                    }
+
+                    prbtBO.crear(ProcesoModulo.S, ProcesoTipo.ESC_CARGA, null, null, file);
+
+                    file.delete();
+                } catch (final IOException ex) {
+                    LOG.fatal(ex, ex);
+                }
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void ejecutarProceso() {
+        for (final ArchivoInfoVO arin : arinEntradaList) {
+            final FileServiceBO flsrBO = new FileServiceBO();
+
+            LOG.info("Importar: " + arin.getNombre());
+
+            try (final InputStream stream = flsrBO.select(arin.getId())) {
+                final List<String> lines = IOUtils.readLines(stream);
 
                 tratarUNB(lines);
 
-                if (prbtVO.getPrmnList().isEmpty()) {
+                if (prmnList.isEmpty()) {
                     if (EscalaTipoMensaje.BERMAN == mensaje) {
                         tratarBGM(lines);
 
                         final int primeraLinea = getPrimeraLineaBerman(lines);
 
-                        if (prbtVO.getPrmnList().isEmpty()) {
+                        if (prmnList.isEmpty()) {
                             validarSegmentosBerman(lines, primeraLinea);
                         }
 
-                        if (prbtVO.getPrmnList().isEmpty()) {
+                        if (prmnList.isEmpty()) {
                             busquedaCodigosMaestrosBerman(lines, primeraLinea);
                         }
-                        if (prbtVO.getPrmnList().isEmpty()) {
+                        if (prmnList.isEmpty()) {
                             buscarMaestros(fechaSolicitud);
                             buscarOrganizaciones(fechaSolicitud);
                         }
-                        if (prbtVO.getPrmnList().isEmpty()) {
+                        if (prmnList.isEmpty()) {
                             lecturaEscalaBerman(lines, primeraLinea);
                         }
-                        if (prbtVO.getPrmnList().isEmpty()) {
+                        if (prmnList.isEmpty()) {
                             final EscalaEdiBO escalaEdiBO = new EscalaEdiBO();
 
                             switch (bermanMensaje) {
@@ -143,11 +170,15 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
             } catch (final IOException ex) {
                 LOG.error(ex, ex);
 
-                addError(MensajeCodigo.G_010, "archivo:" + pathArchivo + ", error:" + ex.getMessage());
+                addError(MensajeCodigo.G_010, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
+            } catch (final InstanceNotFoundException ex) {
+                LOG.error(ex, ex);
+
+                addError(MensajeCodigo.G_000, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
             }
         }
 
-        LOG.info(prbtVO.getPrmnList());
+        LOG.info(prmnList);
     }
 
     /**
@@ -274,7 +305,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
             if (!BermanSegmento.segmentoValido(bermanMensaje, segmento, segmentoSiguiente, tipoTSR)) {
                 addError(MensajeCodigo.G_006,
                         "linea:" + i + ", mensaje:" + mensaje.name() + ", segmento:" + segmento.name()
-                        + ", segmentoSiguiente:" + segmentoSiguiente.name());
+                                + ", segmentoSiguiente:" + segmentoSiguiente.name());
             }
         }
     }
@@ -388,7 +419,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 if (calificador == BermanConstante.AAI) {
                     escalaVO.getItdtMap().get(TipoDato.CADENA_08.getId())
-                    .setCadena(getTokenString(BermanKeyword.FTX_ObservacionesDUE, line, i));
+                            .setCadena(getTokenString(BermanKeyword.FTX_ObservacionesDUE, line, i));
                 }
                 if (calificador == BermanConstante.ACB) {
                     final BermanConstante campo = getTokenConstante(BermanKeyword.FTX_Campo, line, i);
@@ -454,12 +485,12 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 switch (calificador) {
                 case OV:
                     buqueVO.getItdtMap().get(TipoDato.CADENA_08.getId())
-                    .setCadena(getTokenString(BermanKeyword.NAD_CodNaviera, line, i));
+                            .setCadena(getTokenString(BermanKeyword.NAD_CodNaviera, line, i));
 
                     break;
                 case CV:
                     escalaVO.getItdtMap().get(TipoDato.ORGA_3.getId())
-                    .setPrmt(getTokenOrganizacion(BermanKeyword.NAD_NifConsignatario, line, i));
+                            .setPrmt(getTokenOrganizacion(BermanKeyword.NAD_NifConsignatario, line, i));
 
                     break;
 
@@ -476,23 +507,23 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 if (tipoBuqueEdiVO != null) {
                     escalaVO.getItdtMap().get(TipoDato.TIPO_BUQUE.getId())
-                    .setPrmt(tipoBuqueEdiVO.getItdtMap().get(TipoDato.TIPO_BUQUE.getId()).getPrmt());
+                            .setPrmt(tipoBuqueEdiVO.getItdtMap().get(TipoDato.TIPO_BUQUE.getId()).getPrmt());
                     escalaVO.getItdtMap().get(TipoDato.TIPO_BUQUE_2.getId())
-                    .setPrmt(tipoBuqueEdiVO.getItdtMap().get(TipoDato.TIPO_BUQUE.getId()).getPrmt());
+                            .setPrmt(tipoBuqueEdiVO.getItdtMap().get(TipoDato.TIPO_BUQUE.getId()).getPrmt());
                 }
 
                 escalaVO.getItdtMap().get(TipoDato.CADENA_04.getId())
-                .setCadena(getTokenString(BermanKeyword.TDT_Capitan, line, i));
+                        .setCadena(getTokenString(BermanKeyword.TDT_Capitan, line, i));
                 escalaVO.getItdtMap().get(TipoDato.CADENA_05.getId())
-                .setCadena(getTokenString(BermanKeyword.TDT_Capitan, line, i));
+                        .setCadena(getTokenString(BermanKeyword.TDT_Capitan, line, i));
 
                 escalaVO.getItdtMap().get(TipoDato.BUQUE.getId())
-                .setPrmt(getTokenMaestro(BermanKeyword.TDT_IMO_Nombre_Buque, line, i, Entidad.BUQUE));
+                        .setPrmt(getTokenMaestro(BermanKeyword.TDT_IMO_Nombre_Buque, line, i, Entidad.BUQUE));
 
                 buqueVO.setParametro(getTokenString(BermanKeyword.TDT_IMO_Nombre_Buque, line, i));
                 // FIXME Ver si es correcto lo del nombre del buque
                 buqueVO.getItdtMap().get(TipoDato.PAIS.getId())
-                .setPrmt(getTokenMaestro(BermanKeyword.TDT_Bandera, line, i, Entidad.PAIS));
+                        .setPrmt(getTokenMaestro(BermanKeyword.TDT_Bandera, line, i, Entidad.PAIS));
 
                 break;
             case RF1:
@@ -501,30 +532,30 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 switch (calificador) {
                 case VM:
                     buqueVO.getItdtMap().get(TipoDato.CADENA_02.getId())
-                    .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
+                            .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
 
                     break;
                 case ZIO:
                     buqueVO.getItdtMap().get(TipoDato.CADENA_06.getId())
-                    .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
+                            .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
 
                     break;
                 case ZIC:
                     buqueVO.getItdtMap().get(TipoDato.CADENA_05.getId())
-                    .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
+                            .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
 
                     break;
                 case ZSC:
                     buqueVO.getItdtMap().get(TipoDato.CADENA_04.getId())
-                    .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
+                            .setCadena(getTokenString(BermanKeyword.RF1_NumeroReferencia, line, i));
 
                     break;
                 case ZCS:
                     escalaVO.getItdtMap()
-                    .get(TipoDato.SERV_TRAF.getId())
-                    .setPrmt(
-                            getTokenMaestro(BermanKeyword.RF1_NumeroReferencia, line, i,
-                                    Entidad.SERVICIO_TRAFICO));
+                            .get(TipoDato.SERV_TRAF.getId())
+                            .setPrmt(
+                                    getTokenMaestro(BermanKeyword.RF1_NumeroReferencia, line, i,
+                                            Entidad.SERVICIO_TRAFICO));
 
                     break;
                 case ZNG:
@@ -533,7 +564,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                     break;
                 case ZSB:
                     buqueVO.getItdtMap().get(TipoDato.ENTERO_11.getId())
-                    .setCantidadEntera(getTokenLong(BermanKeyword.RF1_NumeroReferencia, line, i));
+                            .setCantidadEntera(getTokenLong(BermanKeyword.RF1_NumeroReferencia, line, i));
 
                     break;
                 case ZAE:
@@ -584,59 +615,59 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 switch (calificador) {
                 case ZMD:
                     buqueVO.getItdtMap().get(TipoDato.DECIMAL_02.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case WM:
                     buqueVO.getItdtMap().get(TipoDato.DECIMAL_04.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case LM:
                     buqueVO.getItdtMap().get(TipoDato.DECIMAL_03.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case HM:
                     buqueVO.getItdtMap().get(TipoDato.DECIMAL_05.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case AAM:
                     buqueVO.getItdtMap().get(TipoDato.ENTERO_01.getId())
-                    .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case ZDW:
                     buqueVO.getItdtMap().get(TipoDato.ENTERO_04.getId())
-                    .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case HT:
                     buqueVO.getItdtMap().get(TipoDato.DECIMAL_06.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case ZMP:
                     buqueVO.getItdtMap().get(TipoDato.ENTERO_06.getId())
-                    .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case ZVC:
                     buqueVO.getItdtMap().get(TipoDato.DECIMAL_07.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case ZVM:
                     buqueVO.getItdtMap().get(TipoDato.DECIMAL_08.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 case ZTL:
                     buqueVO.getItdtMap().get(TipoDato.ENTERO_05.getId())
-                    .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
                     buqueVO.getItdtMap().get(TipoDato.UNID_MED_SBT.getId())
-                    .setCadena(getTokenCR(BermanKeyword.MEA_UnidadMedida, line, i, TipoDato.UNID_MED_SBT));
+                            .setCadena(getTokenCR(BermanKeyword.MEA_UnidadMedida, line, i, TipoDato.UNID_MED_SBT));
 
                     break;
                 case ZHE:
@@ -654,7 +685,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                     break;
                 case ZVL:
                     escalaVO.getItdtMap().get(TipoDato.ENTERO_10.getId())
-                    .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
+                            .setCantidadEntera(getTokenLong(BermanKeyword.MEA_ValorMedida, line, i));
 
                     break;
                 default:
@@ -692,7 +723,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                     break;
                 case ZOB:
                     buqueVO.getItdtMap().get(TipoDato.CADENA_03.getId())
-                    .setCadena(getTokenString(BermanKeyword.FT1_ObservacionesBuque, line, i));
+                            .setCadena(getTokenString(BermanKeyword.FT1_ObservacionesBuque, line, i));
 
                     break;
                 case ZCL:
@@ -722,7 +753,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 case ZOI:
                     escalaVO.getItdtMap().get(TipoDato.BOOLEANO_15.getId()).setCantidadEntera(1L);
                     escalaVO.getItdtMap().get(TipoDato.CADENA_12.getId())
-                    .setCadena(getTokenString(BermanKeyword.FT1_TareasObligatorias, line, i));
+                            .setCadena(getTokenString(BermanKeyword.FT1_TareasObligatorias, line, i));
 
                     break;
                 default:
@@ -736,17 +767,17 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 switch (calificadorLOC) {
                 case 92:
                     escalaVO.getItdtMap().get(TipoDato.UNLOCODE_2.getId())
-                    .setPrmt(getTokenMaestro(BermanKeyword.LOC_Unlocode, line, i, Entidad.UNLOCODE));
+                            .setPrmt(getTokenMaestro(BermanKeyword.LOC_Unlocode, line, i, Entidad.UNLOCODE));
 
                     break;
                 case 61:
                     escalaVO.getItdtMap().get(TipoDato.UNLOCODE.getId())
-                    .setPrmt(getTokenMaestro(BermanKeyword.LOC_Unlocode, line, i, Entidad.UNLOCODE));
+                            .setPrmt(getTokenMaestro(BermanKeyword.LOC_Unlocode, line, i, Entidad.UNLOCODE));
 
                     break;
                 case 229:
                     buqueVO.getItdtMap().get(TipoDato.UNLOCODE.getId())
-                    .setPrmt(getTokenMaestro(BermanKeyword.LOC_Unlocode, line, i, Entidad.UNLOCODE));
+                            .setPrmt(getTokenMaestro(BermanKeyword.LOC_Unlocode, line, i, Entidad.UNLOCODE));
 
                     break;
                 case 153:
@@ -769,12 +800,12 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 switch (calificadorDT1) {
                 case 183:
                     buqueVO.getItdtMap().get(TipoDato.FECHA_03.getId())
-                    .setFecha(getTokenDate(BermanKeyword.DT1_Fecha, line, i, "yyyyMMdd"));
+                            .setFecha(getTokenDate(BermanKeyword.DT1_Fecha, line, i, "yyyyMMdd"));
 
                     break;
                 case 379:
                     buqueVO.getItdtMap().get(TipoDato.FECHA_05.getId())
-                    .setFecha(getTokenDate(BermanKeyword.DT1_Fecha, line, i, "yyyyMMdd"));
+                            .setFecha(getTokenDate(BermanKeyword.DT1_Fecha, line, i, "yyyyMMdd"));
 
                     break;
                 default:
@@ -787,7 +818,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 if (calificador == BermanConstante.ZCA) {
                     buqueVO.getItdtMap().get(TipoDato.CADENA_09.getId())
-                    .setCadena(getTokenString(BermanKeyword.DOC_Numero, line, i));
+                            .setCadena(getTokenString(BermanKeyword.DOC_Numero, line, i));
                 }
 
                 break;
@@ -806,7 +837,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 if (atetAtraqueVO != null) {
                     atraqueVO.getItdtMap().get(TipoDato.TIPO_ATR_EDI.getId()).setPrmt(atetAtraqueVO);
                     atraqueVO.getItdtMap().get(TipoDato.TIPO_ATR.getId())
-                    .setPrmt(atetAtraqueVO.getItdtMap().get(TipoDato.TIPO_ATR.getId()).getPrmt());
+                            .setPrmt(atetAtraqueVO.getItdtMap().get(TipoDato.TIPO_ATR.getId()).getPrmt());
                 }
 
                 atraqueVO.getItdtMap().get(TipoDato.TIPO_ESTAN_ATR.getId()).setCadena(BermanConstante.C.name());
@@ -819,9 +850,9 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 atraqueVO.getItdtMap().get(TipoDato.DECIMAL_06.getId()).setCantidadDecimal(0.0);
                 atraqueVO.getItdtMap().get(TipoDato.DECIMAL_03.getId())
-                .setCantidadDecimal(buqueVO.getItdtMap().get(TipoDato.DECIMAL_02.getId()).getCantidadDecimal());
+                        .setCantidadDecimal(buqueVO.getItdtMap().get(TipoDato.DECIMAL_02.getId()).getCantidadDecimal());
                 atraqueVO.getItdtMap().get(TipoDato.DECIMAL_04.getId())
-                .setCantidadDecimal(buqueVO.getItdtMap().get(TipoDato.DECIMAL_02.getId()).getCantidadDecimal());
+                        .setCantidadDecimal(buqueVO.getItdtMap().get(TipoDato.DECIMAL_02.getId()).getCantidadDecimal());
                 atraqueVO.getItdtMap().get(TipoDato.DECIMAL_05.getId()).setCantidadDecimal(0.0);
                 atraqueVO.getItdtMap().get(TipoDato.COD_EXEN.getId()).setCadena("0");
 
@@ -833,10 +864,10 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 if (calificadorLO1 == 60) {
                     atraqueVO
-                    .getItdtMap()
-                    .get(TipoDato.ALIN.getId())
-                    .setPrmt(
-                            getTokenMaestro(BermanKeyword.LO1_AlineacionSolicitada, line, i, Entidad.ALINEACION));
+                            .getItdtMap()
+                            .get(TipoDato.ALIN.getId())
+                            .setPrmt(
+                                    getTokenMaestro(BermanKeyword.LO1_AlineacionSolicitada, line, i, Entidad.ALINEACION));
 
                     final String norays = getTokenString(BermanKeyword.LO1_NorayInicialFinal, line, i);
 
@@ -855,10 +886,10 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 if (calificador == BermanConstante.ZAD) {
                     atraqueVO.getItdtMap().get(TipoDato.DECIMAL_03.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.ME1_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.ME1_ValorMedida, line, i));
                 } else {
                     atraqueVO.getItdtMap().get(TipoDato.DECIMAL_04.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.ME1_ValorMedida, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.ME1_ValorMedida, line, i));
                 }
 
                 break;
@@ -892,7 +923,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 calificador = getTokenConstante(BermanKeyword.Calificador, line, i);
 
                 atraqueVO.getItdtMap().get(TipoDato.TIPO_ACTIVIDAD_EDI.getId())
-                .setPrmt(getTokenMaestro(BermanKeyword.Calificador, line, i, Entidad.TIPO_ACTIVIDAD_EDI));
+                        .setPrmt(getTokenMaestro(BermanKeyword.Calificador, line, i, Entidad.TIPO_ACTIVIDAD_EDI));
 
                 switch (calificador) {
                 case ZSA:
@@ -929,7 +960,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                     }
                 } else if (calificador == BermanConstante.AAI) {
                     atraqueVO.getItdtMap().get(TipoDato.CADENA_02.getId())
-                    .setCadena(getTokenString(BermanKeyword.FT2_ObservacionesAtraque, line, i));
+                            .setCadena(getTokenString(BermanKeyword.FT2_ObservacionesAtraque, line, i));
                 }
 
                 break;
@@ -938,23 +969,23 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 operacionesMap.get(numeroAtraqueEDI).add(operacionVO);
 
                 operacionVO
-                .getItdtMap()
-                .get(TipoDato.TIPO_OP_MERC.getId())
-                .setPrmt(
-                        getTokenMaestro(BermanKeyword.HAN_CodTipoOperacion, line, i,
-                                Entidad.TIPO_OPERACION_MERCANCIA));
+                        .getItdtMap()
+                        .get(TipoDato.TIPO_OP_MERC.getId())
+                        .setPrmt(
+                                getTokenMaestro(BermanKeyword.HAN_CodTipoOperacion, line, i,
+                                        Entidad.TIPO_OPERACION_MERCANCIA));
 
                 break;
             case NA2:
                 operacionVO.getItdtMap().get(TipoDato.ORGA.getId())
-                .setPrmt(getTokenOrganizacion(BermanKeyword.NA2_NifEstibador, line, i));
+                        .setPrmt(getTokenOrganizacion(BermanKeyword.NA2_NifEstibador, line, i));
                 operacionVO.getItdtMap().get(TipoDato.CADENA_03.getId())
-                .setCadena(getTokenString(BermanKeyword.NA2_NombreEstibador, line, i));
+                        .setCadena(getTokenString(BermanKeyword.NA2_NombreEstibador, line, i));
 
                 break;
             case GDS:
                 operacionVO.getItdtMap().get(TipoDato.TIPO_MERC.getId())
-                .setPrmt(getTokenMaestro(BermanKeyword.GDS_TipoMercancia, line, i, Entidad.TIPO_MERCANCIA));
+                        .setPrmt(getTokenMaestro(BermanKeyword.GDS_TipoMercancia, line, i, Entidad.TIPO_MERCANCIA));
 
                 break;
             case FT3:
@@ -962,9 +993,9 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 if (calificador == BermanConstante.ACB) {
                     operacionVO.getItdtMap().get(TipoDato.CADENA_01.getId())
-                    .setCadena(getTokenString(BermanKeyword.FT3_LugarOperacion, line, i));
+                            .setCadena(getTokenString(BermanKeyword.FT3_LugarOperacion, line, i));
                     operacionVO.getItdtMap().get(TipoDato.CADENA_02.getId())
-                    .setCadena(getTokenString(BermanKeyword.FT3_DetalleMercancia, line, i));
+                            .setCadena(getTokenString(BermanKeyword.FT3_DetalleMercancia, line, i));
                 }
 
                 break;
@@ -981,7 +1012,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                 }
 
                 operacionVO.getItdtMap().get(TipoDato.UNID_MED_BERMAN.getId())
-                .setCadena(getTokenCR(BermanKeyword.ME2_UnidadMedida, line, i, TipoDato.UNID_MED_BERMAN));
+                        .setCadena(getTokenCR(BermanKeyword.ME2_UnidadMedida, line, i, TipoDato.UNID_MED_BERMAN));
 
                 break;
             case EQN:
@@ -989,7 +1020,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
 
                 if (BermanConstante.CT.equals(calificadorME2) || BermanConstante.AAV.equals(calificadorME2)) {
                     operacionVO.getItdtMap().get(TipoDato.DECIMAL_02.getId())
-                    .setCantidadDecimal(getTokenDouble(BermanKeyword.EQN_NumeroUnidades, line, i));
+                            .setCantidadDecimal(getTokenDouble(BermanKeyword.EQN_NumeroUnidades, line, i));
                 }
 
                 break;
@@ -1005,6 +1036,19 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
         }
     }
 
+    /**
+     * Gets the subpuerto escala.
+     *
+     * @param unlocodeVO
+     *            the unlocode vo
+     * @param fechaVigencia
+     *            the fecha vigencia
+     * @param line
+     *            the line
+     * @param lineNumber
+     *            the line number
+     * @return the subpuerto escala
+     */
     private ParametroVO getSubpuertoEscala(final ParametroVO unlocodeVO, final Date fechaVigencia, final String line,
             final int lineNumber) {
         final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.SUBPUERTO.getId());

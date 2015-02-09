@@ -2,7 +2,9 @@ package xeredi.integra.http.controller.action.estadistica;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -20,7 +22,6 @@ import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
-import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.proceso.estadistica.cargaoppe.ProcesoCargaOppe;
 import xeredi.util.applicationobjects.LabelValueVO;
 
@@ -92,17 +93,14 @@ public final class PeriodoProcesoAction extends BaseAction {
 
         if (!hasErrors()) {
             final ProcesoBO prbtBO = new ProcesoBO();
-            final ProcesoVO prbtVO = new ProcesoVO();
+            final Map<String, String> parametroMap = new HashMap<>();
 
-            prbtVO.setModulo(ProcesoModulo.E);
-            prbtVO.setTipo(ProcesoTipo.EST_CARGA);
+            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
+            parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
+            parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
+            parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
-
-            prbtBO.crear(prbtVO);
+            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, parametroMap, null, null);
         }
 
         return SUCCESS;
@@ -145,17 +143,14 @@ public final class PeriodoProcesoAction extends BaseAction {
 
         if (!hasErrors()) {
             final ProcesoBO prbtBO = new ProcesoBO();
-            final ProcesoVO prbtVO = new ProcesoVO();
+            final Map<String, String> parametroMap = new HashMap<>();
 
-            prbtVO.setModulo(ProcesoModulo.E);
-            prbtVO.setTipo(ProcesoTipo.EST_CREACION);
+            parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
+            parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
+            parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
+            parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
-
-            prbtBO.crear(prbtVO);
+            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CREACION, parametroMap, null, null);
         }
 
         return SUCCESS;

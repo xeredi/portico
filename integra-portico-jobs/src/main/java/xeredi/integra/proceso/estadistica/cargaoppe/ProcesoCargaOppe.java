@@ -1,16 +1,23 @@
 package xeredi.integra.proceso.estadistica.cargaoppe;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import xeredi.integra.model.comun.bo.FileServiceBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.io.EstadisticaFileType;
@@ -19,6 +26,7 @@ import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
@@ -30,17 +38,11 @@ import xeredi.integra.proceso.ProcesoTemplate;
  */
 public final class ProcesoCargaOppe extends ProcesoTemplate {
 
+    /** The Constant LOG. */
+    private static final Log LOG = LogFactory.getLog(ProcesoCargaOppe.class);
+
     /** The Constant FILENAME_PATTERN. */
     private static final String FILENAME_PATTERN = "{0}{1,number,0000}{2,number,00}.{3}";
-
-    /** The path entrada. */
-    private static String PATH_ENTRADA;
-
-    /** The path procesado. */
-    private static String PATH_PROCESADO;
-
-    /** The path erroneo. */
-    private static String PATH_ERRONEO;
 
     /** The Constant AUTP_PARAM. */
     public static final String AUTP_PARAM = "autp";
@@ -61,19 +63,24 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      * {@inheritDoc}
      */
     @Override
-    protected void ejecutar() {
-        PATH_ENTRADA = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
-        PATH_PROCESADO = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_procesado_home);
-        PATH_ERRONEO = ConfigurationProxy.getString(ConfigurationKey.estadistica_files_oppe_erroneo_home);
+    protected void prepararProcesos() {
+        // noop
+    }
 
-        final OppeFileImport fileImport = new OppeFileImport(prbtVO);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void ejecutarProceso() {
+        final FileServiceBO flsrBO = new FileServiceBO();
+        final OppeFileImport fileImport = new OppeFileImport(this);
         final PeriodoProcesoVO peprVO = new PeriodoProcesoVO();
 
         // Lectura de los parametros de entrada
-        final long autpId = Long.parseLong(prbtVO.getPrpmMap().get(AUTP_PARAM));
-        final int anio = Integer.parseInt(prbtVO.getPrpmMap().get(ANIO_PARAM));
-        final int mes = Integer.parseInt(prbtVO.getPrpmMap().get(MES_PARAM));
-        final boolean sobreescribir = Boolean.parseBoolean(prbtVO.getPrpmMap().get(SOBREESCRIBIR_PARAM));
+        final long autpId = Long.parseLong(prpmMap.get(AUTP_PARAM).getValor());
+        final int anio = Integer.parseInt(prpmMap.get(ANIO_PARAM).getValor());
+        final int mes = Integer.parseInt(prpmMap.get(MES_PARAM).getValor());
+        final boolean sobreescribir = Boolean.parseBoolean(prpmMap.get(SOBREESCRIBIR_PARAM).getValor());
 
         LOG.info("Carga estadisticas: " + autpId + ", " + anio + ", " + mes);
 
@@ -88,51 +95,62 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             addError(MensajeCodigo.G_001, "entidad: " + Entidad.AUTORIDAD_PORTUARIA.name() + ", codigo: " + autpId);
         }
 
-        if (prbtVO.getPrmnList().isEmpty()) {
-            try (final ZipFile zf = new ZipFile(getFilepath(PATH_ENTRADA, peprVO, EstadisticaFileType.zip))) {
-                if (prbtVO.getPrmnList().isEmpty()) {
-                    getEntry(zf, peprVO, EstadisticaFileType.EPP);
-                    getEntry(zf, peprVO, EstadisticaFileType.EAP);
-                    getEntry(zf, peprVO, EstadisticaFileType.EAV);
-                    getEntry(zf, peprVO, EstadisticaFileType.EAE);
-                    getEntry(zf, peprVO, EstadisticaFileType.EMM);
-                    getEntry(zf, peprVO, EstadisticaFileType.EME);
-                    getEntry(zf, peprVO, EstadisticaFileType.EMT);
+        if (prmnList.isEmpty()) {
+            final ProcesoBO prbtBO = new ProcesoBO();
+
+            final List<ArchivoInfoVO> arinList = prbtBO.selectPrarEntradaList(prbt.getId());
+
+            if (arinList.isEmpty()) {
+                addError(MensajeCodigo.G_000, EstadisticaFileType.zip.name());
+            } else {
+                try (final InputStream stream = flsrBO.select(arinList.get(0).getId());
+                        final ZipInputStream zis = new ZipInputStream(stream)) {
+                    if (prmnList.isEmpty()) {
+                        getEntry(zis, peprVO, EstadisticaFileType.EPP);
+                        getEntry(zis, peprVO, EstadisticaFileType.EAP);
+                        getEntry(zis, peprVO, EstadisticaFileType.EAV);
+                        getEntry(zis, peprVO, EstadisticaFileType.EAE);
+                        getEntry(zis, peprVO, EstadisticaFileType.EMM);
+                        getEntry(zis, peprVO, EstadisticaFileType.EME);
+                        getEntry(zis, peprVO, EstadisticaFileType.EMT);
+                    }
+
+                    if (prmnList.isEmpty()) {
+                        isSigma = fileImport.verifyIsSigma(getEntry(zis, peprVO, EstadisticaFileType.EPP));
+
+                        fileImport.readMaestrosEPP(getEntry(zis, peprVO, EstadisticaFileType.EPP));
+                        fileImport.readMaestrosEAP(getEntry(zis, peprVO, EstadisticaFileType.EAP));
+                        fileImport.readMaestrosEAV(getEntry(zis, peprVO, EstadisticaFileType.EAV));
+                        fileImport.readMaestrosEAE(getEntry(zis, peprVO, EstadisticaFileType.EAE));
+                        fileImport.readMaestrosEMM(getEntry(zis, peprVO, EstadisticaFileType.EMM));
+                        fileImport.readMaestrosEME(getEntry(zis, peprVO, EstadisticaFileType.EME), isSigma);
+                        fileImport.readMaestrosEMT(getEntry(zis, peprVO, EstadisticaFileType.EMT));
+                    }
+
+                    if (prmnList.isEmpty()) {
+                        buscarMaestros(Calendar.getInstance().getTime());
+                    }
+
+                    if (prmnList.isEmpty()) {
+                        fileImport.readEPP(getEntry(zis, peprVO, EstadisticaFileType.EPP));
+                        fileImport.readEAP(getEntry(zis, peprVO, EstadisticaFileType.EAP));
+                        fileImport.readEAV(getEntry(zis, peprVO, EstadisticaFileType.EAV));
+                        fileImport.readEAE(getEntry(zis, peprVO, EstadisticaFileType.EAE));
+                        fileImport.readEMM(getEntry(zis, peprVO, EstadisticaFileType.EMM));
+                        fileImport.readEME(getEntry(zis, peprVO, EstadisticaFileType.EME), isSigma);
+                        fileImport.readEMT(getEntry(zis, peprVO, EstadisticaFileType.EMT));
+                    }
+                } catch (final IOException ex) {
+                    addError(MensajeCodigo.G_010,
+                            "archivo: " + EstadisticaFileType.zip.name() + "error: " + ex.getMessage());
+                } catch (final InstanceNotFoundException ex) {
+                    addError(MensajeCodigo.G_000,
+                            "archivo: " + EstadisticaFileType.zip.name() + "error: " + ex.getMessage());
                 }
-
-                if (prbtVO.getPrmnList().isEmpty()) {
-                    isSigma = fileImport.verifyIsSigma(getEntry(zf, peprVO, EstadisticaFileType.EPP));
-
-                    fileImport.readMaestrosEPP(getEntry(zf, peprVO, EstadisticaFileType.EPP));
-                    fileImport.readMaestrosEAP(getEntry(zf, peprVO, EstadisticaFileType.EAP));
-                    fileImport.readMaestrosEAV(getEntry(zf, peprVO, EstadisticaFileType.EAV));
-                    fileImport.readMaestrosEAE(getEntry(zf, peprVO, EstadisticaFileType.EAE));
-                    fileImport.readMaestrosEMM(getEntry(zf, peprVO, EstadisticaFileType.EMM));
-                    fileImport.readMaestrosEME(getEntry(zf, peprVO, EstadisticaFileType.EME), isSigma);
-                    fileImport.readMaestrosEMT(getEntry(zf, peprVO, EstadisticaFileType.EMT));
-                }
-
-                if (prbtVO.getPrmnList().isEmpty()) {
-                    buscarMaestros(fileImport.getCodigoMaestroMap(), Calendar.getInstance().getTime());
-
-                    fileImport.setMaestroMap(maestroMap);
-                }
-
-                if (prbtVO.getPrmnList().isEmpty()) {
-                    fileImport.readEPP(getEntry(zf, peprVO, EstadisticaFileType.EPP));
-                    fileImport.readEAP(getEntry(zf, peprVO, EstadisticaFileType.EAP));
-                    fileImport.readEAV(getEntry(zf, peprVO, EstadisticaFileType.EAV));
-                    fileImport.readEAE(getEntry(zf, peprVO, EstadisticaFileType.EAE));
-                    fileImport.readEMM(getEntry(zf, peprVO, EstadisticaFileType.EMM));
-                    fileImport.readEME(getEntry(zf, peprVO, EstadisticaFileType.EME), isSigma);
-                    fileImport.readEMT(getEntry(zf, peprVO, EstadisticaFileType.EMT));
-                }
-            } catch (final IOException ex) {
-                addError(MensajeCodigo.G_010, EstadisticaFileType.zip.name());
             }
         }
 
-        if (prbtVO.getPrmnList().isEmpty()) {
+        if (prmnList.isEmpty()) {
             LOG.info("Guardar Datos");
 
             final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
@@ -146,9 +164,9 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             }
         }
 
-        if (!prbtVO.getPrmnList().isEmpty()) {
+        if (!prmnList.isEmpty()) {
             LOG.error("Errores en la carga");
-            LOG.info(prbtVO.getPrmnList());
+            LOG.info(prmnList);
         }
 
         LOG.info("Fin Proceso");
@@ -185,37 +203,35 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
     }
 
     /**
-     * Gets the filepath.
-     *
-     * @param folder
-     *            the folder
-     * @param peprVO
-     *            the pepr vo
-     * @param fileType
-     *            the file type
-     * @return the filepath
-     */
-    private static String getFilepath(final String folder, final PeriodoProcesoVO peprVO,
-            final EstadisticaFileType fileType) {
-        return folder + '/' + getFilename(peprVO, fileType);
-    }
-
-    /**
      * Gets the entry.
      *
-     * @param zf
-     *            the zf
+     * @param zis
+     *            the zis
      * @param peprVO
      *            the pepr vo
      * @param fileType
      *            the file type
      * @return the entry
      */
-    private InputStream getEntry(final ZipFile zf, final PeriodoProcesoVO peprVO, final EstadisticaFileType fileType) {
-        final ZipEntry entry = zf.getEntry(getFilename(peprVO, fileType));
+    private InputStream getEntry(final ZipInputStream zis, final PeriodoProcesoVO peprVO,
+            final EstadisticaFileType fileType) {
+        final String filename = getFilename(peprVO, fileType);
+
+        ZipEntry entry = null;
 
         try {
-            return entry == null ? null : zf.getInputStream(entry);
+            do {
+                entry = zis.getNextEntry();
+
+                if (entry != null && entry.getName().equals(filename)) {
+                    final byte[] buffer = new byte[(int) entry.getSize()];
+
+                    zis.read(buffer);
+
+                    return new ByteArrayInputStream(buffer);
+                }
+            } while (entry != null);
+
         } catch (final IOException ex) {
             addError(MensajeCodigo.G_010, fileType.name());
         }

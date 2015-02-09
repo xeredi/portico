@@ -39,6 +39,15 @@
 						ng-model="vm.item.ffin" data-min-date="{{vm.item.fini}}" bs-datepicker />
 				</div>
 
+				<div ng-repeat="entiId in vm.enti.entiPadresList track by $index" ng-if="entiId != vm.enti.tpsrId"
+					class="col-sm-3 col-md-2 col-lg-2 form-group">
+					<label>{{'enti_' + entiId | translate}}</label>
+					<p class="form-control-static">
+						<a ng-href="#/servicio/ssrv/detail/{{entiId}}/{{vm.itemPadresMap[entiId].value}}">{{vm.itemPadresMap[entiId].label}}</a>
+					</p>
+				</div>
+
+
 				<div ng-if="vm.item.srvc.id" ng-repeat="entiPadre in vm.superentiList track by $index"
 					class="col-md-2 form-group">
 					<label ng-bind="entiPadre.nombre"></label>

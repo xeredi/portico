@@ -1,7 +1,12 @@
 package xeredi.integra.model.proceso.bo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -10,19 +15,25 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.dao.ArchivoDAO;
+import xeredi.integra.model.comun.dao.ArchivoInfoDAO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.exception.OperacionNoPermitidaException;
+import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
+import xeredi.integra.model.comun.vo.ArchivoSentido;
+import xeredi.integra.model.comun.vo.ArchivoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.proceso.dao.ProcesoArchivoDAO;
 import xeredi.integra.model.proceso.dao.ProcesoDAO;
 import xeredi.integra.model.proceso.dao.ProcesoItemDAO;
 import xeredi.integra.model.proceso.dao.ProcesoMensajeDAO;
 import xeredi.integra.model.proceso.dao.ProcesoParametroDAO;
-import xeredi.integra.model.proceso.vo.ArchivoSentido;
 import xeredi.integra.model.proceso.vo.ItemSentido;
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoEstado;
+import xeredi.integra.model.proceso.vo.ProcesoItemCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
@@ -37,49 +48,101 @@ import xeredi.util.pagination.PaginatedList;
  * The Class ProcesoBO.
  */
 public class ProcesoBO {
+
     /**
      * Crear.
      *
-     * @param prbtVO
-     *            the prbt vo
+     * @param modulo
+     *            the modulo
+     * @param tipo
+     *            the tipo
+     * @param parametroMap
+     *            the parametro map
+     * @param itemEntradaList
+     *            the item entrada list
+     * @param fileEntrada
+     *            the file entrada
+     * @return the proceso vo
      */
-    public final void crear(final @Nonnull ProcesoVO prbtVO) {
+    public final ProcesoVO crear(final @Nonnull ProcesoModulo modulo, final @Nonnull ProcesoTipo tipo,
+            final Map<String, String> parametroMap, final List<Long> itemEntradaList, final File fileEntrada) {
+        // Lectura del Archivo (si lo hay)
+        byte[] buffer = null;
+
+        if (fileEntrada != null) {
+            try (final FileInputStream fis = new FileInputStream(fileEntrada)) {
+                buffer = new byte[(int) fileEntrada.length()];
+
+                fis.read(buffer);
+            } catch (final IOException ex) {
+                throw new Error(ex);
+            }
+        }
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
+            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
 
             final IgBO igBO = new IgBO();
+            final ProcesoVO prbt = new ProcesoVO();
 
-            prbtVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            prbtDAO.insert(prbtVO);
+            prbt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            prbt.setModulo(modulo);
+            prbt.setTipo(tipo);
+            prbt.setEstado(ProcesoEstado.C);
 
-            for (final String prpmNombre : prbtVO.getPrpmMap().keySet()) {
-                final ProcesoParametroVO prpmVO = new ProcesoParametroVO();
+            prbtDAO.insert(prbt);
 
-                prpmVO.setPrbtId(prbtVO.getId());
-                prpmVO.setNombre(prpmNombre);
-                prpmVO.setValor(prbtVO.getPrpmMap().get(prpmNombre));
+            if (parametroMap != null) {
+                for (final String prpmNombre : parametroMap.keySet()) {
+                    final ProcesoParametroVO prpm = new ProcesoParametroVO();
 
-                prpmDAO.insert(prpmVO);
+                    prpm.setPrbtId(prbt.getId());
+                    prpm.setNombre(prpmNombre);
+                    prpm.setValor(parametroMap.get(prpmNombre));
+
+                    prpmDAO.insert(prpm);
+                }
             }
 
-            for (final ProcesoArchivoVO prarVO : prbtVO.getPrarEntradaList()) {
-                prarVO.setPrbtId(prbtVO.getId());
-                prarVO.setSentido(ArchivoSentido.E);
+            if (itemEntradaList != null) {
+                for (final Long itemId : itemEntradaList) {
+                    final ProcesoItemVO prit = new ProcesoItemVO();
 
-                prarDAO.insert(prarVO);
+                    prit.setPrbtId(prbt.getId());
+                    prit.setSentido(ItemSentido.E);
+                    prit.setItemId(itemId);
+
+                    pritDAO.insert(prit);
+                }
             }
 
-            for (final ProcesoItemVO pritVO : prbtVO.getPritEntradaList()) {
-                pritVO.setPrbtId(prbtVO.getId());
-                pritVO.setSentido(ItemSentido.E);
+            if (fileEntrada != null) {
+                final ArchivoVO arch = new ArchivoVO();
+                final ArchivoInfoVO arin = new ArchivoInfoVO();
+                final ProcesoArchivoVO prar = new ProcesoArchivoVO();
 
-                pritDAO.insert(pritVO);
+                arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                arin.setNombre(fileEntrada.getName());
+                arin.setSentido(ArchivoSentido.E);
+                arin.setTamanio(fileEntrada.length());
+
+                arch.setArin(arin);
+                arch.setArchivo(buffer);
+
+                prar.setPrbtId(prbt.getId());
+                prar.setArchId(arin.getId());
+
+                archDAO.insert(arch);
+                prarDAO.insert(prar);
             }
 
             session.commit();
+
+            return prbt;
         }
     }
 
@@ -95,9 +158,6 @@ public class ProcesoBO {
     public ProcesoVO proteger(final @Nonnull ProcesoModulo modulo, final @Nonnull ProcesoTipo tipo) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
-            final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-            final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
-            final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
             final ProcesoCriterioVO prbtCriterioVO = new ProcesoCriterioVO();
 
@@ -113,15 +173,6 @@ public class ProcesoBO {
 
                 prbtDAO.updateIniciar(prbtVO.getId());
 
-                prbtVO.getPrarEntradaList().addAll(prarDAO.selectList(prbtVO.getId()));
-                prbtVO.getPritEntradaList().addAll(pritDAO.selectList(prbtVO.getId()));
-
-                final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtVO.getId());
-
-                for (final ProcesoParametroVO prpmVO : prpmList) {
-                    prbtVO.getPrpmMap().put(prpmVO.getNombre(), prpmVO.getValor());
-                }
-
                 session.commit();
 
                 return prbtVO;
@@ -134,52 +185,66 @@ public class ProcesoBO {
     /**
      * Finalizar.
      *
-     * @param prbtVO
-     *            the prbt vo
+     * @param prbtId
+     *            the prbt id
+     * @param prmnList
+     *            the prmn list
+     * @param pritSalidaList
+     *            the prit salida list
+     * @param arinSalidaList
+     *            the arin salida list
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
-    public final void finalizar(final @Nonnull ProcesoVO prbtVO) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+    public final void finalizar(final @Nonnull Long prbtId, final List<ProcesoMensajeVO> prmnList,
+            final List<ProcesoItemVO> pritSalidaList, final List<ArchivoInfoVO> arinSalidaList)
+                    throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
 
-            final ProcesoVO prbtActualVO = prbtDAO.select(prbtVO.getId());
+            final ProcesoVO prbt = prbtDAO.select(prbtId);
 
-            if (prbtActualVO == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtVO.getId());
+            if (prbt == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtId);
             }
 
-            if (prbtActualVO.getEstado() != ProcesoEstado.E) {
-                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_finalizar,
-                        prbtVO.getId());
+            if (prbt.getEstado() != ProcesoEstado.E) {
+                throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_finalizar, prbtId);
             }
 
-            prbtDAO.updateFinalizar(prbtVO.getId());
+            prbtDAO.updateFinalizar(prbtId);
 
-            for (final ProcesoArchivoVO prarVO : prbtVO.getPrarSalidaList()) {
-                prarVO.setPrbtId(prbtVO.getId());
-                prarVO.setSentido(ArchivoSentido.S);
+            if (prmnList != null) {
+                for (final ProcesoMensajeVO prmn : prmnList) {
+                    prmn.setPrbtId(prbtId);
 
-                prarDAO.insert(prarVO);
+                    prmnDAO.insert(prmn);
+                }
             }
 
-            for (final ProcesoItemVO pritVO : prbtVO.getPritSalidaList()) {
-                pritVO.setPrbtId(prbtVO.getId());
-                pritVO.setSentido(ItemSentido.S);
+            if (pritSalidaList != null) {
+                for (final ProcesoItemVO prit : pritSalidaList) {
+                    prit.setPrbtId(prbtId);
+                    prit.setSentido(ItemSentido.S);
 
-                pritDAO.insert(pritVO);
+                    pritDAO.insert(prit);
+                }
             }
 
-            for (final ProcesoMensajeVO prmnVO : prbtVO.getPrmnList()) {
-                prmnVO.setPrbtId(prbtVO.getId());
+            if (arinSalidaList != null) {
+                for (final ArchivoInfoVO arin : arinSalidaList) {
+                    final ProcesoArchivoVO prar = new ProcesoArchivoVO();
 
-                prmnDAO.insert(prmnVO);
+                    prar.setArchId(arin.getId());
+                    prar.setPrbtId(prbtId);
+
+                    prarDAO.insert(prar);
+                }
             }
 
             session.commit();
@@ -197,7 +262,7 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void cancelar(final @Nonnull Long prbtId) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
+    OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -278,43 +343,11 @@ public class ProcesoBO {
     public final ProcesoVO select(final @Nonnull Long prbtId) throws InstanceNotFoundException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
-            final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
-            final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
-            final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
-            final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
 
             final ProcesoVO prbtVO = prbtDAO.select(prbtId);
 
             if (prbtVO == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.prbt, prbtId);
-            }
-
-            final List<ProcesoArchivoVO> prarList = prarDAO.selectList(prbtId);
-
-            for (final ProcesoArchivoVO prarVO : prarList) {
-                if (prarVO.getSentido() == ArchivoSentido.E) {
-                    prbtVO.getPrarEntradaList().add(prarVO);
-                } else {
-                    prbtVO.getPrarSalidaList().add(prarVO);
-                }
-            }
-
-            final List<ProcesoItemVO> pritList = pritDAO.selectList(prbtId);
-
-            for (final ProcesoItemVO pritVO : pritList) {
-                if (pritVO.getSentido() == ItemSentido.E) {
-                    prbtVO.getPritEntradaList().add(pritVO);
-                } else {
-                    prbtVO.getPritSalidaList().add(pritVO);
-                }
-            }
-
-            prbtVO.getPrmnList().addAll(prmnDAO.selectList(prbtId));
-
-            final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtId);
-
-            for (final ProcesoParametroVO prpmVO : prpmList) {
-                prbtVO.getPrpmMap().put(prpmVO.getNombre(), prpmVO.getValor());
             }
 
             return prbtVO;
@@ -345,4 +378,102 @@ public class ProcesoBO {
             return new PaginatedList<ProcesoMensajeVO>(prmnList, offset, limit, count);
         }
     }
+
+    /**
+     * Select prpm map.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @return the map
+     */
+    public Map<String, ProcesoParametroVO> selectPrpmMap(final @Nonnull Long prbtId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ProcesoParametroDAO prpmDAO = session.getMapper(ProcesoParametroDAO.class);
+            final List<ProcesoParametroVO> prpmList = prpmDAO.selectList(prbtId);
+            final Map<String, ProcesoParametroVO> prpmMap = new HashMap<>();
+
+            for (final ProcesoParametroVO prpm : prpmList) {
+                prpmMap.put(prpm.getNombre(), prpm);
+            }
+
+            return prpmMap;
+        }
+    }
+
+    /**
+     * Select prar entrada list.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @return the list
+     */
+    public List<ArchivoInfoVO> selectPrarEntradaList(final @Nonnull Long prbtId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
+            final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
+
+            archCriterio.setPrbtId(prbtId);
+            archCriterio.setSentido(ArchivoSentido.E);
+
+            return arinDAO.selectList(archCriterio);
+        }
+    }
+
+    /**
+     * Select prar salida list.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @return the list
+     */
+    public List<ArchivoInfoVO> selectPrarSalidaList(final @Nonnull Long prbtId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
+            final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
+
+            archCriterio.setPrbtId(prbtId);
+            archCriterio.setSentido(ArchivoSentido.S);
+
+            return arinDAO.selectList(archCriterio);
+        }
+    }
+
+    /**
+     * Select prit entrada list.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @return the list
+     */
+    public List<ProcesoItemVO> selectPritEntradaList(final @Nonnull Long prbtId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
+            final ProcesoItemCriterioVO pritCriterio = new ProcesoItemCriterioVO();
+
+            pritCriterio.setPrbtId(prbtId);
+            pritCriterio.setSentido(ItemSentido.E);
+
+            return pritDAO.selectList(pritCriterio);
+        }
+    }
+
+    /**
+     * Select prit salida list.
+     *
+     * @param prbtId
+     *            the prbt id
+     * @return the list
+     */
+    public List<ProcesoItemVO> selectPritSalidaList(final @Nonnull Long prbtId) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
+            final ProcesoItemCriterioVO pritCriterio = new ProcesoItemCriterioVO();
+
+            pritCriterio.setPrbtId(prbtId);
+            pritCriterio.setSentido(ItemSentido.S);
+
+            return pritDAO.selectList(pritCriterio);
+        }
+    }
+
 }

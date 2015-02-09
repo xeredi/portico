@@ -1,11 +1,15 @@
 package xeredi.integra.proceso.estadistica.cargaoppe;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ProcesoVO;
+import xeredi.integra.model.proceso.vo.ProcesoModulo;
+import xeredi.integra.model.proceso.vo.ProcesoTipo;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,40 +30,28 @@ public final class ProcesoCargaOppeTest {
 
             final ProcesoCargaOppe cargaOppe = new ProcesoCargaOppe();
             final ProcesoBO prbtBO = new ProcesoBO();
-            final ProcesoVO prbtVO = new ProcesoVO();
 
-            prbtVO.setModulo(cargaOppe.getProcesoModulo());
-            prbtVO.setTipo(cargaOppe.getProcesoTipo());
+            {
+                final Map<String, String> prpmMap = new HashMap<>();
 
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "1030308");
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, "2013");
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, "04");
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
-            prbtBO.crear(prbtVO);
+                prpmMap.put(ProcesoCargaOppe.AUTP_PARAM, "1030308");
+                prpmMap.put(ProcesoCargaOppe.ANIO_PARAM, "2013");
+                prpmMap.put(ProcesoCargaOppe.MES_PARAM, "04");
+                prpmMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
 
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "1030308");
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, "2012");
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, "10");
-            prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
-            prbtBO.crear(prbtVO);
+                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null);
+            }
 
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "11");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, "2013");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, "01");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
-            // prbtBO.crear(prbtVO);
-            //
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "11");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, "2013");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, "02");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
-            // prbtBO.crear(prbtVO);
-            //
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.AUTP_PARAM, "11");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.ANIO_PARAM, "2013");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.MES_PARAM, "03");
-            // prbtVO.getPrpmMap().put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
-            // prbtBO.crear(prbtVO);
+            {
+                final Map<String, String> prpmMap = new HashMap<>();
+
+                prpmMap.put(ProcesoCargaOppe.AUTP_PARAM, "1030308");
+                prpmMap.put(ProcesoCargaOppe.ANIO_PARAM, "2012");
+                prpmMap.put(ProcesoCargaOppe.MES_PARAM, "10");
+                prpmMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
+
+                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null);
+            }
 
             cargaOppe.procesar();
         } catch (final Exception ex) {

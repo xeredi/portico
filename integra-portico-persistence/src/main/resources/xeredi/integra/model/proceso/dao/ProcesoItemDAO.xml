@@ -12,18 +12,18 @@
     <sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        prit.prit_prbt_pk
-        , prit.prit_item_pk
-        , prit.prit_sentido
+        prit_prbt_pk
+        , prit_item_pk
+        , prit_sentido
     FROM
-        tbl_proceso_item_prit prit
+        tbl_proceso_item_prit
     ]]>
     </sql>
 
-    <select id="selectList" parameterType="Long" resultMap="ResultMap">
+    <select id="selectList" parameterType="ProcesoItemCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <![CDATA[
-        WHERE prit.prit_prbt_pk = #{value}
+        WHERE prit_prbt_pk = #{prbtId} AND prit_sentido = #{sentido}
         ]]>
     </select>
 

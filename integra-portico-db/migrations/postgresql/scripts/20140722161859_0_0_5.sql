@@ -325,6 +325,7 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pritEntList', 'Elementos Ent.')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pritSalList', 'Elementos Sal.')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prit_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'arch', 'Archivo')\
 
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc', 'Aspecto')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspcList', 'Aspectos')\
@@ -611,11 +612,81 @@ ALTER TABLE portico.tbl_servicio_srvc
 	ADD COLUMN srvc_pepr_pk BIGINT\
 
 
+-- Guardar archivos en la BD
+DROP TABLE portico.tbl_proceso_archivo_prar\
 
+CREATE TABLE portico.tbl_archivo_arch (
+	arch_pk BIGINT NOT NULL
+	, arch_sentido CHAR(1) NOT NULL
+	, arch_nombre VARCHAR(100) NOT NULL
+	, arch_tamanio INT NOT NULL
+	, arch_archivo BYTEA NOT NULL
 
+	, CONSTRAINT pk_arch PRIMARY KEY (arch_pk)
+)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_archivo_arch TO portico\
+
+CREATE TABLE portico.tbl_proceso_archivo_prar (
+	prar_prbt_pk BIGINT NOT NULL
+	, prar_arch_pk BIGINT NOT NULL
+
+	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_arch_pk)
+
+	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
+		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
+	, CONSTRAINT fk_prar_arch_pk FOREIGN KEY (prar_arch_pk)
+		REFERENCES portico.tbl_archivo_arch (arch_pk)
+)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_proceso_archivo_prar TO portico\
+
+CREATE TABLE portico.tbl_servicio_archivo_srar (
+	srar_srvc_pk BIGINT NOT NULL
+	, srar_arch_pk BIGINT NOT NULL
+
+	, CONSTRAINT pk_srar PRIMARY KEY (srar_srvc_pk, srar_arch_pk)
+
+	, CONSTRAINT fk_srar_srvc_pk FOREIGN KEY (srar_srvc_pk)
+		REFERENCES portico.tbl_servicio_srvc (srvc_pk)
+	, CONSTRAINT fk_srar_arch_pk FOREIGN KEY (srar_arch_pk)
+		REFERENCES portico.tbl_archivo_arch (arch_pk)
+)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_servicio_archivo_srar TO portico\
 
 -- //@UNDO
 -- SQL to undo the change goes here.
+
+
+-- Guardar archivos en la BD
+DROP TABLE portico.tbl_servicio_archivo_srar\
+DROP TABLE portico.tbl_proceso_archivo_prar\
+DROP TABLE portico.tbl_archivo_arch\
+
+CREATE TABLE portico.tbl_proceso_archivo_prar
+(
+	prar_prbt_pk BIGINT NOT NULL
+	, prar_nombre VARCHAR(50) NOT NULL
+	, prar_sentido char(1) NOT NULL
+
+	, CONSTRAINT pk_prar PRIMARY KEY (prar_prbt_pk, prar_sentido, prar_nombre)
+
+	, CONSTRAINT fk_prar_prbt_pk FOREIGN KEY (prar_prbt_pk)
+		REFERENCES portico.tbl_proceso_batch_prbt (prbt_pk)
+)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_proceso_archivo_prar TO portico\
+
+COMMENT ON TABLE portico.tbl_proceso_archivo_prar IS 'Ficheros tratados (leidos-generados) en las Ejecuciones de Procesos Batch'\
+COMMENT ON COLUMN portico.tbl_proceso_archivo_prar.prar_prbt_pk IS 'Identificador de proceso al que pertenece el archivo'\
+COMMENT ON COLUMN portico.tbl_proceso_archivo_prar.prar_nombre IS 'Nombre del archivo'\
+COMMENT ON COLUMN portico.tbl_proceso_archivo_prar.prar_sentido IS 'Sentido de Archivo: E (Entrada), S (Salida)'\
+
 
 -- Campos de agregacion de estadisticas
 ALTER TABLE portico.tbl_servicio_srvc

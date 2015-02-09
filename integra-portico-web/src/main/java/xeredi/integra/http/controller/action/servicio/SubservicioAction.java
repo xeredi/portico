@@ -130,6 +130,21 @@ public final class SubservicioAction extends ItemAction {
         enti = TipoSubservicioProxy.select(item.getEntiId());
         accion = ACCION_EDICION.edit;
 
+        if (enti.getEntiPadresList() != null) {
+            itemPadresMap = new HashMap<Long, LabelValueVO>();
+
+            for (final Long entiId : enti.getEntiPadresList()) {
+                if (!enti.getTpsrId().equals(entiId)) {
+                    final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
+
+                    ssrvCriterioVO.setHijoId(item.getId());
+                    ssrvCriterioVO.setEntiId(entiId);
+
+                    itemPadresMap.put(entiId, ssrvBO.selectLabelValueObject(ssrvCriterioVO));
+                }
+            }
+        }
+
         setFechaVigencia(item.getFref());
         loadLabelValuesMap(enti);
 

@@ -909,6 +909,7 @@ function ssrvEditController($http, $routeParams, pageTitleService) {
         vm.enti = data.enti;
         vm.fechaVigencia = data.fechaVigencia;
         vm.item = data.item;
+        vm.itemPadresMap = data.itemPadresMap;
         vm.labelValuesMap = data.labelValuesMap;
         vm.accion = data.accion;
     });

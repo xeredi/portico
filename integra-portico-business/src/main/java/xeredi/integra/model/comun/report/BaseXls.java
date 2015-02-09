@@ -168,7 +168,7 @@ public abstract class BaseXls {
      */
     protected void autoSizeColumns(final @Nonnull HSSFSheet sheet, final @Nonnull HSSFRow header) {
         for (int index = header.getFirstCellNum(); index < header.getLastCellNum(); index++) {
-            sheet.autoSizeColumn(index);
+            sheet.autoSizeColumn(index, false);
         }
     }
 }

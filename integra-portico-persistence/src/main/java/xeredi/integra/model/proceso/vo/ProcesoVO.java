@@ -1,10 +1,6 @@
 package xeredi.integra.model.proceso.vo;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -44,86 +40,12 @@ public final class ProcesoVO {
     /** The mensajes cnt. */
     private Integer mensajesCnt;
 
-    /** The prpm map. */
-    private final Map<String, String> prpmMap = new HashMap<>();
-
-    /** The prmn list. */
-    private final List<ProcesoMensajeVO> prmnList = new ArrayList<>();
-
-    /** The prar entrada list. */
-    private final List<ProcesoArchivoVO> prarEntradaList = new ArrayList<>();
-
-    /** The prar salida list. */
-    private final List<ProcesoArchivoVO> prarSalidaList = new ArrayList<>();
-
-    /** The prit entrada list. */
-    private final List<ProcesoItemVO> pritEntradaList = new ArrayList<>();
-
-    /** The prit salida list. */
-    private final List<ProcesoItemVO> pritSalidaList = new ArrayList<>();
-
     /**
      * {@inheritDoc}
      */
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    /**
-     * Adds the mensaje.
-     *
-     * @param codigo
-     *            the codigo
-     * @param nivel
-     *            the nivel
-     * @param mensaje
-     *            the mensaje
-     */
-    private void addMensaje(final MensajeCodigo codigo, final MensajeNivel nivel, final String mensaje) {
-        final ProcesoMensajeVO prmnVO = new ProcesoMensajeVO();
-
-        prmnVO.setCodigo(codigo);
-        prmnVO.setNivel(nivel);
-        prmnVO.setMensaje(mensaje);
-
-        prmnList.add(prmnVO);
-    }
-
-    /**
-     * Adds the mensaje.
-     *
-     * @param codigo
-     *            the codigo
-     * @param mensaje
-     *            the mensaje
-     */
-    public void addError(final MensajeCodigo codigo, final String mensaje) {
-        addMensaje(codigo, MensajeNivel.E, mensaje);
-    }
-
-    /**
-     * Adds the warning.
-     *
-     * @param codigo
-     *            the codigo
-     * @param mensaje
-     *            the mensaje
-     */
-    public void addWarning(final MensajeCodigo codigo, final String mensaje) {
-        addMensaje(codigo, MensajeNivel.W, mensaje);
-    }
-
-    /**
-     * Adds the info.
-     *
-     * @param codigo
-     *            the codigo
-     * @param mensaje
-     *            the mensaje
-     */
-    public void addInfo(final MensajeCodigo codigo, final String mensaje) {
-        addMensaje(codigo, MensajeNivel.I, mensaje);
     }
 
     /**
@@ -270,60 +192,6 @@ public final class ProcesoVO {
      */
     public void setFfin(final Date value) {
         ffin = value;
-    }
-
-    /**
-     * Gets the prpm map.
-     *
-     * @return the prpm map
-     */
-    public Map<String, String> getPrpmMap() {
-        return prpmMap;
-    }
-
-    /**
-     * Gets the prmn list.
-     *
-     * @return the prmn list
-     */
-    public List<ProcesoMensajeVO> getPrmnList() {
-        return prmnList;
-    }
-
-    /**
-     * Gets the prar entrada list.
-     *
-     * @return the prar entrada list
-     */
-    public List<ProcesoArchivoVO> getPrarEntradaList() {
-        return prarEntradaList;
-    }
-
-    /**
-     * Gets the prar salida list.
-     *
-     * @return the prar salida list
-     */
-    public List<ProcesoArchivoVO> getPrarSalidaList() {
-        return prarSalidaList;
-    }
-
-    /**
-     * Gets the prit entrada list.
-     *
-     * @return the prit entrada list
-     */
-    public List<ProcesoItemVO> getPritEntradaList() {
-        return pritEntradaList;
-    }
-
-    /**
-     * Gets the prit salida list.
-     *
-     * @return the prit salida list
-     */
-    public List<ProcesoItemVO> getPritSalidaList() {
-        return pritSalidaList;
     }
 
     /**

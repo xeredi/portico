@@ -1,4 +1,4 @@
-package xeredi.integra.model.proceso.vo;
+package xeredi.integra.model.comun.vo;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -6,8 +6,8 @@ package xeredi.integra.model.proceso.vo;
  */
 public enum ArchivoSentido {
 
-    /** Entrada. */
+    /** Cargado en la aplicacion. */
     E,
-    /** Salida. */
+    /** Generado por la aplicacion. */
     S;
 }

@@ -39,16 +39,24 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
      * {@inheritDoc}
      */
     @Override
-    protected void ejecutar() {
+    protected void prepararProcesos() {
+        // noop
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void ejecutarProceso() {
         // Validacion de parametros
         Long autpId = null;
         Integer anio = null;
         Integer mes = null;
         Boolean sobreescribir = null;
 
-        if (prbtVO.getPrpmMap().containsKey(AUTP_PARAM)) {
+        if (prpmMap.containsKey(AUTP_PARAM)) {
             try {
-                autpId = Long.parseLong(prbtVO.getPrpmMap().get(AUTP_PARAM));
+                autpId = Long.parseLong(prpmMap.get(AUTP_PARAM).getValor());
             } catch (final NumberFormatException ex) {
                 addError(MensajeCodigo.G_013, AUTP_PARAM);
             }
@@ -56,9 +64,9 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             addError(MensajeCodigo.G_012, AUTP_PARAM);
         }
 
-        if (prbtVO.getPrpmMap().containsKey(ANIO_PARAM)) {
+        if (prpmMap.containsKey(ANIO_PARAM)) {
             try {
-                anio = Integer.parseInt(prbtVO.getPrpmMap().get(ANIO_PARAM));
+                anio = Integer.parseInt(prpmMap.get(ANIO_PARAM).getValor());
             } catch (final NumberFormatException ex) {
                 addError(MensajeCodigo.G_013, ANIO_PARAM);
             }
@@ -66,9 +74,9 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             addError(MensajeCodigo.G_012, ANIO_PARAM);
         }
 
-        if (prbtVO.getPrpmMap().containsKey(MES_PARAM)) {
+        if (prpmMap.containsKey(MES_PARAM)) {
             try {
-                mes = Integer.parseInt(prbtVO.getPrpmMap().get(MES_PARAM));
+                mes = Integer.parseInt(prpmMap.get(MES_PARAM).getValor());
             } catch (final NumberFormatException ex) {
                 addError(MensajeCodigo.G_013, MES_PARAM);
             }
@@ -76,9 +84,9 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             addError(MensajeCodigo.G_012, MES_PARAM);
         }
 
-        if (prbtVO.getPrpmMap().containsKey(SOBREESCRIBIR_PARAM)) {
+        if (prpmMap.containsKey(SOBREESCRIBIR_PARAM)) {
             try {
-                sobreescribir = Boolean.parseBoolean(prbtVO.getPrpmMap().get(SOBREESCRIBIR_PARAM));
+                sobreescribir = Boolean.parseBoolean(prpmMap.get(SOBREESCRIBIR_PARAM).getValor());
             } catch (final NumberFormatException ex) {
                 addError(MensajeCodigo.G_013, ANIO_PARAM);
             }
@@ -86,7 +94,7 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
             addError(MensajeCodigo.G_012, SOBREESCRIBIR_PARAM);
         }
 
-        if (prbtVO.getPrmnList().isEmpty()) {
+        if (prmnList.isEmpty()) {
             try {
                 // Comprobar que existe la AP
                 final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
@@ -111,18 +119,18 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
                 if (subpIds.isEmpty()) {
                     addError(MensajeCodigo.E_002, Entidad.AUTORIDAD_PORTUARIA.name() + ": " + autpId);
                 } else {
-                    final PeriodoProcesoVO peprVO = new PeriodoProcesoVO();
+                    final PeriodoProcesoVO pepr = new PeriodoProcesoVO();
 
-                    peprVO.setAutp(autp);
-                    peprVO.setAnio(anio);
-                    peprVO.setMes(mes);
-                    peprVO.setFreferencia(calendar.getTime());
+                    pepr.setAutp(autp);
+                    pepr.setAnio(anio);
+                    pepr.setMes(mes);
+                    pepr.setFreferencia(calendar.getTime());
 
                     try {
-                        peprBO.agregarServicios(peprVO, subpIds, sobreescribir);
+                        peprBO.agregarServicios(pepr, subpIds, sobreescribir);
                     } catch (final DuplicateInstanceException ex) {
-                        addError(MensajeCodigo.E_001, "Periodo de Proceso: " + peprVO.getAutp().getParametro() + " "
-                                + peprVO.getAnio() + " " + peprVO.getMes());
+                        addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getAutp().getParametro() + " "
+                                + pepr.getAnio() + " " + pepr.getMes());
                     }
                 }
             } catch (final InstanceNotFoundException ex) {

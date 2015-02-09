@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import xeredi.integra.model.proceso.vo.ProcesoItemCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 
 // TODO: Auto-generated Javadoc
@@ -32,10 +33,10 @@ public interface ProcesoItemDAO {
     /**
      * Select list.
      *
-     * @param prbtId
-     *            the prbt id
+     * @param pritCriterio
+     *            the prit criterio
      * @return the list
      */
-    List<ProcesoItemVO> selectList(final @Nonnull Long prbtId);
+    List<ProcesoItemVO> selectList(final @Nonnull ProcesoItemCriterioVO pritCriterio);
 
 }
