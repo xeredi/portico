@@ -9,7 +9,10 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.comun.ItemAction;
 import xeredi.integra.http.util.FieldFiller;
 import xeredi.integra.http.util.FieldValidator;
+import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
@@ -39,6 +42,9 @@ public final class ServicioAction extends ItemAction {
     /** The srvc form. */
     private ServicioVO item;
 
+    /** The arin list. */
+    private List<ArchivoInfoVO> arinList;
+
     /** The subps. */
     private List<LabelValueVO> subpList;
 
@@ -56,10 +62,18 @@ public final class ServicioAction extends ItemAction {
         Preconditions.checkNotNull(item.getId());
         Preconditions.checkNotNull(item.getEntiId());
 
+        enti = TipoServicioProxy.select(item.getEntiId());
+
         final ServicioBO srvcBO = ServicioBOFactory.newInstance(item.getEntiId());
 
         item = srvcBO.select(item.getId(), getIdioma());
-        enti = TipoServicioProxy.select(item.getEntiId());
+
+        final ArchivoBO archBO = new ArchivoBO();
+        final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
+
+        archCriterio.setSrvcId(item.getId());
+
+        arinList = archBO.selectInfoList(archCriterio);
 
         setFechaVigencia(item.getFref());
 
@@ -275,6 +289,15 @@ public final class ServicioAction extends ItemAction {
      */
     public TipoServicioVO getEnti() {
         return enti;
+    }
+
+    /**
+     * Gets the arin list.
+     *
+     * @return the arin list
+     */
+    public List<ArchivoInfoVO> getArinList() {
+        return arinList;
     }
 
 }

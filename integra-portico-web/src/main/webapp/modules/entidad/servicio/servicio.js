@@ -265,6 +265,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
     vm.pageChanged = pageChanged;
     vm.tabSelected = tabSelected;
     vm.remove = remove;
+    vm.download = download;
     vm.srvcAction = srvcAction;
 
     vm.path = $location.path();
@@ -310,6 +311,23 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
                 window.history.back();
             });
         }
+    }
+
+    function download(archId, archNombre) {
+        $http.post('servicio/srar-download.action', {
+            srar : {
+                srvcId : vm.item.id,
+                archId : archId
+            }
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ]);
+
+            setTimeout(function() {
+                saveAs(file, archNombre);
+            }, 0);
+        });
     }
 
     function srvcAction(accName) {
@@ -382,9 +400,9 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
         }
     }).success(function(data) {
         vm.enti = data.enti;
-        // vm.subentiList = data.subentiList;
         vm.item = data.item;
         vm.fechaVigencia = data.fechaVigencia;
+        vm.arinList = data.arinList;
 
         vm.entiHijasMap = {};
         vm.itemHijosMap = {};

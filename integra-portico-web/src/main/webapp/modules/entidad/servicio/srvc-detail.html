@@ -53,6 +53,32 @@
 		<div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
 	</div>
 
+	</tab> <tab heading="{{'archList' | translate}}" select="vm.tabSelected(-1)">
+	<div>
+		<div class="table-responsive">
+			<table class="table-bordered table-condensed table-hover table-nonfluid">
+				<thead>
+					<tr>
+						<th translate="arch_nombre"></th>
+						<th translate="arch_tamanio"></th>
+						<th translate="arch_falta"></th>
+						<th />
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr ng-repeat="arin in vm.arinList track by $index">
+						<td ng-bind="arin.nombre"></td>
+						<td ng-bind="arin.tamanio | number:0" class="number"></td>
+						<td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
+						<td><button class="btn btn-default" ng-click="vm.download(arin.id, arin.nombre)">
+								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+							</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 	</tab> <tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
 		heading="{{'enti_' + entiHijaId | translate}}" active="vm.tabActive[entiHijaId]"
 		select="vm.tabSelected(entiHijaId)">

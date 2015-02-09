@@ -2,6 +2,7 @@ package xeredi.integra.model.comun.bo;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -63,6 +64,21 @@ public final class ArchivoBO {
             }
 
             return arin;
+        }
+    }
+
+    /**
+     * Select info list.
+     *
+     * @param archCriterio
+     *            the arch criterio
+     * @return the list
+     */
+    public List<ArchivoInfoVO> selectInfoList(final ArchivoCriterioVO archCriterio) {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
+
+            return arinDAO.selectList(archCriterio);
         }
     }
 }
