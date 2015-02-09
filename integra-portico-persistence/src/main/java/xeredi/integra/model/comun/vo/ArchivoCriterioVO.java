@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public final class ArchivoCriterioVO {
 
+    /** The id. */
+    private Long id;
+
     /** The srvc id. */
     private Long srvcId;
 
@@ -80,6 +83,25 @@ public final class ArchivoCriterioVO {
      */
     public void setSentido(final ArchivoSentido value) {
         sentido = value;
+    }
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param value
+     *            the new id
+     */
+    public void setId(final Long value) {
+        id = value;
     }
 
 }

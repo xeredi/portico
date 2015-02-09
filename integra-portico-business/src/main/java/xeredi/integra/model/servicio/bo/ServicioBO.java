@@ -87,11 +87,13 @@ public interface ServicioBO {
      *            the ssrv list
      * @param ssssList
      *            the ssss list
+     * @param archId
+     *            the arch id
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
      */
     void insert(final @Nonnull ServicioVO srvcVO, final List<SubservicioVO> ssrvList,
-            final List<SubservicioSubservicioVO> ssssList) throws DuplicateInstanceException;
+            final List<SubservicioSubservicioVO> ssssList, final Long archId) throws DuplicateInstanceException;
 
     /**
      * Update.

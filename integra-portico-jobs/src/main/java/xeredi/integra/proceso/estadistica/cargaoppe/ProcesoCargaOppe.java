@@ -13,7 +13,7 @@ import java.util.zip.ZipInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.FileServiceBO;
+import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
@@ -72,7 +72,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      */
     @Override
     protected void ejecutarProceso() {
-        final FileServiceBO flsrBO = new FileServiceBO();
+        final ArchivoBO flsrBO = new ArchivoBO();
         final OppeFileImport fileImport = new OppeFileImport(this);
         final PeriodoProcesoVO peprVO = new PeriodoProcesoVO();
 
@@ -98,7 +98,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         if (prmnList.isEmpty()) {
             final ProcesoBO prbtBO = new ProcesoBO();
 
-            final List<ArchivoInfoVO> arinList = prbtBO.selectPrarEntradaList(prbt.getId());
+            final List<ArchivoInfoVO> arinList = prbtBO.selectArinEntradaList(prbt.getId());
 
             if (arinList.isEmpty()) {
                 addError(MensajeCodigo.G_000, EstadisticaFileType.zip.name());

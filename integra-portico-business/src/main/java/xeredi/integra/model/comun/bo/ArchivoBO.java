@@ -7,7 +7,10 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.dao.ArchivoDAO;
+import xeredi.integra.model.comun.dao.ArchivoInfoDAO;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.ArchivoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -16,7 +19,7 @@ import xeredi.util.mybatis.SqlMapperLocator;
 /**
  * The Class FileServiceBO.
  */
-public final class FileServiceBO {
+public final class ArchivoBO {
     /**
      * Select.
      *
@@ -37,6 +40,29 @@ public final class FileServiceBO {
             }
 
             return new ByteArrayInputStream(arch.getArchivo());
+        }
+    }
+
+    /**
+     * Select info.
+     *
+     * @param archCriterio
+     *            the arch criterio
+     * @return the archivo info vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
+     */
+    public ArchivoInfoVO selectInfo(final ArchivoCriterioVO archCriterio) throws InstanceNotFoundException {
+        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
+
+            final ArchivoInfoVO arin = arinDAO.selectObject(archCriterio);
+
+            if (arin == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.arch, archCriterio.getId());
+            }
+
+            return arin;
         }
     }
 }

@@ -17,7 +17,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.FileServiceBO;
+import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
@@ -118,7 +118,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
     @Override
     protected void ejecutarProceso() {
         for (final ArchivoInfoVO arin : arinEntradaList) {
-            final FileServiceBO flsrBO = new FileServiceBO();
+            final ArchivoBO flsrBO = new ArchivoBO();
 
             LOG.info("Importar: " + arin.getNombre());
 

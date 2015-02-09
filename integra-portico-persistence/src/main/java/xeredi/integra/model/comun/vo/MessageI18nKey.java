@@ -133,7 +133,9 @@ public enum MessageI18nKey {
     /** The enti_tpdt nombre. */
     enti_tpdtNombre,
     /** The enti_tpsr. */
-    enti_tpsr, enti_classpath,
+    enti_tpsr,
+    /** The enti_classpath. */
+    enti_classpath,
     /** The tppr. */
     tppr,
     /** The tppr list. */
@@ -444,7 +446,17 @@ public enum MessageI18nKey {
     /** The prit sal list. */
     pritSalList,
     /** The prit_nombre. */
-    prit_nombre, arch,
+    prit_nombre,
+    /** The arch. */
+    arch,
+    /** The arch list. */
+    archList,
+    /** The arch_nombre. */
+    arch_nombre,
+    /** The arch_falta. */
+    arch_falta,
+    /** The arch_tamanio. */
+    arch_tamanio,
 
     /** The aspc. */
     aspc,

@@ -25,12 +25,14 @@ import xeredi.integra.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.integra.model.metamodelo.vo.TipoServicioVO;
 import xeredi.integra.model.metamodelo.vo.TipoSubservicioVO;
+import xeredi.integra.model.servicio.dao.ServicioArchivoDAO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.dao.ServicioDatoDAO;
 import xeredi.integra.model.servicio.dao.ServicioSecuenciaDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDAO;
 import xeredi.integra.model.servicio.dao.SubservicioDatoDAO;
 import xeredi.integra.model.servicio.dao.SubservicioSubservicioDAO;
+import xeredi.integra.model.servicio.vo.ServicioArchivoVO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioLupaCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -145,8 +147,8 @@ public abstract class AbstractServicioBO implements ServicioBO {
      * {@inheritDoc}
      */
     @Override
-    public final void insert(final @Nonnull ServicioVO srvcVO, final List<SubservicioVO> ssrvList,
-            final List<SubservicioSubservicioVO> ssssList) throws DuplicateInstanceException {
+    public final void insert(final @Nonnull ServicioVO srvc, final List<SubservicioVO> ssrvList,
+            final List<SubservicioSubservicioVO> ssssList, final Long archId) throws DuplicateInstanceException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
@@ -154,49 +156,51 @@ public abstract class AbstractServicioBO implements ServicioBO {
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
             final ServicioSecuenciaDAO srscDAO = session.getMapper(ServicioSecuenciaDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final ServicioArchivoDAO srarDAO = session.getMapper(ServicioArchivoDAO.class);
+
             final Map<Long, Long> ssrvDepsMap = new HashMap<Long, Long>();
 
-            final TipoServicioVO tpsrVO = TipoServicioProxy.select(srvcVO.getEntiId());
+            final TipoServicioVO tpsrVO = TipoServicioProxy.select(srvc.getEntiId());
 
             if (tpsrVO.getEntdList() != null) {
-                if (srvcVO.getItdtMap() == null) {
-                    srvcVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
+                if (srvc.getItdtMap() == null) {
+                    srvc.setItdtMap(new HashMap<Long, ItemDatoVO>());
                 }
 
                 for (final EntidadTipoDatoVO entd : tpsrVO.getEntdList()) {
                     final Long tpdtId = entd.getTpdt().getId();
 
-                    if (!srvcVO.getItdtMap().containsKey(tpdtId) && !srvcVO.getItdtMap().containsKey(tpdtId.toString())) {
+                    if (!srvc.getItdtMap().containsKey(tpdtId) && !srvc.getItdtMap().containsKey(tpdtId.toString())) {
                         final ItemDatoVO itdt = new ItemDatoVO();
 
                         itdt.setTpdtId(tpdtId);
-                        srvcVO.getItdtMap().put(tpdtId, itdt);
+                        srvc.getItdtMap().put(tpdtId, itdt);
                     }
                 }
             }
 
             final IgBO igBO = new IgBO();
 
-            srscDAO.incrementarSecuencia(srvcVO);
+            srscDAO.incrementarSecuencia(srvc);
 
-            final Integer secuencia = srscDAO.obtenerSecuencia(srvcVO);
+            final Integer secuencia = srscDAO.obtenerSecuencia(srvc);
 
             if (secuencia == null) {
-                throw new Error("No se encuentra secuencia para: " + srvcVO);
+                throw new Error("No se encuentra secuencia para: " + srvc);
             }
 
-            srvcVO.setNumero(ServicioVO.convertNumero(secuencia));
+            srvc.setNumero(ServicioVO.convertNumero(secuencia));
 
-            if (srvcDAO.exists(srvcVO)) {
-                throw new DuplicateInstanceException(srvcVO.getEntiId(), srvcVO);
+            if (srvcDAO.exists(srvc)) {
+                throw new DuplicateInstanceException(srvc.getEntiId(), srvc);
             }
 
-            srvcVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            srvcDAO.insert(srvcVO);
+            srvc.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            srvcDAO.insert(srvc);
 
-            if (srvcVO.getItdtMap() != null) {
-                for (final ItemDatoVO itdtVO : srvcVO.getItdtMap().values()) {
-                    itdtVO.setItemId(srvcVO.getId());
+            if (srvc.getItdtMap() != null) {
+                for (final ItemDatoVO itdtVO : srvc.getItdtMap().values()) {
+                    itdtVO.setItemId(srvc.getId());
                     srdtDAO.insert(itdtVO);
                 }
             }
@@ -210,7 +214,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
                     }
 
                     ssrvVO.setId(ssrvId);
-                    ssrvVO.setSrvc(srvcVO);
+                    ssrvVO.setSrvc(srvc);
                     ssrvDAO.insert(ssrvVO);
 
                     final TipoSubservicioVO tpssVO = TipoSubservicioProxy.select(ssrvVO.getEntiId());
@@ -251,7 +255,16 @@ public abstract class AbstractServicioBO implements ServicioBO {
                 }
             }
 
-            insertPostOperations(session, srvcVO, ssrvList, ssssList);
+            if (archId != null) {
+                final ServicioArchivoVO srar = new ServicioArchivoVO();
+
+                srar.setSrvcId(srvc.getId());
+                srar.setArchId(archId);
+
+                srarDAO.insert(srar);
+            }
+
+            insertPostOperations(session, srvc, ssrvList, ssssList);
 
             session.commit();
         }
@@ -414,6 +427,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
             final ServicioDatoDAO srdtDAO = session.getMapper(ServicioDatoDAO.class);
             final SubservicioDatoDAO ssdtDAO = session.getMapper(SubservicioDatoDAO.class);
             final SubservicioSubservicioDAO ssssDAO = session.getMapper(SubservicioSubservicioDAO.class);
+            final ServicioArchivoDAO srarDAO = session.getMapper(ServicioArchivoDAO.class);
 
             final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
             final SubservicioCriterioVO ssrvCriterioVO = new SubservicioCriterioVO();
@@ -425,6 +439,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
             ssdtDAO.delete(ssrvCriterioVO);
             ssrvDAO.delete(ssrvCriterioVO);
             srdtDAO.delete(srvcCriterioVO);
+            srarDAO.deleteList(srvcId);
 
             final int updated = srvcDAO.delete(srvcId);
 

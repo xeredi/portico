@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,6 +130,7 @@ public class ProcesoBO {
                 arin.setNombre(fileEntrada.getName());
                 arin.setSentido(ArchivoSentido.E);
                 arin.setTamanio(fileEntrada.length());
+                arin.setFalta(Calendar.getInstance().getTime());
 
                 arch.setArin(arin);
                 arch.setArchivo(buffer);
@@ -200,7 +202,7 @@ public class ProcesoBO {
      */
     public final void finalizar(final @Nonnull Long prbtId, final List<ProcesoMensajeVO> prmnList,
             final List<ProcesoItemVO> pritSalidaList, final List<ArchivoInfoVO> arinSalidaList)
-                    throws InstanceNotFoundException, OperacionNoPermitidaException {
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -262,7 +264,7 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void cancelar(final @Nonnull Long prbtId) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -280,7 +282,7 @@ public class ProcesoBO {
                 throw new OperacionNoPermitidaException(MessageI18nKey.prbt, MessageI18nKey.prbt_cancelar, prbtVO);
             }
 
-            prarDAO.delete(prbtId);
+            prarDAO.deleteList(prbtId);
             pritDAO.delete(prbtId);
             prmnDAO.delete(prbtId);
             prpmDAO.delete(prbtId);
@@ -407,7 +409,7 @@ public class ProcesoBO {
      *            the prbt id
      * @return the list
      */
-    public List<ArchivoInfoVO> selectPrarEntradaList(final @Nonnull Long prbtId) {
+    public List<ArchivoInfoVO> selectArinEntradaList(final @Nonnull Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
             final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
@@ -426,7 +428,7 @@ public class ProcesoBO {
      *            the prbt id
      * @return the list
      */
-    public List<ArchivoInfoVO> selectPrarSalidaList(final @Nonnull Long prbtId) {
+    public List<ArchivoInfoVO> selectArinSalidaList(final @Nonnull Long prbtId) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
             final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();

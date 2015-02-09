@@ -322,7 +322,7 @@ public final class ServicioImporterBO {
                     }
 
                     try {
-                        srvcBO.insert(srvcVO, null, null);
+                        srvcBO.insert(srvcVO, null, null, null);
                         entiMap.get(entiVO.getId()).put(servId, srvcVO.getId());
                     } catch (final DuplicateInstanceException ex) {
                         LOG.info(ex.getMessage(locale));

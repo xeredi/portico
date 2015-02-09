@@ -77,37 +77,52 @@
 				</tbody>
 			</table>
 		</div>
-		</tab> <tab ng-if="vm.prarEntradaList.length || vm.prarSalidaList.length"
-			heading="{{'prarList' | translate}}">
-		<div ng-if="vm.prarEntradaList.length" class="table-responsive">
-			<legend translate="prarEntList"></legend>
+		</tab> <tab ng-if="vm.arinEntradaList.length || vm.arinSalidaList.length" heading="{{'archList' | translate}}">
+		<div ng-if="vm.arinEntradaList.length" class="table-responsive">
+			<legend translate="arinEntList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
 					<tr>
-						<th translate="prar_nombre"></th>
+						<th translate="arch_nombre"></th>
+						<th translate="arch_tamanio"></th>
+						<th translate="arch_falta"></th>
+						<th />
 					</tr>
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="prar in vm.prarEntradaList track by $index">
-						<td ng-bind="prar.nombre"></td>
+					<tr ng-repeat="arin in vm.arinEntradaList track by $index">
+						<td ng-bind="arin.nombre"></td>
+						<td ng-bind="arin.tamanio | number:0" class="number"></td>
+						<td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
+						<td><button class="btn btn-default" ng-click="vm.download(arin.id, arin.nombre)">
+								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+							</button></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div ng-if="vm.prarSalidaList.length" class="table-responsive">
-			<legend translate="prarSalList"></legend>
+		<div ng-if="vm.arinSalidaList.length" class="table-responsive">
+			<legend translate="arinSalList"></legend>
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
 					<tr>
-						<th translate="prar_nombre"></th>
+						<th translate="arch_nombre"></th>
+						<th translate="arch_tamanio"></th>
+						<th translate="arch_falta"></th>
+						<th />
 					</tr>
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="prar in vm.prarSalidaList track by $index">
-						<td ng-bind="prar.nombre"></td>
+					<tr ng-repeat="arin in vm.arinSalidaList track by $index">
+						<td ng-bind="arin.nombre"></td>
+						<td ng-bind="arin.tamanio | number:0" class="number"></td>
+						<td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
+						<td><button class="btn btn-default" ng-click="vm.download(arin.id, arin.nombre)">
+								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+							</button></td>
 					</tr>
 				</tbody>
 			</table>

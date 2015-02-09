@@ -21,4 +21,13 @@ public interface ArchivoInfoDAO {
      * @return the list
      */
     List<ArchivoInfoVO> selectList(final @Nonnull ArchivoCriterioVO arinCriterio);
+
+    /**
+     * Select object.
+     *
+     * @param arinCriterio
+     *            the arin criterio
+     * @return the archivo info vo
+     */
+    ArchivoInfoVO selectObject(final @Nonnull ArchivoCriterioVO arinCriterio);
 }

@@ -71,6 +71,7 @@ function prbtDetailController($http, $location, $routeParams, pageTitleService) 
     var vm = this;
 
     vm.cancel = cancel;
+    vm.download = download;
 
     function cancel() {
         $http.post("proceso/prbt-cancel.action", {
@@ -82,14 +83,31 @@ function prbtDetailController($http, $location, $routeParams, pageTitleService) 
         });
     }
 
+    function download(archId, archNombre) {
+        $http.post('proceso/prar-download.action', {
+            prar : {
+                prbtId : vm.prbt.id,
+                archId : archId
+            }
+        }, {
+            responseType : 'arraybuffer'
+        }).success(function(data) {
+            var file = new Blob([ data ]);
+
+            setTimeout(function() {
+                saveAs(file, archNombre);
+            }, 0);
+        });
+    }
+
     $http.post("proceso/prbt-detail.action", {
         prbt : {
             id : $routeParams.prbtId
         }
     }).success(function(data) {
         vm.prbt = data.prbt;
-        vm.prarEntradaList = data.prarEntradaList;
-        vm.prarSalidaList = data.prarSalidaList;
+        vm.arinEntradaList = data.arinEntradaList;
+        vm.arinSalidaList = data.arinSalidaList;
         vm.pritEntradaList = data.pritEntradaList;
         vm.pritSalidaList = data.pritSalidaList;
         vm.prpmMap = data.prpmMap;

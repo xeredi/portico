@@ -1,5 +1,7 @@
 package xeredi.integra.model.comun.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
@@ -19,6 +21,9 @@ public final class ArchivoInfoVO {
 
     /** The sentido. */
     private ArchivoSentido sentido;
+
+    /** The falta. */
+    private Date falta;
 
     /**
      * {@inheritDoc}
@@ -102,6 +107,25 @@ public final class ArchivoInfoVO {
      */
     public void setSentido(final ArchivoSentido value) {
         sentido = value;
+    }
+
+    /**
+     * Gets the falta.
+     *
+     * @return the falta
+     */
+    public Date getFalta() {
+        return falta;
+    }
+
+    /**
+     * Sets the falta.
+     *
+     * @param value
+     *            the new falta
+     */
+    public void setFalta(final Date value) {
+        falta = value;
     }
 
 }

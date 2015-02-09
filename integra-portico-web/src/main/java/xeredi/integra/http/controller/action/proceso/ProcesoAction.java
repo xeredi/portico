@@ -28,10 +28,10 @@ public final class ProcesoAction extends BaseAction {
     private ProcesoVO prbt;
 
     /** The prar entrada list. */
-    private List<ArchivoInfoVO> prarEntradaList;
+    private List<ArchivoInfoVO> arinEntradaList;
 
     /** The prar salida list. */
-    private List<ArchivoInfoVO> prarSalidaList;
+    private List<ArchivoInfoVO> arinSalidaList;
 
     /** The prit entrada list. */
     private List<ProcesoItemVO> pritEntradaList;
@@ -59,8 +59,8 @@ public final class ProcesoAction extends BaseAction {
         final ProcesoBO prbtBO = new ProcesoBO();
 
         prbt = prbtBO.select(prbt.getId());
-        prarEntradaList = prbtBO.selectPrarEntradaList(prbt.getId());
-        prarSalidaList = prbtBO.selectPrarSalidaList(prbt.getId());
+        arinEntradaList = prbtBO.selectArinEntradaList(prbt.getId());
+        arinSalidaList = prbtBO.selectArinSalidaList(prbt.getId());
         pritEntradaList = prbtBO.selectPritEntradaList(prbt.getId());
         pritSalidaList = prbtBO.selectPritSalidaList(prbt.getId());
         prpmMap = prbtBO.selectPrpmMap(prbt.getId());
@@ -109,21 +109,21 @@ public final class ProcesoAction extends BaseAction {
     }
 
     /**
-     * Gets the prar entrada list.
+     * Gets the arin entrada list.
      *
-     * @return the prar entrada list
+     * @return the arin entrada list
      */
-    public List<ArchivoInfoVO> getPrarEntradaList() {
-        return prarEntradaList;
+    public List<ArchivoInfoVO> getArinEntradaList() {
+        return arinEntradaList;
     }
 
     /**
-     * Gets the prar salida list.
+     * Gets the arin salida list.
      *
-     * @return the prar salida list
+     * @return the arin salida list
      */
-    public List<ArchivoInfoVO> getPrarSalidaList() {
-        return prarSalidaList;
+    public List<ArchivoInfoVO> getArinSalidaList() {
+        return arinSalidaList;
     }
 
     /**

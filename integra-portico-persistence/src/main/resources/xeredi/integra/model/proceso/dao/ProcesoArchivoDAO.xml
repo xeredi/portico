@@ -33,7 +33,7 @@
         ]]>
 	</insert>
 
-	<delete id="delete" parameterType="Long">
+	<delete id="deleteList" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_proceso_archivo_prar
         WHERE

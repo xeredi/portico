@@ -326,6 +326,10 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pritSalList', 'Elementos Sal.')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prit_nombre', 'Nombre')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'arch', 'Archivo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'archList', 'Archivos')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'arch_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'arch_falta', 'F. Alta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'arch_tamanio', 'Tamaño (bytes)')\
 
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspc', 'Aspecto')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'aspcList', 'Aspectos')\
@@ -620,6 +624,7 @@ CREATE TABLE portico.tbl_archivo_arch (
 	, arch_sentido CHAR(1) NOT NULL
 	, arch_nombre VARCHAR(100) NOT NULL
 	, arch_tamanio INT NOT NULL
+	, arch_falta TIMESTAMP NOT NULL
 	, arch_archivo BYTEA NOT NULL
 
 	, CONSTRAINT pk_arch PRIMARY KEY (arch_pk)

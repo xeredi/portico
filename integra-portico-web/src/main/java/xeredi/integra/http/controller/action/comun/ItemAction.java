@@ -30,17 +30,6 @@ public abstract class ItemAction extends BaseAction {
     /** The label values map. */
     protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
-    // get / set
-
-    /**
-     * Gets the label values map.
-     *
-     * @return the label values map
-     */
-    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
-        return labelValuesMap;
-    }
-
     /**
      * Load label values map.
      *
@@ -69,6 +58,17 @@ public abstract class ItemAction extends BaseAction {
                 labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
             }
         }
+    }
+
+    // get / set
+
+    /**
+     * Gets the label values map.
+     *
+     * @return the label values map
+     */
+    public final Map<Long, List<LabelValueVO>> getLabelValuesMap() {
+        return labelValuesMap;
     }
 
     /**

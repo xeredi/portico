@@ -10,17 +10,21 @@
 		<result column="arch_sentido" property="sentido" />
 		<result column="arch_nombre" property="nombre" />
 		<result column="arch_tamanio" property="tamanio" />
+		<result column="arch_falta" property="falta" />
 	</resultMap>
 
 	<sql id="SelectPrefix">
     <![CDATA[
-		SELECT arch_pk, arch_sentido, arch_nombre, arch_tamanio
+		SELECT arch_pk, arch_sentido, arch_nombre, arch_tamanio, arch_falta
 		FROM tbl_archivo_arch
     ]]>
 	</sql>
 
 	<sql id="SelectWhere">
 		<where>
+			<if test="id != null">
+				AND arch_pk = #{id}
+			</if>
 			<if test="sentido != null">
 				AND arch_sentido = #{sentido}
 			</if>
@@ -51,6 +55,12 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY arch_nombre
+		ORDER BY arch_falta
+	</select>
+
+	<select id="selectObject" parameterType="ArchivoCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
 	</select>
 </mapper>

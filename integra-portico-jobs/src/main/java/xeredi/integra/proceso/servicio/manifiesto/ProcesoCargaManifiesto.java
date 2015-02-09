@@ -13,7 +13,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.FileServiceBO;
+import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
@@ -87,7 +87,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
         for (final ArchivoInfoVO arin : arinEntradaList) {
             LOG.info("Importar: " + arin.getNombre());
 
-            final FileServiceBO flsrBO = new FileServiceBO();
+            final ArchivoBO flsrBO = new ArchivoBO();
 
             try (final InputStream stream = flsrBO.select(arin.getId())) {
                 final ManifiestoFileImport fileImport = new ManifiestoFileImport(this);
@@ -124,7 +124,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                             }
 
                             srvcBO.insert(fileImport.getManifiestoVO(), fileImport.getSsrvList(),
-                                    fileImport.getSsssList());
+                                    fileImport.getSsssList(), arin.getId());
 
                             final ProcesoItemVO pritSalida = new ProcesoItemVO();
 

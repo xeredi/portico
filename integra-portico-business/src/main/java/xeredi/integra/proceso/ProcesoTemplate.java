@@ -96,7 +96,7 @@ public abstract class ProcesoTemplate {
                     arinSalidaList = new ArrayList<>();
 
                     prpmMap = prbtBO.selectPrpmMap(prbt.getId());
-                    arinEntradaList = prbtBO.selectPrarEntradaList(prbt.getId());
+                    arinEntradaList = prbtBO.selectArinEntradaList(prbt.getId());
 
                     ejecutarProceso();
                 } catch (final Throwable ex) {
