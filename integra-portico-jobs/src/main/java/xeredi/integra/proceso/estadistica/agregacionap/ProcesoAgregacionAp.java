@@ -12,6 +12,7 @@ import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.maestro.vo.ParametroCriterioVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
+import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
@@ -128,6 +129,8 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
 
                     try {
                         peprBO.agregarServicios(pepr, subpIds, sobreescribir);
+
+                        itemSalidaList.add(pepr.getId());
                     } catch (final DuplicateInstanceException ex) {
                         addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getAutp().getParametro() + " "
                                 + pepr.getAnio() + " " + pepr.getMes());
@@ -153,6 +156,14 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
     @Override
     protected ProcesoModulo getProcesoModulo() {
         return ProcesoModulo.E;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ItemTipo getItemTipoSalida() {
+        return ItemTipo.pepr;
     }
 
 }

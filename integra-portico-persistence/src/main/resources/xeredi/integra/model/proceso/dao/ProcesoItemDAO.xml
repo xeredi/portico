@@ -3,42 +3,118 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.proceso.dao.ProcesoItemDAO">
-    <resultMap type="ProcesoItemVO" id="ResultMap">
-        <id column="prit_prbt_pk" property="prbtId" />
-        <result column="prit_item_pk" property="itemId" />
-        <result column="prit_sentido" property="sentido" />
-    </resultMap>
+	<resultMap type="ProcesoItemVO" id="ResultMap">
+		<id column="prit_prbt_pk" property="prbtId" />
+		<result column="prit_item_pk" property="itemId" />
+		<result column="prit_sentido" property="sentido" />
+		<result column="prit_tipo" property="tipo" />
+		<result column="prit_enti_pk" property="entiId" />
+		<result column="prit_etiqueta" property="etiqueta" />
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
         prit_prbt_pk
         , prit_item_pk
         , prit_sentido
+        , prit_tipo
+        , (
+        	CASE prit_tipo
+				WHEN 'srvc' THEN (
+					SELECT srvc_tpsr_pk
+					FROM tbl_servicio_srvc
+					WHERE srvc_pk = prit_item_pk
+				)
+				WHEN 'ssrv' THEN (
+					SELECT ssrv_tpss_pk
+					FROM tbl_subservicio_ssrv
+					WHERE ssrv_pk = prit_item_pk
+				)
+	        END
+	    ) AS prit_enti_pk
+        , (
+        	CASE prit_tipo
+				WHEN 'srvc' THEN (
+					SELECT
+						portico.CONCATENATE(
+							portico.CONCATENATE(
+								portico.CONCATENATE(
+									(
+										SELECT prmt_parametro
+										FROM tbl_parametro_prmt
+										WHERE prmt_pk = srvc_subp_pk
+									)
+									, '/'
+								)
+								, portico.CONCATENATE(
+									srvc_anno
+									, '/'
+								)
+							)
+							, srvc_numero
+						)
+					FROM tbl_servicio_srvc
+					WHERE srvc_pk = prit_item_pk
+				)
+				WHEN 'ssrv' THEN (
+					SELECT
+						portico.CONCATENATE(
+							portico.CONCATENATE(
+								portico.CONCATENATE(
+									portico.CONCATENATE(
+										(
+											SELECT prmt_parametro
+											FROM tbl_parametro_prmt
+											WHERE prmt_pk = srvc_subp_pk
+										)
+										, '/'
+									)
+									, portico.CONCATENATE(
+										srvc_anno
+										, '/'
+									)
+								)
+								, srvc_numero
+							)
+							, portico.CONCATENATE(
+								' - '
+								, ssrv_numero::VARCHAR
+							)
+						)
+					FROM
+						tbl_subservicio_ssrv
+						INNER JOIN tbl_servicio_srvc ON
+							srvc_pk = ssrv_srvc_pk
+					WHERE ssrv_pk = prit_item_pk
+				)
+	        END
+	    ) AS prit_etiqueta
     FROM
         tbl_proceso_item_prit
     ]]>
-    </sql>
+	</sql>
 
-    <select id="selectList" parameterType="ProcesoItemCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
+	<select id="selectList" parameterType="ProcesoItemCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
         <![CDATA[
         WHERE prit_prbt_pk = #{prbtId} AND prit_sentido = #{sentido}
         ]]>
-    </select>
+	</select>
 
-    <insert id="insert" parameterType="ProcesoItemVO">
+	<insert id="insert" parameterType="ProcesoItemVO">
         <![CDATA[
-        INSERT INTO tbl_proceso_item_prit (prit_prbt_pk, prit_item_pk, prit_sentido)
-        VALUES (#{prbtId}, #{itemId}, #{sentido})
+        INSERT INTO tbl_proceso_item_prit (prit_prbt_pk, prit_item_pk, prit_sentido, prit_tipo)
+        VALUES (#{prbtId}, #{itemId}, #{sentido}, #{tipo})
         ]]>
-    </insert>
+	</insert>
 
-    <delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_proceso_item_prit
         WHERE
             prit_prbt_pk = #{value}
         ]]>
-    </delete>
+	</delete>
 </mapper>

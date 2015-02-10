@@ -447,6 +447,20 @@ public enum MessageI18nKey {
     pritSalList,
     /** The prit_nombre. */
     prit_nombre,
+    /** The prit_tipo. */
+    prit_tipo,
+    /** The prit_enti. */
+    prit_enti,
+    /** The Item tipo_srvc. */
+    ItemTipo_srvc,
+    /** The Item tipo_ssrv. */
+    ItemTipo_ssrv,
+    /** The Item tipo_vlrc. */
+    ItemTipo_vlrc,
+    /** The Item tipo_fctr. */
+    ItemTipo_fctr,
+    /** The Item tipo_pepr. */
+    ItemTipo_pepr,
     /** The arch. */
     arch,
     /** The arch list. */

@@ -27,6 +27,7 @@ import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
+import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
@@ -74,7 +75,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final ArchivoBO flsrBO = new ArchivoBO();
         final OppeFileImport fileImport = new OppeFileImport(this);
-        final PeriodoProcesoVO peprVO = new PeriodoProcesoVO();
+        final PeriodoProcesoVO pepr = new PeriodoProcesoVO();
 
         // Lectura de los parametros de entrada
         final long autpId = Long.parseLong(prpmMap.get(AUTP_PARAM).getValor());
@@ -87,10 +88,10 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
         try {
             final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
 
-            peprVO.setAutp(prmtBO.select(autpId, ConfigurationProxy.getString(ConfigurationKey.language_default),
+            pepr.setAutp(prmtBO.select(autpId, ConfigurationProxy.getString(ConfigurationKey.language_default),
                     new Date()));
-            peprVO.setAnio(anio);
-            peprVO.setMes(mes);
+            pepr.setAnio(anio);
+            pepr.setMes(mes);
         } catch (final InstanceNotFoundException ex) {
             addError(MensajeCodigo.G_001, "entidad: " + Entidad.AUTORIDAD_PORTUARIA.name() + ", codigo: " + autpId);
         }
@@ -106,25 +107,25 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                 try (final InputStream stream = flsrBO.select(arinList.get(0).getId());
                         final ZipInputStream zis = new ZipInputStream(stream)) {
                     if (prmnList.isEmpty()) {
-                        getEntry(zis, peprVO, EstadisticaFileType.EPP);
-                        getEntry(zis, peprVO, EstadisticaFileType.EAP);
-                        getEntry(zis, peprVO, EstadisticaFileType.EAV);
-                        getEntry(zis, peprVO, EstadisticaFileType.EAE);
-                        getEntry(zis, peprVO, EstadisticaFileType.EMM);
-                        getEntry(zis, peprVO, EstadisticaFileType.EME);
-                        getEntry(zis, peprVO, EstadisticaFileType.EMT);
+                        getEntry(zis, pepr, EstadisticaFileType.EPP);
+                        getEntry(zis, pepr, EstadisticaFileType.EAP);
+                        getEntry(zis, pepr, EstadisticaFileType.EAV);
+                        getEntry(zis, pepr, EstadisticaFileType.EAE);
+                        getEntry(zis, pepr, EstadisticaFileType.EMM);
+                        getEntry(zis, pepr, EstadisticaFileType.EME);
+                        getEntry(zis, pepr, EstadisticaFileType.EMT);
                     }
 
                     if (prmnList.isEmpty()) {
-                        isSigma = fileImport.verifyIsSigma(getEntry(zis, peprVO, EstadisticaFileType.EPP));
+                        isSigma = fileImport.verifyIsSigma(getEntry(zis, pepr, EstadisticaFileType.EPP));
 
-                        fileImport.readMaestrosEPP(getEntry(zis, peprVO, EstadisticaFileType.EPP));
-                        fileImport.readMaestrosEAP(getEntry(zis, peprVO, EstadisticaFileType.EAP));
-                        fileImport.readMaestrosEAV(getEntry(zis, peprVO, EstadisticaFileType.EAV));
-                        fileImport.readMaestrosEAE(getEntry(zis, peprVO, EstadisticaFileType.EAE));
-                        fileImport.readMaestrosEMM(getEntry(zis, peprVO, EstadisticaFileType.EMM));
-                        fileImport.readMaestrosEME(getEntry(zis, peprVO, EstadisticaFileType.EME), isSigma);
-                        fileImport.readMaestrosEMT(getEntry(zis, peprVO, EstadisticaFileType.EMT));
+                        fileImport.readMaestrosEPP(getEntry(zis, pepr, EstadisticaFileType.EPP));
+                        fileImport.readMaestrosEAP(getEntry(zis, pepr, EstadisticaFileType.EAP));
+                        fileImport.readMaestrosEAV(getEntry(zis, pepr, EstadisticaFileType.EAV));
+                        fileImport.readMaestrosEAE(getEntry(zis, pepr, EstadisticaFileType.EAE));
+                        fileImport.readMaestrosEMM(getEntry(zis, pepr, EstadisticaFileType.EMM));
+                        fileImport.readMaestrosEME(getEntry(zis, pepr, EstadisticaFileType.EME), isSigma);
+                        fileImport.readMaestrosEMT(getEntry(zis, pepr, EstadisticaFileType.EMT));
                     }
 
                     if (prmnList.isEmpty()) {
@@ -132,13 +133,13 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                     }
 
                     if (prmnList.isEmpty()) {
-                        fileImport.readEPP(getEntry(zis, peprVO, EstadisticaFileType.EPP));
-                        fileImport.readEAP(getEntry(zis, peprVO, EstadisticaFileType.EAP));
-                        fileImport.readEAV(getEntry(zis, peprVO, EstadisticaFileType.EAV));
-                        fileImport.readEAE(getEntry(zis, peprVO, EstadisticaFileType.EAE));
-                        fileImport.readEMM(getEntry(zis, peprVO, EstadisticaFileType.EMM));
-                        fileImport.readEME(getEntry(zis, peprVO, EstadisticaFileType.EME), isSigma);
-                        fileImport.readEMT(getEntry(zis, peprVO, EstadisticaFileType.EMT));
+                        fileImport.readEPP(getEntry(zis, pepr, EstadisticaFileType.EPP));
+                        fileImport.readEAP(getEntry(zis, pepr, EstadisticaFileType.EAP));
+                        fileImport.readEAV(getEntry(zis, pepr, EstadisticaFileType.EAV));
+                        fileImport.readEAE(getEntry(zis, pepr, EstadisticaFileType.EAE));
+                        fileImport.readEMM(getEntry(zis, pepr, EstadisticaFileType.EMM));
+                        fileImport.readEME(getEntry(zis, pepr, EstadisticaFileType.EME), isSigma);
+                        fileImport.readEMT(getEntry(zis, pepr, EstadisticaFileType.EMT));
                     }
                 } catch (final IOException ex) {
                     addError(MensajeCodigo.G_010,
@@ -156,11 +157,11 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
 
             try {
-                peprBO.cargarArchivo(peprVO, fileImport.getAutpMap(), fileImport.getEstdList(), sobreescribir);
+                peprBO.cargarArchivo(pepr, fileImport.getAutpMap(), fileImport.getEstdList(), sobreescribir);
+
+                itemSalidaList.add(pepr.getId());
             } catch (final DuplicateInstanceException ex) {
-                addError(MensajeCodigo.E_001,
-                        "Periodo de Proceso: " + peprVO.getAutp().getParametro() + " " + peprVO.getAnio() + " "
-                                + peprVO.getMes());
+                addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getEtiqueta());
             }
         }
 
@@ -186,6 +187,14 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
     @Override
     protected ProcesoModulo getProcesoModulo() {
         return ProcesoModulo.E;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ItemTipo getItemTipoSalida() {
+        return ItemTipo.pepr;
     }
 
     /**

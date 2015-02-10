@@ -30,6 +30,7 @@ import xeredi.integra.model.proceso.dao.ProcesoItemDAO;
 import xeredi.integra.model.proceso.dao.ProcesoMensajeDAO;
 import xeredi.integra.model.proceso.dao.ProcesoParametroDAO;
 import xeredi.integra.model.proceso.vo.ItemSentido;
+import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.ProcesoArchivoVO;
 import xeredi.integra.model.proceso.vo.ProcesoCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoEstado;
@@ -59,6 +60,8 @@ public class ProcesoBO {
      *            the tipo
      * @param parametroMap
      *            the parametro map
+     * @param itemEntradaTipo
+     *            the item entrada tipo
      * @param itemEntradaList
      *            the item entrada list
      * @param fileEntrada
@@ -66,7 +69,8 @@ public class ProcesoBO {
      * @return the proceso vo
      */
     public final ProcesoVO crear(final @Nonnull ProcesoModulo modulo, final @Nonnull ProcesoTipo tipo,
-            final Map<String, String> parametroMap, final List<Long> itemEntradaList, final File fileEntrada) {
+            final Map<String, String> parametroMap, final ItemTipo itemEntradaTipo, final List<Long> itemEntradaList,
+            final File fileEntrada) {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
 
@@ -112,12 +116,13 @@ public class ProcesoBO {
                     prit.setPrbtId(prbt.getId());
                     prit.setSentido(ItemSentido.E);
                     prit.setItemId(itemId);
+                    prit.setTipo(itemEntradaTipo);
 
                     pritDAO.insert(prit);
                 }
             }
 
-            if (fileEntrada != null) {
+            if (buffer != null) {
                 final ArchivoVO arch = new ArchivoVO();
                 final ArchivoInfoVO arin = new ArchivoInfoVO();
                 final ProcesoArchivoVO prar = new ProcesoArchivoVO();
@@ -187,23 +192,37 @@ public class ProcesoBO {
      *            the prbt id
      * @param prmnList
      *            the prmn list
-     * @param pritSalidaList
-     *            the prit salida list
-     * @param arinSalidaList
-     *            the arin salida list
+     * @param itemSalidaTipo
+     *            the item salida tipo
+     * @param itemSalidaList
+     *            the item salida list
+     * @param fileSalida
+     *            the file salida
      * @throws InstanceNotFoundException
      *             the instance not found exception
      * @throws OperacionNoPermitidaException
      *             the operacion no permitida exception
      */
     public final void finalizar(final @Nonnull Long prbtId, final List<ProcesoMensajeVO> prmnList,
-            final List<ProcesoItemVO> pritSalidaList, final List<ArchivoInfoVO> arinSalidaList)
+            final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
                     throws InstanceNotFoundException, OperacionNoPermitidaException {
+        // Lectura del Archivo (si lo hay)
+        byte[] buffer = null;
+
+        try {
+            buffer = GzipUtil.compress(fileSalida);
+        } catch (final IOException ex) {
+            throw new Error(ex);
+        }
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
             final ProcesoItemDAO pritDAO = session.getMapper(ProcesoItemDAO.class);
             final ProcesoMensajeDAO prmnDAO = session.getMapper(ProcesoMensajeDAO.class);
+            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
+
+            final IgBO igBO = new IgBO();
 
             final ProcesoVO prbt = prbtDAO.select(prbtId);
 
@@ -225,24 +244,38 @@ public class ProcesoBO {
                 }
             }
 
-            if (pritSalidaList != null) {
-                for (final ProcesoItemVO prit : pritSalidaList) {
+            if (itemSalidaList != null) {
+                for (final Long itemId : itemSalidaList) {
+                    final ProcesoItemVO prit = new ProcesoItemVO();
+
                     prit.setPrbtId(prbtId);
+                    prit.setItemId(itemId);
                     prit.setSentido(ItemSentido.S);
+                    prit.setTipo(itemSalidaTipo);
 
                     pritDAO.insert(prit);
                 }
             }
 
-            if (arinSalidaList != null) {
-                for (final ArchivoInfoVO arin : arinSalidaList) {
-                    final ProcesoArchivoVO prar = new ProcesoArchivoVO();
+            if (buffer != null) {
+                final ArchivoVO arch = new ArchivoVO();
+                final ArchivoInfoVO arin = new ArchivoInfoVO();
+                final ProcesoArchivoVO prar = new ProcesoArchivoVO();
 
-                    prar.setArchId(arin.getId());
-                    prar.setPrbtId(prbtId);
+                arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+                arin.setNombre(fileSalida.getName());
+                arin.setSentido(ArchivoSentido.S);
+                arin.setTamanio(fileSalida.length());
+                arin.setFalta(Calendar.getInstance().getTime());
 
-                    prarDAO.insert(prar);
-                }
+                arch.setArin(arin);
+                arch.setArchivo(buffer);
+
+                prar.setPrbtId(prbt.getId());
+                prar.setArchId(arin.getId());
+
+                archDAO.insert(arch);
+                prarDAO.insert(prar);
             }
 
             session.commit();

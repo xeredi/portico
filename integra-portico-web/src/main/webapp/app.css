@@ -15,6 +15,10 @@ p, label, li, .btn, .form-control, .input-group-sm>.form-control,
 	font-size: 11px;
 }
 
+.alert li {
+	list-style-type: none;
+}
+
 .form-control {
 	color: black;
 }
@@ -96,7 +100,7 @@ a {
 	padding: 0px;
 }
 
-.nav, .pagination, .carousel, .panel-title a, .input-group-addon {
+.nav, .pagination, .carousel, .panel-title a, .input-group-addon, a {
 	cursor: pointer;
 }
 

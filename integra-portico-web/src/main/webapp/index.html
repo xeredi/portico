@@ -50,12 +50,10 @@
 	</header>
 
 	<div id="body-content" class="container-fluid">
-		<alert ng-if="actionErrors && actionErrors.length > 0" type="danger"> <span translate="errorList"></span>
-		<ul>
+		<ul ng-if="actionErrors && actionErrors.length > 0" class="alert alert-danger" role="alert">
+			<span translate="errorList"></span>
 			<li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
 		</ul>
-		</alert>
-
 		<span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner"></span>
 		<div ng-view></div>
 	</div>

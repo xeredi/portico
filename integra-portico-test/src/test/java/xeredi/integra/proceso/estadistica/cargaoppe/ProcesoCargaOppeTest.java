@@ -39,7 +39,7 @@ public final class ProcesoCargaOppeTest {
                 prpmMap.put(ProcesoCargaOppe.MES_PARAM, "04");
                 prpmMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
 
-                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null);
+                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
             }
 
             {
@@ -50,7 +50,7 @@ public final class ProcesoCargaOppeTest {
                 prpmMap.put(ProcesoCargaOppe.MES_PARAM, "10");
                 prpmMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
 
-                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null);
+                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
             }
 
             cargaOppe.procesar();

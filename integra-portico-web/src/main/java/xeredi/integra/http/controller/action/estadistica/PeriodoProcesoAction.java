@@ -100,7 +100,7 @@ public final class PeriodoProcesoAction extends BaseAction {
             parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
-            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, parametroMap, null, null);
+            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, parametroMap, null, null, null);
         }
 
         return SUCCESS;
@@ -150,7 +150,7 @@ public final class PeriodoProcesoAction extends BaseAction {
             parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
-            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CREACION, parametroMap, null, null);
+            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CREACION, parametroMap, null, null, null);
         }
 
         return SUCCESS;

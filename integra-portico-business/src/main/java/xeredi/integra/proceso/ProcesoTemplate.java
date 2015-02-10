@@ -1,5 +1,6 @@
 package xeredi.integra.proceso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,9 +25,9 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
+import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
-import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
@@ -51,10 +52,10 @@ public abstract class ProcesoTemplate {
     protected List<ProcesoMensajeVO> prmnList;
 
     /** The prit salida list. */
-    protected List<ProcesoItemVO> pritSalidaList;
+    protected List<Long> itemSalidaList;
 
     /** The arin salida list. */
-    protected List<ArchivoInfoVO> arinSalidaList;
+    protected File fileSalida;
 
     /** The arin entrada list. */
     protected List<ArchivoInfoVO> arinEntradaList;
@@ -92,8 +93,7 @@ public abstract class ProcesoTemplate {
 
                 try {
                     prmnList = new ArrayList<>();
-                    pritSalidaList = new ArrayList<>();
-                    arinSalidaList = new ArrayList<>();
+                    itemSalidaList = new ArrayList<>();
 
                     prpmMap = prbtBO.selectPrpmMap(prbt.getId());
                     arinEntradaList = prbtBO.selectArinEntradaList(prbt.getId());
@@ -107,7 +107,7 @@ public abstract class ProcesoTemplate {
                 }
 
                 try {
-                    prbtBO.finalizar(prbt.getId(), prmnList, pritSalidaList, arinSalidaList);
+                    prbtBO.finalizar(prbt.getId(), prmnList, getItemTipoSalida(), itemSalidaList, fileSalida);
                 } catch (final InstanceNotFoundException ex) {
                     LOG.fatal("Proceso " + prbt.getId() + " no encontrado al tratar de finalizarlo. " + prbt);
                 } catch (final OperacionNoPermitidaException ex) {
@@ -149,7 +149,7 @@ public abstract class ProcesoTemplate {
      * @param fechaVigencia
      *            the fecha vigencia
      */
-    protected void buscarOrganizaciones(final Date fechaVigencia) {
+    protected final void buscarOrganizaciones(final Date fechaVigencia) {
         Preconditions.checkNotNull(fechaVigencia);
 
         if (!nifSet.isEmpty()) {
@@ -329,17 +329,9 @@ public abstract class ProcesoTemplate {
         addMensaje(codigo, MensajeNivel.I, mensaje);
     }
 
-    // FIXME Quitar - Es solo para pruebas
     /**
-     * Sets the prbt vo.
-     *
-     * @param value
-     *            the new prbt vo
+     * Preparar procesos.
      */
-    public void setPrbt(final ProcesoVO value) {
-        prbt = value;
-    }
-
     protected abstract void prepararProcesos();
 
     /**
@@ -360,4 +352,11 @@ public abstract class ProcesoTemplate {
      * @return the proceso modulo
      */
     protected abstract ProcesoModulo getProcesoModulo();
+
+    /**
+     * Gets the item tipo salida.
+     *
+     * @return the item tipo salida
+     */
+    protected abstract ItemTipo getItemTipoSalida();
 }

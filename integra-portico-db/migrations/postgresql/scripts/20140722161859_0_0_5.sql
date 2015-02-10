@@ -325,6 +325,13 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pritEntList', 'Elementos Ent.')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pritSalList', 'Elementos Sal.')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prit_nombre', 'Nombre')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prit_tipo', 'Tipo')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'prit_enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ItemTipo_srvc', 'Servicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ItemTipo_ssrv', 'Subservicio')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ItemTipo_vlrc', 'Valoración')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ItemTipo_fctr', 'Factura')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'ItemTipo_pepr', 'Período de Proceso')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'arch', 'Archivo')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'archList', 'Archivos')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'arch_nombre', 'Nombre')\
@@ -617,8 +624,6 @@ ALTER TABLE portico.tbl_servicio_srvc
 
 
 -- Guardar archivos en la BD
-DROP TABLE portico.tbl_proceso_archivo_prar\
-
 CREATE TABLE portico.tbl_archivo_arch (
 	arch_pk BIGINT NOT NULL
 	, arch_sentido CHAR(1) NOT NULL
@@ -632,6 +637,8 @@ CREATE TABLE portico.tbl_archivo_arch (
 \
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_archivo_arch TO portico\
+
+DROP TABLE portico.tbl_proceso_archivo_prar\
 
 CREATE TABLE portico.tbl_proceso_archivo_prar (
 	prar_prbt_pk BIGINT NOT NULL
@@ -663,11 +670,17 @@ CREATE TABLE portico.tbl_servicio_archivo_srar (
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_servicio_archivo_srar TO portico\
 
+
+ALTER TABLE portico.tbl_proceso_item_prit ADD COLUMN prit_tipo VARCHAR(4)\
+
+
 -- //@UNDO
 -- SQL to undo the change goes here.
 
 
 -- Guardar archivos en la BD
+ALTER TABLE portico.tbl_proceso_item_prit DROP COLUMN prit_tipo\
+
 DROP TABLE portico.tbl_servicio_archivo_srar\
 DROP TABLE portico.tbl_proceso_archivo_prar\
 DROP TABLE portico.tbl_archivo_arch\

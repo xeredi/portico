@@ -27,8 +27,8 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.metamodelo.vo.TipoDato;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
+import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.escala.EscalaBO;
@@ -69,7 +69,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                         LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
                     }
 
-                    prbtBO.crear(ProcesoModulo.S, ProcesoTipo.MAN_CARGA, null, null, file);
+                    prbtBO.crear(ProcesoModulo.S, ProcesoTipo.MAN_CARGA, null, null, null, file);
 
                     file.delete();
                 } catch (final IOException ex) {
@@ -126,11 +126,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
                             srvcBO.insert(fileImport.getManifiestoVO(), fileImport.getSsrvList(),
                                     fileImport.getSsssList(), arin.getId());
 
-                            final ProcesoItemVO pritSalida = new ProcesoItemVO();
-
-                            pritSalida.setItemId(fileImport.getManifiestoVO().getId());
-
-                            pritSalidaList.add(pritSalida);
+                            itemSalidaList.add(fileImport.getManifiestoVO().getId());
                         } catch (final DuplicateInstanceException ex) {
                             throw new Error(ex);
                         }
@@ -167,6 +163,14 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
     @Override
     protected ProcesoModulo getProcesoModulo() {
         return ProcesoModulo.S;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ItemTipo getItemTipoSalida() {
+        return ItemTipo.srvc;
     }
 
     /**
