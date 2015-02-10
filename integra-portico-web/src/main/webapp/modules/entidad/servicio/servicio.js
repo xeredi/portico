@@ -89,7 +89,7 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/servicio/srvc/maniTotales/:srvcId", {
+    .when("/servicio/srvc/maniTotales/:entiId/:srvcId", {
         templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
         controller : "maniTotalesController",
         controllerAs : "vm"
@@ -133,7 +133,7 @@ function config($routeProvider) {
         controllerAs : "vm"
     })
 
-    .when("/servicio/ssrv/mablTotales/:srvcId/:ssrvId", {
+    .when("/servicio/ssrv/mablTotales/:entiId/:srvcId/:ssrvId", {
         templateUrl : "modules/entidad/servicio/manifiesto/mabl-totales.html",
         controller : "mablTotalesController",
         controllerAs : "vm"
@@ -377,7 +377,7 @@ function srvcDetailController($http, $location, $routeParams, pageTitleService) 
 
             break;
         case "mani-totales":
-            $location.path("/servicio/srvc/maniTotales/" + vm.item.id);
+            $location.path("/servicio/srvc/maniTotales/" + vm.item.entiId + "/" + vm.item.id);
 
             break;
         default:
@@ -543,15 +543,19 @@ function srvcLupaCtrl($http, $scope) {
     };
 }
 
-function maniTotalesController($scope, $http, $location, $routeParams) {
+function maniTotalesController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
     $http.post("servicio/manifiesto/mani-totales.action", {
         item : {
             id : $routeParams.srvcId
         }
     }).success(function(data) {
-        $scope.item = data.item;
-        $scope.resumen = data.resumen;
+        vm.item = data.item;
+        vm.resumen = data.resumen;
     });
+
+    pageTitleService.setTitleEnti($routeParams.entiId, "page_verificarTotales");
 }
 
 function ssrvGridController($http, $location, $routeParams, $modal, pageTitleService) {
@@ -720,7 +724,7 @@ function ssrvDetailController($http, $location, $routeParams, pageTitleService) 
 
             break;
         case "mabl-totales":
-            $location.path("/servicio/ssrv/mablTotales/" + vm.item.srvc.id + "/" + vm.item.id);
+            $location.path("/servicio/ssrv/mablTotales/" + vm.item.entiId + "/" + vm.item.srvc.id + "/" + vm.item.id);
 
             break;
 
@@ -985,7 +989,7 @@ function ssrvLupaCtrl($http, $scope) {
     };
 }
 
-function mablTotalesController($http, $location, $routeParams, pageTitleService) {
+function mablTotalesController($http, $routeParams, pageTitleService) {
     var vm = this;
 
     $http.post("servicio/manifiesto/mabl-totales.action", {

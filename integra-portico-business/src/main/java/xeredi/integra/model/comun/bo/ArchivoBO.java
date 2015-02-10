@@ -1,6 +1,5 @@
 package xeredi.integra.model.comun.bo;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
 import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.comun.vo.ArchivoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
+import xeredi.integra.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
@@ -40,7 +40,7 @@ public final class ArchivoBO {
                 throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
             }
 
-            return new ByteArrayInputStream(arch.getArchivo());
+            return GzipUtil.decompress(arch.getArchivo());
         }
     }
 

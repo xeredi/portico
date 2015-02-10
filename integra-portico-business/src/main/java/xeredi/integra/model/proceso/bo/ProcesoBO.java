@@ -1,7 +1,6 @@
 package xeredi.integra.model.proceso.bo;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +40,7 @@ import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
+import xeredi.integra.model.util.GzipUtil;
 import xeredi.util.mybatis.SqlMapperLocator;
 import xeredi.util.pagination.PaginatedList;
 
@@ -70,14 +70,10 @@ public class ProcesoBO {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
 
-        if (fileEntrada != null) {
-            try (final FileInputStream fis = new FileInputStream(fileEntrada)) {
-                buffer = new byte[(int) fileEntrada.length()];
-
-                fis.read(buffer);
-            } catch (final IOException ex) {
-                throw new Error(ex);
-            }
+        try {
+            buffer = GzipUtil.compress(fileEntrada);
+        } catch (final IOException ex) {
+            throw new Error(ex);
         }
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -202,7 +198,7 @@ public class ProcesoBO {
      */
     public final void finalizar(final @Nonnull Long prbtId, final List<ProcesoMensajeVO> prmnList,
             final List<ProcesoItemVO> pritSalidaList, final List<ArchivoInfoVO> arinSalidaList)
-            throws InstanceNotFoundException, OperacionNoPermitidaException {
+                    throws InstanceNotFoundException, OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
@@ -264,7 +260,7 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void cancelar(final @Nonnull Long prbtId) throws InstanceNotFoundException,
-            OperacionNoPermitidaException {
+    OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
