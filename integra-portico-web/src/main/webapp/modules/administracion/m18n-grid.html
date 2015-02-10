@@ -19,16 +19,16 @@
                 <tr>
                     <th class="buttonLinks" nowrap="nowrap" />
                     <th class="codigo" nowrap="nowrap" translate="m18n_key"></th>
-                    <th ng-repeat="language in vm.report.languageList track by $index" nowrap="nowrap"
-                        ng-bind="language" />
+                    <th ng-repeat="language in ::vm.report.languageList track by language" nowrap="nowrap"
+                        ng-bind="::language" />
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="key in vm.report.keys track by $index" ng-show="([key] | filter:m18nSearch).length > 0">
-                    <td><a ng-href="#/administracion/m18n/detail/{{key}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <tr ng-repeat="key in ::vm.report.keys track by key" ng-show="([key] | filter:m18nSearch).length > 0">
+                    <td><a ng-href="#/administracion/m18n/detail/{{::key}}"><i class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="key"></td>
-                    <td ng-repeat="language in vm.report.languageList track by $index"
-                        ng-bind="vm.report.valuesMap[key][language]"></td>
+                    <td ng-repeat="language in ::vm.report.languageList track by $index"
+                        ng-bind="::vm.report.valuesMap[key][language]"></td>
                 </tr>
             </tbody>
         </table>

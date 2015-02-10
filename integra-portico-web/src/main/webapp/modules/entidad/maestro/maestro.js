@@ -172,11 +172,17 @@ function sprmService($http) {
     }
 }
 
-function maestroController($http, pageTitleService) {
+function maestroController($http, $translate, pageTitleService) {
     var vm = this;
 
     $http.post('maestro/tppr-list.action').success(function(data) {
-        vm.tpprList = data.tpprList;
+        vm.tpprList = data.tpprList.map(function(tppr) {
+            $translate('enti_' + tppr.value).then(function(translation) {
+                tppr.label = translation.toUpperCase();
+            });
+
+            return tppr;
+        });
     });
 
     pageTitleService.setTitle("prmtList", "page_home");

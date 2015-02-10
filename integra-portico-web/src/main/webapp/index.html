@@ -17,9 +17,11 @@
 				<li><a ng-href="index.html" class="brand" ng-bind="title"></a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li class="btn-group" dropdown is-open="status.isopen"><a class="btn btn-primary dropdown-toggle"
-					dropdown-toggle ng-disabled="disabled" translate="menu"></a>
-					<ul class="dropdown-menu" role="menu">
+				<div class="dropdown">
+					<!--
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+						aria-expanded="true" translate="menu"></button>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 						<li role="presentation" class="divider"></li>
 						<li><a ng-href="#/servicio" translate="srvcList"></a></li>
 						<li><a ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
@@ -28,7 +30,21 @@
 						<li><a ng-href="#/proceso/prbt/grid" translate="prbtList"></a></li>
 						<li role="presentation" class="divider"></li>
 						<li><a ng-href="#/administracion" translate="sec_administracion"></a></li>
-					</ul></li>
+					</ul>
+-->
+					<li class="btn-group" dropdown is-open="status.isopen"><a class="btn btn-primary dropdown-toggle"
+						dropdown-toggle ng-disabled="disabled" translate="menu"></a>
+						<ul class="dropdown-menu" role="menu">
+							<li role="presentation" class="divider"></li>
+							<li><a ng-href="#/servicio" translate="srvcList"></a></li>
+							<li><a ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
+							<li><a ng-href="#/maestro" translate="prmtList"></a></li>
+							<li><a ng-href="#/facturacion" translate="sec_facturacion"></a></li>
+							<li><a ng-href="#/proceso/prbt/grid" translate="prbtList"></a></li>
+							<li role="presentation" class="divider"></li>
+							<li><a ng-href="#/administracion" translate="sec_administracion"></a></li>
+						</ul></li>
+				</div>
 			</ul>
 		</nav>
 	</header>

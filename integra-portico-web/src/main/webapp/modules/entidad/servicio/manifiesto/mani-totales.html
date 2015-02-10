@@ -1,6 +1,6 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-if="vm.item">
     <div class="row">
-        <p class="bg-primary">MANIFIESTO: {{vm.item.etiqueta}}</p>
+        <p class="bg-primary">MANIFIESTO: {{::vm.item.etiqueta}}</p>
     </div>
 
     <div ng-include="'modules/entidad/servicio/manifiesto/totales-content.html'"></div>
