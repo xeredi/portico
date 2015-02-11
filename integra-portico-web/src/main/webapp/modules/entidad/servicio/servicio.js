@@ -134,7 +134,7 @@ function config($routeProvider) {
     })
 
     .when("/servicio/ssrv/mablTotales/:entiId/:srvcId/:ssrvId", {
-        templateUrl : "modules/entidad/servicio/manifiesto/mabl-totales.html",
+        templateUrl : "modules/entidad/servicio/manifiesto/mani-totales.html",
         controller : "mablTotalesController",
         controllerAs : "vm"
     })

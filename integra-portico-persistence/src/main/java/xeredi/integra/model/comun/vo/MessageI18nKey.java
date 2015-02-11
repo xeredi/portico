@@ -947,6 +947,8 @@ public enum MessageI18nKey {
     prbt_cancelar,
     /** The prbt_finalizar. */
     prbt_finalizar,
+    /** The page_verificar totales. */
+    page_verificarTotales,
     /** The mani_resumen_mercancias. */
     mani_resumen_mercancias,
     /** The mani_resumen_pasajeros. */
