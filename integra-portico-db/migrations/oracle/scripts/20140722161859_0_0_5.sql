@@ -134,6 +134,7 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_imprimir', 'Imprimir')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_recargar', 'Recargar')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_valorar', 'Valorar')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_valoraciones', 'Valoraciones')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_cargar', 'Cargar')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_start', 'Iniciar')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'btn_pause', 'Pausar')\
@@ -295,7 +296,9 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_anio', 'Aut. Año')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_mes', 'Mes')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_file', 'Archivo')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_falta', 'F. Alta')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_sobreescribir', 'Sobreescribir?')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'pepr_cdmsGenerado', 'C. Mensual?')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'cdms', 'Cuadro Mensual')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estd', 'Estadistica')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'estdList', 'Estadisticas')\
@@ -563,6 +566,25 @@ INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'equi_bloquear', 'Bloquear Equipamiento')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'equi_iniciar', 'Iniciar Equipamiento')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'equi_anular', 'Anular Equipamiento')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_mercancias', 'Mercanc\u00edas')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_pasajeros', 'Pasajeros')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numBlsMercancia', 'N\u00ba BLs')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numBlsPasajeros', 'N\u00ba BLs')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numContenedores20', 'Contenedores 20')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numContenedores20Llenos', 'Llenos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numContenedores20Vacios', 'Vac\u00edos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numContenedores40', 'Contenedores 40')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numContenedores40Llenos', 'Llenos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numContenedores40Vacios', 'Vac\u00edos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numEquipamientos', 'Equipamientos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numEquipamientosLlenos', 'Llenos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numEquipamientosVacios', 'Vac\u00edos')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numPartidasMercancia', 'N\u00ba Partidas')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_pesoPartidasMercancia', 'Peso Total (Kg)')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numPartidasPasajeros', 'N\u00ba Partidas')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numPasajeros', 'N\u00ba Pasajeros')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numCruceristas', 'N\u00ba Cruceristas')\
+INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'mani_resumen_numVehiculos', 'N\u00ba Veh\u00edculos')\
 
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'atra_denegar', 'Denegar Atraque')\
 INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 1, 'atra_autorizar', 'Autorizar Atraque')\

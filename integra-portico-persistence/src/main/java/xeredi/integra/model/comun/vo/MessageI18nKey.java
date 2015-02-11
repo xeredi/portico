@@ -58,6 +58,8 @@ public enum MessageI18nKey {
     btn_recargar,
     /** The btn_valorar. */
     btn_valorar,
+    /** The btn_valoraciones. */
+    btn_valoraciones,
     /** The btn_cargar. */
     btn_cargar,
     /** The btn_start. */
@@ -379,8 +381,12 @@ public enum MessageI18nKey {
     pepr_mes,
     /** The pepr_file. */
     pepr_file,
+    /** The pepr_falta. */
+    pepr_falta,
     /** The pepr_sobreescribir. */
     pepr_sobreescribir,
+    /** The pepr_cdms generado. */
+    pepr_cdmsGenerado,
     /** The cdms. */
     cdms,
     /** The estd. */
@@ -941,6 +947,44 @@ public enum MessageI18nKey {
     prbt_cancelar,
     /** The prbt_finalizar. */
     prbt_finalizar,
+    /** The mani_resumen_mercancias. */
+    mani_resumen_mercancias,
+    /** The mani_resumen_pasajeros. */
+    mani_resumen_pasajeros,
+    /** The mani_resumen_num bls mercancia. */
+    mani_resumen_numBlsMercancia,
+    /** The mani_resumen_num bls pasajeros. */
+    mani_resumen_numBlsPasajeros,
+    /** The mani_resumen_num contenedores20. */
+    mani_resumen_numContenedores20,
+    /** The mani_resumen_num contenedores20 llenos. */
+    mani_resumen_numContenedores20Llenos,
+    /** The mani_resumen_num contenedores20 vacios. */
+    mani_resumen_numContenedores20Vacios,
+    /** The mani_resumen_num contenedores40. */
+    mani_resumen_numContenedores40,
+    /** The mani_resumen_num contenedores40 llenos. */
+    mani_resumen_numContenedores40Llenos,
+    /** The mani_resumen_num contenedores40 vacios. */
+    mani_resumen_numContenedores40Vacios,
+    /** The mani_resumen_num equipamientos. */
+    mani_resumen_numEquipamientos,
+    /** The mani_resumen_num equipamientos llenos. */
+    mani_resumen_numEquipamientosLlenos,
+    /** The mani_resumen_num equipamientos vacios. */
+    mani_resumen_numEquipamientosVacios,
+    /** The mani_resumen_num partidas mercancia. */
+    mani_resumen_numPartidasMercancia,
+    /** The mani_resumen_peso partidas mercancia. */
+    mani_resumen_pesoPartidasMercancia,
+    /** The mani_resumen_num partidas pasajeros. */
+    mani_resumen_numPartidasPasajeros,
+    /** The mani_resumen_num pasajeros. */
+    mani_resumen_numPasajeros,
+    /** The mani_resumen_num cruceristas. */
+    mani_resumen_numCruceristas,
+    /** The mani_resumen_num vehiculos. */
+    mani_resumen_numVehiculos,
 
     ;
 

@@ -69,25 +69,6 @@ angular.module("i18n", [ "pascalprecht.translate" ])
 
         mani_totales : "Totales Manifiesto",
         mabl_totales : "Totales BL",
-        mani_resumen_mercancias : "Mercanc\u00edas",
-        mani_resumen_pasajeros : "Pasajeros",
-        mani_resumen_numBlsMercancia : "N\u00ba BLs",
-        mani_resumen_numBlsPasajeros : "N\u00ba BLs",
-        mani_resumen_numContenedores20 : "Contenedores 20",
-        mani_resumen_numContenedores20Llenos : "Llenos",
-        mani_resumen_numContenedores20Vacios : "Vac\u00edos",
-        mani_resumen_numContenedores40 : "Contenedores 40",
-        mani_resumen_numContenedores40Llenos : "Llenos",
-        mani_resumen_numContenedores40Vacios : "Vac\u00edos",
-        mani_resumen_numEquipamientos : "Equipamientos",
-        mani_resumen_numEquipamientosLlenos : "Llenos",
-        mani_resumen_numEquipamientosVacios : "Vac\u00edos",
-        mani_resumen_numPartidasMercancia : "N\u00ba Partidas",
-        mani_resumen_pesoPartidasMercancia : "Peso Total (Kg)",
-        mani_resumen_numPartidasPasajeros : "N\u00ba Partidas",
-        mani_resumen_numPasajeros : "N\u00ba Pasajeros",
-        mani_resumen_numCruceristas : "N\u00ba Cruceristas",
-        mani_resumen_numVehiculos : "N\u00ba Veh\u00edculos",
     });
 
     $translateProvider.preferredLanguage("es");
