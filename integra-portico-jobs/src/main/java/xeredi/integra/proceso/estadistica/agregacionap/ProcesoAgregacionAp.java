@@ -1,5 +1,6 @@
 package xeredi.integra.proceso.estadistica.agregacionap;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -134,6 +135,8 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
                     } catch (final DuplicateInstanceException ex) {
                         addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getAutp().getParametro() + " "
                                 + pepr.getAnio() + " " + pepr.getMes());
+                    } catch (final IOException ex) {
+                        addError(MensajeCodigo.G_000, ex.getMessage());
                     }
                 }
             } catch (final InstanceNotFoundException ex) {

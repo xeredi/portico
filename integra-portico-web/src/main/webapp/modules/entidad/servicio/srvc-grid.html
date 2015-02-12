@@ -33,6 +33,7 @@
 					<th class="buttonLinks" nowrap="nowrap" />
 					<th class="codigo" nowrap="nowrap" translate>srvc</th>
 					<th ng-if="vm.enti.tpdtEstado" translate>srvc_estado</th>
+					<th translate>srvc_falta</th>
 					<th ng-if="!vm.enti.temporal" translate>srvc_fref</th>
 					<th ng-if="vm.enti.temporal" translate>srvc_fini</th>
 					<th ng-if="vm.enti.temporal" translate>srvc_ffin</th>
@@ -47,6 +48,7 @@
 					<td ng-bind="item.etiqueta" nowrap="nowrap"></td>
 					<td ng-if="vm.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
 						data-title="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + item.estado | translate}}" ng-bind="item.estado"></td>
+					<td nowrap="nowrap" ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
 					<td nowrap="nowrap" ng-if="!vm.enti.temporal" ng-bind="item.fref | date: ('format_datetime' | translate)"></td>
 					<td nowrap="nowrap" ng-if="vm.enti.temporal" ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
 					<td nowrap="nowrap" ng-if="vm.enti.temporal" ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>

@@ -88,6 +88,23 @@
 							srvc_pk = ssrv_srvc_pk
 					WHERE ssrv_pk = prit_item_pk
 				)
+				WHEN 'pepr' THEN (
+					SELECT
+						portico.CONCATENATE(
+							portico.CONCATENATE(
+								(
+									SELECT prmt_parametro
+									FROM tbl_parametro_prmt
+									WHERE prmt_pk = pepr_autp_pk
+								)
+								, pepr_anio::VARCHAR
+							)
+							, LPAD(pepr_mes::VARCHAR, 2, '0')::VARCHAR
+						)
+					FROM
+						tbl_periodo_proceso_pepr
+					WHERE pepr_pk = prit_item_pk
+				)
 	        END
 	    ) AS prit_etiqueta
     FROM

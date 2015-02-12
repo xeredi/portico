@@ -1,27 +1,17 @@
 package xeredi.integra.http.controller.action.estadistica;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.bo.ArchivoBO;
 import xeredi.integra.model.comun.exception.ApplicationException;
-import xeredi.integra.model.comun.exception.InternalErrorException;
-import xeredi.integra.model.estadistica.bo.EstadisticaBO;
+import xeredi.integra.model.comun.vo.ArchivoCriterioVO;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
-import xeredi.integra.model.estadistica.io.EstadisticaFileType;
-import xeredi.integra.model.estadistica.io.OppeFileExport;
-import xeredi.integra.model.estadistica.vo.EstadisticaCriterioVO;
-import xeredi.integra.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.integra.model.metamodelo.vo.Entidad;
 
 import com.google.common.base.Preconditions;
 
@@ -36,6 +26,9 @@ public final class PeriodoProcesoExportAction extends BaseAction {
 
     /** The pepr. */
     private PeriodoProcesoVO pepr;
+
+    /** The arin. */
+    private ArchivoInfoVO arin;
 
     /** The stream. */
     private InputStream stream;
@@ -55,61 +48,16 @@ public final class PeriodoProcesoExportAction extends BaseAction {
         Preconditions.checkNotNull(pepr);
         Preconditions.checkNotNull(pepr.getId());
 
-        final OppeFileExport export = new OppeFileExport();
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-        final Date exportDate = new Date();
-        final EstadisticaBO estdBO = new EstadisticaBO();
-        final EstadisticaCriterioVO estdCriterioVO = new EstadisticaCriterioVO();
-        final PeriodoProcesoCriterioVO peprCriterioVO = new PeriodoProcesoCriterioVO();
+        final ArchivoBO archBO = new ArchivoBO();
+        final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                final ZipOutputStream zipOutputStream = new ZipOutputStream(baos)) {
-            pepr = peprBO.select(pepr.getId());
+        pepr = peprBO.select(pepr.getId());
 
-            peprCriterioVO.setId(pepr.getId());
-            estdCriterioVO.setPepr(peprCriterioVO);
+        archCriterio.setId(pepr.getArin().getId());
 
-            estdCriterioVO.setEntiId(Entidad.ACTIVIDAD_PESQUERA.getId());
-            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAP));
-            export.generarEAP(zipOutputStream, estdBO.selectList(estdCriterioVO));
-            zipOutputStream.closeEntry();
-
-            estdCriterioVO.setEntiId(Entidad.AVITUALLAMIENTO.getId());
-            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAV));
-            export.generarEAV(zipOutputStream, estdBO.selectList(estdCriterioVO));
-            zipOutputStream.closeEntry();
-
-            estdCriterioVO.setEntiId(Entidad.AGREGACION_ESCALA.getId());
-            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAE));
-            export.generarEAE(zipOutputStream, estdBO.selectList(estdCriterioVO));
-            zipOutputStream.closeEntry();
-
-            estdCriterioVO.setEntiId(Entidad.MOVIMIENTO_MERCANCIA.getId());
-            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EMM));
-            export.generarEMM(zipOutputStream, estdBO.selectList(estdCriterioVO));
-            zipOutputStream.closeEntry();
-
-            estdCriterioVO.setEntiId(Entidad.MOVIMIENTO_MERCANCIA_EEE.getId());
-            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EME));
-            export.generarEME(zipOutputStream, estdBO.selectList(estdCriterioVO));
-            zipOutputStream.closeEntry();
-
-            estdCriterioVO.setEntiId(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId());
-            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EMT));
-            export.generarEMT(zipOutputStream, estdBO.selectList(estdCriterioVO));
-            zipOutputStream.closeEntry();
-
-            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EPP));
-            export.generarEPP(zipOutputStream, pepr, exportDate);
-            zipOutputStream.closeEntry();
-
-            zipOutputStream.flush();
-            zipOutputStream.close();
-
-            stream = new ByteArrayInputStream(baos.toByteArray());
-        } catch (final IOException ex) {
-            throw new InternalErrorException(ex);
-        }
+        arin = archBO.selectInfo(archCriterio);
+        stream = archBO.select(pepr.getArin().getId());
 
         return SUCCESS;
     }
@@ -142,6 +90,15 @@ public final class PeriodoProcesoExportAction extends BaseAction {
      */
     public InputStream getStream() {
         return stream;
+    }
+
+    /**
+     * Gets the arin.
+     *
+     * @return the arin
+     */
+    public ArchivoInfoVO getArin() {
+        return arin;
     }
 
 }

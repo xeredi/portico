@@ -1,5 +1,7 @@
 package xeredi.integra.model.estadistica.bo;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,6 +9,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.annotation.Nonnull;
 
@@ -17,8 +21,12 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.dao.ArchivoDAO;
 import xeredi.integra.model.comun.exception.DuplicateInstanceException;
 import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
+import xeredi.integra.model.comun.vo.ArchivoSentido;
+import xeredi.integra.model.comun.vo.ArchivoVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.dao.CuadroMesDAO;
@@ -26,6 +34,8 @@ import xeredi.integra.model.estadistica.dao.EstadisticaAgregadoDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaDAO;
 import xeredi.integra.model.estadistica.dao.EstadisticaDatoDAO;
 import xeredi.integra.model.estadistica.dao.PeriodoProcesoDAO;
+import xeredi.integra.model.estadistica.io.EstadisticaFileType;
+import xeredi.integra.model.estadistica.io.OppeFileExport;
 import xeredi.integra.model.estadistica.vo.CuadroMesConcepto;
 import xeredi.integra.model.estadistica.vo.CuadroMesParametroVO;
 import xeredi.integra.model.estadistica.vo.EstadisticaAgregadoCriterioVO;
@@ -304,18 +314,22 @@ public class PeriodoProcesoBO {
     /**
      * Agregar servicios.
      *
-     * @param peprVO
-     *            the pepr vo
+     * @param pepr
+     *            the pepr
+     * @param subpIds
+     *            the subp ids
      * @param removeIfExists
      *            the remove if exists
      * @throws DuplicateInstanceException
      *             the duplicate instance exception
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    public final void agregarServicios(final @Nonnull PeriodoProcesoVO peprVO, final @Nonnull List<Long> subpIds,
-            final boolean removeIfExists) throws DuplicateInstanceException {
-        Preconditions.checkNotNull(peprVO.getAutp());
-        Preconditions.checkNotNull(peprVO.getAnio());
-        Preconditions.checkNotNull(peprVO.getMes());
+    public final void agregarServicios(final @Nonnull PeriodoProcesoVO pepr, final @Nonnull List<Long> subpIds,
+            final boolean removeIfExists) throws DuplicateInstanceException, IOException {
+        Preconditions.checkNotNull(pepr.getAutp());
+        Preconditions.checkNotNull(pepr.getAnio());
+        Preconditions.checkNotNull(pepr.getMes());
         Preconditions.checkArgument(!subpIds.isEmpty());
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -325,21 +339,20 @@ public class PeriodoProcesoBO {
             final IgBO igBO = new IgBO();
 
             // Si el periodo proceso ya existe
-            if (peprDAO.exists(peprVO)) {
+            if (peprDAO.exists(pepr)) {
                 if (removeIfExists) {
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("Borrado del periodo de proceso existente");
                     }
 
-                    delete(session, peprVO);
+                    delete(session, pepr);
                 } else {
-                    throw new DuplicateInstanceException(MessageI18nKey.pepr, peprVO);
+                    throw new DuplicateInstanceException(MessageI18nKey.pepr, pepr);
                 }
             }
 
-            peprVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            peprVO.setFalta(Calendar.getInstance().getTime());
-            peprDAO.insert(peprVO);
+            pepr.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            pepr.setFalta(Calendar.getInstance().getTime());
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Busqueda de datos agregados");
@@ -349,22 +362,22 @@ public class PeriodoProcesoBO {
 
             final Calendar finicio = Calendar.getInstance();
             finicio.setTimeInMillis(0);
-            finicio.set(Calendar.YEAR, peprVO.getAnio());
-            finicio.set(Calendar.MONTH, peprVO.getMes() - 1);
+            finicio.set(Calendar.YEAR, pepr.getAnio());
+            finicio.set(Calendar.MONTH, pepr.getMes() - 1);
             finicio.set(Calendar.DAY_OF_MONTH, 1);
 
             final Calendar ffin = Calendar.getInstance();
             ffin.setTimeInMillis(0);
-            ffin.set(Calendar.YEAR, peprVO.getAnio());
-            ffin.set(Calendar.MONTH, peprVO.getMes());
+            ffin.set(Calendar.YEAR, pepr.getAnio());
+            ffin.set(Calendar.MONTH, pepr.getMes());
             ffin.set(Calendar.DAY_OF_MONTH, 1);
 
             esagCriterioVO.setFini(finicio.getTime());
             esagCriterioVO.setFfin(ffin.getTime());
             esagCriterioVO.setSubpIds(subpIds);
-            esagCriterioVO.setPeprId(peprVO.getId());
+            esagCriterioVO.setPeprId(pepr.getId());
 
-            final List<EstadisticaVO> estdList = new ArrayList<>();
+            final Map<Entidad, List<EstadisticaVO>> estdMap = new HashMap<Entidad, List<EstadisticaVO>>();
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Actividad Pesquera - update");
@@ -376,8 +389,10 @@ public class PeriodoProcesoBO {
                 LOG.debug("Actividad Pesquera - select");
             }
 
-            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.ACTIVIDAD_PESQUERA.getId(),
-                    esagDAO.selectActividadPesquera(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.ACTIVIDAD_PESQUERA,
+                    obtenerEstadisticas(pepr, Entidad.ACTIVIDAD_PESQUERA.getId(),
+                            esagDAO.selectActividadPesquera(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Avituallamiento - update");
@@ -389,8 +404,10 @@ public class PeriodoProcesoBO {
                 LOG.debug("Avituallamiento - select");
             }
 
-            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AVITUALLAMIENTO.getId(),
-                    esagDAO.selectAvituallamiento(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.AVITUALLAMIENTO,
+                    obtenerEstadisticas(pepr, Entidad.AVITUALLAMIENTO.getId(),
+                            esagDAO.selectAvituallamiento(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Agregacion Superficie - update");
@@ -402,8 +419,10 @@ public class PeriodoProcesoBO {
                 LOG.debug("Agregacion Superficie - select");
             }
 
-            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_SUPERFICIE.getId(),
-                    esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.AGREGACION_SUPERFICIE,
+                    obtenerEstadisticas(pepr, Entidad.AGREGACION_SUPERFICIE.getId(),
+                            esagDAO.selectAgregacionSuperficie(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Agregacion Escala - update");
@@ -415,8 +434,10 @@ public class PeriodoProcesoBO {
                 LOG.debug("Agregacion Escala - select");
             }
 
-            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.AGREGACION_ESCALA.getId(),
-                    esagDAO.selectAgregacionEscala(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.AGREGACION_ESCALA,
+                    obtenerEstadisticas(pepr, Entidad.AGREGACION_ESCALA.getId(),
+                            esagDAO.selectAgregacionEscala(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Movimiento Tipo Buque EEE - update");
@@ -428,8 +449,10 @@ public class PeriodoProcesoBO {
                 LOG.debug("Movimiento Tipo Buque EEE - select");
             }
 
-            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
-                    esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.MOVIMIENTO_TIPO_BUQUE_EEE,
+                    obtenerEstadisticas(pepr, Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId(),
+                            esagDAO.selectMovimientoTipoBuqueEEE(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Buque Fondeado Atracado - update");
@@ -441,8 +464,10 @@ public class PeriodoProcesoBO {
                 LOG.debug("Buque Fondeado Atracado - select");
             }
 
-            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
-                    esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.BUQUE_FONDEADO_ATRACADO,
+                    obtenerEstadisticas(pepr, Entidad.BUQUE_FONDEADO_ATRACADO.getId(),
+                            esagDAO.selectBuqueFondeadoAtracado(esagCriterioVO)));
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Movimiento Mercancia - update");
@@ -454,10 +479,33 @@ public class PeriodoProcesoBO {
                 LOG.debug("Movimiento Mercancia - select");
             }
 
-            estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA.getId(),
-                    esagDAO.selectMovimientoMercancia(esagCriterioVO)));
+            estdMap.put(
+                    Entidad.MOVIMIENTO_MERCANCIA,
+                    obtenerEstadisticas(pepr, Entidad.MOVIMIENTO_MERCANCIA.getId(),
+                            esagDAO.selectMovimientoMercancia(esagCriterioVO)));
+            // FIXME Acabar
             // estdList.addAll(obtenerEstadisticas(peprVO, Entidad.MOVIMIENTO_MERCANCIA_EEE.getId(),
             // esagDAO.selectMovimientoMercanciaEEE(esagCriterioVO)));
+
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Generacion de archivo de OPPE");
+            }
+
+            final byte[] buffer = generarArchivo(pepr, estdMap);
+
+            final ArchivoVO arch = new ArchivoVO();
+            final ArchivoInfoVO arin = new ArchivoInfoVO();
+
+            arin.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
+            arin.setNombre(pepr.getFilename() + ".zip");
+            arin.setSentido(ArchivoSentido.S);
+            arin.setFalta(Calendar.getInstance().getTime());
+            arin.setTamanio(buffer.length);
+
+            arch.setArin(arin);
+            arch.setArchivo(buffer);
+
+            pepr.setArin(arin);
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Grabacion de Datos Agregados");
@@ -465,17 +513,25 @@ public class PeriodoProcesoBO {
 
             final EstadisticaDAO estdDAO = session.getMapper(EstadisticaDAO.class);
             final EstadisticaDatoDAO esdtDAO = session.getMapper(EstadisticaDatoDAO.class);
+            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
 
-            for (final EstadisticaVO estdVO : estdList) {
-                estdDAO.insert(estdVO);
+            archDAO.insert(arch);
+            peprDAO.insert(pepr);
+
+            for (final Entidad entidad : estdMap.keySet()) {
+                for (final EstadisticaVO estdVO : estdMap.get(entidad)) {
+                    estdDAO.insert(estdVO);
+                }
             }
 
-            for (final EstadisticaVO estdVO : estdList) {
-                if (estdVO.getItdtMap() != null) {
-                    for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
-                        itdtVO.setItemId(estdVO.getId());
+            for (final Entidad entidad : estdMap.keySet()) {
+                for (final EstadisticaVO estdVO : estdMap.get(entidad)) {
+                    if (estdVO.getItdtMap() != null) {
+                        for (final ItemDatoVO itdtVO : estdVO.getItdtMap().values()) {
+                            itdtVO.setItemId(estdVO.getId());
 
-                        esdtDAO.insert(itdtVO);
+                            esdtDAO.insert(itdtVO);
+                        }
                     }
                 }
             }
@@ -484,13 +540,63 @@ public class PeriodoProcesoBO {
                 LOG.debug("Cuadro Mensual");
             }
 
-            generarCuadroMensual(session, peprVO.getId(), removeIfExists);
-
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Generacion de archivo de OPPE");
-            }
+            generarCuadroMensual(session, pepr.getId(), removeIfExists);
 
             session.commit();
+        }
+    }
+
+    /**
+     * Generar archivo.
+     *
+     * @param pepr
+     *            the pepr
+     * @param estdMap
+     *            the estd map
+     * @return the byte[]
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    private byte[] generarArchivo(final PeriodoProcesoVO pepr, final Map<Entidad, List<EstadisticaVO>> estdMap)
+            throws IOException {
+        final OppeFileExport export = new OppeFileExport();
+
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                final ZipOutputStream zipOutputStream = new ZipOutputStream(baos)) {
+
+            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAP));
+            export.generarEAP(zipOutputStream, estdMap.get(Entidad.ACTIVIDAD_PESQUERA));
+            zipOutputStream.closeEntry();
+
+            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAV));
+            export.generarEAV(zipOutputStream, estdMap.get(Entidad.AVITUALLAMIENTO));
+            zipOutputStream.closeEntry();
+
+            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EAE));
+            export.generarEAE(zipOutputStream, estdMap.get(Entidad.AGREGACION_ESCALA));
+            zipOutputStream.closeEntry();
+
+            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EMM));
+            export.generarEMM(zipOutputStream, estdMap.get(Entidad.MOVIMIENTO_MERCANCIA));
+            zipOutputStream.closeEntry();
+
+            // FIXME Acabar
+            // zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EME));
+            // export.generarEME(zipOutputStream, estdMap.get(Entidad.MOVIMIENTO_MERCANCIA_EEE));
+            // zipOutputStream.closeEntry();
+
+            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EMT));
+            export.generarEMT(zipOutputStream, estdMap.get(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE));
+            zipOutputStream.closeEntry();
+
+            zipOutputStream.putNextEntry(new ZipEntry(pepr.getFilename() + '.' + EstadisticaFileType.EPP));
+            export.generarEPP(zipOutputStream, pepr, Calendar.getInstance().getTime());
+            zipOutputStream.closeEntry();
+
+            zipOutputStream.flush();
+            zipOutputStream.close();
+
+            return baos.toByteArray();
         }
     }
 
@@ -514,13 +620,11 @@ public class PeriodoProcesoBO {
 
         for (final EstadisticaAgregadoVO esagVO : esagList) {
             final EstadisticaVO estdVO = new EstadisticaVO();
-            final ParametroVO autpVO = new ParametroVO();
-
-            autpVO.setId(esagVO.getSubpId());
+            final ParametroVO autp = new ParametroVO();
 
             estdVO.setEntiId(tpesId);
             estdVO.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            estdVO.setSubp(autpVO);
+            estdVO.setSubp(esagVO.getSubp());
             estdVO.setPepr(peprVO);
             estdVO.setItdtMap(new HashMap<Long, ItemDatoVO>());
 
@@ -565,6 +669,9 @@ public class PeriodoProcesoBO {
                             } else {
                                 prmtVO.setId(((Long) value).longValue());
                             }
+
+                            prmtVO.setParametro(String.valueOf(esagVO.getEsdtMap().get(
+                                    entd.getTpdt().getCodigo() + "_prmt")));
 
                             itdtVO.setPrmt(prmtVO);
 

@@ -1,15 +1,21 @@
 package xeredi.integra.proceso.estadistica.cargaoppe;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.Map;
 
+import javax.annotation.Nonnull;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -104,28 +110,23 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
             if (arinList.isEmpty()) {
                 addError(MensajeCodigo.G_000, EstadisticaFileType.zip.name());
             } else {
-                try (final InputStream stream = flsrBO.select(arinList.get(0).getId());
-                        final ZipInputStream zis = new ZipInputStream(stream)) {
-                    if (prmnList.isEmpty()) {
-                        getEntry(zis, pepr, EstadisticaFileType.EPP);
-                        getEntry(zis, pepr, EstadisticaFileType.EAP);
-                        getEntry(zis, pepr, EstadisticaFileType.EAV);
-                        getEntry(zis, pepr, EstadisticaFileType.EAE);
-                        getEntry(zis, pepr, EstadisticaFileType.EMM);
-                        getEntry(zis, pepr, EstadisticaFileType.EME);
-                        getEntry(zis, pepr, EstadisticaFileType.EMT);
-                    }
+                final ArchivoInfoVO arin = arinList.get(0);
+
+                pepr.setArin(arin);
+
+                try (final InputStream stream = flsrBO.select(arin.getId())) {
+                    final Map<EstadisticaFileType, List<String>> mapFiles = readFile(stream);
 
                     if (prmnList.isEmpty()) {
-                        isSigma = fileImport.verifyIsSigma(getEntry(zis, pepr, EstadisticaFileType.EPP));
+                        isSigma = fileImport.verifyIsSigma(mapFiles.get(EstadisticaFileType.EPP));
 
-                        fileImport.readMaestrosEPP(getEntry(zis, pepr, EstadisticaFileType.EPP));
-                        fileImport.readMaestrosEAP(getEntry(zis, pepr, EstadisticaFileType.EAP));
-                        fileImport.readMaestrosEAV(getEntry(zis, pepr, EstadisticaFileType.EAV));
-                        fileImport.readMaestrosEAE(getEntry(zis, pepr, EstadisticaFileType.EAE));
-                        fileImport.readMaestrosEMM(getEntry(zis, pepr, EstadisticaFileType.EMM));
-                        fileImport.readMaestrosEME(getEntry(zis, pepr, EstadisticaFileType.EME), isSigma);
-                        fileImport.readMaestrosEMT(getEntry(zis, pepr, EstadisticaFileType.EMT));
+                        fileImport.readMaestrosEPP(mapFiles.get(EstadisticaFileType.EPP));
+                        fileImport.readMaestrosEAP(mapFiles.get(EstadisticaFileType.EAP));
+                        fileImport.readMaestrosEAV(mapFiles.get(EstadisticaFileType.EAV));
+                        fileImport.readMaestrosEAE(mapFiles.get(EstadisticaFileType.EAE));
+                        fileImport.readMaestrosEMM(mapFiles.get(EstadisticaFileType.EMM));
+                        fileImport.readMaestrosEME(mapFiles.get(EstadisticaFileType.EME), isSigma);
+                        fileImport.readMaestrosEMT(mapFiles.get(EstadisticaFileType.EMT));
                     }
 
                     if (prmnList.isEmpty()) {
@@ -133,13 +134,13 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
                     }
 
                     if (prmnList.isEmpty()) {
-                        fileImport.readEPP(getEntry(zis, pepr, EstadisticaFileType.EPP));
-                        fileImport.readEAP(getEntry(zis, pepr, EstadisticaFileType.EAP));
-                        fileImport.readEAV(getEntry(zis, pepr, EstadisticaFileType.EAV));
-                        fileImport.readEAE(getEntry(zis, pepr, EstadisticaFileType.EAE));
-                        fileImport.readEMM(getEntry(zis, pepr, EstadisticaFileType.EMM));
-                        fileImport.readEME(getEntry(zis, pepr, EstadisticaFileType.EME), isSigma);
-                        fileImport.readEMT(getEntry(zis, pepr, EstadisticaFileType.EMT));
+                        fileImport.readEPP(mapFiles.get(EstadisticaFileType.EPP));
+                        fileImport.readEAP(mapFiles.get(EstadisticaFileType.EAP));
+                        fileImport.readEAV(mapFiles.get(EstadisticaFileType.EAV));
+                        fileImport.readEAE(mapFiles.get(EstadisticaFileType.EAE));
+                        fileImport.readEMM(mapFiles.get(EstadisticaFileType.EMM));
+                        fileImport.readEME(mapFiles.get(EstadisticaFileType.EME), isSigma);
+                        fileImport.readEMT(mapFiles.get(EstadisticaFileType.EMT));
                     }
                 } catch (final IOException ex) {
                     addError(MensajeCodigo.G_010,
@@ -222,30 +223,38 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      *            the file type
      * @return the entry
      */
-    private InputStream getEntry(final ZipInputStream zis, final PeriodoProcesoVO peprVO,
-            final EstadisticaFileType fileType) {
-        final String filename = getFilename(peprVO, fileType);
+    private Map<EstadisticaFileType, List<String>> readFile(final @Nonnull InputStream stream) throws IOException {
+        final Map<EstadisticaFileType, List<String>> fileMap = new HashMap<EstadisticaFileType, List<String>>();
 
-        ZipEntry entry = null;
+        try (final ZipArchiveInputStream zis = new ZipArchiveInputStream(stream)) {
+            ArchiveEntry entry = null;
 
-        try {
             do {
                 entry = zis.getNextEntry();
 
-                if (entry != null && entry.getName().equals(filename)) {
-                    final byte[] buffer = new byte[(int) entry.getSize()];
+                if (entry != null) {
+                    try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                        final String fileExtension = entry.getName().substring(entry.getName().lastIndexOf('.') + 1)
+                                .toUpperCase();
+                        final byte[] buffer = new byte[2048];
 
-                    zis.read(buffer);
+                        int bytesRead = 0;
 
-                    return new ByteArrayInputStream(buffer);
+                        do {
+                            bytesRead = zis.read(buffer);
+
+                            if (bytesRead > 0) {
+                                baos.write(buffer, 0, bytesRead);
+                            }
+                        } while (bytesRead > 0);
+
+                        fileMap.put(EstadisticaFileType.valueOf(fileExtension),
+                                IOUtils.readLines(new ByteArrayInputStream(baos.toByteArray())));
+                    }
                 }
             } while (entry != null);
-
-        } catch (final IOException ex) {
-            addError(MensajeCodigo.G_010, fileType.name());
         }
 
-        return null;
+        return fileMap;
     }
-
 }

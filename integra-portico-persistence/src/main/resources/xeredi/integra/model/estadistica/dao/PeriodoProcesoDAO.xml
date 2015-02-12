@@ -16,13 +16,19 @@
 			<id column="pepr_autp_pk" property="id" />
 			<result column="prmt_parametro" property="parametro" />
 		</association>
+
+		<association property="arin" javaType="ArchivoInfoVO">
+			<id column="pepr_arch_pk" property="id" />
+			<id column="arch_nombre" property="nombre" />
+			<id column="arch_tamanio" property="tamanio" />
+		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix">
     <![CDATA[
     SELECT
-        pepr.pepr_pk, pepr.pepr_anio, pepr.pepr_mes, pepr.pepr_trimestre, pepr.pepr_freferencia, pepr.pepr_falta
-        , pepr.pepr_autp_pk, autp.prmt_parametro
+        pepr_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta
+        , pepr_autp_pk, prmt_parametro, pepr_arch_pk, arch_nombre, arch_tamanio
         , (
             CASE
                 WHEN EXISTS (
@@ -34,9 +40,11 @@
                 ELSE 0
             END
         ) AS pepr_cdms_generado
-    FROM tbl_periodo_proceso_pepr pepr
-        JOIN tbl_parametro_prmt autp ON
-            autp.prmt_pk = pepr.pepr_autp_pk
+    FROM tbl_periodo_proceso_pepr
+        JOIN tbl_parametro_prmt ON
+            prmt_pk = pepr_autp_pk
+        LEFT JOIN tbl_archivo_arch ON
+            arch_pk = pepr_arch_pk
     ]]>
 	</sql>
 
@@ -44,25 +52,25 @@
     <![CDATA[
     SELECT
         COUNT(1)
-    FROM tbl_periodo_proceso_pepr pepr
-        JOIN tbl_parametro_prmt autp ON
-            autp.prmt_pk = pepr.pepr_autp_pk
+    FROM tbl_periodo_proceso_pepr
+        JOIN tbl_parametro_prmt ON
+            prmt_pk = pepr_autp_pk
     ]]>
 	</sql>
 
 	<sql id="SelectWhere">
 		<where>
 			<if test="anio != null">
-				AND pepr.pepr_anio = #{anio}
+				AND pepr_anio = #{anio}
 			</if>
 			<if test="mes != null">
-				AND pepr.pepr_mes = #{mes}
+				AND pepr_mes = #{mes}
 			</if>
 			<if test="trimestre != null">
-				AND pepr.pepr_trimestre = #{trimestre}
+				AND pepr_trimestre = #{trimestre}
 			</if>
 			<if test="autpId != null">
-				AND pepr.pepr_autp_pk = #{autpId}
+				AND pepr_autp_pk = #{autpId}
 			</if>
 		</where>
 	</sql>
@@ -77,14 +85,14 @@
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY autp.prmt_parametro, pepr.pepr_anio DESC, pepr.pepr_mes DESC
+		ORDER BY prmt_parametro, pepr_anio DESC, pepr_mes DESC
 	</select>
 
 	<select id="selectPaginatedList" parameterType="PeriodoProcesoCriterioVO"
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />
-		ORDER BY autp.prmt_parametro, pepr.pepr_anio DESC, pepr.pepr_mes DESC
+		ORDER BY prmt_parametro, pepr_anio DESC, pepr_mes DESC
 	</select>
 
 	<select id="selectObject" parameterType="PeriodoProcesoCriterioVO"
@@ -95,7 +103,7 @@
 
 	<select id="select" parameterType="Long" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		WHERE pepr.pepr_pk = #{value}
+		WHERE pepr_pk = #{value}
 	</select>
 
 	<select id="exists" parameterType="ParametroVO" resultType="Boolean">
@@ -110,8 +118,8 @@
 
 	<insert id="insert" parameterType="ParametroVO">
         <![CDATA[
-        INSERT INTO tbl_periodo_proceso_pepr(pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta)
-        VALUES (#{id}, #{autp.id}, #{anio}, #{mes}, #{trimestre}, #{freferencia}, #{falta})
+        INSERT INTO tbl_periodo_proceso_pepr(pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_trimestre, pepr_freferencia, pepr_falta, pepr_arch_pk)
+        VALUES (#{id}, #{autp.id}, #{anio}, #{mes}, #{trimestre}, #{freferencia}, #{falta}, #{arin.id})
         ]]>
 	</insert>
 

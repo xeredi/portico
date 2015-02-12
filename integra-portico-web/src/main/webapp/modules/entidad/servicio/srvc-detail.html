@@ -34,6 +34,11 @@
 					ng-bind="'cdrf_' + vm.enti.tpdtEstado.id + '_' + vm.item.estado | translate"></p>
 			</div>
 
+			<div class="col-sm-2 col-md-2 col-lg-1 form-group">
+				<label translate>srvc_falta</label>
+				<p class="form-control-static" ng-bind="vm.item.falta | date: ('format_datetime' | translate)"></p>
+			</div>
+
 			<div ng-if="!vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">
 				<label translate>srvc_fref</label>
 				<p class="form-control-static" ng-bind="vm.item.fref | date: ('format_datetime' | translate)"></p>
@@ -59,21 +64,20 @@
 			<table class="table-bordered table-condensed table-hover table-nonfluid">
 				<thead>
 					<tr>
+						<th />
 						<th translate="arch_nombre"></th>
 						<th translate="arch_tamanio"></th>
 						<th translate="arch_falta"></th>
-						<th />
 					</tr>
 				</thead>
 
 				<tbody>
 					<tr ng-repeat="arin in vm.arinList track by $index">
+						<td><a ng-click="vm.download(arin.id, arin.nombre)"> <span class="glyphicon glyphicon-save"></span>
+						</a></td>
 						<td ng-bind="arin.nombre"></td>
 						<td ng-bind="arin.tamanio | number:0" class="number"></td>
 						<td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
-						<td><button class="btn btn-default" ng-click="vm.download(arin.id, arin.nombre)">
-								<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
-							</button></td>
 					</tr>
 				</tbody>
 			</table>

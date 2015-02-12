@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.comun.vo.ArchivoInfoVO;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
@@ -37,6 +38,9 @@ public final class PeriodoProcesoVO {
 
     /** The cdms generado. */
     private boolean cdmsGenerado;
+
+    /** The arin. */
+    private ArchivoInfoVO arin;
 
     /**
      * {@inheritDoc}
@@ -257,6 +261,25 @@ public final class PeriodoProcesoVO {
      */
     public void setCdmsGenerado(final boolean value) {
         cdmsGenerado = value;
+    }
+
+    /**
+     * Gets the arin.
+     *
+     * @return the arin
+     */
+    public ArchivoInfoVO getArin() {
+        return arin;
+    }
+
+    /**
+     * Sets the arin.
+     *
+     * @param value
+     *            the new arin
+     */
+    public void setArin(final ArchivoInfoVO value) {
+        arin = value;
     }
 
 }

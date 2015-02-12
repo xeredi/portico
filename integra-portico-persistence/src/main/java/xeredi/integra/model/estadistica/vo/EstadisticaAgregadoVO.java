@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import xeredi.integra.model.maestro.vo.ParametroVO;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class EstadisticaAgregadoVO.
@@ -11,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class EstadisticaAgregadoVO {
 
     /** The subp id. */
-    private Long subpId;
+    private ParametroVO subp;
 
     /** The esdt map. */
     private Map<String, Object> esdtMap;
@@ -26,26 +28,26 @@ public class EstadisticaAgregadoVO {
 
     /**
      * Gets the subp id.
-     * 
+     *
      * @return the subp id
      */
-    public Long getSubpId() {
-        return subpId;
+    public ParametroVO getSubp() {
+        return subp;
     }
 
     /**
      * Sets the subp id.
-     * 
+     *
      * @param value
      *            the new subp id
      */
-    public void setSubpId(final Long value) {
-        subpId = value;
+    public void setSubp(final ParametroVO value) {
+        subp = value;
     }
 
     /**
      * Gets the esdt map.
-     * 
+     *
      * @return the esdt map
      */
     public Map<String, Object> getEsdtMap() {
@@ -54,7 +56,7 @@ public class EstadisticaAgregadoVO {
 
     /**
      * Sets the esdt map.
-     * 
+     *
      * @param value
      *            the value
      */

@@ -43,6 +43,23 @@ public final class GzipUtil {
     }
 
     /**
+     * Compress.
+     *
+     * @param buffer
+     *            the buffer
+     * @return the byte[]
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    public static byte[] compress(final byte[] buffer) throws IOException {
+        if (buffer == null) {
+            return null;
+        }
+
+        return buffer;
+    }
+
+    /**
      * Decompress.
      *
      * @param buffer

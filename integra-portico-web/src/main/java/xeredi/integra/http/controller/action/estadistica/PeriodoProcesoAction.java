@@ -12,11 +12,15 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
+import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.integra.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.integra.model.maestro.bo.ParametroBO;
 import xeredi.integra.model.maestro.bo.ParametroBOFactory;
+import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
@@ -76,7 +80,7 @@ public final class PeriodoProcesoAction extends BaseAction {
      * @return the string
      */
     @Action("pepr-cargar")
-    public String cargar() {
+    public String cargar() throws InstanceNotFoundException {
         if (pepr == null) {
             pepr = new PeriodoProcesoVO();
         }
@@ -95,12 +99,24 @@ public final class PeriodoProcesoAction extends BaseAction {
             final ProcesoBO prbtBO = new ProcesoBO();
             final Map<String, String> parametroMap = new HashMap<>();
 
+            // FIXME Deberia llegar por el formulario
+            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.AUTORIDAD_PORTUARIA.getId());
+            final ParametroVO autp = prmtBO.select(pepr.getAutp().getId(), getIdioma(), Calendar.getInstance()
+                    .getTime());
+
+            pepr.setAutp(autp);
+
+            final String foldername = ConfigurationProxy
+                    .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
+            final String filepath = foldername + "/" + pepr.getFilename() + ".zip";
+            final File file = new File(filepath);
+
             parametroMap.put(ProcesoCargaOppe.AUTP_PARAM, pepr.getAutp().getId().toString());
             parametroMap.put(ProcesoCargaOppe.ANIO_PARAM, pepr.getAnio().toString());
             parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
-            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, parametroMap, null, null, null);
+            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, parametroMap, null, null, file);
         }
 
         return SUCCESS;

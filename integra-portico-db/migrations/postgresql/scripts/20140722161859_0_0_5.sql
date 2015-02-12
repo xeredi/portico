@@ -696,12 +696,18 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_servicio_archivo_srar TO por
 
 ALTER TABLE portico.tbl_proceso_item_prit ADD COLUMN prit_tipo VARCHAR(4)\
 
+ALTER TABLE portico.tbl_periodo_proceso_pepr ADD COLUMN pepr_arch_pk BIGINT\
+ALTER TABLE portico.tbl_periodo_proceso_pepr ADD CONSTRAINT fk_pepr_arch_pk FOREIGN KEY (pepr_arch_pk)
+	REFERENCES portico.tbl_archivo_arch (arch_pk)\
+
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
 
 -- Guardar archivos en la BD
+ALTER TABLE portico.tbl_periodo_proceso_pepr DROP COLUMN pepr_arch_pk\
+
 ALTER TABLE portico.tbl_proceso_item_prit DROP COLUMN prit_tipo\
 
 DROP TABLE portico.tbl_servicio_archivo_srar\

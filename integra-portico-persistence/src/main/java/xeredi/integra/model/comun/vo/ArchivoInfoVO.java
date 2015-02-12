@@ -17,7 +17,7 @@ public final class ArchivoInfoVO {
     private String nombre;
 
     /** The filesize. */
-    private Long tamanio;
+    private Integer tamanio;
 
     /** The sentido. */
     private ArchivoSentido sentido;
@@ -76,7 +76,7 @@ public final class ArchivoInfoVO {
      *
      * @return the tamanio
      */
-    public Long getTamanio() {
+    public Integer getTamanio() {
         return tamanio;
     }
 
@@ -86,7 +86,7 @@ public final class ArchivoInfoVO {
      * @param value
      *            the new tamanio
      */
-    public void setTamanio(final Long value) {
+    public void setTamanio(final Integer value) {
         tamanio = value;
     }
 

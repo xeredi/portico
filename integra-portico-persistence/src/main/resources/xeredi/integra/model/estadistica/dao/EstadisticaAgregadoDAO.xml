@@ -90,15 +90,24 @@
 		<id column="ZONA_PESCA" />
 		<id column="ORGA" />
 
-		<result column="estd_subp_pk" property="subpId" />
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="TIPO_CAPTURA_PESCA" property="TIPO_CAPTURA_PESCA" />
+			<result column="TIPO_CAPTURA_PESCA_prmt" property="TIPO_CAPTURA_PESCA_prmt" />
 			<result column="TIPO_OP_PESCA" property="TIPO_OP_PESCA" />
+			<result column="TIPO_OP_PESCA_prmt" property="TIPO_OP_PESCA_prmt" />
 			<result column="ESPECIE_PESCA" property="ESPECIE_PESCA" />
+			<result column="ESPECIE_PESCA_prmt" property="ESPECIE_PESCA_prmt" />
 			<result column="ARTE_PESCA" property="ARTE_PESCA" />
+			<result column="ARTE_PESCA_prmt" property="ARTE_PESCA_prmt" />
 			<result column="ZONA_PESCA" property="ZONA_PESCA" />
+			<result column="ZONA_PESCA_prmt" property="ZONA_PESCA_prmt" />
 			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
 
 			<result column="ENTERO_01" property="ENTERO_01" />
 			<result column="DECIMAL_01" property="DECIMAL_01" />
@@ -108,8 +117,29 @@
 	<select id="selectActividadPesquera" parameterType="EstadisticaAgregadoCriterioVO"
 		resultMap="ResultMapActividadPesquera">
     <![CDATA[
-		SELECT estd_subp_pk, TIPO_CAPTURA_PESCA, SUM(kilos) AS ENTERO_01, SUM(precio) AS DECIMAL_01
-			, TIPO_OP_PESCA, ESPECIE_PESCA, ARTE_PESCA, ZONA_PESCA, ORGA
+		SELECT
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_CAPTURA_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_CAPTURA_PESCA) AS TIPO_CAPTURA_PESCA_prmt
+			, SUM(kilos) AS ENTERO_01, SUM(precio) AS DECIMAL_01
+			, TIPO_OP_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_OP_PESCA) AS TIPO_OP_PESCA_prmt
+			, ESPECIE_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ESPECIE_PESCA) AS ESPECIE_PESCA_prmt
+			, ARTE_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ARTE_PESCA) AS ARTE_PESCA_prmt
+			, ZONA_PESCA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ZONA_PESCA) AS ZONA_PESCA_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
 		FROM (
 			SELECT
 				srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_fref, srvc_estado, ssrv_tpss_pk, ssrv_estado
@@ -349,10 +379,15 @@
 		<id column="estd_subp_pk" />
 		<id column="TIPO_SUM" />
 
-		<result column="estd_subp_pk" property="subpId" />
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="TIPO_SUM" property="TIPO_SUM" />
+			<result column="TIPO_SUM_prmt" property="TIPO_SUM_prmt" />
+
 			<result column="ENTERO_01" property="ENTERO_01" />
 		</association>
 	</resultMap>
@@ -360,7 +395,15 @@
 	<select id="selectAvituallamiento" parameterType="EstadisticaAgregadoCriterioVO"
 		resultMap="ResultMapAvituallamiento">
     <![CDATA[
-		SELECT estd_subp_pk, TIPO_SUM, SUM(consumo) AS ENTERO_01
+		SELECT
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_SUM
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_SUM) AS TIPO_SUM_prmt
+
+			, SUM(consumo) AS ENTERO_01
 		FROM (
 			WITH avituallamientos AS (
 				SELECT prmt_pk, prvr_fini, prvr_ffin
@@ -563,14 +606,23 @@
 		<id column="ORGA" />
 		<id column="BOOLEANO_01" />
 
-		<result column="estd_subp_pk" property="subpId" />
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="ZONA_DEP" property="ZONA_DEP" />
+			<result column="ZONA_DEP_prmt" property="ZONA_DEP_prmt" />
 			<result column="UNID_SUP" property="UNID_SUP" />
+			<result column="UNID_SUP_prmt" property="UNID_SUP_prmt" />
 			<result column="TIPO_MERC_EST" property="TIPO_MERC_EST" />
+			<result column="TIPO_MERC_EST_prmt" property="TIPO_MERC_EST_prmt" />
 			<result column="TIPO_OP_SUP" property="TIPO_OP_SUP" />
+			<result column="TIPO_OP_SUP_prmt" property="TIPO_OP_SUP_prmt" />
 			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
+
 			<result column="BOOLEANO_01" property="BOOLEANO_01" />
 			<result column="ENTERO_01" property="ENTERO_01" />
 		</association>
@@ -580,7 +632,25 @@
 		resultMap="ResultMapAgregacionSuperficie">
     <![CDATA[
 		SELECT
-			estd_subp_pk, ZONA_DEP, UNID_SUP, TIPO_MERC_EST, TIPO_OP_SUP, ORGA, BOOLEANO_01, SUM(dias * ENTERO_01) AS ENTERO_01
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, ZONA_DEP
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ZONA_DEP) AS ZONA_DEP_prmt
+			, UNID_SUP
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNID_SUP) AS UNID_SUP_prmt
+			, TIPO_MERC_EST
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_MERC_EST) AS TIPO_MERC_EST_prmt
+			, TIPO_OP_SUP
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_OP_SUP) AS TIPO_OP_SUP_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
+			, BOOLEANO_01, SUM(dias * ENTERO_01) AS ENTERO_01
 		FROM (
 			SELECT
 				srvc_pk, srvc_fref, ssrv_pk, ssrv_fini, ssrv_ffin
@@ -745,20 +815,35 @@
 		<id column="ORGA" />
 		<id column="TIPO_BUQUE_GT" />
 
-		<result column="estd_subp_pk" property="subpId" />
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="TIPO_BUQUE" property="TIPO_BUQUE" />
+			<result column="TIPO_BUQUE_prmt" property="TIPO_BUQUE_prmt" />
 			<result column="PAIS" property="PAIS" />
+			<result column="PAIS_prmt" property="PAIS_prmt" />
 			<result column="TIPO_NAV" property="TIPO_NAV" />
+			<result column="TIPO_NAV_prmt" property="TIPO_NAV_prmt" />
 			<result column="TIPO_NAV_2" property="TIPO_NAV_2" />
+			<result column="TIPO_NAV_2_prmt" property="TIPO_NAV_2_prmt" />
 			<result column="TIPO_ACT" property="TIPO_ACT" />
+			<result column="TIPO_ACT_prmt" property="TIPO_ACT_prmt" />
 			<result column="BUQUE" property="BUQUE" />
-			<result column="TIPO_ESTAN_ESC" property="TIPO_ESTAN_ESC" />
+			<result column="BUQUE_prmt" property="BUQUE_prmt" />
 			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="SERV_TRAF_prmt" property="SERV_TRAF_prmt" />
 			<result column="ACUERDO" property="ACUERDO" />
+			<result column="ACUERDO_prmt" property="ACUERDO_prmt" />
 			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
 			<result column="TIPO_BUQUE_GT" property="TIPO_BUQUE_GT" />
+			<result column="TIPO_BUQUE_GT_prmt" property="TIPO_BUQUE_GT_prmt" />
+
+			<result column="TIPO_ESTAN_ESC" property="TIPO_ESTAN_ESC" />
+
 			<result column="ENTERO_01" property="ENTERO_01" />
 			<result column="ENTERO_02" property="ENTERO_02" />
 		</association>
@@ -768,8 +853,43 @@
 		resultMap="ResultMapAgregacionEscala">
     <![CDATA[
 		SELECT
-			estd_subp_pk, TIPO_ACT, TIPO_BUQUE, TIPO_BUQUE_GT, TIPO_NAV, TIPO_NAV_2, PAIS, COUNT(1) AS ENTERO_01, SUM(ENTERO_02) AS ENTERO_02
-			, BUQUE, TIPO_ESTAN_ESC, SERV_TRAF, ACUERDO, ORGA
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_ACT
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_ACT) AS TIPO_ACT_prmt
+			, TIPO_BUQUE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE) AS TIPO_BUQUE_prmt
+			, TIPO_BUQUE_GT
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE_GT) AS TIPO_BUQUE_GT_prmt
+			, TIPO_NAV
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_NAV) AS TIPO_NAV_prmt
+			, TIPO_NAV_2
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_NAV_2) AS TIPO_NAV_2_prmt
+			, PAIS
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = PAIS) AS PAIS_prmt
+			, BUQUE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = BUQUE) AS BUQUE_prmt
+			, SERV_TRAF
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = SERV_TRAF) AS SERV_TRAF_prmt
+			, ACUERDO
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ACUERDO) AS ACUERDO_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
+
+			, TIPO_ESTAN_ESC
+
+			, COUNT(1) AS ENTERO_01, SUM(ENTERO_02) AS ENTERO_02
 		FROM (
 			WITH buqueTipoGT AS (
 				SELECT prmt_pk, prvr_fini, prvr_ffin
@@ -1070,13 +1190,20 @@
 	</update>
 
 	<resultMap id="ResultMapMovimientoTipoBuqueEEE" type="EstadisticaAgregadoVO">
-		<id column="estd_subp_pk" property="subpId" />
+		<id column="estd_subp_pk" />
 		<id column="TIPO_BUQUE_EEE" />
 		<id column="TIPO_BUQUE_GT_EEE" />
 
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
+
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="TIPO_BUQUE_EEE" property="TIPO_BUQUE_EEE" />
+			<result column="TIPO_BUQUE_EEE_prmt" property="TIPO_BUQUE_EEE_prmt" />
 			<result column="TIPO_BUQUE_GT_EEE" property="TIPO_BUQUE_GT_EEE" />
+			<result column="TIPO_BUQUE_GT_EEE_prmt" property="TIPO_BUQUE_GT_EEE_prmt" />
 			<result column="ENTERO_01" property="ENTERO_01" />
 			<result column="ENTERO_02" property="ENTERO_02" />
 		</association>
@@ -1086,7 +1213,16 @@
 		resultMap="ResultMapMovimientoTipoBuqueEEE">
     <![CDATA[
 		SELECT
-			estd_subp_pk, TIPO_BUQUE_EEE, TIPO_BUQUE_GT_EEE, COUNT(1) AS ENTERO_01, SUM(gt) AS ENTERO_02
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_BUQUE_EEE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE_EEE) AS TIPO_BUQUE_EEE_prmt
+			, TIPO_BUQUE_GT_EEE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_BUQUE_GT_EEE) AS TIPO_BUQUE_GT_EEE_prmt
+			, COUNT(1) AS ENTERO_01, SUM(gt) AS ENTERO_02
 		FROM (
 			WITH buqueTipoGTEEE AS (
 				SELECT prmt_pk, prvr_fini, prvr_ffin
@@ -1364,14 +1500,22 @@
 		<id column="SERV_TRAF" />
 		<id column="ALIN" />
 
-		<result column="estd_subp_pk" property="subpId" />
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="TIPO_ATR" property="TIPO_ATR" />
+			<result column="TIPO_ATR_prmt" property="TIPO_ATR_prmt" />
 			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
 			<result column="BUQUE" property="BUQUE" />
+			<result column="BUQUE_prmt" property="BUQUE_prmt" />
 			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="SERV_TRAF_prmt" property="SERV_TRAF_prmt" />
 			<result column="ALIN" property="ALIN" />
+			<result column="ALIN_prmt" property="ALIN_prmt" />
 			<result column="ENTERO_01" property="ENTERO_01" />
 			<result column="ENTERO_02" property="ENTERO_02" />
 			<result column="ENTERO_03" property="ENTERO_03" />
@@ -1384,7 +1528,24 @@
 		resultMap="ResultMapBuqueFondeadoAtracado">
     <![CDATA[
 		SELECT
-			estd_subp_pk, TIPO_ATR, ORGA, BUQUE, SERV_TRAF, ALIN
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, TIPO_ATR
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_ATR) AS TIPO_ATR_prmt
+			, ORGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA) AS ORGA_prmt
+			, BUQUE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = BUQUE) AS BUQUE_prmt
+			, SERV_TRAF
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = SERV_TRAF) AS SERV_TRAF_prmt
+			, ALIN
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ALIN) AS ALIN_prmt
 			, COUNT(1) AS ENTERO_01, SUM(eslora) AS ENTERO_02, SUM(eslora * diasatr) AS ENTERO_03
 			, SUM(gt) AS ENTERO_04, SUM(gt * diasatr) AS ENTERO_05
 		FROM (
@@ -1653,27 +1814,46 @@
 		<id column="TERMINAL" />
 		<id column="CADENA_01" />
 
-		<result column="estd_subp_pk" property="subpId" />
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
 
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="TIPO_OP_BL" property="TIPO_OP_BL" />
+			<result column="TIPO_OP_BL_prmt" property="TIPO_OP_BL_prmt" />
 			<result column="UNLOCODE" property="UNLOCODE" />
+			<result column="UNLOCODE_prmt" property="UNLOCODE_prmt" />
 			<result column="UNLOCODE_2" property="UNLOCODE_2" />
+			<result column="UNLOCODE_2_prmt" property="UNLOCODE_2_prmt" />
 			<result column="ALIN" property="ALIN" />
+			<result column="ALIN_prmt" property="ALIN_prmt" />
 			<result column="UNLOCODE_3" property="UNLOCODE_3" />
+			<result column="UNLOCODE_3_prmt" property="UNLOCODE_3_prmt" />
 			<result column="UNLOCODE_4" property="UNLOCODE_4" />
+			<result column="UNLOCODE_4_prmt" property="UNLOCODE_4_prmt" />
 			<result column="MERCANCIA" property="MERCANCIA" />
+			<result column="MERCANCIA_prmt" property="MERCANCIA_prmt" />
 			<result column="TIPO_NAV" property="TIPO_NAV" />
+			<result column="TIPO_NAV_prmt" property="TIPO_NAV_prmt" />
 			<result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
+			<result column="UNIDAD_CARGA_prmt" property="UNIDAD_CARGA_prmt" />
 			<result column="INST_ESP" property="INST_ESP" />
+			<result column="INST_ESP_prmt" property="INST_ESP_prmt" />
 			<result column="TIPO_TRANSPORTE" property="TIPO_TRANSPORTE" />
 			<result column="BOOLEANO_01" property="BOOLEANO_01" />
 			<result column="ORGA" property="ORGA" />
+			<result column="ORGA_prmt" property="ORGA_prmt" />
 			<result column="ORGA_2" property="ORGA_2" />
+			<result column="ORGA_2_prmt" property="ORGA_2_prmt" />
 			<result column="BUQUE" property="BUQUE" />
+			<result column="BUQUE_prmt" property="BUQUE_prmt" />
 			<result column="SERV_TRAF" property="SERV_TRAF" />
+			<result column="SERV_TRAF_prmt" property="SERV_TRAF_prmt" />
 			<result column="ACUERDO" property="ACUERDO" />
+			<result column="ACUERDO_prmt" property="ACUERDO_prmt" />
 			<result column="TERMINAL" property="TERMINAL" />
+			<result column="TERMINAL_prmt" property="TERMINAL_prmt" />
 			<result column="CADENA_01" property="CADENA_01" />
 			<result column="DECIMAL_01" property="DECIMAL_01" />
 			<result column="ENTERO_01" property="ENTERO_01" />
@@ -1685,8 +1865,59 @@
 		resultMap="ResultMapMovimientoMercancia">
     <![CDATA[
 		SELECT
-			estd_subp_pk, BUQUE, TIPO_OP_BL, UNLOCODE, UNLOCODE_2, UNLOCODE_3, UNLOCODE_4, ALIN, TIPO_NAV, TIPO_TRANSPORTE, ORGA_2, SERV_TRAF, MERCANCIA
-			, UNIDAD_CARGA, BOOLEANO_01, INST_ESP, ACUERDO, TERMINAL, TIPO_EQUI
+			estd_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+			, BUQUE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = BUQUE) AS BUQUE_prmt
+			, TIPO_OP_BL
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_OP_BL) AS TIPO_OP_BL_prmt
+			, UNLOCODE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNLOCODE) AS UNLOCODE_prmt
+			, UNLOCODE_2
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNLOCODE_2) AS UNLOCODE_2_prmt
+			, UNLOCODE_3
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNLOCODE_3) AS UNLOCODE_3_prmt
+			, UNLOCODE_4
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNLOCODE_4) AS UNLOCODE_4_prmt
+			, ALIN
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ALIN) AS ALIN_prmt
+			, TIPO_NAV
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_NAV) AS TIPO_NAV_prmt
+			, TIPO_TRANSPORTE
+			, ORGA_2
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ORGA_2) AS ORGA_2_prmt
+			, SERV_TRAF
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = SERV_TRAF) AS SERV_TRAF_prmt
+			, MERCANCIA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = MERCANCIA) AS MERCANCIA_prmt
+			, UNIDAD_CARGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNIDAD_CARGA) AS UNIDAD_CARGA_prmt
+			, BOOLEANO_01
+			, INST_ESP
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = INST_ESP) AS INST_ESP_prmt
+			, ACUERDO
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = ACUERDO) AS ACUERDO_prmt
+			, TERMINAL
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TERMINAL) AS TERMINAL_prmt
+			, TIPO_EQUI
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = TIPO_EQUI) AS TIPO_EQUI_prmt
 			, SUM(COALESCE(DECIMAL_01, 0)) / 1000 AS DECIMAL_01, SUM(COALESCE(ENTERO_01, 0)) AS ENTERO_01, SUM(COALESCE(DECIMAL_02, 0) * COALESCE(ENTERO_01, 0)) AS DECIMAL_02
 		FROM (
 			SELECT *
@@ -2077,7 +2308,7 @@
 	</select>
 
 	<resultMap id="ResultMapMovimientoMercanciaEEE" type="EstadisticaAgregadoVO">
-		<id column="srvc_subp_pk" property="subpId" />
+		<id column="srvc_subp_pk" />
 		<id column="UNLOCODE" />
 		<id column="MERCANCIA" />
 		<id column="UNIDAD_CARGA" />
@@ -2086,12 +2317,22 @@
 		<id column="DIREC_MERC" />
 		<id column="BOOLEANO_01" />
 
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+		</association>
+
 		<association property="esdtMap" javaType="java.util.Map">
 			<result column="UNLOCODE" property="UNLOCODE" />
+			<result column="UNLOCODE_prmt" property="UNLOCODE_prmt" />
 			<result column="MERCANCIA" property="MERCANCIA" />
+			<result column="MERCANCIA_prmt" property="MERCANCIA_prmt" />
 			<result column="UNIDAD_CARGA" property="UNIDAD_CARGA" />
+			<result column="UNIDAD_CARGA_prmt" property="UNIDAD_CARGA_prmt" />
 			<result column="GRUPO_NST" property="GRUPO_NST" />
+			<result column="GRUPO_NST_prmt" property="GRUPO_NST_prmt" />
 			<result column="REG_TBUQUE_EEE" property="REG_TBUQUE_EEE" />
+			<result column="REG_TBUQUE_EEE_prmt" property="REG_TBUQUE_EEE_prmt" />
 			<result column="DIREC_MERC" property="DIREC_MERC" />
 			<result column="BOOLEANO_01" property="BOOLEANO_01" />
 
@@ -2107,7 +2348,27 @@
 	<select id="selectMovimientoMercanciaEEE" parameterType="EstadisticaAgregadoCriterioVO"
 		resultMap="ResultMapMovimientoMercanciaEEE">
     <![CDATA[
-        SELECT srvc_subp_pk, UNLOCODE, MERCANCIA, UNIDAD_CARGA, GRUPO_NST, REG_TBUQUE_EEE, DIREC_MERC, BOOLEANO_01
+        SELECT
+        	srvc_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = estd_subp_pk) AS estd_subp
+        	, UNLOCODE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNLOCODE) AS UNLOCODE_prmt
+        	, MERCANCIA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = MERCANCIA) AS MERCANCIA_prmt
+        	, UNIDAD_CARGA
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = UNIDAD_CARGA) AS UNIDAD_CARGA_prmt
+        	, GRUPO_NST
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = GRUPO_NST) AS GRUPO_NST_prmt
+        	, REG_TBUQUE_EEE
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt
+				WHERE prmt_pk = REG_TBUQUE_EEE) AS REG_TBUQUE_EEE_prmt
+        	, DIREC_MERC
+        	, BOOLEANO_01
         	, COALESCE(SUM(DECIMAL_01), 0) AS DECIMAL_01, COALESCE(SUM(ENTERO_01), 0) AS ENTERO_01
         	, COALESCE(SUM(ENTERO_02), 0) AS ENTERO_02, COALESCE(SUM(ENTERO_03), 0) AS ENTERO_03
         	, COALESCE(SUM(ENTERO_04), 0) AS ENTERO_04, COALESCE(SUM(ENTERO_05), 0) AS ENTERO_05

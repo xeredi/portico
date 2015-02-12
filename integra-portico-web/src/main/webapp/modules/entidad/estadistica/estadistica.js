@@ -112,8 +112,6 @@ function peprDetailController($http, $routeParams, pageTitleService) {
     vm.oppeExport = oppeExport;
 
     function oppeExport() {
-        alert('export');
-
         $http.post('estadistica/pepr-export.action', {
             pepr : vm.pepr
         }, {
