@@ -158,6 +158,7 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_entiPadresList', 'Entidades Padre')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_entiHijasList', 'Entidades Hija')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_enacList', 'Acciones')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_enagList', 'Acciones Asociadas al Grid')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_i18n', 'I18n?')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tempExp', 'Temporal?')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enti_tpdt', 'T. Dato')\
@@ -191,6 +192,12 @@ INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_ke
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_path', 'Ruta (URL)')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_etiqueta', 'Etiqueta')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enac_orden', 'Orden')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enag', 'Acción Asociada al grid de la Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enagList', 'Acciónes Asociadas al grid de la Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enag_enti', 'Entidad')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enag_path', 'Ruta (URL)')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enag_etiqueta', 'Etiqueta')\
+INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enag_orden', 'Orden')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enen', 'Dependencia entre Entidades')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enenList', 'Dependencias entre Entidades')\
 INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_internal, m18n_key, m18n_value) VALUES ('es', 0, 'enen_entiPadre', 'Entidad Padre')\
@@ -700,10 +707,34 @@ ALTER TABLE portico.tbl_periodo_proceso_pepr ADD COLUMN pepr_arch_pk BIGINT\
 ALTER TABLE portico.tbl_periodo_proceso_pepr ADD CONSTRAINT fk_pepr_arch_pk FOREIGN KEY (pepr_arch_pk)
 	REFERENCES portico.tbl_archivo_arch (arch_pk)\
 
+-- Acciones de entidad a nivel de GRID
+CREATE TABLE portico.tbl_entidad_accgrid_enag (
+	enag_pk BIGINT NOT NULL
+	, enag_enti_pk BIGINT NOT NULL
+	, enag_path VARCHAR(30) NOT NULL
+	, enag_orden INT NOT NULL
+
+	, CONSTRAINT pk_enag PRIMARY KEY (enag_pk)
+
+	, CONSTRAINT uq_enag UNIQUE (enag_enti_pk, enag_path)
+
+	, CONSTRAINT fk_enag_enti_pk FOREIGN KEY (enag_enti_pk)
+		REFERENCES portico.tbl_entidad_enti (enti_pk)
+)
+\
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_entidad_accgrid_enag TO portico\
+
+INSERT INTO portico.tbl_entidad_accgrid_enag (enag_pk, enag_enti_pk, enag_path, enag_orden) VALUES (28000, 20118, 'amad-recalc-estado', 1)\
+	INSERT INTO portico.tbl_i18n_i18n (i18n_pref, i18n_lang, i18n_ext_pk, i18n_text) VALUES ('enag', 'es', 28000, 'Recalc. Estados')\
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+-- Acciones de entidad a nivel de GRID
+DELETE FROM portico.tbl_i18n_i18n WHERE i18n_ext_pk=28000 AND i18n_pref='enag'\
+
+DROP TABLE portico.tbl_entidad_accgrid_enag\
 
 -- Guardar archivos en la BD
 ALTER TABLE portico.tbl_periodo_proceso_pepr DROP COLUMN pepr_arch_pk\

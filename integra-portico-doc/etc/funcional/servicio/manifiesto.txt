@@ -1,0 +1,140 @@
+PARTIDA
+	- LISTADO
+		- Filtro por defecto
+		- Pantalla (Grid Paginado)
+		- Acciones Disponibles
+			- Filtro
+			- Alta
+			- Exportar Excel
+	- VISUALIZAR
+		- Pantalla
+			- Mostrar Datos Partida, y los hijos en Pestañas
+		- Acciones Disponibles
+			- Partida
+				- Editar
+				- Borrar
+				- Duplicar
+				- Imprimir
+				- Anular
+				- Iniciar
+				- Bloquear
+			- Equipamiento Partida (Grid Paginado)
+				- Alta
+				- Visualizar
+			- MMPP Partida (Grid Paginado)
+				- Alta
+				- Visualizar
+			- IM Partida (Grid Paginado)
+				- Alta
+				- Visualizar
+			- Documento Partida (Grid Paginado)
+				- Alta
+				- Visualizar
+	- ALTA
+		- Pantalla
+			- Mostrar Formulario Partida
+		- Acciones
+			- Validar
+			- Guardar
+			- Actualizar Datos Comunes
+			- Recalcular Estado BL
+			- Recalcular Estado Manifiesto
+	- EDITAR
+		- Precondiciones
+			- Estado <> 'A'
+			- Estado Facturacion = 'X'
+		- Pantalla
+			- Mostrar Formulario Partida
+		- Acciones
+			- Validar
+			- Guardar
+			- Actualizar Datos Comunes
+	- DUPLICAR
+		- Pantalla
+			- Mostrar Datos Partida
+		- Acciones
+			- Validar
+			- Estado = 'R'
+			- Numero -> Calculado
+			- Copiar Partida, e hijos (incluido Partida-Equipamiento)
+			- Actualizar Datos Comunes
+			- Recalcular Estado BL
+			- Recalcular Estado Manifiesto
+	- BORRAR
+		- Precondiciones
+			- Estado = 'R'
+			- Estado Facturacion = 'X'
+		- Acciones
+			- Borrar entrada en Partida e Hijos (incluido Partida-Equipamiento)
+			- Recalcular Estado BL
+			- Recalcular Estado Manifiesto
+	- ANULAR
+		- Precondiciones
+			- Estado = 'R'
+			- Estado Facturacion = 'X'
+		- Acciones
+			- Estado = 'A'
+			- Si hay entradas en Partida-Equipamiento -> Se borran
+			- Recalcular Estado BL
+			- Recalcular Estado Manifiesto
+	- INICIAR
+		- Precondiciones
+			- Estado = 'B'
+		- Acciones
+			- Estado = 'R'
+			- Si hay Equipamientos asociados en estado 'B' -> Ponerles estado 'R'
+			- Recalcular Estado BL
+			- Recalcular Estado Manifiesto
+	- BLOQUEAR
+		- Precondiciones
+			- Estado = 'R'
+			- Estado Facturacion = 'X'
+			- Estado Facturacion Equipamientos asociados = 'X'
+		- Acciones
+			- Estado = 'B'
+			- Si hay Equipamientos asociados en estado 'R' -> Ponerles estado 'B'
+			- Recalcular Estado BL
+			- Recalcular Estado Manifiesto
+
+	- DUDAS
+		- Actualizar Datos Comunes
+
+EQUIPAMIENTO PARTIDA
+	?????????????
+
+DOCUMENTO PARTIDA
+	- ALTA
+	- VISUALIZAR
+	- EDITAR
+	- BORRAR
+
+MMPP PARTIDA
+	- ALTA
+	- VISUALIZAR
+	- EDITAR
+	- BORRAR
+
+IM PARTIDA
+	- ALTA
+	- VISUALIZAR
+	- EDITAR
+	- BORRAR
+
+COMPARTIDOS
+	- Verificar Totales
+		- Origen
+			- Visualizar Manifiesto
+			- Visualizar BL
+		- Filtro
+			- Criterio
+				- srvcId: Obligatorio
+				- ssrvId (bl): Opcional
+			- Recuperar
+				- Total Partidas
+				- Total Contenedores 20
+				- Total Contenedores 40
+				- ...
+		- Pantalla
+			- Mostrar Datos Recuperados
+			- Acciones Disponibles:
+				- Volver

@@ -114,6 +114,8 @@ public enum MessageI18nKey {
     enti_entiHijasList,
     /** The enti_enac list. */
     enti_enacList,
+    /** The enti_enag list. */
+    enti_enagList,
     /** The enti_i18n. */
     enti_i18n,
     /** The enti_temp exp. */
@@ -170,6 +172,18 @@ public enum MessageI18nKey {
     enac_etiqueta,
     /** The enac_orden. */
     enac_orden,
+    /** The enag. */
+    enag,
+    /** The enag list. */
+    enagList,
+    /** The enag_enti. */
+    enag_enti,
+    /** The enag_path. */
+    enag_path,
+    /** The enag_etiqueta. */
+    enag_etiqueta,
+    /** The enag_orden. */
+    enag_orden,
     /** The enen. */
     enen,
     /** The enen list. */

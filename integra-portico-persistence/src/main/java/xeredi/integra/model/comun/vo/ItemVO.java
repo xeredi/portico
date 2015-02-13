@@ -25,6 +25,17 @@ public abstract class ItemVO implements ItemEntidad {
     private Map<Long, ItemDatoVO> itdtMap = new HashMap<>();
 
     /**
+     * Gets the itdt.
+     *
+     * @param tpdtId
+     *            the tpdt id
+     * @return the itdt
+     */
+    public final ItemDatoVO getItdt(final @Nonnull Long tpdtId) {
+        return itdtMap.get(tpdtId);
+    }
+
+    /**
      * Adds the itdt.
      *
      * @param tpdtId
@@ -32,7 +43,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final @Nonnull Long tpdtId, final Long value) {
+    public final void addItdt(final @Nonnull Long tpdtId, final Long value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -49,7 +60,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final @Nonnull Long tpdtId, final Double value) {
+    public final void addItdt(final @Nonnull Long tpdtId, final Double value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -66,7 +77,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final @Nonnull Long tpdtId, final String value) {
+    public final void addItdt(final @Nonnull Long tpdtId, final String value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -83,7 +94,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final @Nonnull Long tpdtId, final ParametroVO value) {
+    public final void addItdt(final @Nonnull Long tpdtId, final ParametroVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -100,7 +111,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final @Nonnull Long tpdtId, final ServicioVO value) {
+    public final void addItdt(final @Nonnull Long tpdtId, final ServicioVO value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);
@@ -117,7 +128,7 @@ public abstract class ItemVO implements ItemEntidad {
      * @param value
      *            the value
      */
-    public void addItdt(final @Nonnull Long tpdtId, final Date value) {
+    public final void addItdt(final @Nonnull Long tpdtId, final Date value) {
         final ItemDatoVO itdt = new ItemDatoVO();
 
         itdt.setTpdtId(tpdtId);

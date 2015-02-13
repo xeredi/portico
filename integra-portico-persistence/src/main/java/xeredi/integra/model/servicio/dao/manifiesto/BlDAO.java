@@ -18,4 +18,13 @@ public interface BlDAO {
      * @return the int
      */
     int updateRecalcularEstado(final @Nonnull SubservicioCriterioVO criterioVO);
+
+    /**
+     * Update recalcular tipo iva.
+     *
+     * @param criterioVO
+     *            the criterio vo
+     * @return the int
+     */
+    int updateRecalcularTipoIva(final @Nonnull SubservicioCriterioVO criterioVO);
 }

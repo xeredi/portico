@@ -1,7 +1,7 @@
 <div class="container-fluid" ng-if="vm.item">
 	<div class="row">
 		<legend>
-			<span ng-bind="'enti_' + vm.item.entiId | translate"></span>: {{::vm.item.etiqueta}}
+			<span translate="{{'enti_' + vm.item.entiId}}"></span>: {{::vm.item.etiqueta}}
 		</legend>
 	</div>
 

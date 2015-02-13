@@ -14,6 +14,8 @@ public enum I18nPrefix {
     entd,
     /** The enac. */
     enac,
+    /** The enag. */
+    enag,
     /** The tpdt. */
     tpdt,
     /** The cdrf. */

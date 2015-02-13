@@ -1,0 +1,26 @@
+<div ng-if="vm.enag">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/metamodelo/enag/edit/{{vm.enag.id}}"><i
+                class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            <button data-ng-click="vm.remove()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                <label translate>enag_path</label>
+                <p class="form-control-static" ng-bind="vm.enag.path"></p>
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1 form-group">
+                <label translate>enag_orden</label>
+                <p class="form-control-static" ng-bind="vm.enag.orden"></p>
+            </div>
+        </div>
+
+        <div class="row" ng-include="'modules/common/i18nMap-detail.html'"></div>
+    </div>
+</div>

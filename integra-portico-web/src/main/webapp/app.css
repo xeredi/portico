@@ -171,6 +171,10 @@ legend {
 	padding-right: 1px;
 }
 
+.error {
+	background-color: red;
+}
+
 /* Theme */
 /*
 body, legend {

@@ -195,6 +195,7 @@ function prmtGridController($location, $routeParams, $http, $modal, pageTitleSer
     vm.pageChanged = pageChanged;
     vm.filter = filter;
     vm.xlsExport = xlsExport;
+    vm.prmtAction = prmtAction;
 
     vm.itemCriterio = $routeParams.itemCriterio ? angular.fromJson($routeParams.itemCriterio) : {};
     vm.itemCriterio.entiId = $routeParams.entiId;
@@ -244,6 +245,25 @@ function prmtGridController($location, $routeParams, $http, $modal, pageTitleSer
             vm.labelValuesMap = data.labelValuesMap;
             vm.limits = data.limits;
         });
+    }
+
+    function prmtAction(accName) {
+        switch (accName) {
+        // ----------- EMB. DEP. AUT. ------------------
+        // ----------- EMB. DEP. AUT. ------------------
+        // ----------- EMB. DEP. AUT. ------------------
+
+        case "amad-recalc-estado":
+            $http.post("maestro/embdeportivas/amad-recalc-estado.action").success(function(data) {
+                search($routeParams.page ? $routeParams.page : 1);
+            });
+
+            break;
+        default:
+            alert(accName);
+
+            break;
+        }
     }
 
     search($routeParams.page ? $routeParams.page : 1);

@@ -61,6 +61,9 @@ public class EntidadVO {
     /** {@link List} de acciones web que se pueden realizar sobre la entidad. */
     private List<EntidadAccionVO> enacList;
 
+    /** {@link List} de acciones web que se pueden realizar sobre el grid de la entidad. */
+    private List<EntidadAccionGridVO> enagList;
+
     /**
      * {@inheritDoc}
      */
@@ -374,6 +377,25 @@ public class EntidadVO {
      */
     public void setClasspath(final String value) {
         classpath = value;
+    }
+
+    /**
+     * Gets the enag list.
+     *
+     * @return the enag list
+     */
+    public List<EntidadAccionGridVO> getEnagList() {
+        return enagList;
+    }
+
+    /**
+     * Sets the enag list.
+     *
+     * @param value
+     *            the new enag list
+     */
+    public void setEnagList(final List<EntidadAccionGridVO> value) {
+        enagList = value;
     }
 
 }

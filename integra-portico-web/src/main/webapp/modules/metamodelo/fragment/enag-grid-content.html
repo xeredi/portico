@@ -1,0 +1,29 @@
+<fieldset>
+    <legend translate="enti_enagList"></legend>
+
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-default" ng-href="#/metamodelo/enag/create/{{vm.enti.id}}"><i
+                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
+        </div>
+    </div>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th translate>enag_path</th>
+                <th translate>enag_etiqueta</th>
+                <th translate>enag_orden</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="enag in vm.enti.enagList track by $index">
+                <td><a ng-href="#/metamodelo/enag/detail/{{enag.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="enag.path"></td>
+                <td ng-bind="enag.etiqueta"></td>
+                <td ng-bind="enag.orden" class="number"></td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>

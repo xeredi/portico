@@ -10,11 +10,14 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.metamodelo.dao.EntidadAccionDAO;
+import xeredi.integra.model.metamodelo.dao.EntidadAccionGridDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadEntidadDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadGrupoDatoDAO;
 import xeredi.integra.model.metamodelo.dao.EntidadTipoDatoDAO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridCriterioVO;
+import xeredi.integra.model.metamodelo.vo.EntidadAccionGridVO;
 import xeredi.integra.model.metamodelo.vo.EntidadAccionVO;
 import xeredi.integra.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.integra.model.metamodelo.vo.EntidadEntidadCriterioVO;
@@ -38,15 +41,15 @@ public final class EntidadBO {
     /**
      * Select list.
      *
-     * @param entiCriterioVO
+     * @param entiCriterio
      *            the enti criterio vo
      * @return the list
      */
-    public List<EntidadVO> selectList(final @Nonnull EntidadCriterioVO entiCriterioVO) {
+    public List<EntidadVO> selectList(final @Nonnull EntidadCriterioVO entiCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
-            return entiDAO.selectList(entiCriterioVO);
+            return entiDAO.selectList(entiCriterio);
         }
     }
 
@@ -64,55 +67,66 @@ public final class EntidadBO {
             final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
             final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
             final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
+            final EntidadAccionGridDAO enagDAO = session.getMapper(EntidadAccionGridDAO.class);
 
             final Map<Long, EntidadVO> entiMap = entiDAO.selectMap(new EntidadCriterioVO());
 
-            for (final EntidadEntidadVO enenVO : enenDAO.selectList(new EntidadEntidadCriterioVO())) {
-                final EntidadVO entiPadreVO = entiMap.get(enenVO.getEntiPadreId());
-                final EntidadVO entiHijaVO = entiMap.get(enenVO.getEntiHija().getId());
+            for (final EntidadEntidadVO enen : enenDAO.selectList(new EntidadEntidadCriterioVO())) {
+                final EntidadVO entiPadre = entiMap.get(enen.getEntiPadreId());
+                final EntidadVO entiHija = entiMap.get(enen.getEntiHija().getId());
 
-                if (entiPadreVO.getEntiHijasList() == null) {
-                    entiPadreVO.setEntiHijasList(new ArrayList<Long>());
+                if (entiPadre.getEntiHijasList() == null) {
+                    entiPadre.setEntiHijasList(new ArrayList<Long>());
                 }
-                entiPadreVO.getEntiHijasList().add(entiHijaVO.getId());
+                entiPadre.getEntiHijasList().add(entiHija.getId());
 
-                if (entiHijaVO.getEntiPadresList() == null) {
-                    entiHijaVO.setEntiPadresList(new ArrayList<Long>());
+                if (entiHija.getEntiPadresList() == null) {
+                    entiHija.setEntiPadresList(new ArrayList<Long>());
                 }
-                entiHijaVO.getEntiPadresList().add(entiPadreVO.getId());
+                entiHija.getEntiPadresList().add(entiPadre.getId());
             }
 
-            for (final EntidadGrupoDatoVO engdVO : engdDAO.selectAll()) {
-                final EntidadVO entiVO = entiMap.get(engdVO.getEntiId());
+            for (final EntidadGrupoDatoVO engd : engdDAO.selectAll()) {
+                final EntidadVO enti = entiMap.get(engd.getEntiId());
 
-                if (entiVO.getEngdList() == null) {
-                    entiVO.setEngdList(new ArrayList<EntidadGrupoDatoVO>());
+                if (enti.getEngdList() == null) {
+                    enti.setEngdList(new ArrayList<EntidadGrupoDatoVO>());
                 }
-                entiVO.getEngdList().add(engdVO);
-                engdVO.setEntiId(null);
+                enti.getEngdList().add(engd);
+                engd.setEntiId(null);
             }
 
-            for (final EntidadTipoDatoVO entdVO : entdDAO.selectAll()) {
-                final EntidadVO entiVO = entiMap.get(entdVO.getEntiId());
+            for (final EntidadTipoDatoVO entd : entdDAO.selectAll()) {
+                final EntidadVO enti = entiMap.get(entd.getEntiId());
 
-                entdVO.setTpdt(tpdtMap.get(entdVO.getTpdt().getId()));
+                entd.setTpdt(tpdtMap.get(entd.getTpdt().getId()));
 
-                if (entiVO.getEntdList() == null) {
-                    entiVO.setEntdList(new ArrayList<EntidadTipoDatoVO>());
+                if (enti.getEntdList() == null) {
+                    enti.setEntdList(new ArrayList<EntidadTipoDatoVO>());
                 }
 
-                entiVO.getEntdList().add(entdVO);
-                entdVO.setEntiId(null);
+                enti.getEntdList().add(entd);
+                entd.setEntiId(null);
             }
 
-            for (final EntidadAccionVO enacVO : enacDAO.selectAll()) {
-                final EntidadVO entiVO = entiMap.get(enacVO.getEntiId());
+            for (final EntidadAccionVO enac : enacDAO.selectAll()) {
+                final EntidadVO enti = entiMap.get(enac.getEntiId());
 
-                if (entiVO.getEnacList() == null) {
-                    entiVO.setEnacList(new ArrayList<EntidadAccionVO>());
+                if (enti.getEnacList() == null) {
+                    enti.setEnacList(new ArrayList<EntidadAccionVO>());
                 }
-                entiVO.getEnacList().add(enacVO);
-                enacVO.setEntiId(null);
+                enti.getEnacList().add(enac);
+                enac.setEntiId(null);
+            }
+
+            for (final EntidadAccionGridVO enag : enagDAO.selectAll()) {
+                final EntidadVO enti = entiMap.get(enag.getEntiId());
+
+                if (enti.getEnagList() == null) {
+                    enti.setEnagList(new ArrayList<EntidadAccionGridVO>());
+                }
+                enti.getEnagList().add(enag);
+                enag.setEntiId(null);
             }
 
             return entiMap;
@@ -122,16 +136,16 @@ public final class EntidadBO {
     /**
      * Select label values.
      *
-     * @param entiCriterioVO
+     * @param entiCriterio
      *            the enti criterio vo
      * @return the list
      */
-    public List<LabelValueVO> selectLabelValues(final @Nonnull EntidadCriterioVO entiCriterioVO) {
+    public List<LabelValueVO> selectLabelValues(final @Nonnull EntidadCriterioVO entiCriterio) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
             final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
             final List<LabelValueVO> list = new ArrayList<>();
 
-            for (final EntidadVO enti : entiDAO.selectList(entiCriterioVO)) {
+            for (final EntidadVO enti : entiDAO.selectList(entiCriterio)) {
                 list.add(new LabelValueVO(enti.getNombre(), enti.getId()));
             }
 
@@ -144,93 +158,103 @@ public final class EntidadBO {
      *
      * @param session
      *            the session
-     * @param entiVO
+     * @param enti
      *            the enti vo
      * @param idioma
      *            the idioma
      */
-    void fillDependencies(final @Nonnull SqlSession session, final @Nonnull EntidadVO entiVO, final String idioma) {
-        Preconditions.checkNotNull(entiVO.getId());
+    void fillDependencies(final @Nonnull SqlSession session, final @Nonnull EntidadVO enti, final String idioma) {
+        Preconditions.checkNotNull(enti.getId());
 
         final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
         final EntidadGrupoDatoDAO engdDAO = session.getMapper(EntidadGrupoDatoDAO.class);
         final EntidadTipoDatoDAO entdDAO = session.getMapper(EntidadTipoDatoDAO.class);
         final EntidadAccionDAO enacDAO = session.getMapper(EntidadAccionDAO.class);
+        final EntidadAccionGridDAO enagDAO = session.getMapper(EntidadAccionGridDAO.class);
 
         // Grupos de datos de la entidad
-        final EntidadGrupoDatoCriterioVO engdCriterioVO = new EntidadGrupoDatoCriterioVO();
+        final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
 
-        engdCriterioVO.setEntiId(entiVO.getId());
-        engdCriterioVO.setIdioma(idioma);
+        engdCriterio.setEntiId(enti.getId());
+        engdCriterio.setIdioma(idioma);
 
-        final List<EntidadGrupoDatoVO> engdList = engdDAO.selectList(engdCriterioVO);
+        final List<EntidadGrupoDatoVO> engdList = engdDAO.selectList(engdCriterio);
 
         if (!engdList.isEmpty()) {
-            entiVO.setEngdList(new ArrayList<EntidadGrupoDatoVO>());
+            enti.setEngdList(new ArrayList<EntidadGrupoDatoVO>());
 
-            for (final EntidadGrupoDatoVO engdVO : engdList) {
-                if (engdVO.getNumero() > 1) {
-                    entiVO.getEngdList().add(engdVO);
-                    engdVO.setEntiId(null);
+            for (final EntidadGrupoDatoVO engd : engdList) {
+                if (engd.getNumero() > 1) {
+                    enti.getEngdList().add(engd);
+                    engd.setEntiId(null);
                 }
             }
         }
 
         // Datos asociados a la entidad
-        final EntidadTipoDatoCriterioVO entdCriterioVO = new EntidadTipoDatoCriterioVO();
+        final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
 
-        entdCriterioVO.setEntiId(entiVO.getId());
-        entdCriterioVO.setIdioma(idioma);
+        entdCriterio.setEntiId(enti.getId());
+        entdCriterio.setIdioma(idioma);
 
-        final List<EntidadTipoDatoVO> entdList = entdDAO.selectList(entdCriterioVO);
+        final List<EntidadTipoDatoVO> entdList = entdDAO.selectList(entdCriterio);
 
         if (!entdList.isEmpty()) {
-            entiVO.setEntdList(new ArrayList<EntidadTipoDatoVO>());
+            enti.setEntdList(new ArrayList<EntidadTipoDatoVO>());
 
-            for (final EntidadTipoDatoVO entdVO : entdList) {
-                entiVO.getEntdList().add(entdVO);
-                entdVO.setEntiId(null);
+            for (final EntidadTipoDatoVO entd : entdList) {
+                enti.getEntdList().add(entd);
+                entd.setEntiId(null);
             }
         }
 
         // Entidades padres e hijas
-        EntidadCriterioVO entiCriterioVO = null;
+        EntidadCriterioVO entiCriterio = null;
 
-        entiCriterioVO = new EntidadCriterioVO();
-        entiCriterioVO.setEntiHijaId(entiVO.getId());
+        entiCriterio = new EntidadCriterioVO();
+        entiCriterio.setEntiHijaId(enti.getId());
 
-        final List<EntidadVO> entiPadres = entiDAO.selectList(entiCriterioVO);
+        final List<EntidadVO> entiPadres = entiDAO.selectList(entiCriterio);
 
         if (!entiPadres.isEmpty()) {
-            entiVO.setEntiPadresList(new ArrayList<Long>());
+            enti.setEntiPadresList(new ArrayList<Long>());
 
-            for (final EntidadVO entiPadreVO : entiPadres) {
-                entiVO.getEntiPadresList().add(entiPadreVO.getId());
+            for (final EntidadVO entiPadre : entiPadres) {
+                enti.getEntiPadresList().add(entiPadre.getId());
             }
         }
 
-        entiCriterioVO = new EntidadCriterioVO();
-        entiCriterioVO.setEntiPadreId(entiVO.getId());
+        entiCriterio = new EntidadCriterioVO();
+        entiCriterio.setEntiPadreId(enti.getId());
 
-        final List<EntidadVO> entiHijas = entiDAO.selectList(entiCriterioVO);
+        final List<EntidadVO> entiHijas = entiDAO.selectList(entiCriterio);
 
         if (!entiHijas.isEmpty()) {
-            entiVO.setEntiHijasList(new ArrayList<Long>());
+            enti.setEntiHijasList(new ArrayList<Long>());
 
-            for (final EntidadVO entiHijaVO : entiHijas) {
-                entiVO.getEntiHijasList().add(entiHijaVO.getId());
+            for (final EntidadVO entiHija : entiHijas) {
+                enti.getEntiHijasList().add(entiHija.getId());
             }
         }
 
         // Acciones asociadas a la entidad
-        final EntidadAccionCriterioVO enacCriterioVO = new EntidadAccionCriterioVO();
+        final EntidadAccionCriterioVO enacCriterio = new EntidadAccionCriterioVO();
 
-        enacCriterioVO.setEntiId(entiVO.getId());
-        enacCriterioVO.setIdioma(idioma);
+        enacCriterio.setEntiId(enti.getId());
+        enacCriterio.setIdioma(idioma);
 
-        final List<EntidadAccionVO> enacList = enacDAO.selectList(enacCriterioVO);
+        final List<EntidadAccionVO> enacList = enacDAO.selectList(enacCriterio);
 
-        entiVO.setEnacList(enacList);
+        enti.setEnacList(enacList);
+
+        final EntidadAccionGridCriterioVO enagCriterio = new EntidadAccionGridCriterioVO();
+
+        enagCriterio.setEntiId(enti.getId());
+        enagCriterio.setIdioma(idioma);
+
+        final List<EntidadAccionGridVO> enagList = enagDAO.selectList(enagCriterio);
+
+        enti.setEnagList(enagList);
     }
 
 }

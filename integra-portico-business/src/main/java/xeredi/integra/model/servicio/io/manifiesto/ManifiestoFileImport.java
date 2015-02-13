@@ -437,36 +437,36 @@ public final class ManifiestoFileImport {
                 final ParametroVO alineacionBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoAlineacion, line, i,
                         Entidad.ALINEACION);
 
-                blActualVO.addItdt(TipoDato.ALIN.getId(),
-                        alineacionBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ALIN.getId()).getPrmt()
+                blActualVO
+                .addItdt(TipoDato.ALIN.getId(),
+                        alineacionBlVO == null ? manifiestoVO.getItdt(TipoDato.ALIN.getId()).getPrmt()
                                 : alineacionBlVO);
 
                 final ParametroVO terminalBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoTerminal, line, i,
                         Entidad.TERMINAL);
 
-                blActualVO.addItdt(TipoDato.TERMINAL.getId(),
-                        terminalBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.TERMINAL.getId()).getPrmt()
+                blActualVO
+                .addItdt(TipoDato.TERMINAL.getId(),
+                        terminalBlVO == null ? manifiestoVO.getItdt(TipoDato.TERMINAL.getId()).getPrmt()
                                 : terminalBlVO);
 
                 final ParametroVO acuerdoBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoAcuerdo, line, i,
                         Entidad.ACUERDO);
 
                 blActualVO.addItdt(TipoDato.ACUERDO.getId(),
-                        acuerdoBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ACUERDO.getId()).getPrmt()
-                                : acuerdoBlVO);
+                        acuerdoBlVO == null ? manifiestoVO.getItdt(TipoDato.ACUERDO.getId()).getPrmt() : acuerdoBlVO);
 
                 final ParametroVO servicioBlVO = getTokenMaestro(ManifiestoKeyword.CNI_CodigoServicio, line, i,
                         Entidad.SERVICIO_TRAFICO);
 
                 blActualVO.addItdt(TipoDato.SERV_TRAF.getId(),
-                        servicioBlVO == null ? manifiestoVO.getItdtMap().get(TipoDato.SERV_TRAF.getId()).getPrmt()
+                        servicioBlVO == null ? manifiestoVO.getItdt(TipoDato.SERV_TRAF.getId()).getPrmt()
                                 : servicioBlVO);
 
                 estibadorVO = getTokenOrganizacion(ManifiestoKeyword.CNI_NIFEstibador, line, i);
 
                 blActualVO.addItdt(TipoDato.ORGA_2.getId(),
-                        estibadorVO == null ? manifiestoVO.getItdtMap().get(TipoDato.ORGA.getId()).getPrmt()
-                                : estibadorVO);
+                        estibadorVO == null ? manifiestoVO.getItdt(TipoDato.ORGA.getId()).getPrmt() : estibadorVO);
 
                 ssrvList.add(blActualVO);
                 ssssList.add(new SubservicioSubservicioVO(macoActualVO.getId(), blActualVO.getId()));

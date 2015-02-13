@@ -98,6 +98,7 @@ public final class EntidadProxy {
                 entiVO.setEntiHijasList(ENTIDAD_MAP.get(entiVO.getId()).getEntiHijasList());
                 entiVO.setEntiPadresList(ENTIDAD_MAP.get(entiVO.getId()).getEntiPadresList());
                 entiVO.setEnacList(ENTIDAD_MAP.get(entiVO.getId()).getEnacList());
+                entiVO.setEnagList(ENTIDAD_MAP.get(entiVO.getId()).getEnagList());
                 entiVO.setEngdList(ENTIDAD_MAP.get(entiVO.getId()).getEngdList());
             }
         }

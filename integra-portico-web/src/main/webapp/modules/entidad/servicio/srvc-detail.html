@@ -120,11 +120,11 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="itemHijo in ::vm.itemHijosMap[entiHijaId].list track by $index">
-						<td><a ng-href="#/servicio/ssrv/detail/{{entiHijaId}}/{{::itemHijo.id}}"><span
+					<tr ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
+						<td><a ng-href="#/servicio/ssrv/detail/{{entiHijaId}}/{{itemHijo.id}}"><span
 								class="glyphicon glyphicon-search"></span></a></td>
 
-						<td ng-bind="::itemHijo.numero" class="number"></td>
+						<td ng-bind="itemHijo.numero" class="number"></td>
 						<td ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" nowrap="nowrap" bs-tooltip
 							data-title="{{('cdrf_' + vm.entiHijasMap[entiHijaId].tpdtEstado.id + '_' + itemHijo.estado | translate)}}"
 							ng-bind="itemHijo.estado"></td>
@@ -133,7 +133,7 @@
 						<td ng-if="vm.entiHijasMap[entiHijaId].temporal"
 							ng-bind="itemHijo.ffin | date: ('format_date' | translate)"></td>
 
-						<td ng-repeat="entd in ::vm.entiHijasMap[entiHijaId].entdList track by $index" ng-if="entd.gridable"
+						<td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index" ng-if="entd.gridable"
 							ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"
 							class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></span>
 							<span ng-switch-when="ND" ng-bind="itemHijo.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"

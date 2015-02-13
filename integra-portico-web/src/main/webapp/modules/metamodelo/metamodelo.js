@@ -83,6 +83,13 @@ angular.module("metamodelo", [])
 
 .controller("enacCreateController", enacCreateController)
 
+// ------------------- ACCION DE GRID DE ENTIDAD --------------------
+.controller("enagDetailController", enagDetailController)
+
+.controller("enagEditController", enagEditController)
+
+.controller("enagCreateController", enagCreateController)
+
 // ------------------- DEPENDENCIA ENTRE ENTIDADES --------------------
 .controller("enenCreateController", enenCreateController);
 
@@ -312,6 +319,24 @@ function config($routeProvider) {
     .when("/metamodelo/enac/create/:entiId", {
         templateUrl : "modules/metamodelo/enac-edit.html",
         controller : "enacCreateController",
+        controllerAs : 'vm'
+    })
+
+    .when("/metamodelo/enag/detail/:id", {
+        templateUrl : "modules/metamodelo/enag-detail.html",
+        controller : "enagDetailController",
+        controllerAs : 'vm'
+    })
+
+    .when("/metamodelo/enag/edit/:id", {
+        templateUrl : "modules/metamodelo/enag-edit.html",
+        controller : "enagEditController",
+        controllerAs : 'vm'
+    })
+
+    .when("/metamodelo/enag/create/:entiId", {
+        templateUrl : "modules/metamodelo/enag-edit.html",
+        controller : "enagCreateController",
         controllerAs : 'vm'
     })
 
@@ -1590,6 +1615,102 @@ function enacCreateController($http, $location, $routeParams, pageTitleService) 
     });
 
     pageTitleService.setTitle("enac", "page_create");
+}
+
+function enagDetailController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.remove = remove;
+
+    function remove() {
+        if (confirm("Are you sure?")) {
+            $http.post("metamodelo/enag-remove.action", {
+                enag : {
+                    id : vm.enag.id
+                }
+            }).success(function(data) {
+                window.history.back();
+            });
+        }
+    }
+
+    $http.post("metamodelo/enag-detail.action", {
+        enag : {
+            id : $routeParams.id
+        }
+    }).success(function(data) {
+        vm.enag = data.enag;
+        vm.i18nMap = data.i18nMap;
+    });
+
+    pageTitleService.setTitle("enag", "page_detail");
+}
+
+function enagEditController($http, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("metamodelo/enag-save.action", {
+            enag : vm.enag,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
+        }).success(function(data) {
+            setTimeout(function() {
+                window.history.back();
+            }, 0);
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.post("metamodelo/enag-edit.action", {
+        enag : {
+            id : $routeParams.id
+        }
+    }).success(function(data) {
+        vm.enag = data.enag;
+        vm.i18nMap = data.i18nMap;
+        vm.accion = data.accion;
+    });
+
+    pageTitleService.setTitle("enag", "page_edit");
+}
+
+function enagCreateController($http, $location, $routeParams, pageTitleService) {
+    var vm = this;
+
+    vm.save = save;
+    vm.cancel = cancel;
+
+    function save() {
+        $http.post("metamodelo/enag-save.action", {
+            enag : vm.enag,
+            i18nMap : vm.i18nMap,
+            accion : vm.accion
+        }).success(function(data) {
+            $location.path("/metamodelo/enag/detail/" + data.enag.id).replace();
+        });
+    }
+
+    function cancel() {
+        window.history.back();
+    }
+
+    $http.post("metamodelo/enag-create.action", {
+        enag : {
+            entiId : $routeParams.entiId
+        }
+    }).success(function(data) {
+        vm.enag = data.enag;
+        vm.accion = data.accion;
+    });
+
+    pageTitleService.setTitle("enag", "page_create");
 }
 
 function enenCreateController($http, $routeParams, pageTitleService) {

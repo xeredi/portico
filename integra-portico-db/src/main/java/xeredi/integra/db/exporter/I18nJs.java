@@ -46,7 +46,7 @@ public class I18nJs {
         final MessageI18nBO messageI18nBO = new MessageI18nBO();
 
         final Set<I18nPrefix> i18nPrefixSet = Sets.newHashSet(I18nPrefix.enti, I18nPrefix.engd, I18nPrefix.entd,
-                I18nPrefix.enac, I18nPrefix.tpdt, I18nPrefix.cdrf);
+                I18nPrefix.enac, I18nPrefix.enag, I18nPrefix.tpdt, I18nPrefix.cdrf);
 
         for (final String language : languages) {
             final List<LabelValueVO> labelValues = new ArrayList<>();
