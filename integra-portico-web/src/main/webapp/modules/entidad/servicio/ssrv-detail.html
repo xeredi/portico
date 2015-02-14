@@ -33,7 +33,8 @@
 
 			<div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group">
 				<label translate>ssrv_estado</label>
-				<p class="form-control-static" ng-bind="vm.item.estado"></p>
+				<p class="form-control-static"
+					ng-bind="'cdrf_' + vm.enti.tpdtEstado.id + '_' + vm.item.estado | translate"></p>
 			</div>
 
 			<div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-lg-1 form-group">

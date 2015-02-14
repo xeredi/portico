@@ -59,7 +59,13 @@
                     END
                 )
             ) AS label
-            , i18n.i18n_text AS value
+            , (
+				CASE
+					WHEN cdrf_tpdt_pk IS NOT NULL
+					THEN portico.concatenate(portico.concatenate(cdrf_valor, ' - '), i18n_text)
+					ELSE i18n.i18n_text
+				END
+            ) AS value
         FROM
             tbl_i18n_i18n i18n
             LEFT JOIN tbl_codigo_ref_cdrf ON
@@ -86,7 +92,13 @@
                     END
                 )
             ) AS label
-            , i18n.i18n_text AS value
+            , (
+				CASE
+					WHEN cdrf_tpdt_pk IS NOT NULL
+					THEN portico.concatenate(portico.concatenate(cdrf_valor, ' - '), i18n_text)
+					ELSE i18n.i18n_text
+				END
+            ) AS value
         FROM
             tbl_i18n_i18n i18n
             LEFT JOIN tbl_codigo_ref_cdrf ON
@@ -113,7 +125,13 @@
                     END
                 )
             ) AS label
-            , i18n.i18n_text AS value
+            , (
+				CASE
+					WHEN cdrf_tpdt_pk IS NOT NULL
+					THEN portico.concatenate(portico.concatenate(cdrf_valor, ' - '), i18n_text)
+					ELSE i18n.i18n_text
+				END
+            ) AS value
         FROM
             tbl_i18n_i18n i18n
             LEFT JOIN tbl_codigo_ref_cdrf ON
