@@ -36,7 +36,6 @@ import xeredi.integra.model.metamodelo.vo.TipoDatoVO;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.escala.EscalaEdiBO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -103,7 +102,7 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
                         LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
                     }
 
-                    prbtBO.crear(ProcesoModulo.S, ProcesoTipo.ESC_CARGA, null, null, null, file);
+                    prbtBO.crear(ProcesoTipo.ESC_CARGA, null, null, null, file);
 
                     file.delete();
                 } catch (final IOException ex) {
@@ -1343,14 +1342,6 @@ public final class ProcesoCargaEscala extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.ESC_CARGA;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ProcesoModulo getProcesoModulo() {
-        return ProcesoModulo.S;
     }
 
     /**

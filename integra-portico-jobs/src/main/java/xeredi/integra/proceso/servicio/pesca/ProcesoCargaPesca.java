@@ -19,7 +19,6 @@ import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.servicio.bo.pesca.ManifiestoPescaBO;
 import xeredi.integra.model.servicio.io.pesca.PescaFileImport;
@@ -55,7 +54,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
                         LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
                     }
 
-                    prbtBO.crear(ProcesoModulo.S, ProcesoTipo.PES_CARGA, null, null, null, file);
+                    prbtBO.crear(ProcesoTipo.PES_CARGA, null, null, null, file);
 
                     file.delete();
                 } catch (final IOException ex) {
@@ -126,14 +125,6 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.PES_CARGA;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ProcesoModulo getProcesoModulo() {
-        return ProcesoModulo.S;
     }
 
     /**

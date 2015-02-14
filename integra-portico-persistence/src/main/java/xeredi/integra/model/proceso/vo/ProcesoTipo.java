@@ -6,6 +6,8 @@ package xeredi.integra.model.proceso.vo;
  */
 public enum ProcesoTipo {
 
+    /** The valorador. */
+    VALORADOR(ProcesoModulo.F),
     /** The est carga. */
     EST_CARGA(ProcesoModulo.E),
     /** The est creacion. */

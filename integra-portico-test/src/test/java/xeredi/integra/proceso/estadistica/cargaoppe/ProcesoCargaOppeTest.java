@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 
 // TODO: Auto-generated Javadoc
@@ -39,7 +38,7 @@ public final class ProcesoCargaOppeTest {
                 prpmMap.put(ProcesoCargaOppe.MES_PARAM, "04");
                 prpmMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
 
-                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
+                prbtBO.crear(ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
             }
 
             {
@@ -50,7 +49,7 @@ public final class ProcesoCargaOppeTest {
                 prpmMap.put(ProcesoCargaOppe.MES_PARAM, "10");
                 prpmMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, "true");
 
-                prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
+                prbtBO.crear(ProcesoTipo.EST_CARGA, prpmMap, null, null, null);
             }
 
             cargaOppe.procesar();

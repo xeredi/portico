@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,7 +34,6 @@ import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.proceso.ProcesoTemplate;
 
@@ -47,9 +45,6 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ProcesoCargaOppe.class);
-
-    /** The Constant FILENAME_PATTERN. */
-    private static final String FILENAME_PATTERN = "{0}{1,number,0000}{2,number,00}.{3}";
 
     /** The Constant AUTP_PARAM. */
     public static final String AUTP_PARAM = "autp";
@@ -186,30 +181,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
      * {@inheritDoc}
      */
     @Override
-    protected ProcesoModulo getProcesoModulo() {
-        return ProcesoModulo.E;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected ItemTipo getItemTipoSalida() {
         return ItemTipo.pepr;
-    }
-
-    /**
-     * Gets the filename.
-     *
-     * @param peprVO
-     *            the pepr vo
-     * @param fileType
-     *            the file type
-     * @return the filename
-     */
-    private static String getFilename(final PeriodoProcesoVO peprVO, final EstadisticaFileType fileType) {
-        return MessageFormat.format(FILENAME_PATTERN, new Object[] { peprVO.getAutp().getParametro(), peprVO.getAnio(),
-                peprVO.getMes(), fileType.name() });
     }
 
     /**

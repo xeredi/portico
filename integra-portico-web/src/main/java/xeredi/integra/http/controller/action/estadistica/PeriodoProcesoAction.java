@@ -24,7 +24,6 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.bo.ProcesoBO;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.proceso.estadistica.cargaoppe.ProcesoCargaOppe;
 import xeredi.util.applicationobjects.LabelValueVO;
@@ -116,7 +115,7 @@ public final class PeriodoProcesoAction extends BaseAction {
             parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
-            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CARGA, parametroMap, null, null, file);
+            prbtBO.crear(ProcesoTipo.EST_CARGA, parametroMap, null, null, file);
         }
 
         return SUCCESS;
@@ -166,7 +165,7 @@ public final class PeriodoProcesoAction extends BaseAction {
             parametroMap.put(ProcesoCargaOppe.MES_PARAM, pepr.getMes().toString());
             parametroMap.put(ProcesoCargaOppe.SOBREESCRIBIR_PARAM, getSobreescribir().toString());
 
-            prbtBO.crear(ProcesoModulo.E, ProcesoTipo.EST_CREACION, parametroMap, null, null, null);
+            prbtBO.crear(ProcesoTipo.EST_CREACION, parametroMap, null, null, null);
         }
 
         return SUCCESS;

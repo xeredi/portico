@@ -31,7 +31,6 @@ import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.MensajeNivel;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
@@ -84,7 +83,7 @@ public abstract class ProcesoTemplate {
         final ProcesoBO prbtBO = new ProcesoBO();
 
         do {
-            prbt = prbtBO.proteger(getProcesoModulo(), getProcesoTipo());
+            prbt = prbtBO.proteger(getProcesoTipo());
 
             if (prbt != null) {
                 if (LOG.isDebugEnabled()) {
@@ -336,13 +335,6 @@ public abstract class ProcesoTemplate {
      * @return the proceso tipo
      */
     protected abstract ProcesoTipo getProcesoTipo();
-
-    /**
-     * Gets the proceso modulo.
-     *
-     * @return the proceso modulo
-     */
-    protected abstract ProcesoModulo getProcesoModulo();
 
     /**
      * Gets the item tipo salida.

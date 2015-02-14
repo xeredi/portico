@@ -48,7 +48,6 @@ import xeredi.integra.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
-import xeredi.integra.model.proceso.dao.ProcesoDAO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -71,6 +70,20 @@ public class ValoradorBO {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
 
+    /** The prbt. */
+    private final ProcesoVO prbt;
+
+    /**
+     * Instantiates a new valorador bo.
+     *
+     * @param aprbt
+     *            the aprbt
+     */
+    public ValoradorBO(final ProcesoVO aprbt) {
+        super();
+        prbt = aprbt;
+    }
+
     /**
      * Valorar servicio.
      *
@@ -83,14 +96,11 @@ public class ValoradorBO {
      * @param prbtId
      *            the prbt id
      */
-    public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion,
-            final Long prbtId) {
-        LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion
-                + ", prbtId: " + prbtId);
+    public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion) {
+        LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
-            final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
@@ -99,36 +109,31 @@ public class ValoradorBO {
             Preconditions.checkNotNull(srvcId);
             Preconditions.checkNotNull(crgoIds);
             Preconditions.checkNotNull(fechaLiquidacion);
-            Preconditions.checkNotNull(prbtId);
 
-            final ValoradorContextoVO contextoVO = new ValoradorContextoVO();
-            final ProcesoVO prbt = prbtDAO.select(prbtId);
+            final ValoradorContextoVO vldrContexto = new ValoradorContextoVO();
             final ServicioVO srvc = srvcDAO.select(srvcId);
 
-            if (prbt == null) {
-                throw new Error("Proceso Batch no encontrado: " + prbt);
-            }
             if (srvc == null) {
-                throw new Error("Servicio no encontrado: " + srvc);
+                throw new Error("Servicio no encontrado: " + srvcId);
             }
 
-            contextoVO.setFliquidacion(fechaLiquidacion);
-            contextoVO.setPrbt(prbt);
-            contextoVO.setSrvc(srvc);
-            contextoVO.setTpsr(TipoServicioProxy.select(contextoVO.getSrvc().getEntiId()));
+            vldrContexto.setFliquidacion(fechaLiquidacion);
+            vldrContexto.setPrbt(prbt);
+            vldrContexto.setSrvc(srvc);
+            vldrContexto.setTpsr(TipoServicioProxy.select(vldrContexto.getSrvc().getEntiId()));
 
             for (final Long crgoId : crgoIds) {
                 // Obtencion de los cargos, y los cargos dependientes
-                final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+                final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-                crgoCriterioVO.setId(crgoId);
-                crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
-                crgoCriterioVO.setSoloPrincipales(true);
+                crgoCriterio.setId(crgoId);
+                crgoCriterio.setFechaVigencia(fechaLiquidacion);
+                crgoCriterio.setSoloPrincipales(true);
 
-                final CargoVO crgo = crgoDAO.selectObject(crgoCriterioVO);
+                final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
 
                 if (crgo == null) {
-                    throw new Error("No se encuentra el cargo: " + crgoCriterioVO);
+                    throw new Error("No se encuentra el cargo: " + crgoCriterio);
                 }
 
                 LOG.info("Cargo principal: " + crgo.getCodigo());
@@ -137,51 +142,51 @@ public class ValoradorBO {
 
                 crgoList.add(crgo);
 
-                final CargoCriterioVO crgoDepCriterioVO = new CargoCriterioVO();
+                final CargoCriterioVO crgoDepCriterio = new CargoCriterioVO();
 
-                crgoDepCriterioVO.setPadreId(crgoId);
-                crgoDepCriterioVO.setFechaVigencia(fechaLiquidacion);
-                crgoDepCriterioVO.setSoloDependientes(true);
+                crgoDepCriterio.setPadreId(crgoId);
+                crgoDepCriterio.setFechaVigencia(fechaLiquidacion);
+                crgoDepCriterio.setSoloDependientes(true);
 
-                contextoVO.setCrgo(crgo);
+                vldrContexto.setCrgo(crgo);
 
-                final Date fref = contextoDAO.selectFref(contextoVO);
+                final Date fref = contextoDAO.selectFref(vldrContexto);
 
                 if (fref == null) {
-                    throw new Error("No se encuentra fecha de referencia para el contexto: " + contextoVO);
+                    throw new Error("No se encuentra fecha de referencia para el contexto: " + vldrContexto);
                 }
 
-                contextoVO.setFref(fref);
+                vldrContexto.setFref(fref);
 
                 LOG.info("fref: " + fref);
 
-                crgoList.addAll(crgoDAO.selectList(crgoDepCriterioVO));
+                crgoList.addAll(crgoDAO.selectList(crgoDepCriterio));
 
                 for (final CargoVO crgoServicio : crgoList) {
-                    contextoVO.setCrgo(crgoServicio);
-                    valorarCargoServicio(session, contextoVO);
+                    vldrContexto.setCrgo(crgoServicio);
+                    valorarCargoServicio(session, vldrContexto);
                 }
 
-                final AspectoCriterioVO aspcCriterioVO = new AspectoCriterioVO();
+                final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-                aspcCriterioVO.setFechaVigencia(fref);
-                aspcCriterioVO.setSrvcId(srvcId);
+                aspcCriterio.setFechaVigencia(fref);
+                aspcCriterio.setSrvcId(srvcId);
 
-                final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterioVO);
+                final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterio);
 
                 if (aspcList.isEmpty()) {
-                    throw new Error("No se encuentran aspectos para: " + aspcCriterioVO);
+                    throw new Error("No se encuentran aspectos para: " + aspcCriterio);
                 }
 
                 for (final AspectoVO aspc : aspcList) {
-                    contextoVO.setAspc(aspc);
+                    vldrContexto.setAspc(aspc);
 
-                    aplicarAspecto(session, contextoVO);
+                    aplicarAspecto(session, vldrContexto);
                 }
 
-                if (vlrtDAO.existsPendiente(contextoVO)) {
+                if (vlrtDAO.existsPendiente(vldrContexto)) {
                     throw new Error("No se ha podido aplicar aspecto a todos los elementos del servicio valorado: "
-                            + contextoVO);
+                            + vldrContexto);
                 }
 
                 if (LOG.isDebugEnabled()) {
@@ -198,10 +203,10 @@ public class ValoradorBO {
      *
      * @param session
      *            the session
-     * @param contextoVO
+     * @param vldrContexto
      *            the contexto vo
      */
-    private void aplicarAspecto(final SqlSession session, final ValoradorContextoVO contextoVO) {
+    private void aplicarAspecto(final SqlSession session, final ValoradorContextoVO vldrContexto) {
         final ValoracionAgregadaDAO vlraDAO = session.getMapper(ValoracionAgregadaDAO.class);
         final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
         final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
@@ -213,14 +218,14 @@ public class ValoradorBO {
 
         final IgBO igBO = new IgBO();
 
-        generateSql(contextoVO.getAspc());
+        generateSql(vldrContexto.getAspc());
 
-        final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(contextoVO);
+        final List<ValoracionAgregadaVO> vlraList = vlraDAO.selectList(vldrContexto);
         final Set<Long> vlrcIds = new HashSet<Long>();
 
         for (final ValoracionAgregadaVO vlra : vlraList) {
             vlra.getVlrc().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            vlra.getVlrc().setAspc(contextoVO.getAspc());
+            vlra.getVlrc().setAspc(vldrContexto.getAspc());
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
 
             LOG.info("vlrc: " + vlra.getVlrc());
@@ -266,25 +271,25 @@ public class ValoradorBO {
         }
 
         for (final ValoracionAgregadaVO vlra : vlraList) {
-            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-            vlrcCriterioVO.setId(vlra.getVlrc().getId());
+            vlrcCriterio.setId(vlra.getVlrc().getId());
 
-            final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
+            final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterio);
 
             for (final ValoracionImpuestoVO vlri : vlriList) {
                 vlriDAO.insert(vlri);
             }
 
-            vlrgDAO.insertGenerate(vlrcCriterioVO);
+            vlrgDAO.insertGenerate(vlrcCriterio);
         }
 
         if (!vlrcIds.isEmpty()) {
-            final ServicioCargoCriterioVO srcrCriterioVO = new ServicioCargoCriterioVO();
+            final ServicioCargoCriterioVO srcrCriterio = new ServicioCargoCriterioVO();
 
-            srcrCriterioVO.setVlrcIds(vlrcIds);
-            srcrDAO.insertMarcarValorado(srcrCriterioVO);
-            vlrtDAO.deleteList(contextoVO);
+            srcrCriterio.setVlrcIds(vlrcIds);
+            srcrDAO.insertMarcarValorado(srcrCriterio);
+            vlrtDAO.deleteList(vldrContexto);
         }
     }
 
@@ -293,56 +298,56 @@ public class ValoradorBO {
      *
      * @param session
      *            the session
-     * @param contextoVO
+     * @param vldrContexto
      *            the contexto vo
      */
-    private void valorarCargoServicio(final SqlSession session, final ValoradorContextoVO contextoVO) {
+    private void valorarCargoServicio(final SqlSession session, final ValoradorContextoVO vldrContexto) {
         final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
         final ReglaDAO rglaDAO = session.getMapper(ReglaDAO.class);
         final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
 
-        LOG.info("Cargo: " + contextoVO.getCrgo().getCodigo());
+        LOG.info("Cargo: " + vldrContexto.getCrgo().getCodigo());
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Contexto: " + contextoVO);
+            LOG.debug("Contexto: " + vldrContexto);
         }
 
-        final Date fini = contextoDAO.selectFini(contextoVO);
-        final Date ffin = contextoDAO.selectFfin(contextoVO);
+        final Date fini = contextoDAO.selectFini(vldrContexto);
+        final Date ffin = contextoDAO.selectFfin(vldrContexto);
 
-        contextoVO.setFini(fini);
-        contextoVO.setFfin(ffin);
+        vldrContexto.setFini(fini);
+        vldrContexto.setFfin(ffin);
 
         // Obtener Reglas de Tipo Precio
 
-        final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
+        final ReglaCriterioVO rglaCriterio = new ReglaCriterioVO();
 
-        rglaCriterioVO.setCrgoId(contextoVO.getCrgo().getId());
-        rglaCriterioVO.setFechaVigencia(contextoVO.getFref());
+        rglaCriterio.setCrgoId(vldrContexto.getCrgo().getId());
+        rglaCriterio.setFechaVigencia(vldrContexto.getFref());
 
         final IgBO igBO = new IgBO();
 
         {
             // Aplicar procedimientos de tipo precio
-            rglaCriterioVO.setTipo(ReglaTipo.T);
+            rglaCriterio.setTipo(ReglaTipo.T);
 
-            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
+            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
                 LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getRglv().getTipo());
 
                 generateSql(rgla);
-                contextoVO.setRgla(rgla);
+                vldrContexto.setRgla(rgla);
 
                 final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
                 switch (rgla.getRglv().getEnti().getTipo()) {
                 case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(vldrContexto));
 
                     break;
                 default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(vldrContexto));
 
                     break;
                 }
@@ -354,12 +359,12 @@ public class ValoradorBO {
                     vlrt.setPadreId(vlrt.getId());
 
                     vlrt.setRgla(rgla);
-                    vlrt.setFreferencia(contextoVO.getFref());
-                    vlrt.setFliquidacion(contextoVO.getFliquidacion());
+                    vlrt.setFreferencia(vldrContexto.getFref());
+                    vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                    if (contextoVO.getCrgo().getCrgv().getTemporal()) {
-                        vlrt.setFinicio(contextoVO.getFini());
-                        vlrt.setFfin(contextoVO.getFfin());
+                    if (vldrContexto.getCrgo().getCrgv().getTemporal()) {
+                        vlrt.setFinicio(vldrContexto.getFini());
+                        vlrt.setFfin(vldrContexto.getFfin());
                     }
 
                     if (vlrt.getImporte() == -0.0) {
@@ -384,26 +389,26 @@ public class ValoradorBO {
 
         {
             // Aplicar procedimientos de tipo coeficiente
-            rglaCriterioVO.setTipo(ReglaTipo.C);
+            rglaCriterio.setTipo(ReglaTipo.C);
 
-            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
+            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
                 LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getRglv().getTipo());
 
                 generateSql(rgla);
-                contextoVO.setRgla(rgla);
+                vldrContexto.setRgla(rgla);
 
                 final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
                 switch (rgla.getRglv().getEnti().getTipo()) {
                 case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
                     break;
 
                 default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
 
                     break;
                 }
@@ -416,12 +421,12 @@ public class ValoradorBO {
                     vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     vlrt.setRgla(rgla);
-                    vlrt.setFreferencia(contextoVO.getFref());
-                    vlrt.setFliquidacion(contextoVO.getFliquidacion());
+                    vlrt.setFreferencia(vldrContexto.getFref());
+                    vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                    if (contextoVO.getCrgo().getCrgv().getTemporal()) {
-                        vlrt.setFinicio(contextoVO.getFini());
-                        vlrt.setFfin(contextoVO.getFfin());
+                    if (vldrContexto.getCrgo().getCrgv().getTemporal()) {
+                        vlrt.setFinicio(vldrContexto.getFini());
+                        vlrt.setFfin(vldrContexto.getFfin());
                     }
 
                     if (vlrt.getImporte() == -0.0) {
@@ -445,33 +450,33 @@ public class ValoradorBO {
                 if (incompatibilidadFound) {
                     LOG.info("Incompatibilidades. Recalcular Importes!!");
 
-                    vlrtDAO.updateRecalcularCargo(contextoVO);
+                    vlrtDAO.updateRecalcularCargo(vldrContexto);
                 }
             }
         }
 
         {
             // Aplicar procedimientos de tipo bonificacion
-            rglaCriterioVO.setTipo(ReglaTipo.D);
+            rglaCriterio.setTipo(ReglaTipo.D);
 
-            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterioVO);
+            final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
                 LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getRglv().getTipo());
 
                 generateSql(rgla);
-                contextoVO.setRgla(rgla);
+                vldrContexto.setRgla(rgla);
 
                 final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
                 switch (rgla.getRglv().getEnti().getTipo()) {
                 case T:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
                     break;
 
                 default:
-                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(contextoVO));
+                    vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorSubservicio(vldrContexto));
 
                     break;
                 }
@@ -484,12 +489,12 @@ public class ValoradorBO {
                     vlrt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
                     vlrt.setRgla(rgla);
-                    vlrt.setFreferencia(contextoVO.getFref());
-                    vlrt.setFliquidacion(contextoVO.getFliquidacion());
+                    vlrt.setFreferencia(vldrContexto.getFref());
+                    vlrt.setFliquidacion(vldrContexto.getFliquidacion());
 
-                    if (contextoVO.getCrgo().getCrgv().getTemporal()) {
-                        vlrt.setFinicio(contextoVO.getFini());
-                        vlrt.setFfin(contextoVO.getFfin());
+                    if (vldrContexto.getCrgo().getCrgv().getTemporal()) {
+                        vlrt.setFinicio(vldrContexto.getFini());
+                        vlrt.setFfin(vldrContexto.getFfin());
                     }
 
                     if (vlrt.getImporte() == -0.0) {
@@ -513,7 +518,7 @@ public class ValoradorBO {
                 if (incompatibilidadFound) {
                     LOG.info("Incompatibilidades. Recalcular Importes!!");
 
-                    vlrtDAO.updateRecalcularCargo(contextoVO);
+                    vlrtDAO.updateRecalcularCargo(vldrContexto);
                 }
             }
         }
@@ -610,12 +615,12 @@ public class ValoradorBO {
      *            the expression
      * @return the string
      */
-    private String generateSqlCondition(final ReglaVO reglaVO, final String expression) {
+    private String generateSqlCondition(final ReglaVO regla, final String expression) {
         if (expression == null || expression.isEmpty()) {
             return null;
         }
 
-        final ConditionSqlGenerator conditionSqlGenerator = new ConditionSqlGenerator(reglaVO);
+        final ConditionSqlGenerator conditionSqlGenerator = new ConditionSqlGenerator(regla);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);
         final ConditionLexer lexer = new ConditionLexer(input);
@@ -635,12 +640,12 @@ public class ValoradorBO {
      *            the expression
      * @return the string
      */
-    private String generateSqlFormula(final ReglaVO reglaVO, final String expression) {
+    private String generateSqlFormula(final ReglaVO regla, final String expression) {
         if (expression == null || expression.isEmpty()) {
             return null;
         }
 
-        final FormulaSqlGenerator formulaSqlGenerator = new FormulaSqlGenerator(reglaVO);
+        final FormulaSqlGenerator formulaSqlGenerator = new FormulaSqlGenerator(regla);
 
         final ANTLRInputStream input = new ANTLRInputStream(expression);
         final FormulaLexer lexer = new FormulaLexer(input);

@@ -9,5 +9,7 @@ public enum ProcesoModulo {
     /** Servicio. */
     S,
     /** Estadistica. */
-    E;
+    E,
+    /** Facturacion. */
+    F;
 }

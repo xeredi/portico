@@ -15,7 +15,6 @@ import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.metamodelo.vo.Entidad;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.proceso.ProcesoTemplate;
 
@@ -151,14 +150,6 @@ public final class ProcesoAgregacionAp extends ProcesoTemplate {
     @Override
     protected ProcesoTipo getProcesoTipo() {
         return ProcesoTipo.EST_CREACION;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ProcesoModulo getProcesoModulo() {
-        return ProcesoModulo.E;
     }
 
     /**

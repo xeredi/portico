@@ -9,8 +9,8 @@ angular.module(
 
     .when("/", {
         title : 'home',
-        templateUrl : "modules/home.html",
-    })
+        templateUrl : "modules/home.html"
+    });
 } ])
 
 .config(function($datepickerProvider) {
@@ -21,7 +21,7 @@ angular.module(
         startWeek : 1,
         container : 'body',
         autoclose : true
-    })
+    });
 })
 
 .config(function($timepickerProvider) {
@@ -29,13 +29,13 @@ angular.module(
         timeFormat : 'HH:mm',
         length : 1,
         minuteStep : 1
-    })
+    });
 })
 
 .config(function($tooltipProvider) {
     angular.extend($tooltipProvider.defaults, {
         container : 'body'
-    })
+    });
 })
 
 .config(function($typeaheadProvider) {
@@ -59,7 +59,7 @@ angular.module(
 .config(function($modalProvider) {
     angular.extend($modalProvider.defaults, {
         html : true
-    })
+    });
 })
 
 .config([ '$httpProvider', function($httpProvider) {

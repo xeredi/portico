@@ -37,7 +37,6 @@ import xeredi.integra.model.proceso.vo.ProcesoEstado;
 import xeredi.integra.model.proceso.vo.ProcesoItemCriterioVO;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
 import xeredi.integra.model.proceso.vo.ProcesoMensajeVO;
-import xeredi.integra.model.proceso.vo.ProcesoModulo;
 import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
@@ -54,8 +53,6 @@ public class ProcesoBO {
     /**
      * Crear.
      *
-     * @param modulo
-     *            the modulo
      * @param tipo
      *            the tipo
      * @param parametroMap
@@ -68,9 +65,8 @@ public class ProcesoBO {
      *            the file entrada
      * @return the proceso vo
      */
-    public final ProcesoVO crear(final @Nonnull ProcesoModulo modulo, final @Nonnull ProcesoTipo tipo,
-            final Map<String, String> parametroMap, final ItemTipo itemEntradaTipo, final List<Long> itemEntradaList,
-            final File fileEntrada) {
+    public final ProcesoVO crear(final @Nonnull ProcesoTipo tipo, final Map<String, String> parametroMap,
+            final ItemTipo itemEntradaTipo, final List<Long> itemEntradaList, final File fileEntrada) {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
 
@@ -91,7 +87,7 @@ public class ProcesoBO {
             final ProcesoVO prbt = new ProcesoVO();
 
             prbt.setId(igBO.nextVal(IgBO.SQ_INTEGRA));
-            prbt.setModulo(modulo);
+            prbt.setModulo(tipo.getModulo());
             prbt.setTipo(tipo);
             prbt.setEstado(ProcesoEstado.C);
 
@@ -158,14 +154,14 @@ public class ProcesoBO {
      *            the tipo
      * @return the proceso vo
      */
-    public ProcesoVO proteger(final @Nonnull ProcesoModulo modulo, final @Nonnull ProcesoTipo tipo) {
+    public ProcesoVO proteger(final @Nonnull ProcesoTipo tipo) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
 
             final ProcesoCriterioVO prbtCriterioVO = new ProcesoCriterioVO();
 
             prbtCriterioVO.setEstado(ProcesoEstado.C);
-            prbtCriterioVO.setModulo(modulo);
+            prbtCriterioVO.setModulo(tipo.getModulo());
             prbtCriterioVO.setTipo(tipo);
 
             final List<ProcesoVO> prbtList = prbtDAO.selectPaginatedList(prbtCriterioVO, new RowBounds(
@@ -205,7 +201,7 @@ public class ProcesoBO {
      */
     public final void finalizar(final @Nonnull Long prbtId, final List<ProcesoMensajeVO> prmnList,
             final ItemTipo itemSalidaTipo, final List<Long> itemSalidaList, final File fileSalida)
-                    throws InstanceNotFoundException, OperacionNoPermitidaException {
+            throws InstanceNotFoundException, OperacionNoPermitidaException {
         // Lectura del Archivo (si lo hay)
         byte[] buffer = null;
 
@@ -293,7 +289,7 @@ public class ProcesoBO {
      *             the operacion no permitida exception
      */
     public final void cancelar(final @Nonnull Long prbtId) throws InstanceNotFoundException,
-    OperacionNoPermitidaException {
+            OperacionNoPermitidaException {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final ProcesoArchivoDAO prarDAO = session.getMapper(ProcesoArchivoDAO.class);
