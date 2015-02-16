@@ -13,8 +13,9 @@
 								<label translate>ssrv_srvc</label>
 								<div class="input-group-sm" ng-controller="srvcLupaCtrl">
 									<input type="text" autocomplete="off" ng-model="vm.itemCriterio.srvc"
-										ng-options="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)"
-										bs-typeahead class="form-control input-sm">
+										typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)"
+										typeahead-editable="false" typeahead-min-length="2" typeahead-wait-ms="250"
+										class="form-control input-sm">
 								</div>
 							</div>
 							<div class="col-sm-1 col-md-1 form-group">

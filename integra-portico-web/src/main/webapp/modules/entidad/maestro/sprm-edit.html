@@ -10,8 +10,9 @@
 					<label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
 					<div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
 						<input type="text" autocomplete="off" ng-model="vm.item.prmtAsociado"
-							ng-options="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
-							bs-typeahead class="form-control input-sm">
+							typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
+							typeahead-editable="false" typeahead-min-length="2" typeahead-wait-ms="250"
+							class="form-control input-sm">
 					</div>
 					<p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prmtAsociado.etiqueta"></p>
 				</div>
@@ -23,7 +24,8 @@
 
 				<div class="col-sm-2 col-md-2 col-md-1 form-group">
 					<label translate>prmt_ffin</label> <label translate>prmt_fini</label> <input type="text"
-						class="form-control input-sm" ng-model="vm.item.spvr.ffin" data-min-date="{{vm.item.spvr.fini}}" bs-datepicker />
+						class="form-control input-sm" ng-model="vm.item.spvr.ffin" data-min-date="{{vm.item.spvr.fini}}"
+						bs-datepicker />
 				</div>
 			</div>
 

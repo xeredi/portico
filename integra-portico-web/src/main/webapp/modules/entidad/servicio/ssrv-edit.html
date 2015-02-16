@@ -9,7 +9,8 @@
 					<label translate>ssrv_srvc</label>
 					<div ng-if="!vm.item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
 						<input type="text" autocomplete="off" ng-model="vm.item.srvc"
-							ng-options="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)" bs-typeahead
+							typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)"
+							typeahead-editable="false" typeahead-min-length="2" typeahead-wait-ms="250"
 							class="form-control input-sm">
 					</div>
 					<p ng-if="vm.item.srvc.id" class="form-control-static" ng-bind="vm.item.srvc.etiqueta"></p>
@@ -53,8 +54,9 @@
 					<label ng-bind="entiPadre.nombre"></label>
 					<div class="input-group-sm" ng-controller="ssrvLupaCtrl">
 						<input type="text" autocomplete="off" ng-model="vm.itemPadresMap[entiPadre.id]"
-							ng-options="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, vm.item.srvc.id, $viewValue)"
-							bs-typeahead class="form-control input-sm">
+							typeahead="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, vm.item.srvc.id, $viewValue)"
+							typeahead-editable="false" typeahead-min-length="2" typeahead-wait-ms="250"
+							class="form-control input-sm">
 					</div>
 				</div>
 			</div>

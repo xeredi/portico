@@ -1,8 +1,8 @@
 angular.module(
         "integraApp",
         [ "ngRoute", "ui.bootstrap.tpls", "ui.bootstrap.tabs", "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
-                "mgcrea.ngStrap", "pascalprecht.translate", "angularSpinner", "util", "i18n", "administracion",
-                "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ])
+                "ui.bootstrap.typeahead", "mgcrea.ngStrap", "pascalprecht.translate", "angularSpinner", "util", "i18n",
+                "administracion", "metamodelo", "facturacion", "maestro", "servicio", "estadistica", "proceso" ])
 
 .config([ "$routeProvider", function($routeProvider) {
     $routeProvider
