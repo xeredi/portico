@@ -42,12 +42,12 @@
 			<div ng-switch-when="PR" ng-if="entd.tpdt.tpht == 'F'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
 				<input type="text" autocomplete="off" ng-model="vm.item.itdtMap[entd.tpdt.id].prmt"
 					typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(entd.tpdt.enti.id, $viewValue, vm.fechaVigencia)"
-					typeahead-editable="false" typeahead-min-length="2" typeahead-wait-ms="250" class="form-control input-sm">
+					typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
 			</div>
 			<div ng-switch-when="SR" class="input-group-sm" ng-controller="srvcLupaCtrl">
 				<input type="text" autocomplete="off" ng-model="vm.item.itdtMap[entd.tpdt.id].srvc"
 					typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(entd.tpdt.enti.id, $viewValue)"
-					typeahead-editable="false" typeahead-min-length="2" typeahead-wait-ms="250" class="form-control input-sm">
+					typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
 			</div>
 		</div>
 	</div>

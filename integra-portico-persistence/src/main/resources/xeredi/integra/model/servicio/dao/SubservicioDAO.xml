@@ -23,24 +23,95 @@
         </association>
     </resultMap>
 
-    <sql id="SelectPrefix">
-        SELECT ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref
-            , srvc_pk, srvc_anno, srvc_numero
-            , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
-        <include refid="SelectPrefixSpecific" />
-        FROM vw_subservicio_ssrv ssrv
+    <sql id="SelectPrefix" databaseId="postgres">
+    <![CDATA[
+		SELECT
+			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		FROM (
+			SELECT *
+				, NULL AS rownumVar
+			FROM tbl_subservicio_ssrv
+	]]>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+			ORDER BY ssrv_srvc_pk, ssrv_numero
+	]]>
+		<if test="offset != null or limit != null">
+			<if test="offset != null">OFFSET ${offset} ROWS</if>
+			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
+		</if>
+    <![CDATA[
+		) sql
+			INNER JOIN tbl_servicio_srvc ON
+				srvc_pk = ssrv_srvc_pk
+	]]>
     </sql>
 
-    <sql id="SelectPrefixSpecific" databaseId="postgres">
-        , NULL AS rownumVar
+    <sql id="SelectPrefix" databaseId="sqlserver">
+    <![CDATA[
+		SELECT
+			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		FROM (
+			SELECT *
+				, NULL AS rownumVar
+			FROM tbl_subservicio_ssrv
+	]]>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+			ORDER BY ssrv_srvc_pk, ssrv_numero
+	]]>
+		<if test="offset != null or limit != null">
+			<if test="offset != null">OFFSET ${offset} ROWS</if>
+			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
+		</if>
+    <![CDATA[
+		) sql
+			INNER JOIN tbl_servicio_srvc ON
+				srvc_pk = ssrv_srvc_pk
+	]]>
     </sql>
 
-    <sql id="SelectPrefixSpecific" databaseId="sqlserver">
-        , NULL AS rownumVar
-    </sql>
-
-    <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , row_number() over (order by ssrv_srvc_pk, ssrv_numero) rownumVar
+    <sql id="SelectPrefix" databaseId="oracle">
+    <![CDATA[
+		SELECT
+			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		FROM (
+			SELECT *
+			FROM (
+				SELECT *
+					, row_number() over
+					(ORDER BY ssrv_srvc_pk, ssrv_numero) rownumVar
+				FROM tbl_subservicio_ssrv
+	]]>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+				ORDER BY ssrv_srvc_pk, ssrv_numero
+			) sql
+	]]>
+		<if test="offset != null or limit != null">
+			<where>
+				<if test="offset != null">AND rownumVar > ${offset}</if>
+				<if test="limit != null">
+			    <![CDATA[
+					AND rownumVar <= (${limit}
+				]]>
+					<if test="offset != null">+ ${offset}</if>
+					)
+				</if>
+			</where>
+		</if>
+    <![CDATA[
+		) sql
+    ]]>
     </sql>
 
     <sql id="SelectWhere">
@@ -119,56 +190,19 @@
         SELECT
             COUNT(1)
         FROM
-            vw_subservicio_ssrv
+            tbl_subservicio_ssrv
         ]]>
         <where>
             <include refid="SelectWhere" />
         </where>
     </select>
 
-    <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap" resultSetType="SCROLL_INSENSITIVE">
+    <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY ssrv_srvc_pk, ssrv_numero
-    </select>
-
-    <select id="selectPaginatedList" parameterType="SubservicioCriterioVO" resultMap="ResultMap" databaseId="postgres">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY ssrv_srvc_pk, ssrv_numero
-        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-    </select>
-
-    <select id="selectPaginatedList" parameterType="SubservicioCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY ssrv_srvc_pk, ssrv_numero
-        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-    </select>
-
-    <select id="selectPaginatedList" parameterType="SubservicioCriterioVO" resultMap="ResultMap" databaseId="oracle">
-        SELECT * FROM (
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        <![CDATA[
-        ORDER BY ssrv_srvc_pk, ssrv_numero
-        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
-        ]]>
     </select>
 
     <select id="selectObject" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
     </select>
 
     <select id="exists" parameterType="SubservicioVO" resultType="boolean">

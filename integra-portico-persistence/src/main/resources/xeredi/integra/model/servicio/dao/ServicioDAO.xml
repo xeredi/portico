@@ -20,27 +20,72 @@
 		</association>
 	</resultMap>
 
-	<sql id="SelectPrefix">
+	<sql id="SelectPrefix" databaseId="postgres">
     <![CDATA[
-    SELECT
-        srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
-		, (SELECT prmt_parametro FROM tbl_parametro_prmt
-			WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+			, NULL AS rownumVar
+		FROM tbl_servicio_srvc
     ]]>
-		<include refid="SelectPrefixSpecific" />
-		FROM vw_servicio_srvc srvc
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+		ORDER BY srvc_falta DESC
+    ]]>
+		<if test="offset != null or limit != null">
+			<if test="offset != null">OFFSET ${offset} ROWS</if>
+			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
+		</if>
 	</sql>
 
-	<sql id="SelectPrefixSpecific" databaseId="postgres">
-		, NULL AS rownumVar
+	<sql id="SelectPrefix" databaseId="sqlserver">
+    <![CDATA[
+		SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
+			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+			, NULL AS rownumVar
+		FROM tbl_servicio_srvc
+    ]]>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+		ORDER BY srvc_falta DESC
+    ]]>
+		<if test="offset != null or limit != null">
+			<if test="offset != null">OFFSET ${offset} ROWS</if>
+			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
+		</if>
 	</sql>
 
-	<sql id="SelectPrefixSpecific" databaseId="sqlserver">
-		, NULL AS rownumVar
-	</sql>
-
-	<sql id="SelectPrefixSpecific" databaseId="oracle">
-		, row_number() over (order by srvc_falta DESC) rownumVar
+	<sql id="SelectPrefix" databaseId="oracle">
+    <![CDATA[
+    	SELECT *
+    	FROM (
+			SELECT srvc_pk, srvc_tpsr_pk, srvc_anno, srvc_numero, srvc_falta, srvc_fref, srvc_fini, srvc_ffin, srvc_estado, srvc_subp_pk
+				, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+				, row_number() over (order by srvc_falta DESC) rownumVar
+			FROM tbl_servicio_srvc
+    ]]>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+			ORDER BY srvc_falta DESC
+		) sql
+    ]]>
+		<if test="offset != null or limit != null">
+			<where>
+				<if test="offset != null">AND rownumVar > ${offset}</if>
+				<if test="limit != null">
+			    <![CDATA[
+					AND rownumVar <= (${limit}
+				]]>
+					<if test="offset != null">+ ${offset}</if>
+					)
+				</if>
+			</where>
+		</if>
 	</sql>
 
 	<sql id="SelectCountPrefix">
@@ -48,7 +93,7 @@
     SELECT
         COUNT(1)
     FROM
-    	vw_servicio_srvc
+    	tbl_servicio_srvc
     ]]>
 	</sql>
 
@@ -133,56 +178,11 @@
 	<select id="selectList" parameterType="ServicioCriterioVO"
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-		ORDER BY srvc_falta DESC
-	</select>
-
-	<select id="selectPaginatedList" parameterType="ServicioCriterioVO"
-		resultMap="ResultMap" databaseId="postgres">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-		ORDER BY srvc_falta DESC
-		OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-	</select>
-
-	<select id="selectPaginatedList" parameterType="ServicioCriterioVO"
-		resultMap="ResultMap" databaseId="sqlserver">
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-		ORDER BY srvc_falta DESC
-		OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-	</select>
-
-	<select id="selectPaginatedList" parameterType="ServicioCriterioVO"
-		resultMap="ResultMap" databaseId="oracle">
-		SELECT * FROM (
-		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-        <![CDATA[
-        ORDER BY srvc_falta DESC
-        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
-        ]]>
 	</select>
 
 	<select id="selectObject" parameterType="ServicioCriterioVO"
 		resultMap="ResultMap">
 		<include refid="SelectPrefix" />
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-	</select>
-
-	<select id="select" parameterType="Long" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		WHERE srvc_pk = #{value}
 	</select>
 
 	<select id="selectLupaList" parameterType="ServicioLupaCriterioVO"

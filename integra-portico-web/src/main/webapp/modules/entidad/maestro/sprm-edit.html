@@ -11,7 +11,7 @@
 					<div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
 						<input type="text" autocomplete="off" ng-model="vm.item.prmtAsociado"
 							typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
-							typeahead-editable="false" typeahead-min-length="2" typeahead-wait-ms="250"
+							typeahead-editable="false" typeahead-wait-ms="250"
 							class="form-control input-sm">
 					</div>
 					<p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prmtAsociado.etiqueta"></p>

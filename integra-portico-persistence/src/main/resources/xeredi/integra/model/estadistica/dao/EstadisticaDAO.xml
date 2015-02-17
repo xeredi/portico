@@ -3,102 +3,237 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.estadistica.dao.EstadisticaDAO">
-    <resultMap type="EstadisticaVO" id="ResultMap">
-        <id column="estd_pk" property="id" />
-        <result column="estd_tpes_pk" property="entiId" />
-        <result column="pepr_freferencia" property="fref" />
+	<resultMap type="EstadisticaVO" id="ResultMap">
+		<id column="estd_pk" property="id" />
+		<result column="estd_tpes_pk" property="entiId" />
+		<result column="pepr_freferencia" property="fref" />
 
-        <association property="subp" javaType="ParametroVO">
-            <result column="prmt_pk" property="id" />
-            <result column="prmt_parametro" property="parametro" />
-            <result column="p18n_texto" property="texto" />
-        </association>
+		<association property="subp" javaType="ParametroVO">
+			<result column="estd_subp_pk" property="id" />
+			<result column="estd_subp" property="parametro" />
+			<result column="p18n_texto" property="texto" />
+		</association>
 
-        <association property="pepr" javaType="PeriodoProcesoVO">
-            <result column="estd_pepr_pk" property="id" />
-            <result column="pepr_anio" property="anio" />
-            <result column="pepr_mes" property="mes" />
-            <result column="pepr_freferencia" property="freferencia" />
+		<association property="pepr" javaType="PeriodoProcesoVO">
+			<result column="estd_pepr_pk" property="id" />
+			<result column="pepr_anio" property="anio" />
+			<result column="pepr_mes" property="mes" />
 
-            <association property="autp" javaType="ParametroVO">
-                <result column="pepr_autp_pk" property="id" />
-                <result column="pepr_autp" property="parametro" />
-            </association>
-        </association>
-    </resultMap>
+			<association property="autp" javaType="ParametroVO">
+				<result column="pepr_autp_pk" property="id" />
+				<result column="pepr_autp" property="parametro" />
+			</association>
+		</association>
+	</resultMap>
 
-    <sql id="SelectPrefix">
+	<sql id="SelectPrefixIdioma">
+		<if test="idioma != null">
         <![CDATA[
-        SELECT estd.*
-            , (SELECT prmt_parametro FROM tbl_parametro_prmt
-                WHERE prmt_pk = pepr_autp_pk) AS pepr_autp
-        ]]>
-        <if test="idioma != null">
-        <![CDATA[
-        	, (
-                SELECT i18n_text
-                FROM tbl_i18n_i18n
-                WHERE
-                    i18n_pref = 'prvr'
-                    AND i18n_ext_pk = (
-                        SELECT prvr_pk
-                        FROM tbl_parametro_version_prvr
-                        WHERE
-                            prvr_prmt_pk = estd_subp_pk
-                            AND pepr_freferencia BETWEEN prvr_fini AND COALESCE(prvr_ffin, pepr_freferencia)
-                    )
-                    AND i18n_lang = #{idioma}
-            ) AS p18n_texto
-        ]]>
-        </if>
-        <include refid="SelectPrefixSpecific" />
-        FROM vw_estadistica_estd estd
-    </sql>
+		, (
+			SELECT i18n_text
+			FROM tbl_i18n_i18n
+			WHERE
+				i18n_pref = 'prvr'
+				AND i18n_ext_pk = (
+					SELECT prvr_pk
+					FROM tbl_parametro_version_prvr
+					WHERE
+						prvr_prmt_pk = estd_subp_pk
+						AND pepr_freferencia BETWEEN prvr_fini AND COALESCE(prvr_ffin, pepr_freferencia)
+				)
+				AND i18n_lang = 'es'
+		) AS p18n_texto
+    	]]>
+		</if>
+	</sql>
 
-    <sql id="SelectPrefixSpecific" databaseId="postgres">
-        , NULL AS rownumVar
-    </sql>
-
-    <sql id="SelectPrefixSpecific" databaseId="sqlserver">
-        , NULL AS rownumVar
-    </sql>
-
-    <sql id="SelectPrefixSpecific" databaseId="oracle">
-        , row_number() over (ORDER BY estd_tpes_pk, estd_pk) rownumVar
-    </sql>
-
-    <sql id="SelectCountPrefix">
+	<sql id="SelectPrefix" databaseId="postgres">
     <![CDATA[
-    SELECT
-        COUNT(1)
-    FROM
-        vw_estadistica_estd
+	SELECT
+		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
+		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
+		, (
+			SELECT prmt_parametro
+			FROM tbl_parametro_prmt
+			WHERE
+				prmt_pk = estd_subp_pk
+		) AS estd_subp
+		, (
+			SELECT prmt_parametro
+			FROM tbl_parametro_prmt
+			WHERE
+				prmt_pk = pepr_autp_pk
+		) AS pepr_autp
+        ]]>
+		<include refid="SelectPrefixIdioma" />
+    <![CDATA[
+	FROM (
+		SELECT
+			estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
+			, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
+			, NULL AS rownumVar
+		FROM
+			tbl_estadistica_estd
+			INNER JOIN tbl_periodo_proceso_pepr ON
+				pepr_pk = estd_pepr_pk
     ]]>
-    </sql>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+		ORDER BY estd_tpes_pk, estd_pk
+    ]]>
+		<if test="offset != null or limit != null">
+			<if test="offset != null">OFFSET ${offset} ROWS</if>
+			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
+		</if>
+    <![CDATA[
+	) sql
+    ]]>
+	</sql>
 
-    <sql id="SelectWhere">
-        <if test="id != null">
-            AND estd_pk = #{id}
-        </if>
-        <if test="entiId != null">
-            AND estd_tpes_pk = #{entiId}
-        </if>
-        <if test="pepr != null">
-            <if test="pepr.id != null">
-                AND estd_pepr_pk = #{pepr.id}
-            </if>
-            <if test="pepr.autpId != null">
-                AND pepr_autp_pk = #{pepr.autpId}
-            </if>
-        </if>
-        <if test="subpId != null">
-            AND estd_subp_pk = #{subpId}
-        </if>
-        <if test="itdtMap != null and !itdtMap.empty">
-            <foreach collection="itdtMap" index="key" item="itdt">
-                <!-- FIXME ojo, faltan las fechas -->
-                <if
-                    test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
+	<sql id="SelectPrefix" databaseId="sqlserver">
+    <![CDATA[
+	SELECT
+		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
+		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes
+		, (
+			SELECT prmt_parametro
+			FROM tbl_parametro_prmt
+			WHERE
+				prmt_pk = estd_subp_pk
+		) AS estd_subp
+		, (
+			SELECT prmt_parametro
+			FROM tbl_parametro_prmt
+			WHERE
+				prmt_pk = pepr_autp_pk
+		) AS pepr_autp
+        ]]>
+		<include refid="SelectPrefixIdioma" />
+    <![CDATA[
+	FROM (
+		SELECT
+			estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
+			, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
+			, NULL AS rownumVar
+		FROM
+			tbl_estadistica_estd
+			INNER JOIN tbl_periodo_proceso_pepr ON
+				pepr_pk = estd_pepr_pk
+    ]]>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+		ORDER BY estd_tpes_pk, estd_pk
+    ]]>
+		<if test="offset != null or limit != null">
+			<if test="offset != null">OFFSET ${offset} ROWS</if>
+			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
+		</if>
+    <![CDATA[
+	) sql
+    ]]>
+	</sql>
+
+	<sql id="SelectPrefix" databaseId="oracle">
+    <![CDATA[
+	SELECT
+		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
+		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes
+		, (
+			SELECT prmt_parametro
+			FROM tbl_parametro_prmt
+			WHERE
+				prmt_pk = estd_subp_pk
+		) AS estd_subp
+		, (
+			SELECT prmt_parametro
+			FROM tbl_parametro_prmt
+			WHERE
+				prmt_pk = pepr_autp_pk
+		) AS pepr_autp
+        ]]>
+		<include refid="SelectPrefixIdioma" />
+    <![CDATA[
+	FROM (
+		SELECT *
+		FROM (
+			SELECT
+				estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
+				, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
+				, row_number() over
+				(ORDER BY estd_tpes_pk, estd_pk) rownumVar
+			FROM
+				tbl_estadistica_estd
+				INNER JOIN tbl_periodo_proceso_pepr ON
+					pepr_pk = estd_pepr_pk
+			ORDER BY estd_tpes_pk, estd_pk
+    ]]>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+    <![CDATA[
+    	) sql
+    ]]>
+		<if test="offset != null or limit != null">
+			<where>
+				<if test="offset != null">AND rownumVar > ${offset}</if>
+				<if test="limit != null">
+			    <![CDATA[
+					AND rownumVar <= (${limit}
+				]]>
+					<if test="offset != null">+ ${offset}</if>
+					)
+				</if>
+			</where>
+		</if>
+    <![CDATA[
+	) sql
+    ]]>
+	</sql>
+
+	<sql id="SelectCountPrefix">
+    <![CDATA[
+		SELECT COUNT(1)
+		FROM tbl_estadistica_estd
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<if test="id != null">
+			AND estd_pk = #{id}
+		</if>
+		<if test="entiId != null">
+			AND estd_tpes_pk = #{entiId}
+		</if>
+		<if test="pepr != null">
+	    	<![CDATA[
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_periodo_proceso_pepr
+					WHERE
+						pepr_pk = estd_pepr_pk
+		    ]]>
+			<if test="pepr.id != null">
+				AND pepr_pk = #{pepr.id}
+			</if>
+			<if test="pepr.autpId != null">
+				AND pepr_autp_pk = #{pepr.autpId}
+			</if>
+	    	<![CDATA[
+		    	)
+		    ]]>
+		</if>
+		<if test="subpId != null">
+			AND estd_subp_pk = #{subpId}
+		</if>
+		<if test="itdtMap != null and !itdtMap.empty">
+			<foreach collection="itdtMap" index="key" item="itdt">
+				<!-- FIXME ojo, faltan las fechas -->
+				<if
+					test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadDecimal != null or itdt.cantidadEntera != null or (itdt.cadena != null and !itdt.cadena.empty) ">
                     <![CDATA[
                     AND EXISTS (
                         SELECT 1
@@ -107,87 +242,53 @@
                             esdt_estd_pk = estd_pk
                             AND esdt_tpdt_pk = #{itdt.tpdtId}
                     ]]>
-                    <if test="itdt.prmt != null and itdt.prmt.id != null">
-                        AND esdt_prmt_pk = #{itdt.prmt.id}
-                    </if>
-                    <if test="itdt.cantidadEntera != null">
-                        AND esdt_nentero = #{itdt.cantidadEntera}
-                    </if>
-                    <if test="itdt.cantidadDecimal != null">
-                        AND esdt_ndecimal = #{itdt.cantidadDecimal}
-                    </if>
-                    <if test="itdt.cadena != null and !itdt.cadena.empty">
-                        AND esdt_cadena LIKE #{itdt.cadena}
-                    </if>
-                    )
-                </if>
-            </foreach>
-        </if>
-    </sql>
+					<if test="itdt.prmt != null and itdt.prmt.id != null">
+						AND esdt_prmt_pk = #{itdt.prmt.id}
+					</if>
+					<if test="itdt.cantidadEntera != null">
+						AND esdt_nentero = #{itdt.cantidadEntera}
+					</if>
+					<if test="itdt.cantidadDecimal != null">
+						AND esdt_ndecimal = #{itdt.cantidadDecimal}
+					</if>
+					<if test="itdt.cadena != null and !itdt.cadena.empty">
+						AND esdt_cadena LIKE #{itdt.cadena}
+					</if>
+					)
+				</if>
+			</foreach>
+		</if>
+	</sql>
 
-    <select id="selectCount" parameterType="EstadisticaCriterioVO" resultType="Integer">
-        <include refid="SelectCountPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-    </select>
+	<select id="selectCount" parameterType="EstadisticaCriterioVO"
+		resultType="Integer">
+		<include refid="SelectCountPrefix" />
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+	</select>
 
-    <select id="selectList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY estd_tpes_pk, estd_pk
-    </select>
+	<select id="selectList" parameterType="EstadisticaCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+	</select>
 
-    <select id="selectPaginatedList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap" databaseId="postgres">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY estd_tpes_pk, estd_pk
-        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-    </select>
+	<select id="selectObject" parameterType="EstadisticaCriterioVO"
+		resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+	</select>
 
-    <select id="selectPaginatedList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap" databaseId="sqlserver">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        ORDER BY estd_tpes_pk, estd_pk
-        OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY
-    </select>
-
-    <select id="selectPaginatedList" parameterType="EstadisticaCriterioVO" resultMap="ResultMap" databaseId="oracle">
-        SELECT * FROM (
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-        <![CDATA[
-        ORDER BY estd_tpes_pk, estd_pk
-        ) WHERE rownumVar > ${offset} AND rownumVar <= (${offset} + ${limit})
-        ]]>
-    </select>
-
-    <select id="selectObject" parameterType="EstadisticaCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-    </select>
-
-    <insert id="insert" parameterType="EstadisticaVO">
+	<insert id="insert" parameterType="EstadisticaVO">
         <![CDATA[
         INSERT INTO tbl_estadistica_estd (estd_pk, estd_tpes_pk, estd_pepr_pk, estd_subp_pk)
         VALUES (#{id}, #{entiId}, #{pepr.id}, #{subp.id})
         ]]>
-    </insert>
+	</insert>
 
-    <delete id="delete" parameterType="Long">
+	<delete id="delete" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_estadistica_estd
         WHERE estd_pepr_pk = #{value}
         ]]>
-    </delete>
+	</delete>
 </mapper>

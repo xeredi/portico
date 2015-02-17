@@ -2,6 +2,7 @@ package xeredi.integra.jobs;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -12,6 +13,7 @@ import xeredi.integra.proceso.estadistica.cargaoppe.ProcesoCargaOppe;
 /**
  * The Class CargaOppeJob.
  */
+@DisallowConcurrentExecution
 public final class CargaOppeJob implements Job {
 
     /** The Constant LOG. */

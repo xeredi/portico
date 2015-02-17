@@ -70,15 +70,6 @@ public interface ServicioDAO {
     List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
 
     /**
-     * Select paginated list.
-     *
-     * @param srvcCriterioVO
-     *            the srvc criterio vo
-     * @return the list
-     */
-    List<ServicioVO> selectPaginatedList(final @Nonnull ServicioCriterioVO srvcCriterioVO);
-
-    /**
      * Select object.
      *
      * @param srvcCriterioVO
@@ -86,15 +77,6 @@ public interface ServicioDAO {
      * @return the servicio vo
      */
     ServicioVO selectObject(final @Nonnull ServicioCriterioVO srvcCriterioVO);
-
-    /**
-     * Select.
-     *
-     * @param srvcId
-     *            the srvc id
-     * @return the servicio vo
-     */
-    ServicioVO select(final @Nonnull Long srvcId);
 
     /**
      * Select lupa list.

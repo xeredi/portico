@@ -50,6 +50,7 @@ import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
 import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
+import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
 import xeredi.integra.model.util.grammar.ConditionLexer;
 import xeredi.integra.model.util.grammar.ConditionParser;
@@ -111,7 +112,11 @@ public class ValoradorBO {
             Preconditions.checkNotNull(fechaLiquidacion);
 
             final ValoradorContextoVO vldrContexto = new ValoradorContextoVO();
-            final ServicioVO srvc = srvcDAO.select(srvcId);
+            final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
+
+            srvcCriterio.setId(srvcId);
+
+            final ServicioVO srvc = srvcDAO.selectObject(srvcCriterio);
 
             if (srvc == null) {
                 throw new Error("Servicio no encontrado: " + srvcId);

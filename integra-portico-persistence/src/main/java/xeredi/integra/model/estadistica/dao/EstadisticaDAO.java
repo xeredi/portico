@@ -40,15 +40,6 @@ public interface EstadisticaDAO {
     List<EstadisticaVO> selectList(final @Nonnull EstadisticaCriterioVO estdCriterioVO);
 
     /**
-     * Select paginated list.
-     *
-     * @param estdCriterioVO
-     *            the estd criterio vo
-     * @return the list
-     */
-    List<EstadisticaVO> selectPaginatedList(final @Nonnull EstadisticaCriterioVO estdCriterioVO);
-
-    /**
      * Select object.
      *
      * @param estdCriterioVO

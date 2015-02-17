@@ -107,7 +107,7 @@ public abstract class AbstractServicioBO implements ServicioBO {
                 srvcCriterioVO.setOffset(offset);
                 srvcCriterioVO.setLimit(limit);
 
-                srvcList.addAll(srvcDAO.selectPaginatedList(srvcCriterioVO));
+                srvcList.addAll(srvcDAO.selectList(srvcCriterioVO));
                 fillDependencies(session, srvcList, srvcCriterioVO, true);
             }
 
@@ -121,6 +121,9 @@ public abstract class AbstractServicioBO implements ServicioBO {
     @Override
     public final List<ServicioVO> selectList(final @Nonnull ServicioCriterioVO srvcCriterioVO) {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+            srvcCriterioVO.setOffset(null);
+            srvcCriterioVO.setLimit(null);
+
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterioVO);
 

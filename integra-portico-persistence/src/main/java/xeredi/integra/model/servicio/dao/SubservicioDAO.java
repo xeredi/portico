@@ -79,15 +79,6 @@ public interface SubservicioDAO {
     List<SubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 
     /**
-     * Select paginated list.
-     *
-     * @param ssrvCriterioVO
-     *            the ssrv criterio vo
-     * @return the list
-     */
-    List<SubservicioVO> selectPaginatedList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
-
-    /**
      * Select lupa list.
      *
      * @param ssrvCriterioVO
