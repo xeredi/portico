@@ -1,276 +1,289 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>integra-portico</groupId>
-    <artifactId>pom</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>Integra (2.0)</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>integra-portico</groupId>
+	<artifactId>pom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Integra (2.0)</name>
 
-    <profiles>
-        <profile>
-            <id>postgresql</id>
+	<profiles>
+		<profile>
+			<id>postgresql</id>
 
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 
-            <properties>
-                <profile-id>postgresql</profile-id>
-                <database-vendor>postgresql</database-vendor>
-                <server-vendor>jetty</server-vendor>
-            </properties>
+			<properties>
+				<profile-id>postgresql</profile-id>
+				<database-vendor>postgresql</database-vendor>
+				<server-vendor>jetty</server-vendor>
+			</properties>
 
-            <dependencies>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>9.3-1102-jdbc41</version>
-                </dependency>
-            </dependencies>
-        </profile>
+			<dependencies>
+				<dependency>
+					<groupId>org.postgresql</groupId>
+					<artifactId>postgresql</artifactId>
+					<version>9.3-1102-jdbc41</version>
+				</dependency>
+			</dependencies>
+		</profile>
 
-        <profile>
-            <id>oracle</id>
+		<profile>
+			<id>oracle</id>
 
-            <properties>
-                <profile-id>oracle</profile-id>
-                <database-vendor>oracle</database-vendor>
-                <server-vendor>jetty</server-vendor>
-            </properties>
+			<properties>
+				<profile-id>oracle</profile-id>
+				<database-vendor>oracle</database-vendor>
+				<server-vendor>jetty</server-vendor>
+			</properties>
 
-            <dependencies>
-                <dependency>
-                    <groupId>com.oracle</groupId>
-                    <artifactId>jdbc</artifactId>
-                    <version>11.2</version>
-                </dependency>
-            </dependencies>
-        </profile>
+			<dependencies>
+				<dependency>
+					<groupId>com.oracle</groupId>
+					<artifactId>jdbc</artifactId>
+					<version>11.2</version>
+				</dependency>
+			</dependencies>
+		</profile>
 
-        <profile>
-            <id>sqlserver</id>
+		<profile>
+			<id>sqlserver</id>
 
-            <properties>
-                <profile-id>sqlserver</profile-id>
-                <database-vendor>sqlserver</database-vendor>
-                <server-vendor>jetty</server-vendor>
-            </properties>
+			<properties>
+				<profile-id>sqlserver</profile-id>
+				<database-vendor>sqlserver</database-vendor>
+				<server-vendor>jetty</server-vendor>
+			</properties>
 
-            <dependencies>
-                <dependency>
-                    <groupId>net.sourceforge.jtds</groupId>
-                    <artifactId>jtds</artifactId>
-                    <version>1.3.1</version>
-                </dependency>
-                <!-- <dependency> <groupId>com.microsoft.sqlserver</groupId> <artifactId>jdbc</artifactId> <version>4.0</version>
-                    </dependency> -->
-            </dependencies>
-        </profile>
-    </profiles>
+			<dependencies>
+				<dependency>
+					<groupId>net.sourceforge.jtds</groupId>
+					<artifactId>jtds</artifactId>
+					<version>1.3.1</version>
+				</dependency>
+				<!-- <dependency> <groupId>com.microsoft.sqlserver</groupId> <artifactId>jdbc</artifactId>
+					<version>4.0</version> </dependency> -->
+			</dependencies>
+		</profile>
+	</profiles>
 
-    <repositories>
-        <repository>
-            <id>sonatype-oss-public</id>
-            <url>http://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
+	<repositories>
+		<repository>
+			<id>sonatype-oss-public</id>
+			<url>http://oss.sonatype.org/content/groups/public/</url>
+		</repository>
+	</repositories>
 
-    <modules>
-        <module>../integra-portico-db</module>
-        <module>../integra-portico-persistence</module>
-        <module>../integra-portico-business</module>
-        <module>../integra-portico-jobs</module>
-        <module>../integra-portico-web</module>
+	<modules>
+		<module>../integra-portico-db</module>
+		<module>../integra-portico-persistence</module>
+		<module>../integra-portico-business</module>
+		<module>../integra-portico-jobs</module>
+		<module>../integra-portico-web</module>
 
-        <module>../integra-portico-test</module>
-    </modules>
+		<module>../integra-portico-test</module>
+	</modules>
 
-    <distributionManagement>
-        <site>
-            <id>project-site</id>
-            <url>file:${user.home}/proyectos/deploy/site/integra-portico/pom</url>
-        </site>
-    </distributionManagement>
+	<distributionManagement>
+		<site>
+			<id>project-site</id>
+			<url>file:${user.home}/proyectos/deploy/site/integra-portico/pom</url>
+		</site>
+	</distributionManagement>
 
-    <issueManagement>
-        <system>Trac</system>
-        <url>http://xp-dev.com/trac/xeredi</url>
-    </issueManagement>
+	<issueManagement>
+		<system>Trac</system>
+		<url>http://xp-dev.com/trac/xeredi</url>
+	</issueManagement>
 
-    <scm>
-        <connection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</connection>
-        <developerConnection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</developerConnection>
-        <url>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</url>
-    </scm>
+	<scm>
+		<connection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</connection>
+		<developerConnection>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</developerConnection>
+		<url>scm:svn:http://xp-dev.com/svn/xeredi/xeredi-integra-pom</url>
+	</scm>
 
-    <developers>
-        <developer>
-            <id>xeredi</id>
-            <email>xeredi@gmail.com</email>
-            <name>Xesus Rey Diaz</name>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<id>xeredi</id>
+			<email>xeredi@gmail.com</email>
+			<name>Xesus Rey Diaz</name>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
 
-    <properties>
-        <!-- Build -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <changes.component>portico</changes.component>
-    </properties>
+	<properties>
+		<!-- Build -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<changes.component>portico</changes.component>
+	</properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <inherited>false</inherited>
-                <configuration>
-                    <siteDirectory>${project.basedir}/src/site</siteDirectory>
-                    <stagingSiteURL>${siteDeploy.url}</stagingSiteURL>
-                    <relativizeDecorationLinks>false</relativizeDecorationLinks>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.doxia</groupId>
-                        <artifactId>doxia-module-markdown</artifactId>
-                        <version>1.6</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<inherited>false</inherited>
+				<configuration>
+					<siteDirectory>${project.basedir}/src/site</siteDirectory>
+					<stagingSiteURL>${siteDeploy.url}</stagingSiteURL>
+					<relativizeDecorationLinks>false</relativizeDecorationLinks>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-module-markdown</artifactId>
+						<version>1.6</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
-                        <debug>${maven-compiler-plugin.debug}</debug>
-                        <optimize>${maven-compiler-plugin.optimize}</optimize>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <skipTests>${maven-surefire-plugin.skipTests}</skipTests>
-                        <testFailureIgnore>${maven-surefire-plugin.testFailureIgnore}</testFailureIgnore>
-                        <excludes>
-                            <include>**/**Populator**.java</include>
-                            <include>**/**Performance**.java</include>
-                        </excludes>
-                    </configuration>
-                </plugin>
-                <!-- <plugin> <artifactId>maven-pdf-plugin</artifactId> <version>${maven-pdf-plugin.version}</version> <executions>
-                    <execution> <id>pdf</id> <phase>site</phase> <goals> <goal>pdf</goal> </goals> <configuration> <includeReports>true</includeReports>
-                    </configuration> </execution> </executions> </plugin> -->
-                <plugin>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <configuration>
-                        <siteDirectory>${project.parent.basedir}/src/site</siteDirectory>
-                        <reportPlugins>
-                            <plugin>
-                                <artifactId>maven-project-info-reports-plugin</artifactId>
-                                <configuration>
-                                    <dependencyLocationsEnabled>
-                                        false
-                                    </dependencyLocationsEnabled>
-                                </configuration>
-                            </plugin>
-                            <plugin>
-                                <artifactId>maven-javadoc-plugin</artifactId>
-                                <configuration>
-                                    <source>1.7</source>
-                                    <aggregate>true</aggregate>
-                                    <quiet>true</quiet>
-                                    <show>private</show>
-                                    <linksource>true</linksource>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+						<debug>${maven-compiler-plugin.debug}</debug>
+						<optimize>${maven-compiler-plugin.optimize}</optimize>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<skipTests>${maven-surefire-plugin.skipTests}</skipTests>
+						<testFailureIgnore>${maven-surefire-plugin.testFailureIgnore}</testFailureIgnore>
+						<excludes>
+							<include>**/**Populator**.java</include>
+							<include>**/**Performance**.java</include>
+						</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<server>serverLocal</server>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-site-plugin</artifactId>
+					<configuration>
+						<siteDirectory>${project.parent.basedir}/src/site</siteDirectory>
+						<reportPlugins>
+							<plugin>
+								<artifactId>maven-project-info-reports-plugin</artifactId>
+								<configuration>
+									<dependencyLocationsEnabled>
+										false
+									</dependencyLocationsEnabled>
+								</configuration>
+							</plugin>
+							<plugin>
+								<artifactId>maven-javadoc-plugin</artifactId>
+								<configuration>
+									<source>1.7</source>
+									<aggregate>true</aggregate>
+									<quiet>true</quiet>
+									<show>private</show>
+									<linksource>true</linksource>
 
- <!--                                    <doclet>ydoc.doclets.YStandard</doclet>
-                                    <docletPath>/tools/java/yworks-uml-doclet/lib/ydoc.jar:/tools/java/yworks-uml-doclet/resources</docletPath>
-                                    <additionalparam>-umlautogen</additionalparam>
- -->
-                                </configuration>
-                            </plugin>
-                            <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-jxr-plugin</artifactId>
-                                <configuration>
-                                    <aggregate>${maven-jxr-plugin.aggregate}</aggregate>
-                                </configuration>
-                            </plugin>
-                            <plugin>
-                                <groupId>org.apache.maven.plugins</groupId>
-                                <artifactId>maven-pmd-plugin</artifactId>
-                                <configuration>
-                                    <targetJdk>${maven-pmd-plugin.targetJdk}</targetJdk>
-                                    <aggregate>${maven-pmd-plugin.aggregate}</aggregate>
-                                </configuration>
-                            </plugin>
+									<!-- <doclet>ydoc.doclets.YStandard</doclet> <docletPath>/tools/java/yworks-uml-doclet/lib/ydoc.jar:/tools/java/yworks-uml-doclet/resources</docletPath>
+										<additionalparam>-umlautogen</additionalparam> -->
+								</configuration>
+							</plugin>
+							<plugin>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-jxr-plugin</artifactId>
+								<configuration>
+									<aggregate>${maven-jxr-plugin.aggregate}</aggregate>
+								</configuration>
+							</plugin>
+							<plugin>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-pmd-plugin</artifactId>
+								<configuration>
+									<targetJdk>${maven-pmd-plugin.targetJdk}</targetJdk>
+									<aggregate>${maven-pmd-plugin.aggregate}</aggregate>
+								</configuration>
+							</plugin>
 
-                            <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId>
-                                <version>${maven-surefire-report-plugin.version}</version> <configuration> <aggregate>${maven-surefire-report-plugin.aggregate}</aggregate>
-                                </configuration> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId>
-                                <version>${maven-checkstyle-plugin.version}</version> <configuration> <configLocation>conf/checkstyle-checker.xml</configLocation>
-                                </configuration> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changelog-plugin</artifactId>
-                                <version>${maven-changelog-plugin.version}</version> <configuration> <username>${scm.username}</username> <password>${scm.password}</password>
-                                <outputXMLExpiration>${maven-changelog-plugin.outputXMLExpiration}</outputXMLExpiration> </configuration> </plugin> <plugin>
-                                <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId> <version>${cobertura-maven-plugin.version}</version>
-                                <configuration> <aggregate>${cobertura-maven-plugin.aggregate}</aggregate> <quiet>${cobertura-maven-plugin.quiet}</quiet>
-                                </configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId> <version>${findbugs-maven-plugin.version}</version>
-                                <configuration> <includeTests>true</includeTests> </configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId>
-                                <artifactId>jdepend-maven-plugin</artifactId> <version>${jdepend-maven-plugin.version}</version> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId>
-                                <artifactId>taglist-maven-plugin</artifactId> <version>${taglist-maven-plugin.version}</version> <configuration> <aggregate>${taglist-maven-plugin.aggregate}</aggregate>
-                                <tagListOptions> <tagClasses> <tagClass> <displayName>Todo Work</displayName> <tags> <tag> <matchString>TODO</matchString>
-                                <matchType>exact</matchType> </tag> <tag> <matchString>FIXME</matchString> <matchType>exact</matchType> </tag> </tags> </tagClass>
-                                </tagClasses> </tagListOptions> </configuration> </plugin> -->
+							<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId>
+								<version>${maven-surefire-report-plugin.version}</version> <configuration>
+								<aggregate>${maven-surefire-report-plugin.aggregate}</aggregate> </configuration>
+								</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId>
+								<version>${maven-checkstyle-plugin.version}</version> <configuration> <configLocation>conf/checkstyle-checker.xml</configLocation>
+								</configuration> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-changelog-plugin</artifactId> <version>${maven-changelog-plugin.version}</version>
+								<configuration> <username>${scm.username}</username> <password>${scm.password}</password>
+								<outputXMLExpiration>${maven-changelog-plugin.outputXMLExpiration}</outputXMLExpiration>
+								</configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId>
+								<artifactId>cobertura-maven-plugin</artifactId> <version>${cobertura-maven-plugin.version}</version>
+								<configuration> <aggregate>${cobertura-maven-plugin.aggregate}</aggregate>
+								<quiet>${cobertura-maven-plugin.quiet}</quiet> </configuration> </plugin>
+								<plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId>
+								<version>${findbugs-maven-plugin.version}</version> <configuration> <includeTests>true</includeTests>
+								</configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId>
+								<artifactId>jdepend-maven-plugin</artifactId> <version>${jdepend-maven-plugin.version}</version>
+								</plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>taglist-maven-plugin</artifactId>
+								<version>${taglist-maven-plugin.version}</version> <configuration> <aggregate>${taglist-maven-plugin.aggregate}</aggregate>
+								<tagListOptions> <tagClasses> <tagClass> <displayName>Todo Work</displayName>
+								<tags> <tag> <matchString>TODO</matchString> <matchType>exact</matchType>
+								</tag> <tag> <matchString>FIXME</matchString> <matchType>exact</matchType>
+								</tag> </tags> </tagClass> </tagClasses> </tagListOptions> </configuration>
+								</plugin> -->
 
-                            <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changes-plugin</artifactId>
-                                <version>${maven-changes-plugin.version}</version> <configuration> <tracUser>${changes.username}</tracUser> <tracPassword>${changes.password}</tracPassword>
-                                <query>component=${changes.component}</query> </configuration> </plugin> -->
-                            <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>javancss-maven-plugin</artifactId>
-                                <version>${javancss-maven-plugin.version}</version> </plugin> -->
-                        </reportPlugins>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+							<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changes-plugin</artifactId>
+								<version>${maven-changes-plugin.version}</version> <configuration> <tracUser>${changes.username}</tracUser>
+								<tracPassword>${changes.password}</tracPassword> <query>component=${changes.component}</query>
+								</configuration> </plugin> -->
+							<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>javancss-maven-plugin</artifactId>
+								<version>${javancss-maven-plugin.version}</version> </plugin> -->
+						</reportPlugins>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.9</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-api</artifactId> <version>2.0.1</version>
-            </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-core</artifactId> <version>2.0.1</version>
-            </dependency> -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-        <dependency>
-            <groupId>org.umlgraph</groupId>
-            <artifactId>umlgraph</artifactId>
-            <version>5.6.6</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>sun.jdk</groupId>
-                    <artifactId>tools</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.9</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-api</artifactId>
+			<version>2.0.1</version> </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId> <version>2.0.1</version> </dependency> -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.umlgraph</groupId>
+			<artifactId>umlgraph</artifactId>
+			<version>5.6.6</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>sun.jdk</groupId>
+					<artifactId>tools</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
 </project>
-<!-- <doclet.version>5.6.6</doclet.version> <doclet.additionalparam> -inferrel -inferdep -quiet -hide java.* -hide xeredi.util.*
-    -hide org.* -hide com.* -qualify -postfixpackage -nodefontsize 9 -nodefontpackagesize 8 -useimports </doclet.additionalparam>
-    <doclet.useStandardDocletOptions>true</doclet.useStandardDocletOptions> -->
+<!-- <doclet.version>5.6.6</doclet.version> <doclet.additionalparam> -inferrel
+	-inferdep -quiet -hide java.* -hide xeredi.util.* -hide org.* -hide com.*
+	-qualify -postfixpackage -nodefontsize 9 -nodefontpackagesize 8 -useimports
+	</doclet.additionalparam> <doclet.useStandardDocletOptions>true</doclet.useStandardDocletOptions> -->

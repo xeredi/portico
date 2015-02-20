@@ -45,7 +45,7 @@ public final class ProcesoCargaPesca extends ProcesoTemplate {
         final File folder = new File(folderPath);
         final File[] files = folder.listFiles();
 
-        if (files.length > 0) {
+        if (files != null && files.length > 0) {
             Arrays.sort(files, new FiledateComparator());
 
             for (final File file : files) {

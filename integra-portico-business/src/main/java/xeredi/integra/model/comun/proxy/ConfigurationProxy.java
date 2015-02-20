@@ -20,6 +20,8 @@ public final class ConfigurationProxy {
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(ConfigurationProxy.class);
 
+    public static final String CONFIGURATION_FILENAME = "Configuration_env.properties";
+
     /** The configuration. */
     private static CombinedConfiguration configuration;
 
@@ -36,7 +38,7 @@ public final class ConfigurationProxy {
         configuration = new CombinedConfiguration();
 
         try {
-            configuration.addConfiguration(new PropertiesConfiguration("Configuration_env.properties"));
+            configuration.addConfiguration(new PropertiesConfiguration(CONFIGURATION_FILENAME));
 
             final ConfigurationBO confBO = new ConfigurationBO();
 
@@ -46,6 +48,8 @@ public final class ConfigurationProxy {
             }
         } catch (final Throwable ex) {
             LOG.fatal("Error Loading Configuration", ex);
+
+            throw new Error(ex);
         }
     }
 

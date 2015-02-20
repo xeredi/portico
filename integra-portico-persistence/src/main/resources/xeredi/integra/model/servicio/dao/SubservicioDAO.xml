@@ -85,10 +85,10 @@
 		FROM (
 			SELECT *
 			FROM (
-				SELECT *
+				SELECT ssrv.*
 					, row_number() over
 					(ORDER BY ssrv_srvc_pk, ssrv_numero) rownumVar
-				FROM tbl_subservicio_ssrv
+				FROM tbl_subservicio_ssrv ssrv
 	]]>
 		<where>
 			<include refid="SelectWhere" />
@@ -111,6 +111,8 @@
 		</if>
     <![CDATA[
 		) sql
+			INNER JOIN tbl_servicio_srvc ON
+				srvc_pk = ssrv_srvc_pk
     ]]>
     </sql>
 

@@ -1,6 +1,6 @@
 ﻿-- Secuencias de Servicios - postgres
 INSERT INTO portico.tbl_servicio_secuencia_srsc (srsc_tpsr_pk, srsc_subp_pk, srsc_anno, srsc_ultimo_numero)
-SELECT tpsr_pk, prmt_pk, UNNEST(ARRAY['2015', '2014', '2013', '2012', '2011', '2010', '2009']), 0
+SELECT tpsr_pk, prmt_pk, UNNEST(ARRAY['2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009']), 0
 FROM portico.tbl_parametro_prmt, portico.tbl_tipo_servicio_tpsr
 WHERE prmt_tppr_pk = 20063
 ;
@@ -17,7 +17,7 @@ FROM
 		Select (Rownum + 2006) anio
 		From
 			dual
-		Connect By Rownum <= 10
+		Connect By Rownum <= 12
 	)
 WHERE prmt_tppr_pk = 20063
 ;

@@ -38,7 +38,7 @@
 					<label translate="prbt_ffin"></label>
 					<p class="form-control-static" ng-bind="vm.prbt.ffin | date: ('format_datetime' | translate)"></p>
 				</div>
-				<div class="col-sm-2 col-md-2 col-lg-1 form-group">
+				<div class="col-sm-2 col-md-2 form-group">
 					<label translate="prbt_duracion"></label>
 					<p class="form-control-static number" ng-bind="vm.prbt.duracion | number:0"></p>
 				</div>
@@ -211,8 +211,8 @@
 
 			<tbody>
 				<tr ng-repeat="prmn in vm.prmnList.list track by $index">
-					<td ng-bind="'MensajeNivel_' + prmn.nivel | translate"></td>
-					<td ng-bind="prmn.codigo"></td>
+					<td ng-bind="'MensajeNivel_' + prmn.nivel | translate" nowrap="nowrap"></td>
+					<td ng-bind="prmn.codigo" nowrap="nowrap"></td>
 					<td ng-bind="prmn.mensaje"></td>
 				</tr>
 			</tbody>

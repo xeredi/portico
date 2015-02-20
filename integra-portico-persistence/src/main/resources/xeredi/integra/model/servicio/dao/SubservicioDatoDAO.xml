@@ -87,20 +87,23 @@
 				refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
 		</if>
 
+        <![CDATA[
+        		)
+        ]]>
+
 		<if test="soloDatosGrid">
             <![CDATA[
-		                AND EXISTS (
-		                    SELECT 1
-		                    FROM tbl_entidad_tipo_dato_entd
-		                    WHERE
-		                        entd_tpdt_pk = ssdt_tpdt_pk
-		                        AND entd_enti_pk = #{entiId}
-		                        AND entd_gridable = 1
-		                )
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_entidad_tipo_dato_entd
+                    WHERE
+                        entd_tpdt_pk = ssdt_tpdt_pk
+                        AND entd_enti_pk = #{entiId}
+                        AND entd_gridable = 1
+                )
             ]]>
 		</if>
         <![CDATA[
-        		)
 		) sql
 			INNER JOIN tbl_subservicio_ssrv ON
 				ssrv_pk = ssdt_ssrv_pk

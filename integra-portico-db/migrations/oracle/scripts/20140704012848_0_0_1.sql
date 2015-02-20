@@ -403,8 +403,8 @@ CREATE TABLE tbl_parametro_dato_prdt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_prdt_prmt_pk ON tbl_parametro_dato_prdt (prdt_prmt_pk)\
-CREATE INDEX ix_prdt_cadena ON tbl_parametro_dato_prdt (prdt_tpdt_pk, prdt_cadena)\
+CREATE INDEX ix_prdt_prmt_pk ON tbl_parametro_dato_prdt (prdt_tpdt_pk, prdt_prmt_pk, prdt_prvr_pk)\
+CREATE INDEX ix_prdt_cadena ON tbl_parametro_dato_prdt (prdt_tpdt_pk, prdt_cadena, prdt_prvr_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_parametro_dato_prdt FOR porticoadm.tbl_parametro_dato_prdt\
 
@@ -701,8 +701,8 @@ CREATE TABLE tbl_servicio_dato_srdt (
 		REFERENCES tbl_servicio_srvc (srvc_pk)
 )\
 
-CREATE INDEX ix_srdt_prmt_pk ON tbl_servicio_dato_srdt (srdt_prmt_pk)\
-CREATE INDEX ix_srdt_cadena ON tbl_servicio_dato_srdt (srdt_tpdt_pk, srdt_cadena)\
+CREATE INDEX ix_srdt_prmt_pk ON tbl_servicio_dato_srdt (srdt_tpdt_pk, srdt_prmt_pk, srdt_srvc_pk)\
+CREATE INDEX ix_srdt_cadena ON tbl_servicio_dato_srdt (srdt_tpdt_pk, srdt_cadena, srdt_srvc_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_servicio_dato_srdt FOR porticoadm.tbl_servicio_dato_srdt\
 
@@ -776,8 +776,8 @@ CREATE TABLE tbl_subservicio_dato_ssdt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_ssdt_prmt_pk ON tbl_subservicio_dato_ssdt (ssdt_prmt_pk)\
-CREATE INDEX ix_ssdt_cadena ON tbl_subservicio_dato_ssdt (ssdt_tpdt_pk, ssdt_cadena)\
+CREATE INDEX ix_ssdt_prmt_pk ON tbl_subservicio_dato_ssdt (ssdt_tpdt_pk, ssdt_prmt_pk, ssdt_ssrv_pk)\
+CREATE INDEX ix_ssdt_cadena ON tbl_subservicio_dato_ssdt (ssdt_tpdt_pk, ssdt_cadena, ssdt_ssrv_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_subservicio_dato_ssdt FOR porticoadm.tbl_subservicio_dato_ssdt\
 
@@ -920,8 +920,8 @@ CREATE TABLE tbl_estadistica_dato_esdt (
 		REFERENCES tbl_parametro_prmt (prmt_pk)
 )\
 
-CREATE INDEX ix_esdt_prmt_pk ON tbl_estadistica_dato_esdt (esdt_prmt_pk)\
-CREATE INDEX ix_esdt_cadena ON tbl_estadistica_dato_esdt (esdt_tpdt_pk, esdt_cadena)\
+CREATE INDEX ix_esdt_prmt_pk ON tbl_estadistica_dato_esdt (esdt_tpdt_pk, esdt_prmt_pk, esdt_estd_pk)\
+CREATE INDEX ix_esdt_cadena ON tbl_estadistica_dato_esdt (esdt_tpdt_pk, esdt_cadena, esdt_estd_pk)\
 
 CREATE OR REPLACE SYNONYM portico.tbl_estadistica_dato_esdt FOR porticoadm.tbl_estadistica_dato_esdt\
 

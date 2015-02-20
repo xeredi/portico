@@ -1,39 +1,50 @@
 <div ng-if="vm.confList">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3 form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <i class="glyphicon glyphicon-filter"></i>
-                    </div>
-                    <input type="text" ng-model="confSearch" name="confSearch" maxlength="50"
-                        class="form-control input-sm" />
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<button class="btn btn-default" data-ng-click="vm.reload()">
+				<i class="glyphicon glyphicon-refresh"></i> <span translate>btn_reload</span>
+			</button>
+		</div>
+	</div>
 
-    <div class="table-responsive">
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap" translate="conf_key"></th>
-                    <th class="codigo" nowrap="nowrap" translate="conf_valueType"></th>
-                    <th class="codigo" nowrap="nowrap" translate="conf_defaultValue"></th>
-                    <th class="codigo" nowrap="nowrap" translate="conf_value"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in vm.confList track by $index" ng-show="([item] | filter:confSearch).length > 0">
-                    <td><a ng-href="#/administracion/conf/detail/{{item.key}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td nowrap="nowrap" ng-bind="item.key"></td>
-                    <td nowrap="nowrap" ng-bind="'ConfigurationValueType_' + item.valueType | translate"></td>
-                    <td nowrap="nowrap" ng-bind="item.defaultValue"></td>
-                    <td nowrap="nowrap" ng-bind="item.value"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6 col-md-4 col-lg-3 form-group">
+				<div class="input-group">
+					<div class="input-group-addon">
+						<i class="glyphicon glyphicon-filter"></i>
+					</div>
+					<input type="text" ng-model="confSearch" name="confSearch"
+						maxlength="50" class="form-control input-sm" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-responsive">
+		<table
+			class="table-bordered table-condensed table-hover table-nonfluid">
+			<thead>
+				<tr>
+					<th class="buttonLinks" nowrap="nowrap" />
+					<th class="codigo" nowrap="nowrap" translate="conf_key"></th>
+					<th class="codigo" nowrap="nowrap" translate="conf_valueType"></th>
+					<th class="codigo" nowrap="nowrap" translate="conf_defaultValue"></th>
+					<th class="codigo" nowrap="nowrap" translate="conf_value"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in vm.confList track by $index"
+					ng-show="([item] | filter:confSearch).length > 0">
+					<td><a ng-href="#/administracion/conf/detail/{{item.key}}"><i
+							class="glyphicon glyphicon-search"></i></a></td>
+					<td nowrap="nowrap" ng-bind="item.key"></td>
+					<td nowrap="nowrap"
+						ng-bind="'ConfigurationValueType_' + item.valueType | translate"></td>
+					<td nowrap="nowrap" ng-bind="item.defaultValue"></td>
+					<td nowrap="nowrap" ng-bind="item.value"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

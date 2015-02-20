@@ -14,7 +14,7 @@
 			<groupId>integra-portico</groupId>
 			<artifactId>web</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
+			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>integra-portico</groupId>

@@ -654,7 +654,7 @@
 		FROM (
 			SELECT
 				srvc_pk, srvc_fref, ssrv_pk, ssrv_fini, ssrv_ffin
-				, EXTRACT (EPOCH FROM (ssrv_ffin - ssrv_fini)) / (60*60*24) AS dias
+				, portico.daysBetween(ssrv_fini, ssrv_ffin) AS dias
 				, (
 					SELECT prdt_prmt_pk
 					FROM tbl_parametro_dato_prdt
@@ -1647,7 +1647,7 @@
 							ssdt_ssrv_pk = ssrv_pk
 							AND ssdt_tpdt_pk = portico.getTipoDato('ALIN_3')
 					) AS ALIN
-					, EXTRACT(epoch FROM (ssrv_ffin - ssrv_fini))/86400::int AS diasAtr
+					, portico.daysBetween(ssrv_fini, ssrv_ffin) AS diasAtr
 				FROM
 					tbl_servicio_srvc
 					INNER JOIN tbl_subservicio_ssrv ON
@@ -1920,7 +1920,7 @@
 				WHERE prmt_pk = TIPO_EQUI) AS TIPO_EQUI_prmt
 			, SUM(COALESCE(DECIMAL_01, 0)) / 1000 AS DECIMAL_01, SUM(COALESCE(ENTERO_01, 0)) AS ENTERO_01, SUM(COALESCE(DECIMAL_02, 0) * COALESCE(ENTERO_01, 0)) AS DECIMAL_02
 		FROM (
-			SELECT *
+			SELECT sql.*
 				, (
 					SELECT ssdt_prmt_pk
 					FROM tbl_subservicio_dato_ssdt

@@ -37,9 +37,9 @@
         	CASE prit_tipo
 				WHEN 'srvc' THEN (
 					SELECT
-						portico.CONCATENATE(
-							portico.CONCATENATE(
-								portico.CONCATENATE(
+						CONCAT(
+							CONCAT(
+								CONCAT(
 									(
 										SELECT prmt_parametro
 										FROM tbl_parametro_prmt
@@ -47,7 +47,7 @@
 									)
 									, '/'
 								)
-								, portico.CONCATENATE(
+								, CONCAT(
 									srvc_anno
 									, '/'
 								)
@@ -59,10 +59,10 @@
 				)
 				WHEN 'ssrv' THEN (
 					SELECT
-						portico.CONCATENATE(
-							portico.CONCATENATE(
-								portico.CONCATENATE(
-									portico.CONCATENATE(
+						CONCAT(
+							CONCAT(
+								CONCAT(
+									CONCAT(
 										(
 											SELECT prmt_parametro
 											FROM tbl_parametro_prmt
@@ -70,16 +70,16 @@
 										)
 										, '/'
 									)
-									, portico.CONCATENATE(
+									, CONCAT(
 										srvc_anno
 										, '/'
 									)
 								)
 								, srvc_numero
 							)
-							, portico.CONCATENATE(
+							, CONCAT(
 								' - '
-								, ssrv_numero::VARCHAR
+								, ssrv_numero
 							)
 						)
 					FROM
@@ -91,15 +91,15 @@
 				WHEN 'pepr' THEN (
 					SELECT
 						portico.CONCATENATE(
-							portico.CONCATENATE(
+							CONCAT(
 								(
 									SELECT prmt_parametro
 									FROM tbl_parametro_prmt
 									WHERE prmt_pk = pepr_autp_pk
 								)
-								, pepr_anio::VARCHAR
+								, pepr_anio
 							)
-							, LPAD(pepr_mes::VARCHAR, 2, '0')::VARCHAR
+							, TO_CHAR(pepr_mes, '09')
 						)
 					FROM
 						tbl_periodo_proceso_pepr

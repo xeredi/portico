@@ -59,10 +59,25 @@ GRANT EXECUTE ON concatenate TO portico\
 
 
 
+CREATE OR REPLACE FUNCTION daysBetween(fdesde DATE, fhasta DATE)
+   RETURN DOUBLE PRECISION
+IS
+BEGIN
+   RETURN fhasta - fdesde;
+END;
+\
+
+CREATE OR REPLACE SYNONYM portico.daysBetween FOR daysBetween\
+
+GRANT EXECUTE ON daysBetween TO portico\
+
+
+
 
 -- //@UNDO
 -- SQL to undo the change goes here.
 
+DROP FUNCTION daysBetween\
 DROP FUNCTION concatenate\
 DROP FUNCTION getTipoDato\
 DROP FUNCTION getEntidad\
