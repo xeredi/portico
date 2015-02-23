@@ -169,12 +169,12 @@
 				tbl_estadistica_estd
 				INNER JOIN tbl_periodo_proceso_pepr ON
 					pepr_pk = estd_pepr_pk
-			ORDER BY estd_tpes_pk, estd_pk
     ]]>
 		<where>
 			<include refid="SelectWhere" />
 		</where>
     <![CDATA[
+			ORDER BY estd_tpes_pk, estd_pk
     	) sql
     ]]>
 		<if test="offset != null or limit != null">

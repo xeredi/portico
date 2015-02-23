@@ -548,6 +548,8 @@ public class ValoracionBO {
      *
      * @param vlrd
      *            the vlrd
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     public void insertVlrd(final ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
         Preconditions.checkNotNull(vlrd);

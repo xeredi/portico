@@ -77,6 +77,8 @@ public final class PeriodoProcesoAction extends BaseAction {
      * Cargar.
      *
      * @return the string
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     @Action("pepr-cargar")
     public String cargar() throws InstanceNotFoundException {

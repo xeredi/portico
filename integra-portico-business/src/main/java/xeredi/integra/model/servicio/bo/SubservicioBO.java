@@ -49,6 +49,8 @@ public interface SubservicioBO {
      * @param ssrvCriterioVO
      *            the ssrv criterio vo
      * @return the label value vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
     LabelValueVO selectLabelValueObject(final @Nonnull SubservicioCriterioVO ssrvCriterioVO)
             throws InstanceNotFoundException;

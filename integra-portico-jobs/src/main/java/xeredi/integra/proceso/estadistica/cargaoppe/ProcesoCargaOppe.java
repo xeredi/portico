@@ -188,13 +188,11 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
     /**
      * Gets the entry.
      *
-     * @param zis
-     *            the zis
-     * @param peprVO
-     *            the pepr vo
-     * @param fileType
-     *            the file type
+     * @param stream
+     *            the stream
      * @return the entry
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     private Map<EstadisticaFileType, List<String>> readFile(final @Nonnull InputStream stream) throws IOException {
         final Map<EstadisticaFileType, List<String>> fileMap = new HashMap<EstadisticaFileType, List<String>>();

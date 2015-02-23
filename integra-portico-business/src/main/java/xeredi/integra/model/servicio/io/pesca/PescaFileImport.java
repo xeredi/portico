@@ -51,8 +51,8 @@ public final class PescaFileImport {
     /**
      * Instantiates a new pesca file import.
      *
-     * @param aprmnList
-     *            the aprmn list
+     * @param aproceso
+     *            the aproceso
      */
     public PescaFileImport(final @Nonnull ProcesoTemplate aproceso) {
         super();
@@ -63,8 +63,8 @@ public final class PescaFileImport {
     /**
      * Read file.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      * @param filename
      *            the filename
      */
@@ -142,8 +142,8 @@ public final class PescaFileImport {
     /**
      * Read maestros.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readMaestros(final List<String> lines) {
         int i = 0;

@@ -148,8 +148,6 @@ public class ProcesoBO {
     /**
      * Proteger.
      *
-     * @param modulo
-     *            the modulo
      * @param tipo
      *            the tipo
      * @return the proceso vo

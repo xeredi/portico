@@ -83,7 +83,6 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -120,7 +119,6 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -155,7 +153,6 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -201,7 +198,6 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -278,7 +274,6 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
@@ -341,7 +336,6 @@ public final class OppeFileExport {
      *            the stream
      * @param estdList
      *            the estd list
-     * @return the string
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */

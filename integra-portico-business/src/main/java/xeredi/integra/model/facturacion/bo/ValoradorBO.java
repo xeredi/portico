@@ -16,6 +16,9 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.exception.ModelException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
@@ -48,7 +51,6 @@ import xeredi.integra.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
 import xeredi.integra.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.integra.model.metamodelo.vo.EntidadVO;
-import xeredi.integra.model.proceso.vo.ProcesoVO;
 import xeredi.integra.model.servicio.dao.ServicioDAO;
 import xeredi.integra.model.servicio.vo.ServicioCriterioVO;
 import xeredi.integra.model.servicio.vo.ServicioVO;
@@ -58,6 +60,7 @@ import xeredi.integra.model.util.grammar.FormulaLexer;
 import xeredi.integra.model.util.grammar.FormulaParser;
 import xeredi.integra.model.util.grammar.PathLexer;
 import xeredi.integra.model.util.grammar.PathParser;
+import xeredi.integra.proceso.ProcesoTemplate;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -72,17 +75,17 @@ public class ValoradorBO {
     private static final Log LOG = LogFactory.getLog(ValoradorBO.class);
 
     /** The prbt. */
-    private final ProcesoVO prbt;
+    private final ProcesoTemplate proceso;
 
     /**
      * Instantiates a new valorador bo.
      *
-     * @param aprbt
-     *            the aprbt
+     * @param aproceso
+     *            the aproceso
      */
-    public ValoradorBO(final ProcesoVO aprbt) {
+    public ValoradorBO(final ProcesoTemplate aproceso) {
         super();
-        prbt = aprbt;
+        proceso = aproceso;
     }
 
     /**
@@ -94,10 +97,11 @@ public class ValoradorBO {
      *            the crgo ids
      * @param fechaLiquidacion
      *            the fecha liquidacion
-     * @param prbtId
-     *            the prbt id
+     * @throws ModelException
+     *             the model exception
      */
-    public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion) {
+    public void valorarServicio(final Long srvcId, final Set<Long> crgoIds, final Date fechaLiquidacion)
+            throws ModelException {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
@@ -119,11 +123,11 @@ public class ValoradorBO {
             final ServicioVO srvc = srvcDAO.selectObject(srvcCriterio);
 
             if (srvc == null) {
-                throw new Error("Servicio no encontrado: " + srvcId);
+                throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
             }
 
             vldrContexto.setFliquidacion(fechaLiquidacion);
-            vldrContexto.setPrbt(prbt);
+            vldrContexto.setPrbt(proceso.getPrbt());
             vldrContexto.setSrvc(srvc);
             vldrContexto.setTpsr(TipoServicioProxy.select(vldrContexto.getSrvc().getEntiId()));
 
@@ -138,7 +142,7 @@ public class ValoradorBO {
                 final CargoVO crgo = crgoDAO.selectObject(crgoCriterio);
 
                 if (crgo == null) {
-                    throw new Error("No se encuentra el cargo: " + crgoCriterio);
+                    throw new InstanceNotFoundException(MessageI18nKey.crgo, crgoId);
                 }
 
                 LOG.info("Cargo principal: " + crgo.getCodigo());
@@ -180,7 +184,7 @@ public class ValoradorBO {
                 final List<AspectoVO> aspcList = aspcDAO.selectList(aspcCriterio);
 
                 if (aspcList.isEmpty()) {
-                    throw new Error("No se encuentran aspectos para: " + aspcCriterio);
+                    throw new InstanceNotFoundException(MessageI18nKey.aspc, aspcCriterio);
                 }
 
                 for (final AspectoVO aspc : aspcList) {
@@ -234,6 +238,8 @@ public class ValoradorBO {
             vlra.getVlrc().setFalta(Calendar.getInstance().getTime());
 
             LOG.info("vlrc: " + vlra.getVlrc());
+
+            proceso.addPritSalida(vlra.getVlrc().getId());
 
             vlrcIds.add(vlra.getVlrc().getId());
 
@@ -614,8 +620,8 @@ public class ValoradorBO {
     /**
      * Generate sql condition.
      *
-     * @param reglaVO
-     *            the regla vo
+     * @param regla
+     *            the regla
      * @param expression
      *            the expression
      * @return the string
@@ -639,8 +645,8 @@ public class ValoradorBO {
     /**
      * Generate sql formula.
      *
-     * @param reglaVO
-     *            the regla vo
+     * @param regla
+     *            the regla
      * @param expression
      *            the expression
      * @return the string

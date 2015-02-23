@@ -31,6 +31,7 @@ import xeredi.integra.proceso.ProcesoTemplate;
  */
 public final class OppeFileImport {
 
+    /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(OppeFileImport.class);
 
     /** The Constant DATE_PATTERN. */
@@ -80,8 +81,8 @@ public final class OppeFileImport {
     /**
      * Verify is sigma.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      * @return true, if successful
      */
     public boolean verifyIsSigma(final @Nonnull List<String> lines) {
@@ -97,8 +98,8 @@ public final class OppeFileImport {
     /**
      * Read maestros epp.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readMaestrosEPP(final @Nonnull List<String> lines) {
         int i = 0;
@@ -116,8 +117,8 @@ public final class OppeFileImport {
     /**
      * Read maestros eap.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readMaestrosEAP(final @Nonnull List<String> lines) {
         int i = 0;
@@ -135,8 +136,8 @@ public final class OppeFileImport {
     /**
      * Read maestros eav.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readMaestrosEAV(final @Nonnull List<String> lines) {
         int i = 0;
@@ -155,8 +156,8 @@ public final class OppeFileImport {
     /**
      * Read maestros eae.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readMaestrosEAE(final @Nonnull List<String> lines) {
         int i = 0;
@@ -188,8 +189,8 @@ public final class OppeFileImport {
     /**
      * Read maestros emm.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readMaestrosEMM(final @Nonnull List<String> lines) {
         int i = 0;
@@ -240,8 +241,8 @@ public final class OppeFileImport {
     /**
      * Read maestros eme.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      * @param isSigma
      *            the is sigma
      */
@@ -274,8 +275,8 @@ public final class OppeFileImport {
     /**
      * Read maestros emt.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readMaestrosEMT(final @Nonnull List<String> lines) {
         int i = 0;
@@ -297,8 +298,8 @@ public final class OppeFileImport {
     /**
      * Read epp.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readEPP(final @Nonnull List<String> lines) {
         int i = 0;
@@ -320,8 +321,8 @@ public final class OppeFileImport {
     /**
      * Read eap.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readEAP(final @Nonnull List<String> lines) {
         int i = 0;
@@ -352,8 +353,8 @@ public final class OppeFileImport {
     /**
      * Read eav.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readEAV(final @Nonnull List<String> lines) {
         int i = 0;
@@ -387,8 +388,8 @@ public final class OppeFileImport {
     /**
      * Read eae.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readEAE(final @Nonnull List<String> lines) {
         int i = 0;
@@ -427,8 +428,8 @@ public final class OppeFileImport {
     /**
      * Read emm.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readEMM(final @Nonnull List<String> lines) {
         int i = 0;
@@ -513,8 +514,8 @@ public final class OppeFileImport {
     /**
      * Read eme.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      * @param isSigma
      *            the is sigma
      */
@@ -589,8 +590,8 @@ public final class OppeFileImport {
     /**
      * Read emt.
      *
-     * @param stream
-     *            the stream
+     * @param lines
+     *            the lines
      */
     public void readEMT(final @Nonnull List<String> lines) {
         int i = 0;

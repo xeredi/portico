@@ -101,8 +101,8 @@
             FROM tbl_estadistica_dato_esdt
             WHERE
                 esdt_tpdt_pk = #{tipoDato.id}
-                AND EXISTS (
-                    SELECT 1
+				AND esdt_estd_pk = ANY (
+					SELECT estd_pk
                     FROM tbl_estadistica_estd
                     WHERE
                         estd_pk = esdt_estd_pk
@@ -121,8 +121,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -156,8 +156,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -195,8 +195,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -246,8 +246,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -297,8 +297,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -332,8 +332,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -396,8 +396,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -489,8 +489,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -570,8 +570,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -664,8 +664,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -744,8 +744,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -830,8 +830,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -910,8 +910,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -985,8 +985,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk
@@ -1073,8 +1073,8 @@
         FROM tbl_estadistica_dato_esdt
         WHERE
             esdt_tpdt_pk = #{tipoDato.id}
-            AND EXISTS (
-                SELECT 1
+			AND esdt_estd_pk = ANY (
+				SELECT estd_pk
                 FROM tbl_estadistica_estd
                 WHERE
                     estd_pk = esdt_estd_pk

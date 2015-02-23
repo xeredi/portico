@@ -5,6 +5,9 @@ angular.module("facturacion", [ "ngRoute", "util" ])
 // ----------------- MENU PRINCIPAL --------------------------
 .controller("facturacionController", facturacionController)
 
+// ----------- VALORADOR ------------------
+.controller("vldrPrepareController", vldrPrepareController)
+
 // ----------- VALORACION ------------------
 .controller("vlrcGridController", vlrcGridController)
 
@@ -65,6 +68,13 @@ function config($routeProvider) {
         templateUrl : "modules/facturacion/facturacion.html",
         controller : "facturacionController",
         controllerAs : "vm"
+    })
+
+    .when("/facturacion/vldr/prepare/:srvcId", {
+        templateUrl : "modules/facturacion/vldr-prepare.html",
+        controller : "vldrPrepareController",
+        controllerAs : "vm",
+        reloadOnSearch : false
     })
 
     .when("/facturacion/vlrc/grid", {
@@ -289,6 +299,12 @@ function config($routeProvider) {
 
 function facturacionController(pageTitleService) {
     pageTitleService.setTitle("sec_facturacion", "page_home");
+}
+
+function vldrPrepareController($http, $location, $routeParams, $modal, pageTitleService) {
+    var vm = this;
+
+    pageTitleService.setTitle("vldr", "page_prepare");
 }
 
 function vlrcGridController($http, $location, $routeParams, $modal, pageTitleService) {
