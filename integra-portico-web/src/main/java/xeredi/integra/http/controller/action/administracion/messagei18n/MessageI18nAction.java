@@ -1,14 +1,12 @@
 package xeredi.integra.http.controller.action.administracion.messagei18n;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
-import xeredi.integra.model.comun.bo.MessageI18nBO;
-import xeredi.integra.model.comun.vo.I18nVO;
+import xeredi.integra.model.comun.bo.MessageBO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.comun.vo.MessageI18nVO;
 
 import com.google.common.base.Preconditions;
@@ -26,10 +24,10 @@ public final class MessageI18nAction extends BaseAction {
     private ACCION_EDICION accion;
 
     /** The m18n. */
-    private MessageI18nVO m18n;
+    private MessageI18nKey key;
 
     /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+    private Map<String, MessageI18nVO> m18nMap;
 
     /**
      * Detail.
@@ -38,12 +36,11 @@ public final class MessageI18nAction extends BaseAction {
      */
     @Action("m18n-detail")
     public String detail() {
-        Preconditions.checkNotNull(m18n);
-        Preconditions.checkNotNull(m18n.getKey());
+        Preconditions.checkNotNull(key);
 
-        final MessageI18nBO m18nBO = new MessageI18nBO();
+        final MessageBO mesgBO = new MessageBO();
 
-        // m18n = m18nBO.select(m18n.getKey());
+        m18nMap = mesgBO.selectKeyMap(key);
 
         return SUCCESS;
     }
@@ -55,18 +52,12 @@ public final class MessageI18nAction extends BaseAction {
      */
     @Action("m18n-edit")
     public String edit() {
-        Preconditions.checkNotNull(m18n);
-        Preconditions.checkNotNull(m18n.getKey());
+        Preconditions.checkNotNull(key);
 
+        final MessageBO mesgBO = new MessageBO();
+
+        m18nMap = mesgBO.selectKeyMap(key);
         accion = ACCION_EDICION.edit;
-        i18nMap = new HashMap<String, I18nVO>();
-
-        final MessageI18nBO m18nBO = new MessageI18nBO();
-        final List<MessageI18nVO> m18nList = m18nBO.selectList(m18n.getKey());
-
-        for (final MessageI18nVO vo : m18nList) {
-            m18n = vo;
-        }
 
         return SUCCESS;
     }
@@ -79,13 +70,12 @@ public final class MessageI18nAction extends BaseAction {
     @Action("m18n-save")
     public String save() {
         Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(m18n);
-        Preconditions.checkNotNull(m18n.getKey());
+        Preconditions.checkNotNull(key);
 
-        final MessageI18nBO m18nBO = new MessageI18nBO();
+        final MessageBO mesgBO = new MessageBO();
 
         if (accion == ACCION_EDICION.edit) {
-            // m18nBO.update(m18n);
+            mesgBO.updateKeyMap(key, m18nMap);
         }
 
         return SUCCESS;
@@ -111,41 +101,41 @@ public final class MessageI18nAction extends BaseAction {
     }
 
     /**
-     * Gets the m18n.
+     * Gets the key.
      *
-     * @return the m18n
+     * @return the key
      */
-    public MessageI18nVO getM18n() {
-        return m18n;
+    public MessageI18nKey getKey() {
+        return key;
     }
 
     /**
-     * Sets the m18n.
+     * Sets the key.
      *
      * @param value
-     *            the new m18n
+     *            the new key
      */
-    public void setM18n(final MessageI18nVO value) {
-        m18n = value;
+    public void setKey(final MessageI18nKey value) {
+        key = value;
     }
 
     /**
-     * Gets the i18n map.
+     * Gets the m18n map.
      *
-     * @return the i18n map
+     * @return the m18n map
      */
-    public Map<String, I18nVO> getI18nMap() {
-        return i18nMap;
+    public Map<String, MessageI18nVO> getM18nMap() {
+        return m18nMap;
     }
 
     /**
-     * Sets the i18n map.
+     * Sets the m18n map.
      *
      * @param value
      *            the value
      */
-    public void setI18nMap(final Map<String, I18nVO> value) {
-        i18nMap = value;
+    public void setM18nMap(final Map<String, MessageI18nVO> value) {
+        m18nMap = value;
     }
 
 }

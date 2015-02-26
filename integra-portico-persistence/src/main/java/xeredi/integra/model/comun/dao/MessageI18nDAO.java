@@ -14,36 +14,28 @@ import xeredi.integra.model.comun.vo.MessageI18nVO;
 public interface MessageI18nDAO {
 
     /**
-     * Select language list.
-     *
-     * @return the list
-     */
-    List<String> selectLanguageList();
-
-    /**
      * Select list.
      *
-     * @param criterioVO
-     *            the criterio vo
+     * @param criterio
+     *            the criterio
      * @return the list
      */
-    List<MessageI18nVO> selectList(final @Nonnull MessageI18nCriterioVO criterioVO);
+    List<MessageI18nVO> selectList(final @Nonnull MessageI18nCriterioVO criterio);
 
     /**
-     * Select object.
+     * Delete list.
      *
-     * @param criterioVO
-     *            the criterio vo
-     * @return the message i18n vo
-     */
-    MessageI18nVO selectObject(final @Nonnull MessageI18nCriterioVO criterioVO);
-
-    /**
-     * Update.
-     *
-     * @param vo
-     *            the vo
+     * @param criterio
+     *            the criterio
      * @return the int
      */
-    int update(final @Nonnull MessageI18nVO vo);
+    int deleteList(final @Nonnull MessageI18nCriterioVO criterio);
+
+    /**
+     * Insert.
+     *
+     * @param m18n
+     *            the m18n
+     */
+    void insert(final @Nonnull MessageI18nVO m18n);
 }

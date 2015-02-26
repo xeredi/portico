@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.bo.ConfigurationBO;
+import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationVO;
 
 // TODO: Auto-generated Javadoc
@@ -30,6 +31,18 @@ public final class ConfigurationListAction extends BaseAction {
         final ConfigurationBO confBO = new ConfigurationBO();
 
         confList = confBO.selectList();
+
+        return SUCCESS;
+    }
+
+    /**
+     * Reload.
+     *
+     * @return the string
+     */
+    @Action("conf-reload")
+    public String reload() {
+        ConfigurationProxy.reload();
 
         return SUCCESS;
     }

@@ -7,10 +7,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * The Class MessageI18nCriterioVO.
  */
 public final class MessageI18nCriterioVO {
-
-    /** The internals only. */
-    private boolean externalsOnly;
-
     /** The key. */
     private MessageI18nKey key;
 
@@ -61,25 +57,6 @@ public final class MessageI18nCriterioVO {
      */
     public void setLanguage(final String value) {
         language = value;
-    }
-
-    /**
-     * Checks if is externals only.
-     *
-     * @return true, if is externals only
-     */
-    public boolean isExternalsOnly() {
-        return externalsOnly;
-    }
-
-    /**
-     * Sets the externals only.
-     *
-     * @param value
-     *            the new externals only
-     */
-    public void setExternalsOnly(final boolean value) {
-        externalsOnly = value;
     }
 
 }

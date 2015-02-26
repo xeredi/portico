@@ -46,9 +46,9 @@ public final class MessageI18nResourceBundle extends ListResourceBundle {
         final List<Object[]> contentList = new ArrayList<>();
 
         final String defaultLanguage = ConfigurationProxy.getString(ConfigurationKey.language_default);
-        final MessageI18nBO messageI18nBO = new MessageI18nBO();
+        final MessageBO mesgBO = new MessageBO();
 
-        final Map<MessageI18nKey, String> map = messageI18nBO.selectKeyValueMap(locale, false);
+        final Map<MessageI18nKey, String> map = mesgBO.selectLocaleMap(locale);
 
         for (final MessageI18nKey key : map.keySet()) {
             contentList.add(new Object[] { key.name(), map.get(key) });

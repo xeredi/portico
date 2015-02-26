@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="xeredi.integra.model.comun.dao.MessageDAO">
+    <resultMap type="MessageVO" id="ResultMap">
+        <id column="mesg_key" />
+
+        <result column="mesg_internal" property="internal" />
+        <result column="mesg_key" property="key" />
+    </resultMap>
+
+    <sql id="SelectPrefix">
+    <![CDATA[
+    SELECT
+        mesg_key, mesg_internal
+    FROM tbl_message_mesg
+    ]]>
+    </sql>
+
+    <sql id="SelectWhere">
+        <where>
+            <if test="internal != null">
+                AND mesg_internal = #{internal}
+            </if>
+        </where>
+    </sql>
+
+    <select id="select" parameterType="MessageI18nKey" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        WHERE mesg_key = #{value}
+    </select>
+
+    <select id="selectList" parameterType="MessageCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY mesg_key
+    </select>
+</mapper>

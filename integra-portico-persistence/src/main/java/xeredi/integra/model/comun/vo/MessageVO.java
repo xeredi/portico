@@ -4,18 +4,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MessageI18nVO.
+ * The Class MessageVO.
  */
-public final class MessageI18nVO {
+public final class MessageVO {
 
     /** The key. */
     private MessageI18nKey key;
 
-    /** The language. */
-    private String language;
-
-    /** The value. */
-    private String value;
+    /** The internal. */
+    private Boolean internal;
 
     /**
      * {@inheritDoc}
@@ -45,41 +42,22 @@ public final class MessageI18nVO {
     }
 
     /**
-     * Gets the language.
+     * Checks if is internal.
      *
-     * @return the language
+     * @return true, if is internal
      */
-    public String getLanguage() {
-        return language;
+    public Boolean getInternal() {
+        return internal;
     }
 
     /**
-     * Sets the language.
+     * Sets the internal.
      *
      * @param value
-     *            the new language
+     *            the new internal
      */
-    public void setLanguage(final String value) {
-        language = value;
-    }
-
-    /**
-     * Gets the value.
-     *
-     * @return the value
-     */
-    public String getValue() {
-        return value;
-    }
-
-    /**
-     * Sets the value.
-     *
-     * @param value
-     *            the new value
-     */
-    public void setValue(final String value) {
-        this.value = value;
+    public void setInternal(final Boolean value) {
+        internal = value;
     }
 
 }

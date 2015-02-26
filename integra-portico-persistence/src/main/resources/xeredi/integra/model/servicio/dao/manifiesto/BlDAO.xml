@@ -311,7 +311,7 @@
 										SELECT 1
 										FROM tbl_subserv_subserv_ssss
 										WHERE ssss_ssrvh_pk = ssrvHijoBl.ssrv_pk
-											AND ssss_ssrvp_pk = ssrvBl.ssrv_pk
+											AND ssss_ssrvp_pk = ssrv_pk
 									)
 							)
 						SELECT

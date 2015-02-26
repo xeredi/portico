@@ -1,4 +1,4 @@
-package xeredi.integra.db.exporter;
+package xeredi.integra.model.comun.bo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,8 +12,6 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.integra.model.comun.bo.I18nBO;
-import xeredi.integra.model.comun.bo.MessageI18nBO;
 import xeredi.integra.model.comun.proxy.ConfigurationProxy;
 import xeredi.integra.model.comun.vo.ConfigurationKey;
 import xeredi.integra.model.comun.vo.I18nPrefix;
@@ -43,7 +41,7 @@ public class I18nJs {
         final String webappInstallPath = ConfigurationProxy.getString(ConfigurationKey.webapp_install_path);
 
         final I18nBO i18nBO = new I18nBO();
-        final MessageI18nBO messageI18nBO = new MessageI18nBO();
+        final MessageBO mesgBO = new MessageBO();
 
         final Set<I18nPrefix> i18nPrefixSet = Sets.newHashSet(I18nPrefix.enti, I18nPrefix.engd, I18nPrefix.entd,
                 I18nPrefix.enac, I18nPrefix.enag, I18nPrefix.tpdt, I18nPrefix.cdrf);
@@ -53,11 +51,10 @@ public class I18nJs {
 
             labelValues.addAll(i18nBO.selectLabelValueList(i18nPrefixSet, language));
 
-            final Map<MessageI18nKey, String> messageI18nMap = messageI18nBO.selectKeyValueMap(new Locale(language),
-                    true);
+            final Map<MessageI18nKey, String> m18nMap = mesgBO.selectLocaleMap(new Locale(language));
 
-            for (final MessageI18nKey key : messageI18nMap.keySet()) {
-                labelValues.add(new LabelValueVO(key.name(), messageI18nMap.get(key)));
+            for (final MessageI18nKey key : m18nMap.keySet()) {
+                labelValues.add(new LabelValueVO(key.name(), m18nMap.get(key)));
             }
 
             final Iterator<LabelValueVO> labelValueIterator = labelValues.iterator();
@@ -82,7 +79,7 @@ public class I18nJs {
 
             final String filename = webappInstallPath + "/modules/i18n/i18n_messages_" + language + ".js";
 
-            try (final PrintWriter printWriter = new PrintWriter(filename)) {
+            try (final PrintWriter printWriter = new PrintWriter(filename, "UTF-8")) {
                 printWriter.print(jsTemplate);
 
                 System.out.println(filename);
