@@ -60,6 +60,16 @@
 			<if test="estado != null">
 				AND prbt.prbt_estado = #{estado}
 			</if>
+			<if test="faltaMin != null">
+		    <![CDATA[
+				AND prbt.prbt_falta >= #{faltaMin}
+    		]]>
+			</if>
+			<if test="faltaMax != null">
+		    <![CDATA[
+				AND prbt.prbt_falta < #{faltaMax}
+    		]]>
+			</if>
 		</where>
 	</sql>
 

@@ -17,7 +17,7 @@ angular.module(
     angular.extend($datepickerProvider.defaults, {
         dateFormat : 'dd/MM/yyyy',
         modelDateFormat : "yyyy-MM-ddTHH:mm:ss",
-        dateType : "string",
+        dateType : "date",
         startWeek : 1,
         container : 'body',
         autoclose : true
@@ -27,6 +27,7 @@ angular.module(
 .config(function($timepickerProvider) {
     angular.extend($timepickerProvider.defaults, {
         timeFormat : 'HH:mm',
+        timeType : "date",
         length : 1,
         minuteStep : 1
     });
