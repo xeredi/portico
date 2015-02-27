@@ -1,4 +1,4 @@
-angular.module("administracion", [ "ngRoute", "util" ])
+angular.module("administracion", [])
 
 .config(config)
 

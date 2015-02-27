@@ -1,49 +1,44 @@
-<div ng-if="vm.keyList">
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<button class="btn btn-default" data-ng-click="vm.reload()">
-				<i class="glyphicon glyphicon-refresh"></i> <span translate>btn_reload</span>
-			</button>
-		</div>
-	</div>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-6 col-md-4 col-lg-3 form-group">
-				<div class="input-group">
-					<div class="input-group-addon">
-						<i class="glyphicon glyphicon-filter"></i>
-					</div>
-					<input type="text" ng-model="m18nSearch" name="m18nSearch"
-						maxlength="50" class="form-control input-sm" />
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button class="btn btn-default" data-ng-click="vm.reload()">
+            <i class="glyphicon glyphicon-refresh"></i> <span translate>btn_reload</span>
+        </button>
+    </div>
+</div>
 
-	<div class="table-responsive">
-		<table
-			class="table-bordered table-condensed table-hover table-nonfluid">
-			<thead>
-				<tr>
-					<th class="buttonLinks" nowrap="nowrap" />
-					<th class="codigo" nowrap="nowrap" translate="m18n_key"></th>
-					<th
-						ng-repeat="language in ::vm.availableLanguages track by language"
-						nowrap="nowrap" ng-bind="::language" />
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="key in ::vm.keyList track by key"
-					ng-show="([key] | filter:m18nSearch).length > 0">
-					<td><a ng-href="#/administracion/m18n/detail/{{::key}}"><i
-							class="glyphicon glyphicon-search"></i></a></td>
-					<td ng-bind="key"></td>
-					<td
-						ng-repeat="language in ::vm.availableLanguages track by language"
-						ng-bind="::vm.keyMap[key][language]"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+<fieldset>
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3 form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="glyphicon glyphicon-filter"></i>
+                </div>
+                <input type="text" ng-model="m18nSearch" name="m18nSearch" maxlength="50"
+                    class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<div class="table-responsive">
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap" translate="m18n_key"></th>
+                <th ng-repeat="language in ::vm.availableLanguages track by language" nowrap="nowrap"
+                    ng-bind="::language" />
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="key in ::vm.keyList track by key" ng-show="([key] | filter:m18nSearch).length > 0">
+                <td><a ng-href="#/administracion/m18n/detail/{{::key}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="key"></td>
+                <td ng-repeat="language in ::vm.availableLanguages track by language"
+                    ng-bind="::vm.keyMap[key][language]"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>

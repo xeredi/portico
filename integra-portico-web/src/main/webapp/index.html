@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <link rel='stylesheet' href="webjars/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel='stylesheet' href="static/bootstrap-theme/css/bootstrap.min.css">
@@ -11,14 +12,14 @@
 <title ng-bind="'ARGO - ' + title"></title>
 </head>
 <body>
-	<header class="navbar navbar-default navbar-fixed-top">
-		<nav class="collapse navbar-collapse" role="navigation">
-			<ul class="nav navbar-nav">
-				<li><a ng-href="index.html" class="brand" ng-bind="title"></a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<div class="dropdown">
-					<!--
+    <header class="navbar navbar-default navbar-fixed-top">
+        <nav class="collapse navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a ng-href="index.html" class="brand" ng-bind="title"></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <div class="dropdown">
+                    <!--
 					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
 						aria-expanded="true" translate="menu"></button>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
@@ -32,54 +33,57 @@
 						<li><a ng-href="#/administracion" translate="sec_administracion"></a></li>
 					</ul>
 -->
-					<li class="btn-group" dropdown is-open="status.isopen"><a class="btn btn-primary dropdown-toggle"
-						dropdown-toggle ng-disabled="disabled" translate="menu"></a>
-						<ul class="dropdown-menu" role="menu">
-							<li role="presentation" class="divider"></li>
-							<li><a ng-href="#/servicio" translate="srvcList"></a></li>
-							<li><a ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
-							<li><a ng-href="#/maestro" translate="prmtList"></a></li>
-							<li><a ng-href="#/facturacion" translate="sec_facturacion"></a></li>
-							<li><a ng-href="#/proceso/prbt/grid" translate="prbtList"></a></li>
-							<li role="presentation" class="divider"></li>
-							<li><a ng-href="#/administracion" translate="sec_administracion"></a></li>
-						</ul></li>
-				</div>
-			</ul>
-		</nav>
-	</header>
+                    <li class="btn-group" dropdown is-open="status.isopen"><a
+                        class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled"
+                        translate="menu"></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" class="divider"></li>
+                            <li><a ng-href="#/servicio" translate="srvcList"></a></li>
+                            <li><a ng-href="#/estadistica/pepr/grid" translate="estdList"></a></li>
+                            <li><a ng-href="#/maestro" translate="prmtList"></a></li>
+                            <li><a ng-href="#/facturacion" translate="sec_facturacion"></a></li>
+                            <li><a ng-href="#/proceso/prbt/grid" translate="prbtList"></a></li>
+                            <li role="presentation" class="divider"></li>
+                            <li><a ng-href="#/administracion" translate="sec_administracion"></a></li>
+                        </ul></li>
+                </div>
+            </ul>
+        </nav>
+    </header>
 
-	<div id="body-content" class="container-fluid">
-		<ul ng-if="actionErrors && actionErrors.length > 0" class="alert alert-danger" role="alert">
-			<span translate="errorList"></span>
-			<li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
-		</ul>
-		<span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner"></span>
-		<div ng-view></div>
-	</div>
+    <div id="body-content">
+        <ul ng-if="actionErrors && actionErrors.length > 0" class="alert alert-danger" role="alert">
+            <span translate="errorList"></span>
+            <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
+        </ul>
+        <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="spinner"></span>
+        <div ng-view class="container-fluid"></div>
+    </div>
 
 
-	<script type="text/javascript" src="webjars/angularjs/1.3.13/angular.min.js"></script>
-	<script type="text/javascript" src="webjars/angularjs/1.3.13/angular-route.min.js"></script>
-	<script type="text/javascript" src="webjars/angular-translate/2.6.0/angular-translate.min.js"></script>
-	<script type="text/javascript" src="webjars/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
-	<script type="text/javascript" src="webjars/spin-js/2.0.0/spin.js"></script>
-	<script type="text/javascript" src="webjars/angular-file-upload/2.1.1/angular-file-upload.min.js"></script>
-	<script type="text/javascript" src="webjars/angular-strap/2.1.4/angular-strap.min.js"></script>
-	<script type="text/javascript" src="webjars/angular-strap/2.1.4/angular-strap.tpl.min.js"></script>
-	<script type="text/javascript" src="static/angular-spinner/angular-spinner.min.js"></script>
-	<script type="text/javascript" src="static/filesaver/FileSaver.min.js"></script>
-	<script type="text/javascript" src="app.js"></script>
-	<script type="text/javascript" src="modules/util/util.js"></script>
-	<script type="text/javascript" src="modules/i18n/i18n_messages_es.js"></script>
-	<script type="text/javascript" src="modules/administracion/administracion.js"></script>
-	<script type="text/javascript" src="modules/metamodelo/metamodelo.js"></script>
-	<script type="text/javascript" src="modules/entidad/maestro/maestro.js"></script>
-	<script type="text/javascript" src="modules/entidad/servicio/servicio.js"></script>
-	<script type="text/javascript" src="modules/entidad/estadistica/estadistica.js"></script>
-	<script type="text/javascript" src="modules/facturacion/facturacion.js"></script>
-	<script type="text/javascript" src="modules/proceso/proceso.js"></script>
-	<!--
+    <script type="text/javascript" async="async" src="webjars/angularjs/1.3.13/angular.min.js"></script>
+    <script type="text/javascript" async="async" src="webjars/angularjs/1.3.13/angular-route.min.js"></script>
+    <script type="text/javascript" async="async"
+        src="webjars/angular-translate/2.6.0/angular-translate.min.js"></script>
+    <script type="text/javascript" async="async"
+        src="webjars/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" async="async" src="webjars/spin-js/2.0.0/spin.js"></script>
+    <script type="text/javascript" async="async"
+        src="webjars/angular-file-upload/2.1.1/angular-file-upload.min.js"></script>
+    <script type="text/javascript" async="async" src="webjars/angular-strap/2.1.4/angular-strap.min.js"></script>
+    <script type="text/javascript" async="async" src="webjars/angular-strap/2.1.4/angular-strap.tpl.min.js"></script>
+    <script type="text/javascript" async="async" src="static/angular-spinner/angular-spinner.min.js"></script>
+    <script type="text/javascript" async="async" src="static/filesaver/FileSaver.min.js"></script>
+    <script type="text/javascript" async="async" src="app.js"></script>
+    <script type="text/javascript" async="async" src="modules/i18n/i18n_messages_es.js"></script>
+    <script type="text/javascript" async="async" src="modules/administracion/administracion.js"></script>
+    <script type="text/javascript" async="async" src="modules/metamodelo/metamodelo.js"></script>
+    <script type="text/javascript" async="async" src="modules/entidad/maestro/maestro.js"></script>
+    <script type="text/javascript" async="async" src="modules/entidad/servicio/servicio.js"></script>
+    <script type="text/javascript" async="async" src="modules/entidad/estadistica/estadistica.js"></script>
+    <script type="text/javascript" async="async" src="modules/facturacion/facturacion.js"></script>
+    <script type="text/javascript" async="async" src="modules/proceso/proceso.js"></script>
+    <!--
     <script type="text/javascript" src="static/angularjs/1.3.0-rc.4/i18n/angular-locale_es.js"></script>
  -->
 </body>

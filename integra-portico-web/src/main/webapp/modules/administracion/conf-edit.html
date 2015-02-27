@@ -1,35 +1,34 @@
-<div ng-if="vm.conf">
-    <form role="form">
-        <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.conf.key" />
+<form role="form">
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.conf.key" />
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-                    <label translate>conf_valueType</label>
-                    <p class="form-control-static" ng-bind="'ConfigurationValueType_' + vm.conf.valueType | translate"></p>
-                </div>
-                <div class="col-sm-9 col-md-8 col-lg-7 form-group">
-                    <label translate>conf_key</label>
-                    <p class="form-control-static" ng-bind="vm.conf.key"></p>
-                </div>
-                <div class="col-sm-9 col-md-8 col-lg-7 form-group">
-                    <label translate>conf_defaultValue</label>
-                    <p class="form-control-static" ng-bind="vm.conf.defaultValue"></p>
-                </div>
-                <div class="col-sm-9 col-md-8 col-lg-7 form-group">
-                    <label translate>conf_value</label> <input type="text" class="form-control input-sm"
-                        ng-model="vm.conf.value" />
-                </div>
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-lg-1 form-group">
+                <label translate>conf_valueType</label>
+                <p class="form-control-static"
+                    ng-bind="'ConfigurationValueType_' + vm.conf.valueType | translate"></p>
+            </div>
+            <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+                <label translate>conf_key</label>
+                <p class="form-control-static" ng-bind="vm.conf.key"></p>
+            </div>
+            <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+                <label translate>conf_defaultValue</label>
+                <p class="form-control-static" ng-bind="vm.conf.defaultValue"></p>
+            </div>
+            <div class="col-sm-9 col-md-8 col-lg-7 form-group">
+                <label translate>conf_value</label> <input type="text" class="form-control input-sm"
+                    ng-model="vm.conf.value" />
             </div>
         </div>
+    </fieldset>
 
-        <div class="btn-group">
-            <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-            </button>
-            <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-            </button>
-        </div>
-    </form>
-</div>
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+        </button>
+    </div>
+</form>

@@ -1,28 +1,24 @@
-<div ng-if="vm.schr">
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<button class="btn btn-default" ng-if="vm.schr.inStandbyMode" ng-click="vm.start()">
-				<i class="glyphicon glyphicon-play"></i> <span translate>btn_start</span>
-			</button>
-			<button class="btn btn-default" ng-if="vm.schr.started" ng-click="vm.pause()">
-				<i class="glyphicon glyphicon-pause"></i> <span translate>btn_pause</span>
-			</button>
-			<button class="btn btn-default" ng-if="vm.schr.started" ng-click="vm.shutdownClean()">
-				<i class="glyphicon glyphicon-stop"></i> <span translate>btn_shutdownClean</span>
-			</button>
-			<button class="btn btn-default" ng-if="vm.schr.started" ng-click="vm.shutdown()">
-				<i class="glyphicon glyphicon-remove"></i> <span translate>btn_shutdown</span>
-			</button>
-		</div>
-	</div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button class="btn btn-default" ng-if="vm.schr.inStandbyMode" ng-click="vm.start()">
+            <i class="glyphicon glyphicon-play"></i> <span translate>btn_start</span>
+        </button>
+        <button class="btn btn-default" ng-if="vm.schr.started" ng-click="vm.pause()">
+            <i class="glyphicon glyphicon-pause"></i> <span translate>btn_pause</span>
+        </button>
+        <button class="btn btn-default" ng-if="vm.schr.started" ng-click="vm.shutdownClean()">
+            <i class="glyphicon glyphicon-stop"></i> <span translate>btn_shutdownClean</span>
+        </button>
+        <button class="btn btn-default" ng-if="vm.schr.started" ng-click="vm.shutdown()">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_shutdown</span>
+        </button>
+    </div>
+</div>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-3 col-md-2 col-lg-1 form-group">
-				<label translate>Estado del Scheduler</label>
-				<p class="form-control-static">{{vm.schr.started ? 'En Ejecucuón' : ''}}{{vm.schr.shutdown ? 'Apagado'
-					: ''}}{{vm.schr.inStandbyMode ? 'En Espera' : ''}}</p>
-			</div>
-		</div>
-	</div>
+<div class="row">
+    <div class="col-sm-3 col-md-2 col-lg-1 form-group">
+        <label translate>Estado del Scheduler</label>
+        <p class="form-control-static">{{vm.schr.started ? 'En Ejecucuón' : ''}}{{vm.schr.shutdown ?
+            'Apagado' : ''}}{{vm.schr.inStandbyMode ? 'En Espera' : ''}}</p>
+    </div>
 </div>

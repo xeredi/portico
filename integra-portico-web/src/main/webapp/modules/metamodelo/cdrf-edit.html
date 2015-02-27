@@ -1,31 +1,27 @@
-<div ng-if="vm.cdrf">
-    <form name="editForm" novalidate role="form">
-        <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.cdrf.id" /><input type="hidden"
-            ng-model="vm.cdrf.tpdtId" />
+<form name="editForm" novalidate role="form">
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.cdrf.id" /><input
+        type="hidden" ng-model="vm.cdrf.tpdtId" />
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3 form-group">
-                    <label translate>cdrf_valor</label> <input ng-if="vm.accion == 'create'" type="text"
-                        ng-model="vm.cdrf.valor" class="form-control input-sm" />
-                    <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.cdrf.valor"></p>
-                </div>
-                <div class="col-md-1 form-group">
-                    <label translate>cdrf_orden</label> <input type="text" ng-model="vm.cdrf.orden"
-                        class="form-control input-sm number" />
-                </div>
-            </div>
-
-            <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <label translate>cdrf_valor</label> <input ng-if="vm.accion == 'create'" type="text"
+                ng-model="vm.cdrf.valor" class="form-control input-sm" />
+            <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.cdrf.valor"></p>
         </div>
-
-        <div class="btn-group">
-            <button data-ng-click="vm.save()" class="btn btn-primary">
-                <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-            </button>
-            <button data-ng-click="vm.cancel()" class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-            </button>
+        <div class="col-md-1 form-group">
+            <label translate>cdrf_orden</label> <input type="text" ng-model="vm.cdrf.orden"
+                class="form-control input-sm number" />
         </div>
-    </form>
-</div>
+    </div>
+
+    <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+        </button>
+    </div>
+</form>

@@ -39,12 +39,12 @@ legend, label {
 td span {
 	display: block;
 }
-
+/*
 .container-fluid {
 	padding-left: 10px;
 	padding-right: 10px;
 }
-
+*/
 .modal.custom, .modal-dialog {
 	width: 90%;
 }
@@ -144,6 +144,10 @@ form {
 	padding-right: 0px;
 }
 
+fieldset {
+	padding-left: 10px;
+}
+
 .glyphicon-search, .glyphicon-search, .glyphicon-ok, .glyphicon-remove,
 	.glyphicon-tags {
 	padding-right: 5px;
@@ -174,24 +178,3 @@ legend {
 .error {
 	background-color: red;
 }
-
-/* Theme */
-/*
-body, legend {
-	color: #FFFFFA;
-	background-color: #2B3E50;
-}
-
-.navbar {
-	color: #EBEBEB;
-	background-color: #4E5D6C;
-}
-
-.modal-header, .modal-footer {
-	background-color: #485563;
-}
-
-.modal-body {
-	background-color: #4E5D6C;
-}
-*/

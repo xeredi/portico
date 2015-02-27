@@ -123,6 +123,36 @@
 		<if test="estado != null and !estado.empty">
 			AND srvc_estado = #{estado}
 		</if>
+		<if test="frefMin != null">
+        <![CDATA[
+			AND srvc_fref >= #{frefMin}
+        ]]>
+		</if>
+		<if test="frefMax != null">
+        <![CDATA[
+			AND srvc_fref < #{frefMax}
+        ]]>
+		</if>
+		<if test="finiMin != null">
+        <![CDATA[
+			AND srvc_fini >= #{finiMin}
+        ]]>
+		</if>
+		<if test="finiMax != null">
+        <![CDATA[
+			AND srvc_fini < #{finiMax}
+        ]]>
+		</if>
+		<if test="ffinMin != null">
+        <![CDATA[
+			AND srvc_ffin >= #{ffinMin}
+        ]]>
+		</if>
+		<if test="ffinMax != null">
+        <![CDATA[
+			AND srvc_ffin < #{ffinMax}
+        ]]>
+		</if>
 		<if test="itdtMap != null and !itdtMap.empty">
 			<foreach collection="itdtMap" item="itdt">
 				<if
