@@ -1,222 +1,219 @@
-<div ng-if="vm.prbt">
-	<div>
-		<tabset type="pills"> <tab heading="{{'prbt' | translate}}">
-		<div class="btn-toolbar" role="toolbar">
-			<div class="btn-group">
-				<button class="btn btn-default" ng-click="vm.cancel()">
-					<i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
-				</button>
-			</div>
-		</div>
+<div>
+    <tabset type="pills"> <tab heading="{{'prbt' | translate}}">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button class="btn btn-default" ng-click="vm.cancel()">
+                <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+            </button>
+        </div>
+    </div>
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
-					<label translate="prbt_modulo"></label>
-					<p class="form-control-static" ng-bind="'ProcesoModulo_' + vm.prbt.modulo | translate"></p>
-				</div>
-				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
-					<label translate="prbt_tipo"></label>
-					<p class="form-control-static" ng-bind="vm.prbt.tipo"></p>
-				</div>
-				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
-					<label translate="prbt_estado"></label>
-					<p class="form-control-static" ng-bind="'ProcesoEstado_' + vm.prbt.estado | translate"></p>
-				</div>
-			</div>
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                <label translate="prbt_modulo"></label>
+                <p class="form-control-static" ng-bind="'ProcesoModulo_' + vm.prbt.modulo | translate"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                <label translate="prbt_tipo"></label>
+                <p class="form-control-static" ng-bind="vm.prbt.tipo"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                <label translate="prbt_estado"></label>
+                <p class="form-control-static" ng-bind="'ProcesoEstado_' + vm.prbt.estado | translate"></p>
+            </div>
+        </div>
 
-			<div class="row">
-				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
-					<label translate="prbt_falta"></label>
-					<p class="form-control-static" ng-bind="vm.prbt.falta | date: ('format_datetime' | translate)"></p>
-				</div>
-				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
-					<label translate="prbt_fini"></label>
-					<p class="form-control-static" ng-bind="vm.prbt.finicio | date: ('format_datetime' | translate)"></p>
-				</div>
-				<div class="col-sm-3 col-md-2 col-lg-2 form-group">
-					<label translate="prbt_ffin"></label>
-					<p class="form-control-static" ng-bind="vm.prbt.ffin | date: ('format_datetime' | translate)"></p>
-				</div>
-				<div class="col-sm-2 col-md-2 form-group">
-					<label translate="prbt_duracion"></label>
-					<p class="form-control-static number" ng-bind="vm.prbt.duracion | number:0"></p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-2 col-md-2 col-lg-1 form-group">
-					<label translate="prbt_erroresCnt"></label>
-					<p class="form-control-static number" ng-bind="vm.prbt.erroresCnt | number:0"></p>
-				</div>
-				<div class="col-sm-2 col-md-2 col-lg-1 form-group">
-					<label translate="prbt_alertasCnt"></label>
-					<p class="form-control-static number" ng-bind="vm.prbt.alertasCnt | number:0"></p>
-				</div>
-				<div class="col-sm-2 col-md-2 col-lg-1 form-group">
-					<label translate="prbt_mensajesCnt"></label>
-					<p class="form-control-static number" ng-bind="vm.prbt.mensajesCnt | number:0"></p>
-				</div>
-			</div>
-		</div>
+        <div class="row">
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                <label translate="prbt_falta"></label>
+                <p class="form-control-static" ng-bind="vm.prbt.falta | date: ('format_datetime' | translate)"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                <label translate="prbt_fini"></label>
+                <p class="form-control-static"
+                    ng-bind="vm.prbt.finicio | date: ('format_datetime' | translate)"></p>
+            </div>
+            <div class="col-sm-3 col-md-2 col-lg-2 form-group">
+                <label translate="prbt_ffin"></label>
+                <p class="form-control-static" ng-bind="vm.prbt.ffin | date: ('format_datetime' | translate)"></p>
+            </div>
+            <div class="col-sm-2 col-md-2 form-group">
+                <label translate="prbt_duracion"></label>
+                <p class="form-control-static number" ng-bind="vm.prbt.duracion | number:0"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <label translate="prbt_erroresCnt"></label>
+                <p class="form-control-static number" ng-bind="vm.prbt.erroresCnt | number:0"></p>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <label translate="prbt_alertasCnt"></label>
+                <p class="form-control-static number" ng-bind="vm.prbt.alertasCnt | number:0"></p>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+                <label translate="prbt_mensajesCnt"></label>
+                <p class="form-control-static number" ng-bind="vm.prbt.mensajesCnt | number:0"></p>
+            </div>
+        </div>
+    </fieldset>
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-6 col-md-5 col-lg-4">
-					DATOS DE ENTRADA
+    <div class="row">
+        <div class="col-sm-6 col-md-5 col-lg-4">
+            DATOS DE ENTRADA
 
-					<fieldset ng-if="vm.prpmMap">
-						<legend translate="prpmList"></legend>
-						<table class="table-bordered table-condensed table-hover table-nonfluid">
-							<thead>
-								<tr>
-									<th translate="prpm_nombre"></th>
-									<th translate="prpm_valor"></th>
-								</tr>
-							</thead>
+            <div ng-if="vm.prpmMap">
+                <legend translate="prpmList"></legend>
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th translate="prpm_nombre"></th>
+                            <th translate="prpm_valor"></th>
+                        </tr>
+                    </thead>
 
-							<tbody>
-								<tr ng-repeat="(key, value) in vm.prpmMap track by key">
-									<td ng-bind="key"></td>
-									<td ng-bind="value.valor"></td>
-								</tr>
-							</tbody>
-						</table>
-					</fieldset>
-					<fieldset ng-if="vm.arinEntradaList.length">
-						<legend translate="archList"></legend>
-						<table class="table-bordered table-condensed table-hover table-nonfluid">
-							<thead>
-								<tr>
-									<th />
-									<th translate="arch_nombre"></th>
-									<th translate="arch_tamanio"></th>
-									<th translate="arch_falta"></th>
-								</tr>
-							</thead>
+                    <tbody>
+                        <tr ng-repeat="(key, value) in vm.prpmMap track by key">
+                            <td ng-bind="key"></td>
+                            <td ng-bind="value.valor"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="vm.arinEntradaList.length">
+                <legend translate="archList"></legend>
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th translate="arch_nombre"></th>
+                            <th translate="arch_tamanio"></th>
+                            <th translate="arch_falta"></th>
+                        </tr>
+                    </thead>
 
-							<tbody>
-								<tr ng-repeat="arin in vm.arinEntradaList track by $index">
-									<td><a ng-click="vm.download(arin.id, arin.nombre)"> <span class="glyphicon glyphicon-save"
-											aria-hidden="true"></span>
-									</a></td>
-									<td ng-bind="arin.nombre"></td>
-									<td ng-bind="arin.tamanio | number:0" class="number"></td>
-									<td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
-								</tr>
-							</tbody>
-						</table>
-					</fieldset>
-					<fieldset ng-if="vm.pritEntradaList.length">
-						<legend translate="pritList"></legend>
-						<table class="table-bordered table-condensed table-hover table-nonfluid">
-							<thead>
-								<tr>
-									<th />
-									<th translate="prit_tipo"></th>
-									<th translate="prit_nombre"></th>
-									<th translate="prit_enti"></th>
-								</tr>
-							</thead>
+                    <tbody>
+                        <tr ng-repeat="arin in vm.arinEntradaList track by $index">
+                            <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
+                                    class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                            </a></td>
+                            <td ng-bind="arin.nombre"></td>
+                            <td ng-bind="arin.tamanio | number:0" class="number"></td>
+                            <td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="vm.pritEntradaList.length">
+                <legend translate="pritList"></legend>
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th translate="prit_tipo"></th>
+                            <th translate="prit_nombre"></th>
+                            <th translate="prit_enti"></th>
+                        </tr>
+                    </thead>
 
-							<tbody>
-								<tr ng-repeat="prit in vm.pritEntradaList track by $index">
-									<td ng-switch on="prit.tipo"><a ng-switch-when="srvc"
-										ng-href="#/servicio/srvc/detail/{{prit.entiId}}/{{prit.itemId}}"><span
-											class="glyphicon glyphicon-search"></span></a></td>
-									<td ng-bind="'ItemTipo_' + prit.tipo | translate"></td>
-									<td ng-bind="prit.etiqueta"></td>
-									<td ng-bind="'enti_' + prit.entiId | translate"></td>
-								</tr>
-							</tbody>
-						</table>
-					</fieldset>
-				</div>
-				<div class="col-sm-6 col-md-5 col-lg-4">
-					DATOS DE SALIDA
+                    <tbody>
+                        <tr ng-repeat="prit in vm.pritEntradaList track by $index">
+                            <td ng-switch on="prit.tipo"><a ng-switch-when="srvc"
+                                ng-href="#/servicio/srvc/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a></td>
+                            <td ng-bind="'ItemTipo_' + prit.tipo | translate"></td>
+                            <td ng-bind="prit.etiqueta"></td>
+                            <td ng-bind="'enti_' + prit.entiId | translate"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-5 col-lg-4">
+            DATOS DE SALIDA
 
-					<fieldset ng-if="vm.arinSalidaList.length">
-						<legend translate="archList"></legend>
-						<table class="table-bordered table-condensed table-hover table-nonfluid">
-							<thead>
-								<tr>
-									<th />
-									<th translate="arch_nombre"></th>
-									<th translate="arch_tamanio"></th>
-									<th translate="arch_falta"></th>
-								</tr>
-							</thead>
+            <div ng-if="vm.arinSalidaList.length">
+                <legend translate="archList"></legend>
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th translate="arch_nombre"></th>
+                            <th translate="arch_tamanio"></th>
+                            <th translate="arch_falta"></th>
+                        </tr>
+                    </thead>
 
-							<tbody>
-								<tr ng-repeat="arin in vm.arinSalidaList track by $index">
-									<td><a ng-click="vm.download(arin.id, arin.nombre)"> <span class="glyphicon glyphicon-save"
-											aria-hidden="true"></span>
-									</a></td>
-									<td ng-bind="arin.nombre"></td>
-									<td ng-bind="arin.tamanio | number:0" class="number"></td>
-									<td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
-								</tr>
-							</tbody>
-						</table>
-					</fieldset>
-					<fieldset ng-if="vm.pritSalidaList.length">
-						<legend translate="pritList"></legend>
-						<table class="table-bordered table-condensed table-hover table-nonfluid">
-							<thead>
-								<tr>
-									<th />
-									<th translate="prit_tipo"></th>
-									<th translate="prit_nombre"></th>
-									<th translate="prit_enti"></th>
-								</tr>
-							</thead>
+                    <tbody>
+                        <tr ng-repeat="arin in vm.arinSalidaList track by $index">
+                            <td><a ng-click="vm.download(arin.id, arin.nombre)"> <span
+                                    class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                            </a></td>
+                            <td ng-bind="arin.nombre"></td>
+                            <td ng-bind="arin.tamanio | number:0" class="number"></td>
+                            <td ng-bind="arin.falta | date: ('format_datetime' | translate)"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="vm.pritSalidaList.length">
+                <legend translate="pritList"></legend>
+                <table class="table-bordered table-condensed table-hover table-nonfluid">
+                    <thead>
+                        <tr>
+                            <th />
+                            <th translate="prit_tipo"></th>
+                            <th translate="prit_nombre"></th>
+                            <th translate="prit_enti"></th>
+                        </tr>
+                    </thead>
 
-							<tbody>
-								<tr ng-repeat="prit in vm.pritSalidaList track by $index">
-									<td ng-switch on="prit.tipo"><a ng-switch-when="srvc"
-										ng-href="#/servicio/srvc/detail/{{prit.entiId}}/{{prit.itemId}}"><span
-											class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
-										ng-href="#/servicio/ssrv/detail/{{prit.entiId}}/{{prit.itemId}}"><span
-											class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
-										ng-href="#/estadistica/pepr/detail/{{prit.itemId}}"><span class="glyphicon glyphicon-search"></span></a></td>
-									<td ng-bind="'ItemTipo_' + prit.tipo | translate"></td>
-									<td ng-bind="prit.etiqueta"></td>
-									<td><span ng-if="prit.tipo == 'srvc' || prit.tipo == 'ssrv'"
-										ng-bind="'enti_' + prit.entiId | translate"></span></td>
-								</tr>
-							</tbody>
-						</table>
-					</fieldset>
-				</div>
-			</div>
-		</div>
+                    <tbody>
+                        <tr ng-repeat="prit in vm.pritSalidaList track by $index">
+                            <td ng-switch on="prit.tipo"><a ng-switch-when="srvc"
+                                ng-href="#/servicio/srvc/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
+                                ng-href="#/servicio/ssrv/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
+                                ng-href="#/estadistica/pepr/detail/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a></td>
+                            <td ng-bind="'ItemTipo_' + prit.tipo | translate"></td>
+                            <td ng-bind="prit.etiqueta"></td>
+                            <td><span ng-if="prit.tipo == 'srvc' || prit.tipo == 'ssrv'"
+                                ng-bind="'enti_' + prit.entiId | translate"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
+    </tab> <tab heading="{{'prmnList' | translate}}" ng-if="vm.prmnList.list.length">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <pagination total-items="vm.prmnList.count" items-per-page="vm.prmnList.limit" ng-model="vm.page"
+                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+                next-text="&rsaquo;&rsaquo;"></pagination>
+        </div>
+    </div>
 
-		</tab> <tab heading="{{'prmnList' | translate}}" ng-if="vm.prmnList.list.length">
-		<div class="btn-toolbar" role="toolbar">
-			<div class="btn-group">
-				<pagination total-items="vm.prmnList.count" items-per-page="vm.prmnList.limit" ng-model="vm.page"
-					ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-					next-text="&rsaquo;&rsaquo;"></pagination>
-			</div>
-		</div>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th translate="prmn_nivel"></th>
+                <th translate="prmn_codigo"></th>
+                <th translate="prmn_mensaje"></th>
+            </tr>
+        </thead>
 
-		<table class="table-bordered table-condensed table-hover table-nonfluid">
-			<thead>
-				<tr>
-					<th translate="prmn_nivel"></th>
-					<th translate="prmn_codigo"></th>
-					<th translate="prmn_mensaje"></th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr ng-repeat="prmn in vm.prmnList.list track by $index">
-					<td ng-bind="'MensajeNivel_' + prmn.nivel | translate" nowrap="nowrap"></td>
-					<td ng-bind="prmn.codigo" nowrap="nowrap"></td>
-					<td ng-bind="prmn.mensaje"></td>
-				</tr>
-			</tbody>
-		</table>
-		</tab> </tabset>
-	</div>
+        <tbody>
+            <tr ng-repeat="prmn in vm.prmnList.list track by $index">
+                <td ng-bind="'MensajeNivel_' + prmn.nivel | translate" nowrap="nowrap"></td>
+                <td ng-bind="prmn.codigo" nowrap="nowrap"></td>
+                <td ng-bind="prmn.mensaje"></td>
+            </tr>
+        </tbody>
+    </table>
+    </tab> </tabset>
 </div>
