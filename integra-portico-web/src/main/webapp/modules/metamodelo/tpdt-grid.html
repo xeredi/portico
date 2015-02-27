@@ -1,47 +1,49 @@
-<div ng-if="vm.tpdtList">
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<pagination total-items="vm.tpdtList.count" items-per-page="vm.tpdtList.limit" ng-model="vm.page"
-				ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-				next-text="&rsaquo;&rsaquo;"></pagination>
-		</div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="vm.tpdtList.count" items-per-page="vm.tpdtList.limit" ng-model="vm.page"
+            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
 
-		<div class="btn-group">
-			<a class="btn btn-default" ng-href="#/metamodelo/tpdt/create"><i class="glyphicon glyphicon-file"></i>
-				<span translate>btn_crear</span> </a>
-			<button class="btn btn-default" data-ng-click="vm.filter('lg')"
-				data-template="modules/metamodelo/tpdt-filter-modal.html" bs-modal="modal">
-				<i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
-			</button>
-		</div>
-	</div>
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/metamodelo/tpdt/create"><i class="glyphicon glyphicon-file"></i>
+            <span translate>btn_crear</span> </a>
+        <button class="btn btn-default" data-ng-click="vm.filter('lg')"
+            data-template="modules/metamodelo/tpdt-filter-modal.html" bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+        </button>
+    </div>
+</div>
 
-	<div class="table-responsive">
-		<span class="label label-default" translate="grid_count"
-			translate-value-count="{{vm.tpdtList.count | number:0}}"></span>
+<div class="table-responsive">
+    <span class="label label-default" translate="grid_count"
+        translate-value-count="{{vm.tpdtList.count | number:0}}"></span>
 
-		<table class="table-bordered table-condensed table-hover table-nonfluid">
-			<thead>
-				<tr>
-					<th class="buttonLinks" nowrap="nowrap" />
-					<th class="codigo" nowrap="nowrap" translate>tpdt_codigo</th>
-					<th nowrap="nowrap" translate>tpdt_nombre</th>
-					<th nowrap="nowrap" translate>tpdt_tpht</th>
-					<th nowrap="nowrap" translate>tpdt_tpel</th>
-					<th nowrap="nowrap" translate>tpdt_enti</th>
-				</tr>
-			</thead>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap" translate>tpdt_codigo</th>
+                <th nowrap="nowrap" translate>tpdt_nombre</th>
+                <th nowrap="nowrap" translate>tpdt_tpht</th>
+                <th nowrap="nowrap" translate>tpdt_tpel</th>
+                <th nowrap="nowrap" translate>tpdt_enti</th>
+            </tr>
+        </thead>
 
-			<tbody>
-				<tr ng-repeat="tpdt in vm.tpdtList.list track by $index">
-					<td><a ng-href="#/metamodelo/tpdt/detail/{{tpdt.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-					<td ng-bind="tpdt.codigo"></td>
-					<td ng-bind="tpdt.nombre"></td>
-					<td nowrap="nowrap" bs-tooltip data-title="{{'HtmlTipo_' + tpdt.tpht | translate}}" ng-bind="tpdt.tpht"></td>
-					<td nowrap="nowrap" bs-tooltip data-title="{{'ElementoTipo_' + tpdt.tipoElemento | translate}}" ng-bind="tpdt.tipoElemento"></td>
-					<td ng-bind="tpdt.enti.nombre"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+        <tbody>
+            <tr ng-repeat="tpdt in vm.tpdtList.list track by $index">
+                <td><a ng-href="#/metamodelo/tpdt/detail/{{tpdt.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="tpdt.codigo"></td>
+                <td ng-bind="tpdt.nombre"></td>
+                <td nowrap="nowrap" bs-tooltip data-title="{{'HtmlTipo_' + tpdt.tpht | translate}}"
+                    ng-bind="tpdt.tpht"></td>
+                <td nowrap="nowrap" bs-tooltip
+                    data-title="{{'ElementoTipo_' + tpdt.tipoElemento | translate}}"
+                    ng-bind="tpdt.tipoElemento"></td>
+                <td ng-bind="tpdt.enti.nombre"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>

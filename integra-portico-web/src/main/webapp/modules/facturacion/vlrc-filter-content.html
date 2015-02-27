@@ -1,58 +1,60 @@
 <div class="modal-header">
-	<p class="modal-title" translate="filtro"></p>
+    <p class="modal-title" translate="filtro"></p>
 </div>
 <div class="modal-body">
-	<form>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-2 col-md-1 form-group">
-					<label translate>vlrc_id</label> <input type="text" ng-model="vm.vlrcCriterio.id"
-						class="form-control input-sm" />
-				</div>
-				<div class="col-sm-3 col-md-2 form-group">
-					<label translate>srvc_tpsr</label> <select ng-model="vm.vlrcCriterio.tpsrId"
-						ng-options="item.value as (('enti_' + item.value) | translate) for item in vm.tpsrList"
-						ng-change="vm.tpsrChanged(vm.vlrcCriterio.tpsrId)" class="form-control input-sm">
-						<option />
-					</select>
-				</div>
-				<div class="col-sm-3 col-md-2 form-group" ng-show="vm.vlrcCriterio.tpsrId">
-					<label translate>vlrc_srvc</label>
-					<div class="input-group-sm" ng-controller="srvcLupaCtrl">
-						<input type="text" autocomplete="off" ng-model="vm.vlrcCriterio.srvc"
-							typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.vlrcCriterio.tpsrId, $viewValue)"
-							typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
-					</div>
-				</div>
-				<div class="col-sm-3 col-md-2 form-group" ng-show="vm.vlrcCriterio.tpsrId">
-					<label translate>vlrc_aspc</label> <select ng-model="vm.vlrcCriterio.aspcId"
-						ng-options="item.value as item.label for item in vm.aspcList" class="form-control input-sm">
-						<option />
-					</select>
-				</div>
-				<div class="col-sm-3 col-md-2 form-group" ng-show="vm.vlrcCriterio.tpsrId">
-					<label translate>crgo</label> <select ng-model="vm.vlrcCriterio.crgoId"
-						ng-options="item.value as item.label for item in vm.crgoList" class="form-control input-sm">
-						<option />
-					</select>
-				</div>
-				<div class="col-sm-4 col-md-3 form-group">
-					<label translate>vlrc_pagador</label>
-					<div class="input-group-sm" ng-controller="prmtsLupaCtrl">
-						<input type="text" autocomplete="off" ng-model="vm.vlrcCriterio.pagador"
-							typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
-							typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+    <form>
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-2 col-md-1 form-group">
+                    <label translate>vlrc_id</label> <input type="text" ng-model="vm.vlrcCriterio.id"
+                        class="form-control input-sm" />
+                </div>
+                <div class="col-sm-3 col-md-2 form-group">
+                    <label translate>srvc_tpsr</label> <select ng-model="vm.vlrcCriterio.tpsrId"
+                        ng-options="item.value as (('enti_' + item.value) | translate) for item in vm.tpsrList"
+                        ng-change="vm.tpsrChanged(vm.vlrcCriterio.tpsrId)" class="form-control input-sm">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-3 col-md-2 form-group" ng-show="vm.vlrcCriterio.tpsrId">
+                    <label translate>vlrc_srvc</label>
+                    <div class="input-group-sm" ng-controller="srvcLupaCtrl">
+                        <input type="text" autocomplete="off" ng-model="vm.vlrcCriterio.srvc"
+                            typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.vlrcCriterio.tpsrId, $viewValue)"
+                            typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-2 form-group" ng-show="vm.vlrcCriterio.tpsrId">
+                    <label translate>vlrc_aspc</label> <select ng-model="vm.vlrcCriterio.aspcId"
+                        ng-options="item.value as item.label for item in vm.aspcList"
+                        class="form-control input-sm">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-3 col-md-2 form-group" ng-show="vm.vlrcCriterio.tpsrId">
+                    <label translate>crgo</label> <select ng-model="vm.vlrcCriterio.crgoId"
+                        ng-options="item.value as item.label for item in vm.crgoList"
+                        class="form-control input-sm">
+                        <option />
+                    </select>
+                </div>
+                <div class="col-sm-4 col-md-3 form-group">
+                    <label translate>vlrc_pagador</label>
+                    <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
+                        <input type="text" autocomplete="off" ng-model="vm.vlrcCriterio.pagador"
+                            typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
+                            typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" data-ng-click="vm.ok()">
-		<i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
-	</button>
-	<button class="btn btn-default" data-ng-click="vm.cancel()">
-		<i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
-	</button>
+    <button class="btn btn-primary" data-ng-click="vm.ok()">
+        <i class="glyphicon glyphicon-search"></i><span translate>btn_buscar</span>
+    </button>
+    <button class="btn btn-default" data-ng-click="vm.cancel()">
+        <i class="glyphicon glyphicon-remove"></i><span translate>btn_cancelar</span>
+    </button>
 </div>

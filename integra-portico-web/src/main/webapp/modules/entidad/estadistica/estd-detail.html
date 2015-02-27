@@ -1,18 +1,16 @@
-<div ng-if="vm.item">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-4 col-md-3 col-md-2 form-group">
-                <label translate>estd_pepr</label>
-                <p class="form-control-static">
-                    <a ng-href="#/estadistica/pepr/detail/{{vm.item.pepr.id}}" ng-bind="vm.item.pepr.etiqueta"></a>
-                </p>
-            </div>
-            <div class="col-sm-4 col-md-3 col-md-2 form-group">
-                <label translate>estd_subp</label>
-                <p class="form-control-static" ng-bind="vm.item.subp.etiqueta"></p>
-            </div>
+<fieldset>
+    <div class="row">
+        <div class="col-sm-4 col-md-3 col-md-2 form-group">
+            <label translate>estd_pepr</label>
+            <p class="form-control-static">
+                <a ng-href="#/estadistica/pepr/detail/{{vm.item.pepr.id}}" ng-bind="vm.item.pepr.etiqueta"></a>
+            </p>
         </div>
-
-        <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+        <div class="col-sm-4 col-md-3 col-md-2 form-group">
+            <label translate>estd_subp</label>
+            <p class="form-control-static" ng-bind="vm.item.subp.etiqueta"></p>
+        </div>
     </div>
-</div>
+
+    <div ng-include="'modules/entidad/common/itdtMap-detail.html'"></div>
+</fieldset>

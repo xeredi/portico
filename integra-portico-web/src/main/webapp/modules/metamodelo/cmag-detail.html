@@ -1,26 +1,24 @@
-<div ng-if="vm.cmag">
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<a class="btn btn-default" ng-href="#/metamodelo/cmag/edit/{{vm.cmag.tpesId}}/{{vm.cmag.entd.id}}"><i
-				class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
-			<button data-ng-click="vm.remove()" class="btn btn-default">
-				<i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-			</button>
-		</div>
-	</div>
-
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-2 form-group">
-				<label translate>cmag_nombre</label>
-				<p class="form-control-static" ng-bind="vm.cmag.nombre"></p>
-			</div>
-			<div class="col-md-1 form-group">
-				<label translate>cmag_agregar</label>
-				<p class="form-control-static">
-					<i class="glyphicon glyphicon-{{vm.cmag.agregar ? 'ok' : 'remove'}}"></i>
-				</p>
-			</div>
-		</div>
-	</div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/metamodelo/cmag/edit/{{vm.cmag.tpesId}}/{{vm.cmag.entd.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+        <button data-ng-click="vm.remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+        </button>
+    </div>
 </div>
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2 form-group">
+            <label translate>cmag_nombre</label>
+            <p class="form-control-static" ng-bind="vm.cmag.nombre"></p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label translate>cmag_agregar</label>
+            <p class="form-control-static">
+                <i class="glyphicon glyphicon-{{vm.cmag.agregar ? 'ok' : 'remove'}}"></i>
+            </p>
+        </div>
+    </div>
+</fieldset>

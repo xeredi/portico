@@ -2,19 +2,21 @@
     <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.cdrf.id" /><input
         type="hidden" ng-model="vm.cdrf.tpdtId" />
 
-    <div class="row">
-        <div class="col-md-3 form-group">
-            <label translate>cdrf_valor</label> <input ng-if="vm.accion == 'create'" type="text"
-                ng-model="vm.cdrf.valor" class="form-control input-sm" />
-            <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.cdrf.valor"></p>
+    <fieldset>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label translate>cdrf_valor</label> <input ng-if="vm.accion == 'create'" type="text"
+                    ng-model="vm.cdrf.valor" class="form-control input-sm" />
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.cdrf.valor"></p>
+            </div>
+            <div class="col-md-1 form-group">
+                <label translate>cdrf_orden</label> <input type="text" ng-model="vm.cdrf.orden"
+                    class="form-control input-sm number" />
+            </div>
         </div>
-        <div class="col-md-1 form-group">
-            <label translate>cdrf_orden</label> <input type="text" ng-model="vm.cdrf.orden"
-                class="form-control input-sm number" />
-        </div>
-    </div>
 
-    <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+        <div class="row" ng-include="'modules/common/i18nMap-edit.html'"></div>
+    </fieldset>
 
     <div class="btn-group">
         <button data-ng-click="vm.save()" class="btn btn-primary">

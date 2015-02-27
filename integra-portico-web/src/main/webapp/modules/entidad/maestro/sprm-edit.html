@@ -1,44 +1,43 @@
-<div ng-if="vm.item">
-	<form role="form">
-		<input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.item.entiId" /><input
-			type="hidden" ng-model="vm.item.id" /><input type="hidden" ng-model="vm.item.prmtId" /><input
-			type="hidden" ng-model="vm.item.spvr.id" />
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-4 col-md-2 col-md-2 form-group">
-					<label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
-					<div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
-						<input type="text" autocomplete="off" ng-model="vm.item.prmtAsociado"
-							typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
-							typeahead-editable="false" typeahead-wait-ms="250"
-							class="form-control input-sm">
-					</div>
-					<p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.item.prmtAsociado.etiqueta"></p>
-				</div>
+<form role="form">
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.item.entiId" /><input
+        type="hidden" ng-model="vm.item.id" /><input type="hidden" ng-model="vm.item.prmtId" /><input
+        type="hidden" ng-model="vm.item.spvr.id" />
 
-				<div class="col-sm-2 col-md-2 col-md-1 form-group">
-					<label translate>prmt_fini</label> <input type="text" class="form-control input-sm"
-						ng-model="vm.item.spvr.fini" data-max-date="{{vm.item.spvr.ffin}}" bs-datepicker />
-				</div>
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4 col-md-2 col-md-2 form-group">
+                <label ng-bind="'enti_' + vm.enti.tpprAsociado.id | translate"></label>
+                <div ng-if="vm.accion != 'edit'" class="input-group-sm" ng-controller="prmtsLupaCtrl">
+                    <input type="text" autocomplete="off" ng-model="vm.item.prmtAsociado"
+                        typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(vm.enti.tpprAsociado.id, $viewValue, vm.fechaVigencia)"
+                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
+                </div>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static"
+                    ng-bind="vm.item.prmtAsociado.etiqueta"></p>
+            </div>
 
-				<div class="col-sm-2 col-md-2 col-md-1 form-group">
-					<label translate>prmt_ffin</label> <label translate>prmt_fini</label> <input type="text"
-						class="form-control input-sm" ng-model="vm.item.spvr.ffin" data-min-date="{{vm.item.spvr.fini}}"
-						bs-datepicker />
-				</div>
-			</div>
+            <div class="col-sm-2 col-md-2 col-md-1 form-group">
+                <label translate>prmt_fini</label> <input type="text" class="form-control input-sm"
+                    ng-model="vm.item.spvr.fini" data-max-date="{{vm.item.spvr.ffin}}" bs-datepicker />
+            </div>
 
-			<div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
-		</div>
+            <div class="col-sm-2 col-md-2 col-md-1 form-group">
+                <label translate>prmt_ffin</label> <label translate>prmt_fini</label> <input type="text"
+                    class="form-control input-sm" ng-model="vm.item.spvr.ffin"
+                    data-min-date="{{vm.item.spvr.fini}}" bs-datepicker />
+            </div>
+        </div>
 
-		<div class="btn-group">
-			<button data-ng-click="vm.save()" class="btn btn-primary">
-				<i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
-			</button>
-			<button data-ng-click="vm.cancel()" class="btn btn-default">
-				<i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
-			</button>
-		</div>
-	</form>
-</div>
+        <div ng-include="'modules/entidad/common/itdtMap-edit.html'"></div>
+    </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate>btn_guardar</span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_cancelar</span>
+        </button>
+    </div>
+</form>

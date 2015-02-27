@@ -1,62 +1,61 @@
-<div ng-if="vm.vlrcList">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <pagination total-items="vm.vlrcList.count" items-per-page="vm.vlrcList.limit" ng-model="vm.page"
-                ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
-                next-text="&rsaquo;&rsaquo;"></pagination>
-        </div>
-        <div class="btn-group">
-            <button class="btn btn-default" data-ng-click="vm.filter('lg')">
-                <i class="glyphicon glyphicon-search"></i><span translate>btn_filtrar</span>
-            </button>
 
-            <script type="text/ng-template" id="vlrc-filter-content.html">
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="vm.vlrcList.count" items-per-page="vm.vlrcList.limit" ng-model="vm.page"
+            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default" data-ng-click="vm.filter('lg')">
+            <i class="glyphicon glyphicon-search"></i><span translate>btn_filtrar</span>
+        </button>
+
+        <script type="text/ng-template" id="vlrc-filter-content.html">
         	<div ng-include="'modules/facturacion/vlrc-filter-content.html'"></div>
     		</script>
-        </div>
     </div>
+</div>
 
-    <div class="table-responsive">
-        <span class="label label-default" translate="grid_count"
-            translate-value-count="{{vm.vlrcList.count | number:0}}"></span>
+<div class="table-responsive">
+    <span class="label label-default" translate="grid_count"
+        translate-value-count="{{vm.vlrcList.count | number:0}}"></span>
 
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th class="buttonLinks" nowrap="nowrap" />
-                    <th class="codigo" nowrap="nowrap" translate>vlrc_id</th>
-                    <th class="codigo" nowrap="nowrap" translate>vlrc_srvc</th>
-                    <th translate>aspc_tpsr</th>
-                    <th translate>vlrc_aspc</th>
-                    <th translate>vlrc_pagador</th>
-                    <th translate>vlrc_importe</th>
-                    <th translate>vlrc_impuesto</th>
-                    <th translate>vlrc_fliq</th>
-                    <th translate>vlrc_fini</th>
-                    <th translate>vlrc_ffin</th>
-                    <th translate>vlrc_sujPasivo</th>
-                    <th translate>vlrc_codExencion</th>
-                </tr>
-            </thead>
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th class="codigo" nowrap="nowrap" translate>vlrc_id</th>
+                <th class="codigo" nowrap="nowrap" translate>vlrc_srvc</th>
+                <th translate>aspc_tpsr</th>
+                <th translate>vlrc_aspc</th>
+                <th translate>vlrc_pagador</th>
+                <th translate>vlrc_importe</th>
+                <th translate>vlrc_impuesto</th>
+                <th translate>vlrc_fliq</th>
+                <th translate>vlrc_fini</th>
+                <th translate>vlrc_ffin</th>
+                <th translate>vlrc_sujPasivo</th>
+                <th translate>vlrc_codExencion</th>
+            </tr>
+        </thead>
 
-            <tbody>
-                <tr ng-repeat="item in vm.vlrcList.list track by $index">
-                    <td><a ng-href="#/facturacion/vlrc/detail/{{item.id}}"><i
-                            class="glyphicon glyphicon-search"></i></a></td>
-                    <td ng-bind="item.id"></td>
-                    <td ng-bind="item.srvc.etiqueta"></td>
-                    <td ng-bind="item.aspc.tpsr.nombre"></td>
-                    <td ng-bind="item.aspc.etiqueta"></td>
-                    <td ng-bind="item.pagador.etiqueta"></td>
-                    <td class="number" ng-bind="item.importe | number:2"></td>
-                    <td class="number" ng-bind="item.impuesto | number:2"></td>
-                    <td ng-bind="item.fliq | date: ('format_date' | translate)"></td>
-                    <td ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
-                    <td ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
-                    <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
-                    <td ng-bind="item.codExencion"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <tbody>
+            <tr ng-repeat="item in vm.vlrcList.list track by $index">
+                <td><a ng-href="#/facturacion/vlrc/detail/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="item.id"></td>
+                <td ng-bind="item.srvc.etiqueta"></td>
+                <td ng-bind="item.aspc.tpsr.nombre"></td>
+                <td ng-bind="item.aspc.etiqueta"></td>
+                <td ng-bind="item.pagador.etiqueta"></td>
+                <td class="number" ng-bind="item.importe | number:2"></td>
+                <td class="number" ng-bind="item.impuesto | number:2"></td>
+                <td ng-bind="item.fliq | date: ('format_date' | translate)"></td>
+                <td ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
+                <td ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
+                <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
+                <td ng-bind="item.codExencion"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>

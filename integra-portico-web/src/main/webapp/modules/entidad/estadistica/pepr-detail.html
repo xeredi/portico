@@ -1,52 +1,50 @@
-<div ng-if="vm.pepr">
-	<div class="btn-toolbar" role="toolbar">
-		<div class="btn-group">
-			<button data-ng-click="vm.oppeExport()" class="btn btn-default">
-				<i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
-			</button>
-		</div>
-		<div class="btn-group">
-			<button data-ng-click="vm.remove()" class="btn btn-default">
-				<i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-			</button>
-		</div>
-	</div>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <button data-ng-click="vm.oppeExport()" class="btn btn-default">
+            <i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
+        </button>
+    </div>
+    <div class="btn-group">
+        <button data-ng-click="vm.remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+        </button>
+    </div>
+</div>
 
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-4 col-md-3 col-md-2 form-group">
-				<label translate="pepr_autp"></label>
-				<p class="form-control-static" ng-bind="vm.pepr.autp.parametro"></p>
-			</div>
-			<div class="col-sm-2 col-md-1 col-md-1 form-group">
-				<label translate="pepr_anio"></label>
-				<p class="form-control-static number" ng-bind="vm.pepr.anio" class="number"></p>
-			</div>
-			<div class="col-sm-2 col-md-1 col-md-1 form-group">
-				<label translate="pepr_mes"></label>
-				<p class="form-control-static number" ng-bind="vm.pepr.mes"></p>
-			</div>
-			<div class="col-sm-3 col-md-2 col-md-1 form-group">
-				<label translate="pepr_cdmsGenerado"></label>
-				<p class="form-control-static">
-					<i class="glyphicon glyphicon-{{vm.pepr.cdmsGenerado ? 'ok' : 'remove'}}"></i>
-				</p>
-			</div>
-			<div class="col-sm-2 col-md-2 form-group">
-				<label translate>pepr_falta</label>
-				<p class="form-control-static" ng-bind="vm.pepr.falta | date: ('format_datetime' | translate)"></p>
-			</div>
-			<div class="col-sm-2 col-md-2 col-lg-1 form-group">
-				<label translate>pepr_arch</label>
-				<p class="form-control-static" ng-bind="vm.pepr.arin.nombre"></p>
-			</div>
-		</div>
-	</div>
+<fieldset>
+    <div class="row">
+        <div class="col-sm-4 col-md-3 col-md-2 form-group">
+            <label translate="pepr_autp"></label>
+            <p class="form-control-static" ng-bind="vm.pepr.autp.parametro"></p>
+        </div>
+        <div class="col-sm-2 col-md-1 col-md-1 form-group">
+            <label translate="pepr_anio"></label>
+            <p class="form-control-static number" ng-bind="vm.pepr.anio" class="number"></p>
+        </div>
+        <div class="col-sm-2 col-md-1 col-md-1 form-group">
+            <label translate="pepr_mes"></label>
+            <p class="form-control-static number" ng-bind="vm.pepr.mes"></p>
+        </div>
+        <div class="col-sm-3 col-md-2 col-md-1 form-group">
+            <label translate="pepr_cdmsGenerado"></label>
+            <p class="form-control-static">
+                <i class="glyphicon glyphicon-{{vm.pepr.cdmsGenerado ? 'ok' : 'remove'}}"></i>
+            </p>
+        </div>
+        <div class="col-sm-2 col-md-2 form-group">
+            <label translate>pepr_falta</label>
+            <p class="form-control-static" ng-bind="vm.pepr.falta | date: ('format_datetime' | translate)"></p>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-1 form-group">
+            <label translate>pepr_arch</label>
+            <p class="form-control-static" ng-bind="vm.pepr.arin.nombre"></p>
+        </div>
+    </div>
+</fieldset>
 
-	<div class="list-group">
-		<a ng-href="#/estadistica/cdms/detail/{{vm.pepr.id}}" class="list-group-item">{{'cdms' | translate |
-			uppercase}}</a> <a ng-href="#/estadistica/estd/grid/{{enti.value}}/{{vm.pepr.id}}/{{vm.pepr.autp.id}}"
-			class="list-group-item" ng-repeat="enti in vm.tpesList track by $index"
-			ng-bind="'enti_' + enti.value | translate | uppercase"></a>
-	</div>
+<div class="list-group">
+    <a ng-href="#/estadistica/cdms/detail/{{vm.pepr.id}}" class="list-group-item">{{'cdms' | translate |
+        uppercase}}</a> <a ng-href="#/estadistica/estd/grid/{{enti.value}}/{{vm.pepr.id}}/{{vm.pepr.autp.id}}"
+        class="list-group-item" ng-repeat="enti in vm.tpesList track by $index"
+        ng-bind="'enti_' + enti.value | translate | uppercase"></a>
 </div>

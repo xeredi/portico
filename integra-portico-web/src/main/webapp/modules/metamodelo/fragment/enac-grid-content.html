@@ -1,29 +1,29 @@
-<fieldset>
-    <legend translate="enti_enacList"></legend>
 
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <a class="btn btn-default" ng-href="#/metamodelo/enac/create/{{vm.enti.id}}"><i
-                class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
-        </div>
+<legend translate="enti_enacList"></legend>
+
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/metamodelo/enac/create/{{vm.enti.id}}"><i
+            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span></a>
     </div>
+</div>
 
-    <table class="table-bordered table-condensed table-hover table-nonfluid">
-        <thead>
-            <tr>
-                <th class="buttonLinks" nowrap="nowrap" />
-                <th translate>enac_path</th>
-                <th translate>enac_etiqueta</th>
-                <th translate>enac_orden</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="enac in vm.enti.enacList track by enac.id">
-                <td><a ng-href="#/metamodelo/enac/detail/{{enac.id}}"><i class="glyphicon glyphicon-search"></i></a></td>
-                <td ng-bind="enac.path"></td>
-                <td ng-bind="enac.etiqueta"></td>
-                <td ng-bind="enac.orden" class="number"></td>
-            </tr>
-        </tbody>
-    </table>
-</fieldset>
+<table class="table-bordered table-condensed table-hover table-nonfluid">
+    <thead>
+        <tr>
+            <th class="buttonLinks" nowrap="nowrap" />
+            <th translate>enac_path</th>
+            <th translate>enac_etiqueta</th>
+            <th translate>enac_orden</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="enac in vm.enti.enacList track by enac.id">
+            <td><a ng-href="#/metamodelo/enac/detail/{{enac.id}}"><i
+                    class="glyphicon glyphicon-search"></i></a></td>
+            <td ng-bind="enac.path"></td>
+            <td ng-bind="enac.etiqueta"></td>
+            <td ng-bind="enac.orden" class="number"></td>
+        </tr>
+    </tbody>
+</table>
