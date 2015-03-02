@@ -12,8 +12,9 @@
         </button>
     </div>
     <div class="btn-group" ng-if="vm.enti.facturable">
-        <a class="btn btn-default" ng-href="#/facturacion/vldr/prepare/{{vm.item.id}}"> <span translate>btn_valorar</span></a>
-        <a class="btn btn-default" ng-href="#/facturacion/vlrc/grid/?srvcId={{vm.item.id}}"> <span
+        <a class="btn btn-default" ng-href="#/facturacion/vldr/prepare/{{vm.item.entiId}}/{{vm.item.id}}">
+            <span translate>btn_valorar</span>
+        </a> <a class="btn btn-default" ng-href="#/facturacion/vlrc/grid/?srvcId={{vm.item.id}}"> <span
             translate>btn_valoraciones</span></a>
     </div>
     <div class="btn-group">

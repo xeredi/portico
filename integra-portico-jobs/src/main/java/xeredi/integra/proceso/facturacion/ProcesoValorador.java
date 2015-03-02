@@ -21,6 +21,12 @@ import xeredi.integra.proceso.ProcesoTemplate;
  */
 public final class ProcesoValorador extends ProcesoTemplate {
 
+    /** The Constant FLIQ_PARAM. */
+    public static final String FLIQ_PARAM = "fliq";
+
+    /** The Constant CARGOIDS_PARAM. */
+    public static final String CARGOIDS_PARAM = "crgoIds";
+
     /**
      * {@inheritDoc}
      */
@@ -37,11 +43,11 @@ public final class ProcesoValorador extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final ValoradorBO vldrBO = new ValoradorBO(this);
 
-        final String crgoIdsString = prpmMap.get("crgoIdList").getValor();
-        final String fliqString = prpmMap.get("fliq").getValor();
+        final String crgoIdsString = prpmMap.get(CARGOIDS_PARAM).getValor();
+        final String fliqString = prpmMap.get(FLIQ_PARAM).getValor();
 
         try {
-            final Date fliq = (new SimpleDateFormat("dd/MM/yyyy HH:mm")).parse(fliqString);
+            final Date fliq = new SimpleDateFormat("dd/MM/yyyy").parse(fliqString);
             final Set<Long> crgoIds = new HashSet<>();
             final StringTokenizer tokenizer = new StringTokenizer(crgoIdsString);
 

@@ -70,7 +70,7 @@ function config($routeProvider) {
 		controllerAs : "vm"
 	})
 
-	.when("/facturacion/vldr/prepare/:srvcId", {
+	.when("/facturacion/vldr/prepare/:entiId/:srvcId", {
 		templateUrl : "modules/facturacion/vldr-prepare.html",
 		controller : "vldrPrepareController",
 		controllerAs : "vm",
@@ -304,6 +304,35 @@ function facturacionController(pageTitleService) {
 function vldrPrepareController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
+
+	vm.valorar = valorar;
+	vm.cancel = cancel;
+
+	function valorar() {
+		$http.post("facturacion/vldr-valorar.action", {
+			fliq : vm.fliq,
+			srvc : vm.srvc
+		}).success(
+				function(data) {
+					$location.path(
+							"/servicio/srvc/detail/" + data.srvc.entiId + "/"
+									+ data.srvc.id).replace();
+				});
+	}
+
+	function cancel() {
+		window.history.back();
+	}
+
+	$http.post("facturacion/vldr-prepare.action", {
+		srvc : {
+			id : $routeParams.srvcId,
+			entiId : $routeParams.entiId
+		}
+	}).success(function(data) {
+		vm.srvc = data.srvc;
+		vm.fliq = data.fliq;
+	});
 
 	pageTitleService.setTitle("vldr", "page_prepare");
 }

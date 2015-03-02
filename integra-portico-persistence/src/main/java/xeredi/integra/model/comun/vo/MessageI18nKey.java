@@ -886,6 +886,20 @@ public enum MessageI18nKey {
     ProcesoModulo_S,
     /** The Proceso modulo_ e. */
     ProcesoModulo_E,
+    /** The Proceso modulo_ f. */
+    ProcesoModulo_F,
+    /** The Proceso tipo_ es c_ carga. */
+    ProcesoTipo_ESC_CARGA,
+    /** The Proceso tipo_ pe s_ carga. */
+    ProcesoTipo_PES_CARGA,
+    /** The Proceso tipo_ ma n_ carga. */
+    ProcesoTipo_MAN_CARGA,
+    /** The Proceso tipo_ es t_ carga. */
+    ProcesoTipo_EST_CARGA,
+    /** The Proceso tipo_ es t_ creacion. */
+    ProcesoTipo_EST_CREACION,
+    /** The Proceso tipo_ valorador. */
+    ProcesoTipo_VALORADOR,
     /** The Cargo tipo_ b. */
     CargoTipo_B,
     /** The Cargo tipo_ t. */

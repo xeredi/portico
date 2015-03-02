@@ -975,6 +975,20 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'Proce
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoModulo_S', 'S - Servicios')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoModulo_E')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoModulo_E', 'E - Estadísticas')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoModulo_F')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoModulo_F', 'F - Facturación')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoTipo_ESC_CARGA')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoTipo_ESC_CARGA', 'Carga de Escala')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoTipo_PES_CARGA')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoTipo_PES_CARGA', 'Carga de Manifiesto de Pesca')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoTipo_MAN_CARGA')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoTipo_MAN_CARGA', 'Carga de Manifiesto de Mescancía')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoTipo_EST_CARGA')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoTipo_EST_CARGA', 'Carga de Período de Proceso')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoTipo_EST_CREACION')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoTipo_EST_CREACION', 'Creación de Período de Proceso')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'ProcesoTipo_VALORADOR')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'ProcesoTipo_VALORADOR', 'Valorador')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'CargoTipo_T')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'CargoTipo_T', 'T - Tarifa')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'CargoTipo_B')\
