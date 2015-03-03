@@ -45,18 +45,18 @@
                 <td><a ng-href="#/servicio/srvc/detail/{{vm.enti.id}}/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.etiqueta" nowrap="nowrap"></td>
-                <td ng-if="vm.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
+                <td ng-if="::vm.enti.tpdtEstado" nowrap="nowrap" bs-tooltip
                     data-title="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + item.estado | translate}}"
                     ng-bind="item.estado"></td>
                 <td nowrap="nowrap" ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
                 <td nowrap="nowrap" ng-if="!vm.enti.temporal"
                     ng-bind="item.fref | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-if="vm.enti.temporal"
+                <td nowrap="nowrap" ng-if="::vm.enti.temporal"
                     ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
-                <td nowrap="nowrap" ng-if="vm.enti.temporal"
+                <td nowrap="nowrap" ng-if="::vm.enti.temporal"
                     ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
-                <td ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.gridable" ng-switch
-                    on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                <td ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="::entd.gridable" ng-switch
+                    on="::entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                     <span ng-switch-when="ND" class="pull-right"
                     ng-bind="item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span

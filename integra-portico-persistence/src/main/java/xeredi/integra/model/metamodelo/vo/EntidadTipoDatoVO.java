@@ -53,16 +53,44 @@ public final class EntidadTipoDatoVO {
     }
 
     /**
+     * Gets the span normalizado.
+     *
+     * @param span
+     *            the span
+     * @return the span normalizado
+     */
+    private Integer getSpanNormalizado(final Double span) {
+        if (span == null) {
+            return null;
+        }
+
+        if (span < 1) {
+            return 1;
+        }
+
+        if (span > 12) {
+            return 12;
+        }
+
+        return (int) Math.round(span);
+    }
+
+    /**
+     * Gets the span xl.
+     *
+     * @return the span xl
+     */
+    public Integer getSpanXl() {
+        return getSpanNormalizado(span / 1.61);
+    }
+
+    /**
      * Gets the span lg.
      *
      * @return the span lg
      */
     public Integer getSpanLg() {
-        if (span == null) {
-            return null;
-        }
-
-        return span > 2 && span < 12 ? span * 3 / 4 : span;
+        return getSpanNormalizado(span / 1.21);
     }
 
     /**
@@ -71,18 +99,7 @@ public final class EntidadTipoDatoVO {
      * @return the span sm
      */
     public Integer getSpanSm() {
-        if (span == null) {
-            return null;
-        }
-
-        if (span < 4) {
-            return span + 1;
-        }
-        if (span > 9) {
-            return span;
-        }
-
-        return span * 4 / 3;
+        return getSpanNormalizado(span * 1.29);
     }
 
     /**

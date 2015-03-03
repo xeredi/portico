@@ -1,6 +1,6 @@
 <div class="row">
     <div ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.filtrable"
-        class="col-sm-{{::entd.spanSm}} col-md-{{::entd.span}} col-lg-{{::entd.spanLg}} form-group">
+        class="col-sm-{{::entd.spanSm}} col-md-{{::entd.span}} col-lg-{{::entd.spanLg}} col-xl-{{entd.spanXl}} form-group">
         <label translate="{{'entd_' + entd.id}}"></label>
 
         <div ng-switch on="entd.tpdt.tipoElemento">

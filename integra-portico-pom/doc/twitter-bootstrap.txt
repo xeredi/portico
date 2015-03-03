@@ -9,6 +9,25 @@ http://tutorialzine.com/2013/07/50-must-have-plugins-for-extending-twitter-boots
 
 http://eonasdan.github.io/bootstrap-datetimepicker/
 	Calendario
-	
+
 https://gist.github.com/havvg/3226804
     Formulario modal
+
+grid
+----
+
+md -> lg / 1.21
+md -> xl / 1.61
+md -> sm * 1.29
+
+xl: 1570px	1600
+lg:	1170px	1200
+md:  970px	 992
+sm:  750px	 768
+
+md - 992
+lg - 1200
+
+md = 1/992
+lg = 1/1200
+

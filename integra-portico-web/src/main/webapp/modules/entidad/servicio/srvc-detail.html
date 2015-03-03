@@ -36,22 +36,22 @@
                 translate="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + vm.item.estado}}"></p>
         </div>
 
-        <div class="col-sm-2 col-md-2 form-group">
+        <div class="col-sm-2 col-md-2 col-xl-1 form-group">
             <label translate="srvc_falta"></label>
             <p class="form-control-static" ng-bind="vm.item.falta | date: ('format_datetime' | translate)"></p>
         </div>
 
-        <div ng-if="!vm.enti.temporal" class="col-sm-2 col-md-2 form-group">
+        <div ng-if="!vm.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group">
             <label translate="srvc_fref"></label>
             <p class="form-control-static" ng-bind="vm.item.fref | date: ('format_datetime' | translate)"></p>
         </div>
 
-        <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 form-group">
+        <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group">
             <label translate="srvc_fini"></label>
             <p class="form-control-static" ng-bind="vm.item.fini | date: ('format_datetime' | translate)"></p>
         </div>
 
-        <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 form-group">
+        <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group">
             <label translate="srvc_ffin"></label>
             <p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_datetime' | translate)"></p>
         </div>
@@ -130,7 +130,7 @@
                     <td ng-bind="itemHijo.numero" class="number"></td>
                     <td ng-if="::vm.entiHijasMap[entiHijaId].tpdtEstado" nowrap="nowrap" bs-tooltip
                         data-title="{{('cdrf_' + vm.entiHijasMap[entiHijaId].tpdtEstado.id + '_' + itemHijo.estado | translate)}}"
-                        ng-bind="itemHijo.estado"></td>
+                        ng-bind="::itemHijo.estado"></td>
                     <td ng-if="::vm.entiHijasMap[entiHijaId].temporal"
                         ng-bind="itemHijo.fini | date: ('format_date' | translate)"></td>
                     <td ng-if="::vm.entiHijasMap[entiHijaId].temporal"
