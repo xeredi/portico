@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-sm-3 col-md-2 form-group" ng-show="vm.vlrcCriterio.tpsrId">
                     <label translate>vlrc_srvc</label>
-                    <div class="input-group-sm" ng-controller="srvcLupaCtrl">
+                    <div class="input-group-sm" ng-controller="SrvcLupaController">
                         <input type="text" autocomplete="off" ng-model="vm.vlrcCriterio.srvc"
                             typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.vlrcCriterio.tpsrId, $viewValue)"
                             typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-sm-4 col-md-3 form-group">
                     <label translate>vlrc_pagador</label>
-                    <div class="input-group-sm" ng-controller="prmtsLupaCtrl">
+                    <div class="input-group-sm" ng-controller="PrmtsLupaController">
                         <input type="text" autocomplete="off" ng-model="vm.vlrcCriterio.pagador"
                             typeahead="prmt as prmt.etiqueta for prmt in getLabelValues(20010, $viewValue)"
                             typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">

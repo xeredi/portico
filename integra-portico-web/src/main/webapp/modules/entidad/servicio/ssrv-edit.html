@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group">
                 <label translate>ssrv_srvc</label>
-                <div ng-if="!vm.item.srvc.id" class="input-group-sm" ng-controller="srvcLupaCtrl">
+                <div ng-if="!vm.item.srvc.id" class="input-group-sm" ng-controller="SrvcLupaController">
                     <input type="text" autocomplete="off" ng-model="vm.item.srvc"
                         typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.enti.tpsrId, $viewValue)"
                         typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
@@ -52,7 +52,7 @@
             <div ng-if="vm.item.srvc.id" ng-repeat="entiPadre in vm.superentiList track by $index"
                 class="col-md-2 form-group">
                 <label ng-bind="entiPadre.nombre"></label>
-                <div class="input-group-sm" ng-controller="ssrvLupaCtrl">
+                <div class="input-group-sm" ng-controller="SsrvLupaController">
                     <input type="text" autocomplete="off" ng-model="vm.itemPadresMap[entiPadre.id]"
                         typeahead="ssrv as ssrv.etiqueta for ssrv in getLabelValues(entiPadre.id, vm.item.srvc.id, $viewValue)"
                         typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">

@@ -5,144 +5,144 @@ angular.module("maestro", [])
 .factory('sprmService', sprmService)
 
 // ----------------- MENU PRINCIPAL --------------------------
-.controller("maestroController", maestroController)
+.controller("MaestroController", MaestroController)
 
 // ----------- PARAMETROS ------------------
-.controller("prmtGridController", prmtGridController)
+.controller("PrmtGridController", PrmtGridController)
 
-.controller("prmtDetailController", prmtDetailController)
+.controller("PrmtDetailController", PrmtDetailController)
 
-.controller("prmtCreateController", prmtCreateController)
+.controller("PrmtCreateController", PrmtCreateController)
 
-.controller("prmtEditController", prmtEditController)
+.controller("PrmtEditController", PrmtEditController)
 
-.controller("prmtDuplicateController", prmtDuplicateController)
+.controller("PrmtDuplicateController", PrmtDuplicateController)
 
-.controller('prmtsLupaCtrl', prmtsLupaCtrl)
+.controller('PrmtsLupaController', PrmtsLupaController)
 
 // ----------- SUBPARAMETROS ------------------
-.controller("sprmDetailController", sprmDetailController)
+.controller("SprmDetailController", SprmDetailController)
 
-.controller("sprmCreateController", sprmCreateController)
+.controller("SprmCreateController", SprmCreateController)
 
-.controller("sprmEditController", sprmEditController)
+.controller("SprmEditController", SprmEditController)
 
-.controller("sprmDuplicateController", sprmDuplicateController);
+.controller("SprmDuplicateController", SprmDuplicateController);
 
 function config($routeProvider) {
 	$routeProvider
 
 	.when("/maestro", {
 		templateUrl : "modules/entidad/maestro/maestro.html",
-		controller : "maestroController",
+		controller : "MaestroController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/prmt/grid/:entiId", {
 		templateUrl : "modules/entidad/maestro/prmt-grid.html",
-		controller : "prmtGridController",
+		controller : "PrmtGridController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
 	.when("/maestro/prmt/grid/:entiId/:page", {
 		templateUrl : "modules/entidad/maestro/prmt-grid.html",
-		controller : "prmtGridController",
+		controller : "PrmtGridController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
 	.when("/maestro/prmt/create/:entiId", {
 		templateUrl : "modules/entidad/maestro/prmt-edit.html",
-		controller : "prmtCreateController",
+		controller : "PrmtCreateController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/prmt/detail/:entiId/:itemId", {
 		templateUrl : "modules/entidad/maestro/prmt-detail.html",
-		controller : "prmtDetailController",
+		controller : "PrmtDetailController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
 	.when("/maestro/prmt/detail/:entiId/:itemId/:fechaVigencia", {
 		templateUrl : "modules/entidad/maestro/prmt-detail.html",
-		controller : "prmtDetailController",
+		controller : "PrmtDetailController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
 	.when("/maestro/prmt/edit/:entiId/:itemId", {
 		templateUrl : "modules/entidad/maestro/prmt-edit.html",
-		controller : "prmtEditController",
+		controller : "PrmtEditController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/prmt/edit/:entiId/:itemId/:fechaVigencia", {
 		templateUrl : "modules/entidad/maestro/prmt-edit.html",
-		controller : "prmtEditController",
+		controller : "PrmtEditController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/prmt/duplicate/:entiId/:itemId", {
 		templateUrl : "modules/entidad/maestro/prmt-edit.html",
-		controller : "prmtDuplicateController",
+		controller : "PrmtDuplicateController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
 	.when("/maestro/prmt/duplicate/:entiId/:itemId/:fechaVigencia", {
 		templateUrl : "modules/entidad/maestro/prmt-edit.html",
-		controller : "prmtDuplicateController",
+		controller : "PrmtDuplicateController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
 	.when("/maestro/sprm/detail/:entiId/:itemId", {
 		templateUrl : "modules/entidad/maestro/sprm-detail.html",
-		controller : "sprmDetailController",
+		controller : "SprmDetailController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/sprm/detail/:entiId/:itemId/:fechaVigencia", {
 		templateUrl : "modules/entidad/maestro/sprm-detail.html",
-		controller : "sprmDetailController",
+		controller : "SprmDetailController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/sprm/create/:entiId/:prmtId", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "sprmCreateController",
+		controller : "SprmCreateController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/sprm/create/:entiId/:prmtId/:fechaVigencia", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "sprmCreateController",
+		controller : "SprmCreateController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/sprm/edit/:entiId/:itemId", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "sprmEditController",
+		controller : "SprmEditController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/sprm/edit/:entiId/:itemId/:fechaVigencia", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "sprmEditController",
+		controller : "SprmEditController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/sprm/duplicate/:entiId/:itemId", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "sprmDuplicateController",
+		controller : "SprmDuplicateController",
 		controllerAs : 'vm'
 	})
 
 	.when("/maestro/sprm/duplicate/:entiId/:itemId/:fechaVigencia", {
 		templateUrl : "modules/entidad/maestro/sprm-edit.html",
-		controller : "sprmDuplicateController",
+		controller : "SprmDuplicateController",
 		controllerAs : 'vm'
 	})
 
@@ -172,7 +172,7 @@ function sprmService($http) {
 	}
 }
 
-function maestroController($http, $translate, pageTitleService) {
+function MaestroController($http, $translate, pageTitleService) {
 	var vm = this;
 
 	$http.post('maestro/tppr-list.action').success(function(data) {
@@ -188,7 +188,7 @@ function maestroController($http, $translate, pageTitleService) {
 	pageTitleService.setTitle("prmtList", "page_home");
 }
 
-function prmtGridController($location, $routeParams, $http, $modal,
+function PrmtGridController($location, $routeParams, $http, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -273,7 +273,7 @@ function prmtGridController($location, $routeParams, $http, $modal,
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function prmtDetailController($http, $location, $routeParams, sprmService,
+function PrmtDetailController($http, $location, $routeParams, sprmService,
 		pageTitleService) {
 	var vm = this;
 
@@ -368,7 +368,7 @@ function prmtDetailController($http, $location, $routeParams, sprmService,
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function prmtCreateController($http, $location, $routeParams, pageTitleService) {
+function PrmtCreateController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -408,7 +408,7 @@ function prmtCreateController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_create");
 }
 
-function prmtEditController($http, $location, $routeParams, pageTitleService) {
+function PrmtEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -450,7 +450,7 @@ function prmtEditController($http, $location, $routeParams, pageTitleService) {
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_edit");
 }
 
-function prmtDuplicateController($http, $location, $routeParams,
+function PrmtDuplicateController($http, $location, $routeParams,
 		pageTitleService) {
 	var vm = this;
 
@@ -493,7 +493,7 @@ function prmtDuplicateController($http, $location, $routeParams,
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_duplicate");
 }
 
-function prmtsLupaCtrl($http, $scope) {
+function PrmtsLupaController($http, $scope) {
 	$scope.getLabelValues = function(entiId, textoBusqueda, fechaVigencia) {
 		if (textoBusqueda.length <= 0) {
 			return null;
@@ -511,7 +511,7 @@ function prmtsLupaCtrl($http, $scope) {
 	};
 }
 
-function sprmDetailController($http, $routeParams, pageTitleService) {
+function SprmDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -544,7 +544,7 @@ function sprmDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_detail");
 }
 
-function sprmCreateController($http, $location, $routeParams, pageTitleService) {
+function SprmCreateController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -586,7 +586,7 @@ function sprmCreateController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_create");
 }
 
-function sprmEditController($http, $location, $routeParams, pageTitleService) {
+function SprmEditController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -625,7 +625,7 @@ function sprmEditController($http, $location, $routeParams, pageTitleService) {
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_edit");
 }
 
-function sprmDuplicateController($http, $location, $routeParams,
+function SprmDuplicateController($http, $location, $routeParams,
 		pageTitleService) {
 	var vm = this;
 

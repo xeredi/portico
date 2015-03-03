@@ -51,6 +51,15 @@ td span {
 
 .modal-footer {
 	text-align: left;
+	padding-left: 8px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.modal-body {
+	padding-left: 8px;
+	padding-bottom: 0px;
+	padding-top: 5px;
 }
 
 .modal.fade {

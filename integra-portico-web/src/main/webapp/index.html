@@ -52,7 +52,7 @@
     </header>
 
     <div id="body-content">
-        <ul ng-if="actionErrors && actionErrors.length > 0" class="alert alert-danger" role="alert">
+        <ul ng-if="actionErrors != null && actionErrors.length > 0" class="alert alert-danger" role="alert">
             <span translate="errorList"></span>
             <li ng-repeat="error in actionErrors track by $index" ng-bind="error"></li>
         </ul>

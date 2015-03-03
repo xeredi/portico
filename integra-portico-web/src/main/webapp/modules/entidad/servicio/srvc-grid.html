@@ -7,17 +7,17 @@
 
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/servicio/srvc/create/{{vm.enti.id}}"><i
-            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span> </a>
+            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
 
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
             data-template="modules/entidad/servicio/srvc-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
 
     <div class="btn-group">
         <button data-ng-click="vm.xlsExport()" class="btn btn-default">
-            <i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
+            <i class="glyphicon glyphicon-download-alt"></i> <span translate="btn_exportar"></span>
         </button>
     </div>
 </div>
@@ -30,14 +30,14 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate>srvc</th>
-                <th ng-if="vm.enti.tpdtEstado" translate>srvc_estado</th>
-                <th translate>srvc_falta</th>
-                <th ng-if="!vm.enti.temporal" translate>srvc_fref</th>
-                <th ng-if="vm.enti.temporal" translate>srvc_fini</th>
-                <th ng-if="vm.enti.temporal" translate>srvc_ffin</th>
-                <th ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable">{{'entd_'
-                    + entd.id | translate}}</th>
+                <th class="codigo" nowrap="nowrap" translate="srvc"></th>
+                <th ng-if="vm.enti.tpdtEstado" translate="srvc_estado"></th>
+                <th translate="srvc_falta"></th>
+                <th ng-if="!vm.enti.temporal" translate="srvc_fref"></th>
+                <th ng-if="vm.enti.temporal" translate="srvc_fini"></th>
+                <th ng-if="vm.enti.temporal" translate="srvc_ffin"></th>
+                <th ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.gridable"
+                    translate="{{'entd_' + entd.id}}"></th>
             </tr>
         </thead>
         <tbody>
@@ -55,7 +55,7 @@
                     ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
                 <td nowrap="nowrap" ng-if="vm.enti.temporal"
                     ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
-                <td ng-repeat="entd in vm.enti.entdList track by $index" ng-if="entd.gridable" ng-switch
+                <td ng-repeat="entd in ::vm.enti.entdList track by $index" ng-if="entd.gridable" ng-switch
                     on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                     <span ng-switch-when="ND" class="pull-right"

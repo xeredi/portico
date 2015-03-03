@@ -3,90 +3,90 @@ angular.module("facturacion", [])
 .config(config)
 
 // ----------------- MENU PRINCIPAL --------------------------
-.controller("facturacionController", facturacionController)
+.controller("FacturacionController", FacturacionController)
 
 // ----------- VALORADOR ------------------
-.controller("vldrPrepareController", vldrPrepareController)
+.controller("VldrPrepareController", VldrPrepareController)
 
 // ----------- VALORACION ------------------
-.controller("vlrcGridController", vlrcGridController)
+.controller("VlrcGridController", VlrcGridController)
 
-.controller("vlrcFilterController", vlrcFilterController)
+.controller("VlrcFilterController", VlrcFilterController)
 
-.controller("vlrlCreateController", vlrlCreateController)
+.controller("VlrlCreateController", VlrlCreateController)
 
-.controller("vlrcDetailController", vlrcDetailController)
+.controller("VlrcDetailController", VlrcDetailController)
 
-.controller("vlrlDetailController", vlrlDetailController)
+.controller("VlrlDetailController", VlrlDetailController)
 
-.controller("vlrlEditController", vlrlEditController)
+.controller("VlrlEditController", VlrlEditController)
 
-.controller("vlrdDetailController", vlrdDetailController)
+.controller("VlrdDetailController", VlrdDetailController)
 
 // ----------- CARGO y REGLA------------------
-.controller("crgoGridController", crgoGridController)
+.controller("CrgoGridController", CrgoGridController)
 
-.controller("crgoCreateController", crgoCreateController)
+.controller("CrgoCreateController", CrgoCreateController)
 
-.controller("crgoDetailController", crgoDetailController)
+.controller("CrgoDetailController", CrgoDetailController)
 
-.controller("crgoEditController", crgoEditController)
+.controller("CrgoEditController", CrgoEditController)
 
-.controller("rglaDetailController", rglaDetailController)
+.controller("RglaDetailController", RglaDetailController)
 
-.controller("rglaEditController", rglaEditController)
+.controller("RglaEditController", RglaEditController)
 
-.controller("rglaCreateController", rglaCreateController)
+.controller("RglaCreateController", RglaCreateController)
 
-.controller("rginDetailController", rginDetailController)
+.controller("RginDetailController", RginDetailController)
 
-.controller("rginEditController", rginEditController)
+.controller("RginEditController", RginEditController)
 
-.controller("rginCreateController", rginCreateController)
+.controller("RginCreateController", RginCreateController)
 
 // ----------- ASPECTO y ASPECTO CARGO ------------------
-.controller("aspcGridController", aspcGridController)
+.controller("AspcGridController", AspcGridController)
 
-.controller("aspcCreateController", aspcCreateController)
+.controller("AspcCreateController", AspcCreateController)
 
-.controller("aspcDetailController", aspcDetailController)
+.controller("AspcDetailController", AspcDetailController)
 
-.controller("aspcEditController", aspcEditController)
+.controller("AspcEditController", AspcEditController)
 
-.controller("aspcDuplicateController", aspcDuplicateController)
+.controller("AspcDuplicateController", AspcDuplicateController)
 
-.controller("ascrCreateController", ascrCreateController)
+.controller("AscrCreateController", AscrCreateController)
 
-.controller("ascrDetailController", ascrDetailController)
+.controller("AscrDetailController", AscrDetailController)
 
-.controller("ascrEditController", ascrEditController);
+.controller("AscrEditController", AscrEditController);
 
 function config($routeProvider) {
 	$routeProvider
 
 	.when("/facturacion", {
 		templateUrl : "modules/facturacion/facturacion.html",
-		controller : "facturacionController",
+		controller : "FacturacionController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/vldr/prepare/:entiId/:srvcId", {
 		templateUrl : "modules/facturacion/vldr-prepare.html",
-		controller : "vldrPrepareController",
+		controller : "VldrPrepareController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
 
 	.when("/facturacion/vlrc/grid", {
 		templateUrl : "modules/facturacion/vlrc-grid.html",
-		controller : "vlrcGridController",
+		controller : "VlrcGridController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
 
 	.when("/facturacion/vlrc/detail/:vlrcId", {
 		templateUrl : "modules/facturacion/vlrc-detail.html",
-		controller : "vlrcDetailController",
+		controller : "VlrcDetailController",
 		controllerAs : "vm"
 	})
 
@@ -98,25 +98,25 @@ function config($routeProvider) {
 
 	.when("/facturacion/vlrl/create/:vlrcId", {
 		templateUrl : "modules/facturacion/vlrl-edit.html",
-		controller : "vlrlCreateController",
+		controller : "VlrlCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/vlrl/detail/:vlrlId", {
 		templateUrl : "modules/facturacion/vlrl-detail.html",
-		controller : "vlrlDetailController",
+		controller : "VlrlDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/vlrl/edit/:vlrlId", {
 		templateUrl : "modules/facturacion/vlrl-edit.html",
-		controller : "vlrlEditController",
+		controller : "VlrlEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/vlrd/detail/:vlrdId", {
 		templateUrl : "modules/facturacion/vlrd-detail.html",
-		controller : "vlrdDetailController",
+		controller : "VlrdDetailController",
 		controllerAs : "vm"
 	})
 
@@ -128,180 +128,180 @@ function config($routeProvider) {
 
 	.when("/facturacion/crgo/grid", {
 		templateUrl : "modules/facturacion/crgo-grid.html",
-		controller : "crgoGridController",
+		controller : "CrgoGridController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
 
 	.when("/facturacion/crgo/detail/:crgoId", {
 		templateUrl : "modules/facturacion/crgo-detail.html",
-		controller : "crgoDetailController",
+		controller : "CrgoDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/crgo/detail/:crgoId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/crgo-detail.html",
-		controller : "crgoDetailController",
+		controller : "CrgoDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/crgo/edit/:crgoId", {
 		templateUrl : "modules/facturacion/crgo-edit.html",
-		controller : "crgoEditController",
+		controller : "CrgoEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/crgo/edit/:crgoId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/crgo-edit.html",
-		controller : "crgoEditController",
+		controller : "CrgoEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/crgo/create", {
 		templateUrl : "modules/facturacion/crgo-edit.html",
-		controller : "crgoCreateController",
+		controller : "CrgoCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgla/detail/:rglaId", {
 		templateUrl : "modules/facturacion/rgla-detail.html",
-		controller : "rglaDetailController",
+		controller : "RglaDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgla/detail/:rglaId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/rgla-detail.html",
-		controller : "rglaDetailController",
+		controller : "RglaDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgla/edit/:rglaId", {
 		templateUrl : "modules/facturacion/rgla-edit.html",
-		controller : "rglaEditController",
+		controller : "RglaEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgla/edit/:rglaId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/rgla-edit.html",
-		controller : "rglaEditController",
+		controller : "RglaEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgla/create/:crgoId", {
 		templateUrl : "modules/facturacion/rgla-edit.html",
-		controller : "rglaCreateController",
+		controller : "RglaCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgla/create/:crgoId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/rgla-edit.html",
-		controller : "rglaCreateController",
+		controller : "RglaCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgin/detail/:rginId", {
 		templateUrl : "modules/facturacion/rgin-detail.html",
-		controller : "rginDetailController",
+		controller : "RginDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgin/detail/:rginId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/rgin-detail.html",
-		controller : "rginDetailController",
+		controller : "RginDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgin/edit/:rgivId", {
 		templateUrl : "modules/facturacion/rgin-edit.html",
-		controller : "rginEditController",
+		controller : "RginEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/rgin/create/:crgoId/:rgla1Id", {
 		templateUrl : "modules/facturacion/rgin-edit.html",
-		controller : "rginCreateController",
+		controller : "RginCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/aspc/grid", {
 		templateUrl : "modules/facturacion/aspc-grid.html",
-		controller : "aspcGridController",
+		controller : "AspcGridController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
 
 	.when("/facturacion/aspc/create", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "aspcCreateController",
+		controller : "AspcCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/aspc/detail/:aspcId", {
 		templateUrl : "modules/facturacion/aspc-detail.html",
-		controller : "aspcDetailController",
+		controller : "AspcDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/aspc/detail/:aspcId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/aspc-detail.html",
-		controller : "aspcDetailController",
+		controller : "AspcDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/aspc/edit/:aspcId", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "aspcEditController",
+		controller : "AspcEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/aspc/edit/:aspcId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "aspcEditController",
+		controller : "AspcEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/aspc/duplicate/:aspcId", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "aspcDuplicateController",
+		controller : "AspcDuplicateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/aspc/duplicate/:aspcId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/aspc-edit.html",
-		controller : "aspcDuplicateController",
+		controller : "AspcDuplicateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/ascr/create/:aspcId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/ascr-edit.html",
-		controller : "ascrCreateController",
+		controller : "AscrCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/ascr/detail/:ascrId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/ascr-detail.html",
-		controller : "ascrDetailController",
+		controller : "AscrDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/ascr/edit/:ascrId", {
 		templateUrl : "modules/facturacion/ascr-edit.html",
-		controller : "ascrEditController",
+		controller : "AscrEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/facturacion/ascr/edit/:ascrId/:fechaVigencia", {
 		templateUrl : "modules/facturacion/ascr-edit.html",
-		controller : "ascrEditController",
+		controller : "AscrEditController",
 		controllerAs : "vm"
 	});
 }
 
-function facturacionController(pageTitleService) {
+function FacturacionController(pageTitleService) {
 	pageTitleService.setTitle("sec_facturacion", "page_home");
 }
 
-function vldrPrepareController($http, $location, $routeParams, $modal,
+function VldrPrepareController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -337,7 +337,7 @@ function vldrPrepareController($http, $location, $routeParams, $modal,
 	pageTitleService.setTitle("vldr", "page_prepare");
 }
 
-function vlrcGridController($http, $location, $routeParams, $modal,
+function VlrcGridController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -379,7 +379,7 @@ function vlrcGridController($http, $location, $routeParams, $modal,
 	function filter(size) {
 		var modalInstance = $modal.open({
 			templateUrl : 'modules/facturacion/vlrc-filter-content.html',
-			controller : 'vlrcFilterController',
+			controller : 'VlrcFilterController',
 			controllerAs : 'vm',
 			size : size,
 			resolve : {
@@ -401,7 +401,7 @@ function vlrcGridController($http, $location, $routeParams, $modal,
 	pageTitleService.setTitle("vlrc", "page_grid");
 }
 
-function vlrcFilterController($http, $modalInstance, vlrcCriterio,
+function VlrcFilterController($http, $modalInstance, vlrcCriterio,
 		pageTitleService) {
 	var vm = this;
 
@@ -435,7 +435,7 @@ function vlrcFilterController($http, $modalInstance, vlrcCriterio,
 	});
 }
 
-function vlrlCreateController($scope, $http, $location, $routeParams,
+function VlrlCreateController($scope, $http, $location, $routeParams,
 		pageTitleService) {
 	$http.post("facturacion/vlrl-create.action", {
 		vlrl : {
@@ -464,7 +464,7 @@ function vlrlCreateController($scope, $http, $location, $routeParams,
 	pageTitleService.setTitle("vlrc", "page_create");
 }
 
-function vlrcDetailController($scope, $http, $location, $routeParams,
+function VlrcDetailController($scope, $http, $location, $routeParams,
 		pageTitleService) {
 	$http.post("facturacion/vlrc-detail.action", {
 		vlrc : {
@@ -489,7 +489,7 @@ function vlrcDetailController($scope, $http, $location, $routeParams,
 	pageTitleService.setTitle("vlrc", "page_detail");
 }
 
-function vlrlDetailController($scope, $http, $location, $routeParams,
+function VlrlDetailController($scope, $http, $location, $routeParams,
 		pageTitleService) {
 	$http.post("facturacion/vlrl-detail.action", {
 		vlrl : {
@@ -524,7 +524,7 @@ function vlrlDetailController($scope, $http, $location, $routeParams,
 	pageTitleService.setTitle("vlrl", "page_detail");
 }
 
-function vlrlEditController($scope, $http, $location, $routeParams,
+function VlrlEditController($scope, $http, $location, $routeParams,
 		pageTitleService) {
 	$http.post("facturacion/vlrl-edit.action", {
 		vlrl : {
@@ -553,7 +553,7 @@ function vlrlEditController($scope, $http, $location, $routeParams,
 	pageTitleService.setTitle("vlrl", "page_edit");
 }
 
-function vlrdDetailController($scope, $http, $location, $routeParams,
+function VlrdDetailController($scope, $http, $location, $routeParams,
 		pageTitleService) {
 	$http.post("facturacion/vlrd-detail.action", {
 		vlrd : {
@@ -566,7 +566,7 @@ function vlrdDetailController($scope, $http, $location, $routeParams,
 	pageTitleService.setTitle("vlrl", "page_edit");
 }
 
-function crgoGridController($http, $location, $routeParams, $modal,
+function CrgoGridController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -612,7 +612,7 @@ function crgoGridController($http, $location, $routeParams, $modal,
 	pageTitleService.setTitle("crgo", "page_grid");
 }
 
-function crgoDetailController($http, $routeParams, pageTitleService) {
+function CrgoDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -646,7 +646,7 @@ function crgoDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("crgo", "page_detail");
 }
 
-function crgoCreateController($http, $location, $routeParams, pageTitleService) {
+function CrgoCreateController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -679,7 +679,7 @@ function crgoCreateController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("crgo", "page_create");
 }
 
-function crgoEditController($http, $routeParams, pageTitleService) {
+function CrgoEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -716,7 +716,7 @@ function crgoEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("crgo", "page_edit");
 }
 
-function rglaDetailController($http, $routeParams, pageTitleService) {
+function RglaDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -749,7 +749,7 @@ function rglaDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("rgla", "page_detail");
 }
 
-function rglaEditController($http, $routeParams, pageTitleService) {
+function RglaEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -785,7 +785,7 @@ function rglaEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("rgla", "page_edit");
 }
 
-function rglaCreateController($http, $location, $routeParams, pageTitleService) {
+function RglaCreateController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -824,7 +824,7 @@ function rglaCreateController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("rgla", "page_create");
 }
 
-function rginDetailController($http, $routeParams, pageTitleService) {
+function RginDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -856,7 +856,7 @@ function rginDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("rgin", "page_detail");
 }
 
-function rginEditController($http, $routeParams, pageTitleService) {
+function RginEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -891,7 +891,7 @@ function rginEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("rgin", "page_edit");
 }
 
-function rginCreateController($http, $location, $routeParams, pageTitleService) {
+function RginCreateController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -926,7 +926,7 @@ function rginCreateController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("rgin", "page_create");
 }
 
-function aspcGridController($http, $location, $routeParams, $modal,
+function AspcGridController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -972,7 +972,7 @@ function aspcGridController($http, $location, $routeParams, $modal,
 	pageTitleService.setTitle("aspc", "page_grid");
 }
 
-function aspcDetailController($http, $location, $routeParams, pageTitleService) {
+function AspcDetailController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -1007,7 +1007,7 @@ function aspcDetailController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("aspc", "page_detail");
 }
 
-function aspcCreateController($http, $location, $routeParams, pageTitleService) {
+function AspcCreateController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -1039,7 +1039,7 @@ function aspcCreateController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("aspc", "page_create");
 }
 
-function aspcEditController($http, $routeParams, pageTitleService) {
+function AspcEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -1075,7 +1075,7 @@ function aspcEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("aspc", "page_edit");
 }
 
-function aspcDuplicateController($http, $location, $routeParams,
+function AspcDuplicateController($http, $location, $routeParams,
 		pageTitleService) {
 	var vm = this;
 
@@ -1113,7 +1113,7 @@ function aspcDuplicateController($http, $location, $routeParams,
 	pageTitleService.setTitle("aspc", "page_duplicate");
 }
 
-function ascrDetailController($http, $routeParams, pageTitleService) {
+function AscrDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -1145,7 +1145,7 @@ function ascrDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("ascr", "page_detail");
 }
 
-function ascrCreateController($http, $location, $routeParams, pageTitleService) {
+function AscrCreateController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -1181,7 +1181,7 @@ function ascrCreateController($http, $location, $routeParams, pageTitleService) 
 	pageTitleService.setTitle("ascr", "page_create");
 }
 
-function ascrEditController($http, $routeParams, pageTitleService) {
+function AscrEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;

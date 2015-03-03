@@ -2,9 +2,9 @@ angular.module("proceso", [])
 
 .config(config)
 
-.controller("prbtGridController", prbtGridController)
+.controller("PrbtGridController", PrbtGridController)
 
-.controller("prbtDetailController", prbtDetailController)
+.controller("PrbtDetailController", PrbtDetailController)
 
 ;
 
@@ -13,19 +13,19 @@ function config($routeProvider) {
 
 	.when("/proceso/prbt/grid", {
 		templateUrl : "modules/proceso/prbt-grid.html",
-		controller : "prbtGridController",
+		controller : "PrbtGridController",
 		controllerAs : 'vm',
 		reloadOnSearch : false
 	})
 
 	.when("/proceso/prbt/detail/:prbtId", {
 		templateUrl : "modules/proceso/prbt-detail.html",
-		controller : "prbtDetailController",
+		controller : "PrbtDetailController",
 		controllerAs : 'vm'
 	});
 }
 
-function prbtGridController($http, $location, $routeParams, $modal,
+function PrbtGridController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -69,7 +69,7 @@ function prbtGridController($http, $location, $routeParams, $modal,
 	pageTitleService.setTitle("prbt", "page_grid");
 }
 
-function prbtDetailController($http, $location, $routeParams, pageTitleService) {
+function PrbtDetailController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.cancel = cancel;

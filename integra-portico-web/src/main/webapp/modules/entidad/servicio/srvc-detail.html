@@ -3,56 +3,56 @@
     select="vm.tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/servicio/srvc/edit/{{vm.enti.id}}/{{vm.item.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span> </a> <a
-            class="btn btn-default" ng-href="#/servicio/srvc/duplicate/{{vm.enti.id}}/{{vm.item.id}}"><i
-            class="glyphicon glyphicon-tags"></i> <span translate>btn_duplicar</span> </a>
+        <a class="btn btn-default" ng-href="#/servicio/srvc/edit/{{::vm.enti.id}}/{{vm.item.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span> </a> <a
+            class="btn btn-default" ng-href="#/servicio/srvc/duplicate/{{::vm.enti.id}}/{{vm.item.id}}"><i
+            class="glyphicon glyphicon-tags"></i> <span translate="btn_duplicar"></span> </a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
-    <div class="btn-group" ng-if="vm.enti.facturable">
-        <a class="btn btn-default" ng-href="#/facturacion/vldr/prepare/{{vm.item.entiId}}/{{vm.item.id}}">
-            <span translate>btn_valorar</span>
+    <div class="btn-group" ng-if="::vm.enti.facturable">
+        <a class="btn btn-default" ng-href="#/facturacion/vldr/prepare/{{::vm.enti.id}}/{{vm.item.id}}"> <span
+            translate="btn_valorar"></span>
         </a> <a class="btn btn-default" ng-href="#/facturacion/vlrc/grid/?srvcId={{vm.item.id}}"> <span
-            translate>btn_valoraciones</span></a>
+            translate="btn_valoraciones"></span></a>
     </div>
     <div class="btn-group">
-        <button ng-repeat="enac in vm.enti.enacList track by $index" ng-click="vm.srvcAction(enac.path)"
-            class="btn btn-default">{{'enac_' + enac.id | translate}}</button>
+        <button ng-repeat="enac in ::vm.enti.enacList track by $index" ng-click="vm.srvcAction(enac.path)"
+            class="btn btn-default" translate="{{'enac_' + enac.id}}"></button>
     </div>
 </div>
 
 <fieldset>
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-1 form-group">
-            <label translate>srvc</label>
+            <label translate="srvc"></label>
             <p class="form-control-static" ng-bind="vm.item.etiqueta"></p>
         </div>
 
         <div ng-if="vm.enti.tpdtEstado" class="col-sm-3 col-md-2 col-lg-2 form-group">
-            <label translate>srvc_estado</label>
+            <label translate="srvc_estado"></label>
             <p class="form-control-static"
-                ng-bind="'cdrf_' + vm.enti.tpdtEstado.id + '_' + vm.item.estado | translate"></p>
+                translate="{{'cdrf_' + vm.enti.tpdtEstado.id + '_' + vm.item.estado}}"></p>
         </div>
 
         <div class="col-sm-2 col-md-2 form-group">
-            <label translate>srvc_falta</label>
+            <label translate="srvc_falta"></label>
             <p class="form-control-static" ng-bind="vm.item.falta | date: ('format_datetime' | translate)"></p>
         </div>
 
         <div ng-if="!vm.enti.temporal" class="col-sm-2 col-md-2 form-group">
-            <label translate>srvc_fref</label>
+            <label translate="srvc_fref"></label>
             <p class="form-control-static" ng-bind="vm.item.fref | date: ('format_datetime' | translate)"></p>
         </div>
 
         <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 form-group">
-            <label translate>srvc_fini</label>
+            <label translate="srvc_fini"></label>
             <p class="form-control-static" ng-bind="vm.item.fini | date: ('format_datetime' | translate)"></p>
         </div>
 
         <div ng-if="vm.enti.temporal" class="col-sm-2 col-md-2 form-group">
-            <label translate>srvc_ffin</label>
+            <label translate="srvc_ffin"></label>
             <p class="form-control-static" ng-bind="vm.item.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
@@ -85,7 +85,7 @@
         </table>
     </div>
 </div>
-</tab> <tab ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index"
+</tab> <tab ng-repeat="entiHijaId in ::vm.enti.entiHijasList track by $index"
     heading="{{'enti_' + entiHijaId | translate}}" active="vm.tabActive[entiHijaId]"
     select="vm.tabSelected(entiHijaId)">
 <div ng-if="vm.itemHijosMap[entiHijaId]">
@@ -113,12 +113,12 @@
                     <th class="buttonLinks" />
 
                     <th translate>ssrv_numero</th>
-                    <th ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" translate>ssrv_estado</th>
-                    <th ng-if="vm.entiHijasMap[entiHijaId].temporal" class="date" translate>ssrv_fini</th>
-                    <th ng-if="vm.entiHijasMap[entiHijaId].temporal" class="date" translate>ssrv_ffin</th>
+                    <th ng-if="::vm.entiHijasMap[entiHijaId].tpdtEstado" translate="ssrv_estado"></th>
+                    <th ng-if="::vm.entiHijasMap[entiHijaId].temporal" class="date" translate="ssrv_fini"></th>
+                    <th ng-if="::vm.entiHijasMap[entiHijaId].temporal" class="date" translate="ssrv_ffin"></th>
 
-                    <th ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                        ng-if="entd.gridable">{{'entd_' + entd.id | translate}}</th>
+                    <th ng-repeat="entd in ::vm.entiHijasMap[entiHijaId].entdList track by $index"
+                        ng-if="::entd.gridable" translate="{{'entd_' + entd.id}}"></th>
                 </tr>
             </thead>
 
@@ -128,16 +128,16 @@
                             class="glyphicon glyphicon-search"></span></a></td>
 
                     <td ng-bind="itemHijo.numero" class="number"></td>
-                    <td ng-if="vm.entiHijasMap[entiHijaId].tpdtEstado" nowrap="nowrap" bs-tooltip
+                    <td ng-if="::vm.entiHijasMap[entiHijaId].tpdtEstado" nowrap="nowrap" bs-tooltip
                         data-title="{{('cdrf_' + vm.entiHijasMap[entiHijaId].tpdtEstado.id + '_' + itemHijo.estado | translate)}}"
                         ng-bind="itemHijo.estado"></td>
-                    <td ng-if="vm.entiHijasMap[entiHijaId].temporal"
+                    <td ng-if="::vm.entiHijasMap[entiHijaId].temporal"
                         ng-bind="itemHijo.fini | date: ('format_date' | translate)"></td>
-                    <td ng-if="vm.entiHijasMap[entiHijaId].temporal"
+                    <td ng-if="::vm.entiHijasMap[entiHijaId].temporal"
                         ng-bind="itemHijo.ffin | date: ('format_date' | translate)"></td>
 
-                    <td ng-repeat="entd in vm.entiHijasMap[entiHijaId].entdList track by $index"
-                        ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span
+                    <td ng-repeat="entd in ::vm.entiHijasMap[entiHijaId].entdList track by $index"
+                        ng-if="::entd.gridable" ng-switch on="::entd.tpdt.tipoElemento" nowrap="nowrap"><span
                         ng-switch-when="BO"
                         class="glyphicon glyphicon-{{itemHijo.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></span>
                         <span ng-switch-when="ND"
@@ -150,7 +150,8 @@
                         ng-bind="itemHijo.itdtMap[entd.tpdt.id].cadena"></span> <span ng-switch-when="PR"
                         bs-tooltip data-title="{{itemHijo.itdtMap[entd.tpdt.id].prmt.etiqueta}}"
                         ng-bind="itemHijo.itdtMap[entd.tpdt.id].prmt.parametro"></span> <span
-                        ng-switch-when="FE" ng-bind="[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span>
+                        ng-switch-when="FE"
+                        ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_date' | translate)"></span>
                         <span ng-switch-when="FH"
                         ng-bind="itemHijo.itdtMap[entd.tpdt.id].fecha | date: ('format_datetime' | translate)"></span></td>
                 </tr>

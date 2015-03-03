@@ -2,69 +2,69 @@ angular.module("estadistica", [])
 
 .config(config)
 
-.controller("peprGridController", peprGridController)
+.controller("PeprGridController", PeprGridController)
 
-.controller("peprDetailController", peprDetailController)
+.controller("PeprDetailController", PeprDetailController)
 
-.controller("peprPrepareLoadController", peprPrepareLoadController)
+.controller("PeprPrepareLoadController", PeprPrepareLoadController)
 
-.controller("peprCreateController", peprCreateController)
+.controller("PeprCreateController", PeprCreateController)
 
-.controller("cdmsDetailController", cdmsDetailController)
+.controller("CdmsDetailController", CdmsDetailController)
 
-.controller("estdGridController", estdGridController)
+.controller("EstdGridController", EstdGridController)
 
-.controller("estdDetailController", estdDetailController);
+.controller("EstdDetailController", EstdDetailController);
 
 function config($routeProvider) {
 	$routeProvider
 
 	.when("/estadistica/pepr/grid", {
 		templateUrl : "modules/entidad/estadistica/pepr-grid.html",
-		controller : "peprGridController",
+		controller : "PeprGridController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
 
 	.when("/estadistica/pepr/detail/:peprId", {
 		templateUrl : "modules/entidad/estadistica/pepr-detail.html",
-		controller : "peprDetailController",
+		controller : "PeprDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/estadistica/pepr/prepareLoad", {
 		templateUrl : "modules/entidad/estadistica/pepr-prepare-load.html",
-		controller : "peprPrepareLoadController",
+		controller : "PeprPrepareLoadController",
 		controllerAs : "vm"
 	})
 
 	.when("/estadistica/pepr/create", {
 		templateUrl : "modules/entidad/estadistica/pepr-create.html",
-		controller : "peprCreateController",
+		controller : "PeprCreateController",
 		controllerAs : "vm"
 	})
 
 	.when("/estadistica/cdms/detail/:peprId", {
 		templateUrl : "modules/entidad/estadistica/cdms-detail.html",
-		controller : "cdmsDetailController",
+		controller : "CdmsDetailController",
 		controllerAs : "vm"
 	})
 
 	.when("/estadistica/estd/grid/:entiId/:peprId/:autpId", {
 		templateUrl : "modules/entidad/estadistica/estd-grid.html",
-		controller : "estdGridController",
+		controller : "EstdGridController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
 
 	.when("/estadistica/estd/detail/:entiId/:itemId", {
 		templateUrl : "modules/entidad/estadistica/estd-detail.html",
-		controller : "estdDetailController",
+		controller : "EstdDetailController",
 		controllerAs : "vm"
 	});
 }
 
-function peprGridController($http, $location, $routeParams, $modal,
+function PeprGridController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -107,7 +107,7 @@ function peprGridController($http, $location, $routeParams, $modal,
 	pageTitleService.setTitle("pepr", "page_grid");
 }
 
-function peprDetailController($http, $routeParams, pageTitleService) {
+function PeprDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.remove = remove;
@@ -153,7 +153,7 @@ function peprDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("pepr", "page_detail");
 }
 
-function peprPrepareLoadController($http, $location, $upload, pageTitleService) {
+function PeprPrepareLoadController($http, $location, $upload, pageTitleService) {
 	var vm = this;
 
 	vm.load = load;
@@ -182,7 +182,7 @@ function peprPrepareLoadController($http, $location, $upload, pageTitleService) 
 	pageTitleService.setTitle("pepr", "page_pepr_load");
 }
 
-function peprCreateController($http, $location, pageTitleService) {
+function PeprCreateController($http, $location, pageTitleService) {
 	var vm = this;
 
 	vm.create = create;
@@ -210,7 +210,7 @@ function peprCreateController($http, $location, pageTitleService) {
 	pageTitleService.setTitle("pepr", "page_pepr_create");
 }
 
-function cdmsDetailController($http, $routeParams, pageTitleService) {
+function CdmsDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	$http.post("estadistica/cdms-detail.action", {
@@ -225,7 +225,7 @@ function cdmsDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("cdms", "page_detail");
 }
 
-function estdGridController($http, $location, $routeParams, $modal,
+function EstdGridController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
@@ -295,7 +295,7 @@ function estdGridController($http, $location, $routeParams, $modal,
 	pageTitleService.setTitleEnti($routeParams.entiId, "page_grid");
 }
 
-function estdDetailController($http, $routeParams, pageTitleService) {
+function EstdDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	$http.post("estadistica/estd-detail.action", {

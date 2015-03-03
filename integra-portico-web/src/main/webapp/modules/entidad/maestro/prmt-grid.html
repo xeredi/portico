@@ -7,22 +7,22 @@
 
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/maestro/prmt/create/{{vm.enti.id}}"><i
-            class="glyphicon glyphicon-file"></i> <span translate>btn_crear</span> </a>
+            class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
 
         <button class="btn btn-default" data-ng-click="vm.filter('lg')"
             data-template="modules/entidad/maestro/prmt-filter-content.html" bs-modal="modal">
-            <i class="glyphicon glyphicon-search"></i> <span translate>btn_filtrar</span>
+            <i class="glyphicon glyphicon-search"></i> <span translate="btn_filtrar"></span>
         </button>
     </div>
 
     <div class="btn-group">
         <button data-ng-click="vm.xlsExport()" class="btn btn-default">
-            <i class="glyphicon glyphicon-download-alt"></i> <span translate>btn_exportar</span>
+            <i class="glyphicon glyphicon-download-alt"></i> <span translate="btn_exportar"></span>
         </button>
     </div>
 
     <div class="btn-group">
-        <button ng-repeat="enag in vm.enti.enagList track by $index" ng-click="vm.prmtAction(enag.path)"
+        <button ng-repeat="enag in ::vm.enti.enagList track by $index" ng-click="vm.prmtAction(enag.path)"
             class="btn btn-default" translate="{{'enag_' + enag.id}}"></button>
     </div>
 </div>
@@ -36,11 +36,11 @@
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
                 <th class="codigo" nowrap="nowrap" translate="prmt_parametro"></th>
-                <th ng-if="vm.enti.i18n" translate>i18n_text</th>
-                <th translate>prmt_fini</th>
-                <th translate>prmt_ffin</th>
-                <th ng-repeat="entd in vm.enti.entdList" ng-if="entd.gridable">{{'entd_' + entd.id |
-                    translate}}</th>
+                <th ng-if="vm.enti.i18n" translate="i18n_text"></th>
+                <th translate="prmt_fini"></th>
+                <th translate="prmt_ffin"></th>
+                <th ng-repeat="entd in ::vm.enti.entdList" ng-if="entd.gridable"
+                    translate="{{'entd_' + entd.id}}"></th>
             </tr>
         </thead>
         <tbody>
@@ -52,8 +52,9 @@
                 <td nowrap="nowrap" ng-if="vm.enti.i18n" ng-bind="item.texto"></td>
                 <td nowrap="nowrap" ng-bind="item.prvr.fini | date: ('format_date' | translate)"></td>
                 <td nowrap="nowrap" ng-bind="item.prvr.ffin | date: ('format_date' | translate)"></td>
-                <td ng-repeat="entd in vm.enti.entdList track by $index" nowrap="nowrap" ng-if="entd.gridable"
-                    ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span ng-switch-when="BO"><i
+                <td ng-repeat="entd in ::vm.enti.entdList track by $index" nowrap="nowrap"
+                    ng-if="entd.gridable" ng-switch on="entd.tpdt.tipoElemento" nowrap="nowrap"><span
+                    ng-switch-when="BO"><i
                         class="glyphicon glyphicon-{{item.itdtMap[entd.tpdt.id].cantidadEntera ? 'ok' : 'remove'}}"></i></span>
                     <span ng-switch-when="ND" class="pull-right"
                     ng-bind="item.itdtMap[entd.tpdt.id].cantidadDecimal | number:2"></span> <span

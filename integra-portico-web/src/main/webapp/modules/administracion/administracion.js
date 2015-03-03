@@ -3,27 +3,27 @@ angular.module("administracion", [])
 .config(config)
 
 // ----------------- MENU PRINCIPAL --------------------------
-.controller("administracionController", administracionController)
+.controller("AdministracionController", AdministracionController)
 
 // ----------------- METAMODELO --------------------------
-.controller("metamodeloReloadController", metamodeloReloadController)
+.controller("MetamodeloReloadController", MetamodeloReloadController)
 
 // ----------------- CONFIGURACION --------------------------
-.controller("confGridController", confGridController)
+.controller("ConfGridController", ConfGridController)
 
-.controller("confDetailController", confDetailController)
+.controller("ConfDetailController", ConfDetailController)
 
-.controller("confEditController", confEditController)
+.controller("ConfEditController", ConfEditController)
 
 // ----------------- MESSAGEI18N --------------------------
-.controller("m18nGridController", m18nGridController)
+.controller("M18nGridController", M18nGridController)
 
-.controller("m18nDetailController", m18nDetailController)
+.controller("M18nDetailController", M18nDetailController)
 
-.controller("m18nEditController", m18nEditController)
+.controller("M18nEditController", M18nEditController)
 
 // ----------------- SCHEDULER --------------------------
-.controller("schrDetailController", schrDetailController)
+.controller("SchrDetailController", SchrDetailController)
 
 ;
 
@@ -33,55 +33,55 @@ function config($routeProvider) {
 	.when("/administracion", {
 		title : 'sec_administracion',
 		templateUrl : "modules/administracion/administracion.html",
-		controller : "administracionController",
+		controller : "AdministracionController",
 		controllerAs : "vm"
 	})
 
 	.when("/administracion/metamodelo/reload", {
 		title : 'metamodelo_reload',
 		templateUrl : "modules/administracion/metamodelo-reload.html",
-		controller : "metamodeloReloadController",
+		controller : "MetamodeloReloadController",
 		controllerAs : "vm"
 	})
 
 	.when("/administracion/conf/grid", {
 		title : 'conf_grid',
 		templateUrl : "modules/administracion/conf-grid.html",
-		controller : "confGridController",
+		controller : "ConfGridController",
 		controllerAs : "vm"
 	}).when("/administracion/conf/detail/:key", {
 		title : 'conf_detail',
 		templateUrl : "modules/administracion/conf-detail.html",
-		controller : "confDetailController",
+		controller : "ConfDetailController",
 		controllerAs : "vm"
 	}).when("/administracion/conf/edit/:key", {
 		title : 'conf_edit',
 		templateUrl : "modules/administracion/conf-edit.html",
-		controller : "confEditController",
+		controller : "ConfEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/administracion/m18n/grid", {
 		title : 'm18nList',
 		templateUrl : "modules/administracion/m18n-grid.html",
-		controller : "m18nGridController",
+		controller : "M18nGridController",
 		controllerAs : "vm"
 	}).when("/administracion/m18n/detail/:key", {
 		title : 'm18n',
 		templateUrl : "modules/administracion/m18n-detail.html",
-		controller : "m18nDetailController",
+		controller : "M18nDetailController",
 		controllerAs : "vm"
 	}).when("/administracion/m18n/edit/:key", {
 		title : 'm18n',
 		templateUrl : "modules/administracion/m18n-edit.html",
-		controller : "m18nEditController",
+		controller : "M18nEditController",
 		controllerAs : "vm"
 	})
 
 	.when("/administracion/schr/detail", {
 		title : 'm18n',
 		templateUrl : "modules/administracion/schr-detail.html",
-		controller : "schrDetailController",
+		controller : "SchrDetailController",
 		controllerAs : "vm"
 	})
 
@@ -89,11 +89,11 @@ function config($routeProvider) {
 
 }
 
-function administracionController(pageTitleService) {
+function AdministracionController(pageTitleService) {
 	pageTitleService.setTitle("sec_administracion", "page_home");
 }
 
-function metamodeloReloadController($http, pageTitleService) {
+function MetamodeloReloadController($http, pageTitleService) {
 	var vm = this;
 
 	vm.reload = reload;
@@ -107,7 +107,7 @@ function metamodeloReloadController($http, pageTitleService) {
 	pageTitleService.setTitle("metamodelo", "page_reload");
 }
 
-function confGridController($http, pageTitleService) {
+function ConfGridController($http, pageTitleService) {
 	var vm = this;
 
 	vm.reload = reload;
@@ -126,7 +126,7 @@ function confGridController($http, pageTitleService) {
 	pageTitleService.setTitle("conf", "page_grid");
 }
 
-function confDetailController($http, $routeParams, pageTitleService) {
+function ConfDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	$http.post("administracion/configuracion/conf-detail.action", {
@@ -140,7 +140,7 @@ function confDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("conf", "page_detail");
 }
 
-function confEditController($http, $routeParams, pageTitleService) {
+function ConfEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -173,7 +173,7 @@ function confEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("conf", "page_edit");
 }
 
-function m18nGridController($http, pageTitleService) {
+function M18nGridController($http, pageTitleService) {
 	var vm = this;
 
 	vm.reload = reload;
@@ -194,7 +194,7 @@ function m18nGridController($http, pageTitleService) {
 	pageTitleService.setTitle("m18n", "page_grid");
 }
 
-function m18nDetailController($http, $routeParams, pageTitleService) {
+function M18nDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	$http.post("administracion/messagei18n/m18n-detail.action", {
@@ -208,7 +208,7 @@ function m18nDetailController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("m18n", "page_detail");
 }
 
-function m18nEditController($http, $routeParams, pageTitleService) {
+function M18nEditController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.save = save;
@@ -242,7 +242,7 @@ function m18nEditController($http, $routeParams, pageTitleService) {
 	pageTitleService.setTitle("m18n", "page_edit");
 }
 
-function schrDetailController($http, $routeParams, pageTitleService) {
+function SchrDetailController($http, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.start = start;
