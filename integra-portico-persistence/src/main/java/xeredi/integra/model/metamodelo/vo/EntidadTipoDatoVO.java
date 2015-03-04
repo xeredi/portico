@@ -81,6 +81,10 @@ public final class EntidadTipoDatoVO {
      * @return the span xl
      */
     public Integer getSpanXl() {
+        if (span == null) {
+            return null;
+        }
+
         return getSpanNormalizado(span / 1.61);
     }
 
@@ -90,6 +94,10 @@ public final class EntidadTipoDatoVO {
      * @return the span lg
      */
     public Integer getSpanLg() {
+        if (span == null) {
+            return null;
+        }
+
         return getSpanNormalizado(span / 1.21);
     }
 
@@ -99,6 +107,10 @@ public final class EntidadTipoDatoVO {
      * @return the span sm
      */
     public Integer getSpanSm() {
+        if (span == null) {
+            return null;
+        }
+
         return getSpanNormalizado(span * 1.29);
     }
 

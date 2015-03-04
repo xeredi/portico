@@ -357,7 +357,6 @@ function TpdtGridController($http, $location, $routeParams, $modal,
 
 	vm.tpdtCriterio = $routeParams.tpdtCriterio ? angular
 			.fromJson($routeParams.tpdtCriterio) : {};
-	vm.page = $routeParams.page ? $routeParams.page : 1;
 
 	function search(page) {
 		$http.post("metamodelo/tpdt-list.action", {
@@ -600,7 +599,6 @@ function TpprGridController($http, $location, $routeParams, $modal,
 
 	vm.entiCriterio = $routeParams.entiCriterio ? angular
 			.fromJson($routeParams.entiCriterio) : {};
-	vm.page = $routeParams.page ? $routeParams.page : 1;
 
 	function search(page) {
 		$http.post("metamodelo/tppr-list.action", {
@@ -854,7 +852,6 @@ function TpsrGridController($http, $location, $routeParams, $modal,
 
 	vm.entiCriterio = $routeParams.entiCriterio ? angular
 			.fromJson($routeParams.entiCriterio) : {};
-	vm.page = $routeParams.page ? $routeParams.page : 1;
 
 	function search(page) {
 		$http.post("metamodelo/tpsr-list.action", {
@@ -1121,7 +1118,6 @@ function TpesGridController($http, $location, $routeParams, $modal,
 
 	vm.entiCriterio = $routeParams.entiCriterio ? angular
 			.fromJson($routeParams.entiCriterio) : {};
-	vm.page = $routeParams.page ? $routeParams.page : 1;
 
 	function search(page) {
 		$http.post("metamodelo/tpes-list.action", {

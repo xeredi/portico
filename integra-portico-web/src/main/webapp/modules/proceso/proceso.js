@@ -35,7 +35,6 @@ function PrbtGridController($http, $location, $routeParams, $modal,
 
 	vm.prbtCriterio = $routeParams.prbtCriterio ? angular
 			.fromJson($routeParams.prbtCriterio) : {};
-	vm.page = $routeParams.page ? $routeParams.page : 1;
 
 	function search(page) {
 		$http.post("proceso/prbt-list.action", {
