@@ -58,7 +58,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrc");
 
-                final ValoracionVO vlrc = vlrcBO.select(vlrcId);
+                final ValoracionVO vlrc = vlrcBO.select(vlrcId, "es");
 
                 Assert.assertNotNull(vlrc);
 
@@ -72,7 +72,7 @@ public final class ValoracionTest {
 
                 ids.add(vlrcId);
 
-                final List<ValoracionImpresionVO> vlrcList = vlrcBO.selectImprimir(ids);
+                final List<ValoracionImpresionVO> vlrcList = vlrcBO.selectImprimir(ids, "es");
 
                 Assert.assertNotNull(vlrcList);
 

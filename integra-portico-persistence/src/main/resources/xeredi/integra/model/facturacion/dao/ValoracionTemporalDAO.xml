@@ -157,7 +157,7 @@
                     AND srcr_crgo_pk = rgla_crgo_pk
                     AND (srcr_vlrc_pk IS NOT NULL OR srcr_fctr_pk IS NOT NULL)
             )
-            -- TODO Ojo lo de temporalidad
+            /* TODO Ojo lo de temporalidad */
 
             AND srvc_pk = #{srvc.id}
     ) item
@@ -191,7 +191,7 @@
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
         , vlrt_impuesto_prmt_pk, vlrt_es_suj_pasivo, vlrt_pagador_prmt_pk, vlrt_cod_exen
     FROM (
-        SELECT *
+        SELECT item.*, rgla.*, vlrt.*
             , COALESCE(
                 (
                     SELECT SUM(vlrt_importe)
@@ -239,7 +239,7 @@
             JOIN tbl_regla_rgla ON
                 rgla_enti_pk = srvc_tpsr_pk
                 AND rgla_pk = #{rgla.id}
-            JOIN tbl_valoracion_tmp_vlrt ON
+            JOIN tbl_valoracion_tmp_vlrt vlrt ON
                 vlrt_srvc_pk = srvc_pk
                 AND vlrt_prbt_pk = #{prbt.id}
                         AND vlrt_crgo_pk = rgla_crgo_pk
@@ -357,7 +357,7 @@
                         tpss_pk = portico.getEntidad('PARTIDA')
                         AND ssrv_estado = 'R'
                         AND (
-                            -- Regimen simplificado
+                            /* Regimen simplificado */
                             EXISTS (
                                 SELECT 1
                                 FROM tbl_subservicio_dato_ssdt
@@ -405,7 +405,7 @@
                                                 )
                                         )
                                         AND prdt_nentero = 1
-                                        -- TODO Falta ver que la mercancia de la unidad de carga sea nula
+                                        /* TODO Falta ver que la mercancia de la unidad de carga sea nula */
                                 )
                             )
                         )
@@ -457,7 +457,7 @@
                             AND srcr_crgo_pk = rgla_crgo_pk
                             AND (srcr_vlrc_pk IS NOT NULL OR srcr_fctr_pk IS NOT NULL)
                     )
-                    -- TODO Ojo lo de temporalidad
+                    /* TODO Ojo lo de temporalidad */
                 )
                 OR (
                     rglv_tipo IN ('C', 'D')
@@ -514,7 +514,7 @@
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
         , vlrt_impuesto_prmt_pk, vlrt_es_suj_pasivo, vlrt_pagador_prmt_pk, vlrt_cod_exen
     FROM (
-        SELECT *
+        SELECT item.*, rgla.*, rglv.*, vlrt.*
             , COALESCE(
                 (
                     SELECT SUM(vlrt_importe)
@@ -567,7 +567,7 @@
                 rglv_enti_pk = ssrv_tpss_pk
                 AND rglv_rgla_pk = rgla_pk
                 AND #{fref} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fref})
-            JOIN tbl_valoracion_tmp_vlrt ON
+            JOIN tbl_valoracion_tmp_vlrt vlrt ON
                 vlrt_srvc_pk = ssrv_srvc_pk
                 AND vlrt_ssrv_pk = ssrv_pk
                 AND vlrt_prbt_pk = #{prbt.id}

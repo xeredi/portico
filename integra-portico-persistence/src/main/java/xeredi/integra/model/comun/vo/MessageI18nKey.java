@@ -736,6 +736,8 @@ public enum MessageI18nKey {
     vlrc_impuesto,
     /** The vlrc_fliq. */
     vlrc_fliq,
+    /** The vlrc_falta. */
+    vlrc_falta,
     /** The vlrc_fini. */
     vlrc_fini,
     /** The vlrc_ffin. */
@@ -743,11 +745,23 @@ public enum MessageI18nKey {
     /** The vlrc_suj pasivo. */
     vlrc_sujPasivo,
     /** The vlrc_cod exencion. */
-    vlrc_codExencion,
+    vlrc_codExencion, vlrgList, vlriList,
+    /** The vlri_impuesto. */
+    vlri_impuesto,
+    /** The vlri_porcentaje. */
+    vlri_porcentaje,
+    /** The vlri_importe_base. */
+    vlri_importe_base,
+    /** The vlri_importe_impuesto. */
+    vlri_importe_impuesto,
     /** The vlrl. */
     vlrl,
+    /** The vlrl list. */
+    vlrlList,
     /** The vlrd. */
     vlrd,
+    /** The vlrd list. */
+    vlrdList,
     /** The fctr. */
     fctr,
     /** The fctr list. */

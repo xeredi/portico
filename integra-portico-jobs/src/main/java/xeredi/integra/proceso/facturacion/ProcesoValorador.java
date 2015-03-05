@@ -12,6 +12,7 @@ import xeredi.integra.model.facturacion.bo.ValoradorBO;
 import xeredi.integra.model.proceso.vo.ItemTipo;
 import xeredi.integra.model.proceso.vo.MensajeCodigo;
 import xeredi.integra.model.proceso.vo.ProcesoItemVO;
+import xeredi.integra.model.proceso.vo.ProcesoParametroVO;
 import xeredi.integra.model.proceso.vo.ProcesoTipo;
 import xeredi.integra.proceso.ProcesoTemplate;
 
@@ -43,16 +44,20 @@ public final class ProcesoValorador extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final ValoradorBO vldrBO = new ValoradorBO(this);
 
-        final String crgoIdsString = prpmMap.get(CARGOIDS_PARAM).getValor();
         final String fliqString = prpmMap.get(FLIQ_PARAM).getValor();
 
         try {
             final Date fliq = new SimpleDateFormat("dd/MM/yyyy").parse(fliqString);
             final Set<Long> crgoIds = new HashSet<>();
-            final StringTokenizer tokenizer = new StringTokenizer(crgoIdsString);
 
-            while (tokenizer.hasMoreTokens()) {
-                crgoIds.add(Long.parseLong(tokenizer.nextToken()));
+            final ProcesoParametroVO prpmCrgoIds = prpmMap.get(CARGOIDS_PARAM);
+
+            if (prpmCrgoIds != null) {
+                final StringTokenizer tokenizer = new StringTokenizer(prpmCrgoIds.getValor());
+
+                while (tokenizer.hasMoreTokens()) {
+                    crgoIds.add(Long.parseLong(tokenizer.nextToken()));
+                }
             }
 
             for (final ProcesoItemVO pritEntrada : pritEntradaList) {

@@ -51,6 +51,10 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
      */
     @Override
     public String visitScalarExpr(final ScalarExprContext ctx) {
+        if (ctx == null) {
+            return "";
+        }
+
         if (ctx.nmb != null) {
             return ctx.nmb.getText();
         }
@@ -179,7 +183,7 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
 
                     sqlElement += "SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = "
                             + entiElem.getId() + ") AND ssss_ssrvh_pk = ";
-                    sqlElement += isFirst ? "item.ssrv_pk" : "ANY(#{any})";
+                    sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
                 }
 
                 if (pathElementCtx.data != null) {
@@ -230,8 +234,8 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                         field += " SELECT " + field + "fecha FROM ";
                         break;
                     case PR:
-                        field = isLast ? " SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = ANY( SELECT "
-                                + field + "prmt_pk FROM " : " SELECT " + field + "prmt_pk FROM ";
+                        field = isLast ? " SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = ( SELECT " + field
+                                + "prmt_pk FROM " : " SELECT " + field + "prmt_pk FROM ";
                         break;
                     case SR:
                         field += " SELECT " + field + "srvc_dep_pk FROM ";
@@ -245,18 +249,18 @@ public final class ConditionSqlGenerator extends ConditionBaseVisitor {
                     case P:
                         sqlElement += " tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = "
                                 + entd.getTpdt().getId()
-                                + " AND prdt_prvr_pk = ANY (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )";
+                                + " AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )";
                         break;
                     case T:
                         sqlElement += " tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = " + entd.getTpdt().getId()
                         + " AND srdt_srvc_pk = ";
                         sqlElement += isFirst ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
-                                : "item.ssrv_srvc_pk" : "ANY(#{any})";
+                                : "item.ssrv_srvc_pk" : "(#{any})";
                         break;
                     case S:
                         sqlElement += " tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = " + entd.getTpdt().getId()
                         + " AND ssdt_ssrv_pk = ";
-                        sqlElement += isFirst ? "item.ssrv_pk" : "ANY(#{any})";
+                        sqlElement += isFirst ? "item.ssrv_pk" : "(#{any})";
 
                         break;
                     default:

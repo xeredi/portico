@@ -104,16 +104,16 @@ public class ValoradorBO {
             throws ModelException {
         LOG.info("Valoracion - srvcId: " + srvcId + ", crgoIds: " + crgoIds + ", fechaLiquidacion: " + fechaLiquidacion);
 
+        Preconditions.checkNotNull(srvcId);
+        Preconditions.checkNotNull(crgoIds);
+        Preconditions.checkNotNull(fechaLiquidacion);
+
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ServicioDAO srvcDAO = session.getMapper(ServicioDAO.class);
             final CargoDAO crgoDAO = session.getMapper(CargoDAO.class);
             final ValoradorContextoDAO contextoDAO = session.getMapper(ValoradorContextoDAO.class);
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
-
-            Preconditions.checkNotNull(srvcId);
-            Preconditions.checkNotNull(crgoIds);
-            Preconditions.checkNotNull(fechaLiquidacion);
 
             final ValoradorContextoVO vldrContexto = new ValoradorContextoVO();
             final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
@@ -124,6 +124,17 @@ public class ValoradorBO {
 
             if (srvc == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.srvc, srvcId);
+            }
+
+            if (crgoIds.isEmpty()) {
+                final CargoCriterioVO crgoCriterioVO = new CargoCriterioVO();
+
+                crgoCriterioVO.setFechaVigencia(fechaLiquidacion);
+                crgoCriterioVO.setSrvcId(srvcId);
+
+                for (final CargoVO crgo : crgoDAO.selectList(crgoCriterioVO)) {
+                    crgoIds.add(crgo.getId());
+                }
             }
 
             vldrContexto.setFliquidacion(fechaLiquidacion);

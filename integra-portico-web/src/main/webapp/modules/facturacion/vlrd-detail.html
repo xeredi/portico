@@ -1,44 +1,44 @@
 <tabset type="pills"> <tab heading="{{'vlrd' | translate}}">
 <div class="btn-toolbar" role="toolbar">
-	<div class="btn-group">
-		<button data-ng-click="edit()" class="btn btn-default">
-			<i class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span>
-		</button>
-		<button data-ng-click="remove()" class="btn btn-default">
-			<i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
-		</button>
-	</div>
+    <div class="btn-group">
+        <button data-ng-click="edit()" class="btn btn-default">
+            <i class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span>
+        </button>
+        <button data-ng-click="remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+        </button>
+    </div>
 </div>
 
 <fieldset>
-	<div class="row-fluid">
-		<div class="col-md-1 form-group">
-			<label translate>vlrd_valorBase</label>
-			<p class="form-control-static" ng-bind="vlrd.valorBase | number:4"></p>
-		</div>
-		<div class="col-md-1 form-group">
-			<label translate>vlrd_importeBase</label>
-			<p class="form-control-static" ng-bind="vlrd.importeBase | number:2"></p>
-		</div>
-		<div class="col-md-1 form-group">
-			<label translate>vlrd_importe</label>
-			<p class="form-control-static" ng-bind="vlrd.importe | number:2"></p>
-		</div>
-		<div class="col-md-2 form-group">
-			<label translate>vlrd_ssrv</label>
-			<p class="form-control-static">
-				<a ng-if="vlrd.ssrv.id" ng-href="#/servicio/ssrv/detail/{{vlrd.ssrv.entiId}}/{{vlrd.ssrv.id}}"
-					ng-bind="vlrd.ssrv.numero"></a>
-			</p>
-		</div>
-		<div class="col-md-2 form-group">
-			<label translate>vlrd_fini</label>
-			<p class="form-control-static" ng-bind="vlrd.fini | date: ('format_datetime' | translate)"></p>
-		</div>
-		<div class="col-md-2 form-group">
-			<label translate>vlrd_ffin</label>
-			<p class="form-control-static" ng-bind="vlrd.ffin | date: ('format_datetime' | translate)"></p>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-1 form-group">
+            <label translate>vlrd_valorBase</label>
+            <p class="form-control-static" ng-bind="vlrd.valorBase | number:4"></p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label translate>vlrd_importeBase</label>
+            <p class="form-control-static" ng-bind="vlrd.importeBase | number:2"></p>
+        </div>
+        <div class="col-md-1 form-group">
+            <label translate>vlrd_importe</label>
+            <p class="form-control-static" ng-bind="vlrd.importe | number:2"></p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label translate>vlrd_ssrv</label>
+            <p class="form-control-static">
+                <a ng-if="vlrd.ssrv.id" ng-href="#/servicio/ssrv/detail/{{vlrd.ssrv.entiId}}/{{vlrd.ssrv.id}}"
+                    ng-bind="vlrd.ssrv.numero"></a>
+            </p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label translate>vlrd_fini</label>
+            <p class="form-control-static" ng-bind="vlrd.fini | date: ('format_datetime' | translate)"></p>
+        </div>
+        <div class="col-md-2 form-group">
+            <label translate>vlrd_ffin</label>
+            <p class="form-control-static" ng-bind="vlrd.ffin | date: ('format_datetime' | translate)"></p>
+        </div>
+    </div>
 </fieldset>
 </tab></tabset>

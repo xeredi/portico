@@ -110,12 +110,17 @@ public class ValoracionBO {
      * @throws InstanceNotFoundException
      *             the instance not found exception
      */
-    public ValoracionVO select(final Long id) throws InstanceNotFoundException {
+    public ValoracionVO select(final Long id, final String idioma) throws InstanceNotFoundException {
         Preconditions.checkNotNull(id);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
-            final ValoracionVO vlrc = vlrcDAO.select(id);
+            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+
+            vlrcCriterio.setId(id);
+            vlrcCriterio.setIdioma(idioma);
+
+            final ValoracionVO vlrc = vlrcDAO.selectObject(vlrcCriterio);
 
             if (vlrc == null) {
                 throw new InstanceNotFoundException(MessageI18nKey.vlrc, id);
@@ -162,7 +167,7 @@ public class ValoracionBO {
      *            the ids
      * @return the list
      */
-    public List<ValoracionImpresionVO> selectImprimir(final Set<Long> ids) {
+    public List<ValoracionImpresionVO> selectImprimir(final Set<Long> ids, final String idioma) {
         Preconditions.checkNotNull(ids);
         Preconditions.checkArgument(!ids.isEmpty());
 
@@ -179,9 +184,11 @@ public class ValoracionBO {
                 final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
 
                 vlrcCriterioVO.setId(vlrcId);
+                vlrcCriterioVO.setIdioma(idioma);
+
                 vlrlCriterioVO.setVlrc(vlrcCriterioVO);
 
-                final ValoracionVO vlrc = vlrcDAO.select(vlrcId);
+                final ValoracionVO vlrc = vlrcDAO.selectObject(vlrcCriterioVO);
 
                 if (vlrc != null) {
                     final List<ValoracionCargoVO> vlrgList = vlrgDAO.selectList(vlrcCriterioVO);
@@ -351,7 +358,11 @@ public class ValoracionBO {
             final SubservicioDAO ssrvDAO = session.getMapper(SubservicioDAO.class);
 
             // Validacion de datos
-            final ValoracionVO vlrc = vlrcDAO.select(vlrl.getVlrcId());
+            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+
+            vlrcCriterio.setId(vlrl.getVlrcId());
+
+            final ValoracionVO vlrc = vlrcDAO.selectObject(vlrcCriterio);
 
             if (vlrc == null) {
                 throw new Error("Valoracion no encontrada: " + vlrl.getVlrcId());

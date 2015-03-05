@@ -24,18 +24,18 @@
         <thead>
             <tr>
                 <th class="buttonLinks" nowrap="nowrap" />
-                <th class="codigo" nowrap="nowrap" translate>vlrc_id</th>
-                <th class="codigo" nowrap="nowrap" translate>vlrc_srvc</th>
-                <th translate>aspc_tpsr</th>
-                <th translate>vlrc_aspc</th>
-                <th translate>vlrc_pagador</th>
-                <th translate>vlrc_importe</th>
-                <th translate>vlrc_impuesto</th>
-                <th translate>vlrc_fliq</th>
-                <th translate>vlrc_fini</th>
-                <th translate>vlrc_ffin</th>
-                <th translate>vlrc_sujPasivo</th>
-                <th translate>vlrc_codExencion</th>
+                <th class="codigo" nowrap="nowrap" translate="vlrc_id"></th>
+                <th translate="srvc_tpsr"></th>
+                <th class="codigo" nowrap="nowrap" translate="vlrc_srvc"></th>
+                <th translate="vlrc_aspc"></th>
+                <th translate="vlrc_pagador"></th>
+                <th translate="vlrc_importe"></th>
+                <th translate="vlrc_impuesto"></th>
+                <th translate="vlrc_fliq"></th>
+                <th translate="vlrc_fini"></th>
+                <th translate="vlrc_ffin"></th>
+                <th translate="vlrc_sujPasivo"></th>
+                <th translate="vlrc_codExencion"></th>
             </tr>
         </thead>
 
@@ -44,8 +44,8 @@
                 <td><a ng-href="#/facturacion/vlrc/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.id"></td>
+                <td translate="{{'enti_' + item.srvc.entiId}}"></td>
                 <td ng-bind="item.srvc.etiqueta"></td>
-                <td ng-bind="item.aspc.tpsr.nombre"></td>
                 <td ng-bind="item.aspc.etiqueta"></td>
                 <td ng-bind="item.pagador.etiqueta"></td>
                 <td class="number" ng-bind="item.importe | number:2"></td>

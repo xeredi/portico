@@ -62,6 +62,16 @@
 				AND crgo_tpsr_pk = #{tpsrId}
 			</if>
 
+			<if test="srvcId != null">
+				AND EXISTS (
+					SELECT 1
+					FROM tbl_servicio_srvc
+					WHERE
+						srvc_tpsr_pk = crgo_tpsr_pk
+						AND srvc_pk = #{srvcId}
+				)
+			</if>
+
 			<if test="crgvId != null">
 				AND crgv_pk = #{crgvId}
 			</if>

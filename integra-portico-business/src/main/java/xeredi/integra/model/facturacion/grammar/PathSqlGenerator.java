@@ -106,9 +106,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
             entiTmp = EntidadProxy.select(tpss.getTpsrId());
 
             sqlElement
-            .append("SELECT ")
-            .append(lastPathElement && generateLabel ? "portico.CONCAT(portico.CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), portico.CONCAT(srvc_anio, portico.CONCAT('/', srvc_numero)))"
-                    : "srvc_pk").append(" FROM tbl_servicio_srvc WHERE srvc_pk = ");
+                    .append("SELECT ")
+                    .append(lastPathElement && generateLabel ? "CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero)))"
+                            : "srvc_pk").append(" FROM tbl_servicio_srvc WHERE srvc_pk = ");
             sqlElement.append(firstPathElement ? "item.ssrv_srvc_pk" : "#{any}");
         }
         if (ctx.ELEMENT_PARENT() != null) {
@@ -119,9 +119,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
             entiTmp = EntidadProxy.select(Entidad.valueOf(ctx.ID().getText()).getId());
 
             sqlElement
-            .append("SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = portico.getEntidad('"
-                    + ctx.ID().getText() + "')) AND ssss_ssrvh_pk = ");
-            sqlElement.append(firstPathElement ? "item.ssrv_pk" : "ANY(#{any})");
+                    .append("SELECT ssss_ssrvp_pk FROM tbl_subserv_subserv_ssss WHERE EXISTS (SELECT 1 FROM tbl_subservicio_ssrv WHERE ssrv_pk = ssss_ssrvp_pk AND ssrv_tpss_pk = portico.getEntidad('"
+                            + ctx.ID().getText() + "')) AND ssss_ssrvh_pk = ");
+            sqlElement.append(firstPathElement ? "item.ssrv_pk" : "(#{any})");
         }
         if (ctx.ELEMENT_DATA() != null) {
             final TipoDato tipoDato = TipoDato.valueOf(ctx.ID().getText());
@@ -168,14 +168,14 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                     break;
                 case PR:
                     sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT portico.CONCAT(portico.CONCAT(prmt_parametro , ' - '), COALESCE((SELECT p18n_texto FROM tbl_parametro_i18n_p18n WHERE p18n_idioma = 'es_ES' AND p18n_prvr_pk = ANY(SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = srdt_prmt_pk)"
-                            : "srdt_prmt_pk");
+                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = srdt_prmt_pk)"
+                                    : "srdt_prmt_pk");
 
                     break;
                 case SR:
                     sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT portico.CONCAT(portico.CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), portico.CONCAT(srvc_anio, portico.CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = srdt_srvc_dep_pk)"
-                            : "srdt_srvc_dep_pk");
+                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(( SELECT prmt_parametro FROM tbl_parametro WHERE prmt_pk = srvc_subp_pk ), '/'), CONCAT(srvc_anio, CONCAT('/', srvc_numero))) FROM tbl_servicio_srvc WHERE srvc_pk = srdt_srvc_dep_pk)"
+                                    : "srdt_srvc_dep_pk");
 
                     break;
                 default:
@@ -185,7 +185,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                 sqlElement.append(" FROM tbl_servicio_dato_srdt WHERE srdt_tpdt_pk = portico.getTipoDato('"
                         + ctx.ID().getText() + "') AND srdt_srvc_pk = ");
                 sqlElement.append(firstPathElement ? entiBase.getTipo() == TipoEntidad.T ? "item.srvc_pk"
-                        : "item.ssrv_srvc_pk" : "ANY(#{any})");
+                        : "item.ssrv_srvc_pk" : "(#{any})");
 
                 break;
             case S:
@@ -213,8 +213,8 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                     break;
                 case PR:
                     sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT portico.CONCAT(portico.CONCAT(prmt_parametro , ' - '), COALESCE((SELECT p18n_texto FROM tbl_parametro_i18n_p18n WHERE p18n_idioma = 'es_ES' AND p18n_prvr_pk = ANY(SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = ssdt_prmt_pk)"
-                            : "ssdt_prmt_pk");
+                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = ssdt_prmt_pk)"
+                                    : "ssdt_prmt_pk");
 
                     break;
                 default:
@@ -223,7 +223,7 @@ public final class PathSqlGenerator extends PathBaseVisitor {
 
                 sqlElement.append(" FROM tbl_subservicio_dato_ssdt WHERE ssdt_tpdt_pk = portico.getTipoDato('"
                         + ctx.ID().getText() + "') AND ssdt_ssrv_pk = ");
-                sqlElement.append(firstPathElement ? "item.ssrv_pk" : "ANY(#{any})");
+                sqlElement.append(firstPathElement ? "item.ssrv_pk" : "(#{any})");
 
                 break;
             case P:
@@ -251,8 +251,8 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                     break;
                 case PR:
                     sqlElement
-                    .append(lastPathElement && generateLabel ? "(SELECT portico.CONCAT(portico.CONCAT(prmt_parametro , ' - '), COALESCE((SELECT p18n_texto FROM tbl_parametro_i18n_p18n WHERE p18n_idioma = 'es_ES' AND p18n_prvr_pk = ANY(SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = prdt_prmt_pk)"
-                            : "prdt_prmt_pk");
+                            .append(lastPathElement && generateLabel ? "(SELECT CONCAT(CONCAT(prmt_parametro , ' - '), COALESCE((SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref='prvr' AND i18n_lang = 'es' AND i18n_ext_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE prvr_prmt_pk = prmt_pk AND fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fref))), 'NO i18n!!!')) FROM tbl_parametro_prmt WHERE prmt_pk = prdt_prmt_pk)"
+                                    : "prdt_prmt_pk");
 
                     break;
                 default:
@@ -260,9 +260,9 @@ public final class PathSqlGenerator extends PathBaseVisitor {
                 }
 
                 sqlElement
-                .append(" FROM tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = portico.getTipoDato('"
-                        + ctx.ID().getText()
-                        + "') AND prdt_prvr_pk = ANY (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )");
+                        .append(" FROM tbl_parametro_dato_prdt WHERE prdt_tpdt_pk = portico.getTipoDato('"
+                                + ctx.ID().getText()
+                                + "') AND prdt_prvr_pk = (SELECT prvr_pk FROM tbl_parametro_version_prvr WHERE item.fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, item.fref) AND prvr_prmt_pk = ANY(#{any}) )");
 
                 break;
             default:

@@ -35,11 +35,11 @@ public interface ValoracionDAO {
     /**
      * Busqueda de los datos de una valoracion a partir de su identificador.
      *
-     * @param id
-     *            Identificador de valoracion
+     * @param vlrcCriterio
+     *            the vlrc criterio
      * @return Datos de la valoracion buscada.
      */
-    ValoracionVO select(final @Nonnull Long id);
+    ValoracionVO selectObject(final @Nonnull ValoracionCriterioVO vlrcCriterio);
 
     /**
      * Busqueda de una lista de valoraciones que cumplan un criterio de busqueda.
