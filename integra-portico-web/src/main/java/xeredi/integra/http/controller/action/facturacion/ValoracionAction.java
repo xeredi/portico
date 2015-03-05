@@ -54,6 +54,7 @@ public final class ValoracionAction extends BaseAction {
         }
 
         vlrcCriterioVO.setId(vlrc.getId());
+        vlrcCriterioVO.setIdioma(getIdioma());
 
         vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
         vlriList = vlrcBO.selectVlriList(vlrcCriterioVO);

@@ -745,7 +745,11 @@ public enum MessageI18nKey {
     /** The vlrc_suj pasivo. */
     vlrc_sujPasivo,
     /** The vlrc_cod exencion. */
-    vlrc_codExencion, vlrgList, vlriList,
+    vlrc_codExencion,
+    /** The vlrg list. */
+    vlrgList,
+    /** The vlri list. */
+    vlriList,
     /** The vlri_impuesto. */
     vlri_impuesto,
     /** The vlri_porcentaje. */
@@ -758,10 +762,84 @@ public enum MessageI18nKey {
     vlrl,
     /** The vlrl list. */
     vlrlList,
+    /** The vlrl_rgla. */
+    vlrl_rgla,
+    /** The vlrl_rgla_tipo. */
+    vlrl_rgla_tipo,
+    /** The vlrl_importe base. */
+    vlrl_importeBase,
+    /** The vlrl_importe. */
+    vlrl_importe,
+    /** The vlrl_impuesto. */
+    vlrl_impuesto,
+    /** The vlrl_fini. */
+    vlrl_fini,
+    /** The vlrl_ffin. */
+    vlrl_ffin,
+    /** The vlrl_info1. */
+    vlrl_info1,
+    /** The vlrl_info2. */
+    vlrl_info2,
+    /** The vlrl_info3. */
+    vlrl_info3,
+    /** The vlrl_info4. */
+    vlrl_info4,
+    /** The vlrl_info5. */
+    vlrl_info5,
+    /** The vlrl_info6. */
+    vlrl_info6,
+    /** The vlrl_cuant1. */
+    vlrl_cuant1,
+    /** The vlrl_cuant2. */
+    vlrl_cuant2,
+    /** The vlrl_cuant3. */
+    vlrl_cuant3,
+    /** The vlrl_cuant4. */
+    vlrl_cuant4,
+    /** The vlrl_cuant5. */
+    vlrl_cuant5,
+    /** The vlrl_cuant6. */
+    vlrl_cuant6,
     /** The vlrd. */
     vlrd,
     /** The vlrd list. */
     vlrdList,
+    /** The vlrd_valor base. */
+    vlrd_valorBase,
+    /** The vlrd_importe base. */
+    vlrd_importeBase,
+    /** The vlrd_importe. */
+    vlrd_importe,
+    /** The vlrd_ssrv. */
+    vlrd_ssrv,
+    /** The vlrd_fini. */
+    vlrd_fini,
+    /** The vlrd_ffin. */
+    vlrd_ffin,
+    /** The vlrd_info1. */
+    vlrd_info1,
+    /** The vlrd_info2. */
+    vlrd_info2,
+    /** The vlrd_info3. */
+    vlrd_info3,
+    /** The vlrd_info4. */
+    vlrd_info4,
+    /** The vlrd_info5. */
+    vlrd_info5,
+    /** The vlrd_info6. */
+    vlrd_info6,
+    /** The vlrd_cuant1. */
+    vlrd_cuant1,
+    /** The vlrd_cuant2. */
+    vlrd_cuant2,
+    /** The vlrd_cuant3. */
+    vlrd_cuant3,
+    /** The vlrd_cuant4. */
+    vlrd_cuant4,
+    /** The vlrd_cuant5. */
+    vlrd_cuant5,
+    /** The vlrd_cuant6. */
+    vlrd_cuant6,
     /** The fctr. */
     fctr,
     /** The fctr list. */

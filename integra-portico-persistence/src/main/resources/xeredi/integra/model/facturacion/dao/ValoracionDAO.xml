@@ -49,6 +49,7 @@
 		<association property="pagador" javaType="ParametroVO">
 			<result property="id" column="vlrc_pagador_prmt_pk" />
 			<result property="parametro" column="prmt_parametro" />
+			<result property="entiId" column="prmt_tppr_pk" />
 		</association>
 	</resultMap>
 
@@ -94,6 +95,7 @@
 
 		    , vlrc_pagador_prmt_pk
 		    , prmt_parametro
+		    , prmt_tppr_pk
 		    , prvr_pk
         ]]>
 

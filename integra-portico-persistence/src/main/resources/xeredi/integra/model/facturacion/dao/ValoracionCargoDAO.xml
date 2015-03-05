@@ -25,10 +25,19 @@
     </sql>
 
     <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
-    <![CDATA[
-        SELECT *
-        FROM vw_valoracion_cargo_vlrg
-    ]]>
+        SELECT vlrg.*
+        <if test="idioma != null">
+	    <![CDATA[
+		    , (
+		        SELECT i18n_text
+		        FROM tbl_i18n_i18n
+		        WHERE i18n_ext_pk = crgv_pk
+		            AND i18n_pref = 'crgv'
+		            AND i18n_lang = 'es'
+		    ) AS crgv_descripcion
+    	]]>
+        </if>
+        FROM vw_valoracion_cargo_vlrg vlrg
         <include refid="SelectWhere" />
     </select>
 

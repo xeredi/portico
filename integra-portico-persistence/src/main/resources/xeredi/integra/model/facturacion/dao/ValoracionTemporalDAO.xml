@@ -3,50 +3,50 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionTemporalDAO">
-    <resultMap type="ValoracionTemporalVO" id="ResultMap">
-        <result column="vlrt_pk" property="id" />
-        <result column="vlrt_padre_pk" property="padreId" />
-        <result column="vlrt_prbt_pk" property="prbtId" />
-        <result column="vlrt_srvc_pk" property="srvcId" />
-        <result column="vlrt_orden" property="orden" />
-        <result column="vlrt_valor_base" property="valorBase" />
-        <result column="vlrt_importe_base" property="importeBase" />
-        <result column="vlrt_importe" property="importe" />
-        <result column="vlrt_importe_inc" property="importeInc" />
-        <result column="vlrt_es_suj_pasivo" property="sujPasivo" />
-        <result column="vlrt_cod_exen" property="codExencion" />
-        <result column="vlrt_fref" property="freferencia" />
-        <result column="vlrt_fliq" property="fliquidacion" />
-        <result column="vlrt_fini" property="finicio" />
-        <result column="vlrt_ffin" property="ffin" />
+	<resultMap type="ValoracionTemporalVO" id="ResultMap">
+		<result column="vlrt_pk" property="id" />
+		<result column="vlrt_padre_pk" property="padreId" />
+		<result column="vlrt_prbt_pk" property="prbtId" />
+		<result column="vlrt_srvc_pk" property="srvcId" />
+		<result column="vlrt_orden" property="orden" />
+		<result column="vlrt_valor_base" property="valorBase" />
+		<result column="vlrt_importe_base" property="importeBase" />
+		<result column="vlrt_importe" property="importe" />
+		<result column="vlrt_importe_inc" property="importeInc" />
+		<result column="vlrt_es_suj_pasivo" property="sujPasivo" />
+		<result column="vlrt_cod_exen" property="codExencion" />
+		<result column="vlrt_fref" property="freferencia" />
+		<result column="vlrt_fliq" property="fliquidacion" />
+		<result column="vlrt_fini" property="finicio" />
+		<result column="vlrt_ffin" property="ffin" />
 
-        <result column="vlrt_cuant1" property="cuant1" />
-        <result column="vlrt_cuant2" property="cuant2" />
-        <result column="vlrt_cuant3" property="cuant3" />
-        <result column="vlrt_cuant4" property="cuant4" />
-        <result column="vlrt_cuant5" property="cuant5" />
-        <result column="vlrt_cuant6" property="cuant6" />
+		<result column="vlrt_cuant1" property="cuant1" />
+		<result column="vlrt_cuant2" property="cuant2" />
+		<result column="vlrt_cuant3" property="cuant3" />
+		<result column="vlrt_cuant4" property="cuant4" />
+		<result column="vlrt_cuant5" property="cuant5" />
+		<result column="vlrt_cuant6" property="cuant6" />
 
-        <result column="vlrt_info1" property="info1" />
-        <result column="vlrt_info2" property="info2" />
-        <result column="vlrt_info3" property="info3" />
-        <result column="vlrt_info4" property="info4" />
-        <result column="vlrt_info5" property="info5" />
-        <result column="vlrt_info6" property="info6" />
+		<result column="vlrt_info1" property="info1" />
+		<result column="vlrt_info2" property="info2" />
+		<result column="vlrt_info3" property="info3" />
+		<result column="vlrt_info4" property="info4" />
+		<result column="vlrt_info5" property="info5" />
+		<result column="vlrt_info6" property="info6" />
 
-        <association property="ssrv" columnPrefix="vlrt_"
-            resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
-        <association property="crgo" columnPrefix="vlrt_"
-            resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
-        <association property="rgla" columnPrefix="vlrt_"
-            resultMap="xeredi.integra.model.facturacion.dao.ReglaDAO.ResultMap" />
-        <association property="impuesto" columnPrefix="vlrt_impuesto_"
-            resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
-        <association property="pagador" columnPrefix="vlrt_pagador_"
-            resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
-    </resultMap>
+		<association property="ssrv" columnPrefix="vlrt_"
+			resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
+		<association property="crgo" columnPrefix="vlrt_"
+			resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
+		<association property="rgla" columnPrefix="vlrt_"
+			resultMap="xeredi.integra.model.facturacion.dao.ReglaDAO.ResultMap" />
+		<association property="impuesto" columnPrefix="vlrt_impuesto_"
+			resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
+		<association property="pagador" columnPrefix="vlrt_pagador_"
+			resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
+	</resultMap>
 
-    <select id="selectAplicarReglaServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+	<select id="selectAplicarReglaServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT
         #{prbt.id} AS vlrt_prbt_pk
@@ -60,56 +60,56 @@
         , importe_inc AS vlrt_importe_inc
     ]]>
 
-        <if test="rgla.rglv.pathCuant1Sql != null">
-            , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
-        </if>
-        <if test="rgla.rglv.pathCuant2Sql != null">
-            , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
-        </if>
-        <if test="rgla.rglv.pathCuant3Sql != null">
-            , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
-        </if>
-        <if test="rgla.rglv.pathCuant4Sql != null">
-            , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
-        </if>
-        <if test="rgla.rglv.pathCuant5Sql != null">
-            , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
-        </if>
-        <if test="rgla.rglv.pathCuant6Sql != null">
-            , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
-        </if>
+		<if test="rgla.rglv.pathCuant1Sql != null">
+			, (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
+		</if>
+		<if test="rgla.rglv.pathCuant2Sql != null">
+			, (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
+		</if>
+		<if test="rgla.rglv.pathCuant3Sql != null">
+			, (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
+		</if>
+		<if test="rgla.rglv.pathCuant4Sql != null">
+			, (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
+		</if>
+		<if test="rgla.rglv.pathCuant5Sql != null">
+			, (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
+		</if>
+		<if test="rgla.rglv.pathCuant6Sql != null">
+			, (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
+		</if>
 
-        <if test="rgla.rglv.pathInfo1Sql != null">
-            , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
-        </if>
-        <if test="rgla.rglv.pathInfo2Sql != null">
-            , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
-        </if>
-        <if test="rgla.rglv.pathInfo3Sql != null">
-            , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
-        </if>
-        <if test="rgla.rglv.pathInfo4Sql != null">
-            , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
-        </if>
-        <if test="rgla.rglv.pathInfo5Sql != null">
-            , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
-        </if>
-        <if test="rgla.rglv.pathInfo6Sql != null">
-            , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
-        </if>
+		<if test="rgla.rglv.pathInfo1Sql != null">
+			, (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
+		</if>
+		<if test="rgla.rglv.pathInfo2Sql != null">
+			, (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
+		</if>
+		<if test="rgla.rglv.pathInfo3Sql != null">
+			, (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
+		</if>
+		<if test="rgla.rglv.pathInfo4Sql != null">
+			, (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
+		</if>
+		<if test="rgla.rglv.pathInfo5Sql != null">
+			, (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
+		</if>
+		<if test="rgla.rglv.pathInfo6Sql != null">
+			, (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
+		</if>
 
-        <if test="rgla.rglv.pathImpuestoSql != null">
-            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_prmt_pk
-        </if>
-        <if test="rgla.rglv.pathEsSujPasivoSql != null">
-            , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
-        </if>
-        <if test="rgla.rglv.pathPagadorSql != null">
-            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_prmt_pk
-        </if>
-        <if test="rgla.rglv.pathCodExenSql != null">
-            , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
-        </if>
+		<if test="rgla.rglv.pathImpuestoSql != null">
+			, (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_prmt_pk
+		</if>
+		<if test="rgla.rglv.pathEsSujPasivoSql != null">
+			, (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
+		</if>
+		<if test="rgla.rglv.pathPagadorSql != null">
+			, (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_prmt_pk
+		</if>
+		<if test="rgla.rglv.pathCodExenSql != null">
+			, (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
+		</if>
 
     <![CDATA[
     FROM (
@@ -143,11 +143,11 @@
                 )
             )
     ]]>
-        <if test="rgla.rglv.condicionSql != null">
+		<if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-        </if>
+		</if>
     <![CDATA[
             AND NOT EXISTS (
                 SELECT 1
@@ -162,9 +162,9 @@
             AND srvc_pk = #{srvc.id}
     ) item
     ]]>
-    </select>
+	</select>
 
-    <select id="selectAplicarReglaDecoradorServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+	<select id="selectAplicarReglaDecoradorServicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT
         vlrt_prbt_pk
@@ -252,17 +252,17 @@
         WHERE
             srvc_pk = #{srvc.id}
     ]]>
-        <if test="rgla.rglv.condicionSql != null">
+		<if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-        </if>
+		</if>
     <![CDATA[
     ) item
     ]]>
-    </select>
+	</select>
 
-    <select id="selectAplicarReglaSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+	<select id="selectAplicarReglaSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT
         #{prbt.id} AS vlrt_prbt_pk
@@ -278,56 +278,56 @@
         , importe_inc AS vlrt_importe_inc
     ]]>
 
-        <if test="rgla.rglv.pathCuant1Sql != null">
-            , (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
-        </if>
-        <if test="rgla.rglv.pathCuant2Sql != null">
-            , (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
-        </if>
-        <if test="rgla.rglv.pathCuant3Sql != null">
-            , (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
-        </if>
-        <if test="rgla.rglv.pathCuant4Sql != null">
-            , (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
-        </if>
-        <if test="rgla.rglv.pathCuant5Sql != null">
-            , (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
-        </if>
-        <if test="rgla.rglv.pathCuant6Sql != null">
-            , (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
-        </if>
+		<if test="rgla.rglv.pathCuant1Sql != null">
+			, (${rgla.rglv.pathCuant1Sql}) AS vlrt_cuant1
+		</if>
+		<if test="rgla.rglv.pathCuant2Sql != null">
+			, (${rgla.rglv.pathCuant2Sql}) AS vlrt_cuant2
+		</if>
+		<if test="rgla.rglv.pathCuant3Sql != null">
+			, (${rgla.rglv.pathCuant3Sql}) AS vlrt_cuant3
+		</if>
+		<if test="rgla.rglv.pathCuant4Sql != null">
+			, (${rgla.rglv.pathCuant4Sql}) AS vlrt_cuant4
+		</if>
+		<if test="rgla.rglv.pathCuant5Sql != null">
+			, (${rgla.rglv.pathCuant5Sql}) AS vlrt_cuant5
+		</if>
+		<if test="rgla.rglv.pathCuant6Sql != null">
+			, (${rgla.rglv.pathCuant6Sql}) AS vlrt_cuant6
+		</if>
 
-        <if test="rgla.rglv.pathInfo1Sql != null">
-            , (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
-        </if>
-        <if test="rgla.rglv.pathInfo2Sql != null">
-            , (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
-        </if>
-        <if test="rgla.rglv.pathInfo3Sql != null">
-            , (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
-        </if>
-        <if test="rgla.rglv.pathInfo4Sql != null">
-            , (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
-        </if>
-        <if test="rgla.rglv.pathInfo5Sql != null">
-            , (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
-        </if>
-        <if test="rgla.rglv.pathInfo6Sql != null">
-            , (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
-        </if>
+		<if test="rgla.rglv.pathInfo1Sql != null">
+			, (${rgla.rglv.pathInfo1Sql}) AS vlrt_info1
+		</if>
+		<if test="rgla.rglv.pathInfo2Sql != null">
+			, (${rgla.rglv.pathInfo2Sql}) AS vlrt_info2
+		</if>
+		<if test="rgla.rglv.pathInfo3Sql != null">
+			, (${rgla.rglv.pathInfo3Sql}) AS vlrt_info3
+		</if>
+		<if test="rgla.rglv.pathInfo4Sql != null">
+			, (${rgla.rglv.pathInfo4Sql}) AS vlrt_info4
+		</if>
+		<if test="rgla.rglv.pathInfo5Sql != null">
+			, (${rgla.rglv.pathInfo5Sql}) AS vlrt_info5
+		</if>
+		<if test="rgla.rglv.pathInfo6Sql != null">
+			, (${rgla.rglv.pathInfo6Sql}) AS vlrt_info6
+		</if>
 
-        <if test="rgla.rglv.pathImpuestoSql != null">
-            , (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_prmt_pk
-        </if>
-        <if test="rgla.rglv.pathEsSujPasivoSql != null">
-            , (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
-        </if>
-        <if test="rgla.rglv.pathPagadorSql != null">
-            , (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_prmt_pk
-        </if>
-        <if test="rgla.rglv.pathCodExenSql != null">
-            , (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
-        </if>
+		<if test="rgla.rglv.pathImpuestoSql != null">
+			, (${rgla.rglv.pathImpuestoSql}) AS vlrt_impuesto_prmt_pk
+		</if>
+		<if test="rgla.rglv.pathEsSujPasivoSql != null">
+			, (${rgla.rglv.pathEsSujPasivoSql}) AS vlrt_es_suj_pasivo
+		</if>
+		<if test="rgla.rglv.pathPagadorSql != null">
+			, (${rgla.rglv.pathPagadorSql}) AS vlrt_pagador_prmt_pk
+		</if>
+		<if test="rgla.rglv.pathCodExenSql != null">
+			, (${rgla.rglv.pathCodExenSql}) AS vlrt_cod_exen
+		</if>
 
     <![CDATA[
     FROM (
@@ -439,11 +439,11 @@
                 )
             )
     ]]>
-        <if test="rgla.rglv.condicionSql != null">
+		<if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-        </if>
+		</if>
     <![CDATA[
             AND (
                 (
@@ -485,9 +485,9 @@
     ) item
     ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
     ]]>
-    </select>
+	</select>
 
-    <select id="selectAplicarReglaDecoradorSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
+	<select id="selectAplicarReglaDecoradorSubservicio" parameterType="ValoradorContextoVO" resultMap="ResultMap">
     <![CDATA[
     SELECT
         vlrt_prbt_pk
@@ -576,18 +576,18 @@
         WHERE
             ssrv_srvc_pk = #{srvc.id}
     ]]>
-        <if test="rgla.rglv.condicionSql != null">
+		<if test="rgla.rglv.condicionSql != null">
     <![CDATA[
             AND (${rgla.rglv.condicionSql})
     ]]>
-        </if>
+		</if>
     <![CDATA[
     ) item
     ORDER BY ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero
     ]]>
-    </select>
+	</select>
 
-    <insert id="insert" parameterType="ValoracionTemporalVO">
+	<insert id="insert" parameterType="ValoracionTemporalVO">
     <![CDATA[
     INSERT INTO tbl_valoracion_tmp_vlrt (
         vlrt_pk, vlrt_padre_pk, vlrt_prbt_pk, vlrt_srvc_pk, vlrt_ssrv_pk, vlrt_crgo_pk, vlrt_rgla_pk, vlrt_rgla_tipo, vlrt_impuesto_prmt_pk, vlrt_pagador_prmt_pk
@@ -603,9 +603,9 @@
         , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
     )
     ]]>
-    </insert>
+	</insert>
 
-    <select id="existsPendiente" parameterType="ValoradorContextoVO" resultType="boolean">
+	<select id="existsPendiente" parameterType="ValoradorContextoVO" resultType="boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -613,9 +613,9 @@
         WHERE
             vlrt_prbt_pk = #{prbt.id}
     ]]>
-    </select>
+	</select>
 
-    <delete id="deleteList" parameterType="ValoradorContextoVO">
+	<delete id="deleteList" parameterType="ValoradorContextoVO">
     <![CDATA[
         DELETE FROM
             tbl_valoracion_tmp_vlrt
@@ -630,9 +630,9 @@
             AND vlrt_srvc_pk = #{srvc.id}
             AND vlrt_prbt_pk = #{prbt.id}
     ]]>
-    </delete>
+	</delete>
 
-    <delete id="deleteIncompatibilidadList" parameterType="ValoracionTemporalVO">
+	<delete id="deleteIncompatibilidadList" parameterType="ValoracionTemporalVO">
         <![CDATA[
         DELETE FROM
             tbl_valoracion_tmp_vlrt
@@ -655,14 +655,45 @@
         	)
         ]]>
 
-        <if test="ssrv != null and ssrv.id != null">
+		<if test="ssrv != null and ssrv.id != null">
         <![CDATA[
             AND vlrt_ssrv_pk = #{ssrv.id}
         ]]>
-        </if>
-    </delete>
+		</if>
+	</delete>
 
-    <update id="updateRecalcularCargo" parameterType="ValoradorContextoVO">
+	<update id="updateRecalcularCargo" parameterType="ValoradorContextoVO" databaseId="oracle">
+        <![CDATA[
+		UPDATE (
+		    SELECT
+		    	vlrt.vlrt_pk, vlrt.vlrt_importe_base, vlrt.vlrt_importe, vlrt.vlrt_rgla_tipo, vlrt.vlrt_valor_base
+		        , (
+					SELECT SUM(vlrtAux.vlrt_importe)
+					FROM tbl_valoracion_tmp_vlrt vlrtAux
+					WHERE vlrtAux.vlrt_padre_pk = vlrt.vlrt_padre_pk
+						AND vlrtAux.vlrt_pk      < vlrt.vlrt_pk
+		        ) AS importe_base_corr
+		    FROM tbl_valoracion_tmp_vlrt vlrt
+		    WHERE
+		    	vlrt.vlrt_prbt_pk  = #{prbt.id}
+		      	AND vlrt.vlrt_srvc_pk    = #{srvc.id}
+		      	AND vlrt.vlrt_crgo_pk    = #{crgo.id}
+		      	AND vlrt.vlrt_rgla_tipo <> 'T'
+		)
+		SET
+		    vlrt_importe_base = importe_base_corr
+		    , vlrt_importe = (
+		      CASE
+		        WHEN vlrt_rgla_tipo = 'C'
+		        THEN importe_base_corr * (vlrt_valor_base - 1)
+		        WHEN vlrt_rgla_tipo = 'D'
+		        THEN importe_base_corr * (- vlrt_valor_base) / 100
+		      END
+		    )
+        ]]>
+	</update>
+
+	<update id="updateRecalcularCargo" parameterType="ValoradorContextoVO" databaseId="postgres">
         <![CDATA[
         UPDATE tbl_valoracion_tmp_vlrt vlrt SET
         	vlrt_importe_base = sql.importe_base_corr
@@ -694,5 +725,39 @@
         WHERE
         	vlrt.vlrt_pk = sql.vlrt_pk
         ]]>
-    </update>
+	</update>
+
+	<update id="updateRecalcularCargo" parameterType="ValoradorContextoVO" databaseId="sqlserver">
+        <![CDATA[
+        UPDATE tbl_valoracion_tmp_vlrt vlrt SET
+        	vlrt_importe_base = sql.importe_base_corr
+        	, vlrt_importe = (
+                CASE
+                    WHEN vlrt_rgla_tipo = 'C'
+                    THEN sql.importe_base_corr * (vlrt_valor_base - 1)
+
+                    WHEN vlrt_rgla_tipo = 'D'
+                    THEN sql.importe_base_corr * (- vlrt_valor_base) / 100
+                END
+        	)
+        FROM
+        	(
+        		SELECT vlrt.vlrt_pk
+        			, SUM(vlrtAux.vlrt_importe) AS importe_base_corr
+        		FROM
+        			tbl_valoracion_tmp_vlrt vlrt
+        			JOIN tbl_valoracion_tmp_vlrt vlrtAux ON
+        				vlrtAux.vlrt_padre_pk = vlrt.vlrt_padre_pk
+        				AND vlrtAux.vlrt_pk < vlrt.vlrt_pk
+        		WHERE
+        			vlrt.vlrt_prbt_pk = #{prbt.id}
+        			AND vlrt.vlrt_srvc_pk = #{srvc.id}
+        			AND vlrt.vlrt_crgo_pk = #{crgo.id}
+        			AND vlrt.vlrt_rgla_tipo <> 'T'
+        		GROUP BY vlrt.vlrt_pk
+        	) sql
+        WHERE
+        	vlrt.vlrt_pk = sql.vlrt_pk
+        ]]>
+	</update>
 </mapper>
