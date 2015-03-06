@@ -1,0 +1,42 @@
+
+<form role="form">
+    <input type="hidden" ng-model="vm.accion" /><input type="hidden" ng-model="vm.vlrc.id" />
+
+    <fieldset>
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label translate>vlrc_id</label> <input type="text" ng-if="vm.accion == 'create'"
+                    ng-model="vm.vlrc.id" class="form-control input-sm" />
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" ng-bind="vm.vlrc.id"></p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label translate>srvc_tpsr</label> <select ng-if="vm.accion == 'create'" ng-model="vm.tpsrId"
+                    ng-options="tpsr.value as tpsr.label for tpsr in vm.tpsrList"
+                    class="form-control input-sm">
+                    <option />
+                </select>
+                <p ng-if="vm.accion == 'edit'" class="form-control-static" translate="{{'enti_' + vm.tpsrId}}"></p>
+            </div>
+            <div class="col-md-2 form-group">
+                <label translate>vlrc_srvc</label>
+                <div ng-if="vm.tpsrId" class="input-group-sm" ng-controller="SrvcLupaController">
+                    <input type="text" autocomplete="off" ng-model="vm.vlrc.srvc"
+                        typeahead="srvc as srvc.etiqueta for srvc in getLabelValues(vm.tpsrId, $viewValue)"
+                        typeahead-editable="false" typeahead-wait-ms="250" class="form-control input-sm">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.save()" class="btn btn-primary">
+            <i class="glyphicon glyphicon-ok"></i> <span translate="btn_guardar"></span>
+        </button>
+        <button data-ng-click="vm.cancel()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_cancelar"></span>
+        </button>
+    </div>
+</form>
+
+
+vlrc-edit.html - {{vm.vlrc}} - {{vm.accion}} - {{vm.vlrc.srvc}} - {{vm.vlrc.srvc.entiId}}

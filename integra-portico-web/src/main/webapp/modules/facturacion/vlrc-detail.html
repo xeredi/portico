@@ -2,9 +2,8 @@
 <tabset type="pills"> <tab heading="{{'vlrc' | translate}}" select="vm.tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <button data-ng-click="vm.edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span>
-        </button>
+        <a class="btn btn-default" ng-href="#/facturacion/vlrc/edit/{{vm.vlrc.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
@@ -174,6 +173,7 @@
         <thead>
             <tr>
                 <th />
+                <th translate="rgla_enti"></th>
                 <th translate="vlrl_rgla"></th>
                 <th translate="vlrl_rgla_tipo"></th>
                 <th translate="vlrl_importeBase"></th>
@@ -182,18 +182,12 @@
                 <th translate="vlrl_fini"></th>
                 <th translate="vlrl_ffin"></th>
 
-                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo1"
-                    translate="vlrl_info1"></th>
-                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo2"
-                    translate="vlrl_info2"></th>
-                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo3"
-                    translate="vlrl_info3"></th>
-                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo4"
-                    translate="vlrl_info4"></th>
-                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo5"
-                    translate="vlrl_info5"></th>
-                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo6"
-                    translate="vlrl_info6"></th>
+                <th ng-if="vm.aspc.aspv.lgrpInfo1" translate="vlrl_info1"></th>
+                <th ng-if="vm.aspc.aspv.lgrpInfo2" translate="vlrl_info2"></th>
+                <th ng-if="vm.aspc.aspv.lgrpInfo3" translate="vlrl_info3"></th>
+                <th ng-if="vm.aspc.aspv.lgrpInfo4" translate="vlrl_info4"></th>
+                <th ng-if="vm.aspc.aspv.lgrpInfo5" translate="vlrl_info5"></th>
+                <th ng-if="vm.aspc.aspv.lgrpInfo6" translate="vlrl_info6"></th>
 
                 <th translate="vlrl_cuant1"></th>
                 <th translate="vlrl_cuant2"></th>
@@ -208,31 +202,27 @@
             <tr ng-repeat="vlrl in vm.vlrlList.list track by $index">
                 <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
+                <td nowrap="nowrap" translate="{{'enti_' + vlrl.rgla.rglv.enti.id}}"></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
                 <td ng-bind="vlrl.rgla.rglv.tipo"></td>
-                <td class="number" ng-bind="vlrl.importeBase | number:2"></td>
+                <td class="number"><span ng-if="vlrl.rgla.rglv.tipo != 'T'"
+                    ng-bind="vlrl.importeBase | number:2"></span></td>
                 <td class="number" ng-bind="vlrl.importe | number:2"></td>
                 <td ng-bind="vlrl.impuesto.etiqueta"></td>
                 <td ng-bind="vlrl.fini | date:'short'"></td>
                 <td ng-bind="vlrl.ffin | date:'short'"></td>
 
-                <td ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo1"><span
-                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.rglv.etiqInfo1}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo1"><span ng-if="vlrl.rgla.rglv.tipo == 'T' && vlrl.info1">{{vlrl.rgla.rglv.etiqInfo1}}:
                         {{vlrl.info1}}</span></td>
-                <td ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo2"><span
-                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info2">{{vlrl.rgla.rglv.etiqInfo2}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo2"><span ng-if="vlrl.rgla.rglv.tipo == 'T' && vlrl.info2">{{vlrl.rgla.rglv.etiqInfo2}}:
                         {{vlrl.info2}}</span></td>
-                <td ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo3"><span
-                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info3">{{vlrl.rgla.rglv.etiqInfo3}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo3"><span ng-if="vlrl.rgla.rglv.tipo == 'T' && vlrl.info3">{{vlrl.rgla.rglv.etiqInfo3}}:
                         {{vlrl.info3}}</span></td>
-                <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo4"><span
-                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info4">{{vlrl.rgla.rglv.etiqInfo4}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo4"><span ng-if="vlrl.rgla.rglv.tipo == 'T' && vlrl.info4">{{vlrl.rgla.rglv.etiqInfo4}}:
                         {{vlrl.info4}}</span></td>
-                <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo5"><span
-                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info5">{{vlrl.rgla.rglv.etiqInfo5}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo5"><span ng-if="vlrl.rgla.rglv.tipo == 'T' && vlrl.info5">{{vlrl.rgla.rglv.etiqInfo5}}:
                         {{vlrl.info5}}</span></td>
-                <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo6"><span
-                    ng-if="vlrl.rgla.tipo == 'T' && vlrl.info6">{{vlrl.rgla.rglv.etiqInfo6}}:
+                <td ng-if="vm.aspc.aspv.lgrpInfo6"><span ng-if="vlrl.rgla.rglv.tipo == 'T' && vlrl.info6">{{vlrl.rgla.rglv.etiqInfo6}}:
                         {{vlrl.info6}}</span></td>
 
                 <td><span ng-if="vlrl.cuant1">{{vlrl.rgla.rglv.etiqCuant1}}: {{vlrl.cuant1}}</span></td>

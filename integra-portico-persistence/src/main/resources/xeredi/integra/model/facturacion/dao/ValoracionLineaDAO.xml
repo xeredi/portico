@@ -34,38 +34,61 @@
 		<result column="vlrl_cuant5" property="cuant5" />
 		<result column="vlrl_cuant6" property="cuant6" />
 
-		<association property="ssrv" resultMap="xeredi.integra.model.servicio.dao.SubservicioDAO.ResultMap" />
-		<association property="rgla" resultMap="xeredi.integra.model.facturacion.dao.ReglaDAO.ResultMap" />
-		<association property="impuesto" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
+		<association property="ssrv" javaType="SubservicioVO">
+			<result column="ssrv_pk" property="id" />
+		</association>
+
+		<association property="rgla" javaType="ReglaVO">
+			<result column="rgla_pk" property="id" />
+			<result column="rgla_codigo" property="codigo" />
+
+			<association property="rglv" javaType="ReglaVersionVO">
+				<result column="rglv_tipo" property="tipo" />
+
+				<result column="rglv_etiq_info1" property="etiqInfo1" />
+				<result column="rglv_etiq_info2" property="etiqInfo2" />
+				<result column="rglv_etiq_info3" property="etiqInfo3" />
+				<result column="rglv_etiq_info4" property="etiqInfo4" />
+				<result column="rglv_etiq_info5" property="etiqInfo5" />
+				<result column="rglv_etiq_info6" property="etiqInfo6" />
+
+				<result column="rglv_etiq_cuant1" property="etiqCuant1" />
+				<result column="rglv_etiq_cuant2" property="etiqCuant2" />
+				<result column="rglv_etiq_cuant3" property="etiqCuant3" />
+				<result column="rglv_etiq_cuant4" property="etiqCuant4" />
+				<result column="rglv_etiq_cuant5" property="etiqCuant5" />
+				<result column="rglv_etiq_cuant6" property="etiqCuant6" />
+
+				<association property="enti" javaType="EntidadVO">
+					<result column="rglv_enti_pk" property="id" />
+					<result column="enti_tipo" property="tipo" />
+				</association>
+			</association>
+		</association>
+
+		<association property="impuesto" javaType="ParametroVO">
+			<result column="prmt_pk" property="id" />
+			<result column="prmt_parametro" property="parametro" />
+			<result column="prmt_tppr_pk" property="entiId" />
+			<result column="p18n_texto" property="texto" />
+		</association>
 	</resultMap>
-
-	<insert id="insert" parameterType="ValoracionLineaVO">
-    <![CDATA[
-        INSERT INTO tbl_valoracion_lin_vlrl (
-            vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk
-            , vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin
-            , vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
-            , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
-        )
-        VALUES (
-            #{id}, #{padreId}, #{vlrcId}, #{rgla.id}
-            , #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}
-            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
-            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
-        )
-    ]]>
-	</insert>
-
-	<delete id="delete" parameterType="ValoracionLineaCriterioVO">
-    <![CDATA[
-        DELETE FROM tbl_valoracion_lin_vlrl
-    ]]>
-		<include refid="SelectWhere" />
-	</delete>
 
 	<sql id="SelectPrefix">
     <![CDATA[
-        SELECT *
+        SELECT
+			vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_fref, vlrl_fini, vlrl_ffin, vlrl_importe_base, vlrl_importe
+			, vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
+			, vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
+
+			, ssrv_pk
+
+			, rgla_pk, rgla_codigo
+			, rglv_tipo, rglv_enti_pk, enti_tipo
+			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
+
+			, prmt_pk, prmt_parametro, prmt_tppr_pk
         FROM vw_valoracion_lin_vlrl
     ]]>
 	</sql>
@@ -157,4 +180,26 @@
             AND rgla_pk = #{rgla.id}
     ]]>
 	</select>
+
+	<insert id="insert" parameterType="ValoracionLineaVO">
+    <![CDATA[
+        INSERT INTO tbl_valoracion_lin_vlrl (
+            vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk
+            , vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin
+            , vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
+            , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
+        )
+        VALUES (
+            #{id}, #{padreId}, #{vlrcId}, #{rgla.id}
+            , #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}
+            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
+            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+        )
+    ]]>
+	</insert>
+
+	<delete id="delete" parameterType="ValoracionLineaCriterioVO">
+		DELETE FROM tbl_valoracion_lin_vlrl
+		<include refid="SelectWhere" />
+	</delete>
 </mapper>

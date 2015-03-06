@@ -1,11 +1,20 @@
 angular
 		.module(
 				"integraApp",
-				[ "ngRoute", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
-						"ui.bootstrap.pagination", "ui.bootstrap.dropdown",
-						"ui.bootstrap.typeahead", "mgcrea.ngStrap.alert",
-						"mgcrea.ngStrap.tooltip", "mgcrea.ngStrap.datepicker",
-						"mgcrea.ngStrap.timepicker", "mgcrea.ngStrap.modal",
+				[
+						"ngRoute",
+						"mgcrea.ngStrap",
+						"ui.bootstrap.tpls",
+						"ui.bootstrap.tabs",
+						"ui.bootstrap.pagination",
+						"ui.bootstrap.dropdown",
+						"ui.bootstrap.typeahead"/*
+												 * , "mgcrea.ngStrap.alert",
+												 * "mgcrea.ngStrap.tooltip",
+												 * "mgcrea.ngStrap.datepicker",
+												 * "mgcrea.ngStrap.timepicker",
+												 * "mgcrea.ngStrap.modal"
+												 */,
 						"pascalprecht.translate", "angularSpinner", "i18n",
 						"administracion", "metamodelo", "facturacion",
 						"maestro", "servicio", "estadistica", "proceso" ])

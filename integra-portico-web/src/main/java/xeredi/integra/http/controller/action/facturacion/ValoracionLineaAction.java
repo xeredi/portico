@@ -3,6 +3,7 @@ package xeredi.integra.http.controller.action.facturacion;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 
@@ -48,7 +49,7 @@ public final class ValoracionLineaAction extends BaseAction {
      * @return the string
      */
     @Action("vlrl-edit")
-    public String edit() {
+    public String edit() throws ApplicationException {
         Preconditions.checkNotNull(vlrl);
         Preconditions.checkNotNull(vlrl.getId());
 
