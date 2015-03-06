@@ -68,6 +68,8 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
             vlrcCriterio = new ValoracionCriterioVO();
         }
 
+        vlrcCriterio.setIdioma(getIdioma());
+
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         vlrcList = vlrcBO.selectList(vlrcCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
@@ -103,6 +105,7 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
 
             crgoCriterioVO.setTpsrId(vlrcCriterio.getTpsrId());
             crgoCriterioVO.setFechaVigencia(fechaVigencia);
+            crgoCriterioVO.setIdioma(getIdioma());
 
             crgoList.addAll(crgoBO.selectLabelValueList(crgoCriterioVO));
         }
@@ -113,6 +116,7 @@ public final class ValoracionListadoAction extends BaseAction implements Paginat
 
             aspcCriterioVO.setTpsrId(vlrcCriterio.getTpsrId());
             aspcCriterioVO.setFechaVigencia(fechaVigencia);
+            aspcCriterioVO.setIdioma(getIdioma());
 
             aspcList.addAll(aspcBO.selectLabelValueList(aspcCriterioVO));
         }

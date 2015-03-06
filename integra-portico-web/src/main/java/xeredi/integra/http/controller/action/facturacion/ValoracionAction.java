@@ -47,18 +47,33 @@ public final class ValoracionAction extends BaseAction {
         Preconditions.checkNotNull(vlrc.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
+        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        if (hasErrors()) {
-            return INPUT;
-        }
-
-        vlrcCriterioVO.setId(vlrc.getId());
-        vlrcCriterioVO.setIdioma(getIdioma());
+        vlrcCriterio.setId(vlrc.getId());
+        vlrcCriterio.setIdioma(getIdioma());
 
         vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
-        vlriList = vlrcBO.selectVlriList(vlrcCriterioVO);
-        vlrgList = vlrcBO.selectVlrgList(vlrcCriterioVO);
+        vlriList = vlrcBO.selectVlriList(vlrcCriterio);
+        vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
+
+        return SUCCESS;
+    }
+
+    /**
+     * Removes the.
+     *
+     * @return the string
+     * @throws ApplicationException
+     *             the application exception
+     */
+    @Action("vlrc-remove")
+    public String remove() throws ApplicationException {
+        Preconditions.checkNotNull(vlrc);
+        Preconditions.checkNotNull(vlrc.getId());
+
+        final ValoracionBO vlrcBO = new ValoracionBO();
+
+        vlrcBO.delete(vlrc.getId());
 
         return SUCCESS;
     }

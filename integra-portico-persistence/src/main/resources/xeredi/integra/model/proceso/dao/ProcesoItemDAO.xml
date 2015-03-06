@@ -105,6 +105,8 @@
 						tbl_periodo_proceso_pepr
 					WHERE pepr_pk = prit_item_pk
 				)
+				WHEN 'vlrc' THEN
+					CONCAT('', prit_item_pk)
 	        END
 	    ) AS prit_etiqueta
     FROM

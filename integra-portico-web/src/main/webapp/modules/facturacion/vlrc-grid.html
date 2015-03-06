@@ -6,13 +6,10 @@
             next-text="&rsaquo;&rsaquo;"></pagination>
     </div>
     <div class="btn-group">
-        <button class="btn btn-default" data-ng-click="vm.filter('lg')">
-            <i class="glyphicon glyphicon-search"></i><span translate>btn_filtrar</span>
+        <button class="btn btn-default" data-ng-click="vm.filter('lg')"
+            data-template="modules/facturacion/vlrc-filter-content.html" bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i><span translate="btn_filtrar"></span>
         </button>
-
-        <script type="text/ng-template" id="vlrc-filter-content.html">
-        	<div ng-include="'modules/facturacion/vlrc-filter-content.html'"></div>
-    		</script>
     </div>
 </div>
 

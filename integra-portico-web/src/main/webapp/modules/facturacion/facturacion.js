@@ -11,8 +11,6 @@ angular.module("facturacion", [])
 // ----------- VALORACION ------------------
 .controller("VlrcGridController", VlrcGridController)
 
-.controller("VlrcFilterController", VlrcFilterController)
-
 .controller("VlrlCreateController", VlrlCreateController)
 
 .controller("VlrcDetailController", VlrcDetailController)
@@ -87,7 +85,8 @@ function config($routeProvider) {
 	.when("/facturacion/vlrc/detail/:vlrcId", {
 		templateUrl : "modules/facturacion/vlrc-detail.html",
 		controller : "VlrcDetailController",
-		controllerAs : "vm"
+		controllerAs : "vm",
+		reloadOnSearch : false
 	})
 
 	.when("/facturacion/vlrc/edit/:vlrcId", {
@@ -105,7 +104,8 @@ function config($routeProvider) {
 	.when("/facturacion/vlrl/detail/:vlrlId", {
 		templateUrl : "modules/facturacion/vlrl-detail.html",
 		controller : "VlrlDetailController",
-		controllerAs : "vm"
+		controllerAs : "vm",
+		reloadOnSearch : false
 	})
 
 	.when("/facturacion/vlrl/edit/:vlrlId", {
@@ -312,12 +312,9 @@ function VldrPrepareController($http, $location, $routeParams, $modal,
 		$http.post("facturacion/vldr-valorar.action", {
 			fliq : vm.fliq,
 			srvc : vm.srvc
-		}).success(
-				function(data) {
-					$location.path(
-							"/servicio/srvc/detail/" + data.srvc.entiId + "/"
-									+ data.srvc.id).replace();
-				});
+		}).success(function(data) {
+			$location.path("/proceso/prbt/grid").replace();
+		});
 	}
 
 	function cancel() {
@@ -341,8 +338,10 @@ function VlrcGridController($http, $location, $routeParams, $modal,
 		pageTitleService) {
 	var vm = this;
 
+	vm.search = search;
 	vm.pageChanged = pageChanged;
 	vm.filter = filter;
+	vm.tpsrChanged = tpsrChanged;
 
 	vm.vlrcCriterio = $routeParams.vlrcCriterio ? angular
 			.fromJson($routeParams.vlrcCriterio) : {};
@@ -353,86 +352,111 @@ function VlrcGridController($http, $location, $routeParams, $modal,
 		};
 	}
 
-	function search(vlrcCriterio, page, limit) {
+	function search(page) {
 		$http.post("facturacion/vlrc-list.action", {
-			vlrcCriterio : vlrcCriterio,
+			vlrcCriterio : vm.vlrcCriterio,
 			page : page,
-			limit : limit
+			limit : vm.limit
 		}).success(function(data) {
 			vm.page = data.vlrcList.page;
 			vm.vlrcList = data.vlrcList;
 			vm.vlrcCriterio = data.vlrcCriterio;
 
-			var map = {};
-
-			map.page = data.vlrcList.page;
-			map.vlrcCriterio = JSON.stringify(data.vlrcCriterio);
-
-			$location.search(map).replace();
+			$location.search({
+				page : vm.page,
+				vlrcCriterio : JSON.stringify(vm.vlrcCriterio)
+			}).replace();
 		});
 	}
 
 	function pageChanged() {
-		search($scope.vlrcCriterio, $scope.page, $scope.limit);
+		search(vm.page);
 	}
 
 	function filter(size) {
-		var modalInstance = $modal.open({
-			templateUrl : 'modules/facturacion/vlrc-filter-content.html',
-			controller : 'VlrcFilterController',
-			controllerAs : 'vm',
-			size : size,
-			resolve : {
-				vlrcCriterio : function() {
-					return vm.vlrcCriterio;
-				}
-			}
+		$http.post("facturacion/vlrc-filter.action").success(function(data) {
+			vm.tpsrList = data.tpsrList;
 		});
-
-		modalInstance.result.then(function(vlrcCriterio) {
-			vm.vlrcCriterio = vlrcCriterio;
-
-			search(vm.vlrcCriterio, 1, vm.limit);
-		});
-	}
-
-	search(vm.vlrcCriterio, $routeParams.page ? $routeParams.page : 1, vm.limit);
-
-	pageTitleService.setTitle("vlrc", "page_grid");
-}
-
-function VlrcFilterController($http, $modalInstance, vlrcCriterio,
-		pageTitleService) {
-	var vm = this;
-
-	vm.ok = ok;
-	vm.cancel = cancel;
-	vm.tpsrChanged = tpsrChanged;
-
-	function ok() {
-		$modalInstance.close(vm.vlrcCriterio);
-	}
-
-	function cancel() {
-		$modalInstance.dismiss('cancel');
 	}
 
 	function tpsrChanged(tpsrId) {
-		$http.post("facturacion/vlrc-reload-filter.action", {
-			vlrcCriterio : {
-				tpsrId : tpsrId
-			}
+		if (tpsrId != null) {
+			$http.post("facturacion/vlrc-reload-filter.action", {
+				vlrcCriterio : {
+					tpsrId : tpsrId
+				}
+			}).success(function(data) {
+				vm.crgoList = data.crgoList;
+				vm.aspcList = data.aspcList;
+			});
+		}
+	}
+
+	search($routeParams.page ? $routeParams.page : 1);
+	pageTitleService.setTitle("vlrc", "page_grid");
+}
+
+function VlrcDetailController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.pageChanged = pageChanged;
+	vm.tabSelected = tabSelected;
+	vm.remove = remove;
+
+	vm.tab = $routeParams.tab ? $routeParams.tab : null;
+	vm.path = $location.path();
+
+	function findVlrlList(page) {
+		$http.post("facturacion/vlrl-list.action", {
+			vlrlCriterio : {
+				vlrc : {
+					id : $routeParams.vlrcId
+				}
+			},
+			page : page
 		}).success(function(data) {
-			vm.crgoList = data.crgoList;
-			vm.aspcList = data.aspcList;
+			vm.vlrlList = data.vlrlList;
+			vm.page = data.vlrlList.page;
+
+			$location.search("page", vm.page).replace();
 		});
 	}
 
-	vm.vlrcCriterio = vlrcCriterio;
+	function pageChanged() {
+		findVlrlList(vm.page);
+	}
 
-	$http.post("facturacion/vlrc-filter.action").success(function(data) {
-		vm.tpsrList = data.tpsrList;
+	function tabSelected(tabNo) {
+		if (vm.path == $location.path()) {
+			$location.search("tab", tabNo).replace();
+		}
+	}
+
+	function remove() {
+		if (confirm("Are you sure?")) {
+			$http.post("facturacion/vlrc-remove.action", {
+				vlrc : {
+					id : vm.vlrc.id
+				}
+			}).success(function(data) {
+				window.history.back();
+			});
+		}
+	}
+
+	$http.post("facturacion/vlrc-detail.action", {
+		vlrc : {
+			id : $routeParams.vlrcId
+		}
+	}).success(function(data) {
+		vm.vlrc = data.vlrc;
+		vm.vlrgList = data.vlrgList;
+		vm.vlriList = data.vlriList;
+
+		findVlrlList($routeParams.page ? $routeParams.page : 1);
 	});
+
+	pageTitleService.setTitle("vlrc", "page_detail");
 }
 
 function VlrlCreateController($scope, $http, $location, $routeParams,
@@ -462,31 +486,6 @@ function VlrlCreateController($scope, $http, $location, $routeParams,
 	};
 
 	pageTitleService.setTitle("vlrc", "page_create");
-}
-
-function VlrcDetailController($scope, $http, $location, $routeParams,
-		pageTitleService) {
-	$http.post("facturacion/vlrc-detail.action", {
-		vlrc : {
-			id : $routeParams.vlrcId
-		}
-	}).success(function(data) {
-		$scope.vlrc = data.vlrc;
-		$scope.vlrgList = data.vlrgList;
-		$scope.vlriList = data.vlriList;
-	});
-
-	$http.post("facturacion/vlrl-list.action", {
-		vlrlCriterio : {
-			vlrc : {
-				id : $routeParams.vlrcId
-			}
-		}
-	}).success(function(data) {
-		$scope.vlrlList = data.vlrlList;
-	});
-
-	pageTitleService.setTitle("vlrc", "page_detail");
 }
 
 function VlrlDetailController($scope, $http, $location, $routeParams,

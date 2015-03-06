@@ -113,7 +113,6 @@
                             <th />
                             <th translate="prit_tipo"></th>
                             <th translate="prit_nombre"></th>
-                            <th translate="prit_enti"></th>
                         </tr>
                     </thead>
 
@@ -121,10 +120,18 @@
                         <tr ng-repeat="prit in vm.pritEntradaList track by $index">
                             <td ng-switch on="prit.tipo"><a ng-switch-when="srvc"
                                 ng-href="#/servicio/srvc/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="ssrv"
+                                ng-href="#/servicio/ssrv/detail/{{prit.entiId}}/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
+                                ng-href="#/estadistica/pepr/detail/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
+                                ng-href="#/facturacion/vlrc/detail/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a></td>
-                            <td ng-bind="'ItemTipo_' + prit.tipo | translate"></td>
+                            <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
+                                ng-bind="'enti_' + prit.entiId | translate"></span><span ng-switch-when="ssrv"
+                                ng-bind="'enti_' + prit.entiId | translate"></span><span ng-switch-default
+                                ng-bind="'ItemTipo_' + prit.tipo | translate"></span></td>
                             <td ng-bind="prit.etiqueta"></td>
-                            <td ng-bind="'enti_' + prit.entiId | translate"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -165,7 +172,6 @@
                             <th />
                             <th translate="prit_tipo"></th>
                             <th translate="prit_nombre"></th>
-                            <th translate="prit_enti"></th>
                         </tr>
                     </thead>
 
@@ -177,11 +183,14 @@
                                 ng-href="#/servicio/ssrv/detail/{{prit.entiId}}/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a><a ng-switch-when="pepr"
                                 ng-href="#/estadistica/pepr/detail/{{prit.itemId}}"><span
+                                    class="glyphicon glyphicon-search"></span></a><a ng-switch-when="vlrc"
+                                ng-href="#/facturacion/vlrc/detail/{{prit.itemId}}"><span
                                     class="glyphicon glyphicon-search"></span></a></td>
-                            <td ng-bind="'ItemTipo_' + prit.tipo | translate"></td>
+                            <td ng-switch on="prit.tipo"><span ng-switch-when="srvc"
+                                ng-bind="'enti_' + prit.entiId | translate"></span><span ng-switch-when="ssrv"
+                                ng-bind="'enti_' + prit.entiId | translate"></span><span ng-switch-default
+                                ng-bind="'ItemTipo_' + prit.tipo | translate"></span></td>
                             <td ng-bind="prit.etiqueta"></td>
-                            <td><span ng-if="prit.tipo == 'srvc' || prit.tipo == 'ssrv'"
-                                ng-bind="'enti_' + prit.entiId | translate"></span></td>
                         </tr>
                     </tbody>
                 </table>

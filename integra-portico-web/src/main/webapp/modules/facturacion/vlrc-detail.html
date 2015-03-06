@@ -1,11 +1,11 @@
 
-<tabset type="pills"> <tab heading="{{'vlrc' | translate}}">
+<tabset type="pills"> <tab heading="{{'vlrc' | translate}}" select="vm.tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <button data-ng-click="edit()" class="btn btn-default">
+        <button data-ng-click="vm.edit()" class="btn btn-default">
             <i class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span>
         </button>
-        <button data-ng-click="remove()" class="btn btn-default">
+        <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
@@ -15,42 +15,42 @@
     <div class="row">
         <div class="col-md-2 form-group">
             <label translate="vlrc_id"></label>
-            <p class="form-control-static" ng-bind="vlrc.id"></p>
+            <p class="form-control-static" ng-bind="vm.vlrc.id"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="srvc_tpsr"></label>
             <p class="form-control-static">
-                <a ng-href="#/metamodelo/tpsr/detail/{{vlrc.srvc.entiId}}"
-                    translate="{{'enti_' + vlrc.srvc.entiId}}"></a>
+                <a ng-href="#/metamodelo/tpsr/detail/{{vm.vlrc.srvc.entiId}}"
+                    translate="{{'enti_' + vm.vlrc.srvc.entiId}}"></a>
             </p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_srvc"></label>
             <p class="form-control-static">
-                <a ng-href="#/servicio/srvc/detail/{{vlrc.srvc.entiId}}/{{vlrc.srvc.id}}"
-                    ng-bind="vlrc.srvc.etiqueta"></a>
+                <a ng-href="#/servicio/srvc/detail/{{vm.vlrc.srvc.entiId}}/{{vm.vlrc.srvc.id}}"
+                    ng-bind="vm.vlrc.srvc.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-3 form-group">
             <label translate="vlrc_aspc"></label>
             <p class="form-control-static">
-                <a ng-href="#/facturacion/aspc/detail/{{vlrc.aspc.id}}/{{vlrc.fref}}"
-                    ng-bind="vlrc.aspc.etiqueta"></a>
+                <a ng-href="#/facturacion/aspc/detail/{{vm.vlrc.aspc.id}}/{{vm.vlrc.fref}}"
+                    ng-bind="vm.vlrc.aspc.etiqueta"></a>
             </p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-1 form-group">
             <label translate="vlrc_importe"></label>
-            <p class="form-control-static number" ng-bind="vlrc.importe | number:2"></p>
+            <p class="form-control-static number" ng-bind="vm.vlrc.importe | number:2"></p>
         </div>
         <div class="col-md-1 form-group">
             <label translate="vlrc_impuesto"></label>
-            <p class="form-control-static number" ng-bind="vlrc.impuesto | number:2"></p>
+            <p class="form-control-static number" ng-bind="vm.vlrc.impuesto | number:2"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_codExencion"></label>
-            <p class="form-control-static" ng-bind="vlrc.codExencion"></p>
+            <p class="form-control-static" ng-bind="vm.vlrc.codExencion"></p>
         </div>
     </div>
 
@@ -58,52 +58,53 @@
         <div class="col-md-3 form-group">
             <label translate="vlrc_pagador"></label>
             <p class="form-control-static">
-                <a ng-href="#/maestro/prmt/detail/{{vlrc.pagador.entiId}}/{{vlrc.pagador.id}}/{{vlrc.fref}}"
-                    ng-bind="vlrc.pagador.etiqueta"></a>
+                <a
+                    ng-href="#/maestro/prmt/detail/{{vm.vlrc.pagador.entiId}}/{{vm.vlrc.pagador.id}}/{{vm.vlrc.fref}}"
+                    ng-bind="vm.vlrc.pagador.etiqueta"></a>
             </p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_falta"></label>
-            <p class="form-control-static" ng-bind="vlrc.falta | date: ('format_datetime' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.vlrc.falta | date: ('format_datetime' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_fliq"></label>
-            <p class="form-control-static" ng-bind="vlrc.fliq | date: ('format_date' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.vlrc.fliq | date: ('format_date' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_fini"></label>
-            <p class="form-control-static" ng-bind="vlrc.fini | date: ('format_datetime' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.vlrc.fini | date: ('format_datetime' | translate)"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrc_ffin"></label>
-            <p class="form-control-static" ng-bind="vlrc.ffin | date: ('format_datetime' | translate)"></p>
+            <p class="form-control-static" ng-bind="vm.vlrc.ffin | date: ('format_datetime' | translate)"></p>
         </div>
     </div>
 
     <div class="row">
-        <div ng-if="vlrc.aspc.aspv.cetiqInfo1" class="col-md-4 form-group">
-            <label ng-bind="vlrc.aspc.aspv.cetiqInfo1"></label>
-            <p class="form-control-static" ng-bind="vlrc.info1"></p>
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo1" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo1"></label>
+            <p class="form-control-static" ng-bind="vm.vlrc.info1"></p>
         </div>
-        <div ng-if="vlrc.aspc.aspv.cetiqInfo2" class="col-md-4 form-group">
-            <label ng-bind="vlrc.aspc.aspv.cetiqInfo2"></label>
-            <p class="form-control-static" ng-bind="vlrc.info2"></p>
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo2" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo2"></label>
+            <p class="form-control-static" ng-bind="vm.vlrc.info2"></p>
         </div>
-        <div ng-if="vlrc.aspc.aspv.cetiqInfo3" class="col-md-4 form-group">
-            <label ng-bind="vlrc.aspc.aspv.cetiqInfo3"></label>
-            <p class="form-control-static" ng-bind="vlrc.info3"></p>
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo3" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo3"></label>
+            <p class="form-control-static" ng-bind="vm.vlrc.info3"></p>
         </div>
-        <div ng-if="vlrc.aspc.aspv.cetiqInfo4" class="col-md-4 form-group">
-            <label ng-bind="vlrc.aspc.aspv.cetiqInfo4"></label>
-            <p class="form-control-static" ng-bind="vlrc.info4"></p>
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo4" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo4"></label>
+            <p class="form-control-static" ng-bind="vm.vlrc.info4"></p>
         </div>
-        <div ng-if="vlrc.aspc.aspv.cetiqInfo5" class="col-md-4 form-group">
-            <label ng-bind="vlrc.aspc.aspv.cetiqInfo5"></label>
-            <p class="form-control-static" ng-bind="vlrc.info5"></p>
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo5" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo5"></label>
+            <p class="form-control-static" ng-bind="vm.vlrc.info5"></p>
         </div>
-        <div ng-if="vlrc.aspc.aspv.cetiqInfo6" class="col-md-4 form-group">
-            <label ng-bind="vlrc.aspc.aspv.cetiqInfo6"></label>
-            <p class="form-control-static" ng-bind="vlrc.info6"></p>
+        <div ng-if="vm.vlrc.aspc.aspv.cetiqInfo6" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrc.aspc.aspv.cetiqInfo6"></label>
+            <p class="form-control-static" ng-bind="vm.vlrc.info6"></p>
         </div>
     </div>
 </fieldset>
@@ -114,8 +115,8 @@
 
         <div class="col-md-4 form-group">
             <ul>
-                <li ng-repeat="vlrg in vlrgList track by $index"><a
-                    ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrc.fref}}"
+                <li ng-repeat="vlrg in vm.vlrgList track by $index"><a
+                    ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vm.vlrc.fref}}"
                     ng-bind="vlrg.crgo.etiqueta"></a></li>
             </ul>
         </div>
@@ -138,9 +139,9 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="vlri in vlriList track by $index">
+                    <tr ng-repeat="vlri in vm.vlriList track by $index">
                         <td><a
-                            ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlrc.fref}}"
+                            ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vm.vlrc.fref}}"
                             ng-bind="vlri.impuesto.etiqueta"></a></td>
                         <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
                         <td class="number" ng-bind="vlri.importeBase | number:2"></td>
@@ -151,17 +152,23 @@
         </div>
     </div>
 </fieldset>
-</tab> <tab heading="{{'vlrlList' | translate}}">
+</tab> <tab heading="{{'vlrlList' | translate}}" select="vm.tabSelected('vlrlList')">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/vlrl/create/{{vlrc.id}}"><i
+        <pagination total-items="vm.vlrlList.count" items-per-page="vm.vlrlList.limit" ng-model="vm.page"
+            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
+
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/facturacion/vlrl/create/{{vm.vlrc.id}}"><i
             class="glyphicon glyphicon-file"></i> <span translate="btn_crear"></span> </a>
     </div>
 </div>
 
 <div class="table-responsive">
     <span class="label label-default" translate="grid_count"
-        translate-value-count="{{vlrlList.count | number:0}}"></span>
+        translate-value-count="{{vm.vlrlList.count | number:0}}"></span>
 
     <table class="table-bordered table-condensed table-hover table-nonfluid">
         <thead>
@@ -175,12 +182,18 @@
                 <th translate="vlrl_fini"></th>
                 <th translate="vlrl_ffin"></th>
 
-                <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo1" translate="vlrl_info1"></th>
-                <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo2" translate="vlrl_info2"></th>
-                <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo3" translate="vlrl_info3"></th>
-                <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo4" translate="vlrl_info4"></th>
-                <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo5" translate="vlrl_info5"></th>
-                <th ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo6" translate="vlrl_info6"></th>
+                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo1"
+                    translate="vlrl_info1"></th>
+                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo2"
+                    translate="vlrl_info2"></th>
+                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo3"
+                    translate="vlrl_info3"></th>
+                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo4"
+                    translate="vlrl_info4"></th>
+                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo5"
+                    translate="vlrl_info5"></th>
+                <th ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo6"
+                    translate="vlrl_info6"></th>
 
                 <th translate="vlrl_cuant1"></th>
                 <th translate="vlrl_cuant2"></th>
@@ -192,7 +205,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="vlrl in vlrlList.list track by $index">
+            <tr ng-repeat="vlrl in vm.vlrlList.list track by $index">
                 <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
@@ -203,13 +216,13 @@
                 <td ng-bind="vlrl.fini | date:'short'"></td>
                 <td ng-bind="vlrl.ffin | date:'short'"></td>
 
-                <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo1"><span
+                <td ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo1"><span
                     ng-if="vlrl.rgla.tipo == 'T' && vlrl.info1">{{vlrl.rgla.rglv.etiqInfo1}}:
                         {{vlrl.info1}}</span></td>
-                <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo2"><span
+                <td ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo2"><span
                     ng-if="vlrl.rgla.tipo == 'T' && vlrl.info2">{{vlrl.rgla.rglv.etiqInfo2}}:
                         {{vlrl.info2}}</span></td>
-                <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo3"><span
+                <td ng-if="!vm.vlrc.aspc.aspv.agrupaLineas || vm.vlrc.aspc.aspv.lgrpInfo3"><span
                     ng-if="vlrl.rgla.tipo == 'T' && vlrl.info3">{{vlrl.rgla.rglv.etiqInfo3}}:
                         {{vlrl.info3}}</span></td>
                 <td ng-if="!vlrc.aspc.aspv.agrupaLineas || vlrc.aspc.aspv.lgrpInfo4"><span
