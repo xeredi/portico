@@ -404,6 +404,7 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
 	vm.pageChanged = pageChanged;
 	vm.tabSelected = tabSelected;
 	vm.remove = remove;
+	vm.print = print;
 
 	vm.tab = $routeParams.tab ? $routeParams.tab : null;
 	vm.path = $location.path();
@@ -444,6 +445,22 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
 				window.history.back();
 			});
 		}
+	}
+
+	function print() {
+		$http.post('facturacion/vlrc-print.action', {
+			vlrcId : vm.vlrc.id
+		}, {
+			responseType : 'arraybuffer'
+		}).success(function(data) {
+			var file = new Blob([ data ], {
+				type : 'application/pdf'
+			});
+
+			setTimeout(function() {
+				saveAs(file, vm.vlrc.id + '.pdf');
+			}, 0);
+		});
 	}
 
 	$http.post("facturacion/vlrc-detail.action", {
@@ -608,17 +625,19 @@ function VlrlCreateController($scope, $http, $location, $routeParams,
 	pageTitleService.setTitle("vlrc", "page_create");
 }
 
-function VlrdDetailController($scope, $http, $location, $routeParams,
-		pageTitleService) {
+function VlrdDetailController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
 	$http.post("facturacion/vlrd-detail.action", {
 		vlrd : {
 			id : $routeParams.vlrdId
 		}
 	}).success(function(data) {
-		$scope.vlrd = data.vlrd;
+		vm.vlrd = data.vlrd;
+		vm.vlrl = data.vlrl;
 	});
 
-	pageTitleService.setTitle("vlrl", "page_edit");
+	pageTitleService.setTitle("vlrl", "page_detail");
 }
 
 function CrgoGridController($http, $location, $routeParams, $modal,

@@ -9,9 +9,11 @@ import javax.annotation.Nonnull;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import xeredi.integra.model.comun.proxy.PorticoResourceBundle;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
 import xeredi.integra.model.metamodelo.vo.EntidadTipoDatoVO;
+import xeredi.integra.model.metamodelo.vo.TipoElemento;
 
 import com.google.common.base.Preconditions;
 
@@ -153,6 +155,10 @@ public abstract class BasePdf {
     public final TextFieldBuilder<String> getFieldValue(final @Nonnull PdfCell pdfCell) {
         final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue())
                 .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.VALUE_STYLE);
+
+        if (pdfCell.getTpel() == TipoElemento.ND || pdfCell.getTpel() == TipoElemento.NE) {
+            data.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+        }
 
         return data;
     }

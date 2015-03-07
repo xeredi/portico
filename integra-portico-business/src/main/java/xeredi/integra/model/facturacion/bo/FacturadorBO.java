@@ -24,10 +24,8 @@ import xeredi.integra.model.facturacion.dao.FacturaLineaDAO;
 import xeredi.integra.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.integra.model.facturacion.dao.FacturaServicioDAO;
 import xeredi.integra.model.facturacion.dao.ServicioCargoDAO;
-import xeredi.integra.model.facturacion.dao.ValoracionCargoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionDetalleDAO;
-import xeredi.integra.model.facturacion.dao.ValoracionImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionLineaDAO;
 import xeredi.integra.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.integra.model.facturacion.vo.AspectoVO;
@@ -98,8 +96,6 @@ public class FacturadorBO {
             final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
             final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
-            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
@@ -310,8 +306,6 @@ public class FacturadorBO {
             LOG.info("Borrado de Valoraciones");
             vlrdDAO.deleteList(vlrdCriterioVO);
             vlrlDAO.delete(vlrlCriterioVO);
-            vlriDAO.delete(vlrcCriterioVO);
-            vlrgDAO.delete(vlrcCriterioVO);
             vlrcDAO.delete(vlrcCriterioVO);
 
             session.commit();

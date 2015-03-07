@@ -20,10 +20,8 @@ import xeredi.integra.model.facturacion.dao.FacturaImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaLineaDAO;
 import xeredi.integra.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.integra.model.facturacion.dao.FacturaServicioDAO;
-import xeredi.integra.model.facturacion.dao.ValoracionCargoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionDetalleDAO;
-import xeredi.integra.model.facturacion.dao.ValoracionImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionLineaDAO;
 import xeredi.integra.model.facturacion.vo.FacturaCargoVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
@@ -37,9 +35,7 @@ import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
 import xeredi.integra.model.facturacion.vo.FacturaVO;
-import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
-import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.integra.model.facturacion.vo.ValoracionVO;
 import xeredi.util.mybatis.SqlMapperLocator;
@@ -207,8 +203,6 @@ public class FacturaBO {
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
-            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
 
@@ -349,18 +343,6 @@ public class FacturaBO {
 
             for (final ValoracionDetalleVO vlrd : vlrdList) {
                 vlrdDAO.insert(vlrd);
-            }
-
-            final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-
-            vlrcCriterioVO.setId(vlrc.getId());
-
-            vlrgDAO.insertGenerate(vlrcCriterioVO);
-
-            final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
-
-            for (final ValoracionImpuestoVO vlri : vlriList) {
-                vlriDAO.insert(vlri);
             }
 
             session.commit();

@@ -2,10 +2,10 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <button data-ng-click="edit()" class="btn btn-default">
-            <i class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span>
+            <i class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span>
         </button>
         <button data-ng-click="remove()" class="btn btn-default">
-            <i class="glyphicon glyphicon-remove"></i> <span translate>btn_borrar</span>
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
         </button>
     </div>
 </div>
@@ -13,22 +13,23 @@
 <fieldset>
     <div class="row">
         <div class="col-md-1 form-group">
-            <label translate>vlrd_valorBase</label>
-            <p class="form-control-static" ng-bind="vlrd.valorBase | number:4"></p>
+            <label translate="vlrd_valorBase"></label>
+            <p class="form-control-static number" ng-bind="vm.vlrd.valorBase | number:4"></p>
+        </div>
+        <div class="col-md-1 form-group" ng-if="vm.vlrl.rgla.rglv.tipo != 'T'">
+            <label translate="vlrd_importeBase"></label>
+            <p class="form-control-static number" ng-bind="vm.vlrd.importeBase | number:2"></p>
         </div>
         <div class="col-md-1 form-group">
-            <label translate>vlrd_importeBase</label>
-            <p class="form-control-static" ng-bind="vlrd.importeBase | number:2"></p>
-        </div>
-        <div class="col-md-1 form-group">
-            <label translate>vlrd_importe</label>
-            <p class="form-control-static" ng-bind="vlrd.importe | number:2"></p>
+            <label translate="vlrd_importe"></label>
+            <p class="form-control-static number" ng-bind="vm.vlrd.importe | number:2"></p>
         </div>
         <div class="col-md-2 form-group">
-            <label translate>vlrd_ssrv</label>
+            <label translate="vlrd_ssrv"></label>
             <p class="form-control-static">
-                <a ng-if="vlrd.ssrv.id" ng-href="#/servicio/ssrv/detail/{{vlrd.ssrv.entiId}}/{{vlrd.ssrv.id}}"
-                    ng-bind="vlrd.ssrv.numero"></a>
+                <a ng-if="vm.vlrd.ssrv.id"
+                    ng-href="#/servicio/ssrv/detail/{{vm.vlrd.ssrv.entiId}}/{{vm.vlrd.ssrv.id}}"
+                    ng-bind="vm.vlrd.ssrv.numero"></a>
             </p>
         </div>
         <div class="col-md-2 form-group">

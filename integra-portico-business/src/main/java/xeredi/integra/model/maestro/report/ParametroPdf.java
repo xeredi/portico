@@ -22,6 +22,7 @@ import xeredi.integra.model.comun.report.PdfCell;
 import xeredi.integra.model.comun.report.PdfConstants;
 import xeredi.integra.model.comun.vo.I18nVO;
 import xeredi.integra.model.comun.vo.ItemDatoVO;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.maestro.vo.ParametroVO;
 import xeredi.integra.model.maestro.vo.SubparametroVO;
 import xeredi.integra.model.metamodelo.vo.EntidadGrupoDatoVO;
@@ -79,8 +80,8 @@ public final class ParametroPdf extends BasePdf {
 
         try {
             final String tpprLabel = bundle.getString("enti_" + tpprVO.getId());
-            final String prmtFiniLabel = bundle.getString("prmt_fini");
-            final String prmtFfinLabel = bundle.getString("prmt_ffin");
+            final String prmtFiniLabel = bundle.getString(MessageI18nKey.prmt_fini.name());
+            final String prmtFfinLabel = bundle.getString(MessageI18nKey.prmt_ffin.name());
 
             final JasperReportBuilder report = DynamicReports.report();
 
@@ -192,8 +193,8 @@ public final class ParametroPdf extends BasePdf {
 
         final String tpspLabel = bundle.getString("enti_" + entiVO.getId());
         final String tpprAsociadoLabel = bundle.getString("enti_" + entiVO.getTpprAsociado().getId());
-        final String sprmFiniLabel = bundle.getString("sprm_fini");
-        final String sprmFfinLabel = bundle.getString("sprm_ffin");
+        final String sprmFiniLabel = bundle.getString(MessageI18nKey.sprm_fini.name());
+        final String sprmFfinLabel = bundle.getString(MessageI18nKey.sprm_ffin.name());
 
         final JasperReportBuilder report = DynamicReports.report();
         final List<String> columns = new ArrayList<>();
@@ -208,11 +209,13 @@ public final class ParametroPdf extends BasePdf {
         report.addColumn(DynamicReports.col.column(tpprAsociadoLabel, tpprAsociadoLabel,
                 DynamicReports.type.stringType()).setWidth(4));
 
-        columns.add("fini");
-        columns.add("ffin");
+        columns.add(MessageI18nKey.sprm_fini.name());
+        columns.add(MessageI18nKey.sprm_ffin.name());
 
-        report.addColumn(DynamicReports.col.column(sprmFiniLabel, "fini", DynamicReports.type.stringType()).setWidth(2));
-        report.addColumn(DynamicReports.col.column(sprmFfinLabel, "ffin", DynamicReports.type.stringType()).setWidth(2));
+        report.addColumn(DynamicReports.col.column(sprmFiniLabel, MessageI18nKey.sprm_fini.name(),
+                DynamicReports.type.stringType()).setWidth(2));
+        report.addColumn(DynamicReports.col.column(sprmFfinLabel, MessageI18nKey.sprm_ffin.name(),
+                DynamicReports.type.stringType()).setWidth(2));
 
         if (entiVO.getEntdList() != null) {
             for (final EntidadTipoDatoVO entd : entiVO.getEntdList()) {

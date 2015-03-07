@@ -748,6 +748,10 @@ public enum MessageI18nKey {
     vlrc_codExencion,
     /** The vlrg list. */
     vlrgList,
+    /** The vlrg_crgo. */
+    vlrg_crgo,
+    /** The vlrg_importe. */
+    vlrg_importe,
     /** The vlri list. */
     vlriList,
     /** The vlri_impuesto. */

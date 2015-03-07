@@ -6,6 +6,7 @@ import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.model.comun.exception.ApplicationException;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
+import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 
 import com.google.common.base.Preconditions;
 
@@ -20,6 +21,9 @@ public final class ValoracionDetalleAction extends BaseAction {
 
     /** The vlrd. */
     private ValoracionDetalleVO vlrd;
+
+    /** The vlrl. */
+    private ValoracionLineaVO vlrl;
 
     // acciones web
 
@@ -38,6 +42,7 @@ public final class ValoracionDetalleAction extends BaseAction {
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         vlrd = vlrcBO.selectVlrd(vlrd.getId());
+        vlrl = vlrcBO.selectVlrl(vlrd.getVlrlId());
 
         return SUCCESS;
     }
@@ -61,6 +66,15 @@ public final class ValoracionDetalleAction extends BaseAction {
      */
     public void setVlrd(final ValoracionDetalleVO value) {
         vlrd = value;
+    }
+
+    /**
+     * Gets the vlrl.
+     *
+     * @return the vlrl
+     */
+    public ValoracionLineaVO getVlrl() {
+        return vlrl;
     }
 
 }

@@ -2,7 +2,6 @@ package xeredi.integra.model.facturacion.bo;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -10,9 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-import xeredi.integra.model.comun.proxy.ConfigurationProxy;
-import xeredi.integra.model.comun.vo.ConfigurationKey;
-import xeredi.integra.model.facturacion.report.ValoracionPdf;
 import xeredi.integra.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
@@ -72,16 +68,7 @@ public final class ValoracionTest {
 
                 ids.add(vlrcId);
 
-                final List<ValoracionImpresionVO> vlrcList = vlrcBO.selectImprimir(ids, "es");
-
-                Assert.assertNotNull(vlrcList);
-
-                LOG.info("vlrcImpresion: " + vlrcList);
-
-                final ValoracionPdf valoracionPdf = new ValoracionPdf(new Locale(
-                        ConfigurationProxy.getString(ConfigurationKey.language_default)));
-
-                valoracionPdf.imprimir(vlrcList, null);
+                // FIXME Acabar
             }
 
             {

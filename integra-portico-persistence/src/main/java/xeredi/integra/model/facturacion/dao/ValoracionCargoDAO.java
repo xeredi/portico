@@ -12,24 +12,6 @@ import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
  * The Interface ValoracionCargoDAO.
  */
 public interface ValoracionCargoDAO {
-
-    /**
-     * Insert generate.
-     *
-     * @param vlrcCriterioVO
-     *            the vlrc criterio vo
-     */
-    void insertGenerate(final @Nonnull ValoracionCriterioVO vlrcCriterioVO);
-
-    /**
-     * Delete.
-     *
-     * @param vlrcCriterioVO
-     *            the vlrc criterio vo
-     * @return the int
-     */
-    int delete(final @Nonnull ValoracionCriterioVO vlrcCriterioVO);
-
     /**
      * Select list.
      *

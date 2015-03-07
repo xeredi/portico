@@ -1,5 +1,7 @@
 package xeredi.integra.model.facturacion.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import xeredi.integra.model.maestro.vo.ParametroVO;
@@ -25,6 +27,9 @@ public final class ValoracionImpuestoVO {
     /** The importe impuesto. */
     private Double importeImpuesto;
 
+    /** The fref. */
+    private Date fref;
+
     /**
      * {@inheritDoc}
      */
@@ -48,8 +53,8 @@ public final class ValoracionImpuestoVO {
      * @param value
      *            the new vlrc id
      */
-    public void setVlrcId(Long value) {
-        this.vlrcId = value;
+    public void setVlrcId(final Long value) {
+        vlrcId = value;
     }
 
     /**
@@ -67,8 +72,8 @@ public final class ValoracionImpuestoVO {
      * @param value
      *            the new impuesto
      */
-    public void setImpuesto(ParametroVO value) {
-        this.impuesto = value;
+    public void setImpuesto(final ParametroVO value) {
+        impuesto = value;
     }
 
     /**
@@ -86,8 +91,8 @@ public final class ValoracionImpuestoVO {
      * @param value
      *            the new importe base
      */
-    public void setImporteBase(Double value) {
-        this.importeBase = value;
+    public void setImporteBase(final Double value) {
+        importeBase = value;
     }
 
     /**
@@ -105,8 +110,8 @@ public final class ValoracionImpuestoVO {
      * @param value
      *            the new importe impuesto
      */
-    public void setImporteImpuesto(Double value) {
-        this.importeImpuesto = value;
+    public void setImporteImpuesto(final Double value) {
+        importeImpuesto = value;
     }
 
     /**
@@ -124,8 +129,27 @@ public final class ValoracionImpuestoVO {
      * @param value
      *            the new porcentaje
      */
-    public void setPorcentaje(Double value) {
-        this.porcentaje = value;
+    public void setPorcentaje(final Double value) {
+        porcentaje = value;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
     }
 
 }

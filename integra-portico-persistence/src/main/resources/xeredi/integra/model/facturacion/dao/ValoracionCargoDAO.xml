@@ -3,72 +3,75 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionCargoDAO">
-    <resultMap type="ValoracionCargoVO" id="ResultMap">
-        <id column="vlrg_vlrc_pk" />
-        <id column="vlrg_crgo_pk" />
+	<resultMap type="ValoracionCargoVO" id="ResultMap">
+		<id column="vlrc_pk" />
+		<id column="rgla_crgo_pk" />
 
-        <result column="vlrg_vlrc_pk" property="vlrcId" />
-        <association property="crgo" resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
-    </resultMap>
+		<result column="vlrc_pk" property="vlrcId" />
+		<result column="vlrc_fref" property="fref" />
+		<result column="vlrg_importe" property="importe" />
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND vlrg_vlrc_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND vlrg_vlrc_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
-        </where>
-    </sql>
+		<association property="crgo" javaType="CargoVO">
+			<result column="rgla_crgo_pk" property="id" />
+			<result column="crgo_codigo" property="codigo" />
 
-    <select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
-        SELECT vlrg.*
-        <if test="idioma != null">
+			<association property="crgv" javaType="CargoVersionVO">
+				<result column="crgv_descripcion" property="descripcion" />
+			</association>
+		</association>
+	</resultMap>
+
+	<select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+		SELECT
+		    vlrc_pk, vlrc_fref
+		    , rgla_crgo_pk
+		    , (
+		        SELECT crgo_codigo
+		        FROM tbl_cargo_crgo
+		        WHERE crgo_pk = rgla_crgo_pk
+		    ) AS crgo_codigo
+		    , SUM(vlrd_importe) AS vlrg_importe
+    ]]>
+		<if test="idioma != null">
 	    <![CDATA[
 		    , (
 		        SELECT i18n_text
 		        FROM tbl_i18n_i18n
-		        WHERE i18n_ext_pk = crgv_pk
-		            AND i18n_pref = 'crgv'
-		            AND i18n_lang = 'es'
+		        WHERE
+		            i18n_pref = 'crgv'
+		            AND i18n_lang = #{idioma}
+		            AND i18n_ext_pk = (
+		                SELECT crgv_pk
+		                FROM
+		                    tbl_cargo_version_crgv
+		                WHERE
+		                    crgv_crgo_pk = rgla_crgo_pk
+		                    AND vlrc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrc_fref)
+		            )
 		    ) AS crgv_descripcion
-    	]]>
-        </if>
-        FROM vw_valoracion_cargo_vlrg vlrg
-        <include refid="SelectWhere" />
-    </select>
-
-    <insert id="insertGenerate" parameterType="ValoracionCriterioVO">
+	    ]]>
+		</if>
     <![CDATA[
-        INSERT INTO tbl_valoracion_cargo_vlrg (vlrg_vlrc_pk, vlrg_crgo_pk)
-            SELECT vlrc_pk, crgo_pk
-            FROM tbl_valoracion_vlrc
-                , tbl_cargo_crgo
-            WHERE
-                EXISTS (
-        		    SELECT 1
-		            FROM tbl_regla_rgla
-		            WHERE
-			            rgla_crgo_pk = crgo_pk
-			            AND EXISTS (
-			                SELECT 1
-			                FROM tbl_valoracion_lin_vlrl
-			                WHERE
-				                vlrl_rgla_pk = rgla_pk
-				                AND vlrl_vlrc_pk = vlrc_pk
-                        )
-                        AND vlrc_pk = #{id}
-                )
+		FROM
+		    tbl_valoracion_vlrc
+		    INNER JOIN tbl_valoracion_lin_vlrl ON
+		        vlrl_vlrc_pk = vlrc_pk
+		    INNER JOIN tbl_valoracion_det_vlrd ON
+		        vlrd_vlrl_pk = vlrl_pk
+		    INNER JOIN tbl_regla_rgla ON
+		        rgla_pk = vlrl_rgla_pk
     ]]>
-    </insert>
-
-    <delete id="delete" parameterType="ValoracionCriterioVO">
-    <![CDATA[
-        DELETE FROM tbl_valoracion_cargo_vlrg
-    ]]>
-        <include refid="SelectWhere" />
-    </delete>
+		<where>
+			<if test="id != null">
+				AND vlrc_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND vlrc_pk IN
+				<foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
+		</where>
+		GROUP BY vlrc_pk, vlrc_fref, rgla_crgo_pk
+	</select>
 </mapper>

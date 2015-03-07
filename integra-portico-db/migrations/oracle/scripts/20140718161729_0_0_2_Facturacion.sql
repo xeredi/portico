@@ -388,47 +388,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_vlrc TO portico\
 
 
 
--- tbl_valoracion_cargo_vlrg
-CREATE TABLE tbl_valoracion_cargo_vlrg (
-	vlrg_vlrc_pk NUMBER(19) NOT NULL
-	, vlrg_crgo_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT uq_vlrg UNIQUE (vlrg_vlrc_pk, vlrg_crgo_pk)
-
-	, CONSTRAINT fk_vlrg_vlrc_pk FOREIGN KEY (vlrg_vlrc_pk)
-		REFERENCES tbl_valoracion_vlrc (vlrc_pk)
-	, CONSTRAINT fk_vlrg_crgo_pk FOREIGN KEY (vlrg_crgo_pk)
-		REFERENCES tbl_cargo_crgo (crgo_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_valoracion_cargo_vlrg FOR porticoadm.tbl_valoracion_cargo_vlrg\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_cargo_vlrg TO portico\
-
-
-
--- tbl_valoracion_imp_vlri
-CREATE TABLE tbl_valoracion_imp_vlri (
-	vlri_vlrc_pk NUMBER(19) NOT NULL
-	, vlri_impuesto_prmt_pk NUMBER(19) NOT NULL
-	, vlri_porcentaje NUMERIC(5, 2) NOT NULL
-	, vlri_importe NUMERIC(10, 2) NOT NULL
-	, vlri_impuesto NUMERIC(10, 2) NOT NULL
-
-	, CONSTRAINT pk_vlri PRIMARY KEY (vlri_vlrc_pk, vlri_impuesto_prmt_pk)
-
-	, CONSTRAINT fk_vlri_vlrc_pk FOREIGN KEY (vlri_vlrc_pk)
-		REFERENCES tbl_valoracion_vlrc (vlrc_pk)
-	, CONSTRAINT fk_vlri_impuesto_prmt_pk FOREIGN KEY (vlri_impuesto_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_valoracion_imp_vlri FOR porticoadm.tbl_valoracion_imp_vlri\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_valoracion_imp_vlri TO portico\
-
-
-
 -- tbl_valoracion_lin_vlrl
 CREATE TABLE tbl_valoracion_lin_vlrl (
 	vlrl_pk NUMBER(19) NOT NULL
@@ -851,8 +810,6 @@ DROP TABLE tbl_factura_fctr\
 DROP TABLE tbl_valoracion_tmp_vlrt\
 DROP TABLE tbl_valoracion_det_vlrd\
 DROP TABLE tbl_valoracion_lin_vlrl\
-DROP TABLE tbl_valoracion_imp_vlri\
-DROP TABLE tbl_valoracion_cargo_vlrg\
 DROP TABLE tbl_valoracion_vlrc\
 DROP TABLE tbl_factura_serie_fcsr\
 DROP TABLE tbl_aspecto_cargo_version_ascv\

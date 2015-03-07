@@ -1,5 +1,7 @@
 package xeredi.integra.model.facturacion.vo;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 // TODO: Auto-generated Javadoc
@@ -13,6 +15,12 @@ public final class ValoracionCargoVO {
 
     /** The crgo. */
     private CargoVO crgo;
+
+    /** The fref. */
+    private Date fref;
+
+    /** The importe. */
+    private Double importe;
 
     /**
      * {@inheritDoc}
@@ -37,8 +45,8 @@ public final class ValoracionCargoVO {
      * @param value
      *            the vlrc id
      */
-    public void setVlrcId(Long value) {
-        this.vlrcId = value;
+    public void setVlrcId(final Long value) {
+        vlrcId = value;
     }
 
     /**
@@ -56,8 +64,46 @@ public final class ValoracionCargoVO {
      * @param value
      *            the crgo
      */
-    public void setCrgo(CargoVO value) {
-        this.crgo = value;
+    public void setCrgo(final CargoVO value) {
+        crgo = value;
+    }
+
+    /**
+     * Gets the fref.
+     *
+     * @return the fref
+     */
+    public Date getFref() {
+        return fref;
+    }
+
+    /**
+     * Sets the fref.
+     *
+     * @param value
+     *            the new fref
+     */
+    public void setFref(final Date value) {
+        fref = value;
+    }
+
+    /**
+     * Gets the importe.
+     *
+     * @return the importe
+     */
+    public Double getImporte() {
+        return importe;
+    }
+
+    /**
+     * Sets the importe.
+     *
+     * @param value
+     *            the new importe
+     */
+    public void setImporte(final Double value) {
+        importe = value;
     }
 
 }

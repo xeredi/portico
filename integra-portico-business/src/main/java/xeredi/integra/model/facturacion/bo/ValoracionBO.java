@@ -75,8 +75,6 @@ public class ValoracionBO {
             final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
 
             final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
@@ -93,8 +91,6 @@ public class ValoracionBO {
 
             vlrdDAO.deleteList(vlrdCriterioVO);
             vlrlDAO.delete(vlrlCriterioVO);
-            vlriDAO.delete(vlrcCriterioVO);
-            vlrgDAO.delete(vlrcCriterioVO);
             vlrcDAO.delete(vlrcCriterioVO);
 
             session.commit();
@@ -157,49 +153,6 @@ public class ValoracionBO {
             }
 
             return new PaginatedList<ValoracionVO>(vlrcList, offset, limit, count);
-        }
-    }
-
-    /**
-     * Select imprimir.
-     *
-     * @param ids
-     *            the ids
-     * @return the list
-     */
-    public List<ValoracionImpresionVO> selectImprimir(final Set<Long> ids, final String idioma) {
-        Preconditions.checkNotNull(ids);
-        Preconditions.checkArgument(!ids.isEmpty());
-
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
-            final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-            final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-            final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-
-            final List<ValoracionImpresionVO> list = new ArrayList<>();
-
-            for (final Long vlrcId : ids) {
-                final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-                final ValoracionLineaCriterioVO vlrlCriterioVO = new ValoracionLineaCriterioVO();
-
-                vlrcCriterioVO.setId(vlrcId);
-                vlrcCriterioVO.setIdioma(idioma);
-
-                vlrlCriterioVO.setVlrc(vlrcCriterioVO);
-
-                final ValoracionVO vlrc = vlrcDAO.selectObject(vlrcCriterioVO);
-
-                if (vlrc != null) {
-                    final List<ValoracionCargoVO> vlrgList = vlrgDAO.selectList(vlrcCriterioVO);
-                    final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectList(vlrcCriterioVO);
-                    final List<ValoracionLineaVO> vlrlList = vlrlDAO.selectList(vlrlCriterioVO);
-
-                    list.add(new ValoracionImpresionVO(vlrc, vlrgList, vlriList, vlrlList));
-                }
-            }
-
-            return list;
         }
     }
 
@@ -429,8 +382,6 @@ public class ValoracionBO {
             vlrlDAO.insert(vlrl);
             vlrdDAO.insert(vlrd);
 
-            recalcularVlrc(session, vlrl.getVlrcId());
-
             session.commit();
         }
     }
@@ -493,9 +444,6 @@ public class ValoracionBO {
 
                 vlrdDAO.deleteList(vlrdCriterioVO);
                 vlrlDAO.delete(vlrlCriterioVO);
-
-                // Recalcular cargos e importes de IVA
-                recalcularVlrc(session, vlrl.getVlrcId());
             }
 
             session.commit();
@@ -583,8 +531,6 @@ public class ValoracionBO {
 
             vlrdDAO.insert(vlrd);
 
-            recalcularVlrc(session, vlrd.getVlrcId());
-
             session.commit();
         }
     }
@@ -610,8 +556,6 @@ public class ValoracionBO {
             if (updated == 0) {
                 throw new InstanceNotFoundException(MessageI18nKey.vlrd, vlrd.getId());
             }
-
-            recalcularVlrc(session, vlrd.getVlrcId());
 
             session.commit();
         }
@@ -652,41 +596,7 @@ public class ValoracionBO {
                 vlrlDAO.delete(vlrlCriterioVO);
             }
 
-            recalcularVlrc(session, vlrd.getVlrcId());
-
             session.commit();
         }
     }
-
-    /**
-     * Recalcular.
-     *
-     * @param session
-     *            the session
-     * @param vlrcId
-     *            the vlrc id
-     */
-    private void recalcularVlrc(final SqlSession session, final Long vlrcId) {
-        Preconditions.checkNotNull(vlrcId);
-
-        final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
-        final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-
-        // Recalcular cargos e importes de IVA
-
-        final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
-
-        vlrcCriterioVO.setId(vlrcId);
-
-        vlrgDAO.delete(vlrcCriterioVO);
-        vlrgDAO.insertGenerate(vlrcCriterioVO);
-        vlriDAO.delete(vlrcCriterioVO);
-
-        final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterioVO);
-
-        for (final ValoracionImpuestoVO vlri : vlriList) {
-            vlriDAO.insert(vlri);
-        }
-    }
-
 }

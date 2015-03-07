@@ -24,10 +24,8 @@ import xeredi.integra.model.facturacion.dao.CargoDAO;
 import xeredi.integra.model.facturacion.dao.ReglaDAO;
 import xeredi.integra.model.facturacion.dao.ServicioCargoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionAgregadaDAO;
-import xeredi.integra.model.facturacion.dao.ValoracionCargoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionDetalleDAO;
-import xeredi.integra.model.facturacion.dao.ValoracionImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionLineaDAO;
 import xeredi.integra.model.facturacion.dao.ValoracionTemporalDAO;
 import xeredi.integra.model.facturacion.dao.ValoradorContextoDAO;
@@ -43,9 +41,7 @@ import xeredi.integra.model.facturacion.vo.ReglaTipo;
 import xeredi.integra.model.facturacion.vo.ReglaVO;
 import xeredi.integra.model.facturacion.vo.ServicioCargoCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionAgregadaVO;
-import xeredi.integra.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
-import xeredi.integra.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaAgregadaVO;
 import xeredi.integra.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.integra.model.facturacion.vo.ValoradorContextoVO;
@@ -231,8 +227,6 @@ public class ValoradorBO {
         final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
         final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
         final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
-        final ValoracionImpuestoDAO vlriDAO = session.getMapper(ValoracionImpuestoDAO.class);
-        final ValoracionCargoDAO vlrgDAO = session.getMapper(ValoracionCargoDAO.class);
         final ValoracionTemporalDAO vlrtDAO = session.getMapper(ValoracionTemporalDAO.class);
         final ServicioCargoDAO srcrDAO = session.getMapper(ServicioCargoDAO.class);
 
@@ -290,20 +284,6 @@ public class ValoradorBO {
                     vlrdDAO.insert(vlrd);
                 }
             }
-        }
-
-        for (final ValoracionAgregadaVO vlra : vlraList) {
-            final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-
-            vlrcCriterio.setId(vlra.getVlrc().getId());
-
-            final List<ValoracionImpuestoVO> vlriList = vlriDAO.selectGenerateList(vlrcCriterio);
-
-            for (final ValoracionImpuestoVO vlri : vlriList) {
-                vlriDAO.insert(vlri);
-            }
-
-            vlrgDAO.insertGenerate(vlrcCriterio);
         }
 
         if (!vlrcIds.isEmpty()) {

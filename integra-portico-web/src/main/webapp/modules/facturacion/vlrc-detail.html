@@ -3,9 +3,15 @@
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
         <a class="btn btn-default" ng-href="#/facturacion/vlrc/edit/{{vm.vlrc.id}}"><i
-            class="glyphicon glyphicon-edit"></i> <span translate>btn_editar</span></a>
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+        </button>
+    </div>
+
+    <div class="btn-group">
+        <button data-ng-click="vm.print()" class="btn btn-default">
+            <i class="glyphicon glyphicon-print"></i> <span translate="btn_imprimir"></span>
         </button>
     </div>
 </div>
@@ -113,11 +119,22 @@
         <legend translate="vlrgList"></legend>
 
         <div class="col-md-4 form-group">
-            <ul>
-                <li ng-repeat="vlrg in vm.vlrgList track by $index"><a
-                    ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vm.vlrc.fref}}"
-                    ng-bind="vlrg.crgo.etiqueta"></a></li>
-            </ul>
+            <table class="table-bordered table-condensed table-hover table-nonfluid">
+                <thead>
+                    <tr>
+                        <th translate="vlrg_crgo"></th>
+                        <th translate="vlrg_importe"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="vlrg in vm.vlrgList track by $index">
+                        <td><a ng-href="#/facturacion/crgo/detail/{{vlrg.crgo.id}}/{{vlrg.fref}}"
+                            ng-bind="vlrg.crgo.etiqueta"></a></td>
+                        <td class="number" ng-bind="vlrg.importe | number:2"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </fieldset>
@@ -140,7 +157,7 @@
                 <tbody>
                     <tr ng-repeat="vlri in vm.vlriList track by $index">
                         <td><a
-                            ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vm.vlrc.fref}}"
+                            ng-href="#/maestro/prmt/detail/{{vlri.impuesto.entiId}}/{{vlri.impuesto.id}}/{{vlri.fref}}"
                             ng-bind="vlri.impuesto.etiqueta"></a></td>
                         <td class="number" ng-bind="vlri.porcentaje | number:2"></td>
                         <td class="number" ng-bind="vlri.importeBase | number:2"></td>
