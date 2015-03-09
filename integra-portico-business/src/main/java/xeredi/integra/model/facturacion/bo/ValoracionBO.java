@@ -197,13 +197,17 @@ public class ValoracionBO {
      *            the vlrl id
      * @return the valoracion linea vo
      */
-    public ValoracionLineaVO selectVlrl(final Long vlrlId) {
+    public ValoracionLineaVO selectVlrl(final Long vlrlId, final String idioma) {
         Preconditions.checkNotNull(vlrlId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
+            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-            return vlrlDAO.select(vlrlId);
+            vlrlCriterio.setId(vlrlId);
+            vlrlCriterio.setIdioma(idioma);
+
+            return vlrlDAO.selectObject(vlrlCriterio);
         }
     }
 
@@ -428,7 +432,11 @@ public class ValoracionBO {
                 throw new Error("No se puede borrar la linea '" + vlrlId + "' porque tiene lineas dependientes");
             }
 
-            final ValoracionLineaVO vlrl = vlrlDAO.select(vlrlId);
+            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+
+            vlrlCriterio.setId(vlrlId);
+
+            final ValoracionLineaVO vlrl = vlrlDAO.selectObject(vlrlCriterio);
 
             if (vlrl != null) {
                 final ValoracionCriterioVO vlrcCriterioVO = new ValoracionCriterioVO();
@@ -518,7 +526,12 @@ public class ValoracionBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
-            final ValoracionLineaVO vlrl = vlrlDAO.select(vlrd.getVlrlId());
+
+            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+
+            vlrlCriterio.setId(vlrd.getVlrlId());
+
+            final ValoracionLineaVO vlrl = vlrlDAO.selectObject(vlrlCriterio);
 
             final IgBO igBO = new IgBO();
 

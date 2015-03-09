@@ -38,7 +38,7 @@ public final class ValoracionLineaAction extends BaseAction {
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
-        vlrl = vlrcBO.selectVlrl(vlrl.getId());
+        vlrl = vlrcBO.selectVlrl(vlrl.getId(), getIdioma());
 
         return SUCCESS;
     }
@@ -57,7 +57,7 @@ public final class ValoracionLineaAction extends BaseAction {
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
-        vlrl = vlrcBO.selectVlrl(vlrl.getId());
+        vlrl = vlrcBO.selectVlrl(vlrl.getId(), getIdioma());
 
         return SUCCESS;
     }

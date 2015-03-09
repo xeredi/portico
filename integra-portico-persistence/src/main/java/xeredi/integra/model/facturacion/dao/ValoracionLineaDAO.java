@@ -74,11 +74,11 @@ public interface ValoracionLineaDAO {
     /**
      * Select.
      *
-     * @param id
-     *            the id
+     * @param vlrlCriterio
+     *            the vlrl criterio
      * @return the valoracion linea vo
      */
-    ValoracionLineaVO select(final @Nonnull Long id);
+    ValoracionLineaVO selectObject(final @Nonnull ValoracionLineaCriterioVO vlrlCriterio);
 
     /**
      * Exists dependencia.

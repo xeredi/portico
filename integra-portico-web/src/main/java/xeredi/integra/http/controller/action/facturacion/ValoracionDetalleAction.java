@@ -42,7 +42,7 @@ public final class ValoracionDetalleAction extends BaseAction {
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         vlrd = vlrcBO.selectVlrd(vlrd.getId());
-        vlrl = vlrcBO.selectVlrl(vlrd.getVlrlId());
+        vlrl = vlrcBO.selectVlrl(vlrd.getVlrlId(), getIdioma());
 
         return SUCCESS;
     }
