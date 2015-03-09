@@ -180,10 +180,10 @@ public final class ValoracionPdf extends BasePdf {
         columns.add(MessageI18nKey.vlrg_importe.name());
 
         report.addColumn(DynamicReports.col.column(bundle.getString(MessageI18nKey.vlrg_crgo.name()),
-                MessageI18nKey.vlrg_crgo.name(), DynamicReports.type.stringType()).setWidth(11));
+                MessageI18nKey.vlrg_crgo.name(), DynamicReports.type.stringType()).setWidth(10));
         report.addColumn(DynamicReports.col
                 .column(bundle.getString(MessageI18nKey.vlrg_importe.name()), MessageI18nKey.vlrg_importe.name(),
-                        DynamicReports.type.stringType()).setWidth(1).setHorizontalAlignment(HorizontalAlignment.RIGHT));
+                        DynamicReports.type.stringType()).setWidth(2).setHorizontalAlignment(HorizontalAlignment.RIGHT));
 
         final DRDataSource dataSource = new DRDataSource(columns.toArray(new String[] {}));
 
@@ -227,17 +227,17 @@ public final class ValoracionPdf extends BasePdf {
         columns.add(MessageI18nKey.vlri_importe_impuesto.name());
 
         report.addColumn(DynamicReports.col.column(bundle.getString(MessageI18nKey.vlri_impuesto.name()),
-                MessageI18nKey.vlri_impuesto.name(), DynamicReports.type.stringType()).setWidth(9));
+                MessageI18nKey.vlri_impuesto.name(), DynamicReports.type.stringType()).setWidth(7));
         report.addColumn(DynamicReports.col
                 .column(bundle.getString(MessageI18nKey.vlri_porcentaje.name()), MessageI18nKey.vlri_porcentaje.name(),
                         DynamicReports.type.stringType()).setWidth(1).setHorizontalAlignment(HorizontalAlignment.RIGHT));
         report.addColumn(DynamicReports.col
                 .column(bundle.getString(MessageI18nKey.vlri_importe_base.name()),
-                        MessageI18nKey.vlri_importe_base.name(), DynamicReports.type.stringType()).setWidth(1)
+                        MessageI18nKey.vlri_importe_base.name(), DynamicReports.type.stringType()).setWidth(2)
                 .setHorizontalAlignment(HorizontalAlignment.RIGHT));
         report.addColumn(DynamicReports.col
                 .column(bundle.getString(MessageI18nKey.vlri_importe_impuesto.name()),
-                        MessageI18nKey.vlri_importe_impuesto.name(), DynamicReports.type.stringType()).setWidth(1)
+                        MessageI18nKey.vlri_importe_impuesto.name(), DynamicReports.type.stringType()).setWidth(2)
                 .setHorizontalAlignment(HorizontalAlignment.RIGHT));
 
         final DRDataSource dataSource = new DRDataSource(columns.toArray(new String[] {}));

@@ -87,53 +87,6 @@ GRANT SELECT ON portico.vw_aspecto_cargo_ascr TO portico
 
 
 
-CREATE VIEW portico.vw_valoracion_vlrc AS
-	SELECT *
-		, (
-			SELECT prvr_pk
-			FROM portico.tbl_parametro_version_prvr
-			WHERE prvr_prmt_pk = vlrc_pagador_prmt_pk
-				AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
-		) AS prvr_pk
-		, (
-			SELECT SUM(vlrd_importe)
-			FROM portico.tbl_valoracion_det_vlrd
-			WHERE vlrd_vlrc_pk = vlrc_pk
-		) AS vlrc_importe
-	    , (
-	        SELECT SUM(COALESCE(vlrd_importe * prdt_ndecimal, 0)) / 100
-	        FROM portico.tbl_valoracion_lin_vlrl
-	            INNER JOIN portico.tbl_valoracion_det_vlrd ON
-	                vlrd_vlrl_pk = vlrl_pk
-	            LEFT JOIN portico.tbl_parametro_version_prvr ON
-	                vlrl_impuesto_prmt_pk =  prvr_prmt_pk
-	            LEFT JOIN portico.tbl_parametro_dato_prdt ON
-	                prdt_prvr_pk =  prvr_pk
-	                AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')
-	        WHERE
-	            vlrl_vlrc_pk = vlrc_pk
-	            AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
-	    ) AS vlrc_impuesto
-	FROM
-		portico.tbl_valoracion_vlrc
-		INNER JOIN portico.tbl_servicio_srvc ON
-			srvc_pk = vlrc_srvc_pk
-		INNER JOIN portico.tbl_parametro_prmt ON
-			prmt_pk = vlrc_pagador_prmt_pk
-		INNER JOIN portico.tbl_aspecto_aspc ON
-			aspc_pk = vlrc_aspc_pk
-		INNER JOIN portico.tbl_aspecto_version_aspv ON
-			aspv_aspc_pk = aspc_pk
-			AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
-		INNER JOIN portico.tbl_entidad_enti ON
-			enti_pk = srvc_tpsr_pk
-\
-
-GRANT SELECT ON portico.vw_valoracion_vlrc TO portico
-\
-
-
-
 CREATE VIEW portico.vw_valoracion_lin_vlrl AS
 	SELECT *
 		, (SELECT prvr_pk
@@ -380,4 +333,3 @@ DROP VIEW IF EXISTS portico.vw_factura_cargo_fctc\
 DROP VIEW IF EXISTS portico.vw_factura_fctr\
 DROP VIEW IF EXISTS portico.vw_valoracion_det_vlrd\
 DROP VIEW IF EXISTS portico.vw_valoracion_lin_vlrl\
-DROP VIEW IF EXISTS portico.vw_valoracion_vlrc\
