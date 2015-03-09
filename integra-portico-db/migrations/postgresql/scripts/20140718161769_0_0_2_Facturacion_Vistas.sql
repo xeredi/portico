@@ -87,58 +87,6 @@ GRANT SELECT ON portico.vw_aspecto_cargo_ascr TO portico
 
 
 
-CREATE VIEW portico.vw_valoracion_lin_vlrl AS
-	SELECT *
-		, (SELECT prvr_pk
-			FROM portico.tbl_parametro_version_prvr
-			WHERE prvr_prmt_pk = vlrl_impuesto_prmt_pk
-				AND EXISTS (
-					SELECT 1
-					FROM portico.tbl_valoracion_vlrc
-					WHERE vlrc_pk = vlrl_vlrc_pk
-						AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
-				)
-		) AS vlrl_impuesto_prvr_pk
-		, (
-			SELECT SUM(vlrd_importe_base)
-			FROM portico.tbl_valoracion_det_vlrd
-			WHERE vlrd_vlrl_pk = vlrl_pk
-		) AS vlrl_importe_base
-		, (
-			SELECT SUM(vlrd_importe)
-			FROM portico.tbl_valoracion_det_vlrd
-			WHERE vlrd_vlrl_pk = vlrl_pk
-		) AS vlrl_importe
-		, (
-			SELECT vlrc_fref
-			FROM portico.tbl_valoracion_vlrc
-			WHERE vlrc_pk = vlrl_vlrc_pk
-		) AS vlrl_fref
-	FROM
-		portico.tbl_valoracion_lin_vlrl
-		INNER JOIN portico.tbl_parametro_prmt ON
-			prmt_pk = vlrl_impuesto_prmt_pk
-		INNER JOIN portico.tbl_regla_rgla ON
-			rgla_pk = vlrl_rgla_pk
-		INNER JOIN portico.tbl_regla_version_rglv ON
-			rglv_rgla_pk = vlrl_rgla_pk
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_valoracion_vlrc
-				WHERE vlrc_pk = vlrl_vlrc_pk
-					AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
-			)
-		INNER JOIN portico.tbl_entidad_enti ON
-			enti_pk = rglv_enti_pk
-		LEFT JOIN portico.tbl_subservicio_ssrv ON
-			ssrv_pk = vlrl_ssrv_pk
-\
-
-GRANT SELECT ON portico.vw_valoracion_lin_vlrl TO portico
-\
-
-
-
 CREATE VIEW portico.vw_valoracion_det_vlrd AS
 	SELECT *
 		, (
@@ -332,4 +280,3 @@ DROP VIEW IF EXISTS portico.vw_factura_imp_fcti\
 DROP VIEW IF EXISTS portico.vw_factura_cargo_fctc\
 DROP VIEW IF EXISTS portico.vw_factura_fctr\
 DROP VIEW IF EXISTS portico.vw_valoracion_det_vlrd\
-DROP VIEW IF EXISTS portico.vw_valoracion_lin_vlrl\

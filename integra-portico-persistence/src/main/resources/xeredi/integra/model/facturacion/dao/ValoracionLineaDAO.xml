@@ -5,10 +5,6 @@
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionLineaDAO">
 	<resultMap type="ValoracionLineaVO" id="ResultMap">
 		<id column="vlrl_pk" />
-		<id column="vlrl_padre_pk" />
-		<id column="vlrl_vlrc_pk" />
-		<id column="vlrl_fini" />
-		<id column="vlrl_ffin" />
 
 		<result column="vlrl_pk" property="id" />
 		<result column="vlrl_padre_pk" property="padreId" />
@@ -35,11 +31,12 @@
 		<result column="vlrl_cuant6" property="cuant6" />
 
 		<association property="ssrv" javaType="SubservicioVO">
-			<result column="ssrv_pk" property="id" />
+			<result column="vlrl_ssrv_pk" property="id" />
+			<result column="ssrv_numero" property="numero" />
 		</association>
 
 		<association property="rgla" javaType="ReglaVO">
-			<result column="rgla_pk" property="id" />
+			<result column="vlrl_rgla_pk" property="id" />
 			<result column="rgla_codigo" property="codigo" />
 
 			<association property="rglv" javaType="ReglaVersionVO">
@@ -61,35 +58,69 @@
 
 				<association property="enti" javaType="EntidadVO">
 					<result column="rglv_enti_pk" property="id" />
-					<result column="enti_tipo" property="tipo" />
 				</association>
+			</association>
+
+			<association property="crgo" javaType="CargoVO">
+				<result column="rgla_crgo_pk" property="id" />
 			</association>
 		</association>
 
 		<association property="impuesto" javaType="ParametroVO">
-			<result column="prmt_pk" property="id" />
-			<result column="prmt_parametro" property="parametro" />
-			<result column="prmt_tppr_pk" property="entiId" />
+			<result column="vlrl_impuesto_prmt_pk" property="id" />
+			<result column="vlrl_impuesto_prmt" property="parametro" />
+			<result column="vlrl_impuesto_tppr_pk" property="entiId" />
 			<result column="p18n_texto" property="texto" />
 		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix">
     <![CDATA[
-        SELECT
-			vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_fref, vlrl_fini, vlrl_ffin, vlrl_importe_base, vlrl_importe
-			, vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
-			, vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
+		SELECT
+		    vlrl_pk, vlrl_padre_pk, vlrl_vlrc_pk, vlrl_rgla_pk, vlrl_impuesto_prmt_pk, vlrl_ssrv_pk, vlrl_fini, vlrl_ffin
+		    , vlrl_cuant1, vlrl_cuant2, vlrl_cuant3, vlrl_cuant4, vlrl_cuant5, vlrl_cuant6
+		    , vlrl_info1, vlrl_info2, vlrl_info3, vlrl_info4, vlrl_info5, vlrl_info6
 
-			, ssrv_pk
+		    , rgla_codigo, rgla_crgo_pk
 
-			, rgla_pk, rgla_codigo
-			, rglv_tipo, rglv_enti_pk, enti_tipo
-			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
-			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
+		    , rglv_tipo, rglv_enti_pk
+				, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+				, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 
-			, prmt_pk, prmt_parametro, prmt_tppr_pk
-        FROM vw_valoracion_lin_vlrl
+		    , prmt_parametro AS vlrl_impuesto_prmt
+		    , prmt_tppr_pk AS vlrl_impuesto_tppr_pk
+
+		    , (SELECT ssrv_numero FROM tbl_subservicio_ssrv WHERE ssrv_pk = vlrl_ssrv_pk) AS ssrv_numero
+		    , (SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe
+    ]]>
+		<if test="idioma != null">
+	    <![CDATA[
+		    , (
+		        SELECT i18n_text
+		        FROM tbl_i18n_i18n
+		        WHERE
+		            i18n_lang = #{idioma}
+		            AND i18n_pref = 'prvr'
+		            AND i18n_ext_pk = (
+		                SELECT prvr_pk
+		                FROM tbl_parametro_version_prvr
+		                WHERE prvr_prmt_pk = vlrl_impuesto_prmt_pk
+		                    AND vlrc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, vlrc_fref)
+		            )
+		    ) AS p18n_texto
+	    ]]>
+		</if>
+    <![CDATA[
+		FROM
+		    tbl_valoracion_lin_vlrl
+		    INNER JOIN tbl_valoracion_vlrc ON
+		        vlrc_pk = vlrl_vlrc_pk
+		    INNER JOIN tbl_regla_rgla ON
+		        rgla_pk = vlrl_rgla_pk
+		    INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = vlrl_impuesto_prmt_pk
+		    LEFT JOIN tbl_regla_version_rglv ON
+		        rglv_rgla_pk = vlrl_rgla_pk
     ]]>
 	</sql>
 
@@ -130,14 +161,23 @@
 
 	<select id="count" parameterType="ValoracionLineaCriterioVO" resultType="Integer">
 		SELECT COUNT(1)
-		FROM vw_valoracion_lin_vlrl
+		FROM
+		tbl_valoracion_lin_vlrl
+		INNER JOIN tbl_valoracion_vlrc ON
+		vlrc_pk = vlrl_vlrc_pk
+		INNER JOIN tbl_regla_rgla ON
+		rgla_pk = vlrl_rgla_pk
+		INNER JOIN tbl_parametro_prmt ON
+		prmt_pk = vlrl_impuesto_prmt_pk
+		LEFT JOIN tbl_regla_version_rglv ON
+		rglv_rgla_pk = vlrl_rgla_pk
 		<include refid="SelectWhere" />
 	</select>
 
 	<select id="existsDependencia" parameterType="Long" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_valoracion_lin_vlrl
+        FROM tbl_valoracion_lin_vlrl
         WHERE vlrl_padre_pk = #{value}
             AND vlrl_pk <> #{value}
     ]]>
