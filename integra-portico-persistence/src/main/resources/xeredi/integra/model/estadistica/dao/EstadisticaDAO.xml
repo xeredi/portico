@@ -96,7 +96,7 @@
     <![CDATA[
 	SELECT
 		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes
+		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
 		, (
 			SELECT prmt_parametro
 			FROM tbl_parametro_prmt
@@ -141,7 +141,7 @@
     <![CDATA[
 	SELECT
 		estd_pk, estd_pepr_pk, estd_tpes_pk, estd_subp_pk
-		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes
+		, pepr_pk, pepr_autp_pk, pepr_anio, pepr_mes, pepr_freferencia
 		, (
 			SELECT prmt_parametro
 			FROM tbl_parametro_prmt

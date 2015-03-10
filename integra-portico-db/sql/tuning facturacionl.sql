@@ -1,3 +1,28 @@
+        SELECT ssrv_pk, ssrv_srvc_pk, ssrv_numero, ssrv_tpss_pk 
+            , row_number() over (ORDER BY ssrv_srvc_pk, ssrv_numero) rownumVar 
+        FROM 
+            tbl_subservicio_ssrv ssrv 
+        WHERE ssrv_tpss_pk = 22003 
+        ORDER BY ssrv_srvc_pk, ssrv_numero
+;
+
+SELECT ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero 
+    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp 
+FROM ( 
+    SELECT * 
+    FROM ( 
+        SELECT ssrv.* 
+            , row_number() over (ORDER BY ssrv_srvc_pk, ssrv_numero) rownumVar 
+        FROM tbl_subservicio_ssrv ssrv 
+        WHERE ssrv_tpss_pk = 22003 
+        ORDER BY ssrv_srvc_pk, ssrv_numero
+    ) sql 
+    WHERE rownumVar > 20 AND rownumVar <= (20 + 20 ) 
+) sql 
+    INNER JOIN tbl_servicio_srvc ON 
+        srvc_pk = ssrv_srvc_pk
+;
+
 WITH tipoIva AS (
     SELECT
         prvr_prmt_pk, prvr_fini, prvr_ffin

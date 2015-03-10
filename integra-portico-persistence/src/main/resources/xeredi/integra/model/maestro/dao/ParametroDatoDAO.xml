@@ -52,7 +52,7 @@
                             SELECT prvr_pk
                             FROM tbl_parametro_version_prvr
                             WHERE
-                                prvr_prmt_pk = prdt_prmt_pk
+                                prvr_prmt_pk = prmt_pk
                                 AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
                         )
                         AND prdt_tpdt_pk = tppr_tpdt_pk
