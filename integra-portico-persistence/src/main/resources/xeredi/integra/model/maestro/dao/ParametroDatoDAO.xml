@@ -19,7 +19,13 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-        SELECT prdt.*
+    <![CDATA[
+		SELECT
+		    prdt_prvr_pk, prdt_tpdt_pk, prdt_nentero, prdt_ndecimal, prdt_fecha, prdt_prmt_pk, prdt_cadena
+
+		    , prmt_tppr_pk, prmt_parametro
+
+    ]]>
         <if test="idioma != null and fechaVigencia != null">
         <![CDATA[
             , (
@@ -46,7 +52,7 @@
                             SELECT prvr_pk
                             FROM tbl_parametro_version_prvr
                             WHERE
-                                prvr_prmt_pk = prdt.prdt_prmt_pk
+                                prvr_prmt_pk = prdt_prmt_pk
                                 AND #{fechaVigencia} BETWEEN prvr_fini AND COALESCE(prvr_ffin, #{fechaVigencia})
                         )
                         AND prdt_tpdt_pk = tppr_tpdt_pk
@@ -55,8 +61,14 @@
             ) AS p18n_texto
         ]]>
         </if>
-        FROM
-        vw_parametro_dato_prdt prdt
+    <![CDATA[
+		FROM
+		    tbl_parametro_dato_prdt
+		    LEFT JOIN tbl_parametro_prmt ON
+		        prmt_pk = prdt_prmt_pk
+		    LEFT JOIN tbl_tipo_parametro_tppr ON
+		        tppr_pk = prmt_tppr_pk
+    ]]>
     </sql>
 
     <sql id="SelectWhere">

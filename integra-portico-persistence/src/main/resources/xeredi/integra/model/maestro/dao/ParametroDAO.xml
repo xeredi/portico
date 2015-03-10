@@ -256,6 +256,8 @@
             ) AS p18n_texto
         FROM
 		    tbl_parametro_prmt
+		    INNER JOIN tbl_tipo_parametro_tppr ON
+		        tppr_pk = prmt_tppr_pk
 		    INNER JOIN tbl_parametro_version_prvr ON
 		        prvr_prmt_pk = prmt_pk
         WHERE
