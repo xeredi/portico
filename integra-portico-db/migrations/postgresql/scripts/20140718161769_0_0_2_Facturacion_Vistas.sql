@@ -55,21 +55,6 @@ GRANT SELECT ON portico.vw_regla_inc_rgin TO portico
 
 
 
-CREATE VIEW portico.vw_aspecto_aspc AS
-	SELECT *
-	FROM
-		portico.tbl_aspecto_aspc
-		JOIN portico.tbl_aspecto_version_aspv ON
-			aspv_aspc_pk = aspc_pk
-		JOIN portico.tbl_entidad_enti ON
-			enti_pk = aspc_tpsr_pk
-\
-
-GRANT SELECT ON portico.vw_aspecto_aspc TO portico
-\
-
-
-
 CREATE VIEW portico.vw_aspecto_cargo_ascr AS
 	SELECT *
 	FROM
@@ -83,23 +68,6 @@ CREATE VIEW portico.vw_aspecto_cargo_ascr AS
 \
 
 GRANT SELECT ON portico.vw_aspecto_cargo_ascr TO portico
-\
-
-
-
-CREATE VIEW portico.vw_valoracion_det_vlrd AS
-	SELECT *
-		, (
-			SELECT vlrc_fref
-			FROM portico.tbl_valoracion_vlrc
-			WHERE vlrc_pk = vlrd_vlrc_pk
-		) AS vlrd_fref
-	FROM portico.tbl_valoracion_det_vlrd
-		LEFT JOIN portico.tbl_subservicio_ssrv ON
-			ssrv_pk = vlrd_ssrv_pk
-\
-
-GRANT SELECT ON portico.vw_valoracion_det_vlrd TO portico
 \
 
 
@@ -269,7 +237,6 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 -- SQL to undo the change goes here.
 
 DROP VIEW IF EXISTS portico.vw_aspecto_cargo_ascr\
-DROP VIEW IF EXISTS portico.vw_aspecto_aspc\
 DROP VIEW IF EXISTS portico.vw_cargo_crgo\
 DROP VIEW IF EXISTS portico.vw_regla_rgla\
 DROP VIEW IF EXISTS portico.vw_regla_inc_rgin\
@@ -279,4 +246,3 @@ DROP VIEW IF EXISTS portico.vw_factura_srv_fcts\
 DROP VIEW IF EXISTS portico.vw_factura_imp_fcti\
 DROP VIEW IF EXISTS portico.vw_factura_cargo_fctc\
 DROP VIEW IF EXISTS portico.vw_factura_fctr\
-DROP VIEW IF EXISTS portico.vw_valoracion_det_vlrd\

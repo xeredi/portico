@@ -10,7 +10,9 @@
         <result column="aspc_pk" property="id" />
         <result column="aspc_codigo" property="codigo" />
 
-        <association property="tpsr" resultMap="xeredi.integra.model.metamodelo.dao.TipoServicioDAO.ResultMap" />
+        <association property="tpsr" javaType="TipoServicioVO">
+	        <result column="aspc_tpsr_pk" property="id" />
+        </association>
 
         <association property="aspv" javaType="AspectoVersionVO">
             <result column="aspv_pk" property="id" />
@@ -57,7 +59,17 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-        SELECT aspc.*
+    <![CDATA[
+		SELECT
+		    aspc_pk, aspc_codigo, aspc_tpsr_pk
+
+		    , aspv_pk, aspv_fini, aspv_ffin, aspv_prioridad
+		    , aspv_cpath_info1, aspv_cpath_info2, aspv_cpath_info3, aspv_cpath_info4, aspv_cpath_info5, aspv_cpath_info6
+		    , aspv_cetiq_info1, aspv_cetiq_info2, aspv_cetiq_info3, aspv_cetiq_info4, aspv_cetiq_info5, aspv_cetiq_info6
+		    , aspv_cgrp_info1, aspv_cgrp_info2, aspv_cgrp_info3, aspv_cgrp_info4, aspv_cgrp_info5, aspv_cgrp_info6
+		    , aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
+		    , aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+    ]]>
         <if test="idioma != null">
         <![CDATA[
             , (
@@ -68,7 +80,12 @@
             ) AS aspv_descripcion
         ]]>
         </if>
-        FROM vw_aspecto_aspc aspc
+    <![CDATA[
+		FROM
+		    tbl_aspecto_aspc
+		    INNER JOIN tbl_aspecto_version_aspv ON
+		        aspv_aspc_pk = aspc_pk
+    ]]>
     </sql>
 
     <sql id="SelectWhere">
@@ -128,7 +145,10 @@
     <select id="count" parameterType="AspectoCriterioVO" resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_aspecto_aspc
+		FROM
+		    tbl_aspecto_aspc
+		    INNER JOIN tbl_aspecto_version_aspv ON
+		        aspv_aspc_pk = aspc_pk
     ]]>
         <include refid="SelectWhere" />
     </select>
@@ -161,7 +181,8 @@
     <select id="exists" parameterType="AspectoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM tbl_aspecto_aspc
+		FROM
+		    tbl_aspecto_aspc
         WHERE aspc_codigo = #{codigo} AND aspc_tpsr_pk = #{tpsr.id}
     ]]>
     </select>
@@ -169,7 +190,10 @@
     <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_aspecto_aspc
+		FROM
+		    tbl_aspecto_aspc
+		    INNER JOIN tbl_aspecto_version_aspv ON
+		        aspv_aspc_pk = aspc_pk
         WHERE
             aspc_pk = #{id}
             AND (

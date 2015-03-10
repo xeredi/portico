@@ -64,7 +64,11 @@
             <if test="prvrId == null and prvrIds == null">
             <![CDATA[
               	AND EXISTS (
-                	SELECT 1 FROM vw_parametro_prmt
+                	SELECT 1
+                	FROM
+                		tbl_parametro_prmt
+                		INNER JOIN tbl_parametro_version_prvr ON
+                			prvr_prmt_pk = prmt_pk
                 	WHERE
                         prvr_pk = prdt_prvr_pk
             ]]>

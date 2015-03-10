@@ -84,6 +84,8 @@
 
 		    , rgla_codigo, rgla_crgo_pk
 
+		    , vlrc_fref AS vlrl_fref
+
 		    , rglv_tipo, rglv_enti_pk
 			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
 			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
@@ -93,6 +95,7 @@
 
 		    , (SELECT ssrv_numero FROM tbl_subservicio_ssrv WHERE ssrv_pk = vlrl_ssrv_pk) AS ssrv_numero
 		    , (SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = rglv_enti_pk) AS enti_tipo
+		    , (SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe_base
 		    , (SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe
     ]]>
 		<if test="idioma != null">

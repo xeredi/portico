@@ -2,21 +2,6 @@
 -- Migration SQL that makes the change goes here.
 
 
-CREATE VIEW portico.vw_parametro_prmt AS
-	SELECT *
-	FROM
-		portico.tbl_parametro_prmt
-		INNER JOIN portico.tbl_parametro_version_prvr ON
-			prvr_prmt_pk = prmt_pk
-		INNER JOIN portico.tbl_tipo_parametro_tppr ON
-			tppr_pk = prmt_tppr_pk
-\
-
-GRANT SELECT ON portico.vw_parametro_prmt TO portico
-\
-
-
-
 CREATE VIEW portico.vw_parametro_dato_prdt AS
 	SELECT *
 	FROM
@@ -80,5 +65,4 @@ GRANT SELECT ON portico.vw_subparametro_dato_spdt TO portico\
 
 DROP VIEW portico.vw_subparametro_dato_spdt\
 DROP VIEW portico.vw_subparametro_sprm\
-DROP VIEW portico.vw_parametro_prmt\
 DROP VIEW portico.vw_parametro_dato_prdt\

@@ -4,11 +4,11 @@
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.ValoracionCargoDAO">
 	<resultMap type="ValoracionCargoVO" id="ResultMap">
-		<id column="vlrc_pk" />
+		<id column="vlrl_vlrc_pk" />
 		<id column="rgla_crgo_pk" />
 
-		<result column="vlrc_pk" property="vlrcId" />
-		<result column="vlrc_fref" property="fref" />
+		<result column="vlrl_vlrc_pk" property="vlrcId" />
+		<result column="vlrl_fref" property="fref" />
 		<result column="vlrg_importe" property="importe" />
 
 		<association property="crgo" javaType="CargoVO">
@@ -24,14 +24,11 @@
 	<select id="selectList" parameterType="ValoracionCriterioVO" resultMap="ResultMap">
     <![CDATA[
 		SELECT
-		    vlrc_pk, vlrc_fref
-		    , rgla_crgo_pk
-		    , (
-		        SELECT crgo_codigo
-		        FROM tbl_cargo_crgo
-		        WHERE crgo_pk = rgla_crgo_pk
-		    ) AS crgo_codigo
-		    , SUM(vlrd_importe) AS vlrg_importe
+		    vlrl_vlrc_pk, rgla_crgo_pk
+		    , vlrl_fref
+		    , (SELECT crgo_codigo FROM tbl_cargo_crgo
+		        WHERE crgo_pk = rgla_crgo_pk) AS crgo_codigo
+		    , SUM(vlrl_importe) AS vlrg_importe
     ]]>
 		<if test="idioma != null">
 	    <![CDATA[
@@ -47,31 +44,46 @@
 		                    tbl_cargo_version_crgv
 		                WHERE
 		                    crgv_crgo_pk = rgla_crgo_pk
-		                    AND vlrc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrc_fref)
+		                    AND vlrl_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrl_fref)
 		            )
 		    ) AS crgv_descripcion
 	    ]]>
 		</if>
     <![CDATA[
-		FROM
-		    tbl_valoracion_vlrc
-		    INNER JOIN tbl_valoracion_lin_vlrl ON
-		        vlrl_vlrc_pk = vlrc_pk
-		    INNER JOIN tbl_valoracion_det_vlrd ON
-		        vlrd_vlrl_pk = vlrl_pk
-		    INNER JOIN tbl_regla_rgla ON
-		        rgla_pk = vlrl_rgla_pk
+		FROM (
+		    SELECT
+		        vlrl_vlrc_pk
+		        , (
+		            SELECT vlrc_fref
+		            FROM tbl_valoracion_vlrc
+		            WHERE vlrc_pk = vlrl_vlrc_pk
+		        ) AS vlrl_fref
+		        , (
+		            SELECT rgla_crgo_pk
+		            FROM tbl_regla_rgla
+		            WHERE
+		                rgla_pk = vlrl_rgla_pk
+		            ) AS rgla_crgo_pk
+		        , (
+		            SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd
+		            WHERE vlrd_vlrl_pk = vlrl_pk
+		        ) AS vlrl_importe
+		    FROM
+		        tbl_valoracion_lin_vlrl
     ]]>
 		<where>
 			<if test="id != null">
-				AND vlrc_pk = #{id}
+				AND vlrl_vlrc_pk = #{id}
 			</if>
 			<if test="ids != null">
-				AND vlrc_pk IN
+				AND vlrl_vlrc_pk IN
 				<foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}
 				</foreach>
 			</if>
 		</where>
-		GROUP BY vlrc_pk, vlrc_fref, rgla_crgo_pk
+    <![CDATA[
+		) sql
+		GROUP BY vlrl_vlrc_pk, vlrl_fref, rgla_crgo_pk
+    ]]>
 	</select>
 </mapper>
