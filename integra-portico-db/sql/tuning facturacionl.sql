@@ -1,4 +1,49 @@
+SELECT 
+    fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
+    , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
+    , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
 
+    , aspc_codigo, aspc_tpsr_pk
+    
+    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = fctr_pagador_prmt_pk) AS fctr_pagador_prmt
+    
+    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctr_pk = fctr_pk) AS fctr_importe
+
+    , (
+        WITH tipoIva AS (
+            SELECT
+                prvr_prmt_pk, prvr_fini, prvr_ffin
+                , (SELECT prdt_ndecimal FROM tbl_parametro_dato_prdt
+                    WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS prdt_ndecimal
+            FROM
+                tbl_parametro_version_prvr
+            WHERE
+                prvr_prmt_pk = ANY (
+                    SELECT prmt_pk
+                    FROM tbl_parametro_prmt
+                    WHERE prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
+                )
+        )
+        SELECT
+            SUM(
+                fctd_importe * (
+                    SELECT prdt_ndecimal
+                    FROM tipoIva
+                    WHERE prvr_prmt_pk = fctl_impuesto_prmt_pk
+                        AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
+                )
+            ) / 100
+        FROM
+            tbl_factura_lin_fctl
+            INNER JOIN tbl_factura_det_fctd ON
+                fctd_fctl_pk = fctl_pk
+        WHERE fctl_fctr_pk = fctr_pk
+    ) AS fctr_impuesto
+FROM 
+    tbl_factura_fctr
+    INNER JOIN tbl_aspecto_aspc ON
+        aspc_pk = fctr_aspc_pk
+;
 
 
 SELECT *

@@ -3,33 +3,141 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.FacturaDAO">
-    <resultMap type="FacturaVO" id="ResultMap">
-        <id column="fctr_pk" />
+	<resultMap type="FacturaVO" id="ResultMap">
+		<id column="fctr_pk" />
 
-        <result column="fctr_pk" property="id" />
-        <result column="fctr_fref" property="fref" />
-        <result column="fctr_falta" property="falta" />
-        <result column="fctr_fini" property="fini" />
-        <result column="fctr_ffin" property="ffin" />
-        <result column="fctr_numero" property="numero" />
-        <result column="fctr_importe" property="importe" />
-        <result column="fctr_impuesto" property="impuesto" />
-        <result column="fctr_estado" property="estado" />
-        <result column="fctr_es_suj_pasivo" property="sujPasivo" />
+		<result column="fctr_pk" property="id" />
+		<result column="fctr_fref" property="fref" />
+		<result column="fctr_falta" property="falta" />
+		<result column="fctr_fini" property="fini" />
+		<result column="fctr_ffin" property="ffin" />
+		<result column="fctr_numero" property="numero" />
+		<result column="fctr_importe" property="importe" />
+		<result column="fctr_impuesto" property="impuesto" />
+		<result column="fctr_estado" property="estado" />
+		<result column="fctr_es_suj_pasivo" property="sujPasivo" />
 
-        <result column="fctr_info1" property="info1" />
-        <result column="fctr_info2" property="info2" />
-        <result column="fctr_info3" property="info3" />
-        <result column="fctr_info4" property="info4" />
-        <result column="fctr_info5" property="info5" />
-        <result column="fctr_info6" property="info6" />
+		<result column="fctr_info1" property="info1" />
+		<result column="fctr_info2" property="info2" />
+		<result column="fctr_info3" property="info3" />
+		<result column="fctr_info4" property="info4" />
+		<result column="fctr_info5" property="info5" />
+		<result column="fctr_info6" property="info6" />
 
-        <association property="aspc" resultMap="xeredi.integra.model.facturacion.dao.AspectoDAO.ResultMap" />
-        <association property="fcsr" resultMap="xeredi.integra.model.facturacion.dao.FacturaSerieDAO.ResultMap" />
-        <association property="pagador" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
-    </resultMap>
+		<association property="aspc" javaType="AspectoVO">
+			<result column="fctr_aspc_pk" property="id" />
+			<result column="aspc_codigo" property="codigo" />
 
-    <insert id="insert" parameterType="FacturaVO">
+			<association property="tpsr" javaType="TipoServicioVO">
+				<result column="aspc_tpsr_pk" property="id" />
+			</association>
+		</association>
+
+		<association property="fcsr" javaType="FacturaSerieVO">
+			<result column="fctr_fcsr_pk" property="id" />
+			<result column="fcsr_serie" property="serie" />
+			<result column="fcsr_anio" property="anio" />
+		</association>
+
+		<association property="pagador" javaType="ParametroVO">
+			<result column="fctr_pagador_prmt_pk" property="id" />
+			<result column="fctr_pagador_prmt" property="parametro" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
+		    , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
+		    , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
+
+		    , aspc_codigo, aspc_tpsr_pk
+
+		    , fcsr_serie, fcsr_anio
+
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = fctr_pagador_prmt_pk) AS fctr_pagador_prmt
+
+		    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctr_pk = fctr_pk) AS fctr_importe
+
+		    , (
+		        WITH tipoIva AS (
+		            SELECT
+		                prvr_prmt_pk, prvr_fini, prvr_ffin
+		                , (SELECT prdt_ndecimal FROM tbl_parametro_dato_prdt
+		                    WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS prdt_ndecimal
+		            FROM
+		                tbl_parametro_version_prvr
+		            WHERE
+		                prvr_prmt_pk = ANY (
+		                    SELECT prmt_pk
+		                    FROM tbl_parametro_prmt
+		                    WHERE prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
+		                )
+		        )
+		        SELECT
+		            SUM(
+		                fctd_importe * (
+		                    SELECT prdt_ndecimal
+		                    FROM tipoIva
+		                    WHERE prvr_prmt_pk = fctl_impuesto_prmt_pk
+		                        AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
+		                )
+		            ) / 100
+		        FROM
+		            tbl_factura_lin_fctl
+		            INNER JOIN tbl_factura_det_fctd ON
+		                fctd_fctl_pk = fctl_pk
+		        WHERE fctl_fctr_pk = fctr_pk
+		    ) AS fctr_impuesto
+		FROM
+		    tbl_factura_fctr
+		    INNER JOIN tbl_aspecto_aspc ON
+		        aspc_pk = fctr_aspc_pk
+		    INNER JOIN tbl_factura_serie_fcsr ON
+		        fcsr_pk = fctr_fcsr_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				fctr_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND fctr_pk IN
+				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
+			<if test="estado != null">
+				fctr_estado = #{estado}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select" resultMap="ResultMap" parameterType="Long">
+		<include refid="SelectPrefix" />
+		WHERE fctr_pk = #{value}
+	</select>
+
+	<select id="count" resultType="Integer" parameterType="FacturaCriterioVO">
+		SELECT COUNT(1)
+		FROM
+		tbl_factura_fctr
+		INNER JOIN tbl_aspecto_aspc ON
+		aspc_pk = fctr_aspc_pk
+		INNER JOIN tbl_factura_serie_fcsr ON
+		fcsr_pk = fctr_fcsr_pk
+		<include refid="SelectWhere" />
+	</select>
+
+	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
+
+
+	<insert id="insert" parameterType="FacturaVO">
     <![CDATA[
         INSERT INTO tbl_factura_fctr (
             fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
@@ -41,56 +149,17 @@
             , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
         )
     ]]>
-    </insert>
+	</insert>
 
-    <insert id="updateEstado" parameterType="FacturaVO">
+	<insert id="updateEstado" parameterType="FacturaVO">
     <![CDATA[
         UPDATE tbl_factura_fctr SET
             fctr_estado = #{estado}
         WHERE
             fctr_pk = #{id}
     ]]>
-    </insert>
-
-    <sql id="SelectPrefix">
-    <![CDATA[
-        SELECT *
-        FROM vw_factura_fctr
-    ]]>
-    </sql>
-
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                fctr_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND fctr_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
-            <if test="estado != null">
-                fctr_estado = #{estado}
-            </if>
-        </where>
-    </sql>
-
-    <select id="select" resultMap="ResultMap" parameterType="Long">
-        <include refid="SelectPrefix" />
-        WHERE fctr_pk = #{value}
-    </select>
-
-    <select id="count" resultType="Integer" parameterType="FacturaCriterioVO">
-        SELECT COUNT(1) FROM vw_factura_fctr
-        <include refid="SelectWhere" />
-    </select>
-
-    <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
-
-    <select id="existsFacturaPosterior" parameterType="Long" resultType="Boolean">
+	</insert>
+	<select id="existsFacturaPosterior" parameterType="Long" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -102,9 +171,9 @@
         WHERE
             fcts1.fcts_fctr_pk = #{value}
     ]]>
-    </select>
+	</select>
 
-    <select id="existsValoracionPosterior" parameterType="Long" resultType="Boolean">
+	<select id="existsValoracionPosterior" parameterType="Long" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM
@@ -115,5 +184,5 @@
         WHERE
             fcts_fctr_pk = #{value}
     ]]>
-    </select>
+	</select>
 </mapper>

@@ -12,24 +12,6 @@ import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
  * The Interface FacturaImpuestoDAO.
  */
 public interface FacturaImpuestoDAO {
-
-    /**
-     * Select generate list.
-     *
-     * @param fctrCriterioVO
-     *            the fctr criterio vo
-     * @return the list
-     */
-    List<FacturaImpuestoVO> selectGenerateList(final @Nonnull FacturaCriterioVO fctrCriterioVO);
-
-    /**
-     * Insert.
-     *
-     * @param fcti
-     *            the fcti
-     */
-    void insert(final @Nonnull FacturaImpuestoVO fcti);
-
     /**
      * Select list.
      *

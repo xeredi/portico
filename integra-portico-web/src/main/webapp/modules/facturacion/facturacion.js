@@ -11,6 +11,11 @@ angular.module("facturacion", [])
 // ----------- FACTURADOR ------------------
 .controller("FctrPrepareController", FctrPrepareController)
 
+// ----------- FACTURA ------------------
+.controller("FctrGridController", FctrGridController)
+
+.controller("FctrDetailController", FctrDetailController)
+
 // ----------- VALORACION ------------------
 .controller("VlrcGridController", VlrcGridController)
 
@@ -92,6 +97,20 @@ function config($routeProvider) {
 	.when("/facturacion/fctr/prepare/:vlrcId", {
 		templateUrl : "modules/facturacion/fctr-prepare.html",
 		controller : "FctrPrepareController",
+		controllerAs : "vm",
+		reloadOnSearch : false
+	})
+
+	.when("/facturacion/fctr/grid", {
+		templateUrl : "modules/facturacion/fctr-grid.html",
+		controller : "FctrGridController",
+		controllerAs : "vm",
+		reloadOnSearch : false
+	})
+
+	.when("/facturacion/fctr/detail/:fctrId", {
+		templateUrl : "modules/facturacion/fctr-detail.html",
+		controller : "FctrDetailController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
@@ -413,6 +432,117 @@ function FctrPrepareController($http, $location, $routeParams, pageTitleService)
 	});
 
 	pageTitleService.setTitle("fctr", "page_prepare");
+}
+
+function FctrGridController($http, $location, $routeParams, $modal,
+		pageTitleService) {
+	var vm = this;
+
+	vm.search = search;
+	vm.pageChanged = pageChanged;
+	vm.filter = filter;
+
+	vm.fctrCriterio = $routeParams.fctrCriterio ? angular
+			.fromJson($routeParams.fctrCriterio) : {};
+
+	function search(page) {
+		$http.post("facturacion/fctr-list.action", {
+			fctrCriterio : vm.fctrCriterio,
+			page : page,
+			limit : vm.limit
+		}).success(function(data) {
+			vm.page = data.fctrList.page;
+			vm.fctrList = data.fctrList;
+			vm.fctrCriterio = data.fctrCriterio;
+
+			$location.search({
+				page : vm.page,
+				fctrCriterio : JSON.stringify(vm.fctrCriterio)
+			}).replace();
+		});
+	}
+
+	function pageChanged() {
+		search(vm.page);
+	}
+
+	function filter(size) {
+		$http.post("facturacion/fctr-filter.action").success(function(data) {
+			// vm.tpsrList = data.tpsrList;
+		});
+	}
+
+	search($routeParams.page ? $routeParams.page : 1);
+	pageTitleService.setTitle("fctr", "page_grid");
+}
+
+function FctrDetailController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.pageChanged = pageChanged;
+	vm.tabSelected = tabSelected;
+	vm.remove = remove;
+	vm.print = print;
+
+	vm.tab = $routeParams.tab ? $routeParams.tab : null;
+	vm.path = $location.path();
+
+	function findFctlList(page) {
+		$http.post("facturacion/fctl-list.action", {
+			fctlCriterio : {
+				fctr : {
+					id : $routeParams.fctrId
+				}
+			},
+			page : page
+		}).success(function(data) {
+			vm.fctlList = data.fctlList;
+			vm.page = data.fctlList.page;
+
+			$location.search("page", vm.page).replace();
+		});
+	}
+
+	function pageChanged() {
+		findFctlList(vm.page);
+	}
+
+	function tabSelected(tabNo) {
+		if (vm.path == $location.path()) {
+			$location.search("tab", tabNo).replace();
+		}
+	}
+
+	function print() {
+		$http.post('facturacion/fctr-print.action', {
+			fctrId : vm.fctr.id
+		}, {
+			responseType : 'arraybuffer'
+		}).success(function(data) {
+			var file = new Blob([ data ], {
+				type : 'application/pdf'
+			});
+
+			setTimeout(function() {
+				saveAs(file, vm.fctr.etiqueta + '.pdf');
+			}, 0);
+		});
+	}
+
+	$http.post("facturacion/fctr-detail.action", {
+		vlrc : {
+			id : $routeParams.fctrId
+		}
+	}).success(function(data) {
+		vm.fctr = data.fctr;
+		vm.aspc = data.aspc;
+		vm.fctgList = data.fctgList;
+		vm.fctiList = data.fctiList;
+
+		findVlrlList($routeParams.page ? $routeParams.page : 1);
+	});
+
+	pageTitleService.setTitle("fctr", "page_detail");
 }
 
 function VlrcGridController($http, $location, $routeParams, $modal,
@@ -798,8 +928,7 @@ function FcsrCreateController($http, $location, $routeParams, pageTitleService) 
 			accion : vm.accion
 		}).success(
 				function(data) {
-					$location.path(
-							"/facturacion/fcsr/detail/" + data.fcsr.id)
+					$location.path("/facturacion/fcsr/detail/" + data.fcsr.id)
 							.replace();
 				});
 	}

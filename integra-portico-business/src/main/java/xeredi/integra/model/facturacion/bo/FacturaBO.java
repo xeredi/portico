@@ -69,8 +69,6 @@ public class FacturaBO {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
             final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
-            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
 
@@ -110,8 +108,6 @@ public class FacturaBO {
             // Crear nueva factura a partir de los datos de la factura anulada.
             final FacturaSerieVO fcsr = fcsrDAO.select(fcsrId);
             final List<FacturaServicioVO> fctsList = fctsDAO.selectList(fctrCriterioVO);
-            final List<FacturaCargoVO> fctgList = fctgDAO.selectList(fctrCriterioVO);
-            final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
             final List<FacturaLineaVO> fctlList = fctlDAO.selectList(fctlCriterioVO);
             final List<FacturaDetalleVO> fctdList = fctdDAO.selectList(fctdCriterioVO);
 
@@ -137,20 +133,6 @@ public class FacturaBO {
                 fcts.setFctrId(generatedIds.get(fcts.getFctrId()));
 
                 fctsDAO.insert(fcts);
-            }
-
-            for (final FacturaCargoVO fctg : fctgList) {
-                fctg.setFctrId(generatedIds.get(fctg.getFctrId()));
-
-                fctgDAO.insert(fctg);
-            }
-
-            for (final FacturaImpuestoVO fcti : fctiList) {
-                fcti.setFctrId(generatedIds.get(fcti.getFctrId()));
-                fcti.setImporteBase(-fcti.getImporteBase());
-                fcti.setImporteImpuesto(-fcti.getImporteImpuesto());
-
-                fctiDAO.insert(fcti);
             }
 
             for (final FacturaLineaVO fctl : fctlList) {
@@ -199,7 +181,6 @@ public class FacturaBO {
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
             final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
@@ -234,8 +215,6 @@ public class FacturaBO {
             fctrCriterioVO.setFcts(fctsCriterioVO);
             fctlCriterioVO.setFctr(fctrCriterioVO);
             fctdCriterioVO.setFctl(fctlCriterioVO);
-
-            final List<FacturaImpuestoVO> fctiList = fctiDAO.selectList(fctrCriterioVO);
 
             // Creacion de la valoracion
             final IgBO igBO = new IgBO();

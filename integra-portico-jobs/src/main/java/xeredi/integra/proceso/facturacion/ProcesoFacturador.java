@@ -43,14 +43,20 @@ public final class ProcesoFacturador extends ProcesoTemplate {
     protected void ejecutarProceso() {
         final FacturadorBO fctrBO = new FacturadorBO(this);
 
-        final String ffacString = prpmMap.get(FFAC_PARAM).getValor();
-        final String aspcIdString = prpmMap.get(ASPCID_PARAM).getValor();
-        final String fcsrIdString = prpmMap.get(FCSRID_PARAM).getValor();
-
         try {
-            final Date ffac = new SimpleDateFormat("dd/MM/yyyy").parse(ffacString);
-            final Long aspcId = Long.parseLong(aspcIdString);
-            final Long fcsrId = Long.parseLong(fcsrIdString);
+            Date ffac = null;
+            Long aspcId = null;
+            Long fcsrId = null;
+
+            if (prpmMap.containsKey(FFAC_PARAM)) {
+                ffac = new SimpleDateFormat("dd/MM/yyyy").parse(prpmMap.get(FFAC_PARAM).getValor());
+            }
+            if (prpmMap.containsKey(ASPCID_PARAM)) {
+                aspcId = Long.parseLong(prpmMap.get(ASPCID_PARAM).getValor());
+            }
+            if (prpmMap.containsKey(FCSRID_PARAM)) {
+                fcsrId = Long.parseLong(prpmMap.get(FCSRID_PARAM).getValor());
+            }
 
             final Set<Long> vlrcIds = new HashSet<>();
 
@@ -58,10 +64,12 @@ public final class ProcesoFacturador extends ProcesoTemplate {
                 vlrcIds.add(pritEntrada.getItemId());
             }
 
-            try {
-                fctrBO.facturarValoraciones(vlrcIds, aspcId, fcsrId, ffac);
-            } catch (final Exception ex) {
-                addError(MensajeCodigo.G_000, ex.getMessage());
+            if (!vlrcIds.isEmpty()) {
+                try {
+                    fctrBO.facturarValoraciones(vlrcIds, aspcId, fcsrId, ffac);
+                } catch (final Exception ex) {
+                    addError(MensajeCodigo.G_000, ex.getMessage());
+                }
             }
         } catch (final ParseException ex) {
             throw new Error(ex);

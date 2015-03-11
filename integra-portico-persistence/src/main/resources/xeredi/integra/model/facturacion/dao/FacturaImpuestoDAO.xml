@@ -18,7 +18,7 @@
 
     <select id="selectGenerateList" parameterType="FacturaCriterioVO" resultMap="ResultMap">
     <![CDATA[
-        SELECT *
+        SELECT sql.*
         	, (fcti_importe * fcti_porcentaje) / 100 AS fcti_impuesto
         FROM (
         	SELECT
@@ -44,7 +44,7 @@
         		INNER JOIN tbl_factura_det_fctd ON
         			fctd_fctl_pk = fctl_pk
         	WHERE fcts_fctr_pk = #{id}
-        	GROUP BY fcts_fctr_pk, fctl_impuesto_prmt_pk, fcti_porcentaje
+        	GROUP BY fcts_fctr_pk, fctl_impuesto_prmt_pk
         ) sql
     ]]>
     </select>

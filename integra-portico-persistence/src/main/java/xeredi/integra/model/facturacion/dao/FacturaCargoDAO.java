@@ -12,23 +12,6 @@ import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
  * The Interface FacturaCargoDAO.
  */
 public interface FacturaCargoDAO {
-
-    /**
-     * Insert.
-     *
-     * @param fctc
-     *            the fctc
-     */
-    void insert(final @Nonnull FacturaCargoVO fctc);
-
-    /**
-     * Insert generate.
-     *
-     * @param fctrCriterioVO
-     *            the fctr criterio vo
-     */
-    void insertGenerate(final @Nonnull FacturaCriterioVO fctrCriterioVO);
-
     /**
      * Select list.
      *

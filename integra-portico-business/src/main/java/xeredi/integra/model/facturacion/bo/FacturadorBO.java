@@ -16,10 +16,8 @@ import org.apache.ibatis.session.SqlSession;
 import xeredi.integra.model.comun.bo.IgBO;
 import xeredi.integra.model.facturacion.dao.AspectoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaAgregadaDAO;
-import xeredi.integra.model.facturacion.dao.FacturaCargoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaDAO;
 import xeredi.integra.model.facturacion.dao.FacturaDetalleDAO;
-import xeredi.integra.model.facturacion.dao.FacturaImpuestoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaLineaDAO;
 import xeredi.integra.model.facturacion.dao.FacturaSerieDAO;
 import xeredi.integra.model.facturacion.dao.FacturaServicioDAO;
@@ -33,7 +31,6 @@ import xeredi.integra.model.facturacion.vo.FacturaAgregadaVO;
 import xeredi.integra.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.integra.model.facturacion.vo.FacturaDetalleVO;
 import xeredi.integra.model.facturacion.vo.FacturaEstado;
-import xeredi.integra.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.integra.model.facturacion.vo.FacturaLineaVO;
 import xeredi.integra.model.facturacion.vo.FacturaSerieVO;
 import xeredi.integra.model.facturacion.vo.FacturaServicioVO;
@@ -104,8 +101,6 @@ public class FacturadorBO {
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
             final FacturaServicioDAO fctsDAO = session.getMapper(FacturaServicioDAO.class);
-            final FacturaImpuestoDAO fctiDAO = session.getMapper(FacturaImpuestoDAO.class);
-            final FacturaCargoDAO fctgDAO = session.getMapper(FacturaCargoDAO.class);
             final ValoracionDAO vlrcDAO = session.getMapper(ValoracionDAO.class);
             final ValoracionLineaDAO vlrlDAO = session.getMapper(ValoracionLineaDAO.class);
             final ValoracionDetalleDAO vlrdDAO = session.getMapper(ValoracionDetalleDAO.class);
@@ -288,14 +283,6 @@ public class FacturadorBO {
 
                 fctrCriterioVO.setId(fctr.getFctr().getId());
                 Preconditions.checkNotNull(fctrCriterioVO.getId());
-
-                final List<FacturaImpuestoVO> fctiList = fctiDAO.selectGenerateList(fctrCriterioVO);
-
-                for (final FacturaImpuestoVO fcti : fctiList) {
-                    fctiDAO.insert(fcti);
-                }
-
-                fctgDAO.insertGenerate(fctrCriterioVO);
             }
 
             LOG.info("Marcar como facturado en servicio_cargo");

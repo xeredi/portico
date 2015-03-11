@@ -12,7 +12,9 @@ import java.util.Map;
 import org.apache.struts2.convention.annotation.Action;
 
 import xeredi.integra.http.controller.action.BaseAction;
+import xeredi.integra.http.util.FieldValidator;
 import xeredi.integra.model.comun.exception.ApplicationException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.bo.AspectoBO;
 import xeredi.integra.model.facturacion.bo.FacturaSerieBO;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
@@ -73,7 +75,6 @@ public final class FacturadorAction extends BaseAction {
         final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 
         vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
-        aspcId = vlrc.getAspc().getId();
         ffac = vlrc.getFref();
 
         final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
@@ -104,20 +105,25 @@ public final class FacturadorAction extends BaseAction {
     public String facturar() {
         Preconditions.checkNotNull(vlrc);
         Preconditions.checkNotNull(vlrc.getId());
-        Preconditions.checkNotNull(aspcId);
-        Preconditions.checkNotNull(fcsrId);
-        Preconditions.checkNotNull(ffac);
 
-        final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        final ProcesoBO prbtBO = new ProcesoBO();
-        final List<Long> itemEntradaList = Arrays.asList(vlrc.getId());
-        final Map<String, String> parametroMap = new HashMap<>();
+        FieldValidator.validateRequired(this, MessageI18nKey.fctr_ffac, ffac);
+        FieldValidator.validateRequired(this, MessageI18nKey.fcsr, fcsrId);
 
-        parametroMap.put(ProcesoFacturador.FFAC_PARAM, dateFormat.format(ffac));
-        parametroMap.put(ProcesoFacturador.FCSRID_PARAM, fcsrId.toString());
-        parametroMap.put(ProcesoFacturador.ASPCID_PARAM, aspcId.toString());
+        if (!hasErrors()) {
+            final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            final ProcesoBO prbtBO = new ProcesoBO();
+            final List<Long> itemEntradaList = Arrays.asList(vlrc.getId());
+            final Map<String, String> parametroMap = new HashMap<>();
 
-        prbtBO.crear(ProcesoTipo.FACTURADOR, parametroMap, ItemTipo.vlrc, itemEntradaList, null);
+            parametroMap.put(ProcesoFacturador.FFAC_PARAM, dateFormat.format(ffac));
+            parametroMap.put(ProcesoFacturador.FCSRID_PARAM, fcsrId.toString());
+
+            if (aspcId != null) {
+                parametroMap.put(ProcesoFacturador.ASPCID_PARAM, aspcId.toString());
+            }
+
+            prbtBO.crear(ProcesoTipo.FACTURADOR, parametroMap, ItemTipo.vlrc, itemEntradaList, null);
+        }
 
         return SUCCESS;
     }

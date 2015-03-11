@@ -1,0 +1,69 @@
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <pagination total-items="vm.fctrList.count" items-per-page="vm.fctrList.limit" ng-model="vm.page"
+            ng-change="vm.pageChanged()" class="pagination" max-size="1" previous-text="&lsaquo;&lsaquo;"
+            next-text="&rsaquo;&rsaquo;"></pagination>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default" data-ng-click="vm.filter('lg')"
+            data-template="modules/facturacion/fctr-filter-content.html" bs-modal="modal">
+            <i class="glyphicon glyphicon-search"></i><span translate="btn_filtrar"></span>
+        </button>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <span class="label label-default" translate="grid_count"
+        translate-value-count="{{vm.fctrList.count | number:0}}"></span>
+
+    <table class="table-bordered table-condensed table-hover table-nonfluid">
+        <thead>
+            <tr>
+                <th class="buttonLinks" nowrap="nowrap" />
+                <th translate="fctr"></th>
+                <th translate="fctr_estado"></th>
+                <th translate="fctr_falta"></th>
+                <th translate="fctr_fref"></th>
+                <th translate="fctr_fini"></th>
+                <th translate="fctr_fin"></th>
+                <th translate="fctr_pagador"></th>
+                <th translate="fctr_sujPasivo"></th>
+                <th translate="fctr_aspc"></th>
+                <th translate="fctr_tpsr"></th>
+                <th translate="fctr_importe"></th>
+                <th translate="fctr_impuesto"></th>
+                <th translate="fctr_info1"></th>
+                <th translate="fctr_info2"></th>
+                <th translate="fctr_info3"></th>
+                <th translate="fctr_info4"></th>
+                <th translate="fctr_info5"></th>
+                <th translate="fctr_info6"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="item in vm.fctrList.list track by $index">
+                <td><a ng-href="#/facturacion/fctr/detail/{{item.id}}"><i
+                        class="glyphicon glyphicon-search"></i></a></td>
+                <td ng-bind="item.etiqueta"></td>
+                <td ng-bind="item.estado"></td>
+                <td nowrap="nowrap" ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
+                <td nowrap="nowrap" ng-bind="item.fref | date: ('format_date' | translate)"></td>
+                <td nowrap="nowrap" ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
+                <td nowrap="nowrap" ng-bind="item.ffin | date: ('format_datetime' | translate)"></td>
+                <td nowrap="nowrap" ng-bind="item.pagador.etiqueta"></td>
+                <td><i class="glyphicon glyphicon-{{item.sujPasivo ? 'ok' : 'remove'}}"></i></td>
+                <td nowrap="nowrap" ng-bind="item.aspc.etiqueta"></td>
+                <td nowrap="nowrap" ng-bind="'enti_' + item.aspc.tpsr.id | translate"></td>
+                <td nowrap="nowrap" class="number" ng-bind="item.importe | number:2"></td>
+                <td nowrap="nowrap" class="number" ng-bind="item.impuesto | number:2"></td>
+                <td nowrap="nowrap" ng-bind="item.info1"></td>
+                <td nowrap="nowrap" ng-bind="item.info2"></td>
+                <td ng-bind="item.info3"></td>
+                <td ng-bind="item.info4"></td>
+                <td ng-bind="item.info5"></td>
+                <td ng-bind="item.info6"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

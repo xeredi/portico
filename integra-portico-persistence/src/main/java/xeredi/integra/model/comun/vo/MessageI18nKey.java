@@ -60,6 +60,10 @@ public enum MessageI18nKey {
     btn_valorar,
     /** The btn_valoraciones. */
     btn_valoraciones,
+    /** The btn_facturar. */
+    btn_facturar,
+    /** The btn_facturas. */
+    btn_facturas,
     /** The btn_cargar. */
     btn_cargar,
     /** The btn_start. */
@@ -858,6 +862,8 @@ public enum MessageI18nKey {
     fctr,
     /** The fctr list. */
     fctrList,
+    /** The fctr_ffac. */
+    fctr_ffac,
     /** The conf. */
     conf,
     /** The conf list. */
