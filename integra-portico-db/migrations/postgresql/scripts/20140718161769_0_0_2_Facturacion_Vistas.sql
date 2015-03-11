@@ -19,85 +19,6 @@ GRANT SELECT ON portico.vw_regla_inc_rgin TO portico
 
 
 
-CREATE VIEW portico.vw_factura_fctr AS
-	SELECT *
-		, (
-			SELECT prvr_pk
-			FROM portico.tbl_parametro_version_prvr
-			WHERE prvr_prmt_pk = fctr_pagador_prmt_pk
-				AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
-		) AS prvr_pk
-		, (
-			SELECT SUM(fcti_importe)
-			FROM portico.tbl_factura_imp_fcti
-			WHERE fcti_fctr_pk = fctr_pk
-		) AS fctr_importe
-		, (
-			SELECT SUM(fcti_impuesto)
-			FROM portico.tbl_factura_imp_fcti
-			WHERE fcti_fctr_pk = fctr_pk
-		) AS fctr_impuesto
-	FROM
-		portico.tbl_factura_fctr
-		INNER JOIN portico.tbl_parametro_prmt ON
-			prmt_pk = fctr_pagador_prmt_pk
-		INNER JOIN portico.tbl_aspecto_aspc on
-			aspc_pk = fctr_aspc_pk
-		INNER JOIN portico.tbl_aspecto_version_aspv on
-			aspv_aspc_pk = fctr_aspc_pk
-			AND fctr_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fctr_fref)
-		INNER JOIN portico.tbl_factura_serie_fcsr on
-			fcsr_pk = fctr_fcsr_pk
-\
-
-GRANT SELECT ON portico.vw_factura_fctr TO portico
-\
-
-
-
-CREATE VIEW portico.vw_factura_cargo_fctc AS
-	SELECT *
-	FROM
-		portico.tbl_factura_cargo_fctc
-		INNER JOIN portico.tbl_cargo_crgo ON
-			crgo_pk = fctc_crgo_pk
-		INNER JOIN portico.tbl_cargo_version_crgv ON
-			crgv_crgo_pk = fctc_crgo_pk
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_factura_fctr
-				WHERE
-					fctr_pk = fctc_fctr_pk
-					AND fctr_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, fctr_fref)
-			)
-\
-
-GRANT SELECT ON portico.vw_factura_cargo_fctc TO portico
-\
-
-
-
-CREATE VIEW portico.vw_factura_imp_fcti AS
-	SELECT *
-	FROM portico.tbl_factura_imp_fcti
-		JOIN portico.tbl_parametro_prmt ON
-			prmt_pk = fcti_impuesto_prmt_pk
-		JOIN portico.tbl_parametro_version_prvr ON
-			prvr_prmt_pk = fcti_impuesto_prmt_pk
-			AND EXISTS (
-				SELECT 1
-				FROM portico.tbl_factura_fctr
-				WHERE
-					fctr_pk = fcti_fctr_pk
-					AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
-			)
-\
-
-GRANT SELECT ON portico.vw_factura_imp_fcti TO portico
-\
-
-
-
 CREATE VIEW portico.vw_factura_srv_fcts AS
 	SELECT *
 		, (
@@ -187,6 +108,3 @@ DROP VIEW IF EXISTS portico.vw_regla_inc_rgin\
 DROP VIEW IF EXISTS portico.vw_factura_det_fctd\
 DROP VIEW IF EXISTS portico.vw_factura_lin_fctl\
 DROP VIEW IF EXISTS portico.vw_factura_srv_fcts\
-DROP VIEW IF EXISTS portico.vw_factura_imp_fcti\
-DROP VIEW IF EXISTS portico.vw_factura_cargo_fctc\
-DROP VIEW IF EXISTS portico.vw_factura_fctr\

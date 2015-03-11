@@ -618,47 +618,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_srv_fcts TO portico\
 
 
 
--- tbl_factura_imp_fcti
-CREATE TABLE tbl_factura_imp_fcti (
-	fcti_fctr_pk NUMBER(19) NOT NULL
-	, fcti_impuesto_prmt_pk NUMBER(19) NOT NULL
-	, fcti_porcentaje NUMERIC(5, 2) NOT NULL
-	, fcti_importe NUMERIC(10, 2) NOT NULL
-	, fcti_impuesto NUMERIC(10, 2) NOT NULL
-
-	, CONSTRAINT fk_fcti_fctr_pk FOREIGN KEY (fcti_fctr_pk)
-		REFERENCES tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fcti_impuesto_prmt_pk FOREIGN KEY (fcti_impuesto_prmt_pk)
-		REFERENCES tbl_parametro_prmt (prmt_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_factura_imp_fcti FOR porticoadm.tbl_factura_imp_fcti\
-
-CREATE INDEX ix_fcti_fctr_pk ON tbl_factura_imp_fcti (fcti_fctr_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_imp_fcti TO portico\
-
-
-
--- tbl_factura_cargo_fctc
-CREATE TABLE tbl_factura_cargo_fctc (
-	fctc_fctr_pk NUMBER(19) NOT NULL
-	, fctc_crgo_pk NUMBER(19) NOT NULL
-
-	, CONSTRAINT pk_fctc PRIMARY KEY (fctc_fctr_pk, fctc_crgo_pk)
-
-	, CONSTRAINT fk_fctc_fctr_pk FOREIGN KEY (fctc_fctr_pk)
-		REFERENCES tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fctc_crgo_pk FOREIGN KEY (fctc_crgo_pk)
-		REFERENCES tbl_cargo_crgo (crgo_pk)
-)\
-
-CREATE OR REPLACE SYNONYM portico.tbl_factura_cargo_fctc FOR porticoadm.tbl_factura_cargo_fctc\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_factura_cargo_fctc TO portico\
-
-
-
 -- tbl_factura_lin_fctl
 CREATE TABLE tbl_factura_lin_fctl (
 	fctl_pk NUMBER(19) NOT NULL

@@ -20,88 +20,6 @@ GRANT SELECT ON vw_regla_inc_rgin TO portico\
 
 
 
-CREATE VIEW vw_factura_fctr AS
-	SELECT fctr.*, prmt.*, aspc.*, aspv.*, fcsr.*
-		, (
-			SELECT prvr_pk
-			FROM tbl_parametro_version_prvr
-			WHERE prvr_prmt_pk = fctr_pagador_prmt_pk
-				AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
-		) AS prvr_pk
-		, (
-			SELECT SUM(fcti_importe)
-			FROM tbl_factura_imp_fcti
-			WHERE fcti_fctr_pk = fctr_pk
-		) AS fctr_importe
-		, (
-			SELECT SUM(fcti_impuesto)
-			FROM tbl_factura_imp_fcti
-			WHERE fcti_fctr_pk = fctr_pk
-		) AS fctr_impuesto
-	FROM
-		tbl_factura_fctr fctr
-		INNER JOIN tbl_parametro_prmt prmt ON
-			prmt_pk = fctr_pagador_prmt_pk
-		INNER JOIN tbl_aspecto_aspc aspc on
-			aspc_pk = fctr_aspc_pk
-		INNER JOIN tbl_aspecto_version_aspv aspv on
-			aspv_aspc_pk = fctr_aspc_pk
-			AND fctr_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fctr_fref)
-		INNER JOIN tbl_factura_serie_fcsr fcsr on
-			fcsr_pk = fctr_fcsr_pk
-\
-
-CREATE OR REPLACE SYNONYM portico.vw_factura_fctr FOR vw_factura_fctr\
-
-GRANT SELECT ON vw_factura_fctr TO portico\
-
-
-
-CREATE VIEW vw_factura_cargo_fctc AS
-	SELECT *
-	FROM
-		tbl_factura_cargo_fctc
-		INNER JOIN tbl_cargo_crgo ON
-			crgo_pk = fctc_crgo_pk
-		INNER JOIN tbl_cargo_version_crgv ON
-			crgv_crgo_pk = fctc_crgo_pk
-			AND EXISTS (
-				SELECT 1
-				FROM tbl_factura_fctr
-				WHERE
-					fctr_pk = fctc_fctr_pk
-					AND fctr_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, fctr_fref)
-			)
-\
-
-CREATE OR REPLACE SYNONYM portico.vw_factura_cargo_fctc FOR vw_factura_cargo_fctc\
-
-GRANT SELECT ON vw_factura_cargo_fctc TO portico\
-
-
-
-CREATE VIEW vw_factura_imp_fcti AS
-	SELECT *
-	FROM tbl_factura_imp_fcti
-		JOIN tbl_parametro_prmt ON
-			prmt_pk = fcti_impuesto_prmt_pk
-		JOIN tbl_parametro_version_prvr ON
-			prvr_prmt_pk = fcti_impuesto_prmt_pk
-			AND EXISTS (
-				SELECT 1
-				FROM tbl_factura_fctr
-				WHERE
-					fctr_pk = fcti_fctr_pk
-					AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
-			)
-\
-
-CREATE OR REPLACE SYNONYM portico.vw_factura_imp_fcti FOR vw_factura_imp_fcti\
-
-GRANT SELECT ON vw_factura_imp_fcti TO portico\
-
-
-
 CREATE VIEW vw_factura_srv_fcts AS
 	SELECT fcts.*, aspc.*, aspv.*, srvc.*
 		, (
@@ -194,6 +112,3 @@ DROP VIEW vw_regla_inc_rgin\
 DROP VIEW vw_factura_det_fctd\
 DROP VIEW vw_factura_lin_fctl\
 DROP VIEW vw_factura_srv_fcts\
-DROP VIEW vw_factura_imp_fcti\
-DROP VIEW vw_factura_cargo_fctc\
-DROP VIEW vw_factura_fctr\

@@ -620,47 +620,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_srv_fcts TO portico\
 
 
 
--- tbl_factura_imp_fcti
-CREATE TABLE portico.tbl_factura_imp_fcti
-(
-	fcti_fctr_pk BIGINT NOT NULL
-	, fcti_impuesto_prmt_pk BIGINT NOT NULL
-	, fcti_porcentaje NUMERIC(5, 2) NOT NULL
-	, fcti_importe NUMERIC(10, 2) NOT NULL
-	, fcti_impuesto NUMERIC(10, 2) NOT NULL
-
-	, CONSTRAINT fk_fcti_fctr_pk FOREIGN KEY (fcti_fctr_pk)
-		REFERENCES portico.tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fcti_impuesto_prmt_pk FOREIGN KEY (fcti_impuesto_prmt_pk)
-		REFERENCES portico.tbl_parametro_prmt (prmt_pk)
-)
-\
-
-CREATE INDEX ix_fcti_fctr_pk ON portico.tbl_factura_imp_fcti (fcti_fctr_pk)\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_imp_fcti TO portico\
-
-
-
--- tbl_factura_cargo_fctc
-CREATE TABLE portico.tbl_factura_cargo_fctc
-(
-	fctc_fctr_pk BIGINT NOT NULL
-	, fctc_crgo_pk BIGINT NOT NULL
-
-	, CONSTRAINT pk_fctc PRIMARY KEY (fctc_fctr_pk, fctc_crgo_pk)
-
-	, CONSTRAINT fk_fctc_fctr_pk FOREIGN KEY (fctc_fctr_pk)
-		REFERENCES portico.tbl_factura_fctr (fctr_pk)
-	, CONSTRAINT fk_fctc_crgo_pk FOREIGN KEY (fctc_crgo_pk)
-		REFERENCES portico.tbl_cargo_crgo (crgo_pk)
-)
-\
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_factura_cargo_fctc TO portico\
-
-
-
 -- tbl_factura_lin_fctl
 CREATE TABLE portico.tbl_factura_lin_fctl
 (
@@ -805,8 +764,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON portico.tbl_servicio_cargo_srcr TO porti
 DROP TABLE portico.tbl_servicio_cargo_srcr\
 DROP TABLE portico.tbl_factura_det_fctd\
 DROP TABLE portico.tbl_factura_lin_fctl\
-DROP TABLE portico.tbl_factura_cargo_fctc\
-DROP TABLE portico.tbl_factura_imp_fcti\
 DROP TABLE portico.tbl_factura_srv_fcts\
 DROP TABLE portico.tbl_factura_fctr\
 DROP TABLE portico.tbl_valoracion_tmp_vlrt\
