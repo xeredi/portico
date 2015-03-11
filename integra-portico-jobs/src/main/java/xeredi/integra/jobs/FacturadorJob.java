@@ -7,17 +7,17 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import xeredi.integra.proceso.facturacion.ProcesoValorador;
+import xeredi.integra.proceso.facturacion.ProcesoFacturador;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class ValoradorJob.
+ * The Class FacturadorJob.
  */
 @DisallowConcurrentExecution
-public final class ValoradorJob implements Job {
+public final class FacturadorJob implements Job {
 
     /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ValoradorJob.class);
+    private static final Log LOG = LogFactory.getLog(FacturadorJob.class);
 
     /**
      * {@inheritDoc}
@@ -26,10 +26,10 @@ public final class ValoradorJob implements Job {
     public void execute(final JobExecutionContext context) throws JobExecutionException {
         LOG.info("Start Job");
 
-        final ProcesoValorador procesoValorador = new ProcesoValorador();
+        final ProcesoFacturador procesoFacturador = new ProcesoFacturador();
 
         try {
-            procesoValorador.procesar();
+            procesoFacturador.procesar();
         } catch (final Throwable ex) {
             LOG.error(ex, ex);
         }

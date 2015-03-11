@@ -89,6 +89,16 @@ public final class PorticoScheduler {
 
             instance.scheduleJob(valoradorJob, valoradorTrigger);
 
+            final JobDetail facturadorJob = JobBuilder.newJob(FacturadorJob.class)
+                    .withIdentity("facturadorJob", "fctrGroup").build();
+
+            final Trigger facturadorTrigger = TriggerBuilder.newTrigger()
+                    .withIdentity("facturadorTrigger", "fctrGroup").startNow()
+                    .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(300).repeatForever())
+                    .build();
+
+            instance.scheduleJob(facturadorJob, facturadorTrigger);
+
             LOG.info("Scheduler Created");
         }
 

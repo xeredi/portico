@@ -1,14 +1,4 @@
-SELECT 
-    spdt_spvr_pk, spdt_tpdt_pk, spdt_nentero, spdt_ndecimal, spdt_fecha, spdt_prmt_pk, spdt_cadena
-    
-    , prmt_tppr_pk, prmt_parametro
-FROM 
-    tbl_subparametro_dato_spdt
-    LEFT JOIN tbl_parametro_prmt ON
-        prmt_pk = spdt_prmt_pk
-    LEFT JOIN tbl_tipo_parametro_tppr ON
-        tppr_pk = prmt_tppr_pk
-;
+
 
 
 SELECT *

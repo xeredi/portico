@@ -2,7 +2,9 @@
 <tabset type="pills"> <tab heading="{{'vlrc' | translate}}" select="vm.tabSelected(null)">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
-        <a class="btn btn-default" ng-href="#/facturacion/vlrc/edit/{{vm.vlrc.id}}"><i
+        <a class="btn btn-default" ng-href="#/facturacion/fctr/prepare/{{vm.vlrc.id}}"><i
+            class="glyphicon glyphicon-euro"></i> <span translate="btn_facturar"></span></a> <a
+            class="btn btn-default" ng-href="#/facturacion/vlrc/edit/{{vm.vlrc.id}}"><i
             class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
         <button data-ng-click="vm.remove()" class="btn btn-default">
             <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>

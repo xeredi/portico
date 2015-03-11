@@ -844,6 +844,16 @@ public enum MessageI18nKey {
     vlrd_cuant5,
     /** The vlrd_cuant6. */
     vlrd_cuant6,
+    /** The fcsr. */
+    fcsr,
+    /** The fcsr. */
+    fcsrList,
+    /** The fcsr_serie. */
+    fcsr_serie,
+    /** The fcsr_anio. */
+    fcsr_anio,
+    /** The fcsr_numero ultimo. */
+    fcsr_numeroUltimo,
     /** The fctr. */
     fctr,
     /** The fctr list. */
@@ -996,6 +1006,8 @@ public enum MessageI18nKey {
     ProcesoTipo_EST_CREACION,
     /** The Proceso tipo_ valorador. */
     ProcesoTipo_VALORADOR,
+    /** The Proceso tipo_ facturador. */
+    ProcesoTipo_FACTURADOR,
     /** The Cargo tipo_ b. */
     CargoTipo_B,
     /** The Cargo tipo_ t. */

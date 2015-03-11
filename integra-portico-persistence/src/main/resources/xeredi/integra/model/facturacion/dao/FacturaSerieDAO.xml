@@ -18,10 +18,71 @@
     ]]>
     </sql>
 
+    <sql id="SelectWhere">
+    	<where>
+    		<if test="anio != null">
+    			AND fcsr_anio = #{anio}
+    		</if>
+    	</where>
+    </sql>
+
     <select id="select" parameterType="Long" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         WHERE fcsr_pk = #{value}
     </select>
+
+    <select id="count" parameterType="FacturaSerieCriterioVO" resultType="Integer">
+    	SELECT COUNT(1) FROM tbl_factura_serie_fcsr
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="selectList" parameterType="FacturaSerieCriterioVO" resultMap="ResultMap">
+        <include refid="SelectPrefix" />
+        <include refid="SelectWhere" />
+        ORDER BY fcsr_anio DESC, fcsr_serie
+    </select>
+
+    <select id="selectLabelValueList" parameterType="FacturaSerieCriterioVO" resultType="LabelValueVO">
+    <![CDATA[
+    	SELECT
+    		fcsr_pk AS value
+    		, CONCAT(CONCAT(fcsr_serie, ' - '), fcsr_anio) AS label
+    	FROM tbl_factura_serie_fcsr
+    ]]>
+        <include refid="SelectWhere" />
+    </select>
+
+    <select id="exists" parameterType="FacturaSerieVO" resultType="Boolean">
+    <![CDATA[
+    	SELECT COUNT(1)
+    	FROM tbl_factura_serie_fcsr
+    	WHERE
+    		fcsr_serie = #{serie}
+    		AND fcsr_anio = #{anio}
+    ]]>
+    </select>
+
+	<insert id="insert" parameterType="FacturaSerieVO">
+    <![CDATA[
+    	INSERT INTO tbl_factura_serie_fcsr(fcsr_pk, fcsr_serie, fcsr_anio, fcsr_numero_ultimo)
+    	VALUES(#{id}, #{serie}, #{anio}, #{numeroUltimo})
+    ]]>
+	</insert>
+
+	<update id="update" parameterType="FacturaSerieVO">
+    <![CDATA[
+    	UPDATE tbl_factura_serie_fcsr SET
+    		fcsr_numero_ultimo = #{numeroUltimo}
+    	WHERE fcsr_pk = #{id}
+    ]]>
+	</update>
+
+	<delete id="delete" parameterType="Long">
+    <![CDATA[
+    	DELETE FROM tbl_factura_serie_fcsr
+    	WHERE fcsr_pk = #{value}
+    ]]>
+	</delete>
 
     <update id="updateIncrementar" parameterType="Long">
     <![CDATA[

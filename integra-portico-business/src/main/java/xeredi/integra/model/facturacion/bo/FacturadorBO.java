@@ -44,8 +44,7 @@ import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
-import xeredi.integra.model.proceso.dao.ProcesoDAO;
-import xeredi.integra.model.proceso.vo.ProcesoVO;
+import xeredi.integra.proceso.ProcesoTemplate;
 import xeredi.util.mybatis.SqlMapperLocator;
 
 import com.google.common.base.Preconditions;
@@ -58,6 +57,20 @@ public class FacturadorBO {
 
     /** The Constant LOG. */
     private static final Log LOG = LogFactory.getLog(FacturadorBO.class);
+
+    /** The proceso template. */
+    private final ProcesoTemplate procesoTemplate;
+
+    /**
+     * Instantiates a new facturador bo.
+     *
+     * @param aprocesoTemplate
+     *            the aproceso template
+     */
+    public FacturadorBO(final ProcesoTemplate aprocesoTemplate) {
+        super();
+        procesoTemplate = aprocesoTemplate;
+    }
 
     /**
      * Facturar valoraciones.
@@ -74,7 +87,7 @@ public class FacturadorBO {
      *            the prbt id
      */
     public void facturarValoraciones(final Set<Long> vlrcIds, final Long aspcId, final Long fcsrId,
-            final Date fechaFacturacion, final Long prbtId) {
+            final Date fechaFacturacion) {
         LOG.info("Facturacion de las valoraciones: " + vlrcIds);
 
         LOG.info("Validar parametros");
@@ -82,10 +95,8 @@ public class FacturadorBO {
         Preconditions.checkArgument(!vlrcIds.isEmpty());
         Preconditions.checkNotNull(fcsrId);
         Preconditions.checkNotNull(fechaFacturacion);
-        Preconditions.checkNotNull(prbtId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
-            final ProcesoDAO prbtDAO = session.getMapper(ProcesoDAO.class);
             final FacturaSerieDAO fcsrDAO = session.getMapper(FacturaSerieDAO.class);
             final AspectoDAO aspcDAO = session.getMapper(AspectoDAO.class);
             final FacturaAgregadaDAO fctaDAO = session.getMapper(FacturaAgregadaDAO.class);
@@ -103,14 +114,7 @@ public class FacturadorBO {
             final FacturadorContextoVO contextoVO = new FacturadorContextoVO();
 
             contextoVO.setVlrcIds(vlrcIds);
-
-            final ProcesoVO prbt = prbtDAO.select(prbtId);
-
-            if (prbt == null) {
-                throw new Error("Proceso batch no encontrado: " + prbtId);
-            }
-
-            contextoVO.setPrbt(prbt);
+            contextoVO.setPrbt(procesoTemplate.getPrbt());
 
             final FacturaSerieVO fcsr = fcsrDAO.select(fcsrId);
 

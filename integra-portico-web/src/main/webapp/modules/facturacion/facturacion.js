@@ -8,6 +8,9 @@ angular.module("facturacion", [])
 // ----------- VALORADOR ------------------
 .controller("VldrPrepareController", VldrPrepareController)
 
+// ----------- FACTURADOR ------------------
+.controller("FctrPrepareController", FctrPrepareController)
+
 // ----------- VALORACION ------------------
 .controller("VlrcGridController", VlrcGridController)
 
@@ -23,7 +26,16 @@ angular.module("facturacion", [])
 
 .controller("VlrdDetailController", VlrdDetailController)
 
-// ----------- CARGO y REGLA------------------
+// ----------- SERIE DE FACTURA ------------------
+.controller("FcsrGridController", FcsrGridController)
+
+.controller("FcsrCreateController", FcsrCreateController)
+
+.controller("FcsrDetailController", FcsrDetailController)
+
+.controller("FcsrEditController", FcsrEditController)
+
+// ----------- CARGO y REGLA ------------------
 .controller("CrgoGridController", CrgoGridController)
 
 .controller("CrgoCreateController", CrgoCreateController)
@@ -77,6 +89,13 @@ function config($routeProvider) {
 		reloadOnSearch : false
 	})
 
+	.when("/facturacion/fctr/prepare/:vlrcId", {
+		templateUrl : "modules/facturacion/fctr-prepare.html",
+		controller : "FctrPrepareController",
+		controllerAs : "vm",
+		reloadOnSearch : false
+	})
+
 	.when("/facturacion/vlrc/grid", {
 		templateUrl : "modules/facturacion/vlrc-grid.html",
 		controller : "VlrcGridController",
@@ -125,6 +144,31 @@ function config($routeProvider) {
 	.when("/facturacion/vlrd/edit/:vlrdId", {
 		templateUrl : "modules/facturacion/vlrd-edit.html",
 		controller : "vlrdEditController",
+		controllerAs : "vm"
+	})
+
+	.when("/facturacion/fcsr/grid", {
+		templateUrl : "modules/facturacion/fcsr-grid.html",
+		controller : "FcsrGridController",
+		controllerAs : "vm",
+		reloadOnSearch : false
+	})
+
+	.when("/facturacion/fcsr/detail/:fcsrId", {
+		templateUrl : "modules/facturacion/fcsr-detail.html",
+		controller : "FcsrDetailController",
+		controllerAs : "vm"
+	})
+
+	.when("/facturacion/fcsr/edit/:fcsrId", {
+		templateUrl : "modules/facturacion/fcsr-edit.html",
+		controller : "FcsrEditController",
+		controllerAs : "vm"
+	})
+
+	.when("/facturacion/fcsr/create", {
+		templateUrl : "modules/facturacion/fcsr-edit.html",
+		controller : "FcsrCreateController",
 		controllerAs : "vm"
 	})
 
@@ -303,8 +347,7 @@ function FacturacionController(pageTitleService) {
 	pageTitleService.setTitle("sec_facturacion", "page_home");
 }
 
-function VldrPrepareController($http, $location, $routeParams, $modal,
-		pageTitleService) {
+function VldrPrepareController($http, $location, $routeParams, pageTitleService) {
 	var vm = this;
 
 	vm.valorar = valorar;
@@ -334,6 +377,42 @@ function VldrPrepareController($http, $location, $routeParams, $modal,
 	});
 
 	pageTitleService.setTitle("vldr", "page_prepare");
+}
+
+function FctrPrepareController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.facturar = facturar;
+	vm.cancel = cancel;
+
+	function facturar() {
+		$http.post("facturacion/fctr-facturar.action", {
+			ffac : vm.ffac,
+			vlrc : vm.vlrc,
+			aspcId : vm.aspcId,
+			fcsrId : vm.fcsrId
+		}).success(function(data) {
+			$location.path("/proceso/prbt/grid").replace();
+		});
+	}
+
+	function cancel() {
+		window.history.back();
+	}
+
+	$http.post("facturacion/fctr-prepare.action", {
+		vlrc : {
+			id : $routeParams.vlrcId
+		}
+	}).success(function(data) {
+		vm.vlrc = data.vlrc;
+		vm.ffac = data.ffac;
+		vm.aspcId = data.aspcId;
+		vm.aspcList = data.aspcList;
+		vm.fcsrList = data.fcsrList;
+	});
+
+	pageTitleService.setTitle("fctr", "page_prepare");
 }
 
 function VlrcGridController($http, $location, $routeParams, $modal,
@@ -638,6 +717,136 @@ function VlrdDetailController($http, $location, $routeParams, pageTitleService) 
 	});
 
 	pageTitleService.setTitle("vlrl", "page_detail");
+}
+
+function FcsrGridController($http, $location, $routeParams, $modal,
+		pageTitleService) {
+	var vm = this;
+
+	vm.search = search;
+	vm.pageChanged = pageChanged;
+	vm.filter = filter;
+
+	vm.fcsrCriterio = $routeParams.fcsrCriterio ? angular
+			.fromJson($routeParams.fcsrCriterio) : {};
+	vm.page = $routeParams.page ? $routeParams.page : 1;
+
+	function search(page) {
+		$http.post("facturacion/fcsr-list.action", {
+			fcsrCriterio : vm.fcsrCriterio,
+			page : page,
+			limit : vm.limit
+		}).success(function(data) {
+			vm.fcsrList = data.fcsrList;
+			vm.page = data.fcsrList.page;
+
+			$location.search({
+				page : vm.page,
+				fcsrCriterio : JSON.stringify(vm.fcsrCriterio)
+			}).replace();
+		});
+	}
+
+	function pageChanged() {
+		search(vm.page);
+	}
+
+	function filter(size) {
+	}
+
+	search($routeParams.page ? $routeParams.page : 1);
+	pageTitleService.setTitle("fcsr", "page_grid");
+}
+
+function FcsrDetailController($http, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.remove = remove;
+
+	function remove() {
+		if (confirm("Are you sure?")) {
+			$http.post("facturacion/fcsr-remove.action", {
+				fcsr : {
+					id : vm.fcsr.id
+				}
+			}).success(function(data) {
+				window.history.back();
+			});
+		}
+	}
+
+	$http.post("facturacion/fcsr-detail.action", {
+		fcsr : {
+			id : $routeParams.fcsrId
+		}
+	}).success(function(data) {
+		vm.fcsr = data.fcsr;
+	});
+
+	pageTitleService.setTitle("fcsr", "page_detail");
+}
+
+function FcsrCreateController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.save = save;
+	vm.cancel = cancel;
+
+	function save() {
+		$http.post("facturacion/fcsr-save.action", {
+			fcsr : vm.fcsr,
+			accion : vm.accion
+		}).success(
+				function(data) {
+					$location.path(
+							"/facturacion/fcsr/detail/" + data.fcsr.id)
+							.replace();
+				});
+	}
+
+	function cancel() {
+		window.history.back();
+	}
+
+	$http.post("facturacion/fcsr-create.action").success(function(data) {
+		vm.fcsr = data.fcsr;
+		vm.accion = data.accion;
+	});
+
+	pageTitleService.setTitle("fcsr", "page_create");
+}
+
+function FcsrEditController($http, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.save = save;
+	vm.cancel = cancel;
+
+	function save() {
+		$http.post("facturacion/fcsr-save.action", {
+			fcsr : vm.fcsr,
+			accion : vm.accion
+		}).success(function(data) {
+			setTimeout(function() {
+				window.history.back();
+			}, 0);
+		});
+	}
+
+	function cancel() {
+		window.history.back();
+	}
+
+	$http.post("facturacion/fcsr-edit.action", {
+		fcsr : {
+			id : $routeParams.fcsrId
+		}
+	}).success(function(data) {
+		vm.fcsr = data.fcsr;
+		vm.accion = data.accion;
+	});
+
+	pageTitleService.setTitle("fcsr", "page_edit");
 }
 
 function CrgoGridController($http, $location, $routeParams, $modal,

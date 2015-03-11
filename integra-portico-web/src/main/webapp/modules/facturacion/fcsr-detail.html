@@ -1,0 +1,27 @@
+
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-default" ng-href="#/facturacion/fcsr/edit/{{vm.fcsr.id}}"><i
+            class="glyphicon glyphicon-edit"></i> <span translate="btn_editar"></span></a>
+        <button data-ng-click="vm.remove()" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove"></i> <span translate="btn_borrar"></span>
+        </button>
+    </div>
+</div>
+
+<fieldset>
+    <div class="row">
+        <div class="col-sm-1 form-group">
+            <label translate="fcsr_serie"></label>
+            <p class="form-control-static" ng-bind="vm.fcsr.serie"></p>
+        </div>
+        <div class="col-sm-1 form-group">
+            <label translate="fcsr_anio"></label>
+            <p class="form-control-static" ng-bind="vm.fcsr.anio"></p>
+        </div>
+        <div class="col-sm-3 col-md-2 col-xl-1 form-group">
+            <label translate="fcsr_numeroUltimo"></label>
+            <p class="form-control-static number" ng-bind="vm.fcsr.numeroUltimo"></p>
+        </div>
+    </div>
+</fieldset>
