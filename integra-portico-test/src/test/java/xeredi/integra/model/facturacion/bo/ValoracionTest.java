@@ -74,7 +74,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrl");
 
-                final ValoracionLineaVO vlrl = vlrcBO.selectVlrl(vlrlId);
+                final ValoracionLineaVO vlrl = vlrcBO.selectVlrl(vlrlId, "es");
 
                 Assert.assertNotNull(vlrl);
 

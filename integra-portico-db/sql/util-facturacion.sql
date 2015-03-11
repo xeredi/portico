@@ -153,13 +153,7 @@ group by ssrv_srvc_pk
 SELECT * FROM tbl_cargo_crgo;
 SELECT * FROM tbl_regla_rgla;
 
-SELECT * FROM tbl_servicio_cargo_srcr;
-SELECT * FROM tbl_valoracion_tmp_vlrt;
-SELECT * FROM vw_valoracion_det_vlrd;
-SELECT * FROM vw_valoracion_cargo_vlrg;
 SELECT * FROM tbl_valoracion_vlrc;
-SELECT * FROM tbl_valoracion_cargo_vlrg;
-SELECT * FROM tbl_valoracion_imp_vlri;
 SELECT * FROM tbl_valoracion_lin_vlrl;
 SELECT * FROM tbl_valoracion_det_vlrd;
 SELECT * FROM tbl_valoracion_tmp_vlrt;
@@ -169,20 +163,12 @@ SELECT * FROM tbl_factura_srv_fcts;
 SELECT * FROM tbl_factura_imp_fcti;
 SELECT * FROM tbl_factura_lin_fctl ORDER BY fctl_fctr_pk, fctl_pk;
 SELECT * FROM tbl_factura_det_fctd ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk;
-SELECT * FROM vw_factura_fctr;
-SELECT * FROM vw_factura_cargo_fctc;
-SELECT * FROM vw_factura_srv_fcts;
-SELECT * FROM vw_factura_imp_fcti;
-SELECT * FROM vw_factura_lin_fctl ORDER BY fctl_fctr_pk, fctl_padre_pk, fctl_pk;
-SELECT * FROM vw_factura_det_fctd ORDER BY fctd_fctr_pk, fctd_fctl_pk, fctd_pk;
 
 
 DELETE FROM tbl_servicio_cargo_srcr;
 DELETE FROM tbl_valoracion_tmp_vlrt;
 DELETE FROM tbl_valoracion_det_vlrd;
 DELETE FROM tbl_valoracion_lin_vlrl;
-DELETE FROM tbl_valoracion_imp_vlri;
-DELETE FROM tbl_valoracion_cargo_vlrg;
 DELETE FROM tbl_valoracion_vlrc;
 
 DELETE FROM tbl_factura_det_fctd;

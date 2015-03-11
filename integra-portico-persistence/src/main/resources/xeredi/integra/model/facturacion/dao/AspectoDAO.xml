@@ -12,6 +12,7 @@
 
         <association property="tpsr" javaType="TipoServicioVO">
 	        <result column="aspc_tpsr_pk" property="id" />
+	        <result column="enti_tipo" property="tipo" />
         </association>
 
         <association property="aspv" javaType="AspectoVersionVO">
@@ -69,6 +70,10 @@
 		    , aspv_cgrp_info1, aspv_cgrp_info2, aspv_cgrp_info3, aspv_cgrp_info4, aspv_cgrp_info5, aspv_cgrp_info6
 		    , aspv_lsum_cuant1, aspv_lsum_cuant2, aspv_lsum_cuant3, aspv_lsum_cuant4, aspv_lsum_cuant5, aspv_lsum_cuant6
 		    , aspv_lgrp_info1, aspv_lgrp_info2, aspv_lgrp_info3, aspv_lgrp_info4, aspv_lgrp_info5, aspv_lgrp_info6
+
+		    , (
+		        SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = aspc_tpsr_pk
+		    ) AS enti_tipo
     ]]>
         <if test="idioma != null">
         <![CDATA[

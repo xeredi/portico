@@ -23,17 +23,11 @@ public final class ReglaCriterioVO {
     /** The incompatible id. */
     private Long incompatibleId;
 
-    /** The rglv id. */
-    private Long rglvId;
-
     /** The tipo. */
     private ReglaTipo tipo;
 
     /** The crgo id. */
     private Long crgoId;
-
-    /** The crgv id. */
-    private Long crgvId;
 
     /** The vlrc id. */
     private Long vlrcId;
@@ -142,25 +136,6 @@ public final class ReglaCriterioVO {
     }
 
     /**
-     * Gets the rglv id.
-     *
-     * @return the rglv id
-     */
-    public Long getRglvId() {
-        return rglvId;
-    }
-
-    /**
-     * Sets the rglv id.
-     *
-     * @param value
-     *            the new rglv id
-     */
-    public void setRglvId(final Long value) {
-        rglvId = value;
-    }
-
-    /**
      * Gets the incompatible id.
      *
      * @return the incompatible id
@@ -196,25 +171,6 @@ public final class ReglaCriterioVO {
      */
     public void setVlrcId(final Long value) {
         vlrcId = value;
-    }
-
-    /**
-     * Gets the crgv id.
-     *
-     * @return the crgv id
-     */
-    public Long getCrgvId() {
-        return crgvId;
-    }
-
-    /**
-     * Sets the crgv id.
-     *
-     * @param value
-     *            the new crgv id
-     */
-    public void setCrgvId(final Long value) {
-        crgvId = value;
     }
 
 }

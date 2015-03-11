@@ -78,7 +78,9 @@ public final class CargoAction extends BaseAction {
         final ReglaBO rglaBO = new ReglaBO();
         final ReglaCriterioVO rglaCriterioVO = new ReglaCriterioVO();
 
-        rglaCriterioVO.setCrgvId(crgo.getCrgv().getId());
+        rglaCriterioVO.setCrgoId(crgo.getId());
+        rglaCriterioVO.setFechaVigencia(getFechaVigencia());
+
         rglaList.addAll(rglaBO.selectList(rglaCriterioVO));
 
         return SUCCESS;

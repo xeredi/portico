@@ -3,72 +3,90 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.AspectoCargoDAO">
-    <resultMap type="AspectoCargoVO" id="ResultMap">
-        <id column="ascv_pk" />
-        <id column="ascr_pk" />
+	<resultMap type="AspectoCargoVO" id="ResultMap">
+		<id column="ascv_pk" />
+		<id column="ascr_pk" />
 
-        <result column="ascr_pk" property="id" />
-        <result column="ascr_aspc_pk" property="aspcId" />
+		<result column="ascr_pk" property="id" />
+		<result column="ascr_aspc_pk" property="aspcId" />
 
-        <association property="crgo" resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
+		<association property="crgo" javaType="CargoVO">
+			<result column="ascr_crgo_pk" property="id" />
+			<result column="crgo_codigo" property="codigo" />
 
-        <association property="ascv" javaType="AspectoCargoVersionVO">
-            <result column="ascv_pk" property="id" />
-            <result column="ascv_fini" property="fini" />
-            <result column="ascv_ffin" property="ffin" />
-        </association>
-    </resultMap>
+			<association property="tpsr" javaType="TipoServicioVO">
+				<result column="crgo_tpsr_pk" property="id" />
+			</association>
+		</association>
 
-    <sql id="SelectPrefix">
+		<association property="ascv" javaType="AspectoCargoVersionVO">
+			<result column="ascv_pk" property="id" />
+			<result column="ascv_fini" property="fini" />
+			<result column="ascv_ffin" property="ffin" />
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
     <![CDATA[
-        SELECT *
-        FROM vw_aspecto_cargo_ascr
+		SELECT
+		    ascr_pk, ascr_aspc_pk, ascr_crgo_pk
+
+		    , ascv_pk, ascv_fini, ascv_ffin
+
+		    , crgo_codigo, crgo_tpsr_pk
+		FROM
+		    tbl_aspecto_cargo_ascr
+		    INNER JOIN tbl_aspecto_cargo_version_ascv ON
+		        ascv_ascr_pk = ascr_pk
+		    INNER JOIN tbl_cargo_crgo ON
+		        crgo_pk = ascr_crgo_pk
     ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <where>
-            <if test="fechaVigencia != null">
-                AND #{fechaVigencia} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{fechaVigencia})
-            </if>
+	<sql id="SelectWhere">
+		<where>
+			<if test="fechaVigencia != null">
+				AND #{fechaVigencia} BETWEEN ascv_fini AND COALESCE(ascv_ffin, #{fechaVigencia})
+			</if>
 
-            <if test="id != null">
-                AND ascr_pk = #{id}
-            </if>
+			<if test="id != null">
+				AND ascr_pk = #{id}
+			</if>
 
-            <if test="ascvId != null">
-                AND ascv_pk = #{ascvId}
-            </if>
+			<if test="aspcId != null">
+				AND ascr_aspc_pk = #{aspcId}
+			</if>
+		</where>
+	</sql>
 
-            <if test="aspcId != null">
-                AND ascr_aspc_pk = #{aspcId}
-            </if>
-        </where>
-    </sql>
+	<select id="selectList" parameterType="AspectoCargoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY ascr_aspc_pk, ascr_crgo_pk
+	</select>
 
-    <select id="selectList" parameterType="AspectoCargoCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-        ORDER BY ascr_aspc_pk, ascr_crgo_pk
-    </select>
+	<select id="selectObject" parameterType="AspectoCargoCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+	</select>
 
-    <select id="selectObject" parameterType="AspectoCargoCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-    </select>
-
-    <select id="exists" parameterType="AspectoCargoVO" resultType="Boolean">
+	<select id="exists" parameterType="AspectoCargoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
         FROM tbl_aspecto_cargo_ascr
         WHERE ascr_aspc_pk = #{aspcId} AND ascr_crgo_pk = #{crgo.id}
     ]]>
-    </select>
+	</select>
 
-    <select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
+	<select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_aspecto_cargo_ascr
+		FROM
+		    tbl_aspecto_cargo_ascr
+		    INNER JOIN tbl_aspecto_cargo_version_ascv ON
+		        ascv_ascr_pk = ascr_pk
+		    INNER JOIN tbl_cargo_crgo ON
+		        crgo_pk = ascr_crgo_pk
         WHERE
             ascr_pk = #{id}
             AND (
@@ -77,30 +95,30 @@
                     BETWEEN ascv_fini AND COALESCE(ascv_ffin, COALESCE(#{ascv.ffin, jdbcType=TIMESTAMP, javaType=java.util.Date}, portico.getSysdateTime()))
             )
     ]]>
-        <if test="ascv.id != null">
+		<if test="ascv.id != null">
         <![CDATA[
             AND ascv_pk <> #{ascv.id}
         ]]>
-        </if>
-    </select>
+		</if>
+	</select>
 
-    <select id="selectId" parameterType="AspectoCargoVO" resultType="Long">
+	<select id="selectId" parameterType="AspectoCargoVO" resultType="Long">
     <![CDATA[
         SELECT ascr_pk
         FROM tbl_aspecto_cargo_ascr
         WHERE ascr_aspc_pk = #{aspcId}
             AND ascr_crgo_pk = #{crgo.id}
     ]]>
-    </select>
+	</select>
 
-    <insert id="insert" parameterType="AspectoCargoVO">
+	<insert id="insert" parameterType="AspectoCargoVO">
     <![CDATA[
         INSERT INTO tbl_aspecto_cargo_ascr (ascr_pk, ascr_aspc_pk, ascr_crgo_pk)
         VALUES (#{id}, #{aspcId}, #{crgo.id})
     ]]>
-    </insert>
+	</insert>
 
-    <insert id="insertVersion" parameterType="AspectoCargoVO">
+	<insert id="insertVersion" parameterType="AspectoCargoVO">
     <![CDATA[
         INSERT INTO tbl_aspecto_cargo_version_ascv (
             ascv_pk, ascv_ascr_pk, ascv_fini, ascv_ffin
@@ -108,20 +126,20 @@
             #{ascv.id}, #{id}, #{ascv.fini}, #{ascv.ffin}
         )
     ]]>
-    </insert>
+	</insert>
 
-    <update id="updateVersion" parameterType="AspectoCargoVO">
+	<update id="updateVersion" parameterType="AspectoCargoVO">
     <![CDATA[
         UPDATE tbl_aspecto_cargo_version_ascv SET
             ascv_fini = #{ascv.fini}, ascv_ffin = #{ascv.ffin}
         WHERE ascv_pk = #{ascv.id}
     ]]>
-    </update>
+	</update>
 
-    <delete id="deleteVersion" parameterType="AspectoCargoVO">
+	<delete id="deleteVersion" parameterType="AspectoCargoVO">
     <![CDATA[
         DELETE FROM tbl_aspecto_cargo_version_ascv
         WHERE ascv_pk = #{ascv.id}
     ]]>
-    </delete>
+	</delete>
 </mapper>

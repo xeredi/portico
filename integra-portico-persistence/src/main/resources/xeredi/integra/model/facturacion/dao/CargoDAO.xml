@@ -23,12 +23,21 @@
 
 		<association property="tpsr" javaType="TipoServicioVO">
 			<result column="crgo_tpsr_pk" property="id" />
-			<result column="enti_codigo" property="codigo" />
+			<result column="enti_tipo" property="tipo" />
 		</association>
 	</resultMap>
 
 	<sql id="SelectPrefix">
-		SELECT crgo.*
+    <![CDATA[
+		SELECT
+		    crgo_pk, crgo_codigo, crgo_tpsr_pk
+
+		    , crgv_pk, crgv_fini, crgv_ffin, crgv_codigo_norm, crgv_es_principal, crgv_es_temporal, crgv_tipo
+
+		    , (
+		        SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = crgo_tpsr_pk
+		    ) AS enti_tipo
+    ]]>
 		<if test="idioma != null">
         <![CDATA[
             , (
@@ -39,7 +48,12 @@
             ) AS crgv_descripcion
         ]]>
 		</if>
-		FROM vw_cargo_crgo crgo
+    <![CDATA[
+		FROM
+		    tbl_cargo_crgo
+		    INNER JOIN tbl_cargo_version_crgv ON
+		        crgv_crgo_pk = crgo_pk
+    ]]>
 	</sql>
 
 	<sql id="SelectWhere">
@@ -70,10 +84,6 @@
 						srvc_tpsr_pk = crgo_tpsr_pk
 						AND srvc_pk = #{srvcId}
 				)
-			</if>
-
-			<if test="crgvId != null">
-				AND crgv_pk = #{crgvId}
 			</if>
 
 			<if test="padreId != null">
@@ -144,7 +154,10 @@
 	<select id="count" parameterType="CargoCriterioVO" resultType="Integer">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_cargo_crgo
+		FROM
+		    tbl_cargo_crgo
+		    INNER JOIN tbl_cargo_version_crgv ON
+		        crgv_crgo_pk = crgo_pk
     ]]>
 		<include refid="SelectWhere" />
 	</select>
@@ -161,7 +174,10 @@
 	<select id="existsOverlap" parameterType="CargoVO" resultType="Boolean">
     <![CDATA[
         SELECT COUNT(1)
-        FROM vw_cargo_crgo
+		FROM
+		    tbl_cargo_crgo
+		    INNER JOIN tbl_cargo_version_crgv ON
+		        crgv_crgo_pk = crgo_pk
         WHERE
             crgo_pk = #{id}
             AND (

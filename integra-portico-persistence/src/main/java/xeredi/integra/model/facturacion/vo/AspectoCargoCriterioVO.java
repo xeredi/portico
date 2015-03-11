@@ -10,9 +10,6 @@ public final class AspectoCargoCriterioVO extends BaseCriterioVO {
     /** The id. */
     private Long id;
 
-    /** The ascv id. */
-    private Long ascvId;
-
     /** The aspc id. */
     private Long aspcId;
 
@@ -53,24 +50,4 @@ public final class AspectoCargoCriterioVO extends BaseCriterioVO {
     public void setAspcId(final Long value) {
         aspcId = value;
     }
-
-    /**
-     * Gets the ascv id.
-     *
-     * @return the ascv id
-     */
-    public Long getAscvId() {
-        return ascvId;
-    }
-
-    /**
-     * Sets the ascv id.
-     *
-     * @param value
-     *            the new ascv id
-     */
-    public void setAscvId(final Long value) {
-        ascvId = value;
-    }
-
 }

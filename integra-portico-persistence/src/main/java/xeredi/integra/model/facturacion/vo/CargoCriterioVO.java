@@ -15,9 +15,6 @@ public final class CargoCriterioVO extends BaseCriterioVO {
     /** The ids. */
     private Set<Long> ids;
 
-    /** The crgv id. */
-    private Long crgvId;
-
     /** The padre id. */
     private Long padreId;
 
@@ -173,25 +170,6 @@ public final class CargoCriterioVO extends BaseCriterioVO {
      */
     public void setSrvcId(final Long value) {
         srvcId = value;
-    }
-
-    /**
-     * Gets the crgv id.
-     *
-     * @return the crgv id
-     */
-    public Long getCrgvId() {
-        return crgvId;
-    }
-
-    /**
-     * Sets the crgv id.
-     *
-     * @param value
-     *            the new crgv id
-     */
-    public void setCrgvId(final Long value) {
-        crgvId = value;
     }
 
     /**

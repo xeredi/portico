@@ -1,43 +1,5 @@
 -- // 0 0 2 Facturacion Vistas
 -- Migration SQL that makes the change goes here.
-
-
-
-
-CREATE VIEW vw_cargo_crgo AS
-	SELECT *
-	FROM
-		tbl_cargo_crgo
-		INNER JOIN tbl_cargo_version_crgv ON
-			crgv_crgo_pk = crgo_pk
-		INNER JOIN tbl_entidad_enti ON
-			enti_pk = crgo_tpsr_pk
-\
-
-CREATE OR REPLACE SYNONYM portico.vw_cargo_crgo FOR vw_cargo_crgo\
-
-GRANT SELECT ON vw_cargo_crgo TO portico\
-
-
-
-CREATE VIEW vw_regla_rgla AS
-	SELECT *
-	FROM
-		tbl_regla_rgla
-		INNER JOIN tbl_regla_version_rglv ON
-			rglv_rgla_pk = rgla_pk
-		INNER JOIN tbl_cargo_crgo ON
-			crgo_pk = rgla_crgo_pk
-		INNER JOIN tbl_entidad_enti ON
-			enti_pk = rglv_enti_pk
-\
-
-CREATE OR REPLACE SYNONYM portico.vw_regla_rgla FOR vw_regla_rgla\
-
-GRANT SELECT ON vw_regla_rgla TO portico\
-
-
-
 CREATE VIEW vw_regla_inc_rgin AS
 	SELECT *
 	FROM
@@ -55,24 +17,6 @@ CREATE VIEW vw_regla_inc_rgin AS
 CREATE OR REPLACE SYNONYM portico.vw_regla_inc_rgin FOR vw_regla_inc_rgin\
 
 GRANT SELECT ON vw_regla_inc_rgin TO portico\
-
-
-
-CREATE VIEW vw_aspecto_cargo_ascr AS
-	SELECT *
-	FROM
-		tbl_aspecto_cargo_ascr
-		INNER JOIN tbl_aspecto_cargo_version_ascv ON
-			ascv_ascr_pk = ascr_pk
-		INNER JOIN tbl_cargo_crgo ON
-			crgo_pk = ascr_crgo_pk
-		INNER JOIN tbl_cargo_version_crgv ON
-			crgv_crgo_pk = ascr_crgo_pk
-\
-
-CREATE OR REPLACE SYNONYM portico.vw_aspecto_cargo_ascr FOR vw_aspecto_cargo_ascr\
-
-GRANT SELECT ON vw_aspecto_cargo_ascr TO portico\
 
 
 
@@ -246,9 +190,6 @@ GRANT SELECT ON vw_factura_det_fctd TO portico\
 -- //@UNDO
 -- SQL to undo the change goes here.
 
-DROP VIEW vw_aspecto_cargo_ascr\
-DROP VIEW vw_cargo_crgo\
-DROP VIEW vw_regla_rgla\
 DROP VIEW vw_regla_inc_rgin\
 DROP VIEW vw_factura_det_fctd\
 DROP VIEW vw_factura_lin_fctl\
