@@ -1,9 +1,33 @@
-        SELECT ssrv_pk, ssrv_srvc_pk, ssrv_numero, ssrv_tpss_pk 
-            , row_number() over (ORDER BY ssrv_srvc_pk, ssrv_numero) rownumVar 
-        FROM 
-            tbl_subservicio_ssrv ssrv 
-        WHERE ssrv_tpss_pk = 22003 
-        ORDER BY ssrv_srvc_pk, ssrv_numero
+SELECT 
+    spdt_spvr_pk, spdt_tpdt_pk, spdt_nentero, spdt_ndecimal, spdt_fecha, spdt_prmt_pk, spdt_cadena
+    
+    , prmt_tppr_pk, prmt_parametro
+FROM 
+    tbl_subparametro_dato_spdt
+    LEFT JOIN tbl_parametro_prmt ON
+        prmt_pk = spdt_prmt_pk
+    LEFT JOIN tbl_tipo_parametro_tppr ON
+        tppr_pk = prmt_tppr_pk
+;
+
+
+SELECT *
+FROM 
+    tbl_parametro_prmt
+    INNER JOIN tbl_parametro_version_prvr ON
+        prvr_prmt_pk = prmt_pk
+WHERE 
+    prmt_tppr_pk = 20049
+ORDER BY prmt_tppr_pk, prmt_parametro
+;
+
+SELECT COUNT(1)
+FROM 
+    tbl_parametro_prmt
+    INNER JOIN tbl_parametro_version_prvr ON
+        prvr_prmt_pk = prmt_pk
+WHERE 
+    prmt_tppr_pk = 20005
 ;
 
 SELECT ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero 
@@ -25,28 +49,6 @@ FROM (
 
 
 
-SELECT 
-    rgla_pk, rgla_crgo_pk, rgla_codigo
-    
-    , rglv_pk, rglv_fini, rglv_ffin, rglv_enti_pk, rglv_tipo, rglv_orden
-    , rglv_importe_base, rglv_condicion, rglv_formula, rglv_path_impuesto
-    , rglv_path_pagador, rglv_path_es_suj_pasivo, rglv_path_cod_exen
-    , rglv_path_info1, rglv_path_info2, rglv_path_info3, rglv_path_info4, rglv_path_info5, rglv_path_info6
-    , rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
-    , rglv_path_cuant1, rglv_path_cuant2, rglv_path_cuant3, rglv_path_cuant4, rglv_path_cuant5, rglv_path_cuant6
-    , rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
-
-    , (
-        SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk
-    ) AS crgo_codigo
-    , (
-        SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = rglv_enti_pk
-    ) AS enti_tipo
-FROM
-    tbl_regla_rgla
-    INNER JOIN tbl_regla_version_rglv ON
-        rglv_rgla_pk = rgla_pk
-;
 
 
 WITH tipoIva AS (

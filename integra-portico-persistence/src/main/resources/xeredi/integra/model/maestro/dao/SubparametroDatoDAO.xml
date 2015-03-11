@@ -22,7 +22,15 @@
         <where>
             <![CDATA[
                 AND EXISTS (
-                    SELECT 1 FROM vw_subparametro_sprm
+                    SELECT 1
+					FROM
+					    tbl_subparametro_sprm
+					    INNER JOIN tbl_subparametro_version_spvr ON
+					        spvr_sprm_pk = sprm_pk
+					    INNER JOIN tbl_parametro_prmt ON
+					        prmt_pk = sprm_prmt_dep_pk
+					    INNER JOIN tbl_tipo_parametro_tppr ON
+					        tppr_pk = prmt_tppr_pk
                     WHERE
                         spvr_pk = spdt_spvr_pk
             ]]>
@@ -34,7 +42,12 @@
     </sql>
 
     <sql id="SelectPrefix">
-        SELECT spdt.*
+    <![CDATA[
+		SELECT
+		    spdt_spvr_pk, spdt_tpdt_pk, spdt_nentero, spdt_ndecimal, spdt_fecha, spdt_prmt_pk, spdt_cadena
+
+		    , prmt_tppr_pk, prmt_parametro
+    ]]>
         <if test="idioma != null and fechaVigencia != null">
         <![CDATA[
             , (
@@ -70,7 +83,14 @@
             ) AS p18n_texto
         ]]>
         </if>
-        FROM vw_subparametro_dato_spdt spdt
+    <![CDATA[
+		FROM
+		    tbl_subparametro_dato_spdt
+		    LEFT JOIN tbl_parametro_prmt ON
+		        prmt_pk = spdt_prmt_pk
+		    LEFT JOIN tbl_tipo_parametro_tppr ON
+		        tppr_pk = prmt_tppr_pk
+    ]]>
     </sql>
 
     <select id="selectList" resultMap="ResultMap" parameterType="SubparametroCriterioVO">

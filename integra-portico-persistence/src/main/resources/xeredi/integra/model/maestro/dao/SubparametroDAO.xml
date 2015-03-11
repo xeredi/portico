@@ -14,6 +14,7 @@
         <association property="prmtAsociado" javaType="ParametroVO">
             <result column="sprm_prmt_dep_pk" property="id" />
             <result column="prmt_parametro" property="parametro" />
+            <result column="prmt_tppr_pk" property="entiId" />
             <result column="prmt_texto" property="texto" />
         </association>
 
@@ -25,7 +26,14 @@
     </resultMap>
 
     <sql id="SelectPrefix">
-        SELECT sprm.*
+    <![CDATA[
+		SELECT
+		    sprm_pk, sprm_tpsp_pk, sprm_prmt_pk, sprm_prmt_dep_pk
+
+		    , spvr_pk, spvr_fini, spvr_ffin
+
+		    , prmt_tppr_pk, prmt_parametro
+    ]]>
         <if test="fechaVigencia != null and idioma != null">
         <![CDATA[
             , (CASE
@@ -62,7 +70,16 @@
         ]]>
         </if>
         <include refid="SelectPrefixSpecific" />
-        FROM vw_subparametro_sprm sprm
+    <![CDATA[
+		FROM
+		    tbl_subparametro_sprm
+		    INNER JOIN tbl_subparametro_version_spvr ON
+		        spvr_sprm_pk = sprm_pk
+		    INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = sprm_prmt_dep_pk
+		    INNER JOIN tbl_tipo_parametro_tppr ON
+		        tppr_pk = prmt_tppr_pk
+    ]]>
     </sql>
 
     <sql id="SelectPrefixSpecific" databaseId="postgres">
@@ -104,7 +121,17 @@
     </sql>
 
     <select id="selectCount" parameterType="SubparametroCriterioVO" resultType="Integer">
-        SELECT COUNT(1) FROM vw_subparametro_sprm sprm
+    <![CDATA[
+        SELECT COUNT(1)
+		FROM
+		    tbl_subparametro_sprm
+		    INNER JOIN tbl_subparametro_version_spvr ON
+		        spvr_sprm_pk = sprm_pk
+		    INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = sprm_prmt_dep_pk
+		    INNER JOIN tbl_tipo_parametro_tppr ON
+		        tppr_pk = prmt_tppr_pk
+    ]]>
         <where>
             <include refid="SelectWhere" />
         </where>
