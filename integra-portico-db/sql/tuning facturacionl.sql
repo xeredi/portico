@@ -1,9 +1,44 @@
+
+SELECT
+    fctl_fctr_pk AS fctg_fctr_pk
+    , rgla_crgo_pk AS fctg_cgro_pk
+    , (SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk) AS fctg_crgo_codigo
+    , SUM(fctl_importe) AS fctg_importe
+FROM (
+    SELECT 
+        fctl_pk, fctl_fctr_pk
+        
+        , (
+            SELECT rgla_crgo_pk 
+            FROM tbl_regla_rgla
+            WHERE 
+                rgla_pk = fctl_rgla_pk 
+        ) AS rgla_crgo_pk 
+    
+        , (
+            SELECT SUM(fctd_importe)
+            FROM 
+                tbl_factura_det_fctd
+            WHERE
+                fctd_fctl_pk = fctl_pk
+        ) AS fctl_importe
+    FROM 
+        tbl_factura_lin_fctl 
+    WHERE 
+        fctl_fctr_pk = 3167001
+) sql
+GROUP BY fctl_fctr_pk, rgla_crgo_pk
+ORDER BY fctl_fctr_pk, fctg_crgo_codigo
+;
+
 SELECT 
     fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
     , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
     , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
 
     , aspc_codigo, aspc_tpsr_pk
+    
+    , fcsr_serie, fcsr_anio
     
     , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = fctr_pagador_prmt_pk) AS fctr_pagador_prmt
     
@@ -43,6 +78,8 @@ FROM
     tbl_factura_fctr
     INNER JOIN tbl_aspecto_aspc ON
         aspc_pk = fctr_aspc_pk
+    INNER JOIN tbl_factura_serie_fcsr ON
+        fcsr_pk = fctr_fcsr_pk
 ;
 
 

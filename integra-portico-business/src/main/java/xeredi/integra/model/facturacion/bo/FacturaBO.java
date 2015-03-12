@@ -13,6 +13,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import xeredi.integra.model.comun.bo.IgBO;
+import xeredi.integra.model.comun.exception.InstanceNotFoundException;
+import xeredi.integra.model.comun.vo.MessageI18nKey;
 import xeredi.integra.model.facturacion.dao.FacturaCargoDAO;
 import xeredi.integra.model.facturacion.dao.FacturaDAO;
 import xeredi.integra.model.facturacion.dao.FacturaDetalleDAO;
@@ -385,14 +387,21 @@ public class FacturaBO {
      * @param fctrId
      *            the fctr id
      * @return the factura vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public FacturaVO select(final Long fctrId) {
+    public FacturaVO select(final Long fctrId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(fctrId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDAO fctrDAO = session.getMapper(FacturaDAO.class);
+            final FacturaVO fctr = fctrDAO.select(fctrId);
 
-            return fctrDAO.select(fctrId);
+            if (fctr == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.fctr, fctrId);
+            }
+
+            return fctr;
         }
     }
 

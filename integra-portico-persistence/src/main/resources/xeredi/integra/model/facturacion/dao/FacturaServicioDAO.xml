@@ -3,21 +3,73 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.FacturaServicioDAO">
-    <resultMap type="FacturaServicioVO" id="ResultMap">
-        <id column="fcts_pk" />
+	<resultMap type="FacturaServicioVO" id="ResultMap">
+		<id column="fcts_pk" />
 
-        <result column="fcts_pk" property="id" />
-        <result column="fcts_fctr_pk" property="fctrId" />
-        <result column="fcts_fref" property="fref" />
-        <result column="fcts_fini" property="fini" />
-        <result column="fcts_ffin" property="ffin" />
-        <result column="fcts_cod_exen" property="codExencion" />
+		<result column="fcts_pk" property="id" />
+		<result column="fcts_fctr_pk" property="fctrId" />
+		<result column="fcts_fref" property="fref" />
+		<result column="fcts_fini" property="fini" />
+		<result column="fcts_ffin" property="ffin" />
+		<result column="fcts_cod_exen" property="codExencion" />
 
-        <association property="aspc" resultMap="xeredi.integra.model.facturacion.dao.AspectoDAO.ResultMap" />
-        <association property="srvc" resultMap="xeredi.integra.model.servicio.dao.ServicioDAO.ResultMap" />
-    </resultMap>
+		<association property="aspc" javaType="AspectoVO">
+			<result column="fcts_aspc_pk" property="id" />
+		</association>
 
-    <insert id="insert" parameterType="FacturaServicioVO">
+		<association property="srvc" javaType="ServicioVO">
+			<result column="fcts_srvc_pk" property="id" />
+			<result column="srvc_tpsr_pk" property="entiId" />
+			<result column="srvc_anno" property="anno" />
+			<result column="srvc_numero" property="numero" />
+
+			<association property="subp" javaType="ParametroVO">
+				<result column="srvc_subp_pk" property="id" />
+				<result column="srvc_subp" property="parametro" />
+			</association>
+		</association>
+	</resultMap>
+
+	<sql id="SelectPrefix">
+    <![CDATA[
+		SELECT
+		    fcts_pk, fcts_fctr_pk, fcts_srvc_pk, fcts_aspc_pk, fcts_cod_exen, fcts_fref, fcts_fini, fcts_ffin
+
+		    , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
+
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		FROM
+		    tbl_factura_srv_fcts
+		    INNER JOIN tbl_servicio_srvc ON
+		        srvc_pk = fcts_srvc_pk
+    ]]>
+	</sql>
+
+	<sql id="SelectWhere">
+		<where>
+			<if test="id != null">
+				AND fcts_fctr_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND fcts_fctr_pk IN
+				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<select id="select" resultMap="ResultMap" parameterType="Long">
+		<include refid="SelectPrefix" />
+		WHERE fcts_pk = #{value}
+	</select>
+
+	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
+		<include refid="SelectPrefix" />
+		<include refid="SelectWhere" />
+		ORDER BY fcts_fctr_pk
+	</select>
+
+	<insert id="insert" parameterType="FacturaServicioVO">
     <![CDATA[
         INSERT INTO tbl_factura_srv_fcts (
             fcts_pk, fcts_fctr_pk, fcts_aspc_pk, fcts_srvc_pk, fcts_cod_exen
@@ -27,36 +79,5 @@
             , #{fref}, #{fini}, #{ffin}
         )
     ]]>
-    </insert>
-
-    <sql id="SelectPrefix">
-    <![CDATA[
-        SELECT *
-        FROM vw_factura_srv_fcts
-    ]]>
-    </sql>
-
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND fcts_fctr_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND fcts_fctr_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
-        </where>
-    </sql>
-
-    <select id="select" resultMap="ResultMap" parameterType="Long">
-        <include refid="SelectPrefix" />
-        WHERE fcts_pk = #{value}
-    </select>
-
-    <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
-        <include refid="SelectPrefix" />
-        <include refid="SelectWhere" />
-        ORDER BY fcts_fctr_pk
-    </select>
+	</insert>
 </mapper>

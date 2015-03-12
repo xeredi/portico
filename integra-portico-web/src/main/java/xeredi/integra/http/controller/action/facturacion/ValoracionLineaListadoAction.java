@@ -1,7 +1,6 @@
 package xeredi.integra.http.controller.action.facturacion;
 
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
 
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginatedGrid;
@@ -40,7 +39,7 @@ public final class ValoracionLineaListadoAction extends BaseAction implements Pa
      *
      * @return the string
      */
-    @Actions({ @Action("vlrl-list") })
+    @Action("vlrl-list")
     public String listado() {
         Preconditions.checkNotNull(vlrlCriterio);
 

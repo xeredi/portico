@@ -481,7 +481,6 @@ function FctrDetailController($http, $location, $routeParams, pageTitleService) 
 
 	vm.pageChanged = pageChanged;
 	vm.tabSelected = tabSelected;
-	vm.remove = remove;
 	vm.print = print;
 
 	vm.tab = $routeParams.tab ? $routeParams.tab : null;
@@ -489,11 +488,7 @@ function FctrDetailController($http, $location, $routeParams, pageTitleService) 
 
 	function findFctlList(page) {
 		$http.post("facturacion/fctl-list.action", {
-			fctlCriterio : {
-				fctr : {
-					id : $routeParams.fctrId
-				}
-			},
+			fctrId : $routeParams.fctrId,
 			page : page
 		}).success(function(data) {
 			vm.fctlList = data.fctlList;
@@ -530,16 +525,17 @@ function FctrDetailController($http, $location, $routeParams, pageTitleService) 
 	}
 
 	$http.post("facturacion/fctr-detail.action", {
-		vlrc : {
+		fctr : {
 			id : $routeParams.fctrId
 		}
 	}).success(function(data) {
 		vm.fctr = data.fctr;
 		vm.aspc = data.aspc;
+		vm.fctsList = data.fctsList;
 		vm.fctgList = data.fctgList;
 		vm.fctiList = data.fctiList;
 
-		findVlrlList($routeParams.page ? $routeParams.page : 1);
+		findFctlList($routeParams.page ? $routeParams.page : 1);
 	});
 
 	pageTitleService.setTitle("fctr", "page_detail");

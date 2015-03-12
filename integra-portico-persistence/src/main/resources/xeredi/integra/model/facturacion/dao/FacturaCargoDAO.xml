@@ -3,67 +3,58 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.facturacion.dao.FacturaCargoDAO">
-    <resultMap type="FacturaCargoVO" id="ResultMap">
-        <id column="fctc_fctr_pk" />
-        <id column="fctc_crgo_pk" />
+	<resultMap type="FacturaCargoVO" id="ResultMap">
+		<id column="fctg_fctr_pk" />
+		<id column="fctg_crgo_pk" />
 
-        <result column="fctc_fctr_pk" property="fctrId" />
-        <association property="crgo" resultMap="xeredi.integra.model.facturacion.dao.CargoDAO.ResultMap" />
-    </resultMap>
+		<result column="fctg_fctr_pk" property="fctrId" />
+		<result column="fctg_importe" property="importe" />
 
-    <sql id="SelectPrefix">
+		<association property="crgo" javaType="CargoVO">
+			<result column="fctg_crgo_pk" property="id" />
+			<result column="fctg_crgo_codigo" property="codigo" />
+		</association>
+	</resultMap>
+
+	<select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
     <![CDATA[
-        SELECT *
-        FROM vw_factura_cargo_fctc
+		SELECT
+		    fctl_fctr_pk AS fctg_fctr_pk
+		    , rgla_crgo_pk AS fctg_cgro_pk
+		    , (SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk) AS fctg_crgo_codigo
+		    , SUM(fctl_importe) AS fctg_importe
+		FROM (
+		    SELECT
+		        fctl_pk, fctl_fctr_pk
+
+		        , (
+		            SELECT rgla_crgo_pk
+		            FROM tbl_regla_rgla
+		            WHERE
+		                rgla_pk = fctl_rgla_pk
+		        ) AS rgla_crgo_pk
+
+		        , (
+		            SELECT SUM(fctd_importe)
+		            FROM
+		                tbl_factura_det_fctd
+		            WHERE
+		                fctd_fctl_pk = fctl_pk
+		        ) AS fctl_importe
+		    FROM
+		        tbl_factura_lin_fctl
     ]]>
-    </sql>
-
-    <sql id="SelectWhere">
-        <where>
-            <if test="id != null">
-                AND fctc_fctr_pk = #{id}
-            </if>
-            <if test="ids != null">
-                AND fctc_fctr_pk IN
-                <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-                </foreach>
-            </if>
-        </where>
-    </sql>
-
-    <insert id="insertGenerate" parameterType="FacturaCriterioVO">
+    	<where>
+    		<if test="id != null">
+		    <![CDATA[
+    			AND fctl_fctr_pk = #{id}
+    		]]>
+    		</if>
+    	</where>
     <![CDATA[
-        INSERT INTO tbl_factura_cargo_fctc (fctc_fctr_pk, fctc_crgo_pk)
-            SELECT fctr_pk, crgo_pk
-            FROM tbl_cargo_crgo, tbl_factura_fctr
-            WHERE
-                EXISTS (
-                    SELECT 1
-                    FROM tbl_regla_rgla
-                    WHERE
-                        rgla_crgo_pk = crgo_pk
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_factura_lin_fctl
-                            WHERE
-                                fctl_rgla_pk = rgla_pk
-                                AND fctl_fctr_pk = fctr_pk
-                        )
-                )
-                AND fctr_pk = #{id}
+		) sql
+		GROUP BY fctl_fctr_pk, rgla_crgo_pk
+		ORDER BY fctl_fctr_pk, fctg_crgo_codigo
     ]]>
-    </insert>
-
-    <insert id="insert" parameterType="FacturaCargoVO">
-    <![CDATA[
-        INSERT INTO tbl_factura_cargo_fctc (fctc_fctr_pk, fctc_crgo_pk)
-        VALUES(#{fctrId}, #{crgo.id})
-    ]]>
-    </insert>
-
-    <select id="selectList" resultMap="ResultMap" parameterType="FacturaCriterioVO">
-        <include refid="SelectPrefix"/>
-        <include refid="SelectWhere"/>
-        ORDER BY fctc_fctr_pk
-    </select>
+	</select>
 </mapper>

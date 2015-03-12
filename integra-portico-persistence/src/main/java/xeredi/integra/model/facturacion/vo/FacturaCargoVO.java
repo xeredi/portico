@@ -14,6 +14,9 @@ public final class FacturaCargoVO {
     /** The crgo. */
     private CargoVO crgo;
 
+    /** The importe. */
+    private Double importe;
+
     /**
      * {@inheritDoc}
      */
@@ -37,8 +40,8 @@ public final class FacturaCargoVO {
      * @param value
      *            the fctr id
      */
-    public void setFctrId(Long value) {
-        this.fctrId = value;
+    public void setFctrId(final Long value) {
+        fctrId = value;
     }
 
     /**
@@ -56,8 +59,27 @@ public final class FacturaCargoVO {
      * @param value
      *            the crgo
      */
-    public void setCrgo(CargoVO value) {
-        this.crgo = value;
+    public void setCrgo(final CargoVO value) {
+        crgo = value;
+    }
+
+    /**
+     * Gets the importe.
+     *
+     * @return the importe
+     */
+    public Double getImporte() {
+        return importe;
+    }
+
+    /**
+     * Sets the importe.
+     *
+     * @param value
+     *            the new importe
+     */
+    public void setImporte(final Double value) {
+        importe = value;
     }
 
 }

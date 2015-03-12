@@ -19,29 +19,6 @@ GRANT SELECT ON portico.vw_regla_inc_rgin TO portico
 
 
 
-CREATE VIEW portico.vw_factura_srv_fcts AS
-	SELECT *
-		, (
-			SELECT prmt_parametro
-			FROM portico.tbl_parametro_prmt
-			WHERE prmt_pk = srvc_subp_pk
-		) AS srvc_subp
-	FROM
-		portico.tbl_factura_srv_fcts
-		INNER JOIN portico.tbl_aspecto_aspc ON
-			aspc_pk = fcts_aspc_pk
-		INNER JOIN portico.tbl_aspecto_version_aspv ON
-			aspv_aspc_pk = fcts_aspc_pk
-			AND fcts_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, fcts_fref)
-		INNER JOIN portico.tbl_servicio_srvc ON
-			srvc_pk = fcts_srvc_pk
-\
-
-GRANT SELECT ON portico.vw_factura_srv_fcts TO portico
-\
-
-
-
 CREATE VIEW portico.vw_factura_lin_fctl AS
 	SELECT *
 		, (
@@ -107,4 +84,3 @@ GRANT SELECT ON portico.vw_factura_det_fctd TO portico
 DROP VIEW IF EXISTS portico.vw_regla_inc_rgin\
 DROP VIEW IF EXISTS portico.vw_factura_det_fctd\
 DROP VIEW IF EXISTS portico.vw_factura_lin_fctl\
-DROP VIEW IF EXISTS portico.vw_factura_srv_fcts\
