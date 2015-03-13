@@ -88,8 +88,8 @@
                 <td><a ng-href="#/facturacion/rgla/detail/{{rgla.id}}/{{vm.fechaVigencia}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="rgla.codigo"></td>
-                <td ng-bind="rgla.rglv.tipo"></td>
-                <td ng-bind="'enti_' + rgla.rglv.enti.id | translate"></td>
+                <td ng-bind="rgla.tipo"></td>
+                <td ng-bind="'enti_' + rgla.enti.id | translate"></td>
                 <td ng-bind="rgla.rglv.fini | date: ('format_date' | translate)"></td>
                 <td ng-bind="rgla.rglv.ffin | date: ('format_date' | translate)"></td>
                 <td class="number" ng-bind="rgla.rglv.orden"></td>

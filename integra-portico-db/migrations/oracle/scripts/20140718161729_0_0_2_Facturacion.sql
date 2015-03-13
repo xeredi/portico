@@ -95,12 +95,16 @@ CREATE TABLE tbl_regla_rgla (
 	rgla_pk NUMBER(19) NOT NULL
 	, rgla_crgo_pk NUMBER(19) NOT NULL
 	, rgla_codigo VARCHAR2(20) NOT NULL
+	, rgla_enti_pk NUMBER(19) NOT NULL
+	, rgla_tipo VARCHAR2(1) NOT NULL
 
 	, CONSTRAINT pk_rgla PRIMARY KEY (rgla_pk)
 	, CONSTRAINT uq_rgla UNIQUE (rgla_crgo_pk, rgla_codigo)
 
 	, CONSTRAINT fk_rgla_crgo_pk FOREIGN KEY (rgla_crgo_pk)
 		REFERENCES tbl_cargo_crgo (crgo_pk)
+	, CONSTRAINT fk_rgla_enti_pk FOREIGN KEY (rgla_enti_pk)
+		REFERENCES tbl_entidad_enti (enti_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_regla_rgla FOR porticoadm.tbl_regla_rgla\
@@ -115,8 +119,6 @@ CREATE TABLE tbl_regla_version_rglv (
 	, rglv_rgla_pk NUMBER(19) NOT NULL
 	, rglv_fini TIMESTAMP NOT NULL
 	, rglv_ffin TIMESTAMP
-	, rglv_enti_pk NUMBER(19) NOT NULL
-	, rglv_tipo VARCHAR2(1) NOT NULL
 	, rglv_orden INT NOT NULL
 	, rglv_importe_base NUMERIC(10, 4)
 	, rglv_condicion VARCHAR2(2000) NOT NULL
@@ -159,8 +161,6 @@ CREATE TABLE tbl_regla_version_rglv (
 
 	, CONSTRAINT fk_rglv_rgla_pk FOREIGN KEY (rglv_rgla_pk)
 		REFERENCES tbl_regla_rgla (rgla_pk)
-	, CONSTRAINT fk_rglv_enti_pk FOREIGN KEY (rglv_enti_pk)
-		REFERENCES tbl_entidad_enti (enti_pk)
 )\
 
 CREATE OR REPLACE SYNONYM portico.tbl_regla_version_rglv FOR porticoadm.tbl_regla_version_rglv\
@@ -762,8 +762,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON tbl_servicio_cargo_srcr TO portico\
 DROP TABLE tbl_servicio_cargo_srcr\
 DROP TABLE tbl_factura_det_fctd\
 DROP TABLE tbl_factura_lin_fctl\
-DROP TABLE tbl_factura_cargo_fctc\
-DROP TABLE tbl_factura_imp_fcti\
 DROP TABLE tbl_factura_srv_fcts\
 DROP TABLE tbl_factura_fctr\
 DROP TABLE tbl_valoracion_tmp_vlrt\

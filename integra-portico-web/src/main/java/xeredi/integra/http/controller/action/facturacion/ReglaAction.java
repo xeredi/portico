@@ -137,19 +137,20 @@ public final class ReglaAction extends BaseAction {
 
         rgla = rglaBO.select(rgla.getId(), getFechaVigencia());
 
-        loadEntiFacturables();
-
         return SUCCESS;
     }
 
     /**
      * Busqueda de entidades Facturables para el cargo al que va a pertenecer la regla.
      */
-    private void loadEntiFacturables() {
+    private void loadEntiFacturables() throws ApplicationException {
         final TipoServicioBO tpsrBO = new TipoServicioBO();
+        final CargoBO crgoBO = new CargoBO();
+
+        final CargoVO crgo = crgoBO.select(rgla.getCrgo().getId(), getFechaVigencia(), getIdioma());
         final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
 
-        tpsrCriterioVO.setId(rgla.getCrgo().getTpsr().getId());
+        tpsrCriterioVO.setId(crgo.getTpsr().getId());
         tpsrCriterioVO.setFacturable(Boolean.TRUE);
         tpsrCriterioVO.setIdioma(getIdioma());
 
@@ -158,7 +159,7 @@ public final class ReglaAction extends BaseAction {
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
 
-        tpssCriterioVO.setTpsrId(rgla.getCrgo().getTpsr().getId());
+        tpssCriterioVO.setTpsrId(crgo.getTpsr().getId());
         tpssCriterioVO.setFacturable(Boolean.TRUE);
         tpssCriterioVO.setIdioma(getIdioma());
 
@@ -187,14 +188,14 @@ public final class ReglaAction extends BaseAction {
             Preconditions.checkNotNull(rgla.getRglv().getId());
         }
 
-        FieldValidator.validateRequired(this, MessageI18nKey.rgla_tipo, rgla.getRglv().getTipo());
-        FieldValidator.validateRequired(this, MessageI18nKey.rgla_enti, rgla.getRglv().getEnti());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_tipo, rgla.getTipo());
+        FieldValidator.validateRequired(this, MessageI18nKey.rgla_enti, rgla.getEnti());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_fini, rgla.getRglv().getFini());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_orden, rgla.getRglv().getOrden());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_condicion, rgla.getRglv().getCondicion());
         FieldValidator.validateRequired(this, MessageI18nKey.rgla_formula, rgla.getRglv().getFormula());
 
-        if (ReglaTipo.T == rgla.getRglv().getTipo()) {
+        if (ReglaTipo.T == rgla.getTipo()) {
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_importeBase, rgla.getRglv().getImporteBase());
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathImpuesto, rgla.getRglv().getPathImpuesto());
             FieldValidator.validateRequired(this, MessageI18nKey.rgla_pathPagador, rgla.getRglv().getPathPagador());

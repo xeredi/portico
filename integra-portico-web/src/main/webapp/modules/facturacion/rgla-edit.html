@@ -14,18 +14,29 @@
                 <p ng-if="vm.accion != 'create'" class="form-control-static" ng-bind="vm.rgla.codigo"></p>
             </div>
             <div class="col-md-2 form-group">
-                <label translate>rgla_tipo</label> <select ng-model="vm.rgla.rglv.tipo"
+                <label translate>rgla_tipo</label> <select ng-if="vm.accion == 'create'"
+                    ng-model="vm.rgla.tipo"
                     ng-options="cdrf as ('ReglaTipo_' + cdrf | translate) for cdrf in vm.tipos"
                     class="form-control input-sm">
                     <option />
                 </select>
+                <p ng-if="vm.accion != 'create'" class="form-control-static"
+                    ng-bind="'ReglaTipo_' + vm.rgla.tipo | translate"></p>
             </div>
             <div class="col-md-2 form-group">
-                <label translate>rgla_enti</label> <select ng-model="vm.rgla.rglv.enti.id"
+                <label translate>rgla_enti</label> <select ng-if="vm.accion == 'create'"
+                    ng-model="vm.rgla.enti.id"
                     ng-options="item.value as item.label for item in vm.entiFacturableList"
                     class="form-control input-sm">
                     <option />
                 </select>
+                <p ng-if="vm.accion != 'create'" class="form-control-static">
+                    <a ng-if="vm.rgla.enti.tipo == 'T'" ng-href="#/metamodelo/tpsr/detail/{{vm.rgla.enti.id}}"
+                        ng-bind="'enti_' + vm.rgla.enti.id | translate"></a> <a
+                        ng-if="vm.rgla.enti.tipo == 'S'"
+                        ng-href="#/metamodelo/tpss/detail/{{vm.rgla.enti.id}}"
+                        ng-bind="'enti_' + vm.rgla.enti.id | translate"></a>
+                </p>
             </div>
             <div class="col-md-1 form-group">
                 <label translate>rgla_fini</label><input type="text" class="form-control input-sm"
@@ -39,7 +50,7 @@
                 <label translate>rgla_orden</label> <input type="text" ng-model="vm.rgla.rglv.orden"
                     class="form-control input-sm number" />
             </div>
-            <div ng-if="vm.rgla.rglv.tipo == 'T'" class="col-md-1 form-group">
+            <div ng-if="vm.rgla.tipo == 'T'" class="col-md-1 form-group">
                 <label translate>rgla_importeBase</label> <input type="text"
                     ng-model="vm.rgla.rglv.importeBase" class="form-control input-sm number" />
             </div>
@@ -58,7 +69,7 @@
             </div>
         </div>
 
-        <div ng-if="vm.rgla.rglv.tipo == 'T'" class="row">
+        <div ng-if="vm.rgla.tipo == 'T'" class="row">
             <div class="col-md-6 form-group">
                 <label translate>rgla_pathImpuesto</label> <input type="text"
                     ng-model="vm.rgla.rglv.pathImpuesto" class="form-control input-sm" />
@@ -69,7 +80,7 @@
             </div>
         </div>
 
-        <div ng-if="vm.rgla.rglv.tipo == 'T'" class="row">
+        <div ng-if="vm.rgla.tipo == 'T'" class="row">
             <div class="col-md-6 form-group">
                 <label translate>rgla_pathEsSujPasivo</label> <input type="text"
                     ng-model="vm.rgla.rglv.pathEsSujPasivo" class="form-control input-sm" />
@@ -81,7 +92,7 @@
         </div>
     </fieldset>
 
-    <div ng-if="vm.rgla.rglv.tipo == 'T'">
+    <div ng-if="vm.rgla.tipo == 'T'">
         <legend ng-bind="'Elementos Informativos'"></legend>
 
         <table class="table-condensed table-nonfluid">
@@ -139,7 +150,7 @@
         </table>
     </div>
 
-    <div ng-if="vm.rgla.rglv.tipo == 'T'">
+    <div ng-if="vm.rgla.tipo == 'T'">
         <legend ng-bind="'Elementos Cuantitativos'"></legend>
 
         <table class="table-condensed table-nonfluid">

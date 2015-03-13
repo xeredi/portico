@@ -15,12 +15,12 @@
         <div class="col-md-2 form-group">
             <label translate="rgla_enti"></label>
             <p class="form-control-static">
-                <a ng-if="vm.vlrl.rgla.rglv.enti.tipo == 'T'"
-                    ng-href="#/metamodelo/tpsr/detail/{{vm.vlrl.rgla.rglv.enti.id}}"
-                    translate="{{'enti_' + vm.vlrl.rgla.rglv.enti.id}}"></a> <a
-                    ng-if="vm.vlrl.rgla.rglv.enti.tipo == 'S'"
-                    ng-href="#/metamodelo/tpss/detail/{{vm.vlrl.rgla.rglv.enti.id}}"
-                    translate="{{'enti_' + vm.vlrl.rgla.rglv.enti.id}}"></a>
+                <a ng-if="vm.vlrl.rgla.enti.tipo == 'T'"
+                    ng-href="#/metamodelo/tpsr/detail/{{vm.vlrl.rgla.enti.id}}"
+                    translate="{{'enti_' + vm.vlrl.rgla.enti.id}}"></a> <a
+                    ng-if="vm.vlrl.rgla.enti.tipo == 'S'"
+                    ng-href="#/metamodelo/tpss/detail/{{vm.vlrl.rgla.enti.id}}"
+                    translate="{{'enti_' + vm.vlrl.rgla.enti.id}}"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -32,9 +32,9 @@
         </div>
         <div class="col-md-1 form-group">
             <label translate="vlrl_rgla_tipo"></label>
-            <p class="form-control-static" ng-bind="vm.vlrl.rgla.rglv.tipo"></p>
+            <p class="form-control-static" ng-bind="vm.vlrl.rgla.tipo"></p>
         </div>
-        <div class="col-md-1 form-group" ng-if="vm.vlrl.rgla.rglv.tipo != 'T'">
+        <div class="col-md-1 form-group" ng-if="vm.vlrl.rgla.tipo != 'T'">
             <label translate="vlrl_importeBase"></label>
             <p class="form-control-static number" ng-bind="vm.vlrl.importeBase | number:2"></p>
         </div>
@@ -53,7 +53,7 @@
         <div ng-if="vm.vlrl.ssrv.id" class="col-md-1 form-group">
             <label translate="vlrl_ssrv"></label>
             <p class="form-control-static">
-                <a ng-href="#/servicio/ssrv/detail/{{vm.vlrl.rgla.rglv.enti.id}}/{{vm.vlrl.ssrv.id}}"
+                <a ng-href="#/servicio/ssrv/detail/{{vm.vlrl.rgla.enti.id}}/{{vm.vlrl.ssrv.id}}"
                     ng-bind="vm.vlrl.ssrv.numero"></a>
             </p>
         </div>
@@ -144,7 +144,7 @@
             <tr>
                 <th />
                 <th translate="vlrd_valorBase"></th>
-                <th translate="vlrd_importeBase" ng-if="vm.vlrl.rgla.rglv.tipo != 'T'"></th>
+                <th translate="vlrd_importeBase" ng-if="vm.vlrl.rgla.tipo != 'T'"></th>
                 <th translate="vlrd_importe"></th>
                 <th translate="vlrd_ssrv"></th>
                 <th translate="vlrd_fini"></th>
@@ -182,7 +182,7 @@
                 <td><a ng-href="#/facturacion/vlrd/detail/{{vlrd.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td class="number" ng-bind="vlrd.valorBase | number:4"></td>
-                <td class="number" ng-if="vm.vlrl.rgla.rglv.tipo != 'T'" ng-bind="vlrd.importeBase | number:2"></td>
+                <td class="number" ng-if="vm.vlrl.rgla.tipo != 'T'" ng-bind="vlrd.importeBase | number:2"></td>
                 <td class="number" ng-bind="vlrd.importe | number:2"></td>
                 <td ng-bind="vlrd.ssrv.numero"></td>
                 <td ng-bind="vlrd.fini | date:'short'"></td>

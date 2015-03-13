@@ -61,7 +61,7 @@
                     crgv_crgo_pk = crgo_pk
                     AND vlrc_fref BETWEEN crgv_fini AND COALESCE(crgv_ffin, vlrc_fref)
         	WHERE
-                rglv_tipo = 'T'
+                rgla_tipo = 'T'
                 AND vlrd_vlrc_pk IN
     ]]>
         <foreach collection="vlrcIds" item="item" open="(" close=")" separator=",">#{item}

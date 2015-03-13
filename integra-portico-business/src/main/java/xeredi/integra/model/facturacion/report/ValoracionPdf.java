@@ -73,7 +73,7 @@ public final class ValoracionPdf extends BasePdf {
      */
     public void imprimir(final AspectoVO aspc, final ValoracionVO vlrc, final List<ValoracionCargoVO> vlrgList,
             final List<ValoracionImpuestoVO> vlriList, final List<ValoracionLineaVO> vlrlList, final OutputStream stream)
-                    throws InternalErrorException {
+            throws InternalErrorException {
         Preconditions.checkNotNull(aspc);
         Preconditions.checkNotNull(vlrc);
         Preconditions.checkNotNull(vlrgList);
@@ -329,7 +329,7 @@ public final class ValoracionPdf extends BasePdf {
         ValoracionLineaVO vlrlPrecio = null;
 
         for (final ValoracionLineaVO vlrl : vlrlList) {
-            if (vlrl.getRgla().getRglv().getTipo() == ReglaTipo.T) {
+            if (vlrl.getRgla().getTipo() == ReglaTipo.T) {
                 vlrlPrecio = vlrl;
             }
 
@@ -337,11 +337,10 @@ public final class ValoracionPdf extends BasePdf {
                 throw new Error("La primera linea ha de ser un precio");
             }
 
-            dataSource.add(vlrl.getPadreId().toString(), vlrl.getRgla().getRglv().getTipo().name() + " - "
-                    + vlrl.getRgla().getCodigo(), vlrl.getCuant1(), vlrl.getCuant2(), vlrl.getCuant3(),
-                    vlrl.getCuant4(), vlrl.getCuant5(), vlrl.getCuant6(),
-                    vlrl.getRgla().getRglv().getTipo() == ReglaTipo.T ? null : new BigDecimal(vlrl.getImporteBase()),
-                            new BigDecimal(vlrl.getImporte()));
+            dataSource.add(vlrl.getPadreId().toString(), vlrl.getRgla().getTipo().name() + " - "
+                    + vlrl.getRgla().getCodigo(), vlrl.getCuant1(), vlrl.getCuant2(), vlrl.getCuant3(), vlrl
+                    .getCuant4(), vlrl.getCuant5(), vlrl.getCuant6(), vlrl.getRgla().getTipo() == ReglaTipo.T ? null
+                    : new BigDecimal(vlrl.getImporteBase()), new BigDecimal(vlrl.getImporte()));
         }
 
         report.setDataSource(dataSource);

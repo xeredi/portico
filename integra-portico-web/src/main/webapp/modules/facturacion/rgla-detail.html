@@ -23,17 +23,17 @@
         </div>
         <div class="col-md-1 form-group">
             <label translate>rgla_tipo</label>
-            <p class="form-control-static" ng-bind="'ReglaTipo_' + vm.rgla.rglv.tipo | translate"></p>
+            <p class="form-control-static" ng-bind="'ReglaTipo_' + vm.rgla.tipo | translate"></p>
         </div>
         <div class="col-md-2 form-group">
             <label translate>rgla_enti</label>
             <p class="form-control-static">
-                <a ng-if="vm.rgla.rglv.enti.tipo == 'T'"
-                    ng-href="#/metamodelo/tpsr/detail/{{vm.rgla.rglv.enti.id}}"
-                    ng-bind="'enti_' + vm.rgla.rglv.enti.id | translate"></a> <a
-                    ng-if="vm.rgla.rglv.enti.tipo == 'S'"
-                    ng-href="#/metamodelo/tpss/detail/{{vm.rgla.rglv.enti.id}}"
-                    ng-bind="'enti_' + vm.rgla.rglv.enti.id | translate"></a>
+                <a ng-if="vm.rgla.enti.tipo == 'T'"
+                    ng-href="#/metamodelo/tpsr/detail/{{vm.rgla.enti.id}}"
+                    ng-bind="'enti_' + vm.rgla.enti.id | translate"></a> <a
+                    ng-if="vm.rgla.enti.tipo == 'S'"
+                    ng-href="#/metamodelo/tpss/detail/{{vm.rgla.enti.id}}"
+                    ng-bind="'enti_' + vm.rgla.enti.id | translate"></a>
             </p>
         </div>
         <div class="col-md-1 form-group">
@@ -48,7 +48,7 @@
             <label translate>rgla_orden</label>
             <p class="form-control-static number" ng-bind="vm.rgla.rglv.orden"></p>
         </div>
-        <div ng-if="vm.rgla.rglv.tipo == 'T'" class="col-md-1 form-group">
+        <div ng-if="vm.rgla.tipo == 'T'" class="col-md-1 form-group">
             <label translate>rgla_importeBase</label>
             <p class="form-control-static number" ng-bind="vm.rgla.rglv.importeBase | number:4"></p>
         </div>
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <div ng-if="vm.rgla.rglv.tipo == 'T'" class="row">
+    <div ng-if="vm.rgla.tipo == 'T'" class="row">
         <div class="col-md-6 form-group">
             <label translate>rgla_pathImpuesto</label>
             <p class="form-control-static" ng-bind="vm.rgla.rglv.pathImpuesto"></p>
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <div ng-if="vm.rgla.rglv.tipo == 'T'" class="row">
+    <div ng-if="vm.rgla.tipo == 'T'" class="row">
         <div class="col-md-6 form-group">
             <label translate>rgla_pathEsSujPasivo</label>
             <p class="form-control-static" ng-bind="vm.rgla.rglv.pathEsSujPasivo"></p>
@@ -89,7 +89,7 @@
     </div>
 </fieldset>
 
-<div ng-if="vm.rgla.rglv.tipo == 'T'">
+<div ng-if="vm.rgla.tipo == 'T'">
     <legend>{{'Datos Variables'}}</legend>
 
     <div class="table-responsive">
@@ -196,8 +196,8 @@
                     <td><a ng-href="#/facturacion/rgin/detail/{{rgin.id}}/{{vm.fechaVigencia}}"><i
                             class="glyphicon glyphicon-search"></i></a></td>
                     <td ng-bind="rgin.rgla2.codigo"></td>
-                    <td ng-bind="rgin.rgla2.rglv.tipo"></td>
-                    <td ng-bind="'enti_' + rgin.rgla2.rglv.enti.id | translate"></td>
+                    <td ng-bind="rgin.rgla2.tipo"></td>
+                    <td ng-bind="'enti_' + rgin.rgla2.enti.id | translate"></td>
                     <td ng-bind="rgin.rgiv.fini | date: ('format_date' | translate)"></td>
                     <td ng-bind="rgin.rgiv.ffin | date: ('format_date' | translate)"></td>
                 </tr>

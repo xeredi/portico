@@ -254,7 +254,7 @@ public class ValoradorBO {
                 vlrl.getVlrl().setVlrcId(vlra.getVlrc().getId());
                 vlrl.getVlrl().setId(igBO.nextVal(IgBO.SQ_INTEGRA));
 
-                if (vlrl.getVlrl().getRgla().getRglv().getTipo() == ReglaTipo.T) {
+                if (vlrl.getVlrl().getRgla().getTipo() == ReglaTipo.T) {
                     vlrlPadreId = vlrl.getVlrl().getId();
                 }
 
@@ -336,14 +336,14 @@ public class ValoradorBO {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
-                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getRglv().getTipo());
+                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
                 generateSql(rgla);
                 vldrContexto.setRgla(rgla);
 
                 final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                switch (rgla.getRglv().getEnti().getTipo()) {
+                switch (rgla.getEnti().getTipo()) {
                 case T:
                     vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(vldrContexto));
 
@@ -396,14 +396,14 @@ public class ValoradorBO {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
-                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getRglv().getTipo());
+                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
                 generateSql(rgla);
                 vldrContexto.setRgla(rgla);
 
                 final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                switch (rgla.getRglv().getEnti().getTipo()) {
+                switch (rgla.getEnti().getTipo()) {
                 case T:
                     vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
@@ -464,14 +464,14 @@ public class ValoradorBO {
             final List<ReglaVO> rglaList = rglaDAO.selectList(rglaCriterio);
 
             for (final ReglaVO rgla : rglaList) {
-                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getRglv().getTipo());
+                LOG.info("Regla: " + rgla.getCodigo() + " - " + rgla.getTipo());
 
                 generateSql(rgla);
                 vldrContexto.setRgla(rgla);
 
                 final List<ValoracionTemporalVO> vlrtList = new ArrayList<>();
 
-                switch (rgla.getRglv().getEnti().getTipo()) {
+                switch (rgla.getEnti().getTipo()) {
                 case T:
                     vlrtList.addAll(vlrtDAO.selectAplicarReglaDecoradorServicio(vldrContexto));
 
@@ -533,34 +533,25 @@ public class ValoradorBO {
      *            the rgla
      */
     private void generateSql(final ReglaVO rgla) {
-        rgla.getRglv().setPathImpuestoSql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathImpuesto(), false));
-        rgla.getRglv().setPathPagadorSql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathPagador(), false));
+        rgla.getRglv().setPathImpuestoSql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathImpuesto(), false));
+        rgla.getRglv().setPathPagadorSql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathPagador(), false));
         rgla.getRglv().setPathEsSujPasivoSql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathEsSujPasivo(), false));
-        rgla.getRglv().setPathCodExenSql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathCodExen(), false));
+                generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathEsSujPasivo(), false));
+        rgla.getRglv().setPathCodExenSql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCodExen(), false));
 
-        rgla.getRglv().setPathInfo1Sql(generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathInfo1(), true));
-        rgla.getRglv().setPathInfo2Sql(generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathInfo2(), true));
-        rgla.getRglv().setPathInfo3Sql(generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathInfo3(), true));
-        rgla.getRglv().setPathInfo4Sql(generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathInfo4(), true));
-        rgla.getRglv().setPathInfo5Sql(generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathInfo5(), true));
-        rgla.getRglv().setPathInfo6Sql(generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathInfo6(), true));
+        rgla.getRglv().setPathInfo1Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo1(), true));
+        rgla.getRglv().setPathInfo2Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo2(), true));
+        rgla.getRglv().setPathInfo3Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo3(), true));
+        rgla.getRglv().setPathInfo4Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo4(), true));
+        rgla.getRglv().setPathInfo5Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo5(), true));
+        rgla.getRglv().setPathInfo6Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathInfo6(), true));
 
-        rgla.getRglv().setPathCuant1Sql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathCuant1(), false));
-        rgla.getRglv().setPathCuant2Sql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathCuant2(), false));
-        rgla.getRglv().setPathCuant3Sql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathCuant3(), false));
-        rgla.getRglv().setPathCuant4Sql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathCuant4(), false));
-        rgla.getRglv().setPathCuant5Sql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathCuant5(), false));
-        rgla.getRglv().setPathCuant6Sql(
-                generateSqlPath(rgla.getRglv().getEnti(), rgla.getRglv().getPathCuant6(), false));
+        rgla.getRglv().setPathCuant1Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant1(), false));
+        rgla.getRglv().setPathCuant2Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant2(), false));
+        rgla.getRglv().setPathCuant3Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant3(), false));
+        rgla.getRglv().setPathCuant4Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant4(), false));
+        rgla.getRglv().setPathCuant5Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant5(), false));
+        rgla.getRglv().setPathCuant6Sql(generateSqlPath(rgla.getEnti(), rgla.getRglv().getPathCuant6(), false));
 
         rgla.getRglv().setCondicionSql(generateSqlCondition(rgla, rgla.getRglv().getCondicion()));
         rgla.getRglv().setFormulaSql(generateSqlFormula(rgla, rgla.getRglv().getFormula()));

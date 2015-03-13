@@ -3,15 +3,12 @@
 }
 
 body, .tooltip {
-	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma,
-		Geneva, Arial, Sans-serif;
+	font-family: Verdana, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, Geneva, Arial, Sans-serif;
 }
 
-p, label, li, .btn, .form-control, .input-group-sm>.form-control,
-	.form-control-static, .bootstrap-datetimepicker-widget,
-	.table-condensed, .dropdown-menu, .list-group, .tt-dropdown-menu,
-	.typeahead>li>a, .pagination-sm>li>a, .tooltip, .text-strong,
-	.text-center {
+p, label, li, .btn, .form-control, .input-group-sm>.form-control, .form-control-static,
+	.bootstrap-datetimepicker-widget, .table-condensed, .dropdown-menu, .list-group, .tt-dropdown-menu,
+	.typeahead>li>a, .pagination-sm>li>a, .tooltip, .text-strong, .text-center {
 	font-size: 11px;
 }
 
@@ -126,14 +123,16 @@ table {
 	margin-bottom: 15px;
 }
 
-table a, .table a {
-	text-decoration: none;
-}
-
-.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th,
-	.table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td,
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td,
 	.table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td {
 	padding: 4px;
+}
+
+.table-condensed>tbody>tr>td>a {
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	color: orange;
 }
 
 .btn-toolbar {
@@ -157,8 +156,7 @@ fieldset {
 	padding-left: 10px;
 }
 
-.glyphicon-search, .glyphicon-search, .glyphicon-ok, .glyphicon-remove,
-	.glyphicon-tags {
+.glyphicon-search, .glyphicon-search, .glyphicon-ok, .glyphicon-remove, .glyphicon-tags {
 	padding-right: 5px;
 	padding-left: 2px;
 	padding-top: 1px;
@@ -201,8 +199,7 @@ legend {
 *   Site: WebVakman.nl
 *
 */
-.visible-xl-block, .visible-xl-inline, .visible-xl-inline-block,
-	.visible-xl {
+.visible-xl-block, .visible-xl-inline, .visible-xl-inline-block, .visible-xl {
 	display: none !important;
 }
 
@@ -210,8 +207,8 @@ legend {
 	.container {
 		width: 1570px;
 	}
-	.col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6,
-		.col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12 {
+	.col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10,
+		.col-xl-11, .col-xl-12 {
 		float: left;
 	}
 	.col-xl-12 {

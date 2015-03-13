@@ -208,10 +208,10 @@
             <tr ng-repeat="fctl in vm.fctlList.list track by $index">
                 <td><a ng-href="#/facturacion/fctl/detail/{{fctl.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
-                <td nowrap="nowrap" translate="{{'enti_' + fctl.rgla.rglv.enti.id}}"></td>
+                <td nowrap="nowrap" translate="{{'enti_' + fctl.rgla.enti.id}}"></td>
                 <td nowrap="nowrap" ng-bind="fctl.rgla.codigo"></td>
-                <td ng-bind="fctl.rgla.rglv.tipo"></td>
-                <td class="number"><span ng-if="fctl.rgla.rglv.tipo != 'T'"
+                <td ng-bind="fctl.rgla.tipo"></td>
+                <td class="number"><span ng-if="fctl.rgla.tipo != 'T'"
                     ng-bind="fctl.importeBase | number:2"></span></td>
                 <td class="number" ng-bind="fctl.importe | number:2"></td>
                 <td class="number" ng-bind="fctl.fctdCount"></td>
@@ -220,22 +220,22 @@
                 <td ng-bind="fctl.ffin | date:'short'"></td>
 
                 <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo1"><span
-                    ng-if="fctl.rgla.rglv.tipo == 'T' && fctl.info1">{{fctl.rgla.rglv.etiqInfo1}}:
+                    ng-if="fctl.rgla.tipo == 'T' && fctl.info1">{{fctl.rgla.rglv.etiqInfo1}}:
                         {{fctl.info1}}</span></td>
                 <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo2"><span
-                    ng-if="fctl.rgla.rglv.tipo == 'T' && fctl.info2">{{fctl.rgla.rglv.etiqInfo2}}:
+                    ng-if="fctl.rgla.tipo == 'T' && fctl.info2">{{fctl.rgla.rglv.etiqInfo2}}:
                         {{fctl.info2}}</span></td>
                 <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo3"><span
-                    ng-if="fctl.rgla.rglv.tipo == 'T' && fctl.info3">{{fctl.rgla.rglv.etiqInfo3}}:
+                    ng-if="fctl.rgla.tipo == 'T' && fctl.info3">{{fctl.rgla.rglv.etiqInfo3}}:
                         {{fctl.info3}}</span></td>
                 <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo4"><span
-                    ng-if="fctl.rgla.rglv.tipo == 'T' && fctl.info4">{{fctl.rgla.rglv.etiqInfo4}}:
+                    ng-if="fctl.rgla.tipo == 'T' && fctl.info4">{{fctl.rgla.rglv.etiqInfo4}}:
                         {{fctl.info4}}</span></td>
                 <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo5"><span
-                    ng-if="fctl.rgla.rglv.tipo == 'T' && fctl.info5">{{fctl.rgla.rglv.etiqInfo5}}:
+                    ng-if="fctl.rgla.tipo == 'T' && fctl.info5">{{fctl.rgla.rglv.etiqInfo5}}:
                         {{fctl.info5}}</span></td>
                 <td nowrap="nowrap" ng-if="vm.aspc.aspv.lgrpInfo6"><span
-                    ng-if="fctl.rgla.rglv.tipo == 'T' && fctl.info6">{{fctl.rgla.rglv.etiqInfo6}}:
+                    ng-if="fctl.rgla.tipo == 'T' && fctl.info6">{{fctl.rgla.rglv.etiqInfo6}}:
                         {{fctl.info6}}</span></td>
 
                 <td><span ng-if="fctl.cuant1">{{fctl.rgla.rglv.etiqCuant1}}: {{fctl.cuant1}}</span></td>

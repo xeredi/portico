@@ -85,7 +85,7 @@ public final class FacturaPdf extends BasePdf {
             List<FacturaLineaVO> fctlMods = null;
 
             for (final FacturaLineaVO fctl : vo.getFctlList()) {
-                if (fctl.getRgla().getRglv().getTipo() == ReglaTipo.T) {
+                if (fctl.getRgla().getTipo() == ReglaTipo.T) {
                     if (fctlPrec != null) {
                         // builder.add(createInfoLineasComponent(fctlPrec, fctlMods));
                     }
@@ -253,8 +253,8 @@ public final class FacturaPdf extends BasePdf {
                 createEtiquetaValorComponent("Concepto", fctl.getRgla().getCodigo()),
                 createEtiquetaValorComponent("Cuota",
                         PdfConstants.DOUBLE_FORMAT.format(fctl.getRgla().getRglv().getImporteBase())),
-                        createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
-                        createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
+                createEtiquetaValorComponent("IVA", fctl.getImpuesto().getEtiqueta()),
+                createEtiquetaValorComponent("Importe", PdfConstants.CURRENCY_FORMAT.format(fctl.getImporte()))));
 
         final HorizontalListBuilder infos = DynamicReports.cmp.horizontalList();
 
@@ -327,9 +327,11 @@ public final class FacturaPdf extends BasePdf {
         //
         // report.addColumn(DynamicReports.col.column("conceptoTributario", "conceptoTributario",
         // DynamicReports.type.stringType()).setWidth(6));
-        // report.addColumn(DynamicReports.col.column("importeBase", "importeBase", DynamicReports.type.stringType())
+        // report.addColumn(DynamicReports.col.column("importeBase", "importeBase",
+        // DynamicReports.type.stringType())
         // .setWidth(2));
-        // report.addColumn(DynamicReports.col.column("valorRegla", "valorRegla", DynamicReports.type.stringType())
+        // report.addColumn(DynamicReports.col.column("valorRegla", "valorRegla",
+        // DynamicReports.type.stringType())
         // .setWidth(2));
         // report.addColumn(DynamicReports.col.column("importe", "importe", DynamicReports.type.stringType())
         // .setWidth(2));

@@ -33,6 +33,11 @@
 		<association property="rgla" javaType="ReglaVO">
 			<result column="fctl_rgla_pk" property="id" />
 			<result column="rgla_codigo" property="codigo" />
+			<result column="rgla_tipo" property="tipo" />
+
+			<association property="enti" javaType="EntidadVO">
+				<result column="rgla_enti_pk" property="id" />
+			</association>
 		</association>
 
 		<association property="impuesto" javaType="ParametroVO">
@@ -69,7 +74,7 @@
 		    , fctl_cuant1, fctl_cuant2, fctl_cuant3, fctl_cuant4, fctl_cuant5, fctl_cuant6
 		    , fctl_info1, fctl_info2, fctl_info3, fctl_info4, fctl_info5, fctl_info6
 
-		    , rgla_codigo
+		    , rgla_codigo, rgla_tipo, rgla_enti_pk
 
 		    , prmt_parametro AS fctl_impuesto_prmt
 		    , prmt_tppr_pk AS fctl_impuesto_tppr_pk
@@ -158,7 +163,7 @@
 	<select id="count" resultType="Integer" parameterType="FacturaLineaCriterioVO">
 		SELECT COUNT(1)
 		FROM
-		    tbl_factura_lin_fctl
+		tbl_factura_lin_fctl
 		<include refid="SelectWhere" />
 	</select>
 

@@ -340,7 +340,7 @@ public class ValoracionBO {
                 throw new Error("Regla no encontrada: " + vlrl.getRgla());
             }
 
-            if (rgla.getRglv().getTipo() != ReglaTipo.T) {
+            if (rgla.getTipo() != ReglaTipo.T) {
                 Preconditions.checkNotNull(vlrl.getPadreId());
             }
 
@@ -349,7 +349,7 @@ public class ValoracionBO {
 
             // ssrvCriterioVO.setFechaVigencia(vlrc.getFref());
 
-            if (rgla.getRglv().getEnti().getTipo() == TipoEntidad.S) {
+            if (rgla.getEnti().getTipo() == TipoEntidad.S) {
                 if (aspc.getAspv().isAgrupaDetalles()) {
                     Preconditions.checkNotNull(vlrd.getSsrv());
                     Preconditions.checkNotNull(vlrd.getSsrv().getId());
@@ -358,7 +358,7 @@ public class ValoracionBO {
 
                     final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
 
-                    if (ssrv.getEntiId() != rgla.getRglv().getEnti().getId()) {
+                    if (ssrv.getEntiId() != rgla.getEnti().getId()) {
                         throw new Error("Subservicio no valido para la regla");
                     }
                 } else {
@@ -369,7 +369,7 @@ public class ValoracionBO {
 
                     final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterioVO);
 
-                    if (ssrv.getEntiId() != rgla.getRglv().getEnti().getId()) {
+                    if (ssrv.getEntiId() != rgla.getEnti().getId()) {
                         throw new Error("Subservicio no valido para la regla");
                     }
                 }

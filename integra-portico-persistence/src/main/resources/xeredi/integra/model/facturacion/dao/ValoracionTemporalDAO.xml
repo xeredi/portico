@@ -343,9 +343,9 @@
                 tpsr_pk = srvc_tpsr_pk
             JOIN tbl_regla_rgla rgla ON
                 rgla_pk = #{rgla.id}
+                AND rgla_enti_pk = ssrv_tpss_pk
             JOIN tbl_regla_version_rglv rglv ON
-                rglv_enti_pk = ssrv_tpss_pk
-                AND rglv_rgla_pk = rgla_pk
+                rglv_rgla_pk = rgla_pk
                 AND #{fref} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fref})
         WHERE
             tpsr_es_facturable = 1
@@ -447,7 +447,7 @@
     <![CDATA[
             AND (
                 (
-                    rglv_tipo = 'T'
+                    rgla_tipo = 'T'
                     AND NOT EXISTS (
                         SELECT 1
                         FROM tbl_servicio_cargo_srcr
@@ -460,7 +460,7 @@
                     /* TODO Ojo lo de temporalidad */
                 )
                 OR (
-                    rglv_tipo IN ('C', 'D')
+                    rgla_tipo IN ('C', 'D')
                     AND EXISTS (
                         SELECT 1
                         FROM
@@ -475,7 +475,7 @@
                                 FROM tbl_regla_rgla
                                 WHERE
                                     rgla_crgo_pk = vlrt_crgo_pk
-                                    AND rglv_tipo = 'T'
+                                    AND rgla_tipo = 'T'
                             )
                     )
                 )
@@ -500,9 +500,9 @@
         , importe_base AS vlrt_importe_base
         , (
             CASE
-                WHEN rglv_tipo = 'C'
+                WHEN rgla_tipo = 'C'
                 THEN importe_base * (valor_base - 1)
-                WHEN rglv_tipo = 'B'
+                WHEN rgla_tipo = 'B'
                 THEN importe_base * (- valor_base) / 100
                 ELSE 0
             END
@@ -563,9 +563,9 @@
         FROM tbl_subservicio_ssrv item
             JOIN tbl_regla_rgla rgla ON
                 rgla_pk = #{rgla.id}
+                AND rgla_enti_pk = ssrv_tpss_pk
             JOIN tbl_regla_version_rglv rglv ON
-                rglv_enti_pk = ssrv_tpss_pk
-                AND rglv_rgla_pk = rgla_pk
+                rglv_rgla_pk = rgla_pk
                 AND #{fref} BETWEEN rglv_fini AND COALESCE(rglv_ffin, #{fref})
             JOIN tbl_valoracion_tmp_vlrt vlrt ON
                 vlrt_srvc_pk = ssrv_srvc_pk
@@ -596,7 +596,7 @@
         , vlrt_cuant1, vlrt_cuant2, vlrt_cuant3, vlrt_cuant4, vlrt_cuant5, vlrt_cuant6
         , vlrt_info1, vlrt_info2, vlrt_info3, vlrt_info4, vlrt_info5, vlrt_info6
     ) VALUES (
-        #{id}, #{padreId}, #{prbtId}, #{srvcId}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rgla.rglv.tipo}, #{impuesto.id}, #{pagador.id}
+        #{id}, #{padreId}, #{prbtId}, #{srvcId}, #{ssrv.id}, #{crgo.id}, #{rgla.id}, #{rgla.tipo}, #{impuesto.id}, #{pagador.id}
         , #{orden}, #{valorBase}, #{importeBase}, #{importe}, #{sujPasivo, jdbcType=INTEGER, javaType=Boolean}, #{codExencion}
         , #{freferencia}, #{fliquidacion}, #{finicio}, #{ffin}
         , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}

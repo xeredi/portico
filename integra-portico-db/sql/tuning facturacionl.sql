@@ -1,40 +1,15 @@
-SELECT 
-    fctl_pk, fctl_padre_pk, fctl_fctr_pk, fctl_fcts_pk, fctl_rgla_pk, fctl_impuesto_prmt_pk, fctl_ssrv_pk
-    , fctl_fini, fctl_ffin
-    , fctl_cuant1, fctl_cuant2, fctl_cuant3, fctl_cuant4, fctl_cuant5, fctl_cuant6
-    , fctl_info1, fctl_info2, fctl_info3, fctl_info4, fctl_info5, fctl_info6
+SELECT
+    rgin_pk, rgin_rgla1_pk, rgin_rgla2_pk
     
-    , rgla_codigo
+    , rgiv_pk, rgiv_fini, rgiv_ffin
     
-    , prmt_parametro AS fctl_impuesto_prmt
-    , prmt_tppr_pk AS fctl_impuesto_tppr_pk
-
-    , ssrv_numero, ssrv_tpss_pk
-    
-    , srvc_pk, srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
-    
-    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
-    
-    , (SELECT SUM(fctd_importe_base) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe_base
-    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe
+    , rgla_crgo_pk, rgla_codigo, rgla_enti_pk, rgla_tipo
 FROM
-    tbl_factura_lin_fctl
+    tbl_regla_inc_rgin
+    INNER JOIN tbl_regla_inc_version_rgiv ON
+        rgiv_rgin_pk = rgin_pk
     INNER JOIN tbl_regla_rgla ON
-        rgla_pk = fctl_rgla_pk
-    INNER JOIN tbl_parametro_prmt ON
-        prmt_pk = fctl_impuesto_prmt_pk
-    INNER JOIN tbl_servicio_srvc ON
-        EXISTS (
-            SELECT 1
-            FROM tbl_factura_srv_fcts
-            WHERE 
-                fcts_pk = fctl_fcts_pk
-                AND fcts_srvc_pk = srvc_pk
-        )
-    LEFT JOIN tbl_subservicio_ssrv ON
-        ssrv_pk = fctl_ssrv_pk
-WHERE 
-    fctl_fctr_pk = 3167001
+        rgla_pk = rgin_rgla2_pk
 ;
 
 

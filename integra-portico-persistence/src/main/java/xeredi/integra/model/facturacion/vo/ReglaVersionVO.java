@@ -4,8 +4,6 @@ import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import xeredi.integra.model.metamodelo.vo.EntidadVO;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ReglaVersionVO.
@@ -20,12 +18,6 @@ public final class ReglaVersionVO {
 
     /** The ffin. */
     private Date ffin;
-
-    /** The enti. */
-    private EntidadVO enti;
-
-    /** The tipo. */
-    private ReglaTipo tipo;
 
     /** The orden. */
     private Integer orden;
@@ -1190,44 +1182,6 @@ public final class ReglaVersionVO {
      */
     public void setImporteBase(final Double value) {
         importeBase = value;
-    }
-
-    /**
-     * Gets the enti.
-     *
-     * @return the enti
-     */
-    public EntidadVO getEnti() {
-        return enti;
-    }
-
-    /**
-     * Sets the enti.
-     *
-     * @param value
-     *            the enti
-     */
-    public void setEnti(final EntidadVO value) {
-        enti = value;
-    }
-
-    /**
-     * Gets the tipo.
-     *
-     * @return the tipo
-     */
-    public ReglaTipo getTipo() {
-        return tipo;
-    }
-
-    /**
-     * Sets the tipo.
-     *
-     * @param value
-     *            the tipo
-     */
-    public void setTipo(final ReglaTipo value) {
-        tipo = value;
     }
 
 }
