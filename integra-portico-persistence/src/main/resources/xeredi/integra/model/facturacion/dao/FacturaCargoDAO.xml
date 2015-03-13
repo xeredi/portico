@@ -20,7 +20,7 @@
     <![CDATA[
 		SELECT
 		    fctl_fctr_pk AS fctg_fctr_pk
-		    , rgla_crgo_pk AS fctg_cgro_pk
+		    , rgla_crgo_pk AS fctg_crgo_pk
 		    , (SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk) AS fctg_crgo_codigo
 		    , SUM(fctl_importe) AS fctg_importe
 		FROM (

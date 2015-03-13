@@ -12,6 +12,7 @@
 		<result column="fcts_fini" property="fini" />
 		<result column="fcts_ffin" property="ffin" />
 		<result column="fcts_cod_exen" property="codExencion" />
+		<result column="fcts_importe" property="importe" />
 
 		<association property="aspc" javaType="AspectoVO">
 			<result column="fcts_aspc_pk" property="id" />
@@ -38,6 +39,18 @@
 		    , srvc_tpsr_pk, srvc_subp_pk, srvc_anno, srvc_numero
 
 		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+
+	        , (
+	            SELECT SUM(fctd_importe)
+	            FROM tbl_factura_det_fctd
+	            WHERE
+	                fctd_fctl_pk = ANY(
+	                    SELECT fctl_pk
+	                    FROM tbl_factura_lin_fctl
+	                    WHERE
+	                        fctl_fcts_pk = fcts_pk
+	                )
+	        ) AS fcts_importe
 		FROM
 		    tbl_factura_srv_fcts
 		    INNER JOIN tbl_servicio_srvc ON

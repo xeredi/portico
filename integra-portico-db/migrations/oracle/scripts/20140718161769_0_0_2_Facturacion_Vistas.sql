@@ -20,51 +20,6 @@ GRANT SELECT ON vw_regla_inc_rgin TO portico\
 
 
 
-CREATE VIEW vw_factura_lin_fctl AS
-	SELECT fctl.*, rgla.*, rglv.*, prmt.*, prvr.*, ssrv.*
-		, (
-			SELECT SUM(fctd_importe_base)
-			FROM tbl_factura_det_fctd
-			WHERE fctd_fctl_pk = fctl_pk
-		) AS fctl_importe_base
-		, (
-			SELECT SUM(fctd_importe)
-			FROM tbl_factura_det_fctd
-			WHERE fctd_fctl_pk = fctl_pk
-		) AS fctl_importe
-	FROM tbl_factura_lin_fctl fctl
-		INNER JOIN tbl_regla_rgla rgla ON
-			rgla_pk = fctl_rgla_pk
-		INNER JOIN tbl_regla_version_rglv rglv ON
-			rglv_rgla_pk = fctl_rgla_pk
-			AND EXISTS (
-				SELECT 1
-				FROM tbl_factura_srv_fcts
-				WHERE
-					fcts_pk = fctl_fcts_pk
-					AND fcts_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, fcts_fref)
-			)
-		INNER JOIN tbl_parametro_prmt prmt ON
-			prmt_pk = fctl_impuesto_prmt_pk
-		INNER JOIN tbl_parametro_version_prvr prvr ON
-			prvr_prmt_pk = fctl_impuesto_prmt_pk
-			AND EXISTS (
-				SELECT 1
-				FROM tbl_factura_srv_fcts
-				WHERE
-					fcts_pk = fctl_fcts_pk
-					AND fcts_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fcts_fref)
-			)
-		LEFT JOIN tbl_subservicio_ssrv ssrv ON
-			ssrv_pk = fctl_ssrv_pk
-\
-
-CREATE OR REPLACE SYNONYM portico.vw_factura_lin_fctl FOR vw_factura_lin_fctl\
-
-GRANT SELECT ON vw_factura_lin_fctl TO portico\
-
-
-
 CREATE VIEW vw_factura_det_fctd AS
 	select *
 	FROM
@@ -86,4 +41,3 @@ GRANT SELECT ON vw_factura_det_fctd TO portico\
 
 DROP VIEW vw_regla_inc_rgin\
 DROP VIEW vw_factura_det_fctd\
-DROP VIEW vw_factura_lin_fctl\

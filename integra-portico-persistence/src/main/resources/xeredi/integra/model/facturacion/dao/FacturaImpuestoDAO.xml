@@ -16,6 +16,7 @@
 		<association property="impuesto" javaType="ParametroVO">
 			<result column="fcti_impuesto_prmt_pk" property="id" />
 			<result column="fcti_impuesto_prmt" property="parametro" />
+			<result column="fcti_impuesto_tppr_pk" property="entiId" />
 		</association>
 	</resultMap>
 
@@ -24,7 +25,8 @@
 		SELECT
 		    fctl_fctr_pk AS fcti_fctr_pk
 		    , fctl_impuesto_prmt_pk AS fcti_impuesto_prmt_pk
-		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = fctl_impuesto_prmt_pk) AS fcti_impuesto_prmt
+		    , prmt_parametro AS fcti_impuesto_prmt
+		    , prmt_tppr_pk AS fcti_impuesto_tppr_pk
 		    , fcti_porcentaje
 		    , SUM(fctl_importe) AS fcti_importe_base
 		    , SUM(fctl_importe * fcti_porcentaje) / 100 AS fcti_importe_impuesto
@@ -75,7 +77,9 @@
 		</where>
     <![CDATA[
 		) sql
-		GROUP BY fctl_fctr_pk, fctl_impuesto_prmt_pk, fcti_porcentaje
+			INNER JOIN tbl_parametro_prmt ON
+				prmt_pk = fctl_impuesto_prmt_pk
+		GROUP BY fctl_fctr_pk, fctl_impuesto_prmt_pk, prmt_parametro, prmt_tppr_pk, fcti_porcentaje
 		ORDER BY fctl_fctr_pk, fcti_porcentaje DESC
     ]]>
 	</select>

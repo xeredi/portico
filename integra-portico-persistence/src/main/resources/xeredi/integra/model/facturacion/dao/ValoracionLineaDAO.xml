@@ -15,6 +15,7 @@
 
 		<result column="vlrl_importe_base" property="importeBase" />
 		<result column="vlrl_importe" property="importe" />
+		<result column="vlrl_vlrd_count" property="vlrdCount" />
 
 		<result column="vlrl_info1" property="info1" />
 		<result column="vlrl_info2" property="info2" />
@@ -97,6 +98,7 @@
 		    , (SELECT enti_tipo FROM tbl_entidad_enti WHERE enti_pk = rglv_enti_pk) AS enti_tipo
 		    , (SELECT SUM(vlrd_importe_base) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe_base
 		    , (SELECT SUM(vlrd_importe) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_importe
+		    , (SELECT COUNT(1) FROM tbl_valoracion_det_vlrd WHERE vlrd_vlrl_pk = vlrl_pk) AS vlrl_vlrd_count
     ]]>
 		<if test="idioma != null">
 	    <![CDATA[

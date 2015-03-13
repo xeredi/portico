@@ -81,6 +81,34 @@
 </fieldset>
 
 <fieldset>
+    <legend translate="fctiList"></legend>
+
+    <div class="table-responsive">
+        <table class="table-bordered table-condensed table-hover table-nonfluid">
+            <thead>
+                <tr>
+                    <th translate="fcti_impuesto"></th>
+                    <th translate="fcti_porcentaje"></th>
+                    <th translate="fcti_importe_base"></th>
+                    <th translate="fcti_importe_impuesto"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="fcti in vm.fctiList track by $index">
+                    <td><a
+                        ng-href="#/maestro/prmt/detail/{{fcti.impuesto.entiId}}/{{fcti.impuesto.id}}/{{vm.fctr.fref}}"
+                        ng-bind="fcti.impuesto.etiqueta"></a></td>
+                    <td class="number" ng-bind="fcti.porcentaje | number:2"></td>
+                    <td class="number" ng-bind="fcti.importeBase | number:2"></td>
+                    <td class="number" ng-bind="fcti.importeImpuesto | number:2"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>
+
+<fieldset>
     <legend translate="fctsList"></legend>
 
     <div class="table-responsive">
@@ -92,6 +120,7 @@
                     <th translate="fcts_fini"></th>
                     <th translate="fcts_ffin"></th>
                     <th translate="fcts_codExencion"></th>
+                    <th translate="fcts_importe"></th>
                 </tr>
             </thead>
 
@@ -103,6 +132,7 @@
                     <td ng-bind="fcts.fini | date: ('format_datetime' | translate)"></td>
                     <td ng-bind="fcts.ffin | date: ('format_datetime' | translate)"></td>
                     <td ng-bind="fcts.codExencion"></td>
+                    <td class="number" ng-bind="fcts.importe | number:2"></td>
                 </tr>
             </tbody>
         </table>
@@ -131,34 +161,6 @@
         </table>
     </div>
 </fieldset>
-
-<fieldset>
-    <legend translate="fctiList"></legend>
-
-    <div class="table-responsive">
-        <table class="table-bordered table-condensed table-hover table-nonfluid">
-            <thead>
-                <tr>
-                    <th translate="fcti_impuesto"></th>
-                    <th translate="fcti_porcentaje"></th>
-                    <th translate="fcti_importe_base"></th>
-                    <th translate="fcti_importe_impuesto"></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="fcti in vm.fctiList track by $index">
-                    <td><a
-                        ng-href="#/maestro/prmt/detail/{{fcti.impuesto.entiId}}/{{fcti.impuesto.id}}/{{vm.fctr.fref}}"
-                        ng-bind="fcti.impuesto.etiqueta"></a></td>
-                    <td class="number" ng-bind="fcti.porcentaje | number:2"></td>
-                    <td class="number" ng-bind="fcti.importeBase | number:2"></td>
-                    <td class="number" ng-bind="fcti.importeImpuesto | number:2"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</fieldset>
 </tab> <tab heading="{{'fctlList' | translate}}" select="vm.tabSelected('fctlList')">
 <div class="btn-toolbar" role="toolbar">
     <div class="btn-group">
@@ -181,6 +183,7 @@
                 <th translate="fctl_rgla_tipo"></th>
                 <th translate="fctl_importeBase"></th>
                 <th translate="fctl_importe"></th>
+                <th translate="fctl_fctdCount"></th>
                 <th translate="fctl_impuesto"></th>
                 <th translate="fctl_fini"></th>
                 <th translate="fctl_ffin"></th>
@@ -211,6 +214,7 @@
                 <td class="number"><span ng-if="fctl.rgla.rglv.tipo != 'T'"
                     ng-bind="fctl.importeBase | number:2"></span></td>
                 <td class="number" ng-bind="fctl.importe | number:2"></td>
+                <td class="number" ng-bind="fctl.fctdCount"></td>
                 <td ng-bind="fctl.impuesto.etiqueta"></td>
                 <td ng-bind="fctl.fini | date:'short'"></td>
                 <td ng-bind="fctl.ffin | date:'short'"></td>

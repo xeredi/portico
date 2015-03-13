@@ -23,7 +23,7 @@ public final class FacturaLineaVO {
     private Long fctrId;
 
     /** The fcts id. */
-    private Long fctsId;
+    private FacturaServicioVO fcts;
 
     /** The rgla. */
     private ReglaVO rgla;
@@ -45,6 +45,9 @@ public final class FacturaLineaVO {
 
     /** The importe. */
     private Double importe;
+
+    /** The fctd count. */
+    private Integer fctdCount;
 
     /** The cuant1. */
     private Double cuant1;
@@ -129,22 +132,22 @@ public final class FacturaLineaVO {
     }
 
     /**
-     * Gets the fcts id.
+     * Gets the fcts.
      *
-     * @return the fcts id
+     * @return the fcts
      */
-    public Long getFctsId() {
-        return fctsId;
+    public FacturaServicioVO getFcts() {
+        return fcts;
     }
 
     /**
-     * Sets the fcts id.
+     * Sets the fcts.
      *
      * @param value
-     *            the new fcts id
+     *            the new fcts
      */
-    public void setFctsId(final Long value) {
-        fctsId = value;
+    public void setFcts(final FacturaServicioVO value) {
+        fcts = value;
     }
 
     /**
@@ -485,8 +488,8 @@ public final class FacturaLineaVO {
      * @param value
      *            the padre id
      */
-    public void setPadreId(Long value) {
-        this.padreId = value;
+    public void setPadreId(final Long value) {
+        padreId = value;
     }
 
     /**
@@ -504,8 +507,8 @@ public final class FacturaLineaVO {
      * @param value
      *            the fini
      */
-    public void setFini(Date value) {
-        this.fini = value;
+    public void setFini(final Date value) {
+        fini = value;
     }
 
     /**
@@ -523,8 +526,27 @@ public final class FacturaLineaVO {
      * @param value
      *            the ffin
      */
-    public void setFfin(Date value) {
-        this.ffin = value;
+    public void setFfin(final Date value) {
+        ffin = value;
+    }
+
+    /**
+     * Gets the fctd count.
+     *
+     * @return the fctd count
+     */
+    public Integer getFctdCount() {
+        return fctdCount;
+    }
+
+    /**
+     * Sets the fctd count.
+     *
+     * @param value
+     *            the new fctd count
+     */
+    public void setFctdCount(final Integer value) {
+        fctdCount = value;
     }
 
 }

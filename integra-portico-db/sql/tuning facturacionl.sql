@@ -1,86 +1,42 @@
-
-SELECT
-    fctl_fctr_pk AS fctg_fctr_pk
-    , rgla_crgo_pk AS fctg_cgro_pk
-    , (SELECT crgo_codigo FROM tbl_cargo_crgo WHERE crgo_pk = rgla_crgo_pk) AS fctg_crgo_codigo
-    , SUM(fctl_importe) AS fctg_importe
-FROM (
-    SELECT 
-        fctl_pk, fctl_fctr_pk
-        
-        , (
-            SELECT rgla_crgo_pk 
-            FROM tbl_regla_rgla
-            WHERE 
-                rgla_pk = fctl_rgla_pk 
-        ) AS rgla_crgo_pk 
-    
-        , (
-            SELECT SUM(fctd_importe)
-            FROM 
-                tbl_factura_det_fctd
-            WHERE
-                fctd_fctl_pk = fctl_pk
-        ) AS fctl_importe
-    FROM 
-        tbl_factura_lin_fctl 
-    WHERE 
-        fctl_fctr_pk = 3167001
-) sql
-GROUP BY fctl_fctr_pk, rgla_crgo_pk
-ORDER BY fctl_fctr_pk, fctg_crgo_codigo
-;
-
 SELECT 
-    fctr_pk, fctr_aspc_pk, fctr_pagador_prmt_pk, fctr_fcsr_pk, fctr_numero
-    , fctr_fref, fctr_falta, fctr_fini, fctr_ffin, fctr_estado, fctr_es_suj_pasivo
-    , fctr_info1, fctr_info2, fctr_info3, fctr_info4, fctr_info5, fctr_info6
+    fctl_pk, fctl_padre_pk, fctl_fctr_pk, fctl_fcts_pk, fctl_rgla_pk, fctl_impuesto_prmt_pk, fctl_ssrv_pk
+    , fctl_fini, fctl_ffin
+    , fctl_cuant1, fctl_cuant2, fctl_cuant3, fctl_cuant4, fctl_cuant5, fctl_cuant6
+    , fctl_info1, fctl_info2, fctl_info3, fctl_info4, fctl_info5, fctl_info6
+    
+    , rgla_codigo
+    
+    , prmt_parametro AS fctl_impuesto_prmt
+    , prmt_tppr_pk AS fctl_impuesto_tppr_pk
 
-    , aspc_codigo, aspc_tpsr_pk
+    , ssrv_numero, ssrv_tpss_pk
     
-    , fcsr_serie, fcsr_anio
+    , srvc_pk, srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
     
-    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = fctr_pagador_prmt_pk) AS fctr_pagador_prmt
+    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
     
-    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctr_pk = fctr_pk) AS fctr_importe
-
-    , (
-        WITH tipoIva AS (
-            SELECT
-                prvr_prmt_pk, prvr_fini, prvr_ffin
-                , (SELECT prdt_ndecimal FROM tbl_parametro_dato_prdt
-                    WHERE prdt_prvr_pk = prvr_pk AND prdt_tpdt_pk = portico.getTipoDato('DECIMAL_01')) AS prdt_ndecimal
-            FROM
-                tbl_parametro_version_prvr
-            WHERE
-                prvr_prmt_pk = ANY (
-                    SELECT prmt_pk
-                    FROM tbl_parametro_prmt
-                    WHERE prmt_tppr_pk = portico.getEntidad('TIPO_IVA')
-                )
+    , (SELECT SUM(fctd_importe_base) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe_base
+    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe
+FROM
+    tbl_factura_lin_fctl
+    INNER JOIN tbl_regla_rgla ON
+        rgla_pk = fctl_rgla_pk
+    INNER JOIN tbl_parametro_prmt ON
+        prmt_pk = fctl_impuesto_prmt_pk
+    INNER JOIN tbl_servicio_srvc ON
+        EXISTS (
+            SELECT 1
+            FROM tbl_factura_srv_fcts
+            WHERE 
+                fcts_pk = fctl_fcts_pk
+                AND fcts_srvc_pk = srvc_pk
         )
-        SELECT
-            SUM(
-                fctd_importe * (
-                    SELECT prdt_ndecimal
-                    FROM tipoIva
-                    WHERE prvr_prmt_pk = fctl_impuesto_prmt_pk
-                        AND fctr_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, fctr_fref)
-                )
-            ) / 100
-        FROM
-            tbl_factura_lin_fctl
-            INNER JOIN tbl_factura_det_fctd ON
-                fctd_fctl_pk = fctl_pk
-        WHERE fctl_fctr_pk = fctr_pk
-    ) AS fctr_impuesto
-FROM 
-    tbl_factura_fctr
-    INNER JOIN tbl_aspecto_aspc ON
-        aspc_pk = fctr_aspc_pk
-    INNER JOIN tbl_factura_serie_fcsr ON
-        fcsr_pk = fctr_fcsr_pk
+    LEFT JOIN tbl_subservicio_ssrv ON
+        ssrv_pk = fctl_ssrv_pk
+WHERE 
+    fctl_fctr_pk = 3167001
 ;
+
 
 
 SELECT *

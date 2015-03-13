@@ -207,7 +207,12 @@ public class FacturadorBO {
 
                 fctl.setId(generatedIds.get(vlrl.getId()));
                 fctl.setPadreId(generatedIds.get(vlrl.getPadreId()));
-                fctl.setFctsId(generatedIds.get(vlrl.getVlrcId()));
+
+                final FacturaServicioVO fcts = new FacturaServicioVO();
+
+                fcts.setId(generatedIds.get(vlrl.getVlrcId()));
+
+                fctl.setFcts(fcts);
                 fctl.setFctrId(generatedFcts.get(vlrl.getVlrcId()).getFctrId());
 
                 fctl.setFini(vlrl.getFini());

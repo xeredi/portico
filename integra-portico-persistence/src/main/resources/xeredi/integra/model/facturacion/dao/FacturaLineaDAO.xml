@@ -9,12 +9,12 @@
 		<result column="fctl_pk" property="id" />
 		<result column="fctl_padre_pk" property="padreId" />
 		<result column="fctl_fctr_pk" property="fctrId" />
-		<result column="fctl_fcts_pk" property="fctsId" />
 		<result column="fctl_fini" property="fini" />
 		<result column="fctl_ffin" property="ffin" />
 
 		<result column="fctl_importe_base" property="importeBase" />
 		<result column="fctl_importe" property="importe" />
+		<result column="fctl_fctd_count" property="fctdCount" />
 
 		<result column="fctl_cuant1" property="cuant1" />
 		<result column="fctl_cuant2" property="cuant2" />
@@ -30,29 +30,75 @@
 		<result column="fctl_info5" property="info5" />
 		<result column="fctl_info6" property="info6" />
 
-		<association property="rgla" resultMap="xeredi.integra.model.facturacion.dao.ReglaDAO.ResultMap" />
-		<association property="impuesto" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
-		<association property="ssrv" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
-	</resultMap>
+		<association property="rgla" javaType="ReglaVO">
+			<result column="fctl_rgla_pk" property="id" />
+			<result column="rgla_codigo" property="codigo" />
+		</association>
 
-	<insert id="insert" parameterType="FacturaLineaVO">
-    <![CDATA[
-        INSERT INTO tbl_factura_lin_fctl (
-            fctl_pk, fctl_padre_pk, fctl_fctr_pk, fctl_fcts_pk, fctl_rgla_pk, fctl_impuesto_prmt_pk, fctl_ssrv_pk, fctl_fini, fctl_ffin
-            , fctl_cuant1, fctl_cuant2, fctl_cuant3, fctl_cuant4, fctl_cuant5, fctl_cuant6
-            , fctl_info1, fctl_info2, fctl_info3, fctl_info4, fctl_info5, fctl_info6
-        ) VALUES (
-            #{id}, #{padreId}, #{fctrId}, #{fctsId}, #{rgla.id}, #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}
-            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
-            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
-        )
-    ]]>
-	</insert>
+		<association property="impuesto" javaType="ParametroVO">
+			<result column="fctl_impuesto_prmt_pk" property="id" />
+			<result column="fctl_impuesto_prmt" property="parametro" />
+			<result column="fctl_impuesto_tppr_pk" property="entiId" />
+		</association>
+
+		<association property="fcts" javaType="FacturaServicioVO">
+			<result column="fctl_fcts_pk" property="id" />
+
+			<association property="srvc" javaType="ServicioVO">
+				<result column="srvc_anno" property="anno" />
+				<result column="srvc_numero" property="numero" />
+				<result column="srvc_tpsr_pk" property="entiId" />
+
+				<association property="subp" javaType="ParametroVO">
+					<result column="srvc_subp_pk" property="id" />
+					<result column="srvc_subp" property="parametro" />
+				</association>
+			</association>
+		</association>
+
+		<association property="ssrv" javaType="SubservicioVO">
+			<result column="fctl_ssrv_pk" property="id" />
+		</association>
+	</resultMap>
 
 	<sql id="SelectPrefix">
     <![CDATA[
-        SELECT *
-        FROM vw_factura_lin_fctl
+		SELECT
+		    fctl_pk, fctl_padre_pk, fctl_fctr_pk, fctl_fcts_pk, fctl_rgla_pk, fctl_impuesto_prmt_pk, fctl_ssrv_pk
+		    , fctl_fini, fctl_ffin
+		    , fctl_cuant1, fctl_cuant2, fctl_cuant3, fctl_cuant4, fctl_cuant5, fctl_cuant6
+		    , fctl_info1, fctl_info2, fctl_info3, fctl_info4, fctl_info5, fctl_info6
+
+		    , rgla_codigo
+
+		    , prmt_parametro AS fctl_impuesto_prmt
+		    , prmt_tppr_pk AS fctl_impuesto_tppr_pk
+
+		    , ssrv_numero, ssrv_tpss_pk
+
+		    , srvc_pk, srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
+
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+
+		    , (SELECT SUM(fctd_importe_base) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe_base
+		    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe
+		    , (SELECT COUNT(1) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_fctd_count
+		FROM
+		    tbl_factura_lin_fctl
+		    INNER JOIN tbl_regla_rgla ON
+		        rgla_pk = fctl_rgla_pk
+		    INNER JOIN tbl_parametro_prmt ON
+		        prmt_pk = fctl_impuesto_prmt_pk
+		    INNER JOIN tbl_servicio_srvc ON
+		        EXISTS (
+		            SELECT 1
+		            FROM tbl_factura_srv_fcts
+		            WHERE
+		                fcts_pk = fctl_fcts_pk
+		                AND fcts_srvc_pk = srvc_pk
+		        )
+		    LEFT JOIN tbl_subservicio_ssrv ON
+		        ssrv_pk = fctl_ssrv_pk
     ]]>
 	</sql>
 
@@ -110,7 +156,23 @@
 	</select>
 
 	<select id="count" resultType="Integer" parameterType="FacturaLineaCriterioVO">
-		SELECT COUNT(1) FROM vw_factura_lin_fctl
+		SELECT COUNT(1)
+		FROM
+		    tbl_factura_lin_fctl
 		<include refid="SelectWhere" />
 	</select>
+
+	<insert id="insert" parameterType="FacturaLineaVO">
+    <![CDATA[
+        INSERT INTO tbl_factura_lin_fctl (
+            fctl_pk, fctl_padre_pk, fctl_fctr_pk, fctl_fcts_pk, fctl_rgla_pk, fctl_impuesto_prmt_pk, fctl_ssrv_pk, fctl_fini, fctl_ffin
+            , fctl_cuant1, fctl_cuant2, fctl_cuant3, fctl_cuant4, fctl_cuant5, fctl_cuant6
+            , fctl_info1, fctl_info2, fctl_info3, fctl_info4, fctl_info5, fctl_info6
+        ) VALUES (
+            #{id}, #{padreId}, #{fctrId}, #{fcts.id}, #{rgla.id}, #{impuesto.id}, #{ssrv.id}, #{fini}, #{ffin}
+            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
+            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+        )
+    ]]>
+	</insert>
 </mapper>

@@ -36,6 +36,9 @@ public final class FacturaServicioVO {
     /** The ffin. */
     private Date ffin;
 
+    /** The importe. */
+    private Double importe;
+
     /**
      * {@inheritDoc}
      */
@@ -194,6 +197,25 @@ public final class FacturaServicioVO {
      */
     public void setCodExencion(final String value) {
         codExencion = value;
+    }
+
+    /**
+     * Gets the importe.
+     *
+     * @return the importe
+     */
+    public Double getImporte() {
+        return importe;
+    }
+
+    /**
+     * Sets the importe.
+     *
+     * @param value
+     *            the new importe
+     */
+    public void setImporte(final Double value) {
+        importe = value;
     }
 
 }

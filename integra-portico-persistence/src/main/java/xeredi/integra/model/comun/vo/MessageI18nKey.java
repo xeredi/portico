@@ -864,6 +864,52 @@ public enum MessageI18nKey {
     fctrList,
     /** The fctr_ffac. */
     fctr_ffac,
+    /** The fctr_aspc. */
+    fctr_aspc,
+    /** The fctr_importe. */
+    fctr_importe,
+    /** The fctr_impuesto. */
+    fctr_impuesto,
+    /** The fctr_pagador. */
+    fctr_pagador,
+    /** The fctr_falta. */
+    fctr_falta,
+    /** The fctr_fini. */
+    fctr_fini,
+    /** The fctr_ffin. */
+    fctr_ffin,
+    /** The fcts list. */
+    fctsList,
+    /** The fcts_srvc. */
+    fcts_srvc,
+    /** The fcts_fref. */
+    fcts_fref,
+    /** The fcts_fini. */
+    fcts_fini,
+    /** The fcts_ffin. */
+    fcts_ffin,
+    /** The fcts_cod exencion. */
+    fcts_codExencion,
+    /** The fctg list. */
+    fctgList,
+    /** The fctg_crgo. */
+    fctg_crgo,
+    /** The fctg_importe. */
+    fctg_importe,
+    /** The fcti list. */
+    fctiList,
+    /** The fcti_impuesto. */
+    fcti_impuesto,
+    /** The fcti_porcentaje. */
+    fcti_porcentaje,
+    /** The fcti_importe_base. */
+    fcti_importe_base,
+    /** The fcti_importe_impuesto. */
+    fcti_importe_impuesto,
+    /** The fctl. */
+    fctl,
+    /** The fctl list. */
+    fctlList,
     /** The conf. */
     conf,
     /** The conf list. */

@@ -34,6 +34,9 @@ public final class ValoracionLineaVO {
     /** The importe. */
     private Double importe;
 
+    /** The vlrd count. */
+    private Integer vlrdCount;
+
     /** The impuesto. */
     private ParametroVO impuesto;
 
@@ -527,4 +530,22 @@ public final class ValoracionLineaVO {
         fref = value;
     }
 
+    /**
+     * Gets the vlrd count.
+     *
+     * @return the vlrd count
+     */
+    public Integer getVlrdCount() {
+        return vlrdCount;
+    }
+
+    /**
+     * Sets the vlrd count.
+     *
+     * @param value
+     *            the new vlrd count
+     */
+    public void setVlrdCount(final Integer value) {
+        vlrdCount = value;
+    }
 }
