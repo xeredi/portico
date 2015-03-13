@@ -4,116 +4,123 @@
 
 <mapper namespace="xeredi.integra.model.servicio.dao.SubservicioDatoDAO">
 	<resultMap type="ItemDatoVO" id="ResultMap">
-		<id column="ssdt_ssrv_pk" property="itemId" />
-		<id column="ssdt_tpdt_pk" property="tpdtId" />
+		<id column="ssdt_ssrv_pk" />
+		<id column="ssdt_tpdt_pk" />
+
+		<result column="ssdt_ssrv_pk" property="itemId" />
+		<result column="ssdt_tpdt_pk" property="tpdtId" />
 		<result column="ssdt_nentero" property="cantidadEntera" />
 		<result column="ssdt_ndecimal" property="cantidadDecimal" />
 		<result column="ssdt_fecha" property="fecha" />
 		<result column="ssdt_cadena" property="cadena" />
 
 		<association property="prmt" javaType="ParametroVO">
-			<id column="prmt_pk" property="id" />
+			<result column="prmt_pk" property="id" />
 			<result column="prmt_parametro" property="parametro" />
 			<result column="p18n_texto" property="texto" />
 		</association>
 	</resultMap>
 
-	<select id="selectList" parameterType="SubservicioCriterioVO"
-		resultMap="ResultMap">
-        <![CDATA[
-		SELECT ssdt_ssrv_pk, ssdt_tpdt_pk, ssdt_nentero, ssdt_ndecimal, ssdt_fecha, ssdt_cadena, prmt_pk, prmt_parametro
-        ]]>
+	<select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+		SELECT
+		    ssdt_ssrv_pk, ssdt_tpdt_pk, ssdt_nentero, ssdt_ndecimal, ssdt_prmt_pk, ssdt_fecha, ssdt_cadena
+
+		    , prmt_parametro
+
+    ]]>
+
 		<if test="idioma != null">
         <![CDATA[
-            , (
-                CASE
-                    WHEN tppr_es_i18n = 1
-                    THEN (
-                        SELECT i18n_text
-                        FROM tbl_i18n_i18n
-                        WHERE
-                            i18n_pref = 'prvr'
-                            AND i18n_ext_pk = (
-                                SELECT prvr_pk
-                                FROM tbl_parametro_version_prvr
-                                WHERE
-                                    prvr_prmt_pk = ssdt_prmt_pk
-                                    AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
-                            )
-                            AND i18n_lang = #{idioma}
-                    )
+		    , (
+		        CASE
+		            WHEN
+		                EXISTS (
+		                    SELECT 1
+		                    FROM tbl_tipo_parametro_tppr
+		                    WHERE tppr_pk = prmt_tppr_pk
+		                        AND tppr_es_i18n = 1
+		                )
+		            THEN (
+		                SELECT i18n_text
+		                FROM tbl_i18n_i18n
+		                WHERE
+		                    i18n_lang = #{idioma}
+		                    AND i18n_pref = 'prvr'
+		                    AND i18n_ext_pk = (
+		                        SELECT prvr_pk
+		                        FROM tbl_parametro_version_prvr
+		                        WHERE
+		                            prvr_prmt_pk = ssdt_prmt_pk
+		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
+		                    )
+		            )
 
-                    WHEN tppr_tpdt_pk IS NOT NULL
-                    THEN (
-                        SELECT prdt_cadena
-                        FROM tbl_parametro_dato_prdt
-                        WHERE
-                            prdt_prvr_pk = (
-                                SELECT prvr_pk
-                                FROM tbl_parametro_version_prvr
-                                WHERE
-                                    prvr_prmt_pk = ssdt_prmt_pk
-                                    AND srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc_fref)
-                            )
-                            AND prdt_tpdt_pk = tppr_tpdt_pk
-                    )
-                END
-            ) AS p18n_texto
+		            ELSE (
+		                SELECT prdt_cadena
+		                FROM tbl_parametro_dato_prdt
+		                WHERE
+		                    prdt_prvr_pk = (
+		                        SELECT prvr_pk
+		                        FROM tbl_parametro_version_prvr
+		                        WHERE
+		                            prvr_prmt_pk = ssdt_prmt_pk
+		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
+		                    )
+		                    AND prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk
+		                        FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
+		            )
+		        END
+		    ) AS p18n_texto
         ]]>
-		</if>
-        <![CDATA[
-		FROM (
-			SELECT *
-			FROM
-				tbl_subservicio_dato_ssdt
-			WHERE
-				EXISTS (
-					SELECT 1
-					FROM tbl_subservicio_ssrv
-					WHERE ssrv_pk = ssdt_ssrv_pk
-        ]]>
-		<if test="id != null">
-			AND ssrv_pk = #{id}
-		</if>
-
-		<if test="ids != null">
-			AND ssrv_pk IN
-			<foreach collection="ids" item="item" open="(" close=")"
-				separator=",">#{item}</foreach>
-		</if>
-
-		<if test="id == null and ids == null">
-			<include
-				refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
 		</if>
 
         <![CDATA[
-        		)
+		FROM (
+		    SELECT ssrv_pk
+            , (SELECT srvc_fref FROM tbl_servicio_srvc WHERE srvc_pk = ssrv_srvc_pk) AS srvc_fref
+		    FROM tbl_subservicio_ssrv
+        ]]>
+
+		<where>
+			<if test="id != null">
+				AND ssrv_pk = #{id}
+			</if>
+
+			<if test="ids != null">
+				AND ssrv_pk IN
+				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}</foreach>
+			</if>
+
+			<if test="id == null and ids == null">
+				<include refid="xeredi.integra.model.servicio.dao.SubservicioDAO.SelectWhere" />
+			</if>
+		</where>
+
+        <![CDATA[
+		) sql
+		    INNER JOIN tbl_subservicio_dato_ssdt ON
+		        ssdt_ssrv_pk = sql.ssrv_pk
         ]]>
 
 		<if test="soloDatosGrid">
-            <![CDATA[
-                AND EXISTS (
-                    SELECT 1
-                    FROM tbl_entidad_tipo_dato_entd
-                    WHERE
-                        entd_tpdt_pk = ssdt_tpdt_pk
-                        AND entd_enti_pk = #{entiId}
-                        AND entd_gridable = 1
-                )
-            ]]>
-		</if>
         <![CDATA[
-		) sql
-			INNER JOIN tbl_subservicio_ssrv ON
-				ssrv_pk = ssdt_ssrv_pk
-			INNER JOIN tbl_servicio_srvc ON
-				srvc_pk = ssrv_srvc_pk
-			LEFT JOIN tbl_parametro_prmt ON
-				prmt_pk = ssdt_prmt_pk
-			LEFT JOIN tbl_tipo_parametro_tppr ON
-				tppr_pk = prmt_tppr_pk
+			    AND ssdt_tpdt_pk = ANY (
+			        SELECT entd_tpdt_pk
+			        FROM tbl_entidad_tipo_dato_entd
+			        WHERE entd_enti_pk = #{entiId}
+			            AND entd_gridable = 1
+			    )
         ]]>
+		</if>
+
+    <![CDATA[
+		    LEFT JOIN tbl_parametro_prmt ON
+		        prmt_pk = ssdt_prmt_pk
+    ]]>
 	</select>
 
 	<insert id="insert" parameterType="ItemDatoVO">

@@ -3,211 +3,142 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xeredi.integra.model.servicio.dao.SubservicioDAO">
-    <resultMap type="SubservicioVO" id="ResultMap">
-        <id column="ssrv_pk" property="id" />
-        <result column="ssrv_tpss_pk" property="entiId" />
-        <result column="ssrv_numero" property="numero" />
-        <result column="ssrv_fini" property="fini" />
-        <result column="ssrv_ffin" property="ffin" />
-        <result column="ssrv_estado" property="estado" />
-        <result column="srvc_fref" property="fref" />
+	<resultMap type="SubservicioVO" id="ResultMap">
+		<id column="ssrv_pk" property="id" />
+		<result column="ssrv_tpss_pk" property="entiId" />
+		<result column="ssrv_numero" property="numero" />
+		<result column="ssrv_fini" property="fini" />
+		<result column="ssrv_ffin" property="ffin" />
+		<result column="ssrv_estado" property="estado" />
+		<result column="srvc_fref" property="fref" />
 
-        <association property="srvc" javaType="ServicioVO">
-            <id column="srvc_pk" property="id" />
-            <result column="srvc_anno" property="anno" />
-            <result column="srvc_numero" property="numero" />
+		<association property="srvc" javaType="ServicioVO">
+			<id column="srvc_pk" property="id" />
+			<result column="srvc_anno" property="anno" />
+			<result column="srvc_numero" property="numero" />
 
-            <association property="subp" javaType="ParametroVO">
-                <result column="srvc_subp" property="parametro" />
-            </association>
-        </association>
-    </resultMap>
+			<association property="subp" javaType="ParametroVO">
+				<result column="srvc_subp" property="parametro" />
+			</association>
+		</association>
+	</resultMap>
 
-    <sql id="SelectPrefix" databaseId="postgres">
+	<sql id="SelectPrefix">
     <![CDATA[
 		SELECT
 			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
 			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
-		FROM (
-			SELECT *
-				, NULL AS rownumVar
-			FROM tbl_subservicio_ssrv
-	]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-			ORDER BY ssrv_srvc_pk, ssrv_numero
-	]]>
-		<if test="offset != null or limit != null">
-			<if test="offset != null">OFFSET ${offset} ROWS</if>
-			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
-		</if>
-    <![CDATA[
-		) sql
+		FROM
+			tbl_subservicio_ssrv ssrv
 			INNER JOIN tbl_servicio_srvc ON
 				srvc_pk = ssrv_srvc_pk
 	]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectPrefix" databaseId="sqlserver">
-    <![CDATA[
-		SELECT
-			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
-			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
-		FROM (
-			SELECT *
-				, NULL AS rownumVar
-			FROM tbl_subservicio_ssrv
-	]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-			ORDER BY ssrv_srvc_pk, ssrv_numero
-	]]>
-		<if test="offset != null or limit != null">
-			<if test="offset != null">OFFSET ${offset} ROWS</if>
-			<if test="limit != null">FETCH NEXT ${limit} ROWS ONLY</if>
+	<sql id="SelectWhere">
+		<if test="entiId != null">
+			AND ssrv_tpss_pk = #{entiId}
 		</if>
-    <![CDATA[
-		) sql
-			INNER JOIN tbl_servicio_srvc ON
-				srvc_pk = ssrv_srvc_pk
-	]]>
-    </sql>
-
-    <sql id="SelectPrefix" databaseId="oracle">
-    <![CDATA[
-		SELECT
-			ssrv_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado, srvc_fref , srvc_pk, srvc_anno, srvc_numero
-			, (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
-		FROM (
-			SELECT *
-			FROM (
-				SELECT ssrv.*
-					, row_number() over
-					(ORDER BY ssrv_srvc_pk, ssrv_numero) rownumVar
-				FROM tbl_subservicio_ssrv ssrv
-	]]>
-		<where>
-			<include refid="SelectWhere" />
-		</where>
-    <![CDATA[
-				ORDER BY ssrv_srvc_pk, ssrv_numero
-			) sql
-	]]>
-		<if test="offset != null or limit != null">
-			<where>
-				<if test="offset != null">AND rownumVar > ${offset}</if>
-				<if test="limit != null">
-			    <![CDATA[
-					AND rownumVar <= (${limit}
-				]]>
-					<if test="offset != null">+ ${offset}</if>
+		<if test="numero != null">
+			AND ssrv_numero = #{numero}
+		</if>
+		<if test="estado != null and !estado.empty">
+			AND ssrv_estado = #{estado}
+		</if>
+		<if test="id != null">
+			AND ssrv_pk = #{id}
+		</if>
+		<if test="ids != null and !ids.empty">
+			AND ssrv_pk IN
+			<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+			</foreach>
+		</if>
+		<if test="padreId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_subserv_subserv_ssss
+                    WHERE
+                    	ssss_ssrvh_pk = ssrv_pk
+                    	AND ssss_ssrvp_pk = #{padreId}
+                )
+            ]]>
+		</if>
+		<if test="hijoId != null">
+            <![CDATA[
+                AND EXISTS (
+                    SELECT 1
+                    FROM tbl_subserv_subserv_ssss
+                    WHERE
+                    	ssss_ssrvp_pk = ssrv_pk
+                    	AND ssss_ssrvh_pk = #{hijoId}
+                )
+            ]]>
+		</if>
+		<if test="srvc != null">
+			<if test="srvc.id != null">
+				AND ssrv_srvc_pk = #{srvc.id}
+			</if>
+		</if>
+		<if test="itdtMap != null and !itdtMap.empty">
+			<foreach collection="itdtMap" item="itdt">
+				<if
+					test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
+                        <![CDATA[
+		                AND EXISTS (
+		                    SELECT 1
+                            FROM tbl_subservicio_dato_ssdt
+                            WHERE
+                            	ssdt_ssrv_pk = ssrv_pk
+                            	AND ssdt_tpdt_pk = #{itdt.tpdtId}
+                        ]]>
+					<if test="itdt.prmt != null and itdt.prmt.id != null">
+						AND ssdt_prmt_pk = #{itdt.prmt.id}
+					</if>
+					<if test="itdt.cantidadEntera != null">
+						AND ssdt_nentero = #{itdt.cantidadEntera}
+					</if>
+					<if test="itdt.cantidadDecimal != null">
+						AND ssdt_ndecimal = #{itdt.cantidadDecimal}
+					</if>
+					<if test="itdt.cadena != null and !itdt.cadena.empty">
+						AND ssdt_cadena LIKE #{itdt.cadena}
+					</if>
+					<!-- FIXME Faltan las fechas -->
 					)
 				</if>
-			</where>
+			</foreach>
 		</if>
-    <![CDATA[
-		) sql
-			INNER JOIN tbl_servicio_srvc ON
-				srvc_pk = ssrv_srvc_pk
-    ]]>
-    </sql>
+	</sql>
 
-    <sql id="SelectWhere">
-        <if test="entiId != null">
-            AND ssrv_tpss_pk = #{entiId}
-        </if>
-        <if test="numero != null">
-            AND ssrv_numero = #{numero}
-        </if>
-        <if test="estado != null and !estado.empty">
-            AND ssrv_estado = #{estado}
-        </if>
-        <if test="id != null">
-            AND ssrv_pk = #{id}
-        </if>
-        <if test="ids != null and !ids.empty">
-            AND ssrv_pk IN
-            <foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
-            </foreach>
-        </if>
-        <if test="padreId != null">
-            <![CDATA[
-                AND EXISTS (
-                    SELECT 1 FROM tbl_subserv_subserv_ssss
-                    WHERE ssss_ssrvh_pk = ssrv_pk
-                        AND ssss_ssrvp_pk = #{padreId}
-                )
-            ]]>
-        </if>
-        <if test="hijoId != null">
-            <![CDATA[
-                AND EXISTS (
-                    SELECT 1 FROM tbl_subserv_subserv_ssss
-                    WHERE ssss_ssrvp_pk = ssrv_pk
-                        AND ssss_ssrvh_pk = #{hijoId}
-                )
-            ]]>
-        </if>
-        <if test="srvc != null">
-            <if test="srvc.id != null">
-                AND ssrv_srvc_pk = #{srvc.id}
-            </if>
-        </if>
-        <if test="itdtMap != null and !itdtMap.empty">
-            <foreach collection="itdtMap" item="itdt">
-                <if
-                    test="(itdt.prmt != null and itdt.prmt.id != null) or itdt.cantidadEntera != null or itdt.cantidadDecimal != null or (itdt.cadena != null and !itdt.cadena.empty)">
-                        <![CDATA[
-                        AND EXISTS (
-                            SELECT 1
-                            FROM tbl_subservicio_dato_ssdt
-                            WHERE ssdt_ssrv_pk = ssrv_pk
-                                AND ssdt_tpdt_pk = #{itdt.tpdtId}
-                        ]]>
-                    <if test="itdt.prmt != null and itdt.prmt.id != null">
-                        AND ssdt_prmt_pk = #{itdt.prmt.id}
-                    </if>
-                    <if test="itdt.cantidadEntera != null">
-                        AND ssdt_nentero = #{itdt.cantidadEntera}
-                    </if>
-                    <if test="itdt.cantidadDecimal != null">
-                        AND ssdt_ndecimal = #{itdt.cantidadDecimal}
-                    </if>
-                    <if test="itdt.cadena != null and !itdt.cadena.empty">
-                        AND ssdt_cadena LIKE #{itdt.cadena}
-                    </if>
-                    <!-- FIXME Faltan las fechas -->
-                    )
-                </if>
-            </foreach>
-        </if>
-    </sql>
-
-    <select id="selectCount" parameterType="SubservicioCriterioVO" resultType="Integer">
+	<select id="selectCount" parameterType="SubservicioCriterioVO" resultType="Integer">
         <![CDATA[
         SELECT
             COUNT(1)
         FROM
             tbl_subservicio_ssrv
         ]]>
-        <where>
-            <include refid="SelectWhere" />
-        </where>
-    </select>
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+	</select>
 
-    <select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-    </select>
+	<select id="selectList" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+		ORDER BY ssrv_tpss_pk, ssrv_srvc_pk DESC, ssrv_numero
+	</select>
 
-    <select id="selectObject" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
-        <include refid="SelectPrefix" />
-    </select>
+	<select id="selectObject" parameterType="SubservicioCriterioVO" resultMap="ResultMap">
+		<include refid="SelectPrefix" />
+		<where>
+			<include refid="SelectWhere" />
+		</where>
+	</select>
 
-    <select id="exists" parameterType="SubservicioVO" resultType="boolean">
+	<select id="exists" parameterType="SubservicioVO" resultType="boolean">
         <![CDATA[
     	SELECT COUNT(1)
     	FROM tbl_subservicio_ssrv
@@ -216,9 +147,9 @@
     		AND ssrv_tpss_pk = #{entiId}
     		AND ssrv_numero = #{numero}
         ]]>
-    </select>
+	</select>
 
-    <insert id="insert" parameterType="SubservicioVO">
+	<insert id="insert" parameterType="SubservicioVO">
         <![CDATA[
         INSERT INTO tbl_subservicio_ssrv (
             ssrv_pk, ssrv_srvc_pk, ssrv_tpss_pk, ssrv_numero, ssrv_fini, ssrv_ffin, ssrv_estado
@@ -226,18 +157,18 @@
             #{id}, #{srvc.id}, #{entiId}, #{numero}, #{fini}, #{ffin}, #{estado}
         )
         ]]>
-    </insert>
+	</insert>
 
-    <update id="updateEstado" parameterType="SubservicioVO">
+	<update id="updateEstado" parameterType="SubservicioVO">
         <![CDATA[
         UPDATE tbl_subservicio_ssrv SET
             ssrv_estado = #{estado}
         WHERE
             ssrv_pk = #{id}
         ]]>
-    </update>
+	</update>
 
-    <select id="selectLupaList" parameterType="SubservicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
+	<select id="selectLupaList" parameterType="SubservicioLupaCriterioVO" resultMap="ResultMap" fetchSize="10">
         <![CDATA[
         SELECT
             ssrv_pk
@@ -248,5 +179,5 @@
         	AND ssrv_srvc_pk = #{srvcId}
         	AND ssrv_numero >= #{numero}
         ]]>
-    </select>
+	</select>
 </mapper>

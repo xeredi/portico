@@ -79,6 +79,17 @@ public interface SubservicioDAO {
     List<SubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO);
 
     /**
+     * Select list.
+     *
+     * @param ssrvCriterioVO
+     *            the ssrv criterio vo
+     * @param bounds
+     *            the bounds
+     * @return the list
+     */
+    List<SubservicioVO> selectList(final @Nonnull SubservicioCriterioVO ssrvCriterioVO, final RowBounds bounds);
+
+    /**
      * Select lupa list.
      *
      * @param ssrvCriterioVO

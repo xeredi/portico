@@ -28,92 +28,103 @@
 		</association>
 	</resultMap>
 
-	<select id="selectList" parameterType="ServicioCriterioVO"
-		resultMap="ResultMap">
-        <![CDATA[
+	<select id="selectList" parameterType="ServicioCriterioVO" resultMap="ResultMap">
+    <![CDATA[
 		SELECT
-			srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_fecha, srdt_prmt_pk, srdt_srvc_dep_pk, srdt_cadena
-			, srvc.srvc_fref AS srdt_fref
-			, prmt_parametro
-			, srvcDep.srvc_anno, srvcDep.srvc_numero
-			, ( SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvcDep.srvc_subp_pk ) AS srvc_subp
+		    srdt_srvc_pk, srdt_tpdt_pk, srdt_nentero, srdt_ndecimal, srdt_prmt_pk, srdt_srvc_dep_pk, srdt_fecha, srdt_cadena
+
+		    , prmt_parametro
+
+		    , srvc_anno, srvc_numero
+
+		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
         ]]>
 		<if test="idioma != null">
-	        <![CDATA[
-			, (
-				CASE
-					WHEN tppr_es_i18n = 1
-					THEN (
-						SELECT i18n_text FROM tbl_i18n_i18n WHERE i18n_pref = 'prvr'
-							AND i18n_ext_pk = (
-								SELECT prvr_pk FROM tbl_parametro_version_prvr
-								WHERE
-									prvr_prmt_pk = srdt_prmt_pk
-									AND srvc.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc.srvc_fref)
-							)
-							AND i18n_lang = 'es'
-					)
-					WHEN tppr_tpdt_pk IS NOT NULL
-					THEN (
-						SELECT prdt_cadena FROM tbl_parametro_dato_prdt
-						WHERE
-							prdt_prvr_pk = ANY (
-								SELECT prvr_pk FROM tbl_parametro_version_prvr
-								WHERE
-									prvr_prmt_pk = srdt_prmt_pk
-									AND srvc.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, srvc.srvc_fref)
-							)
-							AND prdt_tpdt_pk = tppr_tpdt_pk
-					)
-				END
-			) AS p18n_texto
-	        ]]>
-		</if>
         <![CDATA[
-		FROM
-			tbl_servicio_dato_srdt
-			INNER JOIN tbl_servicio_srvc srvc ON
-				srvc.srvc_pk = srdt_srvc_pk
-			LEFT JOIN tbl_parametro_prmt ON
-				prmt_pk = srdt_prmt_pk
-			LEFT JOIN tbl_tipo_parametro_tppr ON
-				tppr_pk = prmt_tppr_pk
-			LEFT JOIN tbl_servicio_srvc srvcDep ON
-				srvcDep.srvc_pk = srdt_srvc_dep_pk
-		WHERE
-			EXISTS (
-				SELECT 1
-				FROM tbl_servicio_srvc
-				WHERE
-					srvc_pk = srdt_srvc_pk
-        ]]>
-		<if test="id == null and ids == null">
-			<include refid="xeredi.integra.model.servicio.dao.ServicioDAO.SelectWhere" />
-		</if>
-		<if test="id != null">
-			AND srvc_pk = #{id}
-		</if>
-		<if test="ids != null">
-			AND srvc_pk IN
-			<foreach collection="ids" item="item" open="(" close=")"
-				separator=",">#{item}
-			</foreach>
-		</if>
-        <![CDATA[
-			)
-        ]]>
-		<if test="soloDatosGrid">
-        <![CDATA[
-            AND EXISTS (
-                SELECT 1
-                FROM tbl_entidad_tipo_dato_entd
-                WHERE
-                    entd_tpdt_pk = srdt_tpdt_pk
-                    AND entd_enti_pk = #{entiId}
-                    AND entd_gridable = 1
-            )
+		    , (
+		        CASE
+		            WHEN
+		                EXISTS (
+		                    SELECT 1
+		                    FROM tbl_tipo_parametro_tppr
+		                    WHERE tppr_pk = prmt_tppr_pk
+		                        AND tppr_es_i18n = 1
+		                )
+		            THEN (
+		                SELECT i18n_text
+		                FROM tbl_i18n_i18n
+		                WHERE
+		                    i18n_lang = #{idioma}
+		                    AND i18n_pref = 'prvr'
+		                    AND i18n_ext_pk = (
+		                        SELECT prvr_pk
+		                        FROM tbl_parametro_version_prvr
+		                        WHERE
+		                            prvr_prmt_pk = srdt_prmt_pk
+		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
+		                    )
+		            )
+
+		            ELSE (
+		                SELECT prdt_cadena
+		                FROM tbl_parametro_dato_prdt
+		                WHERE
+		                    prdt_prvr_pk = (
+		                        SELECT prvr_pk
+		                        FROM tbl_parametro_version_prvr
+		                        WHERE
+		                            prvr_prmt_pk = srdt_prmt_pk
+		                            AND sql.srvc_fref BETWEEN prvr_fini AND COALESCE(prvr_ffin, sql.srvc_fref)
+		                    )
+		                    AND prdt_tpdt_pk = (
+		                        SELECT tppr_tpdt_pk
+		                        FROM tbl_tipo_parametro_tppr
+		                        WHERE tppr_pk = prmt_tppr_pk
+		                    )
+		            )
+		        END
+		    ) AS p18n_texto
         ]]>
 		</if>
+    <![CDATA[
+		FROM (
+		    SELECT srvc_pk, srvc_fref
+		    FROM tbl_servicio_srvc
+    ]]>
+		<where>
+			<if test="id == null and ids == null">
+				<include refid="xeredi.integra.model.servicio.dao.ServicioDAO.SelectWhere" />
+			</if>
+			<if test="id != null">
+				AND srvc_pk = #{id}
+			</if>
+			<if test="ids != null">
+				AND srvc_pk = ANY
+				<foreach collection="ids" item="item" open="(" close=")" separator=",">#{item}
+				</foreach>
+			</if>
+		</where>
+    <![CDATA[
+		) sql
+		    INNER JOIN tbl_servicio_dato_srdt ON
+		        srdt_srvc_pk = sql.srvc_pk
+    ]]>
+			<if test="soloDatosGrid">
+       		<![CDATA[
+			    AND srdt_tpdt_pk = ANY (
+			        SELECT entd_tpdt_pk
+			        FROM tbl_entidad_tipo_dato_entd
+			        WHERE entd_enti_pk = #{entiId}
+			            AND entd_gridable = 1
+			    )
+		    ]]>
+			</if>
+    <![CDATA[
+		    LEFT JOIN tbl_parametro_prmt ON
+		        prmt_pk = srdt_prmt_pk
+		    LEFT JOIN tbl_servicio_srvc srvcDep ON
+		        srvcDep.srvc_pk = srdt_srvc_dep_pk
+   ]]>
 	</select>
 
 	<insert id="insert" parameterType="ItemDatoVO">

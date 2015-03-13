@@ -54,7 +54,7 @@ public abstract class AbstractSubservicioBO implements SubservicioBO {
                 ssrvCriterioVO.setOffset(offset);
                 ssrvCriterioVO.setLimit(limit);
 
-                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterioVO));
+                ssrvList.addAll(ssrvDAO.selectList(ssrvCriterioVO, new RowBounds(offset, limit)));
                 fillDependencies(session, ssrvList, ssrvCriterioVO, true);
             }
 

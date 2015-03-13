@@ -1,17 +1,25 @@
-SELECT
-    rgin_pk, rgin_rgla1_pk, rgin_rgla2_pk
-    
-    , rgiv_pk, rgiv_fini, rgiv_ffin
-    
-    , rgla_crgo_pk, rgla_codigo, rgla_enti_pk, rgla_tipo
+SELECT 
+    srvc.*
+    , (
+        CASE 
+            WHEN EXISTS (
+                SELECT 1
+                FROM tbl_tipo_servicio_tpsr
+                WHERE 
+                    tpsr_pk = srvc_tpsr_pk
+                    AND tpsr_es_facturable = 1
+            )
+            THEN 'Facturable'
+            ELSE NULL
+        END
+    ) AS srvc_estado_fac
 FROM
-    tbl_regla_inc_rgin
-    INNER JOIN tbl_regla_inc_version_rgiv ON
-        rgiv_rgin_pk = rgin_pk
-    INNER JOIN tbl_regla_rgla ON
-        rgla_pk = rgin_rgla2_pk
+    tbl_servicio_srvc srvc
 ;
 
+
+SELECT *
+FROM tbl_servicio_cargo_srcr;
 
 
 SELECT *
