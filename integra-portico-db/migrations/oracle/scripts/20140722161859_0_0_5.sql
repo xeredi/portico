@@ -900,6 +900,8 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_fini', 'F. Inicio')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_ffin')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_vlrdCount')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_vlrdCount', 'Nº Detalles')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_info1')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrl_info1', 'Info. 1')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrl_info2')\

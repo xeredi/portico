@@ -25,6 +25,9 @@ public final class ValoracionDetalleAction extends BaseAction {
     /** The vlrl. */
     private ValoracionLineaVO vlrl;
 
+    /** The vlrl padre. */
+    private ValoracionLineaVO vlrlPadre;
+
     // acciones web
 
     /**
@@ -43,6 +46,12 @@ public final class ValoracionDetalleAction extends BaseAction {
 
         vlrd = vlrcBO.selectVlrd(vlrd.getId());
         vlrl = vlrcBO.selectVlrl(vlrd.getVlrlId(), getIdioma());
+
+        if (vlrl.getId() == vlrl.getPadreId()) {
+            vlrlPadre = vlrl;
+        } else {
+            vlrlPadre = vlrcBO.selectVlrl(vlrl.getPadreId(), getIdioma());
+        }
 
         return SUCCESS;
     }
@@ -75,6 +84,15 @@ public final class ValoracionDetalleAction extends BaseAction {
      */
     public ValoracionLineaVO getVlrl() {
         return vlrl;
+    }
+
+    /**
+     * Gets the vlrl padre.
+     *
+     * @return the vlrl padre
+     */
+    public ValoracionLineaVO getVlrlPadre() {
+        return vlrlPadre;
     }
 
 }

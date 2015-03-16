@@ -745,7 +745,9 @@ public enum MessageI18nKey {
     /** The vlrc_fini. */
     vlrc_fini,
     /** The vlrc_ffin. */
-    vlrc_ffin, vlrc_fref,
+    vlrc_ffin,
+    /** The vlrc_fref. */
+    vlrc_fref,
     /** The vlrc_suj pasivo. */
     vlrc_sujPasivo,
     /** The vlrc_cod exencion. */
@@ -784,6 +786,8 @@ public enum MessageI18nKey {
     vlrl_fini,
     /** The vlrl_ffin. */
     vlrl_ffin,
+    /** The vlrl_vlrd count. */
+    vlrl_vlrdCount,
     /** The vlrl_info1. */
     vlrl_info1,
     /** The vlrl_info2. */
@@ -977,7 +981,11 @@ public enum MessageI18nKey {
     /** The fctl_cuant5. */
     fctl_cuant5,
     /** The fctl_cuant6. */
-    fctl_cuant6, fctd, fctdList,
+    fctl_cuant6,
+    /** The fctd. */
+    fctd,
+    /** The fctd list. */
+    fctdList,
     /** The conf. */
     conf,
     /** The conf list. */

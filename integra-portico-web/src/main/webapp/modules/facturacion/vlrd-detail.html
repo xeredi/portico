@@ -18,11 +18,11 @@
         </div>
         <div class="col-md-1 form-group" ng-if="vm.vlrl.rgla.tipo != 'T'">
             <label translate="vlrd_importeBase"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.importeBase | number:2"></p>
+            <p class="form-control-static number">{{vm.vlrd.importeBase | number:2}} &euro;</p>
         </div>
         <div class="col-md-1 form-group">
             <label translate="vlrd_importe"></label>
-            <p class="form-control-static number" ng-bind="vm.vlrd.importe | number:2"></p>
+            <p class="form-control-static number">{{vm.vlrd.importe | number:2}} &euro;</p>
         </div>
         <div class="col-md-2 form-group">
             <label translate="vlrd_ssrv"></label>
@@ -39,6 +39,60 @@
         <div class="col-md-2 form-group">
             <label translate>vlrd_ffin</label>
             <p class="form-control-static" ng-bind="vlrd.ffin | date: ('format_datetime' | translate)"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo1" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo1"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.info1"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo2" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo2"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.info2"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo3" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo3"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.info3"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo4" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo4"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.info4"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo5" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo5"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.info5"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqInfo6" class="col-md-4 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqInfo6"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.info6"></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant1" class="col-md-2 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant1"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.cuant1"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant2" class="col-md-2 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant2"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.cuant2"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant3" class="col-md-2 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant3"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.cuant3"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant4" class="col-md-2 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant4"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.cuant4"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant5" class="col-md-2 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant5"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.cuant5"></p>
+        </div>
+        <div ng-if="vm.vlrlPadre.rgla.rglv.etiqCuant6" class="col-md-2 form-group">
+            <label ng-bind="vm.vlrlPadre.rgla.rglv.etiqCuant6"></label>
+            <p class="form-control-static" ng-bind="vm.vlrd.cuant6"></p>
         </div>
     </div>
 </fieldset>

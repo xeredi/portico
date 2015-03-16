@@ -20,7 +20,7 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 col-lg-1 form-group">
             <label translate="vlrc_id"></label>
             <p class="form-control-static" ng-bind="vm.vlrc.id"></p>
         </div>
@@ -31,7 +31,7 @@
                     translate="{{'enti_' + vm.vlrc.srvc.entiId}}"></a>
             </p>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 col-lg-1 form-group">
             <label translate="vlrc_srvc"></label>
             <p class="form-control-static">
                 <a ng-href="#/servicio/srvc/detail/{{vm.vlrc.srvc.entiId}}/{{vm.vlrc.srvc.id}}"
@@ -193,6 +193,7 @@
             <tr>
                 <th />
                 <th translate="rgla_enti"></th>
+                <th translate="rgla_crgo"></th>
                 <th translate="vlrl_rgla"></th>
                 <th translate="vlrl_rgla_tipo"></th>
                 <th translate="vlrl_importeBase"></th>
@@ -223,13 +224,14 @@
                 <td><a ng-href="#/facturacion/vlrl/detail/{{vlrl.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td nowrap="nowrap" translate="{{'enti_' + vlrl.rgla.enti.id}}"></td>
+                <td nowrap="nowrap" ng-bind="vlrl.rgla.crgo.codigo"></td>
                 <td nowrap="nowrap" ng-bind="vlrl.rgla.codigo"></td>
-                <td ng-bind="vlrl.rgla.tipo"></td>
+                <td ng-bind="vlrl.rgla.tipo" bs-tooltip data-title="{{'ReglaTipo_' + vlrl.rgla.tipo | translate}}"></td>
                 <td nowrap="nowrap" class="number"><span ng-if="vlrl.rgla.tipo != 'T'">{{vlrl.importeBase
                         | number:2}} &euro;</span></td>
                 <td nowrap="nowrap" class="number">{{vlrl.importe | number:2}} &euro;</td>
                 <td class="number" ng-bind="vlrl.vlrdCount"></td>
-                <td ng-bind="vlrl.impuesto.etiqueta"></td>
+                <td ng-bind="vlrl.impuesto.parametro" bs-tooltip data-title="{{vlrl.impuesto.etiqueta}}"></td>
                 <td ng-bind="vlrl.fini | date:'short'"></td>
                 <td ng-bind="vlrl.ffin | date:'short'"></td>
 

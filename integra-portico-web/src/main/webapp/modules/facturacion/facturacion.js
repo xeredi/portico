@@ -886,6 +886,7 @@ function VlrdDetailController($http, $location, $routeParams, pageTitleService) 
 	}).success(function(data) {
 		vm.vlrd = data.vlrd;
 		vm.vlrl = data.vlrl;
+		vm.vlrlPadre = data.vlrlPadre;
 	});
 
 	pageTitleService.setTitle("vlrl", "page_detail");
