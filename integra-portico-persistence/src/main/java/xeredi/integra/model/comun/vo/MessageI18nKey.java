@@ -745,7 +745,7 @@ public enum MessageI18nKey {
     /** The vlrc_fini. */
     vlrc_fini,
     /** The vlrc_ffin. */
-    vlrc_ffin,
+    vlrc_ffin, vlrc_fref,
     /** The vlrc_suj pasivo. */
     vlrc_sujPasivo,
     /** The vlrc_cod exencion. */

@@ -5,7 +5,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
-import xeredi.integra.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -23,8 +22,8 @@ public final class ValoracionDetalleListadoAction extends BaseAction implements 
     /** The vlrd list. */
     private PaginatedList<ValoracionDetalleVO> vlrdList;
 
-    /** The vlrd criterio. */
-    private ValoracionDetalleCriterioVO vlrdCriterio;
+    /** The vlrl id. */
+    private Long vlrlId;
 
     /** The page. */
     private int page = 1;
@@ -41,7 +40,7 @@ public final class ValoracionDetalleListadoAction extends BaseAction implements 
      */
     @Action("vlrd-list")
     public String listado() {
-        Preconditions.checkNotNull(vlrdCriterio);
+        Preconditions.checkNotNull(vlrlId);
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
@@ -49,7 +48,8 @@ public final class ValoracionDetalleListadoAction extends BaseAction implements 
             return INPUT;
         }
 
-        vlrdList = vlrcBO.selectVlrdList(vlrdCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        vlrdList = vlrcBO.selectVlrdList(vlrlId, getIdioma(), PaginatedList.getOffset(getPage(), getLimit()),
+                getLimit());
 
         return SUCCESS;
     }
@@ -95,22 +95,22 @@ public final class ValoracionDetalleListadoAction extends BaseAction implements 
     }
 
     /**
-     * Gets the vlrd criterio.
+     * Gets the vlrl id.
      *
-     * @return the vlrd criterio
+     * @return the vlrl id
      */
-    public ValoracionDetalleCriterioVO getVlrdCriterio() {
-        return vlrdCriterio;
+    public Long getVlrlId() {
+        return vlrlId;
     }
 
     /**
-     * Sets the vlrd criterio.
+     * Sets the vlrl id.
      *
      * @param value
-     *            the vlrd criterio
+     *            the new vlrl id
      */
-    public void setVlrdCriterio(final ValoracionDetalleCriterioVO value) {
-        vlrdCriterio = value;
+    public void setVlrlId(final Long value) {
+        vlrlId = value;
     }
 
     /**

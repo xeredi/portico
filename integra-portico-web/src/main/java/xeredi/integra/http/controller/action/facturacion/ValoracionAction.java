@@ -61,14 +61,10 @@ public final class ValoracionAction extends BaseAction {
 
         final AspectoBO aspcBO = new AspectoBO();
         final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
-
-        vlrcCriterio.setId(vlrc.getId());
-        vlrcCriterio.setIdioma(getIdioma());
 
         vlrc = vlrcBO.select(vlrc.getId(), getIdioma());
-        vlriList = vlrcBO.selectVlriList(vlrcCriterio);
-        vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
+        vlriList = vlrcBO.selectVlriList(vlrc.getId(), getIdioma());
+        vlrgList = vlrcBO.selectVlrgList(vlrc.getId(), getIdioma());
         aspc = aspcBO.select(vlrc.getAspc().getId(), vlrc.getFref(), getIdioma());
 
         return SUCCESS;

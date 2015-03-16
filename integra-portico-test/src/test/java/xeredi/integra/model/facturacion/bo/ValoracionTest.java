@@ -84,7 +84,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrlList");
 
-                final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterioVO);
+                final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrcId, "es");
 
                 Assert.assertNotNull(vlrlList);
                 Assert.assertTrue(!vlrlList.isEmpty());
@@ -97,7 +97,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrlList Paginated");
 
-                final PaginatedList<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterioVO, 0, 20);
+                final PaginatedList<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrcId, "es", 0, 20);
 
                 Assert.assertNotNull(vlrlList);
                 Assert.assertNotNull(vlrlList.getList());
@@ -135,7 +135,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlriList");
 
-                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterioVO);
+                final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcId, "es");
 
                 for (final ValoracionImpuestoVO vlri : vlriList) {
                     LOG.info("vlri: " + vlri);
@@ -145,7 +145,7 @@ public final class ValoracionTest {
             {
                 LOG.info("vlrgList");
 
-                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterioVO);
+                final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcId, "es");
 
                 for (final ValoracionCargoVO vlrg : vlrgList) {
                     LOG.info("vlrg: " + vlrg);

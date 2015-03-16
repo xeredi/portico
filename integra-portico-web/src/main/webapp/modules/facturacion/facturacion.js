@@ -669,11 +669,7 @@ function VlrcDetailController($http, $location, $routeParams, pageTitleService) 
 
 	function findVlrlList(page) {
 		$http.post("facturacion/vlrl-list.action", {
-			vlrlCriterio : {
-				vlrc : {
-					id : $routeParams.vlrcId
-				}
-			},
+			vlrcId : $routeParams.vlrcId,
 			page : page
 		}).success(function(data) {
 			vm.vlrlList = data.vlrlList;
@@ -776,11 +772,7 @@ function VlrlDetailController($http, $location, $routeParams, pageTitleService) 
 
 	function findVlrdList(page) {
 		$http.post("facturacion/vlrd-list.action", {
-			vlrdCriterio : {
-				vlrl : {
-					id : $routeParams.vlrlId
-				}
-			},
+			vlrlId : $routeParams.vlrlId,
 			page : page
 		}).success(function(data) {
 			vm.vlrdList = data.vlrdList;
@@ -818,6 +810,7 @@ function VlrlDetailController($http, $location, $routeParams, pageTitleService) 
 		}
 	}).success(function(data) {
 		vm.vlrl = data.vlrl;
+		vm.vlrlPadre = data.vlrlPadre;
 
 		findVlrdList($routeParams.page ? $routeParams.page : 1);
 	});

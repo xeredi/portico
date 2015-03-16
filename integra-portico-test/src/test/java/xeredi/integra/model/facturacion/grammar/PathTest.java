@@ -63,7 +63,7 @@ public final class PathTest {
      *             the instance not found exception
      */
     private void test(final String expression, final boolean generateLabel) throws IOException,
-    InstanceNotFoundException {
+            InstanceNotFoundException {
         final String message = "Testing: " + expression;
 
         System.out.println(message);
@@ -78,9 +78,9 @@ public final class PathTest {
         final ReglaVO reglaVO = new ReglaVO();
 
         reglaVO.setRglv(new ReglaVersionVO());
-        reglaVO.getRglv().setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
+        reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
 
-        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO.getRglv().getEnti(), generateLabel);
+        final PathSqlGenerator extractor = new PathSqlGenerator(reglaVO.getEnti(), generateLabel);
 
         LOG.info(extractor.visit(tree));
     }

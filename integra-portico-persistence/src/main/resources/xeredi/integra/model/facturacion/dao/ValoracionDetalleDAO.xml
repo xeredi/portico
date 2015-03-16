@@ -95,12 +95,6 @@
 		ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk
 	</select>
 
-	<select id="selectPaginatedList" parameterType="ValoracionDetalleCriterioVO" resultMap="ResultMap">
-		<include refid="SelectPrefix" />
-		<include refid="SelectWhere" />
-		ORDER BY vlrd_vlrc_pk, vlrd_vlrl_pk, vlrd_pk
-	</select>
-
 	<insert id="insert" parameterType="ValoracionDetalleVO">
     <![CDATA[
         INSERT INTO tbl_valoracion_det_vlrd (
@@ -121,5 +115,12 @@
 	<delete id="deleteList" parameterType="ValoracionDetalleCriterioVO">
 		DELETE FROM tbl_valoracion_det_vlrd
 		<include refid="SelectWhere" />
+	</delete>
+
+	<delete id="delete" parameterType="Long">
+    <![CDATA[
+		DELETE FROM tbl_valoracion_det_vlrd
+		WHERE vlrd_pk = #{value}
+    ]]>
 	</delete>
 </mapper>

@@ -72,9 +72,9 @@ public final class ValoracionPdfAction extends BaseAction {
         vlrlCriterio.setIdioma(getIdioma());
 
         final ValoracionVO vlrc = vlrcBO.select(vlrcId, getIdioma());
-        final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcCriterio);
-        final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcCriterio);
-        final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrlCriterio);
+        final List<ValoracionCargoVO> vlrgList = vlrcBO.selectVlrgList(vlrcId, getIdioma());
+        final List<ValoracionImpuestoVO> vlriList = vlrcBO.selectVlriList(vlrcId, getIdioma());
+        final List<ValoracionLineaVO> vlrlList = vlrcBO.selectVlrlList(vlrcId, getIdioma());
         final AspectoVO aspc = aspcBO.select(vlrc.getAspc().getId(), vlrc.getFref(), getIdioma());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {

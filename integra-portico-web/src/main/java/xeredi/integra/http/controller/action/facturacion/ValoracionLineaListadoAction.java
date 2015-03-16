@@ -5,7 +5,6 @@ import org.apache.struts2.convention.annotation.Action;
 import xeredi.integra.http.controller.action.BaseAction;
 import xeredi.integra.http.controller.action.PaginatedGrid;
 import xeredi.integra.model.facturacion.bo.ValoracionBO;
-import xeredi.integra.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.integra.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.util.pagination.PaginatedList;
 
@@ -24,7 +23,7 @@ public final class ValoracionLineaListadoAction extends BaseAction implements Pa
     private PaginatedList<ValoracionLineaVO> vlrlList;
 
     /** The vlrl criterio. */
-    private ValoracionLineaCriterioVO vlrlCriterio;
+    private Long vlrcId;
 
     /** The page. */
     private int page = 1;
@@ -41,7 +40,7 @@ public final class ValoracionLineaListadoAction extends BaseAction implements Pa
      */
     @Action("vlrl-list")
     public String listado() {
-        Preconditions.checkNotNull(vlrlCriterio);
+        Preconditions.checkNotNull(vlrcId);
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
@@ -49,7 +48,8 @@ public final class ValoracionLineaListadoAction extends BaseAction implements Pa
             return INPUT;
         }
 
-        vlrlList = vlrcBO.selectVlrlList(vlrlCriterio, PaginatedList.getOffset(getPage(), getLimit()), getLimit());
+        vlrlList = vlrcBO.selectVlrlList(vlrcId, getIdioma(), PaginatedList.getOffset(getPage(), getLimit()),
+                getLimit());
 
         return SUCCESS;
     }
@@ -95,22 +95,22 @@ public final class ValoracionLineaListadoAction extends BaseAction implements Pa
     }
 
     /**
-     * Gets the vlrl criterio.
+     * Gets the vlrc id.
      *
-     * @return the vlrl criterio
+     * @return the vlrc id
      */
-    public ValoracionLineaCriterioVO getVlrlCriterio() {
-        return vlrlCriterio;
+    public Long getVlrcId() {
+        return vlrcId;
     }
 
     /**
-     * Sets the vlrl criterio.
+     * Sets the vlrc id.
      *
      * @param value
-     *            the new vlrl criterio
+     *            the new vlrc id
      */
-    public void setVlrlCriterio(final ValoracionLineaCriterioVO value) {
-        vlrlCriterio = value;
+    public void setVlrcId(final Long value) {
+        vlrcId = value;
     }
 
     /**

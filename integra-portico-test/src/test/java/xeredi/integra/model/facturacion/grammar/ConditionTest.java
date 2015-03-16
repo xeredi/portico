@@ -71,7 +71,7 @@ public final class ConditionTest {
         final ReglaVO reglaVO = new ReglaVO();
 
         reglaVO.setRglv(new ReglaVersionVO());
-        reglaVO.getRglv().setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
+        reglaVO.setEnti(TipoSubservicioProxy.select(Entidad.PARTIDA.getId()));
         contextoVO.setRgla(reglaVO);
         contextoVO.setFref(Calendar.getInstance().getTime());
 

@@ -35,11 +35,11 @@ public interface ValoracionDetalleDAO {
     /**
      * Delete.
      *
-     * @param vlrdVO
-     *            the vlrd vo
+     * @param vlrdId
+     *            the vlrd id
      * @return the int
      */
-    int delete(final @Nonnull ValoracionDetalleVO vlrdVO);
+    int delete(final Long vlrdId);
 
     /**
      * Delete.
@@ -71,21 +71,21 @@ public interface ValoracionDetalleDAO {
     /**
      * Select list.
      *
-     * @param vlrdCriterioVO
-     *            the vlrd criterio vo
+     * @param vlrdCriterio
+     *            the vlrd criterio
      * @param bounds
      *            the bounds
      * @return the list
      */
-    List<ValoracionDetalleVO> selectPaginatedList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO,
+    List<ValoracionDetalleVO> selectList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterio,
             final @Nonnull RowBounds bounds);
 
     /**
      * Select list.
      *
-     * @param vlrdCriterioVO
-     *            the vlrd criterio vo
+     * @param vlrdCriterio
+     *            the vlrd criterio
      * @return the list
      */
-    List<ValoracionDetalleVO> selectList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterioVO);
+    List<ValoracionDetalleVO> selectList(final @Nonnull ValoracionDetalleCriterioVO vlrdCriterio);
 }

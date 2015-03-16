@@ -24,6 +24,9 @@ public final class ValoracionLineaAction extends BaseAction {
     /** The vlrl. */
     private ValoracionLineaVO vlrl;
 
+    /** The vlrl padre. */
+    private ValoracionLineaVO vlrlPadre;
+
     // acciones web
 
     /**
@@ -32,13 +35,19 @@ public final class ValoracionLineaAction extends BaseAction {
      * @return the string
      */
     @Action("vlrl-detail")
-    public String detalle() {
+    public String detalle() throws ApplicationException {
         Preconditions.checkNotNull(vlrl);
         Preconditions.checkNotNull(vlrl.getId());
 
         final ValoracionBO vlrcBO = new ValoracionBO();
 
         vlrl = vlrcBO.selectVlrl(vlrl.getId(), getIdioma());
+
+        if (vlrl.getId() == vlrl.getPadreId()) {
+            vlrlPadre = vlrl;
+        } else {
+            vlrlPadre = vlrcBO.selectVlrl(vlrl.getPadreId(), getIdioma());
+        }
 
         return SUCCESS;
     }
@@ -47,6 +56,8 @@ public final class ValoracionLineaAction extends BaseAction {
      * Edits the.
      *
      * @return the string
+     * @throws ApplicationException
+     *             the application exception
      */
     @Action("vlrl-edit")
     public String edit() throws ApplicationException {
@@ -115,6 +126,15 @@ public final class ValoracionLineaAction extends BaseAction {
      */
     public void setAccion(final ACCION_EDICION value) {
         accion = value;
+    }
+
+    /**
+     * Gets the vlrl padre.
+     *
+     * @return the vlrl padre
+     */
+    public ValoracionLineaVO getVlrlPadre() {
+        return vlrlPadre;
     }
 
 }
