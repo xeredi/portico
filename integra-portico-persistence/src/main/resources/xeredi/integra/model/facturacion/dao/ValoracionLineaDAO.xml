@@ -126,6 +126,7 @@
 		        prmt_pk = vlrl_impuesto_prmt_pk
 		    LEFT JOIN tbl_regla_version_rglv ON
 		        rglv_rgla_pk = vlrl_rgla_pk
+		        AND vlrc_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, vlrc_fref)
     ]]>
 	</sql>
 

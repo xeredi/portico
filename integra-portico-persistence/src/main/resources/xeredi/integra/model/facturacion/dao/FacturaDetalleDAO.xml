@@ -15,41 +15,39 @@
 		<result column="fctd_importe_base" property="importeBase" />
 		<result column="fctd_importe" property="importe" />
 
-		<result column="fctl_cuant1" property="cuant1" />
-		<result column="fctl_cuant2" property="cuant2" />
-		<result column="fctl_cuant3" property="cuant3" />
-		<result column="fctl_cuant4" property="cuant4" />
-		<result column="fctl_cuant5" property="cuant5" />
-		<result column="fctl_cuant6" property="cuant6" />
+		<result column="fctd_cuant1" property="cuant1" />
+		<result column="fctd_cuant2" property="cuant2" />
+		<result column="fctd_cuant3" property="cuant3" />
+		<result column="fctd_cuant4" property="cuant4" />
+		<result column="fctd_cuant5" property="cuant5" />
+		<result column="fctd_cuant6" property="cuant6" />
 
-		<result column="fctl_info1" property="info1" />
-		<result column="fctl_info2" property="info2" />
-		<result column="fctl_info3" property="info3" />
-		<result column="fctl_info4" property="info4" />
-		<result column="fctl_info5" property="info5" />
-		<result column="fctl_info6" property="info6" />
+		<result column="fctd_info1" property="info1" />
+		<result column="fctd_info2" property="info2" />
+		<result column="fctd_info3" property="info3" />
+		<result column="fctd_info4" property="info4" />
+		<result column="fctd_info5" property="info5" />
+		<result column="fctd_info6" property="info6" />
 
-		<association property="ssrv" resultMap="xeredi.integra.model.maestro.dao.ParametroDAO.ResultMap" />
+		<association property="ssrv" javaType="SubservicioVO">
+			<result column="fctd_ssrv_pk" property="id" />
+			<result column="ssrv_numero" property="numero" />
+			<result column="ssrv_tpss_pk" property="entiId" />
+		</association>
 	</resultMap>
-
-	<insert id="insert" parameterType="FacturaDetalleVO">
-    <![CDATA[
-        INSERT INTO tbl_factura_det_fctd (
-            fctd_pk, fctd_fctr_pk, fctd_fctl_pk, fctd_importe_base, fctd_importe, fctd_ssrv_pk, fctd_fini, fctd_ffin
-            , fctd_cuant1, fctd_cuant2, fctd_cuant3, fctd_cuant4, fctd_cuant5, fctd_cuant6
-            , fctd_info1, fctd_info2, fctd_info3, fctd_info4, fctd_info5, fctd_info6
-        ) VALUES (
-            #{id}, #{fctrId}, #{fctlId}, #{importeBase}, #{importe}, #{ssrv.id}, #{fini}, #{ffin}
-            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
-            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
-        )
-    ]]>
-	</insert>
 
 	<sql id="SelectPrefix">
     <![CDATA[
-        SELECT *
-        FROM vw_factura_det_fctd
+		SELECT
+		    fctd_pk, fctd_fctr_pk, fctd_fctl_pk, fctd_importe_base, fctd_importe, fctd_ssrv_pk, fctd_fini, fctd_ffin
+		    , fctd_cuant1, fctd_cuant2, fctd_cuant3, fctd_cuant4, fctd_cuant5, fctd_cuant6
+		    , fctd_info1, fctd_info2, fctd_info3, fctd_info4, fctd_info5, fctd_info6
+
+		    , ssrv_numero, ssrv_tpss_pk
+		FROM
+		    tbl_factura_det_fctd
+		    LEFT JOIN tbl_subservicio_ssrv ON
+		        ssrv_pk = fctd_ssrv_pk
     ]]>
 	</sql>
 
@@ -127,4 +125,18 @@
 		SELECT COUNT(1) FROM vw_factura_det_fctd
 		<include refid="SelectWhere" />
 	</select>
+
+	<insert id="insert" parameterType="FacturaDetalleVO">
+    <![CDATA[
+        INSERT INTO tbl_factura_det_fctd (
+            fctd_pk, fctd_fctr_pk, fctd_fctl_pk, fctd_importe_base, fctd_importe, fctd_ssrv_pk, fctd_fini, fctd_ffin
+            , fctd_cuant1, fctd_cuant2, fctd_cuant3, fctd_cuant4, fctd_cuant5, fctd_cuant6
+            , fctd_info1, fctd_info2, fctd_info3, fctd_info4, fctd_info5, fctd_info6
+        ) VALUES (
+            #{id}, #{fctrId}, #{fctlId}, #{importeBase}, #{importe}, #{ssrv.id}, #{fini}, #{ffin}
+            , #{cuant1}, #{cuant2}, #{cuant3}, #{cuant4}, #{cuant5}, #{cuant6}
+            , #{info1}, #{info2}, #{info3}, #{info4}, #{info5}, #{info6}
+        )
+    ]]>
+	</insert>
 </mapper>

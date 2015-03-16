@@ -38,6 +38,22 @@
 			<association property="enti" javaType="EntidadVO">
 				<result column="rgla_enti_pk" property="id" />
 			</association>
+
+			<association property="rglv" javaType="ReglaVersionVO">
+				<result column="rglv_etiq_info1" property="etiqInfo1" />
+				<result column="rglv_etiq_info2" property="etiqInfo2" />
+				<result column="rglv_etiq_info3" property="etiqInfo3" />
+				<result column="rglv_etiq_info4" property="etiqInfo4" />
+				<result column="rglv_etiq_info5" property="etiqInfo5" />
+				<result column="rglv_etiq_info6" property="etiqInfo6" />
+
+				<result column="rglv_etiq_cuant1" property="etiqCuant1" />
+				<result column="rglv_etiq_cuant2" property="etiqCuant2" />
+				<result column="rglv_etiq_cuant3" property="etiqCuant3" />
+				<result column="rglv_etiq_cuant4" property="etiqCuant4" />
+				<result column="rglv_etiq_cuant5" property="etiqCuant5" />
+				<result column="rglv_etiq_cuant6" property="etiqCuant6" />
+			</association>
 		</association>
 
 		<association property="impuesto" javaType="ParametroVO">
@@ -48,8 +64,10 @@
 
 		<association property="fcts" javaType="FacturaServicioVO">
 			<result column="fctl_fcts_pk" property="id" />
+			<result column="fcts_fref" property="fref" />
 
 			<association property="srvc" javaType="ServicioVO">
+				<result column="fcts_srvc_pk" property="id" />
 				<result column="srvc_anno" property="anno" />
 				<result column="srvc_numero" property="numero" />
 				<result column="srvc_tpsr_pk" property="entiId" />
@@ -63,6 +81,7 @@
 
 		<association property="ssrv" javaType="SubservicioVO">
 			<result column="fctl_ssrv_pk" property="id" />
+			<result column="ssrv_numero" property="numero" />
 		</association>
 	</resultMap>
 
@@ -79,31 +98,32 @@
 		    , prmt_parametro AS fctl_impuesto_prmt
 		    , prmt_tppr_pk AS fctl_impuesto_tppr_pk
 
-		    , ssrv_numero, ssrv_tpss_pk
+		    , fcts_srvc_pk, fcts_fref
 
-		    , srvc_pk, srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
+		    , srvc_subp_pk, srvc_anno, srvc_numero, srvc_tpsr_pk
+
+			, rglv_etiq_info1, rglv_etiq_info2, rglv_etiq_info3, rglv_etiq_info4, rglv_etiq_info5, rglv_etiq_info6
+			, rglv_etiq_cuant1, rglv_etiq_cuant2, rglv_etiq_cuant3, rglv_etiq_cuant4, rglv_etiq_cuant5, rglv_etiq_cuant6
 
 		    , (SELECT prmt_parametro FROM tbl_parametro_prmt WHERE prmt_pk = srvc_subp_pk) AS srvc_subp
+		    , (SELECT ssrv_numero FROM tbl_subservicio_ssrv WHERE ssrv_pk = fctl_ssrv_pk) AS ssrv_numero
 
 		    , (SELECT SUM(fctd_importe_base) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe_base
 		    , (SELECT SUM(fctd_importe) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_importe
 		    , (SELECT COUNT(1) FROM tbl_factura_det_fctd WHERE fctd_fctl_pk = fctl_pk) AS fctl_fctd_count
 		FROM
 		    tbl_factura_lin_fctl
+		    INNER JOIN tbl_factura_srv_fcts ON
+		        fcts_pk = fctl_fcts_pk
 		    INNER JOIN tbl_regla_rgla ON
 		        rgla_pk = fctl_rgla_pk
+		    INNER JOIN tbl_regla_version_rglv ON
+		        rglv_rgla_pk = rgla_pk
+		        AND fcts_fref BETWEEN rglv_fini AND COALESCE(rglv_ffin, fcts_fref)
 		    INNER JOIN tbl_parametro_prmt ON
 		        prmt_pk = fctl_impuesto_prmt_pk
 		    INNER JOIN tbl_servicio_srvc ON
-		        EXISTS (
-		            SELECT 1
-		            FROM tbl_factura_srv_fcts
-		            WHERE
-		                fcts_pk = fctl_fcts_pk
-		                AND fcts_srvc_pk = srvc_pk
-		        )
-		    LEFT JOIN tbl_subservicio_ssrv ON
-		        ssrv_pk = fctl_ssrv_pk
+		    	srvc_pk = fcts_srvc_pk
     ]]>
 	</sql>
 

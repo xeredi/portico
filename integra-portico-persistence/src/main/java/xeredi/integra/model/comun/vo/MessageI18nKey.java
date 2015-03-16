@@ -848,6 +848,14 @@ public enum MessageI18nKey {
     vlrd_cuant5,
     /** The vlrd_cuant6. */
     vlrd_cuant6,
+    /** The Factura estado_ no. */
+    FacturaEstado_NO,
+    /** The Factura estado_ an. */
+    FacturaEstado_AN,
+    /** The Factura estado_ rn. */
+    FacturaEstado_RN,
+    /** The Factura estado_ rp. */
+    FacturaEstado_RP,
     /** The fcsr. */
     fcsr,
     /** The fcsr. */
@@ -866,6 +874,26 @@ public enum MessageI18nKey {
     fctr_ffac,
     /** The fctr_aspc. */
     fctr_aspc,
+    /** The fctr_estado. */
+    fctr_estado,
+    /** The fctr_suj pasivo. */
+    fctr_sujPasivo,
+    /** The fctr_fref. */
+    fctr_fref,
+    /** The fctr_tpsr. */
+    fctr_tpsr,
+    /** The fctr_info1. */
+    fctr_info1,
+    /** The fctr_info2. */
+    fctr_info2,
+    /** The fctr_info3. */
+    fctr_info3,
+    /** The fctr_info4. */
+    fctr_info4,
+    /** The fctr_info5. */
+    fctr_info5,
+    /** The fctr_info6. */
+    fctr_info6,
     /** The fctr_importe. */
     fctr_importe,
     /** The fctr_impuesto. */
@@ -910,6 +938,46 @@ public enum MessageI18nKey {
     fctl,
     /** The fctl list. */
     fctlList,
+    /** The fctl_rgla. */
+    fctl_rgla,
+    /** The fctl_rgla_tipo. */
+    fctl_rgla_tipo,
+    /** The fctl_importe base. */
+    fctl_importeBase,
+    /** The fctl_importe. */
+    fctl_importe,
+    /** The fctl_fctd count. */
+    fctl_fctdCount,
+    /** The fctl_impuesto. */
+    fctl_impuesto,
+    /** The fctl_fini. */
+    fctl_fini,
+    /** The fctl_ffin. */
+    fctl_ffin,
+    /** The fctl_info1. */
+    fctl_info1,
+    /** The fctl_info2. */
+    fctl_info2,
+    /** The fctl_info3. */
+    fctl_info3,
+    /** The fctl_info4. */
+    fctl_info4,
+    /** The fctl_info5. */
+    fctl_info5,
+    /** The fctl_info6. */
+    fctl_info6,
+    /** The fctl_cuant1. */
+    fctl_cuant1,
+    /** The fctl_cuant2. */
+    fctl_cuant2,
+    /** The fctl_cuant3. */
+    fctl_cuant3,
+    /** The fctl_cuant4. */
+    fctl_cuant4,
+    /** The fctl_cuant5. */
+    fctl_cuant5,
+    /** The fctl_cuant6. */
+    fctl_cuant6, fctd, fctdList,
     /** The conf. */
     conf,
     /** The conf list. */

@@ -535,14 +535,21 @@ public class FacturaBO {
      * @param fctlId
      *            the fctl id
      * @return the factura linea vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public FacturaLineaVO selectFctl(final Long fctlId) {
+    public FacturaLineaVO selectFctl(final Long fctlId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(fctlId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaLineaDAO fctlDAO = session.getMapper(FacturaLineaDAO.class);
+            final FacturaLineaVO fctl = fctlDAO.select(fctlId);
 
-            return fctlDAO.select(fctlId);
+            if (fctl == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.fctl, fctlId);
+            }
+
+            return fctl;
         }
     }
 
@@ -587,14 +594,21 @@ public class FacturaBO {
      * @param fctdId
      *            the fctd id
      * @return the factura detalle vo
+     * @throws InstanceNotFoundException
+     *             the instance not found exception
      */
-    public FacturaDetalleVO selectFctd(final Long fctdId) {
+    public FacturaDetalleVO selectFctd(final Long fctdId) throws InstanceNotFoundException {
         Preconditions.checkNotNull(fctdId);
 
         try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.BATCH)) {
             final FacturaDetalleDAO fctdDAO = session.getMapper(FacturaDetalleDAO.class);
+            final FacturaDetalleVO fctd = fctdDAO.select(fctdId);
 
-            return fctdDAO.select(fctdId);
+            if (fctd == null) {
+                throw new InstanceNotFoundException(MessageI18nKey.fctd, fctdId);
+            }
+
+            return fctd;
         }
     }
 

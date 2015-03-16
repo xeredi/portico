@@ -955,6 +955,14 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrd_
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrd_cuant5', 'Cuant. 5')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrd_cuant6')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrd_cuant6', 'Cuant. 6')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'FacturaEstado_NO')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'FacturaEstado_NO', 'Normal')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'FacturaEstado_AN')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'FacturaEstado_AN', 'Anulada')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'FacturaEstado_RP')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'FacturaEstado_RP', 'Rec. Positiva')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'FacturaEstado_RN')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'FacturaEstado_RN', 'Rec. Negativa')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcsr')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fcsr', 'Serie de Factura')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fcsrList')\
@@ -973,6 +981,26 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_ffac', 'F. Facturación')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_aspc')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_aspc', 'Aspecto')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_estado')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_estado', 'Estado')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_sujPasivo')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_sujPasivo', 'Suj. Pasivo?')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_fref')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_fref', 'F. Referencia')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_tpsr')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_tpsr', 'T. Servicio')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_info1')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_info1', 'Info. 1')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_info2')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_info2', 'Info. 2')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_info3')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_info3', 'Info. 3')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_info4')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_info4', 'Info. 4')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_info5')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_info5', 'Info. 5')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_info6')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_info6', 'Info. 6')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_importe')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctr_importe', 'Importe')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctr_impuesto')\
@@ -1017,6 +1045,50 @@ INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl'
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl', 'Línea de Factura')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctlList')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctlList', 'Líneas de Factura')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_rgla')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_rgla', 'Regla')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_rgla_tipo')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_rgla_tipo', 'Tipo de Regla')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_importeBase')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_importeBase', 'Imp. Base')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_importe')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_importe', 'Importe')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_fctdCount')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_fctdCount', 'Nº Detalles')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_impuesto')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_impuesto', 'Impuesto')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_fini')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_fini', 'F. Inicio')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_ffin')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_ffin', 'F. Fin')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_info1')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_info1', 'Info. 1')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_info2')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_info2', 'Info. 2')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_info3')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_info3', 'Info. 3')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_info4')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_info4', 'Info. 4')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_info5')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_info5', 'Info. 5')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_info6')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_info6', 'Info. 6')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_cuant1')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_cuant1', 'Cuant. 1')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_cuant2')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_cuant2', 'Cuant. 2')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_cuant3')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_cuant3', 'Cuant. 3')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_cuant4')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_cuant4', 'Cuant. 4')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_cuant5')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_cuant5', 'Cuant. 5')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctl_cuant6')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctl_cuant6', 'Cuant. 6')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctd')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctd', 'Detalle de Factura')\
+INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'fctdList')\
+	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'fctdList', 'Detalles de Factura')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'conf')\
 	INSERT INTO portico.tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'conf', 'Parámetro de Configuración')\
 INSERT INTO portico.tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'confList')\

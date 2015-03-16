@@ -16,6 +16,8 @@ angular.module("facturacion", [])
 
 .controller("FctrDetailController", FctrDetailController)
 
+.controller("FctlDetailController", FctlDetailController)
+
 // ----------- VALORACION ------------------
 .controller("VlrcGridController", VlrcGridController)
 
@@ -111,6 +113,13 @@ function config($routeProvider) {
 	.when("/facturacion/fctr/detail/:fctrId", {
 		templateUrl : "modules/facturacion/fctr-detail.html",
 		controller : "FctrDetailController",
+		controllerAs : "vm",
+		reloadOnSearch : false
+	})
+
+	.when("/facturacion/fctl/detail/:fctlId", {
+		templateUrl : "modules/facturacion/fctl-detail.html",
+		controller : "FctlDetailController",
 		controllerAs : "vm",
 		reloadOnSearch : false
 	})
@@ -539,6 +548,50 @@ function FctrDetailController($http, $location, $routeParams, pageTitleService) 
 	});
 
 	pageTitleService.setTitle("fctr", "page_detail");
+}
+
+function FctlDetailController($http, $location, $routeParams, pageTitleService) {
+	var vm = this;
+
+	vm.pageChanged = pageChanged;
+	vm.tabSelected = tabSelected;
+
+	vm.tab = $routeParams.tab ? $routeParams.tab : null;
+	vm.path = $location.path();
+
+	function findFctdList(page) {
+		$http.post("facturacion/fctd-list.action", {
+			fctlId : $routeParams.fctlId,
+			page : page
+		}).success(function(data) {
+			vm.fctdList = data.fctdList;
+			vm.page = data.fctdList.page;
+
+			$location.search("page", vm.page).replace();
+		});
+	}
+
+	function pageChanged() {
+		findFctdList(vm.page);
+	}
+
+	function tabSelected(tabNo) {
+		if (vm.path == $location.path()) {
+			$location.search("tab", tabNo).replace();
+		}
+	}
+
+	$http.post("facturacion/fctl-detail.action", {
+		fctl : {
+			id : $routeParams.fctlId
+		}
+	}).success(function(data) {
+		vm.fctl = data.fctl;
+
+		findFctdList($routeParams.page ? $routeParams.page : 1);
+	});
+
+	pageTitleService.setTitle("fctl", "page_detail");
 }
 
 function VlrcGridController($http, $location, $routeParams, $modal,

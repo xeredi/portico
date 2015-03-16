@@ -25,7 +25,7 @@
                 <th translate="fctr_falta"></th>
                 <th translate="fctr_fref"></th>
                 <th translate="fctr_fini"></th>
-                <th translate="fctr_fin"></th>
+                <th translate="fctr_ffin"></th>
                 <th translate="fctr_pagador"></th>
                 <th translate="fctr_sujPasivo"></th>
                 <th translate="fctr_aspc"></th>
@@ -46,7 +46,8 @@
                 <td><a ng-href="#/facturacion/fctr/detail/{{item.id}}"><i
                         class="glyphicon glyphicon-search"></i></a></td>
                 <td ng-bind="item.etiqueta"></td>
-                <td ng-bind="item.estado"></td>
+                <td ng-bind="item.estado" bs-tooltip
+                    data-title="{{'FacturaEstado_' + item.estado | translate}}"></td>
                 <td nowrap="nowrap" ng-bind="item.falta | date: ('format_datetime' | translate)"></td>
                 <td nowrap="nowrap" ng-bind="item.fref | date: ('format_date' | translate)"></td>
                 <td nowrap="nowrap" ng-bind="item.fini | date: ('format_datetime' | translate)"></td>
@@ -57,12 +58,12 @@
                 <td nowrap="nowrap" ng-bind="'enti_' + item.aspc.tpsr.id | translate"></td>
                 <td nowrap="nowrap" class="number" ng-bind="item.importe | number:2"></td>
                 <td nowrap="nowrap" class="number" ng-bind="item.impuesto | number:2"></td>
-                <td nowrap="nowrap" ng-bind="item.info1"></td>
-                <td nowrap="nowrap" ng-bind="item.info2"></td>
-                <td ng-bind="item.info3"></td>
-                <td ng-bind="item.info4"></td>
-                <td ng-bind="item.info5"></td>
-                <td ng-bind="item.info6"></td>
+                <td nowrap="nowrap"><span ng-bind="item.info1"></span></td>
+                <td nowrap="nowrap"><span ng-bind="item.info2"></span></td>
+                <td nowrap="nowrap"><span ng-bind="item.info3"></span></td>
+                <td nowrap="nowrap"><span ng-bind="item.info4"></span></td>
+                <td nowrap="nowrap"><span ng-bind="item.info5"></span></td>
+                <td nowrap="nowrap"><span ng-bind="item.info6"></span></td>
             </tr>
         </tbody>
     </table>
